@@ -32,6 +32,13 @@
  *   every performance may go on; everybody else rehearses and performs a
  *   School project. Missed rehearsal calls take an actor out of the casting
  *   pool; a missed performance or understudy call is a grave breach.
+ * - **The Cabaret and the summer.** A show a term at the Yale Cabaret, the
+ *   students' own theater, on the chair's approval, never on academic
+ *   warning, in a week clear of recesses and casting; and in the spring of
+ *   the first and second years, the Yale Summer Cabaret's company for the
+ *   summer, three shows and a weekly stipend, a missed performance and it's
+ *   over. Until 2026-09-27 the terms had nothing outside the curriculum and
+ *   the summers nothing at all.
  * - **Evaluation.** At the end of each term's classes the faculty weigh
  *   attendance and growth against the class: good standing, a notice of
  *   academic concern, academic warning, dismissal, with no readmission, as
@@ -46,7 +53,7 @@ import { formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
-  CLASSES_2026_27, COST_2026_27, COURSES, ORIENTATION_2026, SEAGULL_2027, SKILLS, TERM_STARTS_2026_27, WORK_STUDY, YALE_DRAMA,
+  CLASSES_2026_27, COST_2026_27, COURSES, ORIENTATION_2026, SEAGULL_2027, SKILLS, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
@@ -109,7 +116,11 @@ export interface SchoolRecord {
   classmates: { name: string; craft: Craft }[];
   tally: TermTally;
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
-  credits?: { production: string; role: string; kind: Casting['kind']; year: number; wentOn: number }[];
+  credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number }[];
+  /** A Cabaret show this term: which term, its production week's Thursday, and the shows played. */
+  cabaret?: { term: number; week: string; performed: number };
+  /** The Summer Cabaret company: the summer's year, the shows played in each run, whether it's over. */
+  summer?: { year: number; played: number[]; until: Instant; out?: boolean };
   history: TermReview[];
   casting?: Casting;
   workStudy: { yearHours: number; electiveHours: number; owedHours: number };
@@ -125,6 +136,9 @@ export const PAYDAY_KIND = 'school.payday';
 export const CALL_KIND = 'school.call';
 export const EVALUATION_KIND = 'school.evaluation';
 export const COMMENCEMENT_KIND = 'school.commencement';
+export const CABARET_KIND = 'school.cabaret';
+export const SUMMER_KIND = 'school.summer';
+export const STIPEND_KIND = 'school.stipend';
 
 /** SLATE's estimates of what the school doesn't publish, each named where it's used. */
 export const ESTIMATE = {
@@ -436,6 +450,51 @@ function schedule(
     at: when, kind, label, category: 'school', priority: 32, requiresPlayer,
     durationMinutes: minutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id, ...payload },
   });
+}
+
+/** The Cabaret's season a term falls in, by its number. */
+export function cabaretSeason(term: number): string {
+  return `Yale Cabaret, Season ${YALE_CABARET.firstSeason + Math.floor(term / 2)}`;
+}
+
+/** The weekday evenings a Cabaret show rehearses, back from its Thursday, a day off classes skipped. */
+export function cabaretEvenings(thu: SchoolDate, off: readonly (readonly [string, string])[]): SchoolDate[] {
+  const out: SchoolDate[] = [];
+  for (let d = addDays(thu, -1); out.length < YALE_CABARET.rehearsalEvenings; d = addDays(d, -1)) {
+    const wd = weekday(d);
+    if (wd === 0 || wd === 6 || off.some(([a, b]) => keyOf(d) >= a && keyOf(d) <= b)) continue;
+    out.push(d);
+  }
+  return out;
+}
+
+/**
+ * The first Cabaret production week (its Thursday) at least three weeks off,
+ * which leaves its rehearsals inside the term's classes, the week itself
+ * clear of a recess, and its rehearsals and shows clear of every casting
+ * call they have. As first
+ * built on 2026-09-27, a single day off classes in the fortnight ruled a
+ * week out, which left a first-year's fall one week to choose from.
+ */
+export function cabaretWeek(sim: Simulation, person: Person, term: number): SchoolDate | undefined {
+  const period = classPeriod(term);
+  const calls = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === CALL_KIND && i.payload.personId === person.id).map((i) => i.at);
+  const earliest = zonedParts(sim.now + YALE_CABARET.leadDays * MS_DAY, zone());
+  for (let thu = dayOnOrAfter(earliest.year, earliest.month, earliest.day, 4); keyOf(thu) <= keyOf(period.to); thu = addDays(thu, 7)) {
+    const evenings = cabaretEvenings(thu, period.off);
+    const sat = addDays(thu, 2);
+    if (period.off.some(([a, b]) => !(b < keyOf(thu) || a > keyOf(sat)))) continue;
+    const from = at(evenings.at(-1)!, 0);
+    const to = at(addDays(sat, 1), 0);
+    if (calls.some((t) => t >= from && t < to)) continue;
+    return thu;
+  }
+  return undefined;
+}
+
+/** A summer's three runs, 2026's dates in the summer's year. */
+export function summerRuns(year: number): { from: SchoolDate; to: SchoolDate }[] {
+  return SUMMER_CABARET.runs.map(([[m1, d1], [m2, d2]]) => ({ from: { year, month: m1, day: d1 }, to: { year, month: m2, day: d2 } }));
 }
 
 /**
@@ -820,6 +879,124 @@ export function registerSchool(sim: Simulation): void {
     const school = person?.school;
     if (!person || !school || school.standing === 'dismissed') return;
     setStanding(s, person, 'graduated', `You graduate from the ${YALE_DRAMA.name} with an ${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${school.classOf}.`);
+  });
+
+  sim.onCommand<Record<string, never>, { week: string }>('school.cabaret', (_p, { sim: s }) => {
+    const person = s.player;
+    const school = person.school;
+    if (!school || school.standing === 'graduated' || school.standing === 'dismissed') throw new CommandError('The Cabaret is for students.');
+    if (school.standing === 'warning') throw new CommandError('Nobody on academic warning may take part in the Cabaret.');
+    const term = school.termsBegun - 1;
+    if (term < 0) throw new CommandError('The Cabaret’s season begins with the term.');
+    if (school.cabaret?.term === term) throw new CommandError('You’re in a Cabaret show this term already.');
+    const week = cabaretWeek(s, person, term);
+    if (!week) throw new CommandError('No Cabaret week this term clears your classes’ recesses and your casting’s calls.');
+    school.cabaret = { term, week: keyOf(week), performed: 0 };
+    const c = YALE_CABARET;
+    for (const d of cabaretEvenings(week, classPeriod(term).off)) {
+      schedule(s, person, at(d, c.rehearsalFrom), { kind: CABARET_KIND, label: 'Yale Cabaret: Rehearsal', minutes: c.rehearsalMinutes, payload: { call: 'rehearsal' } });
+    }
+    c.shows.forEach(([wd, hour], n) => {
+      schedule(s, person, at(addDays(week, wd - 4), hour), { kind: CABARET_KIND, label: 'Yale Cabaret: Performance', minutes: 90, payload: { call: 'performance', last: n === c.shows.length - 1 } });
+    });
+    return { week: keyOf(week) };
+  });
+
+  sim.onSchedule(CABARET_KIND, (item) => {
+    const person = personOf(item);
+    const school = person?.school;
+    if (!person || !school?.cabaret || !person.craft) return;
+    if (!present(person, item.at)) { item.status = 'missed'; return; }
+    if (item.payload.call === 'performance') {
+      school.cabaret.performed += 1;
+      grow(person.craft, 'acting', focusOf(person), 4);
+      grow(person.craft, 'voice', focusOf(person), 2);
+      tire(person, ESTIMATE.energy.performance);
+      enjoyWork(person, { medium: 'stage', away: false });
+    } else {
+      grow(person.craft, 'acting', focusOf(person), 1.5);
+      grow(person.craft, 'text', focusOf(person));
+      tire(person, ESTIMATE.energy.rehearsal);
+      enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+    }
+    // The closing night played: on the résumé (a show never played never reaches here).
+    if (item.payload.last === true) {
+      (school.credits ??= []).push({ production: cabaretSeason(school.cabaret.term), role: 'In The Company', kind: 'cabaret', year: zonedParts(item.at, zone()).year, wentOn: school.cabaret.performed });
+    }
+  });
+
+  sim.onCommand<Record<string, never>, { from: Instant; until: Instant }>('school.summer_cabaret', (_p, { sim: s }) => {
+    const person = s.player;
+    const school = person.school;
+    if (!school || school.standing !== 'good') throw new CommandError('The Summer Cabaret’s company takes a student in good standing.');
+    const term = school.termsBegun - 1;
+    // A spring term with a year still to come: the summer after the first or second year.
+    if (term < 0 || termStart(term).fall || yearOfTerm(term) === 3) throw new CommandError('The company forms in the spring, for students with a year still to come.');
+    const year = termStart(term).date.year;
+    if (school.summer?.year === year) throw new CommandError('You’re in this summer’s company.');
+    if (s.now > at({ year, month: SUMMER_CABARET.applyBy[0], day: SUMMER_CABARET.applyBy[1] }, 23)) throw new CommandError('This summer’s company has formed.');
+    const runs = summerRuns(year);
+    const from = at(addDays(runs[0]!.from, -7 * SUMMER_CABARET.rehearsalWeeks), SUMMER_CABARET.rehearsalFrom);
+    const until = at(runs[runs.length - 1]!.to, 23);
+    school.summer = { year, played: runs.map(() => 0), until };
+    runs.forEach((run, n) => {
+      for (let d = addDays(run.from, -7 * SUMMER_CABARET.rehearsalWeeks); keyOf(d) < keyOf(run.from); d = addDays(d, 1)) {
+        const wd = weekday(d);
+        if (wd >= 2 && wd <= 6) schedule(s, person, at(d, SUMMER_CABARET.rehearsalFrom), { kind: SUMMER_KIND, label: 'Summer Cabaret: Rehearsal', minutes: SUMMER_CABARET.rehearsalMinutes, payload: { call: 'rehearsal', run: n } });
+      }
+      // Dark on Mondays; the closing is the run's last night played, which a later summer's Monday can move.
+      const nights: SchoolDate[] = [];
+      for (let d = run.from; keyOf(d) <= keyOf(run.to); d = addDays(d, 1)) if (weekday(d) !== 1) nights.push(d);
+      nights.forEach((d, i) => {
+        if (weekday(d) === 6) schedule(s, person, at(d, 14), { kind: SUMMER_KIND, label: 'Summer Cabaret: Matinee', minutes: 150, payload: { call: 'performance', run: n } });
+        schedule(s, person, at(d, 20), { kind: SUMMER_KIND, label: 'Summer Cabaret: Performance', minutes: 150, payload: { call: 'performance', run: n, last: i === nights.length - 1 } });
+      });
+    });
+    // The stipend, each Friday from the first rehearsal week to the closing.
+    for (let d = addDays(runs[0]!.from, -7 * SUMMER_CABARET.rehearsalWeeks); at(d, 17) <= until + 7 * MS_DAY; d = addDays(d, 1)) {
+      if (weekday(d) === 5) schedule(s, person, at(d, 17), { kind: STIPEND_KIND, label: 'Summer Cabaret Stipend', minutes: 0, requiresPlayer: false });
+    }
+    return { from, until };
+  });
+
+  sim.onSchedule(SUMMER_KIND, (item, s) => {
+    const person = personOf(item);
+    const school = person?.school;
+    const summer = school?.summer;
+    if (!person || !summer || summer.out || !person.craft) return;
+    const run = Number(item.payload.run);
+    if (!present(person, item.at)) {
+      item.status = 'missed';
+      if (item.payload.call !== 'performance') return;
+      // A missed performance and the company lets them go: the calls ahead are off, the stipend stops.
+      summer.out = true;
+      for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === SUMMER_KIND || one.kind === STIPEND_KIND) && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
+      if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Out Of The Summer Cabaret', body: 'You missed a performance, and the company went on without you. The weeks you worked are paid.', importance: 80, route: '/workspace/school' });
+      return;
+    }
+    if (item.payload.call === 'performance') {
+      summer.played[run] = (summer.played[run] ?? 0) + 1;
+      grow(person.craft, 'acting', focusOf(person), 4);
+      grow(person.craft, 'voice', focusOf(person), 2);
+      tire(person, ESTIMATE.energy.performance);
+      enjoyWork(person, { medium: 'stage', away: false });
+      if (item.payload.last === true) (school!.credits ??= []).push({ production: `Yale Summer Cabaret ${summer.year}, Show ${run + 1}`, role: 'In The Company', kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
+    } else {
+      grow(person.craft, 'acting', focusOf(person), 1.5);
+      grow(person.craft, 'text', focusOf(person));
+      tire(person, ESTIMATE.energy.rehearsal);
+      enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+    }
+  });
+
+  sim.onSchedule(STIPEND_KIND, (item, s) => {
+    const person = personOf(item);
+    const current = person?.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
+    if (!person || !current || current.closedAt) return;
+    const cur = saveCurrency(s.universe);
+    const pay = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
+    s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }] });
+    recordWages(person, item.at, zone(), { gross: pay, employer: 'yale-summer-cabaret' });
   });
 
   sim.onCommand<Record<string, never>, { excused: boolean }>('school.call_in_sick', (_p, { sim: s }) => {

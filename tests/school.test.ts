@@ -8,9 +8,9 @@ import { createSave, quickSave } from '@/engine';
 import { atSchool, defaultConfig, newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { rentAt } from '@/engine/content/rents';
-import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, WORK_STUDY, YALE_DRAMA } from '@/engine/content/school';
+import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA } from '@/engine/content/school';
 import {
-  CALL_KIND, ESTIMATE, SHIFT_KIND, classPeriod, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
+  CABARET_KIND, CALL_KIND, ESTIMATE, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
   sessionGain, termAccount, termStart, timetable, yearOfStudy,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
@@ -475,4 +475,132 @@ describe('evaluation', () => {
     expect(titled(sim, 'Your MFA Is Conferred')).toHaveLength(1);
     expect(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind.startsWith('school.')).map((i) => i.kind + ' ' + i.label)).toEqual([]);
   }, 120_000);
+});
+
+describe('the Yale Cabaret', () => {
+  it('puts a student in a show this term, three weeks off and clear of recesses, and grows them for it', () => {
+    const sim = life('cabaret');
+    const control = life('cabaret');
+    for (const one of [sim, control]) play(one, at(2026, 9, 7, 18));
+    const answer = sim.execute({ kind: 'school.cabaret', payload: {} });
+    expect(answer.ok).toBe(true);
+    const week = (answer.value as { week: string }).week;
+    const thursday = day(week);
+    expect(new Date(Date.UTC(thursday.year, thursday.month - 1, thursday.day)).getUTCDay()).toBe(4);
+    expect(at(thursday.year, thursday.month, thursday.day, 0) - sim.now).toBeGreaterThanOrEqual(YALE_CABARET.leadDays * MS_DAY - MS_DAY);
+    const calls = pending(sim, CABARET_KIND);
+    expect(calls.filter((c) => c.payload.call === 'rehearsal')).toHaveLength(YALE_CABARET.rehearsalEvenings);
+    expect(calls.filter((c) => c.payload.call === 'performance')).toHaveLength(YALE_CABARET.shows.length);
+    const period = classPeriod(0);
+    for (const c of calls) {
+      const d = zonedParts(c.at, zone);
+      const key = `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`;
+      expect(period.off.some(([a, b]) => key >= a && key <= b), `${key} is in a recess`).toBe(false);
+    }
+    expect(sim.execute({ kind: 'school.cabaret', payload: {} })).toMatchObject({ ok: false, error: 'You’re in a Cabaret show this term already.' });
+    const last = calls.at(-1)!.at;
+    for (const one of [sim, control]) play(one, last + 60_000);
+    expect(sim.player.school!.cabaret!.performed).toBeGreaterThan(0);
+    expect(sim.player.craft!.acting).toBeGreaterThan(control.player.craft!.acting);
+    expect(sim.player.school!.credits).toEqual([{ production: cabaretSeason(0), role: 'In The Company', kind: 'cabaret', year: 2026, wentOn: sim.player.school!.cabaret!.performed }]);
+  }, 120_000);
+
+  it('turns away a student on academic warning, and finds a week clear of the term’s casting calls', () => {
+    const warned = life('cabaret-warning');
+    play(warned, at(2026, 9, 7, 18));
+    warned.player.school!.standing = 'warning';
+    expect(warned.execute({ kind: 'school.cabaret', payload: {} })).toMatchObject({ ok: false, error: 'Nobody on academic warning may take part in the Cabaret.' });
+    const cast = life('cabaret-cast');
+    cast.player.school!.classmates[0]!.craft.acting = 99;
+    cast.advanceTo(at(2027, 1, 4, 9) + 60_000);
+    const casting = pending(cast, CALL_KIND).map((c) => c.at);
+    expect(casting.length).toBeGreaterThan(0);
+    const answer = cast.execute({ kind: 'school.cabaret', payload: {} });
+    if (answer.ok) {
+      const t = day((answer.value as { week: string }).week);
+      const from = at(t.year, t.month, t.day, 0) - 13 * MS_DAY;
+      const to = at(t.year, t.month, t.day, 0) + 3 * MS_DAY;
+      expect(casting.some((x) => x >= from && x < to)).toBe(false);
+    } else {
+      expect(answer.error).toBe('No Cabaret week this term clears your classes’ recesses and your casting’s calls.');
+    }
+  }, 60_000);
+});
+
+describe('the Yale Cabaret, clear of casting', () => {
+  it('moves the show past a week a casting call falls in, and keeps no credit for a show never played', () => {
+    const sim = life('cabaret-clear');
+    play(sim, at(2026, 9, 7, 18));
+    const first = cabaretWeek(sim, sim.player, 0)!;
+    // A call in the first candidate's rehearsal fortnight.
+    sim.schedule({ at: at(first.year, first.month, first.day, 15) - 5 * MS_DAY, kind: CALL_KIND, label: 'A Call', category: 'school', priority: 32, payload: { personId: sim.player.id, call: 'rehearsal' } });
+    const moved = cabaretWeek(sim, sim.player, 0)!;
+    expect(at(moved.year, moved.month, moved.day, 0)).toBeGreaterThan(at(first.year, first.month, first.day, 0));
+    // A Thursday in the Thanksgiving recess isn't a production week.
+    const late = life('cabaret-recess');
+    play(late, at(2026, 11, 4, 18));
+    const week = cabaretWeek(late, late.player, 0)!;
+    expect(week).toEqual({ year: 2026, month: 12, day: 3 });
+    // Joined, then away for all of it: nothing on the résumé.
+    const away = life('cabaret-away');
+    play(away, at(2026, 9, 7, 18));
+    away.must({ kind: 'school.cabaret', payload: {} });
+    const calls = pending(away, CABARET_KIND);
+    play(away, calls[0]!.at - 60_000);
+    away.player.currentLocationId = 'us-ny-newyork';
+    away.advanceTo(calls.at(-1)!.at + 60_000);
+    expect(away.player.school!.cabaret!.performed).toBe(0);
+    expect(away.player.school!.credits ?? []).toEqual([]);
+  }, 120_000);
+});
+
+describe('the Yale Summer Cabaret', () => {
+  it('takes a first-year in good standing into the summer’s company: three shows, afternoon rehearsals, a weekly stipend', () => {
+    const sim = life('summer');
+    play(sim, at(2027, 3, 20, 12));
+    expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(true);
+    const runs = summerRuns(2027);
+    const shows = pending(sim, SUMMER_KIND).filter((c) => c.payload.call === 'performance');
+    expect(shows.every((c) => zonedParts(c.at, zone).month >= 6)).toBe(true);
+    expect(shows.filter((c) => c.payload.last === true)).toHaveLength(runs.length);
+    const stipends = pending(sim, STIPEND_KIND);
+    expect(stipends.length).toBeGreaterThanOrEqual(10);
+    expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'You’re in this summer’s company.' });
+    // The first show, and the stipend through it.
+    const firstClose = shows.find((c) => c.payload.last === true)!;
+    play(sim, firstClose.at + 60_000);
+    expect(sim.player.school!.summer!.played[0]).toBeGreaterThan(0);
+    expect(sim.player.school!.credits?.find((c) => c.kind === 'summer')).toMatchObject({ production: 'Yale Summer Cabaret 2027, Show 1', year: 2027 });
+    const paid = sim.universe.transactions.filter((t) => t.memo.startsWith('Yale Summer Cabaret stipend'));
+    expect(paid.length).toBeGreaterThan(0);
+    expect(paid.every((t) => t.postings.some((p) => p.amount === SUMMER_CABARET.stipendWeekly))).toBe(true);
+    expect(sim.player.earnings!.years[2027]!.employers['yale-summer-cabaret']).toBe(paid.length * SUMMER_CABARET.stipendWeekly);
+  }, 180_000);
+
+  it('lets a student go who misses a performance, and stops the stipend', () => {
+    const sim = life('summer-miss');
+    play(sim, at(2027, 3, 20, 12));
+    sim.must({ kind: 'school.summer_cabaret', payload: {} });
+    const show = pending(sim, SUMMER_KIND).find((c) => c.payload.call === 'performance')!;
+    play(sim, show.at - 60_000);
+    sim.player.currentLocationId = 'us-ny-newyork';
+    sim.advanceTo(show.at + 60_000);
+    expect(sim.player.school!.summer!.out).toBe(true);
+    expect(pending(sim, SUMMER_KIND)).toHaveLength(0);
+    expect(pending(sim, STIPEND_KIND)).toHaveLength(0);
+    expect(titled(sim, 'Out Of The Summer Cabaret')).toHaveLength(1);
+  }, 180_000);
+
+  it('forms in the spring of the first and second years, for a student in good standing, by the end of April', () => {
+    const fall = life('summer-fall');
+    play(fall, at(2026, 10, 1, 12));
+    expect(fall.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'The company forms in the spring, for students with a year still to come.' });
+    const late = life('summer-late');
+    play(late, at(2027, 5, 2, 12));
+    expect(late.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'This summer’s company has formed.' });
+    const concern = life('summer-concern');
+    play(concern, at(2027, 3, 20, 12));
+    concern.player.school!.standing = 'concern';
+    expect(concern.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(false);
+  }, 180_000);
 });

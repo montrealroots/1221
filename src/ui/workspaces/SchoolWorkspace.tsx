@@ -18,10 +18,10 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, WORK_STUDY, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import {
-  CALL_KIND, ESTIMATE, EVALUATION_KIND, SHIFT_KIND, STANDING_LABEL,
-  classPeriod, coursesOn, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm,
+  CABARET_KIND, CALL_KIND, ESTIMATE, EVALUATION_KIND, SHIFT_KIND, STANDING_LABEL,
+  cabaretSeason, classPeriod, coursesOn, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
@@ -321,6 +321,9 @@ function CastingPane() {
         </div>
       </Panel>
 
+      <CabaretPanel />
+      <SummerPanel />
+
       {calls.length > 0 && (
         <Panel title="Calls Ahead">
           <div className="col gap-2">
@@ -334,6 +337,50 @@ function CastingPane() {
         </Panel>
       )}
     </div>
+  );
+}
+
+/** The Yale Cabaret: a show this term, on the chair's approval, clear of casting. */
+function CabaretPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school!;
+  const term = school.termsBegun - 1;
+  const mine = school.cabaret?.term === term ? school.cabaret : undefined;
+  const calls = ahead(sim, person, [CABARET_KIND]);
+  return (
+    <Panel
+      title="The Yale Cabaret"
+      subtitle={mine ? `Your show plays the week of ${dayOf(parseDay(mine.week))}` : cabaretSeason(Math.max(0, term))}
+      actions={mine ? undefined : <Gated feature="school.cabaret" onClick={() => { const a = run<{ week: string }>('school.cabaret'); if (a.ok) toast(`In the Cabaret: your show plays the week of ${dayOf(parseDay(a.value!.week))}.`, 'positive'); }}>Join A Cabaret Show</Gated>}
+    >
+      <div className="col gap-3">
+        {mine && <Stat label="Performed" value={`${mine.performed} of ${YALE_CABARET.shows.length}`} note={`${calls.length} calls ahead`} />}
+        <p className="xs dim" style={{ margin: 0 }}>
+          The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part, and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
+        </p>
+      </div>
+    </Panel>
+  );
+}
+
+/** The Summer Cabaret: the summer's company, for a student with a year to come. */
+function SummerPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const school = person.school!;
+  const summer = school.summer && school.summer.until > sim.now ? school.summer : undefined;
+  return (
+    <Panel
+      title="The Yale Summer Cabaret"
+      subtitle={summer ? (summer.out ? 'You left the company' : `In the ${summer.year} company, to ${formatDate(summer.until, zone())}`) : 'Three shows a summer in New Haven'}
+      actions={summer ? undefined : <Gated feature="school.summer_cabaret" onClick={() => { if (run('school.summer_cabaret').ok) toast('In this summer’s company.', 'positive'); }}>Join The Summer Company</Gated>}
+    >
+      <p className="xs dim" style={{ margin: 0 }}>
+        Three shows between late June and late August, evenings at eight and Saturdays at two, with afternoon rehearsals in the three weeks before each. It pays {formatMoney(SUMMER_CABARET.stipendWeekly, cur)} a week, SLATE’s estimate, as are later summers’ dates and the company taking a student in good standing who asks by the end of April: neither how it’s chosen nor what it pays is published. A missed performance and the company goes on without you. The summer is yours: the Bulletin limits outside work only while classes are in session. Source: {SUMMER_CABARET.source}.
+      </p>
+    </Panel>
   );
 }
 

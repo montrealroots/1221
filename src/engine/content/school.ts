@@ -216,3 +216,47 @@ export const SEAGULL_2027 = {
   roles: { actor: 'Konstantin', actress: 'Nina' },
   source: 'https://yalerep.org/about/2026-27-season/; Equity audition notice (https://www.broadwayworld.com/equity-audition/Yale-Repertory-Theatre-2026-27-Season-Yale-Repertory-Theatre-2026-51081)',
 } as const;
+
+/**
+ * The Yale Cabaret, 217 Park Street: the students' own theater, run by a new
+ * team of them each season (2026–27 is its 59th). A new show each production
+ * week, Thursday to Saturday at eight, and Friday and Saturday at eleven too;
+ * unpaid, and outside the curriculum. An acting student needs the chair's
+ * approval first, nobody on academic warning may take part, and a conflict
+ * with classes, casting or work-study is never resolved in the Cabaret's
+ * favor (the Bulletin, 2026–27). The rehearsals, nine weekday evenings of
+ * five hours before the production week, and one show a term, are SLATE's
+ * estimate; 2026–27's dates weren't yet published.
+ */
+export const YALE_CABARET = {
+  firstSeason: 59,
+  firstYear: 2026,
+  rehearsalEvenings: 9,
+  rehearsalFrom: 18,
+  rehearsalMinutes: 300,
+  /** Weekday (0 Sunday) and hour of each performance in the production week. */
+  shows: [[4, 20], [5, 20], [5, 23], [6, 20], [6, 23]] as readonly (readonly [number, number])[],
+  leadDays: 21,
+  source: 'https://www.yalecabaret.org; https://bulletin.yale.edu (School of Drama, 2026–2027: the Yale Cabaret)',
+} as const;
+
+/**
+ * The Yale Summer Cabaret, the students' summer theater in New Haven, three
+ * shows a summer: 2026's ran 25 to 28 June, 23 July to 1 August and 13 to
+ * 22 August, evenings at eight and Saturdays at two. A student continuing to
+ * the next year may join its company. Later summers' dates, the three weeks'
+ * afternoon rehearsals before each opening, the company being open to a
+ * student in good standing, and its stipend of $375 a week, are SLATE's
+ * estimate: how the company is chosen and what it pays aren't published.
+ * The summer is the student's own: the Bulletin restricts outside work only
+ * while classes are in session.
+ */
+export const SUMMER_CABARET = {
+  runs: [[[6, 25], [6, 28]], [[7, 23], [8, 1]], [[8, 13], [8, 22]]] as readonly (readonly [readonly [number, number], readonly [number, number]])[],
+  rehearsalWeeks: 3,
+  rehearsalFrom: 13,
+  rehearsalMinutes: 300,
+  stipendWeekly: 375_00,
+  applyBy: [4, 30] as const,
+  source: 'https://www.summercabaret.org (2026 season); https://bulletin.yale.edu (School of Drama, 2026–2027)',
+} as const;
