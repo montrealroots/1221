@@ -70,7 +70,7 @@ import { armSummerWork, beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
 import { recordScholarship, recordWages } from './earnings';
 import { armTaxes } from './taxreturn';
-import { armHealth } from './health';
+import { armHealth, inHospital } from './health';
 
 export type Craft = Record<Skill, number>;
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
@@ -446,8 +446,7 @@ function freshTally(person: Person, school: SchoolRecord): TermTally {
 function present(person: Person, when: Instant): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're in no class (`systems/health.ts`).
-  const inHospital = (person.health?.inHospitalUntil ?? 0) > when;
-  return !asleep && !inHospital && person.currentLocationId === YALE_DRAMA.cityId;
+  return !asleep && !inHospital(person, when) && person.currentLocationId === YALE_DRAMA.cityId;
 }
 
 function tire(person: Person, energy: number): void {
@@ -906,7 +905,8 @@ export function registerSchool(sim: Simulation): void {
       return;
     }
     item.status = 'missed';
-    if (school.sickDay === keyOf(day)) { school.tally.excused += 1; return; }
+    // A day in hospital is excused, as a sick day called in is.
+    if (school.sickDay === keyOf(day) || inHospital(person, item.at)) { school.tally.excused += 1; return; }
     if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
 
@@ -916,6 +916,8 @@ export function registerSchool(sim: Simulation): void {
     if (!person || !school) return;
     const hours = Number(item.payload.hours);
     const elective = item.payload.elective === true;
+    // A shift in hospital isn't one they were there to be asked for.
+    if (inHospital(person, item.at)) { item.status = 'missed'; if (elective) school.workStudy.electiveHours -= hours; return; }
     if (!elective) school.tally.shifts += 1;
     if (present(person, item.at)) {
       if (!elective) school.tally.worked += 1;
@@ -952,6 +954,8 @@ export function registerSchool(sim: Simulation): void {
     const casting = item.payload.which === 'rep' ? school?.rep : school?.casting;
     if (!person || !school || !person.craft || !casting) return;
     const call = String(item.payload.call);
+    // In hospital, somebody else covers: the call isn't theirs to answer.
+    if (inHospital(person, item.at)) { item.status = 'missed'; return; }
     if (call === 'oncall') {
       // Most nights the understudy isn't needed.
       if (!goesOn(s, person, item.at)) return;
@@ -1091,7 +1095,8 @@ export function registerSchool(sim: Simulation): void {
     const run = Number(item.payload.run);
     if (!present(person, item.at)) {
       item.status = 'missed';
-      if (item.payload.call !== 'performance') return;
+      // In hospital, the company covers the night and keeps them.
+      if (item.payload.call !== 'performance' || inHospital(person, item.at)) return;
       // A missed performance and the company lets them go: the calls ahead are off, the stipend stops.
       summer.out = true;
       for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === SUMMER_KIND || one.kind === STIPEND_KIND) && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);

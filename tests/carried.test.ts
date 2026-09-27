@@ -194,12 +194,42 @@ describe('home from a job, however it went', () => {
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'tor')!;
     while (sim.now < call.at - 3_600_000) sim.advanceTo(Math.min(call.at - 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('ca-on-toronto');
-    // In hospital there through the first call: replaced.
-    healthOf(sim.player).inHospitalUntil = call.at + 3_600_000;
+    // Asleep through the first call: replaced.
+    sim.player.awakeSince = call.at + 3_600_000;
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('fired');
     while (sim.now < at(2026, 10, 9, 12)) sim.advanceTo(Math.min(at(2026, 10, 9, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
+  }, 60_000);
+
+  it('recasts an actor in hospital on screen without the agency dropping them, and keeps them on stage', () => {
+    const sim = pro('hospital-set');
+    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    const career = careerOf(sim.player);
+    career.agencyId = 'caa';
+    const b: Booking = { id: 'set', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    career.bookings.push(b);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')!;
+    while (sim.now < call.at - 3_600_000) sim.advanceTo(Math.min(call.at - 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    healthOf(sim.player).inHospitalUntil = call.at + 3_600_000;
+    sim.advanceTo(call.at + 60_000);
+    expect(b.status).toBe('released');
+    expect(career.agencyId).toBe('caa');
+    expect(sim.universe.scheduled.filter((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')).toHaveLength(0);
+    // On stage, the understudy covers the night and the run goes on.
+    const stage = pro('hospital-stage');
+    stage.player.craft = { ...sim.player.craft };
+    const run: Booking = { id: 'run', roleId: 'lort-a-plus', cityId: 'us-ny-newyork', starts: at(2026, 10, 6, 8), units: 2, rehearsalWeeks: 1, status: 'offered', dueAt: stage.now + 2 * MS_DAY, offeredAt: stage.now, worked: 0, owed: 0, weeksPaid: 0 };
+    careerOf(stage.player).bookings.push(run);
+    expect(stage.execute({ kind: 'career.accept', payload: { bookingId: run.id } }).ok).toBe(true);
+    const first = stage.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'run')!;
+    while (stage.now < first.at - 3_600_000) stage.advanceTo(Math.min(first.at - 3_600_000, stage.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    healthOf(stage.player).inHospitalUntil = first.at + 3_600_000;
+    stage.advanceTo(first.at + 60_000);
+    expect(run.status).toBe('accepted');
+    expect(run.worked).toBe(0);
+    expect(first.status).toBe('missed');
   }, 60_000);
 });
 

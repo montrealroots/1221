@@ -15,6 +15,7 @@ import {
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
+import { healthOf } from '@/engine/systems/health';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Craft } from '@/engine/systems/school';
 import { yearOf } from '@/engine/systems/earnings';
@@ -159,6 +160,13 @@ describe('an audition, on the day', () => {
     expect(audition(sim, 'room').status).toBe('missed');
     sim.player.currentLocationId = 'us-ny-newyork';
     expect(['done', 'booked']).toContain(audition(sim, 'room').status);
+  });
+
+  it('missed in hospital, counts for nothing against the agency’s three', () => {
+    const sim = signed('ward', 2);
+    healthOf(sim.player).inHospitalUntil = sim.now + 30 * MS_DAY;
+    expect(audition(sim, 'room').status).toBe('missed');
+    expect(careerOf(sim.player).missed).toBe(0);
   });
 
   it('missed three times of the agency’s, and not before, ends the representation; missing your own counts for nothing', () => {

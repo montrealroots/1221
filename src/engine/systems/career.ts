@@ -68,7 +68,7 @@ import {
 } from '../content/career';
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
 import { ABROAD } from '../content/safetynet';
-import { armHealth } from './health';
+import { armHealth, inHospital } from './health';
 import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
 import { meanCraft, focusOf, sessionGain, summerOf, type Craft } from './school';
@@ -603,8 +603,7 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
 function present(person: Person, when: Instant, cityId?: string): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're nowhere else (`systems/health.ts`).
-  const inHospital = (person.health?.inHospitalUntil ?? 0) > when;
-  return !asleep && !inHospital && (cityId === undefined || person.currentLocationId === cityId);
+  return !asleep && !inHospital(person, when) && (cityId === undefined || person.currentLocationId === cityId);
 }
 
 /**
@@ -836,7 +835,8 @@ export function registerCareer(sim: Simulation): void {
     if (!present(person, item.at, audition.mode === 'room' ? audition.cityId : undefined)) {
       audition.status = 'missed';
       item.status = 'missed';
-      if (audition.self || !career.agencyId) return;
+      // In hospital, the agency passes on it for them: no strike.
+      if (audition.self || !career.agencyId || inHospital(person, item.at)) return;
       career.missed += 1;
       if (career.missed >= ESTIMATE.dropAfterMissed) { endRepresentation(s, person, `You missed ${ESTIMATE.dropAfterMissed} auditions the agency got you.`, false); return; }
       if (isPlayer(person)) s.notify({ category: 'money', title: 'You Missed An Audition', body: `${roleById(audition.roleId).label}: the agency got you in, and you weren’t there. ${ESTIMATE.dropAfterMissed} missed and they let you go.`, importance: 75, route: '/workspace/career' });
@@ -909,6 +909,17 @@ export function registerCareer(sim: Simulation): void {
     const role = roleById(booking.roleId);
     if (!present(person, item.at, workCityOf(booking))) {
       item.status = 'missed';
+      if (inHospital(person, item.at)) {
+        // On stage the understudy goes on, and they come back after; the
+        // night isn't paid. On screen or in the booth the production can't
+        // wait, and recasts: the days worked are paid, and nobody walked off.
+        if (role.medium === 'stage') return;
+        booking.status = 'released';
+        for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
+        if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
+        if (isPlayer(person)) s.notify({ category: 'money', title: 'Recast While You Were In Hospital', body: `${role.label} couldn’t wait for you, and went to somebody else. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
+        return;
+      }
       booking.status = 'fired';
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
       if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);

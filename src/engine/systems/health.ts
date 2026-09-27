@@ -210,6 +210,17 @@ export function drawChronic(sim: Simulation, person: Person): void {
 }
 
 /** The health plans' month and week for them, from the first of the next month and the next Monday. */
+/**
+ * Whether a person is in hospital at a moment. An admission is an excused
+ * absence everywhere: a production recasts or covers, an agency reschedules,
+ * and the school counts it as a sick day. Until 2026-09-27 each presence
+ * check read a stay as walking away, and a stay drawn on a Monday morning
+ * put a student in breach before they could call in sick.
+ */
+export function inHospital(person: Person, at: Instant): boolean {
+  return (person.health?.inHospitalUntil ?? 0) > at;
+}
+
 export function armHealth(sim: Simulation, person: Person): void {
   healthOf(person);
   drawChronic(sim, person);

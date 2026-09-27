@@ -14,7 +14,7 @@ import {
   sessionGain, termAccount, termStart, timetable, yearOfStudy,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
-import { careFor } from '@/engine/systems/health';
+import { careFor, healthOf } from '@/engine/systems/health';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import { careerOf } from '@/engine/systems/career';
 
@@ -242,6 +242,15 @@ describe('classes', () => {
     expect(titled(sim, 'You Missed Classes')).toHaveLength(1);
   });
 
+  it('excuse a day in hospital, as a sick day called in', () => {
+    const sim = life('ward');
+    play(sim, at(2026, 8, 31, 8));
+    healthOf(sim.player).inHospitalUntil = at(2026, 8, 31, 18);
+    sim.advanceTo(at(2026, 8, 31, 9) + 60_000);
+    expect(sim.player.school!.tally).toMatchObject({ classDays: 1, attended: 0, excused: 1 });
+    expect(titled(sim, 'You Missed Classes')).toHaveLength(0);
+  });
+
   it('can’t be called in sick from on a day without them', () => {
     const sim = life('weekend');
     play(sim, at(2026, 9, 5, 8));
@@ -282,6 +291,19 @@ describe('work-study', () => {
     sim.advanceTo(at(2026, 9, 5, 11));
     expect(sim.player.school!.workStudy.owedHours).toBe(0);
     expect(sim.player.school!.tally).toMatchObject({ shifts: 1, worked: 0 });
+  });
+
+  it('doesn’t count a shift missed in hospital against the student, and frees an elective evening’s hours', () => {
+    const sim = life('ward-shift');
+    play(sim, at(2026, 9, 5, 9));
+    healthOf(sim.player).inHospitalUntil = at(2026, 9, 5, 18);
+    sim.advanceTo(at(2026, 9, 5, 11));
+    expect(sim.player.school!.tally).toMatchObject({ shifts: 0, worked: 0 });
+    expect(titled(sim, 'You Missed A Work-Study Shift')).toHaveLength(0);
+    const evening = sim.execute<{ at: number }>({ kind: 'school.take_shift', payload: {} }).value!.at;
+    healthOf(sim.player).inHospitalUntil = evening + MS_HOUR;
+    sim.advanceTo(evening + 60_000);
+    expect(sim.player.school!.workStudy.electiveHours).toBe(0);
   });
 
   it('takes elective evenings of four hours on request, up to fifty hours a year', () => {
@@ -396,6 +418,24 @@ describe('casting', () => {
     sim.advanceTo(show.at + 60_000);
     expect(sim.player.school!.standing).toBe('warning');
     expect(sim.player.school!.tally.breaches).toBe(1);
+  });
+
+  it('covers a performance and a rehearsal missed in hospital, with no breach and no call counted', () => {
+    const sim = life('ward-show');
+    sim.player.school!.classmates[0]!.craft.acting = 99;
+    sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
+    const rehearsal = pending(sim, CALL_KIND).find((c) => c.payload.call === 'rehearsal')!;
+    const calls = sim.player.school!.tally.calls;
+    healthOf(sim.player).inHospitalUntil = rehearsal.at + 60 * 60_000;
+    sim.advanceTo(rehearsal.at + 60_000);
+    expect(sim.player.school!.tally.calls).toBe(calls);
+    const show = pending(sim, CALL_KIND).find((c) => c.payload.call === 'performance')!;
+    sim.advanceTo(show.at - 60_000);
+    healthOf(sim.player).inHospitalUntil = show.at + 60 * 60_000;
+    sim.advanceTo(show.at + 60_000);
+    expect(sim.player.school!.standing).toBe('good');
+    expect(sim.player.school!.tally.breaches).toBe(0);
+    expect(titled(sim, 'You Missed A Rehearsal Call')).toHaveLength(0);
   });
 
   it('sends an understudy on when the night calls for it, and grows them; away that night, it’s a grave breach', () => {
@@ -640,6 +680,18 @@ describe('the Yale Summer Cabaret', () => {
     expect(pending(sim, SUMMER_KIND)).toHaveLength(0);
     expect(pending(sim, STIPEND_KIND)).toHaveLength(0);
     expect(titled(sim, 'Out Of The Summer Cabaret')).toHaveLength(1);
+  }, 180_000);
+
+  it('keeps a student in the company who misses a performance in hospital', () => {
+    const sim = life('summer-ward');
+    play(sim, at(2027, 3, 20, 12));
+    sim.must({ kind: 'school.summer_cabaret', payload: {} });
+    const show = pending(sim, SUMMER_KIND).find((c) => c.payload.call === 'performance')!;
+    play(sim, show.at - 60_000);
+    healthOf(sim.player).inHospitalUntil = show.at + MS_HOUR;
+    sim.advanceTo(show.at + 60_000);
+    expect(sim.player.school!.summer!.out).toBeFalsy();
+    expect(pending(sim, SUMMER_KIND).length).toBeGreaterThan(0);
   }, 180_000);
 
   it('forms in the spring of the first and second years, for a student in good standing, by the end of April', () => {
