@@ -189,10 +189,11 @@ part the tool cannot see.
     a recurring arc runs. Each holds at its last published figure, or is
     SLATE's estimate, and says so.
   - Abroad: Canada's section 216.1 return and the UK's payer-by-payer
-    withholding and settlement are built (2026-09-27). What's estimated:
-    Canada's 2026 brackets held for later years, and the 48% surtax, the
-    self-employed's, standing in for an employed actor's province; a
-    payer's UK total expected at the booking's rate. What isn't modeled:
+    withholding and settlement are built (2026-09-27), with the tax of
+    the province the work was done in (British Columbia's, Ontario's and
+    its surtax). What's estimated: the 2026 federal and provincial
+    brackets held for later years, and a payer's UK total expected at the
+    booking's rate. What isn't modeled:
     an FEU8 agreement to withhold less, and the UK allowance's taper,
     which a US citizen never has to reach.
   - The body: obesity isn't modeled, since SLATE keeps no weight. A type

@@ -57,7 +57,8 @@ describe('working abroad', () => {
     expect(late.foreignCredit).toBe(Math.min(9_200_00, Math.round(federal * 0.4)));
     expect(late.federal).toBe(federal - late.foreignCredit);
     // Filed by 30 April, Canada's graduated tax is what stands, and the rest comes back.
-    const elected = canadaElected(40_000_00, 0, 100_000_00, 'USD');
+    // Worked in Toronto: Ontario's tax, not the 48% surtax.
+    const elected = canadaElected(40_000_00, 0, 100_000_00, 'USD', { 'ca-08': 40_000_00 });
     const f = figuresFor(sim.player, 2027, 'USD', at(2028, 4, 15));
     expect(f.foreignRefund).toBe(9_200_00 - elected);
     expect(f.foreignCredit).toBe(Math.min(elected, Math.round(federal * 0.4)));
@@ -65,7 +66,7 @@ describe('working abroad', () => {
     const agented = pro('ftc-agent');
     recordWages(agented.player, at(2027, 3, 1), NY, { gross: 60_000_00, commission: 6_000_00 });
     recordWages(agented.player, at(2027, 5, 1), NY, { gross: 40_000_00, where: 'ca-on-toronto', foreignWithheld: 9_200_00, commission: 4_000_00 });
-    expect(figuresFor(agented.player, 2027, 'USD', at(2028, 4, 15)).foreignRefund).toBe(9_200_00 - canadaElected(40_000_00, 4_000_00, 100_000_00, 'USD'));
+    expect(figuresFor(agented.player, 2027, 'USD', at(2028, 4, 15)).foreignRefund).toBe(9_200_00 - canadaElected(40_000_00, 4_000_00, 100_000_00, 'USD', { 'ca-08': 40_000_00 }));
     const small = pro('ftc-small');
     const under = (exchange(ABROAD.canada.treatyCad, 'CAD', 'USD') ?? 0) - 100_00;
     recordWages(small.player, at(2027, 5, 1), NY, { gross: under, where: 'ca-on-toronto', foreignWithheld: Math.round(under * 0.23) });
@@ -92,6 +93,31 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
     expect(expectedGross(screen, when, 'USD')).toBe(unitRate(screen, when, 'USD') * 3);
     expect(expectedGross(stage, when, 'USD')).toBe(unitRate(stage, when, 'USD') * 10);
     expect(expectedGross(series, when, 'USD')).toBe(unitRate(series, when, 'USD') * roleById('series-hour').series!.episodes);
+  });
+
+  it('takes the province’s tax where the work was done: BC’s in Vancouver, Ontario’s and its surtax in Toronto, the 48% only on what no province takes', () => {
+    const cad = (usd: number) => exchange(usd, 'USD', 'CAD')!;
+    const usdOf = (c: number) => exchange(c, 'CAD', 'USD')!;
+    const net = cad(80_000_00);
+    const federal = Math.round(0.14 * 58_523_00 + 0.205 * (net - 58_523_00));
+    // About CAD 109,600: into BC's third band and Ontario's third.
+    const bc = Math.round(0.056 * 50_363_00 + 0.077 * (100_728_00 - 50_363_00) + 0.105 * (net - 100_728_00));
+    expect(canadaElected(80_000_00, 0, 200_000_00, 'USD', { 'ca-02': 80_000_00 })).toBe(usdOf(Math.round(federal + bc)));
+    const on = Math.round(0.0505 * 53_891_00 + 0.0915 * (107_785_00 - 53_891_00) + 0.1116 * (net - 107_785_00));
+    const onSurtax = Math.max(0, on - 5_818_00) * 0.2 + Math.max(0, on - 7_446_00) * 0.36;
+    expect(canadaElected(80_000_00, 0, 200_000_00, 'USD', { 'ca-08': 80_000_00 })).toBe(usdOf(Math.round(federal + on + onSurtax)));
+    // Half in each; and half nowhere, the surtax on that half.
+    expect(canadaElected(80_000_00, 0, 200_000_00, 'USD', { 'ca-02': 40_000_00, 'ca-08': 40_000_00 })).toBe(usdOf(Math.round(federal + bc / 2 + (on + onSurtax) / 2)));
+    expect(canadaElected(80_000_00, 0, 200_000_00, 'USD', { 'ca-02': 40_000_00 })).toBe(usdOf(Math.round(federal + bc / 2 + federal * 0.48 / 2)));
+    // Mostly Canadian, and the provinces' personal amounts come off too.
+    expect(canadaElected(80_000_00, 0, 80_000_00, 'USD', { 'ca-02': 80_000_00 })).toBe(usdOf(Math.round(federal - Math.round(0.14 * 16_452_00) + bc - Math.round(0.056 * 13_216_00))));
+  });
+
+  it('records where abroad each dollar was earned, for the provinces', () => {
+    const sim = pro('where');
+    recordWages(sim.player, at(2027, 5, 1), NY, { gross: 10_000_00, where: 'ca-bc-vancouver' });
+    recordWages(sim.player, at(2027, 6, 1), NY, { gross: 5_000_00, where: 'ca-on-toronto' });
+    expect(yearOf(sim.player, 2027).foreignWhere).toEqual({ 'ca-bc-vancouver': 10_000_00, 'ca-on-toronto': 5_000_00 });
   });
 
   it('settles the UK years at tax season', () => {

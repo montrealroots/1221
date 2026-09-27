@@ -258,13 +258,17 @@ export const STATE_RETURN = {
  * treaty a US resident whose Canadian gross in the calendar year is CAD
  * 15,000 or less owes none, and the withholding comes back. Over it, a
  * section 216.1 return filed by 30 April pays Canada's graduated federal
- * rates on the net (the gross less the agent's and manager's share) and the
- * 48% surtax in place of a province's, the 23% credited and the rest
- * refunded; the basic personal amount only where Canadian income is 90% of
- * the year's. A return filed later loses the election, and the 23% stands.
- * The 2026 brackets hold for later years, SLATE's estimate, and the surtax
- * is the self-employed's, SLATE's estimate for an employed actor, whose
- * province's own rates run close to it.
+ * rates on the net (the gross less the agent's and manager's share) and,
+ * an actor being the production's employee, the tax of the province the
+ * work was done in: British Columbia's for Vancouver, Ontario's and its
+ * surtax for Toronto, each on the whole net and taken in the share of the
+ * gross earned there (Form T2203); the 48% federal surtax only on what no
+ * province takes. The 23% is credited and the rest refunded. The basic
+ * personal amounts, federal and provincial, only where Canadian income is
+ * 90% of the year's. A return filed later loses the election, and the 23%
+ * stands. The 2026 brackets hold for later years, SLATE's estimate. Until
+ * 2026-09-27 SLATE charged the 48% surtax on it all, the self-employed's
+ * rule, where an employed actor's province's is the law.
  *
  * The United Kingdom withholds 20% from a nonresident entertainer's every
  * payment once one payer's total in the UK tax year (6 April to 5 April)
@@ -283,13 +287,25 @@ export const ABROAD = {
     rate: 0.23, treatyCad: 15_000_00,
     brackets: [[58_523_00, 0.14], [117_045_00, 0.205], [181_440_00, 0.26], [258_482_00, 0.29], [Number.POSITIVE_INFINITY, 0.33]] as readonly (readonly [number, number])[],
     basicPersonal: 16_452_00, residentShare: 0.9, surtax: 0.48, electBy: { month: 4, day: 30 },
+    /** By region: British Columbia's 2026 brackets after its budget, Ontario's with its surtax on its own tax. */
+    provinces: {
+      'ca-02': {
+        brackets: [[50_363_00, 0.056], [100_728_00, 0.077], [115_648_00, 0.105], [140_430_00, 0.1229], [190_405_00, 0.147], [265_545_00, 0.168], [Number.POSITIVE_INFINITY, 0.205]],
+        basicPersonal: 13_216_00,
+      },
+      'ca-08': {
+        brackets: [[53_891_00, 0.0505], [107_785_00, 0.0915], [150_000_00, 0.1116], [220_000_00, 0.1216], [Number.POSITIVE_INFINITY, 0.1316]],
+        basicPersonal: 12_989_00,
+        surtax: [[5_818_00, 0.2], [7_446_00, 0.36]],
+      },
+    } as Readonly<Record<string, { brackets: readonly (readonly [number, number])[]; basicPersonal: Money; surtax?: readonly (readonly [number, number])[] }>>,
   },
   uk: {
     rate: 0.2, treatyUsd: 20_000_00, payerThresholdGbp: 12_570_00,
     bands: [[37_700_00, 0.2], [125_140_00, 0.4], [Number.POSITIVE_INFINITY, 0.45]] as readonly (readonly [number, number])[],
     settleMonth: 1, settleDay: 31,
   },
-  source: 'https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/film-media-tax-credits/non-resident-actors/taxation-non-resident-actors-providing-film-video-acting-services-canada.html; https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/canadian-income-tax-rates-individuals-current-previous-years.html; https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer; https://www.gov.uk/income-tax-rates; IRS Form 1116',
+  source: 'https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/film-media-tax-credits/non-resident-actors/taxation-non-resident-actors-providing-film-video-acting-services-canada.html; https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/canadian-income-tax-rates-individuals-current-previous-years.html; CRA T4058 and T2203; CRA T4127 (2026); https://www2.gov.bc.ca/gov/content/taxes/income-taxes/personal/tax-rates; https://www.ontario.ca/document/ontario-personal-income-tax; https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer; https://www.gov.uk/income-tax-rates; IRS Form 1116',
 } as const;
 
 /**

@@ -36,8 +36,9 @@ export interface YearEarnings {
   byResidence: Record<string, Money>;
   /** Wages for work done in a state they didn't live in, by `livedInState>workedInTown`. */
   elsewhere: Record<string, Money>;
-  /** Wages for work done abroad, and what the country withheld, by country. */
+  /** Wages for work done abroad, and what the country withheld, by country; and by the town it was done in. */
   foreign: Record<string, { gross: Money; withheld: Money }>;
+  foreignWhere?: Record<string, Money>;
 }
 
 export interface EarningsRecord {
@@ -91,6 +92,7 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   if (country && country !== CITIES.get(home)?.countryId) {
     const f = (y.foreign[country] ??= { gross: 0, withheld: 0 });
     f.gross += pay.gross;
+    y.foreignWhere = { ...y.foreignWhere, [pay.where!]: (y.foreignWhere?.[pay.where!] ?? 0) + pay.gross };
     f.withheld += pay.foreignWithheld ?? 0;
     if (country === 'uk') {
       const r = earningsOf(person);

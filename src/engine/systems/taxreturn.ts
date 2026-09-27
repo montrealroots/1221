@@ -20,6 +20,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { computeAnnualTax } from '../content/tax';
+import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
 import { payFromCurrent } from './household';
@@ -135,17 +136,30 @@ export function banded(income: Money, bands: readonly (readonly [number, number]
 
 /**
  * Canada's tax under a section 216.1 election, in dollars of the save: the
- * federal brackets on the net of the Canadian gross, the basic personal
- * amount's credit where Canadian income is 90% of the year's, and the 48%
- * surtax on the rest.
+ * federal brackets on the net of the Canadian gross; each province's tax on
+ * the whole net, with Ontario's surtax on its own, taken in the share of the
+ * gross earned there (Form T2203); the 48% federal surtax on the share no
+ * province takes; and the basic personal amounts' credits only where
+ * Canadian income is 90% of the year's.
  */
-export function canadaElected(gross: Money, commission: Money, world: Money, into: string): Money {
+export function canadaElected(gross: Money, commission: Money, world: Money, into: string, byRegion: Readonly<Record<string, Money>> = {}): Money {
   const c = ABROAD.canada;
   const toCad = (m: Money) => exchange(m, into, 'CAD') ?? m;
   const net = Math.max(0, toCad(gross - commission));
-  const credit = gross >= c.residentShare * world ? Math.round(c.basicPersonal * c.brackets[0]![1]) : 0;
-  const basic = Math.max(0, banded(net, c.brackets) - credit);
-  const cad = Math.round(basic * (1 + c.surtax));
+  const mostly = gross >= c.residentShare * world;
+  const basic = Math.max(0, banded(net, c.brackets) - (mostly ? Math.round(c.basicPersonal * c.brackets[0]![1]) : 0));
+  let provincial = 0;
+  let placed = 0;
+  for (const [region, earned] of Object.entries(byRegion)) {
+    const p = c.provinces[region];
+    if (!p || gross <= 0) continue;
+    const share = earned / gross;
+    placed += share;
+    const own = Math.max(0, banded(net, p.brackets) - (mostly ? Math.round(p.basicPersonal * p.brackets[0]![1]) : 0));
+    const surtax = (p.surtax ?? []).reduce((sum, [over, rate]) => sum + Math.max(0, own - over) * rate, 0);
+    provincial += (own + surtax) * share;
+  }
+  const cad = Math.round(basic + provincial + basic * c.surtax * Math.max(0, 1 - placed));
   return exchange(cad, 'CAD', into) ?? cad;
 }
 
@@ -181,7 +195,13 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
       if (f.gross <= (exchange(ABROAD.canada.treatyCad, 'CAD', into) ?? ABROAD.canada.treatyCad)) back = f.withheld;
       else if (filedAt === undefined || filedAt <= elect) {
         const commission = y.acting > 0 ? Math.round(y.commission * (f.gross / y.acting)) : 0;
-        back = Math.max(0, f.withheld - canadaElected(f.gross, commission, income, into));
+        // Where in Canada it was earned, by province.
+        const byRegion: Record<string, Money> = {};
+        for (const [city, earned] of Object.entries(y.foreignWhere ?? {})) {
+          const place = CITIES.get(city);
+          if (place?.countryId === 'ca') byRegion[place.parentId] = (byRegion[place.parentId] ?? 0) + earned;
+        }
+        back = Math.max(0, f.withheld - canadaElected(f.gross, commission, income, into, byRegion));
       }
     }
     foreignRefund += back;
