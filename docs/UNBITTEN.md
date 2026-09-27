@@ -218,6 +218,14 @@ part the tool cannot see.
     has no news to give.
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
+  - Connecticut (2026-09-27): unemployment, HUSKY D, Covered Connecticut
+    and Access Health CT are built. What's estimated: New Haven's 2026 and
+    2027 benchmark premiums, grown from 2025's published grid, and 2027's
+    $45 minimum benefit, by the statute's index. What isn't modeled: the
+    state's 2026 Temporary Premium Assistance on top of the federal credit,
+    which is 2026's only, with 2027's design unpublished; its hospitals'
+    charity care; and a claim paid by the state the wages were earned in,
+    since SLATE files it where the claimant lives.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two

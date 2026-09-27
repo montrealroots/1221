@@ -14,10 +14,10 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
+import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, returnsOf } from '@/engine/systems/taxreturn';
-import { CONDITION_LABEL, COVER_LABEL, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, planOf, type Condition } from '@/engine/systems/health';
+import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, planOf, type Condition } from '@/engine/systems/health';
 import { homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
@@ -161,15 +161,15 @@ function HealthPane() {
       </Panel>
       <Panel
         title="The Marketplace"
-        subtitle={state ? `${formatMoney(benchmarkFor(state, year, cur), cur)} a month for the benchmark silver plan` : 'In New York or Los Angeles'}
+        subtitle={state ? `${formatMoney(benchmarkFor(state, year, cur), cur)} a month for the benchmark silver plan` : 'In New York, Los Angeles or New Haven'}
         actions={enrolled
           ? <Gated feature="health.drop" onClick={() => { if (run('health.drop').ok) toast('It ends at the month’s end.', 'positive'); }}>Drop The Plan</Gated>
-          : <Gated feature="health.enroll" onClick={() => { const a = run<{ kind: string }>('health.enroll'); if (a.ok) toast(`Enrolled in ${a.value!.kind === 'marketplace' ? 'the marketplace' : a.value!.kind === 'essential' ? 'the Essential Plan' : 'Medicaid'}, from the first of next month.`, 'positive'); }}>Enroll</Gated>}
+          : <Gated feature="health.enroll" onClick={() => { const a = run<{ kind: string }>('health.enroll'); if (a.ok) toast(`Enrolled in ${a.value!.kind === 'marketplace' ? 'the marketplace' : state ? PROGRAM_NAMES[state][a.value!.kind as 'medicaid' | 'essential'] : 'Medicaid'}, from the first of next month.`, 'positive'); }}>Enroll</Gated>}
       >
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>
             {enrolled ? `Enrolled from ${formatDate(ownPlan!.from, sim.zone)}. ` : `${may.why} `}
-            On a low month’s income, Medicaid (Medi-Cal in California) takes you at 138% of the poverty line, and in New York the Essential Plan to 200%, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(PUBLIC_COVER.workEarnings, cur)} a month at renewal.{' '}
+            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(PUBLIC_COVER.workEarnings, cur)} a month at renewal.{' '}
             {enrolled && (cover === 'sag' || cover === 'equity') ? `${COVER_LABEL[cover]} covers you too, so the plan’s premium buys nothing more while it does. ` : ''}
             You pay the whole premium each month, and the return gives back what’s over your share of income: none over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
             {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(CALIFORNIA_MANDATE.flat, cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(CALIFORNIA_MANDATE.bronzeMonth, cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
@@ -286,30 +286,32 @@ function BenefitsPane() {
   const money = (c: number) => formatMoney(c, cur);
   const record = unemploymentOf(person);
   const claim = record.claim;
-  const state = BENEFIT_STATE[person.currentLocationId];
+  // Filed where they live (`homeOf`); until 2026-09-27 this read where they stood.
+  const state = BENEFIT_STATE[homeOf(person)];
   const preview = state ? basePeriodFor(person, state, sim.now, cur) : undefined;
-  const source = state === 'ca' ? CALIFORNIA_UI.source : NEW_YORK_UI.source;
+  const source = state === 'ca' ? CALIFORNIA_UI.source : state === 'ct' ? CONNECTICUT_UI.source : NEW_YORK_UI.source;
+  const partial = state === 'ca' ? 'the benefit less the earnings past the greater of $25 and a quarter of them' : state === 'ct' ? 'the benefit less two-thirds of the pay' : 'by its hours, and nothing where the pay reaches the maximum';
   return (
     <div className="col gap-5">
       <Panel
-        title={claim ? `A ${claim.state === 'ny' ? 'New York' : 'California'} Claim` : 'No Claim Open'}
+        title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}
         actions={claim ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
       >
         <div className="col gap-3">
           {claim ? (
             <div className="grid grid-3">
-              <Stat label="A Week" value={money(claim.weekly)} note={claim.waited ? 'The waiting week is served' : 'The first week due is unpaid'} />
+              <Stat label="A Week" value={money(claim.weekly)} note={claim.state === 'ct' ? 'Connecticut has no waiting week' : claim.waited ? 'The waiting week is served' : 'The first week due is unpaid'} />
               <Stat label="Paid" value={money(claim.paid)} note={`${claim.weeksPaid} weeks`} />
               <Stat label="At Most" value={money(claim.maxTotal)} note={`Until ${formatDate(claim.endsAt, sim.zone)}`} />
             </div>
           ) : (
             <p className="small" style={{ margin: 0 }}>
-              {!state ? 'SLATE pays unemployment in New York and California, where you’d have to live.' : preview!.result.ok ? `Filed now, your base period, ${preview!.quarters.join(', ')}, pays ${preview!.result.why}` : `Filed now, it wouldn’t pay: ${preview!.result.why}`}
+              {!state ? 'SLATE pays unemployment in New York, California and Connecticut, where you’d have to live.' : preview!.result.ok ? `Filed now, your base period, ${preview!.quarters.join(', ')}, pays ${preview!.result.why}` : `Filed now, it wouldn’t pay: ${preview!.result.why}`}
             </p>
           )}
           <p className="small" style={{ margin: 0 }}>
-            Each Sunday the week is certified for you. A week with work pays {state === 'ca' ? 'the benefit less the earnings past the greater of $25 and a quarter of them' : 'by its hours, and nothing where the pay reaches the maximum'}; a week away from the state pays nothing. What’s paid is income on your return{state === 'ca' ? ', federally; California doesn’t tax it' : ''}.
+            Each Sunday the week is certified for you, from anywhere in the country as an interstate claim is; a week abroad pays nothing. A week with work pays {partial}. What’s paid is income on your return{state === 'ca' ? ', federally; California doesn’t tax it' : ''}.
           </p>
           <p className="xs dim" style={{ margin: 0 }}>Source: {source}.</p>
         </div>

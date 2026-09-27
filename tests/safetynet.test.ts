@@ -10,13 +10,13 @@ import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, UNION_HEALTH, rateOn } from '@/engine/content/career';
-import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear } from '@/engine/content/safetynet';
+import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear, CONNECTICUT_UI, INSULIN, PLANS } from '@/engine/content/safetynet';
 import {
   RESIDUAL_KIND, afterlife, beginCareer, careerOf, managerOffersFor, mealPenalty, overtimeFor, paycheck, residualAmount, roleById, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
-import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil } from '@/engine/systems/health';
+import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil, programFor, benchmarkFor, planKey, shareOf, insulinShareOf } from '@/engine/systems/health';
 import { basePeriodFor, monetary, unemploymentOf, weekBenefit, type Claim } from '@/engine/systems/unemployment';
 import { applicablePercent, deadline, figuresFor, latePenalty, returnsOf } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
@@ -42,7 +42,7 @@ function booking(sim: Simulation, roleId: string, units: number, starts = sim.no
   careerOf(sim.player).bookings.push(b);
   return b;
 }
-const claimOf = (state: 'ny' | 'ca', weekly: number): Claim => ({ state, filedAt: 0, endsAt: 1e15, weekly, maxTotal: 1e12, paid: 0, weeksPaid: 0, waited: true, basePeriod: [] });
+const claimOf = (state: 'ny' | 'ca' | 'ct', weekly: number): Claim => ({ state, filedAt: 0, endsAt: 1e15, weekly, maxTotal: 1e12, paid: 0, weeksPaid: 0, waited: true, basePeriod: [] });
 
 describe('new parts', () => {
   it('pay Off-Broadway’s minimums from the audition notices, and a series regular by the episode', () => {
@@ -305,6 +305,72 @@ describe('health cover', () => {
   });
 });
 
+describe('Connecticut', () => {
+  it('pays unemployment on 40 times the benefit, the two best quarters over 26, from its floor to $721, with no waiting week', () => {
+    // ($4,000 + $3,908) / 2 / 26 = $152.07: $152, and $6,080 of base-period wages asked.
+    expect(monetary('ct', [4_000_00, 3_908_00, 0, 0], 'USD', 2026)).toMatchObject({ ok: true, weekly: 152_00, maxTotal: 152_00 * 26 });
+    // Under 40 times the floor, nothing: $1,500 against 40 times $44.
+    expect(monetary('ct', [1_000_00, 500_00, 0, 0], 'USD', 2026).ok).toBe(false);
+    // The floor, $44 in 2026 and $45 in 2027, and the frozen maximum.
+    expect(monetary('ct', [1_000_00, 800_00, 0, 0], 'USD', 2026)).toMatchObject({ ok: true, weekly: 44_00 });
+    expect(monetary('ct', [1_000_00, 800_00, 0, 0], 'USD', 2027)).toMatchObject({ ok: true, weekly: 45_00 });
+    expect(monetary('ct', [50_000_00, 50_000_00, 0, 0], 'USD', 2027).weekly).toBe(CONNECTICUT_UI.maximum);
+    // A week with work: the benefit less two-thirds of the pay, and nothing at one and a half times it.
+    const ct = claimOf('ct', 300_00);
+    expect(weekBenefit(ct, 5, 0)).toBe(300_00);
+    expect(weekBenefit(ct, 5, 150_00)).toBe(200_00);
+    expect(weekBenefit(ct, 5, 100_40)).toBe(300_00 - 67_00);
+    expect(weekBenefit(ct, 5, 449_00)).toBe(0);
+    expect(weekBenefit(ct, 5, 450_00)).toBe(0);
+    // Filed from New Haven, the first week is paid.
+    const sim = pro('ct-claim', 'us-ct-newhaven');
+    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(sim.player).quarters[q] = { wages: 8_000_00, sag: 0 };
+    sim.must({ kind: 'benefits.claim', payload: {} });
+    expect(unemploymentOf(sim.player).claim).toMatchObject({ state: 'ct', waited: true, weekly: 307_00 });
+    play(sim, sim.now + 8 * MS_DAY);
+    expect(unemploymentOf(sim.player).claim!.paid).toBe(307_00);
+  });
+
+  it('covers a low month by HUSKY D, to 175% of last year’s poverty line by Covered Connecticut, and above it by Access Health CT', () => {
+    const sim = pro('ct-cover', 'us-ct-newhaven');
+    const p = sim.player;
+    earningsOf(p).months['2026-05'] = 1_500_00;
+    expect(programFor(p, at(2026, 6, 2))).toEqual({ kind: 'medicaid', band: 'low' });
+    earningsOf(p).months['2026-05'] = 2_250_00;
+    expect(programFor(p, at(2026, 6, 2))).toEqual({ kind: 'essential', band: 'low' });
+    earningsOf(p).months['2026-05'] = 2_300_00;
+    expect(programFor(p, at(2026, 6, 2))).toBeUndefined();
+    earningsOf(p).months['2026-09'] = 5_000_00;
+    expect(mayEnroll(p, at(2026, 10, 25)).ok).toBe(true);
+    expect(mayEnroll(p, at(2026, 10, 20)).why).toMatch(/23 October to 15 January/);
+    expect(benchmarkFor('ct', 2026, 'USD')).toBe(706_00);
+    expect(benchmarkFor('ct', 2027, 'USD')).toBe(786_00);
+    // Enrolled in Covered Connecticut, care costs nothing and renews every six months from 2027.
+    // Last month's income, the month before the save's start.
+    earningsOf(p).months['2025-12'] = 2_250_00;
+    expect(zonedParts(sim.now, NY)).toMatchObject({ year: 2026, month: 1 });
+    sim.must({ kind: 'health.enroll', payload: {} });
+    const h = healthOf(p);
+    expect(h.program).toMatchObject({ kind: 'essential', state: 'ct' });
+    expect(planKey(p, h.program!.from + MS_HOUR)).toBe('covered-ct');
+    expect(shareOf(p, 'stay', h.program!.from + MS_HOUR)).toBe(0);
+    // HUSKY D renews every six months from January 2027, where New York's wait until March.
+    h.program = { ...h.program!, kind: 'medicaid', renewAt: at(2027, 1, 1, 0) };
+    earningsOf(p).months['2026-12'] = 1_000_00;
+    healthMonth(sim, p, at(2027, 1, 1, 1));
+    expect(h.program.renewAt).toBe(at(2027, 7, 1, 0));
+    // HUSKY D asks no copay at the pharmacy, where New York's Medicaid asks a dollar.
+    h.program = { ...h.program!, kind: 'medicaid' };
+    expect(planKey(p, h.program.from + MS_HOUR)).toBe('essential-low');
+    // The marketplace plan: the deductible, then $1,500 for the stay; insulin at Connecticut's $25.
+    delete h.program;
+    h.marketplace = { from: at(2027, 1, 1, 0), state: 'ct' };
+    expect(planKey(p, at(2027, 2, 1))).toBe('marketplace-ct');
+    expect(shareOf(p, 'stay', at(2027, 2, 1))).toBe(PLANS['marketplace-ct']!.deductible + 1_500_00);
+    expect(insulinShareOf(p, at(2027, 2, 2))).toBeLessThanOrEqual(INSULIN.connecticutCap);
+  });
+});
+
 describe('unemployment', () => {
   it('New York: two quarters, $3,500 in one, one and a half times; the high quarter over 26 or 25, $143 to $869', () => {
     expect(monetary('ny', [10_000_00, 5_000_00, 3_000_00, 2_000_00])).toMatchObject({ ok: true, weekly: 384_00 });
@@ -364,7 +430,7 @@ describe('unemployment', () => {
     expect(zonedParts(week.at, 'America/New_York').hour).toBe(20);
   });
 
-  it('isn’t filed while on a job, or outside New York and California', () => {
+  it('isn’t filed while on a job, or outside New York, California and Connecticut', () => {
     const sim = pro('on-job');
     for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(sim.player).quarters[q] = { wages: 10_000_00, sag: 0 };
     const b = booking(sim, 'lort-b', 3, sim.now - MS_DAY, 2);
@@ -376,7 +442,7 @@ describe('unemployment', () => {
     sim.player.currentLocationId = 'us-ct-newhaven';
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(true);
     delete unemploymentOf(sim.player).claim;
-    sim.player.home!.cityId = 'us-ct-newhaven';
+    sim.player.home!.cityId = 'us-tx-houston';
     sim.player.currentLocationId = 'us-ny-newyork';
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);
   });

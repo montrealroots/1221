@@ -1,6 +1,6 @@
 /**
  * SLATE — what's there between jobs and at the year's end, for an actor in
- * New York or California: unemployment insurance, health cover bought on the
+ * New York, California or Connecticut (Connecticut's since 2026-09-27): unemployment insurance, health cover bought on the
  * marketplace, California's mandate, and the income tax return
  * (`systems/unemployment.ts`, `systems/health.ts`, `systems/taxreturn.ts`).
  * Researched 2026-09-26; each figure's source is beside it, and what isn't
@@ -11,8 +11,8 @@ import type { Money } from '../core/money';
 import type { RateSteps } from './career';
 
 /** The states SLATE pays unemployment in, by the city an actor lives in. */
-export type BenefitState = 'ny' | 'ca';
-export const BENEFIT_STATE: Readonly<Record<string, BenefitState>> = { 'us-ny-newyork': 'ny', 'us-ca-losangeles': 'ca' };
+export type BenefitState = 'ny' | 'ca' | 'ct';
+export const BENEFIT_STATE: Readonly<Record<string, BenefitState>> = { 'us-ny-newyork': 'ny', 'us-ca-losangeles': 'ca', 'us-ct-newhaven': 'ct' };
 
 /**
  * New York's unemployment insurance, claims from 2026: wages in two quarters
@@ -57,18 +57,44 @@ export const CALIFORNIA_UI = {
 } as const;
 
 /**
+ * Connecticut's, claims from 2026 (General Statutes chapter 567): base-period
+ * wages at least 40 times the weekly benefit, with no high-quarter test; a
+ * weekly benefit of the average of the two highest quarters over 26, rounded
+ * down, from $44 in 2026 ($45 in 2027, SLATE's estimate by the statute's
+ * index, the ECI's 3.2% to June 2026) to $721, frozen until October 2028; no
+ * waiting week; 26 weeks' benefit in a benefit year. A week with work pays
+ * the benefit less two-thirds of its pay, rounded up, which is nothing where
+ * the pay reaches one and a half times the benefit, as the statute says. Wages Yale paid a student
+ * don't count (§31-222(a)(5)(G)), as work-study's never do in SLATE.
+ */
+export const CONNECTICUT_UI = {
+  totalTimesWeekly: 40,
+  floor: [['2026-01-01', 44_00], ['2027-01-01', 45_00]] as RateSteps,
+  maximum: 721_00,
+  weeks: 26,
+  partialShare: 2 / 3,
+  taxedByState: true,
+  source: 'https://www.cga.ct.gov/current/pub/chap_567.htm (§§31-229, 31-230, 31-231a, 31-231b, 31-235); https://portal.ct.gov/dol/divisions/unemployment-insurance-tax/information-on-unemployment-tax-rate-for-calendar-year-2026',
+} as const;
+
+/**
  * The marketplace's benchmark plan, the second-cheapest silver, a month, for
  * a single adult. Los Angeles: Covered California's 2026 rates for regions 15
  * and 16 at age 40, $463 and $459, put at age 27 by the federal age curve,
  * about $378. New York City: community rated, Kings County's 2025 $880.24
  * with 2026's average 7.1%, about $940, and 2027's approved 6.0% on it. Both
- * are SLATE's estimate from published figures; later years hold.
+ * are SLATE's estimate from published figures; later years hold. New Haven
+ * County: Access Health CT's 2025 grid, $562.01 at 27, grown by KFF's 25.5%
+ * for Connecticut's 2026 benchmark to about $706, and by the Insurance
+ * Department's approved 11.3% average for 2027 to about $786, SLATE's
+ * estimate.
  */
 export const BENCHMARK: Readonly<Record<BenefitState, RateSteps>> = {
   ny: [['2026-01-01', 940_00], ['2027-01-01', 996_00]],
   ca: [['2026-01-01', 378_00]],
+  ct: [['2026-01-01', 706_00], ['2027-01-01', 786_00]],
 };
-export const BENCHMARK_SOURCE = 'https://hbex.coveredca.com/toolkit/downloads/CCA_26_Regional_Bronze_and_Silver_Rates.pdf; https://www.dfs.ny.gov/reports_and_publications/press_releases/pr20260904';
+export const BENCHMARK_SOURCE = 'https://www.kff.org/affordable-care-act/state-indicator/marketplace-average-benchmark-premiums/; https://ctmirror.org/2026/09/14/ct-insurance-rate-hikes-2027-approved/; https://hbex.coveredca.com/toolkit/downloads/CCA_26_Regional_Bronze_and_Silver_Rates.pdf; https://www.dfs.ny.gov/reports_and_publications/press_releases/pr20260904';
 
 /**
  * The premium tax credit, with the enhanced credits expired at the end of
@@ -93,6 +119,13 @@ export const PREMIUM_CREDIT = {
  * days to enroll. Cover starts on the first of the next month.
  */
 export const ENROLLMENT = { openFrom: [11, 1] as const, openUntil: [1, 15] as const, specialDays: 60 } as const;
+
+/**
+ * Access Health CT opens its own: from 23 October for plan year 2027, while
+ * the federal rule ending enrollment on 31 December is in court, to 15
+ * January. HUSKY and Covered Connecticut take anybody at any time.
+ */
+export const CONNECTICUT_ENROLLMENT = { openFrom: [10, 23] as const, openUntil: [1, 15] as const, source: 'https://ctnewsjunkie.com/2026/09/21/access-health-ct-revises-open-enrollment-dates-for-2027/' } as const;
 
 /**
  * California's penalty for a month without cover: the greater of a flat sum
@@ -156,12 +189,21 @@ export const POVERTY_LINE: RateSteps = [['2025-01-01', 15_650_00], ['2026-01-01'
 export const PUBLIC_COVER = {
   medicaidShare: 1.38,
   essentialShare: 2.0,
+  /**
+   * Covered Connecticut: from HUSKY's 138% to 175% of the poverty line, the
+   * prior year's as the marketplace reads it, a silver plan with no premium
+   * and nothing to pay, at any time. HUSKY D, Connecticut's Medicaid, takes a
+   * single adult to 138% with no copays, and from 1 January 2027 asks the
+   * work and renews every six months from then.
+   */
+  coveredCtShare: 1.75,
+  renewMonthsCt: [['2025-01-01', 12], ['2027-01-01', 6]] as RateSteps,
   essentialCopaysFrom: 1.5,
   workFrom: '2027-01-01',
   workHours: 80,
   workEarnings: 580_00,
   renewMonths: [['2025-01-01', 12], ['2027-03-01', 6]] as RateSteps,
-  source: 'https://www.health.ny.gov/health_care/medicaid/; https://info.nystateofhealth.ny.gov/EssentialPlan; https://www.dhcs.ca.gov/services/medi-cal/; Pub. L. 119-21 (2025)',
+  source: 'https://portal.ct.gov/dss/knowledge-base/articles/healthcare-coverage/husky-d; https://portal.ct.gov/dss/health-and-home-care/covered-connecticut-program; https://www.health.ny.gov/health_care/medicaid/; https://info.nystateofhealth.ny.gov/EssentialPlan; https://www.dhcs.ca.gov/services/medi-cal/; Pub. L. 119-21 (2025)',
 } as const;
 
 /**
@@ -217,8 +259,12 @@ export const PLANS: Readonly<Record<string, PlanDesign>> = {
   medicaid: { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Medicaid' },
   'essential-low': { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Essential Plan' },
   'essential-high': { visit: 15_00, urgent: 25_00, emergency: 75_00, stayShare: 0, deductible: 0, outOfPocket: 2_000_00, label: 'Essential Plan' },
+  // Access Health CT's Standard Silver, 2026: $45 a visit, $75 urgent care, $450 an emergency room, a $5,000
+  // deductible, $9,400 at most; a stay after the deductible at $500 a day to $2,000 an admission, $1,500 for SLATE's three days.
+  'marketplace-ct': { visit: 45_00, urgent: 75_00, emergency: 450_00, stayShare: 0, deductible: 5_000_00, outOfPocket: 9_400_00, stayCopay: 1_500_00, label: 'Access Health CT Standard Silver' },
+  'covered-ct': { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Covered Connecticut' },
 };
-export const PLANS_SOURCE = 'https://www.coveredca.com/support/before-you-buy/standard-benefit-designs/; NY State of Health 2026 standard silver; https://www.sagaftraplans.org/health; https://equityleague.org/health/';
+export const PLANS_SOURCE = 'http://agency.accesshealthct.com/wp-content/uploads/2025/03/2026-Standard-Silver-Plan-70.pdf; https://www.coveredca.com/support/before-you-buy/standard-benefit-designs/; NY State of Health 2026 standard silver; https://www.sagaftraplans.org/health; https://equityleague.org/health/';
 
 /**
  * Hospital bills to the uninsured. New York's hospitals charge nothing under
@@ -367,6 +413,8 @@ export const PHARMACY = {
   plans: {
     'marketplace-ca': { generic: [19_00, 0], brand: [60_00, 0], brandDeductible: 50_00 },
     'marketplace-ny': { generic: [15_00, 0], brand: [40_00, 0], brandDeductible: 0 },
+    'marketplace-ct': { generic: [10_00, 0], brand: [50_00, 0], brandDeductible: 250_00 },
+    'covered-ct': { generic: [0, 0], brand: [0, 0], brandDeductible: 0 },
     sag: { generic: [10_00, 0.1], brand: [25_00, 0.25], brandDeductible: 75_00 },
     equity: { generic: [10_00, 0.2], brand: [20_00, 0.25], brandDeductible: 100_00 },
     medicaid: { generic: [1_00, 0], brand: [1_00, 0], brandDeductible: 0 },
@@ -455,6 +503,10 @@ export const INSULIN = {
   newYorkFrom: '2025-01-01',
   /** The New York plans the state regulates: its marketplace and the Essential Plan. The unions' are self-funded. */
   newYorkPlans: ['marketplace-ny', 'essential-low', 'essential-high'] as readonly string[],
+  /** Connecticut's $25 a month on the plans it regulates, from 2022 (Public Act 20-4). */
+  connecticutCap: 25_00,
+  connecticutFrom: '2022-01-01',
+  connecticutPlans: ['marketplace-ct', 'covered-ct'] as readonly string[],
   monitor: { price: 241_00, program: 75_00 },
   source: 'https://www.dfs.ny.gov/apps_and_licensing/health_insurers/insulin_cost_sharing_qa_guidance; https://leginfo.legislature.ca.gov (SB 40, 2025); Lilly, Novo Nordisk and Sanofi $35 programs; https://cga.ct.gov/2020/SUM/pdf/2020SUM00004-R02HB-06003-SUM.pdf; https://www.goodrx.com/freestyle-libre-3-plus',
 } as const;

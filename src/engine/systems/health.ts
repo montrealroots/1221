@@ -42,7 +42,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { UNION_HEALTH, rateOn } from '../content/career';
 import {
-  BENCHMARK, BENEFIT_STATE, CARE, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
+  BENCHMARK, BENEFIT_STATE, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
 import { earningsOf, homeOf, quartersBefore } from './earnings';
@@ -147,9 +147,7 @@ export function planOf(person: Person, at: Instant): PlanDesign | undefined {
   const h = person.health;
   if (!cover) return undefined;
   if (cover === 'cobra') return PLANS[h!.cobra!.plan];
-  if (cover === 'essential') return PLANS[`essential-${h!.program!.band}`];
-  if (cover === 'marketplace') return PLANS[`marketplace-${h!.marketplace!.state}`];
-  return PLANS[cover];
+  return PLANS[planKey(person, at)!];
 }
 
 /** Which plan's tables apply: the union plan COBRA keeps, the state's marketplace, the Essential Plan's band. */
@@ -158,9 +156,10 @@ export function planKey(person: Person, at: Instant): string | undefined {
   const h = person.health;
   if (!cover) return undefined;
   if (cover === 'cobra') return h!.cobra!.plan;
-  if (cover === 'essential') return `essential-${h!.program!.band}`;
+  if (cover === 'essential') return h!.program!.state === 'ct' ? 'covered-ct' : `essential-${h!.program!.band}`;
   if (cover === 'marketplace') return `marketplace-${h!.marketplace!.state}`;
-  if (cover === 'medicaid' && h!.program!.state === 'ca') return 'essential-low';
+  // Medi-Cal and HUSKY D ask no copays, where New York's Medicaid asks a dollar at the pharmacy.
+  if (cover === 'medicaid' && h!.program!.state !== 'ny') return 'essential-low';
   return cover;
 }
 
@@ -175,23 +174,33 @@ export function programFor(person: Person, at: Instant, into = 'USD'): { kind: '
   const ratio = income / povertyMonth(zonedParts(at, HOME).year, into);
   if (ratio <= PUBLIC_COVER.medicaidShare) return { kind: 'medicaid', band: 'low' };
   if (state === 'ny' && ratio <= PUBLIC_COVER.essentialShare) return { kind: 'essential', band: ratio <= PUBLIC_COVER.essentialCopaysFrom ? 'low' : 'high' };
+  // Covered Connecticut reads the year before's poverty line, as the marketplace does.
+  if (state === 'ct' && income / povertyMonth(zonedParts(at, HOME).year - 1, into) <= PUBLIC_COVER.coveredCtShare) return { kind: 'essential', band: 'low' };
   return undefined;
 }
+
+/** What each state calls its programs. */
+export const PROGRAM_NAMES: Readonly<Record<BenefitState, { medicaid: string; essential: string }>> = {
+  ny: { medicaid: 'Medicaid', essential: 'the Essential Plan' },
+  ca: { medicaid: 'Medi-Cal', essential: 'the Essential Plan' },
+  ct: { medicaid: 'HUSKY D', essential: 'Covered Connecticut' },
+};
 
 /** Whether they may enroll now, in a program or the marketplace, and in which. */
 export function mayEnroll(person: Person, at: Instant, into = 'USD'): { ok: boolean; why: string; program?: 'medicaid' | 'essential' } {
   const state = BENEFIT_STATE[homeOf(person)];
-  if (!state) return { ok: false, why: 'SLATE has public cover and the marketplace in New York and Los Angeles.' };
+  if (!state) return { ok: false, why: 'SLATE has public cover and the marketplace in New York, Los Angeles and New Haven.' };
   const h = healthOf(person);
   if (active(h.program, at) || active(h.marketplace, at)) return { ok: false, why: 'You’re enrolled.' };
   const program = programFor(person, at, into);
-  if (program) return { ok: true, why: `Last month’s income qualifies you for ${program.kind === 'medicaid' ? (state === 'ca' ? 'Medi-Cal' : 'Medicaid') : 'the Essential Plan'}, at any time and with no premium.`, program: program.kind };
+  if (program) return { ok: true, why: `Last month’s income qualifies you for ${PROGRAM_NAMES[state][program.kind]}, at any time and with no premium.`, program: program.kind };
   const p = zonedParts(at, HOME);
-  const open = (p.month > ENROLLMENT.openFrom[0] || (p.month === ENROLLMENT.openFrom[0] && p.day >= ENROLLMENT.openFrom[1]))
-    || (p.month < ENROLLMENT.openUntil[0] || (p.month === ENROLLMENT.openUntil[0] && p.day <= ENROLLMENT.openUntil[1]));
+  const window = state === 'ct' ? CONNECTICUT_ENROLLMENT : ENROLLMENT;
+  const open = (p.month > window.openFrom[0] || (p.month === window.openFrom[0] && p.day >= window.openFrom[1]))
+    || (p.month < window.openUntil[0] || (p.month === window.openUntil[0] && p.day <= window.openUntil[1]));
   if (open) return { ok: true, why: 'Open enrollment.' };
   if (h.lostAt !== undefined && at - h.lostAt <= ENROLLMENT.specialDays * MS_DAY) return { ok: true, why: `Within ${ENROLLMENT.specialDays} days of losing cover.` };
-  return { ok: false, why: `Outside open enrollment, 1 November to 15 January, and not within ${ENROLLMENT.specialDays} days of losing cover.` };
+  return { ok: false, why: `Outside open enrollment, ${window.openFrom[1]} ${MONTH_NAMES[window.openFrom[0] - 1]} to ${window.openUntil[1]} ${MONTH_NAMES[window.openUntil[0] - 1]}, and not within ${ENROLLMENT.specialDays} days of losing cover.` };
 }
 
 /** The benchmark plan's premium a month, where they live, in a year. */
@@ -256,7 +265,8 @@ function lastMonthWork(person: Person, at: Instant): { hours: number; earnings: 
   return { hours, earnings: earningsOf(person).months[key] ?? 0 };
 }
 
-const renewMonths = (at: Instant) => rateOn(PUBLIC_COVER.renewMonths, monthKey(at) + '-01');
+const renewMonths = (at: Instant, state?: BenefitState) => rateOn(state === 'ct' ? PUBLIC_COVER.renewMonthsCt : PUBLIC_COVER.renewMonths, monthKey(at) + '-01');
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 /**
  * A month's start. At a quarter's, SAG-AFTRA's plan reads the base period
@@ -314,7 +324,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
       const worksEnough = prog.kind !== 'medicaid' || monthKey(at) < PUBLIC_COVER.workFrom.slice(0, 7) || work.hours >= PUBLIC_COVER.workHours || work.earnings >= usd(PUBLIC_COVER.workEarnings, cur);
       if (still?.kind === prog.kind && worksEnough) {
         prog.band = still.band;
-        prog.renewAt = firstOf(p.year, p.month + renewMonths(at));
+        prog.renewAt = firstOf(p.year, p.month + renewMonths(at, prog.state));
       } else {
         prog.until = at;
         if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Public Cover Ended At Renewal', body: !worksEnough ? `Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work or ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings a month, and last month had neither.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
@@ -426,11 +436,14 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
   }
   let share: number;
   if (care === 'stay' && plan.stayCopay !== undefined) {
-    // An admission's copay, to the plan's cap on them in a year.
+    // What's left of the deductible, then an admission's copay, to the plan's cap on them in a year.
+    const toDeductible = Math.min(price, Math.max(0, usd(plan.deductible, into) - (h.deductible[year] ?? 0)));
+    h.deductible[year] = (h.deductible[year] ?? 0) + toDeductible;
     h.stayCopays ??= {};
     const left = plan.stayCopayCap === undefined ? Number.POSITIVE_INFINITY : Math.max(0, usd(plan.stayCopayCap, into) - (h.stayCopays[year] ?? 0));
-    share = Math.min(usd(plan.stayCopay, into), left);
-    h.stayCopays[year] = (h.stayCopays[year] ?? 0) + share;
+    const copay = Math.min(usd(plan.stayCopay, into), left);
+    h.stayCopays[year] = (h.stayCopays[year] ?? 0) + copay;
+    share = toDeductible + copay;
   } else if (care === 'stay') {
     const left = Math.max(0, usd(plan.deductible, into) - (h.deductible[year] ?? 0));
     const toDeductible = Math.min(price, left);
@@ -473,7 +486,8 @@ export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'U
 export function insulinShareOf(person: Person, at: Instant, into = 'USD'): Money {
   const key = planKey(person, at);
   if (key && INSULIN.newYorkPlans.includes(key) && dayKeyOf(at) >= INSULIN.newYorkFrom) return 0;
-  return Math.min(rxShareOf(person, true, at, into), usd(INSULIN.cashCap, into));
+  const cap = key && INSULIN.connecticutPlans.includes(key) && dayKeyOf(at) >= INSULIN.connecticutFrom ? INSULIN.connecticutCap : INSULIN.cashCap;
+  return Math.min(rxShareOf(person, true, at, into), usd(cap, into));
 }
 
 /** A type 1 diabetic's monitor a month: the plan's brand copay on its price, or the maker's program, whichever is less. */
@@ -651,7 +665,7 @@ export function registerHealth(sim: Simulation): void {
     const h = healthOf(person);
     if (may.program) {
       const band = programFor(person, s.now, cur)!.band;
-      h.program = { kind: may.program, state, from, band, renewAt: firstOf(p.year, p.month + 1 + renewMonths(s.now)) };
+      h.program = { kind: may.program, state, from, band, renewAt: firstOf(p.year, p.month + 1 + renewMonths(s.now, state)) };
     } else h.marketplace = { from, state };
     armHealth(s, person);
     return { from, kind: may.program ?? 'marketplace' };

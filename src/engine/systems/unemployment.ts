@@ -1,5 +1,5 @@
 /**
- * SLATE — unemployment insurance between jobs, in New York and California
+ * SLATE — unemployment insurance between jobs, in New York, California and Connecticut
  * (`content/safetynet.ts`).
  *
  * A claim is filed in the state they live in, when they aren't on a job. Its
@@ -23,10 +23,11 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState } from '../content/safetynet';
+import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState, CONNECTICUT_UI } from '../content/safetynet';
 import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
 import { workedBetween, working } from './career';
 import { payeeAccount } from './cash';
+import { rateOn } from '../content/career';
 
 export const BENEFIT_WEEK_KIND = 'benefits.week';
 
@@ -54,7 +55,7 @@ const usd = (cents: Money, into: string) => (into === 'USD' ? cents : exchange(c
 const dollars = (cents: number) => Math.floor(cents / 100) * 100;
 
 /** Whether a base period's wages qualify, and for what, in a state: the weekly benefit and the most a claim pays. */
-export function monetary(state: BenefitState, wages: Money[], into = 'USD'): { ok: boolean; weekly: Money; maxTotal: Money; why: string } {
+export function monetary(state: BenefitState, wages: Money[], into = 'USD', year = 2026): { ok: boolean; weekly: Money; maxTotal: Money; why: string } {
   const total = wages.reduce((a, b) => a + b, 0);
   const sorted = [...wages].sort((a, b) => b - a);
   const hq = sorted[0] ?? 0;
@@ -75,6 +76,14 @@ export function monetary(state: BenefitState, wages: Money[], into = 'USD'): { o
     weekly = Math.min(usd(u.maximum, into), dollars(weekly));
     return { ok: true, weekly, maxTotal: weekly * u.weeks, why: `${$(weekly)} a week for up to ${u.weeks} weeks.` };
   }
+  if (state === 'ct') {
+    const u = CONNECTICUT_UI;
+    const floor = usd(rateOn(u.floor, `${year}-12-31`), into);
+    // The two highest quarters' average over 26, to the dollar, from the floor to the maximum.
+    const weekly = Math.min(usd(u.maximum, into), Math.max(floor, dollars(((sorted[0] ?? 0) + (sorted[1] ?? 0)) / 2 / 26)));
+    if (total < u.totalTimesWeekly * weekly) return { ok: false, weekly: 0, maxTotal: 0, why: `Connecticut asks for base-period wages of ${u.totalTimesWeekly} times the weekly benefit: ${$(u.totalTimesWeekly * weekly)} for ${$(weekly)}.` };
+    return { ok: true, weekly, maxTotal: weekly * u.weeks, why: `${$(weekly)} a week for up to ${u.weeks} weeks.` };
+  }
   const u = CALIFORNIA_UI;
   const enough = hq >= usd(u.highQuarterMinimum, into) || (hq >= usd(u.lowHighQuarter, into) && total >= u.totalTimesHighQuarter * hq);
   if (!enough) return { ok: false, weekly: 0, maxTotal: 0, why: `California asks for ${$(u.highQuarterMinimum)} in one quarter, or ${$(u.lowHighQuarter)} and one and a quarter times it in all.` };
@@ -90,10 +99,10 @@ export function basePeriodFor(person: Person, state: BenefitState, at: Instant, 
   const record = earningsOf(person).quarters;
   const read = (keys: string[]) => keys.map((k) => record[k]?.wages ?? 0);
   const basic = quartersBefore(y, q, 5).slice(0, 4);
-  const first = monetary(state, read(basic), into);
+  const first = monetary(state, read(basic), into, p.year);
   if (first.ok) return { quarters: basic, wages: read(basic), result: first };
   const alternate = quartersBefore(y, q, 4);
-  const second = monetary(state, read(alternate), into);
+  const second = monetary(state, read(alternate), into, p.year);
   return second.ok ? { quarters: alternate, wages: read(alternate), result: second } : { quarters: basic, wages: read(basic), result: first };
 }
 
@@ -103,6 +112,11 @@ export function weekBenefit(claim: Claim, hours: number, pay: Money, into = 'USD
     if (pay >= usd(NEW_YORK_UI.maximum, into)) return 0;
     const band = NEW_YORK_UI.hourBands.find(([upTo]) => hours <= upTo);
     return band ? Math.round(claim.weekly * band[1]) : 0;
+  }
+  if (claim.state === 'ct') {
+    // The benefit less two-thirds of the week's pay, which comes to nothing at the statute's one and a half times the benefit.
+    const dollarsOf = Math.round(pay / 100) * 100;
+    return Math.max(0, claim.weekly - Math.ceil((dollarsOf * CONNECTICUT_UI.partialShare) / 100) * 100);
   }
   const kept = Math.max(usd(CALIFORNIA_UI.disregard, into), pay * CALIFORNIA_UI.disregardShare);
   return Math.max(0, Math.round(claim.weekly - Math.max(0, pay - kept)));
@@ -132,7 +146,7 @@ export function registerUnemployment(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { weekly: Money; maxTotal: Money }>('benefits.claim', (_p, { sim: s }) => {
     const person = s.player;
     const state = BENEFIT_STATE[homeOf(person)];
-    if (!state) throw new CommandError('SLATE pays unemployment in New York and California, where you’d have to live.');
+    if (!state) throw new CommandError('SLATE pays unemployment in New York, California and Connecticut, where you’d have to live.');
     const record = unemploymentOf(person);
     if (record.claim) throw new CommandError('You have a claim open.');
     if (working(s, person)) throw new CommandError('You’re on a job: a claim is for the weeks between them.');
@@ -142,7 +156,8 @@ export function registerUnemployment(sim: Simulation): void {
     const zone = CITIES.require(homeOf(person)).timeZone;
     record.claim = {
       state, filedAt: s.now, endsAt: s.now + 365 * MS_DAY, weekly: base.result.weekly, maxTotal: base.result.maxTotal,
-      paid: 0, weeksPaid: 0, waited: false, basePeriod: base.quarters,
+      // Connecticut has no waiting week.
+      paid: 0, weeksPaid: 0, waited: state === 'ct', basePeriod: base.quarters,
     };
     s.schedule({ at: nextSunday(s.now, zone), kind: BENEFIT_WEEK_KIND, label: 'Unemployment: The Week Certified', category: 'system', priority: 12, payload: { personId: person.id } });
     return { weekly: base.result.weekly, maxTotal: base.result.maxTotal };
