@@ -14,10 +14,10 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, COBRA, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
+import { BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, CHRONIC, COBRA, DENTAL_VISION, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, returnsOf } from '@/engine/systems/taxreturn';
-import { COVER_LABEL, benchmarkFor, coverOn, healthOf, mayEnroll, medicalDebtOf, planOf } from '@/engine/systems/health';
+import { CONDITION_LABEL, COVER_LABEL, benchmarkFor, coverOn, healthOf, mayEnroll, medicalDebtOf, planOf, type Condition } from '@/engine/systems/health';
 import { homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
@@ -91,6 +91,8 @@ function ReturnsPane() {
           ['Unemployment Insurance', f.unemployment],
           ['Performing Artist Deduction', -f.deduction],
           ['Federal Income Tax', f.federal],
+          ['Of It, The Credit For Another Country’s Tax', -(f.foreignCredit ?? 0)],
+          ['Canada’s Tax Refunded Under Its Treaty', -(f.foreignRefund ?? 0)],
           ...(f.states ?? []).flatMap((l) => [[`${stateName(l.state)} Income Tax`, l.tax], ...(l.credit ? [[`${stateName(l.state)}’s Credit For Another State’s Tax`, -l.credit]] : [])] as [string, number][]),
           ['City Income Tax', f.local ?? 0],
           ['Social Security And Medicare', f.payroll],
@@ -189,6 +191,8 @@ function HealthPane() {
         </Panel>
       )}
 
+      <ConditionsPanel />
+
       <Panel
         title="Care And Its Bills"
         subtitle={plan ? `${plan.label}: ${formatMoney(h.spent[year] ?? 0, cur)} of ${formatMoney(plan.outOfPocket, cur)} paid this year` : 'Uninsured: you pay the price, less a hospital’s charity'}
@@ -210,6 +214,32 @@ function HealthPane() {
         </div>
       </Panel>
     </div>
+  );
+}
+
+/** The conditions carried, and keeping each up or not. */
+function ConditionsPanel() {
+  const { run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const h = healthOf(person);
+  const conditions = Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean }][];
+  if (!conditions.length && !h.lenses) return null;
+  return (
+    <Panel title="Your Conditions" subtitle={h.lenses ? 'You wear prescription lenses' : undefined}>
+      <div className="col gap-3">
+        {conditions.map(([condition, state]) => (
+          <div key={condition} className="row-between small">
+            <span>{CONDITION_LABEL[condition]}: {state.treated ? (state.lapsed ? 'Kept Up, But This Month’s Care Went Unpaid' : 'Kept Up') : 'Left Alone'}</span>
+            <Gated feature="health.treat" onClick={() => { const a = run<{ treated: boolean }>('health.treat', { condition, on: !state.treated }); if (a.ok) toast(a.value!.treated ? 'Kept up from this month.' : 'Left alone.', 'positive'); }}>
+              {state.treated ? 'Let It Go' : 'Keep It Up'}
+            </Gated>
+          </div>
+        ))}
+        <p className="xs dim" style={{ margin: 0 }}>
+          Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%. Kept up, each month’s care is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure. Left alone, depression weighs on your morale each week and asthma doubles your emergencies, which is SLATE’s estimate. Source: {CHRONIC.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
+        </p>
+      </div>
+    </Panel>
   );
 }
 

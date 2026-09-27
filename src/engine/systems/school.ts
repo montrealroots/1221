@@ -54,6 +54,7 @@ import { payFromCurrent } from './household';
 import { beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
 import { recordWages } from './earnings';
+import { armHealth } from './health';
 
 export type Craft = Record<Skill, number>;
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
@@ -411,7 +412,9 @@ function freshTally(person: Person, school: SchoolRecord): TermTally {
 /** Whether a person is awake and in New Haven at a moment. */
 function present(person: Person, when: Instant): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
-  return !asleep && person.currentLocationId === YALE_DRAMA.cityId;
+  // In hospital, they're in no class (`systems/health.ts`).
+  const inHospital = (person.health?.inHospitalUntil ?? 0) > when;
+  return !asleep && !inHospital && person.currentLocationId === YALE_DRAMA.cityId;
 }
 
 function tire(person: Person, energy: number): void {
@@ -442,6 +445,8 @@ export function enroll(sim: Simulation, person: Person): void {
     workStudy: { yearHours: 0, electiveHours: 0, owedHours: 0 },
   };
   person.school = school;
+  // Illness comes at school too, with Yale Health to meet it; until 2026-09-27 it waited for the degree.
+  armHealth(sim, person);
   school.tally = freshTally(person, school);
   sim.schedule({ at: Math.max(at(termStart(0).date, 9), sim.now + 60_000), kind: TERM_KIND, label: termLabel(0) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: 0 } });
   planWeek(sim, person, sim.now);

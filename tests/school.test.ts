@@ -14,6 +14,7 @@ import {
   sessionGain, termAccount, termStart, timetable, yearOfStudy,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
+import { careFor } from '@/engine/systems/health';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
@@ -229,6 +230,18 @@ describe('classes', () => {
     play(sim, at(2026, 9, 5, 8));
     sim.player.wellbeing.condition = 10;
     expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(false);
+  });
+});
+
+describe('illness at school', () => {
+  it('comes at school too, with Yale Health leaving nothing to pay, and a stay in hospital keeps them from class', () => {
+    const sim = life('ill');
+    expect(sim.universe.scheduled.some((i) => i.kind === 'health.week' && i.status === 'pending')).toBe(true);
+    play(sim, at(2026, 8, 31, 8));
+    const bill = careFor(sim, sim.player, { care: 'stay', what: 'A stay in hospital' }, sim.now);
+    expect(bill).toBeUndefined();
+    sim.advanceTo(at(2026, 8, 31, 9) + 60_000);
+    expect(sim.player.school!.tally).toMatchObject({ classDays: 1, attended: 0 });
   });
 });
 

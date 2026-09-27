@@ -20,7 +20,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { computeAnnualTax } from '../content/tax';
-import { CALIFORNIA_MANDATE, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
+import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { stateOf, yearOf } from './earnings';
 import { payFromCurrent } from './household';
 
@@ -53,6 +53,9 @@ export interface ReturnFigures {
   incomeTax: Money;
   /** Of it, the federal tax, and each state's and town's, with the credit a home state gives for another's. */
   federal: Money;
+  /** The US credit for another country's tax, and what Canada gives back under its treaty threshold. */
+  foreignCredit: Money;
+  foreignRefund: Money;
   states: { state: string; tax: Money; credit: Money }[];
   local: Money;
   payroll: Money;
@@ -91,6 +94,29 @@ export function applicablePercent(year: number, ratio: number): number | undefin
   return undefined;
 }
 
+/**
+ * Connecticut's tax on a year's income (`CONNECTICUT`): nothing at $15,000
+ * or less; else the exemption, the rates, the add-back past $56,500, and the
+ * personal credit's share off.
+ */
+export function connecticutTax(income: Money, into = 'USD'): Money {
+  const $ = (c: Money) => usd(c, into);
+  const c = CONNECTICUT;
+  // Nothing at $15,000 or less: the exemption covers it all.
+  const over = Math.max(0, income - $(c.exemptionFrom));
+  const exemption = Math.max(0, $(c.exemption) - Math.ceil(over / $(1_000_00)) * $(1_000_00));
+  const taxable = Math.max(0, income - exemption);
+  let tax = 0;
+  for (const [n, [from, rate]] of c.brackets.entries()) {
+    const to = c.brackets[n + 1]?.[0];
+    if (taxable <= $(from)) break;
+    tax += (Math.min(taxable, to === undefined ? taxable : $(to)) - $(from)) * rate;
+  }
+  const addBack = income <= $(c.addBackFrom) ? 0 : Math.min($(c.addBackMax), Math.ceil((income - $(c.addBackFrom)) / $(5_000_00)) * $(c.addBackStep));
+  const credit = c.credit.find(([upTo]) => income <= $(upTo))?.[1] ?? 0;
+  return Math.round((tax + addBack) * (1 - credit));
+}
+
 /** A year's return, worked out. */
 export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFigures {
   const y = yearOf(person, year);
@@ -102,7 +128,18 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   const performer = income <= usd(RETURN.performingArtistIncome, into) && employers >= RETURN.performingArtistEmployers && expenses > RETURN.performingArtistShare * y.acting;
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);
-  const federal = computeAnnualTax(taxed, cityId, at).federal;
+  const federalBefore = computeAnnualTax(taxed, cityId, at).federal;
+  // Work abroad: Canada's tax stands over CAD 15,000 in the year, and comes back under it; the UK's stands. The US credits it, to its own tax on that income.
+  let foreignIncome = 0;
+  let foreignTax = 0;
+  let foreignRefund = 0;
+  for (const [country, f] of Object.entries(y.foreign)) {
+    foreignIncome += f.gross;
+    if (country === 'ca' && f.gross <= (exchange(ABROAD.canada.treatyCad, 'CAD', into) ?? ABROAD.canada.treatyCad)) foreignRefund += f.withheld;
+    else foreignTax += f.withheld;
+  }
+  const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
+  const federal = federalBefore - foreignCredit;
   // Each state: what came while living there, and wages for work done there, over all of it.
   const states = new Map<string, { city: string; resident: Money; source: Money }>();
   const entry = (state: string, city: string) => { if (!states.has(state)) states.set(state, { city, resident: 0, source: 0 }); return states.get(state)!; };
@@ -111,7 +148,15 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   const lastState = stateOf(cityId);
   // California doesn't tax unemployment, which goes to where they lived at the year's end.
   const benefitOut = (state: string) => (state === 'us-ca' && lastState === 'us-ca' ? y.unemployment : 0);
-  const full = (state: string) => computeAnnualTax(Math.max(0, taxed - benefitOut(state)), states.get(state)!.city, at).regional;
+  // New York and California let the job's costs be itemized above 2% of income, where that beats the standard deduction.
+  const itemized = Math.max(0, y.commission + y.dues - STATE_DEDUCTIONS.floor * income);
+  const extra = (state: string) => Math.max(0, itemized - usd(STATE_DEDUCTIONS.standard[state] ?? Number.POSITIVE_INFINITY, into));
+  const full = (state: string) => {
+    const base = Math.max(0, taxed - benefitOut(state));
+    // Connecticut's own schedule; SLATE's tax table carries none for it.
+    if (state === 'us-ct') return connecticutTax(base, into);
+    return computeAnnualTax(base, states.get(state)!.city, at, { deductions: extra(state) }).regional;
+  };
   const taxes = new Map<string, number>();
   for (const [state, part] of states) {
     const own = Math.max(0, part.resident + part.source - benefitOut(state));
@@ -147,7 +192,7 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, income, deduction,
-    incomeTax, federal, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
+    incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit,
   };
 }
@@ -180,7 +225,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const figures = figuresFor(person, year, cur);
     // Nothing owed and nothing due back: no return to file.
-    if (figures.balance === 0 && figures.income === 0) return;
+    if (figures.balance === 0 && figures.income === 0 && figures.foreignRefund === 0) return;
     const due = deadline(year);
     returnsOf(person)[year] = { year, due, figures };
     s.schedule({ at: due, kind: TAX_DUE_KIND, label: `Tax Return Due: ${year}`, category: 'personal', priority: 25, payload: { personId: person.id, year } });
@@ -204,7 +249,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
     const account = person?.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (!person || !r?.refund || !account || account.closedAt) return;
+    if (!person || !account || account.closedAt) return;
+    // Canada's refund of its withholding, under the treaty, beside the IRS's.
+    const canada = item.payload.foreign === true ? r?.figures.foreignRefund ?? 0 : 0;
+    if (canada) { s.post({ memo: `Canada Revenue Agency refund, ${r!.year}`, category: 'tax', postings: [{ accountId: account.id, amount: canada }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -canada }] }); return; }
+    if (!r?.refund) return;
     s.post({ memo: `Tax refund, ${r.year}`, category: 'tax', postings: [{ accountId: account.id, amount: r.refund }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -r.refund }] });
   });
 
@@ -218,6 +267,7 @@ export function registerTaxReturn(sim: Simulation): void {
     r.filedAt = s.now;
     r.penalty = latePenalty(r.figures.balance, r.due, s.now, cur);
     for (const d of Object.values(s.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = s.now;
+    if (r.figures.foreignRefund > 0) s.schedule({ at: s.now + RETURN.refundDays * MS_DAY, kind: TAX_REFUND_KIND, label: `Canada’s Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, foreign: true } });
     if (r.figures.balance < 0) {
       r.refund = -r.figures.balance;
       r.refundAt = s.now + RETURN.refundDays * MS_DAY;

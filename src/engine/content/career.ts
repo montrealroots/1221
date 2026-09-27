@@ -149,6 +149,8 @@ export interface Role {
   basis?: 'day' | 'week' | 'episode';
   /** A series regular's season: the episodes guaranteed and the workweeks they're made in. */
   series?: { episodes: number; weeks: number };
+  /** A recurring arc: `units` are episodes, each a week's work. */
+  arc?: boolean;
   /** What earns residuals after it's made: a television episode of a length, or a film of a budget. */
   after?: { kind: 'tv'; length: 'half' | 'hour' } | { kind: 'film'; budget: Money } | { kind: 'commercial'; voice: boolean };
   /** A booth session's hours, for a voice part. */
@@ -259,6 +261,13 @@ export const ROLES: readonly Role[] = [
     basis: 'episode', series: { episodes: 13, weeks: 16 }, after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
+    // A recurring, not regular, role, engaged week to week at the weekly performer's rate, an episode a week.
+    id: 'recurring', label: 'A Recurring Role, A Television Series', medium: 'screen', union: 'sag',
+    steps: perDay([['2025-07-01', 4_326_00], ['2026-07-01', 4_456_00], ['2027-07-01', 4_590_00], ['2028-07-01', 4_728_00], ['2029-07-01', 4_870_00]], 5),
+    units: [3, 9], arc: true, bar: 70, weight: 3, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 14, grows: SCREEN,
+    basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
+  },
+  {
     // The 2025 Commercials Contracts' session fee, $822.30 from 1 April 2025 and $855.20 from 1 April 2026; the third year isn't published.
     id: 'commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'sag',
     steps: [['2025-04-01', 822_30], ['2026-04-01', 855_20]],
@@ -294,6 +303,22 @@ export const ROLES: readonly Role[] = [
     sessionHours: 6, source: AUDIOBOOKS,
   },
 ];
+
+/**
+ * The 2026 agreement's 60% rule: a weekly performer engaged on at least 60%
+ * of a season's episodes is paid 120% of scale for the episodes beyond it,
+ * for seasons whose first episode begins photography on or after 1 January
+ * 2027. A season's thirteen episodes are SLATE's estimate.
+ */
+export const RECURRING = { seasonEpisodes: 13, share: 0.6, uplift: 1.2, from: '2027-01-01', source: '2026 SAG-AFTRA TV/Theatrical memorandum of agreement, §30.a (amptp.org)' } as const;
+
+/**
+ * Meal penalties: a first meal due six hours from call; each half hour late
+ * costs a principal $25, then $35, $50, $50, and $75 each after (2026
+ * agreement). How often a shooting day runs late to its meal, a fifth of
+ * them, a half hour or an hour, is SLATE's estimate.
+ */
+export const MEAL_PENALTY = { steps: [25_00, 35_00, 50_00, 50_00] as readonly Money[], later: 75_00, chance: 0.2, halfHours: [1, 2] as const, source: '2026 SAG-AFTRA TV/Theatrical memorandum of agreement, item 22.b' } as const;
 
 /**
  * A commercial's life after its shoot (`RESIDUALS`): a session fee
@@ -342,15 +367,19 @@ export const SERIES = {
 
 /**
  * Working away. A screen job shoots where the production goes: by 2024's
- * series, a quarter in Los Angeles, a tenth in Georgia, 8% in New York, 3%
- * in Illinois (FilmLA), and the rest abroad or spread thin; SLATE sends a job
- * home two times in three, and otherwise to Atlanta, Chicago or New Orleans.
+ * series, a quarter in Los Angeles, 13% in the United Kingdom, a tenth in
+ * Georgia, 8% in British Columbia and in New York, 7% in Ontario, 3% in
+ * Illinois (FilmLA), the rest spread thin. SLATE sends a job home about half
+ * the time, and otherwise to Atlanta, London, Vancouver, Toronto, Chicago or
+ * New Orleans, by those shares. A SAG-AFTRA member hired at home and taken
+ * abroad works under the same contract, per diem and all. Until 2026-09-27
+ * no job left the United States.
  * On location the production flies the actor out the day before and home the
  * day after, a travel day on a non-work day paid as a day, a room of their
  * own, and SAG-AFTRA's meal allowance, $75 a day ($80 from July 2028).
  */
 export const LOCATION = {
-  cities: [['us-ga-atlanta', 0.2], ['us-il-chicago', 0.07], ['us-la-neworleans', 0.07]] as readonly (readonly [string, number])[],
+  cities: [['us-ga-atlanta', 0.14], ['uk-eng-london', 0.12], ['ca-bc-vancouver', 0.08], ['ca-on-toronto', 0.07], ['us-il-chicago', 0.04], ['us-la-neworleans', 0.04]] as readonly (readonly [string, number])[],
   perDiem: [['2025-07-01', 75_00], ['2028-07-01', 80_00]] as RateSteps,
   source: 'SAG-AFTRA Television Agreement §§ overnight location; 2026 memorandum; FilmLA 2024 production report',
 } as const;

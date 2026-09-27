@@ -63,10 +63,11 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CAREER_CITIES, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CAREER_CITIES, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
 } from '../content/career';
-import { earningsOf, recordWages, yearOf } from './earnings';
+import { earningsOf, homeOf, recordWages, yearOf } from './earnings';
+import { ABROAD } from '../content/safetynet';
 import { armHealth } from './health';
 import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
@@ -275,6 +276,36 @@ export function workCity(person: Person): CareerCity {
 /** Where a booking's work is done: on location, or at home. */
 export const workCityOf = (booking: Booking): string => booking.location ?? booking.cityId;
 
+/**
+ * A recurring arc's episode past 60% of the season, where the arc reaches
+ * it, paid at 120% (`RECURRING`), for a season begun from 2027.
+ */
+export function arcUplift(booking: Booking, episode: number): number {
+  const role = roleById(booking.roleId);
+  if (!role.arc || dayKey(booking.starts, zoneOf(workCityOf(booking))) < RECURRING.from) return 1;
+  const threshold = Math.floor(RECURRING.share * RECURRING.seasonEpisodes);
+  // An episode past the mark means the arc reached it.
+  return episode >= threshold ? RECURRING.uplift : 1;
+}
+
+/**
+ * What another country withholds from a check for work done there: Canada
+ * 23% of the gross; the United Kingdom 20% once the year's UK gross passes
+ * the treaty's $20,000. Canada's is withheld whatever the year comes to, and
+ * the return has it back where the year stays under CAD 15,000.
+ */
+export function foreignWithholding(person: Person, workCity: string, gross: Money, when: Instant, into: string): Money {
+  const country = CITIES.get(workCity)?.countryId;
+  if (!country || country === 'us') return 0;
+  if (country === 'ca') return Math.round(gross * ABROAD.canada.rate);
+  if (country === 'uk') {
+    const year = zonedParts(when, zoneOf(workCity)).year;
+    const before = yearOf(person, year).foreign?.uk?.gross ?? 0;
+    return before + gross > usd(ABROAD.uk.treatyUsd, into) ? Math.round(gross * ABROAD.uk.rate) : 0;
+  }
+  return 0;
+}
+
 /** A booking's unit rate on a day: a later season's own, or the part's minimum. */
 export function unitRate(booking: Booking, when: Instant, into: string): Money {
   const role = roleById(booking.roleId);
@@ -473,7 +504,7 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
   const out: { at: Instant; week: number; rehearsal: boolean }[] = [];
   if (role.medium !== 'stage') {
     // A series regular's season is its workweeks, Monday to Friday; a voice session is at ten.
-    const days = role.series ? role.series.weeks * 5 : booking.units;
+    const days = role.series ? role.series.weeks * 5 : role.arc ? booking.units * 5 : booking.units;
     for (let d = 0; out.length < days; d += 1) {
       const when = at(booking.starts, zone, d, role.medium === 'voice' ? 10 : 7);
       const wd = weekday(when, zone);
@@ -545,6 +576,17 @@ export function locationFor(sim: Simulation, person: Person, key: string): strin
   let x = sim.rng('career.location', person.id, key).next();
   for (const [cityId, share] of LOCATION.cities) { if (x < share) return cityId; x -= share; }
   return undefined;
+}
+
+/** What a shooting day's late meal costs the production (`MEAL_PENALTY`), drawn with its hours: nothing four days in five. */
+export function mealPenalty(sim: Simulation, person: Person, key: string): Money {
+  const rng = sim.rng('career.hours', person.id, `${key}-meal`);
+  if (rng.next() >= MEAL_PENALTY.chance) return 0;
+  const [lo, hi] = MEAL_PENALTY.halfHours;
+  const late = lo + Math.floor(rng.next() * (hi - lo + 1));
+  let sum = 0;
+  for (let n = 0; n < late; n += 1) sum += MEAL_PENALTY.steps[n] ?? MEAL_PENALTY.later;
+  return sum;
 }
 
 /** Whether a series picks up its option on a regular (`career.renewal`), at the odds its kind of series has. */
@@ -761,7 +803,9 @@ export function registerCareer(sim: Simulation): void {
     const hours = role.medium === 'screen' ? hoursOf(s, person, `${booking.id}-${booking.worked}`) : role.medium === 'voice' ? role.sessionHours ?? 4 : call.rehearsal ? 8 : 3;
     if (role.basis) {
       const minimum = rateOf(roleById('costar'), item.at, workCityOf(booking), cur);
-      (booking.overtimeDays ??= [])[booking.worked - 1] = overtimeFor(role, unit, minimum, hours, dayKey(item.at, zoneOf(workCityOf(booking))));
+      // A day's overtime, and any meal it ran late to (`career.hours`).
+      (booking.overtimeDays ??= [])[booking.worked - 1] = overtimeFor(role, unit, minimum, hours, dayKey(item.at, zoneOf(workCityOf(booking))))
+        + usd(mealPenalty(s, person, `${booking.id}-${booking.worked}`), cur);
     }
     career.days.push({ at: item.at, hours, pay: scale });
     career.days = career.days.slice(-400);
@@ -811,6 +855,7 @@ export function registerCareer(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const workCity = workCityOf(booking);
     const zone = zoneOf(workCity);
+    const taxCity = CITIES.get(workCity)?.countryId === 'us' ? workCity : homeOf(person);
     const year = zonedParts(item.at, zone).year;
     const wages = yearOf(person, year);
     const represented = career.agencyId !== undefined;
@@ -831,13 +876,17 @@ export function registerCareer(sim: Simulation): void {
     // Travel days are paid as days' work, with the first line.
     let overtime = (booking.overtimeDays ?? []).slice(from, from + calls.length).reduce((sum, o) => sum + (o ?? 0), 0) + (booking.travelOwed ?? 0);
     booking.travelOwed = 0;
-    for (const [, line] of lines) {
+    for (const [week, line] of lines) {
       const rate = unitRate(booking, item.at, cur);
       // A series regular's episodes, spread over the season's workweeks.
       const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium !== 'stage' ? rate * line.days : Math.round((rate * line.days) / 6);
-      const check = paycheck({ scale, overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: workCity, at: item.at });
+      // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
+      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at });
       overtime = 0;
-      recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id, where: workCity });
+      const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur);
+      recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id, where: workCity, foreignWithheld: foreign });
+      check.net -= foreign;
+      if (foreign) postings.push({ accountId: s.nominalAccount('expense', 'Foreign Tax Withheld').id, amount: foreign });
       gross += check.gross;
       net += check.net;
       if (check.agent) postings.push({ accountId: s.nominalAccount('expense', 'Agent Commission').id, amount: check.agent });
@@ -1231,7 +1280,7 @@ function payResidual(sim: Simulation, person: Person, residual: Residual, stream
   // Wages, with tax withheld as a paycheck's. An agency commissions a commercial's use fees, not television's residuals.
   const year = zonedParts(when, zone).year;
   const before = yearOf(person, year).acting;
-  const withheld = computeAnnualTax(before + amount, person.currentLocationId, when).total - computeAnnualTax(before, person.currentLocationId, when).total;
+  const withheld = computeAnnualTax(before + amount, homeOf(person), when).total - computeAnnualTax(before, homeOf(person), when).total;
   const commission = stream === 'cycle' && person.career?.agencyId ? Math.round(amount * AGENT_COMMISSION.rate) : 0;
   recordWages(person, when, zone, { gross: amount, withheld, commission, sag: true, residual: true });
   residual.paid += amount;

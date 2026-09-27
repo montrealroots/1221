@@ -191,11 +191,11 @@ export const CHAPTERS: readonly Chapter[] = [
     body: [
       'Yale’s health plan covers you to the end of July after school. After it, SAG-AFTRA’s plan covers a year when a year’s earnings under it reach its threshold, and Equity-League’s six months after ten weeks of Equity work. Without either, Enroll buys the marketplace’s plan in New York or California, in open enrollment or within 60 days of losing cover; Drop The Plan ends it.',
       'Between jobs, File A Claim opens unemployment insurance where you live, if your base period’s wages qualify. The first week that would pay is unpaid, and a week with work pays less, or nothing.',
-      'A union plan that ends can be kept by COBRA: Elect COBRA within 60 days and it covers you from the day it ended, at its full cost. Illness comes as it does to anyone your age, and each piece of care brings a bill for what your plan leaves you; unpaid, it’s a medical debt, and Pay It Off settles it.',
+      'A union plan that ends can be kept by COBRA: Elect COBRA within 60 days and it covers you from the day it ended, at its full cost. Illness comes as it does to anyone your age, and each piece of care brings a bill for what your plan leaves you; unpaid, it’s a medical debt, and Pay It Off settles it. A condition you carry costs its care each month: Let It Go stops it, Keep It Up starts it again.',
       'Each February a year’s return is ready: File It by mid-April. A balance comes from your bank, a refund comes 21 days on, and filing late with a balance costs penalties. Pay What’s Owed settles what the bank couldn’t.',
     ],
-    names: ['Taxes And Cover', 'Enroll', 'Drop The Plan', 'Elect COBRA', 'Pay It Off', 'File A Claim', 'File It', 'Pay What’s Owed'],
-    opens: ['ui.papers', 'health.enroll', 'health.drop', 'health.elect_cobra', 'health.pay_bill', 'benefits.claim', 'tax.file', 'tax.pay'],
+    names: ['Taxes And Cover', 'Enroll', 'Drop The Plan', 'Elect COBRA', 'Pay It Off', 'Keep It Up', 'Let It Go', 'File A Claim', 'File It', 'Pay What’s Owed'],
+    opens: ['ui.papers', 'health.enroll', 'health.drop', 'health.elect_cobra', 'health.pay_bill', 'health.treat', 'benefits.claim', 'tax.file', 'tax.pay'],
   },
   {
     id: 'home',

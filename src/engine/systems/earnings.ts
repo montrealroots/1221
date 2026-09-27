@@ -32,6 +32,8 @@ export interface YearEarnings {
   byResidence: Record<string, Money>;
   /** Wages for work done in a state they didn't live in, by `livedInState>workedInTown`. */
   elsewhere: Record<string, Money>;
+  /** Wages for work done abroad, and what the country withheld, by country. */
+  foreign: Record<string, { gross: Money; withheld: Money }>;
 }
 
 export interface EarningsRecord {
@@ -52,10 +54,11 @@ export function earningsOf(person: Person): EarningsRecord {
 
 export function yearOf(person: Person, year: number | string): YearEarnings {
   const record = earningsOf(person);
-  record.years[year] ??= { acting: 0, residuals: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {} };
+  record.years[year] ??= { acting: 0, residuals: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} };
   const y = record.years[year]!;
   y.byResidence ??= {};
   y.elsewhere ??= {};
+  y.foreign ??= {};
   return y;
 }
 
@@ -66,13 +69,21 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   gross: Money; withheld?: Money; commission?: Money; dues?: Money; sag?: boolean; residual?: boolean; employer?: string; workStudy?: boolean;
   /** The town the work was done in, where it isn't where they live. */
   where?: string;
+  /** What a country withheld, for work done abroad. */
+  foreignWithheld?: Money;
 }): void {
   const p = zonedParts(at, zone);
   const y = yearOf(person, p.year);
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + pay.gross;
   const lived = stateOf(home);
-  const worked = pay.where ? stateOf(pay.where) : lived;
+  const country = pay.where ? CITIES.get(pay.where)?.countryId : undefined;
+  if (country && country !== CITIES.get(home)?.countryId) {
+    const f = (y.foreign[country] ??= { gross: 0, withheld: 0 });
+    f.gross += pay.gross;
+    f.withheld += pay.foreignWithheld ?? 0;
+  }
+  const worked = pay.where && !(country && country !== CITIES.get(home)?.countryId) ? stateOf(pay.where) : lived;
   if (worked !== lived) y.elsewhere[`${lived}>${pay.where}`] = (y.elsewhere[`${lived}>${pay.where}`] ?? 0) + pay.gross;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + pay.gross;

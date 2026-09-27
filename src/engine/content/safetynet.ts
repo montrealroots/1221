@@ -249,3 +249,128 @@ export const STATE_RETURN = {
   georgiaExemptShare: 0.05,
   source: 'https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf; https://www.ftb.ca.gov/forms/2025/2025-540nr-booklet.pdf; https://dor.georgia.gov',
 } as const;
+
+/**
+ * Working abroad. Canada withholds 23% of a nonresident actor's gross for
+ * film, television and commercial acting, and its residuals; under the
+ * treaty a US resident whose Canadian gross in the year is CAD 15,000 or
+ * less owes none, and the withholding comes back. The United Kingdom
+ * withholds 20% from a nonresident entertainer paid past its threshold; the
+ * treaty leaves receipts of $20,000 or less in its year alone. SLATE takes
+ * both by the calendar year and keeps the UK's without a personal
+ * allowance. The US credits the foreign tax against its own on the same
+ * income, to its own tax on it; New York and California don't.
+ */
+export const ABROAD = {
+  canada: { rate: 0.23, treatyCad: 15_000_00 },
+  uk: { rate: 0.2, treatyUsd: 20_000_00 },
+  source: 'https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/film-media-tax-credits/non-resident-actors/taxation-non-resident-actors-providing-film-video-acting-services-canada.html; https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer; IRS Form 1116',
+} as const;
+
+/**
+ * Connecticut's income tax for a single filer (Form CT-1040 instructions,
+ * 2025, its thresholds unindexed and held): nothing at $15,000 or less; a
+ * $15,000 exemption falling $1,000 a $1,000 past $30,000; 2% on the first
+ * $10,000 taxable and 4.5% to $50,000, then 5.5%, 6%, 6.5%, 6.9% and 6.99%;
+ * $25 added a $5,000 past $56,500, to $250; and the personal credit, a share
+ * of the tax by income, from .75 to nothing.
+ */
+export const CONNECTICUT = {
+  exemption: 15_000_00,
+  exemptionFrom: 30_000_00,
+  brackets: [[0, 0.02], [10_000_00, 0.045], [50_000_00, 0.055], [100_000_00, 0.06], [200_000_00, 0.065], [250_000_00, 0.069], [500_000_00, 0.0699]] as readonly (readonly [Money, number])[],
+  addBackFrom: 56_500_00,
+  addBackStep: 25_00,
+  addBackMax: 250_00,
+  credit: [[18_800_00, 0.75], [19_300_00, 0.7], [19_800_00, 0.65], [20_300_00, 0.6], [20_800_00, 0.55], [21_300_00, 0.5], [21_800_00, 0.45], [22_300_00, 0.4], [25_000_00, 0.35], [25_500_00, 0.3], [26_000_00, 0.25], [26_500_00, 0.2], [31_300_00, 0.15], [31_800_00, 0.14], [32_300_00, 0.13], [32_800_00, 0.12], [33_300_00, 0.11], [60_000_00, 0.1], [60_500_00, 0.09], [61_000_00, 0.08], [61_500_00, 0.07], [62_000_00, 0.06], [62_500_00, 0.05], [63_000_00, 0.04], [63_500_00, 0.03], [64_000_00, 0.02], [64_500_00, 0.01]] as readonly (readonly [Money, number])[],
+  source: 'https://portal.ct.gov/-/media/drs/forms/2025/income/2025-ct-1040-instructions_1225.pdf',
+} as const;
+
+/**
+ * New York and California let an employee itemize the job's costs on the
+ * state return (New York's Form IT-196, California's Schedule CA) above 2% of
+ * federal income, where that beats the state's standard deduction: $8,000
+ * in New York, $5,706 in California (2025's, held). SLATE counts an actor's
+ * commissions and union dues.
+ */
+export const STATE_DEDUCTIONS = {
+  floor: 0.02,
+  standard: { 'us-ny': 8_000_00, 'us-ca': 5_706_00 } as Readonly<Record<string, Money>>,
+  source: 'https://www.tax.ny.gov/pdf/current_forms/it/it196_fill_in.pdf; https://www.ftb.ca.gov/forms/2025/2025-540-ca-instructions.html',
+} as const;
+
+/**
+ * The pharmacy. About 4.5 prescriptions filled a person a year at 18 to 44
+ * (9.3 a user, MEPS, and 48.4% take one, NHIS 2021), 89% of them generic, a
+ * generic's cash price $40 and a brand's $440 (2019 medians). What each plan
+ * leaves at the counter, a generic and a brand: Covered California's Silver
+ * 70 $19 and $60, a $50 deductible on brands; New York's silver $15 and $40;
+ * SAG-AFTRA the greater of $10 or 10% and of $25 or 25%, a $75 deductible;
+ * Equity-League the greater of $10 or 20% and of $20 or 25%, $100 on
+ * brands; New York's Medicaid $1 and $1; Medi-Cal nothing.
+ */
+export interface Pharmacy { generic: [Money, number]; brand: [Money, number]; brandDeductible: Money }
+export const PHARMACY = {
+  perYear: 4.5,
+  generic: 0.89,
+  price: { generic: 40_00, brand: 440_00 },
+  plans: {
+    'marketplace-ca': { generic: [19_00, 0], brand: [60_00, 0], brandDeductible: 50_00 },
+    'marketplace-ny': { generic: [15_00, 0], brand: [40_00, 0], brandDeductible: 0 },
+    sag: { generic: [10_00, 0.1], brand: [25_00, 0.25], brandDeductible: 75_00 },
+    equity: { generic: [10_00, 0.2], brand: [20_00, 0.25], brandDeductible: 100_00 },
+    medicaid: { generic: [1_00, 0], brand: [1_00, 0], brandDeductible: 0 },
+    'essential-low': { generic: [0, 0], brand: [0, 0], brandDeductible: 0 },
+    'essential-high': { generic: [6_00, 0], brand: [15_00, 0], brandDeductible: 0 },
+    yale: { generic: [0, 0], brand: [0, 0], brandDeductible: 0 },
+  } as Readonly<Record<string, Pharmacy>>,
+  source: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10121264/; https://meps.ahrq.gov/data_files/publications/st245/stat245.pdf; Covered California 2026 standard benefit designs; SAG-AFTRA and Equity-League plan summaries',
+} as const;
+
+/**
+ * Teeth and eyes. About 62% of adults 18 to 44 see a dentist a year (65.5%
+ * of all adults, 2023); an uninsured exam and cleaning is $203 and a filling
+ * $226 (2024). About 68% wear prescription lenses; an eye exam is $136 and
+ * glasses about $150. Medical plans on the marketplace carry no adult
+ * dental. SAG-AFTRA's Delta Dental pays preventive care in full and 75% of a
+ * filling, and VSP an exam for $10; Equity-League's Davis Vision an exam and
+ * glasses a year, its dental self-paid; New York's Medicaid and Medi-Cal
+ * cover both. How often a visit needs a filling, a quarter, how often a
+ * wearer's eyes are checked, half the years, and new glasses, every other
+ * year, are SLATE's estimate; Yale Health carries no dental.
+ */
+export interface TeethAndEyes { cleaning: number; filling: number; exam: Money | undefined; glasses: number }
+export const DENTAL_VISION = {
+  dentistShare: 0.62,
+  fillingShare: 0.25,
+  lensShare: 0.68,
+  examShare: 0.5,
+  glassesEvery: 2,
+  price: { cleaning: 203_00, filling: 226_00, exam: 136_00, glasses: 150_00 },
+  /** The share of each the plan pays; an exam's copay where there's one. */
+  plans: {
+    sag: { cleaning: 1, filling: 0.75, exam: 10_00, glasses: 0.2 },
+    equity: { cleaning: 0, filling: 0, exam: 0, glasses: 1 },
+    medicaid: { cleaning: 1, filling: 1, exam: 0, glasses: 1 },
+    'essential-low': { cleaning: 1, filling: 1, exam: 0, glasses: 1 },
+    'essential-high': { cleaning: 1, filling: 1, exam: 0, glasses: 1 },
+  } as Readonly<Record<string, TeethAndEyes>>,
+  source: 'https://www.cdc.gov/nchs/fastats/dental.htm; SAG-AFTRA Health Plan dental and vision; https://equityleague.org/health/dental-plans/; NY Medicaid and Medi-Cal dental',
+} as const;
+
+/**
+ * Chronic conditions at 18 to 34 (BRFSS 2023): depression 25.0%, asthma
+ * 10.1%, high blood pressure 11.5%. Kept up, depression is two sessions of
+ * therapy a month ($176 in New York, $139 elsewhere, before a plan) and a
+ * generic a month; asthma an inhaler, a brand, a month and two visits a year;
+ * high blood pressure a generic a month. Left alone, SLATE's estimate:
+ * depression weighs on morale each week, asthma doubles the emergencies,
+ * and high blood pressure does nothing a year shows.
+ */
+export const CHRONIC = {
+  share: { depression: 0.25, asthma: 0.101, hypertension: 0.115 },
+  therapy: { 'us-ny': 176_00, other: 139_00 },
+  therapyPerMonth: 2,
+  untreated: { moraleAWeek: 3, asthmaEmergencies: 2 },
+  source: 'CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates',
+} as const;

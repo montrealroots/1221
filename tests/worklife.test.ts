@@ -8,10 +8,10 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
-import { COMMERCIAL_USE, LOCATION, SERIES, rateOn } from '@/engine/content/career';
+import { COMMERCIAL_USE, LOCATION, RECURRING, SERIES, rateOn } from '@/engine/content/career';
 import { CARE, COBRA, MEDICAL_DEBT, PLANS, PUBLIC_COVER, STATE_RETURN } from '@/engine/content/safetynet';
 import {
-  RENEWAL_KIND, TRAVEL_KIND, WORK_KIND, afterlife, beginCareer, careerOf, levelFor, locationFor, paycheck, residualAmount, roleById, workDays,
+  RENEWAL_KIND, TRAVEL_KIND, WORK_KIND, afterlife, arcUplift, beginCareer, careerOf, levelFor, locationFor, paycheck, residualAmount, roleById, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
@@ -85,12 +85,12 @@ describe('commercials and voice', () => {
 });
 
 describe('location', () => {
-  it('sends about a third of traveling jobs away, to Atlanta, Chicago or New Orleans', () => {
+  it('sends about half of traveling jobs away, at home or abroad, by where series shoot', () => {
     const sim = pro('loc');
     const draws = Array.from({ length: 2000 }, (_, n) => locationFor(sim, sim.player, `k${n}`));
     const away = draws.filter(Boolean).length / 2000;
-    expect(away).toBeGreaterThan(0.3);
-    expect(away).toBeLessThan(0.38);
+    expect(away).toBeGreaterThan(0.45);
+    expect(away).toBeLessThan(0.53);
     expect(new Set(draws.filter(Boolean))).toEqual(new Set(LOCATION.cities.map(([c]) => c)));
   });
 
@@ -305,6 +305,20 @@ describe('illness and its bills', () => {
     play(ny, ny.now + 31 * MS_DAY);
     healthMonth(ny, ny.player, healthOf(ny.player).debtSince! + 366 * MS_DAY);
     expect(ny.player.credit!.score).toBe(700);
+  });
+});
+
+describe('a recurring role', () => {
+  it('works an episode a week at the weekly performer’s rate, and past 60% of a 2027 season at 120%', () => {
+    expect(arcUplift({ ...booking(pro('arc0'), 'recurring', 8, at(2027, 2, 1, 8)) }, 7)).toBe(RECURRING.uplift);
+    const sim = pro('arc');
+    const b = booking(sim, 'recurring', 8, at(2027, 2, 1, 8));
+    expect(workDays(b)).toHaveLength(40);
+    expect([0, 6, 7].map((e) => arcUplift(b, e))).toEqual([1, 1, RECURRING.uplift]);
+    // Under 60% of the season, or a season begun before 2027, none.
+    expect(arcUplift(booking(sim, 'recurring', 7, at(2027, 2, 1, 8)), 6)).toBe(1);
+    expect(arcUplift(booking(sim, 'recurring', 9, at(2026, 10, 5, 8)), 8)).toBe(1);
+    expect(rateOn(roleById('recurring').steps, '2026-07-01') * 5).toBe(4_456_00);
   });
 });
 

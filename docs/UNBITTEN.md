@@ -201,34 +201,31 @@ part the tool cannot see.
     SLATE's estimate, and their costs grow at the Bulletins' rates.
   - The bachelor's degree the MFA asks for is taken as read, and only the
     birth year is held to it.
-- **The business, and what's between jobs.** Off-Broadway, series
-  regulars, managers, overtime, residuals, union health cover, the
-  marketplace, unemployment insurance and the tax return were added on
-  2026-09-27, and then commercials and voice work, location, a series'
-  later seasons, Medicaid, the Essential Plan, COBRA, illness and its
-  bills, and part-year and nonresident returns (`systems/career.ts`,
-  `systems/health.ts`, `systems/unemployment.ts`, `systems/taxreturn.ts`).
-  What's still open:
+- **The business, and what's between jobs.** Built on 2026-09-27 over
+  four rounds: Off-Broadway, series regulars, managers, overtime,
+  residuals, union health cover, the marketplace, unemployment and the tax
+  return; then commercials and voice, location, later seasons, Medicaid,
+  the Essential Plan, COBRA, illness and its bills, part-year returns; then
+  work abroad, Connecticut's tax, the states' job-expense deductions, meal
+  penalties, recurring roles and the 60% rule, conditions carried, the
+  pharmacy, the dentist and the optician, and illness at school. What's
+  still open:
   - Unpublished: Off-Broadway's categories B and C and every 2027–28 rate;
     the Commercials Contracts' third year; animation's 2026 rate; SAG-AFTRA's
     2027 COBRA rate; New York City's exact 2026 benchmark premium;
-    California's 2026 flat penalty; the renewal rate of freshman streaming
-    series. Each holds at its last published figure, or is SLATE's estimate,
-    and says so.
-  - A job's location is Atlanta, Chicago or New Orleans; production abroad
-    (the United Kingdom's, Canada's) isn't modeled, nor per diem on stage
-    tours, whose Equity figure is members-only.
-  - A commercial's holding fee is taken as credited against a cycle's use;
-    how many cycles and airings a commercial gets is SLATE's estimate.
-  - Illness is the rates of an adult 25 to 44 and a price for each kind of
-    care: no chronic illness, no prescriptions, no dental or vision, and
-    prices aren't inflated past their years (2018–2024).
-  - Yale Health's cost-sharing is taken as nothing, and school years have
-    no illness.
-  - A return sources wages to the state the work was in and residence to
-    the home; the states' own employee-expense deductions, Connecticut's
-    income tax, and New York's days-worked allocation within a job aren't
-    modeled.
+    California's 2026 flat penalty and standard deduction; the renewal rate
+    of freshman streaming series; how often meal penalties come and how long
+    a recurring arc runs. Each holds at its last published figure, or is
+    SLATE's estimate, and says so.
+  - Abroad: Canada's elective return and graduated rates, residuals from
+    Canadian work, and the UK's tax year and personal allowance aren't
+    modeled; SLATE takes both by the calendar year.
+  - The body: obesity, arthritis and diabetes, stand-alone dental plans,
+    and prices past their years (2018–2024) aren't modeled.
+  - Yale Health's own cost-sharing is taken as nothing.
+  - A return's states: New York's days-worked allocation inside a job, and
+    the costs an actor deducts besides commissions and dues (headshots,
+    classes), aren't counted.
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
 - **Some of the banks' research is kept and read by nothing.** Each

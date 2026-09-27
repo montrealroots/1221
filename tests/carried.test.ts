@@ -1,0 +1,211 @@
+/**
+ * The last of what was built in on 2026-09-27: work abroad and its taxes,
+ * Connecticut's income tax, the states' job-expense deductions, meal
+ * penalties, and the body's own: conditions carried, the pharmacy, the
+ * dentist and the optician (`systems/career.ts`, `systems/health.ts`,
+ * `systems/taxreturn.ts`).
+ */
+import { describe, expect, it } from 'vitest';
+import { quickSave } from '@/engine';
+import { MS_DAY, instantFromZoned } from '@/engine/core/time';
+import { exchange } from '@/engine/content/currency';
+import { computeAnnualTax } from '@/engine/content/tax';
+import { MEAL_PENALTY } from '@/engine/content/career';
+import { ABROAD, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
+import { beginCareer, careerOf, foreignWithholding, mealPenalty, type Booking } from '@/engine/systems/career';
+import { recordWages, yearOf } from '@/engine/systems/earnings';
+import { healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
+import { connecticutTax, figuresFor } from '@/engine/systems/taxreturn';
+import type { Simulation } from '@/engine/core/simulation';
+
+const NY = 'America/New_York';
+const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
+function pro(seed: string, city = 'us-ny-newyork'): Simulation {
+  const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  beginCareer(sim, sim.player);
+  return sim;
+}
+
+describe('working abroad', () => {
+  it('withholds Canada’s 23% from every check, and the UK’s 20% past its treaty’s $20,000', () => {
+    const sim = pro('abroad');
+    expect(foreignWithholding(sim.player, 'ca-bc-vancouver', 10_000_00, at(2027, 3, 1), 'USD')).toBe(2_300_00);
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 3, 1), 'USD')).toBe(0);
+    recordWages(sim.player, at(2027, 3, 1), NY, { gross: 15_000_00, where: 'uk-eng-london' });
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 4, 1), 'USD')).toBe(2_000_00);
+    expect(foreignWithholding(sim.player, 'us-ga-atlanta', 10_000_00, at(2027, 4, 1), 'USD')).toBe(0);
+    // Work abroad is the country's, not a state's.
+    expect(yearOf(sim.player, 2027).foreign).toEqual({ uk: { gross: 15_000_00, withheld: 0 } });
+    expect(yearOf(sim.player, 2027).elsewhere).toEqual({});
+  });
+
+  it('credits the foreign tax against the US’s on that income, and has Canada’s back under CAD 15,000', () => {
+    const sim = pro('ftc');
+    recordWages(sim.player, at(2027, 3, 1), NY, { gross: 60_000_00 });
+    recordWages(sim.player, at(2027, 5, 1), NY, { gross: 40_000_00, where: 'ca-on-toronto', foreignWithheld: 9_200_00 });
+    const f = figuresFor(sim.player, 2027);
+    const federal = computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12)).federal;
+    expect(f.foreignCredit).toBe(Math.min(9_200_00, Math.round(federal * 0.4)));
+    expect(f.federal).toBe(federal - f.foreignCredit);
+    expect(f.foreignRefund).toBe(0);
+    const small = pro('ftc-small');
+    const under = (exchange(ABROAD.canada.treatyCad, 'CAD', 'USD') ?? 0) - 100_00;
+    recordWages(small.player, at(2027, 5, 1), NY, { gross: under, where: 'ca-on-toronto', foreignWithheld: Math.round(under * 0.23) });
+    expect(figuresFor(small.player, 2027)).toMatchObject({ foreignRefund: Math.round(under * 0.23), foreignCredit: 0 });
+  });
+});
+
+describe('US tax on work abroad', () => {
+  it('is withheld as at home, not by the country’s own tables', () => {
+    const sim = pro('home-withholding');
+    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    careerOf(sim.player).bookings.push(b);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    while (sim.now < at(2026, 10, 16, 12)) sim.advanceTo(Math.min(at(2026, 10, 16, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    const y = yearOf(sim.player, 2026);
+    expect(y.foreign.ca!.gross).toBe(y.acting);
+    expect(y.withheld).toBe(computeAnnualTax(y.acting, 'us-ny-newyork', at(2026, 10, 15)).total);
+    expect(y.foreign.ca!.withheld).toBe(Math.round(y.acting * ABROAD.canada.rate));
+  });
+});
+
+describe('Connecticut', () => {
+  it('taxes as its instructions work it: nothing at $15,000, $40 at $20,000, $130 at $25,000', () => {
+    expect(connecticutTax(15_000_00)).toBe(0);
+    expect(connecticutTax(20_000_00)).toBe(40_00);
+    expect(connecticutTax(25_000_00)).toBe(130_00);
+    // Past $30,000 the exemption falls away, and past $56,500 the add-back comes.
+    expect(connecticutTax(45_000_00)).toBe(Math.round((200_00 + 0.045 * 35_000_00) * 0.9));
+    expect(connecticutTax(70_000_00)).toBe(Math.round(2_000_00 + 0.055 * 20_000_00 + 75_00));
+  });
+});
+
+describe('the states’ job-expense deductions', () => {
+  it('itemizes an actor’s commissions and dues on a New York return above 2% of income, where that beats $8,000', () => {
+    const sim = pro('it196');
+    recordWages(sim.player, at(2027, 3, 1), NY, { gross: 100_000_00, commission: 18_000_00, dues: 2_000_00 });
+    const itemized = 20_000_00 - 0.02 * 100_000_00;
+    const extra = itemized - STATE_DEDUCTIONS.standard['us-ny']!;
+    const ny = figuresFor(sim.player, 2027).states.find((s) => s.state === 'us-ny')!;
+    expect(ny.tax).toBe(computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12), { deductions: extra }).regional);
+    const small = pro('it196-small');
+    recordWages(small.player, at(2027, 3, 1), NY, { gross: 100_000_00, commission: 5_000_00 });
+    expect(figuresFor(small.player, 2027).states.find((s) => s.state === 'us-ny')!.tax).toBe(computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12)).regional);
+  });
+});
+
+describe('meal penalties', () => {
+  it('come on about a fifth of shooting days, a half hour or an hour late, at $25 and then $35', () => {
+    const sim = pro('meals');
+    const all = Array.from({ length: 4000 }, (_, n) => mealPenalty(sim, sim.player, `d${n}`));
+    const late = all.filter((x) => x > 0);
+    expect(late.length / 4000).toBeGreaterThan(MEAL_PENALTY.chance * 0.85);
+    expect(late.length / 4000).toBeLessThan(MEAL_PENALTY.chance * 1.15);
+    expect(new Set(late)).toEqual(new Set([25_00, 60_00]));
+  });
+});
+
+describe('the pharmacy, the dentist and the optician', () => {
+  it('fill a prescription at each plan’s copay, a brand after its deductible, and the uninsured at the cash price', () => {
+    const sim = pro('rx');
+    const when = at(2027, 3, 1);
+    expect(rxShareOf(sim.player, false, when)).toBe(PHARMACY.price.generic);
+    const h = healthOf(sim.player);
+    h.sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
+    expect(rxShareOf(sim.player, false, when)).toBe(Math.max(10_00, Math.round(0.1 * PHARMACY.price.generic)));
+    // SAG-AFTRA's $75 brand deductible first, the greater of $25 or 25% on top; then only the copay.
+    expect(rxShareOf(sim.player, true, when)).toBe(75_00 + Math.round(0.25 * PHARMACY.price.brand));
+    expect(rxShareOf(sim.player, true, when)).toBe(Math.round(0.25 * PHARMACY.price.brand));
+  });
+
+  it('leave dental and vision to what each plan covers, and the uninsured the price', () => {
+    const sim = pro('teeth');
+    const when = at(2027, 3, 1);
+    expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(DENTAL_VISION.price.cleaning);
+    const h = healthOf(sim.player);
+    h.sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
+    expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(0);
+    expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(Math.round(DENTAL_VISION.price.filling * 0.25));
+    expect(teethAndEyesShareOf(sim.player, 'exam', when)).toBe(10_00);
+    expect(shareOf(sim.player, 'glasses', when)).toBe(Math.round(DENTAL_VISION.price.glasses * 0.8));
+  });
+
+  it('bring the dentist to about three in five a year, and an eye exam only to those with lenses', () => {
+    const sim = pro('visits');
+    const h = healthOf(sim.player);
+    h.lenses = false;
+    let years = 0;
+    let exams = 0;
+    for (let y = 0; y < 120; y += 1) {
+      let saw = false;
+      for (let w = 0; w < 52; w += 1) {
+        for (const e of illnessWeek(sim, sim.player, sim.now + (y * 52 + w) * 7 * MS_DAY)) {
+          if (e.care === 'cleaning') saw = true;
+          if (e.care === 'exam') exams += 1;
+        }
+      }
+      if (saw) years += 1;
+    }
+    expect(years / 120).toBeGreaterThan(DENTAL_VISION.dentistShare - 0.12);
+    expect(years / 120).toBeLessThan(DENTAL_VISION.dentistShare + 0.12);
+    expect(exams).toBe(0);
+  });
+});
+
+describe('conditions carried', () => {
+  it('are drawn once, at a young adult’s rates', () => {
+    let depression = 0;
+    let lenses = 0;
+    for (let n = 0; n < 200; n += 1) {
+      const h = healthOf(pro(`c${n}`).player);
+      if (h.chronic?.depression) depression += 1;
+      if (h.lenses) lenses += 1;
+    }
+    expect(depression / 200).toBeGreaterThan(CHRONIC.share.depression * 0.6);
+    expect(depression / 200).toBeLessThan(CHRONIC.share.depression * 1.4);
+    expect(lenses / 200).toBeGreaterThan(DENTAL_VISION.lensShare * 0.8);
+    expect(lenses / 200).toBeLessThan(DENTAL_VISION.lensShare * 1.2);
+  }, 120_000);
+
+  it('cost their care each month, at what the plan leaves; unpaid, they lapse; left alone, depression weighs on morale', () => {
+    const sim = pro('keep');
+    const h = healthOf(sim.player);
+    h.chronic = { depression: { treated: true }, hypertension: { treated: true } };
+    h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
+    const when = at(2026, 3, 1, 1);
+    const cost = keepUp(sim, sim.player, when);
+    expect(cost).toBe(2 * 25_00 + 2 * Math.max(10_00, Math.round(0.1 * PHARMACY.price.generic)));
+    // With next to nothing and no card, the month's care goes unpaid.
+    const poor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'nothing' }, 'keep-poor');
+    const ph = healthOf(poor.player);
+    ph.chronic = { depression: { treated: true } };
+    for (const acct of Object.values(poor.universe.accounts)) if (acct.ownerId === poor.player.id && acct.id === poor.player.primaryAccountId) acct.balance = -5_000_00;
+    expect(keepUp(poor, poor.player, when)).toBe(0);
+    expect(ph.chronic.depression!.lapsed).toBe(true);
+    // Left alone, against the same life without it, a week on.
+    const alone = pro('weigh');
+    const well = pro('weigh');
+    healthOf(alone.player).chronic = { depression: { treated: true } };
+    healthOf(well.player).chronic = {};
+    expect(alone.execute({ kind: 'health.treat', payload: { condition: 'depression', on: false } }).ok).toBe(true);
+    const week = alone.universe.scheduled.filter((i) => i.kind === 'health.week' && i.status === 'pending').sort((x, y) => x.at - y.at)[0]!.at + 60_000;
+    alone.advanceTo(week);
+    well.advanceTo(week);
+    expect(well.player.wellbeing.morale - alone.player.wellbeing.morale).toBeCloseTo(CHRONIC.untreated.moraleAWeek, 0);
+    expect(sim.execute({ kind: 'health.treat', payload: { condition: 'asthma', on: true } })).toMatchObject({ ok: false, error: 'You don’t have that.' });
+  });
+
+  it('let asthma left alone double the emergencies', () => {
+    const sim = pro('asthma');
+    const h = healthOf(sim.player);
+    let kept = 0;
+    let left = 0;
+    for (let w = 0; w < 52 * 60; w += 1) {
+      h.chronic = { asthma: { treated: true } };
+      kept += illnessWeek(sim, sim.player, sim.now + w * 7 * MS_DAY).filter((e) => e.care === 'emergency').length;
+      h.chronic = { asthma: { treated: false } };
+      left += illnessWeek(sim, sim.player, sim.now + w * 7 * MS_DAY).filter((e) => e.care === 'emergency').length;
+    }
+    expect(left / kept).toBeGreaterThan(1.5);
+  });
+});

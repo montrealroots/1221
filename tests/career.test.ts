@@ -11,7 +11,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, rateOn } from '@/engine/content/career';
 import {
   AUDITION_KIND, CAREER_WEEK_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  beginCareer, billDues, bookingChance, careerOf, mayLeave, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  beginCareer, billDues, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
@@ -372,7 +372,8 @@ describe('pay', () => {
     expect(pay).toHaveLength(1);
     expect(pay[0]!.category).toBe('salary');
     // Scale plus 10% for two days, and each day's overtime past eight hours.
-    const overtime = careerOf(sim.player).days.reduce((sum, d) => sum + overtimeFor(roleById('costar'), 1_283_00, 1_283_00, d.hours, '2026-10-05'), 0);
+    // Each day's overtime, and any meal it ran late to.
+    const overtime = careerOf(sim.player).days.reduce((sum, d, n) => sum + overtimeFor(roleById('costar'), 1_283_00, 1_283_00, d.hours, '2026-10-05') + mealPenalty(sim, sim.player, `${b.id}-${n + 1}`), 0);
     expect(careerOf(sim.player).days.map((d) => d.hours).every((h) => h >= 10 && h <= 12)).toBe(true);
     expect(overtime).toBeGreaterThan(0);
     expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime);

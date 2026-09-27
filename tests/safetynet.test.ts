@@ -12,7 +12,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, UNION_HEALTH, rateOn } from '@/engine/content/career';
 import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear } from '@/engine/content/safetynet';
 import {
-  RESIDUAL_KIND, afterlife, beginCareer, careerOf, managerOffersFor, overtimeFor, paycheck, residualAmount, roleById, weekOfAuditions, workDays,
+  RESIDUAL_KIND, afterlife, beginCareer, careerOf, managerOffersFor, mealPenalty, overtimeFor, paycheck, residualAmount, roleById, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
@@ -64,7 +64,7 @@ describe('new parts', () => {
     const pay = sim.universe.transactions.filter((t) => t.memo.startsWith('Series Regular'))[0]!;
     const scale = Math.round((5_361_00 * 13 * 5) / 80);
     // The Thursday pays the week to the Saturday before: the first five days, and their overtime.
-    const overtime = careerOf(sim.player).days.slice(0, 5).reduce((s, d) => s + overtimeFor(roleById('series-hour'), 5_361_00, 1_283_00, d.hours, '2026-10-05'), 0);
+    const overtime = careerOf(sim.player).days.slice(0, 5).reduce((s, d, n) => s + overtimeFor(roleById('series-hour'), 5_361_00, 1_283_00, d.hours, '2026-10-05') + mealPenalty(sim, sim.player, `${b.id}-${n + 1}`), 0);
     // Unrepresented: scale, with no agency's 10% on it.
     expect(-pay.postings.find((q) => q.amount < 0)!.amount).toBe(scale + overtime);
   });

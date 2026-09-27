@@ -249,7 +249,7 @@ function AuditionsPane() {
                     <td>{r.label}</td>
                     <td>{r.union === 'sag' ? 'SAG-AFTRA' : 'Equity'}</td>
                     <td className="num mono">{formatMoney(rateOf(r, sim.now, r.cities[0]!, cur), cur)}</td>
-                    <td>{r.series ? 'Episode' : r.medium === 'voice' ? 'Session' : r.medium === 'screen' ? 'Day' : 'Week'}</td>
+                    <td>{r.series ? 'Episode' : r.medium === 'voice' ? 'Session' : r.medium === 'stage' ? 'Week' : 'Day'}</td>
                     <td className="num mono">{pct(bookingChance(person.craft!, r, focus, 'room'))}</td>
                   </tr>
                 ))}
@@ -269,6 +269,7 @@ const spanOf = (b: Booking) => {
   const role = roleById(b.roleId);
   if (role.series) return `${role.series.episodes} episodes over ${role.series.weeks} weeks`;
   if (role.medium === 'voice') return `${b.units} ${b.units === 1 ? 'session' : 'sessions'}`;
+  if (role.arc) return `${b.units} episodes, a week each`;
   return role.medium === 'screen' ? `${b.units} ${b.units === 1 ? 'day' : 'days'}` : `${b.rehearsalWeeks} weeks of rehearsal and ${b.units} of performances`;
 };
 

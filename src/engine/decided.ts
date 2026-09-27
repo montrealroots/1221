@@ -409,3 +409,18 @@ defineDecider<{ sim: Simulation; week: number }, string>({
   sample: (seed) => ({ sim: atYale(seed), week: seed % 104 }),
   decide: ({ sim, week }) => Array.from({ length: 52 }, (_, n) => illnessWeek(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((e) => e.what).join('+') || '-').join(' '),
 });
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'health.chronic',
+  decides: 'The conditions a person carries from the start, depression, asthma or high blood pressure, and whether they wear lenses; and an asthmatic month’s visit.',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    // Two saves are two bodies.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 40)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    const h = sim.player.health!;
+    return `${Object.keys(h.chronic ?? {}).sort().join('+') || 'none'}${h.lenses ? ', lenses' : ''}`;
+  },
+});
