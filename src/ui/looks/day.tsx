@@ -162,6 +162,31 @@ function spokenWhen(target: Instant, sim: Simulation, zone: TimeZone): string {
 const lengthOf = (entry: CalendarEntry): string | undefined =>
   (entry.durationMinutes ? formatDuration(entry.durationMinutes * MS_MINUTE) : undefined);
 
+/**
+ * What missing a commitment costs, as its handler has it (`systems/school.ts`,
+ * `systems/career.ts`). Until 2026-09-27 the entry look said only that it
+ * cost "what the Guide says".
+ */
+function missCost(sim: Simulation, id: string): string {
+  const item = sim.universe.scheduled.find((one) => one.id === id);
+  const call = item?.payload.call;
+  switch (item?.kind) {
+    case 'school.classes': return ': an unexcused absence, which the faculty weigh at the term’s evaluation, unless you’re sick or in hospital';
+    case 'school.call':
+      return call === 'performance' ? ': a grave breach, straight to academic warning, or from warning to dismissal'
+        : call === 'oncall' ? ', and if you’re sent on and not there, it’s a grave breach, straight to academic warning'
+          : ': counted against your attendance, and enough missed calls take you out of the casting pool';
+    case 'school.lab': return ': counted against your attendance and your calls';
+    case 'school.shift': return ': the hours aren’t paid, and an assigned shift counts against your attendance';
+    case 'school.summer': return call === 'performance' ? ', and the company lets you go' : ', and the rehearsal goes on without you';
+    case 'school.cabaret': return ', and the show goes on without you';
+    case 'career.audition': return ', and one your agency got you counts: three and it lets you go';
+    case 'career.work': return ': the job ends, and an agency you have lets you go';
+    case 'career.showcase': return ', and the room never sees you';
+    default: return '';
+  }
+}
+
 /** The window an entry occupies, for working out what it collides with. */
 const endOf = (entry: CalendarEntry): Instant => entry.endsAt ?? entry.at;
 
@@ -607,7 +632,7 @@ defineLook<TheEntry>('entry', {
             {entry.status === 'observance'
               ? 'An observance. It’s on the calendar so you know; nothing about it is yours to change.'
               : entry.requiresPlayer
-                ? `This one wants you there, awake${city ? ` and in ${city.name}` : ''}, when the clock reaches it; if you aren’t, it’s missed, and a missed call, audition or day of work costs what the Guide says it does.`
+                ? `This one wants you there, awake${city ? ` and in ${city.name}` : ''}, when the clock reaches it; if you aren’t, it’s missed${missCost(sim, entry.id)}.`
                 : 'This one the world handles on its own when the clock reaches it.'}
             {length && ` It runs ${length}, ${formatTime(entry.at, clock)} to ${formatTime(endOf(entry), clock)}.`}
           </p>

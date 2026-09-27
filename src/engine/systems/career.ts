@@ -1164,16 +1164,26 @@ export function registerCareer(sim: Simulation): void {
       if (booking.status !== 'accepted') return;
       // A room, sublet for the nights: the town's room rent by the night, SLATE's estimate of what it costs.
       const cur = saveCurrency(s.universe);
-      const nights = Math.max(1, Math.round((Number(item.payload.back) - item.at) / MS_DAY));
+      // Only the nights no earlier stay in the city already has a room for:
+      // back to back, the first room is kept on. Until 2026-09-27 each job
+      // sublet its own, and the nights they shared were paid twice.
+      const covered = s.universe.scheduled
+        .filter((one) => one.kind === STAY_KIND && one.status === 'done' && one.payload.direction === 'out' && one.payload.personId === person.id && one.payload.bookingId !== booking.id && one.at <= item.at)
+        .filter((one) => { const other = careerOf(person).bookings.find((b) => b.id === one.payload.bookingId); return other !== undefined && workCityOf(other) === city; })
+        .reduce((most, one) => Math.max(most, Number(one.payload.back)), 0);
+      const from = Math.max(item.at, covered);
+      if (from >= Number(item.payload.back)) { person.currentLocationId = city; s.universe.currentZone = zoneOf(city); return; }
+      const nights = Math.max(1, Math.round((Number(item.payload.back) - from) / MS_DAY));
       const cost = Math.round((rentAt(city, cur).room * nights) / 30.44);
+      const howLong = nights === 1 ? 'one night' : `${nights} nights`;
       // A cost of the work, on the return with the rest, from the bank or on
       // the card. With neither, a friend's sofa for the run. Until 2026-09-27
       // it was taken whether or not the bank could pay, and the room was free.
-      const paid = spend(s, person, cost, `A sublet in ${CITIES.require(city).name}, ${nights} nights`, 'career');
+      const paid = spend(s, person, cost, `A sublet in ${CITIES.require(city).name}, ${howLong}`, 'career');
       if (paid) recordJobCost(person, s.now, cost);
       person.currentLocationId = city;
       s.universe.currentZone = zoneOf(city);
-      if (isPlayer(person)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: paid ? `${roleById(booking.roleId).label}: a room sublet for ${nights} nights, ${formatMoney(cost, cur)}.` : `${roleById(booking.roleId).label}: a sublet for ${nights} nights is ${formatMoney(cost, cur)}, which neither the bank nor the card could cover, so it’s a friend’s sofa.`, importance: 55, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: paid ? `${roleById(booking.roleId).label}: a room sublet for ${howLong}, ${formatMoney(cost, cur)}.` : `${roleById(booking.roleId).label}: a sublet for ${howLong} is ${formatMoney(cost, cur)}, which neither the bank nor the card could cover, so it’s a friend’s sofa.`, importance: 55, route: '/workspace/career' });
       return;
     }
     // Home again however the job went, fired from it or not, where they're

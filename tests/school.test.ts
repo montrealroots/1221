@@ -932,10 +932,15 @@ describe('the summers, for work', () => {
     const home = (id: string) => sim.universe.scheduled.find((i) => i.kind === 'career.stay' && i.payload.bookingId === id && i.payload.direction === 'back')!;
     // The first job's journey home falls inside the second's days.
     expect(home('one').at).toBeLessThan(home('two').at);
+    const planned = { one: home('one').at, two: home('two').at };
     play(sim, home('one').at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     play(sim, home('two').at + 60_000);
     expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
+    // One room kept on: the second job pays only the nights past the first’s.
+    const sublets = sim.universe.transactions.filter((t) => t.memo.startsWith('A sublet in New York'));
+    expect(sublets).toHaveLength(2);
+    expect(sublets[1]!.memo).toBe(`A sublet in New York, ${Math.round((planned.two - planned.one) / MS_DAY)} nights`);
   }, 180_000);
 });
 
