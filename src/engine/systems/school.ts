@@ -50,6 +50,7 @@ import {
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
+import { enjoyWork } from './enjoyment';
 import { payFromCurrent } from './household';
 import { beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
@@ -778,6 +779,7 @@ export function registerSchool(sim: Simulation): void {
         grow(person.craft, 'acting', focusOf(person), 1.5);
         grow(person.craft, 'text', focusOf(person));
         tire(person, ESTIMATE.energy.rehearsal);
+        enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
       }
       return;
     }

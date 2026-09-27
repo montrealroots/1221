@@ -11,7 +11,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, ROLES, WORK_COSTS } from '@/engine/content/career';
-import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
+import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, RECEIPTS, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
 import { ESTIMATE, beginCareer, bookingChance, careerOf, staleHeadshots, submissionsAWeek, weekOfAuditions, workCostsWeek } from '@/engine/systems/career';
 import { recordJobCost, recordWages, yearOf } from '@/engine/systems/earnings';
 import { drawChronic, grown, healthMonth, healthOf, illnessWeek, insulinShareOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf } from '@/engine/systems/health';
@@ -103,7 +103,8 @@ describe('an actor’s working costs', () => {
     const sim = pro('itemize');
     recordWages(sim.player, at(2027, 3, 1), NY, { gross: 100_000_00, commission: 8_000_00 });
     recordJobCost(sim.player, at(2027, 5, 1), 12_000_00);
-    const extra = 20_000_00 - 0.02 * 100_000_00 - STATE_DEDUCTIONS.standard['us-ny']!;
+    // Four in five of the rest have a receipt, for somebody who doesn't keep accounts.
+    const extra = 8_000_00 + 12_000_00 * RECEIPTS.kept - 0.02 * 100_000_00 - STATE_DEDUCTIONS.standard['us-ny']!;
     const ny = figuresFor(sim.player, 2027).states.find((s) => s.state === 'us-ny')!;
     expect(ny.tax).toBe(computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12), { deductions: extra }).regional);
   });

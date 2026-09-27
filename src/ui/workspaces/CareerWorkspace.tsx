@@ -16,6 +16,7 @@ import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engi
 import { CITIES } from '@/engine/content/geography';
 import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029 } from '@/engine/content/career';
 import { YALE_DRAMA } from '@/engine/content/school';
+import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite,
 } from '@/engine/systems/career';
@@ -201,7 +202,7 @@ function AuditionsPane() {
           <div className="col gap-3">
             {offered.map((b) => (
               <div key={b.id} className="row-between small">
-                <span>{roleById(b.roleId).label}: {spanOf(b)} from {formatDate(b.starts, zoneOf(b.cityId))}, answer by {formatDateTime(b.dueAt, zoneOf(b.cityId))}</span>
+                <span>{roleById(b.roleId).label}{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}${(person.genres ?? []).includes(b.genre) ? ', a genre you love' : ''}` : ''}: {spanOf(b)} from {formatDate(b.starts, zoneOf(b.cityId))}, answer by {formatDateTime(b.dueAt, zoneOf(b.cityId))}</span>
                 <span className="row gap-2">
                   <Gated feature="career.accept" onClick={() => { if (run('career.accept', { bookingId: b.id }).ok) toast('Taken. The days are on your calendar.', 'positive'); }}>Take It</Gated>
                   <Gated feature="career.pass" onClick={() => { run('career.pass', { bookingId: b.id }); }}>Pass</Gated>

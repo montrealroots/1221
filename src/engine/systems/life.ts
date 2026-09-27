@@ -575,7 +575,9 @@ export function applySleep(
   // condition by then.
   const worn = remap(Math.min(1, began.condition / mends), 0, 1, 0.8, 1);
   const settled = remap(began.morale, 0, 100, 0.75, 1.15);
-  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * owing * worn, 0, 100);
+  // A night away from home puts back what a homebody's own bed would less, and a restless one's more.
+  const away = person.home !== undefined && person.home.cityId !== person.currentLocationId ? personalityOf(person, 'awayRecovery') : 1;
+  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * away * owing * worn, 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);

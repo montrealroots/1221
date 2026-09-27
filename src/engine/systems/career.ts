@@ -63,7 +63,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CAREER_CITIES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CALLS, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
 } from '../content/career';
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
@@ -72,6 +72,8 @@ import { armHealth } from './health';
 import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
 import { meanCraft, focusOf, sessionGain, type Craft } from './school';
+import { enjoyWork, takeTheRoom } from './enjoyment';
+import { personalityOf } from './personality';
 import { move, payFromCurrent, type Housing } from './household';
 
 export const SHOWCASE_KIND = 'career.showcase';
@@ -154,6 +156,8 @@ export interface Booking {
   units: number;
   /** Weeks of rehearsal first, on stage. */
   rehearsalWeeks: number;
+  /** What it's filed under, where it's filed under anything. */
+  genre?: string;
   status: 'offered' | 'accepted' | 'passed' | 'lapsed' | 'worked' | 'fired' | 'released';
   dueAt: Instant;
   offeredAt: Instant;
@@ -436,6 +440,21 @@ export function workCostsWeek(sim: Simulation, person: Person, when: Instant): v
     scene.paidFor = month;
   }
   if (present(person, when) && person.craft) person.craft.acting = Math.min(100, person.craft.acting + sessionGain(person.craft.acting, focusOf(person)));
+}
+
+/** What a call costs in stress by its hour: before nine in the morning, or a performance that runs late. */
+export function callStress(person: Person, hour: number, performance: boolean): number {
+  if (hour < CALLS.earlyBefore) return CALLS.early * personalityOf(person, 'earlyCall');
+  return performance ? CALLS.late * personalityOf(person, 'lateCall') : 0;
+}
+
+/** A job's genre, by its medium, from a draw. */
+export function genreOf(role: Role, x: number): { genre?: string } {
+  const list = role.id === 'animation' ? GENRES.animation : role.medium === 'stage' ? GENRES.stage : role.medium === 'screen' && role.after?.kind !== 'commercial' ? GENRES.screen : undefined;
+  if (!list) return {};
+  let left = x * list.reduce((sum, [, w]) => sum + w, 0);
+  for (const [genre, w] of list) { left -= w; if (left <= 0) return { genre }; }
+  return { genre: list[list.length - 1]![0] };
 }
 
 /** The next Monday at eight, after a moment. */
@@ -785,6 +804,7 @@ export function registerCareer(sim: Simulation): void {
       return;
     }
     audition.status = 'done';
+    if (audition.mode === 'room') takeTheRoom(person);
     if (!books(s, person, audition, focusOf(person))) return;
     audition.status = 'booked';
     const [lo, hi] = ESTIMATE.offerAfterDays;
@@ -806,6 +826,7 @@ export function registerCareer(sim: Simulation): void {
       id: nextOwnId(career, 'b'), roleId: role.id, cityId: audition.cityId,
       starts: nextMonday(s.now + role.leadDays * MS_DAY, zoneOf(location ?? audition.cityId)),
       units: span(role.units), rehearsalWeeks: role.rehearsalWeeks ? span(role.rehearsalWeeks) : 0,
+      ...genreOf(role, rng.next()),
       status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0, weeksPaid: 0,
       ...(location ? { location } : {}),
     };
@@ -882,6 +903,10 @@ export function registerCareer(sim: Simulation): void {
       person.craft[skill] = Math.min(100, person.craft[skill] + ESTIMATE.workGain * weight * focus * (1 - person.craft[skill] / 100) ** 1.5);
     }
     person.wellbeing.energy = Math.max(0, person.wellbeing.energy - ESTIMATE.workEnergy);
+    // What they love about the day, and how they take the road and the rehearsal room.
+    enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true });
+    // An early call, or a performance that runs late, as the body clock takes it.
+    person.wellbeing.stress = Math.min(100, person.wellbeing.stress + callStress(person, zonedParts(item.at, zoneOf(workCityOf(booking))).hour, role.medium === 'stage' && !call.rehearsal));
     if (booking.worked < workDays(booking).length) return;
     booking.status = 'worked';
     career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });

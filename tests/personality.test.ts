@@ -33,6 +33,7 @@ import type { Simulation } from '@/engine';
 
 const KNOBS: readonly PersonalityKnob[] = [
   'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing', 'spending',
+  'illnessToll', 'awayRecovery', 'earlyCall', 'lateCall', 'receipts',
 ];
 
 /** Somebody with no lean anywhere: every axis at the middle and no traits. */
@@ -377,14 +378,17 @@ describe('what it does', () => {
       .toBeGreaterThan(personalityOf(person([], { conscientiousness: 5 }), 'sleepQuality'));
   });
 
-  it('lets the four it says do nothing do nothing, and Keeps Accounts too', () => {
+  it('keeps the four axes read elsewhere off the knobs, and Keeps Accounts to its receipts', () => {
+    // Openness, extraversion and agreeableness are read by a day's work
+    // (`systems/enjoyment.ts`), risk tolerance by the card: none by a knob.
     for (const axis of ['openness', 'extraversion', 'agreeableness', 'riskTolerance'] as const) {
       for (const knob of KNOBS) {
         expect(personalityOf(person([], { [axis]: 5 }), knob), `${axis} moves ${knob}`)
           .toBe(personalityOf(person([], { [axis]: 95 }), knob));
       }
     }
-    for (const knob of KNOBS) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
+    for (const knob of KNOBS.filter((k) => k !== 'receipts')) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
+    expect(personalityOf(person(['keeps_accounts']), 'receipts')).toBeGreaterThan(1.2);
   });
 
   it('makes a frugal person spend less on the same day’s food than a spender', () => {

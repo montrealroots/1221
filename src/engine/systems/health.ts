@@ -47,6 +47,7 @@ import {
 } from '../content/safetynet';
 import { earningsOf, homeOf, quartersBefore } from './earnings';
 import { payFromCurrent } from './household';
+import { personalityOf } from './personality';
 
 export const HEALTH_MONTH_KIND = 'health.month';
 export const HEALTH_WEEK_KIND = 'health.week';
@@ -534,8 +535,10 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const w = person.wellbeing;
   const toll = event.flu ? CARE.toll.flu : event.care === 'stay' ? CARE.toll.stay : event.care === 'emergency' ? CARE.toll.emergency : undefined;
   if (toll) {
-    w.condition = Math.max(0, w.condition - toll.condition);
-    w.energy = Math.max(0, w.energy - toll.energy);
+    // A resilient body loses less to it.
+    const takes = personalityOf(person, 'illnessToll');
+    w.condition = Math.max(0, w.condition - toll.condition * takes);
+    w.energy = Math.max(0, w.energy - toll.energy * takes);
   }
   if (event.care === 'stay') h.inHospitalUntil = at + CARE.stayDays * MS_DAY;
   // A flu that isn't seen costs nothing.

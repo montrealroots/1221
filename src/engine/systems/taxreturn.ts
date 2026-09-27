@@ -20,9 +20,10 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { computeAnnualTax } from '../content/tax';
-import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
+import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { stateOf, yearOf } from './earnings';
 import { payFromCurrent } from './household';
+import { personalityOf } from './personality';
 
 export const TAX_SEASON_KIND = 'tax.season';
 export const TAX_DUE_KIND = 'tax.due';
@@ -124,7 +125,9 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
   const income = y.acting + y.workStudy + y.unemployment;
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
-  const expenses = y.commission + y.dues + (y.jobCosts ?? 0);
+  // Of the rest of the work's costs, the ones there's a receipt for.
+  const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));
+  const expenses = y.commission + y.dues + Math.round((y.jobCosts ?? 0) * kept);
   const performer = income <= usd(RETURN.performingArtistIncome, into) && employers >= RETURN.performingArtistEmployers && expenses > RETURN.performingArtistShare * y.acting;
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);

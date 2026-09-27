@@ -7,7 +7,10 @@
  * let an interest change how much somebody gets out of doing a thing:
  * Cooking, Fitness, Sport and the evening pastimes lift the mood and ease the
  * stress of the hour they go with (`systems/enjoyment.ts`). The crafts and
- * the genres are still read by nothing, and wait for the film career.
+ * the genres waited for the career until 2026-09-27: a day on a job in a
+ * genre somebody loves, or of Voice Acting for one who loves that, lifts
+ * the mood the same way. The other crafts are trades an actor's jobs don't
+ * do, and are said back.
  *
  * The crafts are the ones film and television are actually made of, from the
  * ones everybody can name to the ones only a crew knows. It says something

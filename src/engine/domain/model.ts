@@ -35,8 +35,11 @@ export type Id = string;
  * conscientiousness sets how well the nights go. Risk tolerance sets whether
  * the card's autopay clears the statement or carries a balance
  * (`systems/credit.ts`); it was read by nothing until the card. Openness,
- * extraversion and agreeableness are kept and read by nothing yet;
- * `tools/wired.mjs` counts them.
+ * extraversion and agreeableness were kept and read by nothing until
+ * 2026-09-27; since then they decide how a day of work is taken
+ * (`systems/enjoyment.ts`): extraversion the stress of an audition in the
+ * room, openness the mood of a day away from home, agreeableness the mood of
+ * a rehearsal.
  */
 export interface Personality {
   openness: number;
@@ -123,7 +126,7 @@ export interface Person {
    * character sheet because a person has them, and the person look says both
    * back. The interests change how much an hour of looking after yourself
    * gives the mood (`systems/enjoyment.ts`), never how good anybody is at
-   * anything; the genres decide nothing.
+   * anything, and since 2026-09-27 what a day of work gives, with the genres.
    */
   interests: string[];
   genres?: string[];

@@ -109,13 +109,14 @@ defineLook<Person>('person', {
     // What they care about and the films they love, said back for the same
     // reason. Nothing in the simulation read either until the interests were
     // let change how much an hour of looking after yourself gives the mood
-    // (`systems/enjoyment.ts`); the genres are still read by nothing.
+    // (`systems/enjoyment.ts`), and since 2026-09-27 the same file reads the
+    // genres, and the interests again, for what a day of work gives.
     const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
     const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
     // The traits they picked. Most of them, unlike the rest of this, move the
     // dials below: the nights of a light sleeper and the stress of an even
     // temper are theirs. Three of the money traits move what food costs, and
-    // Keeps Accounts is only said back.
+    // Keeps Accounts, only said back until 2026-09-27, what a return deducts.
     const traits = (person.personalityTraits ?? [])
       .map((id) => PERSONALITY_TRAIT_BY_ID[id]?.name).filter((one): one is string => !!one);
     const said = [

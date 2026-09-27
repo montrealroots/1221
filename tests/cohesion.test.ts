@@ -237,7 +237,7 @@ describe('the interests and the genres', () => {
     ]) expect(labels).toContain(label);
   });
 
-  it('puts both on the player, and only enjoyment reads the interests, and nothing the genres', () => {
+  it('puts both on the player, and only enjoyment reads the interests and the genres', () => {
     const sim = createSave(1, 'interests', {
       ...defaultConfig(), interests: ['cinematography', 'film'], genres: ['film_noir', 'western'],
     });
@@ -251,7 +251,8 @@ describe('the interests and the genres', () => {
     // start being a stat. On 2026-09-24 the owner narrowed it for the
     // interests: they may change how much somebody gets out of doing a thing,
     // never how good they are at it. That lives in one file, and the test
-    // below holds what it may move. The genres wait for the film career.
+    // below holds what it may move. The genres waited for the film career, and
+    // since 2026-09-27 the same file reads them, for a job's genre.
     const engine = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts'))
       .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
@@ -259,7 +260,7 @@ describe('the interests and the genres', () => {
       .filter((f) => !/world\/bootstrap\.ts|domain\/model\.ts/.test(f));
     const reading = (field: string) => engine.filter((f) => new RegExp(`\\.${field}\\b`).test(readFileSync(f, 'utf8')));
     expect(reading('interests'), 'these read somebody’s interests out of a save').toEqual(['src/engine/systems/enjoyment.ts']);
-    expect(reading('genres'), 'these read somebody’s genres out of a save').toEqual([]);
+    expect(reading('genres'), 'these read somebody’s genres out of a save').toEqual(['src/engine/systems/enjoyment.ts']);
   });
 
   it('lets an interest change how much an action gives the mood and the relief, and nothing else', () => {

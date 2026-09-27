@@ -295,6 +295,15 @@ export const CONNECTICUT = {
  * in New York, $5,706 in California (2025's, held). SLATE counts an actor's
  * commissions and union dues.
  */
+/**
+ * The work's costs a return can deduct are the ones with a record: the
+ * IRS and the states ask for it. Commissions and dues are on the checks and
+ * the union's statements; of the rest, SLATE's estimate is that four in five
+ * are kept, all of them by somebody who keeps accounts, and fewer by a
+ * chaotic one.
+ */
+export const RECEIPTS = { kept: 0.8, source: 'https://www.irs.gov/publications/p463 (records, chapter 5); NY IT-196 and CA Schedule CA instructions' } as const;
+
 export const STATE_DEDUCTIONS = {
   floor: 0.02,
   standard: { 'us-ny': 8_000_00, 'us-ca': 5_706_00 } as Readonly<Record<string, Money>>,

@@ -313,6 +313,25 @@ export const ROLES: readonly Role[] = [
 export const RECURRING = { seasonEpisodes: 13, share: 0.6, uplift: 1.2, from: '2027-01-01', source: '2026 SAG-AFTRA TV/Theatrical memorandum of agreement, §30.a (amptp.org)' } as const;
 
 /**
+ * What a call's hour costs in stress, SLATE's estimate: a call before nine in
+ * the morning and a performance that runs past nine at night each 2, before
+ * a night owl's or an early riser's trait bends it.
+ */
+export const CALLS = { early: 2, earlyBefore: 9, late: 2 } as const;
+
+/**
+ * What a job is filed under, SLATE's estimate by what gets made: on screen
+ * mostly drama and comedy, then crime, thriller, mystery, horror, romance,
+ * action and science fiction; on stage drama, comedy and the musical;
+ * animation animated. Commercials, games and audiobooks have none.
+ */
+export const GENRES: Readonly<Record<'screen' | 'stage' | 'animation', readonly (readonly [string, number])[]>> = {
+  screen: [['drama', 0.3], ['comedy', 0.25], ['crime', 0.1], ['thriller', 0.08], ['mystery', 0.06], ['horror', 0.06], ['romance', 0.05], ['action', 0.05], ['science_fiction', 0.05]],
+  stage: [['drama', 0.45], ['comedy', 0.3], ['musical', 0.25]],
+  animation: [['animated', 1]],
+};
+
+/**
  * What an actor's work costs them, 2025–26 prices. Actors Access PLUS,
  * $68 a year, sends a headshot and reel with a submission where the free
  * tier sends a name and a résumé; Backstage, about $200 a year, has its own

@@ -552,12 +552,13 @@ function PersonalityStep({ config, setConfig }: {
           <div>
             <h2>Dispositions</h2>
             <p className="muted small">
-              How you lean, not what you can do. Four of them do something today: Emotional Stability
+              How you lean, not what you can do. Each of them does something: Emotional Stability
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
               the nights go, Ambition sets what running yourself into the ground costs you in stress,
               and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
-              The other three are written into the save and read by nothing yet. Openness waits on
-              travel, and Extraversion and Agreeableness wait on other people. Neither is built.
+              Extraversion sets how an audition in the room sits with you, Openness how a job away
+              from home does, and Agreeableness how a rehearsal does. None of them makes you better
+              or worse at anything.
             </p>
           </div>
         </div>
@@ -589,11 +590,12 @@ function PersonalityStep({ config, setConfig }: {
             <p className="muted small">
               Pick up to four. Each pair here is one trait written against another, and the two
               sides can’t both be held. Today they change how stress arrives and clears, how well
-              you sleep, how much a night puts back, how quickly you stop being clean and how far
-              your mood swings. Each description and cost is written for a whole life, and the game
-              charges only the part of it that touches those. Frugal, Spender and Generous change
-              what your food costs. Keeps Accounts is about what other people owe you, and waits for
-              other people.
+              you sleep, how much a night puts back (and a night away from home), how quickly you
+              stop being clean, how far your mood swings, what illness takes out of you and how an
+              early call or a late performance sits. Each description and cost is written for a whole
+              life, and the game charges only the part of it that touches those. Frugal, Spender and
+              Generous change what your food costs, and Keeps Accounts how much of what your work
+              costs you can deduct.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -726,8 +728,9 @@ function PersonalStep({
             <p className="muted small">
               Some change how much you get out of looking after yourself: Cooking for a meal,
               Fitness and Sport for a workout, and what you’d spend an evening on for an hour
-              unwinding. They lift your mood more and ease more stress. None makes you better
-              at anything.
+              unwinding. Film, Television, Theater, Voice Acting and Travel do the same for a day of
+              work in them, or away. They lift your mood more and ease more stress. None makes you
+              better at anything.
             </p>
           </div>
           <span className="chip chip-accent">{config.interests.length} Chosen</span>
@@ -751,7 +754,8 @@ function PersonalStep({
           <div>
             <h2>Genres</h2>
             <p className="muted small">
-              The films you love. Take as many as are true — there’s no limit here.
+              The films you love. Take as many as are true — there’s no limit here. A day on a job in
+              one of them lifts your mood and eases your stress; it doesn’t make you any better in it.
             </p>
           </div>
           <div className="row gap-2" style={{ alignItems: 'center' }}>

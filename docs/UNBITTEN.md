@@ -34,16 +34,15 @@ may not rise.
 | Id namespaces | 1 | 7 |
 | Save tables nothing fills | 1 | 9 |
 | Personality knobs nothing reads | 0 | 7 |
-| Personality axes nothing consults | 3 | 7 |
+| Personality axes nothing consults | 0 | 7 |
 
 The first two are the player. The family was the only thing that made a person after
 boot, so `person` has no `nextId` call and `people` is filled only by
 bootstrap, which writes the player by hand. They are counted honestly and they
-are not dead words; the tool says so beside the check. The three axes are
-openness, extraversion and agreeableness, set on the Dispositions & Traits
-step and read by nothing; the step says so, and they are below. Risk
-tolerance was a fourth until the card read it, and this table said four
-until 2026-09-25.
+are not dead words; the tool says so beside the check. The axes were three
+until 2026-09-27: openness, extraversion and agreeableness, read since by a
+day's work (`systems/enjoyment.ts`). Risk tolerance was a fourth until the
+card read it, and this table said four until 2026-09-25.
 
 The tool counts writers. The One Rule asks for readers, which is stricter, so
 the true arrears are larger than this table and the rest of this page is the
@@ -53,36 +52,6 @@ part the tool cannot see.
 
 ## Dead: declared, and nothing reads it
 
-- **The wellbeing model decides nothing outside the body and the workout.**
-  Every dial now decides something (`tests/wellbeing-bites.test.ts`): fitness
-  sets how far rest mends condition and what a workout costs; condition sets
-  how much a night puts back, where morale settles, and readiness; morale sets
-  how much stress a night clears; hygiene under fifty and hunger under twenty
-  wear on the mood; and readiness sets what a workout builds. Eating, a
-  shower, a workout and an hour unwinding (`life.look_after`) are how a player
-  moves them. But all of that is the body deciding things about the body.
-  Readiness had one reader outside it, in the audition room, and the room is
-  gone: nothing a character does in the world yet goes better or worse for
-  how they are.
-- **Until those readers, fitness and morale couldn't be moved.** Fitness
-  moved condition only on a body the nights were wearing down: a rested
-  night pushed condition to the age's ceiling far faster than fitness's
-  drift, so on six- or eight-hour nights eight weeks of workouts left it at
-  99.8, trained or not. And morale reached a hundred on any life with decent
-  nights and stayed there. Rest mends only as far as fitness lets it now, and
-  the nights bring morale back toward where the body has it settle, so on a
-  half year of eight-hour nights a player who eats, showers, trains and
-  unwinds ends at condition 99.7 and morale 100 against 91 and 85.9 for one who
-  only sleeps.
-- **Three of the seven dispositions are kept and read by nothing.** Openness
-  waits on travel, and extraversion and agreeableness on other people. Risk
-  tolerance was a fourth until the card: over 65 it starts autopay on the
-  minimum. The Dispositions & Traits step says so beside the sliders, and
-  `tools/wired.mjs` counts them.
-- **Keeps Accounts is said back and nothing more.** It is about what other
-  people owe you, and there are no other people. The other three money traits
-  declared no knob while nothing spent; since the household they move what
-  food costs (`spending`).
 - **Rent is published in nineteen places, and estimated everywhere else.**
   The atlas put a one-bedroom in Mosfellsbær at $3,424 a month, about what it
   says for New York, because its formula stacks Iceland's price level on a
@@ -93,12 +62,14 @@ part the tool cannot see.
   Food and bills are SLATE's estimates everywhere. The legal floors under
   wages were real and sourced until they went with the job engine on
   2026-09-26.
-- **Most of what a trait's cost says is said back, not charged.** Each is
-  written for a whole life, and the game charges only the part its knobs
-  reach: stress, sleep, the energy a night puts back, hygiene and mood. Early
-  Riser's "No use at all after nine at night", every cost about other people,
-  and Resilient's illness and injury are not charged, and Early Riser and a
-  few others help and cost nothing in play. The Traits card says so.
+- **What a trait's cost says about other people is said back, not
+  charged.** Each is written for a whole life, and since 2026-09-27 the
+  game charges every part of it that touches something it has: stress,
+  sleep, the energy a night puts back and a night away (Homebody,
+  Restless), hygiene, mood, illness (Resilient), an early call or a late
+  performance (Night Owl, Early Riser) and the receipts a return can deduct
+  (Keeps Accounts, Chaotic). What's left is about other people, whom SLATE
+  doesn't have, and injury, which it doesn't model. The Traits card says so.
 - **Some banks' figures weren't found, and a few are given as words.** The
   thirteen countries' waivers are modeled as the banks write them since
   2026-09-25: an average balance, an average across one's accounts at the
@@ -285,12 +256,11 @@ part the tool cannot see.
   weren't found (Arion, Crédit Agricole, Santander Spain) and pay out. An
   empty, unused account that the bank may close is never closed: the banks
   say they may, not when.
-- **The tax engine is a screen again.** `content/tax.ts` works out income
-  and payroll tax on a wage for the place card and Home's Tax On A Wage, and
-  nothing is paid through it. The day job withheld through it outside the
-  thirteen until 2026-09-26, when the job engine went; its sales, property
-  and vehicle rules were read by nothing before that, because nothing is
-  bought, owned or driven.
+- **The tax engine's sales, property and vehicle rules are read by
+  nothing.** Its income and payroll tax is paid again since the career:
+  acting wages are withheld through it and each year's return is worked out
+  with it (`systems/career.ts`, `systems/taxreturn.ts`). Its other rules
+  wait for something bought, owned or driven.
 - **An older save's pension fund is kept, and nothing moves it.** The day
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth
@@ -300,15 +270,14 @@ part the tool cannot see.
   as Film and Television work. Nothing else reads it. It is reference data, so
   it stayed through the revamp; the revamp decides whether it keeps a reader or
   goes.
-- **The crafts and the genres are said back and nothing more.** Creation asks
-  for them and the person look prints them, which is what keeps them from being
-  a question with no answer. Nothing in the simulation reads either, and
-  `tests/cohesion.test.ts` holds that nothing starts to without saying so. The
-  general interests are read since 2026-09-24, by `systems/enjoyment.ts`
-  alone: Cooking, Fitness, Sport and the evening pastimes lift the mood and
-  ease the stress of the hour they go with, and never make anybody better at
-  anything. The rest of the general interests (Animals, Cars, Fashion, Nature,
-  Politics, Travel) go with nothing a player can do yet.
+- **Most of the crafts, and five general interests, are said back and
+  nothing more.** Creation asks for them and the person look prints them.
+  Since 2026-09-27 a day of work reads the genres, Voice Acting, and Film,
+  Television, Theater and Travel (`systems/enjoyment.ts`), under the
+  owner's rule: mood and stress, never how good anybody is. The other
+  crafts are trades an actor's jobs don't do, and Animals, Cars, Fashion,
+  Nature and Politics go with nothing a player can do yet.
+  `tests/cohesion.test.ts` holds that only that file reads them.
 - **The performer title is said back and nothing more.** Actor or actress,
   settled by the pronouns or picked under they/them, and printed on Home, the
   rail and the save slot. It is a word and not a stat, so that is all it
@@ -320,14 +289,6 @@ part the tool cannot see.
   categories for systems long gone were taken out on 2026-09-25.)
 
 ## Unreachable: correct, and nothing can get there
-
-- **What a bank reads from wages.** A fee waived for wages paid in, a
-  lender's check for a salary, and New Zealand's interest tax set by the
-  saver's income all read the wages the ledger holds (`systems/banking.ts`,
-  `systems/lending.ts`). Nothing has paid wages since the job engine went on
-  2026-09-26, so a new life never meets them; a save from before has a year
-  of them at most. `tests/banking.test.ts` and `tests/bank-fees.test.ts`
-  post wages by hand to hold them.
 
 - **The Decision Center has nothing to decide.** Answering, dismissing, closing
   on a date and forgetting are all built and held by `tests/smoke.test.ts`, which
