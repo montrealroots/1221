@@ -54,6 +54,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { plural } from '../core/text';
 import type { ScheduledItem } from '../core/scheduler';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -95,6 +96,7 @@ export const PAY_KIND = 'career.pay';
 export const RESIDUAL_KIND = 'career.residual';
 export const TRAVEL_KIND = 'career.travel';
 export const RENEWAL_KIND = 'career.renewal';
+export const AGENCY_TERM_KIND = 'career.agency_term';
 
 /** SLATE's estimates of what the business doesn't publish, each named where it's used. */
 export const ESTIMATE = {
@@ -158,8 +160,24 @@ export const ESTIMATE = {
   setGrime: 1.6,
 } as const;
 
-/** SAG-AFTRA's terms for leaving an agency: no offer in the first 120 days; after, under ten days' work in 91. */
-export const LEAVING = { firstDays: 120, windowDays: 91, fewerThanDays: 10, source: 'https://servicesagaftra.custhelp.com/app/answers/detail/a_id/2360' } as const;
+/**
+ * SAG-AFTRA's terms for leaving an agency. In a first contract's first 151
+ * days, only once 120 days in a row pass with no bona fide offer; after them,
+ * and in a renewal throughout, whenever the last 91 days held fewer than ten
+ * days' work. Until 2026-09-27 the 91-day rule ran from the first day.
+ */
+export const LEAVING = { firstDays: 120, initialDays: 151, windowDays: 91, fewerThanDays: 10, source: 'https://servicesagaftra.custhelp.com/app/answers/detail/a_id/2360; SAG Codified Agency Regulations, Rule 16(g), Exhibit E ¶6' } as const;
+
+/**
+ * An agency contract's term, from SAG's Rule 16(g), under which SAG-AFTRA's
+ * franchised agents sign actors for film and television: a first contract
+ * may run no longer than a year (§XI D(2)); a new one, up to three years,
+ * once the one in force has run eight months (D(1a)); and a renewal may be
+ * signed only in a term's last third (D(3)). That an agency offers to renew
+ * a client it booked work for in the term, and lets the rest run out, is
+ * SLATE's estimate. Until 2026-09-27 a contract had no term.
+ */
+export const AGENCY_TERM = { firstYears: 1, renewalYears: 3, renewFrom: 2 / 3, source: 'SAG Codified Agency Regulations, Rule 16(g), §XI D(1a), D(2), D(3)' } as const;
 
 // ---------------------------------------------------------------------------
 // The record
@@ -252,6 +270,11 @@ export interface CareerRecord {
   agencyId?: string;
   agencyCity?: CareerCity;
   signedAt?: Instant;
+  /** When the agency contract's term ends (`AGENCY_TERM`), and whether it's a first contract with the agency, to which the 151-day rule applies. */
+  termEnds?: Instant;
+  initialTerm?: boolean;
+  /** A renewal: offered by the agency until the term ends, or turned down by either side, for this term. */
+  renewal?: { state: 'offered' | 'declined' | 'not-offered'; termEnds: Instant };
   /** The last representation ended, and why. */
   ended?: { agencyId: string; at: Instant; reason: string; left: boolean };
   missed: number;
@@ -601,11 +624,31 @@ function scheduleWeek(sim: Simulation, person: Person, when: Instant): void {
   sim.schedule({ at: when, kind: CAREER_WEEK_KIND, label: 'The Week’s Submissions', category: 'system', priority: 8, payload: { personId: person.id } });
 }
 
+/** A moment some years on, on the same date in a zone. */
+function yearsOn(from: Instant, zone: string, years: number): Instant {
+  const p = zonedParts(from, zone);
+  return instantFromZoned({ year: p.year + years, month: p.month, day: Math.min(p.day, 28), hour: p.hour, minute: p.minute }, zone);
+}
+
+/** A term's end, and the day its last third opens, on the calendar. */
+function armTerm(sim: Simulation, person: Person, from: Instant, years: number, initial: boolean): void {
+  const career = careerOf(person);
+  const zone = zoneOf(career.agencyCity ?? workCity(person));
+  const ends = yearsOn(from, zone, years);
+  career.termEnds = ends;
+  career.initialTerm = initial;
+  delete career.renewal;
+  const window = Math.max(sim.now + 60_000, from + Math.round((ends - from) * AGENCY_TERM.renewFrom));
+  sim.schedule({ at: window, kind: AGENCY_TERM_KIND, label: 'The Agency Contract’s Last Third', category: 'system', priority: 20, payload: { personId: person.id, stage: 'window', termEnds: ends } });
+  sim.schedule({ at: ends, kind: AGENCY_TERM_KIND, label: 'The Agency Contract Ends', category: 'system', priority: 20, payload: { personId: person.id, stage: 'end', termEnds: ends } });
+}
+
 function represent(sim: Simulation, person: Person, offer: Offer): void {
   const career = careerOf(person);
   career.agencyId = offer.agencyId;
   career.agencyCity = offer.cityId;
   career.signedAt = sim.now;
+  armTerm(sim, person, sim.now, AGENCY_TERM.firstYears, true);
   career.missed = 0;
   career.offers = [];
   feel(person, 'signed');
@@ -620,6 +663,10 @@ function endRepresentation(sim: Simulation, person: Person, reason: string, left
   delete career.agencyId;
   delete career.agencyCity;
   delete career.signedAt;
+  delete career.termEnds;
+  delete career.initialTerm;
+  delete career.renewal;
+  for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'agency-renewal' && !d.resolvedAt) d.resolvedAt = sim.now;
   career.missed = 0;
   for (const a of career.auditions) {
     if (a.status !== 'ahead' || a.self) continue;
@@ -885,11 +932,13 @@ export function working(sim: Simulation, person: Person): boolean {
 export function mayLeave(sim: Simulation, person: Person): { ok: boolean; why: string } {
   const career = careerOf(person);
   if (!career.agencyId || career.signedAt === undefined) return { ok: false, why: 'You have no agency.' };
-  const offered = career.bookings.some((b) => b.offeredAt >= career.signedAt!);
-  if (!offered) {
-    return sim.now - career.signedAt >= LEAVING.firstDays * MS_DAY
-      ? { ok: true, why: `No offer in the first ${LEAVING.firstDays} days.` }
-      : { ok: false, why: `With no offer yet, you may leave once ${LEAVING.firstDays} days have passed since signing.` };
+  if (career.initialTerm !== false && sim.now - career.signedAt < LEAVING.initialDays * MS_DAY) {
+    // A first contract's first 151 days: the longest stretch since signing with no offer.
+    const times = [career.signedAt, ...career.bookings.map((b) => b.offeredAt).filter((t) => t >= career.signedAt!).sort((a, b) => a - b), sim.now];
+    const longest = Math.max(...times.slice(1).map((t, i) => t - times[i]!));
+    return longest >= LEAVING.firstDays * MS_DAY
+      ? { ok: true, why: `${LEAVING.firstDays} days in a row with no offer.` }
+      : { ok: false, why: `In a first contract’s first ${LEAVING.initialDays} days, you may leave only once ${LEAVING.firstDays} days in a row pass with no offer.` };
   }
   const worked = daysWorkedIn(sim, person, LEAVING.windowDays);
   return worked < LEAVING.fewerThanDays
@@ -945,6 +994,13 @@ export function registerCareer(sim: Simulation): void {
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
+    }
+    // Signed before contracts had a term: the term that would be running now, a year at a time from the signing.
+    if (career.agencyId && career.signedAt !== undefined && career.termEnds === undefined) {
+      let years = AGENCY_TERM.firstYears;
+      const zone = zoneOf(career.agencyCity ?? workCity(person));
+      while (yearsOn(career.signedAt, zone, years) <= s.now + 7 * MS_DAY) years += 1;
+      armTerm(s, person, yearsOn(career.signedAt, zone, years - 1), 1, years === 1);
     }
     if (career.agencyId && career.signedAt !== undefined) {
       const since = Math.max(career.signedAt, career.lastBookedAt ?? 0, career.since ?? 0);
@@ -1277,6 +1333,51 @@ export function registerCareer(sim: Simulation): void {
     const residual = careerOf(person).residuals.find((r) => r.id === item.payload.residualId);
     if (!residual) return;
     payResidual(s, person, residual, String(item.payload.stream) as Stream, Number(item.payload.n), item.at);
+  });
+
+  // The term's last third, and its end (`AGENCY_TERM`).
+  sim.onSchedule(AGENCY_TERM_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person) return;
+    const career = careerOf(person);
+    if (!career.agencyId || career.termEnds === undefined || career.termEnds !== item.payload.termEnds) return;
+    const ends = career.termEnds;
+    const agency = agencyById(career.agencyId)!;
+    const zone = zoneOf(career.agencyCity ?? workCity(person));
+    if (item.payload.stage === 'window') {
+      // An agency keeps a client it booked work for in the term.
+      const booked = (career.lastBookedAt ?? 0) >= yearsOn(ends, zone, -(career.initialTerm === false ? AGENCY_TERM.renewalYears : AGENCY_TERM.firstYears));
+      career.renewal = { state: booked ? 'offered' : 'not-offered', termEnds: ends };
+      if (!isPlayer(person)) { if (booked) armTerm(s, person, ends, AGENCY_TERM.renewalYears, false); return; }
+      if (!booked) {
+        s.notify({ category: 'career', title: `${agency.name} Won’t Renew`, body: `Your contract with ${agency.name} ends ${formatDate(ends, zone)}, and with no work booked in it, they won’t renew.`, importance: 80, route: '/workspace/career' });
+        return;
+      }
+      s.requireDecision({
+        urgency: 70, category: 'career', title: `${agency.name} Offers To Renew`,
+        detail: `Your contract with ${agency.name} ends ${formatDate(ends, zone)}. They offer a new one for ${plural(AGENCY_TERM.renewalYears, 'year')} from then, on the same terms. Let it run out and you’re unrepresented when it ends.`,
+        route: '/workspace/career', dueAt: ends, refType: 'agency-renewal', refId: `${ends}`,
+        actions: [
+          { label: `Renew With ${agency.name}`, commandKind: 'career.renew', payload: { accept: true } },
+          { label: 'Let It Run Out', commandKind: 'career.renew', payload: { accept: false } },
+        ],
+      });
+      return;
+    }
+    // The term's end, unrenewed.
+    const turnedDown = career.renewal?.state === 'declined' || career.renewal?.state === 'offered';
+    endRepresentation(s, person, turnedDown ? 'You let the contract run out.' : 'The contract ran its term, and the agency didn’t renew it.', turnedDown);
+    if (isPlayer(person)) s.notify({ category: 'career', title: 'Your Agency Contract Ended', body: `Your contract with ${agency.name} ended ${formatDate(item.at, zone)}.`, importance: 80, route: '/workspace/career' });
+  });
+
+  sim.onCommand<{ accept: boolean }, { termEnds?: Instant }>('career.renew', (p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    if (!career.agencyId || career.termEnds === undefined || career.renewal?.state !== 'offered') throw new CommandError('No renewal is on offer.');
+    for (const d of Object.values(s.universe.decisions)) if (d.refType === 'agency-renewal' && !d.resolvedAt) d.resolvedAt = s.now;
+    if (p.accept !== true) { career.renewal = { state: 'declined', termEnds: career.termEnds }; return {}; }
+    armTerm(s, person, career.termEnds, AGENCY_TERM.renewalYears, false);
+    return { termEnds: career.termEnds };
   });
 
   sim.onCommand<Record<string, never>, { left: string }>('career.leave', (_p, { sim: s }) => {

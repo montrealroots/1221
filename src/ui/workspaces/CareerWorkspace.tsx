@@ -8,6 +8,7 @@
  */
 
 import { useState } from 'react';
+import { plural } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -18,7 +19,7 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { focusOf, summerOf } from '@/engine/systems/school';
 import { earningsOf } from '@/engine/systems/earnings';
@@ -98,7 +99,7 @@ function AgencyPane() {
     <div className="col gap-5">
       <Panel
         title={agency ? agency.name : 'No Agency'}
-        subtitle={agency && career.agencyCity ? `${cityName(career.agencyCity)} office, signed ${formatDate(career.signedAt!, zoneOf(career.agencyCity))}` : undefined}
+        subtitle={agency && career.agencyCity ? `${cityName(career.agencyCity)} office, signed ${formatDate(career.signedAt!, zoneOf(career.agencyCity))}${career.termEnds !== undefined ? `, the contract running to ${formatDate(career.termEnds, zoneOf(career.agencyCity))}` : ''}` : undefined}
         actions={agency ? <Gated feature="career.leave" onClick={() => { const a = run<{ left: string }>('career.leave'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave The Agency</Gated> : undefined}
       >
         <div className="col gap-3">
@@ -109,8 +110,25 @@ function AgencyPane() {
                 <Stat label="Auditions A Week" value={`About ${agency.auditionsPerWeek}`} note="SLATE’s estimate of its reach" />
                 <Stat label="Missed Auditions" value={`${career.missed} of ${ESTIMATE.dropAfterMissed}`} note="Before it lets you go" tone={career.missed > 0 ? 'warning' : undefined} />
               </div>
+              {career.termEnds !== undefined && (
+                <div className="row-between small">
+                  <span>
+                    {career.initialTerm === false ? `A renewal of ${plural(AGENCY_TERM.renewalYears, 'year')}` : `A first contract, of ${plural(AGENCY_TERM.firstYears, 'year')}`}, to {formatDate(career.termEnds, zoneOf(career.agencyCity ?? 'us-ny-newyork'))}.{' '}
+                    {career.renewal?.state === 'offered' ? `${agency.name} offers to renew for ${plural(AGENCY_TERM.renewalYears, 'year')}.`
+                      : career.renewal?.state === 'declined' ? 'You’re letting it run out.'
+                      : career.renewal?.state === 'not-offered' ? `${agency.name} won’t renew: nothing was booked in it.`
+                      : `In its last third, ${agency.name} offers to renew if it booked you work.`}
+                  </span>
+                  {career.renewal?.state === 'offered' && (
+                    <div className="row gap-2">
+                      <Gated feature="career.renew" onClick={() => { if (run('career.renew', { accept: true }).ok) toast(`Renewed with ${agency.name}.`, 'positive'); }}>Renew</Gated>
+                      <Gated feature="career.renew" onClick={() => { if (run('career.renew', { accept: false }).ok) toast('It runs out at the end of the term.', 'positive'); }}>Let It Run Out</Gated>
+                    </div>
+                  )}
+                </div>
+              )}
               <p className="small" style={{ margin: 0 }}>
-                On SAG-AFTRA work at scale the producer pays scale plus 10%, and the 10% is the agency’s. You may leave on SAG-AFTRA’s terms: with no offer in the first {LEAVING.firstDays} days, or with fewer than {LEAVING.fewerThanDays} days’ work in the last {LEAVING.windowDays}. {may.why}
+                On SAG-AFTRA work at scale the producer pays scale plus 10%, and the 10% is the agency’s. You may leave on SAG-AFTRA’s terms: in a first contract’s first {LEAVING.initialDays} days, once {LEAVING.firstDays} days in a row pass with no offer; after them, and in a renewal, with fewer than {LEAVING.fewerThanDays} days’ work in the last {LEAVING.windowDays}. {may.why}
               </p>
             </>
           ) : (
@@ -119,7 +137,7 @@ function AgencyPane() {
               Without an agency, work comes from submitting yourself, and a job worked can bring an agency’s call.
             </p>
           )}
-          <p className="xs dim" style={{ margin: 0 }}>Source: {AGENT_COMMISSION.source}; {LEAVING.source}.</p>
+          <p className="xs dim" style={{ margin: 0 }}>Source: {AGENT_COMMISSION.source}; {LEAVING.source}; {AGENCY_TERM.source}. Renewing a client it booked work for is SLATE’s estimate.</p>
         </div>
       </Panel>
 

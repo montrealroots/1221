@@ -10,7 +10,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
-  AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
+  AGENCY_TERM, AGENCY_TERM_KIND, AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
   acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
@@ -229,13 +229,25 @@ describe('representation', () => {
     expect(week.at - sim.now).toBeLessThan(8 * MS_DAY);
   });
 
-  it('may be left on SAG-AFTRA’s terms: no offer in 120 days, or under ten days’ work in 91', () => {
+  it('may be left on SAG-AFTRA’s terms: in a first contract’s first 151 days after 120 in a row with no offer, then under ten days’ work in 91', () => {
     const sim = signed('leave');
     const career = careerOf(sim.player);
     expect(mayLeave(sim, sim.player).ok).toBe(false);
     career.signedAt = sim.now - LEAVING.firstDays * MS_DAY;
     expect(mayLeave(sim, sim.player).ok).toBe(true);
-    offer(sim, 'costar', 1);
+    // An offer ten days in breaks the stretch: 115 days since it isn't 120.
+    career.signedAt = sim.now - 125 * MS_DAY;
+    offer(sim, 'costar', 1).offeredAt = career.signedAt + 10 * MS_DAY;
+    expect(mayLeave(sim, sim.player).ok).toBe(false);
+    // And the 91-day rule waits for the 151st: no work at all, and still bound.
+    career.signedAt = sim.now - 150 * MS_DAY;
+    career.bookings.at(-1)!.offeredAt = sim.now - 60 * MS_DAY;
+    expect(mayLeave(sim, sim.player).ok).toBe(false);
+    career.signedAt = sim.now - LEAVING.initialDays * MS_DAY;
+    expect(mayLeave(sim, sim.player).ok).toBe(true);
+    // A renewal is under the 91-day rule from its first day.
+    career.signedAt = sim.now - MS_DAY;
+    career.initialTerm = false;
     expect(mayLeave(sim, sim.player).ok).toBe(true);
     for (let n = 0; n < LEAVING.fewerThanDays; n += 1) careerOf(sim.player).days.push({ at: sim.now - (n + 1) * MS_DAY, hours: 10, pay: 1_283_00 });
     expect(mayLeave(sim, sim.player).ok).toBe(false);
@@ -243,6 +255,68 @@ describe('representation', () => {
     expect(sim.execute({ kind: 'career.leave', payload: {} }).ok).toBe(true);
     expect(careerOf(sim.player)).toMatchObject({ ended: { agencyId: career.ended!.agencyId, left: true } });
     expect(careerOf(sim.player).agencyId).toBeUndefined();
+  });
+
+  it('runs a first contract a year, with a renewal of three offered in its last third to a client the agency booked', () => {
+    const sim = signed('term');
+    const career = careerOf(sim.player);
+    const zone = 'America/New_York';
+    const signedOn = zonedParts(career.signedAt!, zone);
+    expect(zonedParts(career.termEnds!, zone)).toMatchObject({ year: signedOn.year + 1, month: signedOn.month, day: Math.min(signedOn.day, 28) });
+    expect(career.initialTerm).toBe(true);
+    const [window, end] = pending(sim, AGENCY_TERM_KIND);
+    expect([window!.payload.stage, end!.payload.stage]).toEqual(['window', 'end']);
+    expect(window!.at - career.signedAt!).toBeCloseTo((career.termEnds! - career.signedAt!) * AGENCY_TERM.renewFrom, -5);
+    const ends = career.termEnds!;
+    const at = (stage: string) => {
+      sim.schedule({ at: sim.now + 60_000, kind: AGENCY_TERM_KIND, label: 'x', category: 'system', priority: 20, payload: { personId: sim.player.id, stage, termEnds: career.termEnds } });
+      sim.advanceTo(sim.now + 2 * 60_000);
+    };
+    career.lastBookedAt = sim.now;
+    at('window');
+    expect(career.renewal?.state).toBe('offered');
+    expect(Object.values(sim.universe.decisions).some((d) => d.refType === 'agency-renewal' && !d.resolvedAt)).toBe(true);
+    expect(sim.must<{ termEnds: number }>({ kind: 'career.renew', payload: { accept: true } }).termEnds).toBe(career.termEnds);
+    expect(zonedParts(career.termEnds!, zone).year).toBe(zonedParts(ends, zone).year + AGENCY_TERM.renewalYears);
+    expect(career.initialTerm).toBe(false);
+    expect(Object.values(sim.universe.decisions).some((d) => d.refType === 'agency-renewal' && !d.resolvedAt)).toBe(false);
+    // The first term's end finds a renewed contract, and leaves it alone.
+    sim.schedule({ at: sim.now + 60_000, kind: AGENCY_TERM_KIND, label: 'x', category: 'system', priority: 20, payload: { personId: sim.player.id, stage: 'end', termEnds: ends } });
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(career.agencyId).toBeDefined();
+  });
+
+  it('lets a first contract run out when the agency booked nothing, or the client turned the renewal down', () => {
+    for (const booked of [false, true]) {
+      const sim = signed(`term-out-${booked}`);
+      const career = careerOf(sim.player);
+      const at = (stage: string) => {
+        sim.schedule({ at: sim.now + 60_000, kind: AGENCY_TERM_KIND, label: 'x', category: 'system', priority: 20, payload: { personId: sim.player.id, stage, termEnds: career.termEnds } });
+        sim.advanceTo(sim.now + 2 * 60_000);
+      };
+      if (booked) career.lastBookedAt = sim.now;
+      at('window');
+      expect(career.renewal?.state).toBe(booked ? 'offered' : 'not-offered');
+      if (booked) expect(sim.execute({ kind: 'career.renew', payload: { accept: false } }).ok).toBe(true);
+      // Turned down, it stays turned down.
+      if (booked) expect([career.renewal?.state, sim.execute({ kind: 'career.renew', payload: { accept: true } }).ok]).toEqual(['declined', false]);
+      else expect(sim.execute({ kind: 'career.renew', payload: { accept: true } }).ok).toBe(false);
+      at('end');
+      expect(career.agencyId).toBeUndefined();
+      expect(career.ended?.left).toBe(booked);
+    }
+  });
+
+  it('gives a contract signed before contracts had a term the one running now', () => {
+    const sim = signed('term-old');
+    const career = careerOf(sim.player);
+    career.signedAt = sim.now - 400 * MS_DAY;
+    career.lastBookedAt = sim.now - 10 * MS_DAY;
+    delete career.termEnds;
+    delete career.initialTerm;
+    play(sim, pending(sim, CAREER_WEEK_KIND)[0]!.at + MS_HOUR);
+    expect(zonedParts(career.termEnds!, 'America/New_York').year).toBe(zonedParts(career.signedAt, 'America/New_York').year + 2);
+    expect(career.initialTerm).toBe(false);
   });
 
   it('is ended by the agency after a year with nothing booked', () => {
