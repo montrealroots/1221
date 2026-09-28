@@ -19,7 +19,7 @@ export function AttributesPanel() {
   return (
     <Panel title="Your Attributes" subtitle="What the business reads beside the craft">
       <div className="col gap-3">
-        <div className="grid grid-2">
+        <div className="grid grid-4">
           <Stat label="Presence" value={whole(attrs.presence)} note="Read at every audition and the showcase; grows slowly with audiences" />
           <Stat label="Composure" value={whole(attrs.composure)} note={nerves > 0 ? `Nerves take up to ${nerves}% off an audition or a performance, and add stress` : 'Nerves take nothing off the work'} />
           <Stat label="Reputation" value={whole(attrs.reputation)} note={`Called in ${Math.round(sends * 100)}% as often as the agency’s and the sites’ usual`} />
