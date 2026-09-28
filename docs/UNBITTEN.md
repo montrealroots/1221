@@ -88,22 +88,29 @@ part the tool cannot see.
   charged until 2026-09-25; each is charged now, with its waiver as a rule
   (`content/banks-world-fees.ts`). Three waivers are for someone SLATE
   doesn't have (students, state employees), so those fees are charged in
-  full; Swedbank Latvia's exemptions weren't confirmed, so it is charged;
-  Clarien's age for a senior isn't published, and 65 is SLATE's estimate.
-  A rate given for one tier is paid on every balance (Arion's and
-  Íslandsbanki's savings name a range whose tiers weren't found). A bank
-  or figure the research couldn't find keeps a plain account with no fee
-  and no rate. Iceland's savings ledger codes are from weak sources (05 at
-  Landsbankinn, 13 at Arion), and none was found for Íslandsbanki.
-- **Some overdraft terms are missing a figure.** BNZ charges its unarranged
-  overdraft fee, but its interest is a Personal Overdraft Base Rate plus
-  10% and BNZ doesn't publish the base, so none is charged. LCL and Crédit
-  Agricole don't publish the rate on an unauthorized overdraft, so they
-  charge only their €8 commission. An Icelandic account taken below zero
-  by a bank fee, with no overdraft arranged, is charged the arranged rate;
-  the rate for an unarranged one wasn't found. The Canadian banks sell
-  overdraft protection by the month or by the use; SLATE arranges the
-  monthly plan only.
+  full. Since 2026-09-28 Swedbank Latvia's is its price list's, EUR 1.70 and
+  free under 26 (it had been EUR 2.00 to everyone), and Arion's and
+  Íslandsbanki's savings pay by their rate tables' tiers. Clarien's age for
+  a senior is in none of its fee schedule, terms or account pages (checked
+  2026-09-28), and 65 is SLATE's estimate. A bank or figure the research
+  couldn't find keeps a plain account with no fee and no rate. Iceland's
+  savings ledger codes are from weak sources (05 at Landsbankinn, 13 at
+  Arion), none was found for Íslandsbanki, and none of the three banks
+  publishes them.
+- **One overdraft rate is missing.** BNZ charges its unarranged overdraft
+  fee, but its interest is a Personal Overdraft Base Rate plus 10%, and BNZ
+  publishes the base in none of its fee guide, overdraft pages or terms
+  (checked 2026-09-28), so none is charged. Since 2026-09-28: LCL's
+  unauthorized overdraft is charged the 21.02% of its own tariff guide, and
+  Crédit Agricole's the usury ceiling it charges by law, 23.39% (July
+  2025's, the latest SLATE has); and a Canadian overdraft can be paid for by the use where TD, Scotiabank, BMO
+  and CIBC sell it so ($5, once a day at TD and CIBC), RBC selling only the
+  month. An Icelandic account taken below zero by a bank fee, with no
+  overdraft arranged, is charged the arranged rate: none of the three banks
+  publishes a rate for an unarranged overdraft, only a flat fee on a debit
+  posted without funds (Landsbankinn's 900 kr to 2,600 kr by its size), and
+  SLATE's Icelandic banks decline any debit that would do that, as their
+  card and bill payments do.
 - **What follows a charge-off rests on estimates.** A bank closes an
   account left overdrawn for sixty days in a row (SLATE's estimate; a
   French one two months after its notice), and the debt goes to
@@ -117,7 +124,8 @@ part the tool cannot see.
   adds from 20 November 2026 isn't made. An account that goes back above
   zero on each payday is never sixty days overdrawn, as at a real bank.
 - **Some IBANs outside the thirteen are missing a bank code or a national
-  check.** Each is built to its country's registry structure
+  check.** Checked again on 2026-09-28: no bank or central bank publishes
+  them, and the IBAN Registry's examples name no bank. Each is built to its country's registry structure
   (`content/banks-world-iban.ts`): 82 structures, and 321 of 348 banks with
   their own code in place, and since 2026-09-27 Banque Misr's (0002, from
   its own IBAN guide) and Al-Kuraimi's (KRMB, the first letters of its BIC,
@@ -137,8 +145,10 @@ part the tool cannot see.
   Djibouti's keys are taken as France's RIB key and São Tomé's as
   Portugal's NIB, SLATE's inference: no rule is published, and each
   registry example checks by it. Denmark with the Faroes and Greenland is
-  left with its digits drawn, as no Danish bank publishes a check rule; the
-  one that circulates is Norway's. The IBAN's own check always holds.
+  left with its digits drawn, as no Danish bank publishes a check rule (and
+  Oracle's validation spec says there is none); the one that circulates is
+  Norway's. Yemen has used IBANs since December 2024, by the Central Bank in
+  Aden's announcement. The IBAN's own check always holds.
 - **Some cards' terms are SLATE's estimate.** Each bank's card is its own
   (`content/cards.ts`), and the research read 522 of them from the banks'
   terms, a comparison site where the bank's own page was blocked. A bank
@@ -156,15 +166,20 @@ part the tool cannot see.
   Banks whose late fee is a share of nothing the terms name (Equity and
   NCBA in Kenya, QNB, Republic Bank Suriname, Absa Uganda, Bank of Bhutan)
   keep a flat figure or SLATE's estimate. Not modeled: Japan's and Korea's
-  fixed-sum revolving courses, which the research didn't read. Caps
-  left out: Japan's Interest Rate Restriction Act binds cash advances, not
-  purchases; Monaco's and Ukraine's figures weren't the law's own; the
-  British £12 late fee is regulator guidance, and the United States' after
-  2025's ruling wasn't found.
+  fixed-sum revolving courses. Caps left out: Japan's Interest Rate
+  Restriction Act binds cash advances, not purchases; Monaco's and
+  Ukraine's figures weren't the law's own; the British £12 late fee is the
+  OFT's 2006 threshold of intervention, not a cap. Since 2026-09-28 every US
+  card is held to the Reg Z safe harbor, $30 a first late fee and $41 a
+  repeat within six cycles, the CFPB's $8 rule having been vacated in April
+  2025.
 - **Some of what cash costs isn't known.** Another bank's machine's owner
-  may add a fee of its own in the US, Canada, Mexico, Britain, Ireland,
-  Iceland, France, Germany and Australia; SLATE charges the card's bank's
-  fee and says the owner's may come on top, not what it is. A daily limit
+  may add a fee of its own; since 2026-09-28 it's charged at the published
+  average in the US ($3.22, Bankrate 2025) and Australia (A$2.63, the RBA's
+  last, 2017). Elsewhere no average is published (Canada's regulator gives
+  $1.50 to $5.00, LINK only that a fifth of Britain's machines charge), and
+  SLATE charges the card's bank's fee and says the owner's may come on top,
+  not what it is. A daily limit
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
@@ -303,14 +318,18 @@ part the tool cannot see.
   interest (Scotiabank's, Bank of Ireland's, the Spanish banks') aren't
   offered. A money transfer is charged the card's balance transfer rate,
   or its purchase rate where that wasn't found. Introductory rates end
-  early only by the US rule; a British or Irish card that withdraws its
-  offer for a missed payment keeps it. SLATE holds one card at a time, so
+  early by the US rule and, since 2026-09-28, at Barclaycard's one missed
+  minimum, as its terms say; Bank of Ireland's terms have no such clause,
+  and the other British and Irish cards' weren't read for it. SLATE holds one card at a time, so
   a balance transfer is made only from the card being replaced, and not
   where the new limit won't take it with its fee.
 - **Some of an account's life is SLATE's estimate or missing.** Where a
   bank words its early-withdrawal penalty other than in days of interest
-  (a reduced rate in Japan, a rate cut in France, a share in Spain), SLATE
-  forfeits the interest so far and says it's an estimate. A bank that has
+  (a rate cut in France, a share in Spain), SLATE forfeits the interest so
+  far and says it's an estimate; Spanish law caps a penalty at the interest
+  earned (Banco de España), so there it's the most a bank may take. Since
+  2026-09-28 MUFG's is its own rule, the ordinary deposit's rate in the
+  first six months and 70% of the posted rate after, never below it. A bank that has
   its holder choose how a term deposit ends at opening and names no default
   is paid out by default. Korea's banks' lower after-maturity rate is taken
   as the bank's easy-access savings rate. Three banks' maturity terms

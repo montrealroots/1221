@@ -62,6 +62,19 @@ describe('a term deposit’s end', () => {
     expect(Math.round((term.maturesAt! - term.renewedAt!) / (30.44 * MS_DAY))).toBe(months);
   });
 
+  it('breaks at MUFG at its early rate: the ordinary deposit’s in the first six months, and never under it after', () => {
+    const sim = lifeIn('jp-13-tokyo', 'jp-mufg', 'life-mufg-break');
+    const term = openTerm(sim, 10_000_000_00);
+    sim.advanceTo(term.openedAt + 100 * MS_DAY);
+    const earned = Math.floor(term.accrued!);
+    // Kept: the ordinary rate for the days run, the 0.40% of August 2026 (0.7 of the term's 0.50% is less).
+    const kept = earned - breakQuote(sim, term).penalty;
+    expect(kept).toBeGreaterThan(0);
+    expect(kept).toBeLessThan(earned);
+    expect(kept).toBeCloseTo(term.balance * 0.004 * 100 / 365, -3);
+    expect(breakQuote(sim, term).estimate).toBe(false);
+  });
+
   it('pays out instead when the holder says so, and moves into savings where that’s the bank’s way', () => {
     const us = lifeIn('us-ny-newyork', 'us-chase', 'life-payout');
     const cd = openTerm(us, 10_000_00);
@@ -307,6 +320,17 @@ describe('savings', () => {
     expect(feeFor(sim, acct, monthStartOf(sim, sim.now)).fee).toBeGreaterThan(0);
     acct.secondChance = true;
     expect(feeFor(sim, acct, monthStartOf(sim, sim.now)).fee).toBe(0);
+  });
+
+  it('pays Arion’s and Íslandsbanki’s savings by their tiers, as their rate tables step them', () => {
+    const arion = bankById('is-arion')!.savings!;
+    const isb = bankById('is-islandsbanki')!.savings!;
+    const at = (bankId: string) => ({ bankId } as Account);
+    expect(tierRate(arion, at('is-arion'), 500_000_00)).toBeUndefined();
+    expect(tierRate(arion, at('is-arion'), 6_000_000_00)).toBe(0.0575);
+    expect(tierRate(arion, at('is-arion'), 50_000_000_00)).toBe(0.0585);
+    expect(tierRate(isb, at('is-islandsbanki'), 2_000_000_00)).toBe(0.0617);
+    expect(tierRate(isb, at('is-islandsbanki'), 80_000_000_00)).toBe(0.0631);
   });
 
   it('reads a tier, a floor and a cap in the bank’s own money', () => {

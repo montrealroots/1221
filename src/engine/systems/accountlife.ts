@@ -45,7 +45,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
 import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
-import { inSaveMoney, interestTaxFor, openOne } from './banking';
+import { inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { lendingOf } from './lending';
 import { recordInterest } from './earnings';
@@ -80,6 +80,16 @@ export function breakQuote(sim: Simulation, term: Account): { penalty: Money; es
     // In the term's first week, a week's interest at least, whatever the cap.
     if (rules.penaltyFirstWeekDays && sim.now - (term.renewedAt ?? term.openedAt) < 7 * MS_DAY) penalty = Math.max(penalty, daysOf(rules.penaltyFirstWeekDays));
     return { penalty, estimate: false, ...(rules.penaltyWords ? { words: rules.penaltyWords } : {}) };
+  }
+  const early = term.bankId ? EARLY_RATE[term.bankId] : undefined;
+  if (early) {
+    const bank = bankById(term.bankId!)!;
+    const ordinary = rateOn(bank.savings, sim.now, sim.homeZone);
+    const from = term.renewedAt ?? term.openedAt;
+    const months = (sim.now - from) / (30.4375 * MS_DAY);
+    const rate = months < early.underMonths ? ordinary : Math.max(ordinary, (term.fixedRate ?? 0) * early.share);
+    const paid = Math.round(Math.max(0, term.balance) * rate * ((sim.now - from) / MS_DAY) / 365);
+    return { penalty: Math.max(0, earned - paid), estimate: false, ...(rules?.penaltyWords ? { words: rules.penaltyWords } : {}) };
   }
   // Worded another way, or not found: the interest so far is forfeited, SLATE's estimate.
   return { penalty: earned, estimate: true, ...(rules?.penaltyWords ? { words: rules.penaltyWords } : {}) };
@@ -153,6 +163,17 @@ export function roundUpsOn(sim: Simulation, person: Person): boolean {
  * kept in `penaltyWords`). Until 2026-09-27 SLATE broke it at once.
  */
 export const BREAK_NOTICE: Readonly<Record<string, number>> = { 'gb-natwest': 35 };
+
+/**
+ * A bank whose early rate is a rule rather than days of interest: MUFG's
+ * 期限前解約利率 pays the ordinary deposit's rate on a time deposit broken in
+ * its first six months, and 70% of the posted rate for the time it's run
+ * after, never less than the ordinary rate (bk.mufg.jp, スーパー定期 rules,
+ * 12 September 2022). SLATE carries only the twelve-month rate and takes it
+ * for the six-month one. Until 2026-09-28 MUFG's term forfeited all its
+ * interest, as a bank's whose rule wasn't read does.
+ */
+export const EARLY_RATE: Readonly<Record<string, { underMonths: number; share: number }>> = { 'jp-mufg': { underMonths: 6, share: 0.7 } };
 
 /** A term deposit broken now: the penalty from its interest, and from the deposit where that won't cover it. */
 function breakTerm(s: Simulation, person: Person, term: Account): { paid: Money; penalty: Money } {

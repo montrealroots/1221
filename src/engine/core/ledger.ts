@@ -79,6 +79,8 @@ export interface Account {
   /** An arranged overdraft: its limit, its rate, when it was arranged, and interest built on it (`systems/lending.ts`). */
   overdraftLimit?: Money;
   overdraftRate?: number;
+  /** An arranged overdraft paid for by the use rather than the month, where the bank sells it so. */
+  overdraftPerUse?: boolean;
   overdraftSince?: Instant;
   odAccrued?: number;
   /** Overdraft items charged today, where a bank charges by the item and caps the day. */

@@ -8,8 +8,12 @@
  *   another bank's, at the counter, or in Britain at the Post Office where
  *   the bank lets its customers (A33), each for the bank's own fee
  *   (`content/cash.ts`), and the ATMs no more in a day than the bank allows.
- *   Where another machine's owner may add a fee of its own, SLATE doesn't
- *   know what it is, and says so.
+ *   Another machine's owner may add a fee of its own: in the US the average,
+ *   $3.22 (Bankrate's 2025 survey), and in Australia A$2.63 (the RBA's last
+ *   average, 2017), charged since 2026-09-28; elsewhere no average is
+ *   published (Canada's regulator gives only $1.50 to $5.00, and LINK only
+ *   that a fifth of Britain's machines charge), and SLATE says it may come
+ *   on top without knowing what it is.
  * - **On the credit card** (C29, C49, C56, C82): a cash advance, for the
  *   card's fee, at its cash rate from the day it's taken, with no grace
  *   period, within any cash limit it has.
@@ -83,7 +87,13 @@ function atmToday(sim: Simulation, person: Person): Money {
 }
 
 /** What a withdrawal of an amount would cost, and whether it may be made, before it's made. */
-export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, from: CashFrom): { fee: Money; refused?: string; ownerFee?: boolean } {
+/** The machine owner's fee where its average is published, by the bank's country, in that country's money. */
+export const OWNER_SURCHARGE: Readonly<Record<string, { fee: Money; currency: string; source: string }>> = {
+  US: { fee: 3_22, currency: 'USD', source: 'https://www.bankrate.com/banking/checking/checking-account-survey/ (2025: an ATM owner’s surcharge averages $3.22)' },
+  AU: { fee: 2_63, currency: 'AUD', source: 'https://www.rba.gov.au/publications/bulletin/2017/dec/6.html (independent ATMs, June 2017, the latest average published)' },
+};
+
+export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, from: CashFrom): { fee: Money; refused?: string; ownerFee?: boolean; ownerCharge?: Money } {
   const cur = saveCurrency(sim.universe);
   if (from === 'card') {
     const card = cardOf(sim, person);
@@ -110,7 +120,10 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
     const used = atmToday(sim, person);
     if (used + amount > daily) return { fee, refused: `${bank.name} lets ${formatMoney(daily, cur)} out of machines in a day, and ${formatMoney(used, cur)} has come out today.` };
   }
-  if (current.balance < amount + fee) return { fee, refused: `${current.name} holds ${formatMoney(Math.max(0, current.balance), cur)}.` };
+  const owner = from === 'other_atm' && rules?.surcharge ? OWNER_SURCHARGE[bank.iso] : undefined;
+  const ownerCharge = owner ? inSave(sim, owner.fee, owner.currency) : 0;
+  if (current.balance < amount + fee + ownerCharge) return { fee, refused: `${current.name} holds ${formatMoney(Math.max(0, current.balance), cur)}.` };
+  if (ownerCharge) return { fee, ownerCharge };
   return { fee, ...(from === 'other_atm' && rules?.surcharge ? { ownerFee: true } : {}) };
 }
 
@@ -166,7 +179,7 @@ export function allocatePayment(sim: Simulation, person: Person, card: Account, 
 }
 
 export function registerCash(sim: Simulation): void {
-  sim.onCommand<{ amount: Money; from: CashFrom }, { fee: Money; ownerFee?: boolean }>('cash.withdraw', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; from: CashFrom }, { fee: Money; ownerFee?: boolean; ownerCharge?: Money }>('cash.withdraw', (p, { sim: s }) => {
     const person = s.player;
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Say how much.');
@@ -186,7 +199,8 @@ export function registerCash(sim: Simulation): void {
     const where = from === 'atm' ? 'ATM' : from === 'other_atm' ? 'Another bank’s ATM' : from === 'counter' ? 'Counter' : 'Post Office';
     s.post({ memo: `Cash out: ${where}`, category: 'cash', postings: [{ accountId: current.id, amount: -amount }, { accountId: wallet.id, amount }] });
     if (quote.fee > 0) s.post({ memo: `Cash withdrawal fee: ${where}`, category: 'bank_fee', postings: [{ accountId: current.id, amount: -quote.fee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: quote.fee }] });
-    return { fee: quote.fee, ...(quote.ownerFee ? { ownerFee: true } : {}) };
+    if (quote.ownerCharge) s.post({ memo: 'The machine owner’s fee', category: 'bank_fee', postings: [{ accountId: current.id, amount: -quote.ownerCharge }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: quote.ownerCharge }] });
+    return { fee: quote.fee, ...(quote.ownerFee ? { ownerFee: true } : {}), ...(quote.ownerCharge ? { ownerCharge: quote.ownerCharge } : {}) };
   });
 
   sim.onCommand<{ amount: Money; toId: string; at: CashTo }, { paid: Money }>('cash.deposit', (p, { sim: s }) => {

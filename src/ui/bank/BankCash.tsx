@@ -63,7 +63,7 @@ export function BankCash({ bankId }: { bankId: string }) {
       </div>
       {quote && (
         <p className="small" style={{ margin: 'var(--s2) 0' }}>
-          {quote.refused ?? `${quote.fee > 0 ? `${money(quote.fee)} for it` : 'Free'}${quote.ownerFee ? ', and the machine’s owner may add a fee of its own, which the screen shows before you take it; SLATE doesn’t know it' : ''}.`}
+          {quote.refused ?? `${quote.fee > 0 ? `${money(quote.fee)} for it` : 'Free'}${quote.ownerCharge ? `, and ${money(quote.ownerCharge)} to the machine’s owner, what one charges on average` : ''}${quote.ownerFee ? ', and the machine’s owner may add a fee of its own, which the screen shows before you take it; SLATE doesn’t know it' : ''}.`}
           {from === 'card' && cash && !quote.refused && ` It draws ${(cash.cashApr * 100).toFixed(2)}% a year from today, with no grace period.`}
         </p>
       )}

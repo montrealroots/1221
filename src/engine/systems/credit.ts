@@ -57,7 +57,18 @@ import { paymentsOf } from './payments';
 import { allocatePayment, cashOwedOn } from './cash';
 import { planLeftOf, statementOffers, transferRate, transfersOwedOn } from './cardoffers';
 import { PENDING } from '../content/pending';
-import { FIRST_LATE_FEE, LATE_FEE_RULES, lateFeeByRule, type LateFeeRule } from '../content/latefees';
+import { FIRST_LATE_FEE, LATE_FEE_RULES, US_SAFE_HARBOR, lateFeeByRule, type LateFeeRule } from '../content/latefees';
+
+/**
+ * Cards whose terms end a promotional rate at one missed minimum: Barclaycard
+ * ("if you ... don't make your minimum payment in time – your interest rate
+ * goes up to the purchase rate", barclaycard.co.uk, promotional rates). Bank
+ * of Ireland's terms have no such clause and it keeps its rate (Personal
+ * Credit Card terms, 06-26, condition 8(e)); the other British and Irish
+ * cards' terms weren't read for it, and keep theirs. Until 2026-09-28 no card
+ * outside the US ended an offer for a missed payment.
+ */
+export const INTRO_ENDS_ON_MISS: ReadonlySet<string> = new Set(['gb-barclays']);
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -618,9 +629,13 @@ export function registerCredit(sim: Simulation): void {
       const byRule = terms.lateRule ? Math.min(lateFeeByRule(terms.lateRule, due, paid, statement), terms.capped?.lateFee ?? Number.POSITIVE_INFINITY) : undefined;
       // A first late fee lower than a repeat one, where the bank sets it so: until 2026-09-27 Citi's $29 was researched and never charged.
       const tiered = card.bankId ? FIRST_LATE_FEE[card.bankId] : undefined;
-      const repeat = credit.lateFeeAt !== undefined && s.now - credit.lateFeeAt < (tiered?.withinPeriods ?? 0) * 31 * 86_400_000;
-      const flat = tiered && !repeat ? Math.min(terms.lateFee, inSave(s, tiered.first, bankById(card.bankId!)!.currency)) : terms.lateFee;
-      const fee = byRule ?? (bankById(card.bankId ?? '')?.iso === 'US' ? Math.min(flat, due) : flat);
+      const us = bankById(card.bankId ?? '')?.iso === 'US';
+      const within = (tiered?.withinPeriods ?? (us ? US_SAFE_HARBOR.withinPeriods : 0)) * 31 * 86_400_000;
+      const repeat = credit.lateFeeAt !== undefined && s.now - credit.lateFeeAt < within;
+      let flat = tiered && !repeat ? Math.min(terms.lateFee, inSave(s, tiered.first, bankById(card.bankId!)!.currency)) : terms.lateFee;
+      // Every US card held to the safe harbor: $30, or $41 for a repeat within six cycles.
+      if (us) flat = Math.min(flat, inSave(s, repeat ? US_SAFE_HARBOR.repeat : US_SAFE_HARBOR.first, 'USD'));
+      const fee = byRule ?? (us ? Math.min(flat, due) : flat);
       credit.lateFeeAt = s.now;
       s.post({
         memo: 'Late fee', category: 'fees',
@@ -648,8 +663,9 @@ export function registerCredit(sim: Simulation): void {
       if (credit.penalty) credit.penalty.onTime = 0;
       if (bankById(card.bankId ?? '')?.iso === 'GB') credit.recentFees = [...(credit.recentFees ?? []).filter((one) => s.now - one.at < 28 * 86_400_000), { at: s.now, amount: fee }];
       afterMissed(s, person, card, credit, due - paid);
-      // Sixty days late on a US card: its introductory rates end (Reg Z §1026.55(b)(4)).
+      // Sixty days late on a US card: its introductory rates end (Reg Z §1026.55(b)(4)). A card whose terms end it at one missed minimum, at once.
       if ((credit.missed ?? 0) >= 2 && bankById(card.bankId ?? '')?.iso === 'US') credit.introLost = true;
+      if (card.bankId && INTRO_ENDS_ON_MISS.has(card.bankId)) credit.introLost = true;
       // Sixty days late on a US card with a penalty rate: 45 days' notice, then the penalty rate (Reg Z §1026.9(g), §1026.55(b)(4)).
       if ((credit.missed ?? 0) >= 2 && !credit.penalty && terms.penaltyApr && bankById(card.bankId ?? '')?.iso === 'US' && !card.closedAt) {
         credit.penalty = { noticeAt: s.now, from: s.now + 45 * 86_400_000, onTime: 0 };

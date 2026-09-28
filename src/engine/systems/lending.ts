@@ -445,6 +445,9 @@ export function chargeForItem(sim: Simulation, person: Person, item?: Money): vo
       return;
     }
     fee = terms;
+  } else if (terms.kind === 'arranged' && terms.perUse && current.overdraftPerUse && (current.overdraftLimit ?? 0) > 0) {
+    // Canada's pay-per-use: a fee each time the overdraft is created or grows, once a day at most where the bank says.
+    fee = { fee: terms.perUse.fee, ...(terms.perUse.oncePerDay ? { maxPerDay: 1 } : {}) };
   } else if (unarrangedOf(terms)?.fee !== undefined) {
     const past = unarrangedOf(terms)!;
     if (current.balance >= -(current.overdraftLimit ?? 0)) return;
@@ -818,7 +821,7 @@ export function registerLending(sim: Simulation): void {
             commission = Math.min(commission, most - interest);
           }
           charge(s, current, interest, 'Overdraft interest', 'bank_fee', 'Overdraft Interest');
-          if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined) {
+          if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined && !current.overdraftPerUse) {
             charge(s, current, inSaveMoney(s, terms.monthlyFee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
           }
           charge(s, current, commission, 'Overdraft commission', 'bank_fee', 'Bank Fees');
@@ -955,7 +958,7 @@ export function registerLending(sim: Simulation): void {
     return { paid, left: -debt.balance };
   });
 
-  sim.onCommand<{ limit: Money }, { limit: Money; rate?: number }>('bank.arrange_overdraft', (p, { sim: s }) => {
+  sim.onCommand<{ limit: Money; perUse?: boolean }, { limit: Money; rate?: number }>('bank.arrange_overdraft', (p, { sim: s }) => {
     const person = s.player;
     const current = currentOf(s, person);
     if (!current) throw new CommandError('There’s no current account to arrange one on.');
@@ -963,6 +966,7 @@ export function registerLending(sim: Simulation): void {
     if (limit === 0) {
       if (current.balance < 0) throw new CommandError('Pay the overdraft back before closing it.');
       current.overdraftLimit = undefined;
+      delete current.overdraftPerUse;
       return { limit: 0 };
     }
     const offer = overdraftOffer(s, person);
@@ -975,6 +979,9 @@ export function registerLending(sim: Simulation): void {
     const first = current.overdraftLimit === undefined;
     current.overdraftLimit = limit;
     current.overdraftRate = offer.rate;
+    const sold = lendingOf(bankById(current.bankId!)).overdraft;
+    if (p.perUse === true && sold?.kind === 'arranged' && sold.perUse) current.overdraftPerUse = true;
+    else delete current.overdraftPerUse;
     if (first) {
       current.overdraftSince = s.now;
       const bank = bankById(current.bankId!)!;

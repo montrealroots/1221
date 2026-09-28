@@ -72,6 +72,17 @@ export const FIRST_LATE_FEE: Readonly<Record<string, { first: Money; withinPerio
   'us-citi': { first: 29_00, withinPeriods: 6 },
 };
 
+/**
+ * The US safe harbor itself, which binds every US card: a late fee no more
+ * than $30, or $41 for another within the next six billing cycles. The
+ * CFPB's $8 rule of 2024, which carried a $32 and $43 update with it, was
+ * vacated on 15 April 2025, and the annual threshold rules for 2025 and 2026
+ * didn't move the penalty fees, so the figures before it stand (Reg Z
+ * §1026.52(b)(1)(ii); Consumer Finance Monitor, 8 July 2026). Until
+ * 2026-09-28 a US card's own late fee was charged whole the first time.
+ */
+export const US_SAFE_HARBOR = { first: 30_00, repeat: 41_00, withinPeriods: 6 } as const;
+
 /** A rule's fee, in the card's currency, for a minimum of `due` with `paid` of it paid, on a statement of `balance`. */
 export function lateFeeByRule(rule: LateFeeRule, due: Money, paid: Money, balance: Money): Money {
   const base = rule.of === 'minimum' ? due : rule.of === 'unpaid' ? Math.max(0, due - paid) : balance;

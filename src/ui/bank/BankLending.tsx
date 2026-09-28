@@ -61,6 +61,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
   const rule = SWITCHING[isoOf(homeOf(sim.player)) ?? ''];
 
   const [limit, setLimit] = useState('');
+  const [perUse, setPerUse] = useState(false);
   const [deposit, setDeposit] = useState('');
   const [borrow, setBorrow] = useState('');
   const [months, setMonths] = useState(String(lending.loan?.minMonths ?? 24));
@@ -139,7 +140,8 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 : 'None arranged.'}
               {od.rateTo !== undefined ? ` The bank prices it by your record, ${pct(od.rate)} to ${pct(od.rateTo)}.` : (current?.overdraftLimit ?? 0) > 0 ? '' : ` ${pct(od.rate)} a year on what’s used.`}
               {od.buffer !== undefined ? ` The first ${formatMoney(inSaveMoney(sim, od.buffer, bank.currency), cur, { cents: false })} is free.` : ''}
-              {od.monthlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} a month while it’s arranged.` : ''}
+              {od.monthlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} a month while it’s arranged${od.perUse ? `, or ${formatMoney(inSaveMoney(sim, od.perUse.fee, bank.currency), cur)} each time it’s used instead${od.perUse.oncePerDay ? ', once a day at most' : ''}` : ''}.` : ''}
+              {current?.overdraftPerUse ? ' You pay for it by the use.' : ''}
               {od.setupFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.setupFee, bank.currency), cur)} to set one up.` : ''}
               {od.yearlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.yearlyFee, bank.currency), cur)} a year to have one.` : ''}
               {od.beyond ? ` Past the limit the bank still pays${od.beyond.rate !== undefined ? `, at ${pct(od.beyond.rate)} a year on the part beyond it` : ''}${od.beyond.fee !== undefined ? `, for ${formatMoney(inSaveMoney(sim, od.beyond.fee, bank.currency), cur)} an operation${od.beyond.maxPerMonth !== undefined ? `, at most ${od.beyond.maxPerMonth} a month` : ''}` : ''}${od.beyond.monthlyFee !== undefined ? `, and ${formatMoney(inSaveMoney(sim, od.beyond.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.beyond.graceUpTo ?? 0, bank.currency), cur, { cents: false })} past it${od.beyond.afterDays !== undefined && od.beyond.afterDays > 1 ? ` on ${od.beyond.afterDays} days or more` : ''}` : ''}.` : ''}
@@ -154,9 +156,14 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                   <div className="field-act">
                     <div className="field"><label htmlFor="od-limit">{`Overdraft Limit (${cur})`}</label><input id="od-limit" type="text" inputMode="decimal" value={limit} onChange={(e) => setLimit(e.target.value)} /></div>
                     <Gated feature="bank.arrange_overdraft" className="btn btn-sm" disabled={!limit}
-                      onClick={() => { if (run('bank.arrange_overdraft', { limit: cents(limit) }).ok) { toast('Overdraft arranged.', 'positive'); setLimit(''); } }}>
+                      onClick={() => { if (run('bank.arrange_overdraft', { limit: cents(limit), perUse }).ok) { toast('Overdraft arranged.', 'positive'); setLimit(''); } }}>
                       Arrange It
                     </Gated>
+                    {od.perUse && (
+                      <label className="row gap-1 small" style={{ alignItems: 'center' }}>
+                        <input type="checkbox" checked={perUse} onChange={(e) => setPerUse(e.target.checked)} /> Pay Per Use
+                      </label>
+                    )}
                   </div>
                 </>
               )}

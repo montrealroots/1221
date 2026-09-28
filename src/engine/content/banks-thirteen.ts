@@ -197,12 +197,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, source: 'Arion price list, 23 September 2026: a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03', currentLedger: '26', savingsLedger: '13',
         current: p('Veltureikningur', 'arionbanki.is rate table, 24 September 2026: 0.05%; no monthly fee', { rate: 0.0005 }),
-        savings: p('Vöxtur', 'arionbanki.is rate table, 24 September 2026: 5.55% on the lowest tier, up to 5.85%', { rate: 0.0555 }),
+        savings: p('Vöxtur', 'arionbanki.is individuals’ rate table, 24 September 2026, Vöxtur óbundinn: 5.55% to 1 million kr, 5.65% to 5 million, 5.75% to 20 million, 5.85% over', { rate: 0.0555, tiers: [{ from: 1_000_000_00, rate: 0.0565 }, { from: 5_000_000_00, rate: 0.0575 }, { from: 20_000_000_00, rate: 0.0585 }] }),
       },
       {
         id: 'is-islandsbanki', name: 'Íslandsbanki', iso: 'IS', currency: 'ISK', format: 'is', code: '05', currentLedger: '26',
         current: p('Almennur reikningur', 'islandsbanki.is rate table, 3 September 2026: 0.25%; fees not found', { rate: 0.0025 }),
-        savings: p('Vaxtaþrep', 'islandsbanki.is rate table, 3 September 2026: 6.13% on the lowest tier, up to 6.50%', { rate: 0.0613 }),
+        savings: p('Vaxtaþrep', 'islandsbanki.is rate table from 3 September 2026, Vaxtaþrep, interest paid monthly: 6.13% under 1 million kr, 6.17% to 5 million, 6.22% to 20 million, 6.27% to 75 million, 6.31% to 100 million', { rate: 0.0613, tiers: [{ from: 1_000_000_00, rate: 0.0617 }, { from: 5_000_000_00, rate: 0.0622 }, { from: 20_000_000_00, rate: 0.0627 }, { from: 75_000_000_00, rate: 0.0631 }] }),
       },
     ],
   },

@@ -40,6 +40,8 @@ export type Overdraft =
    */
   | {
     kind: 'arranged'; rate: number; rateTo?: number; monthlyFee?: Money; yearlyFee?: Money; setupFee?: Money; buffer?: Money; minLimit?: Money; maxLimit?: Money;
+    /** Instead of the monthly fee, a fee each time it's used, at most once a day where the bank says so (Canada's pay-as-you-go). */
+    perUse?: { fee: Money; oncePerDay?: boolean };
     /** Past the limit, which the bank still pays (France's commission d'intervention, Germany's higher rate). */
     beyond?: Unarranged;
     source: string;
@@ -141,23 +143,23 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   // --- Canada
   'ca-rbc': {
-    overdraft: { kind: 'arranged', rate: 0.22, monthlyFee: 5_00, minLimit: 500_00, maxLimit: 5_000_00, source: 'RBC overdraft protection: $5 a month, about 22%, $500 to $5,000, via savvynewcanadians.com' },
+    overdraft: { kind: 'arranged', rate: 0.22, monthlyFee: 5_00, minLimit: 500_00, maxLimit: 5_000_00, source: 'RBC Personal Deposit Accounts Disclosures, 3 August 2026: overdraft protection $5 a month, 22%, and no pay-per-use; $500 to $5,000 via savvynewcanadians.com' },
     term: { rate: 0.0245, months: 12, called: 'GIC', source: 'RBC 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
   },
   'ca-td': {
-    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, minLimit: 300_00, maxLimit: 5_000_00, source: 'td.com overdraft protection: $5 a month, 21%, $300 to $5,000' },
+    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00, oncePerDay: true }, minLimit: 300_00, maxLimit: 5_000_00, source: 'TD List of Services & Fees, 5 March 2026: overdraft protection $5 a month, or Pay As You Go at $5 a transaction and $5 a day at most, 21%; $300 to $5,000 via td.com' },
     term: { rate: 0.03, months: 12, called: 'GIC', source: 'TD 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
   },
   'ca-scotiabank': {
-    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, source: 'scotiabank.com overdraft protection: $5 a month, 21%' },
+    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00 }, source: 'scotiabank.com fees: overdraft protection $5 a month, or $5 each time an overdraft is created or increased, 21%' },
     term: { rate: 0.0245, months: 12, called: 'GIC', source: 'Scotiabank 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
   },
   'ca-bmo': {
-    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, source: 'BMO overdraft protection: $5 a month, 21%, via finder.com/ca' },
+    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00 }, source: 'BMO Agreements, Bank Plans and Fees, 2 June 2026: Standard overdraft protection $5 a month, Occasional $5 a use; 21% the example rate, the current one at bmo.com/rates' },
     term: { rate: 0.03, months: 12, called: 'GIC', source: 'BMO 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
   },
   'ca-cibc': {
-    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, source: 'CIBC overdraft protection: $5 a month, 21% (low confidence)' },
+    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00, oncePerDay: true }, source: 'CIBC Personal Account Service Fees, 12 March 2026: overdraft protection $5 a month, or $5 a business day an overdraft is created or increased, 21%' },
     term: { rate: 0.0245, months: 12, called: 'GIC', source: 'CIBC 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
   },
   // --- United Kingdom
@@ -225,11 +227,11 @@ export const LENDING: Readonly<Record<string, Lending>> = {
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-lcl': {
-    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr' },
+    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2102, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; 21.02% on an unauthorized overdraft, the taux débiteur of LCL’s own example (Guide tarifaire Particuliers, 1 January 2026, and its amendment of 1 July 2026)' },
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-credit-agricole': {
-    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr' },
+    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2339, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; on an unauthorized overdraft the usury ceiling itself (Code de la consommation L314-6; Charente-Périgord’s tariffs, 1 March 2026), 23.39% for an overdraft to €3,000, the Banque de France’s figure from 1 July 2025, the latest SLATE has' },
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-la-banque-postale': {
