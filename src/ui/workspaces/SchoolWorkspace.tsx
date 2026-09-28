@@ -151,6 +151,18 @@ function StandingPane() {
 
         <AttributesPanel />
 
+        {(() => {
+          const last = school.history.at(-1);
+          return last?.notes?.length ? (
+            <Panel title="From Your Teachers" subtitle={`On ${termLabel(last.term)}`}>
+              <div className="col gap-2">
+                {last.notes.map((n) => (
+                  <div key={n.course} className="small"><strong>{n.teacher}</strong>, {n.course}: {n.note}</div>
+                ))}
+              </div>
+            </Panel>
+          ) : null;
+        })()}
         <Panel title="Your Faculty">
           <div className="col gap-2 small">
             <div>{YALE_DRAMA.dean.name}: {YALE_DRAMA.dean.title}, since {formatDate(Date.parse(`${YALE_DRAMA.dean.since}T12:00:00Z`), zone())}.</div>

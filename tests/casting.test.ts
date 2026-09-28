@@ -10,7 +10,8 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
-import { CALL_KIND, COMPANY_KIND, ESTIMATE, castScore, evaluate, repPlayOf, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
+import { COURSES } from '@/engine/content/school';
+import { CALL_KIND, COMPANY_KIND, ESTIMATE, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
@@ -261,5 +262,21 @@ describe('Yale Rep’s seasons not yet announced', () => {
     const part = two.parts.find((x) => x.name === rep.role)!;
     expect(part.size).toBe('lead');
     expect(['actor', 'either']).toContain(part.for);
+  }, 120_000);
+});
+
+describe('the teachers’ notes', () => {
+  it('give one from each course the term ran, by its teacher, on growth in its skills against the room', () => {
+    const sim = life('teachers');
+    play(sim, on(2026, 12, 20));
+    const review = sim.player.school!.history[0]!;
+    const fall = COURSES.filter((c) => c.year === 1 && c.terms.includes('fall'));
+    expect(review.notes!.map((n) => n.course)).toEqual(fall.map((c) => c.name));
+    expect(review.notes!.map((n) => n.teacher)).toEqual(fall.map((c) => c.teachers.split(', ')[0]));
+    // The notes follow the growth: a student whose skills stood still is told so.
+    const tally = sim.player.school!.tally;
+    tally.craftAtStart = { ...sim.player.craft! };
+    const still = teachersNotes(sim.player, 0);
+    expect(still.every((n) => /hasn’t moved/.test(n.note))).toBe(true);
   }, 120_000);
 });

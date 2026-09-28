@@ -106,6 +106,8 @@ export interface TermTally {
   craftAtStart: Craft;
   /** Each classmate's mean craft when the term began. */
   classAtStart: number[];
+  /** Each classmate's craft, skill by skill, when the term began: what the teachers' notes weigh a course's skills against. */
+  classCraftAtStart?: Craft[];
 }
 
 /** A part played with nights to it: a School production's, the Rep's, a Cabaret show's or a Summer Cabaret play's. */
@@ -126,6 +128,8 @@ export interface TermReview {
   term: number; standing: Standing; attendance: number; growth: number; classGrowth: number; reason: string;
   /** The term's work on stage, its nights on average (`NIGHT_VALUE`), where a run had begun by the evaluation. */
   work?: number;
+  /** Each course's teacher's note (`teachersNotes`). */
+  notes?: { course: string; teacher: string; note: string }[];
 }
 
 export interface Casting {
@@ -577,6 +581,7 @@ function freshTally(person: Person, school: SchoolRecord): TermTally {
   return {
     classDays: 0, attended: 0, excused: 0, calls: 0, answered: 0, shifts: 0, worked: 0, breaches: 0,
     craftAtStart: { ...person.craft! }, classAtStart: school.classmates.map((m) => meanCraft(m.craft)),
+    classCraftAtStart: school.classmates.map((m) => ({ ...m.craft })),
   };
 }
 
@@ -1075,6 +1080,32 @@ export function directorsNote(mean: number): string {
   return 'Uneven. Some nights got away from you: come in rested, and have the part in your body before the house does.';
 }
 
+/**
+ * The teachers' notes on a term: for each course the term ran, its first
+ * teacher on how the student grew in the skills it trains against the class's
+ * middle, ahead at a quarter more, behind under three quarters. The Bulletin
+ * says the faculty evaluate every student each term; what each says, and the
+ * edges, are SLATE's.
+ */
+export function teachersNotes(person: Person, term: number): { course: string; teacher: string; note: string }[] {
+  const t = person.school?.tally;
+  const start = t?.classCraftAtStart;
+  if (!t || !start || !person.craft) return [];
+  const courses = COURSES.filter((c) => c.year === yearOfTerm(term) && c.terms.includes(termStart(term).fall ? 'fall' : 'spring'));
+  return courses.map((c) => {
+    const mine = c.skills.reduce((sum, k) => sum + person.craft![k] - t.craftAtStart[k], 0) / c.skills.length;
+    const class_ = person.school!.classmates.map((m, i) => c.skills.reduce((sum, k) => sum + m.craft[k] - (start[i]?.[k] ?? m.craft[k]), 0) / c.skills.length).sort((a, b) => a - b);
+    const middle = class_[Math.floor(class_.length / 2)] ?? 0;
+    const skill = SKILLS.find((k) => k.id === c.skills[0])!.label.toLowerCase();
+    const note = mine >= 1.25 * middle
+      ? `Real progress this term: you’re pulling ahead of the room in ${skill}.`
+      : mine >= 0.75 * middle
+      ? `Steady work, with the class. Keep at your ${skill}.`
+      : `Your ${skill} hasn’t moved as the room’s has. Come to class rested, and do the work between.`;
+    return { course: c.name, teacher: c.teachers.split(', ')[0]!, note };
+  });
+}
+
 /** A run's nights on average, by what each is worth. */
 export function nightsMean(nights: Partial<Record<Night, number>>): number {
   const all = Object.entries(nights) as [Night, number][];
@@ -1267,7 +1298,8 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${run!.play ?? run!.production} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${run!.play ?? run!.production}.` : '';
   const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}.${onStage}`;
   const next: Standing = !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
-  const review: TermReview = { term, standing: next, attendance, growth, classGrowth, reason, ...(work !== undefined ? { work } : {}) };
+  const notes = teachersNotes(person, term);
+  const review: TermReview = { term, standing: next, attendance, growth, classGrowth, reason, ...(work !== undefined ? { work } : {}), ...(notes.length ? { notes } : {}) };
   school.history.push(review);
   if (!short) school.castable = true;
   setStanding(sim, person, next, next === 'dismissed' ? `The warning wasn’t met. ${reason}` : reason);
