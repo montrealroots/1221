@@ -492,7 +492,7 @@ function WorkPane() {
     >
       <div className="col gap-3">
         <div className="grid grid-3">
-          <Stat label="Hours This Year" value={String(work.yearHours)} note={`Of ${WORK_STUDY.assignedHours + WORK_STUDY.electiveHours} at most`} />
+          <Stat label="Assigned Hours Booked" value={`${work.assignedBooked ?? 0} of ${WORK_STUDY.assignedHours}`} />
           <Stat label="Elective Hours Asked For" value={`${work.electiveHours} of ${WORK_STUDY.electiveHours}`} />
           <Stat label="Owed On Friday" value={formatMoney(Math.round(work.owedHours * rate), cur)} note={`${work.owedHours} hours at ${formatMoney(rate, cur)} an hour`} />
         </div>

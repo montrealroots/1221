@@ -67,7 +67,15 @@ export interface Place {
   keeps: boolean;
   shared: boolean;
   owned: boolean;
+  /** A kitchen to cook in: every home has one, a hotel room doesn't. */
+  cooks: boolean;
 }
+
+/** Where somebody stays away from home on a job. */
+export interface Stay { kind: 'hotel' | 'sublet' | 'sofa' | 'own'; cityId: string; unit?: RentedUnit }
+
+/** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */
+const HOTEL_FIXTURES: Fixtures = { bathtub: true, dishwasher: false, laundry: 'none', cooling: 'central', outdoor: 'none', gym: 'building' };
 
 /** What a friend's sofa gives: their shower and kitchen, and nothing of yours. */
 const SOFA_FIXTURES: Fixtures = { bathtub: false, dishwasher: false, laundry: 'none', cooling: 'none', outdoor: 'none', gym: 'none' };
@@ -95,17 +103,33 @@ export function fixturesOf(sim: Simulation, person: Person, cityId: string, fact
   return drawFixtures(rng, { countryId: city.countryId, latitude: city.latitude, longitude: city.longitude, dense: city.population >= 500_000 || city.kind === 'section' }, facts.type, 0.5, facts.features.includes('yard'));
 }
 
-/** The place somebody lives now, or nothing without a home. */
+/** Where they are now: home, or where a job has them staying (`stayPlace`). */
 export function placeOf(sim: Simulation, person: Person): Place | undefined {
+  if (person.home && !atHome(person)) return stayPlace(sim, person);
+  return homePlace(sim, person);
+}
+
+/** Where a job has them staying: its hotel, a sublet room, a friend's sofa, or their own home in that city. */
+export function stayPlace(sim: Simulation, person: Person): Place {
+  const stay = person.stay?.cityId === person.currentLocationId ? person.stay : undefined;
+  const own = stay?.kind === 'own' ? (person.homes ?? []).find((h) => h.cityId === stay.cityId) : undefined;
+  if (own) return { type: own.facts.type, size: own.facts.size, fixtures: fixturesOf(sim, person, own.cityId, own.facts, own.id), keeps: false, shared: false, owned: true, cooks: true };
+  if (stay?.kind === 'sublet' && stay.unit) return { type: stay.unit.type, size: stay.unit.size, fixtures: stay.unit.fixtures, keeps: false, shared: true, owned: false, cooks: true };
+  if (stay?.kind === 'sofa') return { type: 'condo', size: 700, fixtures: SOFA_FIXTURES, keeps: false, shared: true, owned: false, cooks: true };
+  return { type: 'condo', size: 350, fixtures: HOTEL_FIXTURES, keeps: false, shared: false, owned: false, cooks: false };
+}
+
+/** The place somebody lives, or nothing without a home. */
+export function homePlace(sim: Simulation, person: Person): Place | undefined {
   const home = person.home;
   if (!home) return undefined;
-  if (home.kind === 'sofa') return { type: 'condo', size: 700, fixtures: SOFA_FIXTURES, keeps: false, shared: true, owned: false };
+  if (home.kind === 'sofa') return { type: 'condo', size: 700, fixtures: SOFA_FIXTURES, keeps: false, shared: true, owned: false, cooks: true };
   const owned = livingIn(person);
   if (owned) {
-    return { type: owned.facts.type, size: owned.facts.size, fixtures: fixturesOf(sim, person, owned.cityId, owned.facts, owned.id), keeps: true, shared: false, owned: true };
+    return { type: owned.facts.type, size: owned.facts.size, fixtures: fixturesOf(sim, person, owned.cityId, owned.facts, owned.id), keeps: true, shared: false, owned: true, cooks: true };
   }
   const unit = home.unit ?? drawRental(sim, person, home.cityId, home.kind === 'shared', home.since);
-  return { type: unit.type, size: unit.size, fixtures: unit.fixtures, keeps: true, shared: unit.shared, owned: false };
+  return { type: unit.type, size: unit.size, fixtures: unit.fixtures, keeps: true, shared: unit.shared, owned: false, cooks: true };
 }
 
 /** Whether they're at home now: in its town. */
@@ -195,7 +219,7 @@ export function cleanerCost(sim: Simulation, person: Person): Money {
 
 /** How they'd do the laundry now: the home's way, or the laundromat's away from it. */
 export function laundryWay(sim: Simulation, person: Person): Fixtures['laundry'] {
-  return atHome(person) ? placeOf(sim, person)?.fixtures.laundry ?? 'none' : 'none';
+  return placeOf(sim, person)?.fixtures.laundry ?? 'none';
 }
 
 /** What a laundry costs now, in loads and money. */
@@ -283,7 +307,8 @@ export function heatLoss(sim: Simulation, person: Person, at: Instant): number {
   if (!city) return 0;
   const w = weatherOn(sim, city, at);
   if (w.lowC < HOT_NIGHT.lowC) return 0;
-  const cooling = atHome(person) ? placeOf(sim, person)?.fixtures.cooling ?? 'none' : 'central';
+  // Where they sleep tonight: home, or where a job has them staying.
+  const cooling = placeOf(sim, person)?.fixtures.cooling ?? 'central';
   return cooling === 'none' ? (w.lowC >= HOT_NIGHT.hotC ? HOT_NIGHT.hot : HOT_NIGHT.none) : cooling === 'units' ? HOT_NIGHT.units : 0;
 }
 
@@ -328,7 +353,7 @@ export function swimRefusal(sim: Simulation, person: Person): string | undefined
  */
 export const TRAINING = { gym: 1.2, run: 1.1, home: 1 };
 export function trainingAt(sim: Simulation, person: Person): { where: 'gym' | 'run' | 'home'; builds: number } {
-  if (!atHome(person) || (placeOf(sim, person)?.fixtures.gym ?? 'none') !== 'none') return { where: 'gym', builds: TRAINING.gym };
+  if ((placeOf(sim, person)?.fixtures.gym ?? 'none') !== 'none') return { where: 'gym', builds: TRAINING.gym };
   const w = weatherNow(sim, person);
   if (w && !wet(w.condition) && w.highC <= FINE.highC && w.highC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
   return { where: 'home', builds: TRAINING.home };
@@ -337,8 +362,10 @@ export function trainingAt(sim: Simulation, person: Person): { where: 'gym' | 'r
 /** A day's key for anything drawn once a day at home. */
 export const homeDay = (sim: Simulation, person: Person): string => dateKey(sim.now, CITIES.require(person.home?.cityId ?? person.currentLocationId).timeZone);
 
-/** Whether a meal at home now is cooked, or bought out. */
-export const cooks = (person: Person): boolean => atHome(person) && person.home?.kind !== 'sofa';
+/** Whether a meal now is cooked, where they're staying has a kitchen, or bought out. */
+export function cooks(sim: Simulation, person: Person): boolean {
+  return placeOf(sim, person)?.cooks ?? false;
+}
 
 /** What delivery costs over a meal cooked at home: $21.00 against $3.03 for the same meals (LendingTree, October 2025), near seven times. */
 export const DELIVERY = { times: 21 / 3.03 };

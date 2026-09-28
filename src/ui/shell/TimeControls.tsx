@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
 import {
-  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, LOOKING_AFTER, lookAfterRefusal, minutesFor, costFor, labelFor, type LookAfter,
+  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, LOOKING_AFTER, lookAfterRefusal, minutesFor, costFor, labelFor, type LookAfter,
 } from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
@@ -27,6 +27,8 @@ import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 
 export function TimeControls() {
+  // Why sleep can't start now, as the command has it: in the middle of a commitment.
+  const sleepBusy = useWorld((s) => { const busy = occupiedAt(s, s.now); return busy ? `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.` : undefined; });
   const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
   const [sleepOpen, setSleepOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
@@ -64,7 +66,7 @@ export function TimeControls() {
         >
           {speed === 'paused' ? 'Play' : 'Pause'}
         </Gated>
-        <Gated feature="ui.sleep" className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</Gated>
+        <Gated feature="ui.sleep" className="btn btn-sm" disabled={Boolean(sleepBusy)} title={sleepBusy} onClick={() => setSleepOpen(true)}>Sleep</Gated>
         <LookAfterMenu />
         <AdvanceMenu
           onAdvance={(at, label) => {

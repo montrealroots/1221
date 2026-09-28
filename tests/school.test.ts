@@ -410,7 +410,7 @@ describe('work-study', () => {
   it('works six hours each class-week Saturday and pays them on the Friday, as wages a bank counts', () => {
     const sim = life('work');
     play(sim, at(2026, 9, 5, 17));
-    expect(sim.player.school!.workStudy).toMatchObject({ yearHours: 6, owedHours: 6 });
+    expect(sim.player.school!.workStudy).toMatchObject({ owedHours: 6 });
     play(sim, at(2026, 9, 11, 17) + 60_000);
     const pay = sim.universe.transactions.filter((t) => t.memo.startsWith('Work-study wages'));
     expect(pay).toHaveLength(1);
@@ -639,7 +639,7 @@ describe('casting', () => {
     sim.player.currentLocationId = 'us-ny-newyork';
     sim.advanceTo(shows[1]!.at + 60_000);
     expect(sim.player.school!.standing).toBe('dismissed');
-    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: expect.stringMatching(/^A (Leading|Supporting|Featured) Part In A New Play$/), kind: 'carlotta', year: 2027, wentOn: 1 }]);
+    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: expect.stringMatching(/^A (Leading|Supporting|Featured) Part In A New Play$/), kind: 'carlotta', year: 2027, wentOn: 1, size: expect.stringMatching(/^(lead|supporting|featured)$/) }]);
   }, 120_000);
 
   it('sends an understudy on about one performance in fifty', () => {
@@ -715,8 +715,6 @@ describe('evaluation', () => {
     // The filmed monologues, posted at the end of the final term.
     expect(school.filmed).toBe(true);
     expect(yearOfStudy(sim.player)).toBe(3);
-    expect(school.workStudy.yearHours).toBeGreaterThan(100);
-    expect(school.workStudy.yearHours).toBeLessThanOrEqual(WORK_STUDY.assignedHours + WORK_STUDY.electiveHours);
     // The year's assigned shifts come to its 150 hours at most.
     expect(school.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
     expect(school.workStudy.assignedBooked).toBeGreaterThan(90);

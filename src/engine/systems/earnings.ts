@@ -15,7 +15,6 @@ import { CITIES } from '../content/geography';
 export interface YearEarnings {
   /** Wages from acting work, residuals among them. */
   acting: Money;
-  residuals: Money;
   /** Of the acting wages, under SAG-AFTRA, for its dues and its health plan. */
   sag: Money;
   workStudy: Money;
@@ -85,7 +84,7 @@ export function earningsOf(person: Person): EarningsRecord {
 
 export function yearOf(person: Person, year: number | string): YearEarnings {
   const record = earningsOf(person);
-  record.years[year] ??= { acting: 0, residuals: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} };
+  record.years[year] ??= { acting: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} };
   const y = record.years[year]!;
   y.byResidence ??= {};
   y.elsewhere ??= {};
@@ -129,7 +128,6 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + pay.gross;
   if (pay.workStudy) y.workStudy += pay.gross;
   else y.acting += pay.gross;
-  if (pay.residual) y.residuals += pay.gross;
   if (pay.sag) {
     y.sag += pay.gross;
     if (pay.employer && !pay.residual) (y.sagByProject ??= {})[pay.employer] = (y.sagByProject[pay.employer] ?? 0) + pay.gross;

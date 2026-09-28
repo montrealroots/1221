@@ -55,6 +55,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { personalityOf } from './personality';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -112,10 +113,10 @@ export interface TermTally {
 }
 
 /** A part played with nights to it: a School production's, the Rep's, a Cabaret show's or a Summer Cabaret play's. */
-export interface Run { production: string; role: string; play?: string; by?: string; kind?: Casting['kind']; size?: PartSize; nights?: Partial<Record<Night, number>>; note?: string }
+export interface Run { production: string; role: string; play?: string; by?: string; kind?: Casting['kind']; size?: PartSize; nights?: Partial<Record<Night, number>>; note?: string; noteSkill?: Skill; noteLevel?: number }
 
 /** A student's last part, which the chair reads when casting the next: its size, and how the nights went on average (`NIGHT_VALUE`). */
-export interface LastWork { size: PartSize; nights?: number }
+export interface LastWork { size: PartSize; nights?: number; heeded?: boolean }
 
 /**
  * A classmate: a name, a craft, whether they're cast as an actor or an
@@ -165,6 +166,9 @@ export interface Casting {
   /** The nights played, by how they went (`NIGHT_VALUE`), and the director's note once the run is over. */
   nights?: Partial<Record<Night, number>>;
   note?: string;
+  /** The skill the note named, and where it stood: taken, it reads at the next casting (`LastWork.heeded`). */
+  noteSkill?: Skill;
+  noteLevel?: number;
   kind: 'understudy' | 'role' | 'project' | 'thesis' | 'hughes' | 'shakespeare' | 'carlotta';
   term: number;
   /** Went on as an understudy, or performed. */
@@ -182,9 +186,9 @@ export interface SchoolRecord {
   /** The player's last part, for the chair's next casting. */
   lastWork?: LastWork;
   /** The term's casting across the class: who's in what, as which part. */
-  around?: { term: number; list: { name: string; production: string; part: string }[] };
+  around?: { term: number; list: { name: string; production: string; part: string; size?: PartSize }[] };
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
-  credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number }[];
+  credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number; size?: PartSize }[];
   /** A Cabaret show this term: which term, its production week's Thursday, the shows played, and the part and its nights (`Run`). */
   cabaret?: { term: number; week: string; performed: number } & Partial<Run>;
   /** The Summer Cabaret company: the summer's year, the shows played in each run, whether it's over, and each show's play, part and nights. */
@@ -196,7 +200,7 @@ export interface SchoolRecord {
   /** A Yale Rep assignment beside it: an understudy, or a role at a director's invitation. */
   rep?: Casting;
   /** The year's work-study: hours worked, elective hours asked for, owed on Friday, and assigned hours booked (to `WORK_STUDY.assignedHours`). */
-  workStudy: { yearHours: number; electiveHours: number; owedHours: number; assignedBooked?: number };
+  workStudy: { electiveHours: number; owedHours: number; assignedBooked?: number };
   /** The day, `YYYY-MM-DD`, they called in sick, if today. */
   sickDay?: string;
 }
@@ -243,7 +247,8 @@ export const ESTIMATE = {
    * points against the next lead, a featured part two for it; and how the
    * last run's nights went, a point and a half a band. SLATE's estimate.
    */
-  casting: { balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, nights: 1.5 },
+  /** And a director's note taken: the skill it named grown a point and a half by the next casting reads a point and a half better. SLATE's estimate. */
+  casting: { balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, nights: 1.5, heeded: 1.5, heedGain: 1.5 },
   /**
    * A night's reading (`nightOf`): readiness, a point of the part's craft
    * above what the part asks worth a fortieth (in a School production, what
@@ -756,7 +761,7 @@ export function enroll(sim: Simulation, person: Person): void {
   const school: SchoolRecord = {
     classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true,
     classmates: admitted.classmates, tally: undefined as unknown as TermTally, history: [],
-    workStudy: { yearHours: 0, electiveHours: 0, owedHours: 0 },
+    workStudy: { electiveHours: 0, owedHours: 0 },
   };
   person.school = school;
   // Illness comes at school too, with Yale Health to meet it; until 2026-09-27 it waited for the degree.
@@ -955,7 +960,7 @@ export const repTerm = (term: number) => term === 1 || (termStart(term).fall && 
 function keepCredit(sim: Simulation, school: SchoolRecord): void {
   for (const c of [school.casting, school.rep]) {
     if (!c || c.performed === 0) continue;
-    (school.credits ??= []).push({ production: c.production, role: c.role, kind: c.kind, year: zonedParts(sim.now, zone()).year, wentOn: c.performed });
+    (school.credits ??= []).push({ production: c.production, role: c.role, kind: c.kind, year: zonedParts(sim.now, zone()).year, wentOn: c.performed, ...(c.size ? { size: c.size } : {}) });
   }
 }
 
@@ -1140,7 +1145,27 @@ type Student = { i: number; name: string; craft: Craft; title: NonNullable<Class
 /** How a student reads to the chair for a play: its craft, the balance of opportunity, and how the last run went (`ESTIMATE.casting`). */
 export function castScore(s: { craft: Craft; last?: LastWork }, reads: Partial<Craft>): number {
   const c = ESTIMATE.casting;
-  return readOf(s.craft, reads) + (s.last ? c.balance[s.last.size] + c.nights * (s.last.nights ?? 0) : 0);
+  return readOf(s.craft, reads) + (s.last ? c.balance[s.last.size] + c.nights * (s.last.nights ?? 0) + (s.last.heeded ? c.heeded : 0) : 0);
+}
+
+/**
+ * The day the cast list goes up, read: a lead of their own lifts them; a
+ * friend's lead is good news; a rival's stings. SLATE's estimates of how
+ * much, a little beside a night on stage.
+ */
+export const CAST_LIST = { ownLead: 2, friendLead: 0.5, rivalLead: 1.5 };
+export function castListRead(person: Person): void {
+  const school = person.school;
+  const list = school?.around?.list ?? [];
+  const w = person.wellbeing;
+  const swing = personalityOf(person, 'moraleSwing');
+  for (const one of list) {
+    if (one.size !== 'lead') continue;
+    if (one.name === 'You') { w.morale = Math.min(100, w.morale + CAST_LIST.ownLead * swing); continue; }
+    const bond = bondWord(school!.classmates.find((m) => m.name === one.name)?.bond);
+    if (bond === 'Close Friend' || bond === 'Friend') w.morale = Math.min(100, w.morale + CAST_LIST.friendLead * swing);
+    if (bond === 'Rival') w.stress = Math.min(100, w.stress + CAST_LIST.rivalLead * personalityOf(person, 'stressGain'));
+  }
 }
 
 /**
@@ -1165,7 +1190,10 @@ function cast(sim: Simulation, person: Person, term: number): void {
   const school = person.school!;
   keepCredit(sim, school);
   // What the chair reads of last time: the part's size and how its nights went.
-  if (school.casting?.size) school.lastWork = { size: school.casting.size, ...(school.casting.nights ? { nights: nightsMean(school.casting.nights) } : {}) };
+  // And whether the director's note was taken: the skill it named grown since.
+  const c0 = school.casting;
+  const heeded = c0?.noteSkill !== undefined && c0.noteLevel !== undefined && person.craft![c0.noteSkill] >= c0.noteLevel + ESTIMATE.casting.heedGain;
+  if (c0?.size) school.lastWork = { size: c0.size, ...(c0.nights ? { nights: nightsMean(c0.nights) } : {}), ...(heeded ? { heeded } : {}) };
   delete school.casting;
   delete school.rep;
   // A third-year a director asks into the Rep's company plays there that
@@ -1179,7 +1207,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   const students: Student[] = school.classmates.flatMap((_, i) => { if (matesAtRep.has(i)) return []; const m = mateOf(sim, person, i); return [{ i, name: m.name, craft: m.craft, title: m.title, ...(m.last ? { last: m.last } : {}) }]; });
   if (school.castable && !playerAtRep) students.push({ i: -1, name: 'You', craft: person.craft!, title: person.performerTitle === 'actress' ? 'actress' : 'actor', ...(school.lastWork ? { last: school.lastWork } : {}) });
   const first = schoolProduction(term, 1);
-  const around: { name: string; production: string; part: string }[] = [];
+  const around: { name: string; production: string; part: string; size?: PartSize }[] = [];
   let mine: { production: NonNullable<ReturnType<typeof schoolProduction>>; play: ReturnType<typeof playOf>; part: string; size: PartSize; cast: { name: string; part: string }[] } | undefined;
   if (first) {
     // Placed by how each reads for the first production's play, then cast within each.
@@ -1195,7 +1223,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       const play = playOf(sim, person, production);
       const given = partsFor(members, play.parts, play.reads);
       const shown = play.title ?? production.name;
-      for (const g of given) around.push({ name: g.s.name, production: shown, part: partLabel(g.part, production.kind) });
+      for (const g of given) around.push({ name: g.s.name, production: shown, part: partLabel(g.part, production.kind), size: g.size });
       for (const g of given) if (g.s.i >= 0) school.classmates[g.s.i]!.last = { size: g.size };
       const me = given.find((g) => g.s.i < 0);
       if (me) mine = { production, play, part: me.part, size: me.size, cast: given.filter((g) => g.s.i >= 0).map((g) => ({ name: g.s.name, part: partLabel(g.part, production.kind) })) };
@@ -1221,6 +1249,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
   }
   school.around = { term, list: around };
+  castListRead(person);
   if (!school.castable) {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
     return;
@@ -1331,7 +1360,8 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const run = [school.casting, school.rep].find((c) => c && c.term === term && c.nights && Object.values(c.nights).reduce((a, b) => a + b, 0) >= ESTIMATE.workNights);
   const work = run?.nights ? nightsMean(run.nights) : undefined;
   const workedPoorly = work !== undefined && work <= ESTIMATE.workFloor;
-  const short = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly;
+  // A grave breach in the term keeps it short of good standing, whatever else went well.
+  const short = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || t.breaches > 0;
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${run!.play ?? run!.production} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${run!.play ?? run!.production}.` : '';
   const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}.${onStage}`;
@@ -1364,7 +1394,7 @@ export function registerSchool(sim: Simulation): void {
     if (term > 0) school.tally = freshTally(person, school);
     // A new year's hours from the second fall; the first's began at enrollment, and resetting them
     // here lost an elective shift asked for before the first term's morning.
-    if (term > 0 && termStart(term).fall) school.workStudy = { yearHours: 0, electiveHours: 0, owedHours: school.workStudy.owedHours };
+    if (term > 0 && termStart(term).fall) school.workStudy = { electiveHours: 0, owedHours: school.workStudy.owedHours };
     const cur = saveCurrency(s.universe);
     const need = hasNeed(person);
     const account = termAccount(cur, need, term);
@@ -1441,7 +1471,6 @@ export function registerSchool(sim: Simulation): void {
     if (present(person, item.at)) {
       if (!elective) school.tally.worked += 1;
       school.workStudy.owedHours += hours;
-      school.workStudy.yearHours += hours;
       bookPayday(s, person, item.at);
       tire(person, ESTIMATE.energy.shift);
       return;
@@ -1485,6 +1514,7 @@ export function registerSchool(sim: Simulation): void {
     const reads = castingReads(casting);
     const weakest = (Object.keys(reads) as Skill[]).sort((a, b) => person.craft![a] - person.craft![b])[0];
     casting.note = `${directorsNote(nightsMean(casting.nights))}${weakest ? ` Work on your ${SKILLS.find((k) => k.id === weakest)!.label.toLowerCase()}.` : ''}`;
+    if (weakest) { casting.noteSkill = weakest; casting.noteLevel = person.craft![weakest]; }
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
     return night;
   };

@@ -24,7 +24,7 @@ import { zonedParts, type Instant } from '../core/time';
 import { AGENCIES, ROLES, type Role } from '../content/career';
 import { agencyById, auditionLevel, careerOf, roleById, showcaseScore, type Audition } from './career';
 import { nudge } from './attributes';
-import type { Classmate } from './school';
+import { bondWord, type Classmate } from './school';
 
 export const RIVALS = {
   /** The chance a classmate, out of school, is in the room for one of the player's auditions. */
@@ -35,6 +35,9 @@ export const RIVALS = {
   monthly: { 1: 0.35, 2: 0.25, 3: 0.15, none: 0.08 } as Record<1 | 2 | 3 | 'none', number>,
   /** Recognition a trade item about the player adds. */
   press: 0.5,
+  /** A classmate's booking read in the trades: a friend's lifts the mood this much, a rival's takes it off and adds it to stress. SLATE's estimate. */
+  friendNews: 1,
+  rivalNews: 1.5,
   /** Trade items kept. */
   kept: 40,
 } as const;
@@ -118,7 +121,13 @@ export function classmateBooked(sim: Simulation, person: Person, i: number, role
   m.career.credits.push({ roleId: role.id, year: zonedParts(when, sim.homeZone).year });
   m.career.credits = m.career.credits.slice(-30);
   const line = castLine(m.name, role);
-  if (line) report(sim, person, line.source, line.headline, 'class');
+  if (!line) return;
+  report(sim, person, line.source, line.headline, 'class');
+  // Read in the trades: a friend's news is good news, a rival's stings (`bondWord`). SLATE's estimate of by how much.
+  const bond = bondWord(m.bond);
+  const w = person.wellbeing;
+  if (bond === 'Close Friend' || bond === 'Friend') w.morale = Math.min(100, w.morale + RIVALS.friendNews);
+  if (bond === 'Rival') { w.morale = Math.max(0, w.morale - RIVALS.rivalNews); w.stress = Math.min(100, w.stress + RIVALS.rivalNews); }
 }
 
 /**

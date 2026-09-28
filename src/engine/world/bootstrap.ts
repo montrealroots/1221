@@ -254,7 +254,6 @@ export function emptyUniverse(
       reducedMotion: false, timeSpeed: 'live',
     },
     counters: {},
-    engineFailures: [],
   };
 }
 

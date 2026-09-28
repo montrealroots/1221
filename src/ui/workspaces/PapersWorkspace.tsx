@@ -336,7 +336,7 @@ function BenefitsPane() {
           {claim ? (
             <div className="grid grid-3">
               <Stat label="A Week" value={money(claim.weekly)} note={claim.state === 'ct' ? 'Connecticut has no waiting week' : claim.waited ? 'The waiting week is served' : 'The first week due is unpaid'} />
-              <Stat label="Paid" value={money(claim.paid)} note={`${claim.weeksPaid} weeks`} />
+              <Stat label="Paid" value={money(claim.paid)} note={`Of ${money(claim.maxTotal)} at most`} />
               <Stat label="At Most" value={money(claim.maxTotal)} note={`Until ${formatDate(claim.endsAt, sim.zone)}`} />
             </div>
           ) : (
@@ -354,8 +354,8 @@ function BenefitsPane() {
         <Panel title="Past Claims">
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Filed</th><th scope="col">Base Period</th><th scope="col">Closed</th><th scope="col" className="num">A Week</th><th scope="col" className="num">Weeks Paid</th><th scope="col" className="num">Paid</th></tr></thead>
-              <tbody>{record.past.map((c) => <tr key={c.filedAt}><td>{formatDate(c.filedAt, sim.zone)}</td><td className="mono">{c.basePeriod.length ? `${c.basePeriod[0]} to ${c.basePeriod[c.basePeriod.length - 1]}` : '—'}</td><td>{c.closedAt !== undefined ? formatDate(c.closedAt, sim.zone) : '—'}</td><td className="num mono">{money(c.weekly)}</td><td className="num mono">{c.weeksPaid}</td><td className="num mono">{money(c.paid)}</td></tr>)}</tbody>
+              <thead><tr><th scope="col">Filed</th><th scope="col">Base Period</th><th scope="col">Closed</th><th scope="col" className="num">A Week</th><th scope="col" className="num">Paid</th></tr></thead>
+              <tbody>{record.past.map((c) => <tr key={c.filedAt}><td>{formatDate(c.filedAt, sim.zone)}</td><td className="mono">{c.basePeriod.length ? `${c.basePeriod[0]} to ${c.basePeriod[c.basePeriod.length - 1]}` : '—'}</td><td>{c.closedAt !== undefined ? formatDate(c.closedAt, sim.zone) : '—'}</td><td className="num mono">{money(c.weekly)}</td><td className="num mono">{money(c.paid)}</td></tr>)}</tbody>
             </table>
           </div>
         </Panel>

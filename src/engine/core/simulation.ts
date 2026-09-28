@@ -520,8 +520,8 @@ export class Simulation {
         return { ok: true, value };
       } catch (err) {
         const message = err instanceof CommandError ? err.message : `${command.kind} failed: ${(err as Error).message}`;
-        this.universe.engineFailures.push({ at: this.now, kind: command.kind, error: message });
-        if (this.universe.engineFailures.length > 200) this.universe.engineFailures.shift();
+        // Said to the player as it happens: a CommandError is the world's own sentence for why.
+        this.notify({ category: 'system', title: 'Something Didn’t Go Through', body: message, importance: 60 });
         return { ok: false, error: message };
       } finally {
         this.depth--;

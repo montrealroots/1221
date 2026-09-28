@@ -16,7 +16,7 @@ import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
 import type { Counter, OwnedHome, Purchase } from '../systems/homes';
-import type { Living } from '../systems/dwelling';
+import type { Living, Stay } from '../systems/dwelling';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
@@ -166,6 +166,12 @@ export interface Person {
   buying?: Purchase;
   counter?: Counter;
   offersMade?: Record<string, number>;
+  /**
+   * Where they're staying away from home on a job: a production's hotel, a
+   * sublet room, a friend's sofa, or a home of their own there
+   * (`systems/career.ts`); `systems/dwelling.ts` reads what it has.
+   */
+  stay?: Stay;
   /** Their clothes, the state of the place, and a cleaner (`systems/dwelling.ts`). From 2026-09-28. */
   living?: Living;
   /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
@@ -482,5 +488,4 @@ export interface SaveUniverse {
    * Kept so a background failure is visible in a diagnostic report rather than
    * disappearing silently. Capped: this is a symptom log, not history.
    */
-  engineFailures: { at: Instant; kind: string; error: string }[];
 }

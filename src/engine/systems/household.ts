@@ -49,6 +49,7 @@ import { CITIES } from '../content/geography';
 import { exchange } from '../content/currency';
 import { salesTaxRate } from '../content/tax';
 import { rentAt, type RentFigure } from '../content/rents';
+import { BEDROOM_RENT } from '../content/homes';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { dateKey, instantFromZoned, startOfNextDay, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { clamp } from '../core/rng';
@@ -188,9 +189,15 @@ export function costsAt(cityId: string, kind: HomeKind, currency: string, at: In
 const costsOf = (sim: Simulation, person: Person): LivingCosts | undefined =>
   person.home ? costsAt(person.home.cityId, person.home.kind, saveCurrency(sim.universe), sim.now) : undefined;
 
-/** The month's rent where they live. */
+/**
+ * The month's rent where they live: a one-bedroom's for a place of their own,
+ * or a studio's where that's what they took, at HUD's ratio of 0.87 of a
+ * one-bedroom's (`BEDROOM_RENT`).
+ */
 export function rentOf(sim: Simulation, person: Person): Money {
-  return costsOf(sim, person)?.rent ?? 0;
+  const rent = costsOf(sim, person)?.rent ?? 0;
+  const unit = person.home?.kind === 'own' ? person.home.unit : undefined;
+  return unit && unit.beds === 0 ? Math.round(rent * BEDROOM_RENT[0]! / 100) * 100 : rent;
 }
 
 /**
@@ -318,7 +325,9 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money, wit
 /** What the current account (with linked savings), its overdraft where it may be used, and the card can pay between them, now. */
 export function canPay(sim: Simulation, person: Person, overdraft = true): Money {
   const free = cardRoom(person, cardOf(sim, person));
-  return reachable(sim, person) + (overdraft ? overdraftHeadroom(sim, person) : 0) + free;
+  // Cash in hand pays for food first (`spend`), so it counts.
+  const cash = Math.max(0, accountsOf(sim, person).find((a) => a.kind === 'cash')?.balance ?? 0);
+  return reachable(sim, person) + (overdraft ? overdraftHeadroom(sim, person) : 0) + free + cash;
 }
 
 /**

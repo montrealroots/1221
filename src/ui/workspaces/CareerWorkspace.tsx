@@ -505,9 +505,9 @@ function UnionsPane() {
         {years.length ? (
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Year</th><th scope="col" className="num">Gross</th><th scope="col" className="num">Of It Residuals</th><th scope="col" className="num">Under SAG-AFTRA</th><th scope="col" className="num">Commission</th><th scope="col" className="num">Union Dues</th><th scope="col" className="num">Tax Withheld</th></tr></thead>
+              <thead><tr><th scope="col">Year</th><th scope="col" className="num">Gross</th><th scope="col" className="num">Under SAG-AFTRA</th><th scope="col" className="num">Commission</th><th scope="col" className="num">Union Dues</th><th scope="col" className="num">Tax Withheld</th></tr></thead>
               <tbody>
-                {years.map((y) => <tr key={y}><td className="mono">{y}</td><td className="num mono">{money(ledger[y]!.acting)}</td><td className="num mono">{money(ledger[y]!.residuals)}</td><td className="num mono">{money(ledger[y]!.sag)}</td><td className="num mono">{money(ledger[y]!.commission)}</td><td className="num mono">{money(ledger[y]!.dues)}</td><td className="num mono">{money(ledger[y]!.withheld)}</td></tr>)}
+                {years.map((y) => <tr key={y}><td className="mono">{y}</td><td className="num mono">{money(ledger[y]!.acting)}</td><td className="num mono">{money(ledger[y]!.sag)}</td><td className="num mono">{money(ledger[y]!.commission)}</td><td className="num mono">{money(ledger[y]!.dues)}</td><td className="num mono">{money(ledger[y]!.withheld)}</td></tr>)}
               </tbody>
             </table>
           </div>
@@ -667,7 +667,6 @@ function ResidualsPanel() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const career = careerOf(person);
-  const cur = saveCurrency(sim.universe);
   const seen = { network: 'On A Network', svod: 'Streaming', film: 'A Film’s Television And Streaming', commercial: 'A Commercial’s Cycles' } as const;
   const size = { small: 'A Small Service', middle: 'A Middling Service', large: 'A Big Service' } as const;
   return (
@@ -676,15 +675,14 @@ function ResidualsPanel() {
         {career.residuals.length > 0 && (
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Part</th><th scope="col">Where</th><th scope="col">Since</th><th scope="col" className="num">Payments</th><th scope="col" className="num">Paid</th></tr></thead>
+              <thead><tr><th scope="col">Part</th><th scope="col">Where</th><th scope="col">Since</th><th scope="col">Next Payment</th></tr></thead>
               <tbody>
                 {[...career.residuals].reverse().map((r) => (
                   <tr key={r.id}>
                     <td>{roleById(r.roleId).label}</td>
                     <td>{seen[r.kind]}{r.size ? `, ${size[r.size]}` : ''}{r.rerun ? ', Rerun' : ''}{r.syndicated ? ', Syndicated' : ''}{r.hit ? ', A Hit' : ''}</td>
                     <td>{formatDate(r.airsAt, sim.zone)}</td>
-                    <td className="num mono">{r.payments}</td>
-                    <td className="num mono">{formatMoney(r.paid, cur)}</td>
+                    <td>{(() => { const next = sim.universe.scheduled.filter((one) => one.status === 'pending' && one.payload.residualId === r.id).sort((a, b) => a.at - b.at)[0]; return next ? formatDate(next.at, sim.zone) : 'None to come'; })()}</td>
                   </tr>
                 ))}
               </tbody>

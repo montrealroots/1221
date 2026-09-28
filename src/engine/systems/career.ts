@@ -82,6 +82,7 @@ import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type C
 import { RIVALS, classMonth, classmateBooked, inTheRoom, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { emptyHomeIn, moveIntoOwned } from './homes';
+import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
 import { sagHoliday } from '../content/usholidays';
 
@@ -279,8 +280,6 @@ export interface Residual {
   rerun?: boolean;
   syndicated?: boolean;
   hit?: boolean;
-  paid: Money;
-  payments: number;
 }
 
 /** A day worked: when, its hours, and its scale, for the rule on leaving an agency and a week's unemployment. */
@@ -482,6 +481,22 @@ export function showcaseScore(craft: Craft, focus: number, presence = 50): numbe
   return shown * (1 - ESTIMATE.showcaseTiredness * (1 - Math.min(1, focus)));
 }
 
+/**
+ * What the final year's work adds to a showcase: agents attend the thesis
+ * productions, so a lead part there and the nights the faculty reviewed read
+ * beside the showing. SLATE's estimate: two points a lead in the last year,
+ * and up to two for the reviewed nights.
+ */
+export function thesisSeen(person: Person): number {
+  const school = person.school;
+  if (!school) return 0;
+  const lastYear = school.classOf - 1;
+  const leads = (school.credits ?? []).filter((c) => c.year >= lastYear && (c.kind === 'thesis' || c.kind === 'carlotta') && c.wentOn > 0 && /lead/i.test(c.size ?? '')).length;
+  const reviewed = school.history.filter((r) => r.work !== undefined).slice(-2);
+  const nights = reviewed.length ? reviewed.reduce((sum, r) => sum + r.work!, 0) / reviewed.length : 0;
+  return 2 * Math.min(1, leads) + Math.max(-2, Math.min(2, nights * 2));
+}
+
 /** Which agencies offer after a showing (`career.offers`): those whose bar it clears and who want the actor. */
 export function offersFor(sim: Simulation, person: Person, showing: number, key: string, rivals: readonly number[] = []): string[] {
   const rng = sim.rng('career.offers', person.id, key);
@@ -491,6 +506,9 @@ export function offersFor(sim: Simulation, person: Person, showing: number, key:
   const ahead = rivals.filter((r) => r > score).length;
   return AGENCIES.filter((agency) => rng.next() < ESTIMATE.agencyInterest && score >= agency.bar && ahead < ESTIMATE.agencyTakes).map((a) => a.id);
 }
+
+/** A showcase's buzz: how long a manager may still call after it, and how likely in a month. SLATE's estimates. */
+export const BUZZ = { days: 180, chance: 0.15 };
 
 /** Which management firms offer (`career.managers`): those whose bar the showing clears, half of them wanting the actor. */
 export function managerOffersFor(sim: Simulation, person: Person, showing: number, key: string): string[] {
@@ -728,10 +746,23 @@ function endRepresentation(sim: Simulation, person: Person, reason: string, left
   if (!left && person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${agency.name} Let You Go`, body: `${reason} You can still submit yourself for work.`, importance: 85, route: '/workspace/career' });
 }
 
+/**
+ * Whether an agency would take them back: not one they walked out on within
+ * two years, and not one that let them go within a year unless they've booked
+ * since. SLATE's reading of how agencies treat a former client.
+ */
+export function takesBack(sim: Simulation, person: Person, agencyId: string): boolean {
+  const ended = careerOf(person).ended;
+  if (!ended || ended.agencyId !== agencyId) return true;
+  const since = sim.now - ended.at;
+  if (ended.left) return since > 2 * 365 * MS_DAY;
+  return since > 365 * MS_DAY || (careerOf(person).lastBookedAt ?? 0) > ended.at;
+}
+
 function offerRepresentation(sim: Simulation, person: Person, agencies: string[], cityId: CareerCity, why: string): void {
   const career = careerOf(person);
   const until = sim.now + ESTIMATE.representationOfferDays * MS_DAY;
-  const fresh = agencies.filter((id) => !career.offers.some((o) => o.agencyId === id));
+  const fresh = agencies.filter((id) => !career.offers.some((o) => o.agencyId === id) && takesBack(sim, person, id));
   career.offers.push(...fresh.map((agencyId) => ({ agencyId, cityId, until })));
   if (!fresh.length || person.id !== sim.universe.playerId) return;
   const city = CITIES.require(cityId).name;
@@ -795,8 +826,18 @@ export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'ta
 }
 
 /** Whether an audition books (`career.booking`). */
+/**
+ * What a city's casting knowing the work adds: 3% of the chance for each
+ * credit made there, to five. SLATE's estimate of how a local résumé reads.
+ */
+export const LOCAL_CREDIT = { per: 0.03, most: 5 };
+export function localEdge(person: Person, cityId: string): number {
+  const here = (person.career?.credits ?? []).filter((c) => c.cityId === cityId).length;
+  return 1 + LOCAL_CREDIT.per * Math.min(LOCAL_CREDIT.most, here);
+}
+
 export function books(sim: Simulation, person: Person, audition: Audition, focus: number, edge = 1): boolean {
-  return sim.rng('career.booking', person.id, audition.id).next() < edge * bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence, audition.genre);
+  return sim.rng('career.booking', person.id, audition.id).next() < edge * localEdge(person, audition.cityId) * bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence, audition.genre);
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
@@ -1014,7 +1055,8 @@ export function registerCareer(sim: Simulation): void {
     // The school takes the class; asleep, they aren't seen.
     // Nerves in the room, by the composure there is (`attributes.ts`).
     const focus = present(person, item.at) ? focusOf(person) * nerves(s, person, 'showcase') : 0;
-    const score = showcaseScore(person.craft, focus, attributesOf(s, person).presence);
+    // Agents come to the third-years' thesis shows: the last year's work on stage, as the faculty reviewed it, reads beside the day's.
+    const score = showcaseScore(person.craft, focus, attributesOf(s, person).presence) + thesisSeen(person);
     if (focus > 0) earn(s, person, Math.max(0, score - 50) * ATTRIBUTES.reputation.showcasePer);
     career.showcases.push({ cityId, at: item.at, score });
     // The class shows with them, each classmate at an ordinary day's readiness.
@@ -1052,6 +1094,15 @@ export function registerCareer(sim: Simulation): void {
     // The commercial agent's week, and its contract's end (`systems/commercial.ts`).
     commercialTermEnds(s, person);
     scheduleCommercialWeek(s, person, item.at);
+    // A showcase's buzz: for half a year after it, a manager who was in the room may still call, the likelier the stronger it was.
+    const shown = career.showcases.filter((one) => item.at - one.at < BUZZ.days * MS_DAY);
+    if (!career.managerId && shown.length && month.day <= 7) {
+      const best = Math.max(...shown.map((one) => one.score));
+      if (s.rng('career.managers', person.id, `buzz-${item.at}`).next() < BUZZ.chance) {
+        const found = managerOffersFor(s, person, best, `buzz-${item.at}`);
+        if (found.length) offerManagement(s, person, found, `Still talking about your showcase,`);
+      }
+    }
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
@@ -1502,6 +1553,7 @@ export function registerCareer(sim: Simulation): void {
       const own = (person.homes ?? []).some((h) => h.cityId === city && !h.tenancies.some((t) => t.unit === 'main' && t.status === 'let') && !h.selling);
       if (from >= Number(item.payload.back) || own) {
         person.currentLocationId = city; s.universe.currentZone = zoneOf(city);
+        if (own) person.stay = { kind: 'own', cityId: city };
         if (own && isPlayer(person) && from < Number(item.payload.back)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: `${roleById(booking.roleId).label}: you’re staying in your own home there.`, importance: 50, route: '/workspace/career' });
         return;
       }
@@ -1515,6 +1567,8 @@ export function registerCareer(sim: Simulation): void {
       if (paid) recordJobCost(person, s.now, cost);
       person.currentLocationId = city;
       s.universe.currentZone = zoneOf(city);
+      // A room in somebody's flat, as it is inside, or a friend's sofa (`systems/dwelling.ts`).
+      person.stay = paid ? { kind: 'sublet', cityId: city, unit: drawRental(s, person, city, true, item.at) } : { kind: 'sofa', cityId: city };
       if (isPlayer(person)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: paid ? `${roleById(booking.roleId).label}: a room sublet for ${howLong}, ${formatMoney(cost, cur)}.` : `${roleById(booking.roleId).label}: a sublet for ${howLong} is ${formatMoney(cost, cur)}, which neither the bank nor the card could cover, so it’s a friend’s sofa.`, importance: 55, route: '/workspace/career' });
       return;
     }
@@ -1526,6 +1580,7 @@ export function registerCareer(sim: Simulation): void {
     if (person.currentLocationId !== city || stillWorkingIn(s, person, city, booking.id)) return;
     person.currentLocationId = home;
     s.universe.currentZone = zoneOf(home);
+    delete person.stay;
   });
 
   sim.onSchedule(TRAVEL_KIND, (item, s) => {
@@ -1542,6 +1597,7 @@ export function registerCareer(sim: Simulation): void {
     if (item.payload.direction === 'out') {
       person.currentLocationId = booking.location;
       s.universe.currentZone = zoneOf(booking.location);
+      person.stay = { kind: 'hotel', cityId: booking.location };
       if (isPlayer(person)) s.notify({ category: 'career', title: `On Location In ${CITIES.require(booking.location).name}`, body: `The production flew you out for ${role.label}, with a room of your own and a meal allowance each day.`, importance: 55, route: '/workspace/career' });
       return;
     }
@@ -1550,6 +1606,7 @@ export function registerCareer(sim: Simulation): void {
     booking.perDiemOwed = (booking.perDiemOwed ?? 0) + days * usd(rateOn(LOCATION.perDiem, dayKey(item.at, zoneOf(booking.location))), cur);
     person.currentLocationId = home;
     s.universe.currentZone = zoneOf(home);
+    delete person.stay;
     schedulePay(s, person, booking, item.at + MS_HOUR, true);
   });
 
@@ -2099,7 +2156,7 @@ export function afterlife(sim: Simulation, person: Person, booking: Booking, whe
   const unit = rateOf(role, when, booking.cityId, cur);
   const episodes = role.series ? role.series.episodes : 1;
   const perEpisode = role.series ? unit : unit * booking.units;
-  const base = { id: nextOwnId(career, 'r'), bookingId: booking.id, roleId: role.id, perEpisode, episodes, days: booking.worked, paid: 0, payments: 0, workCity: workCityOf(booking) };
+  const base = { id: nextOwnId(career, 'r'), bookingId: booking.id, roleId: role.id, perEpisode, episodes, days: booking.worked, workCity: workCityOf(booking) };
   let residual: Residual;
   if (role.after.kind === 'film') {
     residual = { ...base, kind: 'film', airsAt: when };
@@ -2208,8 +2265,6 @@ function payResidual(sim: Simulation, person: Person, residual: Residual, stream
   const foreign = residual.workCity && CITIES.get(residual.workCity)?.countryId === 'ca' ? foreignWithholding(person, residual.workCity, amount, when, cur) : 0;
   recordWages(person, when, zone, { gross: amount, withheld, commission, sag: true, residual: true, ...(foreign || residual.workCity ? { where: residual.workCity, foreignWithheld: foreign } : {}) });
   if (residual.kind === 'commercial') recordCommercialPay(person, when, amount);
-  residual.paid += amount;
-  residual.payments += 1;
   const what = { cycle: `the commercial’s cycle ${n}`, rerun: 'a prime-time rerun', syndication: `syndicated run ${n}`, svod: `streaming, year ${n}`, bonus: 'streaming’s success bonus', film: `the film’s year ${n}` }[stream];
   sim.post({
     memo: `Residuals, ${role.label}: ${what}`, category: 'salary',

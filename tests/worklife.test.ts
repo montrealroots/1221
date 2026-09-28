@@ -52,7 +52,7 @@ describe('commercials and voice', () => {
   });
 
   it('pay a commercial’s cycles by where it ran: a network’s airings to the cap, cable’s flat fee, and never under the holding fee', () => {
-    const base = { id: 'c', bookingId: 'b', roleId: 'commercial', kind: 'commercial' as const, perEpisode: 855_20, episodes: 1, days: 1, airsAt: 0, paid: 0, payments: 0 };
+    const base = { id: 'c', bookingId: 'b', roleId: 'commercial', kind: 'commercial' as const, perEpisode: 855_20, episodes: 1, days: 1, airsAt: 0 };
     const [first, second, third, later] = COMMERCIAL_USE.classA.camera;
     expect(residualAmount({ ...base, plan: ['network'], uses: [13] }, 'cycle', 2, 0, NY, 'USD')).toBe(first + second + 11 * third);
     expect(residualAmount({ ...base, plan: ['network'], uses: [30] }, 'cycle', 2, 0, NY, 'USD')).toBe(first + second + 11 * third + 17 * later);
@@ -159,7 +159,7 @@ describe('a series’ later seasons', () => {
       const sim = pro(seed, 'us-ca-losangeles', 90);
       // A season begun in December 2024: a year on is December 2025, already gone at the pickup.
       const prior = booking(sim, 'series-half', 13, at(2024, 12, 2, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', status: 'worked', worked: 65 });
-      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0, paid: 0, payments: 0 });
+      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0 });
       sim.schedule({ at: sim.now + 60_000, kind: RENEWAL_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: sim.player.id, bookingId: prior.id } });
       sim.advanceTo(sim.now + 2 * 60_000);
       const next = careerOf(sim.player).bookings.find((x) => x.season === 2);
@@ -187,7 +187,7 @@ describe('a series’ later seasons', () => {
     for (const seed of ['r1', 'r2', 'r3', 'r4', 'r5', 'r6']) {
       const sim = pro(seed, 'us-ca-losangeles', 90);
       const prior = booking(sim, 'series-half', 13, at(2026, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', status: 'worked', worked: 65 });
-      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0, paid: 0, payments: 0 });
+      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0 });
       const clash = booking(sim, 'guest-hour', 2, at(2027, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', location: 'ca-bc-vancouver' });
       expect(sim.execute({ kind: 'career.accept', payload: { bookingId: clash.id } }).ok).toBe(true);
       sim.schedule({ at: sim.now + 60_000, kind: RENEWAL_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: sim.player.id, bookingId: prior.id } });
@@ -215,7 +215,7 @@ describe('a season picked up with nothing in the bank', () => {
     for (const seed of ['u1', 'u2', 'u3', 'u4', 'u5', 'u6']) {
       const sim = pro(seed, 'us-ca-losangeles', 90);
       const prior = booking(sim, 'series-half', 13, at(2026, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', status: 'worked', worked: 65 });
-      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0, paid: 0, payments: 0 });
+      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0 });
       careerOf(sim.player).unions.sag = { eligibleAt: sim.now - 400 * MS_DAY };
       for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
       sim.schedule({ at: sim.now + 60_000, kind: RENEWAL_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: sim.player.id, bookingId: prior.id } });

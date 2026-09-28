@@ -186,7 +186,7 @@ describe('a guided life', () => {
     const sim = quickSave({ tutorial: true }, 'guide-world');
     const before = sim.universe.transactions.length;
     sim.advanceBy(40 * 24 * 3_600_000);
-    expect(sim.universe.engineFailures).toEqual([]);
+    expect(Object.values(sim.universe.notifications ?? {}).filter((n) => (n as { title: string }).title === 'Something Didn’t Go Through')).toEqual([]);
     expect(sim.universe.transactions.length).toBeGreaterThan(before);
   });
 });

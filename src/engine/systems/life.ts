@@ -393,7 +393,7 @@ export function registerLife(sim: Simulation): void {
       const person = s.player;
       // A meal is bought as it's cooked (`systems/household.ts`), and a delivered one at delivery's price.
       // A payment that doesn't go through leaves them unfed: the command fails, and the time with it.
-      if (action === 'eat' && !spend(s, person, cost, cooks(person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
+      if (action === 'eat' && !spend(s, person, cost, cooks(s, person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'laundry' && !doLaundry(s, person, s.now)) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
@@ -494,13 +494,13 @@ export function minutesFor(sim: Simulation, action: LookAfter): number {
 
 /** What it's called now: a meal at home is cooked; a workout says where it happens. */
 export function labelFor(sim: Simulation, action: LookAfter): string {
-  if (action === 'eat') return cooks(sim.player) ? 'Cook A Meal' : 'Eat A Meal';
+  if (action === 'eat') return cooks(sim, sim.player) ? 'Cook A Meal' : 'Eat A Meal';
   return LOOKING_AFTER[action].label;
 }
 
 /** What it costs now, where it costs anything. */
 export function costFor(sim: Simulation, action: LookAfter): number {
-  if (action === 'eat') return cooks(sim.player) ? mealOf(sim, sim.player) : Math.round(mealOf(sim, sim.player) * EAT_OUT.times);
+  if (action === 'eat') return cooks(sim, sim.player) ? mealOf(sim, sim.player) : Math.round(mealOf(sim, sim.player) * EAT_OUT.times);
   if (action === 'order') return Math.round(mealOf(sim, sim.player) * DELIVERY.times);
   if (action === 'laundry') return laundryCost(sim, sim.player).cost;
   return 0;
@@ -515,8 +515,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
   if ((action === 'eat' || action === 'order' || action === 'laundry') && canPay(sim, person) < costFor(sim, action)) return 'You can’t afford it.';
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
-  if (action === 'bathe' && !atHome(person)) return 'You’re away from home, with a shower.';
-  if (action === 'bathe' && !place?.fixtures.bathtub) return 'There’s no bath where you live, only a shower.';
+  if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
   if ((action === 'exercise' || action === 'swim') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
   if (action === 'outside') { const no = outsideRefusal(sim, person); if (no) return no; }
@@ -640,7 +639,8 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   const late = hour >= 1 && hour < 5 && at - startOfDay(at, sim.zone) >= MS_HOUR ? 0.08 : 0;
   // And a friend's sofa after an eviction sleeps worse than a bed of your own
   // (`systems/household.ts`), by what a late bedtime costs.
-  const sofa = person.home?.kind === 'sofa' && atHome(person) ? 0.08 : 0;
+  // A friend's sofa, at home after an eviction or away when a sublet couldn't be paid.
+  const sofa = (person.home?.kind === 'sofa' && atHome(person)) || (!atHome(person) && person.stay?.kind === 'sofa' && person.stay.cityId === person.currentLocationId) ? 0.08 : 0;
   // And a hot night with no air conditioning, or only units (`systems/dwelling.ts`).
   const heat = heatLoss(sim, person, at);
   return { stressLoss, depth, late, sofa, heat, quality: clamp((0.82 - stressLoss) * depth - late - sofa - heat, 0.28, 1) };

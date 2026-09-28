@@ -39,7 +39,6 @@ export interface Claim {
   weekly: Money;
   maxTotal: Money;
   paid: Money;
-  weeksPaid: number;
   waited: boolean;
   basePeriod: string[];
   closedAt?: Instant;
@@ -158,7 +157,7 @@ export function registerUnemployment(sim: Simulation): void {
     record.claim = {
       state, filedAt: s.now, endsAt: s.now + 365 * MS_DAY, weekly: base.result.weekly, maxTotal: base.result.maxTotal,
       // Connecticut has no waiting week.
-      paid: 0, weeksPaid: 0, waited: state === 'ct', basePeriod: base.quarters,
+      paid: 0, waited: state === 'ct', basePeriod: base.quarters,
     };
     s.schedule({ at: nextSunday(s.now, zone), kind: BENEFIT_WEEK_KIND, label: 'Unemployment: The Week Certified', category: 'system', priority: 12, payload: { personId: person.id } });
     return { weekly: base.result.weekly, maxTotal: base.result.maxTotal };
@@ -194,7 +193,6 @@ export function registerUnemployment(sim: Simulation): void {
       });
       recordBenefit(person, item.at, zone, due);
       claim.paid += due;
-      claim.weeksPaid += 1;
     }
     if (claim.paid >= claim.maxTotal) { close(s, person, `The claim has paid all it can: ${formatMoney(claim.paid, cur)}.`); return; }
     again();

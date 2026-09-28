@@ -354,7 +354,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   list('scheduled', 'the timeline');
   list('history', 'the history');
   list('notifications', 'the notifications');
-  list('engineFailures', 'the failure log');
+  if ('engineFailures' in universe) { delete (universe as unknown as Record<string, unknown>).engineFailures; steps.push('Dropped the failure log: a failure is said to the player as it happens.'); }
 
   if (typeof universe.__idCounter !== 'number') {
     universe.__idCounter = 100_000;

@@ -229,7 +229,8 @@ part the tool cannot see.
     SLATE's estimate: no site publishes what a reel or a subscription is
     worth. The trade news of the class after Yale (Deadline and Playbill
     on a classmate's booking, `systems/rivals.ts`) is shown on the Career
-    screen and read by nothing else: it tells, and changes no outcome.
+    screen, and since 2026-09-28 a friend's booking lifts the mood and a
+    rival's stings (`RIVALS.friendNews`, `rivalNews`).
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
   - Connecticut (2026-09-27): unemployment, HUSKY D, Covered Connecticut
@@ -427,14 +428,6 @@ part the tool cannot see.
   overnight, and what a gym builds over a workout at home. Not modeled: what
   running the machines and the air conditioning adds to the bills, renters'
   insurance, and what a home's fixtures add to its rent or its price.
-- **The engine's failures are kept and read by nothing.** A system that
-  throws inside a scheduled item is caught and the failure kept on the save
-  (`engineFailures`) so the world goes on; no report or screen reads them.
-- **Records the screens show and nothing else reads** are kept as a
-  statement is: a showcase's score, a career's end, residuals paid, each
-  credit's city, a loan's term, the school's history and casting notes,
-  the weeks a claim has paid. They're what happened, told back; none is a
-  dial the game turns.
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads
   the genres, Voice Acting, and Film, Television, Theater and Travel
@@ -453,6 +446,21 @@ part the tool cannot see.
   and a deployed function, so taking it out is a deployment and waits for the
   owner. (`search()`, the five record shapes with no table and the history
   categories for systems long gone were taken out on 2026-09-25.)
+
+## Settled on 2026-09-28, by wiring or deletion
+
+What was kept and only told back, made to count: an agency remembers how a
+client left (`takesBack`); a showcase's buzz brings managers for half a year
+(`BUZZ`); credits in a city count with its casting (`localEdge`); a loan's
+term clears it at its last payment; a grave breach keeps a term short; a
+director's note taken reads at the next casting (`LastWork.heeded`); the final
+year's leads and reviewed stage work read at the showcase (`thesisSeen`); the
+cast list read lifts or stings (`castListRead`); a studio rents for less than a
+one-bedroom; where a job has them staying is what they live with there
+(`person.stay`); an engine failure is said to the player as it happens. What
+only copied the ledger went: a residual's running total and count, a year's
+residuals, a claim's weeks paid, the work-study year's hours, and the failure
+log.
 
 ## Unreachable: correct, and nothing can get there
 

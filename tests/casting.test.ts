@@ -97,7 +97,7 @@ describe('the chair’s casting', () => {
     }
     expect(school.around!.list.filter((a) => a.name === 'You')).toHaveLength(1);
     expect(school.around!.list.length).toBeGreaterThanOrEqual(16);
-    for (const mate of c.cast!) expect(school.around!.list).toContainEqual({ name: mate.name, production: c.play ?? c.production, part: mate.part });
+    for (const mate of c.cast!) expect(school.around!.list).toContainEqual(expect.objectContaining({ name: mate.name, production: c.play ?? c.production, part: mate.part }));
     for (const m of school.classmates) expect(m.last).toBeDefined();
   }, 120_000);
 

@@ -44,7 +44,7 @@ function booking(sim: Simulation, roleId: string, units: number, starts = sim.no
   careerOf(sim.player).bookings.push(b);
   return b;
 }
-const claimOf = (state: 'ny' | 'ca' | 'ct', weekly: number): Claim => ({ state, filedAt: 0, endsAt: 1e15, weekly, maxTotal: 1e12, paid: 0, weeksPaid: 0, waited: true, basePeriod: [] });
+const claimOf = (state: 'ny' | 'ca' | 'ct', weekly: number): Claim => ({ state, filedAt: 0, endsAt: 1e15, weekly, maxTotal: 1e12, paid: 0, waited: true, basePeriod: [] });
 
 describe('new parts', () => {
   it('pay Off-Broadway’s minimums from the audition notices, and a series regular by the episode', () => {
@@ -217,10 +217,8 @@ describe('residuals', () => {
     const first = pending(sim, RESIDUAL_KIND).find((i) => i.payload.residualId === r.id && i.payload.stream === 'svod')!;
     expect(first.at).toBeGreaterThan(r.airsAt + 90 * MS_DAY);
     play(sim, first.at + MS_HOUR);
-    expect(r.payments).toBe(1);
     const pay = sim.universe.transactions.find((t) => t.memo.startsWith('Residuals'))!;
     expect(pay.category).toBe('salary');
-    expect(yearOf(sim.player, zonedParts(first.at, NY).year).residuals).toBe(r.paid);
     expect(pending(sim, RESIDUAL_KIND).some((i) => i.payload.residualId === r.id && i.payload.n === 2)).toBe(true);
   });
 });

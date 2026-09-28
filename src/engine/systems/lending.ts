@@ -911,7 +911,10 @@ export function registerLending(sim: Simulation): void {
         { accountId: s.nominalAccount('expense', 'Loan Interest').id, amount: interest },
       ]);
     }
-    const due = Math.min(loan.loanPayment ?? 0, -loan.balance);
+    // The term's last payment is whatever is left, the pennies each month rounded included.
+    const monthsIn = Math.round((item.at - loan.openedAt) / (30.4375 * MS_DAY));
+    const last = loan.loanMonths !== undefined && monthsIn >= loan.loanMonths;
+    const due = last ? -loan.balance : Math.min(loan.loanPayment ?? 0, -loan.balance);
     const bank = payFromBank(s, person, due);
     const paid = due - bank.short;
     if (paid > 0) post(s, `Payment: ${loan.name}`, 'loan_payment', [{ accountId: loan.id, amount: paid }, ...bank.postings]);
