@@ -339,6 +339,9 @@ export const cooks = (person: Person): boolean => atHome(person) && person.home?
 /** What delivery costs over a meal cooked at home: $21.00 against $3.03 for the same meals (LendingTree, October 2025), near seven times. */
 export const DELIVERY = { times: 21 / 3.03 };
 
+/** A meal bought out, picked up: $11.71 against the $3.03 of cooking it (LendingTree, October 2025). */
+export const EAT_OUT = { times: 11.71 / 3.03 };
+
 export const livedDays = (from: Instant, to: Instant): number => Math.floor((to - from) / MS_DAY);
 
 /** For a notice: what a laundry run came to. */

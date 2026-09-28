@@ -24,7 +24,7 @@ import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import {
-  DELIVERY, LAUNDRY, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, placeOf,
+  DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit,
 } from './dwelling';
 
@@ -392,13 +392,14 @@ export function registerLife(sim: Simulation): void {
       s.advanceTo(s.now + minutesFor(s, action) * 60_000);
       const person = s.player;
       // A meal is bought as it's cooked (`systems/household.ts`), and a delivered one at delivery's price.
-      if (action === 'eat') spend(s, person, cost, 'A meal', 'food');
-      if (action === 'order') spend(s, person, cost, 'A meal delivered', 'food');
+      // A payment that doesn't go through leaves them unfed: the command fails, and the time with it.
+      if (action === 'eat' && !spend(s, person, cost, cooks(person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
+      if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'laundry') doLaundry(s, person, s.now);
       // A workout or a swim is an outfit worn.
       if (action === 'exercise' || action === 'swim') wearOutfit(person);
       const before = { ...person.wellbeing };
-      applyLookingAfter(person, action, s.now, action === 'exercise' ? trainingAt(s, person).builds : 1);
+      applyLookingAfter(person, action, s.now, action === 'exercise' ? trainingAt(s, person).builds : action === 'swim' ? TRAINING.gym : 1);
       const changed: Partial<Wellbeing> = {};
       for (const key of Object.keys(before) as (keyof Wellbeing)[]) {
         const moved = (person.wellbeing[key] ?? 0) - (before[key] ?? 0);
@@ -429,12 +430,12 @@ export function registerLife(sim: Simulation): void {
 export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'outside' | 'unwind' | 'laundry' | 'tidy';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
-  eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or bought where you are: feeds you, and lifts the mood by as much as you needed it' },
+  eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
   order: { label: 'Order In', minutes: 50, does: 'A meal delivered, at what delivery costs: feeds you without the cooking' },
   wash: { label: 'Shower', minutes: 20, does: 'Clean again, and calmer by as much as you needed it' },
   bathe: { label: 'Take A Bath', minutes: 45, does: 'Clean again, and a long soak takes more of the stress off' },
   exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are, and eases stress; costs energy, food, a shower and an outfit' },
-  swim: { label: 'Swim In The Pool', minutes: 45, does: 'Builds fitness like a workout, and lifts the mood more' },
+  swim: { label: 'Swim In The Pool', minutes: 45, does: 'Builds fitness as a gym does, and lifts the mood more' },
   outside: { label: 'Sit Outside', minutes: 45, does: 'Out on your balcony, terrace or yard in the fine weather: calmer, and in better spirits' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
@@ -499,7 +500,7 @@ export function labelFor(sim: Simulation, action: LookAfter): string {
 
 /** What it costs now, where it costs anything. */
 export function costFor(sim: Simulation, action: LookAfter): number {
-  if (action === 'eat') return mealOf(sim, sim.player);
+  if (action === 'eat') return cooks(sim.player) ? mealOf(sim, sim.player) : Math.round(mealOf(sim, sim.player) * EAT_OUT.times);
   if (action === 'order') return Math.round(mealOf(sim, sim.player) * DELIVERY.times);
   if (action === 'laundry') return laundryCost(sim, sim.player).cost;
   return 0;
@@ -514,7 +515,8 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
   if ((action === 'eat' || action === 'order' || action === 'laundry') && canPay(sim, person) < costFor(sim, action)) return 'You can’t afford it.';
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
-  if (action === 'bathe' && !(atHome(person) && place?.fixtures.bathtub)) return 'There’s no bath where you live, only a shower.';
+  if (action === 'bathe' && !atHome(person)) return 'You’re away from home, with a shower.';
+  if (action === 'bathe' && !place?.fixtures.bathtub) return 'There’s no bath where you live, only a shower.';
   if ((action === 'exercise' || action === 'swim') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
   if (action === 'outside') { const no = outsideRefusal(sim, person); if (no) return no; }
@@ -573,8 +575,9 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     livingOf(person).tidy = 100;
     w.morale = clamp(w.morale + 2 * swing, 0, 100);
   } else if (action === 'outside') {
-    w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
-    w.morale = clamp(w.morale + 4 * swing, 0, 100);
+    // Time outside in fine weather does more for the mood than an hour indoors, in less of it.
+    w.stress = clamp(w.stress - 12 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
+    w.morale = clamp(w.morale + 5 * swing, 0, 100);
   } else if (action === 'exercise' || action === 'swim') {
     const ceiling = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).fitness;
     // A gym builds more than a workout at home with nothing (`trainingAt` in `systems/dwelling.ts`).

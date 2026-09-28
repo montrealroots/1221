@@ -245,15 +245,16 @@ const SPREAD = { below: 0.5, above: 0.7 };
 export const LISTINGS = 50;
 /** The year the figures are for, which parts' ages are counted from. */
 const DATA_YEAR = 2026;
-/** A place on the market sells in this many days, a month to four: SLATE's estimate. */
-const CYCLE_DAYS = { least: 30, most: 120 };
+/** A place on the market sells in this many days, a month to six, most within three: SLATE's estimate. */
+const CYCLE_DAYS = { least: 30, most: 180 };
 /** Price cuts: this much, after each of these many days unsold. */
 const PRICE_CUT = { rate: 0.03, afterDays: [60, 120] as const };
 
 /** Where a place on the market is in its cycle at a moment: the home on it, and when that home was listed. */
 function slotAt(sim: Simulation, cityId: string, slot: number, at: Instant, epoch: Instant): { generation: number; listedAt: Instant } {
   const r = sim.rng('homes.listings', cityId, slot);
-  const cycle = CYCLE_DAYS.least + Math.floor(r.next() * (CYCLE_DAYS.most - CYCLE_DAYS.least));
+  // Most sell within three months, some sit for six: long enough for the price cuts to fall.
+  const cycle = CYCLE_DAYS.least + Math.floor(r.next() ** 2 * (CYCLE_DAYS.most - CYCLE_DAYS.least));
   const offset = Math.floor(r.next() * cycle);
   const day = Math.floor((at - epoch) / MS_DAY) + offset;
   const generation = Math.floor(day / cycle);
@@ -275,7 +276,11 @@ export function listingsIn(sim: Simulation, cityId: string, at = sim.now): Listi
     bySim.set(cityId, known);
   }
   const taken = new Set([...(sim.player.homes ?? []).map((h) => h.listingId), ...(sim.player.buying ? [sim.player.buying.listingId] : [])]);
-  return known.list.filter((one) => !taken.has(one.id));
+  // Cheapest first by what's asked today, cuts and all, ranked among what's still for sale.
+  return known.list.filter((one) => !taken.has(one.id))
+    .map((one) => ({ one, asking: askingPrice(sim, one, at) }))
+    .sort((x, y) => x.asking - y.asking)
+    .map(({ one }, n) => ({ ...one, rank: n + 1 }));
 }
 
 function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { generation: number; listedAt: Instant }[]): Listing[] {
@@ -878,6 +883,15 @@ function tenantMovesIn(sim: Simulation, person: Person, owned: OwnedHome, t: Ten
   t.since = sim.now;
   t.leaseEnds = sim.now + HOME.leaseMonths * 30.4375 * MS_DAY;
   t.depositAccountId = deposit.id;
+  // The rest of this month's rent on moving in; the rent on the first after.
+  const zone = CITIES.require(owned.cityId).timeZone;
+  const p = zonedParts(sim.now, zone);
+  const days = new Date(Date.UTC(p.year, p.month, 0)).getUTCDate();
+  const rest = Math.round(t.rent * (days - p.day + 1) / days);
+  if (rest > 0) {
+    sim.post({ memo: `Rent to the month’s end, ${owned.facts.address}`, category: 'home', postings: [{ accountId: checking.id, amount: rest }, { accountId: sim.nominalAccount('income', 'Rent Received').id, amount: -rest }] });
+    recordHome(person, sim.now, zone, 'rentalRent', rest);
+  }
   if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Tenant Moved In', body: `${t.unit === 'adu' ? 'The cottage at ' : ''}${owned.facts.address}: ${formatMoney(t.rent, saveCurrency(sim.universe), { cents: false })} a month for a year, and a month’s deposit held.`, importance: 60, route: '/workspace/homes' });
 }
 
@@ -906,7 +920,7 @@ function tenancies(sim: Simulation, person: Person, owned: OwnedHome, firstOfMon
       if (sim.now >= t.tenantAt) tenantMovesIn(sim, person, owned, t);
       continue;
     }
-    if (firstOfMonth && sim.now - t.since > 20 * MS_DAY) {
+    if (firstOfMonth && sim.now > t.since) {
       const checking = sim.universe.accounts[person.primaryAccountId!]!;
       sim.post({ memo: `Rent, ${owned.facts.address}`, category: 'home', postings: [{ accountId: checking.id, amount: t.rent }, { accountId: sim.nominalAccount('income', 'Rent Received').id, amount: -t.rent }] });
       recordHome(person, sim.now, CITIES.require(owned.cityId).timeZone, 'rentalRent', t.rent);

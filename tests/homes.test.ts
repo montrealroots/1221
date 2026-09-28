@@ -77,7 +77,8 @@ describe('the market', () => {
     const sim = save('homes-fifty');
     const homes = listingsIn(sim, 'us-ct-newhaven');
     expect(homes).toHaveLength(50);
-    for (let n = 1; n < 50; n++) expect(homes[n]!.value).toBeGreaterThanOrEqual(homes[n - 1]!.value);
+    for (let n = 1; n < 50; n++) expect(askingPrice(sim, homes[n]!)).toBeGreaterThanOrEqual(askingPrice(sim, homes[n - 1]!));
+    homes.forEach((h, n) => expect(h.rank).toBe(n + 1));
     const typical = homeValueAt('us-ct-newhaven', 'USD');
     expect(typical.kind).toBe('zillow');
     const middle = (homes[24]!.value + homes[25]!.value) / 2;

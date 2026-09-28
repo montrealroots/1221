@@ -37,7 +37,7 @@ import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
 import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf } from '@/engine/systems/dwelling';
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
-import { sizeText } from '@/engine/systems/homes';
+import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -392,7 +392,7 @@ export function Home() {
                 <Stat
                   label="Sales Tax"
                   value={`${(place.salesTax * 100).toFixed(1)}%`}
-                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners: you rent`}
+                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners${player.home?.kind === 'owned' ? ', which you pay' : ': you rent'}`}
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -709,6 +709,8 @@ function YourHome({ cur }: { cur: string }) {
   const away = useWorld((s) => (s.player.home && s.player.home.cityId !== s.player.currentLocationId ? s.player.home.cityId : undefined));
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
+  const council = useWorld((s) => Math.round(rentersCouncilTax(s, s.player) / 10));
+  const checking = useWorld((s) => Math.max(0, s.universe.accounts[s.player.primaryAccountId ?? '']?.balance ?? 0));
   // What leaves the bank, the old deposit back set against it, and why a move can't be made, as `move` has it.
   const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared') - depositBack(s, s.player), own: moveCost(s, s.player, 'own') - depositBack(s, s.player) }));
   const refused = useWorld((s) => ({ shared: moveRefusal(s, s.player, 'shared'), own: moveRefusal(s, s.player, 'own') }));
@@ -719,7 +721,7 @@ function YourHome({ cur }: { cur: string }) {
       <Stat
         label="Where You Sleep"
         value={homeLabel}
-        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills)} a month on the first: ${money(rent)} rent and ${money(bills)} bills. Since ${formatDate(home!.since, sim.zone)}`}
+        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
       />
       {home && home.kind !== 'sofa' && home.kind !== 'owned' && (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -727,7 +729,7 @@ function YourHome({ cur }: { cur: string }) {
             <label htmlFor="pay-landlord">{owed > 0 ? `Owed: ${money(owed)}` : ahead > 0 ? `Paid Ahead: ${money(ahead)}` : 'Pay The Landlord'} ({cur})</label>
             <input id="pay-landlord" inputMode="decimal" value={paying} onChange={(e) => setPaying(e.target.value)} />
           </div>
-          <Gated feature="home.pay_landlord" className="btn btn-sm" onClick={payLandlord} disabled={!paying}>Pay The Landlord</Gated>
+          <Gated feature="home.pay_landlord" className="btn btn-sm" onClick={payLandlord} disabled={!paying || centsFromTyped(paying) > checking}>Pay The Landlord</Gated>
         </div>
       )}
       {home?.noticeUntil !== undefined && (

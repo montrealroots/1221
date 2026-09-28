@@ -22,6 +22,7 @@ import {
   sellRefusal, sizeText, termsIn, type HomeFacts, type Listing, type OwnedHome, type SellerAnswer, type Tenancy,
 } from '@/engine/systems/homes';
 import { CAREER_CITIES } from '@/engine/content/career';
+import { inTheBank } from '@/engine/systems/household';
 
 type HomesTab = 'sale' | 'yours';
 
@@ -189,9 +190,10 @@ function ForSalePane() {
                     <tr><th scope="row">Down Payment</th><td className="num mono">{money(offer.down)}</td></tr>
                     {offer.loan > 0 && <tr><th scope="row">Mortgage</th><td className="num mono">{money(offer.loan)} at {pct(offer.rate)} over {terms.years} years</td></tr>}
                     <tr><th scope="row">Closing Costs</th><td className="num mono">{money(offer.closing)}</td></tr>
-                    <tr><th scope="row">On The Day</th><td className="num mono">{money(offer.cash)}</td></tr>
+                    {inspect && <tr><th scope="row">The Inspection, When Its Report Comes</th><td className="num mono">{money(atTown(sim, town, HOME.inspectionFeeUsd))}</td></tr>}
+                    <tr><th scope="row">At Closing</th><td className="num mono">{money(offer.cash - offer.earnest)}</td></tr>
                     {offer.loan > 0 && <tr><th scope="row">Principal And Interest</th><td className="num mono">{money(offer.month.mortgage)}</td></tr>}
-                    <tr><th scope="row">{city.parentId === 'uk-eng' ? `Council Tax, Band ${COUNCIL_TAX.letters[councilBand(sim, offer.price)]}` : 'Property Tax'}</th><td className="num mono">{money(offer.month.tax)}</td></tr>
+                    <tr><th scope="row">{city.parentId === 'uk-eng' ? `Council Tax, Band ${COUNCIL_TAX.letters[councilBand(sim, offer.price)]}${living ? '' : ', Until It’s Let'}` : 'Property Tax'}</th><td className="num mono">{money(offer.month.tax)}</td></tr>
                     <tr><th scope="row">Insurance</th><td className="num mono">{money(offer.month.insurance)}</td></tr>
                     {offer.month.pmi > 0 && <tr><th scope="row">Mortgage Insurance</th><td className="num mono">{money(offer.month.pmi)}</td></tr>}
                     {offer.month.hoa > 0 && <tr><th scope="row">{shared}</th><td className="num mono">{money(offer.month.hoa)}</td></tr>}
@@ -236,7 +238,7 @@ function ForSalePane() {
               : typical.kind === 'calibrated'
                 ? 'Zillow doesn’t report this town: its typical home is its rent times what homes cost over a year’s rent in the towns of its state that Zillow does. '
                 : 'The typical home here is SLATE’s estimate: the town’s rent times how dear homes run over rents in this country, measured against America’s. '}
-            The fifty homes are the game’s own, drawn about it: none is a real listing, and the addresses are common street names of the country with numbers of SLATE’s. Each sells in a month to four and another comes on; one unsold two months is cut 3%, and at four 3% again. How a seller answers an offer, rates, down payments and closing costs are SLATE’s estimates of the country’s{city.parentId === 'uk-eng' || city.parentId === 'uk-nir' ? ', but for England’s Stamp Duty Land Tax' : ''}. A home not to live in is an investment: at least {Math.round(HOME.investmentDown * 100)}% down and {pct(HOME.investmentRate)} on the rate.
+            The fifty homes are the game’s own, drawn about it: none is a real listing, and the addresses are common street names of the country with numbers of SLATE’s. Each sells in a month to six and another comes on; one unsold two months is cut 3%, and at four 3% again. How a seller answers an offer, rates, down payments and closing costs are SLATE’s estimates of the country’s{city.parentId === 'uk-eng' || city.parentId === 'uk-nir' ? ', but for England’s Stamp Duty Land Tax' : ''}. A home not to live in is an investment: at least {Math.round(HOME.investmentDown * 100)}% down and {pct(HOME.investmentRate)} on the rate.
           </Fine>
         </div>
       </Panel>
@@ -302,6 +304,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
   const noMoveIn = useWorld((s) => moveInRefusal(s, s.player, owned), [owned]);
   const room = useWorld((s) => equityRoom(s, owned), [owned]);
   const [paying, setPaying] = useState('');
+  const bank = useWorld((s) => inTheBank(s, s.player));
   const [borrowing, setBorrowing] = useState('');
   const noBorrow = useWorld((s) => borrowRefusal(s, s.player, owned, centsFromTyped(borrowing || '0')), [owned, borrowing]);
   const [then, setThen] = useState<'shared' | 'own'>('own');
@@ -310,7 +313,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
   const use = lives ? 'you live here' : owned.tenancies.some((t) => t.unit === 'main' && t.status === 'let') ? 'let' : owned.tenancies.some((t) => t.unit === 'main') ? 'advertised to let' : 'empty';
   const payDown = (loan: 'mortgage' | 'equity') => {
     const answer = run('home.pay_mortgage', { homeId: owned.id, amount: centsFromTyped(paying), loan });
-    if (answer.ok) { toast('Paid off the loan.', 'positive'); setPaying(''); }
+    if (answer.ok) { toast('Paid.', 'positive'); setPaying(''); }
   };
   const units: Tenancy['unit'][] = [...(lives ? [] : ['main' as const]), ...(owned.facts.features.includes('adu') ? ['adu' as const] : [])];
   const parts = [
@@ -331,7 +334,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           <Stat label="Yours Of It" value={money(yours)} note="Its worth, less what’s borrowed on it" tone={yours < 0 ? 'negative' : 'positive'} />
           <Stat label="A Month" value={money(month.total)} note={parts} />
         </div>
-        {owed > 0 && <div className="callout callout-warning small">Behind: {money(owed)} owed on it, paid the first day the bank can. {HOME.graceDays} days late costs a fee, {HOME.reportLateDays} days goes on your record{owned.foreclosureAt !== undefined ? `, and the lender sells it ${formatDate(owned.foreclosureAt, city.timeZone)}` : ''}.</div>}
+        {owed > 0 && <div className="callout callout-warning small">Behind: {money(owed)} owed on it, paid the first day the bank can. A payment {HOME.graceDays} days late costs a fee, and a loan’s {HOME.reportLateDays} days late goes on your record{owned.foreclosureAt !== undefined ? `, and the lender sells it ${formatDate(owned.foreclosureAt, city.timeZone)}` : ''}.</div>}
         <Facts facts={owned.facts} countryId={city.countryId} />
         {city.parentId === 'uk-eng' && <div className="xs dim">Council Tax Band {COUNCIL_TAX.letters[councilBand(sim, value)]}.</div>}
         <Parts facts={owned.facts} year={year} />
@@ -351,8 +354,8 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
               <label htmlFor={`pay-${owned.id}`}>Pay Down ({cur})</label>
               <input id={`pay-${owned.id}`} inputMode="decimal" value={paying} onChange={(e) => setPaying(e.target.value)} />
             </div>
-            {mortgage > 0 && <Gated feature="home.pay_mortgage" className="btn btn-sm" onClick={() => payDown('mortgage')} disabled={!paying}>Pay Down The Mortgage</Gated>}
-            {equityLoan > 0 && <Gated feature="home.pay_mortgage" className="btn btn-sm btn-ghost" onClick={() => payDown('equity')} disabled={!paying}>Pay Down The Equity Loan</Gated>}
+            {mortgage > 0 && <Gated feature="home.pay_mortgage" className="btn btn-sm" onClick={() => payDown('mortgage')} disabled={!paying || centsFromTyped(paying) > bank}>Pay Down The Mortgage</Gated>}
+            {equityLoan > 0 && <Gated feature="home.pay_mortgage" className="btn btn-sm btn-ghost" onClick={() => payDown('equity')} disabled={!paying || centsFromTyped(paying) > bank}>Pay Down The Equity Loan</Gated>}
           </div>
         )}
 
@@ -398,7 +401,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           <div className="strong small">Selling It</div>
           {owned.selling ? (
             <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-              <span className="small">It’s listed, and the sale closes {formatDate(owned.selling.closesAt, city.timeZone)}.{owned.selling.then ? ` You move into ${owned.selling.then === 'own' ? 'a place of your own' : 'a room'} that day.` : ''}</span>
+              <span className="small">It’s listed, and the sale closes {formatDate(owned.selling.closesAt, city.timeZone)}.{owned.selling.then ? ` You move into ${owned.selling.then === 'own' ? 'a place of your own' : 'a room'} that day, if the bank can pay its deposit; otherwise a friend’s sofa.` : ''}</span>
               <Gated feature="home.cancel" className="btn btn-sm btn-ghost" onClick={() => run('home.cancel', { homeId: owned.id })}>Call It Off</Gated>
             </div>
           ) : (
@@ -420,7 +423,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
             </>
           )}
         </div>
-        <Fine>What each job costs and returns at sale is SLATE’s estimate of a typical American job, at the town’s cost of living; the pattern follows the remodeling trade’s cost-against-value surveys. Past half again what the home cost, a job returns half as much. A worn part can fail, the likelier the more worn; storms and hard freezes can damage a house; the insurance pays that damage over a {money(atTown(sim, owned.cityId, HOME.deductibleUsd))} deductible, never wear, and each claim puts a fifth on the premium for three years. What fails and how often, what it costs, what a home lets for by its bedrooms and how tenants behave are SLATE’s estimates.</Fine>
+        <Fine>What each job costs and returns at sale is SLATE’s estimate of a typical American job, at the town’s cost of living; the pattern follows the remodeling trade’s cost-against-value surveys. Past half again what the home cost, a job returns half as much. A worn part can fail, the likelier the more worn; storms and hard freezes can damage a house, and a fire any home; the insurance pays that damage over a {money(atTown(sim, owned.cityId, HOME.deductibleUsd))} deductible, never wear, and each claim puts a fifth on the premium for three years. What fails and how often, what it costs, what a home lets for by its bedrooms and how tenants behave are SLATE’s estimates.</Fine>
       </div>
     </Panel>
   );
