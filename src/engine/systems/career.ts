@@ -87,6 +87,25 @@ export const CAREER_WEEK_KIND = 'career.week';
 export const IMPROV_KIND = 'career.improv';
 export const WORKSHOP_KIND = 'career.workshop';
 export const FESTIVAL_KIND = 'career.festival';
+export const AIRS_KIND = 'career.airs';
+
+/**
+ * A finished independent film's road, SLATE's estimate: Tribeca programs a
+ * hundred or so features a year from thousands submitted, and takes one in
+ * five of a finished SAG-AFTRA film with a trained cast; half the rest play
+ * a smaller festival, the Brooklyn Film Festival in June; the others go
+ * straight to streaming. What each is worth in recognition, of the part's
+ * own (`recognitionFrom`): the festival whole, Brooklyn half, streaming six
+ * tenths. And television's, by its audience when it airs: a network a fifth
+ * more, a streaming service by its size, a hit twice. Until 2026-09-28 every
+ * film premiered at Tribeca and every part's recognition came the day it
+ * wrapped, however many saw it.
+ */
+export const FILM_ROAD = {
+  tribeca: 0.2, brooklyn: 0.5,
+  worth: { tribeca: 1, brooklyn: 0.5, streaming: 0.6 },
+  audience: { network: 1.2, small: 0.5, middle: 1, large: 1.5, hit: 2 },
+} as const;
 export const AUDITION_KIND = 'career.audition';
 export const OFFER_KIND = 'career.offer';
 export const STAY_KIND = 'career.stay';
@@ -584,13 +603,20 @@ function schedulePremiere(sim: Simulation, person: Person, role: Role, wrapped: 
   const cityId: CareerCity = studio ? 'us-ca-losangeles' : 'us-ny-newyork';
   const zone = zoneOf(cityId);
   let when: Instant;
+  // An independent film submits to Tribeca, and may not get in (`career.selection`).
+  const x = studio ? 0 : sim.rng('career.selection', person.id, `${role.id}-${wrapped}`).next();
+  const road: 'studio' | 'tribeca' | 'brooklyn' | 'streaming' = studio ? 'studio' : x < FILM_ROAD.tribeca ? 'tribeca' : x < FILM_ROAD.tribeca + (1 - FILM_ROAD.tribeca) * FILM_ROAD.brooklyn ? 'brooklyn' : 'streaming';
   if (studio) when = at(wrapped + 270 * MS_DAY, zone, 0, 19);
   else {
+    // June's festivals: Tribeca from the 10th, Brooklyn's from the 1st; streaming about nine months on.
     let year = zonedParts(wrapped, zone).year;
-    when = instantFromZoned({ year, month: 6, day: 10, hour: 19 }, zone);
-    if (when < wrapped + 150 * MS_DAY) { year += 1; when = instantFromZoned({ year, month: 6, day: 10, hour: 19 }, zone); }
+    const day = road === 'brooklyn' ? 1 : 10;
+    when = instantFromZoned({ year, month: 6, day, hour: 19 }, zone);
+    if (when < wrapped + 150 * MS_DAY) { year += 1; when = instantFromZoned({ year, month: 6, day, hour: 19 }, zone); }
+    if (road === 'streaming') when = at(wrapped + 270 * MS_DAY, zone, 0, 12);
   }
-  sim.schedule({ at: when, kind: FESTIVAL_KIND, label: `${studio ? 'Premiere' : 'Tribeca Premiere'}: ${role.label}`, category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 180, locationId: cityId, payload: { personId: person.id, roleId: role.id, studio } });
+  const label = { studio: 'Premiere', tribeca: 'Tribeca Premiere', brooklyn: 'Brooklyn Film Festival Premiere', streaming: 'Released To Streaming' }[road];
+  sim.schedule({ at: when, kind: FESTIVAL_KIND, label: `${label}: ${role.label}`, category: 'career', priority: 30, requiresPlayer: road !== 'streaming', durationMinutes: road === 'streaming' ? 0 : 180, locationId: cityId, payload: { personId: person.id, roleId: role.id, studio, road } });
 }
 
 /** What a call costs in stress by its hour: before nine in the morning, or a performance that runs late. */
@@ -1203,10 +1229,17 @@ export function registerCareer(sim: Simulation): void {
     if (booking.worked < workDays(booking).length) return;
     booking.status = 'worked';
     earn(s, person, ATTRIBUTES.reputation.job);
-    nudge(s, person, 'recognition', recognitionFrom(role));
+    // Recognition comes when the work is seen: a commercial and Broadway as they run; television when it airs, by its audience; a film at its premiere or release (`FILM_ROAD`).
+    const television = role.series !== undefined || role.arc === true || role.id.startsWith('guest') || role.id === 'costar';
+    if (!television && !role.id.startsWith('film')) nudge(s, person, 'recognition', recognitionFrom(role));
     if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
     career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
     const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
+    if (television) {
+      const a = FILM_ROAD.audience;
+      const audience = life?.kind === 'network' ? a.network : life?.kind === 'svod' ? a[life.size ?? 'middle'] * (life.hit ? a.hit : 1) : 1;
+      s.schedule({ at: Math.max(s.now + 60_000, life?.airsAt ?? s.now + 60_000), kind: AIRS_KIND, label: `It Airs: ${role.label}`, category: 'system', priority: 20, payload: { personId: person.id, roleId: role.id, audience } });
+    }
     // A season done, the series holds its option until it's picked up or dropped, by mid-June.
     if (role.series && life) {
       const q = zonedParts(item.at, s.homeZone);
@@ -1722,18 +1755,37 @@ export function registerCareer(sim: Simulation): void {
     return { on: true };
   });
 
+  // Television seen: recognition by its audience.
+  sim.onSchedule(AIRS_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person) return;
+    const role = roleById(String(item.payload.roleId));
+    nudge(s, person, 'recognition', recognitionFrom(role) * Number(item.payload.audience ?? 1));
+    if (isPlayer(person) && (role.series || role.arc)) s.notify({ category: 'career', title: `It’s On: ${role.label}`, body: `The episodes you made are airing now.`, importance: 45, route: '/workspace/career' });
+  });
+
   sim.onSchedule(FESTIVAL_KIND, (item, s) => {
     const person = personOf(item);
     if (!person) return;
     const role = roleById(String(item.payload.roleId));
     const f = ATTRIBUTES.build.festival;
-    const full = item.payload.studio === true ? f.studio : f.indie;
+    // A film booked before 2026-09-28 went to Tribeca, or to a studio's premiere.
+    const road = String(item.payload.road ?? (item.payload.studio === true ? 'studio' : 'tribeca')) as 'studio' | 'tribeca' | 'brooklyn' | 'streaming';
+    const worth = road === 'studio' ? 1 : FILM_ROAD.worth[road];
+    if (road === 'streaming') {
+      // Straight to streaming: seen, without a premiere to be at.
+      nudge(s, person, 'recognition', recognitionFrom(role) * worth);
+      if (isPlayer(person)) s.notify({ category: 'career', title: 'Your Film Went To Streaming', body: `${role.label} didn’t get into Tribeca or Brooklyn, and was released straight to streaming.`, importance: 50, route: '/workspace/career' });
+      return;
+    }
+    const full = (road === 'studio' ? f.studio : f.indie) * worth;
     const there = present(person, item.at, item.locationId);
-    // The film premieres either way; the room sees the actor only if they came.
-    nudge(s, person, 'recognition', there ? full : full * f.absent);
+    // The film premieres either way, and its audience sees the work; the room sees the actor only if they came.
+    nudge(s, person, 'recognition', recognitionFrom(role) * worth + (there ? full : full * f.absent));
     if (there) earn(s, person, f.reputation);
     else item.status = 'missed';
-    if (isPlayer(person)) s.notify({ category: 'career', title: there ? 'Your Film Premiered' : 'Your Film Premiered Without You', body: there ? `${role.label} premiered, and you walked the carpet and did the press line.` : `${role.label} premiered, and you weren’t there for the press.`, importance: 60, route: '/workspace/career' });
+    const where = road === 'brooklyn' ? ' at the Brooklyn Film Festival' : road === 'tribeca' ? ' at Tribeca' : '';
+    if (isPlayer(person)) s.notify({ category: 'career', title: there ? 'Your Film Premiered' : 'Your Film Premiered Without You', body: there ? `${role.label} premiered${where}, and you walked the carpet and did the press line.` : `${role.label} premiered${where}, and you weren’t there for the press.`, importance: 60, route: '/workspace/career' });
   });
 
   sim.onCommand<{ auditionId: string }, { coached: true }>('career.coach', (p, { sim: s }) => {

@@ -304,14 +304,19 @@ part the tool cannot see.
   an audition (six points of a part’s bar at the extremes, half on tape) and
   a showing (a fifth of it) is an estimate. Nerves are read before auditions,
   performances, the showcase and days on set, not before classes, rehearsals
-  or the booth. Recognition comes only from finished work, not from its
-  audience, and the overscale it earns is a single multiple of scale, not a
+  or the booth. Since 2026-09-28 recognition comes when the work is seen,
+  by its audience (`FILM_ROAD`): television when it airs, a network or a
+  streaming service by its size, a hit twice; a film at its premiere or its
+  release. How much each audience is worth is SLATE's estimate, and a show's
+  ratings aren't modeled, only its outlet and whether it's a hit. The
+  overscale recognition earns is a single multiple of scale, not a
   negotiated quote. Other people’s attributes aren’t kept: classmates are
   read at an ordinary presence of 50. The ways to build them on purpose (an improv course, a casting
   director workshop, a publicist, a festival premiere) are priced at SLATE’s
-  estimate of what the trade quotes, and what each adds is SLATE’s. A film’s
-  premiere is Tribeca’s June for an independent one and Los Angeles nine
-  months on for a studio’s: no film here is ever passed over by a festival.
+  estimate of what the trade quotes, and what each adds is SLATE’s. An
+  independent film gets into Tribeca one time in five, and half the rest
+  play the Brooklyn Film Festival; the others go straight to streaming, all
+  SLATE's estimate. Until 2026-09-28 every film premiered at Tribeca.
 - **The 21 skills' weights are SLATE's estimates.** The skills themselves are
   the conservatories' and the business's (`content/school.ts`, since
   2026-09-27), and each is read by an outcome. What isn't published: how much

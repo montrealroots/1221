@@ -10,7 +10,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
-  AGENCY_TERM, AGENCY_TERM_KIND, AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
+  AGENCY_TERM, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
   acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
@@ -689,19 +689,37 @@ describe('the attributes at work', () => {
     play(sim, at(2026, 10, 7, 12));
     expect(b.status).toBe('worked');
     expect(a.reputation).toBeCloseTo(earned([ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.job]), 6);
-    expect(a.recognition).toBe(ATTRIBUTES.recognition.costar);
     expect(a.composure).toBeGreaterThan(composure);
+    // Recognition when the episode airs, by its audience: nothing at the wrap.
+    expect(a.recognition).toBe(0);
+    const airs = pending(sim, AIRS_KIND)[0]!;
+    play(sim, airs.at + MS_HOUR);
+    expect(a.recognition).toBeCloseTo(ATTRIBUTES.recognition.costar * Number(airs.payload.audience), 10);
   });
 
-  it('premieres a finished independent film at Tribeca the next June it can make', () => {
-    const sim = pro('attr-premiere');
-    const film = offer(sim, 'film-low', 1, 0, at(2026, 10, 5, 8));
-    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
-    play(sim, at(2026, 10, 9, 12));
-    expect(film.status).toBe('worked');
-    const premiere = pending(sim, FESTIVAL_KIND)[0]!;
-    expect(premiere.locationId).toBe('us-ny-newyork');
-    expect(zonedParts(premiere.at, NY)).toMatchObject({ year: 2027, month: 6, day: 10, hour: 19 });
+  it('sends a finished independent film to Tribeca in June if it gets in, to Brooklyn if not, or straight to streaming', () => {
+    const roads = new Set<string>();
+    for (const seed of ['attr-premiere', 'attr-premiere-2', 'attr-premiere-3', 'attr-premiere-4', 'attr-premiere-5', 'attr-premiere-6', 'attr-premiere-7', 'attr-premiere-8']) {
+      const sim = pro(seed);
+      const film = offer(sim, 'film-low', 1, 0, at(2026, 10, 5, 8));
+      expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
+      play(sim, at(2026, 10, 9, 12));
+      expect(film.status).toBe('worked');
+      const premiere = pending(sim, FESTIVAL_KIND)[0]!;
+      const road = String(premiere.payload.road);
+      roads.add(road);
+      expect(premiere.locationId).toBe('us-ny-newyork');
+      if (road === 'tribeca') expect(zonedParts(premiere.at, NY)).toMatchObject({ year: 2027, month: 6, day: 10, hour: 19 });
+      if (road === 'brooklyn') expect(zonedParts(premiere.at, NY)).toMatchObject({ year: 2027, month: 6, day: 1, hour: 19 });
+      if (road === 'streaming') expect(premiere.requiresPlayer).toBe(false);
+    }
+    expect(roads.size).toBeGreaterThan(1);
+    // About one in five gets into Tribeca, over many films.
+    const sim = pro('attr-roads');
+    const n = 2000;
+    const tribeca = Array.from({ length: n }, (_, k) => sim.rng('career.selection', sim.player.id, `f${k}`).next() < FILM_ROAD.tribeca).filter(Boolean).length;
+    expect(tribeca / n).toBeGreaterThan(0.17);
+    expect(tribeca / n).toBeLessThan(0.23);
   });
 
   it('loses reputation for a walk-off', () => {

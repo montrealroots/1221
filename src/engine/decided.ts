@@ -31,7 +31,7 @@ import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
-import { afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
+import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
 import { illnessWeek } from './systems/health';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
@@ -359,6 +359,19 @@ defineDecider<{ sim: Simulation; roleId: string; level: number }, string>({
     person.craft = evenCraft(level);
     return Array.from({ length: 300 }, (_, n) => books(sim, person, { id: `d${n}`, roleId, at: 0, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' }, 1) ? '1' : '0').join('');
   },
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.selection',
+  decides: 'Where a finished independent film goes: Tribeca, the Brooklyn Film Festival, or straight to streaming.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // Which film.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 11 }),
+  decide: ({ sim, key }) => Array.from({ length: 60 }, (_, n) => { const x = sim.rng('career.selection', sim.player.id, `film-${key + n}`).next(); return x < FILM_ROAD.tribeca ? 'T' : x < FILM_ROAD.tribeca + (1 - FILM_ROAD.tribeca) * FILM_ROAD.brooklyn ? 'B' : 'S'; }).join(''),
 });
 
 defineDecider<{ sim: Simulation; key: number }, string>({

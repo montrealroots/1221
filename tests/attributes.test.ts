@@ -302,11 +302,12 @@ describe('building them on purpose', () => {
       sim.advanceTo(sim.now + 2 * 60_000);
       return a;
     };
+    // The film's audience sees the work either way (`recognitionFrom`); the room sees the actor only if they came.
     const went = run('attr-fest-went', true);
-    expect(went.recognition).toBe(ATTRIBUTES.build.festival.indie);
+    expect(went.recognition).toBe(ATTRIBUTES.recognition.film + ATTRIBUTES.build.festival.indie);
     expect(went.reputation).toBe(ATTRIBUTES.build.festival.reputation);
     const missed = run('attr-fest-missed', false);
-    expect(missed.recognition).toBe(ATTRIBUTES.build.festival.indie * ATTRIBUTES.build.festival.absent);
+    expect(missed.recognition).toBe(ATTRIBUTES.recognition.film + ATTRIBUTES.build.festival.indie * ATTRIBUTES.build.festival.absent);
     expect(missed.reputation).toBe(0);
   });
 });
