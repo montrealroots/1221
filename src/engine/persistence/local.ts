@@ -4,6 +4,13 @@
  * Used standalone and as the offline fallback. Every write makes a backup of
  * the previous state first, so a failed write or a corrupt save always has
  * something to recover from.
+ *
+ * Saves are kept in IndexedDB where the browser has it, and in local storage
+ * where it doesn't. Until 2026-09-28 they were kept in local storage alone,
+ * which a browser holds to about five million characters an origin: a life
+ * played to eighty packs to about 1.4 million, twice that with its backup, so
+ * a second long life in another slot could no longer be saved. A save still
+ * in local storage is moved across the first time it's read.
  */
 
 import type { SaveUniverse } from '../domain/model';
@@ -13,10 +20,10 @@ const KEY = (slot: Slot) => `slate.save.${slot}`;
 const BACKUP_KEY = (slot: Slot) => `slate.backup.${slot}`;
 
 /**
- * A save is gzipped before it goes into local storage, because a universe
- * that has run for a year is several megabytes of JSON and a browser gives
- * an origin about five. The packed form is marked so an older, plain save
- * still loads; the marker is not valid JSON, so the two cannot be confused.
+ * A save is gzipped before it's stored, because a universe that has run for
+ * a year is several megabytes of JSON. The packed form is marked so an older,
+ * plain save still loads; the marker is not valid JSON, so the two cannot be
+ * confused.
  */
 const PACKED = 'slate.gz1:';
 
@@ -54,31 +61,102 @@ async function unpack(raw: string): Promise<string> {
   return new Response(stream).text();
 }
 
-function storage(): Storage {
+/** Where saves are kept: a key and its text. */
+export interface SaveStore {
+  getItem(key: string): Promise<string | null>;
+  setItem(key: string, value: string): Promise<void>;
+  removeItem(key: string): Promise<void>;
+}
+
+function localStore(): Storage {
   if (typeof localStorage === 'undefined') {
     throw new PersistenceError('This browser has no local storage available, so saves can’t be kept here.', false);
   }
   return localStorage;
 }
 
+/** Local storage, as a save store. */
+export const LOCAL_STORE: SaveStore = {
+  getItem: async (key) => localStore().getItem(key),
+  setItem: async (key, value) => localStore().setItem(key, value),
+  removeItem: async (key) => localStore().removeItem(key),
+};
+
+const DB_NAME = 'slate';
+const DB_STORE = 'saves';
+let db: Promise<IDBDatabase> | undefined;
+
+function openDb(): Promise<IDBDatabase> {
+  db ??= new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => { req.result.createObjectStore(DB_STORE); };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => { db = undefined; reject(req.error); };
+  });
+  return db;
+}
+
+function request<T>(mode: IDBTransactionMode, run: (store: IDBObjectStore) => IDBRequest): Promise<T> {
+  return openDb().then((d) => new Promise<T>((resolve, reject) => {
+    const tx = d.transaction(DB_STORE, mode);
+    const req = run(tx.objectStore(DB_STORE));
+    tx.oncomplete = () => resolve(req.result as T);
+    tx.onerror = () => reject(tx.error ?? req.error);
+    tx.onabort = () => reject(tx.error ?? req.error);
+  }));
+}
+
+/** IndexedDB, as a save store. */
+export const INDEXED_STORE: SaveStore = {
+  getItem: async (key) => (await request<string | undefined>('readonly', (st) => st.get(key))) ?? null,
+  setItem: async (key, value) => { await request('readwrite', (st) => st.put(value, key)); },
+  removeItem: async (key) => { await request('readwrite', (st) => st.delete(key)); },
+};
+
+/** A store that keeps saves in `primary`, and moves any still in `legacy` across the first time they're read. */
+export function movingStore(primary: SaveStore, legacy: SaveStore): SaveStore {
+  return {
+    async getItem(key) {
+      const found = await primary.getItem(key);
+      if (found !== null) return found;
+      let old: string | null = null;
+      try { old = await legacy.getItem(key); } catch { return null; }
+      if (old === null) return null;
+      await primary.setItem(key, old);
+      await legacy.removeItem(key).catch(() => {});
+      return old;
+    },
+    setItem: (key, value) => primary.setItem(key, value),
+    async removeItem(key) {
+      await primary.removeItem(key);
+      await legacy.removeItem(key).catch(() => {});
+    },
+  };
+}
+
+function defaultStore(): SaveStore {
+  return typeof indexedDB !== 'undefined' ? movingStore(INDEXED_STORE, LOCAL_STORE) : LOCAL_STORE;
+}
+
 export class LocalSaveAdapter implements SaveAdapter {
   readonly name = 'This Device';
   readonly serverAuthoritative = false;
 
+  constructor(private readonly store: SaveStore = defaultStore()) {}
+
   async listSlots(): Promise<SaveSlotInfo[]> {
     const slots: SaveSlotInfo[] = [];
     for (const slot of [1, 2, 3] as Slot[]) {
-      let store: Storage;
+      let raw: string | null;
       try {
-        store = storage();
+        raw = await this.store.getItem(KEY(slot));
       } catch {
-        slots.push({ slot, occupied: false, hasBackup: false, error: 'Local storage is unavailable.' });
+        slots.push({ slot, occupied: false, hasBackup: false, error: 'This device’s storage is unavailable.' });
         continue;
       }
-      const raw = store.getItem(KEY(slot));
       // A backup is only a backup if it can be read. Advertising one that
       // cannot puts a button on the card that fails when it is pressed.
-      const backup = await this.readBackup(store, slot);
+      const backup = await this.readBackup(slot);
       const hasBackup = backup !== null;
       const backupDateLabel = backup?.meta.worldDateLabel || undefined;
       if (!raw) {
@@ -99,23 +177,22 @@ export class LocalSaveAdapter implements SaveAdapter {
   }
 
   async load(slot: Slot): Promise<SaveUniverse | null> {
-    const raw = storage().getItem(KEY(slot));
+    const raw = await this.store.getItem(KEY(slot));
     if (!raw) return null;
     return deserialise(await unpack(raw));
   }
 
   async save(universe: SaveUniverse): Promise<void> {
-    const store = storage();
     const slot = universe.meta.slot;
-    const previous = store.getItem(KEY(slot));
+    const previous = await this.store.getItem(KEY(slot));
     const next = await pack(serialise(universe));
 
     try {
       // Back up what is already there before overwriting it.
       if (previous) {
-        store.setItem(BACKUP_KEY(slot), previous);
+        await this.store.setItem(BACKUP_KEY(slot), previous);
       }
-      store.setItem(KEY(slot), next);
+      await this.store.setItem(KEY(slot), next);
     } catch (error) {
       const message = (error as Error).name === 'QuotaExceededError'
         ? 'There isn’t enough storage space left on this device to save. Free some space, or delete a save you no longer want.'
@@ -125,16 +202,15 @@ export class LocalSaveAdapter implements SaveAdapter {
   }
 
   async remove(slot: Slot): Promise<void> {
-    const store = storage();
-    const existing = store.getItem(KEY(slot));
+    const existing = await this.store.getItem(KEY(slot));
     // Deleting keeps a backup, so an accidental delete is recoverable. A save
     // that cannot be read is not worth keeping and must never be written over
     // a backup that can: deleting a corrupt slot is exactly when the older
     // copy is the only thing left.
     if (existing && await this.readable(existing)) {
-      store.setItem(BACKUP_KEY(slot), existing);
+      await this.store.setItem(BACKUP_KEY(slot), existing);
     }
-    store.removeItem(KEY(slot));
+    await this.store.removeItem(KEY(slot));
   }
 
   private async readable(raw: string): Promise<boolean> {
@@ -146,8 +222,8 @@ export class LocalSaveAdapter implements SaveAdapter {
     }
   }
 
-  private async readBackup(store: Storage, slot: Slot): Promise<SaveUniverse | null> {
-    const raw = store.getItem(BACKUP_KEY(slot));
+  private async readBackup(slot: Slot): Promise<SaveUniverse | null> {
+    const raw = await this.store.getItem(BACKUP_KEY(slot));
     if (!raw) return null;
     try {
       return deserialise(await unpack(raw));
@@ -157,15 +233,14 @@ export class LocalSaveAdapter implements SaveAdapter {
   }
 
   async backup(slot: Slot): Promise<boolean> {
-    const store = storage();
-    const raw = store.getItem(KEY(slot));
+    const raw = await this.store.getItem(KEY(slot));
     if (!raw) return false;
-    store.setItem(BACKUP_KEY(slot), raw);
+    await this.store.setItem(BACKUP_KEY(slot), raw);
     return true;
   }
 
   async restoreBackup(slot: Slot): Promise<SaveUniverse | null> {
-    const raw = storage().getItem(BACKUP_KEY(slot));
+    const raw = await this.store.getItem(BACKUP_KEY(slot));
     if (!raw) return null;
     const universe = deserialise(await unpack(raw));
     await this.save(universe);
