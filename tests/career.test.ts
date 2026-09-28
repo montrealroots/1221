@@ -10,7 +10,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
-  AGENCY_TERM, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
+  AGENCY_TERM, DAY_TRIPS, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
   acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
@@ -177,13 +177,31 @@ function audition(sim: Simulation, mode: 'tape' | 'room', self = false) {
 }
 
 describe('an audition, on the day', () => {
-  it('on tape is made anywhere; in the room, only in its city', () => {
+  it('on tape is made anywhere; in the room, in its city or a day trip from it, the train paid', () => {
     const sim = signed('where', 2);
-    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.player.currentLocationId = 'us-ca-losangeles';
     expect(['done', 'booked']).toContain(audition(sim, 'tape').status);
     expect(audition(sim, 'room').status).toBe('missed');
     sim.player.currentLocationId = 'us-ny-newyork';
     expect(['done', 'booked']).toContain(audition(sim, 'room').status);
+    // From New Haven, Metro-North's day pass to Grand Central and back: until 2026-09-28 the room was missed.
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    const fares = () => sim.universe.transactions.filter((t) => t.memo.startsWith('The train to New York')).length;
+    const before = fares();
+    expect(['done', 'booked']).toContain(audition(sim, 'room').status);
+    expect(fares()).toBe(before + 1);
+    expect(DAY_TRIPS['us-ct-newhaven']!['us-ny-newyork']!.fare).toBe(46_75);
+  });
+
+  it('in the room, for an actor away on a job, is made on tape and takes no strike', () => {
+    const sim = signed('on-set', 2);
+    const job = offer(sim, 'costar', 5, 0, sim.now - MS_DAY);
+    job.status = 'accepted';
+    sim.player.currentLocationId = 'us-ca-losangeles';
+    const done = audition(sim, 'room');
+    expect(done.mode).toBe('tape');
+    expect(['done', 'booked']).toContain(done.status);
+    expect(careerOf(sim.player).missed).toBe(0);
   });
 
   it('missed in hospital, counts for nothing against the agency’s three', () => {
@@ -195,7 +213,7 @@ describe('an audition, on the day', () => {
 
   it('missed three times of the agency’s, and not before, ends the representation; missing your own counts for nothing', () => {
     const sim = signed('three', 2);
-    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.player.currentLocationId = 'us-ca-losangeles';
     audition(sim, 'room', true);
     expect(careerOf(sim.player).missed).toBe(0);
     audition(sim, 'room');
@@ -393,7 +411,7 @@ describe('auditions', () => {
     const sim = signed('miss', 3);
     play(sim, pending(sim, CAREER_WEEK_KIND)[0]!.at + MS_HOUR);
     const career = careerOf(sim.player);
-    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.player.currentLocationId = 'us-ca-losangeles';
     const room = career.auditions.find((a) => a.mode === 'room');
     const tape = career.auditions.find((a) => a.mode === 'tape');
     let weeks = 0;

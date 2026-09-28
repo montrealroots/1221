@@ -950,6 +950,30 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   return out;
 }
 
+/**
+ * A city an actor reaches for the day and comes home from: Metro-North's New
+ * Haven Line between New Haven and Grand Central, about an hour and fifty
+ * minutes, on its weekday day pass, $46.75 from New Haven in January 2026
+ * (CT Mirror, 12 January 2026). The rise of 1 July 2026 wasn't published as a
+ * figure, so the January fare stands. Until 2026-09-28 an actor in New Haven
+ * signed with a New York agency missed every audition in its room unless they
+ * moved, and was let go for it.
+ */
+export const DAY_TRIPS: Readonly<Record<string, Readonly<Record<string, { fare: Money; currency: string; minutes: number; source: string }>>>> = {
+  'us-ct-newhaven': { 'us-ny-newyork': { fare: 46_75, currency: 'USD', minutes: 110, source: 'https://ctmirror.org/2026/01/12/ct-metro-north-january-ticket-changes/' } },
+  'us-ny-newyork': { 'us-ct-newhaven': { fare: 46_75, currency: 'USD', minutes: 110, source: 'https://ctmirror.org/2026/01/12/ct-metro-north-january-ticket-changes/' } },
+};
+
+/** There for a call in a city: in it, or a day trip from where they are, the fare paid. */
+function reaches(sim: Simulation, person: Person, when: Instant, cityId: string, memo: string): boolean {
+  if (!present(person, when)) return false;
+  if (person.currentLocationId === cityId) return true;
+  const trip = DAY_TRIPS[person.currentLocationId]?.[cityId];
+  if (!trip) return false;
+  const cur = saveCurrency(sim.universe);
+  return payForWork(sim, person, exchange(trip.fare, trip.currency, cur) ?? trip.fare, `The train to ${CITIES.get(cityId)?.name ?? 'the city'} and back: ${memo}`);
+}
+
 function present(person: Person, when: Instant, cityId?: string): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're nowhere else (`systems/health.ts`).
@@ -1229,7 +1253,10 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     const audition = career.auditions.find((a) => a.id === item.payload.auditionId);
     if (!audition || audition.status !== 'ahead') return;
-    if (!present(person, item.at, audition.mode === 'room' ? audition.cityId : undefined)) {
+    // Away on a job in another city, the room takes a tape instead, as casting does for an actor on set.
+    if (audition.mode === 'room' && person.currentLocationId !== audition.cityId && !DAY_TRIPS[person.currentLocationId]?.[audition.cityId] && working(s, person) && present(person, item.at)) audition.mode = 'tape';
+    const there = audition.mode === 'room' ? reaches(s, person, item.at, audition.cityId, 'an audition') : present(person, item.at);
+    if (!there) {
       audition.status = 'missed';
       item.status = 'missed';
       // In hospital, the agency passes on it for them: no strike.
@@ -1896,7 +1923,7 @@ export function registerCareer(sim: Simulation): void {
     if (!person || !career?.improv) return;
     career.improv.left -= 1;
     if (career.improv.left <= 0) delete career.improv;
-    if (!present(person, item.at, String(item.payload.cityId))) { item.status = 'missed'; return; }
+    if (!reaches(s, person, item.at, String(item.payload.cityId), 'an improv class')) { item.status = 'missed'; return; }
     // On your feet in front of a room, with nothing prepared.
     nudge(s, person, 'composure', ATTRIBUTES.build.improvSession.composure, true);
     nudge(s, person, 'presence', ATTRIBUTES.build.improvSession.presence, true);
@@ -1921,7 +1948,7 @@ export function registerCareer(sim: Simulation): void {
   sim.onSchedule(WORKSHOP_KIND, (item, s) => {
     const person = personOf(item);
     if (!person) return;
-    if (!present(person, item.at, String(item.payload.cityId))) { item.status = 'missed'; return; }
+    if (!reaches(s, person, item.at, String(item.payload.cityId), 'a workshop')) { item.status = 'missed'; return; }
     // A cold read in front of the office: known to it after, and the nerves of it.
     nerves(s, person, 'audition');
     earn(s, person, ATTRIBUTES.build.workshop);
