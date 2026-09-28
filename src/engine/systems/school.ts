@@ -66,7 +66,7 @@ import {
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
-import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
+import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent } from './household';
 import { SHOWCASE_KIND, armSummerWork, beginCareer, bookShowcase } from './career';
@@ -107,6 +107,9 @@ export interface TermTally {
   /** Each classmate's mean craft when the term began. */
   classAtStart: number[];
 }
+
+/** A part played with nights to it: a School production's, the Rep's, a Cabaret show's or a Summer Cabaret play's. */
+export interface Run { production: string; role: string; play?: string; by?: string; kind?: Casting['kind']; size?: PartSize; nights?: Partial<Record<Night, number>>; note?: string }
 
 /** A student's last part, which the chair reads when casting the next: its size, and how the nights went on average (`NIGHT_VALUE`). */
 export interface LastWork { size: PartSize; nights?: number }
@@ -156,10 +159,10 @@ export interface SchoolRecord {
   around?: { term: number; list: { name: string; production: string; part: string }[] };
   /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
   credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number }[];
-  /** A Cabaret show this term: which term, its production week's Thursday, and the shows played. */
-  cabaret?: { term: number; week: string; performed: number };
-  /** The Summer Cabaret company: the summer's year, the shows played in each run, whether it's over. */
-  summer?: { year: number; played: number[]; until: Instant; out?: boolean };
+  /** A Cabaret show this term: which term, its production week's Thursday, the shows played, and the part and its nights (`Run`). */
+  cabaret?: { term: number; week: string; performed: number } & Partial<Run>;
+  /** The Summer Cabaret company: the summer's year, the shows played in each run, whether it's over, and each show's play, part and nights. */
+  summer?: { year: number; played: number[]; until: Instant; out?: boolean; shows?: Run[] };
   /** The third year's filmed monologues, posted at the end of the final term: footage a reel can be cut from. */
   filmed?: boolean;
   history: TermReview[];
@@ -989,10 +992,11 @@ export function repPlayOf(sim: Simulation, person: Person, term: number): (typeo
 }
 
 /** What a casting asks of the craft: its play's, a festival's new plays', or the Rep company's. */
-export function castingReads(c: Pick<Casting, 'play' | 'kind'>): Partial<Craft> {
-  const play = c.play ? [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS].find((p) => p.title === c.play) : undefined;
+export function castingReads(c: { play?: string; kind?: Casting['kind'] }): Partial<Craft> {
+  const play = c.play ? [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title === c.play) : undefined;
   if (play) return play.reads;
-  return c.kind === 'carlotta' || c.kind === 'hughes' ? NEW_PLAYS_READ : COMPANY_READ;
+  // The Rep's company without a named play asks a professional stage's; the rest are new work.
+  return c.kind === 'role' || c.kind === 'understudy' ? COMPANY_READ : NEW_PLAYS_READ;
 }
 
 /**
@@ -1016,6 +1020,33 @@ export function rehearse(craft: Craft, focus: number): void {
   grow(craft, 'character', focus, 1.5);
   grow(craft, 'script', focus);
   grow(craft, 'memorization', focus);
+}
+
+/**
+ * A part in a student company, the Cabaret's or the Summer Cabaret's, which
+ * the company casts among itself: a lead for a student in the class's top
+ * four on what the play asks, a supporting part otherwise, the one written
+ * for them where the play names it. SLATE's estimate of how a company that
+ * isn't the chair's casts.
+ */
+export function companyPart(person: Person, reads: Partial<Craft>, parts?: readonly Part[]): { role: string; size: PartSize } {
+  const school = person.school!;
+  const mine = readOf(person.craft!, reads);
+  const place = 1 + school.classmates.filter((m) => readOf(m.craft, reads) > mine).length;
+  const size: PartSize = place <= 4 ? 'lead' : 'supporting';
+  const title = person.performerTitle === 'actress' ? 'actress' : 'actor';
+  const fits = (p: Part) => p.for === 'either' || p.for === title;
+  const part = parts?.find((p) => p.size === size && fits(p)) ?? parts?.find(fits);
+  return part ? { role: part.name, size: part.size } : { role: `${SIZE_WORD[size]} In A New Piece`, size };
+}
+
+/** The Summer Cabaret's three plays for a summer: dealt from `SUMMER_PLAYS` in the save's own shuffled order, three a summer from the first. */
+export function summerPlaysOf(sim: Simulation, person: Person, year: number): (typeof SUMMER_PLAYS)[number][] {
+  const rng = sim.rng('school.class', person.id, 'season-summer');
+  const order = [...SUMMER_PLAYS];
+  for (let i = order.length - 1; i > 0; i -= 1) { const j = Math.floor(rng.next() * (i + 1)); [order[i], order[j]] = [order[j]!, order[i]!]; }
+  const first = (person.school?.classOf ?? year + 2) - 2;
+  return [0, 1, 2].map((n) => order[((year - first) * 3 + n) % order.length]!);
 }
 
 /** What a band of night is worth to the chair's next casting (`LastWork.nights`). */
@@ -1367,7 +1398,7 @@ export function registerSchool(sim: Simulation): void {
   });
 
   /** A night played: its reading, what it does, and on the last, the director's note. */
-  const reckonNight = (s: Simulation, person: Person, casting: Casting, item: { at: Instant; payload: Record<string, unknown> }, kept: number, rep: boolean): Night => {
+  const reckonNight = (s: Simulation, person: Person, casting: Run, item: { at: Instant; payload: Record<string, unknown> }, kept: number, rep: boolean): Night => {
     const n = ESTIMATE.nights;
     // An understudy plays the part they cover, which at the Rep is a lead.
     const night = nightOf(s, person, `${casting.production}-${item.at}`, readOf(person.craft!, castingReads(casting)), focusOf(person) * kept, casting.size ?? 'lead', rep ? 'rep' : 'school');
@@ -1508,7 +1539,8 @@ export function registerSchool(sim: Simulation): void {
     const school = person.school!;
     const term = school.termsBegun - 1;
     const week = cabaretWeek(s, person, term)!;
-    school.cabaret = { term, week: keyOf(week), performed: 0 };
+    // A new piece, made by the students, cast within the company (`companyPart`).
+    school.cabaret = { term, week: keyOf(week), performed: 0, production: cabaretSeason(term), ...companyPart(person, NEW_PLAYS_READ) };
     const c = YALE_CABARET;
     for (const d of cabaretEvenings(week, classPeriod(term).off)) {
       schedule(s, person, at(d, c.rehearsalFrom), { kind: CABARET_KIND, label: 'Yale Cabaret: Rehearsal', minutes: c.rehearsalMinutes, payload: { call: 'rehearsal' } });
@@ -1524,25 +1556,25 @@ export function registerSchool(sim: Simulation): void {
     const school = person?.school;
     if (!person || !school?.cabaret || !person.craft) return;
     if (!present(person, item.at)) { item.status = 'missed'; return; }
+    const cab = school.cabaret;
+    // A show joined before 2026-09-28 has no part yet: the company's, now.
+    if (!cab.role) Object.assign(cab, { production: cabaretSeason(cab.term), ...companyPart(person, NEW_PLAYS_READ) });
+    const run = cab as typeof cab & Run;
     if (item.payload.call === 'performance') {
-      school.cabaret.performed += 1;
+      cab.performed += 1;
       const kept = nerves(sim, person, 'performance');
-      grow(person.craft, 'scene', focusOf(person) * kept, 4);
-      grow(person.craft, 'emotion', focusOf(person) * kept, 2);
-      grow(person.craft, 'voice', focusOf(person) * kept, 2);
+      playNight(person.craft, castingReads(run), focusOf(person) * kept);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
+      reckonNight(sim, person, run, item, kept, false);
     } else {
-      grow(person.craft, 'scene', focusOf(person), 1.5);
-      grow(person.craft, 'character', focusOf(person), 1.5);
-      grow(person.craft, 'script', focusOf(person));
-      grow(person.craft, 'memorization', focusOf(person));
+      rehearse(person.craft, focusOf(person));
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }
     // The closing night played: on the résumé (a show never played never reaches here).
     if (item.payload.last === true) {
-      (school.credits ??= []).push({ production: cabaretSeason(school.cabaret.term), role: 'In The Company', kind: 'cabaret', year: zonedParts(item.at, zone()).year, wentOn: school.cabaret.performed });
+      (school.credits ??= []).push({ production: cabaretSeason(cab.term), role: run.role, kind: 'cabaret', year: zonedParts(item.at, zone()).year, wentOn: cab.performed });
     }
   });
 
@@ -1555,7 +1587,9 @@ export function registerSchool(sim: Simulation): void {
     const runs = summerRuns(year);
     const from = at(addDays(runs[0]!.from, -7 * SUMMER_CABARET.rehearsalWeeks), SUMMER_CABARET.rehearsalFrom);
     const until = at(runs[runs.length - 1]!.to, 23);
-    school.summer = { year, played: runs.map(() => 0), until };
+    // Each show a real play, and a part in it cast within the company (`summerPlaysOf`, `companyPart`).
+    const shows: Run[] = summerPlaysOf(s, person, year).slice(0, runs.length).map((p, n) => ({ production: `Yale Summer Cabaret ${year}, Show ${n + 1}`, play: p.title, by: p.by, ...companyPart(person, p.reads, p.parts) }));
+    school.summer = { year, played: runs.map(() => 0), until, shows };
     runs.forEach((run, n) => {
       for (let d = addDays(run.from, -7 * SUMMER_CABARET.rehearsalWeeks); keyOf(d) < keyOf(run.from); d = addDays(d, 1)) {
         const wd = weekday(d);
@@ -1596,20 +1630,19 @@ export function registerSchool(sim: Simulation): void {
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Out Of The Summer Cabaret', body: 'You missed a performance, and the company went on without you. The weeks you worked are paid.', importance: 80, route: '/workspace/school' });
       return;
     }
+    // A company joined before 2026-09-28 has no plays yet: the summer's, now.
+    summer.shows ??= summerPlaysOf(s, person, summer.year).slice(0, summer.played.length).map((p, n) => ({ production: `Yale Summer Cabaret ${summer.year}, Show ${n + 1}`, play: p.title, by: p.by, ...companyPart(person, p.reads, p.parts) }));
+    const show = summer.shows[run]!;
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
       const kept = nerves(s, person, 'performance');
-      grow(person.craft, 'scene', focusOf(person) * kept, 4);
-      grow(person.craft, 'emotion', focusOf(person) * kept, 2);
-      grow(person.craft, 'voice', focusOf(person) * kept, 2);
+      playNight(person.craft, castingReads(show), focusOf(person) * kept);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
-      if (item.payload.last === true) (school!.credits ??= []).push({ production: `Yale Summer Cabaret ${summer.year}, Show ${run + 1}`, role: 'In The Company', kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
+      reckonNight(s, person, show, item, kept, false);
+      if (item.payload.last === true) (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
-      grow(person.craft, 'scene', focusOf(person), 1.5);
-      grow(person.craft, 'character', focusOf(person), 1.5);
-      grow(person.craft, 'script', focusOf(person));
-      grow(person.craft, 'memorization', focusOf(person));
+      rehearse(person.craft, focusOf(person));
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }

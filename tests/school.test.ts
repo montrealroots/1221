@@ -4,6 +4,7 @@
  * careers: the clock sent on six hours at a time, nights slept alone.
  */
 import { describe, expect, it } from 'vitest';
+import { SUMMER_PLAYS } from '@/engine/content/plays';
 import { createSave, quickSave } from '@/engine';
 import { atSchool, defaultConfig, newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -752,7 +753,12 @@ describe('the Yale Cabaret', () => {
     // In front of a house, the feeling is worked too; in rehearsal, the lines.
     expect(sim.player.craft!.emotion).toBeGreaterThan(control.player.craft!.emotion);
     expect(sim.player.craft!.memorization).toBeGreaterThan(control.player.craft!.memorization);
-    expect(sim.player.school!.credits).toEqual([{ production: cabaretSeason(0), role: 'In The Company', kind: 'cabaret', year: 2026, wentOn: sim.player.school!.cabaret!.performed }]);
+    // A part in a new piece, cast within the company, on the résumé with its nights and the director's note.
+    const cab = sim.player.school!.cabaret!;
+    expect(cab.role).toMatch(/^A (Leading|Supporting) Part In A New Piece$/);
+    expect(Object.values(cab.nights!).reduce((a, b) => a + b, 0)).toBe(cab.performed);
+    expect(cab.note).toBeDefined();
+    expect(sim.player.school!.credits).toEqual([{ production: cabaretSeason(0), role: cab.role, kind: 'cabaret', year: 2026, wentOn: cab.performed }]);
   }, 120_000);
 
   it('turns away a student on academic warning, and finds a week clear of the term’s casting calls', () => {
@@ -833,7 +839,14 @@ describe('the Yale Summer Cabaret', () => {
     const firstClose = shows.find((c) => c.payload.last === true)!;
     play(sim, firstClose.at + 60_000);
     expect(sim.player.school!.summer!.played[0]).toBeGreaterThan(0);
-    expect(sim.player.school!.credits?.find((c) => c.kind === 'summer')).toMatchObject({ production: 'Yale Summer Cabaret 2027, Show 1', year: 2027 });
+    // Each show a real play, with a part in it written for them, its nights kept.
+    const first = sim.player.school!.summer!.shows![0]!;
+    const script = SUMMER_PLAYS.find((x) => x.title === first.play)!;
+    expect(script.parts.map((x) => x.name)).toContain(first.role);
+    expect(sim.player.school!.summer!.shows!.map((x) => x.play)).toHaveLength(3);
+    expect(new Set(sim.player.school!.summer!.shows!.map((x) => x.play)).size).toBe(3);
+    expect(first.nights).toBeDefined();
+    expect(sim.player.school!.credits?.find((c) => c.kind === 'summer')).toMatchObject({ production: `${first.play}, Yale Summer Cabaret 2027`, role: first.role, year: 2027 });
     const paid = sim.universe.transactions.filter((t) => t.memo.startsWith('Yale Summer Cabaret stipend'));
     expect(paid.length).toBeGreaterThan(0);
     expect(paid.every((t) => t.postings.some((p) => p.amount === -SUMMER_CABARET.stipendWeekly))).toBe(true);

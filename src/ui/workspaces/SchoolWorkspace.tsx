@@ -299,6 +299,10 @@ const KIND_WORDS: Record<string, string> = {
   carlotta: 'The Carlotta Festival', project: 'A School project', understudy: 'Understudying at Yale Rep', role: 'In the company at Yale Rep',
 };
 
+/** A run's nights, and its note once it's over, as a line. */
+const nightsLine = (run: { nights?: Partial<Record<keyof typeof NIGHT_WORD, number>>; note?: string }) =>
+  `Your nights: ${(['remarkable', 'strong', 'solid', 'off'] as const).filter((b) => run.nights?.[b]).map((b) => `${NIGHT_WORD[b]} ${run.nights![b]}`).join(', ')}.${run.note ? ` The director’s note: ${run.note}` : ''}`;
+
 /** A night's reading as the Casting tab says it. */
 const NIGHT_WORD = { remarkable: 'Remarkable', strong: 'Strong', solid: 'Solid', off: 'Off' } as const;
 
@@ -409,7 +413,13 @@ function CabaretPanel() {
       actions={mine || cabaretRefusal(sim, person) ? undefined : <Gated feature="school.cabaret" onClick={() => { const a = run<{ week: string }>('school.cabaret'); if (a.ok) toast(`In the Cabaret: your show plays the week of ${dayOf(parseDay(a.value!.week))}.`, 'positive'); }}>Join A Cabaret Show</Gated>}
     >
       <div className="col gap-3">
-        {mine && <Stat label="Performed" value={`${mine.performed} of ${YALE_CABARET.shows.length}`} note={`${calls.length} calls ahead`} />}
+        {mine && (
+          <div className="grid grid-2">
+            {mine.role && <Stat label="Your Part" value={mine.role} note="A new piece, made by the students" />}
+            <Stat label="Performed" value={`${mine.performed} of ${YALE_CABARET.shows.length}`} note={`${calls.length} calls ahead`} />
+          </div>
+        )}
+        {mine?.nights && <p className="small" style={{ margin: 0 }}>{nightsLine(mine)}</p>}
         <p className="xs dim" style={{ margin: 0 }}>
           The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part, and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
         </p>
@@ -432,9 +442,17 @@ function SummerPanel() {
       actions={summer || summerRefusal(sim, person) ? undefined : <Gated feature="school.summer_cabaret" onClick={() => { if (run('school.summer_cabaret').ok) toast('In this summer’s company.', 'positive'); }}>Join The Summer Company</Gated>}
     >
       {summer && (
-        <p className="small" style={{ margin: '0 0 var(--s2)' }}>
-          Performances played: {summerRuns(summer.year).map((_, i) => `Show ${i + 1}, ${summer.played[i] ?? 0}`).join('; ')}.
-        </p>
+        <div className="col gap-2" style={{ margin: '0 0 var(--s2)' }}>
+          {summerRuns(summer.year).map((run, i) => {
+            const show = summer.shows?.[i];
+            return (
+              <div key={i} className="small">
+                <strong>{show?.play ?? `Show ${i + 1}`}</strong>{show?.by ? `, by ${show.by}` : ''}: {show ? `${show.role}, ` : ''}{dayOf(run.from)} to {dayOf(run.to)}, played {summer.played[i] ?? 0}.
+                {show?.nights ? ` ${nightsLine(show)}` : ''}
+              </div>
+            );
+          })}
+        </div>
       )}
       <p className="xs dim" style={{ margin: 0 }}>
         Three shows between late June and late August, evenings at eight and Saturdays at two, with afternoon rehearsals in the three weeks before each. It pays {formatMoney(inSaveMoney(sim, SUMMER_CABARET.stipendWeekly, 'USD'), cur)} a week, SLATE’s estimate, as are later summers’ dates and the company taking a student in good standing who asks by the end of April: neither how it’s chosen nor what it pays is published. A missed performance and the company goes on without you. The summer is yours: the Bulletin limits outside work only while classes are in session. Source: {SUMMER_CABARET.source}.

@@ -128,6 +128,21 @@ export const REP_PLAYS: readonly Play[] = [
 ];
 
 /**
+ * Plays for the Summer Cabaret, three a summer: the short and chamber plays
+ * a small summer company stages, long in the public domain. The Summer
+ * Cabaret's own seasons after 2026 aren't announced, so which a summer has
+ * is SLATE's estimate.
+ */
+export const SUMMER_PLAYS: readonly Play[] = [
+  { title: 'Miss Julie', by: 'August Strindberg', reads: { emotion: 2, scene: 2, intimacy: 1 }, parts: [p('Miss Julie', 'lead', 'actress'), p('Jean', 'lead', 'actor'), p('Kristin', 'supporting', 'actress')] },
+  { title: 'Trifles', by: 'Susan Glaspell', reads: { scene: 2, character: 1, script: 1 }, parts: [p('Mrs Hale', 'lead', 'actress'), p('Mrs Peters', 'lead', 'actress'), p('Sheriff Peters', 'supporting', 'actor'), p('George Henderson', 'supporting', 'actor'), p('Lewis Hale', 'featured', 'actor')] },
+  { title: 'The Bear', by: 'Anton Chekhov', reads: { comedy: 2, scene: 1, movement: 1 }, parts: [p('Yelena Popova', 'lead', 'actress'), p('Grigory Smirnov', 'lead', 'actor'), p('Luka', 'supporting', 'actor')] },
+  { title: 'A Marriage Proposal', by: 'Anton Chekhov', reads: { comedy: 2, scene: 1, speech: 1 }, parts: [p('Ivan Lomov', 'lead', 'actor'), p('Natalya Stepanovna', 'lead', 'actress'), p('Stepan Chubukov', 'supporting', 'actor')] },
+  { title: 'Riders To The Sea', by: 'J. M. Synge', reads: { emotion: 2, accents: 1, voice: 1 }, parts: [p('Maurya', 'lead', 'actress'), p('Cathleen', 'supporting', 'actress'), p('Bartley', 'supporting', 'actor'), p('Nora', 'supporting', 'actress')] },
+  { title: 'Salomé', by: 'Oscar Wilde', reads: { movement: 2, classical: 1, voice: 1, emotion: 1 }, parts: [p('Salomé', 'lead', 'actress'), p('Herod', 'lead', 'actor'), p('Herodias', 'supporting', 'actress'), p('Jokanaan', 'supporting', 'actor'), p('The Young Syrian', 'featured', 'actor'), p('The Page Of Herodias', 'featured', 'either')] },
+];
+
+/**
  * The festivals' new plays: unnamed, as they're chosen after casting, with
  * parts by size. A festival's new
  * plays ask for the script and quick changes as pages come in.
