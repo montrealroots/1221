@@ -807,6 +807,16 @@ function keepCredit(sim: Simulation, school: SchoolRecord): void {
  * actor alone went to Yale Rep, and everybody else was in a project named
  * by term and played in the term's last class week.
  */
+/**
+ * The part a School production casts a student in, where the play isn't named
+ * ahead: new plays, thesis productions and the festivals are chosen after
+ * casting. Until 2026-09-27 every one was "A Role".
+ */
+const PART_IN: Readonly<Record<string, string>> = {
+  carlotta: 'A Part In A New Play', thesis: 'A Part In The Thesis', hughes: 'A Part In The Festival',
+  shakespeare: 'A Part In The Repertory', project: 'A Part In The Project',
+};
+
 function cast(sim: Simulation, person: Person, term: number): void {
   const school = person.school!;
   keepCredit(sim, school);
@@ -828,14 +838,14 @@ function cast(sim: Simulation, person: Person, term: number): void {
   const reps: Call[] = [];
   const production = schoolProduction(term, rankIn(person, 'acting'));
   if (production) {
-    school.casting = { production: production.name, role: 'A Role', kind: production.kind, term, performed: 0 };
+    school.casting = { production: production.name, role: PART_IN[production.kind] ?? 'A Part', kind: production.kind, term, performed: 0 };
     for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) ours.push({ at: at(d, 15), minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
     for (const d of production.runs) ours.push({ at: at(d, 19), minutes: 150, label: `${production.name}: Performance`, call: 'performance' });
   }
   if (repTerm(term) && school.standing === 'good') {
     const rep = repProduction(term);
     const inRole = yearOfTerm(term) === 3 && person.craft!.acting >= ESTIMATE.castAtRep;
-    const role = term === 1 ? (person.performerTitle === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : 'A Role';
+    const role = term === 1 ? (person.performerTitle === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : inRole ? 'A Part In The Company' : 'An Understudy In The Company';
     school.rep = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0 };
     // Rehearsals: an understudy's Wednesday and Friday, three to six; a company member's Tuesday to Saturday, three to nine (SLATE's estimate).
     for (let d = parseKey(rep.rehearsals.from); keyOf(d) <= rep.rehearsals.to; d = addDays(d, 1)) {

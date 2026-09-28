@@ -599,7 +599,7 @@ describe('casting', () => {
     sim.player.currentLocationId = 'us-ny-newyork';
     sim.advanceTo(shows[1]!.at + 60_000);
     expect(sim.player.school!.standing).toBe('dismissed');
-    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: 'A Role', kind: 'carlotta', year: 2027, wentOn: 1 }]);
+    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: 'A Part In A New Play', kind: 'carlotta', year: 2027, wentOn: 1 }]);
   }, 120_000);
 
   it('sends an understudy on about one performance in fifty', () => {

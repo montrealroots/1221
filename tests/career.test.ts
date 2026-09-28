@@ -11,7 +11,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
   AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  beginCareer, billDues, jobsClash, pruneBookings, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
@@ -581,6 +581,26 @@ describe('a job over the school’s calls', () => {
     sim.schedule({ at: first - 20 * MS_HOUR, kind: SHOWCASE_KIND, label: 'Actor Showcase', category: 'school', priority: 30, requiresPlayer: true, durationMinutes: 150, payload: { personId: sim.player.id } });
     expect(schoolClash(sim, sim.player, away)?.kind).toBe(SHOWCASE_KIND);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+  });
+});
+
+describe('an offer that can’t be taken', () => {
+  it('says why on Home and offers only a pass', () => {
+    const sim = pro('offer-cannot');
+    const busy = offer(sim, 'costar', 80);
+    busy.status = 'accepted';
+    const career = careerOf(sim.player);
+    career.auditions.push({ id: 'aud-x', roleId: 'costar', at: sim.now, mode: 'room', cityId: 'us-ny-newyork', status: 'booked' });
+    sim.schedule({ at: sim.now + 60_000, kind: 'career.offer', label: 'An Offer', category: 'system', priority: 20, payload: { personId: sim.player.id, auditionId: 'aud-x' } });
+    sim.advanceTo(sim.now + 2 * 60_000);
+    const made = career.bookings.find((b) => b.status === 'offered' && b.id !== busy.id)!;
+    expect(acceptRefusal(sim, sim.player, made)).toMatch(/clashes with/);
+    const decision = Object.values(sim.universe.decisions).find((d) => d.refType === 'booking' && d.refId === made.id)!;
+    expect(decision.actions.map((a) => a.label)).toEqual(['Pass']);
+    expect(decision.detail).toMatch(/You can’t take it: It clashes with/);
+    // Free again, a new offer can be taken.
+    busy.status = 'passed';
+    expect(acceptRefusal(sim, sim.player, made)).toBeUndefined();
   });
 });
 

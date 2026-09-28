@@ -311,22 +311,28 @@ function CastingPane() {
 
   return (
     <div className="col gap-5">
-      {castings.map((casting) => (
-        <Panel key={casting.production} title={casting.production} subtitle={repeats(casting) ? undefined : KIND_WORDS[casting.kind]}>
+      {castings.map((casting) => {
+        // A production whose calls are all behind it reads as done: until 2026-09-27 a closed run said there were none ahead, and that you were on call at all nought of them.
+        const mine = (c: { label: string }) => c.label.startsWith(casting.production);
+        const onCallLeft = casting.kind === 'understudy' ? onCall.filter(mine).length : 0;
+        const left = every.filter(mine).length + onCallLeft;
+        return (
+        <Panel key={casting.production} title={casting.production} subtitle={left === 0 ? 'Finished' : repeats(casting) ? undefined : KIND_WORDS[casting.kind]}>
           <div className="col gap-3">
             <div className="grid grid-3">
               <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} />
               <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
-              <Stat label="Calls Ahead" value={String(every.filter((c) => c.label.startsWith(casting.production)).length + (casting.kind === 'understudy' ? onCall.length : 0))} note={casting.kind === 'understudy' ? `${onCall.length} of them on call` : undefined} />
+              {left > 0 ? <Stat label="Calls Ahead" value={String(left)} note={casting.kind === 'understudy' ? `${onCallLeft} of them on call` : undefined} /> : <Stat label="Calls Ahead" value="None" note="The run is over" />}
             </div>
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
               <p className="small" style={{ margin: 0 }}>
-                {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. You’re on call at all {onCall.length} performances still ahead: in New Haven and awake, or it’s a grave breach if you’re needed.
+                {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. {onCallLeft > 0 ? `You’re on call at all ${onCallLeft} performances still ahead: in New Haven and awake, or it’s a grave breach if you’re needed.` : 'The run is over.'}
               </p>
             )}
           </div>
         </Panel>
-      ))}
+        );
+      })}
       {castings.length === 0 && (
         <Panel title="Not Cast Yet">
           <p className="small" style={{ margin: 0 }}>

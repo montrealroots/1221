@@ -912,12 +912,15 @@ export function registerCareer(sim: Simulation): void {
       : role.medium !== 'stage'
       ? `${booking.units} ${booking.units === 1 ? (role.medium === 'voice' ? 'session' : 'day') : (role.medium === 'voice' ? 'sessions' : 'days')}`
       : `${booking.rehearsalWeeks} weeks of rehearsal and ${booking.units} of performances`;
+    // One that can't be taken says why, and offers only a pass: until
+    // 2026-09-27 it offered Take It, which the command then refused.
+    const cannot = acceptRefusal(s, person, booking);
     s.requireDecision({
       urgency: 95, category: 'career', title: `Booked: ${role.label}`,
-      detail: `${span2} from ${formatDate(booking.starts, zone)}, in ${CITIES.require(workCityOf(booking)).name}${booking.location ? ', on location' : ''}, at ${formatMoney(unitRate(booking, booking.starts, cur), cur)} a ${role.series ? 'episode' : role.medium === 'voice' ? 'session' : role.medium === 'screen' ? 'day' : 'week'}. Answer by ${formatDateTime(booking.dueAt, zone)}.`,
+      detail: `${span2} from ${formatDate(booking.starts, zone)}, in ${CITIES.require(workCityOf(booking)).name}${booking.location ? ', on location' : ''}, at ${formatMoney(unitRate(booking, booking.starts, cur), cur)} a ${role.series ? 'episode' : role.medium === 'voice' ? 'session' : role.medium === 'screen' ? 'day' : 'week'}. ${cannot ? `You can’t take it: ${cannot}` : `Answer by ${formatDateTime(booking.dueAt, zone)}.`}`,
       route: '/workspace/career', dueAt: booking.dueAt, refType: 'booking', refId: booking.id,
       actions: [
-        { label: 'Take It', commandKind: 'career.accept', payload: { bookingId: booking.id } },
+        ...(cannot ? [] : [{ label: 'Take It', commandKind: 'career.accept', payload: { bookingId: booking.id } }]),
         { label: 'Pass', commandKind: 'career.pass', payload: { bookingId: booking.id } },
       ],
     });
@@ -1144,13 +1147,8 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     const booking = career.bookings.find((b) => b.id === p.bookingId);
     if (!booking || booking.status !== 'offered') throw new CommandError('That offer isn’t open.');
-    const summer = career.since === undefined ? summerOf(person, s.now) : undefined;
-    if (career.since === undefined) {
-      const days = workDays(booking);
-      if (!summer || days[days.length - 1]!.at >= summer.until) throw new CommandError('It runs into the fall term, and the school’s work comes first while classes are in session.');
-    }
-    const called = schoolClash(s, person, booking);
-    if (called) throw new CommandError(`It clashes with ${called.label}, ${formatDateTime(called.at, s.homeZone)}.`);
+    const no = acceptRefusal(s, person, booking);
+    if (no) throw new CommandError(no);
     takeJob(s, person, booking, false);
     return { starts: booking.starts };
   });
@@ -1496,6 +1494,28 @@ function armDues(sim: Simulation, person: Person): void {
   // On the first itself, before nine: this one.
   if (when <= sim.now) { month = month === 5 ? 11 : 5; if (month === 5) year += 1; when = instantFromZoned({ year, month, day: 1, hour: 9 }, sim.homeZone); }
   sim.schedule({ at: when, kind: DUES_KIND, label: 'Union Dues', category: 'career', priority: 20, payload: { personId: person.id } });
+}
+
+/**
+ * Why an offer can't be taken by choice now, or nothing where it can: a
+ * student's term, a school call or showcase in its hours, another series'
+ * option, or a job already taken that it clashes with. `career.accept`
+ * refuses on it, and the offer on Home and on the Career screen says it.
+ */
+export function acceptRefusal(sim: Simulation, person: Person, booking: Booking): string | undefined {
+  const career = careerOf(person);
+  if (career.since === undefined) {
+    const summer = summerOf(person, sim.now);
+    const days = workDays(booking);
+    if (!summer || days[days.length - 1]!.at >= summer.until) return 'It runs into the fall term, and the school’s work comes first while classes are in session.';
+  }
+  const called = schoolClash(sim, person, booking);
+  if (called) return `It clashes with ${called.label}, ${formatDateTime(called.at, sim.homeZone)}.`;
+  const role = roleById(booking.roleId);
+  if (role.series && career.option && career.option.seriesId !== (booking.seriesId ?? booking.id)) return 'Another series holds an option on you until it’s decided.';
+  const other = career.bookings.find((b) => b.status === 'accepted' && b.id !== booking.id && jobsClash(person, booking, b));
+  if (other) return `It clashes with ${roleById(other.roleId).label}.`;
+  return undefined;
 }
 
 /**
