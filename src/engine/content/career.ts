@@ -6,6 +6,7 @@
  */
 
 import type { Money } from '../core/money';
+import type { Skill } from './school';
 import type { Craft } from '../systems/school';
 
 /** Where the business is: the two cities agencies, casting and the work are in. */
@@ -205,6 +206,19 @@ export const GENRE_READS: Readonly<Record<string, Partial<Craft>>> = {
   musical: { singing: 2, dance: 1 },
   action: { combat: 1 },
   romance: { intimacy: 1 },
+};
+
+/**
+ * What a part itself may ask beside its genre, as a breakdown names it: a
+ * song, a fight, a dance, an accent, an intimate scene. Each is drawn on its
+ * own, by the medium: a stage part sings and fights more often, a screen
+ * part asks for an accent and intimacy more. How often is SLATE's estimate;
+ * casting services don't publish their breakdowns' tallies. Until
+ * 2026-09-28 a drama that wanted a fight or a song asked for neither.
+ */
+export const PART_DEMANDS: Readonly<Record<'screen' | 'stage', readonly (readonly [Skill, number])[]>> = {
+  screen: [['accents', 0.1], ['combat', 0.05], ['intimacy', 0.06], ['singing', 0.04], ['dance', 0.03]],
+  stage: [['accents', 0.12], ['combat', 0.08], ['intimacy', 0.04], ['singing', 0.1], ['dance', 0.06]],
 };
 
 /**

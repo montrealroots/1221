@@ -100,7 +100,7 @@ export function signTheClass(sim: Simulation, person: Person, playerScore: numbe
 }
 
 /** A classmate's craft for a part, read as an audition reads it. */
-const readFor = (m: Classmate, role: Role, mode: 'tape' | 'room', genre?: string) => auditionLevel(m.craft, role, mode, genre);
+const readFor = (m: Classmate, role: Role, mode: 'tape' | 'room', genre?: string, demands: readonly (keyof Classmate['craft'])[] = []) => auditionLevel(m.craft, role, mode, genre, demands);
 
 /**
  * Who of the class is in the room for one of the player's auditions, out of
@@ -111,7 +111,7 @@ export function inTheRoom(sim: Simulation, person: Person, audition: Audition): 
   if (!school || school.standing !== 'graduated') return [];
   const rng = sim.rng('career.rivals', person.id, `room-${audition.id}`);
   const role = roleById(audition.roleId);
-  return school.classmates.flatMap((m, i) => (m.career && rng.next() < RIVALS.inTheRoom ? [{ i, name: m.name, read: readFor(m, role, audition.mode, audition.genre) }] : []));
+  return school.classmates.flatMap((m, i) => (m.career && rng.next() < RIVALS.inTheRoom ? [{ i, name: m.name, read: readFor(m, role, audition.mode, audition.genre, audition.demands ?? []) }] : []));
 }
 
 /**

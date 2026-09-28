@@ -16,7 +16,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029 } from '@/engine/content/career';
-import { YALE_DRAMA } from '@/engine/content/school';
+import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
@@ -330,7 +330,7 @@ function AuditionsPane() {
           <div className="col gap-2">
             {ahead.map((a) => (
               <div key={a.id} className="row-between small">
-                <span>{roleById(a.roleId).label}{a.self ? ', submitted yourself' : ''}{a.coached ? ', coached' : ''}</span>
+                <span>{roleById(a.roleId).label}{a.demands?.length ? `, asks for ${a.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{a.self ? ', submitted yourself' : ''}{a.coached ? ', coached' : ''}</span>
                 <span className="row gap-2">
                   <span className="mono">{a.mode === 'tape' ? 'Self-Tape' : `In The Room, ${cityName(a.cityId)}`}, {formatDateTime(a.at, zoneOf(a.cityId))}</span>
                   {!a.coached && <Gated feature="career.coach" onClick={() => { if (run('career.coach', { auditionId: a.id }).ok) toast('An hour with a coach on it.', 'positive'); }}>Book A Coach</Gated>}

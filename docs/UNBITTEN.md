@@ -397,9 +397,11 @@ part the tool cannot see.
   each part reads each skill (`READS`, `GENRE_READS`), the fifth an
   audition reads its own, which skills each Yale course trains, read from its
   title and description, and the scale. Voice-over has no course at Yale, and
-  grows only in the booth. A genre is read, not a part's own demands: a drama
-  that wants a fight or a song asks for neither. Nobody's skills but the
-  player's and the classmates' are kept.
+  grows only in the booth. A genre is read, and since 2026-09-28 a part's own
+  demands as a breakdown names them (a song, a fight, a dance, an accent, an
+  intimate scene; `PART_DEMANDS`), read at the audition and grown on the
+  job; how often a breakdown asks each is SLATE's estimate. Nobody's skills
+  but the player's and the classmates' are kept.
 - **An agency's renewal is SLATE's choice.** Rule 16(g) sets the term (a year,
   then up to three) and when a renewal may be signed, and SLATE follows it
   (`AGENCY_TERM`). Whether an agency offers to renew is its own business,

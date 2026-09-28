@@ -64,7 +64,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, AGENT_COMMISSION, AUDITION_READ, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  AFTERLIFE, AGENCIES, AGENT_COMMISSION, AUDITION_READ, PART_DEMANDS, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
 } from '../content/career';
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
@@ -220,6 +220,8 @@ export interface Audition {
   coached?: boolean;
   /** The job's genre, as the breakdown gives it, read at the audition and kept by the booking. */
   genre?: string;
+  /** What the part itself asks beside it (`PART_DEMANDS`), kept by the booking. */
+  demands?: (keyof Craft)[];
   /** Sent by the commercial agent, not the theatrical one (`systems/commercial.ts`). */
   via?: 'commercial';
 }
@@ -235,6 +237,8 @@ export interface Booking {
   rehearsalWeeks: number;
   /** What it's filed under, where it's filed under anything. */
   genre?: string;
+  /** What the part asks beside its genre, from the audition (`PART_DEMANDS`). */
+  demands?: (keyof Craft)[];
   /** A commercial's product (`PRODUCTS`), drawn at the offer. */
   product?: string;
   status: 'offered' | 'accepted' | 'passed' | 'lapsed' | 'worked' | 'fired' | 'released';
@@ -825,16 +829,24 @@ function offerRepresentation(sim: Simulation, person: Person, agencies: string[]
 // Auditions and bookings
 // ---------------------------------------------------------------------------
 
-/** What a part and its genre ask of the craft, by weight (`READS`, `GENRE_READS`). */
-export function readsFor(role: Role, genre?: string): Partial<Craft> {
+/** What a part, its genre and its own demands ask of the craft, by weight (`READS`, `GENRE_READS`, `PART_DEMANDS`). */
+export function readsFor(role: Role, genre?: string, demands: readonly (keyof Craft)[] = []): Partial<Craft> {
   const out: Partial<Craft> = { ...role.reads };
   for (const [skill, w] of Object.entries((genre && GENRE_READS[genre]) || {}) as [keyof Craft, number][]) out[skill] = (out[skill] ?? 0) + w;
+  for (const skill of demands) out[skill] = (out[skill] ?? 0) + 1;
   return out;
 }
 
+/** What a part asks beside its genre, drawn from the breakdown (`PART_DEMANDS`): none for voice work or a commercial, and nothing the genre asks already. */
+export function demandsOf(role: Role, genre: string | undefined, draw: () => number): (keyof Craft)[] {
+  if (role.medium === 'voice' || role.after?.kind === 'commercial') return [];
+  const asked: Partial<Craft> = (genre && GENRE_READS[genre]) || {};
+  return PART_DEMANDS[role.medium].filter(([skill, chance]) => draw() < chance && asked[skill] === undefined).map(([skill]) => skill);
+}
+
 /** The craft a part reads: its skills, weighed (`readsFor`). */
-export function levelFor(craft: Craft, role: Role, genre?: string): number {
-  const reads = Object.entries(readsFor(role, genre)) as [keyof Craft, number][];
+export function levelFor(craft: Craft, role: Role, genre?: string, demands: readonly (keyof Craft)[] = []): number {
+  const reads = Object.entries(readsFor(role, genre, demands)) as [keyof Craft, number][];
   return reads.reduce((sum, [skill, w]) => sum + craft[skill] * w, 0) / reads.reduce((sum, [, w]) => sum + w, 0);
 }
 
@@ -845,10 +857,10 @@ export function auditionSkills(role: Role, mode: 'tape' | 'room'): (keyof Craft)
 }
 
 /** The read an audition gives: the part's craft, and a fifth the audition's own. */
-export function auditionLevel(craft: Craft, role: Role, mode: 'tape' | 'room', genre?: string): number {
+export function auditionLevel(craft: Craft, role: Role, mode: 'tape' | 'room', genre?: string, demands: readonly (keyof Craft)[] = []): number {
   const own = auditionSkills(role, mode);
   const s = AUDITION_READ.share;
-  return (1 - s) * levelFor(craft, role, genre) + s * own.reduce((sum, k) => sum + craft[k], 0) / own.length;
+  return (1 - s) * levelFor(craft, role, genre, demands) + s * own.reduce((sum, k) => sum + craft[k], 0) / own.length;
 }
 
 /**
@@ -856,8 +868,8 @@ export function auditionLevel(craft: Craft, role: Role, mode: 'tape' | 'room', g
  * session's worth, and the lines learned (`MEMORIZE`), more for a play or
  * a series, none in the booth.
  */
-export function growsFor(role: Role, genre?: string): Partial<Craft> {
-  const reads = readsFor(role, genre);
+export function growsFor(role: Role, genre?: string, demands: readonly (keyof Craft)[] = []): Partial<Craft> {
+  const reads = readsFor(role, genre, demands);
   const most = Math.max(...Object.values(reads));
   const out = Object.fromEntries(Object.entries(reads).map(([k, w]) => [k, w / most])) as Partial<Craft>;
   if (role.medium !== 'voice') out.memorization = role.medium === 'stage' || role.series || role.arc ? MEMORIZE.long : MEMORIZE.job;
@@ -865,9 +877,9 @@ export function growsFor(role: Role, genre?: string): Partial<Craft> {
 }
 
 /** A booking's chance at an audition: at the part's bar, more above and less below, less tired, less on tape and less again without a kit, more coached. */
-export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room', kit = true, coached = false, presence = 50, genre?: string): number {
+export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room', kit = true, coached = false, presence = 50, genre?: string, demands: readonly (keyof Craft)[] = []): number {
   // Presence moves the read above or below the bar, fully in the room and half on tape (`attributes.ts`).
-  const raw = ESTIMATE.bookAtBar + ESTIMATE.bookPerPoint * (auditionLevel(craft, role, mode, genre) + presenceSwing(presence, mode) - role.bar);
+  const raw = ESTIMATE.bookAtBar + ESTIMATE.bookPerPoint * (auditionLevel(craft, role, mode, genre, demands) + presenceSwing(presence, mode) - role.bar);
   const chance = Math.min(ESTIMATE.bookCeiling, Math.max(ESTIMATE.bookFloor, raw)) * Math.min(1.1, focus) * (coached ? WORK_COSTS.coached : 1);
   return mode === 'tape' ? chance * ESTIMATE.tapeFactor * (kit ? 1 : WORK_COSTS.noKit) : chance;
 }
@@ -884,7 +896,7 @@ export function localEdge(person: Person, cityId: string): number {
 }
 
 export function books(sim: Simulation, person: Person, audition: Audition, focus: number, edge = 1): boolean {
-  return sim.rng('career.booking', person.id, audition.id).next() < edge * localEdge(person, audition.cityId) * bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence, audition.genre);
+  return sim.rng('career.booking', person.id, audition.id).next() < edge * localEdge(person, audition.cityId) * bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence, audition.genre, audition.demands ?? []);
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
@@ -1171,6 +1183,9 @@ export function registerCareer(sim: Simulation): void {
       if (s.timeline.conflicts(one.at, one.mode === 'tape' ? 120 : 60).some((i) => i.kind === WORK_KIND && i.payload.personId === person.id)) continue;
       const audition: Audition = { ...one, id: nextOwnId(career, 'a'), status: 'ahead' };
       Object.assign(audition, genreOf(roleById(audition.roleId), s.rng('career.booking', person.id, `${audition.id}-genre`).next()));
+      const asks = s.rng('career.booking', person.id, `${audition.id}-demands`);
+      const demands = demandsOf(roleById(audition.roleId), audition.genre, () => asks.next());
+      if (demands.length) audition.demands = demands;
       career.auditions.push(audition);
       s.schedule({
         at: audition.at, kind: AUDITION_KIND, label: `${audition.mode === 'tape' ? 'Self-Tape' : 'Audition'}: ${roleById(audition.roleId).label}`,
@@ -1225,7 +1240,7 @@ export function registerCareer(sim: Simulation): void {
     // A classmate in the room who reads better is likelier to get it (`systems/rivals.ts`).
     const role = roleById(audition.roleId);
     const room = inTheRoom(s, person, audition);
-    const mine = auditionLevel(person.craft, role, audition.mode, audition.genre);
+    const mine = auditionLevel(person.craft, role, audition.mode, audition.genre, audition.demands ?? []);
     const better = room.filter((r) => r.read > mine).sort((a, b) => b.read - a.read)[0];
     if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1), better ? RIVALS.outread : 1)) {
       if (better) {
@@ -1258,6 +1273,7 @@ export function registerCareer(sim: Simulation): void {
       starts: nextMonday(s.now + role.leadDays * MS_DAY, zoneOf(location ?? audition.cityId)),
       units: span(role.units), rehearsalWeeks: role.rehearsalWeeks ? span(role.rehearsalWeeks) : 0,
       ...(audition.genre === undefined ? genreOf(role, rng.next()) : { genre: audition.genre }),
+      ...(audition.demands?.length ? { demands: audition.demands } : {}),
       ...(role.after?.kind === 'commercial' ? { product: productOf(s.rng('career.booking', person.id, `${audition.id}-product`).next(), s.now, s.homeZone) } : {}),
       status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0,
       ...(location ? { location } : {}),
@@ -1357,7 +1373,7 @@ export function registerCareer(sim: Simulation): void {
     const event = role.medium === 'stage' ? (call.rehearsal ? undefined : 'performance') : role.medium === 'screen' ? 'set' : undefined;
     const focus = focusOf(person) * (event ? nerves(s, person, event) : 1);
     earn(s, person, ATTRIBUTES.reputation.day);
-    for (const [skill, weight] of Object.entries(growsFor(role, booking.genre)) as [keyof Craft, number][]) {
+    for (const [skill, weight] of Object.entries(growsFor(role, booking.genre, booking.demands ?? [])) as [keyof Craft, number][]) {
       person.craft[skill] = Math.min(100, person.craft[skill] + ESTIMATE.workGain * weight * focus * (1 - person.craft[skill] / 100) ** 1.5);
     }
     const spent = role.medium === 'stage' && !call.rehearsal ? ESTIMATE.performanceEnergy : (ESTIMATE.workEnergy * hours) / 8;
