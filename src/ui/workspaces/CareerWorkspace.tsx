@@ -23,6 +23,7 @@ import {
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
+import { COMMERCIAL_AGENCIES, COMMERCIAL_LEAVING, commercialAgencyById, commercialEarnings, commercialRefusal, mayLeaveCommercial } from '@/engine/systems/commercial';
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -85,6 +86,48 @@ function TradesPane() {
   );
 }
 
+/** The commercial agent, beside the theatrical one (`systems/commercial.ts`). */
+function CommercialPane() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = person.career!;
+  if (career.since === undefined) return null;
+  const cur = saveCurrency(sim.universe);
+  const rep = career.commercial;
+  const agency = rep ? commercialAgencyById(rep.agencyId) : undefined;
+  const may = mayLeaveCommercial(sim, person);
+  return (
+    <div style={{ marginTop: 'var(--s5)' }}>
+      <Panel
+        title={agency ? `${agency.name}, For Commercials` : 'No Commercial Agent'}
+        subtitle={rep ? `${CITIES.require(rep.cityId).name} office, signed ${formatDate(rep.signedAt, sim.zone)}, the contract running to ${formatDate(rep.termEnds, sim.zone)}` : 'Commercials come from your theatrical agency until you sign one'}
+        actions={agency ? <Gated feature="career.commercial_leave" onClick={() => { const a = run<{ left: string }>('career.commercial_leave'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave The Commercial Agent</Gated> : undefined}
+      >
+        <div className="col gap-3">
+          {rep ? (
+            <p className="small" style={{ margin: 0 }}>
+              It sends your commercial auditions, on camera and voice-over, and takes 10% of what they book; your theatrical agency sends none now. From commercials in the last {COMMERCIAL_LEAVING.windowDays} days: {formatMoney(commercialEarnings(sim, person, COMMERCIAL_LEAVING.windowDays), cur)}. You may leave on the union’s commercials terms: in a first contract’s first {COMMERCIAL_LEAVING.initialDays} days only after {COMMERCIAL_LEAVING.firstDays} with no commercial offer, and after them with under the floor from commercials in {COMMERCIAL_LEAVING.windowDays}. {may.why}
+            </p>
+          ) : (
+            <div className="col gap-2">
+              {COMMERCIAL_AGENCIES.map((a) => {
+                const no = commercialRefusal(sim, person, a.id);
+                return (
+                  <div key={a.id} className="row-between small">
+                    <span>{a.name}: {a.cities.map((c) => CITIES.require(c).name).join(' and ')}{no ? `. ${no}` : ''}</span>
+                    {!no && <Gated feature="career.commercial_meet" onClick={() => run('career.commercial_meet', { agencyId: a.id })}>Meet</Gated>}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <Fine>Many actors have a theatrical agent and a commercial one. The agencies are real ones with commercial departments; what each needs to see (your presence, mostly, and your record), how many auditions each sends, and a first contract’s year renewed for three when it booked you a commercial are SLATE’s estimate. The rule on leaving is SAG-AFTRA’s for commercials contracts. Source: {COMMERCIAL_LEAVING.source}.</Fine>
+        </div>
+      </Panel>
+    </div>
+  );
+}
+
 export function CareerWorkspace() {
   const person = useWorld((s) => s.player);
   const [tab, setTab] = useState<CareerTab>('agency');
@@ -92,7 +135,7 @@ export function CareerWorkspace() {
   const career = person.career;
   const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
   const panes: Record<CareerTab, JSX.Element> = {
-    agency: <><AgencyPane /><TradesPane /></>, auditions: <AuditionsPane />, work: <WorkPane />, unions: <UnionsPane />, home: <HomePane />,
+    agency: <><AgencyPane /><CommercialPane /><TradesPane /></>, auditions: <AuditionsPane />, work: <WorkPane />, unions: <UnionsPane />, home: <HomePane />,
   };
   return (
     <>

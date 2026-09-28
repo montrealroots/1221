@@ -78,6 +78,7 @@ import { enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
 import { personalityOf } from './personality';
 import { armPension } from './pension';
+import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { payeeAccount } from './cash';
@@ -217,6 +218,8 @@ export interface Audition {
   coached?: boolean;
   /** The job's genre, as the breakdown gives it, read at the audition and kept by the booking. */
   genre?: string;
+  /** Sent by the commercial agent, not the theatrical one (`systems/commercial.ts`). */
+  via?: 'commercial';
 }
 
 export interface Booking {
@@ -320,6 +323,10 @@ export interface CareerRecord {
   residuals: Residual[];
   /** What the trades have printed, about them and their class, the latest first (`systems/rivals.ts`). */
   news?: NewsItem[];
+  /** A commercial agent beside the theatrical one, commercial pay for its rule on leaving, and when each commercial agency last met them (`systems/commercial.ts`). */
+  commercial?: CommercialRep;
+  commercialPay?: { at: Instant; amount: Money }[];
+  commercialMet?: Record<string, Instant>;
   /** A series under option between seasons, until its pickup is decided. */
   option?: { seriesId: string; decidedAt: Instant };
   /** Self-submissions this week, waiting on Monday. */
@@ -342,7 +349,7 @@ export interface CareerRecord {
   seq: number;
 }
 
-const nextOwnId = (career: CareerRecord, prefix: string) => `${prefix}${(career.seq += 1)}`;
+export const nextOwnId = (career: CareerRecord, prefix: string) => `${prefix}${(career.seq += 1)}`;
 
 export type CastingSite = keyof typeof WORK_COSTS.sites;
 
@@ -814,7 +821,8 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
     return open[open.length - 1]!;
   };
   const here = ROLES.filter((r) => r.cities.includes(cityId));
-  const sent = here.filter((r) => agency !== undefined && r.tiers.includes(agency.tier));
+  // With a commercial agent, the theatrical agency sends no commercials (`systems/commercial.ts`).
+  const sent = here.filter((r) => agency !== undefined && r.tiers.includes(agency.tier) && !(career.commercial && r.after?.kind === 'commercial'));
   const open = here.filter((r) => r.selfSubmit);
   const theirs = here.filter((r) => r.tiers.includes(2));
   const zone = zoneOf(cityId);
@@ -1040,6 +1048,9 @@ export function registerCareer(sim: Simulation): void {
     if (month.day <= 7) classMonth(s, person, item.at);
     // The pension's months, from 65 (`systems/pension.ts`).
     armPension(s, person);
+    // The commercial agent's week, and its contract's end (`systems/commercial.ts`).
+    commercialTermEnds(s, person);
+    scheduleCommercialWeek(s, person, item.at);
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
@@ -1105,7 +1116,7 @@ export function registerCareer(sim: Simulation): void {
       audition.status = 'missed';
       item.status = 'missed';
       // In hospital, the agency passes on it for them: no strike.
-      if (audition.self || !career.agencyId || inHospital(person, item.at)) return;
+      if (audition.self || audition.via === 'commercial' || !career.agencyId || inHospital(person, item.at)) return;
       career.missed += 1;
       earn(s, person, ATTRIBUTES.reputation.missedAudition);
       if (career.missed >= ESTIMATE.dropAfterMissed) { endRepresentation(s, person, `You missed ${ESTIMATE.dropAfterMissed} auditions the agency got you.`, false); return; }
@@ -1336,6 +1347,7 @@ export function registerCareer(sim: Simulation): void {
       overtime = 0;
       const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
       recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id, where: workCity, foreignWithheld: foreign });
+      if (role.after?.kind === 'commercial') recordCommercialPay(person, item.at, check.gross);
       check.net -= foreign;
       if (foreign) postings.push({ accountId: s.nominalAccount('expense', 'Foreign Tax Withheld').id, amount: foreign });
       gross += check.gross;
@@ -2182,6 +2194,7 @@ function payResidual(sim: Simulation, person: Person, residual: Residual, stream
   // Canada taxes residuals from work done there, at the same 23%.
   const foreign = residual.workCity && CITIES.get(residual.workCity)?.countryId === 'ca' ? foreignWithholding(person, residual.workCity, amount, when, cur) : 0;
   recordWages(person, when, zone, { gross: amount, withheld, commission, sag: true, residual: true, ...(foreign || residual.workCity ? { where: residual.workCity, foreignWithheld: foreign } : {}) });
+  if (residual.kind === 'commercial') recordCommercialPay(person, when, amount);
   residual.paid += amount;
   residual.payments += 1;
   const what = { cycle: `the commercial’s cycle ${n}`, rerun: 'a prime-time rerun', syndication: `syndicated run ${n}`, svod: `streaming, year ${n}`, bonus: 'streaming’s success bonus', film: `the film’s year ${n}` }[stream];

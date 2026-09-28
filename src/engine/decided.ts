@@ -395,6 +395,19 @@ defineDecider<{ sim: Simulation; month: number }, string>({
 });
 
 defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.commercial',
+  decides: 'How a commercial agency’s meeting reads an actor beside their presence and record: the room’s own swing, five points either way.',
+  drawnIn: 'src/engine/systems/commercial.ts',
+  reads: {
+    // Which meeting.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 13 }),
+  decide: ({ sim, key }) => Array.from({ length: 40 }, (_, n) => (sim.rng('career.commercial', sim.player.id, `cesd-${key + n}`).next() < 0.5 ? '-' : '+')).join(''),
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
   id: 'career.hours',
   decides: 'How long a shooting day runs, and so its overtime.',
   drawnIn: 'src/engine/systems/career.ts',
