@@ -14,6 +14,41 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Parked by the owner, 2026-09-27: what is left, to come back to after the school walkthrough.** The owner asked for this list to be saved as it stood, and is first going through the school screen step by step, with the owner deciding each step. Come back to this list after that walkthrough. The recommendation given was the first item, real competition. It is a large remodel, so the owner sets the plan.
+>
+> 1. **Gameplay gaps a player would notice.**
+>    - An audition is a roll against a part's bar, and no rival actors compete for it. Only the player and the classmates have skills.
+>    - Classmates are never cast against the player, and have no careers after school.
+>    - A part asks only what its genre asks: a drama that needs a fight or a song asks for neither.
+>    - Recognition comes only from finished work, not its audience. Overscale is a single multiple of scale, not a negotiated quote.
+>    - No festival ever passes over a film.
+>    - There is no trade news.
+>    - The commercials contract's own 91-day clause ($4,000) is not modeled.
+> 2. **Things that are said back and nothing reads.**
+>    - Most crafts, and the interests Animals, Cars, Fashion, Nature and Politics.
+>    - The performer title.
+>    - Property tax.
+>    - An older save's pension fund.
+> 3. **Figures waiting on publication.**
+>    - The 2027–28 union rates, Off-Broadway categories B and C, the Commercials Contracts' third year, and animation's 2026 rate.
+>    - SAG-AFTRA's 2027 COBRA rate, New York City's 2026 benchmark premium, and California's 2026 penalty.
+>    - Yale Rep's later seasons and the school's later dates.
+>    - Some banks' fees and fraud rates.
+> 4. **Banking fine print.**
+>    - French card withdrawal ceilings.
+>    - Bank of America's check order.
+>    - Card bonus categories beyond groceries and bills.
+>    - One card at a time.
+>    - Dormant accounts are never closed.
+>    - A year's energy by the climate.
+>    - Other countries' holidays.
+> 5. **The owner's to decide.**
+>    - Merging this branch into `main`.
+>    - A Base44 deployment.
+>    - Taking out `SlateOfficialResult`.
+>
+> The detail for each item is in `docs/UNBITTEN.md`.
+>
 > **Newest, 2026-09-27, later: the attributes engine, the ways to build it, and the 21 skills.** All by Account 2 (session `session_01AmQ8DKKk8371N6NckRHRbY`).
 >
 > - **The attributes** (`1242e3c`, `50846d2`), `systems/attributes.ts`: presence, composure, reputation and recognition on `person.attrs`. It is not `attributes` or `reputation`, which the load's `SHED` list deletes. Presence is drawn once and read at every audition and the showcase. Composure sets the nerves an audition, performance or day on set costs. Reputation scales the auditions an agency sends and reads beside a showing. Recognition pays above scale and fades monthly. Panels are on School → Standing and Career → Representation.
