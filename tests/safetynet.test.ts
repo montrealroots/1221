@@ -541,7 +541,7 @@ describe('the tax return', () => {
     // Not a New York hospital's, nor one already screened.
     healthOf(sim.player).bills.push({ ...bill, id: 'mx2', cityId: 'us-ny-newyork' }, { ...bill, id: 'mx3', aid: 'screened' as const });
     expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx2' } }).ok).toBe(false);
-    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx3' } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx3' } }).error).toMatch(/charity is off it already/);
   });
 
   it('adds Connecticut’s 2026 assistance: half of what the expired credits would have paid over 400% of the poverty line, and none elsewhere', () => {
