@@ -45,6 +45,7 @@ import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { agencyById, registerCareer } from './systems/career';
+import { registerPension } from './systems/pension';
 import { attributesOf } from './systems/attributes';
 import { upgradeCraft } from './systems/school';
 import { registerHealth } from './systems/health';
@@ -84,6 +85,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerSecurity(sim);
   registerSchool(sim);
   registerCareer(sim);
+  registerPension(sim);
   registerHealth(sim);
   registerUnemployment(sim);
   registerTaxReturn(sim);

@@ -22,6 +22,7 @@ import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
+import { SAG_PENSION, pensionAge, pensionOf } from '@/engine/systems/pension';
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -418,8 +419,22 @@ function UnionsPane() {
   const sag = career.unions.sag;
   const equity = career.unions.equity;
   const sagWord = !sag ? 'Not Yet Eligible' : sag.joinedAt !== undefined ? 'Member' : 'Eligible';
+  const pension = pensionOf(sim, person);
   return (
     <div className="col gap-5">
+      {pension.years.length > 0 && (
+        <Panel title="SAG-AFTRA Pension" subtitle="The SAG-Producers Pension Plan, payable from 65">
+          <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Pension Credits" value={String(pension.credits)} note={`A year of ${dollars(SAG_PENSION.creditEarnings)} in covered earnings is one`} />
+              <Stat label="Vested" value={pension.vested ? 'Yes' : 'Not Yet'} note={`At ${SAG_PENSION.vestAt} credits, or ${SAG_PENSION.vestEarlyAt} without a long break`} />
+              <Stat label="A Year At 65" value={money(pension.yearly)} note={`Paid monthly from ${formatDate(pensionAge(person), sim.zone)}${pension.vested ? '' : ', once vested'}`} />
+            </div>
+            <p className="small" style={{ margin: 0 }}>{pension.years.map((y) => `${y.year}: ${money(y.earnings)}${y.credit ? ', a credit' : ''}`).join('; ')}.</p>
+            <p className="xs dim" style={{ margin: 0 }}>The vesting and the age are the Plan’s. The minimum for a credit, held at the Plan’s 2012 figure, and a year adding 2% of its covered earnings, the Plan’s own example, are SLATE’s estimate; the earnings ceilings and early retirement aren’t modeled. Source: {SAG_PENSION.source}.</p>
+          </div>
+        </Panel>
+      )}
       {(career.unions.owed ?? 0) > 0 && (
         <Stat label="Owed To The Union" value={money(career.unions.owed!)} note="Dues and fees the bank couldn’t cover, taken from the next check" tone="warning" />
       )}

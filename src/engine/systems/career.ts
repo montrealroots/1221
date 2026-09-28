@@ -77,6 +77,7 @@ import { rentAt } from '../content/rents';
 import { enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
 import { personalityOf } from './personality';
+import { armPension } from './pension';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { payeeAccount } from './cash';
@@ -1037,6 +1038,8 @@ export function registerCareer(sim: Simulation): void {
     if (month.day <= 7) fadeRecognition(s, person, career.publicist !== undefined);
     // And the class's month of work, after the degree.
     if (month.day <= 7) classMonth(s, person, item.at);
+    // The pension's months, from 65 (`systems/pension.ts`).
+    armPension(s, person);
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);

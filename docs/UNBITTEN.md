@@ -383,10 +383,16 @@ part the tool cannot see.
     thunder's on the weather look, a published rent's on the place look and
     at creation, and the bank's, the laws' and the research's on the Bank
     screen.
-- **An older save's pension fund is kept, and nothing moves it.** The day
-  job paid into one in five countries and it grew daily. Both went with the
-  job engine on 2026-09-26. A save from before keeps the fund, and net worth
-  counts it; nothing adds to it, grows it or pays it out.
+- **The pension is partly SLATE's estimate.** Since 2026-09-28 the
+  SAG-Producers Pension Plan (`systems/pension.ts`) credits a year of covered
+  earnings at the minimum, vests at ten credits or five without a break, and
+  pays monthly from 65, as the Plan's pages say. The minimum is held at the
+  Plan's 2012 figure, $20,000, and a year adds 2% of its earnings, the Plan's
+  own example; the current figures weren't found in a form to read. The
+  Activity Test for five-year vesting, the per-episode and per-project
+  earnings ceilings and early retirement aren't modeled, and the pension
+  isn't on the year's tax return yet. An older save's pension fund from the
+  day job, which nothing moved from 2026-09-26, is paid out at 65.
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads
   the genres, Voice Acting, and Film, Television, Theater and Travel
