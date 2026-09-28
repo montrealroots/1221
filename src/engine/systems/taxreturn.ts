@@ -180,10 +180,26 @@ export function canadaElected(gross: Money, commission: Money, world: Money, int
   return exchange(cad, 'CAD', into) ?? cad;
 }
 
-/** The UK's tax on a UK tax year's gross, a US citizen's: no personal allowance, the bands on it all. */
-export function ukTaxOn(gross: Money, into: string): Money {
+/**
+ * Who of the non-resident keeps the UK's personal allowance: a British or EEA
+ * citizen (gov.uk, "Tax on your UK income if you live abroad"). A US citizen
+ * doesn't, since the UK-US treaty grants none (HMRC RFIG30570, July 2026).
+ */
+const UK_ALLOWED = new Set(['uk', 'at', 'be', 'bg', 'hr', 'cy', 'cz', 'dk', 'ee', 'fi', 'fr', 'de', 'gr', 'hu', 'ie', 'it', 'lv', 'lt', 'lu', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'si', 'es', 'se', 'is', 'li', 'no']);
+export const ukAllowed = (citizenshipId: string | undefined): boolean => UK_ALLOWED.has(citizenshipId ?? '');
+
+/**
+ * The UK's tax on a UK tax year's gross: the bands on it all for a US
+ * citizen, who has no personal allowance; for a British or EEA one the
+ * allowance first, £1 less for each £2 of income over £100,000, gone at
+ * £125,140 (gov.uk, 2026–27). Until 2026-09-28 every player was taxed as a US
+ * citizen.
+ */
+export function ukTaxOn(gross: Money, into: string, allowed = false): Money {
   const toGbp = (m: Money) => exchange(m, into, 'GBP') ?? m;
-  const tax = banded(toGbp(gross), ABROAD.uk.bands);
+  const gbp = toGbp(gross);
+  const allowance = allowed ? Math.max(0, ABROAD.uk.allowance - Math.max(0, gbp - ABROAD.uk.taperFrom) / 2) : 0;
+  const tax = banded(Math.max(0, gbp - allowance), ABROAD.uk.bands);
   return exchange(tax, 'GBP', into) ?? tax;
 }
 
@@ -392,7 +408,7 @@ export function settleUkYears(sim: Simulation, person: Person, calendarYear: num
     // The year from April key to April key + 1 files by 31 January key + 2.
     if (Number(key) + 2 > calendarYear || r.ukSettled?.includes(key)) continue;
     const withheld = r.ukWithheld?.[key] ?? 0;
-    const tax = gross <= usd(ABROAD.uk.treatyUsd, cur) ? 0 : ukTaxOn(gross, cur);
+    const tax = gross <= usd(ABROAD.uk.treatyUsd, cur) ? 0 : ukTaxOn(gross, cur, ukAllowed(person.citizenshipId));
     const change = tax - withheld;
     // With no account to pay or refund through it waits for the next year's;
     // until 2026-09-27 it was marked settled and never paid.

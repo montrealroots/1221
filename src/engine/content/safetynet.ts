@@ -359,7 +359,7 @@ export const ABROAD = {
     } as Readonly<Record<string, { brackets: readonly (readonly [number, number])[]; basicPersonal: Money; surtax?: readonly (readonly [number, number])[] }>>,
   },
   uk: {
-    rate: 0.2, treatyUsd: 20_000_00, payerThresholdGbp: 12_570_00,
+    rate: 0.2, treatyUsd: 20_000_00, payerThresholdGbp: 12_570_00, allowance: 12_570_00, taperFrom: 100_000_00,
     bands: [[37_700_00, 0.2], [125_140_00, 0.4], [Number.POSITIVE_INFINITY, 0.45]] as readonly (readonly [number, number])[],
     settleMonth: 1, settleDay: 31,
   },

@@ -33,7 +33,7 @@ import type { Simulation } from '@/engine';
 
 const KNOBS: readonly PersonalityKnob[] = [
   'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing', 'spending',
-  'illnessToll', 'awayRecovery', 'earlyCall', 'lateCall', 'receipts',
+  'illnessToll', 'awayRecovery', 'earlyCall', 'lateCall', 'receipts', 'bondWarmth', 'bondWound', 'company',
 ];
 
 /** Somebody with no lean anywhere: every axis at the middle and no traits. */
@@ -397,9 +397,10 @@ describe('what it does', () => {
     expect(frugal).toBeLessThan(1);
     expect(spender).toBeGreaterThan(1);
     expect(personalityOf(person(['generous']), 'spending')).toBeGreaterThan(1);
-    // And the other three money traits move nothing else.
+    // And the other three money traits move nothing else, but that people remember a generous person fondly.
+    expect(personalityOf(person(['generous']), 'bondWarmth')).toBeGreaterThan(1);
     for (const id of ['frugal', 'spender', 'generous']) {
-      for (const knob of KNOBS.filter((k) => k !== 'spending')) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
+      for (const knob of KNOBS.filter((k) => k !== 'spending' && !(id === 'generous' && k === 'bondWarmth'))) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
     }
   });
 

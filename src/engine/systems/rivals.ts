@@ -24,7 +24,7 @@ import { zonedParts, type Instant } from '../core/time';
 import { AGENCIES, ROLES, type Role } from '../content/career';
 import { agencyById, auditionLevel, careerOf, roleById, showcaseScore, type Audition } from './career';
 import { nudge } from './attributes';
-import { bondWord, type Classmate } from './school';
+import { BONDS, bondMove, bondWord, type Classmate } from './school';
 
 export const RIVALS = {
   /** The chance a classmate, out of school, is in the room for one of the player's auditions. */
@@ -112,6 +112,17 @@ export function inTheRoom(sim: Simulation, person: Person, audition: Audition): 
   const rng = sim.rng('career.rivals', person.id, `room-${audition.id}`);
   const role = roleById(audition.roleId);
   return school.classmates.flatMap((m, i) => (m.career && rng.next() < RIVALS.inTheRoom ? [{ i, name: m.name, read: readFor(m, role, audition.mode, audition.genre) }] : []));
+}
+
+/**
+ * A part one of them took from the other, in the room: apart by what a lead
+ * taken costs at school (`BONDS.leadTaken`), as the player takes a slight.
+ * Until 2026-09-28 a part lost to a classmate after school was news and
+ * nothing between them.
+ */
+export function partTaken(person: Person, i: number): void {
+  const m = person.school?.classmates[i];
+  if (m) m.bond = Math.max(-100, Math.min(100, (m.bond ?? 0) + bondMove(person, -BONDS.leadTaken)));
 }
 
 /** A part a classmate booked: on their record, and in the trades where it makes them. */

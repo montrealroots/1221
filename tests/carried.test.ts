@@ -16,7 +16,7 @@ import { ABROAD, CARE, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from
 import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, unitRate, type Booking } from '@/engine/systems/career';
 import { earningsOf, recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
-import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
+import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukAllowed, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import { TURNS } from '@/engine/systems/enjoyment';
 import { occupiedAt } from '@/engine/systems/life';
@@ -162,6 +162,19 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
     const gbp = exchange(80_000_00, 'USD', 'GBP')!;
     expect(tax).toBe(exchange(Math.round(0.2 * 37_700_00 + 0.4 * (gbp - 37_700_00)), 'GBP', 'USD'));
     expect(yearOf(sim.player, 2030).foreign.uk!.withheld).toBe(tax - 16_000_00);
+  });
+
+  it('gives a British or EEA citizen the UK’s allowance, tapered past £100,000, and a US citizen none', () => {
+    const gbp = (n: number) => exchange(n, 'GBP', 'USD')!;
+    // £50,000: the allowance first, and the £37,430 left all at 20%.
+    expect(ukTaxOn(gbp(50_000_00), 'USD', true)).toBeCloseTo(gbp(Math.round(0.2 * (50_000_00 - 12_570_00))), -2);
+    expect(ukTaxOn(gbp(50_000_00), 'USD', false)).toBeGreaterThan(ukTaxOn(gbp(50_000_00), 'USD', true));
+    // Gone by £125,140.
+    expect(ukTaxOn(gbp(130_000_00), 'USD', true)).toBe(ukTaxOn(gbp(130_000_00), 'USD', false));
+    expect(ukTaxOn(gbp(110_000_00), 'USD', true)).toBeLessThan(ukTaxOn(gbp(110_000_00), 'USD', false));
+    expect(ukAllowed('uk')).toBe(true);
+    expect(ukAllowed('is')).toBe(true);
+    expect(ukAllowed('us')).toBe(false);
   });
 
   it('keeps a UK year to settle where there’s no account to settle it through', () => {

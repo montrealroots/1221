@@ -9,19 +9,21 @@
  * monthly from the month after the 65th birthday, into the bank.
  *
  * A production's earnings count to $232,000 (the Plan's per-project
- * ceiling since July 2005). A participant with ten or more Pension Credits
- * may start it early, from 55, reduced a quarter of a percent for each month
- * under 65 ("When can I start my pension?"). It's taxable income on the
- * year's return, with no payroll tax.
+ * ceiling since July 2005), and a television episode's to $25,000 for a half
+ * hour and $35,000 for an hour (since July 2024). A participant with ten or
+ * more Pension Credits may start it early, from 55, reduced a quarter of a
+ * percent for each month under 65 ("When can I start my pension?"). It's
+ * taxable income on the year's return, with no payroll tax.
  *
- * What's SLATE's estimate, as the Plan's current figures couldn't be found in
- * a form to read: the minimum for a credit is held at the $20,000 the Plan
- * published for 2012; a year adds 2% of its covered earnings to the yearly
- * pension, the Plan's own example being $100,000 adding $2,000; and a
- * Permanent Break is taken as five years in a row without a credit once one
- * is earned. The Activity Test for five-year vesting and the per-episode
- * ceilings on television aren't modeled. Until 2026-09-28 none of the
- * ceiling, the early start and the return were.
+ * From the Summary Plan Description (December 2019, unchanged by the Plan's
+ * notices of August 2025 and July 2026): a credit needs $20,000 of covered
+ * earnings in a year from 2012, which this said was held at 2012's figure
+ * and is in fact still the Plan's; a year from 2010 adds 2% of its earnings
+ * to the yearly pension. The Activity Test binds only who had five to nine
+ * credits at the end of 1998, so no life SLATE begins meets it. SLATE's
+ * estimate: a Permanent Break is taken as five years in a row without a
+ * credit once one is earned. Until 2026-09-28 none of the ceilings, the
+ * early start and the return were.
  *
  * A pension fund from before (the day job's, until 2026-09-26) sat in a
  * save, counted in its net worth and moved by nothing. It's paid out at 65
@@ -36,6 +38,7 @@ import { exchange } from '../content/currency';
 import { earningsOf, recordPension } from './earnings';
 import { CommandError } from '../core/simulation';
 import { payeeAccount } from './cash';
+import { careerOf, roleById } from './career';
 
 export const SAG_PENSION = {
   creditEarnings: 20_000_00,
@@ -46,6 +49,8 @@ export const SAG_PENSION = {
   age: 65,
   /** The per-project ceiling on covered earnings, and an early start: from 55, with ten credits, a quarter of a percent less a month under 65. */
   projectCeiling: 232_000_00,
+  /** Television's ceiling an episode, by its length, from 1 July 2024 (the Plan's 2024 Pension Summary FAQ, February 2025). */
+  episodeCeiling: { half: 25_000_00, hour: 35_000_00 },
   earliest: 55,
   earlyCredits: 10,
   earlyPerMonth: 0.0025,
@@ -60,9 +65,17 @@ const inSave = (sim: Simulation, usd: Money) => { const cur = saveCurrency(sim.u
 export function pensionOf(sim: Simulation, person: Person): { years: { year: number; earnings: Money; credit: boolean }[]; credits: number; vested: boolean; yearly: Money } {
   const now = zonedParts(sim.now, sim.homeZone).year;
   const floor = inSave(sim, SAG_PENSION.creditEarnings);
-  const ceiling = inSave(sim, SAG_PENSION.projectCeiling);
-  // A year's covered earnings, each production to the ceiling; a year from before the breakdown was kept counts whole.
-  const covered = (e: { sag: Money; sagByProject?: Record<string, Money> }) => (e.sagByProject ? Object.values(e.sagByProject).reduce((sum, v) => sum + Math.min(v, ceiling), 0) + Math.max(0, e.sag - Object.values(e.sagByProject).reduce((a, b) => a + b, 0)) : e.sag);
+  const bookings = careerOf(person).bookings;
+  // A production's ceiling: a film's per project, television's per episode by its length.
+  const ceilingOf = (project: string): Money => {
+    const booking = bookings.find((b) => b.id === project);
+    const role = booking ? roleById(booking.roleId) : undefined;
+    if (!booking || role?.after?.kind !== 'tv') return inSave(sim, SAG_PENSION.projectCeiling);
+    const episodes = role.series ? role.series.episodes : role.arc ? booking.units : 1;
+    return inSave(sim, SAG_PENSION.episodeCeiling[role.after.length]) * episodes;
+  };
+  // A year's covered earnings, each production to its ceiling; a year from before the breakdown was kept counts whole.
+  const covered = (e: { sag: Money; sagByProject?: Record<string, Money> }) => (e.sagByProject ? Object.entries(e.sagByProject).reduce((sum, [project, v]) => sum + Math.min(v, ceilingOf(project)), 0) + Math.max(0, e.sag - Object.values(e.sagByProject).reduce((a, b) => a + b, 0)) : e.sag);
   const years = Object.entries(earningsOf(person).years)
     .map(([y, e]) => ({ year: Number(y), earnings: covered(e) }))
     .filter((y) => y.year < now && y.earnings > 0)

@@ -10,6 +10,7 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { earningsOf } from '@/engine/systems/earnings';
+import { careerOf } from '@/engine/systems/career';
 import { PENSION_KIND, SAG_PENSION, armPension, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
 
 const life = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -72,6 +73,16 @@ describe('the Plan’s finer rules', () => {
     expect(pensionOf(sim, sim.player).years[0]!.earnings).toBe(SAG_PENSION.projectCeiling);
     delete (years['2024'] as unknown as { sagByProject?: unknown }).sagByProject;
     expect(pensionOf(sim, sim.player).years[0]!.earnings).toBe(300_000_00);
+  });
+
+  it('counts a television episode to its length’s ceiling, and a season to its episodes’', () => {
+    const sim = life('pension-episodes');
+    const career = careerOf(sim.player);
+    career.bookings.push({ id: 'b-guest', roleId: 'guest-hour', units: 5 } as never, { id: 'b-series', roleId: 'series-half', units: 13 } as never);
+    const years = earningsOf(sim.player).years;
+    years['2024'] = { acting: 0, residuals: 0, sag: 140_000_00, sagByProject: { 'b-guest': 50_000_00, 'b-series': 90_000_00 }, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} } as never;
+    // A guest hour: one episode, to $35,000. A half-hour season of thirteen: to $325,000, so all of it.
+    expect(pensionOf(sim, sim.player).years[0]!.earnings).toBe(SAG_PENSION.episodeCeiling.hour + 90_000_00);
   });
 
   it('starts early from 55 with ten credits, a quarter of a percent less a month under 65, and pays it onto the return', () => {

@@ -137,9 +137,24 @@ export interface Classmate {
  * production shared, weeks in a rehearsal room together, is ten toward a
  * friend; a lead written for the one that went to the other, twelve toward a
  * rival. From 25 a friend, from 50 a close one, from -20 a rival. Each friend
- * in a cast lifts a night's morale a point, to three.
+ * in a cast lifts a night's morale a point, to three; a cast without one
+ * weighs two on somebody who needs people, by how much they do. How fast a
+ * bond grows and how hard a slight cuts are the traits' (`bondWarmth`,
+ * `bondWound`), as is what the company's worth (`company`).
  */
-export const BONDS = { shared: 10, leadTaken: 12, friend: 25, close: 50, rival: -20, perFriend: 1, most: 3 } as const;
+export const BONDS = { shared: 10, leadTaken: 12, friend: 25, close: 50, rival: -20, perFriend: 1, most: 3, alone: 2 } as const;
+
+/** What the friends in a night's cast are worth to the mood, by how much this person needs company: none weighs on somebody who does. */
+export function castCompany(person: Person, friends: number): number {
+  const company = personalityOf(person, 'company');
+  if (friends) return Math.min(BONDS.most, friends * BONDS.perFriend) * company;
+  return company > 1 ? -BONDS.alone * (company - 1) : 0;
+}
+
+/** A bond's move as this person takes it: closer by their warmth, apart by how a slight cuts them. */
+export function bondMove(person: Person, move: number): number {
+  return move >= 0 ? move * personalityOf(person, 'bondWarmth') : move * personalityOf(person, 'bondWound');
+}
 
 /** What a classmate is to the player, in a word, if anything yet. */
 export function bondWord(bond: number | undefined): 'Close Friend' | 'Friend' | 'Rival' | undefined {
@@ -1239,7 +1254,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
           const ours = partOf(me.part);
           if (theirs?.size === 'lead' && me.size !== 'lead' && (theirs.for === title || theirs.for === 'either')) move -= BONDS.leadTaken;
           if (ours?.size === 'lead' && g.size !== 'lead' && (ours.for === g.s.title || ours.for === 'either')) move -= BONDS.leadTaken;
-          mate.bond = Math.max(-100, Math.min(100, (mate.bond ?? 0) + move));
+          mate.bond = Math.max(-100, Math.min(100, (mate.bond ?? 0) + bondMove(person, move)));
         }
       }
       // The classmates in it rehearse and play it too: grown once the run is over (`COMPANY_KIND`).
@@ -1601,7 +1616,7 @@ export function registerSchool(sim: Simulation): void {
         if (item.payload.which === 'rep') earn(s, person, ATTRIBUTES.reputation.repPerformance);
         // Friends in the cast: a better night to be in.
         const friends = (casting.cast ?? []).filter((c) => (school.classmates.find((m) => m.name === c.name)?.bond ?? 0) >= BONDS.friend).length;
-        if (friends) person.wellbeing.morale = Math.min(100, person.wellbeing.morale + Math.min(BONDS.most, friends * BONDS.perFriend));
+        person.wellbeing.morale = Math.max(0, Math.min(100, person.wellbeing.morale + castCompany(person, friends)));
         playNight(person.craft, castingReads(casting), focusOf(person) * kept);
         tire(person, ESTIMATE.energy.performance);
         reckonNight(s, person, casting, item, kept, item.payload.which === 'rep');

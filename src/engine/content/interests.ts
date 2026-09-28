@@ -9,8 +9,11 @@
  * stress of the hour they go with (`systems/enjoyment.ts`). The crafts and
  * the genres waited for the career until 2026-09-27: a day on a job in a
  * genre somebody loves, or of Voice Acting for one who loves that, lifts
- * the mood the same way. The other crafts are trades an actor's jobs don't
- * do, and are said back.
+ * the mood the same way. The other crafts were trades an actor's jobs don't
+ * do, and were said back, until 2026-09-28: since then each is met where the
+ * work really puts an actor beside it (a set, a stage, a booth, the casting
+ * room, the finished film; `CRAFTS_AT` in `systems/enjoyment.ts`), and Film
+ * History and Film Preservation are an evening with the old films.
  *
  * The crafts are the ones film and television are actually made of, from the
  * ones everybody can name to the ones only a crew knows. It says something

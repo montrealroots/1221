@@ -21,7 +21,11 @@
  * return can deduct of the work's costs (`receipts`), and Chaotic loses some.
  *
  * A trait's description and cost are written for a whole life. The game
- * charges the part of them its knobs reach, and says the rest back.
+ * charges the part of them its knobs reach, and says the rest back. What
+ * the people traits said about other people was said back until 2026-09-28,
+ * when the classmates were there to read it: how fast a bond grows
+ * (`bondWarmth`), how hard a slight cuts (`bondWound`), and how much a
+ * friend in the cast is worth, or none (`company`).
  */
 
 export type PersonalityGroup =
@@ -37,14 +41,17 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
  * `systems/life.ts`, and since 2026-09-27 what illness takes
  * (`systems/health.ts`), what a night away puts back (`systems/life.ts`) and
  * what an early call or a late performance costs (`systems/career.ts`), and
- * how much of the work's costs a return can prove (`systems/taxreturn.ts`). A
+ * how much of the work's costs a return can prove (`systems/taxreturn.ts`),
+ * and since 2026-09-28 how a classmate grows closer or apart and what friends
+ * in a cast are worth (`systems/school.ts`). A
  * trait that wants to move something else has to wait for the system it would
  * move.
  */
 export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
   | 'hygieneDrift' | 'moraleSwing' | 'spending'
-  | 'illnessToll' | 'awayRecovery' | 'earlyCall' | 'lateCall' | 'receipts';
+  | 'illnessToll' | 'awayRecovery' | 'earlyCall' | 'lateCall' | 'receipts'
+  | 'bondWarmth' | 'bondWound' | 'company';
 
 export interface PersonalityTrait {
   id: string;
@@ -66,14 +73,14 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'even_tempered', name: 'Even Tempered', group: 'Temperament',
     description: 'Very little gets through. Bad news lands on you the same way good news does.',
     cost: 'People read the calm as not caring, and drift away from it.',
-    systemMods: { stressGain: 0.78, moraleSwing: 0.8 },
+    systemMods: { stressGain: 0.78, moraleSwing: 0.8, bondWarmth: 0.85 },
     conflictsWith: ['quick_tempered', 'highly_strung'],
   },
   {
     id: 'quick_tempered', name: 'Quick Tempered', group: 'Temperament',
     description: 'It comes up fast and it’s gone just as fast, which isn’t much comfort to whoever was standing there.',
     cost: 'Stress arrives quicker and relationships wear.',
-    systemMods: { stressGain: 1.25, stressRecovery: 1.15 },
+    systemMods: { stressGain: 1.25, stressRecovery: 1.15, bondWound: 1.3 },
     conflictsWith: ['even_tempered', 'unshakeable', 'peacemaker'],
   },
   {
@@ -154,7 +161,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'disciplined_body', name: 'Disciplined', group: 'Body',
     description: 'The training, the sleeping, the eating: all of it belongs to a person who means to still be working at sixty.',
     cost: 'The hours it takes are hours you aren’t spending on anybody.',
-    systemMods: { energyRecovery: 1.08 },
+    systemMods: { energyRecovery: 1.08, bondWarmth: 0.9 },
     conflictsWith: ['indulgent'],
   },
   {
@@ -213,7 +220,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     description: 'You pick up the check, you lend it and you don’t chase it.',
     cost: 'People remember it fondly and you’re poorer for it.',
     conflictsWith: ['keeps_accounts'],
-    systemMods: { spending: 1.1 },
+    systemMods: { spending: 1.1, bondWarmth: 1.1 },
   },
   {
     id: 'keeps_accounts', name: 'Keeps Accounts', group: 'Money',
@@ -228,56 +235,56 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'loyal', name: 'Loyal', group: 'People',
     description: 'The people who were there at the start are still there, and always will be.',
     cost: 'You stay long after you should have gone, and it wears on you.',
-    systemMods: { stressGain: 1.12 },
+    systemMods: { stressGain: 1.12, bondWound: 0.8 },
     conflictsWith: ['independent', 'detached'],
   },
   {
     id: 'independent', name: 'Independent', group: 'People',
     description: 'You don’t need the room, the company or the reassurance. You’re fine.',
     cost: 'Nobody is quite sure they matter to you, and eventually they stop trying.',
-    systemMods: { stressGain: 0.88 },
+    systemMods: { stressGain: 0.88, bondWarmth: 0.8, company: 0.5 },
     conflictsWith: ['loyal', 'needs_people'],
   },
   {
     id: 'needs_people', name: 'Needs People', group: 'People',
     description: 'You’re better with somebody in the room. You always have been.',
     cost: 'Alone, you come apart quietly and quickly.',
-    systemMods: { moraleSwing: 1.2 },
+    systemMods: { moraleSwing: 1.2, company: 1.6 },
     conflictsWith: ['independent', 'guarded'],
   },
   {
     id: 'guarded', name: 'Guarded', group: 'People',
     description: 'It takes a long time to get anywhere with you, and almost nobody has.',
     cost: 'The few who did are load-bearing, and there aren’t many of them.',
-    systemMods: { stressGain: 0.9 },
+    systemMods: { stressGain: 0.9, bondWarmth: 0.75, company: 1.3 },
     conflictsWith: ['needs_people', 'open_book'],
   },
   {
     id: 'open_book', name: 'An Open Book', group: 'People',
     description: 'You say the thing. People know where they are with you within about a minute.',
     cost: 'Keeping a thing to yourself has never once happened.',
-    systemMods: { moraleSwing: 1.1 },
+    systemMods: { moraleSwing: 1.1, bondWarmth: 1.15, bondWound: 1.15 },
     conflictsWith: ['guarded'],
   },
   {
     id: 'peacemaker', name: 'Peacemaker', group: 'People',
     description: 'You can feel a room going wrong before it does and you get in front of it.',
     cost: 'You absorb the trouble and then carry it around all day.',
-    systemMods: { stressGain: 1.15 },
+    systemMods: { stressGain: 1.15, bondWound: 0.75 },
     conflictsWith: ['quick_tempered', 'holds_grudges'],
   },
   {
     id: 'holds_grudges', name: 'Holds Grudges', group: 'People',
     description: 'Exactly what was said, by whom, and in what year: it’s all still there.',
     cost: 'It costs you people, slowly, over a very long time.',
-    systemMods: { stressGain: 1.08 },
+    systemMods: { stressGain: 1.08, bondWound: 1.35 },
     conflictsWith: ['peacemaker', 'forgiving'],
   },
   {
     id: 'forgiving', name: 'Forgiving', group: 'People',
     description: 'It goes, genuinely, and the next conversation starts from nothing.',
     cost: 'You let the same thing happen twice, and carry it both times.',
-    systemMods: { stressRecovery: 1.1, stressGain: 1.1 },
+    systemMods: { stressRecovery: 1.1, stressGain: 1.1, bondWound: 0.7 },
     conflictsWith: ['holds_grudges'],
   },
 

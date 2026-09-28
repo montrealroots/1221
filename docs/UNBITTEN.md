@@ -62,14 +62,22 @@ part the tool cannot see.
   Food and bills are SLATE's estimates everywhere. The legal floors under
   wages were real and sourced until they went with the job engine on
   2026-09-26.
-- **What a trait's cost says about other people is said back, not
-  charged.** Each is written for a whole life, and since 2026-09-27 the
-  game charges every part of it that touches something it has: stress,
-  sleep, the energy a night puts back and a night away (Homebody,
-  Restless), hygiene, mood, illness (Resilient), an early call or a late
-  performance (Night Owl, Early Riser) and the receipts a return can deduct
-  (Keeps Accounts, Chaotic). What's left is about other people, whom SLATE
-  doesn't have, and injury, which it doesn't model. The Traits card says so.
+- **A few words of the traits' costs are said back.** Each is written for
+  a whole life, and since 2026-09-27 the game charges every part of it that
+  touches something it has: stress, sleep, the energy a night puts back and
+  a night away (Homebody, Restless), hygiene, mood, illness (Resilient), an
+  early call or a late performance (Night Owl, Early Riser) and the receipts
+  a return can deduct (Keeps Accounts, Chaotic). What they said about other
+  people was said back until 2026-09-28, when the classmates were there to
+  read it: how fast a bond grows (`bondWarmth`: Even Tempered, Disciplined,
+  Independent and Guarded slower, Generous and An Open Book faster), how hard
+  a slight cuts (`bondWound`: Quick Tempered, Holds Grudges and An Open Book
+  deeper, Loyal, Peacemaker and Forgiving less), and what friends in a cast
+  are worth, and none (`company`: Needs People and Guarded more, Independent
+  less). How much each is is SLATE's estimate. What's left: a visitor seeing
+  the mess (Chaotic), people slept through (Sleeps Anywhere) and others
+  keeping accounts about you (Keeps Accounts), since nobody visits, sleeps
+  beside or owes the player; and injury, which SLATE doesn't model.
 - **Some banks' figures weren't found, and a few are given as words.** The
   thirteen countries' waivers are modeled as the banks write them since
   2026-09-25: an average balance, an average across one's accounts at the
@@ -173,8 +181,11 @@ part the tool cannot see.
   - The fifteen classmates are a name and a craft each: they grow, set the
     evaluation's median and the player's place, and since 2026-09-27 show
     beside the player, an agency taking its best two of the class (SLATE's
-    estimate). They aren't cast against the player, and don't come to
-    anything after school.
+    estimate). This said they weren't cast against the player and came to
+    nothing after school; since 2026-09-28 they work, are in the room for
+    the player's auditions and make the trades (`systems/rivals.ts`), and a
+    part one takes from the other sets them apart as a lead taken at school
+    does. Their presence isn't kept: they're read at an ordinary 50.
   - A student in need's living-expense scholarship, but for its books, is
     income the year's return taxes since 2026-09-27, and the returns begin
     at enrollment. Until then the tax engine collected nothing on it.
@@ -214,8 +225,11 @@ part the tool cannot see.
     its surtax). What's estimated: the 2026 federal and provincial
     brackets held for later years, and a payer's UK total expected at the
     booking's rate. What isn't modeled:
-    an FEU8 agreement to withhold less, and the UK allowance's taper,
-    which a US citizen never has to reach.
+    Canada's Form T1287, filed before the work, which lowers what's
+    withheld where the tax on the net would be under 23% of the gross (the
+    election's return settles it the same either way). Since 2026-09-28 a
+    British or EEA citizen keeps the UK's personal allowance, tapered past
+    £100,000; a US citizen has none, as HMRC's treaty list says.
   - The body: obesity isn't modeled, since SLATE keeps no weight. A type
     2 diabetic's test strips aren't, since most on a generic don't test
     daily. Yale Health is taken as a university's own self-funded plan,
@@ -392,14 +406,17 @@ part the tool cannot see.
 - **The pension is partly SLATE's estimate.** Since 2026-09-28 the
   SAG-Producers Pension Plan (`systems/pension.ts`) credits a year of covered
   earnings at the minimum, vests at ten credits or five without a break, and
-  pays monthly from 65, as the Plan's pages say. The minimum is held at the
-  Plan's 2012 figure, $20,000, and a year adds 2% of its earnings, the Plan's
-  own example; the current figures weren't found in a form to read. A
-  production counts to the Plan's $232,000 ceiling, an early start from 55
-  with ten credits is a quarter of a percent less a month under 65, and the
-  pension is on the year's return, all as the Plan's pages say. The Activity
-  Test for five-year vesting and television's per-episode ceilings aren't
-  modeled. An older save's pension fund from the
+  pays monthly from 65, as the Plan's pages say. The minimum, $20,000, and
+  the 2% a year adds are the Plan's current figures (its Summary Plan
+  Description, unchanged by its notices of August 2025 and July 2026); this
+  said they were held at 2012's, which they are only in that 2012 set them. A
+  production counts to the Plan's $232,000 ceiling and, since 2026-09-28, a
+  television episode to $25,000 a half hour and $35,000 an hour; an early
+  start from 55 with ten credits is a quarter of a percent less a month under
+  65, and the pension is on the year's return, all as the Plan's pages say.
+  The Activity Test binds only who had five to nine credits at the end of
+  1998, which no life SLATE begins did. SLATE's estimate: a Permanent Break
+  as five years in a row without a credit. An older save's pension fund from the
   day job, which nothing moved from 2026-09-26, is paid out at 65.
 - **Homes are partly SLATE's estimate.** Since 2026-09-28 homes are bought by offer, owned, let, kept up,
   borrowed against and sold (`systems/homes.ts`). A US town's typical value
@@ -442,19 +459,6 @@ part the tool cannot see.
   overnight, what a gym builds over a workout at home, what's lost in a
   burglary or a fire, and how much less wall units cool than central air.
   Not modeled: the hot water a washer heats.
-- **Most of the crafts are said back and nothing more.** Creation asks for
-  them and the person look prints them. Since 2026-09-27 a day of work reads
-  the genres, Voice Acting, and Film, Television, Theater and Travel
-  (`systems/enjoyment.ts`), under the owner's rule: mood and stress, never
-  how good anybody is. Since 2026-09-28 a commercial's product reads Animals,
-  Cars, Fashion, Nature and Politics (`PRODUCT_INTEREST`), which until then
-  went with nothing a player could do. The other crafts are trades an
-  actor's jobs don't do. `tests/cohesion.test.ts` holds that only that file
-  reads them.
-- **The performer title is said back and nothing more.** Actor or actress,
-  settled by the pronouns or picked under they/them, and printed on Home, the
-  rail and the save slot. It is a word and not a stat, so that is all it
-  claims to do, but nothing in the simulation reads it either.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
   it: nothing in the build produces an official result. It's a Base44 entity
   and a deployed function, so taking it out is a deployment and waits for the
@@ -462,6 +466,26 @@ part the tool cannot see.
   categories for systems long gone were taken out on 2026-09-25.)
 
 ## Settled on 2026-09-28, by wiring or deletion
+
+The crafts: the thirty that were trades an actor's jobs don't do are each
+met where the work puts an actor beside them (`CRAFTS_AT` and the genre's,
+in `systems/enjoyment.ts`): a set's camera, lighting, makeup, costume,
+sound, script supervisor, director, producers and designers; a series's
+showrunner and writers; a location; a stage's and a rehearsal room's; a
+booth's, an animated series's and a video game's motion capture; the
+genre's stunts, creature effects, choreography, puppetry and more; the
+casting room at an audition or a workshop; improvisation at an improv
+class; and the finished work at its premiere, on air or streaming, with the
+festival and the reviews. Film History and Film Preservation are an evening
+with the old films. One loved craft lifts a day, however many are there,
+under the owner's rule: mood and stress, never how good anybody is.
+`tests/crafts.test.ts` holds that every craft is met somewhere.
+
+The performer title: this page said nothing read it, which was wrong since
+the school's plays were cast (`systems/school.ts`): a part written for an
+actor or an actress goes to one, and the title says which the player is.
+The creation screen says so now. Parts after school aren't written for
+either.
 
 What was kept and only told back, made to count: an agency remembers how a
 client left (`takesBack`); a showcase's buzz brings managers for half a year

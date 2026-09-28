@@ -371,7 +371,8 @@ function IdentityStep({ config, set, setConfig }: {
                   <p className="xs dim" style={{ marginTop: 4 }}>
                     He/Him settles this by itself, and so does She/Her. They/Them doesn’t, so the
                     choice is yours. Actor and Actress are two words for the same craft and the game
-                    treats them as equals. Pick the one you want to be called, and it will call you by it.
+                    treats them as equals. Pick the one you want to be called: the game calls you by it, and at
+                    school you’re cast in the parts a play writes for it, or for anyone.
                   </p>
                 </>
               )}

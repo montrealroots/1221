@@ -74,12 +74,12 @@ import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
 import { actingOf, grow, focusOf, summerOf, type Craft } from './school';
 import { rentAt } from '../content/rents';
-import { enjoyWork, takeTheRoom, feel } from './enjoyment';
+import { CRAFTS_AT, enjoyCrafts, enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
 import { personalityOf } from './personality';
 import { armPension } from './pension';
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
-import { RIVALS, classMonth, classmateBooked, inTheRoom, report, reportBooking, signTheClass, type NewsItem } from './rivals';
+import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { drawRental } from './dwelling';
@@ -1197,11 +1197,14 @@ export function registerCareer(sim: Simulation): void {
     if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1), better ? RIVALS.outread : 1)) {
       if (better) {
         classmateBooked(s, person, better.i, role, item.at);
+        partTaken(person, better.i);
         if (isPlayer(person)) s.notify({ category: 'career', title: `The Part Went To ${better.name}`, body: `${role.label}: your classmate from Yale was in the room too, and booked it.`, importance: 55, route: '/workspace/career' });
       }
       return;
     }
     audition.status = 'booked';
+    // Booked over the classmates in the room: a part taken from each.
+    for (const r of room) partTaken(person, r.i);
     const [lo, hi] = ESTIMATE.offerAfterDays;
     const wait = lo + Math.floor(s.rng('career.booking', person.id, `${audition.id}-wait`).next() * (hi - lo + 1));
     s.schedule({ at: item.at + wait * MS_DAY, kind: OFFER_KIND, label: 'An Offer', category: 'system', priority: 20, payload: { personId: person.id, auditionId: audition.id } });
@@ -1331,7 +1334,7 @@ export function registerCareer(sim: Simulation): void {
     // 2026-09-27 the model's word for it said so and nothing did it.
     if (role.medium !== 'voice') person.wellbeing.hygiene = Math.max(0, (person.wellbeing.hygiene ?? 80) - hours * ESTIMATE.setGrime * personalityOf(person, 'hygieneDrift'));
     // What they love about the day, and how they take the road and the rehearsal room.
-    enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), ...(booking.product ? { product: booking.product } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true });
+    enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), ...(booking.product ? { product: booking.product } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true, role: role.id });
     // An early call, or a performance that runs late, as the body clock takes it.
     person.wellbeing.stress = Math.min(100, person.wellbeing.stress + callStress(person, zonedParts(item.at, zoneOf(workCityOf(booking))).hour, role.medium === 'stage' && !call.rehearsal));
     if (booking.worked < workDays(booking).length) return;
@@ -1832,7 +1835,7 @@ export function registerCareer(sim: Simulation): void {
     nudge(s, person, 'composure', ATTRIBUTES.build.improvSession.composure, true);
     nudge(s, person, 'presence', ATTRIBUTES.build.improvSession.presence, true);
     if (person.craft) grow(person.craft, 'improv', focusOf(person));
-    enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+    enjoyWork(person, { medium: 'stage', away: false, rehearsal: true, crafts: CRAFTS_AT.improv });
   });
 
   // A casting director workshop: an evening's cold reading for one office.
@@ -1857,6 +1860,7 @@ export function registerCareer(sim: Simulation): void {
     nerves(s, person, 'audition');
     earn(s, person, ATTRIBUTES.build.workshop);
     if (person.craft) grow(person.craft, 'coldReading', focusOf(person));
+    enjoyCrafts(person, CRAFTS_AT.room);
   });
 
   sim.onCommand<{ on: boolean }, { on: boolean }>('career.publicist', (p, { sim: s }) => {
@@ -1883,6 +1887,8 @@ export function registerCareer(sim: Simulation): void {
     if (!person) return;
     const role = roleById(String(item.payload.roleId));
     nudge(s, person, 'recognition', recognitionFrom(role) * Number(item.payload.audience ?? 1));
+    // The finished episodes, seen: what the edit, the score and the effects made of the days.
+    enjoyCrafts(person, CRAFTS_AT.seen);
     if (isPlayer(person) && (role.series || role.arc)) s.notify({ category: 'career', title: `It’s On: ${role.label}`, body: `The episodes you made are airing now.`, importance: 45, route: '/workspace/career' });
   });
 
@@ -1897,6 +1903,7 @@ export function registerCareer(sim: Simulation): void {
     if (road === 'streaming') {
       // Straight to streaming: seen, without a premiere to be at.
       nudge(s, person, 'recognition', recognitionFrom(role) * worth);
+      enjoyCrafts(person, CRAFTS_AT.seen);
       if (isPlayer(person)) s.notify({ category: 'career', title: 'Your Film Went To Streaming', body: `${role.label} didn’t get into Tribeca or Brooklyn, and was released straight to streaming.`, importance: 50, route: '/workspace/career' });
       return;
     }
@@ -1904,8 +1911,11 @@ export function registerCareer(sim: Simulation): void {
     const there = present(person, item.at, item.locationId);
     // The film premieres either way, and its audience sees the work; the room sees the actor only if they came.
     nudge(s, person, 'recognition', recognitionFrom(role) * worth + (there ? full : full * f.absent));
-    if (there) earn(s, person, f.reputation);
-    else item.status = 'missed';
+    if (there) {
+      earn(s, person, f.reputation);
+      // In the house for the finished film, and at a festival the festival.
+      enjoyCrafts(person, road === 'studio' ? CRAFTS_AT.seen : [...CRAFTS_AT.seen, ...CRAFTS_AT.festival]);
+    } else item.status = 'missed';
     const where = road === 'brooklyn' ? ' at the Brooklyn Film Festival' : road === 'tribeca' ? ' at Tribeca' : '';
     if (isPlayer(person)) s.notify({ category: 'career', title: there ? 'Your Film Premiered' : 'Your Film Premiered Without You', body: there ? `${role.label} premiered${where}, and you walked the carpet and did the press line.` : `${role.label} premiered${where}, and you weren’t there for the press.`, importance: 60, route: '/workspace/career' });
   });
