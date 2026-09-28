@@ -24,6 +24,7 @@ import { focusOf, summerOf } from '@/engine/systems/school';
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
+import { AttributesPanel } from '@/ui/components/AttributesPanel';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
 
@@ -134,6 +135,8 @@ function AgencyPane() {
           </div>
         </Panel>
       )}
+
+      <AttributesPanel />
 
       <ManagerPanel />
 
@@ -260,7 +263,7 @@ function AuditionsPane() {
                     <td>{r.union === 'sag' ? 'SAG-AFTRA' : 'Equity'}</td>
                     <td className="num mono">{formatMoney(rateOf(r, sim.now, r.cities[0]!, cur), cur)}</td>
                     <td>{r.series ? 'Episode' : r.medium === 'voice' ? 'Session' : r.medium === 'stage' ? 'Week' : 'Day'}</td>
-                    <td className="num mono">{pct(bookingChance(person.craft!, r, focus, 'room'))}</td>
+                    <td className="num mono">{pct(bookingChance(person.craft!, r, focus, 'room', true, false, person.attrs?.presence))}</td>
                   </tr>
                 ))}
               </tbody>

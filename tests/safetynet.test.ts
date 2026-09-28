@@ -5,6 +5,7 @@
  * cover, unemployment insurance and the tax return, against the published
  * figures in `content/career.ts` and `content/safetynet.ts`.
  */
+import { attributesOf } from '@/engine/systems/attributes';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -155,6 +156,7 @@ describe('managers', () => {
 
   it('add auditions a week, and find an unrepresented client agencies', () => {
     const sim = pro('mgr-work');
+    attributesOf(sim, sim.player).reputation = 50;
     let without = 0;
     let withOne = 0;
     for (let w = 0; w < 100; w += 1) {

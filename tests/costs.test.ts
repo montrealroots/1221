@@ -10,6 +10,7 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax, salesTaxRate } from '@/engine/content/tax';
+import { attributesOf } from '@/engine/systems/attributes';
 import { exchange } from '@/engine/content/currency';
 import { AGENCIES, ROLES, WORK_COSTS } from '@/engine/content/career';
 import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, RECEIPTS, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
@@ -68,6 +69,8 @@ describe('an actor’s working costs', () => {
 
   it('has a paid site’s submissions seen twice as often, the reel’s breakdowns shut without one, the sites’ own listings take more, and old headshots cost a fifth of auditions', () => {
     const sim = pro('seen');
+    // A middling reputation: the sites' own rates, neither raised nor cut by it.
+    attributesOf(sim, sim.player).reputation = 50;
     const career = careerOf(sim.player);
     const self = () => { let got = 0; for (let w = 0; w < 600; w += 1) got += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 5).length; return got / 3000; };
     const free = self();

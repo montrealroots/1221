@@ -25,6 +25,7 @@ import {
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
+import { AttributesPanel } from '@/ui/components/AttributesPanel';
 
 type SchoolTab = 'standing' | 'classes' | 'casting' | 'work' | 'terms';
 
@@ -145,6 +146,8 @@ function StandingPane() {
             <p className="xs dim" style={{ margin: 0 }}>The stages are the Yale Bulletin’s. The floors are SLATE’s reading of its “appropriate standards”.</p>
           </div>
         </Panel>
+
+        <AttributesPanel />
 
         <Panel title="Your Faculty">
           <div className="col gap-2 small">

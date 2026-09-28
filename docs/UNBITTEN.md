@@ -296,6 +296,18 @@ part the tool cannot see.
   weren't found (Arion, Crédit Agricole, Santander Spain) and pay out. An
   empty, unused account that the bank may close is never closed: the banks
   say they may, not when.
+- **The attributes’ scales are SLATE’s estimates.** Presence,
+  composure, reputation and recognition (`systems/attributes.ts`, since
+  2026-09-27) each change an outcome, and every figure in them is SLATE’s:
+  the trades publish no scale for an actor’s presence, nerves, standing or
+  name value. Presence is drawn once and grows only slowly; how much it moves
+  an audition (six points of a part’s bar at the extremes, half on tape) and
+  a showing (a fifth of it) is an estimate. Nerves are read before auditions,
+  performances, the showcase and days on set, not before classes, rehearsals
+  or the booth. Recognition comes only from finished work, not from its
+  audience, and the overscale it earns is a single multiple of scale, not a
+  negotiated quote. Other people’s attributes aren’t kept: classmates are
+  read at an ordinary presence of 50.
 - **The tax engine's property tax is shown and charged to no one.** Its
   income and payroll tax is paid again since the career: acting wages are
   withheld through it and each year's return is worked out with it

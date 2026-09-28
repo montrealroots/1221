@@ -29,6 +29,7 @@ import { bankById } from './content/banks';
 import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, meanCraft } from './systems/school';
+import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
 import { illnessWeek } from './systems/health';
@@ -226,6 +227,21 @@ function livingIn(cityId: string, seed: number): Simulation {
 function atYale(seed: number): Simulation {
   return quickSave({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork' }, `yale-${seed}`);
 }
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'attributes.presence',
+  decides: 'The presence a student is given: 55 to 80, most near the middle, for the faculty’s first choice.',
+  drawnIn: 'src/engine/systems/attributes.ts',
+  reads: {
+    // Two saves are two people.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20) + 100) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    delete sim.player.attrs;
+    return attributesOf(sim, sim.player).presence.toFixed(1);
+  },
+});
 
 defineDecider<{ sim: Simulation }, string>({
   id: 'school.class',

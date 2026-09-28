@@ -67,6 +67,7 @@ import { readiness } from './life';
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent } from './household';
 import { SHOWCASE_KIND, armSummerWork, beginCareer, bookShowcase } from './career';
+import { ATTRIBUTES, earn, nerves } from './attributes';
 import { YALE_COST_GROWTH } from '../content/career';
 import { recordScholarship, recordWages, yearOf } from './earnings';
 import { computeAnnualTax } from '../content/tax';
@@ -652,6 +653,8 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
   school.standing = to;
   if (to !== 'good') feel(person, to);
   if (to === 'dismissed' || to === 'graduated') {
+    // The degree is a line casting reads; a dismissal is one too (`attributes.ts`).
+    earn(sim, person, to === 'graduated' ? ATTRIBUTES.reputation.degree : ATTRIBUTES.reputation.dismissed);
     keepCredit(sim, school);
     // The degree's filmed monologues, posted at the end of the final term.
     if (to === 'graduated') school.filmed = true;
@@ -1045,7 +1048,9 @@ export function registerSchool(sim: Simulation): void {
       if (present(person, item.at)) {
         school.tally.answered += 1;
         casting.performed += 1;
-        grow(person.craft, 'acting', focusOf(person), 6);
+        // Sent on: nerves, and a night the Rep's company remembers (`attributes.ts`).
+        grow(person.craft, 'acting', focusOf(person) * nerves(s, person, 'performance'), 6);
+        earn(s, person, ATTRIBUTES.reputation.repPerformance);
         tire(person, ESTIMATE.energy.performance);
         if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
         return;
@@ -1058,8 +1063,11 @@ export function registerSchool(sim: Simulation): void {
       school.tally.answered += 1;
       if (call === 'performance') {
         casting.performed += 1;
-        grow(person.craft, 'acting', focusOf(person), 4);
-        grow(person.craft, 'voice', focusOf(person), 2);
+        // Nerves before a house, and at the Rep a night the company remembers (`attributes.ts`).
+        const kept = nerves(s, person, 'performance');
+        if (item.payload.which === 'rep') earn(s, person, ATTRIBUTES.reputation.repPerformance);
+        grow(person.craft, 'acting', focusOf(person) * kept, 4);
+        grow(person.craft, 'voice', focusOf(person) * kept, 2);
         tire(person, ESTIMATE.energy.performance);
       } else {
         grow(person.craft, 'acting', focusOf(person), 1.5);
@@ -1116,8 +1124,9 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at)) { item.status = 'missed'; return; }
     if (item.payload.call === 'performance') {
       school.cabaret.performed += 1;
-      grow(person.craft, 'acting', focusOf(person), 4);
-      grow(person.craft, 'voice', focusOf(person), 2);
+      const kept = nerves(sim, person, 'performance');
+      grow(person.craft, 'acting', focusOf(person) * kept, 4);
+      grow(person.craft, 'voice', focusOf(person) * kept, 2);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
     } else {
@@ -1184,8 +1193,9 @@ export function registerSchool(sim: Simulation): void {
     }
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
-      grow(person.craft, 'acting', focusOf(person), 4);
-      grow(person.craft, 'voice', focusOf(person), 2);
+      const kept = nerves(s, person, 'performance');
+      grow(person.craft, 'acting', focusOf(person) * kept, 4);
+      grow(person.craft, 'voice', focusOf(person) * kept, 2);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `Yale Summer Cabaret ${summer.year}, Show ${run + 1}`, role: 'In The Company', kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
@@ -1208,7 +1218,7 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at)) { item.status = 'missed'; return; }
     school.tally.answered += 1;
     if (item.payload.showing === true) {
-      grow(person.craft, 'acting', focusOf(person), 3);
+      grow(person.craft, 'acting', focusOf(person) * nerves(sim, person, 'performance'), 3);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
       return;

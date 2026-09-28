@@ -45,6 +45,7 @@ import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { agencyById, registerCareer } from './systems/career';
+import { attributesOf } from './systems/attributes';
 import { registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
 import { registerTaxReturn } from './systems/taxreturn';
@@ -197,6 +198,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   const sim = new Simulation(universe);
   registerAllSystems(sim);
   populateWorld(sim, config);
+  // The attributes, drawn at the start of the life (`systems/attributes.ts`).
+  attributesOf(sim, sim.player);
   return sim;
 }
 
@@ -204,6 +207,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
 export function loadSave(universe: SaveUniverse): Simulation {
   const sim = new Simulation(universe);
   registerAllSystems(sim);
+  // A save from before the attributes draws them on opening, the same draw a new life makes.
+  if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
   const zone = sim.homeZone;
 
   // Every build has armed the rollover for the start of a day, and until the

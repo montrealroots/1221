@@ -15,6 +15,7 @@ import {
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
+import { ATTRIBUTES, attributesOf } from '@/engine/systems/attributes';
 import { rehome } from '@/engine/systems/household';
 import { healthOf } from '@/engine/systems/health';
 import type { Simulation } from '@/engine/core/simulation';
@@ -83,7 +84,9 @@ describe('the showcase', () => {
 
   it('reads acting as much as the rest together, and takes up to a fifth off for tiredness', () => {
     const c = { ...craft(60), acting: 90 };
-    expect(showcaseScore(c, 1)).toBeCloseTo(0.5 * 90 + 0.5 * ((90 + 60 * 6) / 7), 10);
+    // Presence is a fifth of it, beside the craft; a classmate's is read at 50.
+    expect(showcaseScore(c, 1)).toBeCloseTo(0.8 * (0.5 * 90 + 0.5 * ((90 + 60 * 6) / 7)) + 0.2 * 50, 10);
+    expect(showcaseScore(c, 1, 80) - showcaseScore(c, 1, 50)).toBeCloseTo(0.2 * 30, 10);
     expect(showcaseScore(c, 0)).toBeCloseTo(0.8 * showcaseScore(c, 1), 10);
     expect(showcaseScore(c, 1.2)).toBe(showcaseScore(c, 1));
   });
@@ -112,13 +115,23 @@ describe('the showcase, on the day', () => {
     return sim;
   }
 
+  it('gives a good showing to the reputation, as the room remembers it', () => {
+    const sim = showing('remembered');
+    sim.player.awakeSince = sim.now - MS_HOUR;
+    sim.player.attrs!.reputation = 0;
+    sim.advanceTo(sim.now + 2 * 60_000);
+    const score = careerOf(sim.player).showcases[0]!.score;
+    expect(score).toBeGreaterThan(50);
+    expect(sim.player.attrs!.reputation).toBeCloseTo((score - 50) * ATTRIBUTES.reputation.showcasePer, 6);
+  });
+
   it('sees nothing of an actor asleep through it', () => {
     const sim = showing('asleep');
     sim.player.awakeSince = sim.now + MS_DAY;
     sim.advanceTo(sim.now + 2 * 60_000);
     expect(careerOf(sim.player).offers).toEqual([]);
     expect(titled(sim, 'You Missed The Showcase In New York')).toHaveLength(1);
-    expect(careerOf(sim.player).showcases[0]!.score).toBeCloseTo(0.8 * showcaseScore(craft(90), 1), 6);
+    expect(careerOf(sim.player).showcases[0]!.score).toBeCloseTo(0.8 * showcaseScore(craft(90), 1, attributesOf(sim, sim.player).presence), 6);
   });
 
   it('shows the class beside them: an agency takes its best two, and an actor with two better beside them isn’t taken', () => {
@@ -245,6 +258,8 @@ describe('representation', () => {
 describe('auditions', () => {
   it('come each week by the agency’s reach, for the parts its reach sends clients to', () => {
     const sim = pro('reach');
+    // A middling reputation, which neither adds to the agency's reach nor takes from it.
+    attributesOf(sim, sim.player).reputation = 50;
     for (const tier of [1, 2, 3] as const) {
       const agency = AGENCIES.find((a) => a.tier === tier)!;
       let count = 0;
@@ -581,6 +596,69 @@ describe('a job over the school’s calls', () => {
     sim.schedule({ at: first - 20 * MS_HOUR, kind: SHOWCASE_KIND, label: 'Actor Showcase', category: 'school', priority: 30, requiresPlayer: true, durationMinutes: 150, payload: { personId: sim.player.id } });
     expect(schoolClash(sim, sim.player, away)?.kind).toBe(SHOWCASE_KIND);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+  });
+});
+
+describe('the attributes at work', () => {
+  const earned = (steps: number[], from = 0) => steps.reduce((r, s) => (s > 0 ? r + s * (1 - r / 100) : Math.max(0, r + s)), from);
+
+  it('earns reputation by the day and the job, recognition by the screen, and composure on set', () => {
+    const sim = pro('attr-work');
+    const a = attributesOf(sim, sim.player);
+    const composure = a.composure;
+    const b = offer(sim, 'costar', 2, 0, at(2026, 10, 5, 8));
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    play(sim, at(2026, 10, 7, 12));
+    expect(b.status).toBe('worked');
+    expect(a.reputation).toBeCloseTo(earned([ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.job]), 6);
+    expect(a.recognition).toBe(ATTRIBUTES.recognition.costar);
+    expect(a.composure).toBeGreaterThan(composure);
+  });
+
+  it('loses reputation for a walk-off', () => {
+    const sim = pro('attr-walk');
+    const a = attributesOf(sim, sim.player);
+    a.reputation = 30;
+    const stage = offer(sim, 'lort-b', 1, 1, at(2026, 10, 5, 8));
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: stage.id } }).ok).toBe(true);
+    play(sim, at(2026, 10, 8, 12));
+    const before = a.reputation;
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    play(sim, at(2026, 10, 9, 12));
+    expect(stage.status).toBe('fired');
+    expect(a.reputation).toBeCloseTo(before + ATTRIBUTES.reputation.fired, 6);
+  });
+
+  it('costs reputation for an audition the agency got and nobody went to, and puts nerves before one attended', () => {
+    const sim = signed('attr-audition');
+    const a = attributesOf(sim, sim.player);
+    a.reputation = 10;
+    const career = careerOf(sim.player);
+    career.auditions.push({ id: 'aud-miss', roleId: 'costar', at: sim.now + 60_000, mode: 'room', cityId: 'us-ca-losangeles', status: 'ahead' });
+    sim.schedule({ at: sim.now + 60_000, kind: AUDITION_KIND, label: 'Audition', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, payload: { personId: sim.player.id, auditionId: 'aud-miss' } });
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(a.reputation).toBe(10 + ATTRIBUTES.reputation.missedAudition);
+    sim.player.wellbeing.stress = 0;
+    const composure = a.composure;
+    career.auditions.push({ id: 'aud-go', roleId: 'costar', at: sim.now + 60_000, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' });
+    sim.schedule({ at: sim.now + 60_000, kind: AUDITION_KIND, label: 'Audition', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, payload: { personId: sim.player.id, auditionId: 'aud-go' } });
+    sim.player.awakeSince = sim.now - MS_HOUR;
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(sim.player.wellbeing.stress).toBeGreaterThan(0);
+    expect(a.composure).toBeGreaterThan(composure);
+  });
+
+  it('fades recognition in the first week of each month', () => {
+    const sim = pro('attr-fade-week');
+    const a = attributesOf(sim, sim.player);
+    a.recognition = 40;
+    for (let n = 0; n < 6; n += 1) {
+      const week = pending(sim, CAREER_WEEK_KIND)[0]!;
+      sim.advanceTo(week.at + 60_000);
+      if (zonedParts(week.at, sim.homeZone).day <= 7) break;
+      expect(a.recognition).toBe(40);
+    }
+    expect(a.recognition).toBeCloseTo(40 * (1 - ATTRIBUTES.recognition.fadePerMonth), 2);
   });
 });
 

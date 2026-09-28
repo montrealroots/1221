@@ -19,6 +19,7 @@ import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
 import type { Craft, SchoolRecord } from '../systems/school';
+import type { Attributes } from '../systems/attributes';
 import type { CareerRecord } from '../systems/career';
 import type { EarningsRecord } from '../systems/earnings';
 import type { HealthRecord } from '../systems/health';
@@ -182,6 +183,12 @@ export interface Person {
   school?: SchoolRecord;
   /** Their craft as an actor, 0 to 100 in each area (`content/school.ts`). */
   craft?: Craft;
+  /**
+   * Presence, composure, reputation and recognition (`systems/attributes.ts`).
+   * Kept as `attrs`: the migration sheds `attributes` and `reputation` from
+   * every save, the old line's sheet and its standing, so neither name is free.
+   */
+  attrs?: Attributes;
   /** Their working life as an actor: representation, auditions, jobs, the unions (`systems/career.ts`). */
   career?: CareerRecord;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */

@@ -74,6 +74,7 @@ import { YALE_DRAMA } from '../content/school';
 import { meanCraft, focusOf, sessionGain, summerOf, type Craft } from './school';
 import { rentAt } from '../content/rents';
 import { enjoyWork, takeTheRoom, feel } from './enjoyment';
+import { ATTRIBUTES, attributesOf, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
 import { personalityOf } from './personality';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { payeeAccount } from './cash';
@@ -366,6 +367,20 @@ export function expectedGross(booking: Booking, when: Instant, into: string): Mo
   return unitRate(booking, when, into) * units;
 }
 
+/** What a finished part adds to recognition: the screen's reach, and Broadway's (`ATTRIBUTES.recognition`). */
+export function recognitionFrom(role: Role): number {
+  const r = ATTRIBUTES.recognition;
+  if (role.series) return r.series;
+  if (role.arc) return r.arc;
+  if (role.id.startsWith('guest')) return r.guest;
+  if (role.id === 'costar') return r.costar;
+  if (role.id === 'film-weekly') return r.studioFilm;
+  if (role.id.startsWith('film')) return r.film;
+  if (role.id === 'commercial') return r.commercial;
+  if (role.id === 'broadway') return r.broadway;
+  return 0;
+}
+
 /** A booking's unit rate on a day: a later season's own, or the part's minimum. */
 export function unitRate(booking: Booking, when: Instant, into: string): Money {
   const role = roleById(booking.roleId);
@@ -382,23 +397,31 @@ export function rateOf(role: Role, when: Instant, cityId: string, into: string):
 // The showcase and representation
 // ---------------------------------------------------------------------------
 
-/** What a showing reads as: acting weighed against the rest, and up to a fifth less for a tired actor. */
-export function showcaseScore(craft: Craft, focus: number): number {
+/**
+ * What a showing reads as: acting weighed against the rest, presence beside
+ * the craft (`ATTRIBUTES.showcaseShare`), and up to a fifth less for a tired
+ * actor. A classmate is read at an ordinary presence, 50.
+ */
+export function showcaseScore(craft: Craft, focus: number, presence = 50): number {
   const w = ESTIMATE.showcaseActingWeight;
-  return (w * craft.acting + (1 - w) * meanCraft(craft)) * (1 - ESTIMATE.showcaseTiredness * (1 - Math.min(1, focus)));
+  const shown = (1 - ATTRIBUTES.showcaseShare) * (w * craft.acting + (1 - w) * meanCraft(craft)) + ATTRIBUTES.showcaseShare * presence;
+  return shown * (1 - ESTIMATE.showcaseTiredness * (1 - Math.min(1, focus)));
 }
 
 /** Which agencies offer after a showing (`career.offers`): those whose bar it clears and who want the actor. */
-export function offersFor(sim: Simulation, person: Person, score: number, key: string, rivals: readonly number[] = []): string[] {
+export function offersFor(sim: Simulation, person: Person, showing: number, key: string, rivals: readonly number[] = []): string[] {
   const rng = sim.rng('career.offers', person.id, key);
+  // A track record reads beside the showing (`attributes.ts`).
+  const score = showing + ATTRIBUTES.reputationShowing * attributesOf(sim, person).reputation / 100;
   // Shown beside the class, an agency takes its best two: a classmate who outshone them cleared its bar too.
   const ahead = rivals.filter((r) => r > score).length;
   return AGENCIES.filter((agency) => rng.next() < ESTIMATE.agencyInterest && score >= agency.bar && ahead < ESTIMATE.agencyTakes).map((a) => a.id);
 }
 
 /** Which management firms offer (`career.managers`): those whose bar the showing clears, half of them wanting the actor. */
-export function managerOffersFor(sim: Simulation, person: Person, score: number, key: string): string[] {
+export function managerOffersFor(sim: Simulation, person: Person, showing: number, key: string): string[] {
   const rng = sim.rng('career.managers', person.id, key);
+  const score = showing + ATTRIBUTES.reputationShowing * attributesOf(sim, person).reputation / 100;
   return MANAGERS.filter((m) => rng.next() < ESTIMATE.managerInterest && score >= m.bar).map((m) => m.id);
 }
 
@@ -564,15 +587,16 @@ export function levelFor(craft: Craft, role: Role): number {
 }
 
 /** A booking's chance at an audition: at the part's bar, more above and less below, less tired, less on tape and less again without a kit, more coached. */
-export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room', kit = true, coached = false): number {
-  const raw = ESTIMATE.bookAtBar + ESTIMATE.bookPerPoint * (levelFor(craft, role) - role.bar);
+export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room', kit = true, coached = false, presence = 50): number {
+  // Presence moves the read above or below the bar, fully in the room and half on tape (`attributes.ts`).
+  const raw = ESTIMATE.bookAtBar + ESTIMATE.bookPerPoint * (levelFor(craft, role) + presenceSwing(presence, mode) - role.bar);
   const chance = Math.min(ESTIMATE.bookCeiling, Math.max(ESTIMATE.bookFloor, raw)) * Math.min(1.1, focus) * (coached ? WORK_COSTS.coached : 1);
   return mode === 'tape' ? chance * ESTIMATE.tapeFactor * (kit ? 1 : WORK_COSTS.noKit) : chance;
 }
 
 /** Whether an audition books (`career.booking`). */
 export function books(sim: Simulation, person: Person, audition: Audition, focus: number): boolean {
-  return sim.rng('career.booking', person.id, audition.id).next() < bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true);
+  return sim.rng('career.booking', person.id, audition.id).next() < bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence);
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
@@ -582,14 +606,16 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   // Old headshots get an actor called in less, by the agency and on their own.
   const career = careerOf(person);
   const look = staleHeadshots(career, weekStart) ? WORK_COSTS.staleHeadshots : 1;
-  const count = agency ? poisson(agency.auditionsPerWeek * look) : 0;
+  // Known to the offices, an actor is called in more (`attributes.ts`).
+  const known = sendsFactor(attributesOf(sim, person).reputation);
+  const count = agency ? poisson(agency.auditionsPerWeek * look * known) : 0;
   // A manager's relationships: the work a middling agency's reach sends.
-  const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek * look) : 0;
+  const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek * look * known) : 0;
   let self = 0;
   // A free submission sends a name and a résumé; a paid site's, the headshot, and the reel where there is one, without which the breakdowns that ask for one are shut.
   const onAny = (Object.keys(WORK_COSTS.sites) as CastingSite[]).some((site) => onSite(career, site, weekStart));
   const paid = onAny ? (career.reelAt !== undefined ? 1 : 1 - WORK_COSTS.wantReel) : WORK_COSTS.freeSubmissionShare;
-  for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look) self += 1;
+  for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look * known) self += 1;
   const pick = (open: readonly Role[]) => {
     let x = rng.next() * open.reduce((sum, r) => sum + r.weight, 0);
     for (const r of open) { x -= r.weight; if (x <= 0) return r; }
@@ -783,8 +809,10 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     const cityId = item.payload.cityId as CareerCity;
     // The school takes the class; asleep, they aren't seen.
-    const focus = present(person, item.at) ? focusOf(person) : 0;
-    const score = showcaseScore(person.craft, focus);
+    // Nerves in the room, by the composure there is (`attributes.ts`).
+    const focus = present(person, item.at) ? focusOf(person) * nerves(s, person, 'showcase') : 0;
+    const score = showcaseScore(person.craft, focus, attributesOf(s, person).presence);
+    if (focus > 0) earn(s, person, Math.max(0, score - 50) * ATTRIBUTES.reputation.showcasePer);
     career.showcases.push({ cityId, at: item.at, score });
     // The class shows with them, each classmate at an ordinary day's readiness.
     const rivals = person.school.classmates.map((m) => showcaseScore(m.craft, 1));
@@ -810,8 +838,10 @@ export function registerCareer(sim: Simulation): void {
     career.managerOffers = career.managerOffers.filter((o) => o.until > s.now);
     // A manager's month: now and then, meetings that bring an unrepresented client an agency (`career.managers`).
     const month = zonedParts(item.at, s.homeZone);
+    // The month's first week: the public forgets a little (`attributes.ts`).
+    if (month.day <= 7) fadeRecognition(s, person);
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
-      const found = offersFor(s, person, showcaseScore(person.craft, 1), `manager-${item.at}`);
+      const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
     }
     if (career.agencyId && career.signedAt !== undefined) {
@@ -869,13 +899,14 @@ export function registerCareer(sim: Simulation): void {
       // In hospital, the agency passes on it for them: no strike.
       if (audition.self || !career.agencyId || inHospital(person, item.at)) return;
       career.missed += 1;
+      earn(s, person, ATTRIBUTES.reputation.missedAudition);
       if (career.missed >= ESTIMATE.dropAfterMissed) { endRepresentation(s, person, `You missed ${ESTIMATE.dropAfterMissed} auditions the agency got you.`, false); return; }
       if (isPlayer(person)) s.notify({ category: 'career', title: 'You Missed An Audition', body: `${roleById(audition.roleId).label}: the agency got you in, and you weren’t there. ${ESTIMATE.dropAfterMissed} missed and they let you go.`, importance: 75, route: '/workspace/career' });
       return;
     }
     audition.status = 'done';
     if (audition.mode === 'room') takeTheRoom(person);
-    if (!books(s, person, audition, focusOf(person))) return;
+    if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition'))) return;
     audition.status = 'booked';
     const [lo, hi] = ESTIMATE.offerAfterDays;
     const wait = lo + Math.floor(s.rng('career.booking', person.id, `${audition.id}-wait`).next() * (hi - lo + 1));
@@ -900,6 +931,9 @@ export function registerCareer(sim: Simulation): void {
       status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0,
       ...(location ? { location } : {}),
     };
+    // A name the public knows is quoted above scale, and the quote holds for the job (`attributes.ts`).
+    const over = overscaleOf(attributesOf(s, person).recognition);
+    if (over > 1) booking.rate = Math.round(rateOn(role.steps, dayKey(booking.starts, zoneOf(workCityOf(booking)))) * over);
     career.bookings.push(booking);
     pruneBookings(s, person);
     feel(person, 'booked');
@@ -958,6 +992,7 @@ export function registerCareer(sim: Simulation): void {
         return;
       }
       booking.status = 'fired';
+      earn(s, person, ATTRIBUTES.reputation.fired);
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
       if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
       sendHome(s, booking);
@@ -987,7 +1022,10 @@ export function registerCareer(sim: Simulation): void {
       const weeks = earningsOf(person).equityWeeks;
       if (!weeks.includes(key)) weeks.push(key);
     }
-    const focus = focusOf(person);
+    // Nerves at a performance or a day on set, none in the rehearsal room or the booth; and a day kept, remembered (`attributes.ts`).
+    const event = role.medium === 'stage' ? (call.rehearsal ? undefined : 'performance') : role.medium === 'screen' ? 'set' : undefined;
+    const focus = focusOf(person) * (event ? nerves(s, person, event) : 1);
+    earn(s, person, ATTRIBUTES.reputation.day);
     for (const [skill, weight] of Object.entries(role.grows) as [keyof Craft, number][]) {
       person.craft[skill] = Math.min(100, person.craft[skill] + ESTIMATE.workGain * weight * focus * (1 - person.craft[skill] / 100) ** 1.5);
     }
@@ -1003,6 +1041,8 @@ export function registerCareer(sim: Simulation): void {
     person.wellbeing.stress = Math.min(100, person.wellbeing.stress + callStress(person, zonedParts(item.at, zoneOf(workCityOf(booking))).hour, role.medium === 'stage' && !call.rehearsal));
     if (booking.worked < workDays(booking).length) return;
     booking.status = 'worked';
+    earn(s, person, ATTRIBUTES.reputation.job);
+    nudge(s, person, 'recognition', recognitionFrom(role));
     career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
     const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
     // A season done, the series holds its option until it's picked up or dropped, by mid-June.
