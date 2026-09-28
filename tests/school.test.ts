@@ -113,6 +113,27 @@ describe('one student, one calendar', () => {
     expect(labs[1]!.status).toBe('missed');
   });
 
+  it('excuses a performance missed laid up by an injury, as a stay in hospital is', () => {
+    // Until 2026-09-28 a broken bone kept an actor from the stage and the School warned, then dismissed, them for it.
+    const sim = life('laid-up');
+    let performances: ReturnType<typeof pending> = [];
+    for (let m = 0; m < 12 && performances.length < 2; m += 1) {
+      tended(sim, sim.now + 30 * MS_DAY);
+      performances = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'performance').sort((a, b) => a.at - b.at).slice(0, 2);
+    }
+    expect(performances).toHaveLength(2);
+    const school = sim.player.school!;
+    const last = performances[1]!.at;
+    tended(sim, performances[0]!.at - MS_DAY);
+    healthOf(sim.player).injury = { kind: 'fracture', at: sim.now, until: last + 30 * MS_DAY, offWorkUntil: last + MS_DAY };
+    const breaches = school.tally.breaches;
+    const standing = school.standing;
+    tended(sim, last + 60_000);
+    expect(performances.map((c) => c.status)).toEqual(['missed', 'missed']);
+    expect(school.tally.breaches).toBe(breaches);
+    expect(school.standing).toBe(standing);
+  }, 180_000);
+
   it('lets a dismissed student’s showcases go with the school’s calendar', () => {
     const sim = life('show-gone');
     bookShowcase(sim, sim.player);

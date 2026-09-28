@@ -167,6 +167,28 @@ describe('a grave breach', () => {
   });
 });
 
+describe('the term’s growth', () => {
+  it('is weighed against the room each had to grow: the class’s best isn’t warned for growing less, and a stalled student still is', () => {
+    const standingAfter = (start: number, grown: number) => {
+      const sim = createSave(1, 'room-to-grow', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', tutorial: false });
+      sim.advanceBy(30 * MS_DAY);
+      const p = sim.player;
+      const school = p.school!;
+      Object.assign(school.tally, { classDays: 10, attended: 10, excused: 0, calls: 0, answered: 0, shifts: 0, worked: 0, breaches: 0 });
+      const craft = p.craft as unknown as Record<string, number>;
+      for (const k of Object.keys(craft)) craft[k] = start + grown;
+      school.tally.craftAtStart = Object.fromEntries(Object.keys(craft).map((k) => [k, start])) as unknown as typeof school.tally.craftAtStart;
+      // The class, at 50, each grew two points: a session's gain at 50 is (0.5)^1.5 of the most.
+      school.classmates.forEach((m, i) => { const c = m.craft as unknown as Record<string, number>; for (const k of Object.keys(c)) c[k] = 52; school.tally.classAtStart[i] = 50; });
+      return evaluate(sim, p, 0)?.standing;
+    };
+    // At 90 the room is (0.1)^1.5 of the most, about a ninth of the class's: 0.3 points is its pace.
+    expect(standingAfter(90, 0.3)).toBe('good');
+    expect(standingAfter(90, 0)).not.toBe('good');
+    expect(standingAfter(50, 0.3)).not.toBe('good');
+  });
+});
+
 describe('the cast list', () => {
   it('lifts them for a lead of their own, and stings when a rival has one', () => {
     const read = (list: { name: string; production: string; part: string; size?: 'lead' | 'supporting' | 'featured' }[], bond = 0) => {

@@ -640,6 +640,16 @@ function dayKeyAt(when: Instant): string {
   return keyOf({ year: p.year, month: p.month, day: p.day });
 }
 
+/**
+ * In hospital, or laid up by an injury (`systems/injury.ts`): an absence the
+ * School excuses, as it does a sick day called in. Until 2026-09-28 only a
+ * hospital stay was excused, and an actor laid up who missed a performance
+ * was warned and then dismissed for it.
+ */
+function offSick(person: Person, when: Instant): boolean {
+  return inHospital(person, when) || laidUp(person, when);
+}
+
 function present(person: Person, when: Instant): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're in no class (`systems/health.ts`).
@@ -1362,7 +1372,8 @@ function cast(sim: Simulation, person: Person, term: number): void {
 
 /**
  * The faculty's evaluation at the end of a term's classes: attendance at
- * classes, calls and shifts, and growth against the class's median. Short of
+ * classes, calls and shifts, and growth against the class's median, each
+ * measured against the room they had to grow. Short of
  * either, standing falls a step: good to concern, concern to warning,
  * warning to dismissal. Meeting both restores good standing and the casting
  * pool. The floors are SLATE's reading of "appropriate standards".
@@ -1376,7 +1387,16 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const growth = meanCraft(person.craft) - meanCraft(t.craftAtStart);
   const gains = school.classmates.map((m, i) => meanCraft(m.craft) - (t.classAtStart[i] ?? meanCraft(m.craft))).sort((a, b) => a - b);
   const classGrowth = gains[Math.floor(gains.length / 2)] ?? 0;
-  const grewTooLittle = growth < ESTIMATE.growthFloor * classGrowth;
+  // Growth against the room each had to grow, as a session's gain shrinks
+  // near the top (`sessionGain`): until 2026-09-28 raw points were compared,
+  // and the class's best, with the least room, was warned and then dismissed
+  // for growing less than the rest.
+  const room = (start: number) => Math.max(0.01, (1 - start / 100) ** 1.5);
+  const paced = growth / room(meanCraft(t.craftAtStart));
+  const classPaced = school.classmates.map((m, i) => { const start = t.classAtStart[i] ?? meanCraft(m.craft); return (meanCraft(m.craft) - start) / room(start); }).sort((a, b) => a - b);
+  const classPace = classPaced[Math.floor(classPaced.length / 2)] ?? 0;
+  const grewTooLittle = paced < ESTIMATE.growthFloor * classPace;
+  const pace = classPace <= 0 ? 'in line with' : paced >= 1.1 * classPace ? 'ahead of' : grewTooLittle ? 'behind' : 'in line with';
   // The term's work on stage, as the faculty see it: a run gone mostly off falls short, as poor production work does; a strong one is noted.
   const run = [school.casting, school.rep].find((c) => c && c.term === term && c.nights && Object.values(c.nights).reduce((a, b) => a + b, 0) >= ESTIMATE.workNights);
   const work = run?.nights ? nightsMean(run.nights) : undefined;
@@ -1385,7 +1405,7 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const short = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || t.breaches > 0;
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${run!.play ?? run!.production} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${run!.play ?? run!.production}.` : '';
-  const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}.${onStage}`;
+  const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}`;
   const next: Standing = !short ? 'good' : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
   const notes = teachersNotes(person, term);
   const review: TermReview = { term, standing: next, attendance, growth, classGrowth, reason, ...(work !== undefined ? { work } : {}), ...(notes.length ? { notes } : {}) };
@@ -1476,7 +1496,7 @@ export function registerSchool(sim: Simulation): void {
     }
     item.status = 'missed';
     // A day in hospital is excused, as a sick day called in is.
-    if (school.sickDay === keyOf(day) || inHospital(person, item.at)) { school.tally.excused += 1; return; }
+    if (school.sickDay === keyOf(day) || offSick(person, item.at)) { school.tally.excused += 1; return; }
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
 
@@ -1487,7 +1507,7 @@ export function registerSchool(sim: Simulation): void {
     const hours = Number(item.payload.hours);
     const elective = item.payload.elective === true;
     // A shift in hospital isn't one they were there to be asked for.
-    if (inHospital(person, item.at)) { item.status = 'missed'; if (elective) school.workStudy.electiveHours -= hours; return; }
+    if (offSick(person, item.at)) { item.status = 'missed'; if (elective) school.workStudy.electiveHours -= hours; return; }
     if (!elective) school.tally.shifts += 1;
     if (present(person, item.at)) {
       if (!elective) school.tally.worked += 1;
@@ -1564,7 +1584,7 @@ export function registerSchool(sim: Simulation): void {
     // In hospital, or sick with the day called in, somebody else covers: the
     // call isn't theirs to answer. Until 2026-09-27 a sick day excused the
     // classes and not that afternoon's rehearsal.
-    if (inHospital(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
+    if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
     if (call === 'oncall' && item.payload.check === true) {
       // At five: most nights they aren't needed, and the evening is theirs.
       const curtain = Number(item.payload.perfAt);
@@ -1746,7 +1766,7 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at)) {
       item.status = 'missed';
       // In hospital, the company covers the night and keeps them.
-      if (item.payload.call !== 'performance' || inHospital(person, item.at)) return;
+      if (item.payload.call !== 'performance' || offSick(person, item.at)) return;
       // A missed performance and the company lets them go: the calls ahead are off, the stipend stops.
       summer.out = true;
       // This week's stipend is kept, for the days of it worked; until
@@ -1781,7 +1801,7 @@ export function registerSchool(sim: Simulation): void {
     if (!person || !school || !person.craft) return;
     // Excused as a call is. Until 2026-09-27 a lab missed in hospital counted
     // against them, and toward the casting pool's missed calls.
-    if (inHospital(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
+    if (offSick(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
     school.tally.calls += 1;
     if (!present(person, item.at)) { item.status = 'missed'; return; }
     school.tally.answered += 1;
