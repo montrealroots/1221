@@ -337,15 +337,17 @@ part the tool cannot see.
   contract's own rule ($4,000 from commercials in 91 days); which agencies
   sign whom, how many auditions each sends and its renewal are SLATE's
   estimate.
-- **The tax engine's property tax is shown and charged to no one.** Its
+- **The tax engine's vehicle rules are charged to no one.** Its
   income and payroll tax is paid again since the career: acting wages are
   withheld through it and each year's return is worked out with it
   (`systems/career.ts`, `systems/taxreturn.ts`), and since 2026-09-27 its
   sales tax is on the goods the work buys, a self-tape kit and headshot
   prints. The day's food is taken as groceries, which the states SLATE
-  taxes a life in exempt. Property tax is a fact the place shows, and
-  nothing is owned to charge it on; the vehicle rules went on 2026-09-27,
-  with nothing driven. Its tables are in dollars: since that day money in
+  taxes a life in exempt. Its property tax was a fact the place showed, with
+  nothing owned to charge it on, until homes were bought on 2026-09-28:
+  since then an owned home's tax is its assessed value at the engine's rate
+  for the town (`propertyTaxRate`, `systems/homes.ts`). The vehicle rules
+  went on 2026-09-27, with nothing driven. Its tables are in dollars: since that day money in
   another currency is taxed on what it comes to in dollars, where a
   krónur save working in New York had been taxed as if a króna were a
   dollar.
@@ -399,22 +401,29 @@ part the tool cannot see.
   Test for five-year vesting and television's per-episode ceilings aren't
   modeled. An older save's pension fund from the
   day job, which nothing moved from 2026-09-26, is paid out at 65.
-- **Homes are partly SLATE's estimate, and a few of the tax rules aren't
-  there.** Since 2026-09-28 homes are bought by offer, owned, let, kept up,
+- **Homes are partly SLATE's estimate.** Since 2026-09-28 homes are bought by offer, owned, let, kept up,
   borrowed against and sold (`systems/homes.ts`). A US town's typical value
-  is Zillow's; England's Stamp Duty Land Tax and council tax bands, the
+  is Zillow's; England's Stamp Duty Land Tax, Scotland's Land and Buildings
+  Transaction Tax with its Additional Dwelling Supplement, Wales's Land
+  Transaction Tax with its higher rates, each nation's council tax bands,
+  shares and average Band D, the
   Homeowners Protection Act's mortgage insurance rule, the 2025 act's cap on
   state and local taxes, the $750,000 interest cap, the $250,000 exclusion,
-  the long-term gain brackets and the passive loss allowance are law. The
-  rest is SLATE's estimate: rates, down payments and closing and selling
+  the long-term gain brackets, the passive loss allowance, depreciation
+  recaptured at up to 25% (§1250), a let home's held losses freed on its sale
+  (§469(g)) and the exclusion cut for years owned before living in it
+  (§121(b)(5)) are law. The starting rates are Freddie Mac's and
+  Moneyfacts' for September 2026, and since 2026-09-28 they move month by
+  month, and a mortgage can be refinanced at them. What a home's fixtures add
+  to its rent and price is ApartmentAdvisor's regression where it measured
+  one. The rest is SLATE's estimate: how rates wander, refinancing's closing
+  costs, down payments and closing and selling
   costs by country, a foreign town's prices from its rent, how sellers answer
   offers and how long homes sit, what each renovation costs and returns, how
-  often parts fail and weather damages, and how tenants behave. Not modeled:
-  depreciation recaptured at up to 25% on a sale (the gain is all taxed as
-  long-term), a rental loss carried forward freed on the sale, a main home
-  let before it was lived in losing part of its exclusion, refinancing (the
-  rates don't move), and Scotland's and Wales's own council tax (their homes
-  pay a share of value).
+  often parts fail and weather damages, how tenants behave, and the premium
+  of the fixtures no study priced (a washer alone, wall units, a terrace or
+  yard, a home gym). A rented flat's rent stays the published one whatever
+  it has inside, so that creation and play show the same cost of living.
 - **Living in a home is partly SLATE's estimate.** Since 2026-09-28 every
   home has fixtures that everyday life reads (`systems/dwelling.ts`): a bath,
   a dishwasher, the laundry, air conditioning, somewhere outside, a gym. The
@@ -422,12 +431,17 @@ part the tool cannot see.
   INE, ISTAT, Statistics Canada, the ABS, Japan's Cabinet Office, Gallup
   Korea, INEGI, IBGE); laundry prices the Coin Laundry Association's; the
   heat's cost to sleep Minor et al.'s; claims the Triple-I's; delivery
-  LendingTree's; cleaning time the American Time Use Survey's. SLATE's
+  LendingTree's; cleaning time the American Time Use Survey's. Since
+  2026-09-28 the bills read them too: the summer's cooling as far as the air
+  conditioning runs, and each load's electricity by the DOE's and EIA's
+  figures at 2026's price; and renters insurance covers a renter's things
+  against a burglary (the FBI's rate) or a fire in the building, at each
+  state's average premium (Insurance Information Institute). SLATE's
   estimates: bathtubs and balconies (no survey counts them), a wardrobe of two
   weeks, how untidy a day makes a home and what a mess weighs, a rack drying
-  overnight, and what a gym builds over a workout at home. Not modeled: what
-  running the machines and the air conditioning adds to the bills, renters'
-  insurance, and what a home's fixtures add to its rent or its price.
+  overnight, what a gym builds over a workout at home, what's lost in a
+  burglary or a fire, and how much less wall units cool than central air.
+  Not modeled: the hot water a washer heats.
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads
   the genres, Voice Acting, and Film, Television, Theater and Travel

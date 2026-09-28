@@ -95,9 +95,27 @@ export function energyByMonth(cityId: string): number[] {
   return out;
 }
 
-/** What a month's bills come to against the year's average month, in a town: the energy part by its month's share, the rest flat. */
-export function billsFactor(cityId: string, month: number): number {
-  return (1 - ENERGY.share) + ENERGY.share * 12 * energyByMonth(cityId)[month - 1]!;
+/**
+ * How much of a cooling month's energy a home's air conditioning uses:
+ * central air all of a town's cooling, wall or window units cooling fewer
+ * rooms less of it, and a home with none nothing. SLATE's estimate for units.
+ */
+export const COOLING_USE = { central: 1, units: 0.6, none: 0 } as const;
+
+/**
+ * What a month's bills come to against the year's average month, in a town:
+ * the energy part by its month's share, the rest flat; and the cooling in it
+ * as far as the home's air conditioning runs, so a home with none pays no
+ * summer's cooling. Until 2026-09-28 every home paid for cooling it didn't have.
+ */
+export function billsFactor(cityId: string, month: number, cooling: keyof typeof COOLING_USE = 'central'): number {
+  const full = energyByMonth(cityId)[month - 1]!;
+  if (cooling === 'central') return (1 - ENERGY.share) + ENERGY.share * 12 * full;
+  const { hdd, cdd } = degreeDays(cityId);
+  const cddYear = cdd.reduce((a, b) => a + b, 0);
+  const total = ENERGY.baseUsdPerYear + ENERGY.heatUsdPerHddC * hdd.reduce((a, b) => a + b, 0) + ENERGY.coolUsdPerCddC * cddYear;
+  const coolPart = cddYear > 0 ? (ENERGY.coolUsdPerCddC * cddYear / total) * (cdd[month - 1]! / cddYear) : 0;
+  return (1 - ENERGY.share) + ENERGY.share * 12 * (full - coolPart * (1 - COOLING_USE[cooling]));
 }
 
 /** The share of a year's flu each week of the year carries in a town, fifty-two summing to one. */

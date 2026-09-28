@@ -17,8 +17,8 @@ import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COOLING_LABEL, COUNCIL_TAX, FEATURE_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
 import {
-  HOME, askingPrice, minimumDown, atTown, borrowRefusal, councilBand, daysListed, downChoices, equityIn, equityRate, equityRoom, homeValue, letRefusal, lifeOf,
-  listingById, listingsIn, livingIn, marketRent, moveInRefusal, offerFor, offerRefusal, owedOn, ownedMonth, projectsFor, saleNet,
+  HOME, askingPrice, minimumDown, atTown, borrowRefusal, councilBand, councilLetter, councilNation, daysListed, downChoices, equityIn, equityRate, equityRoom, homeValue, letRefusal, lifeOf,
+  listingById, listingsIn, livingIn, marketRent, refinanceOffer, refinanceRefusal, moveInRefusal, offerFor, offerRefusal, owedOn, ownedMonth, projectsFor, saleNet,
   sellRefusal, sizeText, termsIn, type HomeFacts, type Listing, type OwnedHome, type SellerAnswer, type Tenancy,
 } from '@/engine/systems/homes';
 import { CAREER_CITIES } from '@/engine/content/career';
@@ -194,7 +194,7 @@ function ForSalePane() {
                     {inspect && <tr><th scope="row">The Inspection, When Its Report Comes</th><td className="num mono">{money(atTown(sim, town, HOME.inspectionFeeUsd))}</td></tr>}
                     <tr><th scope="row">At Closing</th><td className="num mono">{money(offer.cash - offer.earnest)}</td></tr>
                     {offer.loan > 0 && <tr><th scope="row">Principal And Interest</th><td className="num mono">{money(offer.month.mortgage)}</td></tr>}
-                    <tr><th scope="row">{city.parentId === 'uk-eng' ? `Council Tax, Band ${COUNCIL_TAX.letters[councilBand(sim, offer.price)]}${living ? '' : ', Until It’s Let'}` : 'Property Tax'}</th><td className="num mono">{money(offer.month.tax)}</td></tr>
+                    <tr><th scope="row">{councilNation(town) ? `Council Tax, Band ${councilLetter(town, councilBand(sim, offer.price, town))}${living ? '' : ', Until It’s Let'}` : 'Property Tax'}</th><td className="num mono">{money(offer.month.tax)}</td></tr>
                     <tr><th scope="row">Insurance</th><td className="num mono">{money(offer.month.insurance)}</td></tr>
                     {offer.month.pmi > 0 && <tr><th scope="row">Mortgage Insurance</th><td className="num mono">{money(offer.month.pmi)}</td></tr>}
                     {offer.month.hoa > 0 && <tr><th scope="row">{shared}</th><td className="num mono">{money(offer.month.hoa)}</td></tr>}
@@ -239,7 +239,7 @@ function ForSalePane() {
               : typical.kind === 'calibrated'
                 ? 'Zillow doesn’t report this town: its typical home is its rent times what homes cost over a year’s rent in the towns of its state that Zillow does. '
                 : 'The typical home here is SLATE’s estimate: the town’s rent times how dear homes run over rents in this country, measured against America’s. '}
-            The fifty homes are the game’s own, drawn about it: none is a real listing, and the addresses are common street names of the country with numbers of SLATE’s. Each sells in a month to six and another comes on; one unsold two months is cut 3%, and at four 3% again. How a seller answers an offer, rates, down payments and closing costs are SLATE’s estimates of the country’s{city.parentId === 'uk-eng' || city.parentId === 'uk-nir' ? ', but for England’s Stamp Duty Land Tax, 5% more on a home bought beside one already owned' : ''}.{city.parentId === 'uk-eng' ? ` Council tax is by band, from the ${COUNCIL_TAX.bandDYear} average Band D England’s councils set, ${formatMoney(COUNCIL_TAX.bandD, 'GBP', { cents: false })}.` : ''} A home not to live in is an investment: at least {Math.round(HOME.investmentDown * 100)}% down and {pct(HOME.investmentRate)} on the rate.
+            The fifty homes are the game’s own, drawn about it: none is a real listing, and the addresses are common street names of the country with numbers of SLATE’s. Each sells in a month to six and another comes on; one unsold two months is cut 3%, and at four 3% again. How a seller answers an offer, rates, down payments and closing costs are SLATE’s estimates of the country’s{city.countryId === 'uk' ? ', but for Britain’s taxes on buying: England’s and Northern Ireland’s Stamp Duty Land Tax, Scotland’s Land and Buildings Transaction Tax and Wales’s Land Transaction Tax, each with its own rate on a home bought beside one already owned' : ''}.{councilNation(town) ? ` Council tax is by band, from the ${COUNCIL_TAX.bandDYear} average Band D the nation’s councils set, ${formatMoney(councilNation(town)!.bandD, 'GBP', { cents: false })}.` : ''} A home not to live in is an investment: at least {Math.round(HOME.investmentDown * 100)}% down and {pct(HOME.investmentRate)} on the rate.
           </Fine>
         </div>
       </Panel>
@@ -304,6 +304,8 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
   const noSale = useWorld((s) => sellRefusal(s, s.player, owned), [owned]);
   const noMoveIn = useWorld((s) => moveInRefusal(s, s.player, owned), [owned]);
   const room = useWorld((s) => equityRoom(s, owned), [owned]);
+  const refi = useWorld((s) => refinanceOffer(s, s.player, owned), [owned]);
+  const noRefi = useWorld((s) => refinanceRefusal(s, s.player, owned), [owned]);
   const [paying, setPaying] = useState('');
   const bank = useWorld((s) => inTheBank(s, s.player));
   const [borrowing, setBorrowing] = useState('');
@@ -320,7 +322,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
   const parts = [
     month.mortgage ? `${money(month.mortgage)} mortgage` : '',
     month.equity ? `${money(month.equity)} equity loan` : '',
-    month.tax ? `${money(month.tax)} ${city.parentId === 'uk-eng' ? 'council tax' : 'tax'}` : '',
+    month.tax ? `${money(month.tax)} ${councilNation(owned.cityId) ? 'council tax' : 'tax'}` : '',
     `${money(month.insurance)} insurance`,
     month.pmi ? `${money(month.pmi)} mortgage insurance` : '',
     month.hoa ? `${money(month.hoa)} ${sharedCostsLabel(city.countryId).toLowerCase()}` : '',
@@ -337,7 +339,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
         </div>
         {owed > 0 && <div className="callout callout-warning small">Behind: {money(owed)} owed on it, paid the first day the bank can. A payment {HOME.graceDays} days late costs a fee, and a loan’s {HOME.reportLateDays} days late goes on your record{owned.foreclosureAt !== undefined ? `, and the lender sells it ${formatDate(owned.foreclosureAt, city.timeZone)}` : ''}.</div>}
         <Facts facts={owned.facts} countryId={city.countryId} />
-        {city.parentId === 'uk-eng' && <div className="xs dim">Council Tax Band {COUNCIL_TAX.letters[councilBand(sim, value)]}.</div>}
+        {councilNation(owned.cityId) && <div className="xs dim">Council Tax Band {councilLetter(owned.cityId, councilBand(sim, value, owned.cityId))}.</div>}
         <Parts facts={owned.facts} year={year} />
 
         {!lives && (
@@ -348,6 +350,15 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
         )}
 
         {units.map((unit) => <Letting key={unit} owned={owned} unit={unit} />)}
+
+        {mortgage > 0 && refi && (
+          <div className="col gap-1">
+            <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+              <Gated feature="home.refinance" className="btn btn-sm btn-ghost" disabled={Boolean(noRefi)} onClick={() => { if (run('home.refinance', { homeId: owned.id }).ok) toast(`Refinanced at ${pct(refi.rate)}.`, 'positive'); }}>Refinance At {pct(refi.rate)}</Gated>
+              <span className="xs dim">{noRefi ?? `${money(refi.payment)} a month against ${money(owned.mortgage!.payment)} now, over a new ${termsIn(city.countryId).years} years, for ${money(refi.closing)} in closing costs${refi.pmi ? ', with mortgage insurance' : ''}.`}</span>
+            </div>
+          </div>
+        )}
 
         {(mortgage > 0 || equityLoan > 0) && (
           <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>

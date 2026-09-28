@@ -4,12 +4,13 @@
  * cold or wet ones, each keeping its year's total.
  */
 import { describe, expect, it } from 'vitest';
+import { homePlace, machineUsd } from '@/engine/systems/dwelling';
 import { quickSave } from '@/engine';
 import { instantFromZoned } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { CARE } from '@/engine/content/safetynet';
 import { billsFactor, degreeDays, energyByMonth, ENERGY, fluByWeek, weekOfYear } from '@/engine/systems/seasons';
-import { billsOf, costsAt } from '@/engine/systems/household';
+import { atTown, billsOf, costsAt } from '@/engine/systems/household';
 import { illnessWeek } from '@/engine/systems/health';
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
@@ -35,10 +36,13 @@ describe('the bills', () => {
   it('are paid on the 1st for the month just gone, at the home', () => {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true });
     const flat = costsAt('us-ny-newyork', sim.player.home!.kind, saveCurrency(sim.universe), sim.now).bills;
+    // The home's air conditioning decides the cooling in them, and its own machines' loads are added (`systems/dwelling.ts`).
+    const cooling = homePlace(sim, sim.player)!.fixtures.cooling;
+    const machines = () => atTown('us-ny-newyork', machineUsd(sim.player), saveCurrency(sim.universe));
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 12 }, 'America/New_York'));
-    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1)));
+    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines());
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 12 }, 'America/New_York'));
-    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2)));
+    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines());
   });
 });
 

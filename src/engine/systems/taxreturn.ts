@@ -205,7 +205,11 @@ export function rentalAllowed(person: Person, year: number, into = 'USD'): Money
   for (const yr of years) {
     const y = yearOf(person, yr);
     const net = (y.rentalRent ?? 0) - (y.rentalCosts ?? 0);
-    if (net >= 0) {
+    if (y.rentalDisposed) {
+      // A let home sold: the losses held back are all let go against other income that year (§469(g)).
+      allowed = net - carry;
+      carry = 0;
+    } else if (net >= 0) {
       const used = Math.min(carry, net);
       carry -= used;
       allowed = net - used;
@@ -233,6 +237,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const rental = rentalAllowed(person, year, into);
   const gainShort = y.homeGainShort ?? 0;
   const gainLong = y.homeGain ?? 0;
+  const gain1250 = y.homeGain1250 ?? 0;
   const income = incomeBefore(person, year) + rental + gainShort;
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // Of the rest of the work's costs, the ones there's a receipt for.
@@ -272,9 +277,9 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   for (const [key, amount] of Object.entries(y.elsewhere)) { const city = key.split('>')[1]!; entry(stateOf(city), city).source += amount; }
   const lastState = stateOf(cityId);
   // A home's rent and gains go to the state they lived in at the year's end, which taxes a long-term gain as income too.
-  const homeIncome = rental + gainShort + gainLong;
+  const homeIncome = rental + gainShort + gainLong + gain1250;
   if (homeIncome !== 0) entry(lastState, cityId).resident += homeIncome;
-  const stateTaxed = Math.max(0, taxed + gainLong);
+  const stateTaxed = Math.max(0, taxed + gainLong + gain1250);
   // California doesn't tax unemployment, which goes to where they lived at the year's end.
   const benefitOut = (state: string) => (state === 'us-ca' && lastState === 'us-ca' ? y.unemployment : 0);
   // New York and California let the job's costs be itemized above 2% of income, where that beats the standard deduction.
@@ -325,8 +330,13 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
     gainTax += Math.max(0, Math.min(ordinary + gainLong, edge) - Math.max(ordinary, from)) * rate;
     from = edge;
   }
-  const investment = gainLong + gainShort + Math.max(0, rental) + (y.interest ?? 0);
-  gainTax = Math.round(gainTax + HOME_TAX.niitRate * Math.min(investment, Math.max(0, taxed + gainLong - usd(HOME_TAX.niitFrom, into))));
+  // The recaptured depreciation: as income, but at 25% at most.
+  if (gain1250 > 0) {
+    const withIt = computeAnnualTax(taxed + gain1250, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
+    gainTax += Math.min(Math.round(gain1250 * HOME_TAX.recaptureRate), withIt - federalBefore);
+  }
+  const investment = gainLong + gain1250 + gainShort + Math.max(0, rental) + (y.interest ?? 0);
+  gainTax = Math.round(gainTax + HOME_TAX.niitRate * Math.min(investment, Math.max(0, taxed + gainLong + gain1250 - usd(HOME_TAX.niitFrom, into))));
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
   const federal = federalBefore - foreignCredit + gainTax;
   const incomeTax = federal + stateAndLocal;
@@ -342,7 +352,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0,
-    rental, gainShort, gainLong, gainExcluded: y.homeGainExcluded ?? 0, itemized: itemizing ? itemizedFederal : 0, gainTax, income, deduction,
+    rental, gainShort, gainLong: gainLong + gain1250, gainExcluded: y.homeGainExcluded ?? 0, itemized: itemizing ? itemizedFederal : 0, gainTax, income, deduction,
     incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit,
   };

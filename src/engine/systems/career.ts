@@ -510,6 +510,20 @@ export function offersFor(sim: Simulation, person: Person, showing: number, key:
 /** A showcase's buzz: how long a manager may still call after it, and how likely in a month. SLATE's estimates. */
 export const BUZZ = { days: 180, chance: 0.15 };
 
+/**
+ * The managers a month's buzz brings, for somebody unmanaged with a showcase
+ * in the last half year: a month in `BUZZ.chance`, and then those whose bar
+ * the best showing clears and who want the actor (`managerOffersFor`).
+ */
+export function showcaseBuzz(sim: Simulation, person: Person, at: Instant): string[] {
+  const career = careerOf(person);
+  if (career.managerId) return [];
+  const shown = career.showcases.filter((one) => at >= one.at && at - one.at < BUZZ.days * MS_DAY);
+  if (!shown.length) return [];
+  if (sim.rng('career.managers', person.id, `buzz-${at}`).next() >= BUZZ.chance) return [];
+  return managerOffersFor(sim, person, Math.max(...shown.map((one) => one.score)), `buzz-${at}`);
+}
+
 /** Which management firms offer (`career.managers`): those whose bar the showing clears, half of them wanting the actor. */
 export function managerOffersFor(sim: Simulation, person: Person, showing: number, key: string): string[] {
   const rng = sim.rng('career.managers', person.id, key);
@@ -1094,14 +1108,10 @@ export function registerCareer(sim: Simulation): void {
     // The commercial agent's week, and its contract's end (`systems/commercial.ts`).
     commercialTermEnds(s, person);
     scheduleCommercialWeek(s, person, item.at);
-    // A showcase's buzz: for half a year after it, a manager who was in the room may still call, the likelier the stronger it was.
-    const shown = career.showcases.filter((one) => item.at - one.at < BUZZ.days * MS_DAY);
-    if (!career.managerId && shown.length && month.day <= 7) {
-      const best = Math.max(...shown.map((one) => one.score));
-      if (s.rng('career.managers', person.id, `buzz-${item.at}`).next() < BUZZ.chance) {
-        const found = managerOffersFor(s, person, best, `buzz-${item.at}`);
-        if (found.length) offerManagement(s, person, found, `Still talking about your showcase,`);
-      }
+    // A showcase's buzz: for half a year after it, a manager who was in the room may still call (`showcaseBuzz`).
+    if (month.day <= 7) {
+      const found = showcaseBuzz(s, person, item.at);
+      if (found.length) offerManagement(s, person, found, `Still talking about your showcase,`);
     }
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);

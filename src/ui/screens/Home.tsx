@@ -35,7 +35,7 @@ import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
-import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf } from '@/engine/systems/dwelling';
+import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
@@ -669,6 +669,7 @@ function YourPlace({ cur }: { cur: string }) {
   const place = useWorld((s) => placeOf(s, s.player));
   const living = useWorld((s) => ({ ...livingOf(s.player) }));
   const cleaner = useWorld((s) => cleanerCost(s, s.player));
+  const premium = useWorld((s) => rentersPremium(s, s.player));
   const home = useWorld((s) => s.player.home);
   if (!place || !home) return null;
   const country = CITIES.get(home.cityId)?.countryId ?? 'us';
@@ -684,6 +685,13 @@ function YourPlace({ cur }: { cur: string }) {
         <Stat label="Clean Clothes" value={`${living.clean} Of ${LAUNDRY.outfits}`} note={drying > 0 ? `${drying} drying` : living.dirty > 0 ? `${living.dirty} to wash` : 'All washed'} tone={living.clean <= 2 ? 'warning' : undefined} />
         {place.keeps && <Stat label="Tidy" value={`${Math.round(living.tidy)}`} note={living.tidy < TIDY.messy ? 'A mess, and it weighs on you' : living.cleaner ? 'A cleaner comes weekly' : 'Out of a hundred'} tone={living.tidy < TIDY.messy ? 'warning' : undefined} />}
       </div>
+      {place.keeps && (home.kind === 'own' || home.kind === 'shared') && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {living.rentersInsurance
+            ? <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => run('home.renters_insurance', { on: false })}>Cancel Renters Insurance</Gated>
+            : <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.renters_insurance', { on: true }).ok) toast('Your things are insured.', 'positive'); }}>Get Renters Insurance ({formatMoney(premium, cur, { cents: false })} A Month)</Gated>}
+        </div>
+      )}
       {place.keeps && (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           {living.cleaner

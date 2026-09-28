@@ -339,29 +339,42 @@ export const OVERBUILT_RECOUP = 0.5;
 export const BEDROOM_RENT: readonly number[] = [0.87, 1, 1.23, 1.56, 1.77, 1.95, 2.1, 2.25];
 
 // ---------------------------------------------------------------------------
-// England's council tax
+// Council tax, in England, Scotland and Wales
 
 /**
- * England's council tax, as the Local Government Finance Act 1992 has it:
- * a home's band by what it would have sold for on 1 April 1991, each band a
- * set share of Band D, 25% off for somebody who lives alone, and a year's
- * bill in ten monthly instalments from April. Band D is the average England's
- * councils set for 2026–27, £2,392, 4.9% over 2025–26's £2,280 (MHCLG, March 2026). A home's 1991 value is SLATE's
- * estimate: today's over how far English prices have risen since, near
- * five times.
+ * Council tax as each nation has it (researched 2026-09-28): a home's band by
+ * what it would have sold for on its valuation day, each band a set share of
+ * Band D, 25% off for somebody who lives alone (Local Government Finance Act
+ * 1992), and a year's bill in ten monthly instalments from April.
+ *
+ * England: 1 April 1991 values, eight bands in ninths of D; Band D the
+ * average England's councils set for 2026–27, £2,392 (MHCLG, March 2026).
+ * Scotland: 1 April 1991 values on its own edges, shares of D in 360ths since
+ * April 2017; Band D £1,653.44 for 2026–27, water and sewerage apart
+ * (Scottish Government). Wales: 1 April 2003 values, nine bands to I at 21
+ * ninths; Band D £2,283 for 2026–27 (Welsh Government). A home's value on the
+ * valuation day is SLATE's estimate: today's over how far prices there have
+ * risen since, near five times since 1991 and twice since 2003.
  */
+export interface CouncilTaxNation {
+  /** Upper edges of every band but the last, in pounds of the valuation day. */
+  bands: readonly number[];
+  letters: readonly string[];
+  /** Each band's share of Band D. */
+  shares: readonly number[];
+  bandD: number;
+  since: number;
+}
+export const COUNCIL_TAX_NATIONS: Readonly<Record<'uk-eng' | 'uk-sct' | 'uk-wls', CouncilTaxNation>> = {
+  'uk-eng': { bands: [40_000, 52_000, 68_000, 88_000, 120_000, 160_000, 320_000], letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], shares: [6, 7, 8, 9, 11, 13, 15, 18].map((n) => n / 9), bandD: 2_392_00, since: 5.1 },
+  'uk-sct': { bands: [27_000, 35_000, 45_000, 58_000, 80_000, 106_000, 212_000], letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], shares: [240, 280, 320, 360, 473, 585, 705, 882].map((n) => n / 360), bandD: 1_653_44, since: 4.8 },
+  'uk-wls': { bands: [44_000, 65_000, 91_000, 123_000, 162_000, 223_000, 324_000, 424_000], letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'], shares: [6, 7, 8, 9, 11, 13, 15, 18, 21].map((n) => n / 9), bandD: 2_283_00, since: 2.2 },
+};
 export const COUNCIL_TAX = {
-  /** Upper edges of bands A to G, in pounds of 1991; H is above G. */
-  bands: [40_000, 52_000, 68_000, 88_000, 120_000, 160_000, 320_000] as const,
-  letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as const,
-  /** Each band's ninths of Band D. */
-  ninths: [6, 7, 8, 9, 11, 13, 15, 18] as const,
-  bandD: 2_392_00,
   bandDYear: '2026–27',
-  since1991: 5.1,
   livingAlone: 0.25,
   instalments: 10,
-  /** A rented flat's band and a room's: SLATE's estimates, a one-bedroom in B, a shared flat in C split four ways. */
+  /** A rented flat's band and a room's: SLATE's estimates, a one-bedroom in B, a shared flat in C split among its bedrooms. */
   rentedBand: { own: 1, shared: 2 } as const,
   sharedBy: 4,
 };
@@ -382,7 +395,10 @@ export const COUNCIL_TAX = {
  * Procedure 2025-32; later years hold 2026's); 3.8% on investment income past
  * $200,000; rent less its costs and a residential building's depreciation
  * over 27.5 years, and a loss let against other income to $25,000, less half
- * of income over $100,000, the rest carried forward. The building is 80% of
+ * of income over $100,000, the rest carried forward and let go in full when
+ * the home is sold (§469(g)); on a sale, the depreciation taken taxed as
+ * income to 25% (§1(h)(6)), and the exclusion cut by the share of the years
+ * before they first lived in it (§121(b)(5)). The building is 80% of
  * what a home cost, SLATE's estimate of the land's share.
  */
 export const HOME_TAX = {
@@ -403,6 +419,8 @@ export const HOME_TAX = {
   pmiPhaseFrom: 100_000_00,
   pmiPhaseStep: 1_000_00,
   niitRate: 0.038,
+  /** Depreciation taken, recaptured on a sale: taxed as income, to 25% at most (§1(h)(6)). */
+  recaptureRate: 0.25,
   niitFrom: 200_000_00,
   depreciationYears: 27.5,
   buildingShare: 0.8,

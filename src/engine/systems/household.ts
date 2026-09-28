@@ -49,7 +49,6 @@ import { CITIES } from '../content/geography';
 import { exchange } from '../content/currency';
 import { salesTaxRate } from '../content/tax';
 import { rentAt, type RentFigure } from '../content/rents';
-import { BEDROOM_RENT } from '../content/homes';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { dateKey, instantFromZoned, startOfNextDay, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { clamp } from '../core/rng';
@@ -62,7 +61,7 @@ import { hold } from './pending';
 import { CommandError } from '../core/simulation';
 import { billsFactor } from './seasons';
 import { deadline, latePenalty } from './taxreturn';
-import { drawRental, type RentedUnit } from './dwelling';
+import { drawRental, homePlace, machineUsd, type RentedUnit } from './dwelling';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 
 export const RENT_KIND = 'home.rent';
@@ -190,14 +189,12 @@ const costsOf = (sim: Simulation, person: Person): LivingCosts | undefined =>
   person.home ? costsAt(person.home.cityId, person.home.kind, saveCurrency(sim.universe), sim.now) : undefined;
 
 /**
- * The month's rent where they live: a one-bedroom's for a place of their own,
- * or a studio's where that's what they took, at HUD's ratio of 0.87 of a
- * one-bedroom's (`BEDROOM_RENT`).
+ * The month's rent where they live: the town's published or estimated rent
+ * for the kind of home, which already carries what the typical home there has
+ * inside. A place of their own at a one-bedroom's rent is a one-bedroom.
  */
 export function rentOf(sim: Simulation, person: Person): Money {
-  const rent = costsOf(sim, person)?.rent ?? 0;
-  const unit = person.home?.kind === 'own' ? person.home.unit : undefined;
-  return unit && unit.beds === 0 ? Math.round(rent * BEDROOM_RENT[0]! / 100) * 100 : rent;
+  return costsOf(sim, person)?.rent ?? 0;
 }
 
 /**
@@ -211,9 +208,13 @@ export function billsOf(sim: Simulation, person: Person): Money {
   if (!flat || !person.home) return flat;
   const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone);
   const billed = p.day === 1 ? (p.month === 1 ? 12 : p.month - 1) : p.month;
-  if (person.home.kind !== 'owned') return Math.round(flat * billsFactor(person.home.cityId, billed));
+  // The summer's cooling as far as the home's air conditioning runs; the machines' loads in the month (`systems/dwelling.ts`).
+  const place = homePlace(sim, person);
+  const cooling = place?.fixtures.cooling ?? 'central';
+  const machines = atTown(person.home.cityId, machineUsd(person), saveCurrency(sim.universe));
+  if (person.home.kind !== 'owned') return Math.round(flat * billsFactor(person.home.cityId, billed, cooling)) + machines;
   const { factor, poolUsd } = ownedBillsFactor(person);
-  return Math.round(flat * factor * billsFactor(person.home.cityId, billed) + atTown(person.home.cityId, poolUsd, saveCurrency(sim.universe)));
+  return Math.round(flat * factor * billsFactor(person.home.cityId, billed, cooling) + atTown(person.home.cityId, poolUsd, saveCurrency(sim.universe))) + machines;
 }
 
 /**
@@ -802,6 +803,7 @@ export function registerHousehold(sim: Simulation): void {
     const before = arrearsOf(s, person);
     // Paid at the same moment, they post in the bank's order: highest first unless it takes the lowest first.
     for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
+    if (person.living) delete person.living.loads;
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {
       s.notify({

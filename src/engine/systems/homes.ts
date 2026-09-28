@@ -85,15 +85,20 @@ import { exchange } from '../content/currency';
 import { rentAt } from '../content/rents';
 import { propertyTaxRate, PROPERTY_TAX_RULES, resolveRule } from '../content/tax';
 import {
-  BEDROOM_RENT, COUNCIL_TAX, drawFixtures, isFlat, type Fixtures, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
+  BEDROOM_RENT, COUNCIL_TAX, COUNCIL_TAX_NATIONS, drawFixtures, type CouncilTaxNation, isFlat, type Fixtures, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
   SQM_PER_SQFT, addressOf, homeValueAt, streetsOf, usesFeet, type Feature, type HomeType, type Part, type Project,
 } from '../content/homes';
 import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, refundRentAhead, rehome, rentOf, scheduleRentFor, spend, type Housing } from './household';
+import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
 
 // ---------------------------------------------------------------------------
-// Terms by country: SLATE's estimates, but where the header says otherwise
+// Terms by country: SLATE's estimates, but where the header says otherwise.
+// America's rate is Freddie Mac's 30-year average for the week of 24
+// September 2026, 7.03%; Britain's the average five-year fix on 1 September
+// 2026, 5.64% (Moneyfacts, via HomeOwners Alliance). Both then move with the
+// months (`rateShift`).
 
 export interface LendingTerms {
   /** A 30-year fixed rate in America; the usual fixed or long-term rate elsewhere. */
@@ -107,8 +112,8 @@ export interface LendingTerms {
 }
 
 const TERMS: Readonly<Record<string, LendingTerms>> = {
-  us: { rate: 0.0625, years: 30, minDown: 0.05, closing: 0.03, selling: 0.055 },
-  uk: { rate: 0.046, years: 25, minDown: 0.05, closing: 0.01, selling: 0.02 },
+  us: { rate: 0.0703, years: 30, minDown: 0.05, closing: 0.03, selling: 0.055 },
+  uk: { rate: 0.0564, years: 25, minDown: 0.05, closing: 0.01, selling: 0.02 },
   ie: { rate: 0.04, years: 30, minDown: 0.1, closing: 0.03, selling: 0.02 },
   ca: { rate: 0.046, years: 25, minDown: 0.05, closing: 0.02, selling: 0.05 },
   au: { rate: 0.06, years: 30, minDown: 0.05, closing: 0.045, selling: 0.025 },
@@ -189,6 +194,8 @@ export const HOME = {
   equityRate: 0.015,
   equityYears: 15,
   equityScore: 660,
+  /** A refinance's closing costs, of the loan: SLATE's estimate inside the 2% to 5% Freddie Mac gives for closing costs. */
+  refinanceCost: 0.03,
   /** A lease, the chance a tenant renews at its end, and the most a tenant's damage takes of the deposit: SLATE's estimates. */
   leaseMonths: 12,
   renewal: 2 / 3,
@@ -232,7 +239,7 @@ export interface Listing extends HomeFacts {
 }
 
 /** The inverse of the standard normal's distribution, near enough (Acklam's approximation). */
-function normalAt(p: number): number {
+export function normalAt(p: number): number {
   const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239];
   const b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155211639];
   const c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783];
@@ -250,7 +257,7 @@ function normalAt(p: number): number {
  * log-normal's spread, wider above than below, since a town's dearest homes
  * run further from its typical one than its cheapest do.
  */
-const SPREAD = { below: 0.5, above: 0.7 };
+export const SPREAD = { below: 0.5, above: 0.7 };
 export const LISTINGS = 50;
 /** The year the figures are for, which parts' ages are counted from. */
 const DATA_YEAR = 2026;
@@ -374,7 +381,9 @@ function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { 
     }
     used.add(address);
     const fixtures = drawFixtures(rng, { countryId: country, latitude: city.latitude, longitude: city.longitude, dense }, type, q, features.includes('yard'));
-    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures });
+    // What it has inside moves its price about the spread's (`premiumOf`).
+    const priced = Math.round(value * premiumOf(fixtures));
+    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value: priced, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures });
   }
   return out.sort((x, y) => x.value - y.value).map((one, n) => ({ ...one, rank: n + 1 }));
 }
@@ -544,7 +553,12 @@ export function equityIn(sim: Simulation, owned: OwnedHome): Money {
 // What owning costs
 
 const yearIn = (sim: Simulation, cityId: string, at = sim.now): number => zonedParts(at, CITIES.require(cityId).timeZone).year;
-const inEngland = (cityId: string): boolean => CITIES.get(cityId)?.parentId === 'uk-eng';
+/** The council tax a town's nation charges, where it's one of Britain's that has it. */
+export function councilNation(cityId: string): CouncilTaxNation | undefined {
+  const region = CITIES.get(cityId)?.parentId;
+  return region === 'uk-eng' || region === 'uk-sct' || region === 'uk-wls' ? COUNCIL_TAX_NATIONS[region] : undefined;
+}
+const inEngland = (cityId: string): boolean => councilNation(cityId) !== undefined;
 
 /** What an amount in dollars at an American cost of living a hundred is in a town, in the save's money. */
 export function atTown(sim: Simulation, cityId: string, usd: number): Money {
@@ -562,15 +576,20 @@ export function assessedValue(sim: Simulation, owned: OwnedHome): Money {
 }
 
 /** A home's council tax band, by its value in 1991 (SLATE's estimate of it), 0 for A to 7 for H. */
-export function councilBand(sim: Simulation, value: Money): number {
-  const gbp = (exchange(value, saveCurrency(sim.universe), 'GBP') ?? value) / 100 / COUNCIL_TAX.since1991;
-  const at = COUNCIL_TAX.bands.findIndex((edge) => gbp <= edge);
-  return at === -1 ? 7 : at;
+export function councilBand(sim: Simulation, value: Money, cityId: string): number {
+  const nation = councilNation(cityId) ?? COUNCIL_TAX_NATIONS['uk-eng'];
+  const gbp = (exchange(value, saveCurrency(sim.universe), 'GBP') ?? value) / 100 / nation.since;
+  const at = nation.bands.findIndex((edge) => gbp <= edge);
+  return at === -1 ? nation.bands.length : at;
 }
 
+/** A band's letter where a town is. */
+export const councilLetter = (cityId: string, band: number): string => (councilNation(cityId) ?? COUNCIL_TAX_NATIONS['uk-eng']).letters[band] ?? '';
+
 /** A year's council tax on a band, in the save's money, for somebody living alone or not, and shared a number of ways. */
-export function councilTaxYear(sim: Simulation, band: number, alone: boolean, sharedBy = 1): Money {
-  const gbp = COUNCIL_TAX.bandD * COUNCIL_TAX.ninths[band]! / 9 * (alone ? 1 - COUNCIL_TAX.livingAlone : 1) / sharedBy;
+export function councilTaxYear(sim: Simulation, band: number, alone: boolean, sharedBy = 1, cityId = 'uk-eng-london'): Money {
+  const nation = councilNation(cityId) ?? COUNCIL_TAX_NATIONS['uk-eng'];
+  const gbp = nation.bandD * nation.shares[band]! * (alone ? 1 - COUNCIL_TAX.livingAlone : 1) / sharedBy;
   return Math.round(exchange(Math.round(gbp), 'GBP', saveCurrency(sim.universe)) ?? gbp);
 }
 
@@ -595,7 +614,7 @@ export interface OwnerMonth {
  */
 export function monthOf(sim: Simulation, facts: HomeFacts, cityId: string, value: Money, loans: { mortgage?: { payment: Money; pmi: boolean; balance: Money }; equity?: Money } = {}, assessed = value, loading = 1, let_ = false): OwnerMonth {
   const england = inEngland(cityId);
-  const tax = england ? (let_ ? 0 : Math.round(councilTaxYear(sim, councilBand(sim, value), true) / 12)) : Math.round(assessed * propertyTaxRate(cityId, sim.now) / 12);
+  const tax = england ? (let_ ? 0 : Math.round(councilTaxYear(sim, councilBand(sim, value, cityId), true, 1, cityId) / 12)) : Math.round(assessed * propertyTaxRate(cityId, sim.now) / 12);
   const flat = isFlat(facts.type);
   const insurance = Math.round(value * (flat ? HOME.insuranceFlat : HOME.insurance) * loading / 12);
   const pmi = loans.mortgage?.pmi ? Math.round(loans.mortgage.balance * HOME.pmi / 12) : 0;
@@ -622,8 +641,29 @@ export function paymentFor(loan: Money, rate: number, months: number): Money {
 }
 
 /** The rate a lender here offers this record, for a home they'll live in or not. */
-export function rateFor(person: Person, countryId: string, investment = false): number {
-  const base = termsIn(countryId).rate + (investment ? HOME.investmentRate : 0);
+/**
+ * Where rates have gone since the figures' month: a month's move drawn about
+ * nothing, a fifth of a point either way at most in an ordinary month, pulled
+ * back a thirtieth of the way toward where they began (decider
+ * `homes.rates`). Every country's moves together, as rates largely do. SLATE's
+ * estimate of how rates wander; nobody publishes what they'll be.
+ */
+export const RATE_WALK = { step: 0.002, pull: 1 / 30, from: Date.UTC(2026, 8, 1) };
+const rateCache = new WeakMap<Simulation, number[]>();
+export function rateShift(sim: Simulation, at = sim.now): number {
+  const months = Math.max(0, Math.floor((at - RATE_WALK.from) / (30.4375 * MS_DAY)));
+  let path = rateCache.get(sim);
+  if (!path) { path = [0]; rateCache.set(sim, path); }
+  while (path.length <= months) {
+    const last = path[path.length - 1]!;
+    const move = (sim.rng('homes.rates', path.length).next() * 2 - 1) * RATE_WALK.step;
+    path.push(Math.round((last * (1 - RATE_WALK.pull) + move) * 100_000) / 100_000);
+  }
+  return path[months]!;
+}
+
+export function rateFor(person: Person, countryId: string, investment = false, sim?: Simulation): number {
+  const base = Math.max(0.005, termsIn(countryId).rate + (sim ? rateShift(sim) : 0)) + (investment ? HOME.investmentRate : 0);
   if (countryId !== 'us') return base;
   const score = person.credit?.score ?? 650;
   return base + HOME.scoreBands.find((band) => score >= band.from)!.add;
@@ -635,8 +675,46 @@ export function rateFor(person: Person, countryId: string, investment = false): 
  * first-time buyer's relief to £300,000 on a home of up to £500,000, and 1%
  * besides for the conveyancing and the survey.
  */
+/**
+ * Scotland's Land and Buildings Transaction Tax (Revenue Scotland): 0% to
+ * £145,000, 2% to £250,000, 5% to £325,000, 10% to £750,000 and 12% above,
+ * a first-time buyer's 0% band to £175,000, and 8% more on the whole price of
+ * a home bought beside one already owned (the Additional Dwelling Supplement,
+ * from December 2024). Wales's Land Transaction Tax (the Welsh Revenue
+ * Authority): 0% to £225,000, 6% to £400,000, 7.5% to £750,000, 10% to
+ * £1.5 million and 12% above; a home beside another pays the higher rates,
+ * 5%, 8.5%, 10%, 12.5%, 15% and 17% from nothing (from December 2024). 1%
+ * besides for the conveyancing, as England's.
+ */
+const TRANSFER_TAX: Readonly<Record<'uk-sct' | 'uk-wls', { main: [number, number][]; first?: [number, number][]; additional: [number, number][] | number }>> = {
+  'uk-sct': {
+    main: [[145_000, 0], [250_000, 0.02], [325_000, 0.05], [750_000, 0.1], [Number.POSITIVE_INFINITY, 0.12]],
+    first: [[175_000, 0], [250_000, 0.02], [325_000, 0.05], [750_000, 0.1], [Number.POSITIVE_INFINITY, 0.12]],
+    additional: 0.08,
+  },
+  'uk-wls': {
+    main: [[225_000, 0], [400_000, 0.06], [750_000, 0.075], [1_500_000, 0.1], [Number.POSITIVE_INFINITY, 0.12]],
+    additional: [[180_000, 0.05], [250_000, 0.085], [400_000, 0.1], [750_000, 0.125], [1_500_000, 0.15], [Number.POSITIVE_INFINITY, 0.17]],
+  },
+};
+const onBands = (gbp: number, bands: [number, number][]): number => {
+  let tax = 0;
+  let from = 0;
+  for (const [to, rate] of bands) { if (gbp > from) tax += (Math.min(gbp, to) - from) * rate; from = to; }
+  return tax;
+};
+
 export function closingCost(sim: Simulation, cityId: string, price: Money, firstHome: boolean, additional = false): Money {
   const city = CITIES.require(cityId);
+  if (city.parentId === 'uk-sct' || city.parentId === 'uk-wls') {
+    const cur = saveCurrency(sim.universe);
+    const gbp = (exchange(price, cur, 'GBP') ?? price) / 100;
+    const t = TRANSFER_TAX[city.parentId];
+    let tax: number;
+    if (additional) tax = typeof t.additional === 'number' ? onBands(gbp, t.main) + gbp * t.additional : onBands(gbp, t.additional);
+    else tax = onBands(gbp, firstHome && t.first ? t.first : t.main);
+    return Math.round(exchange(Math.round(tax * 100), 'GBP', cur) ?? tax * 100) + Math.round(price * 0.01);
+  }
   if (city.parentId === 'uk-eng' || city.parentId === 'uk-nir') {
     const cur = saveCurrency(sim.universe);
     const gbp = (exchange(price, cur, 'GBP') ?? price) / 100;
@@ -694,7 +772,7 @@ export function offerFor(sim: Simulation, person: Person, listing: Listing, down
   const country = CITIES.require(listing.cityId).countryId;
   const downCash = Math.round(price * Math.min(1, down));
   const loan = price - downCash;
-  const rate = rateFor(person, country, !live);
+  const rate = rateFor(person, country, !live, sim);
   const months = termsIn(country).years * 12;
   const payment = loan > 0 ? paymentFor(loan, rate, months) : 0;
   const pmi = country === 'us' && live && loan > price * HOME.pmiOver;
@@ -887,7 +965,8 @@ function finishWorks(sim: Simulation, person: Person, owned: OwnedHome, works: W
 export function marketRent(sim: Simulation, owned: Pick<OwnedHome, 'cityId' | 'facts'>, unit: Tenancy['unit']): Money {
   const oneBed = rentAt(owned.cityId, saveCurrency(sim.universe)).oneBed;
   const beds = unit === 'adu' ? 0 : Math.min(BEDROOM_RENT.length - 1, owned.facts.beds);
-  return Math.round(oneBed * BEDROOM_RENT[beds]! / 100) * 100;
+  const inside = unit === 'main' && owned.facts.fixtures ? premiumOf(owned.facts.fixtures) : 1;
+  return Math.round(oneBed * BEDROOM_RENT[beds]! * inside / 100) * 100;
 }
 
 /** Why a unit can't be offered to let at a rent, or nothing where it can. */
@@ -1297,7 +1376,7 @@ function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
   }
   // England's council tax, ten instalments from April, on a home they live in or leave empty; a tenant pays their own.
   if (inEngland(owned.cityId) && (m >= 4 || m === 1) && !owned.tenancies.some((t) => t.unit === 'main' && t.status === 'let')) {
-    owned.owed.push({ kind: 'council', dueAt: due, amount: Math.round(councilTaxYear(sim, councilBand(sim, homeValue(sim, owned)), true) / COUNCIL_TAX.instalments) });
+    owned.owed.push({ kind: 'council', dueAt: due, amount: Math.round(councilTaxYear(sim, councilBand(sim, homeValue(sim, owned), owned.cityId), true, 1, owned.cityId) / COUNCIL_TAX.instalments) });
   }
   if (month.hoa > 0) owned.owed.push({ kind: 'hoa', dueAt: due, amount: month.hoa });
   // A home let is depreciated a month at a time: its building, over 27.5 years; a cottage let, its own cost.
@@ -1469,13 +1548,22 @@ function recordGain(sim: Simulation, person: Person, owned: OwnedHome, sale: Mon
   const lastUsed = person.exclusionUsedAt;
   const may = owns2 && livedDays(owned, sim.now) >= HOME_TAX.exclusionDays && (lastUsed === undefined || sim.now - lastUsed >= HOME_TAX.exclusionDays * MS_DAY);
   const cur = saveCurrency(sim.universe);
-  // The part of the gain that is depreciation taken while it was let isn't excluded (§121(d)(6)).
-  const free = may ? Math.max(0, Math.min(gain - owned.depreciated, exchange(HOME_TAX.exclusion, 'USD', cur) ?? HOME_TAX.exclusion)) : 0;
+  // The part of the gain that is depreciation taken while it was let isn't excluded (§121(d)(6)); and the share of
+  // the years owned before they first lived in it, let or empty, isn't either (§121(b)(5), nonqualified use).
+  const first = owned.occupied.length ? Math.min(...owned.occupied.map((o) => o.from)) : sim.now;
+  const nonqualified = Math.min(1, Math.max(0, first - owned.boughtAt) / Math.max(1, sim.now - owned.boughtAt));
+  const excludable = Math.max(0, (gain - owned.depreciated) * (1 - nonqualified));
+  const free = may ? Math.min(excludable, exchange(HOME_TAX.exclusion, 'USD', cur) ?? HOME_TAX.exclusion) : 0;
   if (free > 0) person.exclusionUsedAt = sim.now;
   const zone = CITIES.require(owned.cityId).timeZone;
   if (free > 0) recordHome(person, sim.now, zone, 'homeGainExcluded', free);
   const taxable = gain - free;
-  if (taxable > 0) recordHome(person, sim.now, zone, sim.now - owned.boughtAt > YEAR_MS ? 'homeGain' : 'homeGainShort', taxable);
+  if (taxable <= 0) return;
+  if (sim.now - owned.boughtAt <= YEAR_MS) { recordHome(person, sim.now, zone, 'homeGainShort', taxable); return; }
+  // Of a long-term gain, the depreciation taken is taxed as income to 25% (§1(h)(6), unrecaptured §1250 gain), the rest at the gain rates.
+  const recaptured = Math.min(taxable, owned.depreciated);
+  if (recaptured > 0) recordHome(person, sim.now, zone, 'homeGain1250', recaptured);
+  if (taxable > recaptured) recordHome(person, sim.now, zone, 'homeGain', taxable - recaptured);
 }
 
 /** The home sold at a forced sale's discount; the loans and what's owed paid from it; the rest theirs, or short with collections. */
@@ -1484,6 +1572,7 @@ function foreclose(sim: Simulation, person: Person, owned: OwnedHome): void {
   const sale = Math.round(homeValue(sim, owned) * HOME.forcedSale);
   // A foreclosure is a sale, and its gain is on the return like any other's.
   recordGain(sim, person, owned, sale, 0);
+  if (owned.depreciated > 0) recordHome(person, sim.now, CITIES.require(owned.cityId).timeZone, 'rentalDisposed', 1);
   const left = settleSale(sim, person, owned, sale, 0, `Foreclosure sale, ${owned.facts.address}`);
   if (person.credit) person.credit.score = Math.max(300, person.credit.score - HOME.foreclosureFall);
   const lived = livingIn(person)?.id === owned.id;
@@ -1525,6 +1614,7 @@ function saleCloses(sim: Simulation, person: Person, owned: OwnedHome): void {
   const loans = owedOn(sim, owned.mortgage) + owedOn(sim, owned.equity);
   const cur = saveCurrency(sim.universe);
   recordGain(sim, person, owned, value, costs);
+  if (owned.depreciated > 0) recordHome(person, sim.now, CITIES.require(owned.cityId).timeZone, 'rentalDisposed', 1);
   settleSale(sim, person, owned, value, costs, `Sold ${owned.facts.address}`);
   const lived = livingIn(person)?.id === owned.id;
   person.homes = homesOf(person).filter((h) => h !== owned);
@@ -1552,8 +1642,8 @@ export function equityRoom(sim: Simulation, owned: OwnedHome): Money {
   return Math.max(0, Math.floor((homeValue(sim, owned) * HOME.equityCeiling - loanBalance(sim, owned)) / 100_00) * 100_00);
 }
 
-export function equityRate(person: Person, owned: OwnedHome): number {
-  return rateFor(person, CITIES.require(owned.cityId).countryId, owned.investment) + HOME.equityRate;
+export function equityRate(person: Person, owned: OwnedHome, sim?: Simulation): number {
+  return rateFor(person, CITIES.require(owned.cityId).countryId, owned.investment, sim) + HOME.equityRate;
 }
 
 /** Why a home equity loan of an amount can't be had, or nothing where it can. */
@@ -1564,7 +1654,7 @@ export function borrowRefusal(sim: Simulation, person: Person, owned: OwnedHome,
   const room = equityRoom(sim, owned);
   if (amount > room) return `A lender lends up to ${Math.round(HOME.equityCeiling * 100)}% of its value, less the mortgage: ${formatMoney(room, saveCurrency(sim.universe), { cents: false })}.`;
   if ((person.credit?.score ?? 650) < HOME.equityScore) return 'A lender asks for a better credit record than yours.';
-  const payment = paymentFor(amount, equityRate(person, owned), HOME.equityYears * 12);
+  const payment = paymentFor(amount, equityRate(person, owned, sim), HOME.equityYears * 12);
   const income = monthlyIncome(sim, person);
   if (income <= 0 || (monthlyDebts(sim, person) + payment) / income > HOME.maxDebtToIncome) return `A lender keeps what you owe each month under ${Math.round(HOME.maxDebtToIncome * 100)}% of your income.`;
   return undefined;
@@ -1578,7 +1668,9 @@ export function rentersCouncilTax(sim: Simulation, person: Person): Money {
   const home = person.home;
   if (!home || !inEngland(home.cityId) || (home.kind !== 'own' && home.kind !== 'shared')) return 0;
   const shared = home.kind === 'shared';
-  return councilTaxYear(sim, COUNCIL_TAX.rentedBand[home.kind], !shared, shared ? COUNCIL_TAX.sharedBy : 1);
+  // A shared flat's bill split between its bedrooms' tenants; the flat's band by its bedrooms.
+  const flatmates = shared ? home.unit?.beds ?? COUNCIL_TAX.sharedBy : 1;
+  return councilTaxYear(sim, COUNCIL_TAX.rentedBand[home.kind], !shared, flatmates, home.cityId);
 }
 
 function councilAccount(sim: Simulation, person: Person): Account {
@@ -1772,6 +1864,28 @@ export function registerHomes(sim: Simulation): void {
     return { movedIn: owned.id };
   });
 
+  sim.onCommand<{ homeId: string }, { rate: number; payment: Money }>('home.refinance', (p, { sim: s }) => {
+    const person = s.player;
+    const owned = homeById(person, String(p.homeId));
+    if (!owned) throw new CommandError('You don’t own that home.');
+    const refusal = refinanceRefusal(s, person, owned);
+    if (refusal) throw new CommandError(refusal);
+    const offer = refinanceOffer(s, person, owned)!;
+    const balance = loanBalance(s, owned);
+    const old = accountOf(s, owned.mortgage)!;
+    const account = s.openAccount({ id: s.nextId('account'), kind: 'mortgage', name: `Mortgage, ${owned.facts.address}`, ownerId: person.id, institution: 'Your Lender', openedAt: s.now, category: 'mortgage', apr: offer.rate });
+    const draw = drawFromBank(s, person, offer.closing, false, true);
+    s.post({ memo: `Refinanced ${owned.facts.address}`, category: 'home', postings: [
+      { accountId: account.id, amount: -balance }, { accountId: old.id, amount: balance },
+      ...draw.postings, { accountId: s.nominalAccount('expense', 'Closing Costs').id, amount: offer.closing },
+    ] });
+    old.closedAt = s.now;
+    const months = termsIn(CITIES.require(owned.cityId).countryId).years * 12;
+    owned.mortgage = { accountId: account.id, rate: offer.rate, payment: offer.payment, original: homeValue(s, owned), pmi: offer.pmi };
+    void months;
+    return { rate: offer.rate, payment: offer.payment };
+  });
+
   sim.onCommand<{ homeId: string; amount: Money }, { payment: Money }>('home.borrow', (p, { sim: s }) => {
     const person = s.player;
     const owned = homeById(person, String(p.homeId));
@@ -1779,13 +1893,42 @@ export function registerHomes(sim: Simulation): void {
     const amount = Math.round(Number(p.amount));
     const refusal = borrowRefusal(s, person, owned, amount);
     if (refusal) throw new CommandError(refusal);
-    const rate = equityRate(person, owned);
+    const rate = equityRate(person, owned, s);
     const months = HOME.equityYears * 12;
     const account = s.openAccount({ id: s.nextId('account'), kind: 'mortgage', name: `Home Equity Loan, ${owned.facts.address}`, ownerId: person.id, institution: 'Your Lender', openedAt: s.now, category: 'equity', apr: rate });
     s.post({ memo: 'Home equity loan', category: 'home', postings: [{ accountId: account.id, amount: -amount }, { accountId: person.primaryAccountId!, amount }] });
     owned.equity = { accountId: account.id, rate, payment: paymentFor(amount, rate, months), original: amount, pmi: false };
     return { payment: owned.equity.payment };
   });
+}
+
+/**
+ * A refinance: the mortgage paid off by a new one for what's owed, at today's
+ * rate for their record, over a new full term, with closing costs from the
+ * bank (`HOME.refinanceCost` of the loan), and mortgage insurance if the loan
+ * is over 80% of what the home is worth now. The lender reads it as a new loan.
+ */
+export function refinanceOffer(sim: Simulation, person: Person, owned: OwnedHome): { rate: number; payment: Money; closing: Money; pmi: boolean } | undefined {
+  if (!owned.mortgage || loanBalance(sim, owned) === 0) return undefined;
+  const country = CITIES.require(owned.cityId).countryId;
+  const balance = loanBalance(sim, owned);
+  const rate = rateFor(person, country, owned.investment, sim);
+  const months = termsIn(country).years * 12;
+  return { rate, payment: paymentFor(balance, rate, months), closing: Math.round(balance * HOME.refinanceCost), pmi: country === 'us' && !owned.investment && balance > homeValue(sim, owned) * HOME.pmiOver };
+}
+
+export function refinanceRefusal(sim: Simulation, person: Person, owned: OwnedHome): string | undefined {
+  const offer = refinanceOffer(sim, person, owned);
+  if (!offer) return 'There’s no mortgage on it to refinance.';
+  if (owned.selling || owned.foreclosureAt !== undefined || owned.owed.some((one) => LOANS.includes(one.kind))) return 'Not while it’s being sold or a payment is behind.';
+  if ((person.credit?.score ?? 650) < HOME.minScore) return 'A lender asks for a better credit record than yours.';
+  if (inTheBank(sim, person) < offer.closing) return `Closing it costs ${formatMoney(offer.closing, saveCurrency(sim.universe), { cents: false })}, which the bank can’t cover.`;
+  const income = monthlyIncome(sim, person);
+  const without = monthlyDebts(sim, person, owned.id);
+  const month = ownedMonth(sim, owned);
+  const newMonth = month.total - month.mortgage - month.pmi + offer.payment + (offer.pmi ? Math.round(loanBalance(sim, owned) * HOME.pmi / 12) : 0);
+  if (income <= 0 || (without + newMonth) / income > HOME.maxDebtToIncome) return `A lender keeps what you owe each month under ${Math.round(HOME.maxDebtToIncome * 100)}% of your income.`;
+  return undefined;
 }
 
 /** Why they can't move into a home they own, or nothing where they can. */

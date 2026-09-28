@@ -40,7 +40,8 @@ import { MS_DAY, MS_HOUR, dateKey, zonedParts, type Instant } from '../core/time
 import { clamp } from '../core/rng';
 import { CITIES } from '../content/geography';
 import { drawFixtures, isFlat, type Fixtures, type HomeType } from '../content/homes';
-import { atTown, livingIn, type HomeFacts } from './homes';
+import { atTown, HOME, insured as insuredHome, livingIn, type HomeFacts } from './homes';
+import { exchange } from '../content/currency';
 import { drawFromBank, spend } from './household';
 import { weatherAt, weatherOn } from './weather';
 import { personalityOf } from './personality';
@@ -86,10 +87,11 @@ export function drawRental(sim: Simulation, person: Person, cityId: string, shar
   const rng = sim.rng('homes.rental', person.id, cityId, shared ? 'room' : 'flat', key);
   const dense = city.population >= 500_000 || city.kind === 'section';
   // A room is one of two to four in a flat, or a house off the dense city; a place of one's own is a studio or a one-bedroom.
-  const type: HomeType = shared ? (!dense && rng.next() < 0.4 ? 'house' : 'condo') : rng.next() < 0.35 ? 'studio' : 'condo';
-  const beds = shared ? rng.int(2, 4) : type === 'studio' ? 0 : 1;
+  // A place of one's own at a one-bedroom's rent is a one-bedroom; a room is one of two to four, whose flatmates share the council tax.
+  const type: HomeType = shared ? (!dense && rng.next() < 0.4 ? 'house' : 'condo') : 'condo';
+  const beds = shared ? rng.int(2, 4) : 1;
   // Near what renters get: an American studio averages 457 square feet and a one-bedroom 735, New York's 487 and 697 (RentCafe, 2024).
-  const size = Math.round((type === 'studio' ? rng.int(380, 540) : shared ? 700 + 300 * beds : rng.int(620, 820)) / 10) * 10;
+  const size = Math.round((shared ? 700 + 300 * beds : rng.int(620, 820)) / 10) * 10;
   // A renter's place sits low in the market: the first third, a shared house a little higher.
   const fixtures = drawFixtures(rng, { countryId: city.countryId, latitude: city.latitude, longitude: city.longitude, dense }, type, rng.float(0.1, 0.4), type === 'house' && rng.next() < 0.6);
   return { type, beds, size, shared, fixtures };
@@ -189,6 +191,10 @@ export interface Living {
   /** Clothes washed and drying, and when they're dry. */
   drying: { count: number; readyAt: Instant }[];
   tidy: number;
+  /** Renters insurance on what's inside, paid monthly. */
+  rentersInsurance?: boolean;
+  /** The month's loads in the home's own machines, for the bills. */
+  loads?: { washer: number; dryer: number };
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
   cleaner?: { day: number };
 }
@@ -239,10 +245,56 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
   if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
   const count = l.dirty;
   l.dirty = 0;
+  // A home's own machines run on its electricity, billed with the month.
+  if (way === 'in-unit' || way === 'washer-only') {
+    const loads = Math.ceil(count / LAUNDRY.perLoad);
+    l.loads = { washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' ? loads : 0) };
+  }
   const ready = finishedAt + LAUNDRY.readyHours[way] * MS_HOUR;
   if (ready <= finishedAt) l.clean += count;
   else l.drying.push({ count, readyAt: ready });
   return true;
+}
+
+/**
+ * What a home's own machines add to the month's bills: an electric dryer's
+ * 2.4 kWh a load (the DOE standard's 684 kWh over 283 cycles) and a washer's
+ * motor's 0.23 kWh (the EIA's 69 kWh a year over ENERGY STAR's 295 loads), at
+ * the 18.19 cents a kWh America's homes paid in 2026 (EIA), at the town's cost
+ * of living. The hot water isn't counted.
+ */
+export const MACHINES = { washerUsd: 0.23 * 0.1819, dryerUsd: 2.4 * 0.1819 };
+
+/** The month's machine loads, in dollars, billed with the month's bills on the first, then counted again. */
+export function machineUsd(person: Person): number {
+  const l = person.living;
+  if (!l?.loads) return 0;
+  return l.loads.washer * MACHINES.washerUsd + l.loads.dryer * MACHINES.dryerUsd;
+}
+
+/**
+ * What a home's fixtures do to what it lets and sells for, over the typical
+ * home's: ApartmentAdvisor's regression on 250,000 one-bedroom listings
+ * (November 2024) found a washer and dryer of its own worth 5.57% of the
+ * rent, a gym 4.86%, a balcony 3.98%, air conditioning 1.30% and a
+ * dishwasher 1.07%; in New York, StreetEasy found about 12% for the machines.
+ * A washer alone, wall units, a terrace and a yard, and a home gym, are
+ * SLATE's estimates beside those. Over the typical home's mix (`FIXTURE_TYPICAL`).
+ */
+export const FIXTURE_PREMIUM = {
+  laundry: { 'in-unit': 0.0557, 'washer-only': 0.02, building: 0, none: 0 },
+  cooling: { central: 0.013, units: 0.0065, none: 0 },
+  outdoor: { terrace: 0.05, yard: 0.03, balcony: 0.0398, none: 0 },
+  dishwasher: 0.0107,
+  gym: { home: 0.03, building: 0.0486, none: 0 },
+  bathtub: 0,
+} as const;
+/** The typical home's premium, which the published rents and values already carry: an American home's mix of them. */
+export const FIXTURE_TYPICAL = 1.075;
+
+export function premiumOf(f: Fixtures): number {
+  const p = FIXTURE_PREMIUM;
+  return (1 + p.laundry[f.laundry] + p.cooling[f.cooling] + p.outdoor[f.outdoor] + (f.dishwasher ? p.dishwasher : 0) + p.gym[f.gym] + (f.bathtub ? p.bathtub : 0)) / FIXTURE_TYPICAL;
 }
 
 /** Clothes dry by now back in the wardrobe. */
@@ -387,7 +439,20 @@ export { isFlat };
 
 export function registerDwelling(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'dwelling.day', (_event, { sim: s }) => {
-    for (const person of Object.values(s.universe.people)) livingDay(s, person);
+    for (const person of Object.values(s.universe.people)) {
+      livingDay(s, person);
+      const city = CITIES.get(person.home?.cityId ?? '');
+      belongingsDay(s, person, city ? zonedParts(s.now, city.timeZone).day === 1 : false);
+    }
+  });
+
+  sim.onCommand<{ on: boolean }, { premium: Money }>('home.renters_insurance', (p, { sim: s }) => {
+    const person = s.player;
+    if (!person.home || person.home.kind === 'sofa' || person.home.kind === 'owned') throw new CommandError('Renters insurance is for somebody renting.');
+    const l = livingOf(person);
+    if (!p.on) { delete l.rentersInsurance; return { premium: 0 }; }
+    l.rentersInsurance = true;
+    return { premium: rentersPremium(s, person) };
   });
 
   sim.onCommand<{ on: boolean; day?: number }, { cost: Money }>('home.cleaner', (p, { sim: s }) => {
@@ -400,4 +465,89 @@ export function registerDwelling(sim: Simulation): void {
     l.cleaner = { day };
     return { cost: cleanerCost(s, person) };
   });
+}
+
+// ---------------------------------------------------------------------------
+// What they own inside: a burglary, a fire, and the insurance on them
+
+/**
+ * A home's belongings at risk. A burglary comes to 8.2 households in a
+ * thousand a year (the Bureau of Justice Statistics' National Crime
+ * Victimization Survey, 2024), and the average theft claim is $5,524 (the
+ * Triple-I from ISO, 2019–2023); a renter's belongings are lost in a fire as
+ * often as a home burns (1 in 425 a year), at about $7,170 a claim (Lemonade,
+ * unverified). A homeowner's policy covers what's in the home over its
+ * deductible (\`systems/homes.ts\`); a renter's needs renters insurance, $171
+ * a year on average (NAIC, 2022: New York $169, California $169, Connecticut
+ * $175), paying over a $500 deductible, SLATE's estimate of a common one.
+ * Without it, they replace what they can afford, and do without the rest.
+ */
+export const BELONGINGS = {
+  burglaryYear: 8.2 / 1000,
+  theftUsd: [1_500, 9_500] as const,
+  fireYear: 1 / 425,
+  fireUsd: [3_000, 11_000] as const,
+  premiumYearUsd: { 'us-ny': 169, 'us-ca': 169, 'us-ct': 175 } as Readonly<Record<string, number>>,
+  premiumDefaultUsd: 171,
+  deductibleUsd: 500,
+  morale: 3,
+  stress: 5,
+  without: 2,
+};
+
+/** A renters insurance premium a month where they live, in the save's money. */
+export function rentersPremium(sim: Simulation, person: Person): Money {
+  const city = CITIES.get(person.home?.cityId ?? person.currentLocationId);
+  if (!city) return 0;
+  const usd = BELONGINGS.premiumYearUsd[city.parentId] ?? BELONGINGS.premiumDefaultUsd;
+  const cur = saveCurrency(sim.universe);
+  // The states' own averages are what they are; elsewhere the national average at the town's cost of living.
+  const cents = BELONGINGS.premiumYearUsd[city.parentId] ? usd * 100 : Math.round(usd * 100 * city.costOfLivingIndex / 100);
+  return Math.round((exchange(cents, 'USD', cur) ?? cents) / 12);
+}
+
+/** Whether what's inside their home is insured, and over what deductible. */
+export function coveredInside(sim: Simulation, person: Person): Money | undefined {
+  const owned = livingIn(person);
+  if (owned) return insuredHome(owned) ? atTown(sim, owned.cityId, HOME.deductibleUsd) : undefined;
+  return person.living?.rentersInsurance ? atTown(sim, person.home?.cityId ?? person.currentLocationId, BELONGINGS.deductibleUsd) : undefined;
+}
+
+/** A day's risk to what's inside: a burglary, or for a renter a fire in the building; and the renters premium on the first. */
+export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boolean): void {
+  const home = person.home;
+  if (!home || home.kind === 'sofa') return;
+  const cur = saveCurrency(sim.universe);
+  if (firstOfMonth && person.living?.rentersInsurance && home.kind !== 'owned') {
+    if (!spend(sim, person, rentersPremium(sim, person), 'Renters insurance', 'insurance')) {
+      delete person.living.rentersInsurance;
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Your Renters Insurance Lapsed', body: 'The premium couldn’t be paid, so the policy ended.', importance: 70, route: '/home' });
+    }
+  }
+  const r = sim.rng('homes.upkeep', person.id, 'belongings', homeDay(sim, person));
+  const burgled = r.next() < BELONGINGS.burglaryYear / 365;
+  const burned = home.kind !== 'owned' && r.next() < BELONGINGS.fireYear / 365;
+  if (!burgled && !burned) return;
+  const [least, most] = burgled ? BELONGINGS.theftUsd : BELONGINGS.fireUsd;
+  const loss = atTown(sim, home.cityId, r.float(least, most));
+  const w = person.wellbeing;
+  w.morale = clamp(w.morale - BELONGINGS.morale * personalityOf(person, 'moraleSwing'), 0, 100);
+  w.stress = clamp(w.stress + BELONGINGS.stress * personalityOf(person, 'stressGain'), 0, 100);
+  const deductible = coveredInside(sim, person);
+  const pays = deductible === undefined ? 0 : Math.max(0, loss - deductible);
+  if (pays > 0) {
+    sim.post({ memo: burgled ? 'Insurance claim: a burglary' : 'Insurance claim: a fire', category: 'insurance', postings: [{ accountId: person.primaryAccountId!, amount: pays }, { accountId: sim.nominalAccount('income', 'Insurance Claims').id, amount: -pays }] });
+    const owned = livingIn(person);
+    if (owned) owned.claims.push(sim.now);
+  }
+  // What's gone is replaced as far as the money goes; what can't be is done without.
+  const replaced = spend(sim, person, loss, burgled ? 'Replacing what was stolen' : 'Replacing what burned', 'household');
+  if (!replaced) w.morale = clamp(w.morale - BELONGINGS.without, 0, 100);
+  if (person.id === sim.universe.playerId) {
+    sim.notify({
+      category: 'home', title: burgled ? 'Your Home Was Burgled' : 'A Fire In The Building',
+      body: `${formatMoney(loss, cur, { cents: false })} of your things ${burgled ? 'were taken' : 'were lost'}. ${pays > 0 ? `The insurance paid ${formatMoney(pays, cur, { cents: false })}, over its deductible.` : deductible !== undefined ? 'It’s under the deductible.' : 'Nothing insured them.'} ${replaced ? 'You’ve replaced what you need.' : 'You can’t afford to replace it all.'}`,
+      importance: 80, route: '/home',
+    });
+  }
 }

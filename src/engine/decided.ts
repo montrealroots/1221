@@ -34,7 +34,7 @@ import { newLifeConfig } from './world/bootstrap';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
 import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
-import { listingsIn, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
+import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { drawRental } from './systems/dwelling';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
@@ -609,4 +609,17 @@ defineDecider<{ sim: Simulation; cityId: string; shared: boolean; key: number },
     const u = drawRental(sim, sim.player, cityId, shared, key + n);
     return `${u.type[0]}${u.beds}${u.size}${u.fixtures.laundry[0]}${u.fixtures.cooling[0]}${u.fixtures.dishwasher ? 'd' : ''}${u.fixtures.bathtub ? 'b' : ''}`;
   }).join(','),
+});
+
+defineDecider<{ sim: Simulation; months: number }, string>({
+  id: 'homes.rates',
+  decides: 'Where mortgage rates wander month by month from the figures’ month: a small move either way, pulled back toward where they began.',
+  drawnIn: 'src/engine/systems/homes.ts',
+  reads: {
+    // How far on.
+    months: (o, t) => ({ ...o, months: 1 + Math.round(t * 120) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), months: 12 + (seed % 60) }),
+  decide: ({ sim, months }) => Array.from({ length: 12 }, (_, n) => rateShift(sim, Date.UTC(2026, 8, 1) + (months + n) * 30.4375 * 86_400_000).toFixed(4)).join(','),
 });

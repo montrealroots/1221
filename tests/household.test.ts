@@ -60,8 +60,10 @@ describe('the cost of living', () => {
     const first = on(sim, 2026, 2, 1, 20);
     sim.advanceTo(first - MS_HOUR);
     const before = checking(sim).balance;
+    // What's due, read before it's charged: the month's machine loads are billed and then counted afresh.
+    const due = rentOf(sim, sim.player) + billsOf(sim, sim.player);
     sim.advanceTo(first + MS_HOUR);
-    expect(before - checking(sim).balance).toBe(rentOf(sim, sim.player) + billsOf(sim, sim.player));
+    expect(before - checking(sim).balance).toBe(due);
     expect(sim.ledger.audit()).toEqual([]);
   });
 

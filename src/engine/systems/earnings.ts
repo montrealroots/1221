@@ -39,6 +39,9 @@ export interface YearEarnings {
   homeGain?: Money;
   homeGainShort?: Money;
   homeGainExcluded?: Money;
+  /** Of a long-term gain, the depreciation taken while it was let, taxed as income to 25%; and whether a let home was sold, which frees its held-back losses. */
+  homeGain1250?: Money;
+  rentalDisposed?: number;
   /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
   sagByProject?: Record<string, Money>;
   withheld: Money;
@@ -183,7 +186,7 @@ export function recordPension(person: Person, at: Instant, zone: string, amount:
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
 }
 
-export type HomeLine = 'homeInterest' | 'homeTax' | 'homePmi' | 'rentalRent' | 'rentalCosts' | 'homeGain' | 'homeGainShort' | 'homeGainExcluded';
+export type HomeLine = 'homeInterest' | 'homeTax' | 'homePmi' | 'rentalRent' | 'rentalCosts' | 'homeGain' | 'homeGainShort' | 'homeGainExcluded' | 'homeGain1250' | 'rentalDisposed';
 
 /** Something a home put on the year, to the year it happened. */
 export function recordHome(person: Person, at: Instant, zone: string, line: HomeLine, amount: Money): void {

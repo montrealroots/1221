@@ -13,11 +13,12 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY } from '@/engine/core/time';
 import { CommandError, type Simulation } from '@/engine/core/simulation';
-import { BUZZ, LOCAL_CREDIT, beginCareer, careerOf, localEdge, takesBack, thesisSeen } from '@/engine/systems/career';
+import { BUZZ, LOCAL_CREDIT, beginCareer, careerOf, localEdge, showcaseBuzz, takesBack, thesisSeen } from '@/engine/systems/career';
 import { castListRead, castScore, evaluate, evenCraft } from '@/engine/systems/school';
 import { classmateBooked } from '@/engine/systems/rivals';
 import { ROLES } from '@/engine/content/career';
-import { canPay, rentOf } from '@/engine/systems/household';
+import { canPay } from '@/engine/systems/household';
+import { rentersCouncilTax } from '@/engine/systems/homes';
 import { heatLoss, placeOf, stayPlace } from '@/engine/systems/dwelling';
 import { lookAfterRefusal } from '@/engine/systems/life';
 
@@ -43,23 +44,28 @@ describe('an agency', () => {
 });
 
 describe('a showcase', () => {
-  it('brings managers for half a year after a strong one, and not without one', () => {
-    // Half a month at a time, since an offer stands only so long.
-    const called = (sim: Simulation) => {
-      let seen = false;
-      for (let d = 0; d < BUZZ.days; d += 15) { sim.advanceBy(15 * MS_DAY); if (careerOf(sim.player).managerOffers.length > 0) seen = true; }
-      return seen;
-    };
-    let offered = 0;
-    let without = 0;
-    for (let n = 0; n < 4; n += 1) {
-      const sim = pro(`buzz-${n}`);
-      careerOf(sim.player).showcases.push({ cityId: 'us-ny-newyork', at: sim.now, score: 95 });
-      if (called(sim)) offered += 1;
-      if (called(pro(`buzz-plain-${n}`))) without += 1;
-    }
-    expect(offered).toBeGreaterThan(without);
-  }, 120_000);
+  it('brings managers in about the months its chance says for half a year after a strong one, and never without one, after it, or below every bar', () => {
+    const sim = pro('buzz');
+    const career = careerOf(sim.player);
+    const months = Array.from({ length: 400 }, (_, n) => sim.now + (n % 170) * MS_DAY + Math.floor(n / 170) * 60_000);
+    const share = () => months.filter((at) => showcaseBuzz(sim, sim.player, at).length > 0).length / months.length;
+    // No showcase: nobody calls.
+    expect(share()).toBe(0);
+    // A strong one: a month in about BUZZ.chance, every bar cleared and the odd manager passing.
+    career.showcases.push({ cityId: 'us-ny-newyork', at: sim.now, score: 95 });
+    expect(share()).toBeGreaterThan(BUZZ.chance * 0.6);
+    expect(share()).toBeLessThan(BUZZ.chance * 1.4);
+    // Past half a year, it's over.
+    expect(months.map((at) => at + BUZZ.days * MS_DAY).filter((at) => showcaseBuzz(sim, sim.player, at).length > 0)).toHaveLength(0);
+    // Below every manager's bar, nobody.
+    career.showcases = [{ cityId: 'us-ny-newyork', at: sim.now, score: 10 }];
+    Object.assign(sim.player.attrs!, { reputation: 0 });
+    expect(share()).toBe(0);
+    // Managed already, nobody else.
+    career.showcases = [{ cityId: 'us-ny-newyork', at: sim.now, score: 95 }];
+    career.managerId = 'e360';
+    expect(share()).toBe(0);
+  });
 
   it('reads the final year’s lead parts and stage work beside the day’s', () => {
     const sim = pro('thesis');
@@ -109,13 +115,13 @@ describe('the trades', () => {
   });
 });
 
-describe('a rented place', () => {
-  it('rents a studio for less than a one-bedroom', () => {
-    const sim = pro('studio');
-    sim.player.home = { ...sim.player.home!, kind: 'own', unit: { type: 'condo', beds: 1, size: 700, shared: false, fixtures: sim.player.home!.unit!.fixtures } };
-    const one = rentOf(sim, sim.player);
-    sim.player.home.unit = { ...sim.player.home.unit!, type: 'studio', beds: 0 };
-    expect(rentOf(sim, sim.player)).toBeLessThan(one);
+describe('a shared flat', () => {
+  it('splits its council tax among its bedrooms', () => {
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, 'flatmates');
+    sim.player.home = { ...sim.player.home!, kind: 'shared', unit: { type: 'condo', beds: 2, size: 1300, shared: true, fixtures: sim.player.home!.unit!.fixtures } };
+    const two = rentersCouncilTax(sim, sim.player);
+    sim.player.home.unit = { ...sim.player.home.unit!, beds: 4 };
+    expect(rentersCouncilTax(sim, sim.player)).toBe(Math.round(two / 2));
   });
 });
 

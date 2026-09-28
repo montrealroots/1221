@@ -372,7 +372,7 @@ describe('borrowing against it', () => {
 describe('council tax', () => {
   it('bands a home by its 1991 value and takes a quarter off for somebody alone', () => {
     const sim = save('homes-council', 'uk-eng-london');
-    expect(councilBand(sim, 0)).toBe(0);
+    expect(councilBand(sim, 0, 'uk-eng-london')).toBe(0);
     const d = councilTaxYear(sim, 3, false);
     expect(councilTaxYear(sim, 7, false) / d).toBeCloseTo(2, 5);
     expect(councilTaxYear(sim, 3, true) / d).toBeCloseTo(1 - COUNCIL_TAX.livingAlone, 5);
@@ -483,7 +483,7 @@ describe('the law, as it stands', () => {
     sim.must({ kind: 'home.sell', payload: { homeId: owned.id, then: 'own' } });
     sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
     const y = yearOf(sim.player, new Date(sim.now).getUTCFullYear());
-    expect((y.homeGain ?? 0) + (y.homeGainShort ?? 0)).toBeGreaterThanOrEqual(40_000_00);
+    expect((y.homeGain ?? 0) + (y.homeGainShort ?? 0) + (y.homeGain1250 ?? 0)).toBeGreaterThanOrEqual(40_000_00);
   }, 60_000);
 
   it('holds a late filing’s own penalty to 22.5%, with paying late running on to 25%', () => {
@@ -495,5 +495,56 @@ describe('the law, as it stands', () => {
   it('holds a Northern Ireland landlord to a month’s deposit', () => {
     addCountryCities('uk', readFileSync('public/geo/uk.tsv', 'utf8'));
     expect(depositCapMonths('uk-nir-belfast')).toBe(1);
+  });
+});
+
+describe('a sale on the return', () => {
+  it('taxes the depreciation taken as income to 25%, apart from the rest of the gain', () => {
+    const flip = bought('homes-1250', 1, false);
+    flip.owned.boughtAt -= 3 * 365 * MS_DAY;
+    flip.owned.depreciated = 30_000_00;
+    flip.owned.improvements.push({ projectId: 'paint', at: flip.sim.now, value: Math.round(flip.owned.price / 2), cost: 0 });
+    flip.sim.must({ kind: 'home.sell', payload: { homeId: flip.owned.id } });
+    flip.sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+    const y = yearOf(flip.sim.player, new Date(flip.sim.now).getUTCFullYear());
+    expect(y.homeGain1250).toBe(30_000_00);
+    expect(y.homeGain ?? 0).toBeGreaterThan(0);
+  }, 60_000);
+
+  it('taxes recaptured depreciation at 25% in a high bracket, with the investment income tax on it', () => {
+    const sim = save('homes-1250-rate');
+    const year = new Date(sim.now).getUTCFullYear();
+    const y = yearOf(sim.player, year);
+    y.acting = 500_000_00;
+    const before = figuresFor(sim.player, year).gainTax ?? 0;
+    y.homeGain1250 = 100_000_00;
+    // 25% (the bracket is 35%) and 3.8%.
+    expect((figuresFor(sim.player, year).gainTax ?? 0) - before).toBeCloseTo(28_800_00, -3);
+  });
+
+  it('cuts the exclusion by the share of the years owned before they first lived in it', () => {
+    // Owned six years either way, the same gain: lived in all six, or only the last three.
+    const excluded = (letFirstYears: number) => {
+      const { sim, owned } = bought('homes-nonq', 1);
+      owned.price = Math.round(owned.price / 3);
+      owned.boughtAt -= 6 * 365 * MS_DAY;
+      owned.occupied[0]!.from = owned.boughtAt + letFirstYears * 365 * MS_DAY;
+      sim.must({ kind: 'home.sell', payload: { homeId: owned.id, then: 'own' } });
+      sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+      return yearOf(sim.player, new Date(sim.now).getUTCFullYear()).homeGainExcluded ?? 0;
+    };
+    expect(excluded(3)).toBeLessThan(excluded(0) * 0.75);
+  }, 120_000);
+
+  it('lets the losses held back go in full the year a let home is sold', () => {
+    const sim = save('homes-freed');
+    const year = new Date(sim.now).getUTCFullYear();
+    const before = yearOf(sim.player, year - 1);
+    before.rentalRent = 10_000_00; before.rentalCosts = 60_000_00; before.acting = 160_000_00;
+    const y = yearOf(sim.player, year);
+    y.rentalRent = 10_000_00; y.rentalCosts = 10_000_00; y.acting = 160_000_00;
+    expect(figuresFor(sim.player, year).rental).toBe(0);
+    y.rentalDisposed = 1;
+    expect(figuresFor(sim.player, year).rental).toBe(-50_000_00);
   });
 });
