@@ -6,6 +6,7 @@
  * figures in `content/career.ts` and `content/safetynet.ts`.
  */
 import { attributesOf } from '@/engine/systems/attributes';
+import { evenCraft } from '@/engine/systems/school';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -28,7 +29,7 @@ const hoursOfDay = (sim: Simulation, n: number) => hoursOf(sim, sim.player, `spr
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
-const craft = (level: number): Craft => ({ acting: level, voice: level, speech: level, body: level, text: level, singing: level, screen: level });
+const craft = (level: number): Craft => (evenCraft(level));
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending').sort((a, b) => a.at - b.at);
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 

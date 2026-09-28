@@ -5,6 +5,7 @@
  * returns (`systems/career.ts`, `systems/health.ts`, `systems/taxreturn.ts`).
  */
 import { describe, expect, it } from 'vitest';
+import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
@@ -23,7 +24,7 @@ import { TURNS } from '@/engine/systems/enjoyment';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
-const craft = (level: number): Craft => ({ acting: level, voice: level, speech: level, body: level, text: level, singing: level, screen: level });
+const craft = (level: number): Craft => (evenCraft(level));
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending').sort((a, b) => a.at - b.at);
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
@@ -74,11 +75,11 @@ describe('commercials and voice', () => {
     expect(longest).toBeGreaterThan(0);
   });
 
-  it('book voice work as booth sessions at ten, weighed on the voice', () => {
+  it('book voice work as booth sessions at ten, weighed on voice-over and the voice', () => {
     const sim = pro('voice');
     const b = booking(sim, 'animation', 2, at(2026, 10, 5, 8));
     expect(workDays(b).map((d) => zonedParts(d.at, 'America/New_York').hour)).toEqual([10, 10]);
-    expect(levelFor({ ...craft(50), voice: 80 }, roleById('game'))).toBe(70);
+    expect(levelFor({ ...craft(50), voiceover: 80, voice: 80 }, roleById('game'))).toBe(68);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     play(sim, at(2026, 10, 6, 18));
     expect(careerOf(sim.player).days.map((d) => d.hours)).toEqual([4, 4]);

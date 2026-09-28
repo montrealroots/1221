@@ -28,7 +28,7 @@ import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
-import { admittedClass, classmatesIn, goesOn, meanCraft } from './systems/school';
+import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
@@ -327,21 +327,21 @@ defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number; managed?: bo
   },
 });
 
-defineDecider<{ sim: Simulation; roleId: string; acting: number }, string>({
+defineDecider<{ sim: Simulation; roleId: string; level: number }, string>({
   id: 'career.booking',
-  decides: 'Which auditions book, weighed on the actor’s craft against the part.',
+  decides: 'Which auditions book, weighed on the actor’s craft against the part, and the genre a part’s breakdown gives.',
   drawnIn: 'src/engine/systems/career.ts',
   reads: {
     // The part: its bar.
     role: (o, t) => ({ ...o, roleId: ROLES[Math.min(ROLES.length - 1, Math.floor(t * ROLES.length))]!.id }),
     // The actor's craft.
-    craft: (o, t) => ({ ...o, acting: 40 + t * 60 }),
+    craft: (o, t) => ({ ...o, level: 40 + t * 60 }),
     world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
   },
-  sample: (seed) => ({ sim: atYale(seed), roleId: ROLES[seed % ROLES.length]!.id, acting: 50 + (seed % 40) }),
-  decide: ({ sim, roleId, acting }) => {
+  sample: (seed) => ({ sim: atYale(seed), roleId: ROLES[seed % ROLES.length]!.id, level: 50 + (seed % 40) }),
+  decide: ({ sim, roleId, level }) => {
     const person = sim.player;
-    person.craft = { ...person.craft!, acting, screen: acting, voice: acting, text: acting };
+    person.craft = evenCraft(level);
     return Array.from({ length: 300 }, (_, n) => books(sim, person, { id: `d${n}`, roleId, at: 0, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' }, 1) ? '1' : '0').join('');
   },
 });

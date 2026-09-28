@@ -36,7 +36,7 @@ describe('one student, one calendar', () => {
   it('never calls a student to two places at once, Yale Rep and their own production, second year or third', () => {
     for (const term of [2, 4]) {
       const sim = life(`both-${term}`);
-      sim.player.craft!.acting = 95;
+      Object.assign(sim.player.craft!, { scene: 95, character: 95, emotion: 95 });
       sim.schedule({ at: sim.now + 60_000, kind: 'school.term', label: 'A Term Begins', category: 'school', priority: 30, payload: { personId: sim.player.id, term } });
       sim.advanceTo(sim.now + 2 * 60_000);
       const calls = pending(sim, CALL_KIND).sort((a, b) => a.at - b.at);
@@ -478,7 +478,7 @@ describe('casting', () => {
 
   it('casts a first-year’s spring in the Carlotta Festival: rehearsals Tuesday to Friday from mid-April, four performances in early May', () => {
     const sim = life('project');
-    sim.player.school!.classmates[0]!.craft.acting = 99;
+    sim.player.school!.classmates[0]!.craft.scene = 99;
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const mine = pending(sim, CALL_KIND).filter((c) => c.payload.which !== 'rep');
     const shows = mine.filter((c) => c.payload.call === 'performance');
@@ -516,7 +516,7 @@ describe('casting', () => {
 
   it('takes an actor out of the pool after missed rehearsal calls, and a missed performance is a grave breach', () => {
     const sim = life('breach');
-    sim.player.school!.classmates[0]!.craft.acting = 99;
+    sim.player.school!.classmates[0]!.craft.scene = 99;
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const rehearsals = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'rehearsal');
     sim.player.currentLocationId = 'us-ny-newyork';
@@ -535,7 +535,7 @@ describe('casting', () => {
 
   it('covers a performance and a rehearsal missed in hospital, with no breach and no call counted', () => {
     const sim = life('ward-show');
-    sim.player.school!.classmates[0]!.craft.acting = 99;
+    sim.player.school!.classmates[0]!.craft.scene = 99;
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const rehearsal = pending(sim, CALL_KIND).find((c) => c.payload.call === 'rehearsal')!;
     const calls = sim.player.school!.tally.calls;
@@ -562,10 +562,10 @@ describe('casting', () => {
     expect(found.length).toBeGreaterThanOrEqual(2);
     const { sim, night } = found[0]!;
     sim.advanceTo(night.at - 60_000);
-    const acting = sim.player.craft!.acting;
+    const acting = sim.player.craft!.scene;
     sim.advanceTo(night.at + 60_000);
     expect(sim.player.school!.rep!.performed).toBe(1);
-    expect(sim.player.craft!.acting).toBeGreaterThan(acting);
+    expect(sim.player.craft!.scene).toBeGreaterThan(acting);
     expect(titled(sim, `You Went On As ${sim.player.school!.rep!.role}`)).toHaveLength(1);
     // On the résumé, once the term's casting is done with: the next term's.
     const role = sim.player.school!.rep!.role;
@@ -589,7 +589,7 @@ describe('casting', () => {
     expect((never.player.school!.credits ?? []).filter((c) => c.kind === 'understudy')).toEqual([]);
     // A project played once, then a grave breach at the next show while on warning: out, with the credit kept.
     const sim = life('project');
-    sim.player.school!.classmates[0]!.craft.acting = 99;
+    sim.player.school!.classmates[0]!.craft.scene = 99;
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const shows = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'performance' && c.payload.which !== 'rep');
     play(sim, shows[0]!.at + 60_000);
@@ -652,11 +652,11 @@ describe('evaluation', () => {
   it('counts a student who grew under half the class’s median as short, and a good term restores standing and the pool', () => {
     const sim = life('stall');
     const p = sim.player;
-    p.school!.classmates.forEach((m) => { m.craft.acting += 7; });
+    p.school!.classmates.forEach((m) => { m.craft.scene += 7; });
     expect(evaluate(sim, p, 0)!.standing).toBe('concern');
     p.school!.castable = false;
-    p.craft!.acting += 7;
-    p.school!.classmates.forEach((m) => { m.craft.acting += 7; });
+    p.craft!.scene += 14;
+    p.school!.classmates.forEach((m) => { m.craft.scene += 7; });
     expect(evaluate(sim, p, 1)!.standing).toBe('good');
     expect(p.school!.castable).toBe(true);
   });
@@ -709,7 +709,10 @@ describe('the Yale Cabaret', () => {
     const last = calls.at(-1)!.at;
     for (const one of [sim, control]) play(one, last + 60_000);
     expect(sim.player.school!.cabaret!.performed).toBeGreaterThan(0);
-    expect(sim.player.craft!.acting).toBeGreaterThan(control.player.craft!.acting);
+    expect(sim.player.craft!.scene).toBeGreaterThan(control.player.craft!.scene);
+    // In front of a house, the feeling is worked too; in rehearsal, the lines.
+    expect(sim.player.craft!.emotion).toBeGreaterThan(control.player.craft!.emotion);
+    expect(sim.player.craft!.memorization).toBeGreaterThan(control.player.craft!.memorization);
     expect(sim.player.school!.credits).toEqual([{ production: cabaretSeason(0), role: 'In The Company', kind: 'cabaret', year: 2026, wentOn: sim.player.school!.cabaret!.performed }]);
   }, 120_000);
 
@@ -719,7 +722,7 @@ describe('the Yale Cabaret', () => {
     warned.player.school!.standing = 'warning';
     expect(warned.execute({ kind: 'school.cabaret', payload: {} })).toMatchObject({ ok: false, error: 'Nobody on academic warning may take part in the Cabaret.' });
     const cast = life('cabaret-cast');
-    cast.player.school!.classmates[0]!.craft.acting = 99;
+    cast.player.school!.classmates[0]!.craft.scene = 99;
     cast.advanceTo(at(2027, 1, 4, 9) + 60_000);
     // A first-year understudying at Yale Rep this spring: afternoon calls leave the evenings free.
     const casting = pending(cast, CALL_KIND).map((c) => [c.at, c.at + (c.durationMinutes ?? 0) * 60_000] as const);
@@ -983,6 +986,8 @@ describe('the curriculum’s labs', () => {
     play(control, labs.at(-1)!.at + 60_000);
     expect(sim.player.school!.tally.calls - sim.player.school!.tally.answered).toBe(0);
     expect(control.player.school!.tally.calls - control.player.school!.tally.answered).toBe(14);
-    expect(sim.player.craft!.text).toBeGreaterThan(control.player.craft!.text);
+    expect(sim.player.craft!.script).toBeGreaterThan(control.player.craft!.script);
+    expect(sim.player.craft!.memorization).toBeGreaterThan(control.player.craft!.memorization);
+    expect(sim.player.craft!.character).toBeGreaterThan(control.player.craft!.character);
   }, 180_000);
 });

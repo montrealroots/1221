@@ -21,7 +21,7 @@ import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -127,6 +127,7 @@ function StandingPane() {
   const evaluation = ahead(sim, person, [EVALUATION_KIND])[0];
   const skills: { id?: Skill; label: string; mine: number; theirs: number[] }[] = [
     ...SKILLS.map((s) => ({ id: s.id, label: s.label, mine: craft[s.id], theirs: school.classmates.map((m) => m.craft[s.id]) })),
+    { label: 'Acting', mine: actingOf(craft), theirs: school.classmates.map((m) => actingOf(m.craft)) },
     { label: 'Overall', mine: meanCraft(craft), theirs: school.classmates.map((m) => meanCraft(m.craft)) },
   ];
 
@@ -162,7 +163,7 @@ function StandingPane() {
           <div className="table-scroll">
             <table>
               <thead>
-                <tr><th scope="col">Area</th><th scope="col" className="num">You</th><th scope="col" className="num">Class Best</th><th scope="col" className="num">Class Median</th><th scope="col" className="num">Your Place</th></tr>
+                <tr><th scope="col">Skill</th><th scope="col" className="num">You</th><th scope="col" className="num">Class Best</th><th scope="col" className="num">Class Median</th><th scope="col" className="num">Your Place</th></tr>
               </thead>
               <tbody>
                 {skills.map((row) => (
@@ -178,7 +179,7 @@ function StandingPane() {
             </table>
           </div>
           <p className="xs dim" style={{ margin: 0 }}>
-            The faculty wanted you most from this year’s auditions, and you began ahead of every classmate in every area. Classes, rehearsals and performances grow craft, more when you come rested and less the better you already are; your classmates grow too. The scale and the rates are SLATE’s.
+            The faculty wanted you most from this year’s auditions, and you began ahead of every classmate in every skill. Classes, rehearsals and performances grow craft, more when you come rested and less the better you already are; your classmates grow too. The scale and the rates are SLATE’s.
           </p>
         </div>
       </Panel>
@@ -278,7 +279,7 @@ function ClassesPane() {
                   <td className="mono">{c.code}</td>
                   <td>{c.name}</td>
                   <td>{c.teachers}</td>
-                  <td>{skillLabel(c.skill)}</td>
+                  <td>{c.skills.map(skillLabel).join(', ')}</td>
                   <td className="num mono">{c.perWeek}</td>
                   <td>{c.terms.length === 2 ? 'Fall And Spring' : c.terms[0] === 'fall' ? 'Fall' : 'Spring'}</td>
                 </tr>

@@ -95,26 +95,64 @@ export const ORIENTATION_2026: { begins: SchoolDate; ends: SchoolDate; classesBe
 };
 
 /**
- * What an actor's craft is measured in: the areas the three years teach.
- * The scale, 0 to 100, is SLATE's; no school publishes one.
+ * What an actor's craft is measured in, in alphabetical order: the areas the
+ * conservatories train (Yale's Bulletin, Juilliard's and RADA's course pages)
+ * and the ones the business reads at an audition and on the job (cold
+ * reading, audition technique, memorization, voice-over). Until 2026-09-27
+ * there were seven, and acting was one number. The scale, 0 to 100, is
+ * SLATE's; no school publishes one.
  */
-export type Skill = 'acting' | 'voice' | 'speech' | 'body' | 'text' | 'singing' | 'screen';
+export type Skill =
+  | 'accents' | 'audition' | 'character' | 'classical' | 'clown' | 'coldReading' | 'comedy'
+  | 'dance' | 'emotion' | 'improv' | 'intimacy' | 'memorization' | 'movement' | 'screen'
+  | 'scene' | 'script' | 'singing' | 'speech' | 'combat' | 'voice' | 'voiceover';
 
 export const SKILLS: readonly { id: Skill; label: string }[] = [
-  { id: 'acting', label: 'Acting' },
-  { id: 'voice', label: 'Voice' },
-  { id: 'speech', label: 'Speech And Accents' },
-  { id: 'body', label: 'Body And Movement' },
-  { id: 'text', label: 'Text' },
-  { id: 'singing', label: 'Singing' },
+  { id: 'accents', label: 'Accents And Dialects' },
+  { id: 'audition', label: 'Audition Technique' },
+  { id: 'character', label: 'Character Work' },
+  { id: 'classical', label: 'Classical Text' },
+  { id: 'clown', label: 'Clown And Mask' },
+  { id: 'coldReading', label: 'Cold Reading' },
+  { id: 'comedy', label: 'Comedy' },
+  { id: 'dance', label: 'Dance' },
+  { id: 'emotion', label: 'Emotional Access' },
+  { id: 'improv', label: 'Improvisation' },
+  { id: 'intimacy', label: 'Intimacy' },
+  { id: 'memorization', label: 'Memorization' },
+  { id: 'movement', label: 'Movement' },
   { id: 'screen', label: 'On Camera' },
+  { id: 'scene', label: 'Scene Study' },
+  { id: 'script', label: 'Script Analysis' },
+  { id: 'singing', label: 'Singing' },
+  { id: 'speech', label: 'Speech' },
+  { id: 'combat', label: 'Stage Combat' },
+  { id: 'voice', label: 'Voice' },
+  { id: 'voiceover', label: 'Voice-Over' },
 ];
+
+/**
+ * A save from before the 21 skills: each new one from the old area it grew
+ * out of. Acting was scene study, character, emotional access, improvisation,
+ * comedy, clown, the audition, cold reading and memorization at once; body,
+ * movement, dance, combat and intimacy; text, script analysis and the
+ * classics; speech and accents, both; voice-over, the voice.
+ */
+export const SKILL_FROM: Readonly<Record<Skill, string>> = {
+  accents: 'speech', audition: 'acting', character: 'acting', classical: 'text', clown: 'acting', coldReading: 'acting',
+  comedy: 'acting', dance: 'body', emotion: 'acting', improv: 'acting', intimacy: 'body', memorization: 'acting',
+  movement: 'body', screen: 'screen', scene: 'acting', script: 'text', singing: 'singing', speech: 'speech',
+  combat: 'body', voice: 'voice', voiceover: 'voice',
+};
 
 export type Term = 'fall' | 'spring';
 
 /**
  * A required course: the Bulletin's code, title and teachers for 2026–2027,
- * the year and terms it runs, and the skill it trains. How often it meets
+ * the year and terms it runs, and the skills it trains, which are SLATE's
+ * reading of the course's title and description: an acting class trains the
+ * scene, the character and the feeling at once. Until 2026-09-27 each course
+ * trained one of seven areas. How often it meets
  * isn't published: `perWeek` is SLATE's estimate, fifteen meetings a week in
  * all, three a day from nine, which is the five hours a day of class the
  * school's acting students describe.
@@ -125,51 +163,51 @@ export interface Course {
   teachers: string;
   year: 1 | 2 | 3;
   terms: readonly Term[];
-  skill: Skill;
+  skills: readonly Skill[];
   perWeek: number;
 }
 
 const both: readonly Term[] = ['fall', 'spring'];
-const c = (code: string, name: string, teachers: string, year: 1 | 2 | 3, terms: readonly Term[], skill: Skill, perWeek: number): Course => ({ code, name, teachers, year, terms, skill, perWeek });
+const c = (code: string, name: string, teachers: string, year: 1 | 2 | 3, terms: readonly Term[], skills: readonly Skill[], perWeek: number): Course => ({ code, name, teachers, year, terms, skills, perWeek });
 
 export const COURSES: readonly Course[] = [
-  c('DRAM 103a/b', 'Acting I', 'Gregory Wallace', 1, both, 'acting', 3),
-  c('DRAM 113a/b', 'Voice I', 'Walton Wilson', 1, both, 'voice', 2),
-  c('DRAM 123a/b', 'Speech And Accents I', 'Julie Foh', 1, both, 'speech', 2),
-  c('DRAM 133a/b', 'The Body As Source I', 'Erica Fae', 1, both, 'body', 2),
-  c('DRAM 143a/b', 'Alexander Technique I', 'Fabio Tavares', 1, both, 'body', 2),
-  c('DRAM 153a', 'Play', 'Justine Williams', 1, ['fall'], 'acting', 1),
-  c('DRAM 163b', 'Text Analysis I: The Actor’s Table Work', 'Tamilla Woodard', 1, ['spring'], 'text', 1),
-  c('DRAM 403a/b', 'Acting Intimacy And Combat For The Stage', 'Kelsey Rainwater, Michael Rossmy', 1, both, 'body', 1),
-  c('DRAM 873a/b', 'Text And Context Across The Repertory', 'Paul Walsh', 1, both, 'text', 2),
+  c('DRAM 103a/b', 'Acting I', 'Gregory Wallace', 1, both, ['scene', 'character', 'emotion'], 3),
+  c('DRAM 113a/b', 'Voice I', 'Walton Wilson', 1, both, ['voice'], 2),
+  c('DRAM 123a/b', 'Speech And Accents I', 'Julie Foh', 1, both, ['speech', 'accents'], 2),
+  c('DRAM 133a/b', 'The Body As Source I', 'Erica Fae', 1, both, ['movement'], 2),
+  c('DRAM 143a/b', 'Alexander Technique I', 'Fabio Tavares', 1, both, ['movement'], 2),
+  c('DRAM 153a', 'Play', 'Justine Williams', 1, ['fall'], ['improv', 'emotion'], 1),
+  c('DRAM 163b', 'Text Analysis I: The Actor’s Table Work', 'Tamilla Woodard', 1, ['spring'], ['script'], 1),
+  c('DRAM 403a/b', 'Acting Intimacy And Combat For The Stage', 'Kelsey Rainwater, Michael Rossmy', 1, both, ['intimacy', 'combat'], 1),
+  c('DRAM 873a/b', 'Text And Context Across The Repertory', 'Paul Walsh', 1, both, ['script'], 2),
 
-  c('DRAM 163a', 'Text Analysis II', 'James Bundy', 2, ['fall'], 'text', 1),
-  c('DRAM 203a/b', 'Acting II: Plays Of Extended And Heightened Language', 'Mary Lou Rosato', 2, both, 'acting', 3),
-  c('DRAM 213a/b', 'Voice II', 'Walton Wilson, Grace Zandarski', 2, both, 'voice', 2),
-  c('DRAM 223a/b', 'Speech And Accents II', 'Amanda Quaid', 2, both, 'speech', 2),
-  c('DRAM 233a/b', 'The Body As Source II', 'Erica Fae', 2, both, 'body', 1),
-  c('DRAM 243a/b', 'Alexander Technique II Tutorials', 'Bill Connington', 2, both, 'body', 1),
-  c('DRAM 263a/b', 'Clown', 'Annelise Lawson, Chris Bayes', 2, both, 'acting', 1),
-  c('DRAM 273a', 'Movement Invention II', 'Andrea Miller', 2, ['fall'], 'body', 1),
-  c('DRAM 293b', 'The Greeks', 'Evan Yionoulis', 2, ['spring'], 'text', 3),
-  c('DRAM 353a', 'Play With Text', 'Justine Williams', 2, ['fall'], 'text', 1),
-  c('DRAM 405a/b', 'Advanced Principles Of Acting Stage Combat', 'Kelsey Rainwater, Michael Rossmy', 2, both, 'body', 1),
-  c('DRAM 413a/b', 'Singing II And Tutorials', 'Glenn Seven Allen', 2, both, 'singing', 1),
+  c('DRAM 163a', 'Text Analysis II', 'James Bundy', 2, ['fall'], ['script'], 1),
+  c('DRAM 203a/b', 'Acting II: Plays Of Extended And Heightened Language', 'Mary Lou Rosato', 2, both, ['classical', 'scene', 'character', 'emotion'], 3),
+  c('DRAM 213a/b', 'Voice II', 'Walton Wilson, Grace Zandarski', 2, both, ['voice'], 2),
+  c('DRAM 223a/b', 'Speech And Accents II', 'Amanda Quaid', 2, both, ['accents', 'speech'], 2),
+  c('DRAM 233a/b', 'The Body As Source II', 'Erica Fae', 2, both, ['movement'], 1),
+  c('DRAM 243a/b', 'Alexander Technique II Tutorials', 'Bill Connington', 2, both, ['movement'], 1),
+  c('DRAM 263a/b', 'Clown', 'Annelise Lawson, Chris Bayes', 2, both, ['comedy', 'clown', 'improv', 'emotion'], 1),
+  c('DRAM 273a', 'Movement Invention II', 'Andrea Miller', 2, ['fall'], ['dance', 'movement'], 1),
+  c('DRAM 293b', 'The Greeks', 'Evan Yionoulis', 2, ['spring'], ['classical', 'voice'], 3),
+  c('DRAM 353a', 'Play With Text', 'Justine Williams', 2, ['fall'], ['emotion', 'script'], 1),
+  c('DRAM 405a/b', 'Advanced Principles Of Acting Stage Combat', 'Kelsey Rainwater, Michael Rossmy', 2, both, ['combat'], 1),
+  c('DRAM 413a/b', 'Singing II And Tutorials', 'Glenn Seven Allen', 2, both, ['singing'], 1),
 
-  c('DRAM 190a', 'Shakespeare Practicum', 'Karin Coonrod', 3, ['fall'], 'text', 2),
-  c('DRAM 253a', 'Commedia', 'Annelise Lawson', 3, ['fall'], 'acting', 2),
-  c('DRAM 303a', 'Acting III', 'Ron Van Lieu, Tamilla Woodard, Evan Yionoulis', 3, ['fall'], 'acting', 2),
-  c('DRAM 313a/b', 'Voice III', 'Walton Wilson, Grace Zandarski', 3, both, 'voice', 2),
-  c('DRAM 323a/b', 'Speech And Accents III', 'Julie Foh, Amanda Quaid', 3, both, 'speech', 2),
-  c('DRAM 343a/b', 'Alexander Technique III Tutorials', 'Eleanor Taylor', 3, both, 'body', 1),
-  c('DRAM 363a', 'You Are The Creator', 'Joan MacIntosh', 3, ['fall'], 'acting', 1),
-  c('DRAM 373a', 'Movement Invention III', 'Andrea Miller', 3, ['fall'], 'body', 1),
-  c('DRAM 423a/b', 'Acting Through Song', 'Lonny Price', 3, both, 'singing', 1),
-  c('DRAM 463a/b', 'On-Camera Acting Technique', 'Ellen Novack', 3, both, 'screen', 1),
-  c('DRAM 273b', 'Character Analysis And Movement', 'Acting faculty', 3, ['spring'], 'body', 2),
-  c('DRAM 473b', 'Taming The Cyclops', 'Ellen Novack', 3, ['spring'], 'screen', 1),
-  c('DRAM 743b', 'Professional Preparation And Audition Workshop', 'Tamilla Woodard', 3, ['spring'], 'screen', 2),
-  c('DRAM 793b', 'Actor Showcase', 'Gregory Wallace, Tamilla Woodard', 3, ['spring'], 'acting', 3),
+  c('DRAM 190a', 'Shakespeare Practicum', 'Karin Coonrod', 3, ['fall'], ['classical', 'voice'], 2),
+  c('DRAM 253a', 'Commedia', 'Annelise Lawson', 3, ['fall'], ['clown', 'comedy', 'movement', 'character'], 2),
+  c('DRAM 303a', 'Acting III', 'Ron Van Lieu, Tamilla Woodard, Evan Yionoulis', 3, ['fall'], ['scene', 'character', 'emotion'], 2),
+  c('DRAM 313a/b', 'Voice III', 'Walton Wilson, Grace Zandarski', 3, both, ['voice'], 2),
+  c('DRAM 323a/b', 'Speech And Accents III', 'Julie Foh, Amanda Quaid', 3, both, ['speech', 'accents'], 2),
+  c('DRAM 343a/b', 'Alexander Technique III Tutorials', 'Eleanor Taylor', 3, both, ['movement'], 1),
+  c('DRAM 363a', 'You Are The Creator', 'Joan MacIntosh', 3, ['fall'], ['character', 'improv'], 1),
+  c('DRAM 373a', 'Movement Invention III', 'Andrea Miller', 3, ['fall'], ['dance', 'movement'], 1),
+  c('DRAM 423a/b', 'Acting Through Song', 'Lonny Price', 3, both, ['singing', 'emotion'], 1),
+  c('DRAM 463a/b', 'On-Camera Acting Technique', 'Ellen Novack', 3, both, ['screen', 'scene'], 1),
+  c('DRAM 273b', 'Character Analysis And Movement', 'Acting faculty', 3, ['spring'], ['character', 'movement'], 2),
+  c('DRAM 473b', 'Taming The Cyclops', 'Ellen Novack', 3, ['spring'], ['screen'], 1),
+  c('DRAM 743b', 'Professional Preparation And Audition Workshop', 'Tamilla Woodard', 3, ['spring'], ['audition', 'coldReading'], 2),
+  c('DRAM 793b', 'Actor Showcase', 'Gregory Wallace, Tamilla Woodard', 3, ['spring'], ['scene', 'audition'], 3),
 ];
 
 /**

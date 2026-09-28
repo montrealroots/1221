@@ -60,7 +60,7 @@ import { formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
-  CLASSES_2026_27, COST_2026_27, COURSES, LABS, ORIENTATION_2026, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
+  CLASSES_2026_27, COST_2026_27, COURSES, LABS, ORIENTATION_2026, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SKILL_FROM, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
@@ -173,8 +173,13 @@ export const ESTIMATE = {
   growthFloor: 0.5,
   /** Missed rehearsal calls in a term that take an actor out of the casting pool. */
   missedCallsOut: 2,
-  /** The acting craft at which a director asks for a third-year in a Yale Rep role. */
-  castAtRep: 80,
+  /**
+   * The acting (`actingOf`) at which a director asks for a third-year in a
+   * Yale Rep role. It was 80 until 2026-09-27, on the one number acting was
+   * then, which ran about three points above the three skills it became by
+   * the third year; 77 keeps the class's best actor as far above it.
+   */
+  castAtRep: 77,
   /** Below this condition a body is unwell enough to call in sick. */
   sickBelow: 55,
 } as const;
@@ -343,7 +348,29 @@ export function daysOffIn(term: number): number {
 // Craft
 // ---------------------------------------------------------------------------
 
+/** A craft at one level in every skill. */
+export const evenCraft = (level: number): Craft => Object.fromEntries(SKILL_IDS.map((id) => [id, level])) as Craft;
+
 export const meanCraft = (craft: Craft) => SKILL_IDS.reduce((sum, id) => sum + craft[id], 0) / SKILL_IDS.length;
+
+/**
+ * The acting at the heart of it: scene study twice, the character and the
+ * feeling once each. What one number called acting stood for until
+ * 2026-09-27, read by the showcase and a Yale Rep role.
+ */
+export const actingOf = (craft: Craft) => (craft.scene * 2 + craft.character + craft.emotion) / 4;
+
+/**
+ * A save's craft from before the 21 skills (`SKILL_FROM`), each new skill
+ * at the old area it grew out of; a craft already in them is left alone.
+ */
+export function upgradeCraft(craft: Craft): boolean {
+  const old = craft as unknown as Record<string, number | undefined>;
+  if (typeof old.acting !== 'number') return false;
+  for (const id of SKILL_IDS) old[id] = old[id] ?? old[SKILL_FROM[id]] ?? 40;
+  for (const gone of ['acting', 'body', 'text']) delete old[gone];
+  return true;
+}
 
 /** What a session adds to a skill: more when ready, less the better it already is. */
 export function sessionGain(level: number, focus: number, weight = 1): number {
@@ -355,7 +382,7 @@ export function focusOf(person: Person): number {
   return Math.min(1.2, Math.max(0.3, readiness(person) / 80));
 }
 
-function grow(craft: Craft, skill: Skill, focus: number, weight = 1): void {
+export function grow(craft: Craft, skill: Skill, focus: number, weight = 1): void {
   craft[skill] = Math.min(100, craft[skill] + sessionGain(craft[skill], focus, weight));
 }
 
@@ -366,7 +393,7 @@ const FAMILY = ['Okafor', 'Reyes', 'Chen', 'Patel', 'Brooks', 'Kowalski', 'Nguye
 /**
  * The admitted class: fifteen classmates with their craft from the
  * auditions, drawn for the save (`school.class`); and the player's, above
- * every classmate's in every area, as the faculty's first choice. The spread,
+ * every classmate's in every skill, as the faculty's first choice. The spread,
  * 38 to 58 with most near 48, and the lead of six are SLATE's estimate.
  */
 export function admittedClass(sim: Simulation, person: Person): { classmates: { name: string; craft: Craft }[]; player: Craft } {
@@ -430,12 +457,13 @@ export function yearOfStudy(person: Person): number {
   return Math.max(1, Math.ceil(begun / 2));
 }
 
-/** Where a student stands among the class in a skill, or overall: 1 is first. */
-export function rankIn(person: Person, skill?: Skill): number {
+/** Where a student stands among the class in a skill, in acting (`actingOf`), or overall: 1 is first. */
+export function rankIn(person: Person, skill?: Skill | 'acting'): number {
   const school = person.school;
   if (!school || !person.craft) return 1;
-  const mine = skill ? person.craft[skill] : meanCraft(person.craft);
-  return 1 + school.classmates.filter((m) => (skill ? m.craft[skill] : meanCraft(m.craft)) > mine).length;
+  const read = (c: Craft) => (skill === 'acting' ? actingOf(c) : skill ? c[skill] : meanCraft(c));
+  const mine = read(person.craft);
+  return 1 + school.classmates.filter((m) => read(m.craft) > mine).length;
 }
 
 function freshTally(person: Person, school: SchoolRecord): TermTally {
@@ -847,7 +875,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   }
   if (repTerm(term) && school.standing === 'good') {
     const rep = repProduction(term);
-    const inRole = yearOfTerm(term) === 3 && person.craft!.acting >= ESTIMATE.castAtRep;
+    const inRole = yearOfTerm(term) === 3 && actingOf(person.craft!) >= ESTIMATE.castAtRep;
     const role = term === 1 ? (person.performerTitle === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : inRole ? 'A Part In The Company' : 'An Understudy In The Company';
     school.rep = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0 };
     // Rehearsals: an understudy's Wednesday and Friday, three to six; a company member's Tuesday to Saturday, three to nine (SLATE's estimate).
@@ -977,12 +1005,12 @@ export function registerSchool(sim: Simulation): void {
     // The classmates, in class most days.
     const inClass = classmatesIn(s, person, keyOf(day));
     school.classmates.forEach((mate, i) => {
-      if (inClass[i]) for (const course of courses) grow(mate.craft, course.skill, ESTIMATE.classmateFocus);
+      if (inClass[i]) for (const course of courses) for (const skill of course.skills) grow(mate.craft, skill, ESTIMATE.classmateFocus);
     });
     if (present(person, item.at)) {
       school.tally.attended += 1;
       const focus = focusOf(person);
-      for (const course of courses) grow(person.craft, course.skill, focus);
+      for (const course of courses) for (const skill of course.skills) grow(person.craft, skill, focus);
       tire(person, ESTIMATE.energy.classes);
       return;
     }
@@ -1049,7 +1077,7 @@ export function registerSchool(sim: Simulation): void {
         school.tally.answered += 1;
         casting.performed += 1;
         // Sent on: nerves, and a night the Rep's company remembers (`attributes.ts`).
-        grow(person.craft, 'acting', focusOf(person) * nerves(s, person, 'performance'), 6);
+        grow(person.craft, 'scene', focusOf(person) * nerves(s, person, 'performance'), 6);
         earn(s, person, ATTRIBUTES.reputation.repPerformance);
         tire(person, ESTIMATE.energy.performance);
         if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
@@ -1066,12 +1094,15 @@ export function registerSchool(sim: Simulation): void {
         // Nerves before a house, and at the Rep a night the company remembers (`attributes.ts`).
         const kept = nerves(s, person, 'performance');
         if (item.payload.which === 'rep') earn(s, person, ATTRIBUTES.reputation.repPerformance);
-        grow(person.craft, 'acting', focusOf(person) * kept, 4);
+        grow(person.craft, 'scene', focusOf(person) * kept, 4);
+        grow(person.craft, 'emotion', focusOf(person) * kept, 2);
         grow(person.craft, 'voice', focusOf(person) * kept, 2);
         tire(person, ESTIMATE.energy.performance);
       } else {
-        grow(person.craft, 'acting', focusOf(person), 1.5);
-        grow(person.craft, 'text', focusOf(person));
+        grow(person.craft, 'scene', focusOf(person), 1.5);
+        grow(person.craft, 'character', focusOf(person), 1.5);
+        grow(person.craft, 'script', focusOf(person));
+        grow(person.craft, 'memorization', focusOf(person));
         tire(person, ESTIMATE.energy.rehearsal);
         enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
       }
@@ -1125,13 +1156,16 @@ export function registerSchool(sim: Simulation): void {
     if (item.payload.call === 'performance') {
       school.cabaret.performed += 1;
       const kept = nerves(sim, person, 'performance');
-      grow(person.craft, 'acting', focusOf(person) * kept, 4);
+      grow(person.craft, 'scene', focusOf(person) * kept, 4);
+      grow(person.craft, 'emotion', focusOf(person) * kept, 2);
       grow(person.craft, 'voice', focusOf(person) * kept, 2);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
     } else {
-      grow(person.craft, 'acting', focusOf(person), 1.5);
-      grow(person.craft, 'text', focusOf(person));
+      grow(person.craft, 'scene', focusOf(person), 1.5);
+      grow(person.craft, 'character', focusOf(person), 1.5);
+      grow(person.craft, 'script', focusOf(person));
+      grow(person.craft, 'memorization', focusOf(person));
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }
@@ -1194,14 +1228,17 @@ export function registerSchool(sim: Simulation): void {
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
       const kept = nerves(s, person, 'performance');
-      grow(person.craft, 'acting', focusOf(person) * kept, 4);
+      grow(person.craft, 'scene', focusOf(person) * kept, 4);
+      grow(person.craft, 'emotion', focusOf(person) * kept, 2);
       grow(person.craft, 'voice', focusOf(person) * kept, 2);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `Yale Summer Cabaret ${summer.year}, Show ${run + 1}`, role: 'In The Company', kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
-      grow(person.craft, 'acting', focusOf(person), 1.5);
-      grow(person.craft, 'text', focusOf(person));
+      grow(person.craft, 'scene', focusOf(person), 1.5);
+      grow(person.craft, 'character', focusOf(person), 1.5);
+      grow(person.craft, 'script', focusOf(person));
+      grow(person.craft, 'memorization', focusOf(person));
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }
@@ -1218,13 +1255,15 @@ export function registerSchool(sim: Simulation): void {
     if (!present(person, item.at)) { item.status = 'missed'; return; }
     school.tally.answered += 1;
     if (item.payload.showing === true) {
-      grow(person.craft, 'acting', focusOf(person) * nerves(sim, person, 'performance'), 3);
+      grow(person.craft, 'scene', focusOf(person) * nerves(sim, person, 'performance'), 3);
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { medium: 'stage', away: false });
       return;
     }
-    grow(person.craft, 'acting', focusOf(person));
-    grow(person.craft, 'text', focusOf(person));
+    grow(person.craft, 'scene', focusOf(person));
+    grow(person.craft, 'character', focusOf(person));
+    grow(person.craft, 'script', focusOf(person));
+    grow(person.craft, 'memorization', focusOf(person));
     tire(person, ESTIMATE.energy.rehearsal);
     enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
   });

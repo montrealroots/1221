@@ -46,6 +46,7 @@ import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { agencyById, registerCareer } from './systems/career';
 import { attributesOf } from './systems/attributes';
+import { upgradeCraft } from './systems/school';
 import { registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
 import { registerTaxReturn } from './systems/taxreturn';
@@ -209,6 +210,12 @@ export function loadSave(universe: SaveUniverse): Simulation {
   registerAllSystems(sim);
   // A save from before the attributes draws them on opening, the same draw a new life makes.
   if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
+  // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.
+  for (const person of Object.values(universe.people)) {
+    if (person.craft) upgradeCraft(person.craft);
+    for (const mate of person.school?.classmates ?? []) upgradeCraft(mate.craft);
+    if (person.school?.tally) upgradeCraft(person.school.tally.craftAtStart);
+  }
   const zone = sim.homeZone;
 
   // Every build has armed the rollover for the start of a day, and until the

@@ -14,7 +14,7 @@ import {
   acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
-import { repProduction, termAccount } from '@/engine/systems/school';
+import { actingOf, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
 import { ATTRIBUTES, attributesOf } from '@/engine/systems/attributes';
 import { rehome } from '@/engine/systems/household';
 import { healthOf } from '@/engine/systems/health';
@@ -30,7 +30,7 @@ const at = (year: number, month: number, day: number, hour = 9, zone = NY) => in
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending').sort((a, b) => a.at - b.at);
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
-const craft = (level: number): Craft => ({ acting: level, voice: level, speech: level, body: level, text: level, singing: level, screen: level });
+const craft = (level: number): Craft => (evenCraft(level));
 
 /** An actor in New York, out of school, with the business begun. */
 function pro(seed: string, level = 75): Simulation {
@@ -82,10 +82,10 @@ describe('the showcase', () => {
     expect(pending(sim, CAREER_WEEK_KIND)).toHaveLength(1);
   }, 120_000);
 
-  it('reads acting as much as the rest together, and takes up to a fifth off for tiredness', () => {
-    const c = { ...craft(60), acting: 90 };
+  it('reads acting as much as the rest a scene shows together, and takes up to a fifth off for tiredness', () => {
+    const c = { ...craft(60), scene: 90, character: 90, emotion: 90 };
     // Presence is a fifth of it, beside the craft; a classmate's is read at 50.
-    expect(showcaseScore(c, 1)).toBeCloseTo(0.8 * (0.5 * 90 + 0.5 * ((90 + 60 * 6) / 7)) + 0.2 * 50, 10);
+    expect(showcaseScore(c, 1)).toBeCloseTo(0.8 * (0.5 * 90 + 0.5 * ((90 * 3 + 60 * 5) / 8)) + 0.2 * 50, 10);
     expect(showcaseScore(c, 1, 80) - showcaseScore(c, 1, 50)).toBeCloseTo(0.2 * 30, 10);
     expect(showcaseScore(c, 0)).toBeCloseTo(0.8 * showcaseScore(c, 1), 10);
     expect(showcaseScore(c, 1.2)).toBe(showcaseScore(c, 1));
@@ -825,13 +825,13 @@ describe('the school’s later years', () => {
     play(sim, at(2028, 8, 28, 10));
     const school = sim.player.school!;
     expect(school.rep?.production).toBe('Yale Rep’s October Production');
-    expect(school.rep?.kind).toBe(sim.player.craft!.acting >= 80 ? 'role' : 'understudy');
+    expect(school.rep?.kind).toBe(actingOf(sim.player.craft!) >= 77 ? 'role' : 'understudy');
   }, 120_000);
 
   it('don’t ask a second-year into a role, however strong', () => {
     const sim = createSave(1, 'rep2', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
     play(sim, at(2027, 8, 22, 12));
-    sim.player.craft!.acting = 95;
+    Object.assign(sim.player.craft!, { scene: 95, character: 95, emotion: 95 });
     play(sim, at(2027, 8, 23, 12));
     expect(sim.player.school!.rep).toMatchObject({ production: 'Yale Rep’s October Production', kind: 'understudy' });
   }, 120_000);

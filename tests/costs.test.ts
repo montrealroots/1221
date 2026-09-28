@@ -6,6 +6,7 @@
  * `content/safetynet.ts`).
  */
 import { describe, expect, it } from 'vitest';
+import { evenCraft } from '@/engine/systems/school';
 import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -24,7 +25,7 @@ const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
-  sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+  sim.player.craft = evenCraft(50);
   beginCareer(sim, sim.player);
   return sim;
 }
@@ -151,7 +152,7 @@ describe('an actor’s working costs', () => {
     const start = sim.now;
     const until = start + 40 * MS_DAY;
     for (const s of [sim, control]) while (s.now < until) s.advanceTo(Math.min(until, s.now + 6 * 3_600_000));
-    expect(sim.player.craft!.acting).toBeGreaterThan(control.player.craft!.acting);
+    expect(sim.player.craft!.scene).toBeGreaterThan(control.player.craft!.scene);
     const months = new Set([zonedParts(start, NY).month, zonedParts(until, NY).month]).size;
     expect(yearOf(sim.player, yearNow(sim)).jobCosts ?? 0).toBeGreaterThanOrEqual(WORK_COSTS.classMonthly * (months - 1));
     expect(sim.execute({ kind: 'career.class', payload: { on: false } }).ok).toBe(true);

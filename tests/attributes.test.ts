@@ -13,10 +13,10 @@ import { ROLES } from '@/engine/content/career';
 import { ATTRIBUTES, earn, fadeRecognition, nerves, overscaleOf, presenceSwing, sendsFactor } from '@/engine/systems/attributes';
 import { FESTIVAL_KIND, IMPROV_KIND, beginCareer, bookingChance, careerOf, offersFor, publicistRefusal, publicityFor, recognitionFrom, roleById, unitRate, weekOfAuditions, workCostsWeek, rateOf } from '@/engine/systems/career';
 import { WORK_COSTS } from '@/engine/content/career';
-import { evaluate } from '@/engine/systems/school';
+import { evaluate, evenCraft } from '@/engine/systems/school';
 import type { Craft } from '@/engine/systems/school';
 
-const craft = (level: number): Craft => ({ acting: level, voice: level, speech: level, body: level, text: level, singing: level, screen: level });
+const craft = (level: number): Craft => (evenCraft(level));
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 function pro(seed: string): Simulation {
   const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -157,7 +157,7 @@ describe('reputation', () => {
     const grad = life('attr-degree');
     grad.player.school!.standing = 'good';
     const p = grad.player;
-    for (const term of [0, 1, 2, 3, 4, 5]) { Object.assign(p.school!.tally, { classDays: 10, attended: 10, excused: 0, calls: 0, answered: 0, shifts: 0, worked: 0 }); p.school!.tally.craftAtStart = { ...p.craft!, acting: p.craft!.acting - 20 }; evaluate(grad, p, term); }
+    for (const term of [0, 1, 2, 3, 4, 5]) { Object.assign(p.school!.tally, { classDays: 10, attended: 10, excused: 0, calls: 0, answered: 0, shifts: 0, worked: 0 }); p.school!.tally.craftAtStart = Object.fromEntries(Object.entries(p.craft!).map(([k, v]) => [k, v - 3])) as Craft; evaluate(grad, p, term); }
     expect(p.school!.standing).toBe('good');
     // Commencement, brought to now: the degree is on the record.
     const commencement = grad.universe.scheduled.find((i) => i.kind === 'school.commencement' && i.status === 'pending')!;
@@ -222,7 +222,7 @@ describe('building them on purpose', () => {
     expect(a.presence).toBeCloseTo(presence + (100 - presence) * ATTRIBUTES.build.sceneWeek.presence, 10);
   });
 
-  it('puts eight improv evenings on the calendar for the course fee, each one kept building composure', () => {
+  it('puts eight improv evenings on the calendar for the course fee, each one kept building composure and improvisation', () => {
     const sim = pro('attr-improv');
     const a = sim.player.attrs!;
     const first = sim.must<{ first: number }>({ kind: 'career.improv', payload: {} }).first;
@@ -230,10 +230,14 @@ describe('building them on purpose', () => {
     expect(evenings).toHaveLength(WORK_COSTS.improvWeeks);
     expect(sim.execute({ kind: 'career.improv', payload: {} }).ok).toBe(false);
     const composure = a.composure;
+    const improv = sim.player.craft!.improv;
+    const scene = sim.player.craft!.scene;
     sim.advanceTo(first - 60_000);
     awake(sim);
     sim.advanceTo(first + 60_000);
     expect(a.composure).toBeGreaterThan(composure);
+    expect(sim.player.craft!.improv).toBeGreaterThan(improv);
+    expect(sim.player.craft!.scene).toBe(scene);
     expect(careerOf(sim.player).improv!.left).toBe(WORK_COSTS.improvWeeks - 1);
     // A student in term waits for the summer.
     const student = life('attr-improv-student');
@@ -241,7 +245,7 @@ describe('building them on purpose', () => {
     expect(student.execute({ kind: 'career.improv', payload: {} }).ok).toBe(false);
   });
 
-  it('books an evening’s workshop with a casting office, one at a time, for reputation and its nerves', () => {
+  it('books an evening’s workshop with a casting office, one at a time, for reputation, cold reading and its nerves', () => {
     const sim = pro('attr-workshop');
     const a = sim.player.attrs!;
     const when = sim.must<{ at: number }>({ kind: 'career.workshop', payload: {} }).at;
@@ -249,8 +253,10 @@ describe('building them on purpose', () => {
     sim.advanceTo(when - 60_000);
     awake(sim);
     sim.player.wellbeing.stress = 0;
+    const cold = sim.player.craft!.coldReading;
     sim.advanceTo(when + 60_000);
     expect(a.reputation).toBeCloseTo(ATTRIBUTES.build.workshop, 10);
+    expect(sim.player.craft!.coldReading).toBeGreaterThan(cold);
     expect(sim.player.wellbeing.stress).toBeGreaterThan(0);
   });
 

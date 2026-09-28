@@ -139,7 +139,8 @@ export interface Role {
   selfSubmit: boolean;
   cities: readonly CareerCity[];
   leadDays: number;
-  grows: Partial<Craft>;
+  /** The skills a part is cast on and grows, by weight (`READS`). */
+  reads: Partial<Craft>;
   /**
    * What overtime is worked on: a day player's day rate over eight hours, or
    * a weekly performer's week over 44, where the week is five of the day
@@ -169,10 +170,53 @@ const COMMERCIALS = 'SAG-AFTRA 2025 Commercials Contracts rate sheets; https://d
 const ANIMATION = 'Producer–SAG-AFTRA Television Animation Agreement rate sheet, 1 July 2025';
 const GAMES = 'SAG-AFTRA 2025 Interactive Media Agreement';
 const AUDIOBOOKS = 'ACX union rates; SAG-AFTRA audiobook agreements';
-const VOICE: Partial<Craft> = { voice: 1, acting: 0.5, speech: 0.5 };
 const BOTH: readonly CareerCity[] = ['us-ny-newyork', 'us-ca-losangeles'];
-const SCREEN: Partial<Craft> = { acting: 1, screen: 1 };
-const STAGE: Partial<Craft> = { acting: 1, voice: 0.5, text: 0.5, body: 0.3 };
+
+/**
+ * What each kind of part is cast on, by weight, SLATE's estimate from how
+ * the work is done. On screen: the scene, the camera, the character, the
+ * feeling a close-up shows, and the script. On stage: the scene, a voice and
+ * speech that carry, the character, the body and the script; at a regional
+ * theater the classics too, and a fight in them. A commercial is cast on
+ * camera and improvised in the room. In the booth: the microphone, the voice
+ * and speech; animation its characters, improvised and funny; a game its
+ * characters and their feeling; an audiobook every accent in it.
+ */
+export const READS = {
+  screen: { scene: 2, screen: 2, character: 1, emotion: 1, script: 1 },
+  stage: { scene: 2, voice: 1, speech: 1, character: 1, movement: 1, script: 1 },
+  classical: { scene: 2, classical: 2, voice: 1, speech: 1, character: 1, movement: 1, script: 1, combat: 0.5 },
+  commercial: { screen: 2, improv: 2, comedy: 1, scene: 1 },
+  voice: { voiceover: 2, voice: 1, speech: 1 },
+  animation: { voiceover: 2, voice: 1, character: 1, improv: 1, comedy: 1 },
+  game: { voiceover: 2, voice: 1, character: 1, emotion: 1 },
+  audiobook: { voiceover: 2, speech: 1, accents: 1, character: 1, script: 1 },
+} as const satisfies Record<string, Partial<Craft>>;
+
+/**
+ * What a job's genre asks beside the part, SLATE's estimate: comedy its
+ * timing and a clown's body, drama and horror the feeling, the musical
+ * singing and dance, action a fight, romance its intimate scenes.
+ */
+export const GENRE_READS: Readonly<Record<string, Partial<Craft>>> = {
+  comedy: { comedy: 2, clown: 0.5 },
+  drama: { emotion: 1 },
+  horror: { emotion: 1 },
+  musical: { singing: 2, dance: 1 },
+  action: { combat: 1 },
+  romance: { intimacy: 1 },
+};
+
+/**
+ * The audition beside the part, SLATE's estimate: a fifth of the read. In a
+ * room the sides can change, so cold reading counts beside the technique and
+ * the lines learned; on tape, the technique and the lines; in the booth the
+ * copy is read cold.
+ */
+export const AUDITION_READ = { share: 0.2 } as const;
+
+/** Lines learned on every job but the booth's, where the script is on the stand; a series or a play most. */
+export const MEMORIZE = { job: 0.3, long: 0.6 } as const;
 
 /** The major role's flat price, per day over the days it's priced on. */
 const perDay = (steps: RateSteps, days: number): RateSteps => steps.map(([from, cents]) => [from, Math.round(cents / days)] as const);
@@ -181,117 +225,117 @@ export const ROLES: readonly Role[] = [
   {
     id: 'costar', label: 'Co-Star, A Television Series', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 1_246_00], ['2026-07-01', 1_283_00], ['2027-07-01', 1_321_00], ['2028-07-01', 1_361_00], ['2029-07-01', 1_402_00]],
-    units: [1, 2], bar: 60, weight: 10, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, grows: SCREEN,
+    units: [1, 2], bar: 60, weight: 10, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, reads: READS.screen,
     basis: 'day', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
     id: 'guest-half', label: 'Guest Star, A Half-Hour Series', medium: 'screen', union: 'sag',
     steps: perDay([['2025-07-01', 6_853_00], ['2026-07-01', 7_057_00], ['2027-07-01', 7_266_00], ['2028-07-01', 7_486_00], ['2029-07-01', 7_711_00]], 5),
-    units: [5, 5], bar: 68, weight: 4, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, grows: SCREEN,
+    units: [5, 5], bar: 68, weight: 4, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, reads: READS.screen,
     basis: 'week', after: { kind: 'tv', length: 'half' }, travels: true, source: AMPTP,
   },
   {
     id: 'guest-hour', label: 'Guest Star, An Hour Series', medium: 'screen', union: 'sag',
     steps: perDay([['2025-07-01', 10_965_00], ['2026-07-01', 11_290_00], ['2027-07-01', 11_625_00], ['2028-07-01', 11_977_00], ['2029-07-01', 12_338_00]], 8),
-    units: [8, 8], bar: 72, weight: 4, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 7, grows: SCREEN,
+    units: [8, 8], bar: 72, weight: 4, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 7, reads: READS.screen,
     basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
     id: 'film-weekly', label: 'Supporting Role, A Studio Film', medium: 'screen', union: 'sag',
     steps: perDay([['2025-07-01', 4_326_00], ['2026-07-01', 4_456_00], ['2027-07-01', 4_590_00], ['2028-07-01', 4_728_00], ['2029-07-01', 4_870_00]], 5),
-    units: [5, 15], bar: 76, weight: 2, tiers: [1], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 21, grows: SCREEN,
+    units: [5, 15], bar: 76, weight: 2, tiers: [1], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 21, reads: READS.screen,
     basis: 'week', after: { kind: 'film', budget: 60_000_000_00 }, travels: true, source: AMPTP,
   },
   {
     id: 'film-low', label: 'A Role, A Low Budget Film', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 810_00], ['2026-07-01', 834_00], ['2027-07-01', 859_00], ['2028-07-01', 885_00], ['2029-07-01', 911_00]],
-    units: [3, 10], bar: 62, weight: 5, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 14, grows: SCREEN,
+    units: [3, 10], bar: 62, weight: 5, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 14, reads: READS.screen,
     basis: 'day', after: { kind: 'film', budget: 1_350_000_00 }, travels: true, source: SAGINDIE,
   },
   {
     id: 'film-mlb', label: 'A Role, A Moderate Low Budget Film', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 436_00], ['2026-07-01', 449_00], ['2027-07-01', 462_00], ['2028-07-01', 476_00], ['2029-07-01', 491_00]],
-    units: [3, 12], bar: 55, weight: 4, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 14, grows: SCREEN,
+    units: [3, 12], bar: 55, weight: 4, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 14, reads: READS.screen,
     basis: 'day', after: { kind: 'film', budget: 500_000_00 }, source: SAGINDIE,
   },
   {
     id: 'film-ulb', label: 'A Role, An Ultra Low Budget Film', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 249_00], ['2026-07-01', 257_00], ['2027-07-01', 264_00], ['2028-07-01', 272_00], ['2029-07-01', 280_00]],
-    units: [3, 15], bar: 45, weight: 6, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 14, grows: SCREEN,
+    units: [3, 15], bar: 45, weight: 6, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 14, reads: READS.screen,
     basis: 'day', after: { kind: 'film', budget: 250_000_00 }, source: SAGINDIE,
   },
   {
     id: 'lort-b', label: 'A Play, A LORT Theater (Category B)', medium: 'stage', union: 'equity',
     steps: [['2023-02-13', 1_058_00], ['2024-07-01', 1_100_00], ['2025-06-30', 1_144_00], ['2026-06-29', 1_213_00]],
-    units: [3, 4], rehearsalWeeks: [4, 6], bar: 64, weight: 4, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 28, grows: STAGE, source: LORT,
+    units: [3, 4], rehearsalWeeks: [4, 6], bar: 64, weight: 4, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 28, reads: READS.classical, source: LORT,
   },
   {
     id: 'lort-a-plus', label: 'A Play, A LORT Theater On Broadway', medium: 'stage', union: 'equity',
     steps: [['2023-02-13', 1_867_00], ['2024-07-01', 1_942_00], ['2025-06-30', 2_020_00], ['2025-12-29', 2_117_00], ['2026-06-29', 2_244_00]],
-    units: [8, 10], rehearsalWeeks: [5, 6], bar: 74, weight: 2, tiers: [1, 2], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 35, grows: STAGE, source: LORT,
+    units: [8, 10], rehearsalWeeks: [5, 6], bar: 74, weight: 2, tiers: [1, 2], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 35, reads: READS.classical, source: LORT,
   },
   {
     id: 'broadway', label: 'A Play On Broadway', medium: 'stage', union: 'equity',
     // $2,799 from 28 September 2026 and $2,883 from 27 September 2027 are the contract's 3% a year on $2,717, worked out.
     steps: [['2025-09-28', 2_717_00], ['2026-09-28', 2_799_00], ['2027-09-27', 2_883_00]],
-    units: [12, 20], rehearsalWeeks: [6, 8], bar: 80, weight: 1, tiers: [1, 2], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 42, grows: STAGE, source: BROADWAY,
+    units: [12, 20], rehearsalWeeks: [6, 8], bar: 80, weight: 1, tiers: [1, 2], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 42, reads: READS.stage, source: BROADWAY,
   },
   {
     // A commercial production in a house of 100 to 199 seats; $868 from the 2026–27 notices, changing late in July.
     id: 'offb-commercial', label: 'A Play Off-Broadway (Category A)', medium: 'stage', union: 'equity',
     steps: [['2026-07-27', 868_00]],
-    units: [4, 9], rehearsalWeeks: [4, 5], bar: 62, weight: 3, tiers: [2, 3], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 28, grows: STAGE, source: OFF_BROADWAY,
+    units: [4, 9], rehearsalWeeks: [4, 5], bar: 62, weight: 3, tiers: [2, 3], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 28, reads: READS.stage, source: OFF_BROADWAY,
   },
   {
     // A not-for-profit League theater's Category BB, the one the Signature, the Public and MCC were paying.
     id: 'offb-nonprofit', label: 'A Play Off-Broadway, A Nonprofit Theater', medium: 'stage', union: 'equity',
     steps: [['2025-07-28', 1_076_00], ['2026-07-27', 1_129_00]],
-    units: [4, 9], rehearsalWeeks: [4, 5], bar: 66, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 28, grows: STAGE, source: OFF_BROADWAY,
+    units: [4, 9], rehearsalWeeks: [4, 5], bar: 66, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: ['us-ny-newyork'], leadDays: 28, reads: READS.stage, source: OFF_BROADWAY,
   },
   {
     id: 'series-half', label: 'Series Regular, A Half-Hour Series', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 4_326_00], ['2026-07-01', 4_456_00], ['2027-07-01', 4_590_00], ['2028-07-01', 4_728_00], ['2029-07-01', 4_870_00]],
-    units: [13, 13], bar: 80, weight: 1, tiers: [1], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 56, grows: SCREEN,
+    units: [13, 13], bar: 80, weight: 1, tiers: [1], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 56, reads: READS.screen,
     basis: 'episode', series: { episodes: 13, weeks: 13 }, after: { kind: 'tv', length: 'half' }, travels: true, source: AMPTP,
   },
   {
     id: 'series-hour', label: 'Series Regular, An Hour Series', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 5_205_00], ['2026-07-01', 5_361_00], ['2027-07-01', 5_522_00], ['2028-07-01', 5_688_00], ['2029-07-01', 5_859_00]],
-    units: [13, 13], bar: 82, weight: 1, tiers: [1], selfSubmit: false, cities: BOTH, leadDays: 56, grows: SCREEN,
+    units: [13, 13], bar: 82, weight: 1, tiers: [1], selfSubmit: false, cities: BOTH, leadDays: 56, reads: READS.screen,
     basis: 'episode', series: { episodes: 13, weeks: 16 }, after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
     // A recurring, not regular, role, engaged week to week at the weekly performer's rate, an episode a week.
     id: 'recurring', label: 'A Recurring Role, A Television Series', medium: 'screen', union: 'sag',
     steps: perDay([['2025-07-01', 4_326_00], ['2026-07-01', 4_456_00], ['2027-07-01', 4_590_00], ['2028-07-01', 4_728_00], ['2029-07-01', 4_870_00]], 5),
-    units: [3, 9], arc: true, bar: 70, weight: 3, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 14, grows: SCREEN,
+    units: [3, 9], arc: true, bar: 70, weight: 3, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 14, reads: READS.screen,
     basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
     // The 2025 Commercials Contracts' session fee, $822.30 from 1 April 2025 and $855.20 from 1 April 2026; the third year isn't published.
     id: 'commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'sag',
     steps: [['2025-04-01', 822_30], ['2026-04-01', 855_20]],
-    units: [1, 1], bar: 55, weight: 6, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, grows: SCREEN,
+    units: [1, 1], bar: 55, weight: 6, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, reads: READS.commercial,
     basis: 'day', after: { kind: 'commercial', voice: false }, source: COMMERCIALS,
   },
   {
     id: 'commercial-vo', label: 'A Commercial, Voice-Over', medium: 'voice', union: 'sag',
     steps: [['2025-04-01', 618_30], ['2026-04-01', 643_00]],
-    units: [1, 1], bar: 55, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, grows: VOICE,
+    units: [1, 1], bar: 55, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, reads: READS.voice,
     sessionHours: 2, after: { kind: 'commercial', voice: true }, source: COMMERCIALS,
   },
   {
     // A principal's session, up to three voices, from 1 July 2025; 2026's rate isn't published.
     id: 'animation', label: 'A Voice, An Animated Series', medium: 'voice', union: 'sag',
     steps: [['2025-07-01', 1_246_00]],
-    units: [1, 3], bar: 65, weight: 2, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, grows: VOICE,
+    units: [1, 3], bar: 65, weight: 2, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, reads: READS.animation,
     sessionHours: 4, source: ANIMATION,
   },
   {
     // The 2025 Interactive Media Agreement's four-hour session, up to three voices, from November 2025.
     id: 'game', label: 'A Voice, A Video Game', medium: 'voice', union: 'sag',
     steps: [['2025-11-01', 1_134_95]],
-    units: [1, 4], bar: 58, weight: 3, tiers: [2, 3], selfSubmit: true, cities: BOTH, leadDays: 10, grows: VOICE,
+    units: [1, 4], bar: 58, weight: 3, tiers: [2, 3], selfSubmit: true, cities: BOTH, leadDays: 10, reads: READS.game,
     sessionHours: 4, source: GAMES,
   },
   {
@@ -299,7 +343,7 @@ export const ROLES: readonly Role[] = [
     // a six-hour booth day makes about 2.4 finished hours (two and a half booth hours to one), SLATE's estimate.
     id: 'audiobook', label: 'Narrating An Audiobook', medium: 'voice', union: 'sag',
     steps: [['2025-01-01', 526_32]],
-    units: [3, 6], bar: 50, weight: 4, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 10, grows: VOICE,
+    units: [3, 6], bar: 50, weight: 4, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 10, reads: READS.audiobook,
     sessionHours: 6, source: AUDIOBOOKS,
   },
 ];

@@ -6,6 +6,7 @@
  * `systems/taxreturn.ts`).
  */
 import { describe, expect, it } from 'vitest';
+import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { exchange } from '@/engine/content/currency';
@@ -206,7 +207,7 @@ describe('US tax on work abroad', () => {
 describe('home from a job, however it went', () => {
   it('brings an actor fired on location home at its end', () => {
     const sim = pro('fired-away');
-    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    sim.player.craft = evenCraft(50);
     const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
@@ -227,7 +228,7 @@ describe('home from a job, however it went', () => {
 
   it('recasts an actor in hospital on screen without the agency dropping them, and keeps them on stage', () => {
     const sim = pro('hospital-set');
-    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    sim.player.craft = evenCraft(50);
     const career = careerOf(sim.player);
     career.agencyId = 'caa';
     const b: Booking = { id: 'set', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
@@ -248,7 +249,7 @@ describe('home from a job, however it went', () => {
     expect(sim.universe.scheduled.filter((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')).toHaveLength(0);
     // On stage, the understudy covers the night and the run goes on.
     const stage = pro('hospital-stage');
-    stage.player.craft = { ...sim.player.craft };
+    stage.player.craft = { ...sim.player.craft! };
     const run: Booking = { id: 'run', roleId: 'lort-a-plus', cityId: 'us-ny-newyork', starts: at(2026, 10, 6, 8), units: 2, rehearsalWeeks: 1, status: 'offered', dueAt: stage.now + 2 * MS_DAY, offeredAt: stage.now, worked: 0, owed: 0 };
     careerOf(stage.player).bookings.push(run);
     expect(stage.execute({ kind: 'career.accept', payload: { bookingId: run.id } }).ok).toBe(true);
@@ -296,7 +297,7 @@ describe('food', () => {
 describe('a day on set', () => {
   it('takes its hours: no sleep, shower, workout or unwinding in the middle of it, though a meal fits; and costs energy by them', () => {
     const sim = pro('on-set');
-    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    sim.player.craft = evenCraft(50);
     const b: Booking = { id: 'day', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 1, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
@@ -339,7 +340,7 @@ describe('a paycheck', () => {
 
   it('keeps New York City’s tax off a New Haven actor’s check for a job in the city', () => {
     const sim = pro('commuter');
-    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    sim.player.craft = evenCraft(50);
     sim.player.home = { kind: 'shared', cityId: 'us-ct-newhaven', since: sim.now };
     // Earlier in the year, enough to be past the city's deduction.
     yearOf(sim.player, 2026).acting = 50_000_00;

@@ -63,7 +63,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CALLS, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  AFTERLIFE, AGENCIES, AGENT_COMMISSION, AUDITION_READ, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
 } from '../content/career';
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
@@ -71,7 +71,7 @@ import { ABROAD } from '../content/safetynet';
 import { armHealth, inHospital } from './health';
 import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
-import { meanCraft, focusOf, sessionGain, summerOf, type Craft } from './school';
+import { actingOf, grow, focusOf, summerOf, type Craft } from './school';
 import { rentAt } from '../content/rents';
 import { enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
@@ -101,8 +101,15 @@ export const ESTIMATE = {
   /** How long an agency's offer of representation stands, and a booking's. */
   representationOfferDays: 30,
   bookingOfferDays: 2,
-  /** How a showing reads: acting counts as much as every other area together. */
+  /** How a showing reads: acting (`actingOf`) counts as much as the rest a scene shows together. */
   showcaseActingWeight: 0.5,
+  /**
+   * What a showcase scene shows beside the acting: the voice and speech, the
+   * body, the script, the character, the feeling, and the camera for the tape
+   * agencies keep. Until 2026-09-27 it was every area, when there were seven;
+   * of 21, voice-over, dance and a fight never show in a scene.
+   */
+  showcaseSeen: ['scene', 'character', 'emotion', 'voice', 'speech', 'movement', 'script', 'screen'] as const,
   /** How much of a showing tiredness can take: at no readiness at all, a fifth. It took it all until 2026-09-26, and the class's best actor, tired at five, read at 58 and no big agency looked. */
   showcaseTiredness: 0.2,
   /** The chance a management firm whose bar the showing clears wants the actor. */
@@ -143,6 +150,8 @@ export const ESTIMATE = {
    * Until 2026-09-27 every day cost 8, a twelve-hour shoot as a three-hour one.
    */
   workGain: 1.2,
+  /** What an audition done grows of the audition's own skills, as a share of a class session's. */
+  auditionGain: 0.3,
   workEnergy: 8,
   performanceEnergy: 10,
   /** Hygiene an hour on set or on stage beyond the day's drift: the drift again. */
@@ -167,6 +176,8 @@ export interface Audition {
   self?: boolean;
   /** Worked on with a coach first. */
   coached?: boolean;
+  /** The job's genre, as the breakdown gives it, read at the audition and kept by the booking. */
+  genre?: string;
 }
 
 export interface Booking {
@@ -405,13 +416,13 @@ export function rateOf(role: Role, when: Instant, cityId: string, into: string):
 // ---------------------------------------------------------------------------
 
 /**
- * What a showing reads as: acting weighed against the rest, presence beside
+ * What a showing reads as: acting (`actingOf`) weighed against the rest, presence beside
  * the craft (`ATTRIBUTES.showcaseShare`), and up to a fifth less for a tired
  * actor. A classmate is read at an ordinary presence, 50.
  */
 export function showcaseScore(craft: Craft, focus: number, presence = 50): number {
   const w = ESTIMATE.showcaseActingWeight;
-  const shown = (1 - ATTRIBUTES.showcaseShare) * (w * craft.acting + (1 - w) * meanCraft(craft)) + ATTRIBUTES.showcaseShare * presence;
+  const shown = (1 - ATTRIBUTES.showcaseShare) * (w * actingOf(craft) + (1 - w) * ESTIMATE.showcaseSeen.reduce((sum, k) => sum + craft[k], 0) / ESTIMATE.showcaseSeen.length) + ATTRIBUTES.showcaseShare * presence;
   return shown * (1 - ESTIMATE.showcaseTiredness * (1 - Math.min(1, focus)));
 }
 
@@ -512,7 +523,7 @@ export function workCostsWeek(sim: Simulation, person: Person, when: Instant): v
     scene.paidFor = month;
   }
   if (present(person, when) && person.craft) {
-    person.craft.acting = Math.min(100, person.craft.acting + sessionGain(person.craft.acting, focusOf(person)));
+    grow(person.craft, 'scene', focusOf(person));
     // Working scenes in front of a class, week on week: steadier, and a little more there.
     nudge(sim, person, 'composure', ATTRIBUTES.build.sceneWeek.composure, true);
     nudge(sim, person, 'presence', ATTRIBUTES.build.sceneWeek.presence, true);
@@ -638,23 +649,56 @@ function offerRepresentation(sim: Simulation, person: Person, agencies: string[]
 // Auditions and bookings
 // ---------------------------------------------------------------------------
 
-/** The craft a part reads: acting twice, with the camera on screen, or the voice and the text on stage. */
-export function levelFor(craft: Craft, role: Role): number {
-  if (role.medium === 'voice') return (craft.acting + craft.voice * 2) / 3;
-  return role.medium === 'screen' ? (craft.acting * 2 + craft.screen) / 3 : (craft.acting * 2 + craft.voice + craft.text) / 4;
+/** What a part and its genre ask of the craft, by weight (`READS`, `GENRE_READS`). */
+export function readsFor(role: Role, genre?: string): Partial<Craft> {
+  const out: Partial<Craft> = { ...role.reads };
+  for (const [skill, w] of Object.entries((genre && GENRE_READS[genre]) || {}) as [keyof Craft, number][]) out[skill] = (out[skill] ?? 0) + w;
+  return out;
+}
+
+/** The craft a part reads: its skills, weighed (`readsFor`). */
+export function levelFor(craft: Craft, role: Role, genre?: string): number {
+  const reads = Object.entries(readsFor(role, genre)) as [keyof Craft, number][];
+  return reads.reduce((sum, [skill, w]) => sum + craft[skill] * w, 0) / reads.reduce((sum, [, w]) => sum + w, 0);
+}
+
+/** The skills an audition itself reads (`AUDITION_READ`): the booth's copy read cold, a tape's lines learned, and a room's both. */
+export function auditionSkills(role: Role, mode: 'tape' | 'room'): (keyof Craft)[] {
+  if (role.medium === 'voice') return ['audition', 'coldReading'];
+  return mode === 'tape' ? ['audition', 'memorization'] : ['audition', 'coldReading', 'memorization'];
+}
+
+/** The read an audition gives: the part's craft, and a fifth the audition's own. */
+export function auditionLevel(craft: Craft, role: Role, mode: 'tape' | 'room', genre?: string): number {
+  const own = auditionSkills(role, mode);
+  const s = AUDITION_READ.share;
+  return (1 - s) * levelFor(craft, role, genre) + s * own.reduce((sum, k) => sum + craft[k], 0) / own.length;
+}
+
+/**
+ * What a day's work grows: what the part reads, the heaviest at a full
+ * session's worth, and the lines learned (`MEMORIZE`), more for a play or
+ * a series, none in the booth.
+ */
+export function growsFor(role: Role, genre?: string): Partial<Craft> {
+  const reads = readsFor(role, genre);
+  const most = Math.max(...Object.values(reads));
+  const out = Object.fromEntries(Object.entries(reads).map(([k, w]) => [k, w / most])) as Partial<Craft>;
+  if (role.medium !== 'voice') out.memorization = role.medium === 'stage' || role.series || role.arc ? MEMORIZE.long : MEMORIZE.job;
+  return out;
 }
 
 /** A booking's chance at an audition: at the part's bar, more above and less below, less tired, less on tape and less again without a kit, more coached. */
-export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room', kit = true, coached = false, presence = 50): number {
+export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room', kit = true, coached = false, presence = 50, genre?: string): number {
   // Presence moves the read above or below the bar, fully in the room and half on tape (`attributes.ts`).
-  const raw = ESTIMATE.bookAtBar + ESTIMATE.bookPerPoint * (levelFor(craft, role) + presenceSwing(presence, mode) - role.bar);
+  const raw = ESTIMATE.bookAtBar + ESTIMATE.bookPerPoint * (auditionLevel(craft, role, mode, genre) + presenceSwing(presence, mode) - role.bar);
   const chance = Math.min(ESTIMATE.bookCeiling, Math.max(ESTIMATE.bookFloor, raw)) * Math.min(1.1, focus) * (coached ? WORK_COSTS.coached : 1);
   return mode === 'tape' ? chance * ESTIMATE.tapeFactor * (kit ? 1 : WORK_COSTS.noKit) : chance;
 }
 
 /** Whether an audition books (`career.booking`). */
 export function books(sim: Simulation, person: Person, audition: Audition, focus: number): boolean {
-  return sim.rng('career.booking', person.id, audition.id).next() < bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence);
+  return sim.rng('career.booking', person.id, audition.id).next() < bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence, audition.genre);
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
@@ -915,6 +959,7 @@ export function registerCareer(sim: Simulation): void {
       // Booked out: an agency doesn't send a client to an audition that clashes with a job they're working.
       if (s.timeline.conflicts(one.at, one.mode === 'tape' ? 120 : 60).some((i) => i.kind === WORK_KIND && i.payload.personId === person.id)) continue;
       const audition: Audition = { ...one, id: nextOwnId(career, 'a'), status: 'ahead' };
+      Object.assign(audition, genreOf(roleById(audition.roleId), s.rng('career.booking', person.id, `${audition.id}-genre`).next()));
       career.auditions.push(audition);
       s.schedule({
         at: audition.at, kind: AUDITION_KIND, label: `${audition.mode === 'tape' ? 'Self-Tape' : 'Audition'}: ${roleById(audition.roleId).label}`,
@@ -964,6 +1009,8 @@ export function registerCareer(sim: Simulation): void {
     }
     audition.status = 'done';
     if (audition.mode === 'room') takeTheRoom(person);
+    // Every audition is practice at auditioning.
+    if (person.craft) for (const k of auditionSkills(roleById(audition.roleId), audition.mode)) grow(person.craft, k, focusOf(person), ESTIMATE.auditionGain);
     if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1))) return;
     audition.status = 'booked';
     const [lo, hi] = ESTIMATE.offerAfterDays;
@@ -985,7 +1032,7 @@ export function registerCareer(sim: Simulation): void {
       id: nextOwnId(career, 'b'), roleId: role.id, cityId: audition.cityId,
       starts: nextMonday(s.now + role.leadDays * MS_DAY, zoneOf(location ?? audition.cityId)),
       units: span(role.units), rehearsalWeeks: role.rehearsalWeeks ? span(role.rehearsalWeeks) : 0,
-      ...genreOf(role, rng.next()),
+      ...(audition.genre === undefined ? genreOf(role, rng.next()) : { genre: audition.genre }),
       status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0,
       ...(location ? { location } : {}),
     };
@@ -1084,7 +1131,7 @@ export function registerCareer(sim: Simulation): void {
     const event = role.medium === 'stage' ? (call.rehearsal ? undefined : 'performance') : role.medium === 'screen' ? 'set' : undefined;
     const focus = focusOf(person) * (event ? nerves(s, person, event) : 1);
     earn(s, person, ATTRIBUTES.reputation.day);
-    for (const [skill, weight] of Object.entries(role.grows) as [keyof Craft, number][]) {
+    for (const [skill, weight] of Object.entries(growsFor(role, booking.genre)) as [keyof Craft, number][]) {
       person.craft[skill] = Math.min(100, person.craft[skill] + ESTIMATE.workGain * weight * focus * (1 - person.craft[skill] / 100) ** 1.5);
     }
     const spent = role.medium === 'stage' && !call.rehearsal ? ESTIMATE.performanceEnergy : (ESTIMATE.workEnergy * hours) / 8;
@@ -1527,6 +1574,7 @@ export function registerCareer(sim: Simulation): void {
     // On your feet in front of a room, with nothing prepared.
     nudge(s, person, 'composure', ATTRIBUTES.build.improvSession.composure, true);
     nudge(s, person, 'presence', ATTRIBUTES.build.improvSession.presence, true);
+    if (person.craft) grow(person.craft, 'improv', focusOf(person));
     enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
   });
 
@@ -1551,6 +1599,7 @@ export function registerCareer(sim: Simulation): void {
     // A cold read in front of the office: known to it after, and the nerves of it.
     nerves(s, person, 'audition');
     earn(s, person, ATTRIBUTES.build.workshop);
+    if (person.craft) grow(person.craft, 'coldReading', focusOf(person));
   });
 
   sim.onCommand<{ on: boolean }, { on: boolean }>('career.publicist', (p, { sim: s }) => {

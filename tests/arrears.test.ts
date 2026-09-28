@@ -4,6 +4,7 @@
  * the input and watches the outcome move.
  */
 import { describe, expect, it } from 'vitest';
+import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { GENRES } from '@/engine/content/career';
@@ -33,7 +34,7 @@ const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, extra: Record<string, unknown> = {}): Simulation {
   const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy', ...extra }, seed);
-  sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+  sim.player.craft = evenCraft(50);
   beginCareer(sim, sim.player);
   return sim;
 }

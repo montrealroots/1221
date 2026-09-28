@@ -586,7 +586,7 @@ function YourSchool() {
         note={`Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}`}
         tone={school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed' ? 'warning' : undefined}
       />
-      <Stat label="Your Place In The Class" value={`${rankIn(person)} of ${YALE_DRAMA.classSize}`} note="By craft, across every area" />
+      <Stat label="Your Place In The Class" value={`${rankIn(person)} of ${YALE_DRAMA.classSize}`} note="By craft, across every skill" />
       {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, zone)} />}
     </div>
   );
