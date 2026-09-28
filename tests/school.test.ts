@@ -33,8 +33,24 @@ const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter
 const day = (key: string) => { const [year, month, d] = key.split('-').map(Number); return { year: year!, month: month!, day: d! }; };
 
 describe('one student, one calendar', () => {
-  it('never calls a student to two places at once, Yale Rep and their own production, second year or third', () => {
-    for (const term of [2, 4]) {
+  it('asks a third-year in the Rep’s company to play there that fall, not in a School production too', () => {
+    const sim = life('both-company');
+    Object.assign(sim.player.craft!, { scene: 95, character: 95, emotion: 95 });
+    Object.assign(sim.player.school!.classmates[0]!.craft, { scene: 95, character: 95, emotion: 95 });
+    sim.schedule({ at: sim.now + 60_000, kind: 'school.term', label: 'A Term Begins', category: 'school', priority: 30, payload: { personId: sim.player.id, term: 4 } });
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(sim.player.school!.rep).toMatchObject({ kind: 'role' });
+    expect(sim.player.school!.casting).toBeUndefined();
+    expect(pending(sim, CALL_KIND).every((c) => c.payload.which === 'rep')).toBe(true);
+    // The class's others at the Rep aren't in the School's productions either.
+    const around = sim.player.school!.around!.list;
+    const atRep = around.filter((a) => a.part === 'A Featured Part In The Company');
+    expect(atRep.map((a) => a.name)).toContain(sim.player.school!.classmates[0]!.name);
+    for (const at of atRep) expect(around.filter((a) => a.name === at.name)).toHaveLength(1);
+  });
+
+  it('never calls a student to two places at once, Yale Rep and their own production', () => {
+    for (const term of [2]) {
       const sim = life(`both-${term}`);
       Object.assign(sim.player.craft!, { scene: 95, character: 95, emotion: 95 });
       sim.schedule({ at: sim.now + 60_000, kind: 'school.term', label: 'A Term Begins', category: 'school', priority: 30, payload: { personId: sim.player.id, term } });
@@ -182,7 +198,7 @@ describe('the admitted class', () => {
   });
 
   it('grows less from a session the better it already is, and more for coming ready', () => {
-    expect(sessionGain(40, 1)).toBeCloseTo(0.55 * 0.6 ** 1.5, 10);
+    expect(sessionGain(40, 1)).toBeCloseTo(ESTIMATE.sessionGain * 0.6 ** 1.5, 10);
     expect(sessionGain(80, 1)).toBeLessThan(sessionGain(40, 1));
     expect(sessionGain(50, 1.2)).toBeGreaterThan(sessionGain(50, 0.3));
     expect(sessionGain(100, 1)).toBe(0);

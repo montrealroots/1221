@@ -25,8 +25,8 @@ describe('the plays', () => {
       const sim = life(seed);
       const theses = [2, 3, 4].map((term) => playOf(sim, sim.player, schoolProduction(term, 1)!));
       for (const t of theses) expect(THESIS_PLAYS.map((p) => p.title)).toContain(t.title);
-      // The fall's two and the spring's one of the same season differ.
-      expect(theses[0]!.title).not.toBe(theses[1]!.title);
+      // No student meets the same play twice: the three theses a class plays in are three plays.
+      expect(new Set(theses.map((t) => t.title)).size).toBe(3);
       const bard = [1, 6, 11].map((rank) => playOf(sim, sim.player, schoolProduction(5, rank)!).title);
       expect(new Set(bard).size).toBe(3);
       for (const t of bard) expect(SHAKESPEARE_PLAYS.map((p) => p.title)).toContain(t);
@@ -165,6 +165,11 @@ describe('a night’s reading', () => {
     expect(fresh.remarkable).toBeGreaterThan(150);
     // The same actor, rested or not.
     expect(count(65, 1.1).strong + count(65, 1.1).remarkable).toBeGreaterThan(count(65, 0.7).strong + count(65, 0.7).remarkable);
+    // A night reads against what the part asks: a lead more than a featured part, and the Rep's professional parts more than the School's.
+    const V = { off: 0, solid: 1, strong: 2, remarkable: 3 } as const;
+    const sum = (size: 'lead' | 'featured', where: 'school' | 'rep') => Array.from({ length: 200 }, (_, n) => V[nightOf(sim, sim.player, 'p' + n, 75, 1, size, where)]).reduce((a: number, b) => a + b, 0);
+    expect(sum('featured', 'school')).toBeGreaterThan(sum('lead', 'school'));
+    expect(sum('lead', 'school')).toBeGreaterThan(sum('lead', 'rep'));
     expect(directorsNote(2)).not.toBe(directorsNote(-1));
     expect(nightsMean({ strong: 2, off: 2 })).toBe(0);
   });
@@ -204,6 +209,8 @@ describe('what a night does', () => {
         play(sim, show.at - 60_000);
         sim.player.currentLocationId = 'us-ct-newhaven';
         sim.player.awakeSince = show.at - 8 * MS_HOUR;
+        // Rested and fed, as a player who looks after themselves comes to a show.
+        Object.assign(sim.player.wellbeing, { energy: 95, stress: 5, sleepDebt: 0, nourishment: 90, morale: 80 });
         sim.advanceTo(show.at + 60_000);
       }
       return { gain: sim.player.attrs!.presence - start, nights: sim.player.school!.casting!.nights! };
@@ -217,10 +224,11 @@ describe('what a night does', () => {
 });
 
 describe('the class’s names', () => {
-  it('gives no two classmates the same family name', () => {
+  it('gives no two classmates the same given name or family name', () => {
     for (const seed of ['names-1', 'names-2', 'names-3']) {
-      const families = life(seed).player.school!.classmates.map((m) => m.name.split(' ')[1]);
-      expect(new Set(families).size).toBe(families.length);
+      const names = life(seed).player.school!.classmates.map((m) => m.name.split(' '));
+      expect(new Set(names.map((n) => n[1])).size).toBe(names.length);
+      expect(new Set(names.map((n) => n[0])).size).toBe(names.length);
     }
   });
 });

@@ -58,8 +58,8 @@ export const ATTRIBUTES = {
   /** Nerves before an event, by its weight: the stress added at composure 0, and the share of the work it takes off. */
   nerves: { focusCost: 0.18 },
   eventWeight: { audition: 10, showcase: 18, performance: 6, set: 4 },
-  /** Composure a performance, an audition and the showcase each add, as a share of what's left to 100. */
-  composureGain: { performance: 0.012, audition: 0.01, showcase: 0.04, set: 0.006 },
+  /** Composure a performance, an audition and the showcase each add, as a share of what's left to 100. It was 0.012, 0.01, 0.04 and 0.006 until 2026-09-28, when all twelve of a batch of played lives reached 99 or 100 by the second year of work. */
+  composureGain: { performance: 0.005, audition: 0.004, showcase: 0.03, set: 0.003 },
   /** Presence a performance adds, as a share of what's left: slow. */
   presenceGain: 0.0015,
   /** Reputation earned and lost: points, as a share of what's left to earn where it's a gain. */

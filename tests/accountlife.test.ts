@@ -393,6 +393,30 @@ describe('an idle account', () => {
     expect(run(sim, 'bank.claim_unclaimed', {}).ok).toBe(false);
   });
 
+  it('writes ninety days before it goes to the state, and getting in touch keeps it', () => {
+    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-escheat-notice');
+    const saver = savings(sim)!;
+    give(sim, saver, 500_00);
+    const long = sim.now - (3 * 365.25 - 100) * MS_DAY;
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? long : sim.now));
+    expect(saver.escheatWarned).toBeUndefined();
+    const soon = sim.now - (3 * 365.25 - 80) * MS_DAY;
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? soon : sim.now));
+    expect(saver.escheatWarned).toBe(sim.now);
+    const notice = Object.values(sim.universe.decisions).find((d) => d.refType === 'unclaimed-notice' && d.refId === saver.id && !d.resolvedAt)!;
+    expect(notice.actions[0]).toMatchObject({ commandKind: 'bank.reactivate', payload: { accountId: saver.id } });
+    sim.must({ kind: notice.actions[0]!.commandKind, payload: notice.actions[0]!.payload });
+    expect(notice.resolvedAt).toBeDefined();
+    // Kept: the untouched years start again from getting in touch.
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? soon - 200 * MS_DAY : sim.now));
+    expect(saver.closedAt).toBeUndefined();
+    // And the next time it sits untouched that long, the bank writes again.
+    sim.advanceBy(10 * MS_DAY);
+    saver.reactivatedAt = sim.now - (3 * 365.25 - 80) * MS_DAY;
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? soon : sim.now));
+    expect(saver.escheatWarned).toBe(sim.now);
+  });
+
   it('stays with a German bank however long it sits, Germany having no scheme', () => {
     const sim = lifeIn('de-be-berlin', 'de-deutsche-bank', 'life-de');
     const saver = savings(sim)!;

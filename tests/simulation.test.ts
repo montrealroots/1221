@@ -951,7 +951,7 @@ describe('the waking day', () => {
 
   it('says when a short sleep, under six hours, would be tonight’s night', () => {
     // A sleep the player chooses is the night of the day it ends in. The
-    // Sleep dialog suggests three hours at half past eleven before a call at
+    // Sleep dialog suggested three hours at half past eleven before a call at
     // three, and taken, they were up from half past two, at energy 10.9 and a
     // debt of 13.15 by eleven the next night, where moving the clock on
     // instead left 28.4 and 5.17. The dialog says so.
@@ -960,7 +960,9 @@ describe('the waking day', () => {
     sim.advanceTo(next(sim, 23) + 30 * MS_MINUTE);
     const midnight = next(sim, 0);
     sim.schedule({ at: midnight + 3 * MS_HOUR, kind: 'test.call', label: 'An Early Call', category: 'personal', requiresPlayer: true });
-    expect(suggestedSleep(sim).hours).toBe(3);
+    // Two hours, keeping the hour and a half to get up and there: it was three until 2026-09-28, never less, which slept through a call under four and a half hours off.
+    expect(suggestedSleep(sim).hours).toBe(2);
+    expect(sleepStandsForTheNight(sim, 2)).toBe(true);
     expect(sleepStandsForTheNight(sim, 3)).toBe(true);
     // Six hours is not a short night, and a whole one is the night whenever
     // it ends.

@@ -570,7 +570,7 @@ export function registerCredit(sim: Simulation): void {
     }
     statementReady(s, person, card, credit.statementBalance > 0
       ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0), saveCurrency(s.universe))}.`
-      : 'The card owes nothing this month.');
+      : 'The card owes nothing this month.', credit.statementBalance > 0);
     scheduleStatement(s, person, item.at);
   });
 

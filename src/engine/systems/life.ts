@@ -1141,8 +1141,12 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
   const away = (next.at - sim.now) / MS_HOUR;
   const available = away - 1.5;
   if (available < ideal) {
+    // What's left before it, to the half hour below, and half an hour at the
+    // least. Until 2026-09-28 it was never under three hours, which with a
+    // call four hours off slept straight through it: an actor jet-lagged in
+    // London, in bed at four for a seven o'clock call, was fired on the day.
     return {
-      hours: Math.max(3, Math.round(available * 2) / 2),
+      hours: Math.max(0.5, Math.floor(available * 2) / 2),
       reason: `"${next.label}" is in ${away.toFixed(1)} hours, and getting up and there takes an hour and a half, so a full night isn’t available.`,
     };
   }

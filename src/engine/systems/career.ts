@@ -1563,6 +1563,7 @@ export function registerCareer(sim: Simulation): void {
     }
     for (const when of paydays) schedulePay(s, person, booking, when);
     closeDecision(s, booking.id);
+    stillTakeable(s, person);
   }
 
   sim.onCommand<{ bookingId: string }, { passed: true }>('career.pass', (p, { sim: s }) => {
@@ -1836,6 +1837,24 @@ function armDues(sim: Simulation, person: Person): void {
  * option, or a job already taken that it clashes with. `career.accept`
  * refuses on it, and the offer on Home and on the Career screen says it.
  */
+/**
+ * The offers still open, asked again once a job is taken: one it now clashes
+ * with says why, and offers only a pass. Until 2026-09-28 an offer kept the
+ * Take It it was raised with, and the command refused it.
+ */
+export function stillTakeable(sim: Simulation, person: Person): void {
+  for (const other of careerOf(person).bookings) {
+    if (other.status !== 'offered') continue;
+    const cannot = acceptRefusal(sim, person, other);
+    if (!cannot) continue;
+    for (const d of Object.values(sim.universe.decisions)) {
+      if (d.resolvedAt || d.refType !== 'booking' || d.refId !== other.id || !d.actions.some((x) => x.commandKind === 'career.accept')) continue;
+      d.actions = d.actions.filter((x) => x.commandKind !== 'career.accept');
+      d.detail = `${d.detail.replace(/ Answer by .*$/, '')} You can’t take it now: ${cannot}`;
+    }
+  }
+}
+
 export function acceptRefusal(sim: Simulation, person: Person, booking: Booking): string | undefined {
   const career = careerOf(person);
   if (career.since === undefined) {

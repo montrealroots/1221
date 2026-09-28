@@ -115,6 +115,8 @@ export interface Account {
   dormant?: boolean;
   /** When its holder last had a dormant account reactivated, which counts as using it. */
   reactivatedAt?: Instant;
+  /** When the bank wrote that the balance goes to the state unless the holder gets in touch (`ESCHEAT_NOTICE_DAYS`). */
+  escheatWarned?: Instant;
   /** A term deposit renewed: until when it can be taken without penalty, and whether the bank has written about its end. */
   graceUntil?: Instant;
   maturityNoticed?: boolean;

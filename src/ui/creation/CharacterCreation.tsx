@@ -817,7 +817,7 @@ function StartingPointStep({ config, set, setConfig }: {
             <h2>{config.school ? 'Where It Begins' : 'Where You Live'}</h2>
             <p className="muted small">
               {config.school
-                ? `A first-year in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}: one of ${YALE_DRAMA.classSize} actors admitted this year, and the one the faculty wanted most from the auditions.`
+                ? `A first-year in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}: one of ${YALE_DRAMA.classSize} actors admitted this year, among the strongest of them but not ahead of everyone.`
                 : 'Where you are decides what things cost and whose holidays you keep.'}
             </p>
             {config.school && (

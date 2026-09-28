@@ -267,10 +267,13 @@ export function registerAccountLife(sim: Simulation): void {
 
   sim.onCommand<{ accountId: string }, { accountId: string }>('bank.reactivate', (p, { sim: s }) => {
     const account = s.universe.accounts[p.accountId];
-    if (!account || account.ownerId !== s.player.id || !account.dormant) throw new CommandError('That account isn’t dormant.');
+    // A dormant account, or one the bank has written about before handing it to the state: getting in touch keeps it.
+    if (!account || account.ownerId !== s.player.id || (!account.dormant && account.escheatWarned === undefined)) throw new CommandError('That account isn’t dormant.');
     delete account.dormant;
     delete account.inactive;
+    delete account.escheatWarned;
     account.reactivatedAt = s.now;
+    for (const d of Object.values(s.universe.decisions)) if (d.refType === 'unclaimed-notice' && d.refId === account.id && !d.resolvedAt) d.resolvedAt = s.now;
     return { accountId: account.id };
   });
 
@@ -312,6 +315,16 @@ export function registerAccountLife(sim: Simulation): void {
 }
 
 /**
+ * How far ahead a bank writes before it hands an untouched balance to the
+ * state: the US Revised Uniform Unclaimed Property Act asks for a notice 60
+ * to 120 days before the report, and states that adopt it keep the window.
+ * SLATE writes at 90, inside it, for every country, where the rest publish
+ * no single figure. Until 2026-09-28 nothing was written, and a wealthy
+ * student's untouched savings went to the state without a word beforehand.
+ */
+export const ESCHEAT_NOTICE_DAYS = 90;
+
+/**
  * At a month's end, for each of a person's accounts: dormant or inactive by
  * the bank's months untouched, and after the country's years, the balance
  * gone to the state or its scheme.
@@ -330,6 +343,20 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
     const iso = bankById(account.bankId)?.iso;
     const law = iso ? UNCLAIMED[iso] : undefined;
     // The years guard also narrows the type; without it NaN compares false the same.
+    // The bank writes first: the balance goes to the state unless the holder gets in touch.
+    const due = law?.years !== undefined ? law.years * 365.25 * MS_DAY : Infinity;
+    if (law && account.escheatWarned === undefined && idle >= due - ESCHEAT_NOTICE_DAYS * MS_DAY && idle < due && account.balance > 0 && account.id !== person.primaryAccountId) {
+      account.escheatWarned = sim.now;
+      if (person.id === sim.universe.playerId) {
+        const by = sim.now + (due - idle);
+        sim.requireDecision({
+          urgency: 85, category: 'bank', title: `${account.institution ?? 'Your Bank'} Is About To Hand ${account.name} To The State`,
+          detail: `${formatMoney(account.balance, saveCurrency(sim.universe))} in ${account.name} has been untouched for nearly ${law.years} years. Unless you get in touch by ${formatDate(by, sim.zone)}, it goes to ${law.to ?? 'the state'} as unclaimed money.`,
+          route: '/workspace/bank', dueAt: by, refType: 'unclaimed-notice', refId: account.id,
+          actions: [{ label: 'Keep The Account', commandKind: 'bank.reactivate', payload: { accountId: account.id } }],
+        });
+      }
+    }
     if (law?.years !== undefined && idle >= law.years * 365.25 * MS_DAY && account.balance > 0 && account.id !== person.primaryAccountId) {
       const amount = account.balance;
       sim.post({ memo: `Unclaimed, to ${law.to ?? 'the state'}`, category: 'transfer', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('liability_other', 'Unclaimed Money').id, amount }] });

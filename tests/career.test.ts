@@ -66,10 +66,12 @@ describe('the showcase', () => {
     expect(shows.map((s) => s.payload.cityId)).toEqual(['us-ny-newyork', 'us-ca-losangeles']);
     expect(zonedParts(shows[0]!.at, NY)).toMatchObject({ year: 2029, month: 4, day: SHOWCASE_2029.newYork.day, hour: 17 });
     expect(zonedParts(shows[1]!.at, 'America/Los_Angeles')).toMatchObject({ month: 5, day: 1, hour: 13 });
+    // The class's strongest by now, as a student who looked after themselves is (since 2026-09-28 the class competes, and one left to themselves can be outshone).
+    sim.player.craft = evenCraft(88);
     play(sim, shows[1]!.at + MS_HOUR);
     const career = careerOf(sim.player);
     expect(career.showcases).toHaveLength(2);
-    // The class's first choice reads high enough for the biggest agencies' bars.
+    // The class's strongest actor reads high enough for the biggest agencies' bars.
     expect(Math.max(...career.showcases.map((s) => s.score))).toBeGreaterThan(74);
     expect(career.offers.length + (career.agencyId ? 1 : 0)).toBeGreaterThan(0);
     for (const o of career.offers) expect(AGENCIES.find((a) => a.id === o.agencyId)!.bar).toBeLessThanOrEqual(Math.max(...career.showcases.map((s) => s.score)));

@@ -335,7 +335,12 @@ export interface AlertSettings {
   lowBalance?: Money;
   /** Tell them of any payment out of the current account or onto the card over this; absent, off. */
   largePayment?: Money;
-  /** Tell them when a statement is ready. On by default, as a bank's app has it. */
+  /**
+   * Tell them when a statement is ready. Off by default since 2026-09-28: a
+   * statement with a payment due tells them anyway (`statementReady`), and a
+   * current account's and a paid-off card's, two every month, buried what
+   * wanted them in a played life, 117 of 305 notices.
+   */
   statements: boolean;
   /** Whether the low-balance alert has fired since the balance last stood above the line. */
   lowSent?: boolean;
@@ -344,13 +349,13 @@ export interface AlertSettings {
 }
 
 export function alertsOf(person: Person): AlertSettings {
-  return person.alerts ?? { statements: true };
+  return person.alerts ?? { statements: false };
 }
 
-/** A statement ready, where they asked to be told. */
-export function statementReady(sim: Simulation, person: Person, account: Account, words: string): void {
-  if (person.id !== sim.universe.playerId || !alertsOf(person).statements) return;
-  sim.notify({ category: 'bank', title: `Statement Ready: ${account.name}`, body: words, importance: 20, route: '/workspace/bank' });
+/** A statement ready: always where there's a payment due, as a bill; otherwise where they asked to be told. */
+export function statementReady(sim: Simulation, person: Person, account: Account, words: string, due = false): void {
+  if (person.id !== sim.universe.playerId || (!due && !alertsOf(person).statements)) return;
+  sim.notify({ category: 'bank', title: `Statement Ready: ${account.name}`, body: words, importance: due ? 50 : 20, route: '/workspace/bank' });
 }
 
 export function registerStatements(sim: Simulation): void {

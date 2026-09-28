@@ -185,14 +185,20 @@ export const COMPANY_KIND = 'school.company';
 
 /** SLATE's estimates of what the school doesn't publish, each named where it's used. */
 export const ESTIMATE = {
-  /** How much a session can move a skill, and how much less the better it already is. */
-  sessionGain: 0.55,
-  /** How ready a classmate is on an ordinary day, as readiness over 80. */
-  classmateFocus: 0.85,
+  /** How much a session can move a skill, and how much less the better it already is. It was 0.55 until 2026-09-28, when a class that rests as students do came to 83 in acting by graduation, and the player to 92. */
+  sessionGain: 0.42,
+  /**
+   * How ready a classmate is on an ordinary day, as readiness over 80: a
+   * student who sleeps and eats as students do, before their own drive. It
+   * was 0.85 until 2026-09-28, and a player who looked after themselves grew
+   * a third faster than the class and finished first in every one of twelve
+   * played lives.
+   */
+  classmateFocus: 1,
   /** How often a classmate is in class. */
   classmateAttendance: 0.97,
-  /** How far a classmate's drive runs either side of an ordinary classmate's: 0.85 to 1.15. */
-  driveSpread: 0.15,
+  /** How far a classmate's drive runs either side of an ordinary classmate's: 0.75 to 1.25, so the most driven can outgrow a player who looks after themselves. */
+  driveSpread: 0.25,
   /**
    * A student's talent on admission, 40 to 56 with most near 48, and each
    * skill up to seven points either side of it; the player's talent from 50,
@@ -207,12 +213,16 @@ export const ESTIMATE = {
   casting: { balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, nights: 1.5 },
   /**
    * A night's reading (`nightOf`): readiness, a point of the part's craft
-   * above 65 worth a fortieth, and luck a fifth either side; under 0.7 an off
-   * night, under 0.95 solid, under 1.1 strong, past it remarkable. What a
+   * above what the part asks worth a fortieth (in a School production a lead
+   * 70, a supporting part 64 and a featured one 58; at Yale Rep, a
+   * professional company, 82, 76 and 70), and luck a fifth either side; under 0.75 an off
+   * night, under 0.98 solid, under 1.18 strong, past it remarkable. Until
+   * 2026-09-28 every part asked 65, and a strong actor's nights were nearly
+   * all remarkable from the second year. What a
    * band does: a strong or remarkable night lifts morale, and a remarkable
    * one the presence and, at the Rep, the reputation; an off night stings.
    */
-  nights: { par: 65, perPoint: 40, luck: 0.4, off: 0.7, solid: 0.95, strong: 1.1, lift: 3, sting: 3, presence: 0.1, reputation: 0.3 },
+  nights: { par: { school: { lead: 70, supporting: 64, featured: 58 }, rep: { lead: 82, supporting: 76, featured: 70 } } as Record<'school' | 'rep', Record<PartSize, number>>, perPoint: 40, luck: 0.4, off: 0.75, solid: 0.98, strong: 1.18, lift: 3, sting: 3, presence: 0.02, reputation: 0.3 },
   /** What a day's classes, a rehearsal, a performance and a shift take out of a body, in energy. */
   energy: { classes: 6, rehearsal: 8, performance: 10, shift: 4 },
   /** The chance, each performance, that an understudy goes on. */
@@ -457,13 +467,14 @@ export function admittedClass(sim: Simulation, person: Person): { classmates: Cl
   // A student's talent overall, and each skill around it: admits differ in both.
   const t = ESTIMATE.talent;
   const skills = (talent: number) => Object.fromEntries(SKILL_IDS.map((id) => [id, Math.round(Math.min(95, talent + t.spread * (rng.next() + rng.next() - 1)) * 10) / 10])) as Craft;
-  // Each family name once in a class: until 2026-09-28 they were drawn with repeats, and a class had three Okafors.
+  // Each name once in a class: until 2026-09-28 they were drawn with repeats, and a class had three Okafors and three Owens.
   const families = [...FAMILY];
+  const given = { actress: [...GIVEN_ACTRESS], actor: [...GIVEN_ACTOR] };
   const classmates = Array.from({ length: YALE_DRAMA.classSize - 1 }, (): Classmate => {
     const craft = skills(t.from + (t.to - t.from) * (rng.next() + rng.next()) / 2);
     const title = rng.next() < 0.5 ? 'actress' : 'actor';
-    const given = title === 'actress' ? GIVEN_ACTRESS : GIVEN_ACTOR;
-    const name = `${given[Math.floor(rng.next() * given.length)]} ${families.splice(Math.floor(rng.next() * families.length), 1)[0]}`;
+    const names = given[title];
+    const name = `${names.splice(Math.floor(rng.next() * names.length), 1)[0]} ${families.splice(Math.floor(rng.next() * families.length), 1)[0]}`;
     const drive = Math.round((1 + ESTIMATE.driveSpread * (2 * rng.next() - 1)) * 1000) / 1000;
     return { name, craft, title, drive };
   });
@@ -717,7 +728,7 @@ export function enroll(sim: Simulation, person: Person): void {
   sim.notify({
     category: 'school',
     title: 'Welcome To The Class Of ' + school.classOf,
-    body: `You’re one of the ${YALE_DRAMA.classSize} actors in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}, and the one the faculty wanted most from this year’s auditions. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until ${day(ORIENTATION_2026.ends)}, and classes from ${day(ORIENTATION_2026.classesBegin)} at 9 a.m.`,
+    body: `You’re one of the ${YALE_DRAMA.classSize} actors in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}, chosen from this year’s auditions with fifteen others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until ${day(ORIENTATION_2026.ends)}, and classes from ${day(ORIENTATION_2026.classesBegin)} at 9 a.m.`,
     importance: 80, route: '/workspace/school',
   });
 }
@@ -932,11 +943,21 @@ export function readOf(craft: Craft, reads: Partial<Craft>): number {
  */
 export function playOf(sim: Simulation, person: Person, production: { kind: Casting['kind']; n: number; runs: SchoolDate[] }): { title?: string; by?: string; parts: Part[]; reads: Partial<Craft> } {
   const year = production.runs[0]!.year;
-  // Each save's own season, the year's three from a place in the list drawn for it (`school.class`).
-  const dealt = (list: readonly (typeof THESIS_PLAYS)[number][], kind: string) => list[(Math.floor(sim.rng('school.class', person.id, `season-${kind}`).next() * list.length) + production.n) % list.length]!;
+  // Each save's own order of the plays, shuffled once (`school.class`), and
+  // dealt out a slot at a time from the class's first year, so no student
+  // meets the same play twice. Until 2026-09-28 each season was dealt on its
+  // own, and a student played Marie in Woyzeck two falls running.
+  const dealt = (list: readonly (typeof THESIS_PLAYS)[number][], kind: string, slot: number) => {
+    const rng = sim.rng('school.class', person.id, `season-${kind}`);
+    const order = [...list];
+    for (let i = order.length - 1; i > 0; i -= 1) { const j = Math.floor(rng.next() * (i + 1)); [order[i], order[j]] = [order[j]!, order[i]!]; }
+    return order[slot % order.length]!;
+  };
   if (production.kind === 'thesis' || production.kind === 'shakespeare') {
-    // The theses' year runs fall to spring: the season is dealt by its fall.
-    const play = production.kind === 'thesis' ? dealt(THESIS_PLAYS, `thesis-${production.runs[0]!.month >= 8 ? year : year - 1}`) : dealt(SHAKESPEARE_PLAYS, `shakespeare-${year}`);
+    // The theses' year runs fall to spring: its three slots by the fall, counted from the class's.
+    const fall = production.runs[0]!.month >= 8 ? year : year - 1;
+    const first = (person.school?.classOf ?? fall + 1) - 3;
+    const play = production.kind === 'thesis' ? dealt(THESIS_PLAYS, 'thesis', (fall - first) * 3 + production.n) : dealt(SHAKESPEARE_PLAYS, 'shakespeare', (year - first - 1) * 3 + production.n);
     return { title: play.title, by: play.by, parts: [...play.parts], reads: play.reads };
   }
   return { parts: production.kind === 'hughes' ? unnamedParts(2, 3, 3) : unnamedParts(3, 6, 7), reads: NEW_PLAYS_READ };
@@ -979,13 +1000,14 @@ export type Night = keyof typeof NIGHT_VALUE;
 /**
  * How a night went (`school.night`): how ready they came and what nerves
  * left of it, how the part sits on their craft, and the night's own luck.
- * Played at an ordinary readiness, with the part's craft at 65, a night lands
- * solid; rested and strong for it, strong or better. The bands and their
+ * Played at an ordinary readiness, with the craft the part asks, a night
+ * lands solid or strong; rested and above it, strong, and now and then
+ * remarkable. The bands and their
  * edges are SLATE's estimate.
  */
-export function nightOf(sim: Simulation, person: Person, key: string, level: number, ready: number): Night {
+export function nightOf(sim: Simulation, person: Person, key: string, level: number, ready: number, size: PartSize = 'supporting', where: 'school' | 'rep' = 'school'): Night {
   const n = ESTIMATE.nights;
-  const q = Math.min(1.2, ready) + (level - n.par) / n.perPoint + n.luck * (sim.rng('school.night', person.id, key).next() - 0.5);
+  const q = Math.min(1.2, ready) + (level - n.par[where][size]) / n.perPoint + n.luck * (sim.rng('school.night', person.id, key).next() - 0.5);
   return q < n.off ? 'off' : q < n.solid ? 'solid' : q < n.strong ? 'strong' : 'remarkable';
 }
 
@@ -1037,9 +1059,16 @@ function cast(sim: Simulation, person: Person, term: number): void {
   if (school.casting?.size) school.lastWork = { size: school.casting.size, ...(school.casting.nights ? { nights: nightsMean(school.casting.nights) } : {}) };
   delete school.casting;
   delete school.rep;
-  // The whole class is cast together, the player among them where they're in the pool.
-  const students: Student[] = school.classmates.map((_, i) => { const m = mateOf(sim, person, i); return { i, name: m.name, craft: m.craft, title: m.title, ...(m.last ? { last: m.last } : {}) }; });
-  if (school.castable) students.push({ i: -1, name: 'You', craft: person.craft!, title: person.performerTitle === 'actress' ? 'actress' : 'actor', ...(school.lastWork ? { last: school.lastWork } : {}) });
+  // A third-year a director asks into the Rep's company plays there that
+  // term, not in a School production too: the two rehearse the same
+  // afternoons. Until 2026-09-28 a student was cast in both, and the Rep won
+  // every rehearsal, leaving the thesis part unrehearsed.
+  const company = repTerm(term) && yearOfTerm(term) === 3;
+  const playerAtRep = company && school.standing === 'good' && actingOf(person.craft!) >= ESTIMATE.castAtRep;
+  const matesAtRep = new Set(company ? school.classmates.map((m, i) => ({ m, i })).filter(({ m }) => actingOf(m.craft) >= ESTIMATE.castAtRep).map(({ i }) => i) : []);
+  // The rest of the class is cast together, the player among them where they're in the pool.
+  const students: Student[] = school.classmates.flatMap((_, i) => { if (matesAtRep.has(i)) return []; const m = mateOf(sim, person, i); return [{ i, name: m.name, craft: m.craft, title: m.title, ...(m.last ? { last: m.last } : {}) }]; });
+  if (school.castable && !playerAtRep) students.push({ i: -1, name: 'You', craft: person.craft!, title: person.performerTitle === 'actress' ? 'actress' : 'actor', ...(school.lastWork ? { last: school.lastWork } : {}) });
   const first = schoolProduction(term, 1);
   const around: { name: string; production: string; part: string }[] = [];
   let mine: { production: NonNullable<ReturnType<typeof schoolProduction>>; play: ReturnType<typeof playOf>; part: string; size: PartSize; cast: { name: string; part: string }[] } | undefined;
@@ -1093,7 +1122,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   }
   if (repTerm(term) && school.standing === 'good') {
     const rep = repProduction(term);
-    const inRole = yearOfTerm(term) === 3 && actingOf(person.craft!) >= ESTIMATE.castAtRep;
+    const inRole = playerAtRep;
     const role = term === 1 ? (person.performerTitle === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : inRole ? 'A Featured Part In The Company' : 'An Understudy In The Company';
     // A student in a professional company plays one of its smaller parts (SLATE's estimate).
     school.rep = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0, ...(inRole ? { size: 'featured' as const } : {}) };
@@ -1133,7 +1162,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   // The class's others the directors ask into the Rep's company in the third year, the same bar.
   if (repTerm(term) && yearOfTerm(term) === 3) {
     const rep = repProduction(term);
-    const mates = school.classmates.map((m, i) => ({ m, i })).filter(({ m }) => actingOf(m.craft) >= ESTIMATE.castAtRep);
+    const mates = school.classmates.map((m, i) => ({ m, i })).filter(({ i }) => matesAtRep.has(i));
     for (const { m } of mates) school.around.list.push({ name: m.name, production: rep.name, part: 'A Featured Part In The Company' });
     const days = Math.max(0, Math.round((Date.parse(rep.run.from) - Date.parse(rep.rehearsals.from)) / MS_DAY));
     if (mates.length) schedule(sim, person, at(parseKey(rep.run.to), 23), { kind: COMPANY_KIND, label: `${rep.name}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates: mates.map(({ i }) => i), rehearsals: Math.round(days * 5 / 7), performances: Math.round((Date.parse(rep.run.to) - Date.parse(rep.run.from)) / MS_DAY * 6 / 7) + 1 } });
@@ -1307,7 +1336,8 @@ export function registerSchool(sim: Simulation): void {
   /** A night played: its reading, what it does, and on the last, the director's note. */
   const reckonNight = (s: Simulation, person: Person, casting: Casting, item: { at: Instant; payload: Record<string, unknown> }, kept: number, rep: boolean): Night => {
     const n = ESTIMATE.nights;
-    const night = nightOf(s, person, `${casting.production}-${item.at}`, readOf(person.craft!, castingReads(casting)), focusOf(person) * kept);
+    // An understudy plays the part they cover, which at the Rep is a lead.
+    const night = nightOf(s, person, `${casting.production}-${item.at}`, readOf(person.craft!, castingReads(casting)), focusOf(person) * kept, casting.size ?? 'lead', rep ? 'rep' : 'school');
     (casting.nights ??= {})[night] = (casting.nights[night] ?? 0) + 1;
     const w = person.wellbeing;
     if (night === 'off') w.morale = Math.max(0, w.morale - n.sting);

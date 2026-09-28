@@ -14,6 +14,29 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Newest, 2026-09-28, later: the playthrough and its fixes.**
+>
+> **The playthrough.** `probe/play-life2.ts` (untracked) played twelve looked-after lives in the engine to July 2031, and two runs played the real screens, until low memory stopped them after their first legs. There were no errors, the ledger balanced, nobody was stranded, and every save reopened on the same minute.
+>
+> **What it found, and what was fixed:**
+>
+> 1. **Too easy.** All twelve lives finished first, with acting 95–97 and presence and composure at 99–100. The fixes:
+>    - `classmateFocus` went from 0.85 to 1.
+>    - `driveSpread` went from 0.15 to 0.25.
+>    - `sessionGain` went from 0.55 to 0.42.
+>    - A night now reads against what the part asks, at School or at the Rep (`nights.par`).
+>    - Composure gains are smaller, and a remarkable night adds less presence.
+>
+>    Six lives since then graduate at about 89, against a best classmate of 81–85. One finished second. Nights are mixed, presence lands at 71–79 and composure at about 69.
+> 2. **Sleep.** The Sleep dialog's suggestion was never under 3 hours, and slept through calls. It now suggests what is left before the call, half an hour at the least.
+> 3. **Clashing castings.** A third-year in the Rep's company was also cast in a thesis. They now play only at the Rep that term, and so do classmates at the Rep.
+> 4. **Repeated plays.** A play could come round twice. Each save now shuffles the list once and deals it out from the class's first year.
+> 5. **Offers that can't be taken.** `stillTakeable` drops the Take It from an offer once a clashing job is taken.
+> 6. **Notices.** Statement notices are off by default, but a statement with a payment due always notifies.
+> 7. **Stale text.** The welcome, the guide and character creation said the player was "the one the faculty wanted most". Corrected.
+> 8. **Names.** Given names now appear once in a class, as family names already did.
+> 9. **Unclaimed money.** The bank now writes 90 days before handing an account to the state (`ESCHEAT_NOTICE_DAYS`, the uniform act's 60 to 120 days). Keep The Account there reactivates it.
+>
 > **Newest, 2026-09-28: the school made as perfect as the owner asked, in six parts.** Account 2 found six failings in the school on the owner's question, and the owner said "Do all 6". The commits are `aeb08ee` and the one after it.
 >
 > 1. **The class competes.** Admits differ in overall talent (`ESTIMATE.talent`). The player is drawn from the class's top quarter, not above everyone. Each classmate has their own drive and is an actor or an actress (`Classmate`). `mateOf` fills both in for older saves.
