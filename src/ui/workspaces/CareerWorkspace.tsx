@@ -482,10 +482,10 @@ function WorkCostsPanel() {
           {!career.kit && <Gated feature="career.buy_kit" onClick={() => { if (run('career.buy_kit').ok) toast('Tapes read better now.', 'positive'); }}>Buy A Kit</Gated>}
         </div>
         <div className="row-between small">
-          <span>A scene-study class, {dollars(WORK_COSTS.classMonthly)} a month: {career.scene ? 'Enrolled' : 'None'}</span>
+          <span>A scene-study class, {dollars(WORK_COSTS.classMonthly)} a month: {career.scene ? 'Enrolled' : career.since === undefined ? 'None: school is your class for now' : 'None'}</span>
           {career.scene
             ? <Gated feature="career.class" onClick={() => { if (run('career.class', { on: false }).ok) toast('Out of the class.', 'positive'); }}>Leave The Class</Gated>
-            : <Gated feature="career.class" onClick={() => { if (run('career.class', { on: true }).ok) toast('In class from this week.', 'positive'); }}>Join A Class</Gated>}
+            : career.since !== undefined && <Gated feature="career.class" onClick={() => { if (run('career.class', { on: true }).ok) toast('In class from this week.', 'positive'); }}>Join A Class</Gated>}
         </div>
         {/* Building the attributes on purpose (`systems/attributes.ts`). */}
         <div className="row-between small">
@@ -497,7 +497,7 @@ function WorkCostsPanel() {
           {!sim.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending') && <Gated feature="career.workshop" onClick={() => { const a = run<{ at: number }>('career.workshop'); if (a.ok && a.value) toast(`Booked for ${formatDate(a.value.at, sim.zone)}.`, 'positive'); }}>Book A Workshop</Gated>}
         </div>
         <div className="row-between small">
-          <span>A publicist, {dollars(WORK_COSTS.publicistMonthly)} a month: {career.publicist ? `on retainer, about ${publicityFor(sim, person, sim.now)} recognition a month from press, and the name fades half as fast` : publicistRefusal(person) ?? `about ${publicityFor(sim, person, sim.now)} recognition a month from interviews and press, and the name fading half as fast`}.</span>
+          <span>A publicist, {dollars(WORK_COSTS.publicistMonthly)} a month: {career.publicist ? `on retainer, about ${publicityFor(sim, person, sim.now)} recognition a month from press, and the name fades half as fast` : publicistRefusal(person)?.replace(/\.$/, '') ?? `about ${publicityFor(sim, person, sim.now)} recognition a month from interviews and press, and the name fading half as fast`}.</span>
           {career.publicist
             ? <Gated feature="career.publicist" onClick={() => { if (run('career.publicist', { on: false }).ok) toast('No more retainer.', 'positive'); }}>Let The Publicist Go</Gated>
             : !publicistRefusal(person) && <Gated feature="career.publicist" onClick={() => { if (run('career.publicist', { on: true }).ok) toast('A publicist is working your name.', 'positive'); }}>Hire A Publicist</Gated>}
