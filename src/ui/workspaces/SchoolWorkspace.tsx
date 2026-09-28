@@ -13,7 +13,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Empty, Stat } from '@/ui/components/primitives';
+import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -145,7 +145,7 @@ function StandingPane() {
               Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, standing falls a step, from good to concern, to warning, to dismissal; meeting both restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree on any standing short of dismissal.
             </p>
             <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
-            <p className="xs dim" style={{ margin: 0 }}>The stages are the Yale Bulletin’s. The floors are SLATE’s reading of its “appropriate standards”.</p>
+            <Fine>The stages are the Yale Bulletin’s. The floors are SLATE’s reading of its “appropriate standards”.</Fine>
           </div>
         </Panel>
 
@@ -167,7 +167,7 @@ function StandingPane() {
           <div className="col gap-2 small">
             <div>{YALE_DRAMA.dean.name}: {YALE_DRAMA.dean.title}, since {formatDate(Date.parse(`${YALE_DRAMA.dean.since}T12:00:00Z`), zone())}.</div>
             <div>{YALE_DRAMA.actingChair.name}: {YALE_DRAMA.actingChair.title}, who casts every student and meets any whose standing falls.</div>
-            <p className="xs dim" style={{ margin: 0 }}>Source: {YALE_DRAMA.source}.</p>
+            <Fine>Source: {YALE_DRAMA.source}.</Fine>
           </div>
         </Panel>
 
@@ -191,9 +191,9 @@ function StandingPane() {
               </tbody>
             </table>
           </div>
-          <p className="xs dim" style={{ margin: 0 }}>
+          <Fine>
             You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals and performances grow craft, more when you come rested and less the better you already are; your classmates grow too. The scale and the rates are SLATE’s.
-          </p>
+          </Fine>
         </div>
       </Panel>
 
@@ -276,9 +276,9 @@ function ClassesPane() {
           <p className="small" style={{ margin: 0 }}>
             {next ? `Next classes: ${formatDateTime(next, zone())}.` : 'No classes ahead.'} This term’s classes run {dayOf(period.from)} to {dayOf(period.to)}, less {off} breaks for holidays, Community Days, work periods and recesses. Asleep or away from New Haven at nine is an absence; calling in sick excuses it when you’re unwell (condition under {ESTIMATE.sickBelow}) or down with the flu, and not otherwise; a day in hospital is excused of itself.
           </p>
-          <p className="xs dim" style={{ margin: 0 }}>
+          <Fine>
             {period.estimate ? 'This term’s dates are SLATE’s estimate by the 2026–2027 pattern. ' : 'The class days are the Yale Bulletin’s. '}The courses are the Bulletin’s; how often each meets isn’t published, and the week is SLATE’s estimate.
-          </p>
+          </Fine>
         </div>
       </Panel>
 
@@ -387,9 +387,9 @@ function CastingPane() {
           </table>
         </Panel>
       )}
-      <p className="xs dim" style={{ margin: 0 }}>
+      <Fine>
         Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how the last run’s nights went. The best read takes the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the reading are SLATE’s estimate, as the seasons you’re cast in aren’t announced; the characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
-      </p>
+      </Fine>
 
       <CabaretPanel />
       <SummerPanel />
@@ -432,9 +432,9 @@ function CabaretPanel() {
           </div>
         )}
         {mine?.nights && <p className="small" style={{ margin: 0 }}>{nightsLine(mine)}</p>}
-        <p className="xs dim" style={{ margin: 0 }}>
+        <Fine>
           The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part, and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
-        </p>
+        </Fine>
       </div>
     </Panel>
   );
@@ -466,9 +466,9 @@ function SummerPanel() {
           })}
         </div>
       )}
-      <p className="xs dim" style={{ margin: 0 }}>
+      <Fine>
         Three shows between late June and late August, evenings at eight and Saturdays at two, with afternoon rehearsals in the three weeks before each. It pays {formatMoney(inSaveMoney(sim, SUMMER_CABARET.stipendWeekly, 'USD'), cur)} a week, SLATE’s estimate, as are later summers’ dates and the company taking a student in good standing who asks by the end of April: neither how it’s chosen nor what it pays is published. A missed performance and the company goes on without you. The summer is yours: the Bulletin limits outside work only while classes are in session. Source: {SUMMER_CABARET.source}.
-      </p>
+      </Fine>
     </Panel>
   );
 }
@@ -509,7 +509,7 @@ function WorkPane() {
         <p className="small" style={{ margin: 0 }}>
           Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
         </p>
-        <p className="xs dim" style={{ margin: 0 }}>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. Source: {WORK_STUDY.source}.</p>
+        <Fine>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. Source: {WORK_STUDY.source}.</Fine>
       </div>
     </Panel>
   );
@@ -544,9 +544,9 @@ function TermsPane() {
               </span>
             </div>
           ))}
-          <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+          <Fine>
             The 2026–2027 dates are the Yale Bulletin’s. Later years aren’t published yet, so they’re SLATE’s estimate by the same pattern.
-          </p>
+          </Fine>
         </div>
       </Panel>
 
@@ -571,7 +571,7 @@ function TermsPane() {
           <p className="small" style={{ margin: 0 }}>
             Tuition is met in full for every student, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {need ? 'Yours found need, and the scholarship meets it.' : 'Yours found none, so the health plan and living costs come from your bank.'}
           </p>
-          <p className="xs dim" style={{ margin: 0 }}>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, SLATE’s estimate until they’re published. Source: {COST_2026_27.source}.</p>
+          <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, SLATE’s estimate until they’re published. Source: {COST_2026_27.source}.</Fine>
         </div>
       </Panel>
     </div>

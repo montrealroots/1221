@@ -10,7 +10,7 @@
 import { useState } from 'react';
 import { plural } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Empty, Stat } from '@/ui/components/primitives';
+import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -64,7 +64,7 @@ function TradesPane() {
               </div>
             ))}
           </div>
-          <p className="xs dim" style={{ margin: 'var(--s3) 0 0' }}>A line about you in the trades adds a little to your recognition. The outlets are the real ones; what they print about you and your class, and which work makes them, is SLATE’s.</p>
+          <Fine>A line about you in the trades adds a little to your recognition. The outlets are the real ones; what they print about you and your class, and which work makes them, is SLATE’s.</Fine>
         </Panel>
       )}
       {mates.length > 0 && (
@@ -181,7 +181,7 @@ function AgencyPane() {
               Without an agency, work comes from submitting yourself, and a job worked can bring an agency’s call.
             </p>
           )}
-          <p className="xs dim" style={{ margin: 0 }}>Source: {AGENT_COMMISSION.source}; {LEAVING.source}; {AGENCY_TERM.source}. Renewing a client it booked work for is SLATE’s estimate.</p>
+          <Fine>Source: {AGENT_COMMISSION.source}; {LEAVING.source}; {AGENCY_TERM.source}. Renewing a client it booked work for is SLATE’s estimate.</Fine>
         </div>
       </Panel>
 
@@ -241,9 +241,9 @@ function AgencyPane() {
               </tbody>
             </table>
           </div>
-          <p className="xs dim" style={{ margin: 0 }}>
+          <Fine>
             Scenes for agents, managers and casting directors in New York and then Los Angeles, as Yale holds them; the class of {person.school?.classOf ?? SHOWCASE_2029.newYork.year}’s dates are SLATE’s estimate by 2025’s and 2026’s. A showing reads your acting (scene study twice, character work and emotional access) as much as the rest of your craft together, with your presence a fifth of it; nerves and tiredness take it down, and an agency reads your reputation beside it. The agencies are the ones Yale names; what each needs to see, and its reach, are SLATE’s estimate. Source: {SHOWCASE_2029.source}; {AGENCY_SOURCE}.
-          </p>
+          </Fine>
         </div>
       </Panel>
     </div>
@@ -331,10 +331,10 @@ function AuditionsPane() {
               </tbody>
             </table>
           </div>
-          <p className="xs dim" style={{ margin: 0 }}>Source: {[...new Set(ROLES.map((r) => r.source))].join('; ')}.</p>
-          <p className="xs dim" style={{ margin: 0 }}>
+          <Fine>Source: {[...new Set(ROLES.map((r) => r.source))].join('; ')}.</Fine>
+          <Fine>
             The pay is each contract’s minimum on today’s date: SAG-AFTRA’s 2026–2030 television and theatrical rates, its low budget agreements, Equity’s LORT rates and its Broadway minimum; after a contract’s last published step it holds. A guest star’s pay is the major role’s five- or eight-day price, by the day; a series regular’s is by the episode, 13 guaranteed. A shooting day runs {OVERTIME.dayHours[0]} to {OVERTIME.dayHours[1]} hours, and the hours past the contract’s are paid at its overtime rates. Your chance is SLATE’s estimate: about one in twenty at the part’s bar, as the trade reckons for a newer actor, more above it, less tired or on tape.
-          </p>
+          </Fine>
         </div>
       </Panel>
     </div>
@@ -431,7 +431,7 @@ function UnionsPane() {
               <Stat label="A Year At 65" value={money(pension.yearly)} note={`Paid monthly from ${formatDate(pensionAge(person), sim.zone)}${pension.vested ? '' : ', once vested'}`} />
             </div>
             <p className="small" style={{ margin: 0 }}>{pension.years.map((y) => `${y.year}: ${money(y.earnings)}${y.credit ? ', a credit' : ''}`).join('; ')}.</p>
-            <p className="xs dim" style={{ margin: 0 }}>The vesting and the age are the Plan’s. The minimum for a credit, held at the Plan’s 2012 figure, and a year adding 2% of its covered earnings, the Plan’s own example, are SLATE’s estimate; the earnings ceilings and early retirement aren’t modeled. Source: {SAG_PENSION.source}.</p>
+            <Fine>The vesting and the age are the Plan’s. The minimum for a credit, held at the Plan’s 2012 figure, and a year adding 2% of its covered earnings, the Plan’s own example, are SLATE’s estimate; the earnings ceilings and early retirement aren’t modeled. Source: {SAG_PENSION.source}.</Fine>
           </div>
         </Panel>
       )}
@@ -445,7 +445,7 @@ function UnionsPane() {
             <p className="small" style={{ margin: 0 }}>
               Your first SAG-AFTRA job makes you eligible. Taking another {SAG_AFTRA.taftHartleyDays} days on means joining first: the {dollars(SAG_AFTRA.initiation)} initiation fee and half a year’s dues. Dues are {dollars(SAG_AFTRA.basicDues)} a year, billed each May and November, and each May {(SAG_AFTRA.workDues * 100).toFixed(3)}% of the last year’s SAG-AFTRA earnings.
             </p>
-            <p className="xs dim" style={{ margin: 0 }}>Source: {SAG_AFTRA.source}.</p>
+            <Fine>Source: {SAG_AFTRA.source}.</Fine>
           </div>
         </Panel>
         <Panel title="Actors’ Equity">
@@ -454,7 +454,7 @@ function UnionsPane() {
             <p className="small" style={{ margin: 0 }}>
               Your first Equity contract makes you a member: {dollars(EQUITY.initiationNow)} of the {dollars(EQUITY.initiation)} initiation fee down and the rest over two years. Dues are {dollars(EQUITY.basicDues)} a year, each May and November, and {EQUITY.workingDues * 100}% of every Equity check.
             </p>
-            <p className="xs dim" style={{ margin: 0 }}>Source: {EQUITY.source}.</p>
+            <Fine>Source: {EQUITY.source}.</Fine>
           </div>
         </Panel>
       </div>
@@ -578,9 +578,9 @@ function WorkCostsPanel() {
             ? <Gated feature="career.publicist" onClick={() => { if (run('career.publicist', { on: false }).ok) toast('No more retainer.', 'positive'); }}>Let The Publicist Go</Gated>
             : !publicistRefusal(person) && <Gated feature="career.publicist" onClick={() => { if (run('career.publicist', { on: true }).ok) toast('A publicist is working your name.', 'positive'); }}>Hire A Publicist</Gated>}
         </div>
-        <p className="xs dim" style={{ margin: 0 }}>
+        <Fine>
           Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; a paid one sends your headshot, and your reel where you have one, without which the {WORK_COSTS.wantReel * 100}% of breakdowns that ask for one are shut. Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week, and Casting Networks’ {WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']} more in Los Angeles and {WORK_COSTS.castingNetworksSubmissions.other} elsewhere. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your scene study as a class at school does; a coach, {dollars(WORK_COSTS.coach)} an hour, makes an audition book about a quarter more often and halves its nerves; a finished film premieres at Tribeca in June or, from a studio, in Los Angeles about nine months on, and being there adds more recognition. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
-        </p>
+        </Fine>
       </div>
     </Panel>
   );
@@ -611,9 +611,9 @@ function ManagerPanel() {
         <p className="small" style={{ margin: 0 }}>
           A manager takes {pctOf(MANAGEMENT.withAgent)} of what you earn beside an agent and {pctOf(MANAGEMENT.alone)} without one, gets you about {MANAGEMENT.auditionsPerWeek} more audition a week, and, while you’ve no agency, sets up meetings that bring one about {pctOf(MANAGEMENT.findsAnAgency)} of months. A first contract runs a year.
         </p>
-        <p className="xs dim" style={{ margin: 0 }}>
+        <Fine>
           The firms are ones signing actors in 2026: {MANAGERS.map((m) => m.name).join(', ')}. Nothing caps a manager’s commission; the rates are what the trade reckons, and the rest is SLATE’s estimate. Source: {MANAGEMENT.source}.
-        </p>
+        </Fine>
       </div>
     </Panel>
   );
@@ -648,9 +648,9 @@ function ResidualsPanel() {
             </table>
           </div>
         )}
-        <p className="xs dim" style={{ margin: 0 }}>
+        <Fine>
           A network’s prime-time rerun pays what you were paid, to its ceiling, within 30 days; syndication a share of the part’s minimum by the run; streaming, after its first 90 days, a share each year by the service’s size, and a hit a bonus; a film’s cast shares {(RESIDUALS.filmPool * 100).toFixed(1)}% of its television and streaming money. The formulas are the agreements’. Where a job is seen, how it does, and what a film earns are SLATE’s estimate. Source: {RESIDUALS.source}.
-        </p>
+        </Fine>
       </div>
     </Panel>
   );

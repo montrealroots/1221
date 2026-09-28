@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel } from '@/ui/components/primitives';
+import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -76,12 +76,12 @@ export function BankSecurity({ bankId }: { bankId: string }) {
                 )}
                 {p.billersStale && <Gated feature="card.update_billers" className="btn btn-sm" onClick={() => run('card.update_billers', {})}>Give The Bills The New Number</Gated>}
               </div>
-              <p className="xs dim" style={{ margin: 0 }}>
+              <Fine>
                 {fee === undefined && rules?.replaceWords ? `The bank’s terms: ${rules.replaceWords} SLATE charges none. ` : ''}
                 {fee === undefined && !rules?.replaceWords ? 'The bank lists no fee for a new card, so SLATE charges none.' : fee === undefined ? '' : fee === 0 ? 'A new card is free.' : `A new card costs ${money(inSaveMoney(sim, fee, bankById(bankId)?.currency ?? cur))}${rules?.freeFor?.length ? `, and nothing when it’s ${rules.freeFor.map((w) => w).join(' or ')}` : ''}.`}
                 {rules?.rushFee !== undefined ? ` Sent in a rush, ${money(inSaveMoney(sim, rules.rushFee, bankById(bankId)?.currency ?? cur))} more.` : ''}
                 {(which === 'credit' ? rules?.cardYearsCredit ?? rules?.cardYears : rules?.cardYears) === undefined ? ` Cards last ${ESTIMATE_YEARS} years here, SLATE’s estimate; the bank doesn’t say.` : ''}
-              </p>
+              </Fine>
             </div>
           );
         })}
@@ -102,7 +102,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
         {law?.debitWords && <p className="xs dim" style={{ margin: 0 }}>The law, for the debit card: {law.debitWords}</p>}
         {law?.creditWords && cards.some((c) => c.which === 'credit') && <p className="xs dim" style={{ margin: 0 }}>For the credit card: {law.creditWords}</p>}
         {law?.refundWords && <p className="xs dim" style={{ margin: 0 }}>A payment reported as not yours: {law.refundWords}</p>}
-        {(rules || law) && <p className="xs dim" style={{ margin: 0 }}>Source: {[rules?.source, law?.source].filter(Boolean).join('; ')}.</p>}
+        {(rules || law) && <Fine>Source: {[rules?.source, law?.source].filter(Boolean).join('; ')}.</Fine>}
       </div>
     </Panel>
   );

@@ -17,7 +17,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Empty } from '@/ui/components/primitives';
+import { Panel, Empty, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { BankLending } from '@/ui/bank/BankLending';
 import { BankCard } from '@/ui/bank/BankCard';
@@ -113,7 +113,7 @@ export function BankWorkspace() {
                 ) : (
                   <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
                 )}
-                {product && <p className="xs dim" style={{ margin: 0 }}>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[bank.confidence ?? 'H']}</p>}
+                {product && <Fine>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[bank.confidence ?? 'H']}</Fine>}
                 {account.kind === 'savings' && (
                   <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     {savingsNotice(sim, account)

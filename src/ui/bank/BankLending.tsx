@@ -14,7 +14,7 @@
 import { useState } from 'react';
 import { homeOf } from '@/engine/systems/earnings';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel } from '@/ui/components/primitives';
+import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -147,9 +147,9 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
               ? <p className="small muted" style={{ margin: 0 }}>{offer.refused}</p>
               : (
                 <>
-                  <p className="xs dim" style={{ margin: 0 }}>
+                  <Fine>
                     It would arrange {od.minLimit !== undefined ? `${money(offer.min)} to ` : 'up to '}{money(offer.max)} at {pct(offer.rate)}: a month of your wages is SLATE’s estimate of what a bank allows.
-                  </p>
+                  </Fine>
                   <div className="field-act">
                     <div className="field"><label htmlFor="od-limit">{`Overdraft Limit (${cur})`}</label><input id="od-limit" type="text" inputMode="decimal" value={limit} onChange={(e) => setLimit(e.target.value)} /></div>
                     <Gated feature="bank.arrange_overdraft" className="btn btn-sm" disabled={!limit}
@@ -181,7 +181,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
             The month’s deepest point so far is {money(current!.odPeak!)}; the commission on it would be {formatMoney(Math.max(Math.round(current!.odPeak! * od.commission.share), inSaveMoney(sim, od.commission.min, bank.currency)), cur)}{od.cap ? `, less whatever takes the month past the cap` : ''}.
           </p>
         )}
-        <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>{od ? `Source: ${od.source}.` : bank.overdraft ?? ''}</p>
+        <Fine>{od ? `Source: ${od.source}.` : bank.overdraft ?? ''}</Fine>
         </>}
       </Panel>
       )}
@@ -208,7 +208,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 Put It Away
               </Gated>
             </div>
-            <p className="xs dim" style={{ margin: 0 }}>Source: {lending.term.source}.</p>
+            <Fine>Source: {lending.term.source}.</Fine>
           </div>
         )}
       </Panel>
@@ -279,7 +279,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 Borrow It
               </Gated>
             </div>
-            <p className="xs dim" style={{ margin: 0 }}>Source: {lending.loan.source}.</p>
+            <Fine>Source: {lending.loan.source}.</Fine>
           </div>
         )}
       </Panel>
@@ -301,7 +301,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 {chex.bank} reported you to ChexSystems on {formatDate(chex.at, sim.zone)}; it stands until {formatDate(chex.at + CHEX.years * 365 * 86_400_000, sim.zone)}. A bank here turns a report away about {Math.round((debt && debt.balance < 0 ? CHEX.declines.unpaid : CHEX.declines.paid) * 100)}% of the time, SLATE’s estimate, and the ones that have are left off the list. Source: {CHEX.source}.
               </p>
             )}
-            {rule && <p className="xs dim" style={{ margin: 0 }}>Source: {rule.source}.</p>}
+            {rule && <Fine>Source: {rule.source}.</Fine>}
             <div className="field-act">
               <div className="field"><label htmlFor="switch-to">Switch To</label><select id="switch-to" value={target} onChange={(e) => setTarget(e.target.value)}>
                 {/* The dearest current account first, the cheapest last. */}

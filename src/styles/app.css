@@ -1295,3 +1295,21 @@ kbd {
 /* A chosen place's line under its name, on the accent's tint, where the dim
    text failed contrast (axe, 2026-09-26, the birthplace every new life picks). */
 .picker-option[data-selected] .picker-option-meta { color: var(--text-muted); }
+
+/* Sources and estimates, folded behind a line (`Fine`). */
+details.fine > summary { cursor: pointer; width: fit-content; }
+details.fine > summary:hover { color: var(--text); }
+details.fine[open] > summary { margin-bottom: 0; }
+
+/* A phone (2026-09-28): the tabs wrap onto a second line rather than hide
+   off the edge, and a table keeps its words whole, scrolling in its panel
+   when it's wider than the screen. Table cells broke words anywhere, which
+   let a column shrink past a word ("Mon/day", "Profession/al"). */
+td, th { overflow-wrap: break-word; }
+@media (max-width: 640px) {
+  .tabs { flex-wrap: wrap; overflow-x: visible; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+/* A statement's lines keep their columns, scrolling as one on a phone. */
+.statement-lines { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.statement-lines > .row-between { min-width: 520px; }

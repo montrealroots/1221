@@ -13,7 +13,7 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel } from '@/ui/components/primitives';
+import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate, zonedParts } from '@/engine/core/time';
@@ -205,9 +205,9 @@ export function BankCard({ bankId }: { bankId: string }) {
             </Gated>
           )}
         </div>
-        <p className="xs dim" style={{ margin: 0 }}>
+        <Fine>
           {estimated}{estimated && terms.source ? ' ' : ''}{terms.source ? `Source: ${terms.source}, ${terms.asOf}.` : ''}
-        </p>
+        </Fine>
       </div>
     </Panel>
   );

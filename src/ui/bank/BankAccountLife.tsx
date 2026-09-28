@@ -7,7 +7,7 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel } from '@/ui/components/primitives';
+import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -58,10 +58,10 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
                 {(life?.endChoices?.length ?? 0) > 1 && notice > 0 && term.maturesAt ? (tooNear ? ` Too near its end to change: the bank needs ${notice} days’ notice.` : ` It can be changed until ${formatDate(term.maturesAt - notice * DAY, sim.zone)}.`) : ''}
               </p>
               {life?.maturityWords && <p className="xs dim" style={{ margin: '0 0 4px' }}>The bank’s terms at the end: {life.maturityWords}</p>}
-              <p className="xs dim" style={{ margin: '0 0 4px' }}>
+              <Fine>
                 {term.breakAt !== undefined ? `Closing on ${formatDate(term.breakAt, sim.zone)}, on the notice given. ` : ''}{quote.refused ?? (quote.penalty > 0 ? `Broken now it costs ${money(quote.penalty)}${quote.estimate ? ', the interest so far: SLATE’s estimate of the bank’s penalty' : ''}.` : 'Broken now it comes out whole.')}
                 {quote.words ? ` The bank’s terms: ${quote.words}` : ''}
-              </p>
+              </Fine>
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
                 {!tooNear && (life?.endChoices ?? []).filter((end) => end !== termEndOf(term)).map((end) => (
                   <Gated key={end} feature="bank.set_term_end" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_term_end', { accountId: term.id, atEnd: end })}>

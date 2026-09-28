@@ -11,6 +11,19 @@ import { clamp } from '@/engine/core/rng';
 import { LookRegion, Open } from '@/ui/looks/Look';
 import type { Subject } from '@/ui/looks/subject';
 
+/**
+ * Sources and estimates, folded behind a line: there to read, out of the way
+ * of playing. Until 2026-09-28 each panel ended in them in full.
+ */
+export function Fine({ children }: { children: ReactNode }) {
+  return (
+    <details className="fine">
+      <summary className="xs dim">Sources And Estimates</summary>
+      <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{children}</p>
+    </details>
+  );
+}
+
 export function Panel({
   title, subtitle, actions, children, flush, tight, look,
 }: {

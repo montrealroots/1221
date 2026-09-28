@@ -14,6 +14,32 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Newest, 2026-09-28, last: "everything that would make it perfect".** Account 2 did this at the owner's word. Each part below was its own gated commit.
+>
+> **A. The school**
+>
+> - **Stage work in the evaluation** (`350c362`). The evaluation reads the work on stage: a run mostly off falls short (`workFloor`), and a strong one is noted. The School's night bars are a student's, and the Rep's a professional's.
+> - **The director's note** (`350c362`) names what to work on.
+> - **The Rep's unannounced seasons** (`350c362`) are dealt from `REP_PLAYS`.
+> - **The Cabaret and the Summer Cabaret** (`2cc9c57`) have parts, plays (`SUMMER_PLAYS`), nights and a note.
+> - **Teachers' notes** (`9896f39`). Each course's teacher gives a note at the evaluation (`teachersNotes`).
+> - **Bonds with classmates** (`b4de8aa`). Classmates' `bond` makes them friends or rivals. Friends in a cast lift a night, and a rival taking the lead is named.
+>
+> **B. The business**
+>
+> - **Recognition and festivals** (`a9f85b8`). Recognition comes when the work is seen, by its audience. Television counts when it airs. An independent film gets into Tribeca one time in five, the Brooklyn Film Festival otherwise, or goes to streaming (`FILM_ROAD`, decider `career.selection`).
+> - **The class after Yale** (`29efaa4`, `systems/rivals.ts`, decider `career.rivals`). The class is signed at the showcase and books work monthly. A classmate is in the room at auditions now and then, and a better read takes the part. Deadline and Playbill carry it on Trade News and Your Class.
+> - **A commercial's product** (`d8c22fb`, `PRODUCTS`). It is read by Animals, Cars, Fashion, Nature and Politics (`PRODUCT_INTEREST`).
+> - **The SAG-AFTRA pension** (`d76ed1d`, `systems/pension.ts`). Credits, vesting and a pension from 65. An old save's day-job fund is paid out then too.
+> - **Not built, with the reasons:**
+>   - The commercials contract's own 91-day clause is not modeled. SLATE signs both contracts together, and the union then applies the TV/theatrical rules.
+>   - Property tax needs a home to own, a whole system, and is the owner's to ask for.
+>
+> **C. Polish**
+>
+> - **Sources folded.** The sources and estimates sit behind a "Sources And Estimates" line (`Fine`).
+> - **Phone width.** The screens fit a phone's width: the tabs wrap, table words stay whole, and wide tables scroll in their panel. `probe/mobile.mjs` (untracked) checks every screen.
+>
 > **Newest, 2026-09-28, later: the playthrough and its fixes.**
 >
 > **The playthrough.** `probe/play-life2.ts` (untracked) played twelve looked-after lives in the engine to July 2031, and two runs played the real screens, until low memory stopped them after their first legs. There were no errors, the ledger balanced, nobody was stranded, and every save reopened on the same minute.

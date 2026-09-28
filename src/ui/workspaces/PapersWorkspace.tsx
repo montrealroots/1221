@@ -9,7 +9,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat } from '@/ui/components/primitives';
+import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -97,7 +97,7 @@ function ReturnsPane() {
                 </p>
               );
             })}
-            <p className="xs dim" style={{ margin: 0 }}>Under the treaty’s {money(treaty)} in a year all that was withheld comes back; over it, the UK’s bands on it all. Source: {ABROAD.source}.</p>
+            <Fine>Under the treaty’s {money(treaty)} in a year all that was withheld comes back; over it, the UK’s bands on it all. Source: {ABROAD.source}.</Fine>
           </div>
         </Panel>
       )}
@@ -154,9 +154,9 @@ function ReturnsPane() {
           </Panel>
         );
       })}
-      <p className="xs dim" style={{ margin: 0 }}>
+      <Fine>
         Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission, dues and the job’s other costs you kept receipts for off an income of {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, from two employers paying {formatMoney(inSaveMoney(sim, RETURN.performingArtistEmployerPay, 'USD'), cur)} or more, where the costs are over a tenth of the acting wages; otherwise federally they aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under {formatMoney(inSaveMoney(sim, ABROAD.canada.treatyCad, 'CAD'), cur)} (CAD 15,000) in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past {formatMoney(inSaveMoney(sim, ABROAD.uk.payerThresholdGbp, 'GBP'), cur)} (£12,570) in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
-      </p>
+      </Fine>
     </div>
   );
 }
@@ -201,9 +201,9 @@ function HealthPane() {
             You pay the whole premium each month, and the return gives back what’s over your share of income: none over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
             {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.flat, 'USD'), cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.bronzeMonth, 'USD'), cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
           </p>
-          <p className="xs dim" style={{ margin: 0 }}>
+          <Fine>
             The benchmark premiums are SLATE’s estimate from published rates. Earned union cover: SAG-AFTRA’s from 12 months’ earnings at its threshold, for a quarterly premium; Equity-League’s from {UNION_HEALTH.equityWeeks} weeks of Equity work in 12 months, {formatMoney(inSaveMoney(sim, UNION_HEALTH.equityPremium, 'USD'), cur)} a quarter. Source: {UNION_HEALTH.source}; {BENCHMARK_SOURCE}; {CALIFORNIA_MANDATE.source}.
-          </p>
+          </Fine>
         </div>
       </Panel>
 
@@ -237,9 +237,9 @@ function HealthPane() {
               </table>
             </div>
           )}
-          <p className="xs dim" style={{ margin: 0 }}>
+          <Fine>
             Illness comes at the rates of an adult your age: about {CARE.perYear.visit} doctor’s visits a year, {CARE.perYear.emergency} emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: {formatMoney(inSaveMoney(sim, grown(CARE.price.visit, 'visit', sim.now), 'USD'), cur)} a visit, {formatMoney(inSaveMoney(sim, grown(CARE.price.emergency, 'emergency', sim.now), 'USD'), cur)} an emergency visit and {formatMoney(inSaveMoney(sim, grown(CARE.price.stay, 'stay', sim.now), 'USD'), cur)} a stay at this year’s commercial prices, grown from their year by the medical price index, and the uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
-          </p>
+          </Fine>
         </div>
       </Panel>
     </div>
@@ -265,9 +265,9 @@ function ConditionsPanel() {
             </Gated>
           </div>
         ))}
-        <p className="xs dim" style={{ margin: 0 }}>
+        <Fine>
           Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%, diabetes {(CHRONIC.share.diabetes * 100).toFixed(1)}%, arthritis {(CHRONIC.share.arthritis * 100).toFixed(1)}%. Kept up, each month’s care is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure, insulin and a glucose monitor (or a generic for type 2) and a visit a quarter for diabetes, a generic for arthritis. Insulin is never more than the makers’ {formatMoney(inSaveMoney(sim, INSULIN.cashCap, 'USD'), cur)} a month, and nothing on a plan New York regulates; the monitor never more than Abbott’s {formatMoney(inSaveMoney(sim, INSULIN.monitor.program, 'USD'), cur)}. Left alone, depression weighs on your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it, which is SLATE’s estimate. Source: {CHRONIC.source}; {INSULIN.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
-        </p>
+        </Fine>
       </div>
     </Panel>
   );
@@ -294,9 +294,9 @@ function DentalPanel() {
     >
       <div className="col gap-3">
         {own && <Stat label="Paid By The Plan This Year" value={`${formatMoney(own.paid[year] ?? 0, cur)} of ${formatMoney(inSaveMoney(sim, d.max, 'USD'), cur)}`} />}
-        <p className="xs dim" style={{ margin: 0 }}>
+        <Fine>
           Cleanings in full; a filling at {d.basic * 100}% after a {formatMoney(inSaveMoney(sim, d.deductible, 'USD'), cur)} deductible, to {formatMoney(inSaveMoney(sim, d.max, 'USD'), cur)} a year. It pays only where your health plan doesn’t. {offered === 'ca' ? 'Covered California sells it only beside its own plan, and it ends with that plan; its Los Angeles premium is SLATE’s estimate.' : offered === 'yale' ? 'Paid for the year to 30 September, and not canceled once paid.' : 'Bought on its own through NY State Of Health; its premium and its share of a filling are SLATE’s estimate.'} Source: {DENTAL_PLANS.source}.
-        </p>
+        </Fine>
       </div>
     </Panel>
   );
@@ -340,7 +340,7 @@ function BenefitsPane() {
           <p className="small" style={{ margin: 0 }}>
             Each Sunday the week is certified for you, from anywhere in the country as an interstate claim is; a week abroad pays nothing. A week with work pays {partial}. What’s paid is income on your return{state === 'ca' ? ', federally; California doesn’t tax it' : ''}.
           </p>
-          <p className="xs dim" style={{ margin: 0 }}>Source: {source}.</p>
+          <Fine>Source: {source}.</Fine>
         </div>
       </Panel>
       {record.past.length > 0 && (
