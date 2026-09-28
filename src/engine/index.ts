@@ -620,12 +620,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // SLATE to acting. A save from before that loses what it held: the past
   // before acting, the job, the pay record, and the shifts, paydays, tips and
   // benefit payments still on its calendar. The money they already paid
-  // stays in the ledger, as money that came in.
+  // stays in the ledger, as money that came in. A save of that era carries its
+  // job, and only such a save is cleared: `earnings` came back as acting's pay
+  // record (`systems/earnings.ts`), and until 2026-09-28 its being there was
+  // taken for the day job's, and every save lost its pay record, which the tax
+  // returns, unemployment and union health read, each time it was opened.
   {
     let cleared = 0;
     for (const person of Object.values(universe.people ?? {})) {
       const p = person as unknown as Record<string, unknown>;
-      if (!('job' in p) && !('earnings' in p) && !('beforeActing' in p)) continue;
+      if (!('job' in p) && !('beforeActing' in p)) continue;
       delete p.job;
       delete p.earnings;
       delete p.beforeActing;
