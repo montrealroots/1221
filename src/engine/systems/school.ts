@@ -126,6 +126,8 @@ export interface LastWork { size: PartSize; nights?: number; heeded?: boolean }
  */
 export interface Classmate {
   name: string; craft: Craft; title?: 'actor' | 'actress'; drive?: number; last?: LastWork;
+  /** Their presence, drawn once as the player's is (`classmatePresence`). */
+  presence?: number;
   /** Where they stand with the player, -100 to 100: a cast shared draws them closer, a lead taken from the other apart (`BONDS`). */
   bond?: number;
   /** Their life after the degree: an agency, and the work they book (`systems/rivals.ts`). */

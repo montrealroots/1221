@@ -19,7 +19,7 @@ import {
 } from '@/engine/systems/career';
 import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
 import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil, programFor, benchmarkFor, planKey, shareOf, insulinShareOf } from '@/engine/systems/health';
-import { basePeriodFor, monetary, unemploymentOf, weekBenefit, type Claim } from '@/engine/systems/unemployment';
+import { basePeriodFor, claimStateFor, monetary, unemploymentOf, weekBenefit, type Claim } from '@/engine/systems/unemployment';
 import { applicablePercent, deadline, figuresFor, latePenalty, returnsOf } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Craft } from '@/engine/systems/school';
@@ -330,6 +330,16 @@ describe('Connecticut', () => {
     expect(unemploymentOf(sim.player).claim).toMatchObject({ state: 'ct', waited: true, weekly: 307_00 });
     play(sim, sim.now + 8 * MS_DAY);
     expect(unemploymentOf(sim.player).claim!.paid).toBe(307_00);
+    // A New Haven actor whose base period was paid for New York work claims in New York, as an interstate claim is.
+    const commuter = pro('ct-ny-claim', 'us-ct-newhaven');
+    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(commuter.player).quarters[q] = { wages: 8_000_00, sag: 0, byState: { 'us-ny': 8_000_00 } };
+    expect(claimStateFor(commuter.player, commuter.now)).toBe('ny');
+    // Wages recorded keep the state they were earned in.
+    const paid = pro('ct-ny-wages', 'us-ct-newhaven');
+    recordWages(paid.player, at(2026, 5, 1), NY, { gross: 5_000_00, where: 'us-ny-newyork', employer: 'x' });
+    expect(earningsOf(paid.player).quarters['2026-2']!.byState).toEqual({ 'us-ny': 5_000_00 });
+    commuter.must({ kind: 'benefits.claim', payload: {} });
+    expect(unemploymentOf(commuter.player).claim!.state).toBe('ny');
   });
 
   it('covers a low month by HUSKY D, to 175% of last year’s poverty line by Covered Connecticut, and above it by Access Health CT', () => {
@@ -402,7 +412,7 @@ describe('unemployment', () => {
     expect(weekBenefit(ca, 8, 2_000_00)).toBe(0);
   });
 
-  it('is claimed where they live, on the base period, with an unpaid waiting week, and paid as income', () => {
+  it('is claimed where they live when the wages’ state isn’t kept, on the base period, with an unpaid waiting week, and paid as income', () => {
     const sim = pro('claim');
     const person = sim.player;
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);

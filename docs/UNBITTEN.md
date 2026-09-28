@@ -204,7 +204,8 @@ part the tool cannot see.
     nothing after school; since 2026-09-28 they work, are in the room for
     the player's auditions and make the trades (`systems/rivals.ts`), and a
     part one takes from the other sets them apart as a lead taken at school
-    does. Their presence isn't kept: they're read at an ordinary 50.
+    does. Since that day each has a presence of their own, drawn as the
+    player's is, where every one had been read at an ordinary 50.
   - A student in need's living-expense scholarship, but for its books, is
     income the year's return taxes since 2026-09-27, and the returns begin
     at enrollment. Until then the tax engine collected nothing on it.
@@ -279,9 +280,11 @@ part the tool cannot see.
     state's 2026 Temporary Premium Assistance is on the return: what the
     expired enhanced credits would have paid, in full from 100% to 200% of
     the poverty line and half over 400% to 500%; it's 2026's only, and no
-    2027 design is published. What isn't modeled: its hospitals' charity
-    care; and a claim paid by the state the wages were earned in, since
-    SLATE files it where the claimant lives.
+    2027 design is published. Since that day a claim is filed with the
+    state the base period's wages were mostly earned in, as an interstate
+    claim is, and where the claimant lives only when that state isn't one
+    SLATE pays in or the wages predate their state being kept. What isn't
+    modeled: its hospitals' charity care.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two
@@ -361,8 +364,9 @@ part the tool cannot see.
   release. How much each audience is worth is SLATE's estimate, and a show's
   ratings aren't modeled, only its outlet and whether it's a hit. The
   overscale recognition earns is a single multiple of scale, not a
-  negotiated quote. Other people’s attributes aren’t kept: classmates are
-  read at an ordinary presence of 50. The ways to build them on purpose (an improv course, a casting
+  negotiated quote. Of other people's attributes only the classmates'
+  presence is kept, drawn as the player's is, since 2026-09-28; until then
+  they were read at an ordinary 50. The ways to build them on purpose (an improv course, a casting
   director workshop, a publicist, a festival premiere) are priced at SLATE’s
   estimate of what the trade quotes, and what each adds is SLATE’s. An
   independent film gets into Tribeca one time in five, and half the rest
@@ -386,20 +390,6 @@ part the tool cannot see.
   contract's own rule ($4,000 from commercials in 91 days); which agencies
   sign whom, how many auditions each sends and its renewal are SLATE's
   estimate.
-- **The tax engine's vehicle rules are charged to no one.** Its
-  income and payroll tax is paid again since the career: acting wages are
-  withheld through it and each year's return is worked out with it
-  (`systems/career.ts`, `systems/taxreturn.ts`), and since 2026-09-27 its
-  sales tax is on the goods the work buys, a self-tape kit and headshot
-  prints. The day's food is taken as groceries, which the states SLATE
-  taxes a life in exempt. Its property tax was a fact the place showed, with
-  nothing owned to charge it on, until homes were bought on 2026-09-28:
-  since then an owned home's tax is its assessed value at the engine's rate
-  for the town (`propertyTaxRate`, `systems/homes.ts`). The vehicle rules
-  went on 2026-09-27, with nothing driven. Its tables are in dollars: since that day money in
-  another currency is taxed on what it comes to in dollars, where a
-  krónur save working in New York had been taxed as if a króna were a
-  dollar.
 - **The weather decides the bills' energy and the flu's weeks, and nothing
   else.** Since 2026-09-27 (`systems/seasons.ts`), a month's bills carry its
   heating and cooling by the home's degree days, from the EIA's 2020 survey,
@@ -524,6 +514,16 @@ festival and the reviews. Film History and Film Preservation are an evening
 with the old films. One loved craft lifts a day, however many are there,
 under the owner's rule: mood and stress, never how good anybody is.
 `tests/crafts.test.ts` holds that every craft is met somewhere.
+
+The tax engine: every part of it is charged. Its income and payroll tax
+since the career (acting wages withheld through it, each year's return
+worked out with it); its sales tax since 2026-09-27 on the goods the work
+buys (the day's food is groceries, which the states SLATE taxes a life in
+exempt); its property tax since homes were bought, an owned home's
+assessed value at the engine's rate for the town. Its vehicle rules went on
+2026-09-27, with nothing driven, and this page kept an entry for them after
+they had gone. Its tables are in dollars, and money in another currency is
+taxed on what it comes to in dollars.
 
 The performer title: this page said nothing read it, which was wrong since
 the school's plays were cast (`systems/school.ts`): a part written for an

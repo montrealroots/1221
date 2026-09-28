@@ -23,7 +23,7 @@ import type { Person } from '../domain/model';
 import { zonedParts, type Instant } from '../core/time';
 import { AGENCIES, ROLES, type Role } from '../content/career';
 import { agencyById, auditionLevel, careerOf, roleById, showcaseScore, type Audition } from './career';
-import { nudge } from './attributes';
+import { classmatePresence, nudge } from './attributes';
 import { BONDS, bondMove, bondWord, type Classmate } from './school';
 
 export const RIVALS = {
@@ -87,7 +87,7 @@ export function reportBooking(sim: Simulation, person: Person, role: Role): void
 export function signTheClass(sim: Simulation, person: Person, playerScore: number): void {
   const school = person.school;
   if (!school || school.classmates.some((m) => m.career)) return;
-  const scored = school.classmates.map((m, i) => ({ m, i, score: showcaseScore(m.craft, 1) }));
+  const scored = school.classmates.map((m, i) => ({ m, i, score: showcaseScore(m.craft, 1, classmatePresence(sim, person, i)) }));
   // The player's showing takes a place at an agency too, as it would.
   const taken = new Set<number>();
   for (const agency of [...AGENCIES].sort((a, b) => a.tier - b.tier)) {

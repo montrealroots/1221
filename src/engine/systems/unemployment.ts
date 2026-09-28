@@ -2,7 +2,12 @@
  * SLATE — unemployment insurance between jobs, in New York, California and Connecticut
  * (`content/safetynet.ts`).
  *
- * A claim is filed in the state they live in, when they aren't on a job. Its
+ * A claim is filed with the state the base period's wages were earned in,
+ * the most of them where they were earned in more than one, as an
+ * interstate claim is: a New Haven actor paid for New York work claims in
+ * New York. Until 2026-09-28 a claim went to the state they lived in, and
+ * where the wages' state isn't one SLATE pays in, or the wages are from
+ * before where they were earned was kept, it still does. Its
  * base period is the first four of the last five completed quarters, or the
  * last four where those fall short, and it pays only where the wages in it
  * meet the state's tests: New York's $3,500 quarter, two quarters and one and
@@ -92,6 +97,19 @@ export function monetary(state: BenefitState, wages: Money[], into = 'USD', year
   return { ok: true, weekly, maxTotal, why: `${$(weekly)} a week, up to ${$(maxTotal)} in all.` };
 }
 
+/** The states SLATE pays unemployment in, by their region. */
+const CLAIM_STATES: Readonly<Record<string, BenefitState>> = { 'us-ny': 'ny', 'us-ca': 'ca', 'us-ct': 'ct' };
+
+/** The state a claim filed now goes to: where the last five quarters' wages were mostly earned, if it's one SLATE pays in. */
+export function claimStateFor(person: Person, at: Instant): BenefitState | undefined {
+  const p = zonedParts(at, 'America/New_York');
+  const [y, q] = quarterKey(p.year, p.month).split('-').map(Number) as [number, number];
+  const by: Record<string, Money> = {};
+  for (const key of quartersBefore(y, q, 5)) for (const [state, wages] of Object.entries(earningsOf(person).quarters[key]?.byState ?? {})) by[state] = (by[state] ?? 0) + wages;
+  const most = Object.entries(by).sort((a, b) => b[1] - a[1])[0];
+  return most ? CLAIM_STATES[most[0]] : undefined;
+}
+
 /** The base period a claim filed at a moment reads: the basic one, or the alternate where the basic falls short. */
 export function basePeriodFor(person: Person, state: BenefitState, at: Instant, into = 'USD'): { quarters: string[]; wages: Money[]; result: ReturnType<typeof monetary> } {
   const p = zonedParts(at, 'America/New_York');
@@ -145,8 +163,8 @@ function close(sim: Simulation, person: Person, why: string): void {
 export function registerUnemployment(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { weekly: Money; maxTotal: Money }>('benefits.claim', (_p, { sim: s }) => {
     const person = s.player;
-    const state = BENEFIT_STATE[homeOf(person)];
-    if (!state) throw new CommandError('SLATE pays unemployment in New York, California and Connecticut, where you’d have to live.');
+    const state = claimStateFor(person, s.now) ?? BENEFIT_STATE[homeOf(person)];
+    if (!state) throw new CommandError('SLATE pays unemployment in New York, California and Connecticut, where you’d have to have worked or live.');
     const record = unemploymentOf(person);
     if (record.claim) throw new CommandError('You have a claim open.');
     if (working(s, person)) throw new CommandError('You’re on a job: a claim is for the weeks between them.');

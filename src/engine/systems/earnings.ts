@@ -66,7 +66,7 @@ export interface YearEarnings {
 export interface EarningsRecord {
   years: Record<string, YearEarnings>;
   /** Wages by quarter, `YYYY-Q`, and of them SAG-AFTRA's. */
-  quarters: Record<string, { wages: Money; sag: Money }>;
+  quarters: Record<string, { wages: Money; sag: Money; byState?: Record<string, Money> }>;
   /** Weeks with Equity work, by the Monday they began, `YYYY-MM-DD`. */
   equityWeeks: string[];
   /** Income by month, `YYYY-MM`, for the programs that test current income. */
@@ -145,6 +145,8 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   const q = (earningsOf(person).quarters[quarterKey(p.year, p.month)] ??= { wages: 0, sag: 0 });
   q.wages += pay.gross;
   if (pay.sag) q.sag += pay.gross;
+  // Where in the country they were earned, which state a claim goes to.
+  (q.byState ??= {})[worked] = (q.byState[worked] ?? 0) + pay.gross;
 }
 
 /** A benefit paid: unemployment insurance, income for the return. */

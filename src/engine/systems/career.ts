@@ -75,7 +75,7 @@ import { YALE_DRAMA } from '../content/school';
 import { actingOf, grow, focusOf, summerOf, type Craft } from './school';
 import { rentAt } from '../content/rents';
 import { CRAFTS_AT, enjoyCrafts, enjoyWork, takeTheRoom, feel } from './enjoyment';
-import { ATTRIBUTES, attributesOf, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
+import { ATTRIBUTES, attributesOf, classmatePresence, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
 import { personalityOf } from './personality';
 import { armPension } from './pension';
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
@@ -505,7 +505,8 @@ export function rateOf(role: Role, when: Instant, cityId: string, into: string):
 /**
  * What a showing reads as: acting (`actingOf`) weighed against the rest, presence beside
  * the craft (`ATTRIBUTES.showcaseShare`), and up to a fifth less for a tired
- * actor. A classmate is read at an ordinary presence, 50.
+ * actor. A classmate is read at their own presence (`classmatePresence`); until
+ * 2026-09-28 at an ordinary 50.
  */
 export function showcaseScore(craft: Craft, focus: number, presence = 50): number {
   const w = ESTIMATE.showcaseActingWeight;
@@ -1105,8 +1106,8 @@ export function registerCareer(sim: Simulation): void {
     const score = showcaseScore(person.craft, focus, attributesOf(s, person).presence) + thesisSeen(person);
     if (focus > 0) earn(s, person, Math.max(0, score - 50) * ATTRIBUTES.reputation.showcasePer);
     career.showcases.push({ cityId, at: item.at, score });
-    // The class shows with them, each classmate at an ordinary day's readiness.
-    const rivals = person.school.classmates.map((m) => showcaseScore(m.craft, 1));
+    // The class shows with them, each classmate at an ordinary day's readiness and their own presence.
+    const rivals = person.school.classmates.map((m, i) => showcaseScore(m.craft, 1, classmatePresence(s, person, i)));
     // The class is signed too, at the first showing, by the same rule (`systems/rivals.ts`).
     signTheClass(s, person, score);
     const offers = focus > 0 && !career.agencyId ? offersFor(s, person, score, cityId, rivals) : [];

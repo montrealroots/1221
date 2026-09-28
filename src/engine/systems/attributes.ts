@@ -89,6 +89,21 @@ export const ATTRIBUTES = {
   overscale: { from: 20, most: 1.0 },
 } as const;
 
+/**
+ * A classmate's presence, drawn once as the player's is and kept on them.
+ * Until 2026-09-28 every classmate was read at an ordinary 50, below the
+ * least a Yale actor's draw can be.
+ */
+export function classmatePresence(sim: Simulation, person: Person, i: number): number {
+  const mate = person.school?.classmates[i];
+  if (!mate) return 50;
+  if (mate.presence === undefined) {
+    const rng = sim.rng('attributes.presence', person.id, `mate-${i}`);
+    mate.presence = Math.round((ATTRIBUTES.presence.from + ATTRIBUTES.presence.span * (rng.next() + rng.next()) / 2) * 10) / 10;
+  }
+  return mate.presence;
+}
+
 /** A person's attributes, drawn the first time they're asked for. */
 export function attributesOf(sim: Simulation, person: Person): Attributes {
   if (person.attrs) return person.attrs;

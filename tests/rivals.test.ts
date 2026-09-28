@@ -31,13 +31,16 @@ describe('the class at the showcase', () => {
     const mates = sim.player.school!.classmates;
     mates.forEach((m, i) => { m.craft = evenCraft(60 + i * 2); });
     signTheClass(sim, sim.player, 50);
+    // Each at their own presence, drawn once (`classmatePresence`), never the flat 50 of before.
+    const shown = (m: (typeof mates)[number]) => showcaseScore(m.craft, 1, m.presence);
+    for (const m of mates) expect(m.presence).toBeGreaterThanOrEqual(55);
     for (const agency of AGENCIES) {
       const signed = mates.filter((m) => m.career?.agencyId === agency.id);
       expect(signed.length).toBeLessThanOrEqual(2);
-      for (const m of signed) expect(showcaseScore(m.craft, 1)).toBeGreaterThanOrEqual(agency.bar);
+      for (const m of signed) expect(shown(m)).toBeGreaterThanOrEqual(agency.bar);
     }
     // The strongest two go to the biggest that takes first, and it's in the trades.
-    const best = [...mates].sort((a, b) => showcaseScore(b.craft, 1) - showcaseScore(a.craft, 1)).slice(0, 2);
+    const best = [...mates].sort((a, b) => shown(b) - shown(a)).slice(0, 2);
     for (const m of best) expect(m.career!.agencyId).toBe(AGENCIES[0]!.id);
     expect(careerOf(sim.player).news!.some((n) => n.source === 'Deadline' && n.headline.startsWith(AGENCIES[0]!.name) && n.about === 'class')).toBe(true);
     for (const m of mates) expect(m.career).toBeDefined();
