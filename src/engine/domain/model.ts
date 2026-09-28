@@ -16,6 +16,7 @@ import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
 import type { Counter, OwnedHome, Purchase } from '../systems/homes';
+import type { Living } from '../systems/dwelling';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
@@ -165,6 +166,8 @@ export interface Person {
   buying?: Purchase;
   counter?: Counter;
   offersMade?: Record<string, number>;
+  /** Their clothes, the state of the place, and a cleaner (`systems/dwelling.ts`). From 2026-09-28. */
+  living?: Living;
   /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
   exclusionUsedAt?: number;
   /** How many homes they've bought: England's first-time buyer's relief is for the first. */

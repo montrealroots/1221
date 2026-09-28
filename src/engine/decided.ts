@@ -35,6 +35,7 @@ import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffe
 import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
 import { listingsIn, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
+import { drawRental } from './systems/dwelling';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -588,4 +589,24 @@ defineDecider<{ sim: Simulation; wear: number; day: number }, string>({
     for (let n = 0; n < 60; n++) out.push(String(upkeepDay(s, s.player, owned, s.now + (day + n) * 86_400_000)));
     return out.join(',');
   },
+});
+
+defineDecider<{ sim: Simulation; cityId: string; shared: boolean; key: number }, string>({
+  id: 'homes.rental',
+  decides: 'What a rented flat or a room in a shared one is like inside when somebody moves in: its kind, rooms and size, and its fixtures by the country’s norms; and the fixtures of a home bought before they were kept.',
+  drawnIn: 'src/engine/systems/dwelling.ts',
+  reads: {
+    // The town: each draws by its own country and density.
+    town: (o, t) => ({ ...o, cityId: HOME_TOWNS[Math.min(2, Math.floor(t * 3))]! }),
+    // A room or a place of one's own.
+    shared: (o, t) => ({ ...o, shared: t >= 0.5 }),
+    // Each move is its own draw.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), cityId: HOME_TOWNS[seed % 3]!, shared: seed % 2 === 0, key: seed * 17 }),
+  decide: ({ sim, cityId, shared, key }) => Array.from({ length: 12 }, (_, n) => {
+    const u = drawRental(sim, sim.player, cityId, shared, key + n);
+    return `${u.type[0]}${u.beds}${u.size}${u.fixtures.laundry[0]}${u.fixtures.cooling[0]}${u.fixtures.dishwasher ? 'd' : ''}${u.fixtures.bathtub ? 'b' : ''}`;
+  }).join(','),
 });

@@ -31,8 +31,14 @@ import { PRODUCT_INTEREST } from '../content/career';
 /** Which of what somebody cares about each thing they can do for themselves is. */
 const LOVED_IN: Record<LookAfter, readonly string[]> = {
   eat: ['cooking'],
+  order: [],
   wash: [],
+  bathe: [],
   exercise: ['fitness', 'sport'],
+  swim: ['fitness', 'sport'],
+  outside: ['nature'],
+  laundry: ['fashion'],
+  tidy: ['design'],
   // An hour to yourself goes on what you'd spend an evening on.
   unwind: ['art', 'design', 'film', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing'],
 };

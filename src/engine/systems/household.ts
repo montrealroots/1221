@@ -61,6 +61,7 @@ import { hold } from './pending';
 import { CommandError } from '../core/simulation';
 import { billsFactor } from './seasons';
 import { deadline, latePenalty } from './taxreturn';
+import { drawRental, type RentedUnit } from './dwelling';
 
 export const RENT_KIND = 'home.rent';
 
@@ -78,6 +79,8 @@ export interface HomeState {
   noticeUntil?: Instant;
   /** The home they own and live in (`systems/homes.ts`), where it's one of theirs. */
   homeId?: string;
+  /** A rented home as it is inside (`systems/dwelling.ts`), drawn when they moved in. */
+  unit?: RentedUnit;
 }
 
 /** What a friend's sofa is, for the screens. */
@@ -502,15 +505,35 @@ function depositAccount(sim: Simulation, person: Person): Account | undefined {
 
 /**
  * The deposit a landlord asks here: a month's rent, or two for a record under
- * 620. Britain caps a deposit at five weeks' rent in law (the Tenant Fees Act
- * 2019), so it is never more than that there.
+ * 620, never past what the place's law allows (`depositCapMonths`).
  */
 export function depositFor(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): Money {
   const rent = costsAt(where, kind, saveCurrency(sim.universe), sim.now).rent;
   const months = (person.credit?.score ?? 650) < POOR_RECORD ? 2 : 1;
-  const country = CITIES.get(where)?.countryId;
-  const cap = country === 'uk' || country === 'gb' ? Math.round(rent * 12 / 52 * 5) : Number.POSITIVE_INFINITY;
-  return Math.min(rent * months, cap);
+  return Math.min(rent * months, Math.round(rent * depositCapMonths(where)));
+}
+
+/**
+ * The most a landlord may take as a deposit where a home is, in months of
+ * rent, as each place's law has it (researched 2026-09-28): a month in New
+ * York (General Obligations Law §7-108), California (Civil Code §1950.5, from
+ * July 2024), Ireland, France (unfurnished), Victoria and Ontario (where it is
+ * the last month's rent, and nothing for damage); two in Connecticut (CGS
+ * §47a-21) and Scotland; five weeks in England (the Tenant Fees Act 2019);
+ * three in Germany (BGB §551, of the cold rent) and Iceland (the Residential
+ * Leases Act, art. 40); half a month in British Columbia; four weeks in New
+ * South Wales. Elsewhere no cap is on record, and a poor record's two months
+ * stand. Until 2026-09-28 only Britain's was read, and a New York landlord
+ * asked two months of a poor record, which the law forbids.
+ */
+const DEPOSIT_CAPS: Readonly<Record<string, number>> = {
+  'us-ny': 1, 'us-ca': 1, 'us-ct': 2, 'uk-eng': 5 * 12 / 52, 'uk-nir': 5 * 12 / 52, 'uk-sct': 2, ie: 1, de: 3, fr: 1, is: 3,
+  'ca-on': 1, 'ca-bc': 0.5, 'au-nsw': 4 * 12 / 52, 'au-vic': 1,
+};
+export function depositCapMonths(cityId: string): number {
+  const city = CITIES.get(cityId);
+  if (!city) return 2;
+  return DEPOSIT_CAPS[city.parentId] ?? DEPOSIT_CAPS[city.countryId] ?? 2;
 }
 
 /**
@@ -594,7 +617,7 @@ export function move(sim: Simulation, person: Person, kind: Housing, where = per
   const hadRent = sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
   // Out of a home they own, it's left empty and theirs (`systems/homes.ts`).
   leaveOwnedHome(sim, person);
-  person.home = { kind, cityId: where, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
+  person.home = { kind, cityId: where, since: sim.now, unit: drawRental(sim, person, where, kind === 'shared', sim.now), ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
   // The first rent after the move is next month's: the rest of this one was paid moving in.
   if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(person.home.cityId).timeZone);
@@ -815,7 +838,7 @@ export function registerHousehold(sim: Simulation): void {
  * landlord, theirs, out of the opening balances.
  */
 export function moveIn(sim: Simulation, person: Person, kind: Housing): void {
-  person.home = { kind, cityId: person.currentLocationId, since: sim.now };
+  person.home = { kind, cityId: person.currentLocationId, since: sim.now, unit: drawRental(sim, person, person.currentLocationId, kind === 'shared', sim.now) };
   const rent = rentOf(sim, person);
   if (rent > 0) {
     sim.openAccount({

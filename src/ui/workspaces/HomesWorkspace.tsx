@@ -15,7 +15,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { COUNCIL_TAX, FEATURE_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
+import { COOLING_LABEL, COUNCIL_TAX, FEATURE_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
 import {
   HOME, askingPrice, atTown, borrowRefusal, councilBand, daysListed, downChoices, equityIn, equityRate, equityRoom, homeValue, letRefusal, lifeOf,
   listingById, listingsIn, livingIn, marketRent, moveInRefusal, offerFor, offerRefusal, owedOn, ownedMonth, projectsFor, saleNet,
@@ -76,6 +76,7 @@ function Facts({ facts, countryId }: { facts: HomeFacts; countryId: string }) {
     <div className="col gap-2 small">
       <div>{typeLabel(facts.type, countryId)} · {bedsText(facts.beds)} · {bathsText(facts.baths)} · {sizeText(facts.size, countryId)}{facts.lot !== undefined ? ` on a ${sizeText(facts.lot, countryId)} lot` : ''} · Built {facts.built}</div>
       {facts.features.length > 0 && <div className="muted">{facts.features.map((f) => FEATURE_LABEL[f]).join(' · ')}</div>}
+      {facts.fixtures && <div className="muted">{[facts.fixtures.bathtub ? 'Bath And Shower' : 'Shower', facts.fixtures.dishwasher ? 'Dishwasher' : 'No Dishwasher', LAUNDRY_LABEL[facts.fixtures.laundry], COOLING_LABEL[facts.fixtures.cooling], OUTDOOR_LABEL[facts.fixtures.outdoor], GYM_LABEL[facts.fixtures.gym]].join(' · ')}</div>}
     </div>
   );
 }

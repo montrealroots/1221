@@ -35,6 +35,9 @@ import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
+import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf } from '@/engine/systems/dwelling';
+import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
+import { sizeText } from '@/engine/systems/homes';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -522,6 +525,7 @@ export function Home() {
           )}
         >
           <YourHome cur={cur} />
+          <YourPlace cur={cur} />
         </Panel>
         )}
         {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
@@ -655,6 +659,42 @@ function YourCareer({ cur }: { cur: string }) {
  * Work And Home until 2026-09-26, with the day job's week, extra shifts,
  * hours, quitting and looking for work above it; the job engine went.
  */
+/**
+ * The place they live as it is inside (`systems/dwelling.ts`): what kind of
+ * home, what it has, how many clean clothes are left and what's drying, how
+ * tidy it is, and a cleaner every week.
+ */
+function YourPlace({ cur }: { cur: string }) {
+  const { run, toast } = useGame();
+  const place = useWorld((s) => placeOf(s, s.player));
+  const living = useWorld((s) => ({ ...livingOf(s.player) }));
+  const cleaner = useWorld((s) => cleanerCost(s, s.player));
+  const home = useWorld((s) => s.player.home);
+  if (!place || !home) return null;
+  const country = CITIES.get(home.cityId)?.countryId ?? 'us';
+  const f = place.fixtures;
+  const has = [f.bathtub ? 'Bath And Shower' : 'Shower', f.dishwasher ? 'Dishwasher' : 'No Dishwasher', LAUNDRY_LABEL[f.laundry], COOLING_LABEL[f.cooling], OUTDOOR_LABEL[f.outdoor], GYM_LABEL[f.gym]];
+  const kind = home.kind === 'sofa' ? 'A friend’s place' : place.shared ? `A room in a shared ${typeLabel(place.type, country, true).toLowerCase()}` : typeLabel(place.type, country, !place.owned);
+  const drying = living.drying.reduce((sum, d) => sum + d.count, 0);
+  return (
+    <div className="col gap-2 small">
+      <div>{kind} · {sizeText(place.size, country)}</div>
+      <div className="muted">{has.join(' · ')}</div>
+      <div className="stats">
+        <Stat label="Clean Clothes" value={`${living.clean} Of ${LAUNDRY.outfits}`} note={drying > 0 ? `${drying} drying` : living.dirty > 0 ? `${living.dirty} to wash` : 'All washed'} tone={living.clean <= 2 ? 'warning' : undefined} />
+        {place.keeps && <Stat label="Tidy" value={`${Math.round(living.tidy)}`} note={living.tidy < TIDY.messy ? 'A mess, and it weighs on you' : living.cleaner ? 'A cleaner comes weekly' : 'Out of a hundred'} tone={living.tidy < TIDY.messy ? 'warning' : undefined} />}
+      </div>
+      {place.keeps && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {living.cleaner
+            ? <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => run('home.cleaner', { on: false })}>Let The Cleaner Go</Gated>
+            : <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cleaner', { on: true }).ok) toast('A cleaner comes every Friday.', 'positive'); }}>Hire A Cleaner ({formatMoney(cleaner, cur, { cents: false })} A Week)</Gated>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function YourHome({ cur }: { cur: string }) {
   const { sim, run, toast } = useGame();
   const [paying, setPaying] = useState('');

@@ -23,6 +23,10 @@ import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
+import {
+  DELIVERY, LAUNDRY, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, placeOf,
+  swimRefusal, trainingAt, wearOutfit,
+} from './dwelling';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -384,12 +388,17 @@ export function registerLife(sim: Simulation): void {
 
       // The hour is lived first, and charged as waking like any other, so
       // what it does is on top of what the hour already cost.
-      s.advanceTo(s.now + LOOKING_AFTER[action].minutes * 60_000);
+      const cost = costFor(s, action);
+      s.advanceTo(s.now + minutesFor(s, action) * 60_000);
       const person = s.player;
-      // A meal is bought as it's cooked (`systems/household.ts`).
-      if (action === 'eat') spend(s, person, mealOf(s, person), 'A meal', 'food');
+      // A meal is bought as it's cooked (`systems/household.ts`), and a delivered one at delivery's price.
+      if (action === 'eat') spend(s, person, cost, 'A meal', 'food');
+      if (action === 'order') spend(s, person, cost, 'A meal delivered', 'food');
+      if (action === 'laundry') doLaundry(s, person, s.now);
+      // A workout or a swim is an outfit worn.
+      if (action === 'exercise' || action === 'swim') wearOutfit(person);
       const before = { ...person.wellbeing };
-      applyLookingAfter(person, action, s.now);
+      applyLookingAfter(person, action, s.now, action === 'exercise' ? trainingAt(s, person).builds : 1);
       const changed: Partial<Wellbeing> = {};
       for (const key of Object.keys(before) as (keyof Wellbeing)[]) {
         const moved = (person.wellbeing[key] ?? 0) - (before[key] ?? 0);
@@ -417,14 +426,23 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'wash' | 'exercise' | 'unwind';
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'outside' | 'unwind' | 'laundry' | 'tidy';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
-  eat: { label: 'Eat A Meal', minutes: 40, does: 'Feeds you, and lifts the mood by as much as you needed it' },
+  eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or bought where you are: feeds you, and lifts the mood by as much as you needed it' },
+  order: { label: 'Order In', minutes: 50, does: 'A meal delivered, at what delivery costs: feeds you without the cooking' },
   wash: { label: 'Shower', minutes: 20, does: 'Clean again, and calmer by as much as you needed it' },
-  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are, and eases stress; costs energy, food and a shower' },
+  bathe: { label: 'Take A Bath', minutes: 45, does: 'Clean again, and a long soak takes more of the stress off' },
+  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are, and eases stress; costs energy, food, a shower and an outfit' },
+  swim: { label: 'Swim In The Pool', minutes: 45, does: 'Builds fitness like a workout, and lifts the mood more' },
+  outside: { label: 'Sit Outside', minutes: 45, does: 'Out on your balcony, terrace or yard in the fine weather: calmer, and in better spirits' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
+  laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
+  tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
 };
+
+/** What a bath's soak takes off stress beyond a shower's: SLATE's estimate. */
+const BATH_RELIEF = 8;
 
 /** What a meal puts back, and what a workout costs and builds. */
 const MEAL = 50;
@@ -463,15 +481,48 @@ export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefi
   return undefined;
 }
 
+/**
+ * How long it takes them now: laundry by the home's way of doing it, and
+ * cleaning by the size of the place; the rest what the list says.
+ */
+export function minutesFor(sim: Simulation, action: LookAfter): number {
+  if (action === 'laundry') return LAUNDRY.minutes[laundryWay(sim, sim.player)];
+  if (action === 'tidy') { const place = placeOf(sim, sim.player); return place ? cleaningMinutes(place) : LOOKING_AFTER.tidy.minutes; }
+  return LOOKING_AFTER[action].minutes;
+}
+
+/** What it's called now: a meal at home is cooked; a workout says where it happens. */
+export function labelFor(sim: Simulation, action: LookAfter): string {
+  if (action === 'eat') return cooks(sim.player) ? 'Cook A Meal' : 'Eat A Meal';
+  return LOOKING_AFTER[action].label;
+}
+
+/** What it costs now, where it costs anything. */
+export function costFor(sim: Simulation, action: LookAfter): number {
+  if (action === 'eat') return mealOf(sim, sim.player);
+  if (action === 'order') return Math.round(mealOf(sim, sim.player) * DELIVERY.times);
+  if (action === 'laundry') return laundryCost(sim, sim.player).cost;
+  return 0;
+}
+
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
+  const person = sim.player;
+  const place = placeOf(sim, person);
   const busy = action === 'eat' ? undefined : occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
-  if (action === 'eat' && w.nourishment >= FULL) return 'You aren’t hungry.';
-  if (action === 'eat' && canPay(sim, sim.player) < mealOf(sim, sim.player)) return 'You can’t afford a meal.';
-  if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
-  if (action === 'exercise' && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
-  const end = sim.now + LOOKING_AFTER[action].minutes * 60_000;
+  if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
+  if ((action === 'eat' || action === 'order' || action === 'laundry') && canPay(sim, person) < costFor(sim, action)) return 'You can’t afford it.';
+  if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
+  if (action === 'bathe' && !(atHome(person) && place?.fixtures.bathtub)) return 'There’s no bath where you live, only a shower.';
+  if ((action === 'exercise' || action === 'swim') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
+  if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
+  if (action === 'outside') { const no = outsideRefusal(sim, person); if (no) return no; }
+  if (action === 'laundry' && livingOf(person).dirty === 0) return 'Your clothes are all clean.';
+  if (action === 'laundry' && !person.home) return 'You have nowhere to keep clothes.';
+  if (action === 'tidy' && !(atHome(person) && place?.keeps)) return 'It isn’t your place to clean.';
+  if (action === 'tidy' && livingOf(person).tidy >= 90) return 'The place is clean.';
+  const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
   if (clash) return `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time.`;
   return undefined;
@@ -501,31 +552,40 @@ export function workoutCosts(person: Person): number {
  * fitness no higher than a body that age can reach, and costs what an hour of
  * training costs: energy, food and a shower's worth of sweat.
  */
-export function applyLookingAfter(person: Person, action: LookAfter, at?: number): void {
+export function applyLookingAfter(person: Person, action: LookAfter, at?: number, training = 1): void {
   const w = person.wellbeing;
   // Somebody who loves what they're doing gets more of the mood and the
   // relief out of it, and nothing else (`systems/enjoyment.ts`).
   const loved = lovedIn(person, action).length > 0;
   const swing = personalityOf(person, 'moraleSwing') * (loved ? LOVED_MOOD : 1);
   const relief = loved ? LOVED_RELIEF : 1;
-  if (action === 'eat') {
+  if (action === 'eat' || action === 'order') {
     const eaten = Math.min(MEAL, 100 - w.nourishment);
     w.nourishment = clamp(w.nourishment + eaten, 0, 100);
     w.morale = clamp(w.morale + eaten * 0.04 * swing, 0, 100);
-  } else if (action === 'wash') {
+  } else if (action === 'wash' || action === 'bathe') {
     const washed = 100 - (w.hygiene ?? 80);
     w.hygiene = 100;
-    w.stress = clamp(w.stress - washed * 0.1, 0, 100);
-  } else if (action === 'exercise') {
+    w.stress = clamp(w.stress - washed * 0.1 - (action === 'bathe' ? BATH_RELIEF * personalityOf(person, 'stressRecovery') * relief : 0), 0, 100);
+  } else if (action === 'laundry') {
+    // The clothes are the wardrobe's (`doLaundry`); the chore itself does nothing to the dials.
+  } else if (action === 'tidy') {
+    livingOf(person).tidy = 100;
+    w.morale = clamp(w.morale + 2 * swing, 0, 100);
+  } else if (action === 'outside') {
+    w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
+    w.morale = clamp(w.morale + 4 * swing, 0, 100);
+  } else if (action === 'exercise' || action === 'swim') {
     const ceiling = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).fitness;
-    const builds = workoutBuilds(person);
+    // A gym builds more than a workout at home with nothing (`trainingAt` in `systems/dwelling.ts`).
+    const builds = workoutBuilds(person) * training;
     const costs = workoutCosts(person);
     if (w.fitness < ceiling) w.fitness = Math.min(w.fitness + builds, ceiling);
     w.energy = clamp(w.energy - costs, 0, 100);
     w.nourishment = clamp(w.nourishment - 6, 0, 100);
     w.hygiene = clamp((w.hygiene ?? 80) - 20 * personalityOf(person, 'hygieneDrift'), 0, 100);
     w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
-    w.morale = clamp(w.morale + 3 * swing, 0, 100);
+    w.morale = clamp(w.morale + (action === 'swim' ? 5 : 3) * swing, 0, 100);
   } else {
     w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
     w.morale = clamp(w.morale + 3 * swing, 0, 100);
@@ -557,7 +617,7 @@ export function sleepQuality(sim: Simulation, person: Person, at = sim.now): num
  * which piece is costing the hours.
  */
 function nightParts(sim: Simulation, person: Person, at = sim.now): {
-  stressLoss: number; depth: number; late: number; sofa: number; quality: number;
+  stressLoss: number; depth: number; late: number; sofa: number; heat: number; quality: number;
 } {
   const stressLoss = remap(person.wellbeing.stress, 0, 100, 0, 0.24);
   // A light sleeper and a night owl both lose here; somebody who can sleep
@@ -578,7 +638,9 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   // And a friend's sofa after an eviction sleeps worse than a bed of your own
   // (`systems/household.ts`), by what a late bedtime costs.
   const sofa = person.home?.kind === 'sofa' ? 0.08 : 0;
-  return { stressLoss, depth, late, sofa, quality: clamp((0.82 - stressLoss) * depth - late - sofa, 0.28, 1) };
+  // And a hot night with no air conditioning, or only units (`systems/dwelling.ts`).
+  const heat = heatLoss(sim, person, at);
+  return { stressLoss, depth, late, sofa, heat, quality: clamp((0.82 - stressLoss) * depth - late - sofa - heat, 0.28, 1) };
 }
 
 export function applySleep(
@@ -754,7 +816,9 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // eaten thin (`eatWhatThereIs`).
     if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);
     else eatWhatThereIs(w);
-    w.hygiene = clamp(Math.max(w.hygiene ?? 80, 82), 0, 100);
+    // Out of clean clothes, the morning starts less fresh (`systems/dwelling.ts`).
+    const fresh = person.living && person.living.clean <= 0 ? WORN_CLOTHES.hygiene : 82;
+    w.hygiene = clamp(Math.max(w.hygiene ?? 80, fresh), 0, 100);
   }
 }
 
@@ -1178,6 +1242,7 @@ function sleepReason(tonight: {
     [night.depth, 'You don’t sleep deeply, so a normal night takes longer.'],
     [night.late > 0 ? 1 - night.late / (calm * night.depth) : 1, 'It’s late, and a night that starts now is a worse one, so it takes longer.'],
     [night.sofa > 0 ? 1 - night.sofa / (calm * night.depth) : 1, 'A night on a sofa is a worse one, so it takes longer.'],
+    [night.heat > 0 ? 1 - night.heat / (calm * night.depth) : 1, 'It’s a hot night, and without air conditioning it sleeps worse, so it takes longer.'],
     [restores, 'A night puts back less for you than for most, so it takes longer.'],
     [age, 'A night puts back less than it used to, so it takes longer.'],
   ];

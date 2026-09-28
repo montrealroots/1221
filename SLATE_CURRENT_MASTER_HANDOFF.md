@@ -14,6 +14,18 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Newest of all, 2026-09-28, last: living in a home.** The owner asked for homes to be lived in: named kinds and the real fixtures of each, used every day, following where the home is, backed by research. Research ran in three parallel agents (fixtures and chores; renting and moving law; sizes and amenities), and every figure is sourced in the code's comments or marked SLATE's estimate.
+>
+> - **Kinds**: studio, apartment (a condo when owned in North America and Australia, a flat in Britain), penthouse (the top of a dense city's market, with a terrace), townhouse, house, mansion (5,000 sq ft and up; a country house in Britain). `isFlat` replaced the studio-or-condo checks.
+> - **Fixtures** (`Fixtures`, `drawFixtures` in `content/homes.ts`): bath, dishwasher, laundry (in-unit, washer only, the building's, none), cooling (central, units, none; America's by census region), outdoor (balcony, terrace, yard), gym (building, home). Listings carry them; a rented place is drawn at the move (`home.unit`, decider `homes.rental`).
+> - **Daily life** (`systems/dwelling.ts`, `life.look_after`): Cook A Meal / Eat A Meal, Order In (seven times the cost, LendingTree), Shower, Take A Bath (a tub), Work Out (a gym builds 1.2×, a fine-day run 1.1×, home 1×), Swim In The Pool (a warm day), Sit Outside (fine weather, a balcony, terrace or yard), Unwind, Do The Laundry (the home's way: own machines, a rack overnight, the building's for $3.50 a load, the laundromat for two hours and $5.75), Clean The Place (by size; ATUS). A wardrobe of fourteen outfits, one a day and one a workout; out of clean clothes the morning starts less fresh and the day weighs. Tidiness falls six a day (less with a dishwasher); under 40 it weighs. A free day keeps up roughly on its own; a working day (four hours of commitments) doesn't. `home.cleaner` hires a weekly cleaner ($45/hr, two hours at least).
+> - **Sleep**: a hot night without air conditioning sleeps worse (Minor et al. 2022: a thirtieth of a night over 25°C, a twentieth over 30°C).
+> - **Upkeep retuned to the Triple-I's claim rates**, and fire added.
+> - **Deposits** held to each place's law (`depositCapMonths`): New York and California one month even for a poor record, Connecticut two, England five weeks, Germany and Iceland three, and more. Until now only Britain's cap was read.
+> - The owner also set a standing standard for the screens: evenly aligned and compactly spaced (`.stats` grid, a test in `tests/interface.test.ts`).
+>
+> **Next, as the owner asked:** a sweep of the whole game so nothing is decoration and everything flows as one world.
+>
 > **Newest of all, 2026-09-28, later: "the full housing experience".** The owner asked for housing as full as everything else. Built on the homes of `d6dd351`, in one gated commit:
 >
 > - **The market turns over.** Each of a town's fifty places sells on its own one-to-four-month cycle and a new home comes on (decider `homes.listings` by slot and generation); a home unsold two months is cut 3%, at four 3% again.

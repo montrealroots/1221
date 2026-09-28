@@ -139,6 +139,8 @@ describe('a bedtime in the first hour of the day of the jump', () => {
       const here = quickSave({ ...dayOf(jump, -3), startLocationId: jump.place, wealth: 'inherited' }, 'autopilot');
       const d = dateOf(jump, -3);
       const la = quickSave({ startYear: d.year, startMonth: d.month, startDay: d.day, startLocationId: LA.place, wealth: 'inherited' }, 'autopilot');
+      // The same flat in both, so the two differ by the day's bounds alone and not by what's in their homes.
+      if (here.player.home && la.player.home?.unit) here.player.home.unit = structuredClone(la.player.home.unit);
       for (let offset = -2; offset <= 6; offset += 1) {
         here.advanceTo(wall(here, jump, offset, 7));
         la.advanceTo(instantFromZoned({ ...dateOf(jump, offset), hour: 7 }, la.homeZone));

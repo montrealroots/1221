@@ -413,6 +413,19 @@ part the tool cannot see.
   let before it was lived in losing part of its exclusion, refinancing (the
   rates don't move), and Scotland's and Wales's own council tax (their homes
   pay a share of value).
+- **Living in a home is partly SLATE's estimate.** Since 2026-09-28 every
+  home has fixtures that everyday life reads (`systems/dwelling.ts`): a bath,
+  a dishwasher, the laundry, air conditioning, somewhere outside, a gym. The
+  shares by country are the national surveys' (RECS, ONS, Destatis, INSEE,
+  INE, ISTAT, Statistics Canada, the ABS, Japan's Cabinet Office, Gallup
+  Korea, INEGI, IBGE); laundry prices the Coin Laundry Association's; the
+  heat's cost to sleep Minor et al.'s; claims the Triple-I's; delivery
+  LendingTree's; cleaning time the American Time Use Survey's. SLATE's
+  estimates: bathtubs and balconies (no survey counts them), a wardrobe of two
+  weeks, how untidy a day makes a home and what a mess weighs, a rack drying
+  overnight, and what a gym builds over a workout at home. Not modeled: what
+  running the machines and the air conditioning adds to the bills, renters'
+  insurance, and what a home's fixtures add to its rent or its price.
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads
   the genres, Voice Acting, and Film, Television, Theater and Travel

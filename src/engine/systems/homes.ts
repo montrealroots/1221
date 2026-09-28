@@ -85,7 +85,7 @@ import { exchange } from '../content/currency';
 import { rentAt } from '../content/rents';
 import { propertyTaxRate, PROPERTY_TAX_RULES, resolveRule } from '../content/tax';
 import {
-  BEDROOM_RENT, COUNCIL_TAX, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
+  BEDROOM_RENT, COUNCIL_TAX, drawFixtures, isFlat, type Fixtures, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
   SQM_PER_SQFT, addressOf, homeValueAt, streetsOf, usesFeet, type Feature, type HomeType, type Part, type Project,
 } from '../content/homes';
 import { drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, scheduleRentFor, type Housing } from './household';
@@ -173,7 +173,7 @@ export const HOME = {
   forcedSale: 0.85,
   foreclosureFall: 120,
   /** A flat's or a house's shared charges a month, in dollars at an American cost of living: SLATE's estimates. */
-  hoaPerSqft: 0.45,
+  hoaPerSqft: 0.3,
   hoaTownhouse: 250,
   /** A home equity loan's ceiling on what's owed over the value, its rate over the mortgage's, its years, and the record it asks. */
   equityCeiling: 0.8,
@@ -207,6 +207,8 @@ export interface HomeFacts {
   parts: Partial<Record<Part, number>>;
   /** Shared charges a month, in dollars at the town's cost of living a hundred. */
   hoaUsd: number;
+  /** What's inside it (`content/homes.ts`); a home bought before 2026-09-28's later build has none recorded, and `fixturesOf` draws them. */
+  fixtures?: Fixtures;
 }
 
 export interface Listing extends HomeFacts {
@@ -293,24 +295,27 @@ function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { 
     const value = Math.round(typical * Math.exp(z * (z < 0 ? SPREAD.below : SPREAD.above)));
     const at = Math.min(0.999, Math.max(0, q + rng.float(-0.06, 0.06)));
     const type: HomeType = dense
-      ? (at < 0.12 ? 'studio' : at < 0.55 ? 'condo' : at < 0.75 ? 'townhouse' : at < 0.95 ? 'house' : 'estate')
+      ? (at < 0.12 ? 'studio' : at < 0.55 ? 'condo' : at < 0.75 ? 'townhouse' : at < 0.93 ? 'house' : at < 0.975 ? 'penthouse' : 'estate')
       : (at < 0.04 ? 'studio' : at < 0.2 ? 'condo' : at < 0.35 ? 'townhouse' : at < 0.93 ? 'house' : 'estate');
     const beds = type === 'studio' ? 0
       : type === 'condo' ? (rng.next() < 0.7 - q * 0.5 ? 1 : rng.next() < 0.8 ? 2 : 3)
+      : type === 'penthouse' ? rng.int(2, 5)
       : type === 'townhouse' ? rng.int(2, 3)
       : type === 'house' ? Math.min(5, 2 + Math.floor(q * 2.5 + rng.next()))
       : rng.int(4, 7);
     const baths = type === 'studio' ? 1
       : type === 'condo' ? (beds === 1 ? 1 : rng.pick([1.5, 2, 2]))
+      : type === 'penthouse' ? beds + 0.5
       : type === 'townhouse' ? rng.pick([1.5, 2, 2.5])
       : type === 'house' ? Math.max(1, beds - 1) + (rng.next() < 0.5 ? 0.5 : 0)
       : beds + rng.pick([-0.5, 0.5, 1.5]);
     const size = Math.round((type === 'studio' ? rng.int(350, 550)
       : type === 'condo' ? 450 + 330 * beds + rng.int(-80, 150)
+      : type === 'penthouse' ? 1_400 + 600 * beds + rng.int(0, 1_000)
       : type === 'townhouse' ? 900 + 300 * beds + rng.int(-100, 250)
       : type === 'house' ? 700 + 420 * beds + rng.int(-150, 400) + q * 500
-      : 2_200 + 650 * beds + rng.int(0, 1_500)) / 10) * 10;
-    const flat = type === 'studio' || type === 'condo';
+      : 3_000 + 650 * beds + rng.int(0, 1_500)) / 10) * 10;
+    const flat = isFlat(type);
     const lot = flat ? undefined : Math.round((type === 'townhouse' ? rng.int(1_200, 2_500)
       : type === 'house' ? (dense ? rng.int(2_500, 6_000) : rng.int(5_000, 15_000))
       : rng.int(12_000, 80_000)) / 100) * 100;
@@ -326,7 +331,7 @@ function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { 
       if (features.includes('yard') && rng.next() < 0.4) features.push('deck');
       if (type !== 'townhouse' && rng.next() < (type === 'estate' ? 0.6 : 0.15)) features.push('patio');
       if (type !== 'townhouse' && rng.next() < (type === 'estate' ? 0.7 : warm ? 0.25 : 0.05)) features.push('pool');
-      if (type !== 'townhouse' && rng.next() < 0.08) features.push('solar');
+      if (type !== 'townhouse' && rng.next() < 0.04) features.push('solar');
       if (type === 'estate' && rng.next() < 0.3) features.push('generator');
       if (rng.next() < 0.05) features.push('metalRoof');
       if (type === 'estate' && rng.next() < 0.4) features.push('stone');
@@ -354,7 +359,8 @@ function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { 
       address = addressOf(country, street, number, unit, [rng.int(1, 7), rng.int(1, 30), rng.int(1, 25)]);
     }
     used.add(address);
-    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd });
+    const fixtures = drawFixtures(rng, { countryId: country, latitude: city.latitude, longitude: city.longitude, dense }, type, q, features.includes('yard'));
+    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures });
   }
   return out.sort((x, y) => x.value - y.value).map((one, n) => ({ ...one, rank: n + 1 }));
 }
@@ -574,7 +580,7 @@ export interface OwnerMonth {
 export function monthOf(sim: Simulation, facts: HomeFacts, cityId: string, value: Money, loans: { mortgage?: { payment: Money; pmi: boolean; balance: Money }; equity?: Money } = {}, assessed = value, loading = 1, let_ = false): OwnerMonth {
   const england = inEngland(cityId);
   const tax = england ? (let_ ? 0 : Math.round(councilTaxYear(sim, councilBand(sim, value), true) / 12)) : Math.round(assessed * propertyTaxRate(cityId, sim.now) / 12);
-  const flat = facts.type === 'studio' || facts.type === 'condo';
+  const flat = isFlat(facts.type);
   const insurance = Math.round(value * (flat ? HOME.insuranceFlat : HOME.insurance) * loading / 12);
   const pmi = loans.mortgage?.pmi ? Math.round(loans.mortgage.balance * HOME.pmi / 12) : 0;
   const hoa = atTown(sim, cityId, facts.hoaUsd);
@@ -929,14 +935,19 @@ function tenancies(sim: Simulation, person: Person, owned: OwnedHome, firstOfMon
 /** A worn part's chance of failing in a month, at a wear of one: it climbs with the cube of the wear. SLATE's estimates. */
 const FAILURE = { monthly: 0.03, from: 0.75, cap: 0.2, repair: [0.12, 0.3] as const };
 /**
- * Weather that damages: a storm's wind, a hard freeze, and what each costs.
- * SLATE's estimates, set so that a house with a sound roof has a wind claim
- * one year in fifty or so, near how often American homeowners claim for
- * wind and hail, and a worn roof several times that. They were ten times as
- * likely until 2026-09-28, and a played year paid a house's arrears in claims.
+ * Weather that damages, and fire, set to how often American homeowners
+ * claim (the Triple-I, from ISO, 2019–2023): wind and hail 2.8 claims in a
+ * hundred house-years at $14,747 on average, water and freezing 1.5 at
+ * $15,400, fire 0.23 at $88,170. A storm or a gale damages a roof the
+ * likelier the more worn it is, about three houses in a hundred a year at
+ * middling wear on a town's twenty-odd stormy days; a hard freeze bursts the
+ * pipes of an empty home or one whose heating is worn out. A roof's damage
+ * is a quarter to three quarters of replacing it. They were forty times as
+ * likely early on 2026-09-28, and a played year paid a house's arrears in claims.
  */
-const STORM = { windKph: 55, chance: 0.001, wornChance: 0.004, share: [0.1, 0.35] as const };
-const FREEZE = { lowC: -12, chance: 0.02, usd: [4_000, 20_000] as const };
+const STORM = { windKph: 55, chance: 0.0006, wornChance: 0.0012, share: [0.25, 0.75] as const };
+const FREEZE = { lowC: -12, chance: 0.02, usd: [6_000, 25_000] as const };
+const FIRE = { perYear: 0.0023, usd: [30_000, 150_000] as const, flat: 0.5 };
 
 const PART_FAILS: Partial<Record<Part, string>> = {
   hvac: 'Your Heating And Cooling Failed', roof: 'Your Roof Leaked', kitchen: 'Your Kitchen Appliances Gave Out', bath: 'A Bathroom Leaked',
@@ -960,6 +971,7 @@ function upkeep(sim: Simulation, person: Person, owned: OwnedHome, at = sim.now)
   const day = dateKey(at, city.timeZone);
   const cur = saveCurrency(sim.universe);
   const player = person.id === sim.universe.playerId;
+  const report = (damage: Money, what: string) => claim(sim, person, owned, at, damage, what);
   const cheapest = (part: Part) => Math.min(...PROJECTS.filter((p) => p.renews === part).map((p) => projectCost(sim, owned, p)));
   for (const part of Object.keys(owned.facts.parts) as Part[]) {
     const wear = wearOf(sim, owned, part);
@@ -970,7 +982,12 @@ function upkeep(sim: Simulation, person: Person, owned: OwnedHome, at = sim.now)
     owned.owed.push({ kind: 'repair', dueAt: at, amount: cost, what: PART_FAILS[part]! });
     if (player) sim.notify({ category: 'home', title: PART_FAILS[part]!, body: `At ${owned.facts.address}: ${formatMoney(cost, cur, { cents: false })} to repair, which the insurance doesn’t pay for wear. Replacing it would stop it happening again.`, importance: 70, route: '/workspace/homes' });
   }
-  const flat = owned.facts.type === 'studio' || owned.facts.type === 'condo';
+  const flat = isFlat(owned.facts.type);
+  // A fire, rare and dear: a flat's owner insures the inside, the building the rest.
+  const fire = sim.rng('homes.upkeep', person.id, owned.id, day, 'fire');
+  if (fire.next() < FIRE.perYear / 365) {
+    report(atTown(sim, owned.cityId, fire.float(FIRE.usd[0], FIRE.usd[1]) * (flat ? FIRE.flat : 1)), 'A Fire Damaged Your Home');
+  }
   if (flat) return;
   const w = weatherOn(sim, city, at);
   const r = sim.rng('homes.upkeep', person.id, owned.id, day, 'weather');
@@ -988,7 +1005,13 @@ function upkeep(sim: Simulation, person: Person, owned: OwnedHome, at = sim.now)
       what = 'Your Pipes Froze And Burst';
     }
   }
-  if (damage === 0) return;
+  if (damage > 0) report(damage, what);
+}
+
+/** Damage that isn't wear: the repair owed, the insurance's share paid over the deductible, and a claim on the record. */
+function claim(sim: Simulation, person: Person, owned: OwnedHome, at: Instant, damage: Money, what: string): void {
+  const cur = saveCurrency(sim.universe);
+  const player = person.id === sim.universe.playerId;
   owned.owed.push({ kind: 'repair', dueAt: at, amount: damage, what });
   const deductible = atTown(sim, owned.cityId, HOME.deductibleUsd);
   const pays = insured(owned) ? Math.max(0, damage - deductible) : 0;
@@ -1042,6 +1065,7 @@ function accept(sim: Simulation, person: Person, listing: Listing, price: Money,
   const facts: HomeFacts = structuredClone({
     type: listing.type, address: listing.address, beds: listing.beds, baths: listing.baths, size: listing.size,
     ...(listing.lot !== undefined ? { lot: listing.lot } : {}), built: listing.built, features: listing.features, parts: listing.parts, hoaUsd: listing.hoaUsd,
+    ...(listing.fixtures ? { fixtures: listing.fixtures } : {}),
   });
   const buying: Purchase = {
     listingId: listing.id, cityId: listing.cityId, facts, price, down, live, inspect, offeredAt: sim.now,

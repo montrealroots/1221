@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
 import {
-  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, LOOKING_AFTER, lookAfterRefusal, type LookAfter,
+  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, LOOKING_AFTER, lookAfterRefusal, minutesFor, costFor, labelFor, type LookAfter,
 } from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
@@ -20,7 +20,6 @@ import {
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { lovedIn } from '@/engine/systems/enjoyment';
-import { mealOf } from '@/engine/systems/household';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { INTEREST_BY_ID } from '@/engine/content/interests';
 import { spokenList } from '@/ui/looks/words';
@@ -485,7 +484,7 @@ function LookAfterMenu() {
     setOpen(false);
     const result = run<{ doneAt: number }>('life.look_after', { action });
     if (result.ok && result.value) {
-      toast(`${LOOKING_AFTER[action].label}: done at ${formatTime(result.value.doneAt, sim.zone)}.`, 'positive');
+      toast(`${labelFor(sim, action)}: done at ${formatTime(result.value.doneAt, sim.zone)}.`, 'positive');
     }
   };
 
@@ -504,7 +503,10 @@ function LookAfterMenu() {
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">
           {(Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => {
-            const { label, minutes, does } = LOOKING_AFTER[action];
+            const { does } = LOOKING_AFTER[action];
+            const label = labelFor(sim, action);
+            const minutes = minutesFor(sim, action);
+            const cost = costFor(sim, action);
             const refused = refusals[action];
             // Said, because it changes what the hour gives: more mood and more
             // relief for somebody who loves it (`systems/enjoyment.ts`).
@@ -520,7 +522,7 @@ function LookAfterMenu() {
               >
                 <span className="menu-item-label">{label}</span>
                 <span className="menu-item-detail">
-                  {formatDuration(minutes * 60_000)}{action === 'eat' ? ` · ${formatMoney(mealOf(sim, sim.player), saveCurrency(sim.universe))}` : ''} · {refused ?? does}
+                  {formatDuration(minutes * 60_000)}{cost > 0 ? ` · ${formatMoney(cost, saveCurrency(sim.universe))}` : ''} · {refused ?? does}
                 </span>
                 {!refused && loved.length > 0 && (
                   <span className="menu-item-detail">You love {spokenList(loved)}, so it lifts you more.</span>

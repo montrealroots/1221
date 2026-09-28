@@ -110,18 +110,29 @@ export function homeValueAt(cityId: string, currency: string): HomeValue {
 // ---------------------------------------------------------------------------
 // What homes are called, and the streets they're on
 
-export type HomeType = 'studio' | 'condo' | 'townhouse' | 'house' | 'estate';
+/**
+ * A studio, an apartment (a condo when it's owned in North America and
+ * Australia), a penthouse at the top of a city's market, a townhouse, a
+ * house, and a mansion.
+ */
+export type HomeType = 'studio' | 'condo' | 'penthouse' | 'townhouse' | 'house' | 'estate';
 
-/** What each type is called where it is: an apartment is a flat in Britain and Ireland, a condo in North America and Australia. */
-export function typeLabel(type: HomeType, countryId: string): string {
+/** A home that's one of several in a building: no lot, no roof or siding of its own. */
+export const isFlat = (type: HomeType): boolean => type === 'studio' || type === 'condo' || type === 'penthouse';
+
+/**
+ * A mansion is the trade's word for a house of five thousand square feet and
+ * more, and SLATE's are drawn from there. What each type is called where it is: an apartment is a flat in Britain and Ireland, a condo in North America and Australia when it's owned. */
+export function typeLabel(type: HomeType, countryId: string, rented = false): string {
   const british = countryId === 'uk' || countryId === 'ie';
-  const condo = ['us', 'ca', 'au', 'nz'].includes(countryId);
+  const condo = !rented && ['us', 'ca', 'au', 'nz'].includes(countryId);
   switch (type) {
     case 'studio': return british ? 'Studio Flat' : 'Studio Apartment';
     case 'condo': return british ? 'Flat' : condo ? 'Condo' : 'Apartment';
+    case 'penthouse': return 'Penthouse';
     case 'townhouse': return british ? 'Terraced House' : 'Townhouse';
     case 'house': return british ? 'Semi-Detached House' : 'House';
-    case 'estate': return british ? 'Detached House' : 'Estate';
+    case 'estate': return british ? 'Country House' : 'Mansion';
   }
 }
 
@@ -256,7 +267,7 @@ export interface Project {
   bedsUpTo?: number;
 }
 
-const ALL: readonly HomeType[] = ['studio', 'condo', 'townhouse', 'house', 'estate'];
+const ALL: readonly HomeType[] = ['studio', 'condo', 'penthouse', 'townhouse', 'house', 'estate'];
 const HOUSES: readonly HomeType[] = ['townhouse', 'house', 'estate'];
 const DETACHED: readonly HomeType[] = ['house', 'estate'];
 
@@ -267,7 +278,7 @@ export const PROJECTS: readonly Project[] = [
   { id: 'floors', label: 'New Hardwood Floors', usd: 14_000, perSize: 1_500, recoup: 0.75, days: 10, renews: 'floors', on: ALL },
   { id: 'kitchen-minor', label: 'Minor Kitchen Remodel', usd: 27_000, recoup: 0.95, days: 21, renews: 'kitchen', on: ALL },
   { id: 'kitchen-major', label: 'Major Kitchen Remodel', usd: 80_000, recoup: 0.5, days: 60, renews: 'kitchen', on: ALL },
-  { id: 'kitchen-upscale', label: 'Upscale Kitchen Remodel', usd: 160_000, recoup: 0.35, days: 90, renews: 'kitchen', on: ['condo', ...HOUSES] },
+  { id: 'kitchen-upscale', label: 'Upscale Kitchen Remodel', usd: 160_000, recoup: 0.35, days: 90, renews: 'kitchen', on: ['condo', 'penthouse', ...HOUSES] },
   { id: 'bath-midrange', label: 'Bathroom Remodel', usd: 25_000, recoup: 0.75, days: 21, renews: 'bath', on: ALL },
   { id: 'bath-upscale', label: 'Upscale Bathroom Remodel', usd: 80_000, recoup: 0.42, days: 45, renews: 'bath', on: ALL },
   { id: 'bath-accessible', label: 'Accessible Bathroom Remodel', usd: 41_000, recoup: 0.62, days: 30, renews: 'bath', on: ALL },
@@ -392,3 +403,122 @@ export const HOME_TAX = {
   passivePhaseFrom: 100_000_00,
   passivePhaseRate: 0.5,
 };
+
+// ---------------------------------------------------------------------------
+// What's inside a home: its fixtures, by where it is
+
+import type { Rng } from '../core/rng';
+
+export type Laundry = 'in-unit' | 'washer-only' | 'building' | 'none';
+export type Cooling = 'central' | 'units' | 'none';
+export type Outdoor = 'none' | 'balcony' | 'terrace' | 'yard';
+export type Gym = 'none' | 'building' | 'home';
+
+/**
+ * What a home has that its owner or tenant uses every day: a bath beside the
+ * shower, a dishwasher, the laundry (a washer and dryer in the home, a washer
+ * alone with a rack to dry on, machines in the building's basement, or none
+ * and the laundromat), air conditioning (central, or wall and window units),
+ * somewhere outside of its own, and a gym in the building or the home. Every
+ * home has a shower, a kitchen and a bed.
+ */
+export interface Fixtures {
+  bathtub: boolean;
+  dishwasher: boolean;
+  laundry: Laundry;
+  cooling: Cooling;
+  outdoor: Outdoor;
+  gym: Gym;
+}
+
+export const LAUNDRY_LABEL: Readonly<Record<Laundry, string>> = {
+  'in-unit': 'Washer And Dryer', 'washer-only': 'Washer, No Dryer', building: 'Laundry Room In The Building', none: 'No Laundry',
+};
+export const COOLING_LABEL: Readonly<Record<Cooling, string>> = { central: 'Central Air', units: 'Wall Or Window Units', none: 'No Air Conditioning' };
+export const OUTDOOR_LABEL: Readonly<Record<Outdoor, string>> = { none: 'Nowhere Outside', balcony: 'Balcony', terrace: 'Terrace', yard: 'Yard' };
+export const GYM_LABEL: Readonly<Record<Gym, string>> = { none: 'No Gym', building: 'Gym In The Building', home: 'Home Gym' };
+
+/**
+ * How often a home has each, by country, from each country's own survey of
+ * what households have (researched 2026-09-28): the United States from the
+ * EIA's Residential Energy Consumption Survey (2024: dishwasher 75%, washer
+ * 85.2%, dryer 84%; air conditioning 88.7% in 2020); Britain from the ONS
+ * (dishwasher 64%, tumble dryer 66%); Germany from Destatis (dishwasher 78%,
+ * washer 97.4%, dryer 47.3%, 2023); France from INSEE and ADEME (61.4%, 96%,
+ * air conditioning 25%); Spain from INE (57.1%, 98.9%, 26.3%, cooling
+ * 49.6%, 2021); Italy from ISTAT (50.2%, 97.3%, 15.2%, 48.8%, 2021); Canada
+ * from Statistics Canada (60.4%, 81.3%, 81%, air conditioning 77%, 2023);
+ * Australia from the ABS (55%, dryer 55%, 74% cooled, 2014, the latest);
+ * Japan from the Cabinet Office (dishwasher 27.7%, a dryer 49.9%, room air
+ * conditioners 88.8%, March 2026); South Korea from Gallup Korea (24%, 46%,
+ * 98%, 2025); Mexico from INEGI (washer 79.1%, air conditioning 23.4%, 2025);
+ * Brazil from IBGE (washer 70.4%, 2024). What no survey counts is SLATE's
+ * estimate: a bath beside the shower, a balcony, Britain's washer and air
+ * conditioning, Iceland's whole row, and the rest where a figure is missing.
+ */
+const NORMS: Readonly<Record<string, { dishwasher: number; washer: number; dryer: number; cooling: number; bathtub: number; balcony: number }>> = {
+  us: { dishwasher: 0.75, washer: 0.852, dryer: 0.84, cooling: 0.887, bathtub: 0.8, balcony: 0.3 },
+  uk: { dishwasher: 0.64, washer: 0.97, dryer: 0.66, cooling: 0.04, bathtub: 0.8, balcony: 0.25 },
+  ie: { dishwasher: 0.55, washer: 0.97, dryer: 0.5, cooling: 0.02, bathtub: 0.7, balcony: 0.2 },
+  ca: { dishwasher: 0.604, washer: 0.813, dryer: 0.81, cooling: 0.77, bathtub: 0.8, balcony: 0.35 },
+  au: { dishwasher: 0.55, washer: 0.95, dryer: 0.55, cooling: 0.74, bathtub: 0.7, balcony: 0.5 },
+  nz: { dishwasher: 0.5, washer: 0.95, dryer: 0.55, cooling: 0.4, bathtub: 0.6, balcony: 0.4 },
+  de: { dishwasher: 0.78, washer: 0.974, dryer: 0.473, cooling: 0.05, bathtub: 0.6, balcony: 0.6 },
+  fr: { dishwasher: 0.614, washer: 0.96, dryer: 0.3, cooling: 0.25, bathtub: 0.6, balcony: 0.5 },
+  es: { dishwasher: 0.571, washer: 0.989, dryer: 0.263, cooling: 0.496, bathtub: 0.5, balcony: 0.6 },
+  it: { dishwasher: 0.502, washer: 0.973, dryer: 0.152, cooling: 0.488, bathtub: 0.6, balcony: 0.6 },
+  jp: { dishwasher: 0.277, washer: 0.99, dryer: 0.499, cooling: 0.888, bathtub: 0.95, balcony: 0.8 },
+  kr: { dishwasher: 0.24, washer: 0.98, dryer: 0.46, cooling: 0.98, bathtub: 0.5, balcony: 0.7 },
+  is: { dishwasher: 0.7, washer: 0.95, dryer: 0.6, cooling: 0.01, bathtub: 0.6, balcony: 0.4 },
+  mx: { dishwasher: 0.1, washer: 0.791, dryer: 0.15, cooling: 0.234, bathtub: 0.2, balcony: 0.3 },
+  br: { dishwasher: 0.1, washer: 0.704, dryer: 0.1, cooling: 0.3, bathtub: 0.1, balcony: 0.5 },
+};
+const NORMS_DEFAULT = { dishwasher: 0.4, washer: 0.8, dryer: 0.2, cooling: 0.3, bathtub: 0.5, balcony: 0.4 };
+
+/**
+ * America's air conditioning by census region (the EIA's RECS 2020): how
+ * many homes use it, and how many of those have central air. A town's
+ * region is read from where it is on the map, near enough.
+ */
+const US_COOLING = {
+  northeast: { uses: 0.89, central: 0.39 / 0.89 },
+  midwest: { uses: 0.93, central: 0.74 / 0.93 },
+  south: { uses: 0.94, central: 0.83 / 0.94 },
+  west: { uses: 0.74, central: 0.54 / 0.74 },
+};
+function usRegion(latitude: number, longitude: number): keyof typeof US_COOLING {
+  if (longitude < -104) return 'west';
+  if (latitude < 36.5) return 'south';
+  if (longitude > -80.5 && latitude > 39) return 'northeast';
+  return latitude < 39 && longitude > -95 ? 'south' : 'midwest';
+}
+
+/** An American apartment in a building has its own washer 54.3% of the time (RECS 2024), a New York rental 34% (StreetEasy, 2025). */
+const US_FLAT_WASHER = { building: 0.543 / 0.852, dense: 0.34 / 0.852 };
+
+/**
+ * A home's fixtures, drawn by its country's norms, how dense its town is,
+ * how warm, what kind of home it is and how far up the market (`tier`, 0 to
+ * 1). The dearest homes have everything. An American city apartment without
+ * its own machines usually has a laundry room downstairs; elsewhere it's the
+ * laundromat. SLATE's estimates.
+ */
+export function drawFixtures(rng: Rng, place: { countryId: string; latitude: number; longitude?: number; dense: boolean }, type: HomeType, tier: number, yard: boolean): Fixtures {
+  const n = NORMS[place.countryId] ?? NORMS_DEFAULT;
+  const flat = isFlat(type);
+  const luxury = type === 'penthouse' || type === 'estate' || tier >= 0.9;
+  const lift = flat ? 0 : 0.15;
+  const has = (p: number) => luxury || rng.next() < Math.min(1, p + lift + tier * 0.15);
+  const washer = has(n.washer * (place.countryId === 'us' && flat ? (place.dense ? US_FLAT_WASHER.dense : US_FLAT_WASHER.building) : 1));
+  const dryer = washer && has(n.dryer / Math.max(n.washer, 0.01));
+  const laundry: Laundry = washer ? (dryer ? 'in-unit' : 'washer-only')
+    : place.countryId === 'us' || place.countryId === 'ca' ? (rng.next() < (flat ? 0.75 : 0.2) ? 'building' : 'none') : 'none';
+  const region = place.countryId === 'us' ? US_COOLING[usRegion(place.latitude, place.longitude ?? -90)] : undefined;
+  const cooled = has(region ? region.uses : n.cooling);
+  const cooling: Cooling = !cooled ? 'none' : luxury || (region && rng.next() < region.central + (flat ? -0.1 : 0.1)) ? 'central' : 'units';
+  const outdoor: Outdoor = type === 'penthouse' ? 'terrace' : yard ? 'yard' : flat && rng.next() < n.balcony ? 'balcony' : 'none';
+  const gym: Gym = type === 'estate' && rng.next() < 0.6 ? 'home'
+    : type === 'penthouse' ? (rng.next() < 0.8 ? 'building' : 'none')
+    : flat && place.dense && rng.next() < (place.countryId === 'us' ? 0.3 : 0.1) ? 'building' : 'none';
+  return { bathtub: has(n.bathtub), dishwasher: has(n.dishwasher), laundry, cooling, outdoor, gym };
+}
