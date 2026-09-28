@@ -312,6 +312,22 @@ part the tool cannot see.
   estimate of what the trade quotes, and what each adds is SLATE’s. A film’s
   premiere is Tribeca’s June for an independent one and Los Angeles nine
   months on for a studio’s: no film here is ever passed over by a festival.
+- **The 21 skills' weights are SLATE's estimates.** The skills themselves are
+  the conservatories' and the business's (`content/school.ts`, since
+  2026-09-27), and each is read by an outcome. What isn't published: how much
+  each part reads each skill (`READS`, `GENRE_READS`), the fifth an
+  audition reads its own, which skills each Yale course trains, read from its
+  title and description, and the scale. Voice-over has no course at Yale, and
+  grows only in the booth. A genre is read, not a part's own demands: a drama
+  that wants a fight or a song asks for neither. Nobody's skills but the
+  player's and the classmates' are kept.
+- **An agency's renewal is SLATE's choice.** Rule 16(g) sets the term (a year,
+  then up to three) and when a renewal may be signed, and SLATE follows it
+  (`AGENCY_TERM`). Whether an agency offers to renew is its own business,
+  and SLATE has it renew a client it booked work for in the term and let the
+  rest run out. The commercials contract's own 91-day clause, $4,000 in
+  commercial earnings, isn't modeled: SLATE holds one contract for all the
+  work, under the TV/theatrical terms, as the union does when both are signed.
 - **The tax engine's property tax is shown and charged to no one.** Its
   income and payroll tax is paid again since the career: acting wages are
   withheld through it and each year's return is worked out with it
