@@ -2,9 +2,14 @@
  * SLATE — what the holder does with the card over its life (module 4 of
  * `docs/BANKING-FUNCTIONS.md`).
  *
- * - **Apply** for the bank's card (C1, C2, C4, C5): the bank reads the record
+ * - **Apply** for a bank's card (C1, C2, C4, C5): the bank reads the record
  *   and what the applicant has to repay from, sets a limit, and the card
- *   arrives in a week. A US applicant under 21 needs means of their own,
+ *   arrives in a week. Any bank in the country that issues one, not only the
+ *   one the current account is with, as a card is applied for in life; one
+ *   card from each, since SLATE has each bank's one card. A card held already
+ *   stays: until 2026-09-28 a person held one card, and a second was refused.
+ *   The everyday card is the one the day's spending goes on; any card can be
+ *   made it. A US applicant under 21 needs means of their own,
  *   which money in the bank is. The score a bank approves at and the limits
  *   it sets are SLATE's estimates; no bank publishes them.
  * - **Apply with a balance transfer** (C31) from a card at another bank, the
@@ -33,7 +38,7 @@ import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
 import { inTheBank } from './household';
-import { cardOf, cardTerms, scheduleStatement, STATEMENT_KIND } from './credit';
+import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, ensurePrimary, freshCardState, scheduleStatement, stateOf, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
 import { bankOf } from './banking';
@@ -69,57 +74,48 @@ export function registerCardLife(sim: Simulation): void {
     const bank = bankById(applied.bankId);
     const product = bank ? CARDS[bank.id] : undefined;
     const name = product && !('none' in product) ? product.name : (bank?.name ?? 'Bank') + ' Credit Card';
-    const old = applied.transfer ? cardOf(s, person) : undefined;
+    const old = applied.transfer ? cardFor(s, person, applied.fromId) : undefined;
+    // Another card held beside it keeps the everyday place; with none, this card takes it.
+    const others = cardsOf(s, person).filter((a) => a.id !== old?.id);
     const card = s.openAccount({ id: s.nextId('account'), kind: 'credit_card', name, ownerId: person.id, institution: bank?.name, bankId: bank?.id, openedAt: s.now, creditLimit: applied.limit });
     // The last four the bank prints on it, from the account's own number in the books.
     card.last4 = last4For(card.id);
-    // A new card starts clean: the old one's closing, suspension, plan, missed payments and penalty were its own.
-    const fresh = person.credit!;
-    delete fresh.applied;
-    delete fresh.closing;
-    delete fresh.suspended;
-    delete fresh.hardship;
-    delete fresh.penalty;
-    fresh.missed = 0;
-    fresh.accrued = 0;
-    fresh.trailing = 0;
-    fresh.cashOwed = 0;
-    fresh.cashAccrued = 0;
-    fresh.transfers = [];
-    fresh.plans = [];
-    fresh.statementPlanDue = 0;
-    fresh.rewards = 0;
-    delete fresh.rewardsFrom;
-    delete fresh.introLost;
+    delete person.credit!.applied;
     const terms = cardTerms(s, card, person.credit!.score);
     // The rate the record buys today, held from here on.
     card.apr = terms.priced;
-    person.credit!.statementBalance = 0;
-    person.credit!.paidSinceStatement = 0;
-    person.credit!.carrying = false;
-    if (terms.kind === 'charge') person.credit!.autopay = 'full';
-    if (old) transferOnArrival(s, person, card, old);
-    const armed = s.universe.scheduled.some((one) => one.kind === STATEMENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
-    if (!armed) scheduleStatement(s, person, s.now);
+    // A new card starts clean: the old one's closing, suspension, plan, missed payments and penalty were its own.
+    const fresh = freshCardState(terms.kind === 'charge' ? 'full' : person.credit!.autopay, s.now);
+    if (others.length) (person.credit!.cards ??= {})[card.id] = fresh;
+    else adoptEveryday(person, card, fresh);
+    if (old) { transferOnArrival(s, person, card, old); ensurePrimary(s, person); }
+    // Its own statement, unless one from before cards were named still stands for the everyday card.
+    const armed = s.universe.scheduled.some((one) => one.kind === STATEMENT_KIND && one.status === 'pending' && one.payload.personId === person.id
+      && (one.payload.accountId === card.id || (one.payload.accountId === undefined && cardOf(s, person)?.id === card.id)));
+    if (!armed) scheduleStatement(s, person, s.now, card);
     if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `The ${name}, with a ${formatMoney(applied.limit, saveCurrency(s.universe))} limit.`, importance: 50, route: '/workspace/bank' });
   });
 
-  sim.onCommand<{ transfer?: boolean }, { approved: boolean; limit?: Money }>('card.apply', (p, { sim: s }) => {
+  sim.onCommand<{ transfer?: boolean; bankId?: string; fromId?: string }, { approved: boolean; limit?: Money }>('card.apply', (p, { sim: s }) => {
     const person = s.player;
     const credit = person.credit;
     if (!credit) throw new CommandError('You have no credit record to apply with.');
     if (credit.applied) throw new CommandError('A card is already on its way.');
-    const bank = bankOf(s, person);
-    if (!bank) throw new CommandError('You need a bank to apply to.');
+    const home = bankOf(s, person);
+    if (!home) throw new CommandError('You need a bank to apply to.');
+    const bank = p?.bankId ? bankById(p.bankId) : home;
+    if (!bank) throw new CommandError('SLATE doesn’t know that bank.');
+    if (bank.iso !== home.iso) throw new CommandError(`A card is applied for in the country you bank in; ${bank.name} is elsewhere.`);
     const product = CARDS[bank.id];
     if (product && 'none' in product) throw new CommandError(`${bank.name} doesn’t issue a credit card.`);
-    // A card held already stays the only one, unless its balance moves onto the new one (C31).
+    // A balance moving onto the new card, from the card named or the everyday one (C31).
     const transfer = Boolean(p?.transfer);
-    if (cardOf(s, person) && !transfer) throw new CommandError('You have a card already; close it first, or move its balance onto the new one.');
+    const from = transfer ? cardFor(s, person, p?.fromId) : undefined;
     if (transfer) {
-      const refused = transferRefusal(s, person, bank.id, limitFor(s, Math.max(300, credit.score - INQUIRY)));
+      const refused = transferRefusal(s, person, bank.id, limitFor(s, Math.max(300, credit.score - INQUIRY)), p?.fromId);
       if (refused) throw new CommandError(refused);
     }
+    if (cardsOf(s, person).some((a) => a.bankId === bank.id)) throw new CommandError(`You hold ${bank.name}’s card already.`);
     // A hard inquiry, approved or not.
     credit.score = Math.max(300, credit.score - INQUIRY);
     const cur = saveCurrency(s.universe);
@@ -135,40 +131,44 @@ export function registerCardLife(sim: Simulation): void {
       return { approved: false };
     }
     const limit = limitFor(s, credit.score);
-    credit.applied = { bankId: bank.id, arrivesAt: s.now + ARRIVES_IN, limit, ...(transfer ? { transfer: true } : {}) };
+    credit.applied = { bankId: bank.id, arrivesAt: s.now + ARRIVES_IN, limit, ...(transfer && from ? { transfer: true, fromId: from.id } : {}) };
     // The old card takes nothing new while the balance waits to move.
-    if (transfer) credit.closing = s.now;
+    if (from) stateOf(person, from).closing = s.now;
     s.schedule({ at: credit.applied.arrivesAt, kind: ARRIVES_KIND, label: 'Your New Card Arrives', category: 'home', priority: 38, payload: { personId: person.id } });
     s.notify({ category: 'bank', title: 'Card Approved', body: `${bank.name} approved a card with a ${formatMoney(limit, cur)} limit. It arrives in a week.`, importance: 50 });
     return { approved: true, limit };
   });
 
-  sim.onCommand<Record<string, never>, { closing: boolean }>('card.close', (_p, { sim: s }) => {
+  sim.onCommand<{ accountId?: string }, { closing: boolean }>('card.close', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
+    const card = cardFor(s, person, p?.accountId);
     if (!card || !person.credit) throw new CommandError('You don’t have a card.');
-    if (person.credit.closing !== undefined) throw new CommandError('It’s already being closed.');
-    person.credit.closing = s.now;
-    if (card.balance >= 0) card.closedAt = s.now;
+    const state = stateOf(person, card);
+    if (state.closing !== undefined) throw new CommandError('It’s already being closed.');
+    state.closing = s.now;
+    if (card.balance >= 0) { card.closedAt = s.now; ensurePrimary(s, person); }
     return { closing: true };
   });
 
-  sim.onCommand<{ day: number }, { day: number }>('card.set_statement_day', (p, { sim: s }) => {
+  sim.onCommand<{ day: number; accountId?: string }, { day: number }>('card.set_statement_day', (p, { sim: s }) => {
     const person = s.player;
-    if (!cardOf(s, person) || !person.credit) throw new CommandError('You don’t have a card.');
+    const card = cardFor(s, person, p.accountId);
+    if (!card || !person.credit) throw new CommandError('You don’t have a card.');
     const day = Math.round(Number(p.day));
     if (!(day >= 1 && day <= 28)) throw new CommandError('Pick a day from the 1st to the 28th.');
-    person.credit.statementDay = day;
+    stateOf(person, card).statementDay = day;
+    const everyday = cardOf(s, person)?.id === card.id;
     for (const item of s.universe.scheduled) {
-      if (item.kind === STATEMENT_KIND && item.status === 'pending' && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
+      if (item.kind === STATEMENT_KIND && item.status === 'pending' && item.payload.personId === person.id
+        && (item.payload.accountId === card.id || (item.payload.accountId === undefined && everyday))) s.timeline.cancel(item.id, s.now);
     }
-    scheduleStatement(s, person, s.now);
+    scheduleStatement(s, person, s.now, card);
     return { day };
   });
 
-  sim.onCommand<{ limit: Money }, { limit: Money; granted: boolean }>('card.request_limit', (p, { sim: s }) => {
+  sim.onCommand<{ limit: Money; accountId?: string }, { limit: Money; granted: boolean }>('card.request_limit', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
+    const card = cardFor(s, person, p.accountId);
     const credit = person.credit;
     if (!card || !credit) throw new CommandError('You don’t have a card.');
     const want = Math.round(Number(p.limit));
@@ -182,7 +182,7 @@ export function registerCardLife(sim: Simulation): void {
       return { limit: card.creditLimit, granted: true };
     }
     const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
-    if (credit.score < 700 || !clean || credit.suspended || inTheBank(s, person) <= 0) {
+    if (credit.score < 700 || !clean || stateOf(person, card).suspended || inTheBank(s, person) <= 0) {
       s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept the limit at ${formatMoney(now, cur)}: it raises one for a record of 700 or more, nothing late in a year, and means to repay.`, importance: 40 });
       return { limit: now, granted: false };
     }
@@ -190,27 +190,29 @@ export function registerCardLife(sim: Simulation): void {
     return { limit: card.creditLimit, granted: true };
   });
 
-  sim.onCommand<{ on: boolean }, { on: boolean }>('card.set_auto_raise', (p, { sim: s }) => {
+  sim.onCommand<{ on: boolean; accountId?: string }, { on: boolean }>('card.set_auto_raise', (p, { sim: s }) => {
     if (!s.player.credit) throw new CommandError('You don’t have a card.');
-    s.player.credit.noAutoRaise = !p.on;
+    const card = cardFor(s, s.player, p.accountId);
+    (card ? stateOf(s.player, card) : s.player.credit).noAutoRaise = !p.on;
     return { on: Boolean(p.on) };
   });
 
-  sim.onCommand<{ on: boolean }, { on: boolean }>('card.set_over_limit', (p, { sim: s }) => {
+  sim.onCommand<{ on: boolean; accountId?: string }, { on: boolean }>('card.set_over_limit', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
+    const card = cardFor(s, person, p.accountId);
     if (!card || !person.credit) throw new CommandError('You don’t have a card.');
     if (bankById(card.bankId ?? '')?.iso !== 'US') throw new CommandError('Opting in to going over the limit is a US card’s choice.');
-    person.credit.overLimitOptIn = Boolean(p.on);
-    if (!p.on) person.credit.overLimitCycles = 0;
+    const state = stateOf(person, card);
+    state.overLimitOptIn = Boolean(p.on);
+    if (!p.on) state.overLimitCycles = 0;
     return { on: Boolean(p.on) };
   });
 
-  sim.onCommand<Record<string, never>, { payment: Money }>('card.request_hardship', (_p, { sim: s }) => {
+  sim.onCommand<{ accountId?: string }, { payment: Money }>('card.request_hardship', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
-    const credit = person.credit;
-    if (!card || !credit) throw new CommandError('You don’t have a card.');
+    const card = cardFor(s, person, p?.accountId);
+    if (!card || !person.credit) throw new CommandError('You don’t have a card.');
+    const credit = stateOf(person, card);
     if (credit.hardship) throw new CommandError('You’re on a plan already.');
     const owed = Math.max(0, -card.balance);
     if (owed === 0) throw new CommandError('The card owes nothing.');

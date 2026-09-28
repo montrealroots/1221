@@ -41,7 +41,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { afterBusinessDays, daysOfAccount } from '../content/bankdays';
 import { FRAUD_LAW, SECURITY } from '../content/security';
-import { cardOf } from './credit';
+import { cardFor, cardOf } from './credit';
 import { accountNumber } from './banknumber';
 import { alertsOf } from './statements';
 
@@ -63,9 +63,9 @@ function currentOf(sim: Simulation, person: Person): Account | undefined {
   return account && !account.closedAt ? account : undefined;
 }
 
-/** The account a card draws on: the current account for the debit card, the card's own for the credit card. */
-export function cardAccount(sim: Simulation, person: Person, which: Which): Account | undefined {
-  return which === 'debit' ? currentOf(sim, person) : cardOf(sim, person);
+/** The account a card draws on: the current account for the debit card, the card's own for a credit card, the everyday one where none is named. */
+export function cardAccount(sim: Simulation, person: Person, which: Which, accountId?: string): Account | undefined {
+  return which === 'debit' ? currentOf(sim, person) : cardFor(sim, person, accountId);
 }
 
 function yearsFor(account: Account, which: Which): number {
@@ -214,8 +214,8 @@ export function registerSecurity(sim: Simulation): void {
     somebodyElse(s, person);
   });
 
-  sim.onCommand<{ which: Which; locked: boolean }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
-    const account = cardAccount(s, s.player, p.which);
+  sim.onCommand<{ which: Which; locked: boolean; accountId?: string }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
+    const account = cardAccount(s, s.player, p.which, p.accountId);
     if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
     if (account.bankId && SECURITY[account.bankId]?.lockInApp === false) throw new CommandError(`${account.institution ?? 'The bank'} locks a card only by phone.`);
     const plastic = plasticOf(s, account, p.which);
@@ -224,9 +224,9 @@ export function registerSecurity(sim: Simulation): void {
     return { locked: plastic.locked };
   });
 
-  sim.onCommand<{ which: Which; why: 'lost' | 'stolen' | 'damaged'; rush?: boolean }, { arrivesAt: Instant; fee: Money }>('card.report', (p, { sim: s }) => {
+  sim.onCommand<{ which: Which; why: 'lost' | 'stolen' | 'damaged'; rush?: boolean; accountId?: string }, { arrivesAt: Instant; fee: Money }>('card.report', (p, { sim: s }) => {
     const person = s.player;
-    const account = cardAccount(s, person, p.which);
+    const account = cardAccount(s, person, p.which, p.accountId);
     if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
     if (!['lost', 'stolen', 'damaged'].includes(p.why)) throw new CommandError('Lost, stolen or damaged.');
     const plastic = plasticOf(s, account, p.which);
@@ -246,8 +246,8 @@ export function registerSecurity(sim: Simulation): void {
     return { arrivesAt, fee };
   });
 
-  sim.onCommand<Record<string, never>, { updated: boolean }>('card.update_billers', (_p, { sim: s }) => {
-    const card = cardOf(s, s.player);
+  sim.onCommand<{ accountId?: string }, { updated: boolean }>('card.update_billers', (p, { sim: s }) => {
+    const card = cardFor(s, s.player, p?.accountId);
     if (!card?.plastic?.billersStale) throw new CommandError('Your bills already have your card’s number.');
     delete card.plastic.billersStale;
     return { updated: true };

@@ -15,7 +15,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate, zonedParts } from '@/engine/core/time';
 import type { Account } from '@/engine/core/ledger';
-import { dueAt } from '@/engine/systems/credit';
+import { dueAt, stateOf } from '@/engine/systems/credit';
 import { pendingOn } from '@/engine/systems/pending';
 import { PENDING } from '@/engine/content/pending';
 import {
@@ -111,7 +111,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
   const closed = period.to <= sim.now;
   const due = closed ? dueAt(sim.zone, period.to, st.terms.graceDays) : undefined;
   // A balance carried into it: paid in full, what built up since still comes on the next, as trailing interest.
-  const carried = sim.player.credit?.carrying === true && st.previous > 0;
+  const carried = sim.player.credit !== undefined && stateOf(sim.player, account).carrying === true && st.previous > 0;
   return (
     <div className="col gap-3">
       <div className="grid grid-3">

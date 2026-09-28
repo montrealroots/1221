@@ -356,9 +356,19 @@ part the tool cannot see.
   or its purchase rate where that wasn't found. Introductory rates end
   early by the US rule and, since 2026-09-28, at Barclaycard's one missed
   minimum, as its terms say; Bank of Ireland's terms have no such clause,
-  and the other British and Irish cards' weren't read for it. SLATE holds one card at a time, so
-  a balance transfer is made only from the card being replaced, and not
-  where the new limit won't take it with its fee.
+  and the other British and Irish cards' weren't read for it. Until 2026-09-28 SLATE held one
+  card at a time; now a person holds one from each bank in the country
+  that issues one, each with its own statement, due date, minimum, plans,
+  transfers and rewards, the day's spending on the everyday card, and the
+  record reading what's used of all their limits together. A balance
+  transfer moves the balance of a card held at another bank, and isn't
+  made where the new limit won't take it with its fee. SLATE's estimates:
+  that a month paid as agreed counts once however many cards report it,
+  each a share, while a late payment on any card is the whole mark (the
+  scoring models aren't published); and one card from each bank, since
+  SLATE has each bank's one card. Not modeled: the length of the credit
+  history a new card shortens, and an issuer's own limits on how many
+  cards it opens in a year.
 - **Some of an account's life is SLATE's estimate or missing.** Where a
   bank words its early-withdrawal penalty other than in days of interest
   (a rate cut in France, a share in Spain), SLATE forfeits the interest so

@@ -130,7 +130,8 @@ describe('a balance transfer', () => {
     const score = sim.player.credit!.score;
     expect(run(sim, 'card.apply', { transfer: true }).ok).toBe(false);
     expect(sim.player.credit!.score).toBe(score);
-    expect(run(sim, 'card.apply', {}).ok).toBe(false);
+    // A second card from the bank already issuing one is refused; until 2026-09-28 any second card was.
+    expect(run(sim, 'card.apply', { bankId: 'us-chase' }).error).toMatch(/already/);
     const same = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'co-bt-same');
     give(same, card(same).id, -card(same).balance - 100_00);
     expect(run(same, 'card.apply', { transfer: true }).error).toMatch(/another bank/);

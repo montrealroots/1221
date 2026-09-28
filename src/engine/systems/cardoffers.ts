@@ -42,7 +42,7 @@ import { addMonths, zonedParts } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
-import { cardOf, cardRoom, cardTerms, type CardPlan, type CardTerms, type CardTransfer, type CreditState } from './credit';
+import { cardFor, cardRoom, cardTerms, stateOf, type CardPlan, type CardState, type CardTerms, type CardTransfer } from './credit';
 import { ENERGY } from './seasons';
 import { INTEREST_PLANS, planPayment } from '../content/plans';
 import { cashOwedOn } from './cash';
@@ -120,18 +120,18 @@ function bonusPeriod(sim: Simulation, per: 'quarter' | 'year' | 'cycle' | 'month
 const NOT_PURCHASES = new Set(['interest', 'fees', 'cash', 'card-transfer', 'transfer', 'card-payment', 'rewards']);
 
 /** A transfer's rate today: its introductory rate while it runs, unless a US payment sixty days late ended it. */
-export function transferRate(sim: Simulation, credit: CreditState, one: CardTransfer): number {
+export function transferRate(sim: Simulation, credit: CardState, one: CardTransfer): number {
   return one.introUntil !== undefined && sim.now < one.introUntil && !credit.introLost ? one.introApr ?? one.apr : one.apr;
 }
 
 /** What the card owes on transfers, cut down to what it owes beyond cash advances. */
 export function transfersOwedOn(person: Person, card: Account): Money {
-  const owed = (person.credit?.transfers ?? []).reduce((sum, one) => sum + one.owed, 0);
+  const owed = person.credit ? (stateOf(person, card).transfers ?? []).reduce((sum, one) => sum + one.owed, 0) : 0;
   return Math.max(0, Math.min(owed, -card.balance - cashOwedOn(person, card)));
 }
 
 /** What's left to pay on the card's plans. */
-export function planLeftOf(credit: CreditState | undefined): Money {
+export function planLeftOf(credit: CardState | undefined): Money {
   return (credit?.plans ?? []).reduce((sum, one) => sum + one.left, 0);
 }
 
@@ -142,7 +142,7 @@ export function transferFee(terms: CardTerms, amount: Money): Money {
 
 /** What purchases owe that isn't in a plan, a transfer or a cash advance: what a plan can be made from. */
 export function planRoom(person: Person, card: Account): Money {
-  return Math.max(0, -card.balance - cashOwedOn(person, card) - transfersOwedOn(person, card) - planLeftOf(person.credit));
+  return Math.max(0, -card.balance - cashOwedOn(person, card) - transfersOwedOn(person, card) - planLeftOf(person.credit ? stateOf(person, card) : undefined));
 }
 
 /**
@@ -150,7 +150,7 @@ export function planRoom(person: Person, card: Account): Money {
  * month moved into what's due with its fee, and the cycle's purchases'
  * rewards counted.
  */
-export function statementOffers(sim: Simulation, card: Account, credit: CreditState, terms: CardTerms): void {
+export function statementOffers(sim: Simulation, card: Account, credit: CardState, terms: CardTerms): void {
   for (const one of credit.transfers ?? []) {
     const interest = Math.round(one.accrued);
     one.accrued = 0;
@@ -203,7 +203,7 @@ export function lastMonthSpend(sim: Simulation, card: Account): Money {
 }
 
 /** A statement's rewards: each category at its bonus to the period's cap, the rate after past it, and the base rate where there's no bonus. */
-export function bonusRewards(sim: Simulation, card: Account, credit: CreditState, base: number, spent: { food: Money; bills: Money; other: Money }, from: number): Money {
+export function bonusRewards(sim: Simulation, card: Account, credit: CardState, base: number, spent: { food: Money; bills: Money; other: Money }, from: number): Money {
   const bonus = card.bankId ? BONUSES[card.bankId] : undefined;
   if (!bonus) return Math.round((spent.food + spent.bills + spent.other) * base);
   const currency = card.bankId ? bankById(card.bankId)?.currency ?? 'USD' : 'USD';
@@ -240,8 +240,8 @@ export function bonusRewards(sim: Simulation, card: Account, credit: CreditState
  * balance moved onto it for the card's fee, and the old card closed.
  */
 export function transferOnArrival(sim: Simulation, person: Person, card: Account, old: Account): void {
-  const credit = person.credit!;
-  const terms = cardTerms(sim, card, credit.score);
+  const terms = cardTerms(sim, card, person.credit!.score);
+  const credit = stateOf(person, card);
   const owed = Math.max(0, -old.balance);
   if (!terms.transfer || owed <= 0) return;
   const fee = transferFee(terms, owed);
@@ -257,12 +257,12 @@ export function transferOnArrival(sim: Simulation, person: Person, card: Account
 }
 
 export function registerCardOffers(sim: Simulation): void {
-  sim.onCommand<{ amount: Money }, { fee: Money }>('card.money_transfer', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; accountId?: string }, { fee: Money }>('card.money_transfer', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
-    const credit = person.credit;
-    if (!card || !credit) throw new CommandError('You don’t have a card.');
-    const terms = cardTerms(s, card, credit.score);
+    const card = cardFor(s, person, p.accountId);
+    if (!card || !person.credit) throw new CommandError('You don’t have a card.');
+    const credit = stateOf(person, card);
+    const terms = cardTerms(s, card, person.credit.score);
     if (!terms.moneyTransferFee) throw new CommandError(`The ${card.name} doesn’t offer money transfers.`);
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (!current || current.closedAt) throw new CommandError('You need a current account for the money.');
@@ -277,12 +277,12 @@ export function registerCardOffers(sim: Simulation): void {
     return { fee };
   });
 
-  sim.onCommand<{ amount: Money; months: number }, { plan: CardPlan }>('card.plan', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; months: number; accountId?: string }, { plan: CardPlan }>('card.plan', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
-    const credit = person.credit;
-    if (!card || !credit) throw new CommandError('You don’t have a card.');
-    const terms = cardTerms(s, card, credit.score);
+    const card = cardFor(s, person, p.accountId);
+    if (!card || !person.credit) throw new CommandError('You don’t have a card.');
+    const credit = stateOf(person, card);
+    const terms = cardTerms(s, card, person.credit.score);
     const interestPlan = card.bankId ? INTEREST_PLANS[card.bankId] : undefined;
     if (!terms.planFeeShare && !interestPlan) throw new CommandError(`The ${card.name} has no plan SLATE has terms for.`);
     const months = Math.round(Number(p.months));
@@ -304,10 +304,10 @@ export function registerCardOffers(sim: Simulation): void {
     return { plan };
   });
 
-  sim.onCommand<Record<string, never>, { redeemed: Money }>('card.redeem_rewards', (_p, { sim: s }) => {
+  sim.onCommand<{ accountId?: string }, { redeemed: Money }>('card.redeem_rewards', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
-    const credit = person.credit;
+    const card = cardFor(s, person, p?.accountId);
+    const credit = card && person.credit ? stateOf(person, card) : undefined;
     const rewards = credit?.rewards ?? 0;
     if (!card || !credit || rewards <= 0) throw new CommandError('The card has no rewards to redeem.');
     s.post({ memo: 'Rewards redeemed', category: 'rewards', postings: [{ accountId: card.id, amount: rewards }, { accountId: s.nominalAccount('income', 'Card Rewards').id, amount: -rewards }] });
@@ -317,8 +317,8 @@ export function registerCardOffers(sim: Simulation): void {
 }
 
 /** A balance transfer asked for with an application: refused before the bank looks if the limit won't take it with its fee. */
-export function transferRefusal(sim: Simulation, person: Person, bankId: string, limit: Money): string | undefined {
-  const old = cardOf(sim, person);
+export function transferRefusal(sim: Simulation, person: Person, bankId: string, limit: Money, fromId?: string): string | undefined {
+  const old = cardFor(sim, person, fromId);
   if (!old) return 'You have no card to move a balance from.';
   if (old.bankId === bankId) return 'A balance moves onto a card at another bank.';
   const bank = bankById(bankId);

@@ -89,7 +89,7 @@ describe('the cost of living', () => {
     sim.post({ memo: 'test', category: 'test', postings: [{ accountId: card.id, amount: -100_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: 100_00 }] });
     expect(troubles(sim, sim.player).some((t) => t.kind === 'card_behind')).toBe(false);
     sim.player.credit!.missed = 1;
-    expect(troubles(sim, sim.player)).toContainEqual({ kind: 'card_behind', amount: 100_00 });
+    expect(troubles(sim, sim.player)).toContainEqual(expect.objectContaining({ kind: 'card_behind', amount: 100_00 }));
     sim.player.credit!.missed = 0;
     sim.player.credit!.suspended = 'late';
     expect(troubles(sim, sim.player).some((t) => t.kind === 'card_behind')).toBe(true);

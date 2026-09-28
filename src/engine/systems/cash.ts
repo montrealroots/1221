@@ -38,7 +38,7 @@ import { instantFromZoned, zonedParts } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CASH } from '../content/cash';
-import { cardOf, cardRoom, cardTerms } from './credit';
+import { cardFor, cardRoom, cardTerms, stateOf } from './credit';
 import { planLeftOf, transferRate } from './cardoffers';
 
 export type CashFrom = 'atm' | 'other_atm' | 'counter' | 'post_office' | 'card';
@@ -93,16 +93,16 @@ export const OWNER_SURCHARGE: Readonly<Record<string, { fee: Money; currency: st
   AU: { fee: 2_63, currency: 'AUD', source: 'https://www.rba.gov.au/publications/bulletin/2017/dec/6.html (independent ATMs, June 2017, the latest average published)' },
 };
 
-export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, from: CashFrom): { fee: Money; refused?: string; ownerFee?: boolean; ownerCharge?: Money } {
+export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, from: CashFrom, accountId?: string): { fee: Money; refused?: string; ownerFee?: boolean; ownerCharge?: Money } {
   const cur = saveCurrency(sim.universe);
   if (from === 'card') {
-    const card = cardOf(sim, person);
+    const card = cardFor(sim, person, accountId);
     if (!card || !person.credit) return { fee: 0, refused: 'You don’t have a card.' };
     const terms = cardTerms(sim, card, person.credit.score);
     const fee = Math.max(terms.cashFeeMin, Math.round(amount * terms.cashFeeShare));
     const room = cardRoom(person, card);
     if (room < amount + fee) return { fee, refused: `The card has ${formatMoney(room, cur)} free, and this takes ${formatMoney(amount + fee, cur)} with its fee.` };
-    const cashOwed = person.credit.cashOwed ?? 0;
+    const cashOwed = stateOf(person, card).cashOwed ?? 0;
     if (terms.cashLimit !== undefined && cashOwed + amount > terms.cashLimit) return { fee, refused: `The card lets ${formatMoney(terms.cashLimit, cur)} out as cash, and ${formatMoney(cashOwed, cur)} is out already.` };
     return { fee };
   }
@@ -129,7 +129,7 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
 
 /** The part of what's owed on the card that's cash, cut down to what's owed at all. */
 export function cashOwedOn(person: Person, card: Account): Money {
-  return Math.max(0, Math.min(person.credit?.cashOwed ?? 0, -card.balance));
+  return Math.max(0, Math.min(person.credit ? stateOf(person, card).cashOwed ?? 0 : 0, -card.balance));
 }
 
 /**
@@ -141,7 +141,7 @@ export function cashOwedOn(person: Person, card: Account): Money {
  * and purchases to split between.
  */
 export function allocatePayment(sim: Simulation, person: Person, card: Account, paid: Money, minimum: Money, rates: { cash: number; purchases: number }): void {
-  const credit = person.credit;
+  const credit = person.credit ? stateOf(person, card) : undefined;
   if (!credit || (!credit.cashOwed && !credit.transfers?.length && !credit.plans?.length)) return;
   const us = bankById(card.bankId ?? '')?.iso === 'US';
   const owedBefore = -card.balance + paid;
@@ -179,20 +179,21 @@ export function allocatePayment(sim: Simulation, person: Person, card: Account, 
 }
 
 export function registerCash(sim: Simulation): void {
-  sim.onCommand<{ amount: Money; from: CashFrom }, { fee: Money; ownerFee?: boolean; ownerCharge?: Money }>('cash.withdraw', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; from: CashFrom; accountId?: string }, { fee: Money; ownerFee?: boolean; ownerCharge?: Money }>('cash.withdraw', (p, { sim: s }) => {
     const person = s.player;
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Say how much.');
     const from = p.from;
     if (!['atm', 'other_atm', 'counter', 'post_office', 'card'].includes(from)) throw new CommandError('From your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
-    const quote = withdrawalQuote(s, person, amount, from);
+    const quote = withdrawalQuote(s, person, amount, from, p.accountId);
     if (quote.refused) throw new CommandError(quote.refused);
     const wallet = walletOf(s, person, true)!;
     if (from === 'card') {
-      const card = cardOf(s, person)!;
+      const card = cardFor(s, person, p.accountId)!;
       s.post({ memo: 'Cash advance', category: 'cash', postings: [{ accountId: card.id, amount: -amount }, { accountId: wallet.id, amount }] });
       if (quote.fee > 0) s.post({ memo: 'Cash advance fee', category: 'fees', postings: [{ accountId: card.id, amount: -quote.fee }, { accountId: s.nominalAccount('expense', 'Card Fees').id, amount: quote.fee }] });
-      person.credit!.cashOwed = (person.credit!.cashOwed ?? 0) + amount;
+      const state = stateOf(person, card);
+      state.cashOwed = (state.cashOwed ?? 0) + amount;
       return { fee: quote.fee };
     }
     const current = currentOf(s, person)!;

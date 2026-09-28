@@ -55,7 +55,7 @@ import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
 import { cardCeilingRoom, monthOrder, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
-import { cardRoom } from './credit';
+import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
 import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
 import { CommandError } from '../core/simulation';
@@ -246,8 +246,9 @@ function checkingOf(sim: Simulation, person: Person): Account | undefined {
   return person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
 }
 
+/** The everyday card, where the day's spending goes. */
 function cardOf(sim: Simulation, person: Person): Account | undefined {
-  return accountsOf(sim, person).find((a) => a.kind === 'credit_card');
+  return everydayCard(sim, person);
 }
 
 /** What owed rent and bills stand at, as a positive amount. */
@@ -738,7 +739,7 @@ function landlord(sim: Simulation, person: Person): void {
 }
 
 /** A money trouble, and how much it comes to. */
-export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'card_behind' | 'medical' | 'collections' | 'tax' | 'return_late' | 'home' | 'council'; amount: Money };
+export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'card_behind' | 'medical' | 'collections' | 'tax' | 'return_late' | 'home' | 'council'; amount: Money; accountId?: string };
 
 /**
  * What money is weighing on somebody with today: owing the landlord, the
@@ -753,11 +754,14 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
   if (rent > 0) out.push({ kind: 'landlord', amount: rent });
   const current = checkingOf(sim, person)?.balance ?? 0;
   if (current < 0) out.push({ kind: 'overdrawn', amount: -current });
-  const card = cardOf(sim, person);
-  if (card && (card.creditLimit ?? 0) > 0 && -card.balance >= CARD_FULL * (card.creditLimit ?? 0)) out.push({ kind: 'card', amount: -card.balance });
-  // Behind on it, or stopped for it: until 2026-09-27 a card two payments
-  // behind and suspended counted as in order unless it was nearly full.
-  if (card && ((person.credit?.missed ?? 0) > 0 || person.credit?.suspended)) out.push({ kind: 'card_behind', amount: Math.max(0, -card.balance) });
+  // Every card: until 2026-09-28 a person held one.
+  for (const card of person.credit ? cardsOf(sim, person) : []) {
+    if ((card.creditLimit ?? 0) > 0 && -card.balance >= CARD_FULL * (card.creditLimit ?? 0)) out.push({ kind: 'card', amount: -card.balance });
+    // Behind on it, or stopped for it: until 2026-09-27 a card two payments
+    // behind and suspended counted as in order unless it was nearly full.
+    const state = stateOf(person, card);
+    if ((state.missed ?? 0) > 0 || state.suspended) out.push({ kind: 'card_behind', amount: Math.max(0, -card.balance), accountId: card.id });
+  }
   for (const kind of ['medical', 'collections'] as const) {
     const owed = accountsOf(sim, person).filter((a) => a.category === kind && a.balance < 0).reduce((sum, a) => sum - a.balance, 0);
     if (owed > 0) out.push({ kind, amount: owed });

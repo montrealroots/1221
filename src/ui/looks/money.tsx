@@ -31,7 +31,7 @@ import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, spokenList } from './words';
-import { cardTerms } from '@/engine/systems/credit';
+import { cardTerms, stateOf } from '@/engine/systems/credit';
 import { lendingOf } from '@/engine/systems/lending';
 import { cashOwedOn } from '@/engine/systems/cash';
 import { transferRate } from '@/engine/systems/cardoffers';
@@ -114,7 +114,8 @@ function yearOfInterest(sim: Simulation, a: Account): Money {
   const cash = cashOwedOn(owner, a);
   let transfers = 0;
   let transferInterest = 0;
-  for (const one of owner.credit.transfers ?? []) { transfers += one.owed; transferInterest += one.owed * transferRate(sim, owner.credit, one); }
+  const state = stateOf(owner, a);
+  for (const one of state.transfers ?? []) { transfers += one.owed; transferInterest += one.owed * transferRate(sim, state, one); }
   const rest = Math.max(0, owed - cash - transfers);
   return Math.round(rest * terms.apr + cash * (terms.cashApr ?? terms.apr) + transferInterest);
 }

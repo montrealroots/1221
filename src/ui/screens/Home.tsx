@@ -24,7 +24,7 @@ import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
+import { cardOf, cardsOf, cardTerms, scoreIsANumberIn, scoreWord, stateOf } from '@/engine/systems/credit';
 import { HOUSING, OWNED, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
 import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -63,7 +63,13 @@ export function Home() {
       if (t.kind === 'landlord') said.push(`You owe your landlord ${m(t.amount)}.`);
       else if (t.kind === 'overdrawn') said.push(`Your current account is ${m(t.amount)} overdrawn.`);
       else if (t.kind === 'card') said.push(`Your card is nearly at its limit, owing ${m(t.amount)}.`);
-      else if (t.kind === 'card_behind') said.push(s.player.credit?.suspended ? `Your card is suspended, owing ${m(t.amount)}.` : `Your card is ${s.player.credit?.missed === 1 ? 'a payment' : `${s.player.credit?.missed} payments`} behind, owing ${m(t.amount)}.`);
+      else if (t.kind === 'card_behind') {
+        // The card named, where there's more than one.
+        const card = t.accountId ? s.universe.accounts[t.accountId] : undefined;
+        const state = card && s.player.credit ? stateOf(s.player, card) : s.player.credit;
+        const which = card && cardsOf(s, s.player).length > 1 ? `The ${card.name}` : 'Your card';
+        said.push(state?.suspended ? `${which} is suspended, owing ${m(t.amount)}.` : `${which} is ${state?.missed === 1 ? 'a payment' : `${state?.missed} payments`} behind, owing ${m(t.amount)}.`);
+      }
       else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
       else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
@@ -775,14 +781,23 @@ function YourHome({ cur }: { cur: string }) {
 function CardSummary({ cur }: { cur: string }) {
   const { sim } = useGame();
   const card = useWorld((s) => cardOf(s, s.player));
+  const cards = useWorld((s) => cardsOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
   // Read as it’s read where they live, not where a job has them.
-  const record = scoreIsANumberIn(homeOf(sim.player)) ? String(credit.score) : scoreWord(credit.score);
+  const record = scoreIsANumberIn(homeOf(sim.player)) ? String(Math.round(credit.score)) : scoreWord(credit.score);
   const terms = card ? cardTerms(sim, card, credit.score) : undefined;
   return (
     <>
-      {card && terms && (
+      {cards.length > 1 && (
+        // Several, as one figure, as the bureaus read them together: until 2026-09-28 a person held one card.
+        <Stat
+          label="Credit Cards"
+          value={<span className="mono">{formatMoney(cards.reduce((sum, c) => sum + Math.max(0, -c.balance), 0), cur, { cents: false })}</span>}
+          note={`Owed of ${formatMoney(cards.reduce((sum, c) => sum + (c.creditLimit ?? 0), 0), cur, { cents: false })} in limits, on ${cards.length} cards`}
+        />
+      )}
+      {cards.length === 1 && card && terms && (
         <Stat
           label={terms.name}
           value={<span className="mono">{formatMoney(Math.max(0, -card.balance), cur, { cents: false })}</span>}

@@ -48,6 +48,7 @@ import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../
 import { inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { lendingOf } from './lending';
+import { ensurePrimary, stateOf } from './credit';
 import { recordInterest } from './earnings';
 
 /** The months to its end a term deposit was opened for. */
@@ -307,8 +308,8 @@ export function registerAccountLife(sim: Simulation): void {
     if (account.kind === 'credit_card') {
       // Canceled, with anything spent still to repay (C6).
       if (!person.credit) throw new CommandError('You don’t have a card.');
-      person.credit.closing = s.now;
-      if (account.balance >= 0) account.closedAt = s.now;
+      stateOf(person, account).closing = s.now;
+      if (account.balance >= 0) { account.closedAt = s.now; ensurePrimary(s, person); }
       return { refunded: 0 };
     }
     if (!into || into.id === account.id) throw new CommandError('Your current account is closed by switching banks.');

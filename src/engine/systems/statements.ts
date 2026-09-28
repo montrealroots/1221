@@ -33,7 +33,7 @@ import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
-import { cardTerms, minimumDue, statementDayOf, type CardTerms } from './credit';
+import { cardTerms, minimumDue, stateOf, statementDayOf, type CardTerms } from './credit';
 import { closesQuarterly } from './banking';
 
 /** One entry, as the account saw it. */
@@ -96,7 +96,7 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
   let y = now.year;
   let m = now.month;
   // A card states on its day, the 20th unless the holder moved it.
-  const sday = statementDayOf(sim.universe.people[account.ownerId]);
+  const sday = statementDayOf(sim.universe.people[account.ownerId], card ? account : undefined);
   if (card && sim.now >= instantFromZoned({ year: now.year, month: now.month, day: sday, hour: 9 }, zone)) m += 1;
   if (m > 12) { m -= 12; y += 1; }
   if (quarterly) m = Math.ceil(m / 3) * 3;
@@ -221,7 +221,9 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
   const averageDaily = end > period.from ? Math.round(weighted / (end - period.from)) : 0;
   const out: CardStatement = { period, previous: opening, payments, spending, fees, interest, newBalance: Math.max(0, closing), averageDaily, lines, terms };
   if (period.to <= sim.now && out.newBalance > 0) {
-    out.minimum = minimumDue(sim, out.newBalance, terms, interest);
+    // The card's own plan months, not the everyday card's: until 2026-09-28 they were one card.
+    const owner = sim.universe.people[card.ownerId ?? ''];
+    out.minimum = minimumDue(sim, out.newBalance, terms, interest, owner?.credit ? stateOf(owner, card).statementPlanDue ?? 0 : 0);
     out.minimumOnly = payingTheMinimum(sim, out.newBalance, terms);
     const bank = card.bankId ? bankById(card.bankId) : undefined;
     if (bank?.iso === 'GB' && terms.kind === 'revolving') out.nextInterest = Math.round(out.newBalance * terms.apr / 12);
