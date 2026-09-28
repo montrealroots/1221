@@ -95,6 +95,39 @@ export const SHAKESPEARE_PLAYS: readonly Play[] = [
 ];
 
 /**
+ * Plays for Yale Rep's productions in the seasons that aren't announced: the
+ * classics a professional regional theater stages beside its new work. Which
+ * one a season has is SLATE's estimate; 2026–27's is The Seagull, the Rep's
+ * own.
+ */
+export const REP_PLAYS: readonly Play[] = [
+  {
+    title: 'A Doll’s House', by: 'Henrik Ibsen', reads: { scene: 2, emotion: 2, character: 1, script: 1 },
+    parts: [p('Nora Helmer', 'lead', 'actress'), p('Torvald Helmer', 'lead', 'actor'), p('Nils Krogstad', 'supporting', 'actor'), p('Kristine Linde', 'supporting', 'actress'), p('Doctor Rank', 'supporting', 'actor'), p('Anne-Marie', 'featured', 'actress'), p('Helene', 'featured', 'actress')],
+  },
+  {
+    title: 'Uncle Vanya', by: 'Anton Chekhov', reads: { scene: 2, emotion: 2, character: 1, script: 1 },
+    parts: [p('Vanya', 'lead', 'actor'), p('Yelena', 'lead', 'actress'), p('Sonya', 'lead', 'actress'), p('Astrov', 'supporting', 'actor'), p('Serebryakov', 'supporting', 'actor'), p('Maria Vasilyevna', 'featured', 'actress'), p('Telegin', 'featured', 'actor'), p('Marina', 'featured', 'actress')],
+  },
+  {
+    title: 'Tartuffe', by: 'Molière', reads: { comedy: 2, classical: 2, speech: 1, scene: 1 },
+    parts: [p('Tartuffe', 'lead', 'actor'), p('Orgon', 'lead', 'actor'), p('Elmire', 'lead', 'actress'), p('Dorine', 'supporting', 'actress'), p('Madame Pernelle', 'supporting', 'actress'), p('Cléante', 'supporting', 'actor'), p('Mariane', 'featured', 'actress'), p('Valère', 'featured', 'actor'), p('Damis', 'featured', 'actor')],
+  },
+  {
+    title: 'An Enemy Of The People', by: 'Henrik Ibsen', reads: { scene: 2, speech: 1, character: 1, script: 1, emotion: 1 },
+    parts: [p('Doctor Thomas Stockmann', 'lead', 'actor'), p('Peter Stockmann', 'lead', 'actor'), p('Petra Stockmann', 'supporting', 'actress'), p('Katherine Stockmann', 'supporting', 'actress'), p('Hovstad', 'supporting', 'actor'), p('Aslaksen', 'featured', 'actor'), p('Billing', 'featured', 'actor'), p('Morten Kiil', 'featured', 'actor')],
+  },
+  {
+    title: 'The Playboy Of The Western World', by: 'J. M. Synge', reads: { accents: 2, comedy: 1, scene: 1, character: 1 },
+    parts: [p('Christy Mahon', 'lead', 'actor'), p('Pegeen Mike', 'lead', 'actress'), p('The Widow Quin', 'supporting', 'actress'), p('Shawn Keogh', 'supporting', 'actor'), p('Old Mahon', 'supporting', 'actor'), p('Michael James', 'featured', 'actor'), p('Sara Tansey', 'featured', 'actress'), p('Susan Brady', 'featured', 'actress')],
+  },
+  {
+    title: 'Mrs Warren’s Profession', by: 'Bernard Shaw', reads: { speech: 2, script: 2, scene: 1, character: 1 },
+    parts: [p('Vivie Warren', 'lead', 'actress'), p('Mrs Kitty Warren', 'lead', 'actress'), p('Frank Gardner', 'supporting', 'actor'), p('Sir George Crofts', 'supporting', 'actor'), p('Praed', 'featured', 'actor'), p('The Reverend Samuel Gardner', 'featured', 'actor')],
+  },
+];
+
+/**
  * The festivals' new plays: unnamed, as they're chosen after casting, with
  * parts by size. A festival's new
  * plays ask for the script and quick changes as pages come in.

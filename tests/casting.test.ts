@@ -9,8 +9,8 @@ import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { NEW_PLAYS_READ, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
-import { CALL_KIND, COMPANY_KIND, ESTIMATE, castScore, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
+import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
+import { CALL_KIND, COMPANY_KIND, ESTIMATE, castScore, evaluate, repPlayOf, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
@@ -189,7 +189,9 @@ describe('a night’s reading', () => {
     }
     const nights = Object.values(c.nights ?? {}).reduce((a, b) => a + b, 0);
     expect(nights).toBe(shows.length);
-    expect(c.note).toBe(directorsNote(nightsMean(c.nights!)));
+    expect(c.note).toContain(directorsNote(nightsMean(c.nights!)));
+    // And names what the play asked that was weakest in them.
+    expect(c.note).toMatch(/ Work on your [a-z -]+.$/);
     expect(sim.universe.notifications.some((n) => n.title.startsWith('The Director’s Note'))).toBe(true);
     play(sim, on(2027, 9, 15));
     expect(sim.player.school!.lastWork).toEqual({ size: c.size, nights: nightsMean(c.nights!) });
@@ -231,4 +233,33 @@ describe('the class’s names', () => {
       expect(new Set(names.map((n) => n[0])).size).toBe(names.length);
     }
   });
+});
+
+describe('the faculty read the work on stage', () => {
+  it('count a run gone mostly off against the term, and note a strong one', () => {
+    for (const [nights, standing, words] of [[{ off: 4 }, 'concern', /fell short/], [{ strong: 2, remarkable: 2 }, 'good', /strong work/], [{ off: 1, solid: 3 }, 'good', /^(?!.*(fell short|strong work))/]] as const) {
+      const sim = life(`work-${standing}-${Object.keys(nights)[0]}`);
+      const school = sim.player.school!;
+      school.casting = { production: 'Directors’ Thesis Production I', play: 'Hedda Gabler', by: 'Henrik Ibsen', role: 'Hedda Tesman', kind: 'thesis', term: 0, performed: 4, size: 'lead', nights };
+      const review = evaluate(sim, sim.player, 0)!;
+      expect(review.standing).toBe(standing);
+      expect(review.work).toBe(nightsMean(nights));
+      expect(review.reason).toMatch(words);
+    }
+  });
+});
+
+describe('Yale Rep’s seasons not yet announced', () => {
+  it('deal each save a play for each, not the same two years running, and an understudy covers a lead written for them', () => {
+    const sim = life('rep-plays', 'he/him');
+    const [two, four] = [repPlayOf(sim, sim.player, 2), repPlayOf(sim, sim.player, 4)];
+    expect(REP_PLAYS).toContain(two);
+    expect(two.title).not.toBe(four.title);
+    play(sim, on(2027, 9, 15));
+    const rep = sim.player.school!.rep!;
+    expect(rep).toMatchObject({ kind: 'understudy', play: two.title, by: two.by });
+    const part = two.parts.find((x) => x.name === rep.role)!;
+    expect(part.size).toBe('lead');
+    expect(['actor', 'either']).toContain(part.for);
+  }, 120_000);
 });

@@ -28,6 +28,8 @@ import { TURNS } from '@/engine/systems/enjoyment';
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
+/** Played by somebody who looks after themselves: rested, fed and steady each time the clock moves, as a player keeps a character. Since 2026-09-28 a run of off nights falls short at the evaluation. */
+const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); } };
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending').sort((a, b) => a.at - b.at);
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 const craft = (level: number): Craft => (evenCraft(level));
@@ -61,7 +63,7 @@ function offer(sim: Simulation, roleId: string, units: number, rehearsalWeeks = 
 describe('the showcase', () => {
   it('is booked in the last spring, in New York and a week later in Los Angeles, on the estimated 2029 dates', () => {
     const sim = createSave(1, 'show', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
-    play(sim, at(2029, 1, 8, 10));
+    tended(sim, at(2029, 1, 8, 10));
     const shows = pending(sim, SHOWCASE_KIND);
     expect(shows.map((s) => s.payload.cityId)).toEqual(['us-ny-newyork', 'us-ca-losangeles']);
     expect(zonedParts(shows[0]!.at, NY)).toMatchObject({ year: 2029, month: 4, day: SHOWCASE_2029.newYork.day, hour: 17 });
@@ -898,7 +900,7 @@ describe('the school’s later years', () => {
     // Rehearsals start no earlier than the term.
     expect(repProduction(2).rehearsals.from).toBe('2027-08-23');
     const sim = createSave(1, 'rep', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
-    play(sim, at(2028, 8, 28, 10));
+    tended(sim, at(2028, 8, 28, 10));
     const school = sim.player.school!;
     expect(school.rep?.production).toBe('Yale Rep’s October Production');
     expect(school.rep?.kind).toBe(actingOf(sim.player.craft!) >= 77 ? 'role' : 'understudy');

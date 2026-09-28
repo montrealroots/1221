@@ -28,6 +28,8 @@ const life = (seed = 'school', extra: Record<string, unknown> = {}) =>
 const inNeed = (seed: string) => life(seed, { family: undefined, wealth: 'scraping' });
 /** Played to a moment, six hours at a time. */
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); };
+/** Played by somebody who looks after themselves: rested, fed and steady each time the clock moves, as a player keeps a character. Since 2026-09-28 a run of off nights falls short at the evaluation. */
+const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending');
 const day = (key: string) => { const [year, month, d] = key.split('-').map(Number); return { year: year!, month: month!, day: d! }; };
@@ -701,10 +703,10 @@ describe('evaluation', () => {
   it('confers the MFA at Commencement after six terms in standing', () => {
     const sim = life('degree');
     // The second year's assigned shifts, all booked by June, come to its 150 hours at most: every class-week Saturday was 156.
-    play(sim, at(2028, 6, 1, 12));
+    tended(sim, at(2028, 6, 1, 12));
     expect(sim.player.school!.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
     expect(sim.player.school!.workStudy.assignedBooked).toBeGreaterThan(WORK_STUDY.assignedHours - 12);
-    play(sim, at(2029, 5, 29, 12));
+    tended(sim, at(2029, 5, 29, 12));
     const school = sim.player.school!;
     expect(school.history.map((r) => r.standing)).toEqual(['good', 'good', 'good', 'good', 'good', 'good']);
     expect(school.standing).toBe('graduated');
