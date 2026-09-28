@@ -239,8 +239,12 @@ part the tool cannot see.
   - Unpublished: Off-Broadway's categories B and C and every 2027–28 rate
     (Equity keeps the rulebook behind its members' portal); animation's
     rate from July 2026, the successor agreement's tables not yet out;
-    SAG-AFTRA's 2027 COBRA rate; New York City's exact 2026 benchmark
-    premium; California's 2026 flat penalty and standard deduction; how
+    SAG-AFTRA's 2027 COBRA rate (its Board set only 2027's earned
+    eligibility premiums in August); New York City's exact 2026 benchmark
+    premium (NY State of Health posts it with the year's 1095-A forms; 2025's
+    was $880.24, and the state approved 7.1% more on average for 2026);
+    California's 2026 flat penalty and standard deduction, which the FTB
+    hadn't published by 28 September 2026; how
     often meal penalties come and how long a recurring arc runs. Each holds
     at its last published figure, or is SLATE's estimate, and says so. Since
     2026-09-28 the Commercials Contracts' third year is the contract's
@@ -285,8 +289,12 @@ part the tool cannot see.
     2027 design is published. Since that day a claim is filed with the
     state the base period's wages were mostly earned in, as an interstate
     claim is, and where the claimant lives only when that state isn't one
-    SLATE pays in or the wages predate their state being kept. What isn't
-    modeled: its hospitals' charity care.
+    SLATE pays in or the wages predate their state being kept. And a
+    Connecticut patient's hospital bill takes Yale New Haven's own charity:
+    free to 250% of the poverty line, 67% off to 550%, for the uninsured,
+    as a hospital screens a patient paying for themselves. What isn't
+    modeled: the same policy's help with what insurance leaves, on an
+    application SLATE doesn't make.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two

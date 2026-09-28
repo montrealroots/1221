@@ -298,9 +298,21 @@ export const PLANS_SOURCE = 'http://agency.accesshealthct.com/wp-content/uploads
 /**
  * Hospital bills to the uninsured. New York's hospitals charge nothing under
  * 200% of the poverty line; California's must discount care to 400%, which
- * SLATE takes as the commercial price, not the list.
+ * SLATE takes as the commercial price, not the list. Connecticut's, Yale New
+ * Haven's own policy (Financial Assistance Programs Policy 2296, May 2025;
+ * its values of 29 January 2026): free to 250% of the poverty line, and 67%
+ * off from 251% to 550%, which the state's law (Conn. Gen. Stat. §19a-673)
+ * binds at cost for the uninsured under 250%. Until 2026-09-28 a Connecticut
+ * patient was billed as if there were no such policy. SLATE applies it to
+ * the uninsured, as a hospital screens a patient paying for themselves; the
+ * policy helps an insured patient with what insurance leaves too, on an
+ * application SLATE doesn't make.
  */
-export const CHARITY = { newYorkFreeBelow: 2, californiaDiscountBelow: 4, source: 'NY Public Health Law §2807-k(9-a); California Health and Safety Code §127400 et seq.' } as const;
+export const CHARITY = {
+  newYorkFreeBelow: 2, californiaDiscountBelow: 4,
+  connecticut: { freeTo: 2.5, discountTo: 5.5, discount: 0.67 },
+  source: 'NY Public Health Law §2807-k(9-a); California Health and Safety Code §127400 et seq.; https://www.ynhh.org/patients-visitors/billing-insurance/FAP-guidelines; https://www.cga.ct.gov/current/pub/chap_368z.htm',
+} as const;
 
 /**
  * A medical debt goes on a credit record only at $500 or more, unpaid, and a

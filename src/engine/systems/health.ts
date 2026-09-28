@@ -428,17 +428,27 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
   const year = zonedParts(at, HOME).year;
   const plan = planOf(person, at);
   const h = healthOf(person);
-  if (!plan) {
-    const hospital = care === 'emergency' || care === 'stay';
-    if (!hospital) return Math.round(price * CARE.uninsuredMarkup);
+  const hospital = care === 'emergency' || care === 'stay';
+  const state = CITIES.get(homeOf(person))?.parentId;
+  // The last year's income against the poverty line, which a hospital's charity reads.
+  const ratio = () => {
     const months = earningsOf(person).months;
     const since = at - 365 * MS_DAY;
     const income = Object.entries(months).filter(([k]) => firstOf(Number(k.slice(0, 4)), Number(k.slice(5, 7))) >= since).reduce((s, [, v]) => s + v, 0);
-    const ratio = income / usd(byYear(POVERTY_LINE, year), into);
-    const state = CITIES.get(homeOf(person))?.parentId;
-    if (state === 'us-ny' && ratio < CHARITY.newYorkFreeBelow) return 0;
-    if (state === 'us-ca' && ratio < CHARITY.californiaDiscountBelow) return price;
-    return Math.round(price * CARE.uninsuredMarkup);
+    return income / usd(byYear(POVERTY_LINE, year), into);
+  };
+  // Connecticut's hospital charity, for a patient paying for themselves, as a hospital screens one.
+  const ct = CHARITY.connecticut;
+  const helped = (owed: Money): Money => {
+    if (!hospital || state !== 'us-ct') return owed;
+    const r = ratio();
+    return r <= ct.freeTo ? 0 : r <= ct.discountTo ? Math.round(owed * (1 - ct.discount)) : owed;
+  };
+  if (!plan) {
+    if (!hospital) return Math.round(price * CARE.uninsuredMarkup);
+    if (state === 'us-ny' && ratio() < CHARITY.newYorkFreeBelow) return 0;
+    if (state === 'us-ca' && ratio() < CHARITY.californiaDiscountBelow) return price;
+    return helped(Math.round(price * CARE.uninsuredMarkup));
   }
   let share: number;
   if (care === 'stay' && plan.stayCopay !== undefined) {

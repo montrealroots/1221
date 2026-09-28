@@ -12,7 +12,7 @@ import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, UNION_HEALTH, rateOn } from '@/engine/content/career';
-import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear, CONNECTICUT_UI, INSULIN, PLANS } from '@/engine/content/safetynet';
+import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear, CONNECTICUT_UI, INSULIN, PLANS, POVERTY_LINE } from '@/engine/content/safetynet';
 import {
   RESIDUAL_KIND, afterlife, beginCareer, careerOf, managerOffersFor, mealPenalty, overtimeFor, paycheck, residualAmount, roleById, weekOfAuditions, workDays,
   type Booking,
@@ -508,6 +508,23 @@ describe('the tax return', () => {
     recordWages(cheap.player, at(2026, 5, 1), NY, { gross: 7_000_00, commission: 700_00, employer: 'a' });
     recordWages(cheap.player, at(2026, 6, 1), NY, { gross: 7_000_00, commission: 700_00, employer: 'b' });
     expect(figuresFor(cheap.player, 2026).deduction).toBe(0);
+  });
+
+  it('takes Yale New Haven’s charity off an uninsured Connecticut patient’s hospital bill: free to 250% of the poverty line, 67% off to 550%', () => {
+    const bill = (seed: string, city: string, yearly: number) => {
+      const sim = pro(seed, city);
+      const months = earningsOf(sim.player).months;
+      for (const k of Object.keys(months)) delete months[k];
+      months['2025-12'] = yearly;
+      return shareOf(sim.player, 'stay', sim.now);
+    };
+    const line = byYear(POVERTY_LINE, 2026);
+    const full = bill('ct-rich', 'us-ct-newhaven', Math.round(line * 7));
+    expect(full).toBeGreaterThan(0);
+    expect(bill('ct-low', 'us-ct-newhaven', Math.round(line * 2))).toBe(0);
+    expect(bill('ct-mid', 'us-ct-newhaven', Math.round(line * 4))).toBe(Math.round(full * 0.33));
+    // Not a New Yorker's: New York's own rule frees under 200% and no more.
+    expect(bill('ny-mid', 'us-ny-newyork', Math.round(line * 4))).toBe(full);
   });
 
   it('adds Connecticut’s 2026 assistance: half of what the expired credits would have paid over 400% of the poverty line, and none elsewhere', () => {
