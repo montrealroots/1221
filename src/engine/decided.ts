@@ -32,6 +32,7 @@ import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } fr
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
+import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
@@ -372,6 +373,25 @@ defineDecider<{ sim: Simulation; key: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), key: seed * 11 }),
   decide: ({ sim, key }) => Array.from({ length: 60 }, (_, n) => { const x = sim.rng('career.selection', sim.player.id, `film-${key + n}`).next(); return x < FILM_ROAD.tribeca ? 'T' : x < FILM_ROAD.tribeca + (1 - FILM_ROAD.tribeca) * FILM_ROAD.brooklyn ? 'B' : 'S'; }).join(''),
+});
+
+defineDecider<{ sim: Simulation; month: number }, string>({
+  id: 'career.rivals',
+  decides: 'Which of the class books work in a month after the degree, and which of them is in the room for one of the player’s auditions.',
+  drawnIn: 'src/engine/systems/rivals.ts',
+  reads: {
+    // Which month.
+    month: (o, t) => ({ ...o, month: Math.round(t * 120) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), month: seed % 60 }),
+  decide: ({ sim, month }) => {
+    const school = sim.player.school!;
+    school.standing = 'graduated';
+    for (const m of school.classmates) m.career = { agencyId: 'gersh', credits: [] };
+    for (let n = 0; n < 6; n += 1) classMonth(sim, sim.player, sim.now + (month + n) * 31 * MS_DAY);
+    return school.classmates.map((m) => m.career!.credits.map((c) => c.roleId).join('+') || '-').join(',');
+  },
 });
 
 defineDecider<{ sim: Simulation; key: number }, string>({

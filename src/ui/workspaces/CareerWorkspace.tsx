@@ -21,7 +21,7 @@ import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
-import { focusOf, summerOf } from '@/engine/systems/school';
+import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -41,6 +41,49 @@ const cityName = (id: string) => CITIES.require(id).name;
 const zoneOf = (id: string) => CITIES.require(id).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 
+/**
+ * The trades, and the class after Yale (`systems/rivals.ts`): what Deadline
+ * and Playbill have printed, and where each classmate's career has got to.
+ */
+function TradesPane() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const news = person.career?.news ?? [];
+  const mates = person.school?.classmates.filter((m) => m.career) ?? [];
+  if (!news.length && !mates.length) return null;
+  return (
+    <div className="col gap-5" style={{ marginTop: 'var(--s5)' }}>
+      {news.length > 0 && (
+        <Panel title="Trade News" subtitle="What the trades have printed about you and your class">
+          <div className="col gap-2">
+            {news.slice(0, 12).map((n) => (
+              <div key={`${n.at}-${n.headline}`} className="row-between small">
+                <span><strong>{n.source}:</strong> {n.headline}</span>
+                <span className="xs dim">{formatDate(n.at, sim.zone)}</span>
+              </div>
+            ))}
+          </div>
+          <p className="xs dim" style={{ margin: 'var(--s3) 0 0' }}>A line about you in the trades adds a little to your recognition. The outlets are the real ones; what they print about you and your class, and which work makes them, is SLATE’s.</p>
+        </Panel>
+      )}
+      {mates.length > 0 && (
+        <Panel title="Your Class" subtitle={`Yale’s class of ${person.school!.classOf}, after the degree`}>
+          <table className="table">
+            <thead><tr><th scope="col">Classmate</th><th scope="col">Agency</th><th scope="col" className="num">Parts Booked</th><th scope="col">Latest</th><th scope="col">To You</th></tr></thead>
+            <tbody>
+              {mates.map((m) => {
+                const last = m.career!.credits.at(-1);
+                return <tr key={m.name}><td>{m.name}</td><td>{m.career!.agencyId ? agencyById(m.career!.agencyId)!.name : 'None'}</td><td className="num mono">{m.career!.credits.length}</td><td>{last ? `${roleById(last.roleId).label}, ${last.year}` : ''}</td><td>{bondWord(m.bond) ?? ''}</td></tr>;
+              })}
+            </tbody>
+          </table>
+          <p className="xs dim" style={{ margin: 'var(--s3) 0 0' }}>They work as you do: an agency’s reach and their craft against each part’s bar. Now and then one is in the room for your audition, and one who reads better is likelier to get it.</p>
+        </Panel>
+      )}
+    </div>
+  );
+}
+
 export function CareerWorkspace() {
   const person = useWorld((s) => s.player);
   const [tab, setTab] = useState<CareerTab>('agency');
@@ -48,7 +91,7 @@ export function CareerWorkspace() {
   const career = person.career;
   const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
   const panes: Record<CareerTab, JSX.Element> = {
-    agency: <AgencyPane />, auditions: <AuditionsPane />, work: <WorkPane />, unions: <UnionsPane />, home: <HomePane />,
+    agency: <><AgencyPane /><TradesPane /></>, auditions: <AuditionsPane />, work: <WorkPane />, unions: <UnionsPane />, home: <HomePane />,
   };
   return (
     <>

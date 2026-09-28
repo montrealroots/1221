@@ -77,6 +77,7 @@ import { rentAt } from '../content/rents';
 import { enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
 import { personalityOf } from './personality';
+import { RIVALS, classMonth, classmateBooked, inTheRoom, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { payeeAccount } from './cash';
 import { sagHoliday } from '../content/usholidays';
@@ -314,6 +315,8 @@ export interface CareerRecord {
   /** The days worked, the last few hundred. */
   days: WorkedDay[];
   residuals: Residual[];
+  /** What the trades have printed, about them and their class, the latest first (`systems/rivals.ts`). */
+  news?: NewsItem[];
   /** A series under option between seasons, until its pickup is decided. */
   option?: { seriesId: string; decidedAt: Instant };
   /** Self-submissions this week, waiting on Monday. */
@@ -673,6 +676,7 @@ function represent(sim: Simulation, person: Person, offer: Offer): void {
   const career = careerOf(person);
   career.agencyId = offer.agencyId;
   career.agencyCity = offer.cityId;
+  if (person.id === sim.universe.playerId) report(sim, person, 'Deadline', `${agencyById(offer.agencyId)!.name} Signs ${person.firstName} ${person.lastName}`, 'you');
   career.signedAt = sim.now;
   armTerm(sim, person, sim.now, AGENCY_TERM.firstYears, true);
   career.missed = 0;
@@ -770,8 +774,8 @@ export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'ta
 }
 
 /** Whether an audition books (`career.booking`). */
-export function books(sim: Simulation, person: Person, audition: Audition, focus: number): boolean {
-  return sim.rng('career.booking', person.id, audition.id).next() < bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence, audition.genre);
+export function books(sim: Simulation, person: Person, audition: Audition, focus: number, edge = 1): boolean {
+  return sim.rng('career.booking', person.id, audition.id).next() < edge * bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true, attributesOf(sim, person).presence, audition.genre);
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
@@ -993,6 +997,8 @@ export function registerCareer(sim: Simulation): void {
     career.showcases.push({ cityId, at: item.at, score });
     // The class shows with them, each classmate at an ordinary day's readiness.
     const rivals = person.school.classmates.map((m) => showcaseScore(m.craft, 1));
+    // The class is signed too, at the first showing, by the same rule (`systems/rivals.ts`).
+    signTheClass(s, person, score);
     const offers = focus > 0 && !career.agencyId ? offersFor(s, person, score, cityId, rivals) : [];
     const city = CITIES.require(cityId).name;
     const managers = focus > 0 && !career.managerId ? managerOffersFor(s, person, score, cityId) : [];
@@ -1017,6 +1023,8 @@ export function registerCareer(sim: Simulation): void {
     const month = zonedParts(item.at, s.homeZone);
     // The month's first week: the public forgets a little, half as much with a publicist (`attributes.ts`).
     if (month.day <= 7) fadeRecognition(s, person, career.publicist !== undefined);
+    // And the class's month of work, after the degree.
+    if (month.day <= 7) classMonth(s, person, item.at);
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
@@ -1093,7 +1101,18 @@ export function registerCareer(sim: Simulation): void {
     if (audition.mode === 'room') takeTheRoom(person);
     // Every audition is practice at auditioning.
     if (person.craft) for (const k of auditionSkills(roleById(audition.roleId), audition.mode)) grow(person.craft, k, focusOf(person), ESTIMATE.auditionGain);
-    if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1))) return;
+    // A classmate in the room who reads better is likelier to get it (`systems/rivals.ts`).
+    const role = roleById(audition.roleId);
+    const room = inTheRoom(s, person, audition);
+    const mine = auditionLevel(person.craft, role, audition.mode, audition.genre);
+    const better = room.filter((r) => r.read > mine).sort((a, b) => b.read - a.read)[0];
+    if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1), better ? RIVALS.outread : 1)) {
+      if (better) {
+        classmateBooked(s, person, better.i, role, item.at);
+        if (isPlayer(person)) s.notify({ category: 'career', title: `The Part Went To ${better.name}`, body: `${role.label}: your classmate from Yale was in the room too, and booked it.`, importance: 55, route: '/workspace/career' });
+      }
+      return;
+    }
     audition.status = 'booked';
     const [lo, hi] = ESTIMATE.offerAfterDays;
     const wait = lo + Math.floor(s.rng('career.booking', person.id, `${audition.id}-wait`).next() * (hi - lo + 1));
@@ -1597,6 +1616,7 @@ export function registerCareer(sim: Simulation): void {
     for (const when of paydays) schedulePay(s, person, booking, when);
     closeDecision(s, booking.id);
     stillTakeable(s, person);
+    if (isPlayer(person)) reportBooking(s, person, role);
   }
 
   sim.onCommand<{ bookingId: string }, { passed: true }>('career.pass', (p, { sim: s }) => {

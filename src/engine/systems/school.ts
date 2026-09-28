@@ -66,6 +66,7 @@ import {
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
+import type { ClassmateCareer } from './rivals';
 import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent } from './household';
@@ -126,6 +127,8 @@ export interface Classmate {
   name: string; craft: Craft; title?: 'actor' | 'actress'; drive?: number; last?: LastWork;
   /** Where they stand with the player, -100 to 100: a cast shared draws them closer, a lead taken from the other apart (`BONDS`). */
   bond?: number;
+  /** Their life after the degree: an agency, and the work they book (`systems/rivals.ts`). */
+  career?: ClassmateCareer;
 }
 
 /**

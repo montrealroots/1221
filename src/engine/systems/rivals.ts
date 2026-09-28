@@ -1,0 +1,149 @@
+/**
+ * SLATE — the class after Yale, and the trades that report it.
+ *
+ * The fifteen classmates don't stop at the degree. At the showcase each is
+ * signed, or not, by the same rule the player is (an agency takes the two
+ * best it wants whose showing clears its bar), and from graduation they work:
+ * a month at a time, by their agency's reach and their craft against a
+ * part's bar (`career.rivals`). They turn up at the player's auditions now
+ * and then, and a classmate who reads better than the player is likelier to
+ * book the part; when one does, the player hears who. The trades carry it
+ * all: Deadline the screen, Playbill the stage, as they do. Until 2026-09-28
+ * a classmate was nothing after school, and an audition was a roll against a
+ * bar with nobody else in the room.
+ *
+ * What's SLATE's estimate: how often a classmate is in the room, how much a
+ * better read takes, how often a signed or unsigned actor books in a month,
+ * and which bookings make the trades. The outlets are the real ones; what
+ * they print about a fictional class is SLATE's.
+ */
+
+import type { Simulation } from '../core/simulation';
+import type { Person } from '../domain/model';
+import { zonedParts, type Instant } from '../core/time';
+import { AGENCIES, ROLES, type Role } from '../content/career';
+import { agencyById, auditionLevel, careerOf, roleById, showcaseScore, type Audition } from './career';
+import { nudge } from './attributes';
+import type { Classmate } from './school';
+
+export const RIVALS = {
+  /** The chance a classmate, out of school, is in the room for one of the player's auditions. */
+  inTheRoom: 0.1,
+  /** What a better read in the room leaves of the player's chance. */
+  outread: 0.6,
+  /** A month's chance of booking, by an agency's reach, and with none. */
+  monthly: { 1: 0.35, 2: 0.25, 3: 0.15, none: 0.08 } as Record<1 | 2 | 3 | 'none', number>,
+  /** Recognition a trade item about the player adds. */
+  press: 0.5,
+  /** Trade items kept. */
+  kept: 40,
+} as const;
+
+/** The parts that make the trades, which trade, and how it puts it. */
+const NEWSWORTHY: Readonly<Record<string, { source: 'Deadline' | 'Playbill'; words: string }>> = {
+  'series-half': { source: 'Deadline', words: 'Joins A New Half-Hour Comedy As A Series Regular' },
+  'series-hour': { source: 'Deadline', words: 'Joins A New Hour Drama As A Series Regular' },
+  recurring: { source: 'Deadline', words: 'Lands A Recurring Role On A Television Series' },
+  'guest-hour': { source: 'Deadline', words: 'Guest Stars On An Hour Drama' },
+  'film-weekly': { source: 'Deadline', words: 'Joins The Cast Of A Studio Feature' },
+  broadway: { source: 'Playbill', words: 'Joins A Broadway Company' },
+  'lort-a-plus': { source: 'Playbill', words: 'Cast In A Broadway Production' },
+  'offb-nonprofit': { source: 'Playbill', words: 'Cast In An Off-Broadway Play' },
+  'offb-commercial': { source: 'Playbill', words: 'Cast In An Off-Broadway Play' },
+};
+
+export interface NewsItem { at: Instant; source: string; headline: string; about: 'you' | 'class' }
+
+/** A classmate's life after the degree: their agency, and the work they've booked. */
+export interface ClassmateCareer { agencyId?: string; credits: { roleId: string; year: number }[] }
+
+/** Something in the trades: kept on the player's record, the latest first, and a little recognition when it's them. */
+export function report(sim: Simulation, person: Person, source: string, headline: string, about: 'you' | 'class'): void {
+  const career = careerOf(person);
+  career.news = [{ at: sim.now, source, headline, about }, ...(career.news ?? [])].slice(0, RIVALS.kept);
+  if (about === 'you') nudge(sim, person, 'recognition', RIVALS.press);
+}
+
+/** A booking's line in the trades, where it makes them: who, and what. */
+function castLine(who: string, role: Role): { source: string; headline: string } | undefined {
+  const news = NEWSWORTHY[role.id];
+  return news ? { source: news.source, headline: `${who} ${news.words}` } : undefined;
+}
+
+/** The player's own booking, in the trades where it makes them. */
+export function reportBooking(sim: Simulation, person: Person, role: Role): void {
+  const line = castLine(`${person.firstName} ${person.lastName}`, role);
+  if (line) report(sim, person, line.source, line.headline, 'you');
+}
+
+/**
+ * The class signed after the showcase, by the rule the player is: an agency
+ * takes the two best it wants whose showing clears its bar, the biggest
+ * choosing first. Once, at the first showing.
+ */
+export function signTheClass(sim: Simulation, person: Person, playerScore: number): void {
+  const school = person.school;
+  if (!school || school.classmates.some((m) => m.career)) return;
+  const scored = school.classmates.map((m, i) => ({ m, i, score: showcaseScore(m.craft, 1) }));
+  // The player's showing takes a place at an agency too, as it would.
+  const taken = new Set<number>();
+  for (const agency of [...AGENCIES].sort((a, b) => a.tier - b.tier)) {
+    const field = [...scored.filter((x) => !taken.has(x.i)), { m: undefined, i: -1, score: playerScore }].filter((x) => x.score >= agency.bar).sort((a, b) => b.score - a.score).slice(0, 2);
+    const signed = field.filter((x) => x.i >= 0);
+    for (const x of signed) { taken.add(x.i); x.m!.career = { agencyId: agency.id, credits: [] }; }
+    if (signed.length) report(sim, person, 'Deadline', `${agency.name} Signs ${signed.map((x) => x.m!.name).join(' And ')} Out Of Yale’s Class Of ${school.classOf}`, 'class');
+  }
+  for (const x of scored) if (!taken.has(x.i)) x.m.career = { credits: [] };
+}
+
+/** A classmate's craft for a part, read as an audition reads it. */
+const readFor = (m: Classmate, role: Role, mode: 'tape' | 'room', genre?: string) => auditionLevel(m.craft, role, mode, genre);
+
+/**
+ * Who of the class is in the room for one of the player's auditions, out of
+ * school: each now and then (`RIVALS.inTheRoom`), and how each reads.
+ */
+export function inTheRoom(sim: Simulation, person: Person, audition: Audition): { i: number; name: string; read: number }[] {
+  const school = person.school;
+  if (!school || school.standing !== 'graduated') return [];
+  const rng = sim.rng('career.rivals', person.id, `room-${audition.id}`);
+  const role = roleById(audition.roleId);
+  return school.classmates.flatMap((m, i) => (m.career && rng.next() < RIVALS.inTheRoom ? [{ i, name: m.name, read: readFor(m, role, audition.mode, audition.genre) }] : []));
+}
+
+/** A part a classmate booked: on their record, and in the trades where it makes them. */
+export function classmateBooked(sim: Simulation, person: Person, i: number, role: Role, when: Instant): void {
+  const m = person.school?.classmates[i];
+  if (!m?.career) return;
+  m.career.credits.push({ roleId: role.id, year: zonedParts(when, sim.homeZone).year });
+  m.career.credits = m.career.credits.slice(-30);
+  const line = castLine(m.name, role);
+  if (line) report(sim, person, line.source, line.headline, 'class');
+}
+
+/**
+ * A month of the class's work, after the degree: each classmate books a part
+ * or doesn't, by their agency's reach, among the parts it sends clients to
+ * that their craft can carry.
+ */
+export function classMonth(sim: Simulation, person: Person, when: Instant): void {
+  const school = person.school;
+  if (!school || school.standing !== 'graduated') return;
+  const key = `${zonedParts(when, sim.homeZone).year}-${zonedParts(when, sim.homeZone).month}`;
+  const rng = sim.rng('career.rivals', person.id, `month-${key}`);
+  school.classmates.forEach((m, i) => {
+    if (!m.career) return;
+    const agency = m.career.agencyId ? agencyById(m.career.agencyId) : undefined;
+    const chance = RIVALS.monthly[agency?.tier ?? 'none'];
+    const x = rng.next();
+    const y = rng.next();
+    if (x >= chance) return;
+    const open = ROLES.filter((r) => (agency ? r.tiers.includes(agency.tier) : r.selfSubmit) && readFor(m, r, 'room') >= r.bar - 5);
+    if (!open.length) return;
+    const total = open.reduce((sum, r) => sum + r.weight, 0);
+    let left = y * total;
+    const role = open.find((r) => (left -= r.weight) <= 0) ?? open[open.length - 1]!;
+    classmateBooked(sim, person, i, role, when);
+  });
+}
+
