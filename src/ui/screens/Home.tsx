@@ -25,7 +25,7 @@ import {
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
-import { HOUSING, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
+import { HOUSING, OWNED, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
 import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
@@ -64,6 +64,7 @@ export function Home() {
       else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
       else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
+      else if (t.kind === 'home') said.push(`You’re behind on your home, ${m(t.amount)} owed.`);
       else said.push(`You owe ${m(t.amount)} of income tax.`);
     }
     if (clash) said.push('Two things on your calendar in the next month want you at once.');
@@ -495,7 +496,7 @@ export function Home() {
             <Stat
               label="Net Worth"
               value={<MoneyText amount={worth.total} currency={cur} compact />}
-              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
+              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}${worth.home > 0 ? `, a home worth ${formatMoney(worth.home, cur, { cents: false })}` : ''}`}
               look={at('networth', player.id)}
             />
             {worth.liabilities > 0 && (
@@ -510,7 +511,15 @@ export function Home() {
         </Panel>
         )}
         {!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
-        <Panel title="Home" tight>
+        <Panel
+          title="Home"
+          tight
+          actions={(
+            <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
+              Homes
+            </Gated>
+          )}
+        >
           <YourHome cur={cur} />
         </Panel>
         )}
@@ -663,7 +672,7 @@ function YourHome({ cur }: { cur: string }) {
   const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared') - depositBack(s, s.player), own: moveCost(s, s.player, 'own') - depositBack(s, s.player) }));
   const refused = useWorld((s) => ({ shared: moveRefusal(s, s.player, 'shared'), own: moveRefusal(s, s.player, 'own') }));
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
-  const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : HOUSING[home.kind].label) : 'Nowhere';
+  const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : home.kind === 'owned' ? OWNED.label : HOUSING[home.kind].label) : 'Nowhere';
   return (
     <div className="col gap-3">
       <Stat
@@ -671,7 +680,7 @@ function YourHome({ cur }: { cur: string }) {
         value={homeLabel}
         note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills)} a month on the first: ${money(rent)} rent and ${money(bills)} bills. Since ${formatDate(home!.since, sim.zone)}`}
       />
-      {home && home.kind !== 'sofa' && (
+      {home && home.kind !== 'sofa' && home.kind !== 'owned' && (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
           <div className="field" style={{ margin: 0 }}>
             <label htmlFor="pay-landlord">{owed > 0 ? `Owed: ${money(owed)}` : ahead > 0 ? `Paid Ahead: ${money(ahead)}` : 'Pay The Landlord'} ({cur})</label>
@@ -685,7 +694,7 @@ function YourHome({ cur }: { cur: string }) {
           A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.
         </div>
       )}
-      {away ? (
+      {home?.kind === 'owned' ? null : away ? (
         <div className="small muted">You’re away: a new home is found back in {CITIES.get(away)?.name ?? 'your town'}.</div>
       ) : (
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -701,7 +710,7 @@ function YourHome({ cur }: { cur: string }) {
         )}
       </div>
       )}
-      {!away && (refused.own ?? refused.shared) && <div className="xs dim">{home?.kind === 'own' ? refused.shared : refused.own}</div>}
+      {!away && home?.kind !== 'owned' && (refused.own ?? refused.shared) && <div className="xs dim">{home?.kind === 'own' ? refused.shared : refused.own}</div>}
     </div>
   );
 }

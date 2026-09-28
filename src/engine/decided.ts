@@ -34,6 +34,7 @@ import { newLifeConfig } from './world/bootstrap';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
 import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
+import { listingsIn } from './systems/homes';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -520,4 +521,19 @@ defineDecider<{ sim: Simulation }, string>({
     const h = sim.player.health!;
     return `${Object.keys(h.chronic ?? {}).sort().join('+') || 'none'}${h.lenses ? ', lenses' : ''}`;
   },
+});
+
+const HOME_TOWNS = ['us-ny-newyork', 'us-ct-newhaven', 'us-ca-losangeles'] as const;
+
+defineDecider<{ sim: Simulation; cityId: string }, string>({
+  id: 'homes.listings',
+  decides: 'The fifty homes for sale in a town: each one’s kind, rooms, size, lot, year built, what it has, how old its parts are, its street and its place in the spread of prices about the town’s typical value.',
+  drawnIn: 'src/engine/systems/homes.ts',
+  reads: {
+    // The town: each draws its own.
+    town: (o, t) => ({ ...o, cityId: HOME_TOWNS[Math.min(2, Math.floor(t * 3))]! }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), cityId: HOME_TOWNS[seed % 3]! }),
+  decide: ({ sim, cityId }) => listingsIn(sim, cityId).map((h) => `${h.type[0]}${h.beds}${h.size}${h.built}${h.features.length}${h.address.length}`).join(','),
 });

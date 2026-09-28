@@ -20,7 +20,7 @@ import { YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
-import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
+import { costsAt, HOUSING } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
 import { COMMERCIAL_AGENCIES, COMMERCIAL_LEAVING, commercialAgencyById, commercialEarnings, commercialRefusal, mayLeaveCommercial } from '@/engine/systems/commercial';
@@ -527,7 +527,7 @@ function HomePane() {
   const cur = saveCurrency(sim.universe);
   const cities = [...CAREER_CITIES, YALE_DRAMA.cityId];
   return (
-    <Panel title="Where You Live" subtitle={`${cityName(person.currentLocationId)}, ${person.home ? (person.home.kind === 'sofa' ? 'on a friend’s sofa' : HOUSING[person.home.kind as Housing].label.toLowerCase()) : 'without a home'}`}>
+    <Panel title="Where You Live" subtitle={`${cityName(person.currentLocationId)}, ${person.home ? (person.home.kind === 'sofa' ? 'on a friend’s sofa' : person.home.kind === 'owned' ? 'in a home you own' : HOUSING[person.home.kind].label.toLowerCase()) : 'without a home'}`}>
       <div className="col gap-3">
         <div className="table-scroll">
           <table>

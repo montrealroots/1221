@@ -124,6 +124,8 @@ const REAL_NAMES = [
   // Banking names and pages spelled by their own banks and governments.
   'Cuenta de Cheques', 'cuentas-cheques', 'cheque-accounts', 'Special Defence Contribution',
   'special-defence-contribution', 'Youth Programme', 'bankers-association/organisation',
+  // A town in Alabama spelled the British way, whose id is in the home values' table.
+  'al-centre',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

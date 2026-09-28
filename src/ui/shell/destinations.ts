@@ -55,6 +55,8 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     items: [
       // Opened from the Money panel, which names the bank it goes to.
       { route: '/workspace/bank', label: 'Your Bank', detail: 'Your accounts, and moving money between them', homeOnly: true },
+      // Opened from the Home panel: the homes for sale in town, and the one owned.
+      { route: '/workspace/homes', label: 'Homes', detail: 'Homes for sale where you live, and the one you own', homeOnly: true },
       // Opened from the Taxes And Cover panel.
       { route: '/workspace/papers', label: 'Taxes And Cover', detail: 'Your returns, health cover and unemployment', homeOnly: true },
     ],

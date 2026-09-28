@@ -15,6 +15,7 @@ import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
+import type { OwnedHome, Purchase } from '../systems/homes';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
@@ -154,6 +155,11 @@ export interface Person {
    * Given to every character from schema 89.
    */
   home?: HomeState;
+  /** A home they own, and one they're buying, until it closes (`systems/homes.ts`). From 2026-09-28. */
+  owned?: OwnedHome;
+  buying?: Purchase;
+  /** How many homes they've bought: England's first-time buyer's relief is for the first. */
+  homesOwned?: number;
   /**
    * Their credit record and how the card is paid (`systems/credit.ts`). Not
    * `creditScore`: `migrate` sheds a field by that name that builds before 80

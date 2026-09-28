@@ -402,6 +402,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/school': 'Your School',
   '/workspace/career': 'Your Career',
   '/workspace/papers': 'Taxes And Cover',
+  '/workspace/homes': 'Homes',
 };
 
 export function labelForRoute(route: string): string {

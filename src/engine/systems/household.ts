@@ -65,8 +65,8 @@ import { deadline, latePenalty } from './taxreturn';
 export const RENT_KIND = 'home.rent';
 
 export type Housing = 'shared' | 'own';
-/** Where somebody sleeps: a home they rent, or a friend's sofa after an eviction. */
-export type HomeKind = Housing | 'sofa';
+/** Where somebody sleeps: a home they rent, one they own (`systems/homes.ts`), or a friend's sofa after an eviction. */
+export type HomeKind = Housing | 'sofa' | 'owned';
 
 export interface HomeState {
   kind: HomeKind;
@@ -91,6 +91,12 @@ export const HOUSING: Readonly<Record<Housing, { label: string; billsUsd: number
     note: 'A one-bedroom to yourself, and every bill yours.',
   },
 };
+
+/**
+ * A home they own: no rent, and a whole home's bills, SLATE's estimate. The
+ * mortgage, the tax and the insurance are the homes system's.
+ */
+export const OWNED = { label: 'A Home You Own', billsUsd: 250 };
 
 /** A day's groceries and a cooked meal, in US dollars at the American average cost of living. SLATE's estimates. */
 const DAY_OF_FOOD_USD = 8;
@@ -132,12 +138,12 @@ export function costsAt(cityId: string, kind: HomeKind, currency: string, at: In
   const city = CITIES.get(cityId);
   const rentFigure = rentAt(cityId, currency);
   if (!city) return { rent: 0, rentFigure, bills: 0, day: 0, meal: 0 };
-  const rent = kind === 'sofa' ? 0 : Math.round((kind === 'own' ? rentFigure.oneBed : rentFigure.room) / 100) * 100;
+  const rent = kind === 'sofa' || kind === 'owned' ? 0 : Math.round((kind === 'own' ? rentFigure.oneBed : rentFigure.room) / 100) * 100;
   const tax = 1 + salesTaxRate(cityId, at, 'groceries');
   return {
     rent,
     rentFigure,
-    bills: kind === 'sofa' ? 0 : atTown(cityId, HOUSING[kind].billsUsd, currency),
+    bills: kind === 'sofa' ? 0 : atTown(cityId, kind === 'owned' ? OWNED.billsUsd : HOUSING[kind].billsUsd, currency),
     day: Math.round(atTown(cityId, DAY_OF_FOOD_USD, currency) * tax),
     meal: Math.round(atTown(cityId, MEAL_USD, currency) * tax),
   };
@@ -471,10 +477,10 @@ function depositAccount(sim: Simulation, person: Person): Account | undefined {
  * 620. Britain caps a deposit at five weeks' rent in law (the Tenant Fees Act
  * 2019), so it is never more than that there.
  */
-export function depositFor(sim: Simulation, person: Person, kind: Housing): Money {
-  const rent = costsAt(person.currentLocationId, kind, saveCurrency(sim.universe), sim.now).rent;
+export function depositFor(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): Money {
+  const rent = costsAt(where, kind, saveCurrency(sim.universe), sim.now).rent;
   const months = (person.credit?.score ?? 650) < POOR_RECORD ? 2 : 1;
-  const country = CITIES.get(person.currentLocationId)?.countryId;
+  const country = CITIES.get(where)?.countryId;
   const cap = country === 'uk' || country === 'gb' ? Math.round(rent * 12 / 52 * 5) : Number.POSITIVE_INFINITY;
   return Math.min(rent * months, cap);
 }
@@ -485,19 +491,19 @@ export function depositFor(sim: Simulation, person: Person, kind: Housing): Mone
  * that charges the new home's month in full: until 2026-09-27 a move on the
  * 1st paid the month twice.
  */
-function restOfMonth(sim: Simulation, person: Person, kind: Housing): Money {
-  const zone = CITIES.get(person.currentLocationId)?.timeZone ?? sim.homeZone;
+function restOfMonth(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): Money {
+  const zone = CITIES.get(where)?.timeZone ?? sim.homeZone;
   const p = zonedParts(sim.now, zone);
   const firstOfNext = instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 1, hour: 0 }, zone);
   if (sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id && one.at < firstOfNext)) return 0;
   const days = new Date(Date.UTC(p.year, p.month, 0)).getUTCDate();
-  const rent = costsAt(person.currentLocationId, kind, saveCurrency(sim.universe), sim.now).rent;
+  const rent = costsAt(where, kind, saveCurrency(sim.universe), sim.now).rent;
   return Math.round(rent * (days - p.day + 1) / days);
 }
 
 /** What moving into a home of a kind costs today: the deposit and the rest of the month. */
-export function moveCost(sim: Simulation, person: Person, kind: Housing): Money {
-  return depositFor(sim, person, kind) + restOfMonth(sim, person, kind);
+export function moveCost(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): Money {
+  return depositFor(sim, person, kind, where) + restOfMonth(sim, person, kind, where);
 }
 
 /** What the old deposit gives back on moving: the deposit, less what's owed on the old place. */
@@ -512,12 +518,15 @@ export function depositBack(sim: Simulation, person: Person): Money {
  * under a notice to pay or quit carried its arrears to a landlord who was
  * then owed them.
  */
-export function moveRefusal(sim: Simulation, person: Person, kind: Housing): string | undefined {
+export function moveRefusal(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): string | undefined {
   if (!checkingOf(sim, person)) return 'You don’t have an account to pay from.';
-  if (person.home && person.home.kind === kind && person.home.cityId === person.currentLocationId) return 'You live in one already.';
+  if (person.home && person.home.kind === kind && person.home.cityId === where) return 'You live in one already.';
+  // A home owned is sold before renting (`home.sell` moves them when it closes); a purchase under way closes into the home bought.
+  if (person.owned) return 'You own your home: selling it moves you into a rented one.';
+  if (person.buying) return 'You’re buying a home: it closes on a day of its own.';
   // A new landlord asks the old one for a reference.
   if (person.home?.noticeUntil !== undefined) return 'There’s a notice to pay or quit on this place, and a new landlord asks this one for a reference: get what you owe under a month’s rent first.';
-  const cost = moveCost(sim, person, kind);
+  const cost = moveCost(sim, person, kind, where);
   const back = depositBack(sim, person);
   if (inTheBank(sim, person) + back < cost) {
     const currency = saveCurrency(sim.universe);
@@ -531,8 +540,8 @@ export function moveRefusal(sim: Simulation, person: Person, kind: Housing): str
  * the month from checking, and taking back the old deposit less what's owed.
  * Throws the reason when it can't be done.
  */
-export function move(sim: Simulation, person: Person, kind: Housing): void {
-  const no = moveRefusal(sim, person, kind);
+export function move(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): void {
+  const no = moveRefusal(sim, person, kind, where);
   if (no) throw new CommandError(no);
   const checking = checkingOf(sim, person)!;
   // The old deposit back first, less what's still owed on the old place.
@@ -543,8 +552,8 @@ export function move(sim: Simulation, person: Person, kind: Housing): void {
     if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: owed });
     sim.post({ memo: 'Deposit back', category: 'rent', postings });
   }
-  const deposit = depositFor(sim, person, kind);
-  const rest = restOfMonth(sim, person, kind);
+  const deposit = depositFor(sim, person, kind, where);
+  const rest = restOfMonth(sim, person, kind, where);
   const held = depositAccount(sim, person) ?? sim.openAccount({
     id: sim.nextId('account'), kind: 'escrow', name: 'Deposit Held', ownerId: person.id,
     institution: 'Your Landlord', openedAt: sim.now, category: 'deposit',
@@ -558,7 +567,7 @@ export function move(sim: Simulation, person: Person, kind: Housing): void {
     ],
   });
   const hadRent = sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
-  person.home = { kind, cityId: person.currentLocationId, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
+  person.home = { kind, cityId: where, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
   // The first rent after the move is next month's: the rest of this one was paid moving in.
   if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(person.home.cityId).timeZone);
@@ -636,7 +645,7 @@ function landlord(sim: Simulation, person: Person): void {
 }
 
 /** A money trouble, and how much it comes to. */
-export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'card_behind' | 'medical' | 'collections' | 'tax' | 'return_late'; amount: Money };
+export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'card_behind' | 'medical' | 'collections' | 'tax' | 'return_late' | 'home'; amount: Money };
 
 /**
  * What money is weighing on somebody with today: owing the landlord, the
@@ -669,6 +678,9 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
     .filter((r) => r.filedAt === undefined && r.figures.balance > 0 && sim.now > deadline(r.year))
     .reduce((sum, r) => sum + r.figures.balance + latePenalty(r.figures.balance, deadline(r.year), sim.now, cur), 0);
   if (late > 0) out.push({ kind: 'return_late', amount: late });
+  // Payments owed on a home they own (`systems/homes.ts`), from 2026-09-28.
+  const onHome = (person.owned?.owed ?? []).reduce((sum, one) => sum + one.amount + (one.escrow ? one.escrow.tax + one.escrow.insurance + one.escrow.pmi : 0), 0);
+  if (onHome > 0) out.push({ kind: 'home', amount: onHome });
   return out;
 }
 
@@ -738,7 +750,7 @@ export function registerHousehold(sim: Simulation): void {
   // Paying the landlord by hand (A62, A69): what's owed first, then rent ahead.
   sim.onCommand<{ amount: Money }, { paid: Money }>('home.pay_landlord', (p, { sim: s }) => {
     const person = s.player;
-    if (!person.home || person.home.kind === 'sofa') throw new CommandError('You have no landlord to pay.');
+    if (!person.home || person.home.kind === 'sofa' || person.home.kind === 'owned') throw new CommandError('You have no landlord to pay.');
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Say how much.');
     const current = checkingOf(s, person);
@@ -782,6 +794,12 @@ export function moveIn(sim: Simulation, person: Person, kind: Housing): void {
     });
   }
   scheduleRent(sim, person, sim.now);
+}
+
+/** A rent and bills due for somebody, where none is: a home bought keeps its bills on the first. */
+export function scheduleRentFor(sim: Simulation, person: Person): void {
+  const due = sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
+  if (!due) scheduleRent(sim, person, sim.now);
 }
 
 /** A rent due for everybody with a home, where none is. */

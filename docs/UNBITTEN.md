@@ -397,6 +397,20 @@ part the tool cannot see.
   Test for five-year vesting and television's per-episode ceilings aren't
   modeled. An older save's pension fund from the
   day job, which nothing moved from 2026-09-26, is paid out at 65.
+- **A home owned is partly SLATE's estimate, and some of what owning
+  does isn't there yet.** Since 2026-09-28 fifty homes in every town can be
+  bought, paid for, renovated and sold (`systems/homes.ts`). A US town's
+  typical value is Zillow's, and England's closing tax is its Stamp Duty
+  Land Tax; everything else a buyer pays is SLATE's estimate by country: the
+  rate, the down payment a lender takes, the closing and selling costs, a
+  foreign town's prices from its rent, and what each renovation costs and
+  returns. What owning doesn't do yet: the mortgage's interest and the
+  property tax aren't deducted on the return, and a sale's gain isn't taxed
+  (in America the first $250,000 of a home's gain is free of it); paying the
+  mortgage on time doesn't raise the credit record as the card does; a home
+  can't be let, so a backyard cottage adds value and no rent, and a move to
+  another city waits for the home to be sold; and every country's property
+  tax is a share of the value, where Britain's council tax goes by band.
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads
   the genres, Voice Acting, and Film, Television, Theater and Travel

@@ -14,6 +14,21 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Newest of all, 2026-09-28: "Build it all".** The owner asked for the three things part B had left out. Each is its own gated commit.
+>
+> - **The pension, finished** (`1e38466`). A production counts to the Plan's $232,000 ceiling (`sagByProject`), a pension can start early from 55 with ten credits (`pension.start`, a quarter of a percent less a month under 65), and it goes on the return (`recordPension`).
+> - **A commercial agent** (`e509411`, `systems/commercial.ts`). CESD, DDO and Abrams sign on presence and record, send the commercial auditions (the theatrical agency then sends none), and are left on the commercials contract's own rule: after 120 days with no offer, then under $4,000 in 91. Renewed for three years when it booked one.
+> - **Homes** (`systems/homes.ts`, `content/homes.ts`, `content/homevalues-us.ts`, `ui/workspaces/HomesWorkspace.tsx`, route `/workspace/homes`). The owner asked mid-task for "50 homes per city in every state/region/country from cheapest to most expensive … real homes and addresses plus infinite amount of renovations catered to what that specific home could get". What was built:
+>   - **Fifty a town, cheapest first**, drawn per save (decider `homes.listings`) about the town's typical value: Zillow's Home Value Index for 12,485 US towns (`tools/build-home-values.mjs`, August 2026), the state's measured price-to-rent for other US towns, and SLATE's estimate by country elsewhere. Types are named as the country names them (a flat in Britain, a condo in America), sizes in square feet or meters.
+>   - **Addresses are not real listings.** Real people's homes and scraped listings were declined (their privacy, and Zillow's terms): each home is a common street name of its country with a number of SLATE's, labeled as the game's.
+>   - **Buying**: an offer, and a closing thirty days on. A lender reads the record (620) and two years' income (43% debt-to-income in America; 4.5 and 4 times income in Britain and Ireland). England's Stamp Duty Land Tax with first-time relief is real; other closing costs, rates and down payments are SLATE's estimates by country.
+>   - **Owning**: the mortgage on the first with the tax and insurance in escrow, mortgage insurance dropped at 78% (Homeowners Protection Act); cash owners pay tax in April and October halves. Property tax reads the place's rate and California's 2% cap. Late: a fee at 15 days, the record at 30, foreclosure at 120, the sale at 210, and the sofa. Net worth counts the home.
+>   - **Renovations without end**: 38 jobs, each tied to what the home has (a deck built can be rebuilt, a garage converted has no door). What a job adds is its return at sale times the wear of the part it replaces, so every part wears and can be done again. Costs and returns are SLATE's estimates: the Remodeling cost-against-value report's terms forbid its figures in software, so only its pattern was used.
+>   - **Selling**: listed, closed 45 days on, the agents and the loan paid, and a move into the rented home chosen.
+>   - **Not built** (in `docs/UNBITTEN.md`): the mortgage interest and property tax deductions, a sale's gain on the return, the record rising with mortgage payments, letting a home (so a backyard cottage earns nothing, and moving city waits for a sale), and Britain's banded council tax.
+>
+> Verified: the gate passed with 1,409 tests; eighteen mutations of the homes claims were all killed; the screen was checked at phone and desk width (`probe/homes-shot.mjs`, untracked). The owner still merges the branch to `main` themselves.
+>
 > **Newest, 2026-09-28, last: "everything that would make it perfect".** Account 2 did this at the owner's word. Each part below was its own gated commit.
 >
 > **A. The school**
