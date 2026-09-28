@@ -10,6 +10,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { injuryOf } from '@/engine/systems/injury';
 import { quickSave } from '@/engine';
 import type { Person, Personality } from '@/engine/domain/model';
 import {
@@ -128,8 +129,11 @@ describe('looking after yourself', () => {
       const idle = quickSave({ wealth: 'inherited' });
       for (let day = 0; day < 56; day++) {
         for (const sim of [trained, idle]) expect(sim.execute({ kind: 'life.sleep', payload: { hours: night } }).ok).toBe(true);
-        const result = doIt(trained, 'exercise');
-        expect(result.ok, result.error).toBe(true);
+        // Hurt, the workout waits till it mends (`systems/injury.ts`).
+        if (!injuryOf(trained.player, trained.now)) {
+          const result = doIt(trained, 'exercise');
+          expect(result.ok, result.error).toBe(true);
+        } else trained.advanceTo(trained.now + LOOKING_AFTER.exercise.minutes * MS_MINUTE);
         const next = trained.now + (24 - night) * MS_HOUR - LOOKING_AFTER.exercise.minutes * MS_MINUTE;
         trained.advanceTo(next);
         idle.advanceTo(next);

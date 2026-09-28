@@ -77,7 +77,8 @@ part the tool cannot see.
   less). How much each is is SLATE's estimate. What's left: a visitor seeing
   the mess (Chaotic), people slept through (Sleeps Anywhere) and others
   keeping accounts about you (Keeps Accounts), since nobody visits, sleeps
-  beside or owes the player; and injury, which SLATE doesn't model.
+  beside or owes the player. Injury, which SLATE didn't model, has been
+  since 2026-09-28 (`systems/injury.ts`).
 - **Some banks' figures weren't found, and a few are given as words.** The
   thirteen countries' waivers are modeled as the banks write them since
   2026-09-25: an average balance, an average across one's accounts at the
@@ -260,7 +261,9 @@ part the tool cannot see.
     election's tax on its net instead of 23%; and a British or EEA citizen
     keeps the UK's personal allowance, tapered past £100,000, a US citizen
     having none, as HMRC's treaty list says.
-  - The body: obesity isn't modeled, since SLATE keeps no weight. A type
+  - The body: since 2026-09-28 a body has a height and a weight, and the
+    weight follows what's eaten against what's spent (see "A body is partly
+    SLATE's estimate"). A type
     2 diabetic's test strips aren't bought, as the ADA's Standards of Care
     (2026) don't advise routine testing for someone not on insulin, and
     about one in seven buys enough to test twice a day (JAMA Internal
@@ -457,6 +460,31 @@ part the tool cannot see.
     thunder's on the weather look, a published rent's on the place look and
     at creation, and the bank's, the laws' and the research's on the Bank
     screen.
+- **A body is partly SLATE's estimate.** Since 2026-09-28 every person has a
+  height and a weight (`systems/body.ts`), drawn from the birth country's
+  adults (NCD-RisC's heights and bands of body mass index) or given at
+  creation; the weight follows the day's eating against what the day spent
+  (Mifflin–St Jeor's resting energy, the Compendium's MET values), at Hall's
+  pace (Lancet 2011), which with a slowing rest gives the 0.29 kg a year the
+  cohorts measure; meals out add the USDA's 134 kcal; a heavier body meets
+  diabetes, high blood pressure and arthritis more (the CDC's and Olmsted
+  County's onset, Guh's ratios) and dies sooner (the Global BMI Mortality
+  Collaboration's bands). SLATE's estimates: the middle of the sexes'
+  resting constants, since it keeps no sex; height's spread outside Japan's
+  survey; a sedentary day's 1.4; what a broke day eats; how an appetite
+  leans (Indulgent, Disciplined); that a working day is eaten back and a
+  workout isn't. Not modeled: new asthma and depression by weight, whose
+  yearly onset isn't published; a casting's reading of a body, which the
+  business does and SLATE leaves out.
+- **Injury is partly SLATE's estimate.** Since 2026-09-28 a run, a workout,
+  a swim, a stage, a set and an ordinary day each bring an injury at their
+  published rate (`systems/injury.ts`: Videbæk's runners, Keogh's lifters,
+  the BLS's performing arts and film, Mattiussi's dancers, the NHIS's
+  everyday causes), mended in the clinical times, off work for a broken bone
+  or a concussion, and at work paid by workers' compensation at New York's
+  and California's 2026 rates. SLATE's estimates: which injury each cause
+  brings, a stunt's rate (none is published), and a production's cover
+  outside the two states, taken as New York's.
 - **The pension is partly SLATE's estimate.** Since 2026-09-28 the
   SAG-Producers Pension Plan (`systems/pension.ts`) credits a year of covered
   earnings at the minimum, vests at ten credits or five without a break, and

@@ -231,6 +231,8 @@ export interface Person {
   fraud?: { accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 
   wellbeing: Wellbeing;
+  /** Height and weight, and the day's energy in and out (`systems/body.ts`). */
+  body?: import('../systems/body').Body;
 
   /** Primary spending account. */
   primaryAccountId?: Id;

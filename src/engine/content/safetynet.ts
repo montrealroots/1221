@@ -521,7 +521,9 @@ export const DENTAL_VISION = {
  * isn't kept. Arthritis, 5.0%: a generic a month and two visits a year. Left
  * alone, SLATE's estimate: type 1 diabetes quadruples the emergencies and
  * both types wear the body down, and arthritis tires it. Obesity, 27.3%,
- * isn't modeled: SLATE has no weight.
+ * wasn't modeled until 2026-09-28, SLATE keeping no weight; since then a body
+ * has one (`systems/body.ts`), and a heavier one meets diabetes, high blood
+ * pressure and arthritis more as the years go (`onsetMonth`).
  */
 export const CHRONIC = {
   share: { depression: 0.25, asthma: 0.101, hypertension: 0.115, diabetes: 0.02, arthritis: 0.05 },

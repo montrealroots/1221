@@ -32,7 +32,21 @@ import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { ageWords, ceilingAt } from '@/engine/content/lifespan';
 import { describeEthnicity } from '@/engine/content/ethnicity';
-import { COUNTRIES } from '@/engine/content/geography';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
+import { bmiOf, bmiWord, type Body } from '@/engine/systems/body';
+import { injuryOf } from '@/engine/systems/injury';
+import { formatDate } from '@/engine/core/time';
+import { INJURY_KIND } from '@/engine/content/injury';
+
+/** A body in words: its height and weight, in feet and pounds or centimeters and kilograms, and its body mass index. */
+function bodyWords(body: Body, imperial: boolean): string {
+  const bmi = bmiOf(body);
+  if (imperial) {
+    const inches = Math.round(body.heightCm / 2.54);
+    return `${Math.floor(inches / 12)} ft ${inches % 12} in and ${Math.round(body.weightKg / 0.45359237)} lb, a body mass index of ${bmi.toFixed(1)}: ${bmiWord(bmi).toLowerCase()}`;
+  }
+  return `${Math.round(body.heightCm)} cm and ${body.weightKg.toFixed(1)} kg, a body mass index of ${bmi.toFixed(1)}: ${bmiWord(bmi).toLowerCase()}`;
+}
 
 /**
  * The eight, in the order a person would notice them.
@@ -131,6 +145,23 @@ defineLook<Person>('person', {
         </p>
       ),
       // Their pronouns and their citizenship, as creation took them: the citizenship is the country of birth’s.
+      // Their height and weight, in the units of where they live, and what the weight comes to.
+      person.body && (
+        <p key="body" className="small">
+          <span className="dim">{isYou ? 'Your body. ' : 'Their body. '}</span>
+          {bodyWords(person.body, CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId === 'us')}.
+        </p>
+      ),
+      // An injury mending, and whether it keeps them off work (`systems/injury.ts`).
+      (() => {
+        const hurt = injuryOf(person, sim.now);
+        return hurt ? (
+          <p key="hurt" className="small">
+            <span className="dim">Mending. </span>
+            {INJURY_KIND[hurt.kind].label}, till {formatDate(hurt.until, sim.zone)}{hurt.offWorkUntil ? ', and off work till then' : ''}{hurt.atWork ? ', on workers’ compensation' : ''}.
+          </p>
+        ) : null;
+      })(),
       <p key="papers" className="small">
         <span className="dim">{isYou ? 'On your papers. ' : 'On their papers. '}</span>
         {person.pronouns}, a citizen of {COUNTRIES.get(person.citizenshipId)?.name ?? person.citizenshipId}.

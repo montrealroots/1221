@@ -49,6 +49,8 @@ import { earningsOf, homeOf, quartersBefore } from './earnings';
 import { payFromCurrent } from './household';
 import { personalityOf } from './personality';
 import { clamp } from '../core/rng';
+import { bmiOf } from './body';
+import { ONSET, onsetYearly } from '../content/body';
 import { fluByWeek, weekOfYear } from './seasons';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -93,6 +95,8 @@ export interface HealthRecord {
   bills: MedicalBill[];
   /** In hospital until. */
   inHospitalUntil?: Instant;
+  /** An injury mending, or the last one (`systems/injury.ts`). */
+  injury?: import('./injury').Injury;
   /** Down with the flu until, and excused from classes for it (`school.call_in_sick`). */
   fluUntil?: Instant;
   /** The frailty band the year's odds of the end were last drawn at (`systems/birthdays.ts`). */
@@ -287,8 +291,33 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
  * program comes up for renewal; the premiums fall due; and what covers them
  * is settled, with a month uncovered in California counted.
  */
+/**
+ * A condition that begins in the month: each not yet carried, at its yearly
+ * onset for their age, a twelfth of it, weighed by their weight's relative
+ * risk (`ONSET` in `content/body.ts`). Until 2026-09-28 a life carried
+ * only the conditions it was drawn with at twenty-seven, whatever it ate or
+ * however long it ran.
+ */
+export function onsetMonth(sim: Simulation, person: Person, at: Instant): Condition | undefined {
+  const h = healthOf(person);
+  if (!h.drawn) return undefined;
+  const age = (at - person.birthInstant) / (365.2425 * MS_DAY);
+  const bmi = person.body ? bmiOf(person.body) : 22.5;
+  const rng = sim.rng('health.onset', person.id, String(at));
+  for (const condition of Object.keys(ONSET.yearly) as (keyof typeof ONSET.yearly)[]) {
+    if (h.chronic?.[condition]) continue;
+    const chance = onsetYearly(condition, age, bmi) / 12;
+    if (rng.next() >= chance) continue;
+    (h.chronic ??= {})[condition] = { treated: true };
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Taxes And Cover stops it.`, importance: 75, route: '/workspace/papers' });
+    return condition;
+  }
+  return undefined;
+}
+
 export function healthMonth(sim: Simulation, person: Person, at: Instant): void {
   const h = healthOf(person);
+  onsetMonth(sim, person, at);
   const cur = saveCurrency(sim.universe);
   const p = zonedParts(at, HOME);
   const record = earningsOf(person);
@@ -675,6 +704,17 @@ export function aidRefusal(bill: MedicalBill, at: Instant): string | undefined {
   if (bill.aid === 'screened') return 'The hospital’s charity is off it already.';
   if (bill.aid) return 'You’ve applied for it.';
   return undefined;
+}
+
+/** A bill for care that isn't one of the kinds `careFor` draws (an injury's): due in 30 days, a debt unpaid. */
+export function billCare(sim: Simulation, person: Person, what: string, amount: Money, at: Instant): MedicalBill {
+  const h = healthOf(person);
+  h.seq = (h.seq ?? 0) + 1;
+  const bill: MedicalBill = { id: `m${h.seq}`, at, what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY };
+  h.bills.push(bill);
+  h.bills = h.bills.slice(-40);
+  sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
+  return bill;
 }
 
 export function registerHealth(sim: Simulation): void {

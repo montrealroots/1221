@@ -51,7 +51,7 @@ export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
   | 'hygieneDrift' | 'moraleSwing' | 'spending'
   | 'illnessToll' | 'awayRecovery' | 'earlyCall' | 'lateCall' | 'receipts'
-  | 'bondWarmth' | 'bondWound' | 'company';
+  | 'bondWarmth' | 'bondWound' | 'company' | 'appetite';
 
 export interface PersonalityTrait {
   id: string;
@@ -161,14 +161,14 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'disciplined_body', name: 'Disciplined', group: 'Body',
     description: 'The training, the sleeping, the eating: all of it belongs to a person who means to still be working at sixty.',
     cost: 'The hours it takes are hours you aren’t spending on anybody.',
-    systemMods: { energyRecovery: 1.08, bondWarmth: 0.9 },
+    systemMods: { energyRecovery: 1.08, bondWarmth: 0.9, appetite: 0.97 },
     conflictsWith: ['indulgent'],
   },
   {
     id: 'indulgent', name: 'Indulgent', group: 'Body',
     description: 'Late food, late nights, and the firm belief you’ll deal with it later.',
     cost: 'You’ll deal with it later, and it will cost more then.',
-    systemMods: { sleepQuality: 0.92, moraleSwing: 1.1 },
+    systemMods: { sleepQuality: 0.92, moraleSwing: 1.1, appetite: 1.05 },
     conflictsWith: ['disciplined_body'],
   },
   {

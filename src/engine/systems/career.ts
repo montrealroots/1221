@@ -78,6 +78,13 @@ import { CRAFTS_AT, enjoyCrafts, enjoyWork, takeTheRoom, feel } from './enjoymen
 import { ATTRIBUTES, attributesOf, classmatePresence, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
 import { personalityOf } from './personality';
 import { armPension } from './pension';
+import { chanceOver, laidUp, mayHurt } from './injury';
+import { INJURY } from '../content/injury';
+import { exerts } from './body';
+import { BODY } from '../content/body';
+
+/** Genres whose work fights or dances whatever the part asks (`GENRE_READS`): action and the musical. */
+const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
@@ -946,7 +953,7 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
 function present(person: Person, when: Instant, cityId?: string): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're nowhere else (`systems/health.ts`).
-  return !asleep && !inHospital(person, when) && (cityId === undefined || person.currentLocationId === cityId);
+  return !asleep && !inHospital(person, when) && !laidUp(person, when) && (cityId === undefined || person.currentLocationId === cityId);
 }
 
 /**
@@ -1129,7 +1136,7 @@ export function registerCareer(sim: Simulation): void {
     if (offers.length) { offerRepresentation(s, person, offers, cityId, `After the showcase in ${city},`); return; }
     if (isPlayer(person) && !career.agencyId) {
       // Until 2026-09-27 a showcase missed in hospital said it was slept through.
-      const missed = inHospital(person, item.at) ? 'In hospital that day, you weren’t seen.' : 'Asleep through it, you weren’t seen.';
+      const missed = inHospital(person, item.at) ? 'In hospital that day, you weren’t seen.' : laidUp(person, item.at) ? 'Laid up with an injury, you weren’t seen.' : 'Asleep through it, you weren’t seen.';
       s.notify({ category: 'career', title: focus > 0 ? `No Offers From ${city}` : `You Missed The Showcase In ${city}`, body: focus > 0 ? 'Nobody in the room offered to represent you. You can still submit yourself for work, and an agency can come later.' : missed, importance: 80, route: '/workspace/career' });
     }
   });
@@ -1226,7 +1233,7 @@ export function registerCareer(sim: Simulation): void {
       audition.status = 'missed';
       item.status = 'missed';
       // In hospital, the agency passes on it for them: no strike.
-      if (audition.self || audition.via === 'commercial' || !career.agencyId || inHospital(person, item.at)) return;
+      if (audition.self || audition.via === 'commercial' || !career.agencyId || inHospital(person, item.at) || laidUp(person, item.at)) return;
       career.missed += 1;
       earn(s, person, ATTRIBUTES.reputation.missedAudition);
       if (career.missed >= ESTIMATE.dropAfterMissed) { endRepresentation(s, person, `You missed ${ESTIMATE.dropAfterMissed} auditions the agency got you.`, false); return; }
@@ -1325,17 +1332,18 @@ export function registerCareer(sim: Simulation): void {
     const role = roleById(booking.roleId);
     if (!present(person, item.at, workCityOf(booking))) {
       item.status = 'missed';
-      if (inHospital(person, item.at)) {
+      if (inHospital(person, item.at) || laidUp(person, item.at)) {
         // On stage the understudy goes on, and they come back after; the
         // night isn't paid. On screen or in the booth the production can't
         // wait, and recasts: the days worked are paid, and nobody walked off.
+        // An injury that keeps them off work is taken as a stay in hospital is.
         if (role.medium === 'stage') return;
         booking.status = 'released';
         for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
         if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
         sendHome(s, booking);
         feel(person, 'recast');
-        if (isPlayer(person)) s.notify({ category: 'career', title: 'Recast While You Were In Hospital', body: `${role.label} couldn’t wait for you, and went to somebody else. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
+        if (isPlayer(person)) s.notify({ category: 'career', title: laidUp(person, item.at) ? 'Recast While You Mended' : 'Recast While You Were In Hospital', body: `${role.label} couldn’t wait for you, and went to somebody else. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
         return;
       }
       booking.status = 'fired';
@@ -1382,6 +1390,15 @@ export function registerCareer(sim: Simulation): void {
     // day's own drift (`life.ts`), SLATE's estimate; a booth doesn't. Until
     // 2026-09-27 the model's word for it said so and nothing did it.
     if (role.medium !== 'voice') person.wellbeing.hygiene = Math.max(0, (person.wellbeing.hygiene ?? 80) - hours * ESTIMATE.setGrime * personalityOf(person, 'hygieneDrift'));
+    // The day's energy by its MET value (`content/body.ts`): a musical's singing and dancing, a rehearsal room, an actor's day, the booth.
+    const musical = booking.genre === 'musical' || (booking.demands ?? []).includes('dance');
+    exerts(person, role.medium === 'voice' ? BODY.met.booth : role.medium === 'stage' ? (musical ? (call.rehearsal ? BODY.met.rehearsal : BODY.met.musical) : BODY.met.acting) : BODY.met.acting, hours, true);
+    // The day's risk to the body, at the medium's rate, more for a part that fights, dances or does its stunts; hurt at work, workers' compensation (`systems/injury.ts`).
+    if (role.medium !== 'voice') {
+      const demanding = (booking.demands ?? []).some((d) => d === 'combat' || d === 'dance') || DEMANDING_GENRES.has(booking.genre ?? '');
+      const rate = role.medium === 'stage' ? (demanding ? INJURY.perThousandHours.stageDemanding : INJURY.perThousandHours.stage) : (demanding ? INJURY.perThousandHours.screenDemanding : INJURY.perThousandHours.screen);
+      mayHurt(s, person, role.medium === 'stage' ? 'stage' : 'screen', chanceOver(rate, hours), item.at, { cityId: workCityOf(booking), weeklyWage: scale * 5 });
+    }
     // What they love about the day, and how they take the road and the rehearsal room.
     enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), ...(booking.product ? { product: booking.product } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true, role: role.id });
     // An early call, or a performance that runs late, as the body clock takes it.

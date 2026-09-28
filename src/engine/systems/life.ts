@@ -21,6 +21,10 @@ import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, M
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
+import { bodyDay, bodyOf, eatsOut, eatsShort, exerts } from './body';
+import { chanceOver, mayHurt, trainingRefusal } from './injury';
+import { INJURY } from '../content/injury';
+import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import {
@@ -399,7 +403,17 @@ export function registerLife(sim: Simulation): void {
       // A workout or a swim is an outfit worn.
       if (action === 'exercise' || action === 'swim') wearOutfit(person);
       const before = { ...person.wellbeing };
-      applyLookingAfter(person, action, s.now, action === 'exercise' ? trainingAt(s, person).builds : action === 'swim' ? TRAINING.gym : 1);
+      // Eaten out where there's no kitchen: a restaurant's meal too.
+      if (action === 'eat' && !cooks(s, person)) eatsOut(person);
+      const where = action === 'exercise' ? trainingAt(s, person) : undefined;
+      applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : 1);
+      // An hour of it, at its injury rate (`content/injury.ts`).
+      if (action === 'exercise' || action === 'swim') {
+        const source = action === 'swim' ? 'swim' : where!.where === 'run' ? 'run' : 'gym';
+        // An hour of it at its MET value (`content/body.ts`), and its injury rate.
+        exerts(person, source === 'swim' ? BODY.met.swim : source === 'run' ? BODY.met.run : BODY.met.workout, 1);
+        mayHurt(s, person, source, chanceOver(INJURY.perThousandHours[source], 1), s.now);
+      }
       const changed: Partial<Wellbeing> = {};
       for (const key of Object.keys(before) as (keyof Wellbeing)[]) {
         const moved = (person.wellbeing[key] ?? 0) - (before[key] ?? 0);
@@ -517,6 +531,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
   if ((action === 'exercise' || action === 'swim') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
+  if (action === 'exercise' || action === 'swim') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
   if (action === 'outside') { const no = outsideRefusal(sim, person); if (no) return no; }
   if (action === 'laundry' && livingOf(person).dirty === 0) return 'Your clothes are all clean.';
@@ -563,6 +578,8 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
   if (action === 'eat' || action === 'order') {
     const eaten = Math.min(MEAL, 100 - w.nourishment);
     w.nourishment = clamp(w.nourishment + eaten, 0, 100);
+    // Ordered in: a restaurant's meal (`content/body.ts`).
+    if (action === 'order') eatsOut(person);
     w.morale = clamp(w.morale + eaten * 0.04 * swing, 0, 100);
   } else if (action === 'wash' || action === 'bathe') {
     const washed = 100 - (w.hygiene ?? 80);
@@ -754,7 +771,12 @@ export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
 
-  for (const person of Object.values(sim.universe.people)) settleTheBody(person, sim.now);
+  for (const person of Object.values(sim.universe.people)) {
+    settleTheBody(person, sim.now);
+    // The day just gone on the scale: what it ate against what it spent (`systems/body.ts`).
+    bodyOf(sim, person);
+    bodyDay(person, sim.now);
+  }
 
   // After the drift, so a night paid here and one paid at the clock's next
   // stop (`life.night_alone`) read the same body. Moved ahead of it, they
@@ -818,7 +840,7 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // bought first (`systems/household.ts`), and a day nobody can pay for is
     // eaten thin (`eatWhatThereIs`).
     if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);
-    else eatWhatThereIs(w);
+    else { eatWhatThereIs(w); eatsShort(person); }
     // Out of clean clothes, the morning starts less fresh (`systems/dwelling.ts`).
     const fresh = person.living && person.living.clean <= 0 ? WORN_CLOTHES.hygiene : 82;
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, fresh), 0, 100);

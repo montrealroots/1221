@@ -246,6 +246,61 @@ function ageAtStart(config: NewSaveConfig): number {
 }
 
 /**
+ * Height and weight, in the units of where they were born: feet, inches and
+ * pounds for an American, centimeters and kilograms for everyone else. Left
+ * blank, the body is drawn from that country's adult averages
+ * (`systems/body.ts`).
+ */
+function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (f: (c: NewSaveConfig) => NewSaveConfig) => void }) {
+  const imperial = countryOfPlace(config.homeRegionId) === 'us';
+  const cm = config.heightCm;
+  const kg = config.weightKg;
+  const feet = cm ? Math.floor(cm / 30.48) : undefined;
+  const inches = cm ? Math.round((cm / 2.54) - (feet ?? 0) * 12) : undefined;
+  const num = (v: string) => (v.trim() === '' ? undefined : Number(v));
+  const setHeight = (value: number | undefined) => setConfig((c) => ({ ...c, heightCm: value && value > 0 ? Math.round(value * 10) / 10 : undefined }));
+  const setWeight = (value: number | undefined) => setConfig((c) => ({ ...c, weightKg: value && value > 0 ? Math.round(value * 10) / 10 : undefined }));
+  return (
+    <>
+      <div className="field-row">
+        {imperial ? (
+          <>
+            <div className="field">
+              <label htmlFor="height-ft">Height (Feet)</label>
+              <input id="height-ft" type="number" min={4} max={7} value={feet ?? ''} onChange={(e) => { const f = num(e.target.value); setHeight(f === undefined ? undefined : (f * 12 + (inches ?? 0)) * 2.54); }} />
+            </div>
+            <div className="field">
+              <label htmlFor="height-in">Inches</label>
+              <input id="height-in" type="number" min={0} max={11} value={inches ?? ''} onChange={(e) => { const i = num(e.target.value) ?? 0; setHeight(((feet ?? 5) * 12 + i) * 2.54); }} />
+            </div>
+            <div className="field">
+              <label htmlFor="weight-lb">Weight (Pounds)</label>
+              <input id="weight-lb" type="number" min={80} max={550} value={kg ? Math.round(kg / 0.45359237) : ''} onChange={(e) => { const lb = num(e.target.value); setWeight(lb === undefined ? undefined : lb * 0.45359237); }} />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="field">
+              <label htmlFor="height-cm">Height (Centimeters)</label>
+              <input id="height-cm" type="number" min={120} max={230} value={cm ?? ''} onChange={(e) => setHeight(num(e.target.value))} />
+            </div>
+            <div className="field">
+              <label htmlFor="weight-kg">Weight (Kilograms)</label>
+              <input id="weight-kg" type="number" min={35} max={250} value={kg ?? ''} onChange={(e) => setWeight(num(e.target.value))} />
+            </div>
+            <div className="field">
+              <label htmlFor="bmi">Body Mass Index</label>
+              <input id="bmi" type="text" readOnly value={cm && kg ? (kg / (cm / 100) ** 2).toFixed(1) : ''} placeholder="From the two" />
+            </div>
+          </>
+        )}
+      </div>
+      <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Leave them blank to be drawn from where you were born.{imperial && cm && kg ? ` A body mass index of ${(kg / (cm / 100) ** 2).toFixed(1)}.` : ''} From here your weight follows what you eat against what you do.</p>
+    </>
+  );
+}
+
+/**
  * The word this character is billed with: settled by their pronouns where
  * their pronouns settle it, and otherwise the one they picked. Undefined only
  * while somebody on they/them has not picked yet, which the Identity step
@@ -446,6 +501,10 @@ function IdentityStep({ config, set, setConfig }: {
           />
         </div>
       </div>
+
+      <hr className="divider" />
+
+      <BodyFields config={config} setConfig={setConfig} />
 
       <hr className="divider" />
 

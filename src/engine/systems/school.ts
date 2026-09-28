@@ -78,6 +78,10 @@ import { recordScholarship, recordWages, yearOf } from './earnings';
 import { computeAnnualTax } from '../content/tax';
 import { armTaxes } from './taxreturn';
 import { armHealth, inHospital } from './health';
+import { chanceOver, laidUp, mayHurt } from './injury';
+import { INJURY } from '../content/injury';
+import { exerts } from './body';
+import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
 
 export type Craft = Record<Skill, number>;
@@ -639,7 +643,7 @@ function dayKeyAt(when: Instant): string {
 function present(person: Person, when: Instant): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're in no class (`systems/health.ts`).
-  return !asleep && !inHospital(person, when) && person.currentLocationId === YALE_DRAMA.cityId;
+  return !asleep && !inHospital(person, when) && !laidUp(person, when) && person.currentLocationId === YALE_DRAMA.cityId;
 }
 
 function tire(person: Person, energy: number): void {
@@ -1611,6 +1615,9 @@ export function registerSchool(sim: Simulation): void {
     school.tally.calls += 1;
     if (present(person, item.at)) {
       school.tally.answered += 1;
+      // A call's risk to the body, a student's on a stage (`systems/injury.ts`); Yale Health, not a workers' compensation, pays the care.
+      mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, call === 'performance' ? 3 : 4), item.at);
+      exerts(person, BODY.met.acting, call === 'performance' ? 3 : 4, true);
       if (call === 'performance') {
         casting.performed += 1;
         // Nerves before a house, and at the Rep a night the company remembers (`attributes.ts`).

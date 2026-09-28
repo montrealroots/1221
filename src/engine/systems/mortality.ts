@@ -39,6 +39,8 @@ import { CITIES } from '../content/geography';
 import { ceilingAt } from '../content/lifespan';
 import { clamp } from '../core/rng';
 import { homeOf } from './earnings';
+import { bmiOf } from './body';
+import { bmiHazard } from '../content/body';
 
 export const END_KIND = 'life.end';
 const MS_YEAR = 365.2425 * 86_400_000;
@@ -91,9 +93,9 @@ export function frailty(condition: number, age: number): number {
   return 0.8 + 2.2 * short ** 1.5;
 }
 
-/** The chance a year from this age ends their life, all of it together. */
+/** The chance a year from this age ends their life, all of it together: the table, the country, the shape they're in and their weight (`bmiHazard`). */
 export function chanceOfEndingYear(person: Person, age: number, countryId: string | undefined): number {
-  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age));
+  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age) * (person.body ? bmiHazard(bmiOf(person.body)) : 1));
 }
 
 /**

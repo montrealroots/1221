@@ -50,6 +50,7 @@ import { registerPension } from './systems/pension';
 import { registerCommercial } from './systems/commercial';
 import { registerHomes } from './systems/homes';
 import { registerDwelling } from './systems/dwelling';
+import { registerInjury } from './systems/injury';
 import { attributesOf } from './systems/attributes';
 import { upgradeCraft } from './systems/school';
 import { registerHealth } from './systems/health';
@@ -94,6 +95,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerHomes(sim);
   registerDwelling(sim);
   registerHealth(sim);
+  registerInjury(sim);
   registerUnemployment(sim);
   registerTaxReturn(sim);
   registerLending(sim);

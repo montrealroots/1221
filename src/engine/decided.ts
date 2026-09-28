@@ -35,6 +35,9 @@ import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffe
 import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
+import { bodyOf } from './systems/body';
+import { onsetMonth } from './systems/health';
+import { mayHurt } from './systems/injury';
 import { drawRental } from './systems/dwelling';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
@@ -622,4 +625,66 @@ defineDecider<{ sim: Simulation; months: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), months: 12 + (seed % 60) }),
   decide: ({ sim, months }) => Array.from({ length: 12 }, (_, n) => rateShift(sim, Date.UTC(2026, 8, 1) + (months + n) * 30.4375 * 86_400_000).toFixed(4)).join(','),
+});
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'body.draw',
+  decides: 'A body where creation set none: its height and body mass index from the birth country’s adult averages and spread.',
+  drawnIn: 'src/engine/systems/body.ts',
+  reads: {
+    // Two saves are two bodies.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 40)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    delete sim.player.body;
+    const b = bodyOf(sim, sim.player);
+    return `${b.heightCm.toFixed(0)}/${b.weightKg.toFixed(0)}`;
+  },
+});
+
+defineDecider<{ sim: Simulation; bmi: number; age: number }, string>({
+  id: 'health.onset',
+  decides: 'Whether a condition begins in a month (diabetes, high blood pressure, arthritis), by age and weight.',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    // A heavier body, and an older one, meet more of them.
+    bmi: (o, t) => ({ ...o, bmi: 18 + t * 24 }),
+    age: (o, t) => ({ ...o, age: 20 + t * 50 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), bmi: 20 + (seed % 20), age: 25 + (seed % 40) }),
+  decide: ({ sim, bmi, age }) => {
+    const person = sim.player;
+    person.birthInstant = sim.now - age * 365.2425 * 86_400_000;
+    person.body = { heightCm: 170, weightKg: bmi * 1.7 ** 2, habitKcal: 2_000, intake: 0, extra: 0 };
+    const h = person.health!;
+    h.drawn = true;
+    const found: string[] = [];
+    for (let m = 0; m < 240; m += 1) {
+      h.chronic = {};
+      const c = onsetMonth(sim, person, sim.now + m * 30.4375 * 86_400_000);
+      if (c) found.push(`${m}${c[0]}`);
+    }
+    return found.join(',') || 'none';
+  },
+});
+
+defineDecider<{ sim: Simulation; source: 'run' | 'stage' | 'fall'; key: number }, string>({
+  id: 'health.injury',
+  decides: 'Whether an hour of a thing, a day of work or a day of everyday life brings an injury, which one, and how long it takes to mend.',
+  drawnIn: 'src/engine/systems/injury.ts',
+  reads: {
+    // What they were doing.
+    source: (o, t) => ({ ...o, source: (['run', 'stage', 'fall'] as const)[Math.min(2, Math.floor(t * 3))]! }),
+    // Each hour is its own draw.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), source: (['run', 'stage', 'fall'] as const)[seed % 3]!, key: seed * 13 }),
+  decide: ({ sim, source, key }) => Array.from({ length: 40 }, (_, n) => {
+    delete sim.player.health!.injury;
+    const hurt = mayHurt(sim, sim.player, source, 0.5, sim.now + (key + n) * 3_600_000);
+    return hurt ? `${hurt.kind[0]}${Math.round((hurt.until - hurt.at) / 86_400_000)}` : '-';
+  }).join(''),
 });

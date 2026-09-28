@@ -12,6 +12,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { injuryOf } from '@/engine/systems/injury';
 import { quickSave } from '@/engine';
 import type { Person, Personality } from '@/engine/domain/model';
 import {
@@ -175,6 +176,8 @@ describe('played careers', () => {
         if (i === 0) {
           for (const [hour, action] of [[8, 'exercise'], [9, 'wash'], [14, 'eat'], [20, 'eat'], [22, 'unwind']] as const) {
             if (sim.now < bed + hour * MS_HOUR) sim.advanceTo(bed + hour * MS_HOUR);
+            // Hurt, a workout waits till it mends (`systems/injury.ts`).
+            if (action === 'exercise' && injuryOf(sim.player, sim.now)) continue;
             expect(sim.execute({ kind: 'life.look_after', payload: { action } }).ok, `${action} on day ${d}`).toBe(true);
           }
         }
