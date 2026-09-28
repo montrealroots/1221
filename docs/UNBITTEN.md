@@ -387,14 +387,15 @@ part the tool cannot see.
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth
   counts it; nothing adds to it, grows it or pays it out.
-- **Most of the crafts, and five general interests, are said back and
-  nothing more.** Creation asks for them and the person look prints them.
-  Since 2026-09-27 a day of work reads the genres, Voice Acting, and Film,
-  Television, Theater and Travel (`systems/enjoyment.ts`), under the
-  owner's rule: mood and stress, never how good anybody is. The other
-  crafts are trades an actor's jobs don't do, and Animals, Cars, Fashion,
-  Nature and Politics go with nothing a player can do yet.
-  `tests/cohesion.test.ts` holds that only that file reads them.
+- **Most of the crafts are said back and nothing more.** Creation asks for
+  them and the person look prints them. Since 2026-09-27 a day of work reads
+  the genres, Voice Acting, and Film, Television, Theater and Travel
+  (`systems/enjoyment.ts`), under the owner's rule: mood and stress, never
+  how good anybody is. Since 2026-09-28 a commercial's product reads Animals,
+  Cars, Fashion, Nature and Politics (`PRODUCT_INTEREST`), which until then
+  went with nothing a player could do. The other crafts are trades an
+  actor's jobs don't do. `tests/cohesion.test.ts` holds that only that file
+  reads them.
 - **The performer title is said back and nothing more.** Actor or actress,
   settled by the pronouns or picked under they/them, and printed on Home, the
   rail and the save slot. It is a word and not a stat, so that is all it

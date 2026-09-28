@@ -26,6 +26,7 @@ import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
 import { personalityOf } from './personality';
+import { PRODUCT_INTEREST } from '../content/career';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
 const LOVED_IN: Record<LookAfter, readonly string[]> = {
@@ -51,13 +52,19 @@ export interface WorkDay {
   medium: 'screen' | 'stage' | 'voice';
   after?: 'tv' | 'film' | 'commercial';
   genre?: string;
+  /** A commercial's product, which may speak to an interest (`PRODUCT_INTEREST`). */
+  product?: string;
   away: boolean;
 }
 
 /**
  * What of somebody's a day's work is: television or film for a screen job,
  * theater for the stage, voice acting for a voice job, travel for a job
- * away, and the job's genre if it's among theirs.
+ * away, the job's genre if it's among theirs, and a commercial's product
+ * where it speaks to an interest: a car for Cars, a fashion brand for
+ * Fashion, travel and the outdoors for Nature, pets for Animals, a campaign
+ * for Politics. Until 2026-09-28 those five interests were said back and
+ * nothing more.
  */
 export function lovedInWork(person: Pick<Person, 'interests' | 'genres'>, day: WorkDay): string[] {
   const theirs = person.interests ?? [];
@@ -66,6 +73,8 @@ export function lovedInWork(person: Pick<Person, 'interests' | 'genres'>, day: W
   if (medium && theirs.includes(medium)) out.push(medium);
   if (day.away && theirs.includes('travel')) out.push('travel');
   if (day.genre && (person.genres ?? []).includes(day.genre)) out.push(day.genre);
+  const product = day.product ? PRODUCT_INTEREST[day.product] : undefined;
+  if (product && theirs.includes(product)) out.push(product);
   return out;
 }
 

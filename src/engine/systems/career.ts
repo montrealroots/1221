@@ -64,7 +64,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, AGENT_COMMISSION, AUDITION_READ, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  AFTERLIFE, AGENCIES, AGENT_COMMISSION, AUDITION_READ, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
 } from '../content/career';
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
@@ -229,6 +229,8 @@ export interface Booking {
   rehearsalWeeks: number;
   /** What it's filed under, where it's filed under anything. */
   genre?: string;
+  /** A commercial's product (`PRODUCTS`), drawn at the offer. */
+  product?: string;
   status: 'offered' | 'accepted' | 'passed' | 'lapsed' | 'worked' | 'fired' | 'released';
   dueAt: Instant;
   offeredAt: Instant;
@@ -629,6 +631,16 @@ export function callStress(person: Person, hour: number, performance: boolean): 
 }
 
 /** A job's genre, by its medium, from a draw. */
+/** A commercial's product, by its share, political ads three times theirs in an election year's autumn. */
+export function productOf(x: number, when: Instant, zone: string): string {
+  const p = zonedParts(when, zone);
+  const election = p.year % 2 === 0 && p.month >= 8 && p.month <= 10;
+  const weights = PRODUCTS.map(([id, , w]) => [id, id === 'political' && election ? w * 3 : w] as const);
+  let left = x * weights.reduce((sum, [, w]) => sum + w, 0);
+  for (const [id, w] of weights) { left -= w; if (left <= 0) return id; }
+  return weights[weights.length - 1]![0];
+}
+
 export function genreOf(role: Role, x: number): { genre?: string } {
   const list = role.id === 'animation' ? GENRES.animation : role.medium === 'stage' ? GENRES.stage : role.medium === 'screen' && role.after?.kind !== 'commercial' ? GENRES.screen : undefined;
   if (!list) return {};
@@ -1134,6 +1146,7 @@ export function registerCareer(sim: Simulation): void {
       starts: nextMonday(s.now + role.leadDays * MS_DAY, zoneOf(location ?? audition.cityId)),
       units: span(role.units), rehearsalWeeks: role.rehearsalWeeks ? span(role.rehearsalWeeks) : 0,
       ...(audition.genre === undefined ? genreOf(role, rng.next()) : { genre: audition.genre }),
+      ...(role.after?.kind === 'commercial' ? { product: productOf(s.rng('career.booking', person.id, `${audition.id}-product`).next(), s.now, s.homeZone) } : {}),
       status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0,
       ...(location ? { location } : {}),
     };
@@ -1156,7 +1169,7 @@ export function registerCareer(sim: Simulation): void {
     // 2026-09-27 it offered Take It, which the command then refused.
     const cannot = acceptRefusal(s, person, booking);
     s.requireDecision({
-      urgency: 95, category: 'career', title: `Booked: ${role.label}`,
+      urgency: 95, category: 'career', title: `Booked: ${role.label}${booking.product ? `, For ${PRODUCTS.find(([id]) => id === booking.product)![1]}` : ''}`,
       detail: `${span2} from ${formatDate(booking.starts, zone)}, in ${CITIES.require(workCityOf(booking)).name}${booking.location ? ', on location' : ''}, at ${formatMoney(unitRate(booking, booking.starts, cur), cur)} a ${role.series ? 'episode' : role.medium === 'voice' ? 'session' : role.medium === 'screen' ? 'day' : 'week'}. ${cannot ? `You can’t take it: ${cannot}` : `Answer by ${formatDateTime(booking.dueAt, zone)}.`}`,
       route: '/workspace/career', dueAt: booking.dueAt, refType: 'booking', refId: booking.id,
       actions: [
@@ -1242,7 +1255,7 @@ export function registerCareer(sim: Simulation): void {
     // 2026-09-27 the model's word for it said so and nothing did it.
     if (role.medium !== 'voice') person.wellbeing.hygiene = Math.max(0, (person.wellbeing.hygiene ?? 80) - hours * ESTIMATE.setGrime * personalityOf(person, 'hygieneDrift'));
     // What they love about the day, and how they take the road and the rehearsal room.
-    enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true });
+    enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), ...(booking.product ? { product: booking.product } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true });
     // An early call, or a performance that runs late, as the body clock takes it.
     person.wellbeing.stress = Math.min(100, person.wellbeing.stress + callStress(person, zonedParts(item.at, zoneOf(workCityOf(booking))).hour, role.medium === 'stage' && !call.rehearsal));
     if (booking.worked < workDays(booking).length) return;

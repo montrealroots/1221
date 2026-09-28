@@ -364,6 +364,24 @@ export const RECURRING = { seasonEpisodes: 13, share: 0.6, uplift: 1.2, from: '2
 export const CALLS = { early: 2, earlyBefore: 9, late: 2 } as const;
 
 /**
+ * What a commercial sells, by roughly each category's share of US television
+ * advertising (automotive, retail, food and drink, pharmaceuticals,
+ * insurance and finance, telecoms and tech, restaurants, fashion, travel and
+ * the outdoors, pets), and political advertising, which SAG-AFTRA's
+ * commercials contracts cover too and which comes in the autumn of an
+ * election year at three times its share. The shares are SLATE's estimate
+ * from what the ad-spend trackers publish in outline.
+ */
+export const PRODUCTS: readonly (readonly [string, string, number])[] = [
+  ['automotive', 'A Car Brand', 0.14], ['retail', 'A Retailer', 0.12], ['food', 'A Food And Drink Brand', 0.14],
+  ['pharma', 'A Drug Maker', 0.12], ['finance', 'An Insurer Or A Bank', 0.12], ['telecom', 'A Phone Or Tech Company', 0.1],
+  ['restaurants', 'A Restaurant Chain', 0.08], ['fashion', 'A Fashion Brand', 0.05], ['outdoors', 'A Travel Or Outdoors Brand', 0.05],
+  ['pets', 'A Pet Brand', 0.03], ['political', 'A Political Campaign', 0.05],
+];
+/** Which interest a commercial's product speaks to, where one does. */
+export const PRODUCT_INTEREST: Readonly<Record<string, string>> = { automotive: 'cars', fashion: 'fashion', outdoors: 'nature', pets: 'animals', political: 'politics' };
+
+/**
  * What a job is filed under, SLATE's estimate by what gets made: on screen
  * mostly drama and comedy, then crime, thriller, mystery, horror, romance,
  * action and science fiction; on stage drama, comedy and the musical;

@@ -9,8 +9,9 @@ import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { AGENCIES, ROLES } from '@/engine/content/career';
-import { AUDITION_KIND, auditionLevel, beginCareer, careerOf, roleById, showcaseScore, type Booking } from '@/engine/systems/career';
+import { AGENCIES, PRODUCT_INTEREST, ROLES } from '@/engine/content/career';
+import { lovedInWork } from '@/engine/systems/enjoyment';
+import { AUDITION_KIND, auditionLevel, beginCareer, careerOf, productOf, roleById, showcaseScore, type Booking } from '@/engine/systems/career';
 import { RIVALS, classMonth, inTheRoom, report, signTheClass } from '@/engine/systems/rivals';
 import { evenCraft } from '@/engine/systems/school';
 
@@ -110,5 +111,20 @@ describe('the trades', () => {
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'sr' } }).ok).toBe(true);
     expect(career.news![0]).toMatchObject({ source: 'Deadline', headline: 'Ada Cole Joins A New Hour Drama As A Series Regular', about: 'you' });
     expect(ROLES.find((r) => r.id === 'series-hour')).toBeDefined();
+  });
+});
+
+describe('what a commercial sells', () => {
+  it('is drawn by its share, political ads three times theirs in an election year’s autumn, and a product one loves is a better day', () => {
+    const count = (when: number) => { let n = 0; for (let k = 0; k < 4000; k += 1) if (productOf((k + 0.5) / 4000, when, 'America/New_York') === 'political') n += 1; return n / 4000; };
+    const autumn = Date.UTC(2028, 8, 15);
+    const spring = Date.UTC(2028, 3, 15);
+    const odd = Date.UTC(2027, 8, 15);
+    expect(count(autumn)).toBeGreaterThan(2 * count(spring));
+    expect(count(odd)).toBeCloseTo(count(spring), 2);
+    const person = { interests: ['cars'], genres: [] };
+    expect(lovedInWork(person, { medium: 'screen', after: 'commercial', product: 'automotive', away: false })).toEqual(['cars']);
+    expect(lovedInWork(person, { medium: 'screen', after: 'commercial', product: 'pets', away: false })).toEqual([]);
+    expect(Object.keys(PRODUCT_INTEREST).sort()).toEqual(['automotive', 'fashion', 'outdoors', 'pets', 'political']);
   });
 });
