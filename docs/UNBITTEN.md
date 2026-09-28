@@ -292,9 +292,9 @@ part the tool cannot see.
     SLATE pays in or the wages predate their state being kept. And a
     Connecticut patient's hospital bill takes Yale New Haven's own charity:
     free to 250% of the poverty line, 67% off to 550%, for the uninsured,
-    as a hospital screens a patient paying for themselves. What isn't
-    modeled: the same policy's help with what insurance leaves, on an
-    application SLATE doesn't make.
+    as a hospital screens a patient paying for themselves, and for an
+    insured one on an application before the bill is due (Apply For
+    Assistance), as the policy asks.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two

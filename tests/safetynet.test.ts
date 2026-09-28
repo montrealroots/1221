@@ -527,6 +527,23 @@ describe('the tax return', () => {
     expect(bill('ny-mid', 'us-ny-newyork', Math.round(line * 4))).toBe(full);
   });
 
+  it('takes it off an insured Connecticut patient’s hospital bill on an application before it’s due, and not twice', () => {
+    const sim = pro('ct-aid', 'us-ct-newhaven');
+    const line = byYear(POVERTY_LINE, 2026);
+    const months = earningsOf(sim.player).months;
+    for (const k of Object.keys(months)) delete months[k];
+    months['2025-12'] = Math.round(line * 4);
+    const bill = { id: 'mx1', at: sim.now, what: 'A stay in hospital', amount: 1_000_00, dueAt: sim.now + 30 * MS_DAY, hospital: true, cityId: 'us-ct-newhaven' };
+    healthOf(sim.player).bills.push(bill);
+    expect(sim.must<{ aid: string }>({ kind: 'health.apply_aid', payload: { billId: 'mx1' } }).aid).toBe('discount');
+    expect(bill.amount).toBe(330_00);
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx1' } }).ok).toBe(false);
+    // Not a New York hospital's, nor one already screened.
+    healthOf(sim.player).bills.push({ ...bill, id: 'mx2', cityId: 'us-ny-newyork' }, { ...bill, id: 'mx3', aid: 'screened' as const });
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx2' } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx3' } }).ok).toBe(false);
+  });
+
   it('adds Connecticut’s 2026 assistance: half of what the expired credits would have paid over 400% of the poverty line, and none elsewhere', () => {
     const at450 = Math.round(4.5 * 15_650_00);
     const figures = (seed: string, city: string, gross: number) => {

@@ -60,7 +60,13 @@ export type DentalPlan = 'ca' | 'ny' | 'yale';
 export type Condition = 'depression' | 'asthma' | 'hypertension' | 'diabetes' | 'arthritis';
 export const CONDITION_LABEL: Record<Condition, string> = { depression: 'Depression', asthma: 'Asthma', hypertension: 'High Blood Pressure', diabetes: 'Diabetes', arthritis: 'Arthritis' };
 
-export interface MedicalBill { id: string; at: Instant; what: string; amount: Money; dueAt: Instant; paid?: boolean }
+export interface MedicalBill {
+  id: string; at: Instant; what: string; amount: Money; dueAt: Instant; paid?: boolean;
+  /** A hospital's bill, which its charity may take in, and the town it was billed in; and what an application for it came to. */
+  hospital?: boolean;
+  cityId?: string;
+  aid?: 'free' | 'discount' | 'refused' | 'screened';
+}
 
 export interface HealthRecord {
   marketplace?: { from: Instant; until?: Instant; state: BenefitState };
@@ -414,6 +420,14 @@ export function medicalDebtOf(sim: Simulation, person: Person) {
 export type Care = 'visit' | 'urgent' | 'emergency' | 'stay' | 'rx-generic' | 'rx-brand' | 'cleaning' | 'filling' | 'exam' | 'glasses';
 const MEDICAL: readonly Care[] = ['visit', 'urgent', 'emergency', 'stay'];
 
+/** The last twelve months' income against the year's poverty line, which a hospital's charity reads. */
+export function incomeRatio(person: Person, at: Instant, into = 'USD'): number {
+  const months = earningsOf(person).months;
+  const since = at - 365 * MS_DAY;
+  const income = Object.entries(months).filter(([k]) => firstOf(Number(k.slice(0, 4)), Number(k.slice(5, 7))) >= since).reduce((s, [, v]) => s + v, 0);
+  return income / usd(byYear(POVERTY_LINE, zonedParts(at, HOME).year), into);
+}
+
 /**
  * What a piece of care leaves them to pay. Covered: the plan's copay, or for
  * a stay the deductible still owed and the plan's share of the rest, to what
@@ -431,12 +445,7 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
   const hospital = care === 'emergency' || care === 'stay';
   const state = CITIES.get(homeOf(person))?.parentId;
   // The last year's income against the poverty line, which a hospital's charity reads.
-  const ratio = () => {
-    const months = earningsOf(person).months;
-    const since = at - 365 * MS_DAY;
-    const income = Object.entries(months).filter(([k]) => firstOf(Number(k.slice(0, 4)), Number(k.slice(5, 7))) >= since).reduce((s, [, v]) => s + v, 0);
-    return income / usd(byYear(POVERTY_LINE, year), into);
-  };
+  const ratio = () => incomeRatio(person, at, into);
   // Connecticut's hospital charity, for a patient paying for themselves, as a hospital screens one.
   const ct = CHARITY.connecticut;
   const helped = (owed: Money): Money => {
@@ -642,11 +651,30 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   }
   if (amount <= 0) return undefined;
   h.seq = (h.seq ?? 0) + 1;
-  const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY };
+  const hospital = event.care === 'emergency' || event.care === 'stay';
+  // An uninsured Connecticut patient's was screened for the charity at billing (`shareOf`).
+  const screened = hospital && !planOf(person, at) && CITIES.get(homeOf(person))?.parentId === 'us-ct';
+  const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screened ? { aid: 'screened' as const } : {}) };
   h.bills.push(bill);
   h.bills = h.bills.slice(-40);
   sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
   return bill;
+}
+
+/**
+ * Why a hospital bill can't be put in for Yale New Haven's financial
+ * assistance, or nothing where it can: a Connecticut hospital's, not yet
+ * due or applied for. Its policy helps an insured patient with what
+ * insurance leaves as it helps the uninsured, on the same incomes, but only
+ * on an application (`CHARITY.connecticut`); the uninsured's is applied
+ * at billing.
+ */
+export function aidRefusal(bill: MedicalBill, at: Instant): string | undefined {
+  if (!bill.hospital || CITIES.get(bill.cityId ?? '')?.parentId !== 'us-ct') return 'Only a Connecticut hospital’s bill.';
+  if (bill.paid || at >= bill.dueAt) return 'It’s settled or past due.';
+  if (bill.aid === 'screened') return 'The hospital’s charity is off it already.';
+  if (bill.aid) return 'You’ve applied for it.';
+  return undefined;
 }
 
 export function registerHealth(sim: Simulation): void {
@@ -766,6 +794,20 @@ export function registerHealth(sim: Simulation): void {
     h.dental = { plan, from, ...(until ? { until } : {}), deductible: {}, paid: {} };
     armHealth(s, person);
     return { plan, ...(until ? { until } : {}) };
+  });
+
+  sim.onCommand<{ billId: string }, { aid: 'free' | 'discount' | 'refused'; amount: Money }>('health.apply_aid', (p, { sim: s }) => {
+    const person = s.player;
+    const bill = healthOf(person).bills.find((b) => b.id === p.billId);
+    if (!bill) throw new CommandError('There’s no such bill.');
+    const no = aidRefusal(bill, s.now);
+    if (no) throw new CommandError(no);
+    const r = incomeRatio(person, s.now, saveCurrency(s.universe));
+    const ct = CHARITY.connecticut;
+    bill.aid = r <= ct.freeTo ? 'free' : r <= ct.discountTo ? 'discount' : 'refused';
+    if (bill.aid === 'free') { bill.amount = 0; bill.paid = true; }
+    if (bill.aid === 'discount') bill.amount = Math.round(bill.amount * (1 - ct.discount));
+    return { aid: bill.aid, amount: bill.amount };
   });
 
   sim.onCommand<{ amount: Money }, { paid: Money }>('health.pay_bill', (p, { sim: s }) => {

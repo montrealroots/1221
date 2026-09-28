@@ -304,9 +304,9 @@ export const PLANS_SOURCE = 'http://agency.accesshealthct.com/wp-content/uploads
  * off from 251% to 550%, which the state's law (Conn. Gen. Stat. §19a-673)
  * binds at cost for the uninsured under 250%. Until 2026-09-28 a Connecticut
  * patient was billed as if there were no such policy. SLATE applies it to
- * the uninsured, as a hospital screens a patient paying for themselves; the
- * policy helps an insured patient with what insurance leaves too, on an
- * application SLATE doesn't make.
+ * the uninsured, as a hospital screens a patient paying for themselves, and
+ * to an insured patient's hospital bill on an application
+ * (`health.apply_aid`), as the policy asks.
  */
 export const CHARITY = {
   newYorkFreeBelow: 2, californiaDiscountBelow: 4,
