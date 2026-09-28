@@ -19,6 +19,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
   cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
@@ -179,7 +180,7 @@ function StandingPane() {
             </table>
           </div>
           <p className="xs dim" style={{ margin: 0 }}>
-            The faculty wanted you most from this year’s auditions, and you began ahead of every classmate in every skill. Classes, rehearsals and performances grow craft, more when you come rested and less the better you already are; your classmates grow too. The scale and the rates are SLATE’s.
+            You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals and performances grow craft, more when you come rested and less the better you already are; your classmates grow too. The scale and the rates are SLATE’s.
           </p>
         </div>
       </Panel>
@@ -321,13 +322,18 @@ function CastingPane() {
         const onCallLeft = casting.kind === 'understudy' ? onCall.filter(mine).length : 0;
         const left = every.filter(mine).length + onCallLeft;
         return (
-        <Panel key={casting.production} title={casting.production} subtitle={left === 0 ? 'Finished' : repeats(casting) ? undefined : KIND_WORDS[casting.kind]}>
+        <Panel key={casting.production} title={casting.play ?? casting.production} subtitle={casting.play ? `${casting.production}, by ${casting.by}${left === 0 ? ', finished' : ''}` : left === 0 ? 'Finished' : repeats(casting) ? undefined : KIND_WORDS[casting.kind]}>
           <div className="col gap-3">
             <div className="grid grid-3">
-              <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} />
+              <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} note={casting.size && !casting.role.startsWith('A ') ? SIZE_WORD[casting.size] : undefined} />
               <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
               {left > 0 ? <Stat label="Calls Ahead" value={String(left)} note={casting.kind === 'understudy' ? `${onCallLeft} of them on call` : undefined} /> : <Stat label="Calls Ahead" value="None" note="The run is over" />}
             </div>
+            {casting.cast && casting.cast.length > 0 && (
+              <p className="small" style={{ margin: 0 }}>
+                From the class with you: {casting.cast.map((c) => `${c.name} as ${c.part}`).join('; ')}. The rest of the cast are from the other two classes.
+              </p>
+            )}
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
               <p className="small" style={{ margin: 0 }}>
                 {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. {onCallLeft > 0 ? `You’re on call at all ${onCallLeft} performances still ahead: in New Haven and awake, or it’s a grave breach if you’re needed.` : 'The run is over.'}
@@ -346,8 +352,18 @@ function CastingPane() {
           </p>
         </Panel>
       )}
+      {school.around && school.around.term === school.termsBegun - 1 && enrolled && (
+        <Panel title="Around The Class" subtitle="Who’s playing what this term">
+          <table className="table">
+            <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th></tr></thead>
+            <tbody>
+              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td>{a.part}</td></tr>)}
+            </tbody>
+          </table>
+        </Panel>
+      )}
       <p className="xs dim" style={{ margin: 0 }}>
-        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The 2026–27 theses and {SEAGULL_2027.name} are the School’s and Yale Rep’s own dates; the festivals’ and later years’ dates, the rehearsal weeks and which production goes to whom are SLATE’s estimate. Source: {SCHOOL_SEASON.source}.
+        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how the last run’s nights went. The best read takes the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the reading are SLATE’s estimate, as the seasons you’re cast in aren’t announced; the characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
       </p>
 
       <CabaretPanel />

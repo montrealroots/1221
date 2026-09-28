@@ -188,8 +188,9 @@ describe('acting at the heart of it', () => {
   it('ranks a student in acting by it, apart from the craft overall', () => {
     const sim = createSave(1, 'skills-rank', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
     const p = sim.player;
+    Object.assign(p.craft!, { scene: 95, character: 95, emotion: 95 });
     expect(rankIn(p, 'acting')).toBe(1);
-    p.school!.classmates[0]!.craft.scene = 99;
+    Object.assign(p.school!.classmates[0]!.craft, { scene: 99, character: 99, emotion: 99 });
     expect(rankIn(p, 'acting')).toBe(2);
     expect(rankIn(p)).toBe(meanCraft(p.school!.classmates[0]!.craft) > meanCraft(p.craft!) ? 2 : 1);
   });

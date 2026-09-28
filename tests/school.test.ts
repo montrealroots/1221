@@ -157,19 +157,24 @@ describe('a new life', () => {
 });
 
 describe('the admitted class', () => {
-  it('is fifteen classmates, and the player, the faculty’s first choice, is ahead of every one in every area', () => {
-    for (const seed of ['a', 'b', 'c']) {
+  it('is fifteen classmates, each an actor or an actress with their own drive, and the player among the strongest, not above everyone', () => {
+    let firstInAll = 0;
+    for (const seed of ['a', 'b', 'c', 'd', 'e', 'f']) {
       const p = life(seed).player;
       const mates = p.school!.classmates;
       expect(mates).toHaveLength(YALE_DRAMA.classSize - 1);
-      for (const { id } of SKILLS) {
-        const best = Math.max(...mates.map((m) => m.craft[id]));
-        expect(p.craft![id]).toBe(Math.min(95, best + 6));
-        expect(rankIn(p, id)).toBe(1);
+      for (const m of mates) {
+        expect(meanCraft(m.craft)).toBeGreaterThan(38);
+        expect(['actor', 'actress']).toContain(m.title);
+        expect(m.drive).toBeGreaterThanOrEqual(1 - ESTIMATE.driveSpread);
+        expect(m.drive).toBeLessThanOrEqual(1 + ESTIMATE.driveSpread);
       }
-      expect(rankIn(p)).toBe(1);
-      for (const m of mates) expect(meanCraft(m.craft)).toBeGreaterThan(38);
+      // Above the class's middle overall, as one of its strongest admits.
+      const means = mates.map((m) => meanCraft(m.craft)).sort((x, y) => x - y);
+      expect(meanCraft(p.craft!)).toBeGreaterThan(means[7]!);
+      if (SKILLS.every(({ id }) => rankIn(p, id) === 1)) firstInAll += 1;
     }
+    expect(firstInAll).toBe(0);
     expect(life('a').player.school!.classmates).toEqual(life('a').player.school!.classmates);
     expect(life('a').player.school!.classmates).not.toEqual(life('b').player.school!.classmates);
   });
@@ -599,7 +604,7 @@ describe('casting', () => {
     sim.player.currentLocationId = 'us-ny-newyork';
     sim.advanceTo(shows[1]!.at + 60_000);
     expect(sim.player.school!.standing).toBe('dismissed');
-    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: 'A Part In A New Play', kind: 'carlotta', year: 2027, wentOn: 1 }]);
+    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: expect.stringMatching(/^A (Leading|Supporting|Featured) Part In A New Play$/), kind: 'carlotta', year: 2027, wentOn: 1 }]);
   }, 120_000);
 
   it('sends an understudy on about one performance in fifty', () => {

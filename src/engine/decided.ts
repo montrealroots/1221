@@ -245,7 +245,7 @@ defineDecider<{ sim: Simulation }, string>({
 
 defineDecider<{ sim: Simulation }, string>({
   id: 'school.class',
-  decides: 'Who the fifteen classmates are, and the craft each brings from the auditions, which sets the player’s above them.',
+  decides: 'Who the fifteen classmates are, actor or actress, the craft and drive each brings from the auditions, and the player’s craft among them.',
   drawnIn: 'src/engine/systems/school.ts',
   reads: {
     // Two saves are two admitted classes.
