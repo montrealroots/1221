@@ -22,7 +22,7 @@ import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABA
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -380,9 +380,9 @@ function CastingPane() {
       {school.around && school.around.term === school.termsBegun - 1 && enrolled && (
         <Panel title="Around The Class" subtitle="Who’s playing what this term">
           <table className="table">
-            <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th></tr></thead>
+            <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">To You</th></tr></thead>
             <tbody>
-              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td>{a.part}</td></tr>)}
+              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td>{a.part}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
             </tbody>
           </table>
         </Panel>

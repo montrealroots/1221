@@ -11,7 +11,7 @@ import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
 import { COURSES } from '@/engine/content/school';
-import { CALL_KIND, COMPANY_KIND, ESTIMATE, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
+import { CALL_KIND, COMPANY_KIND, ESTIMATE, BONDS, bondWord, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
@@ -278,5 +278,42 @@ describe('the teachers’ notes', () => {
     tally.craftAtStart = { ...sim.player.craft! };
     const still = teachersNotes(sim.player, 0);
     expect(still.every((n) => /hasn’t moved/.test(n.note))).toBe(true);
+  }, 120_000);
+});
+
+describe('friends and rivals', () => {
+  it('draw a cast shared closer, and a lead taken apart', () => {
+    const sim = life('bonds');
+    play(sim, on(2027, 1, 6));
+    const school = sim.player.school!;
+    const c = school.casting!;
+    // Everybody's in the first spring's festival together.
+    for (const mate of c.cast!) {
+      const m = school.classmates.find((x) => x.name === mate.name)!;
+      const tookLead = /^A Leading Part/.test(mate.part) && c.size !== 'lead';
+      const lostLead = c.size === 'lead' && !/^A Leading Part/.test(mate.part);
+      expect(m.bond).toBe(BONDS.shared - (tookLead ? BONDS.leadTaken : 0) - (lostLead ? BONDS.leadTaken : 0));
+    }
+    expect(bondWord(30)).toBe('Friend');
+    expect(bondWord(60)).toBe('Close Friend');
+    expect(bondWord(-25)).toBe('Rival');
+    expect(bondWord(5)).toBeUndefined();
+  }, 120_000);
+
+  it('lift a night with friends in the cast', () => {
+    const run = (friendly: boolean) => {
+      const sim = life('bonds-night');
+      play(sim, on(2027, 1, 6));
+      const school = sim.player.school!;
+      for (const mate of school.casting!.cast!) school.classmates.find((x) => x.name === mate.name)!.bond = friendly ? 60 : 0;
+      const show = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.call === 'performance' && i.payload.which !== 'rep')[0]!;
+      play(sim, show.at - 60_000);
+      sim.player.currentLocationId = 'us-ct-newhaven';
+      sim.player.awakeSince = show.at - 8 * MS_HOUR;
+      sim.player.wellbeing.morale = 50;
+      sim.advanceTo(show.at + 60_000);
+      return sim.player.wellbeing.morale;
+    };
+    expect(run(true)).toBeGreaterThan(run(false));
   }, 120_000);
 });

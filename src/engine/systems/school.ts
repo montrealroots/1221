@@ -122,7 +122,26 @@ export interface LastWork { size: PartSize; nights?: number }
  * classmate's), and their last part. Until 2026-09-28 a classmate was a name
  * and a craft, all of them equally driven, and cast in nothing.
  */
-export interface Classmate { name: string; craft: Craft; title?: 'actor' | 'actress'; drive?: number; last?: LastWork }
+export interface Classmate {
+  name: string; craft: Craft; title?: 'actor' | 'actress'; drive?: number; last?: LastWork;
+  /** Where they stand with the player, -100 to 100: a cast shared draws them closer, a lead taken from the other apart (`BONDS`). */
+  bond?: number;
+}
+
+/**
+ * How a classmate comes to be a friend or a rival, SLATE's estimate: a
+ * production shared, weeks in a rehearsal room together, is ten toward a
+ * friend; a lead written for the one that went to the other, twelve toward a
+ * rival. From 25 a friend, from 50 a close one, from -20 a rival. Each friend
+ * in a cast lifts a night's morale a point, to three.
+ */
+export const BONDS = { shared: 10, leadTaken: 12, friend: 25, close: 50, rival: -20, perFriend: 1, most: 3 } as const;
+
+/** What a classmate is to the player, in a word, if anything yet. */
+export function bondWord(bond: number | undefined): 'Close Friend' | 'Friend' | 'Rival' | undefined {
+  if (bond === undefined) return undefined;
+  return bond >= BONDS.close ? 'Close Friend' : bond >= BONDS.friend ? 'Friend' : bond <= BONDS.rival ? 'Rival' : undefined;
+}
 
 export interface TermReview {
   term: number; standing: Standing; attendance: number; growth: number; classGrowth: number; reason: string;
@@ -1177,6 +1196,21 @@ function cast(sim: Simulation, person: Person, term: number): void {
       for (const g of given) if (g.s.i >= 0) school.classmates[g.s.i]!.last = { size: g.size };
       const me = given.find((g) => g.s.i < 0);
       if (me) mine = { production, play, part: me.part, size: me.size, cast: given.filter((g) => g.s.i >= 0).map((g) => ({ name: g.s.name, part: partLabel(g.part, production.kind) })) };
+      // The cast they're in together: closer for the weeks shared, and apart where a lead written for the one went to the other.
+      if (me) {
+        const title = person.performerTitle === 'actress' ? 'actress' : 'actor';
+        const partOf = (name: string) => play.parts.find((x) => x.name === name);
+        for (const g of given) {
+          if (g.s.i < 0) continue;
+          const mate = school.classmates[g.s.i]!;
+          let move: number = BONDS.shared;
+          const theirs = partOf(g.part);
+          const ours = partOf(me.part);
+          if (theirs?.size === 'lead' && me.size !== 'lead' && (theirs.for === title || theirs.for === 'either')) move -= BONDS.leadTaken;
+          if (ours?.size === 'lead' && g.size !== 'lead' && (ours.for === g.s.title || ours.for === 'either')) move -= BONDS.leadTaken;
+          mate.bond = Math.max(-100, Math.min(100, (mate.bond ?? 0) + move));
+        }
+      }
       // The classmates in it rehearse and play it too: grown once the run is over (`COMPANY_KIND`).
       const mates = given.filter((g) => g.s.i >= 0).map((g) => g.s.i);
       const last = production.runs[production.runs.length - 1]!;
@@ -1264,7 +1298,8 @@ function cast(sim: Simulation, person: Person, term: number): void {
     if (c) {
       // Who the lead went to, where it wasn't them.
       const lead = c.size !== 'lead' ? c.cast?.find((x) => !x.part.startsWith('A ') && playOf(sim, person, { kind: c.kind, n: production!.n, runs: production!.runs }).parts.find((p) => p.name === x.part)?.size === 'lead') : undefined;
-      parts.push(`as ${c.role} in ${c.play ? `${c.play} (${c.production})` : `${c.kind === 'thesis' ? '' : 'the '}${c.production}`}, from its first rehearsal call${lead ? `; ${lead.name} plays ${lead.part}` : ''}`);
+      const rival = lead && bondWord(school.classmates.find((m) => m.name === lead.name)?.bond) === 'Rival';
+      parts.push(`as ${c.role} in ${c.play ? `${c.play} (${c.production})` : `${c.kind === 'thesis' ? '' : 'the '}${c.production}`}, from its first rehearsal call${lead ? `; ${lead.name}${rival ? ', your rival,' : ''} plays ${lead.part}` : ''}`);
     }
     const r = school.rep;
     if (r) parts.push(r.kind === 'role' ? `and, at the director’s invitation with the dean’s approval, in the company of ${r.production}` : `and to understudy ${term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${r.production}`}, in New Haven and reachable at every performance`);
@@ -1531,6 +1566,9 @@ export function registerSchool(sim: Simulation): void {
         // Nerves before a house, and at the Rep a night the company remembers (`attributes.ts`).
         const kept = nerves(s, person, 'performance');
         if (item.payload.which === 'rep') earn(s, person, ATTRIBUTES.reputation.repPerformance);
+        // Friends in the cast: a better night to be in.
+        const friends = (casting.cast ?? []).filter((c) => (school.classmates.find((m) => m.name === c.name)?.bond ?? 0) >= BONDS.friend).length;
+        if (friends) person.wellbeing.morale = Math.min(100, person.wellbeing.morale + Math.min(BONDS.most, friends * BONDS.perFriend));
         playNight(person.craft, castingReads(casting), focusOf(person) * kept);
         tire(person, ESTIMATE.energy.performance);
         reckonNight(s, person, casting, item, kept, item.payload.which === 'rep');
