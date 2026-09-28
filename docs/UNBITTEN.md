@@ -227,8 +227,9 @@ part the tool cannot see.
     four in ten breakdowns asking for a reel, Backstage's and Casting
     Networks' own listings, stale headshots, a kit, a class, a coach) is
     SLATE's estimate: no site publishes what a reel or a subscription is
-    worth. Trade papers aren't modeled: what they'd tell an actor, SLATE
-    has no news to give.
+    worth. The trade news of the class after Yale (Deadline and Playbill
+    on a classmate's booking, `systems/rivals.ts`) is shown on the Career
+    screen and read by nothing else: it tells, and changes no outcome.
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
   - Connecticut (2026-09-27): unemployment, HUSKY D, Covered Connecticut
@@ -426,6 +427,14 @@ part the tool cannot see.
   overnight, and what a gym builds over a workout at home. Not modeled: what
   running the machines and the air conditioning adds to the bills, renters'
   insurance, and what a home's fixtures add to its rent or its price.
+- **The engine's failures are kept and read by nothing.** A system that
+  throws inside a scheduled item is caught and the failure kept on the save
+  (`engineFailures`) so the world goes on; no report or screen reads them.
+- **Records the screens show and nothing else reads** are kept as a
+  statement is: a showcase's score, a career's end, residuals paid, each
+  credit's city, a loan's term, the school's history and casting notes,
+  the weeks a claim has paid. They're what happened, told back; none is a
+  dial the game turns.
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads
   the genres, Voice Acting, and Film, Television, Theater and Travel

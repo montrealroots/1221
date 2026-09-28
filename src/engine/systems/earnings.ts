@@ -190,8 +190,14 @@ export type HomeLine = 'homeInterest' | 'homeTax' | 'homePmi' | 'rentalRent' | '
 /** Something a home put on the year, to the year it happened. */
 export function recordHome(person: Person, at: Instant, zone: string, line: HomeLine, amount: Money): void {
   if (amount === 0) return;
-  const y = yearOf(person, zonedParts(at, zone).year);
+  const p = zonedParts(at, zone);
+  const y = yearOf(person, p.year);
   y[line] = (y[line] ?? 0) + amount;
+  // Rent received is income for the programs that test current income, as wages are.
+  if (line === 'rentalRent') {
+    const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
+    earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+  }
 }
 
 /** A scholarship's taxable part, to the year it's paid and where they lived. */

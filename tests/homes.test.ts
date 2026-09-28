@@ -15,10 +15,13 @@ import { COUNCIL_TAX, homeValueAt, PROJECTS } from '@/engine/content/homes';
 import { addCountryCities } from '@/engine/content/geography';
 import { rentOf } from '@/engine/systems/household';
 import { yearOf } from '@/engine/systems/earnings';
-import { figuresFor } from '@/engine/systems/taxreturn';
+import { figuresFor, latePenalty } from '@/engine/systems/taxreturn';
+import { exchange } from '@/engine/content/currency';
+import { saveCurrency } from '@/engine/core/money';
+import { depositCapMonths } from '@/engine/systems/household';
 import {
   HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
-  lifeOf, livingIn, loanBalance, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
+  lifeOf, livingIn, loanBalance, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
   type Listing, type OwnedHome,
 } from '@/engine/systems/homes';
 
@@ -452,5 +455,45 @@ describe('an older save', () => {
     delete person.homes;
     migrate(universe);
     expect((universe.people[universe.playerId]!.homes ?? [])[0]?.id).toBe('home-1');
+  });
+});
+
+describe('the law, as it stands', () => {
+  it('adds England’s 5% on a home bought beside one already owned', () => {
+    const sim = save('homes-surcharge', 'uk-eng-london');
+    expect(closingCost(sim, 'uk-eng-london', 400_000_00, false, true) - closingCost(sim, 'uk-eng-london', 400_000_00, false)).toBe(20_000_00);
+  });
+
+  it('asks Canada’s 5% to C$500,000, 10% past it, 20% from C$1.5 million and on a home to let', () => {
+    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'wealthy' }, 'homes-ca');
+    const cad = (n: number) => exchange(n * 100, 'CAD', saveCurrency(sim.universe))!;
+    expect(minimumDown(sim, 'ca', cad(400_000), true)).toBeCloseTo(0.05, 3);
+    expect(minimumDown(sim, 'ca', cad(1_000_000), true)).toBeCloseTo(0.075, 3);
+    expect(minimumDown(sim, 'ca', cad(2_000_000), true)).toBe(0.2);
+    expect(minimumDown(sim, 'ca', cad(400_000), false)).toBe(0.2);
+    expect(minimumDown(sim, 'ie', 100_000_00, false)).toBe(0.3);
+  });
+
+  it('keeps depreciation taken while a home was let out of the gain kept free', () => {
+    const { sim, owned } = bought('homes-recapture', 1);
+    owned.price = Math.round(owned.price / 3);
+    owned.boughtAt -= 3 * 365 * MS_DAY;
+    owned.occupied[0]!.from -= 3 * 365 * MS_DAY;
+    owned.depreciated = 40_000_00;
+    sim.must({ kind: 'home.sell', payload: { homeId: owned.id, then: 'own' } });
+    sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+    const y = yearOf(sim.player, new Date(sim.now).getUTCFullYear());
+    expect((y.homeGain ?? 0) + (y.homeGainShort ?? 0)).toBeGreaterThanOrEqual(40_000_00);
+  }, 60_000);
+
+  it('holds a late filing’s own penalty to 22.5%, with paying late running on to 25%', () => {
+    const due = Date.UTC(2027, 3, 15);
+    // Fourteen months late on $100,000: paying late 0.5% a month, 7%; filing late 4.5% a month for five, 22.5%.
+    expect(latePenalty(10_000_000, due, due + 400 * MS_DAY)).toBe(Math.round(10_000_000 * (0.225 + 0.07)));
+  });
+
+  it('holds a Northern Ireland landlord to a month’s deposit', () => {
+    addCountryCities('uk', readFileSync('public/geo/uk.tsv', 'utf8'));
+    expect(depositCapMonths('uk-nir-belfast')).toBe(1);
   });
 });

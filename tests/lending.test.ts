@@ -373,6 +373,8 @@ describe('a personal loan', () => {
   it('is priced by the record, paid down monthly, and closed when it’s paid', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-citi', wealth: 'comfortable' });
     wages(sim, 4_000_00);
+    // Savings behind the current account: a loan payment reaches savings only where it's linked (`drawFromBank`).
+    sim.player.payments = { ...(sim.player.payments ?? {}), linkSavings: true } as typeof sim.player.payments;
     const answer = sim.must<{ apr: number; payment: number }>({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 12 } });
     const score = sim.player.credit!.score;
     expect(answer.apr).toBe(rateForRecord(0.0999, 0.1749, score));

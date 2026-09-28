@@ -88,7 +88,7 @@ import {
   BEDROOM_RENT, COUNCIL_TAX, drawFixtures, isFlat, type Fixtures, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
   SQM_PER_SQFT, addressOf, homeValueAt, streetsOf, usesFeet, type Feature, type HomeType, type Part, type Project,
 } from '../content/homes';
-import { drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, scheduleRentFor, type Housing } from './household';
+import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, refundRentAhead, rehome, rentOf, scheduleRentFor, spend, type Housing } from './household';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
 
@@ -129,11 +129,20 @@ const TERMS_DEFAULT: LendingTerms = { rate: 0.06, years: 25, minDown: 0.2, closi
 export const termsIn = (countryId: string): LendingTerms => TERMS[countryId] ?? TERMS_DEFAULT;
 
 export const HOME = {
-  /** An American lender's floor on the record, and its ceiling on debts over income. */
+  /**
+   * A lender's floor on the record and ceiling on debts over income: 620,
+   * the floor conventional lenders have long kept (Fannie Mae dropped its
+   * own for loans its system approves in November 2025; most lenders keep
+   * one), and 45% of income, inside the 50% Fannie Mae's automated approval
+   * allows. The 43% of the Qualified Mortgage rule went in 2021. SLATE's
+   * reading of common practice.
+   */
   minScore: 620,
-  maxDebtToIncome: 0.43,
+  maxDebtToIncome: 0.45,
   /** A loan's ceiling over a year's income in Britain and in Ireland. */
   incomeMultiple: { uk: 4.5, ie: 4 } as Readonly<Record<string, number>>,
+  /** Ireland's for somebody who has bought before: 3.5 times (the Central Bank's rules). */
+  incomeMultipleAgain: { ie: 3.5 } as Readonly<Record<string, number>>,
   /** Months of income a lender averages, and the share of rent it counts. */
   incomeMonths: 24,
   rentCounted: 0.75,
@@ -423,11 +432,12 @@ export interface Installment {
 export interface Loan {
   accountId: string;
   rate: number;
-  months: number;
   /** Principal and interest a month. */
   payment: Money;
   original: Money;
   pmi: boolean;
+  /** When it was paid off, if it has been. */
+  paidOffAt?: Instant;
 }
 
 /** A home let, or offered to let: the whole of it, or its backyard cottage. */
@@ -464,10 +474,14 @@ export interface OwnedHome {
   /** When they've lived in it. */
   occupied: { from: Instant; to?: Instant }[];
   tenancies: Tenancy[];
+  /** Former tenants' deposits not yet all paid back, by account. */
+  depositsOwed?: string[];
   /** Insurance claims paid, when. */
   claims: Instant[];
   /** Depreciation taken while it was let, which the sale's gain reads. */
   depreciated: Money;
+  /** The months, `YYYY-MM`, a lender escrowed the tax and insurance: what a payoff mid-year leaves to pay. */
+  escrowed?: string[];
   foreclosureAt?: Instant;
   /** Listed for sale: the day it closes, and the rented home somebody living in it moves into. */
   selling?: { closesAt: Instant; then?: Housing };
@@ -534,10 +548,7 @@ const inEngland = (cityId: string): boolean => CITIES.get(cityId)?.parentId === 
 
 /** What an amount in dollars at an American cost of living a hundred is in a town, in the save's money. */
 export function atTown(sim: Simulation, cityId: string, usd: number): Money {
-  const city = CITIES.require(cityId);
-  const cur = saveCurrency(sim.universe);
-  const cents = Math.round(usd * 100 * city.costOfLivingIndex / 100);
-  return Math.round((exchange(cents, 'USD', cur) ?? cents) / 100) * 100;
+  return townPrice(cityId, usd, saveCurrency(sim.universe));
 }
 
 /** The value the property tax is on: the market's, or what it cost grown at the place's cap. */
@@ -624,7 +635,7 @@ export function rateFor(person: Person, countryId: string, investment = false): 
  * first-time buyer's relief to £300,000 on a home of up to £500,000, and 1%
  * besides for the conveyancing and the survey.
  */
-export function closingCost(sim: Simulation, cityId: string, price: Money, firstHome: boolean): Money {
+export function closingCost(sim: Simulation, cityId: string, price: Money, firstHome: boolean, additional = false): Money {
   const city = CITIES.require(cityId);
   if (city.parentId === 'uk-eng' || city.parentId === 'uk-nir') {
     const cur = saveCurrency(sim.universe);
@@ -634,6 +645,8 @@ export function closingCost(sim: Simulation, cityId: string, price: Money, first
     let tax = 0;
     let from = 0;
     for (const [to, rate] of bands) { if (gbp > from) tax += (Math.min(gbp, to) - from) * rate; from = to; }
+    // A home bought beside one already owned pays 5% more on all of it, from October 2024.
+    if (additional) tax += gbp * 0.05;
     return Math.round(exchange(Math.round(tax * 100), 'GBP', cur) ?? tax * 100) + Math.round(price * 0.01);
   }
   return Math.round(price * termsIn(city.countryId).closing);
@@ -649,17 +662,18 @@ export function monthlyIncome(sim: Simulation, person: Person): Money {
     const y = p.year + Math.floor((p.month - 1 - n) / 12);
     sum += months[`${y}-${String(m).padStart(2, '0')}`] ?? 0;
   }
+  // The months carry rent received in full (`recordHome`); a lender counts three quarters of today's.
   const rents = (person.homes ?? []).flatMap((h) => h.tenancies).filter((t) => t.status === 'let').reduce((s, t) => s + t.rent, 0);
-  return Math.round(sum / HOME.incomeMonths + rents * HOME.rentCounted);
+  return Math.round(sum / HOME.incomeMonths - rents * (1 - HOME.rentCounted));
 }
 
-/** What their other debts, and the homes they own already, are taken to cost a month. */
-function monthlyDebts(sim: Simulation, person: Person, except?: string): Money {
+/** What their other debts, the homes they own already, and the rent they'll go on paying, are taken to cost a month. */
+function monthlyDebts(sim: Simulation, person: Person, except?: string, keepsRent = false): Money {
   const cards = Object.values(sim.universe.accounts)
     .filter((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && (a.kind === 'credit_card' || a.kind === 'loan') && a.category !== 'tenant_deposit' && a.balance < 0)
     .reduce((sum, a) => sum + Math.round(-a.balance * HOME.debtPayment), 0);
   const homes = (person.homes ?? []).filter((h) => h.id !== except).reduce((sum, h) => sum + ownedMonth(sim, h).total, 0);
-  return cards + homes;
+  return cards + homes + (keepsRent ? rentOf(sim, person) : 0);
 }
 
 export interface Offer {
@@ -684,28 +698,47 @@ export function offerFor(sim: Simulation, person: Person, listing: Listing, down
   const months = termsIn(country).years * 12;
   const payment = loan > 0 ? paymentFor(loan, rate, months) : 0;
   const pmi = country === 'us' && live && loan > price * HOME.pmiOver;
-  const closing = closingCost(sim, listing.cityId, price, (person.homesOwned ?? 0) === 0 && live);
+  const closing = closingCost(sim, listing.cityId, price, (person.homesOwned ?? 0) === 0 && live, (person.homes ?? []).length > 0);
   const month = monthOf(sim, listing, listing.cityId, price, loan > 0 ? { mortgage: { payment, pmi, balance: loan } } : {});
   return { price, down: downCash, loan, closing, rate, payment, month, earnest: Math.round(price * HOME.earnest), cash: downCash + closing };
 }
 
+/**
+ * The least a lender here takes down, of the price, as the countries' rules
+ * have it where they're law: Canada's 5% to C$500,000, 10% on the rest to
+ * C$1.5 million and 20% past it, and 20% on a home to let; Ireland's and New
+ * Zealand's 30% on a home to let (the Central Bank's and the Reserve Bank's
+ * limits). Elsewhere the country's usual, and at least 15% on a home to let.
+ */
+export function minimumDown(sim: Simulation, countryId: string, price: Money, live: boolean): number {
+  const base = termsIn(countryId).minDown;
+  if (countryId === 'ca') {
+    if (!live) return 0.2;
+    const cad = (exchange(price, saveCurrency(sim.universe), 'CAD') ?? price) / 100;
+    if (cad >= 1_500_000) return 0.2;
+    return cad <= 500_000 ? 0.05 : (25_000 + (cad - 500_000) * 0.1) / cad;
+  }
+  if (!live && (countryId === 'ie' || countryId === 'nz')) return 0.3;
+  return Math.max(base, live ? 0 : HOME.investmentDown);
+}
+
 /** The down payments a lender here takes for a home they'll live in or not, the least first, and cash. */
-export function downChoices(countryId: string, live = true): number[] {
-  const min = Math.max(termsIn(countryId).minDown, live ? 0 : HOME.investmentDown);
-  return [...new Set([min, 0.1, 0.2, 0.25].filter((d) => d >= min))].concat(1);
+export function downChoices(countryId: string, live = true, least = Math.max(termsIn(countryId).minDown, live ? 0 : HOME.investmentDown)): number[] {
+  const min = Math.ceil(least * 100) / 100;
+  return [...new Set([min, 0.1, 0.2, 0.25, 0.3].filter((d) => d >= min))].concat(1);
 }
 
 /** Whether the lender would lend on an offer, and why not. */
-function lenderRefusal(sim: Simulation, person: Person, cityId: string, offer: Offer, except?: string): string | undefined {
+function lenderRefusal(sim: Simulation, person: Person, cityId: string, offer: Offer, except?: string, keepsRent = false): string | undefined {
   if (offer.loan === 0) return undefined;
   const cur = saveCurrency(sim.universe);
   if ((person.credit?.score ?? 650) < HOME.minScore) return 'A lender asks for a better credit record than yours.';
   const income = monthlyIncome(sim, person);
   const country = CITIES.require(cityId).countryId;
-  const multiple = HOME.incomeMultiple[country];
+  const multiple = ((person.homesOwned ?? 0) > 0 ? HOME.incomeMultipleAgain[country] : undefined) ?? HOME.incomeMultiple[country];
   if (multiple !== undefined) {
     if (offer.loan > income * 12 * multiple) return `A lender here lends up to ${multiple} times a year’s income, and yours has averaged ${formatMoney(income * 12, cur, { cents: false })} a year over two years.`;
-  } else if (income <= 0 || (offer.month.total + monthlyDebts(sim, person, except)) / income > HOME.maxDebtToIncome) {
+  } else if (income <= 0 || (offer.month.total + monthlyDebts(sim, person, except, keepsRent)) / income > HOME.maxDebtToIncome) {
     return `A lender keeps what you owe each month under ${Math.round(HOME.maxDebtToIncome * 100)}% of your income, and yours has averaged ${formatMoney(income, cur, { cents: false })} a month over two years.`;
   }
   return undefined;
@@ -719,10 +752,11 @@ export function offerRefusal(sim: Simulation, person: Person, listingId: string,
   if (live && listing.cityId !== (person.home?.cityId ?? person.currentLocationId)) return 'A home to live in is bought where you live; one elsewhere is bought to let.';
   if (live && person.home?.noticeUntil !== undefined) return 'There’s a notice to pay or quit on your home: a lender won’t lend over it.';
   if (!(price >= askingPrice(sim, listing) * 0.5)) return 'The seller won’t read an offer under half the asking price.';
-  if (!downChoices(CITIES.require(listing.cityId).countryId, live).includes(down)) return 'A lender here doesn’t take that down payment.';
+  const country = CITIES.require(listing.cityId).countryId;
+  if (!downChoices(country, live, minimumDown(sim, country, price, live)).includes(down)) return 'A lender here doesn’t take that down payment.';
   const offer = offerFor(sim, person, listing, down, price, live);
   if (inTheBank(sim, person) < offer.cash) return `The seller asks to see ${formatMoney(offer.cash, saveCurrency(sim.universe), { cents: false })} in the bank, the down payment and the closing costs.`;
-  return lenderRefusal(sim, person, listing.cityId, offer);
+  return lenderRefusal(sim, person, listing.cityId, offer, undefined, !live);
 }
 
 /** The least a seller would take, as a share of the asking price. */
@@ -895,6 +929,16 @@ function tenantMovesIn(sim: Simulation, person: Person, owned: OwnedHome, t: Ten
   if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Tenant Moved In', body: `${t.unit === 'adu' ? 'The cottage at ' : ''}${owned.facts.address}: ${formatMoney(t.rent, saveCurrency(sim.universe), { cents: false })} a month for a year, and a month’s deposit held.`, importance: 60, route: '/workspace/homes' });
 }
 
+/** A former tenant's deposit paid back, as far as the bank reaches; closed once it's all back. */
+function repayDeposit(sim: Simulation, person: Person, accountId: string): void {
+  const deposit = sim.universe.accounts[accountId];
+  if (!deposit || deposit.balance >= 0) return;
+  const draw = drawFromBank(sim, person, -deposit.balance, true);
+  const paid = -deposit.balance - draw.short;
+  if (paid > 0) sim.post({ memo: 'A tenant’s deposit back', category: 'home', postings: [...draw.postings, { accountId: deposit.id, amount: paid }] });
+  if (deposit.balance === 0) deposit.closedAt = sim.now;
+}
+
 /** A tenant leaving: the deposit back, less any damage. */
 function tenantLeaves(sim: Simulation, person: Person, owned: OwnedHome, t: Tenancy, tries: number): Money {
   const deposit = t.depositAccountId ? sim.universe.accounts[t.depositAccountId] : undefined;
@@ -902,9 +946,10 @@ function tenantLeaves(sim: Simulation, person: Person, owned: OwnedHome, t: Tena
   if (deposit && deposit.balance < 0) {
     const held = -deposit.balance;
     damage = Math.round(held * HOME.damageMax * Math.max(0, sim.rng('homes.market', person.id, owned.id, t.unit, 'damage', tries).next() * 1.5 - 0.5));
-    const checking = sim.universe.accounts[person.primaryAccountId!]!;
-    sim.post({ memo: 'A tenant’s deposit back', category: 'home', postings: [{ accountId: deposit.id, amount: held }, { accountId: checking.id, amount: -(held - damage) }, { accountId: sim.nominalAccount('income', 'Damage Kept From A Deposit').id, amount: -damage }] });
-    deposit.closedAt = sim.now;
+    // Damage kept first; what's owed back, as far as the bank and the overdraft reach; the rest stays owed to them, paid when there's money.
+    if (damage > 0) sim.post({ memo: 'Damage kept from a deposit', category: 'home', postings: [{ accountId: deposit.id, amount: damage }, { accountId: sim.nominalAccount('income', 'Damage Kept From A Deposit').id, amount: -damage }] });
+    repayDeposit(sim, person, deposit.id);
+    if (sim.universe.accounts[deposit.id]!.balance < 0) (owned.depositsOwed ??= []).push(deposit.id);
     if (damage > 0) owned.owed.push({ kind: 'repair', dueAt: sim.now, amount: damage, what: 'Damage A Tenant Left' });
   }
   return damage;
@@ -913,6 +958,8 @@ function tenantLeaves(sim: Simulation, person: Person, owned: OwnedHome, t: Tena
 /** Each day: tenants found, rent in on the first, leases renewed or ended. */
 function tenancies(sim: Simulation, person: Person, owned: OwnedHome, firstOfMonth: boolean): void {
   const cur = saveCurrency(sim.universe);
+  for (const id of owned.depositsOwed ?? []) repayDeposit(sim, person, id);
+  if (owned.depositsOwed) owned.depositsOwed = owned.depositsOwed.filter((id) => (sim.universe.accounts[id]?.balance ?? 0) < 0);
   const player = person.id === sim.universe.playerId;
   for (const t of [...owned.tenancies]) {
     if (t.status === 'advertised') {
@@ -969,7 +1016,12 @@ const PART_FAILS: Partial<Record<Part, string>> = {
   deck: 'Your Deck Boards Rotted Through', siding: 'Your Siding Let Water In', floors: 'A Floor Buckled', door: 'Your Front Door Frame Rotted',
 };
 
-/** Whether the policy is in force: a premium owed stops it paying. */
+/**
+ * Whether the policy is in force. A cash owner's premium owed stops it paying;
+ * a mortgaged home's premium is paid from escrow by the lender even while
+ * the owner is behind, as RESPA has servicers do (12 CFR 1024.17(k)), so it
+ * stays in force.
+ */
 export const insured = (owned: OwnedHome): boolean => !owned.owed.some((one) => one.kind === 'insurance');
 
 /** A home's day at a moment, and what it cost in repairs: the decider sweeps it. */
@@ -1013,7 +1065,9 @@ function upkeep(sim: Simulation, person: Person, owned: OwnedHome, at = sim.now)
       what = w.condition === 'Thunderstorm' ? 'A Storm Damaged Your Roof' : 'A Gale Damaged Your Roof';
     }
   } else if (w.lowC <= FREEZE.lowC) {
-    const empty = !owned.occupied.some((o) => o.to === undefined) && !owned.tenancies.some((t) => t.status === 'let');
+    // Nobody there: not lived in, or its owner away, and no tenant.
+    const away = livingIn(person)?.id === owned.id && person.currentLocationId !== owned.cityId;
+    const empty = (away || !owned.occupied.some((o) => o.to === undefined)) && !owned.tenancies.some((t) => t.status === 'let');
     if ((empty || wearOf(sim, owned, 'hvac') >= 1) && r.next() < FREEZE.chance) {
       damage = atTown(sim, owned.cityId, r.float(FREEZE.usd[0], FREEZE.usd[1]));
       what = 'Your Pipes Froze And Burst';
@@ -1033,6 +1087,8 @@ function claim(sim: Simulation, person: Person, owned: OwnedHome, at: Instant, d
     const checking = sim.universe.accounts[person.primaryAccountId!]!;
     sim.post({ memo: `Insurance claim: ${what.toLowerCase()}`, category: 'home', postings: [{ accountId: checking.id, amount: pays }, { accountId: sim.nominalAccount('income', 'Insurance Claims').id, amount: -pays }] });
     owned.claims.push(sim.now);
+    // The repair goes on a let home's costs when it's paid; what the insurer paid comes off them.
+    if (letOut(owned)) recordHome(person, sim.now, CITIES.require(owned.cityId).timeZone, 'rentalCosts', -pays);
   }
   if (player) {
     sim.notify({
@@ -1097,7 +1153,11 @@ function inspection(sim: Simulation, person: Person): void {
   const buying = person.buying;
   if (!buying) return;
   const fee = atTown(sim, buying.cityId, HOME.inspectionFeeUsd);
-  sim.post({ memo: 'Home inspection', category: 'home', postings: [...drawFromBank(sim, person, fee, true, true).postings, { accountId: sim.nominalAccount('expense', 'Home Inspection').id, amount: fee }] });
+  // Paid the way anything is, the card where the bank can't; with neither, the inspector doesn't come.
+  if (!spend(sim, person, fee, 'Home inspection', 'home')) {
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'The Inspection Didn’t Happen', body: `The inspector's ${formatMoney(fee, saveCurrency(sim.universe), { cents: false })} couldn't be paid, so there's no report. You can still call the purchase off before ${formatDate(buying.inspectionUntil!, CITIES.require(buying.cityId).timeZone)}.`, importance: 75, route: '/workspace/homes' });
+    return;
+  }
   buying.inspectedAt = sim.now;
   const year = yearIn(sim, buying.cityId);
   const worn = (Object.entries(buying.facts.parts) as [Part, number][]).filter(([part, put]) => (year - put) / lifeOf(buying.facts, part) >= 1).map(([part]) => part);
@@ -1125,7 +1185,7 @@ function close(sim: Simulation, person: Person): void {
   const pseudo = { ...buying.facts, id: buying.listingId, cityId: buying.cityId, rank: 0, value: price, listedAt: buying.offeredAt } satisfies Listing;
   const offer = offerFor(sim, person, pseudo, buying.down, price, buying.live);
   // The financing contingency: a loan the lender won't make gives the earnest back.
-  const lender = lenderRefusal(sim, person, buying.cityId, offer);
+  const lender = lenderRefusal(sim, person, buying.cityId, offer, undefined, !buying.live);
   if (lender) { fail(`The lender wouldn’t lend: ${lender}`, true); return; }
   const escrow = sim.universe.accounts[buying.escrowAccountId];
   const earnest = Math.max(0, escrow?.balance ?? 0);
@@ -1138,7 +1198,7 @@ function close(sim: Simulation, person: Person): void {
   if (offer.loan > 0) {
     const account = sim.openAccount({ id: sim.nextId('account'), kind: 'mortgage', name: `Mortgage, ${buying.facts.address}`, ownerId: person.id, institution: 'Your Lender', openedAt: sim.now, category: 'mortgage', apr: offer.rate });
     const months = termsIn(country).years * 12;
-    mortgage = { accountId: account.id, rate: offer.rate, months, payment: paymentFor(offer.loan, offer.rate, months), original: price, pmi: country === 'us' && buying.live && offer.loan > price * HOME.pmiOver };
+    mortgage = { accountId: account.id, rate: offer.rate, payment: paymentFor(offer.loan, offer.rate, months), original: price, pmi: country === 'us' && buying.live && offer.loan > price * HOME.pmiOver };
     postings.push({ accountId: account.id, amount: -offer.loan });
   }
   // The home leaves the ledger at its price: the seller's, paid.
@@ -1155,7 +1215,9 @@ function close(sim: Simulation, person: Person): void {
   homesOf(person).push(owned);
   person.homesOwned = (person.homesOwned ?? 0) + 1;
   let back = 0;
-  if (buying.live) back = moveInto(sim, person, owned);
+  // Bought to live in, where they still live; a move to another city since leaves it standing empty.
+  const stillHere = buying.cityId === (person.home?.cityId ?? person.currentLocationId);
+  if (buying.live && stillHere) back = moveInto(sim, person, owned);
   if (player) {
     sim.notify({ category: 'home', title: 'The Keys Are Yours', body: `You closed on ${buying.facts.address}: ${formatMoney(price, cur, { cents: false })}${offer.loan > 0 ? `, ${formatMoney(offer.loan, cur, { cents: false })} of it on a mortgage at ${(offer.rate * 100).toFixed(3)}%` : ', in cash'}.${back > 0 ? ` Your rental deposit came back: ${formatMoney(back, cur, { cents: false })}.` : ''}`, importance: 85, route: '/workspace/homes' });
   }
@@ -1164,8 +1226,22 @@ function close(sim: Simulation, person: Person): void {
 /** A home's month, before it's on their list. */
 const ownedMonthFor = (sim: Simulation, owned: OwnedHome): OwnerMonth => monthOf(sim, owned.facts, owned.cityId, owned.price);
 
+/** An empty home of theirs in a town, to move into before renting or a sofa: not let, not being sold, not the one they're in. */
+export function emptyHomeIn(person: Person, cityId: string): OwnedHome | undefined {
+  return (person.homes ?? []).find((h) => h.cityId === cityId && h.id !== livingIn(person)?.id && !h.selling && h.foreclosureAt === undefined
+    && !h.tenancies.some((t) => t.unit === 'main' && t.status === 'let'));
+}
+
+/** Moves them into a home they own, from anywhere: `moveInto`, and the day on its clock. */
+export function moveIntoOwned(sim: Simulation, person: Person, owned: OwnedHome): void {
+  person.currentLocationId = owned.cityId;
+  moveInto(sim, person, owned);
+  if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(owned.cityId).timeZone);
+}
+
 /** Moves them into a home they own: the lease on a rented one ends, a home they owned and lived in is left empty. */
 function moveInto(sim: Simulation, person: Person, owned: OwnedHome): Money {
+  refundRentAhead(sim, person);
   const back = person.home?.kind === 'shared' || person.home?.kind === 'own' ? leaseEnds(sim, person) : 0;
   leaveOwnedHome(sim, person);
   owned.tenancies = owned.tenancies.filter((t) => t.unit !== 'main');
@@ -1203,9 +1279,16 @@ function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
   if (owned.mortgage && loanBalance(sim, owned) > 0) {
     const balance = loanBalance(sim, owned);
     owned.owed.push({ kind: 'mortgage', dueAt: due, amount: Math.min(owned.mortgage.payment, balance + Math.round(balance * owned.mortgage.rate / 12)), escrow: { tax: inEngland(owned.cityId) ? 0 : month.tax, insurance: month.insurance, pmi: month.pmi } });
+    // The months the lender escrowed, for the tax halves after a payoff; a year of them is all that's kept.
+    owned.escrowed = [...(owned.escrowed ?? []).filter((k) => Number(k.slice(0, 4)) >= Number(key.slice(0, 4)) - 1), key];
   } else {
-    // No lender to escrow them: the tax in halves, April and October, and the insurance a year at a time.
-    if (!inEngland(owned.cityId) && (m === 4 || m === 10)) owned.owed.push({ kind: 'tax', dueAt: due, amount: month.tax * 6 });
+    // No lender to escrow them: the tax in halves, April and October, less the months a lender escrowed this half-year, and the insurance a year at a time.
+    if (!inEngland(owned.cityId) && (m === 4 || m === 10)) {
+      const half = m === 4 ? [1, 6] : [7, 12];
+      const year = Number(key.slice(0, 4));
+      const escrowed = (owned.escrowed ?? []).filter((k) => Number(k.slice(0, 4)) === year && Number(k.slice(5)) >= half[0]! && Number(k.slice(5)) <= half[1]!).length;
+      if (6 - escrowed > 0) owned.owed.push({ kind: 'tax', dueAt: due, amount: month.tax * (6 - escrowed) });
+    }
     if (m === zonedParts(owned.boughtAt, CITIES.require(owned.cityId).timeZone).month) owned.owed.push({ kind: 'insurance', dueAt: due, amount: month.insurance * 12 });
   }
   if (owned.equity && owedOn(sim, owned.equity) > 0) {
@@ -1219,8 +1302,8 @@ function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
   if (month.hoa > 0) owned.owed.push({ kind: 'hoa', dueAt: due, amount: month.hoa });
   // A home let is depreciated a month at a time: its building, over 27.5 years; a cottage let, its own cost.
   const zone = CITIES.require(owned.cityId).timeZone;
-  const basis = owned.price + owned.closing + owned.improvements.reduce((s, i) => s + i.cost, 0);
   const cottage = owned.improvements.filter((i) => i.projectId === 'adu').reduce((s, i) => s + i.cost, 0);
+  const basis = owned.price + owned.closing + owned.improvements.reduce((s, i) => s + i.cost, 0) - cottage;
   for (const t of owned.tenancies.filter((one) => one.status === 'let')) {
     const building = t.unit === 'main' ? basis * HOME_TAX.buildingShare : cottage;
     const month1 = Math.round(building / HOME_TAX.depreciationYears / 12);
@@ -1253,9 +1336,11 @@ function payOwed(sim: Simulation, person: Person, owned: OwnedHome): void {
       const account = accountOf(sim, loan)!;
       const balance = Math.max(0, -account.balance);
       interest = Math.round(balance * loan.rate / 12);
-      // The return takes interest on up to $750,000 borrowed to buy a home.
+      // The return takes interest on up to $750,000 borrowed to buy a main home and one second home, all of it together.
       const cap = exchange(HOME_TAX.acquisitionCap, 'USD', saveCurrency(sim.universe)) ?? HOME_TAX.acquisitionCap;
-      deductible = Math.round(interest * Math.min(1, cap / Math.max(1, balance)));
+      const kept = (person.homes ?? []).filter((h) => !letOut(h) && h.mortgage).sort((a, b) => Number(livingIn(person)?.id !== a.id) - Number(livingIn(person)?.id !== b.id)).slice(0, 2);
+      const borrowed = kept.reduce((sum, h) => sum + owedOn(sim, h.mortgage), 0);
+      deductible = kept.some((h) => h.id === owned.id) ? Math.round(interest * Math.min(1, cap / Math.max(1, borrowed))) : 0;
       postings.push({ accountId: account.id, amount: one.amount - interest }, { accountId: sim.nominalAccount('expense', EXPENSE[one.kind]).id, amount: interest });
       if (one.escrow?.tax) postings.push({ accountId: sim.nominalAccount('expense', EXPENSE.tax).id, amount: one.escrow.tax });
       if (one.escrow?.insurance) postings.push({ accountId: sim.nominalAccount('expense', EXPENSE.insurance).id, amount: one.escrow.insurance });
@@ -1277,8 +1362,23 @@ function payOwed(sim: Simulation, person: Person, owned: OwnedHome): void {
       if (one.escrow?.pmi) recordHome(person, sim.now, zone, 'homePmi', one.escrow.pmi);
     }
     dropPmi(sim, owned);
+    paidOff(sim, owned);
   }
   if (!owned.owed.some((one) => LOANS.includes(one.kind))) delete owned.foreclosureAt;
+}
+
+/**
+ * A mortgage paid off: escrow ends, so the insurance from now to the policy's
+ * anniversary is paid by the owner, who pays it yearly from then on.
+ */
+function paidOff(sim: Simulation, owned: OwnedHome): void {
+  if (!owned.mortgage || loanBalance(sim, owned) > 0 || owned.mortgage.paidOffAt !== undefined) return;
+  owned.mortgage.paidOffAt = sim.now;
+  const zone = CITIES.require(owned.cityId).timeZone;
+  const now = zonedParts(sim.now, zone).month;
+  const anniversary = zonedParts(owned.boughtAt, zone).month;
+  const months = ((anniversary - now) % 12 + 12) % 12;
+  if (months > 0) owned.owed.push({ kind: 'insurance', dueAt: sim.now, amount: ownedMonth(sim, owned).insurance * months });
 }
 
 /** Mortgage insurance ends when the loan falls to 78% of what the home cost. */
@@ -1369,7 +1469,8 @@ function recordGain(sim: Simulation, person: Person, owned: OwnedHome, sale: Mon
   const lastUsed = person.exclusionUsedAt;
   const may = owns2 && livedDays(owned, sim.now) >= HOME_TAX.exclusionDays && (lastUsed === undefined || sim.now - lastUsed >= HOME_TAX.exclusionDays * MS_DAY);
   const cur = saveCurrency(sim.universe);
-  const free = may ? Math.min(gain, exchange(HOME_TAX.exclusion, 'USD', cur) ?? HOME_TAX.exclusion) : 0;
+  // The part of the gain that is depreciation taken while it was let isn't excluded (§121(d)(6)).
+  const free = may ? Math.max(0, Math.min(gain - owned.depreciated, exchange(HOME_TAX.exclusion, 'USD', cur) ?? HOME_TAX.exclusion)) : 0;
   if (free > 0) person.exclusionUsedAt = sim.now;
   const zone = CITIES.require(owned.cityId).timeZone;
   if (free > 0) recordHome(person, sim.now, zone, 'homeGainExcluded', free);
@@ -1381,12 +1482,18 @@ function recordGain(sim: Simulation, person: Person, owned: OwnedHome, sale: Mon
 function foreclose(sim: Simulation, person: Person, owned: OwnedHome): void {
   const cur = saveCurrency(sim.universe);
   const sale = Math.round(homeValue(sim, owned) * HOME.forcedSale);
+  // A foreclosure is a sale, and its gain is on the return like any other's.
+  recordGain(sim, person, owned, sale, 0);
   const left = settleSale(sim, person, owned, sale, 0, `Foreclosure sale, ${owned.facts.address}`);
   if (person.credit) person.credit.score = Math.max(300, person.credit.score - HOME.foreclosureFall);
   const lived = livingIn(person)?.id === owned.id;
   person.homes = homesOf(person).filter((h) => h !== owned);
   cancelScheduled(sim, person, [WORKS_KIND, SALE_KIND], owned.id);
-  if (lived) person.home = { kind: 'sofa', cityId: owned.cityId, since: sim.now };
+  if (lived) {
+    const own = emptyHomeIn(person, owned.cityId);
+    if (own) moveInto(sim, person, own);
+    else person.home = { kind: 'sofa', cityId: owned.cityId, since: sim.now };
+  }
   if (person.id === sim.universe.playerId) {
     sim.notify({ category: 'home', title: 'Your Home Was Sold', body: `The lender foreclosed on ${owned.facts.address} and sold it for ${formatMoney(sale, cur, { cents: false })}. ${left >= 0 ? `${formatMoney(left, cur, { cents: false })} of it was yours.` : `It left ${formatMoney(-left, cur, { cents: false })} unpaid, which is with collections.`} It’s on your record${lived ? ', and you’re on a friend’s sofa' : ''}.`, importance: 95, route: '/workspace/homes' });
   }
@@ -1423,9 +1530,13 @@ function saleCloses(sim: Simulation, person: Person, owned: OwnedHome): void {
   person.homes = homesOf(person).filter((h) => h !== owned);
   let refusal: string | undefined;
   if (lived) {
-    person.home = { kind: 'sofa', cityId: owned.cityId, since: sim.now };
-    refusal = moveRefusal(sim, person, then ?? 'own', owned.cityId);
-    if (!refusal) move(sim, person, then ?? 'own', owned.cityId);
+    const own = emptyHomeIn(person, owned.cityId);
+    if (own) moveInto(sim, person, own);
+    else {
+      person.home = { kind: 'sofa', cityId: owned.cityId, since: sim.now };
+      refusal = moveRefusal(sim, person, then ?? 'own', owned.cityId);
+      if (!refusal) move(sim, person, then ?? 'own', owned.cityId);
+    }
   }
   if (person.id === sim.universe.playerId) {
     sim.notify({ category: 'home', title: 'Your Home Is Sold', body: `${owned.facts.address} sold for ${formatMoney(value, cur, { cents: false })}; ${formatMoney(costs, cur, { cents: false })} went to the agents and the closing${loans > 0 ? `, and ${formatMoney(loans, cur, { cents: false })} paid off what was borrowed on it` : ''}.${refusal ? ` You couldn’t rent yet: ${refusal}` : ''}`, importance: 85, route: '/workspace/homes' });
@@ -1607,6 +1718,7 @@ export function registerHomes(sim: Simulation): void {
     if (draw.short > 0) throw new CommandError('The bank can’t cover it.');
     s.post({ memo: 'Paid down a loan on a home', category: 'home', postings: [...draw.postings, { accountId: loan.accountId, amount }] });
     dropPmi(s, owned);
+    paidOff(s, owned);
     return { paid: amount };
   });
 
@@ -1671,7 +1783,7 @@ export function registerHomes(sim: Simulation): void {
     const months = HOME.equityYears * 12;
     const account = s.openAccount({ id: s.nextId('account'), kind: 'mortgage', name: `Home Equity Loan, ${owned.facts.address}`, ownerId: person.id, institution: 'Your Lender', openedAt: s.now, category: 'equity', apr: rate });
     s.post({ memo: 'Home equity loan', category: 'home', postings: [{ accountId: account.id, amount: -amount }, { accountId: person.primaryAccountId!, amount }] });
-    owned.equity = { accountId: account.id, rate, months, payment: paymentFor(amount, rate, months), original: amount, pmi: false };
+    owned.equity = { accountId: account.id, rate, payment: paymentFor(amount, rate, months), original: amount, pmi: false };
     return { payment: owned.equity.payment };
   });
 }

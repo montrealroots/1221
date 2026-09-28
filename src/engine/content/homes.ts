@@ -346,7 +346,7 @@ export const BEDROOM_RENT: readonly number[] = [0.87, 1, 1.23, 1.56, 1.77, 1.95,
  * a home's band by what it would have sold for on 1 April 1991, each band a
  * set share of Band D, 25% off for somebody who lives alone, and a year's
  * bill in ten monthly instalments from April. Band D is the average England's
- * councils set for 2025–26, £2,280, held. A home's 1991 value is SLATE's
+ * councils set for 2026–27, £2,392, 4.9% over 2025–26's £2,280 (MHCLG, March 2026). A home's 1991 value is SLATE's
  * estimate: today's over how far English prices have risen since, near
  * five times.
  */
@@ -356,8 +356,8 @@ export const COUNCIL_TAX = {
   letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as const,
   /** Each band's ninths of Band D. */
   ninths: [6, 7, 8, 9, 11, 13, 15, 18] as const,
-  bandD: 2_280_00,
-  bandDYear: '2025–26',
+  bandD: 2_392_00,
+  bandDYear: '2026–27',
   since1991: 5.1,
   livingAlone: 0.25,
   instalments: 10,
@@ -378,7 +378,8 @@ export const COUNCIL_TAX = {
  * an American home's property tax; mortgage insurance as interest from 2026;
  * a home's gain free to $250,000 for somebody who owned it and lived in it
  * two of the five years before the sale; long-term gains taxed at 0%, 15%
- * and 20% on 2025's single brackets, held; 3.8% on investment income past
+ * and 20% on each year's single brackets (2025's, and 2026's from Revenue
+ * Procedure 2025-32; later years hold 2026's); 3.8% on investment income past
  * $200,000; rent less its costs and a residential building's depreciation
  * over 27.5 years, and a loss let against other income to $25,000, less half
  * of income over $100,000, the rest carried forward. The building is 80% of
@@ -394,7 +395,13 @@ export const HOME_TAX = {
   exclusion: 250_000_00,
   exclusionDays: 730,
   exclusionWindowYears: 5,
-  ltcg: [[48_350_00, 0], [533_400_00, 0.15], [Number.POSITIVE_INFINITY, 0.2]] as const,
+  ltcg: {
+    2025: [[48_350_00, 0], [533_400_00, 0.15], [Number.POSITIVE_INFINITY, 0.2]],
+    2026: [[49_450_00, 0], [545_500_00, 0.15], [Number.POSITIVE_INFINITY, 0.2]],
+  } as Readonly<Record<number, readonly (readonly [number, number])[]>>,
+  /** Mortgage insurance's deduction fades by a tenth for each $1,000 of income over $100,000. */
+  pmiPhaseFrom: 100_000_00,
+  pmiPhaseStep: 1_000_00,
   niitRate: 0.038,
   niitFrom: 200_000_00,
   depreciationYears: 27.5,

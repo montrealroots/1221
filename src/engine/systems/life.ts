@@ -395,7 +395,7 @@ export function registerLife(sim: Simulation): void {
       // A payment that doesn't go through leaves them unfed: the command fails, and the time with it.
       if (action === 'eat' && !spend(s, person, cost, cooks(person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
-      if (action === 'laundry') doLaundry(s, person, s.now);
+      if (action === 'laundry' && !doLaundry(s, person, s.now)) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
       if (action === 'exercise' || action === 'swim') wearOutfit(person);
       const before = { ...person.wellbeing };
@@ -640,7 +640,7 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   const late = hour >= 1 && hour < 5 && at - startOfDay(at, sim.zone) >= MS_HOUR ? 0.08 : 0;
   // And a friend's sofa after an eviction sleeps worse than a bed of your own
   // (`systems/household.ts`), by what a late bedtime costs.
-  const sofa = person.home?.kind === 'sofa' ? 0.08 : 0;
+  const sofa = person.home?.kind === 'sofa' && atHome(person) ? 0.08 : 0;
   // And a hot night with no air conditioning, or only units (`systems/dwelling.ts`).
   const heat = heatLoss(sim, person, at);
   return { stressLoss, depth, late, sofa, heat, quality: clamp((0.82 - stressLoss) * depth - late - sofa - heat, 0.28, 1) };
@@ -681,7 +681,7 @@ export function applySleep(
   const worn = remap(Math.min(1, began.condition / mends), 0, 1, 0.8, 1);
   const settled = remap(began.morale, 0, 100, 0.75, 1.15);
   // A night away from home puts back what a homebody's own bed would less, and a restless one's more.
-  const away = person.home !== undefined && person.home.cityId !== person.currentLocationId ? personalityOf(person, 'awayRecovery') : 1;
+  const away = person.home !== undefined && !atHome(person) ? personalityOf(person, 'awayRecovery') : 1;
   w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * away * owing * worn, 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.

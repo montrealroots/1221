@@ -311,7 +311,8 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const stateAndLocal = stateLines.reduce((sum, l) => sum + l.tax - l.credit, 0) + local;
   // Federal: itemized where a home's interest, its taxes and the state's to their cap, and from 2026 its mortgage insurance, beat the standard deduction.
   const standard = usd(federalStandardDeduction(cityId, at), into);
-  const itemizedFederal = (y.homeInterest ?? 0) + Math.min(saltCap(year, income + gainLong, into), (y.homeTax ?? 0) + stateAndLocal) + (year >= HOME_TAX.pmiFrom ? y.homePmi ?? 0 : 0);
+  const pmiShare = Math.max(0, 1 - 0.1 * Math.ceil(Math.max(0, income - usd(HOME_TAX.pmiPhaseFrom, into)) / usd(HOME_TAX.pmiPhaseStep, into)));
+  const itemizedFederal = (y.homeInterest ?? 0) + Math.min(saltCap(year, income + gainLong, into), (y.homeTax ?? 0) + stateAndLocal) + (year >= HOME_TAX.pmiFrom ? Math.round((y.homePmi ?? 0) * pmiShare) : 0);
   const itemizing = (y.homeInterest ?? 0) + (y.homeTax ?? 0) > 0 && itemizedFederal > standard;
   const beyond = itemizing ? itemizedFederal - standard : 0;
   const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
@@ -319,7 +320,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const ordinary = Math.max(0, taxed - standard - beyond);
   let gainTax = 0;
   let from = 0;
-  for (const [upTo, rate] of HOME_TAX.ltcg) {
+  for (const [upTo, rate] of HOME_TAX.ltcg[Math.min(2026, Math.max(2025, year))]!) {
     const edge = upTo === Number.POSITIVE_INFINITY ? upTo : usd(upTo, into);
     gainTax += Math.max(0, Math.min(ordinary + gainLong, edge) - Math.max(ordinary, from)) * rate;
     from = edge;
@@ -351,8 +352,9 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
 export function latePenalty(balance: Money, due: Instant, filedAt: Instant, into = 'USD'): Money {
   if (balance <= 0 || filedAt <= due) return 0;
   const months = Math.ceil((filedAt - due) / (30.4375 * MS_DAY));
+  // Paying late runs to a quarter of the balance; filing late is 5% a month to five months, less the paying-late half-point it runs beside, so 22.5% (IRC §6651(a), (c)).
   const payLate = Math.min(RETURN.lateCap, RETURN.payLateMonthly * months) * balance;
-  let fileLate = Math.min(RETURN.lateCap - Math.min(RETURN.lateCap, RETURN.payLateMonthly * months), (RETURN.lateMonthly - RETURN.payLateMonthly) * months) * balance;
+  let fileLate = Math.min(5, months) * (RETURN.lateMonthly - RETURN.payLateMonthly) * balance;
   if (filedAt - due > RETURN.lateMinimumAfterDays * MS_DAY) fileLate = Math.max(fileLate, Math.min(usd(RETURN.lateMinimum, into), balance));
   return Math.round(payLate + fileLate);
 }

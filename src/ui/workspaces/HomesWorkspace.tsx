@@ -17,7 +17,7 @@ import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COOLING_LABEL, COUNCIL_TAX, FEATURE_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
 import {
-  HOME, askingPrice, atTown, borrowRefusal, councilBand, daysListed, downChoices, equityIn, equityRate, equityRoom, homeValue, letRefusal, lifeOf,
+  HOME, askingPrice, minimumDown, atTown, borrowRefusal, councilBand, daysListed, downChoices, equityIn, equityRate, equityRoom, homeValue, letRefusal, lifeOf,
   listingById, listingsIn, livingIn, marketRent, moveInRefusal, offerFor, offerRefusal, owedOn, ownedMonth, projectsFor, saleNet,
   sellRefusal, sizeText, termsIn, type HomeFacts, type Listing, type OwnedHome, type SellerAnswer, type Tenancy,
 } from '@/engine/systems/homes';
@@ -116,7 +116,8 @@ function ForSalePane() {
   const mayLive = town === homeTown;
   const [live, setLive] = useState(true);
   const living = live && mayLive;
-  const choices = downChoices(city.countryId, living);
+  const asked = useWorld((s) => (listing ? askingPrice(s, listing) : 0), [listing]);
+  const choices = downChoices(city.countryId, living, minimumDown(sim, city.countryId, asked, living));
   const [downPicked, setDown] = useState<number>(0.2);
   const down = choices.includes(downPicked) ? downPicked : choices[0]!;
   const [inspect, setInspect] = useState(true);
@@ -238,7 +239,7 @@ function ForSalePane() {
               : typical.kind === 'calibrated'
                 ? 'Zillow doesn’t report this town: its typical home is its rent times what homes cost over a year’s rent in the towns of its state that Zillow does. '
                 : 'The typical home here is SLATE’s estimate: the town’s rent times how dear homes run over rents in this country, measured against America’s. '}
-            The fifty homes are the game’s own, drawn about it: none is a real listing, and the addresses are common street names of the country with numbers of SLATE’s. Each sells in a month to six and another comes on; one unsold two months is cut 3%, and at four 3% again. How a seller answers an offer, rates, down payments and closing costs are SLATE’s estimates of the country’s{city.parentId === 'uk-eng' || city.parentId === 'uk-nir' ? ', but for England’s Stamp Duty Land Tax' : ''}. A home not to live in is an investment: at least {Math.round(HOME.investmentDown * 100)}% down and {pct(HOME.investmentRate)} on the rate.
+            The fifty homes are the game’s own, drawn about it: none is a real listing, and the addresses are common street names of the country with numbers of SLATE’s. Each sells in a month to six and another comes on; one unsold two months is cut 3%, and at four 3% again. How a seller answers an offer, rates, down payments and closing costs are SLATE’s estimates of the country’s{city.parentId === 'uk-eng' || city.parentId === 'uk-nir' ? ', but for England’s Stamp Duty Land Tax, 5% more on a home bought beside one already owned' : ''}.{city.parentId === 'uk-eng' ? ` Council tax is by band, from the ${COUNCIL_TAX.bandDYear} average Band D England’s councils set, ${formatMoney(COUNCIL_TAX.bandD, 'GBP', { cents: false })}.` : ''} A home not to live in is an investment: at least {Math.round(HOME.investmentDown * 100)}% down and {pct(HOME.investmentRate)} on the rate.
           </Fine>
         </div>
       </Panel>

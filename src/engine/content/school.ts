@@ -268,7 +268,6 @@ export const SEAGULL_2027 = {
  */
 export const YALE_CABARET = {
   firstSeason: 59,
-  firstYear: 2026,
   rehearsalEvenings: 9,
   rehearsalFrom: 18,
   rehearsalMinutes: 300,

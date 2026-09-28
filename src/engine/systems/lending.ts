@@ -70,6 +70,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { drawFromBank } from './household';
 import { CommandError } from '../core/simulation';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -238,8 +239,13 @@ export function declines(sim: Simulation, person: Person, bank: Bank): boolean {
 }
 
 /** A person's debt in collections, where a bank charged one off. */
+/**
+ * The bank's own debt in collections, named for it. A mortgage's shortfall in
+ * collections is a collection agency's (`systems/homes.ts`): until
+ * 2026-09-28 this found either, and a bank's charge-off could post into it.
+ */
 export function collectionsOf(sim: Simulation, person: Person): Account | undefined {
-  return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS);
+  return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS && a.name.endsWith(', In Collections'));
 }
 
 export function lendingOf(bank: Bank | undefined): Lending {
@@ -530,21 +536,11 @@ function scheduleLoan(sim: Simulation, loan: Account, after: Instant): void {
 
 /** Pays an amount from the bank, overdraft and all, and says what it couldn't. */
 function payFromBank(sim: Simulation, person: Person, amount: Money): { postings: { accountId: string; amount: Money }[]; short: Money } {
-  const postings: { accountId: string; amount: Money }[] = [];
-  let left = amount;
-  const current = currentOf(sim, person);
-  const saver = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term');
-  for (const account of [current, saver]) {
-    if (!account || left <= 0) continue;
-    const take = Math.min(left, Math.max(0, account.balance));
-    if (take > 0) { postings.push({ accountId: account.id, amount: -take }); left -= take; }
-  }
-  if (current && left > 0) {
-    const take = Math.min(left, overdraftHeadroom(sim, person));
-    if (take > 0) { postings.push({ accountId: current.id, amount: -take }); left -= take; }
-  }
-  return { postings, short: left };
+  // As every other payment is taken (`drawFromBank`): savings only where it's linked, and with its fee. Until
+  // 2026-09-28 a loan's took from savings whatever the setting, and skipped the fee and a German allowance.
+  return drawFromBank(sim, person, amount, true);
 }
+
 
 /** Moves one person's bank to another of their country's, now. */
 function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false, secondChance = false): void {

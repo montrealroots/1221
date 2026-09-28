@@ -81,6 +81,7 @@ import { armPension } from './pension';
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
+import { emptyHomeIn, moveIntoOwned } from './homes';
 import { payeeAccount } from './cash';
 import { sagHoliday } from '../content/usholidays';
 
@@ -300,7 +301,7 @@ export interface CareerRecord {
   termEnds?: Instant;
   initialTerm?: boolean;
   /** A renewal: offered by the agency until the term ends, or turned down by either side, for this term. */
-  renewal?: { state: 'offered' | 'declined' | 'not-offered'; termEnds: Instant };
+  renewal?: { state: 'offered' | 'declined' | 'not-offered' };
   /** The last representation ended, and why. */
   ended?: { agencyId: string; at: Instant; reason: string; left: boolean };
   missed: number;
@@ -1427,7 +1428,7 @@ export function registerCareer(sim: Simulation): void {
     if (item.payload.stage === 'window') {
       // An agency keeps a client it booked work for in the term.
       const booked = (career.lastBookedAt ?? 0) >= yearsOn(ends, zone, -(career.initialTerm === false ? AGENCY_TERM.renewalYears : AGENCY_TERM.firstYears));
-      career.renewal = { state: booked ? 'offered' : 'not-offered', termEnds: ends };
+      career.renewal = { state: booked ? 'offered' : 'not-offered' };
       if (!isPlayer(person)) { if (booked) armTerm(s, person, ends, AGENCY_TERM.renewalYears, false); return; }
       if (!booked) {
         s.notify({ category: 'career', title: `${agency.name} Won’t Renew`, body: `Your contract with ${agency.name} ends ${formatDate(ends, zone)}, and with no work booked in it, they won’t renew.`, importance: 80, route: '/workspace/career' });
@@ -1455,7 +1456,7 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     if (!career.agencyId || career.termEnds === undefined || career.renewal?.state !== 'offered') throw new CommandError('No renewal is on offer.');
     for (const d of Object.values(s.universe.decisions)) if (d.refType === 'agency-renewal' && !d.resolvedAt) d.resolvedAt = s.now;
-    if (p.accept !== true) { career.renewal = { state: 'declined', termEnds: career.termEnds }; return {}; }
+    if (p.accept !== true) { career.renewal = { state: 'declined' }; return {}; }
     armTerm(s, person, career.termEnds, AGENCY_TERM.renewalYears, false);
     return { termEnds: career.termEnds };
   });
@@ -1497,7 +1498,13 @@ export function registerCareer(sim: Simulation): void {
         .filter((one) => { const other = careerOf(person).bookings.find((b) => b.id === one.payload.bookingId); return other !== undefined && workCityOf(other) === city; })
         .reduce((most, one) => Math.max(most, Number(one.payload.back)), 0);
       const from = Math.max(item.at, covered);
-      if (from >= Number(item.payload.back)) { person.currentLocationId = city; s.universe.currentZone = zoneOf(city); return; }
+      // A home of their own in the city, empty, is where they stay: no sublet.
+      const own = (person.homes ?? []).some((h) => h.cityId === city && !h.tenancies.some((t) => t.unit === 'main' && t.status === 'let') && !h.selling);
+      if (from >= Number(item.payload.back) || own) {
+        person.currentLocationId = city; s.universe.currentZone = zoneOf(city);
+        if (own && isPlayer(person) && from < Number(item.payload.back)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: `${roleById(booking.roleId).label}: you’re staying in your own home there.`, importance: 50, route: '/workspace/career' });
+        return;
+      }
       const nights = Math.max(1, Math.round((Number(item.payload.back) - from) / MS_DAY));
       const cost = Math.round((rentAt(city, cur).room * nights) / 30.44);
       const howLong = nights === 1 ? 'one night' : `${nights} nights`;
@@ -1854,6 +1861,12 @@ export function registerCareer(sim: Simulation): void {
     // Until 2026-09-27 a student could move to Los Angeles mid-term, and miss every class after.
     const school = person.school;
     if (p.cityId !== YALE_DRAMA.cityId && school && school.standing !== 'dismissed' && school.standing !== 'graduated' && !summerOf(person, s.now)) throw new CommandError('Classes are in New Haven while the term is on; a move away waits for the summer or the degree.');
+    // Away on a job, the move waits for home; a home being bought to live in is where they're moving already.
+    if (person.home && person.currentLocationId !== person.home.cityId && working(s, person)) throw new CommandError('You’re away on a job: move when you’re home.');
+    if (person.buying?.live && person.buying.cityId !== p.cityId) throw new CommandError(`You’re buying a home to live in, in ${CITIES.get(person.buying.cityId)?.name ?? 'another town'}: call it off first.`);
+    // A home of their own there, empty, is where they go.
+    const own = emptyHomeIn(person, p.cityId);
+    if (own) { moveIntoOwned(s, person, own); s.universe.currentZone = zoneOf(p.cityId); return { cityId: p.cityId }; }
     person.currentLocationId = p.cityId;
     s.universe.currentZone = zoneOf(p.cityId);
     // A move the bank can't pay for throws, and the command's rollback puts them back where they were.

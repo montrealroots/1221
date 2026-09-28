@@ -12,7 +12,7 @@ import type { Simulation } from '../core/simulation';
 import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
 import type { Id } from '../domain/model';
-import { homesValue } from './homes';
+import { homesValue, owedOnHomes } from './homes';
 
 export interface Worth {
   /** In the bank: every account of theirs but a deposit a landlord holds. */
@@ -52,5 +52,7 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
 
   const person = sim.universe.people[ownerId];
   const home = person ? homesValue(sim, person) : 0;
+  // Payments due on homes and not yet made are owed, as a debt on the ledger is.
+  if (person) liabilities += owedOnHomes(person);
   return { cash, held, pension, home, liabilities, total: cash + held + pension + home - liabilities };
 }

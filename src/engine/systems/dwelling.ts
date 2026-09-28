@@ -42,7 +42,7 @@ import { CITIES } from '../content/geography';
 import { drawFixtures, isFlat, type Fixtures, type HomeType } from '../content/homes';
 import { atTown, livingIn, type HomeFacts } from './homes';
 import { drawFromBank, spend } from './household';
-import { weatherOn } from './weather';
+import { weatherAt, weatherOn } from './weather';
 import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
@@ -119,8 +119,8 @@ export const atHome = (person: Person): boolean => Boolean(person.home && person
  * washer's cycle runs about an hour (CHOICE's lab tests: 58 minutes for a
  * top-loader) and a dryer's another (about 64), so clothes are dry two hours
  * on. A laundromat's wash averages $3.73 and its dryers about a dollar for
- * 25 minutes (the Coin Laundry Association's 2024 survey), near $5.75 a load
- * dried; a building's machines about $1.50 to $2 a wash and as much to dry
+ * 25 minutes (the Coin Laundry Association's 2024 survey), so $6.29 a load
+ * with a 64-minute dry; a building's machines about $1.50 to $2 a wash and as much to dry
  * (CSC ServiceWorks rooms), $3.50 a load; both at the town's cost of living.
  * SLATE's estimates: two weeks of outfits and seven to a load, a person's
  * one load or two a week (the American Cleaning Institute found 1 to 3 the
@@ -134,7 +134,7 @@ export const LAUNDRY = {
   readyHours: { 'in-unit': 2, 'washer-only': 18, building: 2, none: 0 } as const,
   /** A wash and a dry, a load, in dollars. */
   buildingUsd: 3.5,
-  laundromatUsd: 5.75,
+  laundromatUsd: 6.29,
 };
 
 /** How fast a home gets untidy a day, a dishwasher's saving, where it starts to weigh, and what it weighs. SLATE's estimates. */
@@ -151,7 +151,7 @@ export function busyDay(sim: Simulation, person: Person): boolean {
  * (the American Time Use Survey's 94 minutes a day for those who clean,
  * 2024), longer the bigger it is, to four hours. A cleaner charges by the
  * hour, $45 at an American cost of living, with a two-hour visit the least,
- * so a flat's weekly clean is near $90 and a mansion's past $150, inside the
+ * so a flat's weekly clean is near $90 and a mansion's near $145, inside the
  * $75 to $145 and $100 to $250 a week that cleaners charge for an apartment
  * and a house (HomeGuide, 2026). SLATE's estimates within those.
  */
@@ -203,20 +203,22 @@ export function laundryCost(sim: Simulation, person: Person): { loads: number; c
   const loads = Math.ceil(livingOf(person).dirty / LAUNDRY.perLoad);
   const way = laundryWay(sim, person);
   const usd = way === 'building' ? LAUNDRY.buildingUsd : way === 'none' ? LAUNDRY.laundromatUsd : 0;
-  return { loads, cost: usd > 0 ? loads * atTown(sim, person.home?.cityId ?? person.currentLocationId, usd) : 0 };
+  // At the prices where it's done: home, or the laundromat where a job has them.
+  return { loads, cost: usd > 0 ? loads * atTown(sim, atHome(person) ? person.home!.cityId : person.currentLocationId, usd) : 0 };
 }
 
 /** Does the laundry: the clothes into the wash, paid for where it's paid, and wearable when they're dry. */
-export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant): void {
+export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant): boolean {
   const l = livingOf(person);
   const way = laundryWay(sim, person);
   const { cost } = laundryCost(sim, person);
-  if (cost > 0) spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry');
+  if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
   const count = l.dirty;
   l.dirty = 0;
   const ready = finishedAt + LAUNDRY.readyHours[way] * MS_HOUR;
   if (ready <= finishedAt) l.clean += count;
   else l.drying.push({ count, readyAt: ready });
+  return true;
 }
 
 /** Clothes dry by now back in the wardrobe. */
@@ -246,7 +248,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (!wearOutfit(person)) {
     w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   }
-  if (!place.keeps) return;
+  // Away, the place stands as they left it: no mess made, and none cleared.
+  if (!place.keeps || !atHome(person)) return;
   l.tidy = clamp(l.tidy - TIDY.perDay * (place.fixtures.dishwasher ? TIDY.dishwasher : 1), 0, 100);
   if (free && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
   const day = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
@@ -287,9 +290,10 @@ export function heatLoss(sim: Simulation, person: Person, at: Instant): number {
 /** Weather to be out in: dry, and neither freezing nor sweltering. A swim needs a warm day. */
 export const FINE = { lowC: 10, highC: 32, swimC: 24, runLowC: 0 };
 
-export function weatherNow(sim: Simulation, person: Person) {
-  const city = CITIES.get(person.currentLocationId);
-  return city ? weatherOn(sim, city, sim.now) : undefined;
+/** The weather this hour where they are, as the Weather panel shows it: the sky now, and the temperature now. */
+export function weatherNow(sim: Simulation, person: Person): { condition: string; highC: number } | undefined {
+  const w = weatherAt(sim, person.currentLocationId, sim.now);
+  return w ? { condition: w.condition, highC: w.temperatureC } : undefined;
 }
 
 const FALLING: Readonly<Record<string, string>> = { Rain: 'raining', Thunderstorm: 'storming', Snow: 'snowing', Drizzle: 'drizzling' };
