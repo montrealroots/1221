@@ -184,8 +184,10 @@ part the tool cannot see.
   $1.50 to $5.00, LINK only that a fifth of Britain's machines charge), and
   SLATE charges the card's bank's fee and says the owner's may come on top,
   not what it is. A daily limit
-  on debit card purchases is published by few of the 60 banks and isn't
-  enforced; the daily ATM limit is. A card whose cash advance terms weren't
+  on debit card purchases is published by few of the 60 banks (Chase's,
+  Citi's and Capital One's $5,000; none of Britain's or Canada's) and
+  isn't enforced, since SLATE's debit card buys only the day's food, which
+  no limit reaches; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
 - **Drama school runs its three years, and the business follows.** A new
   life begins as a first-year actor at the David Geffen School of Drama at
@@ -309,9 +311,14 @@ part the tool cannot see.
 - **Some of what fraud costs is an estimate or missing.** A case's size
   runs from a quarter of the country's average to seven quarters, SLATE's
   estimate of the spread. Only Britain publishes the share its banks stop;
-  elsewhere none is stopped. Canada, Mexico and New Zealand publish a rate
-  but no average case, and Japan and Korea no rate, so nobody there meets
-  fraud. France's and New Zealand's rates include more than card fraud. A
+  elsewhere none is stopped. Since 2026-09-28 Mexico's average case is
+  CONDUSEF's 2025 claims of possible fraud, MXN 4,285 a claim, and fraud is
+  met there. Canada and New Zealand publish a rate but no average case
+  (Canada's regulator only that 36% of Canadians said in 2024 they'd had a
+  card number misused, over no stated period; New Zealand's banks only
+  card fraud and account takeover together), and Japan and Korea no case
+  count to divide their losses by (Japan's ¥51 billion in 2025 over 320
+  million cards), so nobody there meets fraud. France's and New Zealand's rates include more than card fraud. A
   card that isn't reported lost is never lost: no country publishes how
   often. Cards last four years where the bank doesn't say, and a
   replacement takes seven business days, SLATE's estimates.
@@ -323,9 +330,13 @@ part the tool cannot see.
   card doesn't buy here (dining, drugstores, fuel, travel) would pay the
   base rate anyway. Since 2026-09-28 Santander Mexico's 4% on telecoms is
   paid on the phone and internet's share of the bills, INEGI's 4.8 of 19.5
-  of what isn't energy. A Korean card's discounts on conditions of last
-  month's spending aren't modeled: the thresholds of SLATE's Korean cards
-  weren't found (Shinhan's Deep Dream, another card, asks ₩300,000). A
+  of what isn't energy. Since that day a Korean card's discount on the
+  phone bill is paid as its terms tie it to last month's spending: KB's My
+  WE:SH 10% to ₩5,000 after a ₩400,000 month, Shinhan's 처음 10% in points
+  to 5,000, 10,000 or 20,000 after ₩300,000, ₩500,000 or ₩1,000,000, on
+  Korea's phone and internet share of the bills (the National Data Office's
+  2025 survey). Their other categories (restaurants, convenience stores,
+  streaming) are things SLATE's card doesn't buy. A
   plan's fee is the most the bank says it charges, not the offer it would
   make on the day; since 2026-09-28 plans charged as interest or a fee by
   their length are offered at the banks' own terms (`content/plans.ts`):

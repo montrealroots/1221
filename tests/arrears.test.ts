@@ -26,7 +26,7 @@ import { CHEX, ESTIMATE, FRANCE, FRENCH_CARDS, cardCeilingRoom, chargeForItem, l
 import { spend } from '@/engine/systems/household';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { BREAK_NOTICE } from '@/engine/systems/accountlife';
-import { BONUSES, bonusRewards } from '@/engine/systems/cardoffers';
+import { BONUSES, KOREA_TELECOM_OF_BILLS, bonusRewards, lastMonthSpend } from '@/engine/systems/cardoffers';
 import { exchange } from '@/engine/content/currency';
 import type { CreditState } from '@/engine/systems/credit';
 
@@ -425,6 +425,21 @@ describe('a card’s bonus categories', () => {
   const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'modest' }, 'bonus');
   const card = (bankId: string) => ({ bankId } as unknown as Account);
   const cad = (c: number) => exchange(c, 'CAD', 'USD')!;
+
+  it('pays a Korean card’s phone-bill bonus only after a month of the spending it asks, its cap by the tier reached', () => {
+    const seoul = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', livesWhereBorn: true, wealth: 'wealthy', bankId: 'kr-shinhan' }, 'kr-bonus');
+    const kb = Object.values(seoul.universe.accounts).find((a) => a.ownerId === seoul.player.id && a.kind === 'credit_card')!;
+    const bills = 3_000_000_00;
+    // Nothing on the card last month: no bonus.
+    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills, other: 0 }, 1)).toBe(0);
+    // ₩600,000 on it last month: the second tier, 10,000 points at most.
+    seoul.post({ memo: 'Groceries', category: 'food', postings: [{ accountId: kb.id, amount: -600_000_00 }, { accountId: seoul.nominalAccount('expense', 'Food').id, amount: 600_000_00 }] });
+    seoul.advanceBy(32 * 86_400_000);
+    expect(lastMonthSpend(seoul, kb)).toBe(600_000_00);
+    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills, other: 0 }, 2)).toBe(10_000_00);
+    // A small month's bill earns its 10% of the phone's share in full.
+    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills: 100_000_00, other: 0 }, 3)).toBe(Math.round(100_000_00 * 0.1 * KOREA_TELECOM_OF_BILLS));
+  });
 
   it('pays BMO’s 3% on groceries and 1% on bills to $500 a cycle each, and 0.5% past it and on the rest', () => {
     const credit = {} as CreditState;

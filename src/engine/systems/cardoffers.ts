@@ -74,7 +74,22 @@ export interface Bonus { rate: number; cap?: Money; after?: number }
  */
 export const TELECOM_OF_BILLS = (1 - ENERGY.share) * (4.8 / 19.5);
 
-export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; bills?: Bonus; other?: Bonus; shared?: boolean }>> = {
+/**
+ * Korea's: its households spent ₩167,000 a month on communications against
+ * ₩337,000 on transport in 2025 (National Data Office, 가계동향조사, 26
+ * February 2026), so communications are 167/504 of the bills' part that
+ * isn't energy.
+ */
+export const KOREA_TELECOM_OF_BILLS = (1 - ENERGY.share) * (167 / 504);
+
+/** A bills bonus that is a rate on the phone's share, held to a cap on the bonus itself, as the spend that reaches it. */
+const onPhone = (rate: number, share: number, bonusCap: Money): Bonus => ({ rate: rate * share, cap: Math.round(bonusCap / (rate * share)), after: 0 });
+
+export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; bills?: Bonus; other?: Bonus; shared?: boolean; priorMonth?: readonly (readonly [Money, number])[] }>> = {
+  // 10% off the phone bill, ₩5,000 a month at most, in a month after one of ₩400,000 on the card (card.kbcard.com, My WE:SH).
+  'kr-kb-kookmin': { per: 'month', bills: onPhone(0.1, KOREA_TELECOM_OF_BILLS, 5_000_00), priorMonth: [[400_000_00, 1]] },
+  // 10% of the phone bill in points (₩1 each), to 5,000, 10,000 or 20,000 a month after one of ₩300,000, ₩500,000 or ₩1,000,000 (shinhancard.com, 처음).
+  'kr-shinhan': { per: 'month', bills: onPhone(0.1, KOREA_TELECOM_OF_BILLS, 5_000_00), priorMonth: [[300_000_00, 1], [500_000_00, 2], [1_000_000_00, 4]] },
   // 2% at grocery stores, on the first $2,500 of grocery and choice spending together a quarter; 1% on the rest.
   'us-bank-of-america': { per: 'quarter', food: { rate: 0.02, cap: 2_500_00, after: 0.01 } },
   // 2% on the first $6,000 of groceries, 1% after; 0.5% on the first $6,000 of the rest, 1% after.
@@ -173,12 +188,34 @@ export function statementOffers(sim: Simulation, card: Account, credit: CreditSt
   credit.rewardsFrom = sim.now;
 }
 
+/** What went on a card in the last calendar month, as purchases. */
+export function lastMonthSpend(sim: Simulation, card: Account): Money {
+  const p = zonedParts(sim.now, sim.homeZone);
+  const month = p.month === 1 ? `${p.year - 1}-12` : `${p.year}-${String(p.month - 1).padStart(2, '0')}`;
+  let total = 0;
+  for (const t of sim.universe.transactions) {
+    if (NOT_PURCHASES.has(t.category)) continue;
+    const q = zonedParts(t.at, sim.homeZone);
+    if (`${q.year}-${String(q.month).padStart(2, '0')}` !== month) continue;
+    for (const one of t.postings) if (one.accountId === card.id && one.amount < 0) total -= one.amount;
+  }
+  return total;
+}
+
 /** A statement's rewards: each category at its bonus to the period's cap, the rate after past it, and the base rate where there's no bonus. */
 export function bonusRewards(sim: Simulation, card: Account, credit: CreditState, base: number, spent: { food: Money; bills: Money; other: Money }, from: number): Money {
   const bonus = card.bankId ? BONUSES[card.bankId] : undefined;
   if (!bonus) return Math.round((spent.food + spent.bills + spent.other) * base);
   const currency = card.bankId ? bankById(card.bankId)?.currency ?? 'USD' : 'USD';
   const into = saveCurrency(sim.universe);
+  // A Korean card's bonus turns on last month's spending (전월실적), its caps by the tier reached; below the first, only the base rate.
+  let scale = 1;
+  if (bonus.priorMonth) {
+    const last = lastMonthSpend(sim, card);
+    const tier = [...bonus.priorMonth].reverse().find(([atLeast]) => last >= (exchange(atLeast, currency, into) ?? atLeast));
+    if (!tier) return Math.round((spent.food + spent.bills + spent.other) * base);
+    scale = tier[1];
+  }
   const period = bonusPeriod(sim, bonus.per, from);
   const used = (credit.bonusUsed ??= {});
   for (const key of Object.keys(used)) if (!key.endsWith(`@${period}`)) delete used[key];
@@ -188,7 +225,7 @@ export function bonusRewards(sim: Simulation, card: Account, credit: CreditState
     const b = bonus[kind];
     if (!b) { total += amount * base; continue; }
     if (b.cap === undefined) { total += amount * b.rate; continue; }
-    const cap = exchange(b.cap, currency, into) ?? b.cap;
+    const cap = (exchange(b.cap, currency, into) ?? b.cap) * scale;
     const key = `${bonus.shared ? 'all' : kind}@${period}`;
     const room = Math.max(0, cap - (used[key] ?? 0));
     const within = Math.min(amount, room);
