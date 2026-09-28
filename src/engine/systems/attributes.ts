@@ -70,6 +70,21 @@ export const ATTRIBUTES = {
   reputationShowing: 8,
   /** Recognition from a finished screen job, by the part; and the month's fade. */
   recognition: { series: 12, arc: 4, guest: 2, costar: 0.5, film: 3, studioFilm: 7, commercial: 0.5, broadway: 3, fadePerMonth: 0.03 },
+  /**
+   * Building them on purpose: a scene-study week's composure and presence; an
+   * improv session's; a casting director workshop's reputation; a coached
+   * audition's nerves halved; a publicist's month of press, by the credits
+   * there are to sell, and the fade it slows; a festival premiere's
+   * recognition and standing, less if the film premieres without them.
+   */
+  build: {
+    sceneWeek: { composure: 0.01, presence: 0.001 },
+    improvSession: { composure: 0.025, presence: 0.002 },
+    workshop: 1.5,
+    coachedNerves: 0.5,
+    publicity: { base: 1, perCredit: 0.5, most: 4, fadeKept: 0.5 },
+    festival: { indie: 2, studio: 3, reputation: 1, absent: 0.5 },
+  },
   /** Recognition past which the public knows the name, and the most above scale it pays at 100. */
   overscale: { from: 20, most: 1.0 },
 } as const;
@@ -109,9 +124,10 @@ export type Event = keyof typeof ATTRIBUTES.eventWeight;
  * the work left to them, which the event's reading multiplies. The event
  * then adds to composure, and a performance a little to presence.
  */
-export function nerves(sim: Simulation, person: Person, event: Event): number {
+export function nerves(sim: Simulation, person: Person, event: Event, steadied = 1): number {
   const a = attributesOf(sim, person);
-  const unsettled = 1 - a.composure / 100;
+  // Worked on with a coach first, half the nerves.
+  const unsettled = (1 - a.composure / 100) * steadied;
   person.wellbeing.stress = clamp(person.wellbeing.stress + ATTRIBUTES.eventWeight[event] * unsettled * personalityOf(person, 'stressGain'), 0, 100);
   const kept = 1 - ATTRIBUTES.nerves.focusCost * unsettled;
   nudge(sim, person, 'composure', ATTRIBUTES.composureGain[event], true);
@@ -136,8 +152,9 @@ export function overscaleOf(recognition: number): number {
   return 1 + most * Math.max(0, recognition - from) / (100 - from);
 }
 
-/** A month without new screen work: recognition fades. */
-export function fadeRecognition(sim: Simulation, person: Person): void {
+/** A month without new screen work: recognition fades, half as fast with a publicist keeping the name out. */
+export function fadeRecognition(sim: Simulation, person: Person, kept = false): void {
   const a = attributesOf(sim, person);
-  a.recognition = Math.round(a.recognition * (1 - ATTRIBUTES.recognition.fadePerMonth) * 100) / 100;
+  const fade = ATTRIBUTES.recognition.fadePerMonth * (kept ? ATTRIBUTES.build.publicity.fadeKept : 1);
+  a.recognition = Math.round(a.recognition * (1 - fade) * 100) / 100;
 }

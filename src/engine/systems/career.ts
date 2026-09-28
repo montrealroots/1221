@@ -83,6 +83,9 @@ import { sagHoliday } from '../content/usholidays';
 export const SHOWCASE_KIND = 'career.showcase';
 export const DUES_KIND = 'career.dues';
 export const CAREER_WEEK_KIND = 'career.week';
+export const IMPROV_KIND = 'career.improv';
+export const WORKSHOP_KIND = 'career.workshop';
+export const FESTIVAL_KIND = 'career.festival';
 export const AUDITION_KIND = 'career.audition';
 export const OFFER_KIND = 'career.offer';
 export const STAY_KIND = 'career.stay';
@@ -270,6 +273,10 @@ export interface CareerRecord {
   kit?: boolean;
   reelAt?: Instant;
   scene?: { paidFor: string };
+  /** An improv course under way: its evenings left (`career.improv`). */
+  improv?: { left: number };
+  /** A publicist on retainer, and the month last paid (`career.publicist`). */
+  publicist?: { paidFor: string };
   /** The last dues period billed, `YYYY-M`. */
   duesBilled?: string;
   /** The last id given an audition or a booking. */
@@ -491,6 +498,12 @@ export function workCostsWeek(sim: Simulation, person: Person, when: Instant): v
     if (payForWork(sim, person, usd(price, cur), `${label}, a year`)) held.until += 365 * MS_DAY;
     else held.renews = false;
   }
+  // A publicist's month: the retainer, and press by the work there is to sell (`attributes.ts`).
+  const pr = career.publicist;
+  if (pr && pr.paidFor !== monthOf(when, sim.homeZone)) {
+    if (!payForWork(sim, person, usd(WORK_COSTS.publicistMonthly, cur), 'A publicist, the month')) delete career.publicist;
+    else { pr.paidFor = monthOf(when, sim.homeZone); nudge(sim, person, 'recognition', publicityFor(sim, person, when)); }
+  }
   const scene = career.scene;
   if (!scene) return;
   const month = monthOf(when, sim.homeZone);
@@ -498,7 +511,52 @@ export function workCostsWeek(sim: Simulation, person: Person, when: Instant): v
     if (!payForWork(sim, person, usd(WORK_COSTS.classMonthly, cur), 'Scene-study class, the month')) { delete career.scene; return; }
     scene.paidFor = month;
   }
-  if (present(person, when) && person.craft) person.craft.acting = Math.min(100, person.craft.acting + sessionGain(person.craft.acting, focusOf(person)));
+  if (present(person, when) && person.craft) {
+    person.craft.acting = Math.min(100, person.craft.acting + sessionGain(person.craft.acting, focusOf(person)));
+    // Working scenes in front of a class, week on week: steadier, and a little more there.
+    nudge(sim, person, 'composure', ATTRIBUTES.build.sceneWeek.composure, true);
+    nudge(sim, person, 'presence', ATTRIBUTES.build.sceneWeek.presence, true);
+  }
+}
+
+/** A month of press: a point, and half a point for each credit to sell in the last year, to the most a publicist can do. */
+export function publicityFor(sim: Simulation, person: Person, when: Instant): number {
+  const p = ATTRIBUTES.build.publicity;
+  const year = zonedParts(when, sim.homeZone).year;
+  const recent = careerOf(person).credits.filter((c) => c.year >= year - 1 && recognitionFrom(roleById(c.roleId)) > 0).length;
+  return Math.min(p.most, p.base + p.perCredit * recent);
+}
+
+/** Whether a publicist has anything to sell: a screen credit or Broadway. */
+export function publicistRefusal(person: Person): string | undefined {
+  if (!careerOf(person).credits.some((c) => recognitionFrom(roleById(c.roleId)) > 0)) return 'A publicist needs work to sell: a screen credit, or Broadway.';
+  return undefined;
+}
+
+/** The next weekday at an hour, in a zone, after a moment. */
+function nextDayAt(from: Instant, zone: string, day: number, hour: number): Instant {
+  for (let n = 1; n <= 7; n += 1) if (weekday(at(from, zone, n, hour), zone) === day) return at(from, zone, n, hour);
+  return from + 7 * MS_DAY;
+}
+
+/**
+ * A finished film's premiere: an independent one at Tribeca, in New York in
+ * June, the first one at least five months after the wrap; a studio film in
+ * Los Angeles nine months on. SLATE's estimate of a film's road; attending
+ * it is the actor's to choose.
+ */
+function schedulePremiere(sim: Simulation, person: Person, role: Role, wrapped: Instant): void {
+  const studio = role.id === 'film-weekly';
+  const cityId: CareerCity = studio ? 'us-ca-losangeles' : 'us-ny-newyork';
+  const zone = zoneOf(cityId);
+  let when: Instant;
+  if (studio) when = at(wrapped + 270 * MS_DAY, zone, 0, 19);
+  else {
+    let year = zonedParts(wrapped, zone).year;
+    when = instantFromZoned({ year, month: 6, day: 10, hour: 19 }, zone);
+    if (when < wrapped + 150 * MS_DAY) { year += 1; when = instantFromZoned({ year, month: 6, day: 10, hour: 19 }, zone); }
+  }
+  sim.schedule({ at: when, kind: FESTIVAL_KIND, label: `${studio ? 'Premiere' : 'Tribeca Premiere'}: ${role.label}`, category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 180, locationId: cityId, payload: { personId: person.id, roleId: role.id, studio } });
 }
 
 /** What a call costs in stress by its hour: before nine in the morning, or a performance that runs late. */
@@ -838,8 +896,8 @@ export function registerCareer(sim: Simulation): void {
     career.managerOffers = career.managerOffers.filter((o) => o.until > s.now);
     // A manager's month: now and then, meetings that bring an unrepresented client an agency (`career.managers`).
     const month = zonedParts(item.at, s.homeZone);
-    // The month's first week: the public forgets a little (`attributes.ts`).
-    if (month.day <= 7) fadeRecognition(s, person);
+    // The month's first week: the public forgets a little, half as much with a publicist (`attributes.ts`).
+    if (month.day <= 7) fadeRecognition(s, person, career.publicist !== undefined);
     if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
@@ -906,7 +964,7 @@ export function registerCareer(sim: Simulation): void {
     }
     audition.status = 'done';
     if (audition.mode === 'room') takeTheRoom(person);
-    if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition'))) return;
+    if (!books(s, person, audition, focusOf(person) * nerves(s, person, 'audition', audition.coached ? ATTRIBUTES.build.coachedNerves : 1))) return;
     audition.status = 'booked';
     const [lo, hi] = ESTIMATE.offerAfterDays;
     const wait = lo + Math.floor(s.rng('career.booking', person.id, `${audition.id}-wait`).next() * (hi - lo + 1));
@@ -1043,6 +1101,7 @@ export function registerCareer(sim: Simulation): void {
     booking.status = 'worked';
     earn(s, person, ATTRIBUTES.reputation.job);
     nudge(s, person, 'recognition', recognitionFrom(role));
+    if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
     career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
     const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
     // A season done, the series holds its option until it's picked up or dropped, by mid-June.
@@ -1439,6 +1498,91 @@ export function registerCareer(sim: Simulation): void {
     if (!payForWork(s, person, usd(WORK_COSTS.classMonthly, cur), 'Scene-study class, the month')) throw new CommandError(`A month is ${formatMoney(usd(WORK_COSTS.classMonthly, cur), cur)}, which the bank can’t cover.`);
     career.scene = { paidFor: monthOf(s.now, s.homeZone) };
     return { on: true };
+  });
+
+  // An improv course: eight Tuesday evenings where you live and work.
+  sim.onCommand<Record<string, never>, { first: Instant }>('career.improv', (_p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    if (career.since === undefined && !summerOf(person, s.now)) throw new CommandError('School is your class for now; a course waits for the summer or the degree.');
+    if (career.improv) throw new CommandError('You’re in a course.');
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.improv, cur), 'An improv course, eight weeks')) throw new CommandError(`The course is ${formatMoney(usd(WORK_COSTS.improv, cur), cur)}, which the bank can’t cover.`);
+    const city = workCity(person);
+    const first = nextDayAt(s.now, zoneOf(city), 2, 19);
+    for (let n = 0; n < WORK_COSTS.improvWeeks; n += 1) {
+      s.schedule({ at: at(first, zoneOf(city), 7 * n, 19), kind: IMPROV_KIND, label: `Improv Class ${n + 1} Of ${WORK_COSTS.improvWeeks}`, category: 'career', priority: 34, requiresPlayer: true, durationMinutes: 180, locationId: city, payload: { personId: person.id, cityId: city } });
+    }
+    career.improv = { left: WORK_COSTS.improvWeeks };
+    return { first };
+  });
+
+  sim.onSchedule(IMPROV_KIND, (item, s) => {
+    const person = personOf(item);
+    const career = person ? careerOf(person) : undefined;
+    if (!person || !career?.improv) return;
+    career.improv.left -= 1;
+    if (career.improv.left <= 0) delete career.improv;
+    if (!present(person, item.at, String(item.payload.cityId))) { item.status = 'missed'; return; }
+    // On your feet in front of a room, with nothing prepared.
+    nudge(s, person, 'composure', ATTRIBUTES.build.improvSession.composure, true);
+    nudge(s, person, 'presence', ATTRIBUTES.build.improvSession.presence, true);
+    enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
+  });
+
+  // A casting director workshop: an evening's cold reading for one office.
+  sim.onCommand<Record<string, never>, { at: Instant }>('career.workshop', (_p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    if (career.since === undefined && !summerOf(person, s.now)) throw new CommandError('While classes are in session, the school’s work comes first.');
+    if (s.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending' && i.payload.personId === person.id)) throw new CommandError('You have one booked.');
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.workshop, cur), 'A casting director workshop')) throw new CommandError(`A workshop is ${formatMoney(usd(WORK_COSTS.workshop, cur), cur)}, which the bank can’t cover.`);
+    const city = workCity(person);
+    const when = nextDayAt(s.now, zoneOf(city), 4, 19);
+    s.schedule({ at: when, kind: WORKSHOP_KIND, label: 'Casting Director Workshop', category: 'career', priority: 34, requiresPlayer: true, durationMinutes: 180, locationId: city, payload: { personId: person.id, cityId: city } });
+    return { at: when };
+  });
+
+  sim.onSchedule(WORKSHOP_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person) return;
+    if (!present(person, item.at, String(item.payload.cityId))) { item.status = 'missed'; return; }
+    // A cold read in front of the office: known to it after, and the nerves of it.
+    nerves(s, person, 'audition');
+    earn(s, person, ATTRIBUTES.build.workshop);
+  });
+
+  sim.onCommand<{ on: boolean }, { on: boolean }>('career.publicist', (p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    if (p.on !== true) {
+      if (!career.publicist) throw new CommandError('You have no publicist.');
+      delete career.publicist;
+      return { on: false };
+    }
+    if (career.publicist) throw new CommandError('You have a publicist.');
+    const no = publicistRefusal(person);
+    if (no) throw new CommandError(no);
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.publicistMonthly, cur), 'A publicist, the month')) throw new CommandError(`A month is ${formatMoney(usd(WORK_COSTS.publicistMonthly, cur), cur)}, which the bank can’t cover.`);
+    career.publicist = { paidFor: monthOf(s.now, s.homeZone) };
+    nudge(s, person, 'recognition', publicityFor(s, person, s.now));
+    return { on: true };
+  });
+
+  sim.onSchedule(FESTIVAL_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person) return;
+    const role = roleById(String(item.payload.roleId));
+    const f = ATTRIBUTES.build.festival;
+    const full = item.payload.studio === true ? f.studio : f.indie;
+    const there = present(person, item.at, item.locationId);
+    // The film premieres either way; the room sees the actor only if they came.
+    nudge(s, person, 'recognition', there ? full : full * f.absent);
+    if (there) earn(s, person, f.reputation);
+    else item.status = 'missed';
+    if (isPlayer(person)) s.notify({ category: 'career', title: there ? 'Your Film Premiered' : 'Your Film Premiered Without You', body: there ? `${role.label} premiered, and you walked the carpet and did the press line.` : `${role.label} premiered, and you weren’t there for the press.`, importance: 60, route: '/workspace/career' });
   });
 
   sim.onCommand<{ auditionId: string }, { coached: true }>('career.coach', (p, { sim: s }) => {

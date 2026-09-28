@@ -7,11 +7,12 @@
 import { describe, expect, it } from 'vitest';
 import { createSave, loadSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { ROLES } from '@/engine/content/career';
 import { ATTRIBUTES, earn, fadeRecognition, nerves, overscaleOf, presenceSwing, sendsFactor } from '@/engine/systems/attributes';
-import { beginCareer, bookingChance, careerOf, offersFor, recognitionFrom, roleById, unitRate, weekOfAuditions, rateOf } from '@/engine/systems/career';
+import { FESTIVAL_KIND, IMPROV_KIND, beginCareer, bookingChance, careerOf, offersFor, publicistRefusal, publicityFor, recognitionFrom, roleById, unitRate, weekOfAuditions, workCostsWeek, rateOf } from '@/engine/systems/career';
+import { WORK_COSTS } from '@/engine/content/career';
 import { evaluate } from '@/engine/systems/school';
 import type { Craft } from '@/engine/systems/school';
 
@@ -204,5 +205,102 @@ describe('recognition', () => {
     const booking = career.bookings.find((b) => b.status === 'offered')!;
     const scale = rateOf(roleById('costar'), booking.starts, 'us-ny-newyork', 'USD');
     expect(unitRate(booking, booking.starts, 'USD')).toBe(Math.round(scale * overscaleOf(60)));
+  });
+});
+
+describe('building them on purpose', () => {
+  const awake = (sim: Simulation) => { sim.player.awakeSince = sim.now - 3_600_000; };
+
+  it('steadies and sharpens a little each week in a scene-study class', () => {
+    const sim = pro('attr-scene');
+    const a = sim.player.attrs!;
+    careerOf(sim.player).scene = { paidFor: 'paid' };
+    awake(sim);
+    const [composure, presence] = [a.composure, a.presence];
+    workCostsWeek(sim, sim.player, sim.now);
+    expect(a.composure).toBeCloseTo(composure + (100 - composure) * ATTRIBUTES.build.sceneWeek.composure, 10);
+    expect(a.presence).toBeCloseTo(presence + (100 - presence) * ATTRIBUTES.build.sceneWeek.presence, 10);
+  });
+
+  it('puts eight improv evenings on the calendar for the course fee, each one kept building composure', () => {
+    const sim = pro('attr-improv');
+    const a = sim.player.attrs!;
+    const first = sim.must<{ first: number }>({ kind: 'career.improv', payload: {} }).first;
+    const evenings = sim.universe.scheduled.filter((i) => i.kind === IMPROV_KIND && i.status === 'pending');
+    expect(evenings).toHaveLength(WORK_COSTS.improvWeeks);
+    expect(sim.execute({ kind: 'career.improv', payload: {} }).ok).toBe(false);
+    const composure = a.composure;
+    sim.advanceTo(first - 60_000);
+    awake(sim);
+    sim.advanceTo(first + 60_000);
+    expect(a.composure).toBeGreaterThan(composure);
+    expect(careerOf(sim.player).improv!.left).toBe(WORK_COSTS.improvWeeks - 1);
+    // A student in term waits for the summer.
+    const student = life('attr-improv-student');
+    student.advanceTo(student.now + 10 * MS_DAY);
+    expect(student.execute({ kind: 'career.improv', payload: {} }).ok).toBe(false);
+  });
+
+  it('books an evening’s workshop with a casting office, one at a time, for reputation and its nerves', () => {
+    const sim = pro('attr-workshop');
+    const a = sim.player.attrs!;
+    const when = sim.must<{ at: number }>({ kind: 'career.workshop', payload: {} }).at;
+    expect(sim.execute({ kind: 'career.workshop', payload: {} }).ok).toBe(false);
+    sim.advanceTo(when - 60_000);
+    awake(sim);
+    sim.player.wellbeing.stress = 0;
+    sim.advanceTo(when + 60_000);
+    expect(a.reputation).toBeCloseTo(ATTRIBUTES.build.workshop, 10);
+    expect(sim.player.wellbeing.stress).toBeGreaterThan(0);
+  });
+
+  it('halves an audition’s nerves with a coach', () => {
+    const sim = pro('attr-coach');
+    const p = sim.player;
+    p.attrs!.composure = 30;
+    p.wellbeing.stress = 0;
+    nerves(sim, p, 'audition');
+    const full = p.wellbeing.stress;
+    p.attrs!.composure = 30;
+    p.wellbeing.stress = 0;
+    const kept = nerves(sim, p, 'audition', ATTRIBUTES.build.coachedNerves);
+    expect(p.wellbeing.stress).toBeCloseTo(full / 2, 10);
+    expect(kept).toBeCloseTo(1 - ATTRIBUTES.nerves.focusCost * 0.7 * 0.5, 10);
+  });
+
+  it('hires a publicist only with work to sell, for press each month and a slower fade', () => {
+    const sim = pro('attr-pr');
+    const a = sim.player.attrs!;
+    expect(publicistRefusal(sim.player)).toMatch(/work to sell/);
+    expect(sim.execute({ kind: 'career.publicist', payload: { on: true } }).ok).toBe(false);
+    careerOf(sim.player).credits.push({ roleId: 'costar', year: zonedParts(sim.now, sim.homeZone).year, cityId: 'us-ny-newyork' });
+    expect(publicityFor(sim, sim.player, sim.now)).toBe(ATTRIBUTES.build.publicity.base + ATTRIBUTES.build.publicity.perCredit);
+    expect(sim.execute({ kind: 'career.publicist', payload: { on: true } }).ok).toBe(true);
+    expect(a.recognition).toBe(publicityFor(sim, sim.player, sim.now));
+    a.recognition = 40;
+    fadeRecognition(sim, sim.player, true);
+    expect(a.recognition).toBeCloseTo(40 * (1 - ATTRIBUTES.recognition.fadePerMonth * ATTRIBUTES.build.publicity.fadeKept), 2);
+    // The next month's retainer, and its press.
+    careerOf(sim.player).publicist!.paidFor = 'last month';
+    const r = a.recognition;
+    workCostsWeek(sim, sim.player, sim.now);
+    expect(a.recognition).toBeCloseTo(r + publicityFor(sim, sim.player, sim.now), 10);
+  });
+
+  it('premieres a finished film at a festival: more recognition and some standing for being there, half without', () => {
+    const run = (seed: string, there: boolean) => {
+      const sim = pro(seed);
+      const a = sim.player.attrs!;
+      sim.schedule({ at: sim.now + 60_000, kind: FESTIVAL_KIND, label: 'Tribeca Premiere', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 180, locationId: there ? 'us-ny-newyork' : 'us-ca-losangeles', payload: { personId: sim.player.id, roleId: 'film-low', studio: false } });
+      awake(sim);
+      sim.advanceTo(sim.now + 2 * 60_000);
+      return a;
+    };
+    const went = run('attr-fest-went', true);
+    expect(went.recognition).toBe(ATTRIBUTES.build.festival.indie);
+    expect(went.reputation).toBe(ATTRIBUTES.build.festival.reputation);
+    const missed = run('attr-fest-missed', false);
+    expect(missed.recognition).toBe(ATTRIBUTES.build.festival.indie * ATTRIBUTES.build.festival.absent);
+    expect(missed.reputation).toBe(0);
   });
 });

@@ -10,8 +10,8 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
-  AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
+  acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
@@ -615,6 +615,17 @@ describe('the attributes at work', () => {
     expect(a.composure).toBeGreaterThan(composure);
   });
 
+  it('premieres a finished independent film at Tribeca the next June it can make', () => {
+    const sim = pro('attr-premiere');
+    const film = offer(sim, 'film-low', 1, 0, at(2026, 10, 5, 8));
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
+    play(sim, at(2026, 10, 9, 12));
+    expect(film.status).toBe('worked');
+    const premiere = pending(sim, FESTIVAL_KIND)[0]!;
+    expect(premiere.locationId).toBe('us-ny-newyork');
+    expect(zonedParts(premiere.at, NY)).toMatchObject({ year: 2027, month: 6, day: 10, hour: 19 });
+  });
+
   it('loses reputation for a walk-off', () => {
     const sim = pro('attr-walk');
     const a = attributesOf(sim, sim.player);
@@ -646,6 +657,14 @@ describe('the attributes at work', () => {
     sim.advanceTo(sim.now + 2 * 60_000);
     expect(sim.player.wellbeing.stress).toBeGreaterThan(0);
     expect(a.composure).toBeGreaterThan(composure);
+    // Worked on with a coach, the same nerves at half.
+    const plain = sim.player.wellbeing.stress;
+    sim.player.wellbeing.stress = 0;
+    a.composure = composure;
+    career.auditions.push({ id: 'aud-coached', roleId: 'costar', at: sim.now + 60_000, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead', coached: true });
+    sim.schedule({ at: sim.now + 60_000, kind: AUDITION_KIND, label: 'Audition', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, payload: { personId: sim.player.id, auditionId: 'aud-coached' } });
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(sim.player.wellbeing.stress).toBeCloseTo(plain / 2, 1);
   });
 
   it('fades recognition in the first week of each month', () => {
@@ -659,6 +678,17 @@ describe('the attributes at work', () => {
       expect(a.recognition).toBe(40);
     }
     expect(a.recognition).toBeCloseTo(40 * (1 - ATTRIBUTES.recognition.fadePerMonth), 2);
+    // With a publicist keeping the name out, half the fade.
+    careerOf(sim.player).publicist = { paidFor: 'kept' };
+    const r = a.recognition;
+    for (let n = 0; n < 6; n += 1) {
+      const week = pending(sim, CAREER_WEEK_KIND)[0]!;
+      sim.advanceTo(week.at + 60_000);
+      if (zonedParts(week.at, sim.homeZone).day <= 7) break;
+    }
+    // Its retainer's press lands twice on the way (a month paid, then the new month's), and the fade between is half.
+    const press = publicityFor(sim, sim.player, sim.now);
+    expect(a.recognition).toBeCloseTo((r + press) * (1 - ATTRIBUTES.recognition.fadePerMonth * ATTRIBUTES.build.publicity.fadeKept) + press, 1);
   });
 });
 

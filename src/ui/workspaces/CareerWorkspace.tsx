@@ -18,7 +18,7 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  ESTIMATE, LEAVING, acceptRefusal, agencyById, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
+  ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { focusOf, summerOf } from '@/engine/systems/school';
 import { earningsOf } from '@/engine/systems/earnings';
@@ -487,8 +487,23 @@ function WorkCostsPanel() {
             ? <Gated feature="career.class" onClick={() => { if (run('career.class', { on: false }).ok) toast('Out of the class.', 'positive'); }}>Leave The Class</Gated>
             : <Gated feature="career.class" onClick={() => { if (run('career.class', { on: true }).ok) toast('In class from this week.', 'positive'); }}>Join A Class</Gated>}
         </div>
+        {/* Building the attributes on purpose (`systems/attributes.ts`). */}
+        <div className="row-between small">
+          <span>An improv course, {dollars(WORK_COSTS.improv)} for {WORK_COSTS.improvWeeks} Tuesday evenings: {career.improv ? `${career.improv.left} evenings left` : 'None'}. Builds composure, and a little presence.</span>
+          {!career.improv && <Gated feature="career.improv" onClick={() => { const a = run<{ first: number }>('career.improv'); if (a.ok && a.value) toast(`The first class is ${formatDate(a.value.first, sim.zone)}.`, 'positive'); }}>Take The Course</Gated>}
+        </div>
+        <div className="row-between small">
+          <span>A casting director workshop, {dollars(WORK_COSTS.workshop)} an evening of cold reading for one office: {sim.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending') ? 'Booked' : 'None booked'}. Builds reputation, the nerves of it composure.</span>
+          {!sim.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending') && <Gated feature="career.workshop" onClick={() => { const a = run<{ at: number }>('career.workshop'); if (a.ok && a.value) toast(`Booked for ${formatDate(a.value.at, sim.zone)}.`, 'positive'); }}>Book A Workshop</Gated>}
+        </div>
+        <div className="row-between small">
+          <span>A publicist, {dollars(WORK_COSTS.publicistMonthly)} a month: {career.publicist ? `on retainer, about ${publicityFor(sim, person, sim.now)} recognition a month from press, and the name fades half as fast` : publicistRefusal(person) ?? `about ${publicityFor(sim, person, sim.now)} recognition a month from interviews and press, and the name fading half as fast`}.</span>
+          {career.publicist
+            ? <Gated feature="career.publicist" onClick={() => { if (run('career.publicist', { on: false }).ok) toast('No more retainer.', 'positive'); }}>Let The Publicist Go</Gated>
+            : !publicistRefusal(person) && <Gated feature="career.publicist" onClick={() => { if (run('career.publicist', { on: true }).ok) toast('A publicist is working your name.', 'positive'); }}>Hire A Publicist</Gated>}
+        </div>
         <p className="xs dim" style={{ margin: 0 }}>
-          Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; a paid one sends your headshot, and your reel where you have one, without which the {WORK_COSTS.wantReel * 100}% of breakdowns that ask for one are shut. Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week, and Casting Networks’ {WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']} more in Los Angeles and {WORK_COSTS.castingNetworksSubmissions.other} elsewhere. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your acting as a class at school does; a coach, {dollars(WORK_COSTS.coach)} an hour, makes an audition book about a quarter more often. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
+          Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; a paid one sends your headshot, and your reel where you have one, without which the {WORK_COSTS.wantReel * 100}% of breakdowns that ask for one are shut. Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week, and Casting Networks’ {WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']} more in Los Angeles and {WORK_COSTS.castingNetworksSubmissions.other} elsewhere. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your acting as a class at school does; a coach, {dollars(WORK_COSTS.coach)} an hour, makes an audition book about a quarter more often and halves its nerves; a finished film premieres at Tribeca in June or, from a studio, in Los Angeles about nine months on, and being there adds more recognition. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
         </p>
       </div>
     </Panel>

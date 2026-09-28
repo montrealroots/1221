@@ -368,12 +368,24 @@ export const WORK_COSTS = {
   kit: 110_00,
   classMonthly: 300_00,
   coach: 150_00,
+  /**
+   * Building yourself (`systems/attributes.ts`): an eight-week improv course
+   * of three-hour evenings, UCB's Improv 101 and the Groundlings' Basic
+   * running near it; a casting director workshop, an evening's cold reading
+   * for one office, as One on One and Actors Connection hold them; a
+   * publicist's monthly retainer, the $2,000 to $5,000 the trade quotes for
+   * an actor. Each price is SLATE's estimate of the range.
+   */
+  improv: 495_00,
+  improvWeeks: 8,
+  workshop: 60_00,
+  publicistMonthly: 3_000_00,
   freeSubmissionShare: 0.5,
   backstageSubmissions: 5,
   staleHeadshots: 0.8,
   noKit: 0.8,
   coached: 1.25,
-  source: 'https://actorsaccess.com; https://www.backstage.com; https://www.castingnetworks.com/pricing (Premium, 2026); https://ivanachubbuck.com; https://www.hbstudio.org; https://www.tschreiber.org; https://oneononenyc.com',
+  source: 'https://actorsaccess.com; https://www.backstage.com; https://www.castingnetworks.com/pricing (Premium, 2026); https://ivanachubbuck.com; https://www.hbstudio.org; https://www.tschreiber.org; https://oneononenyc.com; https://ucbcomedy.com (Improv 101); https://www.groundlings.com (Basic); https://www.actorsconnection.com',
 } as const;
 
 /**

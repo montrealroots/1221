@@ -307,7 +307,11 @@ part the tool cannot see.
   or the booth. Recognition comes only from finished work, not from its
   audience, and the overscale it earns is a single multiple of scale, not a
   negotiated quote. Other people’s attributes aren’t kept: classmates are
-  read at an ordinary presence of 50.
+  read at an ordinary presence of 50. The ways to build them on purpose (an improv course, a casting
+  director workshop, a publicist, a festival premiere) are priced at SLATE’s
+  estimate of what the trade quotes, and what each adds is SLATE’s. A film’s
+  premiere is Tribeca’s June for an independent one and Los Angeles nine
+  months on for a studio’s: no film here is ever passed over by a festival.
 - **The tax engine's property tax is shown and charged to no one.** Its
   income and payroll tax is paid again since the career: acting wages are
   withheld through it and each year's return is worked out with it
