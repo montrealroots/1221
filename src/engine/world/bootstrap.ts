@@ -13,8 +13,7 @@ import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange, hasRate } from '../content/currency';
 import { DEFAULT_LEDGER_CURRENCY } from '../core/money';
 import type { Housing } from '../systems/household';
-import { costOfLiving } from '../content/tax';
-import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
+import { instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
@@ -28,6 +27,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
 import { freshWellbeing } from '../systems/life';
 import { citizenshipFor } from '../domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '../systems/personality';
+import { ORIENTATION_2026, YALE_DRAMA } from '../content/school';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
@@ -89,6 +89,18 @@ export interface NewSaveConfig {
   /** A room in a shared flat, or a place of their own (`systems/household.ts`). */
   housing: Housing;
 
+  /**
+   * Where the life begins: drama school (`content/school.ts`), which sets
+   * the town and the day. Absent, the town and day chosen below.
+   */
+  school?: 'yale-drama';
+  /**
+   * The family they come from, which the engine reads and no screen shows:
+   * a wealthy family's means rule out need, so Yale's aid for living costs
+   * doesn't come (`systems/school.ts`, `hasNeed`).
+   */
+  family?: 'wealthy';
+
   /** Starting point */
   startLocationId: string;
   wealth: StartingWealth;
@@ -133,6 +145,49 @@ export function defaultConfig(): NewSaveConfig {
     startYear: 2026, startMonth: 1, startDay: 5,
   };
 }
+
+/**
+ * A config set to begin at drama school: the school's town, and the first
+ * day of its fall term. What the player chose about the town and the day
+ * gives way to the school's.
+ */
+export function atSchool(config: NewSaveConfig): NewSaveConfig {
+  const begins = ORIENTATION_2026.begins;
+  return {
+    ...config,
+    school: 'yale-drama',
+    startLocationId: YALE_DRAMA.cityId,
+    livesWhereBorn: config.homeRegionId === YALE_DRAMA.cityId,
+    startYear: begins.year, startMonth: begins.month, startDay: begins.day,
+  };
+}
+
+/**
+ * A new life in the game: beginning at drama school, from a wealthy
+ * family, with the family's money behind them in the bank. The birthplace is
+ * the player's to choose, and none is chosen for them (until 2026-09-26 it
+ * was New York). The engine's `defaultConfig` stays where it was for saves
+ * made by tests and tools, which choose their own town and day.
+ */
+export function newLifeConfig(): NewSaveConfig {
+  return atSchool({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002, wealth: 'wealthy', family: 'wealthy' });
+}
+
+/**
+ * A draft carried back into a new life: what the player chose, at the
+ * school, with the family and money the life comes with rather than any the
+ * draft had.
+ */
+export function newLifeFrom(draft: Partial<NewSaveConfig>): NewSaveConfig {
+  const life = newLifeConfig();
+  return atSchool({ ...life, ...draft, wealth: life.wealth, family: life.family });
+}
+
+/** Whether the player picks what they start with: not in a life whose family sets it. */
+export const choosesWealth = (config: NewSaveConfig) => config.family === undefined;
+
+/** Whether the school's need assessment would find need, as `hasNeed` reads a person (`systems/school.ts`). */
+export const findsNeed = (config: NewSaveConfig) => config.family !== 'wealthy';
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
   nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Next to nothing to your name, and no savings behind it.' },
@@ -196,11 +251,8 @@ export function emptyUniverse(
     accounts: {}, transactions: [],
     scheduled: [], history: [], decisions: {}, notifications: [],
     preferences: {
-      reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
-      timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
-      confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
+      reducedMotion: false, timeSpeed: 'live',
     },
-    idempotency: {},
     counters: {},
     engineFailures: [],
   };
@@ -240,7 +292,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     slot,
     schemaVersion: SAVE_SCHEMA_VERSION,
     createdAt: now,
-    lastPlayedAt: now,
     playtimeSeconds: 0,
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
@@ -249,7 +300,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
-    backupAvailable: false,
     appVersion: APP_VERSION,
     currency: currencyFor(config.startLocationId),
   };
@@ -285,6 +335,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     ...(config.raceEthnicityOwn?.trim() ? { raceEthnicityOwn: config.raceEthnicityOwn.trim() } : {}),
     homeRegionId: config.homeRegionId,
     citizenshipId,
+    ...(config.family ? { family: config.family } : {}),
     currentLocationId: config.startLocationId,
     // Inside the slider's range, and only traits that can be held together:
     // the screen enforces both, and a save built straight from the engine
@@ -323,6 +374,3 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   return { universe, playerId };
 }
 
-export const WEALTH_PROFILES = WEALTH_PROFILE;
-export const DAY = MS_DAY;
-export { addDays, addMonths, costOfLiving };

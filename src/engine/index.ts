@@ -43,6 +43,14 @@ import { registerCash } from './systems/cash';
 import { registerAccountLife } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
+import { enroll, registerSchool, yearOfStudy } from './systems/school';
+import { agencyById, registerCareer } from './systems/career';
+import { attributesOf } from './systems/attributes';
+import { upgradeCraft } from './systems/school';
+import { registerHealth } from './systems/health';
+import { registerUnemployment } from './systems/unemployment';
+import { registerTaxReturn } from './systems/taxreturn';
+import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
@@ -74,6 +82,11 @@ export function registerAllSystems(sim: Simulation): void {
   registerAccountLife(sim);
   registerCardOffers(sim);
   registerSecurity(sim);
+  registerSchool(sim);
+  registerCareer(sim);
+  registerHealth(sim);
+  registerUnemployment(sim);
+  registerTaxReturn(sim);
   registerLending(sim);
 }
 
@@ -155,6 +168,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   openCredit(sim, player, wealth.creditScore);
   armBirthdays(sim);
   armBanking(sim);
+  // A life that begins at drama school, where it's in the school's town.
+  if (config.school === YALE_DRAMA.id && config.startLocationId === YALE_DRAMA.cityId) enroll(sim, player);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -167,11 +182,15 @@ export function refreshMeta(sim: Simulation): void {
   // A finished life says so on its slot, on every adapter, since the slot
   // list the server sends carries the labels and not the rest of the meta.
   const ended = sim.universe.meta.endedAge;
-  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + (ended !== undefined ? `, Died At ${ended}` : '');
+  // Where the life is: the year at school, or the agency after it. Until
+  // 2026-09-27 it was the title alone, Actor or Actress, whatever the life.
+  const school = player.school;
+  const agency = player.career?.agencyId ? agencyById(player.career.agencyId)?.name : undefined;
+  const where = school && school.standing !== 'graduated' && school.standing !== 'dismissed' ? `, Yale Drama Year ${yearOfStudy(player)}` : agency ? `, With ${agency}` : '';
+  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + where + (ended !== undefined ? `, Died At ${ended}` : '');
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total, saveCurrency(sim.universe));
-  sim.universe.meta.lastPlayedAt = sim.now;
 }
 
 /** Creates a brand new save universe with every system wired up. */
@@ -180,6 +199,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   const sim = new Simulation(universe);
   registerAllSystems(sim);
   populateWorld(sim, config);
+  // The attributes, drawn at the start of the life (`systems/attributes.ts`).
+  attributesOf(sim, sim.player);
   return sim;
 }
 
@@ -187,6 +208,14 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
 export function loadSave(universe: SaveUniverse): Simulation {
   const sim = new Simulation(universe);
   registerAllSystems(sim);
+  // A save from before the attributes draws them on opening, the same draw a new life makes.
+  if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
+  // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.
+  for (const person of Object.values(universe.people)) {
+    if (person.craft) upgradeCraft(person.craft);
+    for (const mate of person.school?.classmates ?? []) upgradeCraft(mate.craft);
+    if (person.school?.tally) upgradeCraft(person.school.tally.craftAtStart);
+  }
   const zone = sim.homeZone;
 
   // Every build has armed the rollover for the start of a day, and until the
@@ -310,7 +339,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('people', 'the people');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');
-  record('idempotency', 'the command receipts');
+  // The command receipts went on 2026-09-27: nothing in play passed a key, and a save from before keeps them no more.
+  if ('idempotency' in universe) { delete (universe as unknown as Record<string, unknown>).idempotency; steps.push('Dropped the command receipts.'); }
   record('counters', 'the counters');
   list('transactions', 'the transactions');
   list('scheduled', 'the timeline');
@@ -405,11 +435,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   }
 
   if (!universe.preferences) {
-    universe.preferences = {
-      reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
-      timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
-      confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
-    };
+    universe.preferences = { reducedMotion: false, timeSpeed: 'live' };
     steps.push('Created the preferences.');
   }
 
@@ -654,7 +680,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 export async function openSlot(
   adapter: SaveAdapter,
   slot: Slot,
-  opts: { fromBackup?: boolean; startedAt: number },
+  opts: { fromBackup?: boolean } = {},
 ): Promise<{ universe: SaveUniverse; migration: MigrationResult } | { error: string }> {
   const fromBackup = opts.fromBackup ?? false;
   const universe = fromBackup ? await adapter.restoreBackup(slot) : await adapter.load(slot);
@@ -667,10 +693,8 @@ export async function openSlot(
     };
   }
 
-  universe.meta.migrationInProgress = { from, to: SAVE_SCHEMA_VERSION, startedAt: opts.startedAt };
   const migration = migrate(universe);
   if (migration.problems.length > 0) return { error: migration.problems.join(' ') };
-  universe.meta.migrationInProgress = undefined;
   if (migration.migrated && !fromBackup) {
     await adapter.backup(slot);
     await adapter.save(universe);

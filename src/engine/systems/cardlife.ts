@@ -52,7 +52,7 @@ const ARRIVES_IN = 7 * MS_DAY;
 const RAISE_SHARE = 1.2;
 
 /** The limit a record opens a card with. */
-function limitFor(sim: Simulation, score: number): Money {
+export function limitFor(sim: Simulation, score: number): Money {
   const band = OPENING_LIMITS.find((one) => score >= one.from)!;
   return Math.round(usd(sim, band.usd) / 100) * 100;
 }
@@ -101,7 +101,7 @@ export function registerCardLife(sim: Simulation): void {
     if (old) transferOnArrival(s, person, card, old);
     const armed = s.universe.scheduled.some((one) => one.kind === STATEMENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
     if (!armed) scheduleStatement(s, person, s.now);
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Your New Card Arrived', body: `The ${name}, with a ${formatMoney(applied.limit, saveCurrency(s.universe))} limit.`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `The ${name}, with a ${formatMoney(applied.limit, saveCurrency(s.universe))} limit.`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onCommand<{ transfer?: boolean }, { approved: boolean; limit?: Money }>('card.apply', (p, { sim: s }) => {
@@ -131,7 +131,7 @@ export function registerCardLife(sim: Simulation): void {
     else if (collections) reason = 'you have a debt in collections';
     else if (means <= 0) reason = bank.iso === 'US' && age < 21 ? 'under 21 you need income or money of your own' : 'you have nothing to repay it from';
     if (reason) {
-      s.notify({ category: 'money', title: 'Card Application Declined', body: `${bank.name} said no: ${reason}.`, importance: 50 });
+      s.notify({ category: 'bank', title: 'Card Application Declined', body: `${bank.name} said no: ${reason}.`, importance: 50 });
       return { approved: false };
     }
     const limit = limitFor(s, credit.score);
@@ -139,7 +139,7 @@ export function registerCardLife(sim: Simulation): void {
     // The old card takes nothing new while the balance waits to move.
     if (transfer) credit.closing = s.now;
     s.schedule({ at: credit.applied.arrivesAt, kind: ARRIVES_KIND, label: 'Your New Card Arrives', category: 'home', priority: 38, payload: { personId: person.id } });
-    s.notify({ category: 'money', title: 'Card Approved', body: `${bank.name} approved a card with a ${formatMoney(limit, cur)} limit. It arrives in a week.`, importance: 50 });
+    s.notify({ category: 'bank', title: 'Card Approved', body: `${bank.name} approved a card with a ${formatMoney(limit, cur)} limit. It arrives in a week.`, importance: 50 });
     return { approved: true, limit };
   });
 
@@ -183,7 +183,7 @@ export function registerCardLife(sim: Simulation): void {
     }
     const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
     if (credit.score < 700 || !clean || credit.suspended || inTheBank(s, person) <= 0) {
-      s.notify({ category: 'money', title: 'Limit Increase Declined', body: `The bank kept the limit at ${formatMoney(now, cur)}: it raises one for a record of 700 or more, nothing late in a year, and means to repay.`, importance: 40 });
+      s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept the limit at ${formatMoney(now, cur)}: it raises one for a record of 700 or more, nothing late in a year, and means to repay.`, importance: 40 });
       return { limit: now, granted: false };
     }
     card.creditLimit = Math.min(want, Math.round(now * RAISE_SHARE / 100) * 100);

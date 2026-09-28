@@ -36,7 +36,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account, Plastic } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { dateKey, formatDate, MS_DAY, type Instant } from '../core/time';
+import { dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { FRAUD_LAW, SECURITY } from '../content/security';
@@ -147,8 +147,25 @@ function statementAfter(sim: Simulation, which: Which, at: Instant): Instant {
     const next = sim.universe.scheduled.find((one) => one.kind === 'card.statement' && one.status === 'pending');
     if (next && next.at > at) return next.at;
   }
-  const d = new Date(at);
-  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+  // The bank's month, where the save keeps time; until 2026-09-27 a UTC month.
+  const p = zonedParts(at, sim.homeZone);
+  return instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 1, hour: 0 }, sim.homeZone);
+}
+
+/**
+ * Why a payment can't be reported as not theirs, or nothing where it can:
+ * the command refuses on it, and the Bank screen offers the report only where
+ * it's empty. Until 2026-09-27 the screen offered it past the law's window.
+ */
+export function disputeRefusal(sim: Simulation, person: Person, index: number): string | undefined {
+  const one = person.fraud?.[index];
+  const account = one ? sim.universe.accounts[one.accountId] : undefined;
+  if (!one || !account) return 'That isn’t a payment on your accounts.';
+  if (one.reportedAt !== undefined) return 'You’ve reported it already.';
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const claimDays = bank ? FRAUD_LAW[bank.iso]?.claimDays : undefined;
+  if (claimDays !== undefined && sim.now - one.statedAt > claimDays * MS_DAY) return `The law gives ${claimDays} days from the statement to report it, and they’ve passed.`;
+  return undefined;
 }
 
 export function registerSecurity(sim: Simulation): void {
@@ -167,7 +184,7 @@ export function registerSecurity(sim: Simulation): void {
     // A new number reaches the bills on the card only where the bank passes it on.
     if (which === 'credit' && rules?.updaterToBills !== true) p.billersStale = true;
     if (account.ownerId === s.universe.playerId) {
-      s.notify({ category: 'money', title: 'Your New Card Arrived', body: `Ending ${p.last4}.${p.billersStale ? ' The bills on the old number will be declined until you give them the new one.' : ''}`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `Ending ${p.last4}.${p.billersStale ? ' The bills on the old number will be declined until you give them the new one.' : ''}`, importance: 50, route: '/workspace/bank' });
     }
   });
 
@@ -179,7 +196,7 @@ export function registerSecurity(sim: Simulation): void {
     const back = one.amount - (one.carried ?? 0);
     one.refunded = back;
     if (back > 0) s.post({ memo: 'Refund: a payment you didn’t make', category: 'refund', postings: [{ accountId: account.id, amount: back }, { accountId: s.nominalAccount('expense', 'Unauthorized Use').id, amount: -back }] });
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onEvent('world.day_rollover', 'bank.security', (_event, { sim: s }) => {
@@ -191,7 +208,7 @@ export function registerSecurity(sim: Simulation): void {
       // A month before it expires, a new card with the same number (A144, C88).
       if (!p.stopped && p.expiresAt - s.now <= 30 * MS_DAY) {
         p.expiresAt += yearsFor(account, which) * 365.25 * MS_DAY;
-        s.notify({ category: 'money', title: 'A New Card Is On Its Way', body: `Your ${which} card ending ${p.last4} expires soon. The new one has the same number and expires ${formatDate(p.expiresAt, s.zone)}.`, importance: 35 });
+        s.notify({ category: 'bank', title: 'A New Card Is On Its Way', body: `Your ${which} card ending ${p.last4} expires soon. The new one has the same number and expires ${formatDate(p.expiresAt, s.zone)}.`, importance: 35 });
       }
     }
     somebodyElse(s, person);
@@ -250,14 +267,12 @@ export function registerSecurity(sim: Simulation): void {
 
   sim.onCommand<{ index: number }, { carried: Money; refundAt: Instant }>('card.dispute', (p, { sim: s }) => {
     const person = s.player;
-    const one = person.fraud?.[Number(p.index)];
-    const account = one ? s.universe.accounts[one.accountId] : undefined;
-    if (!one || !account) throw new CommandError('That isn’t a payment on your accounts.');
-    if (one.reportedAt !== undefined) throw new CommandError('You’ve reported it already.');
+    const no = disputeRefusal(s, person, Number(p.index));
+    if (no) throw new CommandError(no);
+    const one = person.fraud![Number(p.index)]!;
+    const account = s.universe.accounts[one.accountId]!;
     const bank = account.bankId ? bankById(account.bankId) : undefined;
     const law = bank ? FRAUD_LAW[bank.iso] : undefined;
-    const claimDays = law?.claimDays;
-    if (claimDays !== undefined && s.now - one.statedAt > claimDays * MS_DAY) throw new CommandError(`The law gives ${claimDays} days from the statement to report it, and they’ve passed.`);
     one.reportedAt = s.now;
     one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY));
     const refundAt = s.now + calendarDays(law?.refundDays ?? ESTIMATE_REFUND_DAYS) * MS_DAY;
@@ -299,16 +314,16 @@ function somebodyElse(sim: Simulation, person: Person): void {
   if (hit.stopped) {
     // Stopped: the bank declines it, asks, and on the answer that it wasn't them, blocks the card and sends another free (A148, C96).
     replace(sim, account, which, 'fraud', false);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked; it wasn’t you, so the card is blocked and a new one is on its way, free.`, importance: 70, route: '/workspace/bank' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked; it wasn’t you, so the card is blocked and a new one is on its way, free.`, importance: 70, route: '/workspace/bank' });
     return;
   }
-  const tx = sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
+  sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
   // Learned of at once where an alert catches it, otherwise at the statement.
   const alert = alertsOf(person).largePayment;
   const statedAt = statementAfter(sim, which, sim.now);
   const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
-  person.fraud = [...(person.fraud ?? []), { transactionId: tx?.id, accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
+  person.fraud = [...(person.fraud ?? []), { accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
   if (alert !== undefined && amount >= alert && person.id === sim.universe.playerId) {
-    sim.notify({ category: 'money', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
   }
 }

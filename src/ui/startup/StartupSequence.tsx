@@ -7,9 +7,13 @@
  * say.
  *
  * The progression is real. Each stage does actual work — resolving persistence,
- * reading the slots, validating what is stored, checking schema versions — and
- * the bar reflects it. A failure stops with a specific reason and a way forward
- * rather than a spinner that never ends.
+ * reading the slots, saying what a slot that won’t read is, checking schema
+ * versions — and the bar reflects it. A failure stops with a specific reason
+ * and a way forward rather than a spinner that never ends. Until 2026-09-27 it
+ * opened on a stage that only waited, "Starting The Projector", closed on
+ * another, and waited between the rest, about 850 milliseconds of a bar
+ * moving for nothing; and "Validating Universes" validated nothing, only
+ * said what reading the slots had found.
  */
 
 import { titleCaseLabel } from '@/engine/core/text';
@@ -42,14 +46,9 @@ interface StartupContext {
 
 const STAGES: Stage[] = [
   {
-    id: 'boot', label: 'Starting The Projector', weight: 10,
-    run: async () => { await pause(160); },
-  },
-  {
-    id: 'storage', label: 'Connecting To Storage', weight: 20,
+    id: 'storage', label: 'Connecting To Storage', weight: 30,
     run: async (context) => {
       context.adapter = await resolveAdapter();
-      await pause(140);
     },
   },
   {
@@ -60,18 +59,17 @@ const STAGES: Stage[] = [
     },
   },
   {
-    id: 'validate', label: 'Validating Universes', weight: 25,
+    id: 'validate', label: 'Saying What Won’t Read', weight: 25,
     run: async (context) => {
       for (const slot of context.slots ?? []) {
         if (slot.error) {
           context.warnings.push(`Slot ${slot.slot}: ${slot.error}${slot.hasBackup ? ' A backup is available.' : ''}`);
         }
       }
-      await pause(180);
     },
   },
   {
-    id: 'migrations', label: 'Checking Schema Versions', weight: 15,
+    id: 'migrations', label: 'Checking Schema Versions', weight: 20,
     run: async (context) => {
       for (const slot of context.slots ?? []) {
         const version = slot.meta?.schemaVersion;
@@ -86,12 +84,7 @@ const STAGES: Stage[] = [
           );
         }
       }
-      await pause(150);
     },
-  },
-  {
-    id: 'ready', label: 'Ready', weight: 5,
-    run: async () => { await pause(220); },
   },
 ];
 
@@ -134,7 +127,6 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
 
     // Warnings are surfaced but never block. The player decides.
     if (context.warnings.length === 0) {
-      await pause(260);
       if (!cancelled.current) onReady({ adapter: context.adapter, slots: context.slots });
     } else {
       (window as unknown as { __slateStartup?: StartupResult }).__slateStartup = {
@@ -232,6 +224,3 @@ function currentLabel(states: Record<string, StageState>): string {
   return active?.label ?? 'Starting';
 }
 
-function pause(ms: number): Promise<void> {
-  return new Promise((resolve) => window.setTimeout(resolve, ms));
-}

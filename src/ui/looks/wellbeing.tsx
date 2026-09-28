@@ -20,15 +20,19 @@
  */
 
 import {
-  A_NORMAL_DAYS_DEBT, EVERYDAY_FITNESS, mendsTo, moraleSettlesAt, readiness, wellbeingSummary, workoutCosts,
+  A_NORMAL_DAYS_DEBT, EVERYDAY_FITNESS, mendsTo, moraleSettlesAt, readiness, readinessParts, wellbeingSummary, workoutCosts,
 } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
+import { ESTIMATE as SCHOOL_ESTIMATE } from '@/engine/systems/school';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, outOf, spokenList } from './words';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
+import { ageWords, ceilingAt } from '@/engine/content/lifespan';
+import { describeEthnicity } from '@/engine/content/ethnicity';
+import { COUNTRIES } from '@/engine/content/geography';
 
 /**
  * The eight, in the order a person would notice them.
@@ -45,7 +49,7 @@ const DIALS = [
   { key: 'stress', name: 'Stress', unit: 'level', behind: 'what it is doing to your sleep' },
   { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: 'what sleep pays back' },
   { key: 'morale', name: 'Morale', unit: 'level', behind: 'how much of the day’s stress a night clears' },
-  { key: 'condition', name: 'Condition', unit: 'level', behind: 'how much a night puts back, and your mood' },
+  { key: 'condition', name: 'Condition', unit: 'level', behind: 'how much a night puts back, your mood, a sick day, and how likely a year is to be your last' },
   { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'how far rest can mend you, and what a workout costs' },
   { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: 'how long since you ate properly' },
   { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'your mood once it’s low, and readiness a little' },
@@ -89,7 +93,7 @@ defineLook<Person>('person', {
     ways.push({
       to: at('readiness', person.id),
       label: 'Readiness',
-      detail: 'What seven of the eight come to, and what a workout builds',
+      detail: 'What seven of the eight come to: your chance at an audition, and what a class, a day’s work or a workout builds',
     });
     if (isYou) {
       ways.push({
@@ -109,13 +113,14 @@ defineLook<Person>('person', {
     // What they care about and the films they love, said back for the same
     // reason. Nothing in the simulation read either until the interests were
     // let change how much an hour of looking after yourself gives the mood
-    // (`systems/enjoyment.ts`); the genres are still read by nothing.
+    // (`systems/enjoyment.ts`), and since 2026-09-27 the same file reads the
+    // genres, and the interests again, for what a day of work gives.
     const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
     const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
     // The traits they picked. Most of them, unlike the rest of this, move the
     // dials below: the nights of a light sleeper and the stress of an even
     // temper are theirs. Three of the money traits move what food costs, and
-    // Keeps Accounts is only said back.
+    // Keeps Accounts, only said back until 2026-09-27, what a return deducts.
     const traits = (person.personalityTraits ?? [])
       .map((id) => PERSONALITY_TRAIT_BY_ID[id]?.name).filter((one): one is string => !!one);
     const said = [
@@ -123,6 +128,18 @@ defineLook<Person>('person', {
         <p key="traits" className="small">
           <span className="dim">{isYou ? 'Who you are. ' : 'Who they are. '}</span>
           {spokenList(traits)}.
+        </p>
+      ),
+      // Their pronouns and their citizenship, as creation took them: the citizenship is the country of birth’s.
+      <p key="papers" className="small">
+        <span className="dim">{isYou ? 'On your papers. ' : 'On their papers. '}</span>
+        {person.pronouns}, a citizen of {COUNTRIES.get(person.citizenshipId)?.name ?? person.citizenshipId}.
+      </p>,
+      // Who they are in their own terms, as creation took it, and nothing more: it moves nothing.
+      (person.raceEthnicity?.length ?? 0) > 0 && (
+        <p key="identity" className="small">
+          <span className="dim">{isYou ? 'In your own terms. ' : 'In their own terms. '}</span>
+          {describeEthnicity(person.raceEthnicity!, person.raceEthnicityOwn)}.
         </p>
       ),
       before.length > 0 && (
@@ -230,22 +247,30 @@ function sentenceFor(dial: Dial, now: number): string {
     case 'condition': {
       const mends = Math.round(mendsTo(dial.person, now));
       const share = Math.round(100 * (0.8 + 0.2 * Math.min(1, w.condition / mendsTo(dial.person, now))));
-      return n >= mends ? `${n}, as sound as your fitness lets rest make you. A night puts all of itself back.`
-        : `${n}, under the ${mends} your fitness lets rest mend you to. A night puts back ${share}% of what it would.`;
+      // What the dial decides, and the midnight pull toward the same mark.
+      const also = `${dial.person.school && n < SCHOOL_ESTIMATE.sickBelow ? ` Under ${SCHOOL_ESTIMATE.sickBelow}, a day off classes called in sick is excused.` : ''} The lower it is, the likelier a year is to be your last.`;
+      return n >= mends ? `${n}, as sound as your fitness lets rest make you. Each midnight settles it back toward ${mends} if it’s over.${also}`
+        : `${n}, under the ${mends} your fitness lets rest mend you to. A night puts back ${share}% of the energy it would, and each midnight settles it a little toward ${mends}.${also}`;
     }
     case 'fitness': {
       const mends = Math.round(mendsTo(dial.person, now));
       const costs = Math.round(workoutCosts(dial.person));
+      // The age’s ceiling, which training can’t pass, and what the years are like now.
+      const age = (now - dial.person.birthInstant) / (365.2425 * 86_400_000);
       return `${n}. Rest can mend you to ${mends}, and a workout costs ${costs} energy.`
-        + (dial.value <= EVERYDAY_FITNESS ? ' This is what an everyday life keeps without training.' : '');
+        + (dial.value <= EVERYDAY_FITNESS ? ' This is what an everyday life keeps without training.' : '')
+        + ` At ${Math.floor(age)}, the most a body can be trained to is ${Math.round(ceilingAt(age).fitness)}. ${ageWords(age)}`;
     }
     case 'nourishment':
-      return n > 70 ? `${n}. Fed, and not thinking about it.`
+      // With the day’s meals: at least 76 each morning when the food is paid for, 40 when it can’t be.
+      return (n > 70 ? `${n}. Fed, and not thinking about it.`
         : n >= 20 ? `${n}. Getting hungry. Under twenty it costs condition and mood by the hour.`
-          : `${n}. Hungry, and it’s costing condition and mood by the hour.`;
+          : `${n}. Hungry, and it’s costing condition and mood by the hour.`)
+        + ' Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.';
     case 'hygiene':
-      return n >= 50 ? `${n}. Clean enough that it isn’t wearing on you.`
-        : `${n}. Under fifty it wears on your mood by the hour. A shower puts it back.`;
+      return (n >= 50 ? `${n}. Clean enough that it isn’t wearing on you.`
+        : `${n}. Under fifty it wears on your mood by the hour. A shower puts it back.`)
+        + ' The morning’s shower takes it to 82 at least.';
     default:
       return `${n}.`;
   }
@@ -257,18 +282,12 @@ function sentenceFor(dial: Dial, now: number): string {
 
 interface Ready { person: Person; value: number; drags: { key: DialKey; name: string; value: number }[] }
 
-/** The dials pulling readiness down hardest, worst first. */
-function dragsOn(w: Wellbeing): { key: DialKey; name: string; value: number }[] {
-  const cost: { key: DialKey; name: string; value: number; hurt: number }[] = [
-    { key: 'energy', name: 'Energy', value: w.energy, hurt: 100 - w.energy },
-    { key: 'stress', name: 'Stress', value: w.stress, hurt: w.stress },
-    { key: 'sleepDebt', name: 'Sleep Debt', value: w.sleepDebt, hurt: Math.min(100, w.sleepDebt * 3.3) },
-    { key: 'nourishment', name: 'Nourishment', value: w.nourishment, hurt: 100 - w.nourishment },
-    { key: 'morale', name: 'Morale', value: w.morale, hurt: 100 - w.morale },
-    { key: 'hygiene', name: 'Hygiene', value: w.hygiene ?? 80, hurt: 100 - (w.hygiene ?? 80) },
-    { key: 'condition', name: 'Condition', value: w.condition, hurt: 100 - w.condition },
-  ];
-  return cost.filter((c) => c.hurt > 12).sort((a, b) => b.hurt - a.hurt).slice(0, 3)
+/** The dials pulling readiness down hardest, worst first, by what each takes off it: a dial costing more than a twentieth of it. */
+function dragsOn(person: Person): { key: DialKey; name: string; value: number }[] {
+  const w = person.wellbeing;
+  return readinessParts(person)
+    .map((part) => ({ key: part.key as DialKey, name: DIALS.find((d) => d.key === part.key)!.name, value: part.key === 'hygiene' ? w.hygiene ?? 80 : w[part.key], hurt: 1 - part.factor / part.best }))
+    .filter((c) => c.hurt > 0.05).sort((a, b) => b.hurt - a.hurt).slice(0, 3)
     .map(({ key, name, value }) => ({ key, name, value }));
 }
 
@@ -277,7 +296,7 @@ defineLook<Ready>('readiness', {
   resolve: (sim, id) => {
     const person = personIn(sim, id || sim.universe.playerId);
     if (!person) return undefined;
-    return { person, value: readiness(person), drags: dragsOn(person.wellbeing) };
+    return { person, value: readiness(person), drags: dragsOn(person) };
   },
   seeds: (sim) => [sim.universe.playerId],
   look: (ready) => ({
@@ -285,13 +304,13 @@ defineLook<Ready>('readiness', {
     kind: 'How Well You Would Do Today',
     parent: at('person', ready.person.id),
     summary: ready.drags.length === 0
-      ? `${Math.round(ready.value)}, and nothing is holding you back. This is as good as a day gets.`
+      ? `${Math.round(ready.value)}, and nothing is holding you back much.${ready.value >= 99.5 ? ' This is as good as a day gets.' : ''}`
       : `${Math.round(ready.value)}, and ${spokenList(ready.drags.map((d) => d.name.toLowerCase()))} ${isAre(ready.drags.length)} what’s costing you.`,
     ways: ready.drags.map((d) => ({
       to: at('dial', `${ready.person.id}/${d.key}`),
       label: d.name,
       detail: `At ${Math.round(d.value)}, and pulling on the rest`,
     })),
-    provenance: 'Seven of the eight, multiplied together, and fitness through condition. It isn’t stored anywhere — it’s what they come to, and it sets what a workout builds.',
+    provenance: 'Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets the chance of booking an audition and what a class, a lab, a day’s work or a workout builds.',
   }),
 });

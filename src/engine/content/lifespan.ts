@@ -37,6 +37,7 @@ interface AgingBand {
   condition: number;
   /** Share of a night's recovery lost per year, as a fraction. */
   recovery: number;
+  /** What a year in the band is like, said on the fitness dial's look beside the ceiling (`ageWords`). */
   about: string;
 }
 
@@ -69,6 +70,11 @@ export function recoveryFactorAt(age: number): number {
   let lost = 0;
   for (let year = 1; year <= age; year++) lost += agingAt(year).recovery;
   return Math.max(0.55, Math.round((1 - lost) * 1000) / 1000);
+}
+
+/** What a year at this age is like, in the band's words. Until 2026-09-27 nothing read them. */
+export function ageWords(age: number): string {
+  return agingAt(Math.max(0, Math.floor(age))).about;
 }
 
 /** The most a body of this age can be brought to, out of a hundred. */

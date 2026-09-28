@@ -220,6 +220,22 @@ describe('a payment to the card', () => {
 });
 
 describe('rewards', () => {
+  it('pays CIBC’s 2% on groceries and 1% on bills at the statement, and 0.5% on the rest', () => {
+    const sim = lifeIn('ca-on-toronto', { bankId: 'ca-cibc' }, 'co-bonus');
+    const c = card(sim);
+    give(sim, c.id, -c.balance);
+    sim.player.credit!.rewardsFrom = sim.now;
+    sim.must({ kind: 'bank.set_payments', payload: { everyday: 'credit' } });
+    spend(sim, sim.player, 200_00, 'Groceries', 'food');
+    const from = sim.player.credit!.rewardsFrom!;
+    sim.advanceTo(nextStatement(sim) + 1000);
+    const on = (cats: string[] | null) => sim.universe.transactions.filter((t) => t.at >= from && t.at < sim.now && !['interest', 'fees', 'cash', 'test', 'card-payment', 'transfer'].includes(t.category) && (cats === null ? !['food', 'bills'].includes(t.category) : cats.includes(t.category)))
+      .reduce((sum, t) => sum + t.postings.filter((p) => p.accountId === c.id && p.amount < 0).reduce((a, p) => a - p.amount, 0), 0);
+    expect(on(['food'])).toBeGreaterThanOrEqual(200_00);
+    expect(sim.player.credit!.rewards).toBe(Math.round(on(['food']) * 0.02 + on(['bills']) * 0.01 + on(null) * 0.005));
+  });
+
+
   it('pays Chase’s 1.5% on purchases at the statement, not on cash, and redeems onto the card', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'co-rewards');
     const c = card(sim);

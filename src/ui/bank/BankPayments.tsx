@@ -12,12 +12,12 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
 import {
-  checksUsed, mayReclaim, paymentWords, paymentsOf, SCHEDULED_KIND, type BillsWay, type RentWay,
+  checkFees, checksUsed, mayReclaim, paymentWords, paymentsOf, SCHEDULED_KIND, type BillsWay, type RentWay,
 } from '@/engine/systems/payments';
-import { CHECK_FEES } from '@/engine/content/payments';
+import { FRENCH_CARDS, cardCeilingRoom } from '@/engine/systems/lending';
 
 export function BankPayments() {
   const { sim, run, toast } = useGame();
@@ -32,7 +32,10 @@ export function BankPayments() {
   const scheduled = useWorld((s) => s.universe.scheduled.filter((i) => i.kind === SCHEDULED_KIND && i.status === 'pending' && i.payload.personId === s.player.id));
   const words = paymentWords(cityId);
   const checks = checksUsed(cityId);
-  const fees = current?.bankId ? CHECK_FEES[current.bankId] : undefined;
+  // In the save's money, as the bank charges them; until 2026-09-27 the bank's own hundredths.
+  const fees = checkFees(sim, person).fees;
+  const ceiling = current?.bankId ? FRENCH_CARDS[current.bankId] : undefined;
+  const ceilingRoom = cardCeilingRoom(sim, person);
   const reclaimable = useWorld((s) => (mayReclaim(cityId) ? s.universe.transactions.filter((t) => t.category === 'bills' && s.now - t.at <= 56 * MS_DAY && !t.reversedBy && !t.reverses
     && t.postings.some((p) => p.accountId === s.player.primaryAccountId && p.amount < 0)) : []));
 
@@ -43,7 +46,7 @@ export function BankPayments() {
   const [spTo, setSpTo] = useState('');
   const [spAmount, setSpAmount] = useState('');
   const [spDate, setSpDate] = useState('');
-  const cents = (v: string) => Math.round(Number(v.replace(/[^\d.]/g, '')) * 100);
+  const cents = centsFromTyped;
 
   const addOrder = () => {
     const answer = run('bank.add_standing_order', { toId: soTo || savings[0]?.id, amount: cents(soAmount), day: Number(soDay) });
@@ -91,12 +94,23 @@ export function BankPayments() {
         {pay.rent === 'check' && 'Rent goes by check on the 1st, and comes out of the current account when the landlord cashes it. Until then it can be stopped. '}
         {pay.rent === 'manual' && 'Rent isn’t paid for you: pay the landlord yourself, from Home, on or before the 1st, or it’s owed. '}
         {pay.rent === 'auto' && 'Rent goes from the current account on the 1st. If the account can’t cover it, it comes back unpaid, the bank charges for that, and it’s owed. '}
+        {pay.rent !== 'check' && checks && fees?.checkbook && !pay.checkbookBought ? `Paying by check orders a checkbook: ${fees.firstFree ? 'the first is free' : money(fees.checkbook)}. ` : ''}
         {pay.bills === 'card' && 'Bills go on the credit card each month. '}
+        {pay.everyday === 'debit' && ceiling && ceilingRoom !== undefined ? `The debit card pays up to its ceiling ${ceiling.window === 'month' ? 'each calendar month' : 'over any 30 days'}, ${money(ceilingRoom)} still; past it the day’s shopping goes on the credit card, or isn’t bought. ` : ''}
         A landlord takes no card.
       </p>
-      <Gated feature="bank.set_payments" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_payments', { linkSavings: !pay.linkSavings })}>
-        Savings Covers The Current Account: {pay.linkSavings ? 'On' : 'Off'}
-      </Gated>
+      {words && <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>How rent and bills are usually paid here: {words.source}.{fees ? ` The bank’s check fees: ${fees.source}.` : ''}</p>}
+      {/* Only with savings to cover it: until 2026-09-27 it was offered with none, and On changed nothing. */}
+      {savings.length > 0 && (
+        <div className="col gap-2">
+          <p className="small" style={{ margin: 0 }}>On, a payment the current account can’t make comes from savings, as far as savings lets it out, and the card’s autopay can draw on it too.</p>
+          <div>
+            <Gated feature="bank.set_payments" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_payments', { linkSavings: !pay.linkSavings })}>
+              Savings Covers The Current Account: {pay.linkSavings ? 'On' : 'Off'}
+            </Gated>
+          </div>
+        </div>
+      )}
 
       {savings.length > 0 && (
         <div style={{ marginTop: 'var(--s4)' }}>

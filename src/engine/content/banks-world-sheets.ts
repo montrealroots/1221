@@ -17,7 +17,6 @@
 
 export interface SheetProduct { name: string; source: string; monthlyFee?: number; statedFee?: number; rate?: number; note?: string }
 export interface Sheet {
-  policy?: { called: string; rate: number; since?: string; source: string };
   interestTax?: { rate: number; note: string; source: string };
   products?: Readonly<Record<string, { current?: SheetProduct; savings?: SheetProduct; confidence: 'H' | 'M' | 'L' }>>;
 }
@@ -41,12 +40,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AX": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.3,
       "note": "Finnish tax at source of 30% is withheld on ordinary bank deposit interest and is final for residents.",
@@ -70,11 +63,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AL": {
-    "policy": {
-      "called": "Key policy rate (1-week repo rate)",
-      "rate": 0.025,
-      "source": "https://tradingeconomics.com/albania/interest-rate"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "Banks must withhold 15% tax on bank interest paid to individuals.",
@@ -97,11 +85,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "DZ": {
-    "policy": {
-      "called": "Discount rate",
-      "rate": 0.025,
-      "source": "https://tradingeconomics.com/algeria/interest-rate"
-    },
     "products": {
       "Banque Nationale d'Algérie (BNA)": {
         "confidence": "M",
@@ -159,12 +142,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AO": {
-    "policy": {
-      "called": "BNA rate (Taxa BNA)",
-      "rate": 0.1475,
-      "since": "2026-09-15",
-      "source": "https://tradingeconomics.com/angola/interest-rate"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Investment income tax (IAC) is withheld on bank deposit interest; sources conflict between 10% and 15%.",
@@ -182,11 +159,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AI": {
-    "policy": {
-      "called": "ECCB discount rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/interest-rates"
-    },
     "products": {
       "National Commercial Bank of Anguilla": {
         "confidence": "M",
@@ -204,11 +176,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AG": {
-    "policy": {
-      "called": "ECCB discount rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/interest-rates"
-    },
     "products": {
       "Antigua Commercial Bank": {
         "confidence": "L",
@@ -227,11 +194,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AR": {
-    "policy": {
-      "called": "Overnight repo rate (benchmark tracked by Trading Economics)",
-      "rate": 0.29,
-      "source": "https://tradingeconomics.com/argentina/interest-rate"
-    },
     "products": {
       "Banco de la Nación Argentina": {
         "confidence": "H",
@@ -249,12 +211,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AM": {
-    "policy": {
-      "called": "Refinancing rate",
-      "rate": 0.0675,
-      "since": "2026-09-15",
-      "source": "https://tradingeconomics.com/armenia/interest-rate"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "Interest, if not exempt, is taxed at 20% from 2023 and withheld at source by the payer.",
@@ -295,12 +251,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AT": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.25,
       "note": "Banks deduct 25% capital-yields tax (KESt) on interest from savings books and current accounts.",
@@ -332,11 +282,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AZ": {
-    "policy": {
-      "called": "Discount rate",
-      "rate": 0.065,
-      "source": "https://tradingeconomics.com/azerbaijan/interest-rate"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% withheld on deposit interest; monthly interest on AZN deposits up to AZN 200 and long (18+ month) AZN deposits are exempt.",
@@ -354,11 +299,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BS": {
-    "policy": {
-      "called": "Discount rate",
-      "rate": 0.04,
-      "source": "https://tradingeconomics.com/bahamas/interest-rate"
-    },
     "products": {
       "RBC Royal Bank": {
         "confidence": "M",
@@ -376,12 +316,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BH": {
-    "policy": {
-      "called": "One-week deposit facility rate",
-      "rate": 0.0475,
-      "since": "2026-09-16",
-      "source": "https://tradingeconomics.com/bahrain/interest-rate"
-    },
     "products": {
       "National Bank of Bahrain": {
         "confidence": "H",
@@ -398,11 +332,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BD": {
-    "policy": {
-      "called": "Policy (repo) rate",
-      "rate": 0.095,
-      "source": "https://tradingeconomics.com/bangladesh/interest-rate"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% deducted at source on deposit interest with a TIN, 15% without.",
@@ -433,11 +362,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BB": {
-    "policy": {
-      "called": "Bank Rate",
-      "rate": 0.02,
-      "source": "https://tradingeconomics.com/barbados/interest-rate"
-    },
     "products": {
       "Republic Bank (Barbados)": {
         "confidence": "M",
@@ -455,11 +379,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BY": {
-    "policy": {
-      "called": "Refinancing rate",
-      "rate": 0.0925,
-      "source": "https://tradingeconomics.com/belarus/interest-rate"
-    },
     "interestTax": {
       "rate": 0.13,
       "note": "13% income tax on deposit interest (short-term deposits); longer-term deposits are exempt.",
@@ -482,12 +401,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BE": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "Regulated savings account interest above EUR 1,020 a year (2026) bears 15% withholding; other interest 30%.",
@@ -529,11 +442,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BJ": {
-    "policy": {
-      "called": "BCEAO marginal lending facility rate",
-      "rate": 0.05,
-      "source": "https://tradingeconomics.com/benin/interest-rate"
-    },
     "products": {
       "Ecobank Bénin": {
         "confidence": "L",
@@ -658,11 +566,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BW": {
-    "policy": {
-      "called": "Monetary Policy Rate",
-      "rate": 0.055,
-      "source": "https://tradingeconomics.com/botswana/interest-rate"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% final withholding on bank interest to residents; the first BWP 7,800 a year is exempt.",
@@ -685,12 +588,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BR": {
-    "policy": {
-      "called": "Selic rate",
-      "rate": 0.1375,
-      "since": "2026-09-17",
-      "source": "https://www.cbrates.com/"
-    },
     "products": {
       "Itaú Unibanco": {
         "confidence": "M",
@@ -741,12 +638,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BG": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "products": {
       "UniCredit Bulbank": {
         "confidence": "M",
@@ -768,11 +659,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BF": {
-    "policy": {
-      "called": "BCEAO marginal lending facility rate",
-      "rate": 0.05,
-      "source": "https://tradingeconomics.com/benin/interest-rate"
-    },
     "interestTax": {
       "rate": 0.125,
       "note": "Capital income tax (IRCM) on interest from deposit and current accounts.",
@@ -796,18 +682,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BI": {
-    "policy": {
-      "called": "Refinance rate",
-      "rate": 0.1,
-      "source": "https://tradingeconomics.com/burundi/interest-rate"
-    }
   },
   "CV": {
-    "policy": {
-      "called": "Reference rate",
-      "rate": 0.025,
-      "source": "https://tradingeconomics.com/cape-verde/interest-rate"
-    }
   },
   "KH": {
     "interestTax": {
@@ -832,11 +708,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CM": {
-    "policy": {
-      "called": "BEAC tender interest rate (TIAO)",
-      "rate": 0.045,
-      "source": "https://tradingeconomics.com/cameroon/interest-rate"
-    },
     "interestTax": {
       "rate": 0.165,
       "note": "Interest bears 16.5% withholding (15% plus 10% local surcharge).",
@@ -876,20 +747,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CF": {
-    "policy": {
-      "called": "BEAC tender interest rate (TIAO)",
-      "rate": 0.045,
-      "since": "2026-06-29",
-      "source": "https://www.capmad.com/article/cemac-beac-cuts-its-policy-rate-to-450-and-eases-reserve-requirements-to-support-lending"
-    }
   },
   "TD": {
-    "policy": {
-      "called": "BEAC tender interest rate (TIAO)",
-      "rate": 0.045,
-      "since": "2026-06-29",
-      "source": "https://www.capmad.com/article/cemac-beac-cuts-its-policy-rate-to-450-and-eases-reserve-requirements-to-support-lending"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "IRCM on interest income for CEMAC residents; secondary source, not confirmed against the tax code.",
@@ -897,11 +756,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CL": {
-    "policy": {
-      "called": "Monetary policy rate (TPM)",
-      "rate": 0.045,
-      "source": "https://www.epicentrochile.com/2026/09/08/banco-central-mantiene-la-tasa-de-politica-monetaria-en-45/"
-    },
     "products": {
       "BancoEstado": {
         "confidence": "M",
@@ -926,12 +780,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CN": {
-    "policy": {
-      "called": "7-day reverse repo rate",
-      "rate": 0.014,
-      "since": "2025-05-08",
-      "source": "https://en.macromicro.me/series/23233/china-reverse-repo-rate-7-day"
-    },
     "products": {
       "ICBC": {
         "confidence": "M",
@@ -949,12 +797,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CO": {
-    "policy": {
-      "called": "Monetary policy (intervention) rate",
-      "rate": 0.12,
-      "since": "2026-06-30",
-      "source": "https://www.banrep.gov.co/es/noticias/junta-directiva-junio-2026"
-    },
     "interestTax": {
       "rate": 0.07,
       "note": "7% withholding on savings-account returns above a daily threshold of 0.055 UVT; an advance on income tax.",
@@ -986,12 +828,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "KM": {
-    "policy": {
-      "called": "TSAO (tender submission rate)",
-      "rate": 0.03,
-      "since": "2023-07-04",
-      "source": "https://banque-comores.km/page/show/taux-dinteret-de-la-bcc"
-    },
     "products": {
       "Exim Bank Comores": {
         "confidence": "L",
@@ -1004,12 +840,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CG": {
-    "policy": {
-      "called": "BEAC tender interest rate (TIAO)",
-      "rate": 0.045,
-      "since": "2026-06-29",
-      "source": "https://www.capmad.com/article/cemac-beac-cuts-its-policy-rate-to-450-and-eases-reserve-requirements-to-support-lending"
-    },
     "products": {
       "LCB Bank": {
         "confidence": "L",
@@ -1021,12 +851,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CD": {
-    "policy": {
-      "called": "Policy rate (taux directeur)",
-      "rate": 0.125,
-      "since": "2026-07-17",
-      "source": "https://www.radiookapi.net/2026/07/19/actualite/economie/nouvelle-baisse-du-taux-directeur-de-la-bcc-de-135-125"
-    },
     "products": {
       "Rawbank": {
         "confidence": "M",
@@ -1063,12 +887,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CR": {
-    "policy": {
-      "called": "Monetary policy rate (TPM)",
-      "rate": 0.03,
-      "since": "2026-07-23",
-      "source": "https://delfino.cr/2026/07/banco-central-reduce-la-tasa-de-politica-monetaria-a-3"
-    },
     "products": {
       "Banco Nacional de Costa Rica": {
         "confidence": "L",
@@ -1093,12 +911,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CI": {
-    "policy": {
-      "called": "BCEAO main policy rate (minimum bid rate)",
-      "rate": 0.03,
-      "since": "2026-03-16",
-      "source": "https://www.bceao.int/fr/documents/taux-directeurs-de-la-bceao"
-    },
     "products": {
       "Société Générale Côte d'Ivoire": {
         "confidence": "M",
@@ -1117,12 +929,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "HR": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.12,
       "note": "12% tax on savings interest withheld by the bank; no allowance.",
@@ -1149,12 +955,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CW": {
-    "policy": {
-      "called": "Pledging rate",
-      "rate": 0.045,
-      "since": "2026-09-17",
-      "source": "https://www.smn-news.com/index.php/st-maarten-st-martin-news/51749-cbcs-raises-pledging-rate-as-foreign-exchange-reserves-are-expected-to-decline.html"
-    },
     "products": {
       "Maduro & Curiel's Bank (MCB)": {
         "confidence": "M",
@@ -1172,12 +972,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CY": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.17,
       "note": "17% Special Defence Contribution withheld on interest for Cyprus-resident, domiciled individuals; non-domiciled exempt.",
@@ -1200,11 +994,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CZ": {
-    "policy": {
-      "called": "2-week repo rate",
-      "rate": 0.0375,
-      "source": "https://www.cnb.cz/en/monetary-policy/bank-board-decisions/"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% final withholding on deposit interest.",
@@ -1241,12 +1030,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "DK": {
-    "policy": {
-      "called": "Current-account rate",
-      "rate": 0.021,
-      "since": "2026-09-11",
-      "source": "https://www.cphstar.dk/2026/09/10/danish-central-bank-raises-interest-rates-by-0-25-percentage-points/"
-    },
     "products": {
       "Danske Bank": {
         "confidence": "M",
@@ -1288,11 +1071,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "DM": {
-    "policy": {
-      "called": "ECCB discount rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/interest-rates"
-    },
     "products": {
       "National Bank of Dominica": {
         "confidence": "L",
@@ -1304,11 +1082,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "DO": {
-    "policy": {
-      "called": "Monetary policy rate (TPM)",
-      "rate": 0.0525,
-      "source": "https://www.diariolibre.com/economia/macroeconomia/2026/07/31/banco-central-mantiene-su-tasa-de-politica-monetaria-en-525--anual/3616418"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% income tax withheld on interest paid to resident individuals.",
@@ -1364,12 +1137,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "EG": {
-    "policy": {
-      "called": "Overnight deposit rate",
-      "rate": 0.19,
-      "since": "2026-02-12",
-      "source": "https://www.cbe.org.eg/en/monetary-policy/mpc-meetings-schedule"
-    },
     "products": {
       "National Bank of Egypt": {
         "confidence": "L",
@@ -1420,20 +1187,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GQ": {
-    "policy": {
-      "called": "BEAC tender interest rate (TIAO)",
-      "rate": 0.045,
-      "since": "2026-06-29",
-      "source": "https://www.capmad.com/article/cemac-beac-cuts-its-policy-rate-to-450-and-eases-reserve-requirements-to-support-lending"
-    }
   },
   "EE": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "products": {
       "Swedbank": {
         "confidence": "M",
@@ -1460,11 +1215,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SZ": {
-    "policy": {
-      "called": "Discount rate",
-      "rate": 0.0675,
-      "source": "https://times.co.sz/39674/business/cbe-holds-rates-as-borrowing-accelerates/"
-    },
     "products": {
       "FNB Eswatini": {
         "confidence": "L",
@@ -1490,12 +1240,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "ET": {
-    "policy": {
-      "called": "National Bank Rate",
-      "rate": 0.16,
-      "since": "2026-07-13",
-      "source": "https://nbe.gov.et/mpc7/"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% final withholding on deposit interest since July 2025 (was 5%).",
@@ -1530,11 +1274,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "FJ": {
-    "policy": {
-      "called": "Overnight Policy Rate",
-      "rate": 0.0025,
-      "source": "https://www.rbf.gov.fj/press-release-no-28-rbf-maintains-the-overnight-policy-rate/"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Resident Interest Withholding Tax, final; exemption certificates available for low incomes and pensioners.",
@@ -1564,12 +1303,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "FI": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.3,
       "note": "30% final tax at source on deposit interest.",
@@ -1609,12 +1342,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GF": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.314,
       "note": "PFU 31.4% (12.8% income-tax prepayment + 18.6% social levies) on ordinary savings interest from 2026; Livret A and LDDS exempt.",
@@ -1656,12 +1383,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GA": {
-    "policy": {
-      "called": "BEAC tender interest rate (TIAO)",
-      "rate": 0.045,
-      "since": "2026-06-29",
-      "source": "https://www.capmad.com/article/cemac-beac-cuts-its-policy-rate-to-450-and-eases-reserve-requirements-to-support-lending"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "IRCM at the general rate on interest from deposits and accounts.",
@@ -1685,11 +1406,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GM": {
-    "policy": {
-      "called": "Monetary policy rate (MPR)",
-      "rate": 0.14,
-      "source": "https://www.voicegambia.com/2026/05/22/central-bank-maintains-monetary-policy-rate-at-14-percent/"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% withholding on interest paid to individuals; secondary source.",
@@ -1706,12 +1422,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GE": {
-    "policy": {
-      "called": "Monetary policy rate",
-      "rate": 0.0825,
-      "since": "2026-05-06",
-      "source": "https://nbg.gov.ge/en/media/news/the-national-bank-of-georgia-raises-the-monetary-policy-rate-by-0-25-percentage-points-to"
-    },
     "products": {
       "TBC Bank": {
         "confidence": "L",
@@ -1736,11 +1446,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GH": {
-    "policy": {
-      "called": "Monetary policy rate",
-      "rate": 0.14,
-      "source": "https://gna.org.gh/2026/03/bog-cuts-policy-rate-to-14-per-cent-despite-geopolitical-tensions/"
-    },
     "products": {
       "GCB Bank": {
         "confidence": "M",
@@ -1775,12 +1480,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GR": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% withheld at source on deposit interest, final for resident individuals.",
@@ -1803,12 +1502,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GL": {
-    "policy": {
-      "called": "Danmarks Nationalbank current-account rate",
-      "rate": 0.021,
-      "since": "2026-09-11",
-      "source": "https://www.cphstar.dk/2026/09/10/danish-central-bank-raises-interest-rates-by-0-25-percentage-points/"
-    },
     "products": {
       "GrønlandsBANKEN": {
         "confidence": "M",
@@ -1834,11 +1527,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GD": {
-    "policy": {
-      "called": "ECCB discount rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/interest-rates"
-    },
     "products": {
       "Grenada Co-operative Bank": {
         "confidence": "M",
@@ -1864,12 +1552,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GP": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.314,
       "note": "French PFU withheld on non-regulated savings interest: 12.8% income tax + 18.6% social levies from 2026; Livret A interest is exempt.",
@@ -1911,12 +1593,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GT": {
-    "policy": {
-      "called": "Tasa de interés líder de política monetaria",
-      "rate": 0.035,
-      "since": "2026-02-18",
-      "source": "https://banguat.gob.gt/page/boletines-de-prensa-2026"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% income tax on bank-deposit interest of individuals, withheld by the bank.",
@@ -1955,12 +1631,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GN": {
-    "policy": {
-      "called": "BCRG taux directeur",
-      "rate": 0.095,
-      "since": "2026-03-30",
-      "source": "https://www.ecofinanceguinee.com/la-bcrg-assouplit-politique-monetaire-en-abaissant-son-taux-directeur-a-950/"
-    },
     "products": {
       "Ecobank Guinée": {
         "confidence": "L",
@@ -1976,12 +1646,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GW": {
-    "policy": {
-      "called": "BCEAO main policy rate (taux directeur principal)",
-      "rate": 0.03,
-      "since": "2026-03-16",
-      "source": "https://www.bceao.int/fr/communique-presse/reunion-ordinaire-du-comite-de-politique-monetaire-de-la-bceao-tenue-le-10-juin"
-    },
     "products": {
       "Banco da África Ocidental (BAO)": {
         "confidence": "L",
@@ -2006,11 +1670,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "GY": {
-    "policy": {
-      "called": "Bank Rate",
-      "rate": 0.05,
-      "source": "https://bankofguyana.org.gy/bog/"
-    },
     "products": {
       "Republic Bank (Guyana)": {
         "confidence": "M",
@@ -2042,12 +1701,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "HN": {
-    "policy": {
-      "called": "Tasa de Política Monetaria (TPM)",
-      "rate": 0.06,
-      "since": "2026-09-21",
-      "source": "https://www.latribuna.hn/2026/09/19/el-bch-sube-la-tasa-de-politica-monetaria-a-6-0-para-garantizar-estabilidad-economica/"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% single tax on savings and time-deposit interest, withheld by the bank.",
@@ -2069,12 +1722,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "HK": {
-    "policy": {
-      "called": "HKMA Base Rate",
-      "rate": 0.0425,
-      "since": "2026-09-17",
-      "source": "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/09/20260917-3"
-    },
     "products": {
       "HSBC": {
         "confidence": "H",
@@ -2092,11 +1739,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "HU": {
-    "policy": {
-      "called": "MNB base rate (alapkamat)",
-      "rate": 0.055,
-      "source": "https://mti.hu/hirek/2026/09/22/kamatdontes-nem-valtoztatott-az-alapkamaton-monetaris-tanacs"
-    },
     "interestTax": {
       "rate": 0.28,
       "note": "15% personal income tax plus 13% social contribution tax on deposit interest, deducted by the bank; the social tax has an annual cap.",
@@ -2120,12 +1762,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "IN": {
-    "policy": {
-      "called": "RBI policy repo rate",
-      "rate": 0.0525,
-      "since": "2025-12-05",
-      "source": "https://www.forbesindia.com/article/news/rbi-mpc-live-updates-august-2026-repo-rate-sanjay-malhotra-policy-announcement-liveblog/2996705/1"
-    },
     "products": {
       "State Bank of India": {
         "confidence": "M",
@@ -2143,11 +1779,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "ID": {
-    "policy": {
-      "called": "BI-Rate",
-      "rate": 0.0575,
-      "source": "https://www.antaranews.com/berita/5754408/bi-rate-kembali-bertahan-di-level-575-persen-pada-rdg-september"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "20% final tax withheld on deposit and savings interest; balances up to IDR 7.5 million are exempt.",
@@ -2183,11 +1814,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "IQ": {
-    "policy": {
-      "called": "Central Bank of Iraq policy rate",
-      "rate": 0.055,
-      "source": "https://www.fxempire.com/interest-rates/iraq"
-    }
   },
   "IM": {
     "products": {
@@ -2207,12 +1833,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "IL": {
-    "policy": {
-      "called": "Bank of Israel interest rate",
-      "rate": 0.0325,
-      "since": "2026-08-31",
-      "source": "https://tradingeconomics.com/israel/interest-rate"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% withheld on interest from deposits not linked to an index; 25% on index-linked deposits.",
@@ -2231,12 +1851,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "IT": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.26,
       "note": "26% withholding (ritenuta) on bank-account and deposit interest.",
@@ -2260,11 +1874,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "JM": {
-    "policy": {
-      "called": "Bank of Jamaica policy rate",
-      "rate": 0.055,
-      "source": "https://boj.org.jm/monetary-policy-press-release-august-2026/"
-    },
     "interestTax": {
       "rate": 0.25,
       "note": "25% withholding on interest paid to resident individuals.",
@@ -2311,12 +1920,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "JO": {
-    "policy": {
-      "called": "CBJ main policy rate",
-      "rate": 0.06,
-      "since": "2026-09-21",
-      "source": "https://www.alarabiya.net/aswaq/economy/2026/09/20/%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%B2%D9%8A-%D8%A7%D9%84%D8%A7%D8%B1%D8%AF%D9%86%D9%8A-%D9%8A%D8%B1%D9%81%D8%BA-%D8%A7%D9%84%D9%81%D8%A7%D8%A6%D8%AF%D8%A9-25-%D9%86%D9%82%D8%B7%D8%A9-%D8%A7%D8%B3%D8%A7%D8%B3"
-    },
     "interestTax": {
       "rate": 0.05,
       "note": "5% withheld on bank interest paid to individuals (7% for legal entities).",
@@ -2339,12 +1942,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "KZ": {
-    "policy": {
-      "called": "NBK base rate",
-      "rate": 0.1625,
-      "since": "2026-09-04",
-      "source": "https://astanatimes.com/2026/09/national-bank-cuts-base-rate-to-16-25-amid-continued-disinflation/"
-    },
     "products": {
       "Halyk Bank": {
         "confidence": "L",
@@ -2370,11 +1967,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "KE": {
-    "policy": {
-      "called": "Central Bank Rate (CBR)",
-      "rate": 0.0875,
-      "source": "https://thekenyatimes.com/business/cbk-announces-bank-lending-rates-for-august-and-september-2026/"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% final withholding tax on bank interest paid to residents.",
@@ -2421,12 +2013,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "KW": {
-    "policy": {
-      "called": "CBK discount rate",
-      "rate": 0.035,
-      "since": "2025-12-10",
-      "source": "https://www.cbk.gov.kw/en/cbk-news/announcements-and-press-releases/press-releases/2025/12/202512101500-cbk-cuts-the-discount-rate-by-25-basis-points-to-350"
-    },
     "products": {
       "National Bank of Kuwait": {
         "confidence": "L",
@@ -2444,19 +2030,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "KG": {
-    "policy": {
-      "called": "NBKR policy rate (учетная ставка)",
-      "rate": 0.12,
-      "source": "https://24.kg/ekonomika/375362_vkyirgyizstane_uchetnaya_stavka_sohranilas_naurovne_12protsentov/"
-    }
   },
   "LA": {
-    "policy": {
-      "called": "BOL 7-day base interest rate",
-      "rate": 0.07,
-      "since": "2026-08-20",
-      "source": "https://english.news.cn/asiapacific/20260822/77071040271b4f17b531e2ceafb0a223/c.html"
-    },
     "products": {
       "BCEL (Banque pour le Commerce Extérieur Lao)": {
         "confidence": "L",
@@ -2475,12 +2050,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "LV": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.255,
       "note": "25.5% personal income tax on interest, withheld at source by Latvian banks.",
@@ -2521,11 +2090,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "LS": {
-    "policy": {
-      "called": "Central Bank Rate (CBR)",
-      "rate": 0.0675,
-      "source": "https://www.lena.gov.ls/cbl-raises-interest-rate-amid-rising-global-economic-uncertainty/"
-    },
     "products": {
       "Standard Lesotho Bank": {
         "confidence": "M",
@@ -2543,11 +2107,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "LR": {
-    "policy": {
-      "called": "CBL Monetary Policy Rate (MPR)",
-      "rate": 0.16,
-      "source": "https://allafrica.com/stories/202607210326.html"
-    },
     "products": {
       "Ecobank Liberia": {
         "confidence": "L",
@@ -2593,12 +2152,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "LT": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0,
       "note": "Banks do not withhold; interest over EUR 500 a year is taxed at 15% and declared by the individual.",
@@ -2629,12 +2182,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "LU": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "RELIBI final withholding of 20% by Luxembourg banks on resident savings interest; first EUR 250 per bank a year exempt.",
@@ -2658,12 +2205,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MO": {
-    "policy": {
-      "called": "AMCM base rate",
-      "rate": 0.0425,
-      "since": "2026-09-17",
-      "source": "https://macaubusiness.com/monetary-authority-raises-base-rate-for-first-time-since-2023-commercial-banks-hold-prime-steady-for-now/"
-    },
     "interestTax": {
       "rate": 0,
       "note": "Macau imposes no withholding tax on bank interest paid to individuals.",
@@ -2696,11 +2237,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MG": {
-    "policy": {
-      "called": "Taux directeur (BFM policy rate)",
-      "rate": 0.125,
-      "source": "https://www.capmad.com/article/bfm-releve-son-taux-directeur-lariary-continue-de-sapprecier-face-au-dollar-et-a-leuro"
-    },
     "interestTax": {
       "rate": 0.21,
       "note": "IRCM on current-account and deposit interest at 21% per a secondary source; withholding mechanics not confirmed.",
@@ -2724,11 +2260,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MW": {
-    "policy": {
-      "called": "Policy rate",
-      "rate": 0.24,
-      "source": "https://malawi24.com/2026/08/06/policy-rate-maintained-at-24/"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "20% withholding tax on bank interest paid to residents, deducted by the bank.",
@@ -2751,12 +2282,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MY": {
-    "policy": {
-      "called": "Overnight Policy Rate (OPR)",
-      "rate": 0.0275,
-      "since": "2025-07-09",
-      "source": "https://www.freemalaysiatoday.com/category/nation/2026/09/03/bank-negara-maintains-opr-at-2-75-3"
-    },
     "interestTax": {
       "rate": 0,
       "note": "Interest on deposits with licensed banks is tax-exempt for resident individuals.",
@@ -2779,11 +2304,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MV": {
-    "policy": {
-      "called": "MMA policy rate",
-      "rate": 0.07,
-      "source": "https://tradingeconomics.com/maldives/interest-rate"
-    },
     "products": {
       "Bank of Maldives": {
         "confidence": "M",
@@ -2801,11 +2321,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "ML": {
-    "policy": {
-      "called": "BCEAO minimum bid rate (taux directeur)",
-      "rate": 0.03,
-      "source": "https://www.capmad.com/article/le-cpm-de-la-bceao-maintient-son-taux-directeur-a-3-apres-sa-reunion-du-9-septembre"
-    },
     "interestTax": {
       "rate": 0.09,
       "note": "IRC on interest from deposits and savings accounts of individuals, 9% per a secondary summary of Mali's tax code.",
@@ -2828,12 +2343,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MT": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "Banks deduct a 15% final withholding tax on local interest paid to residents.",
@@ -2895,12 +2404,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MQ": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.314,
       "note": "French PFU: 12.8% income-tax prepayment plus 18.6% social levies withheld on taxable savings interest (Livret A exempt).",
@@ -2924,19 +2427,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MR": {
-    "policy": {
-      "called": "Taux directeur (BCM policy rate)",
-      "rate": 0.0675,
-      "source": "https://fr.saharamedias.net/la-banque-centrale-de-mauritanie-releve-son-taux-directeur-a-675-afin-de-faire-face-a-linflation/"
-    }
   },
   "MU": {
-    "policy": {
-      "called": "Key Rate",
-      "rate": 0.0475,
-      "since": "2026-05-20",
-      "source": "https://platformafrica.com/2026/08/13/key-repo-rate-maintained-at-4-75-per-cent-per-annum/"
-    },
     "interestTax": {
       "rate": 0,
       "note": "Interest on an individual's savings or fixed deposit account is exempt; tax is deducted at source only where deposits exceed Rs 2 million.",
@@ -2960,12 +2452,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "YT": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.314,
       "note": "French PFU: 12.8% income-tax prepayment plus 18.6% social levies withheld on taxable savings interest (Livret A exempt).",
@@ -3007,12 +2493,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MD": {
-    "policy": {
-      "called": "Base rate",
-      "rate": 0.09,
-      "since": "2026-09-17",
-      "source": "https://www.bnm.md/ro/content/decizia-de-politica-monetara-17092026"
-    },
     "interestTax": {
       "rate": 0.06,
       "note": "Banks withhold a final 6% income tax on deposit interest paid to resident individuals.",
@@ -3038,11 +2518,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MN": {
-    "policy": {
-      "called": "Policy rate",
-      "rate": 0.125,
-      "source": "https://english.news.cn/asiapacific/20260917/ce8a17805f9c46adb2326e7b6678810b/c.html"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Resident individuals pay 10% on interest income; withholding by the bank is implied but not confirmed.",
@@ -3084,11 +2559,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MS": {
-    "policy": {
-      "called": "ECCB discount rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/news/communique-of-the-112th-meeting-of-the-eccb-monetary-council"
-    },
     "products": {
       "Bank of Montserrat": {
         "confidence": "M",
@@ -3107,12 +2577,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MA": {
-    "policy": {
-      "called": "Taux directeur (Bank Al-Maghrib key rate)",
-      "rate": 0.0225,
-      "since": "2025-03-18",
-      "source": "https://telquel.ma/instant-t/2026/09/22/bank-al-maghrib-maintient-son-taux-directeur-a-225_2008947"
-    },
     "interestTax": {
       "rate": 0.3,
       "note": "30% final withholding on interest paid to individuals for non-professional investments.",
@@ -3136,11 +2600,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MZ": {
-    "policy": {
-      "called": "MIMO rate",
-      "rate": 0.0925,
-      "source": "https://aimnews.org/2026/05/26/banco-de-mocambique-mantem-taxa-mimo-em-925-por-cento/"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Liberatory IRPS withholding on deposit interest, 10% per secondary sources (some cite 20%); unverified.",
@@ -3162,11 +2621,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MM": {
-    "policy": {
-      "called": "CBM policy rate",
-      "rate": 0.09,
-      "source": "https://www.ceicdata.com/en/myanmar/central-bank-rate"
-    },
     "products": {
       "KBZ Bank": {
         "confidence": "L",
@@ -3179,11 +2633,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NA": {
-    "policy": {
-      "called": "Repo rate",
-      "rate": 0.0675,
-      "source": "https://tradingeconomics.com/namibia/interest-rate/news/574720"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Banks withhold a final 10% tax on interest paid to individuals.",
@@ -3206,11 +2655,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NP": {
-    "policy": {
-      "called": "Policy rate",
-      "rate": 0.045,
-      "source": "https://nepsetrading.com/blog/nepal-rastra-bank-keeps-policy-rates-unchanged-signals-gradual-shift-toward-a-narrower-interest-rate-corridor"
-    },
     "interestTax": {
       "rate": 0.06,
       "note": "Banks deduct a final 6% TDS on interest paid to natural persons (Income Tax Act s.88).",
@@ -3228,12 +2672,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NL": {
-    "policy": {
-      "called": "ECB deposit facility rate",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "products": {
       "ING": {
         "confidence": "M",
@@ -3252,12 +2690,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NC": {
-    "policy": {
-      "called": "IEOM 7-day rediscount rate",
-      "rate": 0.0235,
-      "since": "2026-04-30",
-      "source": "https://www.tntvnews.pf/polynesie/economie/lieom-baisse-lensemble-des-taux-dinteret-directeurs-de-25-points-de-base-pour-la-zone-franc-pacifique/"
-    },
     "interestTax": {
       "rate": 0.12,
       "note": "Banks withhold IRCDC at 8% plus the 4% Contribution Calédonienne de Solidarité on ordinary account and livret interest (Livret A bears only the CCS).",
@@ -3280,11 +2712,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NI": {
-    "policy": {
-      "called": "Tasa de Referencia Monetaria (TRM)",
-      "rate": 0.0575,
-      "source": "https://www.prensa-latina.cu/2026/09/04/banco-de-nicaragua-mantiene-sin-cambios-tasa-de-referencia-monetaria/"
-    },
     "products": {
       "BANPRO": {
         "confidence": "M",
@@ -3302,11 +2729,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NE": {
-    "policy": {
-      "called": "BCEAO minimum bid rate (taux directeur)",
-      "rate": 0.03,
-      "source": "https://www.capmad.com/article/le-cpm-de-la-bceao-maintient-son-taux-directeur-a-3-apres-sa-reunion-du-9-septembre"
-    },
     "products": {
       "Ecobank Niger": {
         "confidence": "L",
@@ -3319,12 +2741,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NG": {
-    "policy": {
-      "called": "Monetary Policy Rate (MPR)",
-      "rate": 0.23,
-      "since": "2026-09-22",
-      "source": "https://www.arise.tv/cbn-cuts-mpr-to-23-from-26-5-as-mpc-revises-policy/"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Banks deduct 10% withholding tax on savings interest under the Nigeria Tax Act 2025.",
@@ -3365,11 +2781,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MK": {
-    "policy": {
-      "called": "Central bank bills rate (NBRM policy rate)",
-      "rate": 0.0425,
-      "source": "https://tradingeconomics.com/macedonia/interest-rate/news/559341"
-    },
     "interestTax": {
       "rate": 0,
       "note": "Interest on bank deposits is exempt from personal income tax and not withheld.",
@@ -3404,12 +2815,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "NO": {
-    "policy": {
-      "called": "Policy rate (styringsrenten)",
-      "rate": 0.045,
-      "since": "2026-09-24",
-      "source": "https://www.norges-bank.no/aktuelt/nyheter/Foredrag-og-taler/2026/2026-09-24-pk"
-    },
     "products": {
       "DNB": {
         "confidence": "L",
@@ -3433,12 +2838,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "OM": {
-    "policy": {
-      "called": "CBO repo rate",
-      "rate": 0.045,
-      "since": "2026-09-17",
-      "source": "https://www.omanobserver.om/article/1196345/business/markets/cbo-raises-repo-rate-to-45-in-first-increase-since-july-2023"
-    },
     "products": {
       "Bank Muscat": {
         "confidence": "M",
@@ -3456,11 +2855,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PK": {
-    "policy": {
-      "called": "Policy rate",
-      "rate": 0.115,
-      "source": "https://tradingeconomics.com/pakistan/interest-rate"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "Section 151 withholding on bank profit for filers per a TY2027 rate card; non-filers pay double (40%). Unverified against FBR.",
@@ -3540,11 +2934,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PG": {
-    "policy": {
-      "called": "Kina Facility Rate",
-      "rate": 0.05,
-      "source": "https://www.bankpng.gov.pg/kina-facility-rates"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "Interest withholding tax of 15% is deducted from interest paid by a financial institution to a PNG resident, creditable against final tax.",
@@ -3567,11 +2956,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PY": {
-    "policy": {
-      "called": "Monetary Policy Rate (TPM)",
-      "rate": 0.055,
-      "source": "https://www.bcp.gov.py/en/tasa-de-politica-monetaria"
-    },
     "products": {
       "Banco Itaú Paraguay": {
         "confidence": "M",
@@ -3596,12 +2980,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PE": {
-    "policy": {
-      "called": "Reference Rate",
-      "rate": 0.0425,
-      "since": "2025-09-11",
-      "source": "https://www.bcrp.gob.pe/"
-    },
     "products": {
       "BCP (Banco de Crédito del Perú)": {
         "confidence": "M",
@@ -3620,12 +2998,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PH": {
-    "policy": {
-      "called": "Target Reverse Repurchase Rate",
-      "rate": 0.05,
-      "since": "2026-08-27",
-      "source": "https://www.bsp.gov.ph/SitePages/PriceStability/MonetaryPolicyDecision.aspx"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "A 20% final withholding tax is deducted from peso deposit interest.",
@@ -3664,11 +3036,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PL": {
-    "policy": {
-      "called": "Reference Rate",
-      "rate": 0.0375,
-      "source": "https://www.bankier.pl/wiadomosc/Stopy-w-NBP-bez-zmian-we-wrzesiu-2026-Rada-nie-zmienia-stop-ale-czy-zmienila-kurs-9194318.html"
-    },
     "interestTax": {
       "rate": 0.19,
       "note": "The 19% capital-income tax (podatek Belki) is withheld by the bank from deposit interest.",
@@ -3691,12 +3058,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PT": {
-    "policy": {
-      "called": "Deposit Facility Rate (ECB)",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.28,
       "note": "Deposit interest paid to residents bears a 28% liberatory withholding tax.",
@@ -3738,12 +3099,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "QA": {
-    "policy": {
-      "called": "QCB Deposit Rate (QCBDR)",
-      "rate": 0.041,
-      "since": "2026-09-17",
-      "source": "http://thepeninsulaqatar.com/article/16/09/2026/qcb-increases-interest-rates-1"
-    },
     "products": {
       "QNB": {
         "confidence": "M",
@@ -3768,12 +3123,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "RE": {
-    "policy": {
-      "called": "Deposit Facility Rate (ECB)",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.314,
       "note": "French rules: 12.8% income-tax prepayment plus 18.6% social levies (from 2026) withheld on taxable interest; Livret A interest is exempt.",
@@ -3797,12 +3146,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "RO": {
-    "policy": {
-      "called": "Monetary Policy Rate",
-      "rate": 0.065,
-      "since": "2024-08-08",
-      "source": "https://www.bnr.ro"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Banks withhold 10% income tax on deposit interest for residents; CASS may also be owed above six minimum wages.",
@@ -3841,11 +3184,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "RU": {
-    "policy": {
-      "called": "Key Rate",
-      "rate": 0.14,
-      "source": "https://www.cbr.ru/hd_base/keyrate/"
-    },
     "products": {
       "Sberbank": {
         "confidence": "M",
@@ -3863,11 +3201,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "RW": {
-    "policy": {
-      "called": "Central Bank Rate",
-      "rate": 0.0875,
-      "source": "https://www.bnr.rw/"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% final withholding tax on interest; deposits held at least one year are exempt.",
@@ -3884,12 +3217,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "BL": {
-    "policy": {
-      "called": "Deposit Facility Rate (ECB)",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "products": {
       "BRED": {
         "confidence": "L",
@@ -3924,11 +3251,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "KN": {
-    "policy": {
-      "called": "ECCB Discount Rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/news/communique-of-the-112th-meeting-of-the-eccb-monetary-council"
-    },
     "products": {
       "St Kitts-Nevis-Anguilla National Bank": {
         "confidence": "M",
@@ -3945,11 +3267,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "LC": {
-    "policy": {
-      "called": "ECCB Discount Rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/news/communique-of-the-112th-meeting-of-the-eccb-monetary-council"
-    },
     "products": {
       "Bank of Saint Lucia": {
         "confidence": "M",
@@ -3966,12 +3283,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "MF": {
-    "policy": {
-      "called": "Deposit Facility Rate (ECB)",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "products": {
       "BRED": {
         "confidence": "L",
@@ -3989,12 +3300,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "PM": {
-    "policy": {
-      "called": "Deposit Facility Rate (ECB)",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "products": {
       "Banque de Saint-Pierre-et-Miquelon": {
         "confidence": "L",
@@ -4007,11 +3312,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "VC": {
-    "policy": {
-      "called": "ECCB Discount Rate",
-      "rate": 0.03,
-      "source": "https://www.eccb-centralbank.org/news/communique-of-the-112th-meeting-of-the-eccb-monetary-council"
-    },
     "products": {
       "Bank of St Vincent and the Grenadines": {
         "confidence": "L",
@@ -4076,12 +3376,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SA": {
-    "policy": {
-      "called": "Repo Rate",
-      "rate": 0.045,
-      "since": "2026-09-16",
-      "source": "https://saudigazette.com.sa/article/664633/saudi-arabia/saudi-arabia-raises-repo-and-reverse-repo-rates-by-25-basis-points"
-    },
     "products": {
       "Al Rajhi Bank": {
         "confidence": "M",
@@ -4106,12 +3400,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SN": {
-    "policy": {
-      "called": "BCEAO Main Policy Rate",
-      "rate": 0.03,
-      "since": "2026-03-16",
-      "source": "https://www.bceao.int/fr/documents/taux-directeurs-de-la-bceao"
-    },
     "products": {
       "CBAO (Attijariwafa)": {
         "confidence": "M",
@@ -4129,12 +3417,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "RS": {
-    "policy": {
-      "called": "Key Policy Rate",
-      "rate": 0.0575,
-      "since": "2024-09-12",
-      "source": "https://www.nbs.rs/en/ciljevi-i-funkcije/monetarna-politika/kamatne-stope/"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% capital-income tax is withheld on foreign-currency savings interest; interest on dinar savings is exempt.",
@@ -4153,11 +3435,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SC": {
-    "policy": {
-      "called": "Monetary Policy Rate",
-      "rate": 0.0175,
-      "source": "https://tradingeconomics.com/seychelles/interest-rate"
-    },
     "products": {
       "Seychelles Commercial Bank": {
         "confidence": "L",
@@ -4182,12 +3459,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SL": {
-    "policy": {
-      "called": "Monetary Policy Rate",
-      "rate": 0.17,
-      "since": "2026-06-17",
-      "source": "https://sierraloaded.sl/news/bank-sierra-leone-raises-monetary-policy-rate-17/"
-    },
     "products": {
       "Sierra Leone Commercial Bank": {
         "confidence": "L",
@@ -4217,12 +3488,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SX": {
-    "policy": {
-      "called": "Pledging Rate",
-      "rate": 0.045,
-      "since": "2026-09-17",
-      "source": "https://www.smn-news.com/index.php/st-maarten-st-martin-news/51749-cbcs-raises-pledging-rate-as-foreign-exchange-reserves-are-expected-to-decline.html"
-    },
     "products": {
       "Windward Islands Bank (WIB)": {
         "confidence": "H",
@@ -4241,12 +3506,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SK": {
-    "policy": {
-      "called": "Deposit Facility Rate (ECB)",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "interestTax": {
       "rate": 0.19,
       "note": "Banks withhold 19% final tax on deposit interest paid to resident individuals.",
@@ -4284,12 +3543,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SI": {
-    "policy": {
-      "called": "Deposit Facility Rate (ECB)",
-      "rate": 0.025,
-      "since": "2026-09-16",
-      "source": "https://www.ecb.europa.eu"
-    },
     "products": {
       "NLB": {
         "confidence": "H",
@@ -4340,12 +3593,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "ZA": {
-    "policy": {
-      "called": "Repo Rate",
-      "rate": 0.0725,
-      "since": "2026-09-25",
-      "source": "https://www.sanews.gov.za/south-africa/mpc-raises-repo-rate-725"
-    },
     "products": {
       "Capitec": {
         "confidence": "H",
@@ -4364,11 +3611,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SS": {
-    "policy": {
-      "called": "Central Bank Rate",
-      "rate": 0.13,
-      "source": "https://cbonds.com/indexes/60825/"
-    },
     "products": {
       "KCB South Sudan": {
         "confidence": "L",
@@ -4385,12 +3627,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "LK": {
-    "policy": {
-      "called": "Overnight Policy Rate",
-      "rate": 0.0875,
-      "since": "2026-05-26",
-      "source": "https://www.cbsl.gov.lk/en/news/monetary-policy-review-no-3-of-2026"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "Banks withhold 10% (advance income tax) on deposit interest; senior citizens may be exempt below a threshold.",
@@ -4469,12 +3705,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SJ": {
-    "policy": {
-      "called": "policy rate",
-      "rate": 0.045,
-      "since": "2026-09-24",
-      "source": "https://www.norges-bank.no/en/topics/monetary-policy/policy-rate/"
-    },
     "products": {
       "SpareBank 1 Nord-Norge (Longyearbyen)": {
         "confidence": "H",
@@ -4492,12 +3722,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "SE": {
-    "policy": {
-      "called": "policy rate",
-      "rate": 0.0175,
-      "since": "2025-10-01",
-      "source": "https://www.riksbank.se/en-gb/press-and-published/notices-and-press-releases/press-releases/2025/policy-rate-is-cut-to-1.75-per-cent"
-    },
     "interestTax": {
       "rate": 0.3,
       "note": "Banks deduct 30% preliminary tax from interest paid to resident individuals; it is settled in the annual tax return.",
@@ -4520,12 +3744,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "CH": {
-    "policy": {
-      "called": "SNB policy rate",
-      "rate": 0,
-      "since": "2025-06-20",
-      "source": "https://www.snb.ch/en/the-snb/mandates-goals/monetary-policy/decisions"
-    },
     "interestTax": {
       "rate": 0.35,
       "note": "35% federal withholding tax on bank interest; customer deposits earning no more than CHF 200 of interest a year are exempt, and it is reclaimable when declared.",
@@ -4565,12 +3783,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TW": {
-    "policy": {
-      "called": "discount rate",
-      "rate": 0.02,
-      "since": "2024-03-22",
-      "source": "https://www.cbc.gov.tw/en/cp-448-192435-024f3-2.html"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% withheld on interest paid to residents; up to NT$270,000 of savings interest per household is deductible when filing.",
@@ -4592,20 +3804,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TJ": {
-    "policy": {
-      "called": "refinancing rate",
-      "rate": 0.07,
-      "since": "2026-02-02",
-      "source": "https://www.nbt.tj/en/"
-    }
   },
   "TZ": {
-    "policy": {
-      "called": "Central Bank Rate (CBR)",
-      "rate": 0.0625,
-      "since": "2026-07-03",
-      "source": "https://www.tanzaniainvest.com/economy/central-bank-rate-q3-2026"
-    },
     "interestTax": {
       "rate": 0.1,
       "note": "10% withholding tax on interest paid to residents.",
@@ -4627,12 +3827,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TH": {
-    "policy": {
-      "called": "policy interest rate (1-day repurchase rate)",
-      "rate": 0.01,
-      "since": "2026-02-25",
-      "source": "https://www.bot.or.th/en/our-roles/monetary-policy/mpc-publication/policy-interest-rate.html"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% withheld on bank interest; savings-account interest is exempt if the total from all banks is at most THB 20,000 a year and the depositor consents to reporting.",
@@ -4674,12 +3868,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TG": {
-    "policy": {
-      "called": "BCEAO main policy rate (principal taux directeur)",
-      "rate": 0.03,
-      "since": "2026-03-16",
-      "source": "https://www.financialafrik.com/2026/09/09/uemoa-la-bceao-maintient-ses-taux-directeurs-linflation-attendue-a-1-en-2026/"
-    },
     "products": {
       "Orabank Togo": {
         "confidence": "H",
@@ -4698,11 +3886,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TO": {
-    "policy": {
-      "called": "policy rate",
-      "rate": 0.02,
-      "source": "https://matangitonga.to/2026/08/29/nrbt-maintains-neutral-stance"
-    },
     "products": {
       "BSP Tonga": {
         "confidence": "M",
@@ -4727,12 +3910,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TT": {
-    "policy": {
-      "called": "repo rate",
-      "rate": 0.035,
-      "since": "2020-03-17",
-      "source": "https://www.central-bank.org.tt/core-functions/monetary-policy/repurchase-rate/"
-    },
     "products": {
       "Republic Bank": {
         "confidence": "M",
@@ -4750,12 +3927,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TN": {
-    "policy": {
-      "called": "key policy rate (taux directeur)",
-      "rate": 0.07,
-      "since": "2026-01-07",
-      "source": "https://africanmanager.com/le-taux-directeur-de-la-bct-a-7-des-le-7-janvier-2026/"
-    },
     "interestTax": {
       "rate": 0.2,
       "note": "20% withheld on deposit interest; interest on special savings accounts is exempt up to TND 5,000 a year (TND 3,000 for bank accounts).",
@@ -4779,12 +3950,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "TR": {
-    "policy": {
-      "called": "one-week repo rate",
-      "rate": 0.37,
-      "since": "2026-01-23",
-      "source": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Core+Functions/Monetary+Policy/Central+Bank+Interest+Rates/1+Week+Repo"
-    },
     "interestTax": {
       "rate": 0.175,
       "note": "17.5% on TL demand deposits and terms up to 6 months (15% up to 1 year, 10% over 1 year), extended to 31 Dec 2026.",
@@ -4822,11 +3987,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "UG": {
-    "policy": {
-      "called": "Central Bank Rate (CBR)",
-      "rate": 0.0975,
-      "source": "https://www.monitor.co.ug/uganda/news/national/bank-of-uganda-holds-benchmark-rate-at-9-75-as-inflation-edge-prompts-caution-5557436"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% withholding tax on interest paid by a financial institution to an individual, final tax.",
@@ -4857,12 +4017,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "UA": {
-    "policy": {
-      "called": "key policy rate",
-      "rate": 0.16,
-      "since": "2026-09-18",
-      "source": "https://bank.gov.ua/en/news/all/natsionalniy-bank-ukrayini-pidvischiv-oblikovu-stavku-do-16"
-    },
     "interestTax": {
       "rate": 0.23,
       "note": "18% personal income tax plus 5% military levy, both withheld by the bank.",
@@ -4884,12 +4038,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "AE": {
-    "policy": {
-      "called": "Base Rate (Overnight Deposit Facility)",
-      "rate": 0.039,
-      "since": "2026-09-17",
-      "source": "https://gulfnews.com/business/banking/uae-central-bank-raises-base-rate-to-39-after-us-fed-rate-hike-1.500677315"
-    },
     "products": {
       "Emirates NBD": {
         "confidence": "H",
@@ -4908,11 +4056,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "UY": {
-    "policy": {
-      "called": "Tasa de Política Monetaria (TPM)",
-      "rate": 0.0575,
-      "source": "https://www.bcu.gub.uy/Comunicaciones/Paginas/Detalle-Noticia.aspx?noticia=504&title=El-BCU-mantiene-la-Tasa-de-Pol%C3%ADtica-Monetaria-en-5,75%25"
-    },
     "interestTax": {
       "rate": 0.055,
       "note": "IRPF on peso deposits (no indexation) up to 1 year is 5.5%; foreign-currency deposits pay 12%.",
@@ -4935,11 +4078,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "UZ": {
-    "policy": {
-      "called": "policy rate",
-      "rate": 0.14,
-      "source": "https://www.uzdaily.uz/en/uzbekistan-central-bank-keeps-key-rate-at-14-18-09-2026/"
-    },
     "products": {
       "National Bank of Uzbekistan (NBU)": {
         "confidence": "L",
@@ -4959,11 +4097,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "VU": {
-    "policy": {
-      "called": "monetary policy rate",
-      "rate": 0.0275,
-      "source": "https://www.centralbanking.com/central-banks/monetary-policy/monetary-policy-decisions/7976291/vanuatu-holds-rates-and-forecasts-continued-economic-recovery"
-    },
     "products": {
       "National Bank of Vanuatu": {
         "confidence": "L",
@@ -4997,12 +4130,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "VN": {
-    "policy": {
-      "called": "refinancing rate",
-      "rate": 0.045,
-      "since": "2023-06-19",
-      "source": "https://www.ceicdata.com/en/vietnam/prime-rate-refinancing-rates-and-discount-rate/refinancing-rate"
-    },
     "products": {
       "Vietcombank": {
         "confidence": "M",
@@ -5036,12 +4163,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "WF": {
-    "policy": {
-      "called": "IEOM deposit facility rate",
-      "rate": 0.0225,
-      "since": "2026-06-25",
-      "source": "https://www.ieom.fr/Decision-de-politique-monetaire-du-conseil-de-surveillance-de-l-IEOM-7088?lang=fr"
-    },
     "products": {
       "Banque de Wallis-et-Futuna (BNP Paribas)": {
         "confidence": "L",
@@ -5055,11 +4176,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "EH": {
-    "policy": {
-      "called": "key policy rate (taux directeur)",
-      "rate": 0.0225,
-      "source": "https://telquel.ma/instant-t/2026/09/22/bank-al-maghrib-maintient-son-taux-directeur-a-225_2008947"
-    },
     "interestTax": {
       "rate": 0.3,
       "note": "30% withheld at source on interest paid to individuals, in full discharge of income tax.",
@@ -5097,12 +4213,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "ZM": {
-    "policy": {
-      "called": "Monetary Policy Rate",
-      "rate": 0.1325,
-      "since": "2026-05-13",
-      "source": "https://www.cnbcafrica.com/2026/zambias-central-bank-trims-policy-rate-by-25-basis-points"
-    },
     "products": {
       "Zanaco": {
         "confidence": "M",
@@ -5143,11 +4253,6 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     }
   },
   "ZW": {
-    "policy": {
-      "called": "Bank Policy Rate",
-      "rate": 0.3,
-      "source": "https://lucent.co.zw/business/analysis-of-the-reserve-bank-of-zimbabwes-2026-mid-term-monetary-policy-statement/"
-    },
     "interestTax": {
       "rate": 0.15,
       "note": "15% resident tax withheld on interest from financial institutions, final for individuals.",

@@ -227,7 +227,7 @@ export class Base44SaveAdapter implements SaveAdapter {
       try {
         // The key is the save and the moment it reached, so a retry after a
         // dropped connection writes once rather than twice.
-        const reply = await this.call('saveUniverse', {
+        await this.call('saveUniverse', {
           slot,
           payload,
           // The schema is in the key because bringing a save forward moves
@@ -236,7 +236,6 @@ export class Base44SaveAdapter implements SaveAdapter {
           // dropped, so the server kept the old save.
           idempotencyKey: `${universe.meta.id}:${universe.now}:${Math.round(universe.meta.playtimeSeconds)}:${universe.meta.schemaVersion}`,
         }, 'Saving');
-        universe.meta.backupAvailable = Boolean(reply.backupAvailable);
         await this.fallback.save(universe).catch(() => undefined);
         return;
       } catch (error) {
@@ -270,7 +269,6 @@ export class Base44SaveAdapter implements SaveAdapter {
           backup_payload: existing.payload,
           backup_world_date_label: existing.world_date_label ?? '',
         });
-        universe.meta.backupAvailable = true;
       } else {
         await entity.create(data);
       }

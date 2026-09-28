@@ -9,12 +9,14 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { CARDS } from '@/engine/content/cards';
 import { cardOf, cardTerms } from '@/engine/systems/credit';
-import { PLAN_MONTHS, planRoom, transferRate } from '@/engine/systems/cardoffers';
+import { BONUSES, PLAN_MONTHS, planRoom, transferRate, transferRefusal } from '@/engine/systems/cardoffers';
+import { limitFor } from '@/engine/systems/cardlife';
+import { inSaveMoney } from '@/engine/systems/banking';
 
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 
@@ -28,7 +30,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   const card = useWorld((s) => cardOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
-  const cents = (typed: string) => Math.round(Number(typed.replace(/[^\d.]/g, '')) * 100);
+  const cents = centsFromTyped;
 
   // A card at a bank the player has left: this bank's card, with the balance moved onto it (C31).
   if (card && card.bankId !== bankId && !credit.applied) {
@@ -36,12 +38,16 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
     const offer = found && !('none' in found) ? found.transfer : undefined;
     const bank = bankById(bankId);
     if (!offer || !bank) return null;
+    // Offered only where the bank would take it: until 2026-09-27 Apply showed for a transfer the command refused.
+    const refused = transferRefusal(sim, sim.player, bankId, limitFor(sim, credit.score));
     return (
       <Panel title="Move Your Card Here" subtitle={`A balance transfer to ${bank.name}`}>
         <p className="small">
-          Apply for {bank.name}’s card and the {card.name}’s balance moves onto it when it arrives, for {offer.feeShare ? `${pct(offer.feeShare)} of it` : 'no fee'}{offer.feeMin ? ', never under the card’s minimum' : ''}, at {offer.introMonths !== undefined ? `${pct(offer.introApr ?? 0)} for ${offer.introMonths + ' months'}, then ` : ''}{offer.apr !== undefined ? pct(offer.apr) : 'the card’s own rate'}. The old card takes nothing new while it waits, and closes once it’s moved.
+          Apply for {bank.name}’s card and the {card.name}’s balance moves onto it when it arrives, for {offer.feeShare ? `${pct(offer.feeShare)} of it` : 'no fee'}{offer.feeMin ? `, never under ${money(inSaveMoney(sim, offer.feeMin, bank.currency))}` : ''}, at {offer.introMonths !== undefined ? `${pct(offer.introApr ?? 0)} for ${offer.introMonths + ' months'}, then ` : ''}{offer.apr !== undefined ? pct(offer.apr) : 'the card’s own rate'}. The old card takes nothing new while it waits, and closes once it’s moved.
         </p>
-        <Gated feature="card.apply" className="btn btn-sm" onClick={() => run('card.apply', { transfer: true })}>Apply And Move The Balance</Gated>
+        {refused
+          ? <p className="small muted" style={{ margin: 0 }}>{refused}</p>
+          : <Gated feature="card.apply" className="btn btn-sm" onClick={() => run('card.apply', { transfer: true })}>Apply And Move The Balance</Gated>}
       </Panel>
     );
   }
@@ -60,7 +66,14 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   }
   if (terms.transfer && transfers.length === 0) lines.push(`It takes a balance from a card at another bank for ${terms.transfer.feeShare ? `${pct(terms.transfer.feeShare)} of it` : 'no fee'}, at ${terms.transfer.introMonths !== undefined ? `${pct(terms.transfer.introApr ?? 0)} for ${terms.transfer.introMonths + ' months'}, then ` : ''}${pct(terms.transfer.apr)}: after switching banks, apply for the new bank’s card and move it.`);
   for (const plan of plans) lines.push(`A plan: ${money(plan.left)} left, ${money(plan.monthly)} a month for ${plan.monthsLeft === 1 ? 'one more month' : plan.monthsLeft + ' more months'}, and ${money(plan.fee)} a month in place of interest.`);
-  if (terms.rewardsRate) lines.push(`Rewards: ${pct(terms.rewardsRate)} back on every purchase, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. SLATE pays the base rate, not the categories.` : ''}`);
+  const bonus = card?.bankId ? BONUSES[card.bankId] : undefined;
+  // Each category as the card pays it (`BONUSES`), not a base rate the rest may not earn: until 2026-09-27 this
+  // said "the rest at the base rate" of cards that pay nothing on the rest, or less past a cap.
+  const per = { quarter: 'a quarter', year: 'a year', cycle: 'a statement', month: 'a month' } as const;
+  const part = (what: string, b: { rate: number; cap?: number; after?: number } | undefined, cur2: string) => b === undefined ? undefined
+    : `${pct(b.rate)} on ${what}${b.cap !== undefined ? ` to the first ${money(inSaveMoney(sim, b.cap, cur2))} ${per[bonus!.per]}, ${pct(b.after ?? 0)} after` : ''}`;
+  const bonusWords = bonus && card?.bankId ? [part('groceries', bonus.food, bankById(card.bankId)?.currency ?? 'USD'), part('recurring bills', bonus.bills, bankById(card.bankId)?.currency ?? 'USD'), bonus.other ? part('everything else', bonus.other, bankById(card.bankId)?.currency ?? 'USD') : `${pct(terms.rewardsRate ?? 0)} on everything else`].filter(Boolean).join('; ') : undefined;
+  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. ${bonus ? 'Groceries and recurring bills are what a card buys here.' : 'Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.'}` : ''}`);
 
   return (
     <Panel title="The Card’s Offers" subtitle={terms.name}>
@@ -72,7 +85,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
         {terms.moneyTransferFee && (
           <div className="field-row">
             <div className="field">
-              <label htmlFor="card-money-transfer">A Money Transfer To Your Account</label>
+              <label htmlFor="card-money-transfer">A Money Transfer To Your Account ({cur})</label>
               <input id="card-money-transfer" inputMode="decimal" value={moveAmount} onChange={(e) => setMoveAmount(e.target.value)} />
             </div>
             <Gated feature="card.money_transfer" className="btn btn-sm" disabled={!moveAmount} onClick={() => {
@@ -88,7 +101,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
             </p>
             <div className="field-row">
               <div className="field">
-                <label htmlFor="card-plan-amount">Into A Plan</label>
+                <label htmlFor="card-plan-amount">Into A Plan ({cur})</label>
                 <input id="card-plan-amount" inputMode="decimal" value={planAmount} onChange={(e) => setPlanAmount(e.target.value)} />
               </div>
               <div className="field">

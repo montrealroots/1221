@@ -14,6 +14,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { netWorth } from '@/engine/systems/finance';
 import { CITIES } from '@/engine/content/geography';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
+import { homeOf } from '@/engine/systems/earnings';
 
 export function LifeEnded() {
   const { sim, exitToMenu } = useGame();
@@ -21,14 +22,12 @@ export function LifeEnded() {
   const cur = saveCurrency(sim.universe);
   const endedAt = sim.universe.meta.endedAt ?? sim.now;
   const age = sim.universe.meta.endedAge;
-  const town = CITIES.get(player.currentLocationId)?.name ?? 'where they lived';
+  const town = CITIES.get(homeOf(player))?.name ?? 'where they lived';
   const worth = netWorth(sim, player.id);
-  // What the work paid, from the ledger: the wages and the tips credited to
-  // their accounts over the whole life.
-  const mine = new Set(Object.values(sim.universe.accounts).filter((a) => a.ownerId === player.id).map((a) => a.id));
-  const earned = sim.universe.transactions
-    .filter((t) => t.category === 'salary' || t.category === 'tips')
-    .reduce((sum, t) => sum + t.postings.filter((p) => mine.has(p.accountId)).reduce((s, p) => s + Math.max(0, p.amount), 0), 0);
+  // What the work paid, from the record the returns read (`systems/earnings.ts`): acting's wages, residuals
+  // among them, and work-study's, before tax and commission. Until 2026-09-27 it summed what the bank
+  // was paid under a "tips" category that no longer existed, per diem and stipends among the wages.
+  const earned = Object.values(player.earnings?.years ?? {}).reduce((sum, y) => sum + y.acting + y.workStudy, 0);
   const years = Math.max(0, (endedAt - sim.universe.meta.createdAt) / (365.2425 * 86_400_000));
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
 
@@ -43,14 +42,14 @@ export function LifeEnded() {
         </p>
         <div className="grid grid-3" style={{ margin: 'var(--s5) 0', textAlign: 'left' }}>
           <div className="stat">
-            <span className="stat-label">Time Played</span>
+            <span className="stat-label">Years In The World</span>
             <span className="stat-value">{years < 1 ? `${Math.round(years * 12)} Months` : `${years.toFixed(1)} Years`}</span>
-            <span className="stat-note">From the first morning to the last</span>
+            <span className="stat-note">From the first morning to the last, in the world’s time</span>
           </div>
           <div className="stat">
             <span className="stat-label">Earned</span>
             <span className="stat-value mono">{money(earned)}</span>
-            <span className="stat-note">Wages and tips, after tax</span>
+            <span className="stat-note">Wages, before tax and commission</span>
           </div>
           <div className="stat">
             <span className="stat-label">Left Behind</span>

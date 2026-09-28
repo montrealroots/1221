@@ -17,7 +17,8 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
+import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
@@ -41,10 +42,10 @@ export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 const DEBT_PER_WAKING_HOUR = 0.34;
 const DEBT_CEILING = 60;
 /** Energy under this is running on empty, and nourishment under this is hungry. */
-const EMPTY = 15;
+export const EMPTY = 15;
 const HUNGRY = 20;
 /** Stress over this costs condition for as long as it stays there. */
-const OVERWROUGHT = 75;
+export const OVERWROUGHT = 75;
 /** Hygiene under this wears on the mood for as long as it stays there. */
 const GRIMY = 50;
 
@@ -224,20 +225,34 @@ function debtWokenWith(person: Person, at: number): number {
  * right now?
  */
 export function readiness(person: Person): number {
+  const product = readinessParts(person).reduce((p, part) => p * part.factor, 1);
+  return clamp(100 * product / 1.35, 5, 100);
+}
+
+export type ReadinessDial = 'energy' | 'stress' | 'sleepDebt' | 'nourishment' | 'morale' | 'hygiene' | 'condition';
+
+/**
+ * Each dial's multiplier on readiness now, and the most it gives at its best:
+ * what the Wellbeing look ranks as costing the most. Until 2026-09-27 the
+ * look ranked the dials by a formula of its own, and hygiene at 40 outranked
+ * stress at 50, which costs readiness three times as much.
+ */
+export function readinessParts(person: Person): { key: ReadinessDial; factor: number; best: number }[] {
   const w = person.wellbeing;
-  const energyPart = remap(w.energy, 0, 100, 0.45, 1.15);
-  const stressPart = remap(w.stress, 0, 100, 1.12, 0.62);
-  const debtPart = remap(w.sleepDebt, 0, 30, 1.05, 0.66);
-  const nourishPart = remap(w.nourishment, 0, 100, 0.78, 1.05);
-  const moralePart = remap(w.morale, 0, 100, 0.82, 1.12);
-  // Turning up to a room having not showered in two days is not nothing, but
-  // it is not much either: a few points, not a career.
-  const cleanPart = remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03);
-  // Condition was left out, so fitness reached nothing past its own dial. A
-  // body at ninety-one, where everyday fitness mends it to, is 2.7% short of
-  // one at a hundred.
-  const soundPart = remap(w.condition, 0, 100, 0.7, 1);
-  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * cleanPart * soundPart / 1.35, 5, 100);
+  return [
+    { key: 'energy', factor: remap(w.energy, 0, 100, 0.45, 1.15), best: 1.15 },
+    { key: 'stress', factor: remap(w.stress, 0, 100, 1.12, 0.62), best: 1.12 },
+    { key: 'sleepDebt', factor: remap(w.sleepDebt, 0, 30, 1.05, 0.66), best: 1.05 },
+    { key: 'nourishment', factor: remap(w.nourishment, 0, 100, 0.78, 1.05), best: 1.05 },
+    { key: 'morale', factor: remap(w.morale, 0, 100, 0.82, 1.12), best: 1.12 },
+    // Turning up to a room having not showered in two days is not nothing, but
+    // it is not much either: a few points, not a career.
+    { key: 'hygiene', factor: remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03), best: 1.03 },
+    // Condition was left out, so fitness reached nothing past its own dial. A
+    // body at ninety-one, where everyday fitness mends it to, is 2.7% short of
+    // one at a hundred.
+    { key: 'condition', factor: remap(w.condition, 0, 100, 0.7, 1), best: 1 },
+  ];
 }
 
 export function wellbeingSummary(person: Person): string {
@@ -295,6 +310,8 @@ export function registerLife(sim: Simulation): void {
       const hours = clamp(p.hours, 0.5, 16);
       const start = p.startAt ?? s.now;
       if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
+      const busy = occupiedAt(s, start);
+      if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
       const wakeAt = start + Math.round(hours * MS_HOUR);
 
       // Anything scheduled during the night still happens; the world does not
@@ -427,8 +444,29 @@ const SPENT = 25;
  * worth warning about, but twenty minutes in the shower that makes you miss a
  * call is only a mistake.
  */
+/**
+ * The commitment the player is in the middle of at a moment: one they turned
+ * up for, whose hours still run. A meal fits in one, as a break on set or
+ * between classes; sleep, a shower, a workout and unwinding don't. Until
+ * 2026-09-27 a commitment took only the moment it began, and at ten in the
+ * morning of a twelve-hour shoot the player could sleep for eight hours and
+ * the day still counted as worked.
+ */
+export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefined {
+  const list = sim.universe.scheduled;
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const one = list[i]!;
+    if (one.status !== 'done' || one.requiresPlayer !== true || !one.durationMinutes || one.at > at) continue;
+    if (one.payload.personId !== undefined && one.payload.personId !== sim.player.id) continue;
+    if (at < one.at + one.durationMinutes * 60_000) return one;
+  }
+  return undefined;
+}
+
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
+  const busy = action === 'eat' ? undefined : occupiedAt(sim, sim.now);
+  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   if (action === 'eat' && w.nourishment >= FULL) return 'You aren’t hungry.';
   if (action === 'eat' && canPay(sim, sim.player) < mealOf(sim, sim.player)) return 'You can’t afford a meal.';
   if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
@@ -441,8 +479,10 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
 
 /**
  * What a workout builds: 0.6 fitness at readiness 75, less for training
- * tired, hungry or stretched, and up to 0.72 at a hundred. The one thing
- * outside the dials' own display that reads readiness.
+ * tired, hungry or stretched, and up to 0.72 at a hundred. Readiness is read
+ * through `focusOf` too, by the audition's booking roll and by the craft a
+ * class, a lab or a day of work builds; this said until 2026-09-27 that a
+ * workout was the one thing that read it.
  */
 export function workoutBuilds(person: Person): number {
   return WORKOUT_FITNESS * remap(readiness(person), 0, 100, 0.4, 1.2);
@@ -575,7 +615,9 @@ export function applySleep(
   // condition by then.
   const worn = remap(Math.min(1, began.condition / mends), 0, 1, 0.8, 1);
   const settled = remap(began.morale, 0, 100, 0.75, 1.15);
-  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * owing * worn, 0, 100);
+  // A night away from home puts back what a homebody's own bed would less, and a restless one's more.
+  const away = person.home !== undefined && person.home.cityId !== person.currentLocationId ? personalityOf(person, 'awayRecovery') : 1;
+  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * away * owing * worn, 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
@@ -676,7 +718,11 @@ export function settleTheBody(person: Person, at: number): void {
   const ceiling = ceilingAt(yearsSince(person.birthInstant, at));
   const fell = w.fitness > EVERYDAY_FITNESS ? Math.max(EVERYDAY_FITNESS, w.fitness - 0.18) : w.fitness;
   w.fitness = clamp(Math.min(fell, ceiling.fitness), 0, 100);
-  const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
+  // Toward what the fitness supports, which is what a night mends to
+  // (`mendsTo`). Until 2026-09-27 it drifted toward 60 + 0.4 fitness, 74 at
+  // an everyday fitness against the nights' 91, and a body as sound as rest
+  // could make it was pulled down every midnight.
+  const target = mendsTo(person, at);
   w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
 }
 
@@ -1090,11 +1136,14 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
     return { hours, reason: needed > LONGEST_NIGHT ? why : 'Your calendar’s clear, so sleep as long as you need.' };
   }
 
-  const available = (next.at - sim.now) / MS_HOUR - 1.5;
+  // An hour and a half kept back to get up and get there. The reason says how far off it is, which it said
+  // less that hour and a half until 2026-09-27.
+  const away = (next.at - sim.now) / MS_HOUR;
+  const available = away - 1.5;
   if (available < ideal) {
     return {
       hours: Math.max(3, Math.round(available * 2) / 2),
-      reason: `"${next.label}" is in ${available.toFixed(1)} hours, so a full night isn’t available.`,
+      reason: `"${next.label}" is in ${away.toFixed(1)} hours, and getting up and there takes an hour and a half, so a full night isn’t available.`,
     };
   }
   return { hours, reason: why };

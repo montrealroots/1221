@@ -26,7 +26,14 @@ import { endBetween } from './systems/mortality';
 import { accountNumber } from './systems/banknumber';
 import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
+import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
+import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft } from './systems/school';
+import { attributesOf } from './systems/attributes';
+import { newLifeConfig } from './world/bootstrap';
+import { afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
+import { illnessWeek } from './systems/health';
+import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -134,7 +141,9 @@ defineDecider<Year, string>({
     const person = {
       ...player,
       birthInstant: from - age * 365.2425 * MS_DAY,
+      // Where they live, whose table it is (`homeOf`).
       currentLocationId: COUNTRY_PLACES[countryId]!,
+      home: { kind: 'shared' as const, cityId: COUNTRY_PLACES[countryId]!, since: from },
       wellbeing: { ...player.wellbeing, condition },
     };
     const at = endBetween(sim, person, from, from + 365 * MS_DAY);
@@ -209,3 +218,245 @@ defineDecider<Theft, string>({
 function livingIn(cityId: string, seed: number): Simulation {
   return quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true }, `fraud-${seed}`);
 }
+
+// ---------------------------------------------------------------------------
+// Drama school
+// ---------------------------------------------------------------------------
+
+/** A life begun at drama school, born in New York, under a seed. */
+function atYale(seed: number): Simulation {
+  return quickSave({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork' }, `yale-${seed}`);
+}
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'attributes.presence',
+  decides: 'The presence a student is given: 55 to 80, most near the middle, for the faculty’s first choice.',
+  drawnIn: 'src/engine/systems/attributes.ts',
+  reads: {
+    // Two saves are two people.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20) + 100) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    delete sim.player.attrs;
+    return attributesOf(sim, sim.player).presence.toFixed(1);
+  },
+});
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'school.class',
+  decides: 'Who the fifteen classmates are, and the craft each brings from the auditions, which sets the player’s above them.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // Two saves are two admitted classes.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    const { classmates, player } = admittedClass(sim, sim.player);
+    return classmates.map((m) => `${m.name} ${meanCraft(m.craft).toFixed(1)}`).join(', ') + ` / ${meanCraft(player).toFixed(1)}`;
+  },
+});
+
+defineDecider<{ sim: Simulation; day: number }, string>({
+  id: 'school.attendance',
+  decides: 'Which classmates are in class on a day, and so grow from it.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // The day: each is drawn on its own.
+    day: (o, t) => ({ ...o, day: Math.round(t * 60) }),
+    // Two saves are two classes.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), day: seed % 60 }),
+  // A fortnight of class days from the one read, so an absence shows.
+  decide: ({ sim, day }) => Array.from({ length: 14 }, (_, n) => classmatesIn(sim, sim.player, `day-${day + n}`).map((x) => (x ? '1' : '0')).join('')).join(' '),
+});
+
+defineDecider<{ sim: Simulation; night: number }, string>({
+  id: 'school.understudy',
+  decides: 'On which performances an understudy on call is sent on.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // Which run of nights.
+    night: (o, t) => ({ ...o, night: Math.round(t * 400) }),
+    // Two saves are two runs of luck.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), night: seed * 7 }),
+  // Two hundred nights, so the rare night on shows.
+  decide: ({ sim, night }) => Array.from({ length: 200 }, (_, n) => (goesOn(sim, sim.player, sim.now + (night + n) * MS_DAY) ? String(night + n) : '')).filter(Boolean).join(',') || 'none',
+});
+
+// ---------------------------------------------------------------------------
+// The business
+// ---------------------------------------------------------------------------
+
+defineDecider<{ sim: Simulation; score: number }, string>({
+  id: 'career.offers',
+  decides: 'Which agencies offer to represent an actor after a showing.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The showing: the higher, the more agencies' bars it clears.
+    score: (o, t) => ({ ...o, score: 55 + t * 30 }),
+    // Two saves are two sets of agents in the room.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), score: 60 + (seed % 25) }),
+  decide: ({ sim, score }) => offersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
+});
+
+defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number; managed?: boolean }, string>({
+  id: 'career.auditions',
+  decides: 'How many auditions a week brings, for which parts, when, and whether on tape.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The agency's reach: none, or the smallest to the biggest.
+    agency: (o, t) => ({ ...o, tier: Math.min(3, Math.floor(t * 4)) as 0 | 1 | 2 | 3 }),
+    // The week: each is drawn on its own.
+    week: (o, t) => ({ ...o, week: Math.round(t * 52) }),
+    // A manager's relationships add their own.
+    manager: (o, t) => ({ ...o, managed: t >= 0.5 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), tier: (seed % 4) as 0 | 1 | 2 | 3, week: seed % 52 }),
+  decide: ({ sim, tier, week, managed }) => {
+    const agency = tier === 0 ? undefined : AGENCIES.find((a) => a.tier === tier);
+    return weekOfAuditions(sim, sim.player, sim.now + week * 7 * MS_DAY, agency, 'us-ny-newyork', 5, managed ?? false)
+      .map((a) => `${a.roleId}@${a.at}/${a.mode}`).join(' ') || 'none';
+  },
+});
+
+defineDecider<{ sim: Simulation; roleId: string; level: number }, string>({
+  id: 'career.booking',
+  decides: 'Which auditions book, weighed on the actor’s craft against the part, and the genre a part’s breakdown gives.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The part: its bar.
+    role: (o, t) => ({ ...o, roleId: ROLES[Math.min(ROLES.length - 1, Math.floor(t * ROLES.length))]!.id }),
+    // The actor's craft.
+    craft: (o, t) => ({ ...o, level: 40 + t * 60 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), roleId: ROLES[seed % ROLES.length]!.id, level: 50 + (seed % 40) }),
+  decide: ({ sim, roleId, level }) => {
+    const person = sim.player;
+    person.craft = evenCraft(level);
+    return Array.from({ length: 300 }, (_, n) => books(sim, person, { id: `d${n}`, roleId, at: 0, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' }, 1) ? '1' : '0').join('');
+  },
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.hours',
+  decides: 'How long a shooting day runs, and so its overtime.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The day: each is drawn on its own.
+    day: (o, t) => ({ ...o, key: Math.round(t * 500) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 11 }),
+  decide: ({ sim, key }) => Array.from({ length: 40 }, (_, n) => hoursOf(sim, sim.player, `d${key + n}`)).join(','),
+});
+
+defineDecider<{ sim: Simulation; roleId: string; job: number }, string>({
+  id: 'career.residuals',
+  decides: 'Where a finished job is seen, and how it does: a network or a streaming service of a size, a rerun, a syndication sale, a hit.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The part: television or a film.
+    role: (o, t) => ({ ...o, roleId: ['costar', 'guest-hour', 'series-hour', 'film-low'][Math.min(3, Math.floor(t * 4))]! }),
+    // The job: each is drawn on its own.
+    job: (o, t) => ({ ...o, job: Math.round(t * 200) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), roleId: ['costar', 'guest-hour', 'series-hour', 'film-low'][seed % 4]!, job: seed }),
+  decide: ({ sim, roleId, job }) => Array.from({ length: 20 }, (_, n) => {
+    const r = afterlife(sim, sim.player, { id: `j${job}-${n}`, roleId, cityId: 'us-ny-newyork', starts: sim.now, units: 2, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 2, owed: 0 }, sim.now)!;
+    return `${r.kind}${r.size ?? ''}${r.rerun ? 'R' : ''}${r.syndicated ? 'S' : ''}${r.hit ? 'H' : ''}`;
+  }).join(' '),
+});
+
+defineDecider<{ sim: Simulation; score: number }, string>({
+  id: 'career.managers',
+  decides: 'Which management firms offer after a showing or a job, and whether a manager finds an unrepresented client an agency in a month.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The showing: the higher, the more firms' bars it clears.
+    score: (o, t) => ({ ...o, score: 55 + t * 25 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), score: 60 + (seed % 20) }),
+  decide: ({ sim, score }) => managerOffersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.location',
+  decides: 'Where a screen job shoots: at home, or on location in Atlanta, Chicago or New Orleans.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The job: each is drawn on its own.
+    job: (o, t) => ({ ...o, key: Math.round(t * 300) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 13 }),
+  decide: ({ sim, key }) => Array.from({ length: 30 }, (_, n) => locationFor(sim, sim.player, `j${key + n}`) ?? 'home').join(','),
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.renewal',
+  decides: 'Whether a series picks up its option on a regular for another season.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The season: each is drawn on its own.
+    season: (o, t) => ({ ...o, key: Math.round(t * 300) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 7 }),
+  decide: ({ sim, key }) => Array.from({ length: 30 }, (_, n) => (renewed(sim, sim.player, `s${key + n}`, SERIES.renewal.network) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; bank: number }, string>({
+  id: 'bank.chex',
+  decides: 'Whether a US bank turns away somebody with a standing ChexSystems report.',
+  drawnIn: 'src/engine/systems/lending.ts',
+  reads: {
+    // Each bank answers on its own.
+    bank: (o, t) => ({ ...o, bank: Math.round(t * 4) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), bank: seed % 5 }),
+  decide: ({ sim, bank }) => {
+    sim.player.chex = { at: sim.now, bank: 'Chase' };
+    const banks = ['us-chase', 'us-bank-of-america', 'us-wells-fargo', 'us-citi', 'us-capital-one'].map((id) => bankById(id)).filter((b) => b !== undefined);
+    return banks.map((b, n) => (n >= bank && declines(sim, sim.player, b!) ? '1' : '0')).join('');
+  },
+});
+
+defineDecider<{ sim: Simulation; week: number }, string>({
+  id: 'health.illness',
+  decides: 'What a week brings to a body: the flu in its season, a doctor’s visit, an emergency, a stay in hospital.',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    // The week: in the flu season or out of it.
+    week: (o, t) => ({ ...o, week: Math.round(t * 104) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed % 104 }),
+  decide: ({ sim, week }) => Array.from({ length: 52 }, (_, n) => illnessWeek(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((e) => e.what).join('+') || '-').join(' '),
+});
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'health.chronic',
+  decides: 'The conditions a person carries from the start, depression, asthma, high blood pressure, diabetes (and whether type 1) or arthritis, and whether they wear lenses; and an asthmatic’s or an arthritic’s month’s visit.',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    // Two saves are two bodies.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 40)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    const h = sim.player.health!;
+    return `${Object.keys(h.chronic ?? {}).sort().join('+') || 'none'}${h.lenses ? ', lenses' : ''}`;
+  },
+});

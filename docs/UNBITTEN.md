@@ -34,16 +34,15 @@ may not rise.
 | Id namespaces | 1 | 7 |
 | Save tables nothing fills | 1 | 9 |
 | Personality knobs nothing reads | 0 | 7 |
-| Personality axes nothing consults | 3 | 7 |
+| Personality axes nothing consults | 0 | 7 |
 
 The first two are the player. The family was the only thing that made a person after
 boot, so `person` has no `nextId` call and `people` is filled only by
 bootstrap, which writes the player by hand. They are counted honestly and they
-are not dead words; the tool says so beside the check. The three axes are
-openness, extraversion and agreeableness, set on the Dispositions & Traits
-step and read by nothing; the step says so, and they are below. Risk
-tolerance was a fourth until the card read it, and this table said four
-until 2026-09-25.
+are not dead words; the tool says so beside the check. The axes were three
+until 2026-09-27: openness, extraversion and agreeableness, read since by a
+day's work (`systems/enjoyment.ts`). Risk tolerance was a fourth until the
+card read it, and this table said four until 2026-09-25.
 
 The tool counts writers. The One Rule asks for readers, which is stricter, so
 the true arrears are larger than this table and the rest of this page is the
@@ -53,36 +52,6 @@ part the tool cannot see.
 
 ## Dead: declared, and nothing reads it
 
-- **The wellbeing model decides nothing outside the body and the workout.**
-  Every dial now decides something (`tests/wellbeing-bites.test.ts`): fitness
-  sets how far rest mends condition and what a workout costs; condition sets
-  how much a night puts back, where morale settles, and readiness; morale sets
-  how much stress a night clears; hygiene under fifty and hunger under twenty
-  wear on the mood; and readiness sets what a workout builds. Eating, a
-  shower, a workout and an hour unwinding (`life.look_after`) are how a player
-  moves them. But all of that is the body deciding things about the body.
-  Readiness had one reader outside it, in the audition room, and the room is
-  gone: nothing a character does in the world yet goes better or worse for
-  how they are.
-- **Until those readers, fitness and morale couldn't be moved.** Fitness
-  moved condition only on a body the nights were wearing down: a rested
-  night pushed condition to the age's ceiling far faster than fitness's
-  drift, so on six- or eight-hour nights eight weeks of workouts left it at
-  99.8, trained or not. And morale reached a hundred on any life with decent
-  nights and stayed there. Rest mends only as far as fitness lets it now, and
-  the nights bring morale back toward where the body has it settle, so on a
-  half year of eight-hour nights a player who eats, showers, trains and
-  unwinds ends at condition 99.7 and morale 100 against 91 and 85.9 for one who
-  only sleeps.
-- **Three of the seven dispositions are kept and read by nothing.** Openness
-  waits on travel, and extraversion and agreeableness on other people. Risk
-  tolerance was a fourth until the card: over 65 it starts autopay on the
-  minimum. The Dispositions & Traits step says so beside the sliders, and
-  `tools/wired.mjs` counts them.
-- **Keeps Accounts is said back and nothing more.** It is about what other
-  people owe you, and there are no other people. The other three money traits
-  declared no knob while nothing spent; since the household they move what
-  food costs (`spending`).
 - **Rent is published in nineteen places, and estimated everywhere else.**
   The atlas put a one-bedroom in Mosfellsbær at $3,424 a month, about what it
   says for New York, because its formula stacks Iceland's price level on a
@@ -93,12 +62,14 @@ part the tool cannot see.
   Food and bills are SLATE's estimates everywhere. The legal floors under
   wages were real and sourced until they went with the job engine on
   2026-09-26.
-- **Most of what a trait's cost says is said back, not charged.** Each is
-  written for a whole life, and the game charges only the part its knobs
-  reach: stress, sleep, the energy a night puts back, hygiene and mood. Early
-  Riser's "No use at all after nine at night", every cost about other people,
-  and Resilient's illness and injury are not charged, and Early Riser and a
-  few others help and cost nothing in play. The Traits card says so.
+- **What a trait's cost says about other people is said back, not
+  charged.** Each is written for a whole life, and since 2026-09-27 the
+  game charges every part of it that touches something it has: stress,
+  sleep, the energy a night puts back and a night away (Homebody,
+  Restless), hygiene, mood, illness (Resilient), an early call or a late
+  performance (Night Owl, Early Riser) and the receipts a return can deduct
+  (Keeps Accounts, Chaotic). What's left is about other people, whom SLATE
+  doesn't have, and injury, which it doesn't model. The Traits card says so.
 - **Some banks' figures weren't found, and a few are given as words.** The
   thirteen countries' waivers are modeled as the banks write them since
   2026-09-25: an average balance, an average across one's accounts at the
@@ -125,39 +96,41 @@ part the tool cannot see.
   the rate for an unarranged one wasn't found. The Canadian banks sell
   overdraft protection by the month or by the use; SLATE arranges the
   monthly plan only.
-- **What follows a charge-off is only partly there.** A bank closes an
-  account left overdrawn for sixty days in a row (SLATE's estimate), and
-  the debt goes to collections and costs the record. A real American bank
-  also reports it to ChexSystems, and most banks then won't open an account
-  for years; SLATE opens one at the next bank, though not the bank that is
-  owed, which won't take them back until it is paid. An account that went
-  back above zero on each payday was never sixty days overdrawn, as at a real
-  bank, so a life that spent more than it earned could run an overdraft for
-  years; with no payday since the job engine went on 2026-09-26, one that
-  goes under stays under. France's rule that a bank must offer a loan after three months of
-  it isn't modeled.
-- **The deposit guarantee and the central bank's rate are shown and change
-  nothing.** No bank fails in SLATE, so the guarantee is never called on,
-  and no bank's rate is set from the central bank's, which SLATE holds at
-  the day the research read it. Both are real, sourced facts on the bank
-  screen; neither has anything to bite on until banks can fail or rates
-  can move.
+- **What follows a charge-off rests on estimates.** A bank closes an
+  account left overdrawn for sixty days in a row (SLATE's estimate; a
+  French one two months after its notice), and the debt goes to
+  collections and costs the record. Since 2026-09-27 a US bank reports it
+  to ChexSystems for five years and the next bank reads the report: how
+  often one turns it away (85% unpaid, half paid) and the second-chance
+  account's $10 a month are SLATE's estimates, since no figure is
+  published. France's month's letter and three months' loan offer run; the
+  loan is the bank's personal loan at the top of its rates over twelve
+  months, SLATE's estimate of the offer, and the solvency check France
+  adds from 20 November 2026 isn't made. An account that goes back above
+  zero on each payday is never sixty days overdrawn, as at a real bank.
 - **Some IBANs outside the thirteen are missing a bank code or a national
   check.** Each is built to its country's registry structure
   (`content/banks-world-iban.ts`): 82 structures, and 321 of 348 banks with
-  their own code in place. Where a code wasn't found (Burundi, Djibouti,
-  Egypt, Yemen, São Tomé, and a few banks elsewhere) that field is drawn.
+  their own code in place, and since 2026-09-27 Banque Misr's (0002, from
+  its own IBAN guide) and Al-Kuraimi's (KRMB, the first letters of its BIC,
+  SLATE's estimate). Where a code wasn't found (Burundi, Djibouti, São
+  Tomé, Egypt's National Bank and CIB, Yemen's other banks, and a few banks
+  elsewhere) that field is drawn: none is published.
   The national check inside the BBAN is built wherever its rule is
   published: Belgium, the French RIB countries, the MOD 97-10 ones
   (Portugal, Serbia, Montenegro, North Macedonia, Slovenia, Timor-Leste,
   Bosnia and Herzegovina, Kosovo) and, since 2026-09-25, Italy and San
   Marino's CIN, Norway, the Czech Republic, Slovakia, Poland, Croatia,
   Estonia, Hungary, Albania and Finland with Åland, each checked against the
-  IBAN Registry's example. Three are left with the digits drawn: Sweden,
-  whose check depends on each bank's account type; Denmark with the Faroes
-  and Greenland, whose check is set bank by bank; and São Tomé, whose rule
-  isn't published and whose registry example and a live central-bank IBAN
-  disagree. The IBAN's own check always holds.
+  IBAN Registry's example; and since 2026-09-27 Sweden, bank by bank by
+  Bankgirot's rules (Swedbank's clearing digit and account by Luhn, SEB's
+  and Nordea's by mod 11 over clearing and account, Handelsbanken's by mod
+  11 over the account), each against the official examples. Burundi's and
+  Djibouti's keys are taken as France's RIB key and São Tomé's as
+  Portugal's NIB, SLATE's inference: no rule is published, and each
+  registry example checks by it. Denmark with the Faroes and Greenland is
+  left with its digits drawn, as no Danish bank publishes a check rule; the
+  one that circulates is Norway's. The IBAN's own check always holds.
 - **Some cards' terms are SLATE's estimate.** Each bank's card is its own
   (`content/cards.ts`), and the research read 522 of them from the banks'
   terms, a comparison site where the bank's own page was blocked. A bank
@@ -166,10 +139,16 @@ part the tool cannot see.
   minimum and the late fee most often), runs on SLATE's estimate of a
   typical American card's, and the bank's screen names which terms are the
   estimate. A charge card that can be spread (Iceland's, Japan's, Korea's,
-  Spain's) is a revolving card with autopay on the whole statement. Not
-  modeled: Canada's penalty rate after two missed payments in a year (BMO's
-  and CIBC's, researched; only the US penalty rate runs, by Reg Z's rules), a late fee set as a share of the payment, Mexico's minimum on
-  the limit, and Japan's and Korea's fixed-sum revolving courses. Caps
+  Spain's) is a revolving card with autopay on the whole statement. Since
+  2026-09-27 Canada's penalty rates run (RBC's, BMO's and CIBC's, after two
+  missed minimums in twelve months; twelve on time takes them off, which is
+  SLATE's estimate for RBC), as do the late fees 31 banks set as a share of
+  the minimum, the balance or what went unpaid (`content/latefees.ts`),
+  Citi's lower first late fee, and Mexico's minimum of 1.25% of the limit.
+  Banks whose late fee is a share of nothing the terms name (Equity and
+  NCBA in Kenya, QNB, Republic Bank Suriname, Absa Uganda, Bank of Bhutan)
+  keep a flat figure or SLATE's estimate. Not modeled: Japan's and Korea's
+  fixed-sum revolving courses, which the research didn't read. Caps
   left out: Japan's Interest Rate Restriction Act binds cash advances, not
   purchases; Monaco's and Ukraine's figures weren't the law's own; the
   British £12 late fee is regulator guidance, and the United States' after
@@ -181,23 +160,106 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
-- **Some of the banks' research is kept and read by nothing.** Each
-  country's deposit guarantee, its central bank's rate, a sentence on how
-  money moves there, and the local names for its ways of paying came off
-  the bank's screen on 2026-09-26: no bank fails, no rate follows the
-  central bank's, and the sentences named ways of paying SLATE doesn't
-  have (Zelle, Interac, SPEI, money orders). They wait for what would read
-  them.
+- **Drama school runs its three years, and the business follows.** A new
+  life begins as a first-year actor at the David Geffen School of Drama at
+  Yale, ahead of every classmate in craft; classes, work-study, casting,
+  Yale Rep and each term's evaluation read and move it (`systems/school.ts`),
+  and the showcase, representation, auditions, jobs, pay and the unions
+  take it from there (`systems/career.ts`). Until 2026-09-26 nothing
+  followed the MFA, only the first spring went to Yale Rep, and later
+  years held at 2026–27's costs. What's still open:
+  - Yale Rep's seasons after 2026–27 aren't announced: their productions
+    are SLATE's estimate by the slots its seasons keep, unnamed.
+  - The fifteen classmates are a name and a craft each: they grow, set the
+    evaluation's median and the player's place, and since 2026-09-27 show
+    beside the player, an agency taking its best two of the class (SLATE's
+    estimate). They aren't cast against the player, and don't come to
+    anything after school.
+  - A student in need's living-expense scholarship, but for its books, is
+    income the year's return taxes since 2026-09-27, and the returns begin
+    at enrollment. Until then the tax engine collected nothing on it.
+  - Later years' dates aren't published; the terms after 2026–27 are
+    SLATE's estimate, and their costs grow at the Bulletins' rates.
+  - The bachelor's degree the MFA asks for is taken as read, and only the
+    birth year is held to it.
+  - A student ending the last term on concern or warning still takes the
+    degree: the Bulletin doesn't say what a last term short of its
+    standards does, and SLATE confers it on any standing short of
+    dismissal, which the Standing tab says.
+  - How often an understudy is sent on is SLATE's estimate; since
+    2026-09-27 a night on call holds the evening on the calendar and is
+    called off when not needed.
+- **The business, and what's between jobs.** Built on 2026-09-27 over
+  four rounds: Off-Broadway, series regulars, managers, overtime,
+  residuals, union health cover, the marketplace, unemployment and the tax
+  return; then commercials and voice, location, later seasons, Medicaid,
+  the Essential Plan, COBRA, illness and its bills, part-year returns; then
+  work abroad, Connecticut's tax, the states' job-expense deductions, meal
+  penalties, recurring roles and the 60% rule, conditions carried, the
+  pharmacy, the dentist and the optician, and illness at school; then an
+  actor's working costs, diabetes and arthritis, insulin's caps,
+  stand-alone dental plans, medical prices grown by the index, Yale
+  Health's own cost-sharing, Canada's tax on residuals and the UK's April
+  tax year. What's still open:
+  - Unpublished: Off-Broadway's categories B and C and every 2027–28 rate;
+    the Commercials Contracts' third year; animation's 2026 rate; SAG-AFTRA's
+    2027 COBRA rate; New York City's exact 2026 benchmark premium;
+    California's 2026 flat penalty and standard deduction; the renewal rate
+    of freshman streaming series; how often meal penalties come and how long
+    a recurring arc runs. Each holds at its last published figure, or is
+    SLATE's estimate, and says so.
+  - Abroad: Canada's section 216.1 return and the UK's payer-by-payer
+    withholding and settlement are built (2026-09-27), with the tax of
+    the province the work was done in (British Columbia's, Ontario's and
+    its surtax). What's estimated: the 2026 federal and provincial
+    brackets held for later years, and a payer's UK total expected at the
+    booking's rate. What isn't modeled:
+    an FEU8 agreement to withhold less, and the UK allowance's taper,
+    which a US citizen never has to reach.
+  - The body: obesity isn't modeled, since SLATE keeps no weight. A type
+    2 diabetic's test strips aren't, since most on a generic don't test
+    daily. Yale Health is taken as a university's own self-funded plan,
+    which Connecticut's $25 insulin and $100 supply caps don't bind: a
+    secondary source and an inference, SLATE's estimate. Each kind of
+    care's own index grows past August 2026 at its 2019–24 rate, SLATE's
+    estimate.
+  - What the working costs do (a free submission seen half as often,
+    four in ten breakdowns asking for a reel, Backstage's and Casting
+    Networks' own listings, stale headshots, a kit, a class, a coach) is
+    SLATE's estimate: no site publishes what a reel or a subscription is
+    worth. Trade papers aren't modeled: what they'd tell an actor, SLATE
+    has no news to give.
+  - Where a job is seen, how it does, a film's television money and its
+    cast's units are SLATE's estimate.
+  - Connecticut (2026-09-27): unemployment, HUSKY D, Covered Connecticut
+    and Access Health CT are built. What's estimated: New Haven's 2026 and
+    2027 benchmark premiums, grown from 2025's published grid, and 2027's
+    $45 minimum benefit, by the statute's index. What isn't modeled: the
+    state's 2026 Temporary Premium Assistance on top of the federal credit,
+    which is 2026's only, with 2027's design unpublished; its hospitals'
+    charity care; and a claim paid by the state the wages were earned in,
+    since SLATE files it where the claimant lives.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two
   business days, its estimate, never past the bank's most. Until a played
   career showed London's groceries pending ten days each, it posted every
-  payment at the bank's most. France's card holds use the card's spending
-  limit rather than the account's balance, and SLATE holds the balance. A
-  statement's value date is the day of the payment, which Sabadell's three
-  days after it isn't. The US banks' nightly posting orders are on record
-  and don't decide anything: an item's fee is charged when it's paid.
+  payment at the bank's most. Settled on 2026-09-27: a French standard
+  debit card pays against its payment ceiling, not the balance, and past
+  it declines (`FRENCH_CARDS`; LCL's and Société Générale's are set in
+  each contract, and SLATE takes their floors, its estimate); Sabadell's
+  three-day value date is its BS Card Mastercard's, a card SLATE doesn't
+  issue, and its debit card's is the purchase day, as SLATE's statement
+  has it; and the US banks' posting order decides the order of items at
+  the same moment (Wells Fargo's lowest first, so the month's bills before
+  the rent), with their small-item waivers (Chase's $5, Wells Fargo's $10,
+  Bank of America's $1) and Bank of America's two fees a day. What's left:
+  a French card's withdrawal ceilings, and the order of checks by number
+  at Bank of America, which SLATE's one check a month never tests. Since
+  2026-09-27 a card's bank holds back the credit a payment from another
+  bank frees for its published days (Chase's 15, Capital One's 9, CIBC's
+  7, TD's and Scotiabank's 5, SMBC's 2); a payment from its own bank isn't
+  held, which is SLATE's reading of "up to".
 - **Some of what fraud costs is an estimate or missing.** A case's size
   runs from a quarter of the country's average to seven quarters, SLATE's
   estimate of the spread. Only Britain publishes the share its banks stop;
@@ -207,9 +269,15 @@ part the tool cannot see.
   card that isn't reported lost is never lost: no country publishes how
   often. Cards last four years where the bank doesn't say, and a
   replacement takes seven business days, SLATE's estimates.
-- **Some of a card's offers aren't modeled.** A card's bonus reward
-  categories are shown in the bank's words and not paid; SLATE pays the
-  base rate on everything. A plan's fee is the most the bank says it
+- **Some of a card's offers aren't modeled.** Since 2026-09-27 a card's
+  bonus is paid on groceries and recurring bills, the two things a card
+  buys in SLATE, for the seven cards whose bonus names either (Bank of
+  America's, RBC's, TD's, Scotiabank's, BMO's, CIBC's, Santander
+  Mexico's), read by hand from the bank's words; a bonus on something a
+  card doesn't buy here (dining, drugstores, fuel, travel) would pay the
+  base rate anyway. Santander Mexico's 4% on telecoms isn't paid, as the
+  phone's share of the bills isn't known, and a Korean card's discounts
+  on conditions of last month's spending aren't modeled. A plan's fee is the most the bank says it
   charges, not the offer it would make on the day, and plans charged as
   interest (Scotiabank's, Bank of Ireland's, the Spanish banks') aren't
   offered. A money transfer is charged the card's balance transfer rate,
@@ -218,8 +286,6 @@ part the tool cannot see.
   offer for a missed payment keeps it. SLATE holds one card at a time, so
   a balance transfer is made only from the card being replaced, and not
   where the new limit won't take it with its fee.
-- **NatWest's fixed-term savings asks 35 days' notice to close early.**
-  SLATE breaks it at once for its penalty.
 - **Some of an account's life is SLATE's estimate or missing.** Where a
   bank words its early-withdrawal penalty other than in days of interest
   (a reduced rate in Japan, a rate cut in France, a share in Spain), SLATE
@@ -230,30 +296,100 @@ part the tool cannot see.
   weren't found (Arion, Crédit Agricole, Santander Spain) and pay out. An
   empty, unused account that the bank may close is never closed: the banks
   say they may, not when.
-- **The tax engine is a screen again.** `content/tax.ts` works out income
-  and payroll tax on a wage for the place card and Home's Tax On A Wage, and
-  nothing is paid through it. The day job withheld through it outside the
-  thirteen until 2026-09-26, when the job engine went; its sales, property
-  and vehicle rules were read by nothing before that, because nothing is
-  bought, owned or driven.
+- **The attributes’ scales are SLATE’s estimates.** Presence,
+  composure, reputation and recognition (`systems/attributes.ts`, since
+  2026-09-27) each change an outcome, and every figure in them is SLATE’s:
+  the trades publish no scale for an actor’s presence, nerves, standing or
+  name value. Presence is drawn once and grows only slowly; how much it moves
+  an audition (six points of a part’s bar at the extremes, half on tape) and
+  a showing (a fifth of it) is an estimate. Nerves are read before auditions,
+  performances, the showcase and days on set, not before classes, rehearsals
+  or the booth. Recognition comes only from finished work, not from its
+  audience, and the overscale it earns is a single multiple of scale, not a
+  negotiated quote. Other people’s attributes aren’t kept: classmates are
+  read at an ordinary presence of 50. The ways to build them on purpose (an improv course, a casting
+  director workshop, a publicist, a festival premiere) are priced at SLATE’s
+  estimate of what the trade quotes, and what each adds is SLATE’s. A film’s
+  premiere is Tribeca’s June for an independent one and Los Angeles nine
+  months on for a studio’s: no film here is ever passed over by a festival.
+- **The 21 skills' weights are SLATE's estimates.** The skills themselves are
+  the conservatories' and the business's (`content/school.ts`, since
+  2026-09-27), and each is read by an outcome. What isn't published: how much
+  each part reads each skill (`READS`, `GENRE_READS`), the fifth an
+  audition reads its own, which skills each Yale course trains, read from its
+  title and description, and the scale. Voice-over has no course at Yale, and
+  grows only in the booth. A genre is read, not a part's own demands: a drama
+  that wants a fight or a song asks for neither. Nobody's skills but the
+  player's and the classmates' are kept.
+- **An agency's renewal is SLATE's choice.** Rule 16(g) sets the term (a year,
+  then up to three) and when a renewal may be signed, and SLATE follows it
+  (`AGENCY_TERM`). Whether an agency offers to renew is its own business,
+  and SLATE has it renew a client it booked work for in the term and let the
+  rest run out. The commercials contract's own 91-day clause, $4,000 in
+  commercial earnings, isn't modeled: SLATE holds one contract for all the
+  work, under the TV/theatrical terms, as the union does when both are signed.
+- **The tax engine's property tax is shown and charged to no one.** Its
+  income and payroll tax is paid again since the career: acting wages are
+  withheld through it and each year's return is worked out with it
+  (`systems/career.ts`, `systems/taxreturn.ts`), and since 2026-09-27 its
+  sales tax is on the goods the work buys, a self-tape kit and headshot
+  prints. The day's food is taken as groceries, which the states SLATE
+  taxes a life in exempt. Property tax is a fact the place shows, and
+  nothing is owned to charge it on; the vehicle rules went on 2026-09-27,
+  with nothing driven. Its tables are in dollars: since that day money in
+  another currency is taxed on what it comes to in dollars, where a
+  krónur save working in New York had been taxed as if a króna were a
+  dollar.
+- **The weather decides the bills' energy and the flu's weeks, and nothing
+  else.** Since 2026-09-27 (`systems/seasons.ts`), a month's bills carry its
+  heating and cooling by the home's degree days, from the EIA's 2020 survey,
+  and the flu comes in the town's cold weeks, or its wet ones where it's warm
+  all year, keeping its 8.9% a year (Tamerius et al., 2013). Holidays that
+  day too: the Federal Reserve's by a US bank's business days and
+  SAG-AFTRA's by a shoot (`content/usholidays.ts`). What's estimated: the
+  energy share of SLATE's bills and the degree-day rates outside the US. What
+  isn't modeled: a year's energy by the climate (a Reykjavík flat costs what a
+  Los Angeles one does in a year, only paid in other months), since the
+  climate normals are smooth and undercount degree days; air conditioning's
+  ownership by country; humidity; and other countries' holidays and a bank's
+  own, whose files are fetched at run time.
+- **Some of the machinery is built and nothing in play uses it.** Found
+  by the dead-word audit of 2026-09-27; what was plainly dead went that day
+  (six preferences, `Booking.weeksPaid`, the rail's locked path, the
+  place profile's weather, and about thirty helpers used nowhere), and
+  these are kept, each with its reason:
+  - Settled later that day: the scheduler's recurrences and the engine's
+    command receipts went (the server's save key, which a retry needs,
+    stays); a loan's term, a hardship plan's start, a penalty's notice, a
+    home's date, a claim's base period and close, an evaluation's reason,
+    a return's income tax and interest, the pronouns and the citizenship,
+    and a calendar entry's booking and settling are shown; a casting's term
+    decides whether the Casting tab shows it; and the save's
+    `migrationInProgress`, `backupAvailable` and `lastPlayedAt`, a
+    transaction's references, an option's booking, the school's id and a
+    fraud's transaction went.
+  - Content researched for features not built went on 2026-09-27: the
+    airports (`nearestAirport`), the neighbourhoods, a city's home price,
+    vehicle fees, and cashier's check and money order fees. A bank's
+    payment hold on freed credit is read since that day, and its
+    posting-order words, the maturity, dormancy, replacement, credit-card
+    and refund wording, and the countries' claim-back words are shown.
+  - Every source is shown since 2026-09-27: roles' on the Career screen,
+    thunder's on the weather look, a published rent's on the place look and
+    at creation, and the bank's, the laws' and the research's on the Bank
+    screen.
 - **An older save's pension fund is kept, and nothing moves it.** The day
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth
   counts it; nothing adds to it, grows it or pays it out.
-- **The gazetteer still carries the film calibration.** Every hand-calibrated
-  city has an `industryPresence` figure, and the place card and Home print it
-  as Film and Television work. Nothing else reads it. It is reference data, so
-  it stayed through the revamp; the revamp decides whether it keeps a reader or
-  goes.
-- **The crafts and the genres are said back and nothing more.** Creation asks
-  for them and the person look prints them, which is what keeps them from being
-  a question with no answer. Nothing in the simulation reads either, and
-  `tests/cohesion.test.ts` holds that nothing starts to without saying so. The
-  general interests are read since 2026-09-24, by `systems/enjoyment.ts`
-  alone: Cooking, Fitness, Sport and the evening pastimes lift the mood and
-  ease the stress of the hour they go with, and never make anybody better at
-  anything. The rest of the general interests (Animals, Cars, Fashion, Nature,
-  Politics, Travel) go with nothing a player can do yet.
+- **Most of the crafts, and five general interests, are said back and
+  nothing more.** Creation asks for them and the person look prints them.
+  Since 2026-09-27 a day of work reads the genres, Voice Acting, and Film,
+  Television, Theater and Travel (`systems/enjoyment.ts`), under the
+  owner's rule: mood and stress, never how good anybody is. The other
+  crafts are trades an actor's jobs don't do, and Animals, Cars, Fashion,
+  Nature and Politics go with nothing a player can do yet.
+  `tests/cohesion.test.ts` holds that only that file reads them.
 - **The performer title is said back and nothing more.** Actor or actress,
   settled by the pronouns or picked under they/them, and printed on Home, the
   rail and the save slot. It is a word and not a stat, so that is all it
@@ -266,18 +402,19 @@ part the tool cannot see.
 
 ## Unreachable: correct, and nothing can get there
 
-- **What a bank reads from wages.** A fee waived for wages paid in, a
-  lender's check for a salary, and New Zealand's interest tax set by the
-  saver's income all read the wages the ledger holds (`systems/banking.ts`,
-  `systems/lending.ts`). Nothing has paid wages since the job engine went on
-  2026-09-26, so a new life never meets them; a save from before has a year
-  of them at most. `tests/banking.test.ts` and `tests/bank-fees.test.ts`
-  post wages by hand to hold them.
+Nothing, since 2026-09-27. What a bank reads from wages is reached again by
+acting pay, and the Decision Center by offers of representation, management
+and work and by each year's return.
 
-- **The Decision Center has nothing to decide.** Answering, dismissing, closing
-  on a date and forgetting are all built and held by `tests/smoke.test.ts`, which
-  raises a row by hand. The one thing that raised a row on its own was the
-  reimbursement on the family's pictures, and it went with them.
+## Settled on 2026-09-27, by deletion
+
+Each was researched or calibrated and read by nothing, and nothing in SLATE
+could read it: each country's deposit guarantee and its central bank's rate
+(no bank fails and no rate moves), a sentence on how money moves there and
+each country's own names for its ways of paying (`content/banks*.ts`,
+`content/payments.ts`), and every hand-calibrated town's film-industry and
+job-market ratings (`content/geography.ts`). They are in the history, and
+their generators no longer write them.
 
 ---
 

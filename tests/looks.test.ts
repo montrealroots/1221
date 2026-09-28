@@ -27,6 +27,7 @@ import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
 import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
+import { readiness, readinessParts } from '@/engine/systems/life';
 
 const UI = new URL('../src/ui/', import.meta.url);
 
@@ -163,6 +164,19 @@ function statGrids(body: ReactNode): ReactElement[] {
       .some((child) => nameOfType(child) === 'Stat');
   });
 }
+
+describe('what’s costing readiness', () => {
+  it('ranks the dials by what each takes off readiness, and multiplies to it', () => {
+    const sim = quickSave({}, 'ready-rank');
+    const w = sim.player.wellbeing;
+    Object.assign(w, { energy: 100, stress: 50, sleepDebt: 0, nourishment: 100, morale: 100, hygiene: 40, condition: 100 });
+    const parts = readinessParts(sim.player);
+    const loss = (key: string) => { const p = parts.find((one) => one.key === key)!; return 1 - p.factor / p.best; };
+    // Stress at 50 costs about three times what hygiene at 40 does.
+    expect(loss('stress')).toBeGreaterThan(3 * loss('hygiene'));
+    expect(readiness(sim.player)).toBeCloseTo(Math.min(100, 100 * parts.reduce((p, one) => p * one.factor, 1) / 1.35), 6);
+  });
+});
 
 describe('the shape of a look', () => {
   const sim = world();
@@ -457,8 +471,10 @@ describe('the sentence the player wrote', () => {
     player.interests = [];
     player.genres = [];
 
+    // Only the papers, which a person always has: no empty line where the background, the interests and the films would be.
     const found = resolveLook(sim, at('person', player.id)) as Looked;
-    expect(found.body).toBeUndefined();
+    const kids = (found.body as { props: { children: { key: string }[] } }).props.children.filter(Boolean);
+    expect(kids.map((k) => k.key)).toEqual(['papers']);
   });
 });
 

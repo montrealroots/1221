@@ -19,7 +19,7 @@ import { placeProfile } from '@/engine/world/place';
 import { rentAt } from '@/engine/content/rents';
 import type { Simulation } from '@/engine';
 import {
-  arrearsOf, depositFor, moveCost, rentOf, spend,
+  arrearsOf, depositBack, depositFor, moveCost, moveRefusal, rentOf, spend,
 } from '@/engine/systems/household';
 import { sleepQuality } from '@/engine/systems/life';
 import { MS_DAY, MS_HOUR, instantFromZoned, startOfNextDay } from '@/engine/core/time';
@@ -54,7 +54,8 @@ describe('the landlord', () => {
     const score = sim.player.credit!.score;
     days(sim, 31);
     expect(sim.player.home!.kind).toBe('sofa');
-    expect(sim.player.credit!.score).toBeLessThanOrEqual(score - 60);
+    // The eviction is on the record; the rent owed before it never was, and a month's statement paid as agreed is.
+    expect(sim.player.credit!.score).toBeLessThanOrEqual(score - 60 + 3);
     expect(rentOf(sim, sim.player)).toBe(0);
     expect(sim.ledger.audit()).toEqual([]);
   });
@@ -118,6 +119,8 @@ describe('moving', () => {
     const sim = quickSave({ wealth: 'comfortable' }, 'move');
     const before = checking(sim).balance;
     const cost = moveCost(sim, sim.player, 'own');
+    // Mid-month, the rest of the month is on top of the deposit.
+    expect(cost).toBeGreaterThan(depositFor(sim, sim.player, 'own'));
     // The month's deposit held on the room they started in comes back first.
     const startingDeposit = deposit(sim)!.balance;
     expect(startingDeposit).toBe(rentOf(sim, sim.player));
@@ -134,6 +137,67 @@ describe('moving', () => {
     const answer = broke.execute({ kind: 'home.move', payload: { kind: 'own' } });
     expect(answer.ok).toBe(false);
     expect(answer.error).toMatch(/deposit/);
+  });
+
+  it('is refused under a notice to pay or quit, and with the old deposit back counted when money is short', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'move-notice');
+    sim.player.home!.noticeUntil = sim.now + 10 * MS_DAY;
+    expect(moveRefusal(sim, sim.player, 'own')).toMatch(/notice to pay or quit/);
+    const answer = sim.execute({ kind: 'home.move', payload: { kind: 'own' } });
+    expect(answer.ok).toBe(false);
+    delete sim.player.home!.noticeUntil;
+    // Exactly enough with the deposit back: the move goes.
+    const back = depositBack(sim, sim.player);
+    expect(back).toBeGreaterThan(0);
+    const need = moveCost(sim, sim.player, 'own') - back;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings' && a.balance !== 0) sim.post({ memo: 'test', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('income', 'Test').id, amount: a.balance }] });
+    setChecking(sim, need - 1);
+    expect(moveRefusal(sim, sim.player, 'own')).toMatch(/deposit back/);
+    setChecking(sim, need);
+    expect(moveRefusal(sim, sim.player, 'own')).toBeUndefined();
+    expect(sim.execute({ kind: 'home.move', payload: { kind: 'own' } }).ok).toBe(true);
+  });
+
+  it('charges a month once for a move on the 1st before the rent, and a room found from the sofa starts paying next month', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'move-first');
+    const zone = sim.homeZone;
+    const p = new Date(sim.now);
+    const first = instantFromZoned({ year: p.getUTCMonth() === 11 ? p.getUTCFullYear() + 1 : p.getUTCFullYear(), month: p.getUTCMonth() === 11 ? 1 : p.getUTCMonth() + 2, day: 1, hour: 10 }, zone);
+    while (sim.now < first) sim.advanceTo(Math.min(first, sim.now + 6 * MS_HOUR));
+    const rentLine = () => sim.nominalAccount('expense', 'Rent').balance;
+    const before = rentLine();
+    expect(moveCost(sim, sim.player, 'own')).toBe(depositFor(sim, sim.player, 'own'));
+    expect(sim.execute({ kind: 'home.move', payload: { kind: 'own' } }).ok).toBe(true);
+    sim.advanceTo(first + 12 * MS_HOUR);
+    expect(rentLine() - before).toBe(rentOf(sim, sim.player));
+    // Moved in off the sofa on the 1st, with no rent to come this month, the next is next month's.
+    const sofa = quickSave({ wealth: 'comfortable' }, 'move-first-sofa');
+    while (sofa.now < first) sofa.advanceTo(Math.min(first, sofa.now + 6 * MS_HOUR));
+    for (const one of sofa.timeline.pending()) if (one.kind === 'home.rent') sofa.timeline.cancel(one.id, sofa.now);
+    sofa.player.home!.kind = 'sofa';
+    expect(sofa.execute({ kind: 'home.move', payload: { kind: 'shared' } }).ok).toBe(true);
+    const next = sofa.timeline.pending().filter((one) => one.kind === 'home.rent').map((one) => one.at);
+    expect(next).toHaveLength(1);
+    expect(next[0]).toBeGreaterThan(first + 20 * MS_DAY);
+  });
+
+  it('finds a home only where they live, not on a job away', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'move-away');
+    const home = sim.player.home!.cityId;
+    sim.player.currentLocationId = 'ca-bc-vancouver';
+    const answer = sim.execute({ kind: 'home.move', payload: { kind: 'own' } });
+    expect(answer.ok).toBe(false);
+    expect(answer.error).toMatch(/away/);
+    expect(sim.player.home!.cityId).toBe(home);
+    // The place they're standing in reads as away from home.
+    expect(placeProfile(sim, 'ca-bc-vancouver')).toMatchObject({ away: true, homeCity: { id: home } });
+    // Off the sofa too: the room waits until they're back.
+    sim.player.home!.kind = 'sofa';
+    days(sim, 2);
+    expect(sim.player.home).toMatchObject({ kind: 'sofa', cityId: home });
+    sim.player.currentLocationId = home;
+    days(sim, 2);
+    expect(sim.player.home).toMatchObject({ kind: 'shared', cityId: home });
   });
 
   it('asks two months’ deposit of a poor record', () => {
@@ -156,7 +220,7 @@ describe('the record', () => {
     expect(sim.player.credit!.score).toBe(score + 6 * 3);
   });
 
-  it('counts rent owed in a month the card owes nothing', () => {
+  it('leaves rent owed to a landlord off the record, a month the card owes nothing being paid as agreed', () => {
     const sim = quickSave({ wealth: 'comfortable' }, 'zero-owed');
     const score = sim.player.credit!.score;
     // No room on the card, nothing in the bank: the rent is owed to the landlord.
@@ -168,8 +232,8 @@ describe('the record', () => {
       setChecking(sim, 0);
       sim.advanceTo(startOfNextDay(sim.now, sim.zone) + 7 * MS_HOUR);
     }
-    // January's statement, on the 20th, owed nothing: paid as agreed, less the rent owed.
-    expect(sim.player.credit!.score).toBe(score + 3 - 10);
+    // January's statement, on the 20th, owed nothing: paid as agreed. A private landlord reports nothing.
+    expect(sim.player.credit!.score).toBe(score + 3);
   });
 
   it('raises the card’s limit for a clean record at six months, and a late payment cuts it', () => {

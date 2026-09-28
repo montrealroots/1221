@@ -15,12 +15,16 @@
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate, zonedParts } from '@/engine/core/time';
 import { cardOf, cardTerms, DUE_KIND, minimumDue, statementDayOf, type CardTerm } from '@/engine/systems/credit';
 import { bankById } from '@/engine/content/banks';
 import { useState } from 'react';
 import { inTheBank } from '@/engine/systems/household';
+import { PENDING } from '@/engine/content/pending';
+import { FIRST_LATE_FEE } from '@/engine/content/latefees';
+import { inSaveMoney } from '@/engine/systems/banking';
+import { CARDS } from '@/engine/content/cards';
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
@@ -40,13 +44,21 @@ export function BankCard({ bankId }: { bankId: string }) {
   const payable = useWorld((s) => Math.min(Math.max(0, -(cardOf(s, s.player)?.balance ?? 0)), inTheBank(s, s.player)));
   const due = useWorld((s) => s.timeline.pending().find((i) => i.kind === DUE_KIND && i.payload.personId === s.player.id));
   if (!credit) return null;
+  // Where the bank issues none, as `card.apply` refuses; until 2026-09-27 the button showed at 28 such banks.
+  const current = sim.player.primaryAccountId ? sim.universe.accounts[sim.player.primaryAccountId] : undefined;
+  const issuer = current?.bankId ? bankById(current.bankId) : undefined;
+  const product = issuer ? CARDS[issuer.id] : undefined;
+  const issuesNone = Boolean(product && 'none' in product);
+  const bankName = issuer?.name ?? 'The bank';
   if (!card) {
     // No card: the one on its way, or applying for the bank's (C1).
     return (
       <Panel title="Credit Card" subtitle={credit.applied ? 'On its way' : 'None'}>
         {credit.applied
           ? <p className="small" style={{ margin: 0 }}>Approved with a {money(credit.applied.limit)} limit. It arrives {formatDate(credit.applied.arrivesAt, sim.zone)}.</p>
-          : (
+          : issuesNone
+            ? <p className="small" style={{ margin: 0 }}>{bankName} doesn’t issue a credit card.</p>
+            : (
             <>
               <p className="small">The bank reads your record and what you have to repay from, and if it says yes, the card comes in about a week. Applying costs your record a few points, yes or no.</p>
               <Gated feature="card.apply" className="btn btn-sm" onClick={() => run('card.apply', {})}>Apply For The Bank’s Card</Gated>
@@ -72,17 +84,38 @@ export function BankCard({ bankId }: { bankId: string }) {
     lines.push(`${pct(terms.apr)} a year on a balance carried.`);
   }
   if (!charge) lines.push('Interest builds each day on what’s owed, the day’s interest included, once a statement isn’t paid in full; pay a statement in full and new spending draws none until the next is due.');
-  if (terms.penaltyApr) lines.push(terms.penaltyInForce ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force: six payments on time in a row takes it off.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
+  // Canada's rule where it runs (`CANADA_PENALTY`), the US's otherwise.
+  const canadian = bankIso === 'CA';
+  if (terms.penaltyApr) lines.push(terms.penaltyInForce
+    ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force${credit.penalty ? ` since ${formatDate(credit.penalty.noticeAt, sim.zone)}` : ''}: ${canadian ? 'twelve' : 'six'} payments on time in a row takes it off.`
+    : canadian ? `Two missed minimums in twelve months, and the rate becomes ${pct(terms.penaltyApr)} at once, for twelve payments on time at least.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
   if (card.balance > 0) lines.push(`The card holds ${money(card.balance)} of your money${bankIso === 'US' ? ', and sends it back after six months if it’s still there' : ''}.`);
   // A fee the research didn't find isn't a fee of none; until 2026-09-26 the Barclaycard said it had none.
-  lines.push(terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
+  // In a US card's first year the law holds its fees to a quarter of the limit (Reg Z §1026.52(a)), as the statement charges it.
+  const firstYearFee = bankIso === 'US' && sim.now - card.openedAt < 365 * 86_400_000 ? Math.min(terms.annualFee, Math.round(limit * 0.25)) : undefined;
+  lines.push(firstYearFee !== undefined && firstYearFee < terms.annualFee ? `${money(firstYearFee)} this first year, on the statement in ${opened}: the law holds a first year’s fees to a quarter of the limit. ${money(terms.annualFee)} a year after.` : terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
   lines.push(`A statement on the ${statementDayOf(person)}${ordinal(statementDayOf(person))}, and the payment due ${terms.graceDays !== undefined ? `${terms.graceDays} days after it` : 'on the 15th of the next month'}${due ? `: next on ${formatDate(due.at, sim.zone)}` : ''}.`);
   if (!charge) {
-    lines.push(`The least a statement asks is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${credit.statementBalance > 0 ? `: ${money(minimumDue(sim, credit.statementBalance, terms, credit.statementInterest ?? 0))} on this one` : ''}.`);
+    lines.push(`The least a statement asks is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${terms.minimumOfLimit ? `, and never under ${money(terms.minimumOfLimit)}, 1.25% of the limit, as Mexico’s central bank sets it` : ''}${credit.statementBalance > 0 ? `: ${money(minimumDue(sim, credit.statementBalance, terms, credit.statementInterest ?? 0))} on this one` : ''}.`);
   }
-  lines.push(`A payment short of ${charge ? 'the statement' : 'the minimum'} costs ${money(terms.lateFee)}, goes on your record, and cuts the limit.`);
+  // As the engine takes it, by country: until 2026-09-27 every card read as America's rule of the day before.
+  const short = charge ? 'the statement' : 'the minimum';
+  if (bankIso === 'US') {
+    const asked = credit.statementBalance > 0 ? minimumDue(sim, credit.statementBalance, terms, credit.statementInterest, credit.statementPlanDue) : undefined;
+    lines.push(`A payment short of ${short} costs ${money(asked !== undefined ? Math.min(terms.lateFee, asked) : terms.lateFee)}${asked === undefined || asked >= terms.lateFee ? ', or the minimum if that’s less' : ', the minimum, which the law holds it to'}.${card.bankId && FIRST_LATE_FEE[card.bankId] ? ` The first in ${FIRST_LATE_FEE[card.bankId]!.withinPeriods} billing periods costs ${money(inSaveMoney(sim, FIRST_LATE_FEE[card.bankId]!.first, 'USD'))}.` : ''} Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.`);
+  } else {
+    const rule = terms.lateRule;
+    const costs = rule ? `${rule.fixed ? `${money(rule.fixed)} and ` : ''}${pct(rule.share)} of ${rule.of === 'minimum' ? 'the minimum' : rule.of === 'balance' ? 'the balance' : 'what went unpaid'}${rule.min !== undefined ? `, at least ${money(rule.min)}` : ''}${rule.max !== undefined ? `, at most ${money(rule.max)}` : ''}${rule.notOverMinimum ? ', never more than the minimum' : ''}` : money(terms.lateFee);
+    lines.push(`A payment short of ${short} costs ${costs}, goes on your record, and cuts the limit.${bankIso === 'GB' ? ` ${bankName} takes what was missed from your other accounts with it.` : ''}`);
+  }
+  if (bankIso === 'GB' && credit.persistentNoticeAt !== undefined && !credit.hardship) {
+    lines.push(`Persistent debt: over eighteen months more went to interest and fees than to the card (the bank wrote on ${formatDate(credit.persistentNoticeAt, sim.zone)}). At thirty-six the bank freezes the interest, sets ${money(Math.ceil(owed / 48 / 100) * 100)} a month, and suspends the card.`);
+  }
   if (credit.suspended === 'late') lines.push(`Suspended: ${credit.missed ?? 0} payments missed in a row. It works again once a payment is made on time; six in a row and it's charged off to collections.`);
-  if (credit.hardship) lines.push(`On a plan: no interest, and ${money(credit.hardship.payment)} a month until it's cleared. The card can't be used until then.`);
+  if (credit.hardship) lines.push(`${credit.suspended === 'persistent' ? 'Three years of persistent debt, and the bank put it on a plan' : 'On a plan'} since ${formatDate(credit.hardship.since, sim.zone)}: no interest, and ${money(credit.hardship.payment)} a month until it’s cleared. The card can’t be used until then.`);
+  // Credit a payment from another bank freed, held while it clears (`PENDING.paymentHoldDays`).
+  const holds = credit.paymentHolds ?? [];
+  if (holds.length) lines.push(`${money(holds.reduce((sum, one) => sum + one.amount, 0))} of the credit your payment freed is held until ${formatDate(Math.max(...holds.map((one) => one.until)), sim.zone)}, while it clears from another bank.${card.bankId && PENDING[card.bankId]?.paymentHoldWords ? ` ${PENDING[card.bankId]!.paymentHoldWords}` : ''}`);
   if (credit.closing !== undefined) lines.push('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
   if (credit.overLimitOptIn) lines.push(`Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows${terms.overLimitFee ? `, for ${money(terms.overLimitFee)} a statement, three in a row at most` : ', and this card charges nothing for it'}.`);
   if (terms.capped) {
@@ -157,7 +190,7 @@ export function BankCard({ bankId }: { bankId: string }) {
               <input id="card-limit" type="text" inputMode="decimal" value={limitWanted} onChange={(e) => setLimitWanted(e.target.value)} />
             </div>
             <Gated feature="card.request_limit" className="btn btn-sm" disabled={!limitWanted} onClick={() => {
-              const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: Math.round(Number(limitWanted.replace(/[^\d.]/g, '')) * 100) });
+              const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: centsFromTyped(limitWanted) });
               if (answer.ok && answer.value?.granted) { toast(`The limit is ${money(answer.value.limit)} now.`, 'positive'); setLimitWanted(''); }
             }}>Ask For It</Gated>
           </div>

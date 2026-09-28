@@ -3,8 +3,10 @@
  *
  * From research on 2026-09-25, each figure from the bank's own price list,
  * product page or rate table where it could be read, and from the official
- * body otherwise: the central bank for its rate, the deposit guarantee for
- * its limit, the tax authority for what a bank takes off interest. Where a
+ * body otherwise: the tax authority for what a bank takes off interest.
+ * Each country's deposit guarantee, its central bank's rate and a line on
+ * how money moves there were researched too and read by nothing, and went
+ * on 2026-09-27; they are in this file's history. Where a
  * figure couldn't be found it is left out rather than guessed: a bank with
  * no published savings rate pays none here, and the screen says there's no
  * rate on record.
@@ -29,10 +31,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- United States ----------------------------------------------------------
   {
     iso: 'US',
-    guarantee: { scheme: 'FDIC', limit: 250_000_00, currency: 'USD', source: 'fdic.gov, per depositor, per bank, per ownership category' },
-    policy: { called: 'federal funds target (upper bound)', rate: 0.04, since: '2026-09-16', source: 'federalreserve.gov, 3.75%–4.00%' },
     interestTax: { rate: 0, note: 'The bank withholds no tax; interest is reported on a 1099-INT and taxed on the return.', source: 'irs.gov backup withholding' },
-    howMoneyMoves: 'Pay arrives by direct deposit over ACH; bills go by autopay or online bill pay, and people pay each other by Zelle.',
     banks: [
       {
         id: 'us-chase', name: 'Chase', iso: 'US', currency: 'USD', format: 'us', code: '021000021',
@@ -66,10 +65,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Canada -----------------------------------------------------------------
   {
     iso: 'CA',
-    guarantee: { scheme: 'Canada Deposit Insurance Corporation (CDIC)', limit: 100_000_00, currency: 'CAD', source: 'cdic.ca, per depositor, per member, per category' },
-    policy: { called: 'overnight rate target', rate: 0.0225, since: '2025-10-29', source: 'bankofcanada.ca' },
     interestTax: { rate: 0, note: 'The bank withholds no tax from a resident; interest is reported on a T5 slip.', source: 'canada.ca, line 12100' },
-    howMoneyMoves: 'Pay arrives by direct deposit; bills go by online bill payment or pre-authorized debit, and people send each other Interac e-Transfers. Since 12 March 2026 a bank may charge at most $10 for a payment it returns unpaid.',
     banks: [
       {
         id: 'ca-rbc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'RBC Royal Bank', iso: 'CA', currency: 'CAD', format: 'ca', code: '003',
@@ -101,10 +97,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Mexico -----------------------------------------------------------------
   {
     iso: 'MX',
-    guarantee: { scheme: 'IPAB', note: '400,000 UDIs per person per bank, about MXN 3.53 million at the UDI of 2026-09-25', source: 'gob.mx/ipab' },
-    policy: { called: 'tasa objetivo', rate: 0.065, since: '2026-05-08', source: 'Banxico, via expansion.mx' },
     interestTax: { rate: 0, note: 'The bank withholds ISR at 0.90% a year on the capital earning interest (LIF 2026, art. 24); no savings rate was found, so nothing here earns interest to withhold from.', source: 'diputados.gob.mx LIF 2026' },
-    howMoneyMoves: 'Pay arrives in a payroll account (cuenta de nómina) by SPEI; bills go by domiciliación, by SPEI to the payee’s CLABE, or in cash at a convenience store.',
     banks: [
       {
         id: 'mx-bbva', name: 'BBVA México', iso: 'MX', currency: 'MXN', format: 'mx', code: '012',
@@ -131,10 +124,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- United Kingdom ---------------------------------------------------------
   {
     iso: 'GB',
-    guarantee: { scheme: 'Financial Services Compensation Scheme (FSCS)', limit: 120_000_00, currency: 'GBP', source: 'fscs.org.uk, per person per firm since 1 December 2025' },
-    policy: { called: 'Bank Rate', rate: 0.0375, since: '2025-12-18', source: 'bankofengland.co.uk' },
     interestTax: { rate: 0, note: 'Banks have withheld no tax since April 2016; the Personal Savings Allowance covers £1,000 a year for a basic-rate taxpayer.', source: 'gov.uk' },
-    howMoneyMoves: 'Pay arrives by BACS Direct Credit, usually monthly; bills go by Direct Debit, and one-off payments by Faster Payments.',
     banks: [
       {
         id: 'gb-barclays', name: 'Barclays', iso: 'GB', currency: 'GBP', format: 'gb', code: '20',
@@ -171,10 +161,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Ireland ----------------------------------------------------------------
   {
     iso: 'IE',
-    guarantee: { scheme: 'Deposit Guarantee Scheme', limit: 100_000_00, currency: 'EUR', source: 'centralbank.ie, per person per institution' },
-    policy: { called: 'ECB deposit facility rate', rate: 0.025, since: '2026-09-16', source: 'ecb.europa.eu' },
     interestTax: { rate: 0.33, note: 'DIRT at 33%, taken by the bank and final.', source: 'revenue.ie' },
-    howMoneyMoves: 'Pay arrives by SEPA credit transfer; bills go by SEPA Direct Debit.',
     banks: [
       {
         id: 'ie-aib', name: 'AIB', iso: 'IE', currency: 'EUR', format: 'ie', code: 'AIBK93',
@@ -196,14 +183,11 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Iceland ----------------------------------------------------------------
   {
     iso: 'IS',
-    guarantee: { scheme: 'Depositors’ and Investors’ Guarantee Fund (Tryggingarsjóður)', note: 'the equivalent of €100,000 in krónur, about 13.8 million kr', source: 'Act 98/1999, art. 9, althingi.is' },
-    policy: { called: 'key interest rate (meginvextir)', rate: 0.08, since: '2026-08-19', source: 'sedlabanki.is' },
     interestTax: {
       rate: 0.22, refund: { allowance: 300_000_00, month: 6, day: 1, estimateDate: true },
       note: 'Capital income tax (fjármagnstekjuskattur) at 22%, taken by the bank; the tax on the first 300,000 kr of a year’s interest comes back at the next year’s assessment.',
       source: 'skatturinn.is',
     },
-    howMoneyMoves: 'Pay arrives in the current account; bills arrive as claims (kröfur) in the online bank and are paid from there.',
     banks: [
       {
         id: 'is-landsbankinn', name: 'Landsbankinn', iso: 'IS', currency: 'ISK', format: 'is', code: '01', currentLedger: '26', savingsLedger: '05',
@@ -225,10 +209,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- France -----------------------------------------------------------------
   {
     iso: 'FR',
-    guarantee: { scheme: 'Fonds de Garantie des Dépôts et de Résolution (FGDR)', limit: 100_000_00, currency: 'EUR', source: 'garantiedesdepots.fr' },
-    policy: { called: 'ECB deposit facility rate', rate: 0.025, since: '2026-09-16', source: 'ecb.europa.eu' },
     interestTax: { rate: 0.314, note: 'On ordinary interest the bank takes 12.8% toward income tax and 18.6% social charges (from 2026). A Livret A pays tax-free.', source: 'service-public.gouv.fr F2329' },
-    howMoneyMoves: 'Salary arrives by SEPA virement; bills go by SEPA prélèvement, and a few by check.',
     banks: [
       {
         id: 'fr-bnp-paribas', name: 'BNP Paribas', iso: 'FR', currency: 'EUR', format: 'fr', code: '30004',
@@ -260,10 +241,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Germany ----------------------------------------------------------------
   {
     iso: 'DE',
-    guarantee: { scheme: 'statutory deposit guarantee (EdB for private banks; Sparkassen and Volksbanken by their own schemes)', limit: 100_000_00, currency: 'EUR', source: 'bafin.de' },
-    policy: { called: 'ECB deposit facility rate', rate: 0.025, since: '2026-09-16', source: 'ecb.europa.eu' },
     interestTax: { rate: 0.26375, allowance: 1_000_00, note: 'Abgeltungsteuer at 25% plus the 5.5% Solidaritätszuschlag, taken by the bank on interest above the €1,000 Sparer-Pauschbetrag a year; church tax not modeled.', source: 'gesetze-im-internet.de, §32d and §20(9) EStG' },
-    howMoneyMoves: 'Pay arrives by SEPA-Überweisung; rent goes by standing order (Dauerauftrag), and utilities and insurance by SEPA-Lastschrift.',
     banks: [
       {
         id: 'de-deutsche-bank', name: 'Deutsche Bank', iso: 'DE', currency: 'EUR', format: 'de', code: '10070000',
@@ -295,10 +273,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Spain ------------------------------------------------------------------
   {
     iso: 'ES',
-    guarantee: { scheme: 'Fondo de Garantía de Depósitos (FGD)', limit: 100_000_00, currency: 'EUR', source: 'BOE-A-2011-16173' },
-    policy: { called: 'ECB deposit facility rate', rate: 0.025, since: '2026-09-16', source: 'ecb.europa.eu' },
     interestTax: { rate: 0.19, note: 'A 19% retención on interest, taken by the bank.', source: 'Ley 35/2006, art. 101.4, boe.es' },
-    howMoneyMoves: 'The nómina arrives by SEPA transfer into the salary account; bills are recibos domiciliados, and people pay each other by Bizum. An overdraft may not cost more than 8.125% a year in 2026, two and a half times the legal rate.',
     banks: [
       {
         id: 'es-santander', name: 'Banco Santander', iso: 'ES', currency: 'EUR', format: 'es', code: '0049',
@@ -330,10 +305,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Japan ------------------------------------------------------------------
   {
     iso: 'JP',
-    guarantee: { scheme: 'Deposit Insurance Corporation of Japan (DICJ)', limit: 10_000_000_00, currency: 'JPY', source: 'dic.go.jp, principal and interest per depositor per bank' },
-    policy: { called: 'uncollateralized overnight call rate target', rate: 0.0125, since: '2026-09-18', source: 'boj.or.jp' },
     interestTax: { rate: 0.20315, note: '20.315% taken at source and final: 15.315% national, reconstruction surtax included, and 5% local.', source: 'nta.go.jp No.1310' },
-    howMoneyMoves: 'Pay arrives by salary transfer (kyūyo furikomi) into an ordinary deposit account; bills go by account transfer (kōza furikae) or with a slip at a convenience store.',
     banks: [
       {
         id: 'jp-mufg', dormant: { yearly: 1_320_00, afterYears: 2, source: 'bk.mufg.jp: ¥1,320 a year on an account unused for two years' }, name: 'MUFG Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0005',
@@ -365,10 +337,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- South Korea ------------------------------------------------------------
   {
     iso: 'KR',
-    guarantee: { scheme: 'Korea Deposit Insurance Corporation (KDIC)', limit: 100_000_000_00, currency: 'KRW', source: 'fsc.go.kr, per depositor per institution from 1 September 2025' },
-    policy: { called: 'Base Rate', rate: 0.03, since: '2026-08-27', source: 'bok.or.kr' },
     interestTax: { rate: 0.154, note: '15.4% taken at source: 14% national and 1.4% local income tax.', source: 'kbthink.com' },
-    howMoneyMoves: 'Salary arrives in a designated salary account, which unlocks its fee waivers; bills go by auto-transfer (jadong iche), card, or KakaoPay and Toss.',
     banks: [
       {
         id: 'kr-kb-kookmin', name: 'KB Kookmin Bank', iso: 'KR', currency: 'KRW', format: 'kr', code: '004', groups: [6, 2, 6],
@@ -400,10 +369,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- Australia --------------------------------------------------------------
   {
     iso: 'AU',
-    guarantee: { scheme: 'Financial Claims Scheme', limit: 250_000_00, currency: 'AUD', source: 'apra.gov.au, per account holder per bank' },
-    policy: { called: 'cash rate target', rate: 0.0435, since: '2026-05-06', source: 'rba.gov.au' },
     interestTax: { rate: 0, note: 'The bank withholds no tax once a tax file number is given; without one the bank takes 47%.', source: 'savings.com.au (the ATO page could not be read)' },
-    howMoneyMoves: 'Pay arrives by direct credit, often to a PayID; bills go by BPAY, direct debit or card.',
     banks: [
       {
         id: 'au-commbank', name: 'Commonwealth Bank', iso: 'AU', currency: 'AUD', format: 'au', code: '06',
@@ -430,8 +396,6 @@ export const THIRTEEN: readonly CountryBanking[] = [
   // --- New Zealand ------------------------------------------------------------
   {
     iso: 'NZ',
-    guarantee: { scheme: 'Depositor Compensation Scheme', limit: 100_000_00, currency: 'NZD', source: 'rbnz.govt.nz, per depositor per institution since 1 July 2025' },
-    policy: { called: 'Official Cash Rate', rate: 0.0275, since: '2026-09-02', source: 'rbnz.govt.nz' },
     interestTax: {
       brackets: [
         { upTo: 15_600_00, rate: 0.105 }, { upTo: 53_500_00, rate: 0.175 }, { upTo: 78_100_00, rate: 0.30 },
@@ -440,7 +404,6 @@ export const THIRTEEN: readonly CountryBanking[] = [
       note: 'Resident withholding tax at the rate that matches the saver’s income: 10.5%, 17.5%, 30%, 33% or 39%.',
       source: 'ird.govt.nz, resident withholding tax',
     },
-    howMoneyMoves: 'Pay arrives by direct credit, weekly or fortnightly; bills go by internet-banking bill payment, automatic payment or direct debit.',
     banks: [
       {
         id: 'nz-anz', name: 'ANZ', iso: 'NZ', currency: 'NZD', format: 'nz', code: '01',

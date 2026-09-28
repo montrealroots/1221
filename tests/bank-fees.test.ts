@@ -18,7 +18,7 @@ import type { Account } from '@/engine/core/ledger';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { spend } from '@/engine/systems/household';
 import { bankAccountsOf, feeFor, inSaveMoney, monthStartOf, rateOf } from '@/engine/systems/banking';
-import { bankById, bankingIn, banksIn } from '@/engine/content/banks';
+import { bankById, banksIn } from '@/engine/content/banks';
 import { WORLD_FEES } from '@/engine/content/banks-world-fees';
 import { SHEETS } from '@/engine/content/banks-world-sheets';
 import { IBAN_CODES } from '@/engine/content/banks-world-iban';
@@ -263,7 +263,6 @@ describe('the rest of the world’s banks', () => {
         }
         if (found.savings?.rate !== undefined) expect(bank!.savings.rate).toBe(found.savings.rate);
       }
-      if (sheet.policy) expect(bankingIn(iso)?.policy?.rate).toBe(sheet.policy.rate);
     }
     expect(named).toBeGreaterThan(150);
     expect(stated).toBe(22);

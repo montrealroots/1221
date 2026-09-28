@@ -21,6 +21,8 @@ import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
 } from '@/engine/content/interests';
 import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
+import { TURNS, feel } from '@/engine/systems/enjoyment';
+import { personalityOf } from '@/engine/systems/personality';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
 function globSource(directory: string): string {
@@ -116,7 +118,7 @@ describe('the year a character can be born in', () => {
 
   it('stops at eighteen years before the save begins', () => {
     expect(BIRTH_YEARS_BEFORE_START).toBe(18);
-    expect(latestBirthYear(2026)).toBe(2008);
+    expect(latestBirthYear({ startYear: 2026 })).toBe(2008);
   });
 
   it('lets a birthday at the cap open the save at seventeen', () => {
@@ -128,8 +130,8 @@ describe('the year a character can be born in', () => {
   });
 
   it('checks the year rather than the age, so the picker and the rule agree', () => {
-    expect(source).toContain('max={latestBirthYear(config.startYear)}');
-    expect(source).toContain('config.birthYear > latestBirthYear(config.startYear)');
+    expect(source).toContain('max={latestBirthYear(config)}');
+    expect(source).toContain('config.birthYear > latestBirthYear(config)');
     // No age floor anywhere: it would contradict the year the picker allows.
     expect(source.match(/\bage < \d+\b/g) ?? []).toEqual([]);
   });
@@ -200,6 +202,24 @@ describe('race and ethnicity on the character sheet', () => {
   });
 });
 
+describe('a turn in the career or at school', () => {
+  it('moves morale by the temperament’s swing and stress by how it gains, and a relief as it is', () => {
+    const sim = quickSave({}, 'turns');
+    const p = sim.player;
+    p.personalityTraits = ['highly_strung'];
+    p.wellbeing.morale = 50;
+    p.wellbeing.stress = 50;
+    feel(p, 'dropped');
+    expect(p.wellbeing.morale).toBeCloseTo(50 + TURNS.dropped.morale * personalityOf(p, 'moraleSwing'), 9);
+    expect(p.wellbeing.stress).toBeCloseTo(50 + TURNS.dropped.stress * personalityOf(p, 'stressGain'), 9);
+    expect(personalityOf(p, 'moraleSwing')).not.toBe(1);
+    expect(personalityOf(p, 'stressGain')).not.toBe(1);
+    p.wellbeing.stress = 50;
+    feel(p, 'booked');
+    expect(p.wellbeing.stress).toBe(50 + TURNS.booked.stress);
+  });
+});
+
 describe('the interests and the genres', () => {
   it('offers film and television, and the trades that make them', () => {
     const general = GENERAL_INTERESTS.map((one) => one.id);
@@ -237,7 +257,7 @@ describe('the interests and the genres', () => {
     ]) expect(labels).toContain(label);
   });
 
-  it('puts both on the player, and only enjoyment reads the interests, and nothing the genres', () => {
+  it('puts both on the player, and only enjoyment reads the interests and the genres', () => {
     const sim = createSave(1, 'interests', {
       ...defaultConfig(), interests: ['cinematography', 'film'], genres: ['film_noir', 'western'],
     });
@@ -251,7 +271,8 @@ describe('the interests and the genres', () => {
     // start being a stat. On 2026-09-24 the owner narrowed it for the
     // interests: they may change how much somebody gets out of doing a thing,
     // never how good they are at it. That lives in one file, and the test
-    // below holds what it may move. The genres wait for the film career.
+    // below holds what it may move. The genres waited for the film career, and
+    // since 2026-09-27 the same file reads them, for a job's genre.
     const engine = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts'))
       .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
@@ -259,7 +280,7 @@ describe('the interests and the genres', () => {
       .filter((f) => !/world\/bootstrap\.ts|domain\/model\.ts/.test(f));
     const reading = (field: string) => engine.filter((f) => new RegExp(`\\.${field}\\b`).test(readFileSync(f, 'utf8')));
     expect(reading('interests'), 'these read somebody’s interests out of a save').toEqual(['src/engine/systems/enjoyment.ts']);
-    expect(reading('genres'), 'these read somebody’s genres out of a save').toEqual([]);
+    expect(reading('genres'), 'these read somebody’s genres out of a save').toEqual(['src/engine/systems/enjoyment.ts']);
   });
 
   it('lets an interest change how much an action gives the mood and the relief, and nothing else', () => {

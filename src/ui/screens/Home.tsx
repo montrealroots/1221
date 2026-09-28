@@ -10,7 +10,7 @@ import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
-import { MS_DAY, WEEKDAY_NAMES } from '@/engine/core/time';
+import { MS_DAY, WEEKDAY_NAMES, formatDateTime, zonedParts } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -18,16 +18,23 @@ import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
-import { readiness, wellbeingSummary } from '@/engine/systems/life';
+import { readiness, wellbeingSummary, EMPTY, OVERWROUGHT } from '@/engine/systems/life';
 import { CITIES } from '@/engine/content/geography';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
-import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf } from '@/engine/systems/household';
+import { HOUSING, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
+import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
+import { YALE_DRAMA } from '@/engine/content/school';
+import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
+import { agencyById } from '@/engine/systems/career';
+import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
+import { resolveIncomeTaxLayers } from '@/engine/content/tax';
+import { homeOf } from '@/engine/systems/earnings';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -38,16 +45,27 @@ export function Home() {
   const worth = useWorld((s) => netWorth(s, s.player.id));
   const cur = saveCurrency(sim.universe);
   const unread = useWorld(unreadNotifications);
-  // What still weighs with nothing to decide: rent owed, a notice, a clash in
-  // the next month. "All Clear" was said over all three.
+  // What still weighs with nothing to decide: a notice, what money weighs
+  // with (`troubles`, which the day's worry reads too), a clash in the next
+  // month. "All Clear" was said over all of them, and until 2026-09-27 it
+  // read only the rent of the money.
   const weighing = useWorld((s) => {
-    const owed = arrearsOf(s, s.player);
     const notice = s.player.home?.noticeUntil;
     const clash = entriesBetween(s, s.now, s.now + 30 * MS_DAY).some((e) => e.conflicted);
     const cur = saveCurrency(s.universe);
+    const m = (cents: number) => formatMoney(cents, cur, { cents: false });
     const said: string[] = [];
     if (notice !== undefined) said.push(`A notice to pay or quit runs until ${formatDate(notice, s.zone)}.`);
-    if (owed > 0) said.push(`You owe your landlord ${formatMoney(owed, cur, { cents: false })}.`);
+    for (const t of troubles(s, s.player)) {
+      if (t.kind === 'landlord') said.push(`You owe your landlord ${m(t.amount)}.`);
+      else if (t.kind === 'overdrawn') said.push(`Your current account is ${m(t.amount)} overdrawn.`);
+      else if (t.kind === 'card') said.push(`Your card is nearly at its limit, owing ${m(t.amount)}.`);
+      else if (t.kind === 'card_behind') said.push(s.player.credit?.suspended ? `Your card is suspended, owing ${m(t.amount)}.` : `Your card is ${s.player.credit?.missed === 1 ? 'a payment' : `${s.player.credit?.missed} payments`} behind, owing ${m(t.amount)}.`);
+      else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
+      else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
+      else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
+      else said.push(`You owe ${m(t.amount)} of income tax.`);
+    }
     if (clash) said.push('Two things on your calendar in the next month want you at once.');
     return said;
   });
@@ -72,6 +90,9 @@ export function Home() {
     weather: useFeature('ui.weather').open,
     money: useFeature('ui.money').open,
     home: useFeature('ui.home').open,
+    school: useFeature('ui.school').open,
+    career: useFeature('ui.career').open,
+    papers: useFeature('ui.papers').open,
   };
 
   return (
@@ -143,7 +164,8 @@ export function Home() {
               <span className="stat-note">
                 <Open subject={at('day', dateKey(next.at, sim.zone))}>{formatDate(next.at, sim.zone)}</Open>
                 {' at '}
-                <Open subject={at('entry', next.id)}>{formatTime(next.at, sim.zone)}</Open>
+                {/* The call's own clock, where it names another city: until 2026-09-27 the home clock with no zone. */}
+                <Open subject={at('entry', next.id)}>{(() => { const tz = next.locationId ? CITIES.get(next.locationId)?.timeZone : undefined; return tz && tz !== sim.zone ? `${formatTime(next.at, tz)} ${zoneAbbreviation(next.at, tz)}` : formatTime(next.at, sim.zone); })()}</Open>
                 {next.locationId && next.locationId !== player.currentLocationId && (
                   <span className="negative">
                     {' · you’re not in '}
@@ -195,7 +217,7 @@ export function Home() {
             weighing.length === 0 ? (
               <Empty
                 title="All Clear"
-                body="You’re not late for anything, you owe nobody rent, and the calendar doesn’t clash. Go and do something you want to do."
+                body="You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do."
               />
             ) : (
               <Empty title="No Decisions Waiting" body={weighing.join(' ')} />
@@ -299,8 +321,8 @@ export function Home() {
                 <Open subject={at('person', player.id)}>{wellbeingSummary(player)}</Open>
               </p>
               <div className="col gap-3">
-                <Meter label="Energy" value={player.wellbeing.energy} look={at('dial', `${player.id}/energy`)} />
-                <Meter label="Stress" value={player.wellbeing.stress} invert look={at('dial', `${player.id}/stress`)} />
+                <Meter label="Energy" value={player.wellbeing.energy} line={EMPTY} look={at('dial', `${player.id}/energy`)} />
+                <Meter label="Stress" value={player.wellbeing.stress} invert line={OVERWROUGHT} look={at('dial', `${player.id}/stress`)} />
                 <Meter label="Readiness" value={ready} look={at('readiness', player.id)} />
               </div>
             </LookRegion>
@@ -358,20 +380,14 @@ export function Home() {
                 />
                 <Stat
                   label="Tax On A Wage"
-                  value={`${Math.round(place.effectiveIncomeTax * 100)}%`}
-                  note="Income tax and payroll both, on a US$60,000 wage"
+                  value={resolveIncomeTaxLayers(place.city.id, sim.now).length > 0 ? `${Math.round(place.effectiveIncomeTax * 100)}%` : 'Not On File'}
+                  note={resolveIncomeTaxLayers(place.city.id, sim.now).length > 0 ? 'Income tax and payroll both, on a US$60,000 wage' : 'No table for this country yet'}
                   look={at('place', place.city.id)}
                 />
                 <Stat
                   label="Sales Tax"
                   value={`${(place.salesTax * 100).toFixed(1)}%`}
-                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%`}
-                  look={at('place', place.city.id)}
-                />
-                <Stat
-                  label="Industry"
-                  value={`${place.industryPresence}/100`}
-                  note="Film and Television work here"
+                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners: you rent`}
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -479,7 +495,7 @@ export function Home() {
             <Stat
               label="Net Worth"
               value={<MoneyText amount={worth.total} currency={cur} compact />}
-              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
+              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
               look={at('networth', player.id)}
             />
             {worth.liabilities > 0 && (
@@ -498,8 +514,128 @@ export function Home() {
           <YourHome cur={cur} />
         </Panel>
         )}
+        {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
+        <Panel
+          title="School"
+          tight
+          actions={(
+            <Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>
+              {YALE_DRAMA.short}
+            </Gated>
+          )}
+        >
+          <YourSchool />
+        </Panel>
+        ))}
+        {player.career && (!shows.career ? <LockedPanel feature="ui.career" title="Career" /> : (
+        <Panel
+          title="Career"
+          tight
+          actions={(
+            <Gated feature="ui.career" className="btn btn-sm" onClick={() => navigate('/workspace/career', 'Your Career')}>
+              Career
+            </Gated>
+          )}
+        >
+          <YourCareer cur={cur} />
+        </Panel>
+        ))}
+        {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
+        {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Taxes And Cover" /> : (
+        <Panel
+          title="Taxes And Cover"
+          tight
+          actions={(
+            <Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Taxes And Cover')}>
+              Taxes
+            </Gated>
+          )}
+        >
+          <YourPapers cur={cur} />
+        </Panel>
+        ))}
       </div>
     </>
+  );
+}
+
+/**
+ * Where the life began: the year and standing, the place in the class, and
+ * the next thing the school has on the calendar (`systems/school.ts`). Until
+ * 2026-09-26 it said what scholarship the next term paid in, which a family
+ * with means isn't paid.
+ */
+function YourSchool() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school;
+  if (!school) return null;
+  const zone = CITIES.require(YALE_DRAMA.cityId).timeZone;
+  const booked = sim.universe.scheduled
+    .filter((item) => item.status === 'pending' && item.category === 'school' && item.requiresPlayer && item.payload.personId === person.id)
+    .sort((x, y) => x.at - y.at)[0];
+  // What the calendar holds, or past this week, the next classes, while there are classes to go to.
+  const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
+  const classes = enrolled ? nextClasses(sim.now) : undefined;
+  const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;
+  return (
+    <div className="col gap-3">
+      <Stat
+        label={`${YALE_DRAMA.degree} In ${YALE_DRAMA.program}`}
+        value={school.standing === 'graduated' ? 'Graduated' : school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`}
+        note={`Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}`}
+        tone={school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed' ? 'warning' : undefined}
+      />
+      <Stat label="Your Place In The Class" value={`${rankIn(person)} of ${YALE_DRAMA.classSize}`} note="By craft, across every skill" />
+      {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, zone)} />}
+    </div>
+  );
+}
+
+/**
+ * Taxes and cover (`systems/health.ts`, `systems/taxreturn.ts`,
+ * `systems/unemployment.ts`): what covers them, the next return, and a claim.
+ */
+function YourPapers({ cur }: { cur: string }) {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const cover = coverOn(person, sim.now);
+  const open = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined);
+  // Past its day, the penalty filing now would add; filed and unpaid, what's owed and growing. Until 2026-09-27 neither showed.
+  const penalty = open && open.figures.balance > 0 && sim.now > open.due ? latePenalty(open.figures.balance, open.due, sim.now, cur) : 0;
+  const owedTax = Object.values(person.returns ?? {}).reduce((sum, r) => sum + Math.max(0, r.owed ?? 0), 0);
+  const claim = person.unemployment?.claim;
+  return (
+    <div className="col gap-3">
+      <Stat label="Health Cover" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
+      <Stat label="Tax Return" value={open ? `${open.year}, Due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}` : owedTax > 0 ? `Owed: ${formatMoney(owedTax, cur, { cents: false })}` : 'None Open'} note={open ? (open.figures.balance > 0 ? `${formatMoney(open.figures.balance + penalty, cur, { cents: false })} owed${penalty > 0 ? `, ${formatMoney(penalty, cur, { cents: false })} of it the late penalty so far` : ''}` : `${formatMoney(-open.figures.balance, cur, { cents: false })} back`) : owedTax > 0 ? 'Filed, and growing half a percent a month until it’s paid' : undefined} tone={(open && sim.now > open.due) || owedTax > 0 ? 'warning' : undefined} />
+      <Stat label="Unemployment" value={claim ? `${formatMoney(claim.weekly, cur, { cents: false })} A Week` : 'No Claim'} note={claim ? 'Less for a week you work' : undefined} />
+    </div>
+  );
+}
+
+/**
+ * The working life (`systems/career.ts`): who represents them, what's next
+ * on the calendar for it, and the year's wages.
+ */
+function YourCareer({ cur }: { cur: string }) {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = person.career;
+  if (!career) return null;
+  const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
+  const next = sim.universe.scheduled
+    .filter((item) => item.status === 'pending' && item.category === 'career' && item.requiresPlayer && item.payload.personId === person.id)
+    .sort((x, y) => x.at - y.at)[0];
+  const year = String(zonedParts(sim.now, sim.zone).year);
+  // A manager's offer is one to answer too: until 2026-09-27 it wasn't counted.
+  const offers = career.offers.filter((o) => o.until > sim.now).length + career.managerOffers.filter((o) => o.until > sim.now).length + career.bookings.filter((b) => b.status === 'offered').length;
+  return (
+    <div className="col gap-3">
+      <Stat label="Representation" value={agency?.name ?? 'None'} note={offers ? `${offers} ${offers === 1 ? 'offer' : 'offers'} to answer` : `${career.credits.length} ${career.credits.length === 1 ? 'credit' : 'credits'}`} tone={offers ? 'warning' : undefined} />
+      <Stat label="Earned This Year" value={formatMoney(person.earnings?.years[year]?.acting ?? 0, cur, { cents: false })} note="Before commission and tax" />
+      {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, sim.zone)} />}
+    </div>
   );
 }
 
@@ -515,13 +651,17 @@ function YourHome({ cur }: { cur: string }) {
   const owed = useWorld((s) => arrearsOf(s, s.player));
   const ahead = useWorld((s) => s.player.payments?.rentCredit ?? 0);
   const payLandlord = () => {
-    const answer = run('home.pay_landlord', { amount: Math.round(Number(paying.replace(/[^\d.]/g, '')) * 100) });
+    const answer = run('home.pay_landlord', { amount: centsFromTyped(paying) });
     if (answer.ok) { toast('Paid.', 'positive'); setPaying(''); }
   };
   const home = useWorld((s) => s.player.home);
+  // Away on a job or a stay, a home is found back where they live (`home.move`).
+  const away = useWorld((s) => (s.player.home && s.player.home.cityId !== s.player.currentLocationId ? s.player.home.cityId : undefined));
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
-  const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared'), own: moveCost(s, s.player, 'own') }));
+  // What leaves the bank, the old deposit back set against it, and why a move can't be made, as `move` has it.
+  const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared') - depositBack(s, s.player), own: moveCost(s, s.player, 'own') - depositBack(s, s.player) }));
+  const refused = useWorld((s) => ({ shared: moveRefusal(s, s.player, 'shared'), own: moveRefusal(s, s.player, 'own') }));
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
   const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : HOUSING[home.kind].label) : 'Nowhere';
   return (
@@ -529,7 +669,7 @@ function YourHome({ cur }: { cur: string }) {
       <Stat
         label="Where You Sleep"
         value={homeLabel}
-        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills)} a month on the first: ${money(rent)} rent and ${money(bills)} bills`}
+        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills)} a month on the first: ${money(rent)} rent and ${money(bills)} bills. Since ${formatDate(home!.since, sim.zone)}`}
       />
       {home && home.kind !== 'sofa' && (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -545,18 +685,23 @@ function YourHome({ cur }: { cur: string }) {
           A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.
         </div>
       )}
+      {away ? (
+        <div className="small muted">You’re away: a new home is found back in {CITIES.get(away)?.name ?? 'your town'}.</div>
+      ) : (
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         {home?.kind !== 'shared' && (
-          <Gated feature="home.move" className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'shared' })}>
+          <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.shared)} onClick={() => run('home.move', { kind: 'shared' })}>
             Move Into A Room ({money(costs.shared)})
           </Gated>
         )}
         {home?.kind !== 'own' && (
-          <Gated feature="home.move" className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'own' })}>
+          <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.own)} onClick={() => run('home.move', { kind: 'own' })}>
             Get A Place Of Your Own ({money(costs.own)})
           </Gated>
         )}
       </div>
+      )}
+      {!away && (refused.own ?? refused.shared) && <div className="xs dim">{home?.kind === 'own' ? refused.shared : refused.own}</div>}
     </div>
   );
 }
@@ -572,7 +717,8 @@ function CardSummary({ cur }: { cur: string }) {
   const card = useWorld((s) => cardOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
-  const record = scoreIsANumberIn(sim.player.currentLocationId) ? String(credit.score) : scoreWord(credit.score);
+  // Read as it’s read where they live, not where a job has them.
+  const record = scoreIsANumberIn(homeOf(sim.player)) ? String(credit.score) : scoreWord(credit.score);
   const terms = card ? cardTerms(sim, card, credit.score) : undefined;
   return (
     <>

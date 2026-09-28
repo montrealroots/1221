@@ -787,13 +787,6 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 }
 .rail-item:hover { background: var(--surface-2); color: var(--text); }
 .rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
-.rail-item.is-locked { opacity: 0.6; }
-.rail-item.is-locked:hover { opacity: 0.8; background: transparent; color: var(--text-muted); }
-.rail-lock {
-  flex-shrink: 0; font-size: var(--size-xs); letter-spacing: .04em;
-  border: 1px solid var(--line); border-radius: var(--radius-sm);
-  padding: 0 var(--s1); color: var(--text-dim);
-}
 .rail-badge {
   margin-left: auto; font-size: var(--size-xs); font-weight: 700;
   background: var(--negative); color: #fff; border-radius: 100px;
@@ -810,34 +803,6 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 /* The two sides of the bar. Left is the world; right is you. */
 .topbar-group { display: flex; align-items: center; gap: var(--s2); }
 .topbar-divider { width: 1px; height: 22px; background: var(--line); flex: none; }
-
-/*
-  Where To — the destination grid on Home.
-
-  This replaces a left-hand rail that sat on every screen. Tiles rather than a
-  list, because Home has the width for it and a destination with a line about
-  what is behind it is worth more than a bare label.
-*/
-.dest-grid {
-  display: grid; gap: var(--s2);
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-}
-.dest {
-  display: flex; align-items: flex-start; gap: var(--s3); width: 100%;
-  padding: var(--s3); border-radius: var(--radius-sm); text-align: left;
-  background: var(--surface-2); border: 1px solid var(--line);
-  color: var(--text); font: inherit; cursor: pointer; min-width: 0;
-}
-.dest:hover { background: var(--surface-3); border-color: var(--line-strong); }
-.dest-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.dest-label {
-  font-size: var(--size-sm); font-weight: 600; display: flex; align-items: center; gap: var(--s2);
-}
-.dest-detail { font-size: var(--size-xs); color: var(--text-dim); }
-.dest-lock { margin-left: var(--s2); font-size: 10px; vertical-align: middle; }
-/* A destination that exists and does not open. Clicking says so. */
-.dest.is-locked { opacity: 0.6; }
-.dest.is-locked:hover { opacity: 0.8; background: var(--surface-2); border-color: var(--line); }
 
 .main {
   flex: 1; overflow-y: auto; min-width: 0;
@@ -1326,3 +1291,7 @@ kbd {
   .guide-toc-item .grow { display: none; }
 }
 .guide-opens + p { margin-top: var(--s3); }
+
+/* A chosen place's line under its name, on the accent's tint, where the dim
+   text failed contrast (axe, 2026-09-26, the birthplace every new life picks). */
+.picker-option[data-selected] .picker-option-meta { color: var(--text-muted); }

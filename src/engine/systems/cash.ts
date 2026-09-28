@@ -47,6 +47,17 @@ export function walletOf(sim: Simulation, person: Person, open = false): Account
   return sim.openAccount({ id: sim.nextId('account'), kind: 'cash', name: 'Cash In Hand', ownerId: person.id, openedAt: sim.now });
 }
 
+/**
+ * Where money paid to somebody lands: their open current account, or with
+ * none open, the payer's check, cashed into their wallet. Until 2026-09-27
+ * pay, residuals, a stipend, work-study, unemployment and a tax refund with
+ * no open current account to go to were dropped, and what was owed with them.
+ */
+export function payeeAccount(sim: Simulation, person: Person): Account {
+  const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+  return current && !current.closedAt ? current : walletOf(sim, person, true)!;
+}
+
 function inSave(sim: Simulation, amount: Money, currency: string): Money {
   const into = saveCurrency(sim.universe);
   return into === currency ? amount : exchange(amount, currency, into) ?? amount;
@@ -199,10 +210,15 @@ export function savingsLeftThisMonth(sim: Simulation, account: Account): Money |
   const monthly = CASH[account.bankId]?.savingsMonthly;
   if (monthly === undefined) return undefined;
   const bank = bankById(account.bankId)!;
-  const p = zonedParts(sim.now, sim.zone);
-  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.zone);
-  const out = sim.universe.transactions
-    .filter((t) => t.at >= since && t.category !== 'interest')
-    .reduce((sum, t) => sum + t.postings.filter((q) => q.accountId === account.id && q.amount < 0).reduce((a, q) => a - q.amount, 0), 0);
+  // The bank's month, as every other bank month is kept; until 2026-09-27 the clock's zone's.
+  const p = zonedParts(sim.now, sim.homeZone);
+  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.homeZone);
+  let out = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0 && list[i]!.at >= since; i -= 1) {
+    const t = list[i]!;
+    if (t.category === 'interest' || t.category === 'bank_fee') continue;
+    for (const q of t.postings) if (q.accountId === account.id && q.amount < 0) out -= q.amount;
+  }
   return Math.max(0, inSave(sim, monthly, bank.currency) - out);
 }

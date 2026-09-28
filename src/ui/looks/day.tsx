@@ -162,6 +162,31 @@ function spokenWhen(target: Instant, sim: Simulation, zone: TimeZone): string {
 const lengthOf = (entry: CalendarEntry): string | undefined =>
   (entry.durationMinutes ? formatDuration(entry.durationMinutes * MS_MINUTE) : undefined);
 
+/**
+ * What missing a commitment costs, as its handler has it (`systems/school.ts`,
+ * `systems/career.ts`). Until 2026-09-27 the entry look said only that it
+ * cost "what the Guide says".
+ */
+function missCost(sim: Simulation, id: string): string {
+  const item = sim.universe.scheduled.find((one) => one.id === id);
+  const call = item?.payload.call;
+  switch (item?.kind) {
+    case 'school.classes': return ': an unexcused absence, which the faculty weigh at the term’s evaluation, unless you’re sick or in hospital';
+    case 'school.call':
+      return call === 'performance' ? ': a grave breach, straight to academic warning, or from warning to dismissal'
+        : call === 'oncall' ? ', and if you’re sent on and not there, it’s a grave breach, straight to academic warning'
+          : ': counted against your attendance, and enough missed calls take you out of the casting pool';
+    case 'school.lab': return ': counted against your attendance and your calls';
+    case 'school.shift': return ': the hours aren’t paid, and an assigned shift counts against your attendance';
+    case 'school.summer': return call === 'performance' ? ', and the company lets you go' : ', and the rehearsal goes on without you';
+    case 'school.cabaret': return ', and the show goes on without you';
+    case 'career.audition': return ', and one your agency got you counts: three and it lets you go';
+    case 'career.work': return ': the job ends, and an agency you have lets you go';
+    case 'career.showcase': return ', and the room never sees you';
+    default: return '';
+  }
+}
+
 /** The window an entry occupies, for working out what it collides with. */
 const endOf = (entry: CalendarEntry): Instant => entry.endsAt ?? entry.at;
 
@@ -342,7 +367,7 @@ defineLook<TheDay>('day', {
           {sim.zone !== zone && (
             <p className="small muted">
               You’re keeping {zoneAbbreviation(sim.now, sim.zone)} out there, and the calendar is still
-              cut into days by {zoneAbbreviation(sim.now, zone)}, which is where you started from.
+              cut into days by {zoneAbbreviation(sim.now, zone)}, where you live.
             </p>
           )}
           <div className="grid grid-3">
@@ -607,14 +632,14 @@ defineLook<TheEntry>('entry', {
             {entry.status === 'observance'
               ? 'An observance. It’s on the calendar so you know; nothing about it is yours to change.'
               : entry.requiresPlayer
-                ? 'This one wants you there. Move the clock to it and it happens.'
+                ? `This one wants you there, awake${city ? ` and in ${city.name}` : ''}, when the clock reaches it; if you aren’t, it’s missed${missCost(sim, entry.id)}.`
                 : 'This one the world handles on its own when the clock reaches it.'}
             {length && ` It runs ${length}, ${formatTime(entry.at, clock)} to ${formatTime(endOf(entry), clock)}.`}
           </p>
           <p className="small muted">
             {city
               ? elsewhere
-                ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}, so getting there is part of it.</>
+                ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}: a job’s travel takes you there on its own, and anything else needs you to be there by then.</>
                 : <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, where you already are.</>
               : 'It names no city, so wherever you are is close enough.'}
             {clashes.length > 0
@@ -643,6 +668,12 @@ defineLook<TheEntry>('entry', {
                 : entry.status === 'done' ? 'positive' : undefined}
               note={`${WEEKDAY_NAMES[parts.weekday]}, ${spokenWhen(entry.at, sim, zone)}`}
             />
+            {entry.bookedAt !== undefined && (
+              <Stat label="Booked" value={formatDate(entry.bookedAt, zone)} note={formatTime(entry.bookedAt, zone)} />
+            )}
+            {entry.settledAt !== undefined && entry.status !== 'pending' && (
+              <Stat label={entry.status === 'cancelled' ? 'Called Off' : entry.status === 'missed' ? 'Missed' : 'Done'} value={formatDate(entry.settledAt, zone)} note={formatTime(entry.settledAt, zone)} />
+            )}
           </div>
         </>
       ),

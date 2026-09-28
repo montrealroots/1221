@@ -2,12 +2,12 @@
  * SLATE — the banks, country by country.
  *
  * Real banks under their own names, with their own account names, fees and
- * savings rates where they publish them, the deposit guarantee that covers
- * them and the central bank's rate, for the thirteen countries SLATE pays
- * and taxes a life in (`BANKING`). Every other country has its biggest banks
- * by name and its deposit guarantee (`WORLD_BANKS` in `banks-world.ts`), and
- * accounts there have no fee and pay the rate the table says, which is
- * none where nothing was found.
+ * savings rates where they publish them, for the thirteen countries SLATE
+ * pays and taxes a life in (`BANKING`). Every other country has its biggest
+ * banks by name (`WORLD_BANKS` in `banks-world.ts`), and accounts there have
+ * no fee and pay the rate the table says, which is none where nothing was
+ * found. Each country's deposit guarantee and its central bank's rate were
+ * kept here, read by nothing, until 2026-09-27.
  *
  * Every figure says where it came from and when. A figure marked `estimate`
  * is SLATE's own, set from the figures around it, and the screen says so.
@@ -140,22 +140,9 @@ export interface Bank {
   quietMonth?: { fee: Money; minTransactions: number; unlessWages?: boolean; source: string };
 }
 
-export interface Guarantee {
-  scheme: string;
-  /** Per depositor, per bank, in the currency's hundredths, where it is one plain sum. */
-  limit?: Money;
-  currency?: string;
-  /** The limit as the source put it, where it is more than a sum. */
-  note?: string;
-  source: string;
-}
-
 export interface CountryBanking {
   iso: string;
   banks: readonly Bank[];
-  guarantee?: Guarantee;
-  /** The central bank's rate, called what the bank calls it, since a date. */
-  policy?: { called: string; rate: number; since?: string; source: string };
   /**
    * Tax a bank takes off interest before paying it: a flat rate, above a
    * yearly allowance where there is one, or a rate by the saver's income.
@@ -169,8 +156,6 @@ export interface CountryBanking {
     note: string;
     source: string;
   };
-  /** How pay comes in and bills go out, in a line. */
-  howMoneyMoves?: string;
 }
 
 export const BANKING: readonly CountryBanking[] = THIRTEEN;
@@ -194,7 +179,6 @@ function withSheets(list: readonly CountryBanking[]): CountryBanking[] {
     const sheet = SHEETS[country.iso];
     return {
       ...country,
-      policy: sheet?.policy ?? country.policy,
       interestTax: sheet?.interestTax ?? country.interestTax,
       banks: country.banks.map((one) => {
         // The IBAN's structure and the bank's code in it, where researched.

@@ -73,6 +73,28 @@ describe('an account left overdrawn', () => {
     expect(current(sim).id).not.toBe(old.id);
     // And Chase won't take them back while it's owed.
     expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'us-chase' } }).ok).toBe(false);
+    // A bank is one where they live, whatever a job abroad has them standing in.
+    sim.player.home = { kind: 'shared', cityId: 'us-ny-newyork', since: sim.now };
+    sim.player.currentLocationId = 'uk-eng-london';
+    expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'gb-hsbc' } }).error).toMatch(/where you live/);
+  });
+
+  it('re-banks them where they live, and switches on its rules, whatever a job abroad has them standing in', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase', wealth: 'modest' }, 'lend-away');
+    const old = current(sim);
+    set(sim, savings(sim), 0);
+    set(sim, old, -400_00);
+    old.overdraftLimit = undefined;
+    sim.player.currentLocationId = 'uk-eng-london';
+    sim.advanceBy((ESTIMATE.closeAfterDays + 1) * MS_DAY);
+    expect(old.closedAt).toBeDefined();
+    expect(bankOf(sim, sim.player)!.id.startsWith('us-')).toBe(true);
+    // A switch between US banks completes at once, not on Britain's seven working days.
+    const well = lifeIn('us-ny-newyork', { bankId: 'us-chase', wealth: 'wealthy' }, 'lend-away-switch');
+    well.player.currentLocationId = 'uk-eng-london';
+    well.must({ kind: 'bank.switch', payload: { bankId: 'us-citi' } });
+    expect(well.universe.scheduled.some((i) => i.kind === SWITCH_KIND && i.status === 'pending')).toBe(false);
+    expect(bankOf(well, well.player)!.id).toBe('us-citi');
   });
 
   it('sets off only what savings there needs to give, and charges off the rest', () => {
@@ -163,6 +185,19 @@ describe('an overdraft by the item', () => {
     sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 12, hour: 18 }, sim.homeZone));
     expect(feesOn(sim, current(sim), 'Overdraft fee')).toEqual([]);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 13, hour: 6 }, sim.homeZone));
+    expect(feesOn(sim, current(sim), 'Overdraft fee')).toEqual([-34_00]);
+  });
+
+  it('waits over a Federal Reserve holiday: Friday’s fees, before Martin Luther King Jr. Day, are charged after the Tuesday ends', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' });
+    sim.player.home = undefined;
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 16, hour: 12 }, sim.homeZone));
+    set(sim, current(sim), 0);
+    set(sim, savings(sim), 0);
+    spend(sim, sim.player, 200_00, 'Test', 'bills');
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 20, hour: 6 }, sim.homeZone));
+    expect(feesOn(sim, current(sim), 'Overdraft fee')).toEqual([]);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 21, hour: 6 }, sim.homeZone));
     expect(feesOn(sim, current(sim), 'Overdraft fee')).toEqual([-34_00]);
   });
 

@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  APP_VERSION, currencyFor, defaultConfig, wealthIn, wealthNote,
+  APP_VERSION, choosesWealth, currencyFor, findsNeed, newLifeConfig, newLifeFrom, wealthIn, wealthNote,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
@@ -26,7 +26,7 @@ import { formatMoney } from '@/engine/core/money';
 import { banksFor, startingBank } from '@/engine/systems/banking';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
-import { ageOnDate, zoneAbbreviation } from '@/engine/core/time';
+import { ageOnDate, formatDate, instantFromZoned, zoneAbbreviation } from '@/engine/core/time';
 import { citizenshipFor } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
@@ -41,6 +41,8 @@ import {
   conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
 import { AXIS_MAX, AXIS_MIN, personalityOf } from '@/engine/systems/personality';
+import { YALE_DRAMA } from '@/engine/content/school';
+import { termAccount } from '@/engine/systems/school';
 import { outOf, said } from '@/ui/looks/words';
 
 /**
@@ -54,9 +56,14 @@ import { outOf, said } from '@/ui/looks/words';
  */
 export const BIRTH_YEARS_BEFORE_START = 18;
 
-/** The last year somebody can be born in and still start this save. */
-export function latestBirthYear(startYear: number): number {
-  return startYear - BIRTH_YEARS_BEFORE_START;
+/**
+ * The last year somebody can be born in and still start this save: eighteen
+ * years before it begins, or twenty-one for a life that begins at drama
+ * school, whose MFA asks for a bachelor's degree (`content/school.ts`).
+ * Drawn on the year there too, for the same reason.
+ */
+export function latestBirthYear(config: Pick<NewSaveConfig, 'startYear' | 'school'>): number {
+  return config.startYear - (config.school ? YALE_DRAMA.minimumAge : BIRTH_YEARS_BEFORE_START);
 }
 
 const STEPS = ['Identity', 'Dispositions & Traits', 'Interests & Background', 'Starting Point', 'Review'] as const;
@@ -96,7 +103,7 @@ export function CharacterCreation({
   onStart: (config: NewSaveConfig) => void;
 }) {
   const [step, setStep] = useState<StepIndex>(0);
-  const [config, setConfig] = useState<NewSaveConfig>(() => loadDraft(slot) ?? defaultConfig());
+  const [config, setConfig] = useState<NewSaveConfig>(() => loadDraft(slot) ?? newLifeConfig());
   const [restored] = useState(() => loadDraft(slot) !== null);
 
   // Persist on every change. Losing the page must not lose the setup.
@@ -161,7 +168,7 @@ export function CharacterCreation({
         {restored && step === 0 && (
           <div className="callout callout-info" style={{ marginBottom: 'var(--s5)' }}>
             You’d half-filled this form already. It’s been put back the way you left it.
-            <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(defaultConfig())}>
+            <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(newLifeConfig())}>
               Start Over
             </button>
           </div>
@@ -418,7 +425,7 @@ function IdentityStep({ config, set, setConfig }: {
         <div className="field">
           <label htmlFor="birth-year">Year Of Birth</label>
           <input
-            id="birth-year" type="number" min={1940} max={latestBirthYear(config.startYear)}
+            id="birth-year" type="number" min={1940} max={latestBirthYear(config)}
             value={config.birthYear}
             onChange={(e) => set('birthYear', Number(e.target.value))}
           />
@@ -446,7 +453,7 @@ function IdentityStep({ config, set, setConfig }: {
           <h3>Place Of Birth</h3>
           <p className="muted small">
             Where you’re from, which isn’t always where you ended up. It’s the answer you give
-            when somebody asks, and it’s the accent you either lost on purpose or kept.
+            when somebody asks, and it’s the citizenship you were born to.
           </p>
         </div>
       </div>
@@ -456,11 +463,9 @@ function IdentityStep({ config, set, setConfig }: {
         cityId={config.homeRegionId}
         // Where you were born, and where you live with it while you still live
         // there. Starting Point is where the two come apart.
-        onPick={(picked) => setConfig((c) => ({
-          ...c,
-          homeRegionId: picked.id,
-          ...(c.livesWhereBorn ? { startLocationId: picked.id } : {}),
-        }))}
+        onPick={(picked) => setConfig((c) => (c.school
+          ? { ...c, homeRegionId: picked.id, livesWhereBorn: picked.id === c.startLocationId }
+          : { ...c, homeRegionId: picked.id, ...(c.livesWhereBorn ? { startLocationId: picked.id } : {}) }))}
       />
 
       {/* Not asked: the place of birth decides it, so it sits under the
@@ -547,12 +552,13 @@ function PersonalityStep({ config, setConfig }: {
           <div>
             <h2>Dispositions</h2>
             <p className="muted small">
-              How you lean, not what you can do. Four of them do something today: Emotional Stability
+              How you lean, not what you can do. Each of them does something: Emotional Stability
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
-              the nights go, Ambition sets what running yourself into the ground costs you in stress,
+              the nights go, Ambition adds to how quickly every stress arrives, work’s and money’s alike,
               and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
-              The other three are written into the save and read by nothing yet. Openness waits on
-              travel, and Extraversion and Agreeableness wait on other people. Neither is built.
+              Extraversion sets how an audition in the room sits with you, Openness how a job away
+              from home does, and Agreeableness how a rehearsal does. None of them makes you better
+              or worse at anything.
             </p>
           </div>
         </div>
@@ -584,11 +590,12 @@ function PersonalityStep({ config, setConfig }: {
             <p className="muted small">
               Pick up to four. Each pair here is one trait written against another, and the two
               sides can’t both be held. Today they change how stress arrives and clears, how well
-              you sleep, how much a night puts back, how quickly you stop being clean and how far
-              your mood swings. Each description and cost is written for a whole life, and the game
-              charges only the part of it that touches those. Frugal, Spender and Generous change
-              what your food costs. Keeps Accounts is about what other people owe you, and waits for
-              other people.
+              you sleep, how much a night puts back (and a night away from home), how quickly you
+              stop being clean, how far your mood swings, what illness takes out of you and how an
+              early call or a late performance sits. Each description and cost is written for a whole
+              life, and the game charges only the part of it that touches those. Frugal, Spender and
+              Generous change what your food costs, and Keeps Accounts how much of what your work
+              costs you can deduct.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -721,8 +728,9 @@ function PersonalStep({
             <p className="muted small">
               Some change how much you get out of looking after yourself: Cooking for a meal,
               Fitness and Sport for a workout, and what you’d spend an evening on for an hour
-              unwinding. They lift your mood more and ease more stress. None makes you better
-              at anything.
+              unwinding. Film, Television, Theater, Voice Acting and Travel do the same for a day of
+              work in them, or away. They lift your mood more and ease more stress. None makes you
+              better at anything.
             </p>
           </div>
           <span className="chip chip-accent">{config.interests.length} Chosen</span>
@@ -746,7 +754,8 @@ function PersonalStep({
           <div>
             <h2>Genres</h2>
             <p className="muted small">
-              The films you love. Take as many as are true — there’s no limit here.
+              The films you love. Take as many as are true — there’s no limit here. A day on a job in
+              one of them lifts your mood and eases your stress; it doesn’t make you any better in it.
             </p>
           </div>
           <div className="row gap-2" style={{ alignItems: 'center' }}>
@@ -805,13 +814,21 @@ function StartingPointStep({ config, set, setConfig }: {
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Where You Live</h2>
+            <h2>{config.school ? 'Where It Begins' : 'Where You Live'}</h2>
             <p className="muted small">
-              Where you are decides what things cost and whose holidays you keep.
+              {config.school
+                ? `A first-year in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}: one of ${YALE_DRAMA.classSize} actors admitted this year, and the one the faculty wanted most from the auditions.`
+                : 'Where you are decides what things cost and whose holidays you keep.'}
             </p>
+            {config.school && (
+              <p className="muted small">
+                You arrive in {city?.name ?? 'New Haven'} on {formatDate(instantFromZoned({ year: config.startYear, month: config.startMonth, day: config.startDay, hour: 12 }, city?.timeZone ?? 'America/New_York'), city?.timeZone ?? 'America/New_York')}, the first day of the fall term. Tuition is covered, as it is for every student.
+              </p>
+            )}
           </div>
         </div>
 
+        {!config.school && (<>
         <label className="check" htmlFor="live-here">
           <input
             id="live-here"
@@ -837,6 +854,7 @@ function StartingPointStep({ config, set, setConfig }: {
             onPick={(picked) => set('startLocationId', picked.id)}
           />
         )}
+        </>)}
 
         {city && (
           <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
@@ -852,7 +870,7 @@ function StartingPointStep({ config, set, setConfig }: {
             <div className="stat">
               <span className="stat-label">Cost Of Living</span>
               <span className="stat-value">{city.costOfLivingIndex}</span>
-              <span className="stat-note">A hundred is the American average</span>
+              <span className="stat-note">A hundred is the United States’ price level</span>
             </div>
           </div>
         )}
@@ -872,13 +890,17 @@ function StartingPointStep({ config, set, setConfig }: {
             </p>
           </div>
         </div>
-        <div className="field">
-          <label htmlFor="wealth">What You Are Starting With</label>
-          <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
-            {WEALTH.map((w) => <option key={w} value={w}>{w.charAt(0).toUpperCase() + w.slice(1)}</option>)}
-          </select>
-        </div>
-        <div className="callout">{wealthNote(config.wealth)}</div>
+        {choosesWealth(config) && (
+          <>
+            <div className="field">
+              <label htmlFor="wealth">What You Are Starting With</label>
+              <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
+                {WEALTH.map((w) => <option key={w} value={w}>{w.charAt(0).toUpperCase() + w.slice(1)}</option>)}
+              </select>
+            </div>
+            <div className="callout">{wealthNote(config.wealth)}</div>
+          </>
+        )}
         <BankChoice config={config} set={set} />
         <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
           <div className="stat">
@@ -893,6 +915,14 @@ function StartingPointStep({ config, set, setConfig }: {
             <span className="stat-label">Credit Record</span>
             <span className="stat-value mono">{scoreIsANumberIn(config.startLocationId) ? wealth.creditScore : scoreWord(wealth.creditScore)}</span>
           </div>
+          {/* The card the save opens with, and what it carries in: until 2026-09-27 creation never said. */}
+          {wealth.cardLimit > 0 && (
+            <div className="stat">
+              <span className="stat-label">Credit Card</span>
+              <span className="stat-value mono">{formatMoney(wealth.cardLimit, cur, { cents: false })} Limit</span>
+              {wealth.cardBalance < 0 && <span className="stat-note">{formatMoney(-wealth.cardBalance, cur, { cents: false })} owed on it already</span>}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -957,7 +987,7 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       <div className="panel-head">
         <div>
           <h2>Month By Month</h2>
-          <p className="muted small">What living here costs. Rent and bills are due on the first.</p>
+          <p className="muted small">What living here costs. Rent and bills are due on the first; the bills here are the year’s average month, and a winter’s or a summer’s run higher by what the climate asks of the heating and the cooling.</p>
         </div>
       </div>
 
@@ -983,11 +1013,15 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       </div>
 
       <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-        About {money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card, and then owing the landlord.
+        {config.school
+          ? (!findsNeed(config)
+            ? `About ${money(out)} going out a month, from your bank, and ${formatMoney(termAccount(cur, false).healthPlan, cur)} each term for your Yale Health plan. Tuition is covered; Yale’s aid for living costs goes by need.`
+            : `About ${money(out)} going out a month. The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`)
+          : `About ${money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card, and then owing the landlord.`}
       </div>
 
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. `}
+        {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. Source: ${costs.rentFigure.source}. `}
         {costs.rentFigure.kind === 'calibrated' && 'Rent is SLATE’s estimate for this town, scaled to what’s published elsewhere in the country. '}
         {costs.rentFigure.kind === 'estimate' && 'Rent is SLATE’s estimate for this town; nothing is published for the country. '}
         Bills and food are SLATE's estimates, not published figures.
@@ -1043,6 +1077,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
 
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
+          {config.school && <Line label="School" value={`${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${config.startYear + 3}`} />}
           <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
           <Line label="Bank" value={startingBank(config.startLocationId, config.bankId)?.name ?? 'None On Record'} />
           <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
@@ -1153,9 +1188,10 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     const age = ageAtStart(config);
     // The year, not the age. A birth year at the cap can still leave somebody
     // seventeen when the save opens, and that is a life this game will run.
-    if (config.birthYear > latestBirthYear(config.startYear)) {
-      issues.push(`Your character can’t be born after ${latestBirthYear(config.startYear)}.`);
+    if (config.birthYear > latestBirthYear(config)) {
+      issues.push(`Your character can’t be born after ${latestBirthYear(config)}.`);
     }
+
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
@@ -1197,18 +1233,15 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
       return null;
     }
 
-    const merged = { ...defaultConfig(), ...stored.config };
+    const merged = newLifeFrom(stored.config);
 
     // A town small enough not to be bundled is not resolvable until its
     // country has been fetched, which has not happened yet on a cold start.
     // Losing the whole draft over that threw away a filled-in form because
     // somebody was from a village, so the id is kept whenever the country it
     // names is real, and CharacterCreation pulls that country in. An id whose
-    // country does not exist is a lost cause and falls back.
-    if (!countryOfPlace(merged.startLocationId)) {
-      merged.startLocationId = defaultConfig().startLocationId;
-    }
-    if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = merged.startLocationId;
+    // country does not exist is a lost cause, and the birthplace is asked again.
+    if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = '';
 
     return merged;
   } catch {

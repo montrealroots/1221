@@ -5,16 +5,18 @@
  *   - the one world clock and the ONE code path that advances it;
  *   - the event bus that lets buying a house touch nine other systems;
  *   - the ledger, timeline, historian and deterministic RNG;
- *   - the command bus, which gives every mutation idempotency and atomicity.
+ *   - the command bus, which makes every mutation atomic: a refused command
+ *     leaves nothing behind. It kept receipts for a repeated key too until
+ *     2026-09-27, which nothing in play sent.
  *
  * Nothing outside this file is allowed to assign `universe.now`.
  */
 
 import type { SaveUniverse, Id } from '../domain/model';
 import type { Instant, TimeZone } from './time';
-import { addDays, addMonths, addYears, MS_MINUTE, MS_DAY, formatDateTime } from './time';
+import { MS_MINUTE, formatDateTime } from './time';
 import { Ledger, type LedgerTransaction, type Account } from './ledger';
-import { Timeline, type ScheduledItem, type Recurrence, nextRecurrence } from './scheduler';
+import { Timeline, type ScheduledItem } from './scheduler';
 import { Historian, type HistoryRecord } from './audit';
 import { EventBus, type WorldEvent, worldEvent } from './events';
 import { createIdFactory, type IdNamespace } from './ids';
@@ -35,8 +37,6 @@ export type PassageReactor = (sim: Simulation, from: Instant) => void;
 export interface Command<P = Record<string, unknown>, R = unknown> {
   kind: string;
   payload: P;
-  /** Repeating a command with the same key returns the first result. */
-  idempotencyKey?: string;
   /**
    * Phantom marker carrying the result type so `execute` can infer it from the
    * command literal. Never set at runtime.
@@ -56,8 +56,6 @@ export interface CommandResult<R = unknown> {
   ok: boolean;
   value?: R;
   error?: string;
-  /** True when the command was a replay of an already-applied idempotency key. */
-  replayed?: boolean;
   /** Events emitted, for tests and the developer console. */
   events?: string[];
 }
@@ -312,7 +310,6 @@ export class Simulation {
     priority?: number;
     refType?: string;
     refId?: Id;
-    recurrence?: Recurrence;
     requiresPlayer?: boolean;
     locationId?: string;
     durationMinutes?: number;
@@ -335,7 +332,6 @@ export class Simulation {
       category: spec.category,
       refType: spec.refType,
       refId: spec.refId,
-      recurrence: spec.recurrence,
       requiresPlayer: spec.requiresPlayer ?? false,
       locationId: spec.locationId,
       durationMinutes: spec.durationMinutes,
@@ -443,28 +439,6 @@ export class Simulation {
           result.missed.push(due);
         }
 
-        // Re-arm recurrences.
-        if (due.recurrence) {
-          const nextAt = nextRecurrence(due, (fromAt, unit, interval) => this.addUnit(fromAt, unit, interval));
-          if (nextAt !== undefined) {
-            const rec: Recurrence = { ...due.recurrence, fired: (due.recurrence.fired ?? 0) + 1 };
-            this.schedule({
-              at: nextAt,
-              kind: due.kind,
-              label: due.label,
-              category: due.category,
-              payload: due.payload,
-              priority: due.priority,
-              refType: due.refType,
-              refId: due.refId,
-              recurrence: rec,
-              requiresPlayer: due.requiresPlayer,
-              locationId: due.locationId,
-              durationMinutes: due.durationMinutes,
-            });
-          }
-        }
-
         result.itemsProcessed++;
         if (opts.onProgress && result.itemsProcessed % 25 === 0) {
           opts.onProgress(result.itemsProcessed, Math.max(totalDue, result.itemsProcessed), this.universe.now);
@@ -487,17 +461,6 @@ export class Simulation {
       return result;
     } finally {
       this.advance = undefined;
-    }
-  }
-
-  private addUnit(from: Instant, unit: Recurrence['unit'], interval: number): Instant {
-    const zone = this.homeZone;
-    switch (unit) {
-      case 'day': return addDays(from, interval, zone);
-      case 'week': return addDays(from, interval * 7, zone);
-      case 'month': return addMonths(from, interval, zone);
-      case 'year': return addYears(from, interval, zone);
-      default: return from + interval * MS_DAY;
     }
   }
 
@@ -543,20 +506,9 @@ export class Simulation {
       return { ok: false, error: `Unknown command '${command.kind}'.` };
     }
 
-    // Idempotency: a retried purchase must never charge twice.
-    if (command.idempotencyKey) {
-      const prior = this.universe.idempotency[command.idempotencyKey];
-      if (prior) {
-        return { ok: true, value: prior.result as R, replayed: true };
-      }
-    }
-
     // Nested commands share the outer transaction rather than snapshotting again.
     if (this.depth > 0) {
       const value = (handler as CommandHandler<Record<string, unknown>, R>)(command.payload, this.context());
-      if (command.idempotencyKey) {
-        this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
-      }
       return { ok: true, value };
     }
 
@@ -565,9 +517,6 @@ export class Simulation {
       this.depth++;
       try {
         const value = (handler as CommandHandler<Record<string, unknown>, R>)(command.payload, this.context());
-        if (command.idempotencyKey) {
-          this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
-        }
         return { ok: true, value };
       } catch (err) {
         const message = err instanceof CommandError ? err.message : `${command.kind} failed: ${(err as Error).message}`;
@@ -589,9 +538,6 @@ export class Simulation {
     this.depth++;
     try {
       const value = (handler as CommandHandler<Record<string, unknown>, R>)(command.payload, this.context());
-      if (command.idempotencyKey) {
-        this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
-      }
       const events = this.pendingEvents.splice(eventsBefore).map((e) => e.kind);
       return { ok: true, value, events };
     } catch (err) {
@@ -621,9 +567,6 @@ export class Simulation {
     category: string;
     postings: { accountId: Id; amount: Money }[];
     at?: Instant;
-    refType?: string;
-    refId?: Id;
-    idempotencyKey?: string;
   }): LedgerTransaction {
     const txn: LedgerTransaction = {
       id: this.nextId('txn'),
@@ -632,25 +575,8 @@ export class Simulation {
       memo: spec.memo,
       category: spec.category,
       postings: spec.postings,
-      refType: spec.refType,
-      refId: spec.refId,
-      idempotencyKey: spec.idempotencyKey,
     };
     return this.ledger.post(txn);
-  }
-
-  /** Moves money between two accounts. Positive `amount` flows from -> to. */
-  transfer(fromAccountId: Id, toAccountId: Id, amount: Money, memo: string, category: string, refs: { refType?: string; refId?: Id } = {}): LedgerTransaction {
-    if (amount < 0) throw new CommandError('Transfer amounts must be positive; swap the accounts instead.');
-    return this.post({
-      memo,
-      category,
-      postings: [
-        { accountId: fromAccountId, amount: -amount },
-        { accountId: toAccountId, amount },
-      ],
-      ...refs,
-    });
   }
 
   openAccount(spec: Omit<Account, 'saveId' | 'balance' | 'nominal'> & { balance?: Money; nominal?: boolean }): Account {
@@ -697,38 +623,6 @@ export class Simulation {
     };
     this.ledger.open(account);
     return account;
-  }
-
-  /** Records money entering the player's world from outside it. */
-  income(toAccountId: Id, amount: Money, source: string, category: string, refs: { refType?: string; refId?: Id; at?: Instant } = {}): LedgerTransaction {
-    const src = this.nominalAccount('income', source);
-    return this.post({
-      memo: source,
-      category,
-      at: refs.at,
-      postings: [
-        { accountId: toAccountId, amount },
-        { accountId: src.id, amount: -amount },
-      ],
-      refType: refs.refType,
-      refId: refs.refId,
-    });
-  }
-
-  /** Records money leaving the player's world. */
-  expense(fromAccountId: Id, amount: Money, purpose: string, category: string, refs: { refType?: string; refId?: Id; at?: Instant } = {}): LedgerTransaction {
-    const dst = this.nominalAccount('expense', purpose);
-    return this.post({
-      memo: purpose,
-      category,
-      at: refs.at,
-      postings: [
-        { accountId: fromAccountId, amount: -amount },
-        { accountId: dst.id, amount },
-      ],
-      refType: refs.refType,
-      refId: refs.refId,
-    });
   }
 
   remember(spec: Omit<HistoryRecord, 'id' | 'saveId' | 'at'> & { at?: Instant }): HistoryRecord {

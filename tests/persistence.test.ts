@@ -207,7 +207,7 @@ describe('opening a slot', () => {
     await adapter.save(sim.universe);
     const newer = sim.universe.now;
 
-    const opened = await openSlot(adapter, slot, { fromBackup: true, startedAt: 0 });
+    const opened = await openSlot(adapter, slot, { fromBackup: true });
     if ('error' in opened) throw new Error(opened.error);
     expect(opened.universe.now).toBe(older);
     expect(opened.universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
@@ -223,7 +223,7 @@ describe('opening a slot', () => {
     delete (sim.universe as unknown as Record<string, unknown>).history;
     await adapter.save(sim.universe);
 
-    const opened = await openSlot(adapter, slot, { startedAt: 0 });
+    const opened = await openSlot(adapter, slot);
     if ('error' in opened) throw new Error(opened.error);
     expect(opened.migration.steps).toContain('Created the history.');
     expect(opened.universe.history).toEqual([]);
@@ -237,7 +237,7 @@ describe('opening a slot', () => {
     await adapter.save(sim.universe);
     const stored = store.getItem(`slate.save.${slot}`);
 
-    const opened = await openSlot(adapter, slot, { startedAt: 0 });
+    const opened = await openSlot(adapter, slot);
     if ('error' in opened) throw new Error(opened.error);
     expect(opened.migration.migrated).toBe(false);
     expect(store.getItem(`slate.save.${slot}`)).toBe(stored);
@@ -249,7 +249,7 @@ describe('opening a slot', () => {
     const sim = quickSave({}, 'newer');
     sim.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION + 1;
     await adapter.save(sim.universe);
-    const opened = await openSlot(adapter, sim.universe.meta.slot, { startedAt: 0 });
+    const opened = await openSlot(adapter, sim.universe.meta.slot);
     expect('error' in opened && opened.error).toMatch(/newer version of SLATE/);
   });
 });

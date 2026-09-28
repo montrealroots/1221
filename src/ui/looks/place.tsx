@@ -1,11 +1,13 @@
 /**
  * SLATE — where you are, and everything that hangs off it.
  *
- * Home’s Where You Are panel prints eleven figures about a city — a local
+ * Home’s Where You Are panel printed eleven figures about a city — a local
  * clock, a daylight span, a currency, a cost index, three tax rates, an
  * industry rating, a jobs figure, a language list and a country line — and
- * every one of them is a dead end today. They are all real. They come from the
- * gazetteer and the jurisdiction tables the simulation already runs on.
+ * every one of them was a dead end. The rest are real, from the gazetteer and
+ * the jurisdiction tables the simulation already runs on; the industry rating
+ * and the jobs figure were SLATE’s calibration, read by nothing, and went on
+ * 2026-09-27.
  *
  * The chain declared here is the gazetteer’s own chain rather than an invented
  * one: a city hangs beneath its region and a region beneath its country
@@ -16,7 +18,7 @@
  * in it would say so.
  *
  * Where a figure is SLATE’s calibration rather than public record — a rent, a
- * cost index, an exchange rate, an industry rating — one provenance line at
+ * cost index, an exchange rate — one provenance line at
  * the foot of the body says so, and that is the whole of it.
  */
 
@@ -38,7 +40,7 @@ import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { rentAt } from '@/engine/content/rents';
-import { isAre, outOf, said, spokenList, toStart } from './words';
+import { isAre, said, spokenList, toStart } from './words';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -231,15 +233,15 @@ defineLook<PlaceProfile>('place', {
           <p className="small muted">
             {place.medianRentCents > 0 && `Rent on a one-bedroom runs about ${rent} a month, `}
             {place.medianRentCents > 0
-              ? `and the cost of living sits at ${place.costOfLivingIndex}, where a hundred is the American average.`
+              ? `and the cost of living sits at ${place.costOfLivingIndex}, where a hundred is the United States’ price level.`
               : `The cost of living sits at ${place.costOfLivingIndex}, where a hundred is the American average.`}
+            {(() => { const figure = rentAt(place.city.id, 'USD'); return figure.kind === 'published' ? ` The rent is published: ${figure.measure}, ${figure.period}; source: ${figure.source}.` : ''; })()}
             {layers.length === 0
               ? ` SLATE has no income tax table for ${theCountry(place.countryName)} yet, so the tile below says so rather than showing you a zero it can’t stand behind.`
               : taking.length === 0
                 ? ` No income tax comes out of a wage here, at any level.`
                 : ` Income tax comes in ${said(taking.length, 'layer')} here: ${spokenList(taking.map((l) => l.label))}${takesNone.length > 0 ? `, and ${spokenList(takesNone)} ${takesNone.length === 1 ? 'adds' : 'add'} nothing on top` : ''}.`}
           </p>
-          <p className="small muted">{industryLine(place)}</p>
           {place.away && place.homeCity && (
             <p className="small muted">
               {isHere
@@ -264,7 +266,7 @@ defineLook<PlaceProfile>('place', {
               value={`${place.currency.symbol} ${place.currency.code}`}
               note={rateLine(place.currency)}
             />
-            <Stat label="Cost Of Living" value={place.costOfLivingIndex} note="A hundred is the American average" />
+            <Stat label="Cost Of Living" value={place.costOfLivingIndex} note="A hundred is the United States’ price level" />
             <Stat
               label="Tax On A Wage"
               value={layers.length > 0 ? `${Math.round(place.effectiveIncomeTax * 100)}%` : 'Not On File'}
@@ -275,8 +277,6 @@ defineLook<PlaceProfile>('place', {
               value={salesRule ? `${(place.salesTax * 100).toFixed(1)}%` : 'Not On File'}
               note={propertyRule ? `Property ${(place.propertyTax * 100).toFixed(2)}%` : 'Property tax not on file either'}
             />
-            <Stat label="Industry" value={`${place.industryPresence}/100`} note="Film and Television work here" />
-            <Stat label="Jobs" value={`${place.jobMarketDepth}/100`} note="Ordinary work, outside the industry" />
             <Stat
               label="Languages"
               value={place.languages[0] ?? 'Not On File'}
@@ -288,10 +288,10 @@ defineLook<PlaceProfile>('place', {
       ways,
       provenance: 'Where it sits, what the clock says and which country it answers to are public record. '
         + (rentAt(place.city.id, 'USD').kind === 'published'
-          ? 'The rent is published. The cost index, industry rating and tax rates are SLATE’s calibration.'
+          ? 'Its rent is published, and its cost index and tax rates are SLATE’s calibration.'
           : rentAt(place.city.id, 'USD').kind === 'calibrated'
-            ? 'The rent is SLATE’s estimate, scaled to published rents. The cost index, industry rating and tax rates are SLATE’s calibration.'
-            : 'The rent, the cost index, the industry rating and the tax rates are SLATE’s own calibration.'),
+            ? 'Its rent is SLATE’s estimate, scaled to published rents, and its cost index and tax rates are SLATE’s calibration.'
+            : 'Its rent, cost index and tax rates are SLATE’s own calibration.'),
     };
   },
 });
@@ -311,11 +311,6 @@ function summaryOfPlace(place: PlaceProfile, isHere: boolean, isHome: boolean): 
     return `It’s ${place.localTime} there, and you’re not in it.`;
   }
   return `It’s ${place.localTime} there, ${place.distanceFromHome} from home, and you’re not in it.`;
-}
-
-/** What the two work ratings come to, side by side. */
-function industryLine(place: PlaceProfile): string {
-  return `Film and Television rate ${outOf(place.industryPresence)} here, against ${outOf(place.jobMarketDepth)} for ordinary work.`;
 }
 
 // ---------------------------------------------------------------------------

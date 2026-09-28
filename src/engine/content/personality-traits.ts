@@ -16,8 +16,9 @@
  * mood knobs. The money traits had no other, so they declared none and were
  * said back and nothing more until something in the game spent: since the
  * household, Frugal, Spender and Generous move what food costs somebody
- * (`spending`). Keeps Accounts is about what other people owe, and waits for
- * other people.
+ * (`spending`). Keeps Accounts was about what other people owe, and waited
+ * for other people until 2026-09-27; since then its receipts are what a
+ * return can deduct of the work's costs (`receipts`), and Chaotic loses some.
  *
  * A trait's description and cost are written for a whole life. The game
  * charges the part of them its knobs reach, and says the rest back.
@@ -31,14 +32,19 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
 ];
 
 /**
- * The knobs a trait may move. Every one of them is asked for in
- * `systems/life.ts` through `personalityOf`, which `tools/wired.mjs` counts. A
+ * The knobs a trait may move. Every one of them is asked for through
+ * `personalityOf`, which `tools/wired.mjs` counts: the body's in
+ * `systems/life.ts`, and since 2026-09-27 what illness takes
+ * (`systems/health.ts`), what a night away puts back (`systems/life.ts`) and
+ * what an early call or a late performance costs (`systems/career.ts`), and
+ * how much of the work's costs a return can prove (`systems/taxreturn.ts`). A
  * trait that wants to move something else has to wait for the system it would
  * move.
  */
 export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
-  | 'hygieneDrift' | 'moraleSwing' | 'spending';
+  | 'hygieneDrift' | 'moraleSwing' | 'spending'
+  | 'illnessToll' | 'awayRecovery' | 'earlyCall' | 'lateCall' | 'receipts';
 
 export interface PersonalityTrait {
   id: string;
@@ -104,14 +110,14 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'early_riser', name: 'Early Riser', group: 'Habits',
     description: 'Up before anybody wants you, and the best hours of your day are over by ten.',
     cost: 'No use at all after nine at night.',
-    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1 },
+    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1, earlyCall: 0.5, lateCall: 3 },
     conflictsWith: ['night_owl'],
   },
   {
     id: 'night_owl', name: 'Night Owl', group: 'Habits',
     description: 'The good hours start after midnight, and none of them are before noon.',
     cost: 'Every early call is a fight with yourself, and you sleep badly.',
-    systemMods: { sleepQuality: 0.85, energyRecovery: 0.94 },
+    systemMods: { sleepQuality: 0.85, energyRecovery: 0.94, earlyCall: 3, lateCall: 0.5 },
     conflictsWith: ['early_riser'],
   },
   {
@@ -125,21 +131,21 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'chaotic', name: 'Chaotic', group: 'Habits',
     description: 'The mess is genuinely invisible to you, and you know where everything is anyway.',
     cost: 'It shows, and it costs you when somebody comes round.',
-    systemMods: { hygieneDrift: 1.3, stressGain: 0.92 },
+    systemMods: { hygieneDrift: 1.3, stressGain: 0.92, receipts: 0.9 },
     conflictsWith: ['orderly'],
   },
   {
     id: 'homebody', name: 'Homebody', group: 'Habits',
     description: 'Your own house, your own kitchen, your own bed. That’s where you recover.',
-    cost: 'Nowhere else puts it back the way home does, and the game has no away to charge you for yet.',
-    systemMods: { energyRecovery: 1.15 },
+    cost: 'Nowhere else puts it back the way home does.',
+    systemMods: { energyRecovery: 1.15, awayRecovery: 0.8 },
     conflictsWith: ['restless'],
   },
   {
     id: 'restless', name: 'Restless', group: 'Habits',
     description: 'One place for long is beyond you.',
-    cost: 'You don’t rest properly, anywhere, ever.',
-    systemMods: { energyRecovery: 0.9 },
+    cost: 'You don’t rest properly, anywhere, ever, though away is where you rest best.',
+    systemMods: { energyRecovery: 0.9, awayRecovery: 1.1 },
     conflictsWith: ['homebody'],
   },
 
@@ -162,7 +168,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'resilient', name: 'Resilient', group: 'Body',
     description: 'Illness, injury, a bad year: all of it clears faster in you than in the people around you.',
     cost: 'None. This one is simply luck, and there’s one of it.',
-    systemMods: { stressRecovery: 1.2, energyRecovery: 1.1 },
+    systemMods: { stressRecovery: 1.2, energyRecovery: 1.1, illnessToll: 0.6 },
     conflictsWith: ['burns_out'],
   },
   {
@@ -211,9 +217,10 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   },
   {
     id: 'keeps_accounts', name: 'Keeps Accounts', group: 'Money',
-    description: 'What you’re owed and by whom, down to the coffee, stays remembered.',
+    description: 'What you’re owed and by whom, down to the coffee, stays remembered, and every receipt with it.',
     cost: 'So does everybody else, about you.',
     conflictsWith: ['generous'],
+    systemMods: { receipts: 1.3 },
   },
 
   // --- People: how they are with others -------------------------------------

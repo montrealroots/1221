@@ -34,8 +34,6 @@ export interface ScheduledItem {
   /** Optional link back to the entity that owns the commitment. */
   refType?: string;
   refId?: string;
-  /** If set, this item recurs; the handler re-arms it after firing. */
-  recurrence?: Recurrence;
   /** True when the player must act rather than the world resolving it alone. */
   requiresPlayer?: boolean;
   /** Where the player needs to be. Travel checks use this. */
@@ -44,16 +42,6 @@ export interface ScheduledItem {
   durationMinutes?: number;
   createdAt: Instant;
   resolvedAt?: Instant;
-}
-
-export interface Recurrence {
-  unit: 'day' | 'week' | 'month' | 'year';
-  interval: number;
-  /** Stop recurring at or after this instant. */
-  until?: Instant;
-  /** Stop after this many total firings. */
-  count?: number;
-  fired?: number;
 }
 
 export interface TimelineHost {
@@ -218,16 +206,3 @@ export class Timeline {
   }
 }
 
-/** Computes the next firing of a recurrence, or undefined when it has ended. */
-export function nextRecurrence(
-  item: ScheduledItem,
-  advance: (from: Instant, unit: Recurrence['unit'], interval: number) => Instant,
-): Instant | undefined {
-  const rec = item.recurrence;
-  if (!rec) return undefined;
-  const fired = (rec.fired ?? 0) + 1;
-  if (rec.count !== undefined && fired >= rec.count) return undefined;
-  const next = advance(item.at, rec.unit, rec.interval);
-  if (rec.until !== undefined && next > rec.until) return undefined;
-  return next;
-}

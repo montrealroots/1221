@@ -117,6 +117,12 @@ describe('each national check against the IBAN Registry’s own example', () => 
     PT: 'PT50000201231234567890154',
     RS: 'RS35260005601001611379',
     FR: 'FR1420041010050500013M02606',
+    // Since 2026-09-27: Handelsbanken's official example (Bankinfrastruktur), and the registry's for
+    // three countries whose keys SLATE infers from their neighbors' (RIB, NIB).
+    SE: 'SE5860000000000517182351',
+    BI: 'BI4210000100010000332045181',
+    DJ: 'DJ2100010000000154000100186',
+    ST: 'ST23000200000289355710148',
   };
   for (const [country, example] of Object.entries(EXAMPLES)) {
     it(`keeps ${country}’s example as it is`, () => {
@@ -136,6 +142,7 @@ describe('each national check against the IBAN Registry’s own example', () => 
   const CHECKS: Record<string, number[]> = {
     FI: [13], AL: [7], BA: [14, 15], XK: [14, 15], HR: [6, 16], EE: [15], HU: [7, 23], IT: [0], SM: [0],
     NO: [10], PL: [7], BE: [10, 11], PT: [19, 20], RS: [16, 17], FR: [21, 22], CZ: [19], SK: [19],
+    SE: [19], BI: [21, 22], DJ: [21, 22], ST: [19, 20],
   };
   for (const [country, positions] of Object.entries(CHECKS)) {
     it(`puts back ${country}’s check characters when they’re wrong`, () => {
@@ -148,6 +155,34 @@ describe('each national check against the IBAN Registry’s own example', () => 
       }
     });
   }
+
+  it('builds each Swedish bank’s number its own way: Swedbank’s clearing digit and account digit by Luhn, SEB’s and Nordea’s by mod 11 over clearing and account', () => {
+    // Swedbank's official example, and SEB's the registry's.
+    const swedbank = 'SE5580000832790147258925'.slice(4);
+    const seb = 'SE4550000000058398257466'.slice(4);
+    for (const bban of [swedbank, seb]) expect(withNationalCheck('SE', bban)).toBe(bban);
+    // Swedbank: the clearing number's fifth digit (at 9) and the account's last (at 19).
+    for (const at of [9, 19]) {
+      const damaged = swedbank.slice(0, at) + String((Number(swedbank[at]) + 1) % 10) + swedbank.slice(at + 1);
+      expect(withNationalCheck('SE', damaged)).toBe(swedbank);
+    }
+    // Nordea's clearing stays within 3000 to 3299, clear of its personal accounts at 3300.
+    for (let n = 0; n < 50; n += 1) {
+      const out = withNationalCheck('SE', `300${String(n * 7919).padStart(17, '9')}`);
+      if (out) expect(Number(out.slice(9, 13))).toBeLessThan(3300);
+    }
+    // Handelsbanken's accounts whose check would be ten aren't issued: the draw is turned down.
+    const outcomes = new Set<string>();
+    for (let n = 0; n < 200; n += 1) outcomes.add(withNationalCheck('SE', `600${String(n).padStart(17, '0')}`) === undefined ? 'refused' : 'ok');
+    expect([...outcomes].sort()).toEqual(['ok', 'refused']);
+    // Every Swedish IBAN SLATE draws is valid.
+    for (let n = 0; n < 40; n += 1) {
+      for (const bank of ['300', '500', '600', '800']) {
+        const out = withNationalCheck('SE', `${bank}${String(n * 104729 + 12345).padStart(17, '0')}`);
+        if (out) expect(ibanValid(iban('SE', out))).toBe(true);
+      }
+    }
+  });
 
   it('turns down a draw whose check would be ten, where the country never issues one', () => {
     // Norway: 8601111796 weighs to a sum where the check comes out as 10.

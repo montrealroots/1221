@@ -7,7 +7,8 @@
  *
  * Entries are text. No emoji, no glyph icons: a symbol that renders as a
  * picture on one platform and a box on another is not a label, and a
- * screen reader has nothing to say about it.
+ * screen reader has nothing to say about it. A destination that existed and
+ * didn't open, `locked`, went on 2026-09-27: none had been for a long time.
  */
 
 export interface Destination {
@@ -15,11 +16,6 @@ export interface Destination {
   label: string;
   /** One line on what is behind it, shown on the tile. */
   detail: string;
-  /**
-   * A destination that exists and does not open. Its features are not built,
-   * so clicking says so and leaves you where you were.
-   */
-  locked?: boolean;
   /**
    * Offered on Home and kept off the rail. The calendar describes the day you
    * are standing in, so it belongs beside the day rather than in a list of
@@ -41,10 +37,26 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     ],
   },
   {
+    label: 'Your Training',
+    items: [
+      // Opened from the School panel, for a life that began at drama school.
+      { route: '/workspace/school', label: 'Your School', detail: 'Your standing, classes, casting and terms', homeOnly: true },
+    ],
+  },
+  {
+    label: 'Your Work',
+    items: [
+      // Opened from the Career panel, from the showcase on.
+      { route: '/workspace/career', label: 'Your Career', detail: 'Your agency, auditions, work and unions', homeOnly: true },
+    ],
+  },
+  {
     label: 'Your Money',
     items: [
       // Opened from the Money panel, which names the bank it goes to.
       { route: '/workspace/bank', label: 'Your Bank', detail: 'Your accounts, and moving money between them', homeOnly: true },
+      // Opened from the Taxes And Cover panel.
+      { route: '/workspace/papers', label: 'Taxes And Cover', detail: 'Your returns, health cover and unemployment', homeOnly: true },
     ],
   },
 ];
@@ -63,7 +75,3 @@ export const RAIL_DESTINATIONS: readonly DestinationGroup[] = DESTINATIONS
 /** Every destination, flat. */
 export const ALL_DESTINATIONS: readonly Destination[] = DESTINATIONS.flatMap((g) => g.items);
 
-/** The ones that do not open, by route. */
-export const LOCKED_ROUTES: ReadonlySet<string> = new Set(
-  ALL_DESTINATIONS.filter((d) => d.locked).map((d) => d.route),
-);

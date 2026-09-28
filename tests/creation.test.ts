@@ -16,6 +16,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, migrate, refreshMeta } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { AGENCIES } from '@/engine/content/career';
 import { CITIES } from '@/engine/content/geography';
 import { blockedTraitReason, latestBirthYear } from '@/ui/creation/CharacterCreation';
 import { settledTitle } from '@/engine/core/performer';
@@ -104,9 +106,10 @@ describe('Identity', () => {
     expect(settledTitle('She/Her')).toBe('actress');
   });
 
-  it('caps the birth year so nobody starts under eighteen', () => {
-    expect(latestBirthYear(2026)).toBe(2008);
-    expect(latestBirthYear(2030)).toBe(2012);
+  it('caps the birth year so nobody starts under eighteen, or twenty-one at drama school', () => {
+    expect(latestBirthYear({ startYear: 2026 })).toBe(2008);
+    expect(latestBirthYear({ startYear: 2030 })).toBe(2012);
+    expect(latestBirthYear({ startYear: 2026, school: 'yale-drama' })).toBe(2005);
   });
 
   it('carries every answer into the save', () => {
@@ -193,6 +196,16 @@ describe('the title', () => {
     sim.universe.meta.careerLabel = '';
     refreshMeta(sim);
     expect(sim.universe.meta.careerLabel).toBe('Actress');
+  });
+
+  it('says on the slot where the life is: the year at school, or the agency after it', () => {
+    const sim = createSave(1, 'slot-where', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    refreshMeta(sim);
+    expect(sim.universe.meta.careerLabel).toBe('Actress, Yale Drama Year 1');
+    sim.player.school!.standing = 'graduated';
+    (sim.player.career ??= {} as never).agencyId = AGENCIES[0]!.id;
+    refreshMeta(sim);
+    expect(sim.universe.meta.careerLabel).toBe(`Actress, With ${AGENCIES[0]!.name}`);
   });
 });
 

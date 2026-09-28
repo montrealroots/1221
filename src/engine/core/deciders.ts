@@ -149,11 +149,3 @@ export function sweepOne<Input, Outcome>(
   }
   return { reads, outcomes: [...seen], samples, inert: movedIn === 0 };
 }
-
-/** The same, for every input a decider claims to read. */
-export function sweepAll<Input, Outcome>(
-  decider: Decider<Input, Outcome>,
-  opts?: { samples?: number; steps?: number },
-): Sweep[] {
-  return Object.keys(decider.reads).map((reads) => sweepOne(decider, reads, opts));
-}

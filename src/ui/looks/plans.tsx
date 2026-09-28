@@ -177,8 +177,8 @@ defineLook<Plans>('plans', {
             {pending.length === 0
               ? 'The calendar takes what you give it: a name, a time, how long it runs and where it wants you. None of it has to be there.'
               : `${asName(next!.title)} is the next one, ${formatDate(next!.at, zone)} at ${formatTime(next!.at, zone)}.`}
-            {missed.length > 0 && ` ${said(missed.length, 'has', 'have')} gone by without you.`}
-            {called.length > 0 && ` ${said(called.length, 'was', 'were')} called off.`}
+            {missed.length > 0 && ` ${toStart(said(missed.length, 'plan'))} ${missed.length === 1 ? 'has' : 'have'} gone by without you.`}
+            {called.length > 0 && ` ${toStart(said(called.length, 'plan'))} ${called.length === 1 ? 'was' : 'were'} called off.`}
           </p>
           <div className="grid grid-3">
             <Stat label="Waiting" value={pending.length} note="Still ahead of you" />

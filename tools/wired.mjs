@@ -128,6 +128,8 @@ function group(name, what, dead, hint) {
 // and it says on it which three do something today and that the other four
 // are kept and read by nothing: openness waits on travel, and extraversion,
 // agreeableness and risk tolerance on other people. None of those is built.
+// Risk tolerance was read by the card, and on 2026-09-27 the other three by a
+// day's work (`systems/enjoyment.ts`), and the count fell to nought.
 // The knobs came back at nought, and a trait can only declare one that
 // something reads.
 

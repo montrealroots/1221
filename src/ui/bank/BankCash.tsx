@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { CASH } from '@/engine/content/cash';
 import { walletOf, withdrawalQuote, type CashFrom, type CashTo } from '@/engine/systems/cash';
 import { cardOf, cardTerms } from '@/engine/systems/credit';
@@ -27,7 +27,7 @@ export function BankCash({ bankId }: { bankId: string }) {
   const [inAmount, setInAmount] = useState('');
   const [into, setInto] = useState('');
   const [at, setAt] = useState<CashTo>('counter');
-  const cents = (v: string) => Math.round(Number(v.replace(/[^\d.]/g, '')) * 100);
+  const cents = centsFromTyped;
   const quote = outAmount ? withdrawalQuote(sim, person, cents(outAmount), from) : undefined;
   const cash = card && person.credit ? cardTerms(sim, card, person.credit.score) : undefined;
 
@@ -96,7 +96,7 @@ export function BankCash({ bankId }: { bankId: string }) {
       )}
       <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
         {rules ? `Fees and limits from the bank: ${rules.source}.` : 'This bank’s cash fees weren’t found, so taking cash out here costs nothing.'}
-        {cash?.estimated.includes('cashAdvance') ? ' The cash advance’s fee is SLATE’s estimate of a US card’s: 5% or $10.' : ''}
+        {cash?.estimated.includes('cashAdvance') ? ` The cash advance’s fee is SLATE’s estimate of a US card’s: ${Number((cash.cashFeeShare * 100).toFixed(2))}% or ${money(cash.cashFeeMin)}.` : ''}
       </p>
     </Panel>
   );

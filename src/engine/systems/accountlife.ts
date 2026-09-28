@@ -45,8 +45,10 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
 import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
-import { interestTaxFor, openOne } from './banking';
+import { inSaveMoney, interestTaxFor, openOne } from './banking';
+import { savingsLeftThisMonth } from './cash';
 import { lendingOf } from './lending';
+import { recordInterest } from './earnings';
 
 /** The months to its end a term deposit was opened for. */
 function termMonths(term: Account): number {
@@ -93,11 +95,22 @@ export function inCoolingOff(sim: Simulation, account: Account): boolean {
   return sim.now - account.openedAt <= days * MS_DAY;
 }
 
-/** Savings withdrawals this calendar month, for the bank's free count. */
+/**
+ * Withdrawals from savings this month, for the bank's free count: every
+ * payment out, not the bank's own interest tax or fees. Until 2026-09-27 it
+ * counted only a move by hand, in the clock's zone rather than the bank's
+ * month, and a payment the linked savings made was never counted or charged.
+ */
 function withdrawalsThisMonth(sim: Simulation, account: Account): number {
-  const p = zonedParts(sim.now, sim.zone);
-  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.zone);
-  return sim.universe.transactions.filter((t) => t.at >= since && t.category === 'transfer' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)).length;
+  const p = zonedParts(sim.now, sim.homeZone);
+  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.homeZone);
+  let n = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0 && list[i]!.at >= since; i -= 1) {
+    const t = list[i]!;
+    if (t.category !== 'interest' && t.category !== 'bank_fee' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)) n += 1;
+  }
+  return n;
 }
 
 /** The fee a withdrawal from savings costs now, past the bank's free ones a month (B12, B33). */
@@ -105,12 +118,21 @@ export function savingsWithdrawalFee(sim: Simulation, account: Account): Money {
   if (account.kind !== 'savings' || account.category === 'term' || !account.bankId) return 0;
   const rules = ACCOUNT_LIFE[account.bankId];
   if (rules?.freeWithdrawals === undefined || !rules.withdrawalFee) return 0;
-  return withdrawalsThisMonth(sim, account) >= rules.freeWithdrawals ? rules.withdrawalFee : 0;
+  // In the save's money: until 2026-09-27 a Canadian or New Zealand fee was taken in the bank's own hundredths.
+  return withdrawalsThisMonth(sim, account) >= rules.freeWithdrawals ? inSaveMoney(sim, rules.withdrawalFee, bankById(account.bankId)!.currency) : 0;
 }
 
-/** Whether an account is dormant, and blocked until used again. */
-export function isDormant(account: Account): boolean {
-  return account.dormant === true;
+/**
+ * What can come out of easy-access savings now, and what the next
+ * withdrawal costs: the balance less the fee, and no more than Germany's
+ * monthly allowance without notice. Every way money leaves savings reads
+ * it: a move by hand, the linked sweep, a scheduled payment, the card paid
+ * from the bank.
+ */
+export function savingsDebit(sim: Simulation, account: Account): { room: Money; fee: Money } {
+  const fee = savingsWithdrawalFee(sim, account);
+  const left = savingsLeftThisMonth(sim, account);
+  return { room: Math.max(0, Math.min(account.balance - fee, left ?? Infinity)), fee };
 }
 
 /** What round-ups have to move into savings tonight. */
@@ -123,6 +145,36 @@ export function roundUpOf(amount: Money): Money {
 export function roundUpsOn(sim: Simulation, person: Person): boolean {
   const current = currentOf(sim, person);
   return Boolean(person.roundUps?.on && current?.bankId && ACCOUNT_LIFE[current.bankId]?.roundUp);
+}
+
+/**
+ * The days' notice a bank needs before it closes a term deposit early, where
+ * its terms ask for it: NatWest's Fixed Term Savings, 35 (its own words are
+ * kept in `penaltyWords`). Until 2026-09-27 SLATE broke it at once.
+ */
+export const BREAK_NOTICE: Readonly<Record<string, number>> = { 'gb-natwest': 35 };
+
+/** A term deposit broken now: the penalty from its interest, and from the deposit where that won't cover it. */
+function breakTerm(s: Simulation, person: Person, term: Account): { paid: Money; penalty: Money } {
+  const quote = breakQuote(s, term);
+  const into = currentOf(s, person)!;
+  const earned = Math.floor(term.accrued ?? 0);
+  const kept = Math.max(0, earned - quote.penalty);
+  const fromPrincipal = Math.max(0, quote.penalty - earned);
+  const tax = interestTaxFor(s, term, kept);
+  const paid = term.balance - fromPrincipal + kept - tax;
+  const postings = [
+    { accountId: into.id, amount: paid },
+    { accountId: term.id, amount: -term.balance },
+  ];
+  if (kept > 0) postings.push({ accountId: s.nominalAccount('income', 'Interest').id, amount: -kept });
+  if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
+  if (fromPrincipal > 0) postings.push({ accountId: s.nominalAccount('expense', 'Early Withdrawal Penalty').id, amount: fromPrincipal });
+  s.post({ memo: `${term.name} broken early`, category: kept > 0 ? 'interest' : 'transfer', postings });
+  term.accrued = 0;
+  term.closedAt = s.now;
+  delete term.breakAt;
+  return { paid, penalty: quote.penalty };
 }
 
 export function registerAccountLife(sim: Simulation): void {
@@ -141,11 +193,17 @@ export function registerAccountLife(sim: Simulation): void {
       for (const account of Object.values(s.universe.accounts)) {
         if (account.ownerId !== person.id || account.closedAt || !account.bankId) continue;
         const rules = ACCOUNT_LIFE[account.bankId];
+        // An early close on notice, once the notice has run.
+        if (account.category === 'term' && account.breakAt !== undefined && account.breakAt <= s.now && currentOf(s, person)) {
+          const done = breakTerm(s, person, account);
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, less ${formatMoney(done.penalty, saveCurrency(s.universe))} for closing early.`, importance: 50, route: '/workspace/bank' });
+          continue;
+        }
         // A term deposit's end: the bank writes a month before, or in time
         // for any notice it needs to change what happens (B41).
         if (account.category === 'term' && account.maturesAt !== undefined && rules?.atEnd && !account.maturityNoticed && account.maturesAt - s.now <= noticeLead(rules) * MS_DAY) {
           account.maturityNoticed = true;
-          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${account.name} Ends Soon`, body: `On ${formatDate(account.maturesAt, s.zone)} it ${END_WORDS[termEndOf(account)]}.${(rules.endChoices?.length ?? 0) > 1 ? ` You can change that${rules.endNoticeDays ? ` until ${rules.endNoticeDays} days before` : ''}.` : ''}${rules.graceDays && termEndOf(account) === 'renews' ? ` After it renews you have ${rules.graceDays} days to take the money without a penalty.` : ''}`, importance: 45, route: '/workspace/bank' });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Ends Soon`, body: `On ${formatDate(account.maturesAt, s.zone)} it ${END_WORDS[termEndOf(account)]}.${(rules.endChoices?.length ?? 0) > 1 ? ` You can change that${rules.endNoticeDays ? ` until ${rules.endNoticeDays} days before` : ''}.` : ''}${rules.graceDays && termEndOf(account) === 'renews' ? ` After it renews you have ${rules.graceDays} days to take the money without a penalty.` : ''}`, importance: 45, route: '/workspace/bank' });
         }
       }
     }
@@ -164,30 +222,21 @@ export function registerAccountLife(sim: Simulation): void {
     return { atEnd: p.atEnd };
   });
 
-  sim.onCommand<{ accountId: string }, { paid: Money; penalty: Money }>('bank.break_term', (p, { sim: s }) => {
+  sim.onCommand<{ accountId: string }, { paid: Money; penalty: Money; at?: Instant }>('bank.break_term', (p, { sim: s }) => {
     const person = s.player;
     const term = s.universe.accounts[p.accountId];
     if (!term || term.ownerId !== person.id || term.closedAt || term.category !== 'term') throw new CommandError('That isn’t one of your term deposits.');
     const quote = breakQuote(s, term);
     if (quote.refused) throw new CommandError(quote.refused);
-    const into = currentOf(s, person);
-    if (!into) throw new CommandError('You need a current account for the money.');
-    const earned = Math.floor(term.accrued ?? 0);
-    const kept = Math.max(0, earned - quote.penalty);
-    const fromPrincipal = Math.max(0, quote.penalty - earned);
-    const tax = interestTaxFor(s, term, kept);
-    const paid = term.balance - fromPrincipal + kept - tax;
-    const postings = [
-      { accountId: into.id, amount: paid },
-      { accountId: term.id, amount: -term.balance },
-    ];
-    if (kept > 0) postings.push({ accountId: s.nominalAccount('income', 'Interest').id, amount: -kept });
-    if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
-    if (fromPrincipal > 0) postings.push({ accountId: s.nominalAccount('expense', 'Early Withdrawal Penalty').id, amount: fromPrincipal });
-    s.post({ memo: `${term.name} broken early`, category: kept > 0 ? 'interest' : 'transfer', postings });
-    term.accrued = 0;
-    term.closedAt = s.now;
-    return { paid, penalty: quote.penalty };
+    if (!currentOf(s, person)) throw new CommandError('You need a current account for the money.');
+    // A bank that needs notice closes it when the notice has run, at the penalty then.
+    const notice = BREAK_NOTICE[term.bankId ?? ''];
+    if (notice) {
+      if (term.breakAt !== undefined) throw new CommandError(`It closes on ${formatDate(term.breakAt, s.zone)}, on the notice given.`);
+      term.breakAt = s.now + notice * MS_DAY;
+      return { paid: 0, penalty: quote.penalty, at: term.breakAt };
+    }
+    return breakTerm(s, person, term);
   });
 
   sim.onCommand<{ accountId: string }, { paid: Money }>('bank.take_term_interest', (p, { sim: s }) => {
@@ -203,6 +252,7 @@ export function registerAccountLife(sim: Simulation): void {
     if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
     s.post({ memo: `Interest: ${term.name}`, category: 'interest', postings });
     term.accrued = (term.accrued ?? 0) - earned;
+    recordInterest(person, s.now, s.homeZone, earned);
     return { paid: earned - tax };
   });
 
@@ -275,7 +325,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
     if (rules?.inactiveMonths !== undefined) account.inactive = idle >= rules.inactiveMonths * month;
     if (rules?.dormantMonths !== undefined && idle >= rules.dormantMonths * month && !account.dormant) {
       account.dormant = true;
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: `${account.name} Is Dormant`, body: `Untouched for ${rules.dormantMonths} months. ${account.institution ?? 'The bank'} has blocked it until you use it again.`, importance: 55, route: '/workspace/bank' });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.name} Is Dormant`, body: `Untouched for ${rules.dormantMonths} months. ${account.institution ?? 'The bank'} has blocked it until you use it again.`, importance: 55, route: '/workspace/bank' });
     }
     const iso = bankById(account.bankId)?.iso;
     const law = iso ? UNCLAIMED[iso] : undefined;
@@ -285,7 +335,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
       sim.post({ memo: `Unclaimed, to ${law.to ?? 'the state'}`, category: 'transfer', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('liability_other', 'Unclaimed Money').id, amount }] });
       account.closedAt = sim.now;
       person.unclaimed = [...(person.unclaimed ?? []), { amount, to: law.to ?? 'the state', at: sim.now }];
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left untouched in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}. ${law.claimBack ?? ''}`, importance: 60, route: '/workspace/bank' });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left untouched in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}. ${law.claimBack ?? ''}`, importance: 60, route: '/workspace/bank' });
     }
   }
 }

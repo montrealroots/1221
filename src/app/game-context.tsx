@@ -34,7 +34,7 @@ export interface GameContextValue {
   /** Increments on every mutation. Components read it to stay current. */
   version: number;
   /** Runs a command and refreshes the UI. Failures surface as a toast. */
-  run: <R = unknown>(kind: string, payload?: Record<string, unknown>, options?: { idempotencyKey?: string; silent?: boolean }) => CommandResult<R>;
+  run: <R = unknown>(kind: string, payload?: Record<string, unknown>, options?: { silent?: boolean }) => CommandResult<R>;
   /** Advances world time through the one advancement path. */
   advance: (ms: number) => AdvanceResult | undefined;
   /** `resumes` carries on a jump a stop broke off: where that jump was sent from. */
@@ -155,9 +155,9 @@ export function GameProvider({
   const run = useCallback(<R,>(
     kind: string,
     payload: Record<string, unknown> = {},
-    options: { idempotencyKey?: string; silent?: boolean } = {},
+    options: { silent?: boolean } = {},
   ): CommandResult<R> => {
-    const result = sim.execute<R>({ kind, payload, idempotencyKey: options.idempotencyKey });
+    const result = sim.execute<R>({ kind, payload });
     if (!result.ok && !options.silent) toast(result.error ?? 'That couldn’t be done.', 'negative');
     if (result.ok) dirty.current = true;
     refresh();
@@ -375,6 +375,9 @@ export function GameProvider({
 const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
   '/workspace/calendar': 'Calendar',
+  '/workspace/school': 'Your School',
+  '/workspace/career': 'Your Career',
+  '/workspace/papers': 'Taxes And Cover',
 };
 
 export function labelForRoute(route: string): string {

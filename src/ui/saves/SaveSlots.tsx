@@ -36,7 +36,7 @@ export function SaveSlots({
     setBusy(slot);
     setError(null);
     try {
-      const opened = await openSlot(adapter, slot, { fromBackup, startedAt: Date.now() });
+      const opened = await openSlot(adapter, slot, { fromBackup });
       if ('error' in opened) {
         setError(opened.error);
         return;

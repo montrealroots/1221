@@ -38,6 +38,7 @@ import { zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { ceilingAt } from '../content/lifespan';
 import { clamp } from '../core/rng';
+import { homeOf } from './earnings';
 
 export const END_KIND = 'life.end';
 const MS_YEAR = 365.2425 * 86_400_000;
@@ -103,7 +104,8 @@ export function chanceOfEndingYear(person: Person, age: number, countryId: strin
 export function endBetween(sim: Simulation, person: Person, from: Instant, to: Instant): Instant | undefined {
   if (to <= from) return undefined;
   const age = (from - person.birthInstant) / MS_YEAR;
-  const country = CITIES.get(person.currentLocationId)?.countryId;
+  // The life table of where they live, not of a birthday on a shoot abroad.
+  const country = CITIES.get(homeOf(person))?.countryId;
   const q = chanceOfEndingYear(person, age, country);
   const share = Math.min(1, (to - from) / MS_YEAR);
   const chance = 1 - (1 - q) ** share;

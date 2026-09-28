@@ -121,23 +121,6 @@ export function formatLocalCompact(cents: number, code: string): string | undefi
   return info.symbolAfter ? `${number} ${info.symbol}` : `${info.symbol}${number}`;
 }
 
-/**
- * The unit this atlas itself is quoted in.
- *
- * The US dollar, and it has to be said out loud now that the ledger is not.
- * `unitsPerUsd` above is the whole of how a rent in Reykjavik becomes a rent
- * in krónur, so every figure it converts FROM — `medianRentCents`, the
- * reference wage the tax card is worked out on — is dollars, and none of it
- * is a balance. Nothing in this atlas is ever debited from an account, which
- * is the only reason it can be a different unit from the ledger safely.
- *
- * Before this existed the fallback for a country with no rate on file went
- * through the ledger's own formatter, so a dollar figure came out wearing
- * the ledger's symbol — a conversion that never happened, stated as though
- * it had.
- */
-export const ATLAS_CURRENCY = 'USD';
-
 /** A compact atlas amount in the unit the atlas is quoted in: "$1.4K". */
 export function formatAtlasCompact(cents: number): string {
   const v = Math.abs(cents) / 100;

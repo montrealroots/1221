@@ -37,6 +37,12 @@ export function CalendarWorkspace() {
   // days, however recently it was.
   const next30 = useWorld((s) => entriesBetween(s, s.now, s.now + 30 * MS_DAY).filter(stillStands));
   const conflicts = next30.filter((e) => e.conflicted);
+  const collisions = [...conflicts].sort((x, y) => x.at - y.at).reduce((runs, e) => {
+    const last = runs[runs.length - 1];
+    if (last && e.at < last.end) { last.end = Math.max(last.end, e.endsAt ?? e.at); return runs; }
+    runs.push({ end: e.endsAt ?? e.at });
+    return runs;
+  }, [] as { end: number }[]).length;
   const selectedDay = days.find((d) => d.key === selected);
   const planningDay = days.find((d) => d.key === planning);
 
@@ -61,9 +67,10 @@ export function CalendarWorkspace() {
         </p>
       </div>
 
+      {/* A collision is a run of items that overlap, however many are in it: until 2026-09-27 it was the items over two, rounded up, so three at once read as two. */}
       {conflicts.length > 0 && (
         <div className="callout callout-negative" style={{ marginBottom: 'var(--s5)' }}>
-          <strong>{conflicts.length / 2 >= 1 ? `${Math.ceil(conflicts.length / 2)} collision${Math.ceil(conflicts.length / 2) === 1 ? '' : 's'}` : 'A collision'} in the next month.</strong>
+          <strong>{collisions === 1 ? 'A collision' : `${collisions} collisions`} in the next month.</strong>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {conflicts.slice(0, 6).map((entry) => (
               <li key={entry.id}>
@@ -239,9 +246,10 @@ export function CalendarWorkspace() {
  * and who it was with; the family was the only other kind and the only
  * company, and both went with it.
  *
- * No "where" yet. Every plan is where you are standing, because nothing in
- * the game moves you anywhere else, and offering a city you cannot get to
- * would be offering a commitment you are guaranteed to miss.
+ * No "where" yet. Every plan is where you are standing. When it was written
+ * nothing in the game moved you anywhere else; travel to a job, a sublet and
+ * a move all do now, and a plan is still made where you are at the time, so
+ * a city you won't be in is never offered.
  */
 function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => void; onDone: () => void }) {
   const { sim, run } = useGame();

@@ -15,7 +15,8 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
-import { ageOn, decideStretch } from './mortality';
+import { END_KIND, ageOn, decideStretch, frailty } from './mortality';
+import { healthOf } from './health';
 
 export { ageOn };
 
@@ -48,9 +49,36 @@ function schedule(sim: Simulation, person: Person, after: Instant): void {
     priority: 20, payload: { personId: person.id },
   });
   decideStretch(sim, person, after, at);
+  healthOf(person).endBand = bandOf(sim, person);
+}
+
+/**
+ * The year's odds are drawn at a birthday, from the body as it is then
+ * (`frailty`). A body that falls, or recovers, a quarter-band from that
+ * draws the rest of the year again from its state now: the end pending is
+ * taken off and the stretch to the birthday drawn afresh. Until 2026-09-27 a
+ * collapse the day after a birthday changed nothing for a year.
+ */
+export const END_BAND = 0.25;
+
+const bandOf = (sim: Simulation, person: Person) => Math.round(frailty(person.wellbeing.condition, (sim.now - person.birthInstant) / (365.2425 * 86_400_000)) / END_BAND) * END_BAND;
+
+export function redrawIfChanged(sim: Simulation, person: Person): void {
+  const h = healthOf(person);
+  const band = bandOf(sim, person);
+  if (h.endBand === undefined || band === h.endBand) { h.endBand = band; return; }
+  h.endBand = band;
+  const birthday = sim.universe.scheduled.find((one) => one.kind === BIRTHDAY_KIND && one.status === 'pending' && one.payload.personId === person.id);
+  if (!birthday) return;
+  for (const one of sim.universe.scheduled) if (one.kind === END_KIND && one.status === 'pending' && one.payload.personId === person.id) sim.timeline.cancel(one.id, sim.now);
+  decideStretch(sim, person, sim.now, birthday.at);
 }
 
 export function registerBirthdays(sim: Simulation): void {
+  sim.onEvent('world.day_rollover', 'life.end_band', (_event, { sim: s }) => {
+    for (const person of Object.values(s.universe.people)) redrawIfChanged(s, person);
+  });
+
   sim.onSchedule(BIRTHDAY_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId ?? s.universe.playerId)];
     if (!person) return;

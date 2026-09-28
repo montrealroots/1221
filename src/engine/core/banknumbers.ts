@@ -221,6 +221,60 @@ function mod11Zero(body: string, weights: readonly number[]): string | undefined
 }
 
 /**
+ * A check digit for a Swedish number: mod 11, weights 1, 2, 3... from the
+ * right, the check digit weighing 1; undefined where it would be 10. The
+ * weights start again at 1 from the eleventh digit, which no number built
+ * here reaches: nine digits before the check at most.
+ */
+function swedishMod11(body: string): string | undefined {
+  const sum = [...body].reverse().reduce((acc, d, i) => acc + Number(d) * (i + 2), 0);
+  const d = (11 - (sum % 11)) % 11;
+  return d === 10 ? undefined : String(d);
+}
+
+/** A Luhn check digit: from the right, the body's digits weigh 2, 1, 2..., a two-digit product less 9. */
+function luhn(body: string): string {
+  const sum = [...body].reverse().reduce((acc, d, i) => { const p = Number(d) * (i % 2 === 0 ? 2 : 1); return acc + (p > 9 ? p - 9 : p); }, 0);
+  return String((10 - (sum % 10)) % 10);
+}
+
+/**
+ * A Swedish BBAN, bank by bank, as Bankgirot's Bankernas kontonummer
+ * (2024-02-22) and Bankinfrastruktur's IBAN rules (v1.5; table of
+ * 2026-08-06) set it: SEB (500) and Nordea (300), a 4-digit clearing
+ * number and a 7-digit account, mod 11 over the clearing's last three
+ * digits and the account; Handelsbanken (600), a 9-digit account, mod 11
+ * over it; Swedbank (800), a 5-digit clearing number 8xxx with its Luhn
+ * digit and a 10-digit account with its own. Nordea's clearing avoids 3300
+ * and 3782, its personal accounts, and 4000 to 4999, weighed another way.
+ */
+function swedishBban(bban: string): string | undefined {
+  const bank = bban.slice(0, 3);
+  const d = bban.slice(3);
+  if (bank === '500' || bank === '300') {
+    // The clearing number: 5xxx for SEB; Nordea's 3000 to 3299.
+    // Seventeen digits: six zeros, the clearing number, the account and its check.
+    const clearing = bank === '500' ? `5${d.slice(7, 10)}` : `3${String(Number(d[7]) % 3)}${d.slice(8, 10)}`;
+    const account = d.slice(10, 16);
+    const check = swedishMod11(clearing.slice(1) + account);
+    return check === undefined ? undefined : `${bank}000000${clearing}${account}${check}`;
+  }
+  if (bank === '600') {
+    // Eight zeros, then the account and its check.
+    const account = d.slice(8, 16);
+    const check = swedishMod11(account);
+    return check === undefined ? undefined : `600${'0'.repeat(8)}${account}${check}`;
+  }
+  if (bank === '800') {
+    // Two zeros, the clearing number with its digit, the account and its.
+    const clearing = `8${d.slice(3, 6)}`;
+    const account = d.slice(7, 16);
+    return `80000${clearing}${luhn(clearing)}${account}${luhn(account)}`;
+  }
+  return bban;
+}
+
+/**
  * The BBAN with its national check characters worked out, for a country
  * SLATE has the rule for; the BBAN unchanged for one it doesn't; undefined
  * when the draw can't carry a valid number.
@@ -228,9 +282,12 @@ function mod11Zero(body: string, weights: readonly number[]): string | undefined
 export function withNationalCheck(country: string, bban: string): string | undefined {
   switch (country) {
     case 'BE': return bban.slice(0, 10) + belgianCheck(bban.slice(0, 10));
-    case 'FR': case 'MC': case 'MR': return bban.slice(0, 21) + ribKey(bban.slice(0, 5), bban.slice(5, 10), bban.slice(10, 21));
-    case 'ME': case 'RS': case 'MK': case 'SI': case 'PT': case 'TL': case 'BA': case 'XK':
+    // Burundi and Djibouti keep the French RIB key: SLATE's inference, as their registry examples check by it.
+    case 'FR': case 'MC': case 'MR': case 'BI': case 'DJ': return bban.slice(0, 21) + ribKey(bban.slice(0, 5), bban.slice(5, 10), bban.slice(10, 21));
+    // São Tomé keeps Portugal's NIB key: SLATE's inference, as the registry's current example checks by it.
+    case 'ME': case 'RS': case 'MK': case 'SI': case 'PT': case 'TL': case 'BA': case 'XK': case 'ST':
       return bban.slice(0, -2) + mod9710(bban.slice(0, -2));
+    case 'SE': return swedishBban(bban);
     case 'FI': return bban.slice(0, 13) + luhnFi(bban.slice(0, 13));
     case 'AL': return bban.slice(0, 7) + weightedMod10(bban.slice(0, 7), [9, 7, 3, 1]) + bban.slice(8);
     case 'PL': return bban.slice(0, 7) + weightedMod10(bban.slice(0, 7), [3, 9, 7, 1]) + bban.slice(8);

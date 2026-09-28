@@ -20,10 +20,6 @@ export type AccountKind =
 
 export const NOMINAL_KINDS: readonly AccountKind[] = ['income', 'expense', 'equity', 'asset_value', 'liability_other'];
 
-export function isNominal(kind: AccountKind): boolean {
-  return NOMINAL_KINDS.includes(kind);
-}
-
 /** Liability accounts carry a negative balance when money is owed. */
 export const LIABILITY_KINDS: readonly AccountKind[] = ['credit_card', 'loan', 'mortgage', 'auto_loan', 'company_credit'];
 
@@ -122,6 +118,14 @@ export interface Account {
   /** A term deposit renewed: until when it can be taken without penalty, and whether the bank has written about its end. */
   graceUntil?: Instant;
   maturityNoticed?: boolean;
+  /** A term deposit whose early close has been asked for, on the notice the bank needs, closing on this day. */
+  breakAt?: number;
+  /** France: the month's letter about an overrun sent, the credit offered at three months, and the closing's notice given. */
+  overrunInformed?: boolean;
+  creditOffered?: { amount: number; apr: number; months: number };
+  closingNoticed?: boolean;
+  /** A second-chance account, opened for somebody the mainstream banks turned away: a monthly fee and no overdraft. */
+  secondChance?: boolean;
   /** When a term deposit last renewed: its current term runs from here. */
   renewedAt?: Instant;
   /** What its holder has told the bank to do with a term deposit at its end, where it differs from the bank's default. */
@@ -144,10 +148,6 @@ export interface LedgerTransaction {
   /** Statement category: 'salary', 'rent', 'groceries', 'production', ... */
   category: string;
   postings: Posting[];
-  /** What caused this, for the "why is my balance this?" audit. */
-  refType?: string;
-  refId?: string;
-  idempotencyKey?: string;
   /** Set when a transaction has been reversed; points at the reversing txn. */
   reversedBy?: string;
   reverses?: string;

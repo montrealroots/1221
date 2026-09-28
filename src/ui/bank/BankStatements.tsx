@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate, zonedParts } from '@/engine/core/time';
 import type { Account } from '@/engine/core/ledger';
 import { dueAt } from '@/engine/systems/credit';
@@ -83,7 +83,23 @@ function AccountStatementView({ account, period }: { account: Account; period: R
         {!owed && period.to > sim.now && pending !== 0 && <Figure label="Posted Balance" value={money(st.closing - pending)} note="Completed items only; what’s pending is still to post" />}
       </div>
       <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} />
+      {!owed && account.bankId && PENDING[account.bankId] && <PendingTerms bankId={account.bankId} />}
     </div>
+  );
+}
+
+/** How the bank holds and posts what's paid, in its words, and where they're from. */
+function PendingTerms({ bankId }: { bankId: string }) {
+  const terms = PENDING[bankId]!;
+  const said = [
+    terms.pendingWords ? `A card payment: ${terms.pendingWords}` : '',
+    terms.postingOrder ? `Overnight: ${terms.postingOrder}` : '',
+    terms.valueDating ? `Value dates: ${terms.valueDating}` : '',
+  ].filter(Boolean);
+  return (
+    <p className="xs dim" style={{ margin: 0 }}>
+      {said.join(' ')}{said.length ? ' ' : ''}{terms.pendingDays === undefined ? 'The bank doesn’t say how long a card payment stays pending, so SLATE’s estimate holds it. ' : ''}Source: {terms.source}.
+    </p>
   );
 }
 
@@ -94,6 +110,8 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
   const st = cardStatement(sim, account, period);
   const closed = period.to <= sim.now;
   const due = closed ? dueAt(sim.zone, period.to, st.terms.graceDays) : undefined;
+  // A balance carried into it: paid in full, what built up since still comes on the next, as trailing interest.
+  const carried = sim.player.credit?.carrying === true && st.previous > 0;
   return (
     <div className="col gap-3">
       <div className="grid grid-3">
@@ -109,7 +127,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
         <p className="small" style={{ margin: 0 }}>
           {st.terms.kind === 'charge'
             ? `${st.terms.issuer ?? 'The bank'} takes the whole ${money(st.newBalance)} from your current account${due ? ` on ${formatDate(due, sim.zone)}` : ''}.`
-            : `The least to pay is ${money(st.minimum)}${due ? `, by ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)} and none of it draws interest.`}
+            : `The least to pay is ${money(st.minimum)}${due ? `, by ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)} and ${carried ? 'nothing new draws interest, though what built up since this statement comes on the next one' : 'none of it draws interest'}.`}
         </p>
       )}
       {closed && st.minimumOnly && st.terms.kind !== 'charge' && (
@@ -169,7 +187,7 @@ function AlertsView() {
   const alerts = useWorld((s) => alertsOf(s.player));
   const [low, setLow] = useState(alerts.lowBalance !== undefined ? String(alerts.lowBalance / 100) : '');
   const [large, setLarge] = useState(alerts.largePayment !== undefined ? String(alerts.largePayment / 100) : '');
-  const cents = (v: string) => (v.trim() === '' ? null : Math.round(Number(v.replace(/[^\d.]/g, '')) * 100));
+  const cents = (v: string) => (v.trim() === '' ? null : centsFromTyped(v));
   const save = () => {
     const answer = run('bank.set_alerts', { lowBalance: cents(low), largePayment: cents(large) });
     if (answer.ok) toast('Alerts saved.', 'positive');

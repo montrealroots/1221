@@ -1517,6 +1517,14 @@ export const IBAN_CODES: Readonly<Record<string, { code: string; source: string 
     "code": "4500",
     "source": "https://bits.no/wp-content/uploads/2020/10/201001-Norwegian-IBAN-BIC-Table.xls"
   },
+  "EG|Banque Misr": {
+    "code": "0002",
+    "source": "https://www.banquemisr.com/-/media/iban-pdf/iban-EN.pdf (Banque Misr's own IBAN guide), added 2026-09-27"
+  },
+  "YE|Al-Kuraimi Islamic Microfinance Bank": {
+    "code": "KRMB",
+    "source": "SLATE's estimate: the first four letters of its BIC, KRMBYESA, as the IBAN Registry's example uses the Central Bank's; added 2026-09-27"
+  },
   "SE|Swedbank": {
     "code": "800",
     "source": "https://www.financesweden.se/media/1255/bank_id_iban_bic.pdf"

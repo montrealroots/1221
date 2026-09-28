@@ -4,8 +4,9 @@
  * Every city has its own clock, weather, prices and taxes, and when the
  * player is in one, Home says so. This gathers what the rest of the engine
  * already knows about a city into one honest profile: the time zone and the
- * hours it is from home, the weather now, the climate, what things cost, how
- * much of the industry is here, and what the taxman takes. Nothing here is
+ * hours it is from home, the climate, what things cost, and what the taxman
+ * takes. The weather now is read beside it (`weatherAt`); until 2026-09-27 the
+ * profile ran the hourly model for a field nothing read. Nothing here is
  * new information; it is the same jurisdiction, geography and climate the
  * simulation runs on, read for one place.
  */
@@ -19,7 +20,6 @@ import { currencyInfo, formatLocalCompact, type CurrencyInfo } from '../content/
 import { languageNames } from '../content/languages';
 import { usesFahrenheit, usesMiles } from '../content/climate';
 import { rentAt } from '../content/rents';
-import { weatherAt, type WeatherNow } from '../systems/weather';
 
 /** "Capital", "State Capital", "Provincial Capital": what kind of place this is, if it is a kind at all. */
 export function placeKindLabel(city: City): string | undefined {
@@ -76,11 +76,8 @@ export interface PlaceProfile {
   /** Distance from home, in the unit this country reads. */
   distanceFromHome?: string;
   away: boolean;
-  weather?: WeatherNow;
   costOfLivingIndex: number;
   medianRentCents: number;
-  industryPresence: number;
-  jobMarketDepth: number;
   /** Effective income tax rate at the reference income, 0-1. */
   /**
    * What a wage actually loses, as a fraction of it.
@@ -97,15 +94,14 @@ export interface PlaceProfile {
 }
 
 /**
- * The city the player lives in.
- *
- * This was the house's city, and the house is gone. Nothing in this build
- * moves the player, so where they live is where they are, and where they are
- * from stands in only if that place is unknown.
+ * The city the player lives in: their home's, and where they are when they
+ * have none. Until 2026-09-27 it was always where they were, from a build in
+ * which nothing moved the player; jobs on location, sublets and relocation
+ * all move them now, and the place look's away lines never showed.
  */
 export function homeCityOf(sim: Simulation): City | undefined {
   const player = sim.player;
-  return CITIES.get(player.currentLocationId) ?? CITIES.get(player.homeRegionId);
+  return CITIES.get(player.home?.cityId ?? player.currentLocationId) ?? CITIES.get(player.homeRegionId);
 }
 
 export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | undefined {
@@ -160,11 +156,8 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
     homeCity: home,
     distanceFromHome,
     away,
-    weather: weatherAt(sim, city.id),
     costOfLivingIndex: city.costOfLivingIndex,
     medianRentCents: oneBedUsd,
-    industryPresence: city.industryPresence,
-    jobMarketDepth: city.jobMarketDepth,
     effectiveIncomeTax: totalTax / TAX_REFERENCE_INCOME,
     salesTax: salesTaxRate(city.id, sim.now, 'general'),
     propertyTax: propertyTaxRate(city.id, sim.now),

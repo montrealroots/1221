@@ -10,6 +10,7 @@ import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { PAYMENT_NORMS, CHECK_FEES, type PaymentNorm, type CheckFees } from '@/engine/content/payments';
 import { paymentsOf } from '@/engine/systems/payments';
 import { arrearsOf, spend } from '@/engine/systems/household';
+import { exchange } from '@/engine/content/currency';
 
 const norms = PAYMENT_NORMS as Record<string, PaymentNorm>;
 const checkFees = CHECK_FEES as Record<string, CheckFees>;
@@ -38,7 +39,7 @@ const run = (sim: Simulation, kind: string, payload: Record<string, unknown>) =>
   return answer;
 };
 const firstOf = (sim: Simulation, month: number, hour = 21) => instantFromZoned({ year: 2026, month, day: 1, hour }, sim.zone);
-const US_CHECKS: PaymentNorm = { rent: ['check', 'online_portal'], rentMost: 'check', bills: ['online_portal'], billsMost: 'online_portal', terms: 'a check, or the landlord’s online portal', source: 'test' };
+const US_CHECKS: PaymentNorm = { rent: ['check', 'online_portal'], rentMost: 'check', bills: ['online_portal'], billsMost: 'online_portal', source: 'test' };
 
 describe('a new life', () => {
   it('pays the country’s usual way, on the debit card, with savings not linked, as a bank opens it', () => {
@@ -105,6 +106,37 @@ describe('rent by hand', () => {
   });
 });
 
+describe('rent paid ahead', () => {
+  it('goes against the next rent however it’s paid, a direct debit and a check alike', () => {
+    for (const how of ['auto', 'check'] as const) {
+      withNorm('US', US_CHECKS);
+      const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, `ahead-${how}`);
+      run(sim, 'bank.set_payments', { rent: how });
+      setCurrent(sim, 1_000_000_00);
+      run(sim, 'home.pay_landlord', { amount: 500_00 });
+      expect(paymentsOf(sim.player).rentCredit).toBe(500_00);
+      const rentLine = () => sim.nominalAccount('expense', 'Rent').balance;
+      const before = rentLine();
+      const fromBank = () => sim.universe.transactions.filter((t) => t.category === 'rent' && t.memo !== 'Rent, paid ahead').flatMap((t) => t.postings).filter((p) => p.accountId === current(sim).id).reduce((a, p) => a - p.amount, 0);
+      const bankBefore = fromBank();
+      sim.advanceTo(firstOf(sim, 2) + 5 * MS_DAY);
+      expect(paymentsOf(sim.player).rentCredit).toBe(0);
+      const rent = rentLine() - before;
+      expect(rent).toBeGreaterThan(500_00);
+      // The bank paid the month less what was paid ahead.
+      expect(fromBank() - bankBefore).toBe(rent - 500_00);
+    }
+    // A whole month paid ahead of a check writes no check that month.
+    withNorm('US', US_CHECKS);
+    const whole = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'ahead-whole');
+    run(whole, 'bank.set_payments', { rent: 'check' });
+    setCurrent(whole, 1_000_000_00);
+    run(whole, 'home.pay_landlord', { amount: 20_000_00 });
+    whole.advanceTo(firstOf(whole, 2) + MS_DAY);
+    expect(whole.universe.scheduled.filter((i) => i.kind === 'bank.check_clears' && i.label.startsWith('Rent'))).toHaveLength(0);
+  });
+});
+
 describe('rent by check', () => {
   it('is cashed days after the 1st, bounces with a fee where the account can’t cover it, and is owed', () => {
     withNorm('US', US_CHECKS);
@@ -135,6 +167,27 @@ describe('rent by check', () => {
     const paid = sim.universe.transactions.filter((t) => t.category === 'rent' && t.memo === 'Rent' && t.postings.some((p) => p.accountId === current(sim).id));
     expect(paid).toEqual([]);
     expect(sim.universe.notifications.some((n) => n.title === 'Check Stopped')).toBe(true);
+  });
+
+  it('charges the stop in the save’s money, and buys the checkbook once, where the first isn’t free', () => {
+    withNorm('US', US_CHECKS);
+    withFees('us-chase', { stopPayment: 30_00, checkbook: 20_00, source: 'test' });
+    const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'pay-book');
+    const books = () => sim.universe.transactions.filter((t) => t.memo === 'Checks ordered').length;
+    const had = books();
+    run(sim, 'bank.set_payments', { rent: 'auto' });
+    run(sim, 'bank.set_payments', { rent: 'check' });
+    run(sim, 'bank.set_payments', { rent: 'auto' });
+    run(sim, 'bank.set_payments', { rent: 'check' });
+    expect(books() - had).toBeLessThanOrEqual(1);
+    expect(paymentsOf(sim.player).checkbookBought).toBe(true);
+    // A bank in another money: its fee is converted.
+    withFees('ca-rbc', { stopPayment: 12_50, source: 'test' });
+    current(sim).bankId = 'ca-rbc';
+    sim.advanceTo(firstOf(sim, 2));
+    const check = paymentsOf(sim.player).checks[0]!;
+    const answer = run(sim, 'bank.stop_check', { id: check.id });
+    expect((answer.value as { fee: number }).fee).toBe(exchange(12_50, 'CAD', 'USD'));
   });
 
   it('isn’t offered where rent isn’t paid by check', () => {
@@ -194,6 +247,21 @@ describe('standing orders and payments set for a date', () => {
     setCurrent(sim, 1_000_000_00);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 3, day: 11, hour: 12 }, sim.zone));
     expect(moved()).toBe(1);
+  });
+
+  it('moves with the accounts when the bank is switched', () => {
+    const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'pay-switch');
+    const oldSavings = accountOf(sim, 'savings')!;
+    run(sim, 'bank.add_standing_order', { toId: oldSavings.id, amount: 100_00, day: 20 });
+    const at = sim.now + 5 * MS_DAY;
+    run(sim, 'bank.schedule_payment', { fromId: current(sim).id, toId: oldSavings.id, amount: 50_00, at });
+    run(sim, 'bank.switch', { bankId: 'us-citi' });
+    const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && !a.closedAt && a.kind === 'savings' && a.bankId === 'us-citi')!;
+    expect(paymentsOf(sim.player).standingOrders[0]!.toId).toBe(savings.id);
+    const before = savings.balance;
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 21, hour: 12 }, sim.zone));
+    expect(savings.balance - before).toBeGreaterThanOrEqual(150_00);
+    expect(sim.universe.notifications.some((n) => n.title === 'A Standing Order Didn’t Go')).toBe(false);
   });
 
   it('pays on the day set, and not once canceled', () => {

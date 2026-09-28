@@ -1,10 +1,12 @@
 /**
  * SLATE — The domain model.
  *
- * Every stateful thing in the universe. Rule: each record carries `saveId`, and
- * the store refuses to hand back a record whose saveId does not match the
- * universe you asked from. One save is one world; three saves are three worlds
- * that can never see each other.
+ * Every stateful thing in the universe. Each record carries `saveId`, and a
+ * universe is refused on load where a person, an account or a scheduled item
+ * carries another save's (`validateUniverse`). One save is one world; three
+ * saves are three worlds that can never see each other. This said a store
+ * refused any record of another save's, and until 2026-09-27 no such store
+ * existed: the load's check is the whole of it.
  */
 
 import type { Instant, TimeZone } from '../core/time';
@@ -16,6 +18,13 @@ import type { HomeState } from '../systems/household';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
+import type { Craft, SchoolRecord } from '../systems/school';
+import type { Attributes } from '../systems/attributes';
+import type { CareerRecord } from '../systems/career';
+import type { EarningsRecord } from '../systems/earnings';
+import type { HealthRecord } from '../systems/health';
+import type { UnemploymentRecord } from '../systems/unemployment';
+import type { TaxReturn } from '../systems/taxreturn';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -29,8 +38,11 @@ export type Id = string;
  * conscientiousness sets how well the nights go. Risk tolerance sets whether
  * the card's autopay clears the statement or carries a balance
  * (`systems/credit.ts`); it was read by nothing until the card. Openness,
- * extraversion and agreeableness are kept and read by nothing yet;
- * `tools/wired.mjs` counts them.
+ * extraversion and agreeableness were kept and read by nothing until
+ * 2026-09-27; since then they decide how a day of work is taken
+ * (`systems/enjoyment.ts`): extraversion the stress of an audition in the
+ * room, openness the mood of a day away from home, agreeableness the mood of
+ * a rehearsal.
  */
 export interface Personality {
   openness: number;
@@ -58,8 +70,9 @@ export interface Wellbeing {
   /** Hunger 0-100 where 100 is fed. */
   nourishment: number;
   /**
-   * 0-100, where 100 is clean and rested-looking. Falls through the day and
-   * faster on a shoot; a shower puts it back. Rooms notice.
+   * 0-100, where 100 is clean and rested-looking. Falls through the day, and
+   * twice as fast on set or on stage (`setGrime`); a shower puts it back.
+   * Rooms notice.
    */
   hygiene: number;
 }
@@ -117,7 +130,7 @@ export interface Person {
    * character sheet because a person has them, and the person look says both
    * back. The interests change how much an hour of looking after yourself
    * gives the mood (`systems/enjoyment.ts`), never how good anybody is at
-   * anything; the genres decide nothing.
+   * anything, and since 2026-09-27 what a day of work gives, with the genres.
    */
   interests: string[];
   genres?: string[];
@@ -147,6 +160,8 @@ export interface Person {
    * kept on the person.
    */
   credit?: CreditState;
+  /** A US bank's ChexSystems report of an account it closed for what was owed: when, and by whom. */
+  chex?: { at: number; bank: string };
   /**
    * The bank's alerts they've set (`systems/statements.ts`): the current
    * account under a line, a payment over one, and a statement ready. From
@@ -164,8 +179,30 @@ export interface Person {
   roundUps?: { on: boolean; pending: Money };
   /** Money gone to the state or its scheme after years untouched, which can be claimed back. */
   unclaimed?: { amount: Money; to: string; at: Instant }[];
+  /** Drama school, while they're at one and after (`systems/school.ts`). */
+  school?: SchoolRecord;
+  /** Their craft as an actor, 0 to 100 in each area (`content/school.ts`). */
+  craft?: Craft;
+  /**
+   * Presence, composure, reputation and recognition (`systems/attributes.ts`).
+   * Kept as `attrs`: the migration sheds `attributes` and `reputation` from
+   * every save, the old line's sheet and its standing, so neither name is free.
+   */
+  attrs?: Attributes;
+  /** Their working life as an actor: representation, auditions, jobs, the unions (`systems/career.ts`). */
+  career?: CareerRecord;
+  /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
+  earnings?: EarningsRecord;
+  /** Health cover after school: the unions' plans and the marketplace (`systems/health.ts`). */
+  health?: HealthRecord;
+  /** Unemployment insurance claims (`systems/unemployment.ts`). */
+  unemployment?: UnemploymentRecord;
+  /** Income tax returns, by year (`systems/taxreturn.ts`). */
+  returns?: Record<string, TaxReturn>;
+  /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
+  family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */
-  fraud?: { transactionId?: string; accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
+  fraud?: { accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 
   wellbeing: Wellbeing;
 
@@ -227,8 +264,10 @@ export interface Person {
    * name, a country or a city.
    *
    * It carries no attribute, no skill, no advantage and no penalty. Nothing in
-   * the simulation reads it, and nothing should: it is on the character sheet
+   * the simulation reads it, and nothing should: the person look says it
    * because a person has one, not because the game does anything with it.
+   * Until 2026-09-27 this said it was on the character sheet, and no screen
+   * showed it after creation.
    */
   raceEthnicity?: readonly string[];
   /** Said in their own words, where the list did not have it. */
@@ -276,20 +315,21 @@ export interface Notification {
   importance: number;
 }
 
+/**
+ * What the player has set. Until 2026-09-27 six more were kept here, sound on
+ * and its volume, compact mode, advanced numbers and a confirmation for large
+ * purchases with its threshold, and nothing read any of them: there is no
+ * sound, no settings screen and no confirmation. A save from before keeps
+ * them, unread, as it keeps any key SLATE no longer knows.
+ */
 export interface Preferences {
   reducedMotion: boolean;
-  audioEnabled: boolean;
-  audioVolume: number;
   /**
    * How fast the world runs against real time. 'live' is one to one: a minute
    * of your evening is a minute of theirs. The faster settings are there for
    * waiting something out, not because the game needs them.
    */
   timeSpeed: 'paused' | 'live' | 'fast' | 'faster';
-  compactMode: boolean;
-  showAdvancedNumbers: boolean;
-  confirmLargePurchases: boolean;
-  largePurchaseThreshold: Money;
 }
 
 /**
@@ -338,7 +378,6 @@ export interface SaveMeta {
   slot: 1 | 2 | 3;
   schemaVersion: number;
   createdAt: number;
-  lastPlayedAt: number;
   /** Accumulated real seconds of play. */
   playtimeSeconds: number;
   /** Deterministic seed for the whole universe. */
@@ -353,9 +392,6 @@ export interface SaveMeta {
   locationLabel: string;
   worldDateLabel: string;
   netWorthLabel: string;
-  /** Set while a migration is mid-flight, for recovery. */
-  migrationInProgress?: { from: number; to: number; startedAt: number };
-  backupAvailable: boolean;
   appVersion: string;
   /**
    * The currency this save's money is kept in: the one where the character
@@ -391,7 +427,7 @@ export interface SaveUniverse {
 
   /** The one canonical world instant. */
   now: Instant;
-  /** Zone used for the player's day-to-day display. */
+  /** Zone of the player's home: the day turns over on its clock, and it follows a move (`rehome`). */
   homeZone: TimeZone;
   /** Zone the player is physically in right now. */
   currentZone: TimeZone;
@@ -417,7 +453,6 @@ export interface SaveUniverse {
   tutorial?: { read: string[] };
 
   /** Idempotency keys already applied, mapped to their recorded result. */
-  idempotency: Record<string, { at: Instant; result: unknown }>;
 
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;

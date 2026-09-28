@@ -9,14 +9,13 @@
 import { holidaysAcross, type Calendar, type KeptHoliday } from '../content/holidays';
 import type { Simulation } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
-import type { Id } from '../domain/model';
 import {
   addDays, dateKey, daysInMonth, instantFromZoned, seasonOf,
   startOfDay, startOfNextDay, zonedParts, type Instant, type Season, MS_DAY, MS_MINUTE,
 } from '../core/time';
 import { CITIES } from '../content/geography';
 
-export type CalendarCategory = 'personal' | 'home' | 'holiday' | 'system';
+export type CalendarCategory = 'personal' | 'school' | 'career' | 'home' | 'holiday' | 'system';
 
 export interface CalendarLegendEntry {
   category: CalendarCategory;
@@ -35,6 +34,8 @@ export interface CalendarLegendEntry {
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Time that’s yours.' },
+  { category: 'school', label: 'School', colour: '#6b8ca8', description: 'Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s evaluation, the showcase and Commencement.' },
+  { category: 'career', label: 'Work', colour: '#c9a14a', description: 'Auditions, self-tapes, the days of a job you’ve taken, its travel and paydays, residuals and the unions’ dues.' },
   { category: 'home', label: 'Home', colour: '#8ca86b', description: 'Rent and bills on the first, and the card’s statement and payment.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
@@ -53,8 +54,9 @@ export interface CalendarEntry {
   requiresPlayer: boolean;
   locationId?: string;
   status: ScheduledItem['status'] | 'observance';
-  refType?: string;
-  refId?: Id;
+  /** When it went on the calendar, and when it was done, missed or called off: the entry look says both. */
+  bookedAt?: Instant;
+  settledAt?: Instant;
   durationMinutes?: number;
   /** True when this entry conflicts with another commitment. */
   conflicted?: boolean;
@@ -91,8 +93,8 @@ function toEntry(item: ScheduledItem): CalendarEntry {
     requiresPlayer: item.requiresPlayer ?? false,
     locationId: item.locationId,
     status: item.status,
-    refType: item.refType,
-    refId: item.refId,
+    bookedAt: item.createdAt,
+    settledAt: item.resolvedAt,
     durationMinutes: item.durationMinutes,
   };
 }
@@ -262,26 +264,4 @@ export function missedBy(sim: Simulation, at: Instant): CalendarEntry[] {
 /** Whether a proposed commitment collides with anything already booked. */
 export function checkConflicts(sim: Simulation, at: Instant, durationMinutes: number): CalendarEntry[] {
   return sim.timeline.conflicts(at, durationMinutes).map(toEntry);
-}
-
-/** Free windows in a day, for scheduling UIs that suggest times. */
-export function freeWindows(sim: Simulation, day: Instant, opts: { fromHour?: number; toHour?: number } = {}): { start: Instant; end: Instant }[] {
-  const zone = sim.homeZone;
-  const parts = zonedParts(day, zone);
-  const from = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: opts.fromHour ?? 8 }, zone);
-  const to = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: opts.toHour ?? 22 }, zone);
-
-  const busy = sim.timeline
-    .between(from, to, (i) => i.requiresPlayer === true)
-    .map((i) => ({ start: i.at, end: i.at + (i.durationMinutes ?? 60) * MS_MINUTE }))
-    .sort((a, b) => a.start - b.start);
-
-  const windows: { start: Instant; end: Instant }[] = [];
-  let cursor = from;
-  for (const block of busy) {
-    if (block.start > cursor + 30 * MS_MINUTE) windows.push({ start: cursor, end: block.start });
-    cursor = Math.max(cursor, block.end);
-  }
-  if (to > cursor + 30 * MS_MINUTE) windows.push({ start: cursor, end: to });
-  return windows;
 }

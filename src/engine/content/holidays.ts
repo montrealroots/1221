@@ -44,11 +44,6 @@ export function isHolidaysLoaded(countryId: string): boolean {
   return loaded.has(countryId);
 }
 
-/** Whether SLATE has a holiday file for this country at all. */
-export function hasHolidayFile(countryId: string): boolean {
-  return !!HOLIDAY_FILES[countryId];
-}
-
 /**
  * Adds one country's holidays from its tab-delimited file. Lines starting
  * with "# " name the subdivisions the file knows. The fetch below uses this;

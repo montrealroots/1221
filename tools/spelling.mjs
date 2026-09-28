@@ -92,7 +92,7 @@ const REAL_NAMES = [
   // company, not a color.
   'Grey Dog Software',
   'Southbank Centre', 'Sydney Theatre', 'Abbey Theatre', 'Lyric Theatre', 'Apollo Theatre',
-  'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre',
+  'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre', 'Yale Repertory Theatre',
   // Retail chains that spell themselves that way.
   'Text Book Centre', 'Home Centre', 'Centrepoint', 'Community Care Centre',
   // Cinema chains and classification bodies that spell themselves that way.
@@ -255,7 +255,7 @@ function outsideInterpolations(line, start, end) {
 /**
  * A word in a comment that is really an identifier.
  *
- * Doc comments name real code — `COLOURS`, `wardrobe.colour`, `NEIGHBOURHOODS`
+ * Doc comments name real code — `COLOURS`, `wardrobe.colour`, `favourite_colour`
  * — and rewriting those makes the documentation describe something that does
  * not exist. Anything in backticks, anything touching a dot or an underscore,
  * and anything in SHOUTING case is left alone.
