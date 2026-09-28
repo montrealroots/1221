@@ -30,7 +30,8 @@ import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '..
 import { ORIENTATION_2026, YALE_DRAMA } from '../content/school';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
 
-export const APP_VERSION = '1.1.0';
+import { APP_VERSION } from '../version';
+export { APP_VERSION };
 
 // ---------------------------------------------------------------------------
 // Character creation input
