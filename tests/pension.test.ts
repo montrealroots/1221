@@ -10,7 +10,7 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { earningsOf } from '@/engine/systems/earnings';
-import { PENSION_KIND, SAG_PENSION, armPension, pensionAge, pensionOf } from '@/engine/systems/pension';
+import { PENSION_KIND, SAG_PENSION, armPension, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
 
 const life = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
 /** Covered earnings, a year at a time, in the years before now. */
@@ -61,5 +61,42 @@ describe('the Plan', () => {
     expect(Math.max(...paid()[0]!.postings.map((x) => x.amount))).toBe(Math.round(pensionOf(sim, sim.player).yearly / 12));
     sim.advanceBy(31 * MS_DAY);
     expect(paid()).toHaveLength(2);
+  });
+});
+
+describe('the Plan’s finer rules', () => {
+  it('counts a production’s earnings to its ceiling, and a year before the breakdown whole', () => {
+    const sim = life('pension-ceiling');
+    const years = earningsOf(sim.player).years;
+    years['2024'] = { acting: 300_000_00, residuals: 0, sag: 300_000_00, sagByProject: { 'A Studio Film': 300_000_00 }, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} } as never;
+    expect(pensionOf(sim, sim.player).years[0]!.earnings).toBe(SAG_PENSION.projectCeiling);
+    delete (years['2024'] as unknown as { sagByProject?: unknown }).sagByProject;
+    expect(pensionOf(sim, sim.player).years[0]!.earnings).toBe(300_000_00);
+  });
+
+  it('starts early from 55 with ten credits, a quarter of a percent less a month under 65, and pays it onto the return', () => {
+    const sim = life('pension-early-start');
+    const ten = Object.fromEntries(Array.from({ length: 10 }, (_, n) => [2015 + n, 30_000_00]));
+    earned(sim, ten);
+    // Fifty-four: too young.
+    sim.player.birthInstant = sim.now - Math.round(54.5 * 365.2425 * MS_DAY);
+    expect(earlyRefusal(sim, sim.player)).toMatch(/at the earliest/);
+    // Sixty exactly: five years early, sixty months, 15% less.
+    sim.player.birthInstant = sim.now - Math.round(60 * 365.2425 * MS_DAY) - 2 * MS_DAY;
+    expect(earlyRefusal(sim, sim.player)).toBeUndefined();
+    const { factor } = sim.must<{ factor: number }>({ kind: 'pension.start', payload: {} });
+    expect(factor).toBeCloseTo(1 - 60 * SAG_PENSION.earlyPerMonth, 6);
+    sim.advanceBy(2 * MS_DAY);
+    const month = Math.round((pensionOf(sim, sim.player).yearly * factor) / 12);
+    const paid = sim.universe.transactions.filter((t) => t.memo === 'SAG-Producers Pension Plan, the month');
+    expect(paid).toHaveLength(1);
+    expect(Math.max(...paid[0]!.postings.map((x) => x.amount))).toBe(month);
+    expect(earningsOf(sim.player).years[String(new Date(sim.now).getUTCFullYear())]!.pension).toBe(month);
+    expect(sim.execute({ kind: 'pension.start', payload: {} }).ok).toBe(false);
+    // Nine credits: not early.
+    const nine = life('pension-nine');
+    earned(nine, Object.fromEntries(Array.from({ length: 9 }, (_, n) => [2016 + n, 30_000_00])));
+    nine.player.birthInstant = nine.now - Math.round(60 * 365.2425 * MS_DAY);
+    expect(earlyRefusal(nine, nine.player)).toMatch(/10 Pension Credits/);
   });
 });

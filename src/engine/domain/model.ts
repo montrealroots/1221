@@ -193,6 +193,8 @@ export interface Person {
   career?: CareerRecord;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
   earnings?: EarningsRecord;
+  /** A SAG-AFTRA pension begun: when, and what an early start leaves of it (`systems/pension.ts`). */
+  pensionStart?: { at: number; factor: number };
   /** Health cover after school: the unions' plans and the marketplace (`systems/health.ts`). */
   health?: HealthRecord;
   /** Unemployment insurance claims (`systems/unemployment.ts`). */

@@ -22,7 +22,7 @@ import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
-import { SAG_PENSION, pensionAge, pensionOf } from '@/engine/systems/pension';
+import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -407,7 +407,7 @@ function WorkPane() {
 
 /** The unions, the dues, and the year's wages and what came off them. */
 function UnionsPane() {
-  const { sim } = useGame();
+  const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const career: CareerRecord = careerOf(person);
   const cur = saveCurrency(sim.universe);
@@ -423,7 +423,7 @@ function UnionsPane() {
   return (
     <div className="col gap-5">
       {pension.years.length > 0 && (
-        <Panel title="SAG-AFTRA Pension" subtitle="The SAG-Producers Pension Plan, payable from 65">
+        <Panel title="SAG-AFTRA Pension" subtitle={person.pensionStart ? `Begun ${formatDate(person.pensionStart.at, sim.zone)}${person.pensionStart.factor < 1 ? `, early, at ${Math.round(person.pensionStart.factor * 100)}% of the full pension` : ''}` : 'The SAG-Producers Pension Plan, payable from 65'} actions={earlyRefusal(sim, person) ? undefined : <Gated feature="pension.start" onClick={() => { const r = run<{ factor: number }>('pension.start'); if (r.ok) toast(`Your pension begins, at ${Math.round(r.value!.factor * 100)}% of the full pension.`, 'positive'); }}>Start Your Pension Early</Gated>}>
           <div className="col gap-3">
             <div className="grid grid-3">
               <Stat label="Pension Credits" value={String(pension.credits)} note={`A year of ${dollars(SAG_PENSION.creditEarnings)} in covered earnings is one`} />

@@ -24,6 +24,10 @@ export interface YearEarnings {
   scholarship?: Money;
   /** Interest the bank paid, before any tax taken at source: a 1099-INT's, taxable, with no payroll tax. */
   interest?: Money;
+  /** A pension paid: a 1099-R's, taxable, with no payroll tax (`systems/pension.ts`). */
+  pension?: Money;
+  /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
+  sagByProject?: Record<string, Money>;
   withheld: Money;
   /** What the job cost: the agency's and the manager's commission, and the unions' dues. */
   commission: Money;
@@ -112,7 +116,10 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   if (pay.workStudy) y.workStudy += pay.gross;
   else y.acting += pay.gross;
   if (pay.residual) y.residuals += pay.gross;
-  if (pay.sag) y.sag += pay.gross;
+  if (pay.sag) {
+    y.sag += pay.gross;
+    if (pay.employer && !pay.residual) (y.sagByProject ??= {})[pay.employer] = (y.sagByProject[pay.employer] ?? 0) + pay.gross;
+  }
   y.withheld += pay.withheld ?? 0;
   y.commission += pay.commission ?? 0;
   y.dues += pay.dues ?? 0;
@@ -147,6 +154,17 @@ export function recordInterest(person: Person, at: Instant, zone: string, amount
   const p = zonedParts(at, zone);
   const y = yearOf(person, p.year);
   y.interest = (y.interest ?? 0) + amount;
+  const home = homeOf(person);
+  y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
+  const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
+  earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+}
+
+/** A pension paid, to the year it's paid and where they lived: income for the return, and the month's. */
+export function recordPension(person: Person, at: Instant, zone: string, amount: Money): void {
+  const p = zonedParts(at, zone);
+  const y = yearOf(person, p.year);
+  y.pension = (y.pension ?? 0) + amount;
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;

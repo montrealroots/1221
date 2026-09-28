@@ -388,10 +388,12 @@ part the tool cannot see.
   earnings at the minimum, vests at ten credits or five without a break, and
   pays monthly from 65, as the Plan's pages say. The minimum is held at the
   Plan's 2012 figure, $20,000, and a year adds 2% of its earnings, the Plan's
-  own example; the current figures weren't found in a form to read. The
-  Activity Test for five-year vesting, the per-episode and per-project
-  earnings ceilings and early retirement aren't modeled, and the pension
-  isn't on the year's tax return yet. An older save's pension fund from the
+  own example; the current figures weren't found in a form to read. A
+  production counts to the Plan's $232,000 ceiling, an early start from 55
+  with ten credits is a quarter of a percent less a month under 65, and the
+  pension is on the year's return, all as the Plan's pages say. The Activity
+  Test for five-year vesting and television's per-episode ceilings aren't
+  modeled. An older save's pension fund from the
   day job, which nothing moved from 2026-09-26, is paid out at 65.
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads

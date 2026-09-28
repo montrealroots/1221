@@ -116,6 +116,7 @@ function ReturnsPane() {
           ['Scholarship For Living Costs', f.scholarship ?? 0],
           ['Unemployment Insurance', f.unemployment],
           ['Interest', f.interest ?? 0],
+          ['Pension', f.pension ?? 0],
           ['Performing Artist Deduction', -f.deduction],
           ['Federal Income Tax', f.federal],
           ['Of It, The Credit For Another Country’s Tax', -(f.foreignCredit ?? 0)],
