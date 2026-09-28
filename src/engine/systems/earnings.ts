@@ -26,6 +26,20 @@ export interface YearEarnings {
   interest?: Money;
   /** A pension paid: a 1099-R's, taxable, with no payroll tax (`systems/pension.ts`). */
   pension?: Money;
+  /**
+   * What a home put on the year (`systems/homes.ts`), from 2026-09-28: the
+   * mortgage interest, the American property tax and the mortgage insurance
+   * paid on a home kept; the rent in and the costs and depreciation of a home
+   * let; and a sale's gain, long-term or short, and what was kept free of tax.
+   */
+  homeInterest?: Money;
+  homeTax?: Money;
+  homePmi?: Money;
+  rentalRent?: Money;
+  rentalCosts?: Money;
+  homeGain?: Money;
+  homeGainShort?: Money;
+  homeGainExcluded?: Money;
   /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
   sagByProject?: Record<string, Money>;
   withheld: Money;
@@ -169,6 +183,15 @@ export function recordPension(person: Person, at: Instant, zone: string, amount:
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+}
+
+export type HomeLine = 'homeInterest' | 'homeTax' | 'homePmi' | 'rentalRent' | 'rentalCosts' | 'homeGain' | 'homeGainShort' | 'homeGainExcluded';
+
+/** Something a home put on the year, to the year it happened. */
+export function recordHome(person: Person, at: Instant, zone: string, line: HomeLine, amount: Money): void {
+  if (amount === 0) return;
+  const y = yearOf(person, zonedParts(at, zone).year);
+  y[line] = (y[line] ?? 0) + amount;
 }
 
 /** A scholarship's taxable part, to the year it's paid and where they lived. */

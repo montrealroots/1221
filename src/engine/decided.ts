@@ -34,7 +34,7 @@ import { newLifeConfig } from './world/bootstrap';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
 import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
-import { listingsIn } from './systems/homes';
+import { listingsIn, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -536,4 +536,56 @@ defineDecider<{ sim: Simulation; cityId: string }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), cityId: HOME_TOWNS[seed % 3]! }),
   decide: ({ sim, cityId }) => listingsIn(sim, cityId).map((h) => `${h.type[0]}${h.beds}${h.size}${h.built}${h.features.length}${h.address.length}`).join(','),
+});
+
+/** A save that owns a house in New Haven, bought a while ago, for the homes' deciders to read. */
+function withHouse(sim: Simulation): OwnedHome {
+  const listing = listingsIn(sim, 'us-ct-newhaven').find((h) => h.type === 'house')!;
+  const owned: OwnedHome = {
+    id: 'home-1', listingId: listing.id, cityId: listing.cityId, facts: structuredClone({ ...listing }), boughtAt: sim.now, price: listing.value, closing: 0,
+    investment: false, improvements: [], works: [], owed: [], billedThrough: '2026-01', occupied: [{ from: sim.now }], tenancies: [], claims: [], depreciated: 0,
+  };
+  sim.player.homes = [owned];
+  return owned;
+}
+
+defineDecider<{ sim: Simulation; ratio: number; tries: number }, string>({
+  id: 'homes.market',
+  decides: 'How a seller answers an offer between the least they’d take and the asking price, and, for a home let, when a tenant is found, whether one renews and what damage one leaves.',
+  drawnIn: 'src/engine/systems/homes.ts',
+  reads: {
+    // How near the asking price the offer is.
+    ratio: (o, t) => ({ ...o, ratio: 0.9 + t * 0.1 }),
+    // Each offer is its own draw.
+    tries: (o, t) => ({ ...o, tries: Math.round(t * 40) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), ratio: 0.9 + (seed % 10) / 100, tries: seed }),
+  decide: ({ sim, ratio, tries }) => {
+    const listing = listingsIn(sim, 'us-ct-newhaven')[25]!;
+    return Array.from({ length: 20 }, (_, n) => sellerAnswer(sim, sim.player, listing, Math.round(listing.value * ratio), true, tries + n).answer[0]).join('');
+  },
+});
+
+defineDecider<{ sim: Simulation; wear: number; day: number }, string>({
+  id: 'homes.upkeep',
+  decides: 'Whether a worn part of a home fails on a day and what its repair costs, and whether a storm or a hard freeze damages it.',
+  drawnIn: 'src/engine/systems/homes.ts',
+  reads: {
+    // How worn the parts are: the older, the likelier to fail.
+    wear: (o, t) => ({ ...o, wear: t }),
+    // Each day is its own draw.
+    day: (o, t) => ({ ...o, day: Math.round(t * 300) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), wear: (seed % 5) / 4, day: seed * 7 }),
+  decide: ({ sim, wear, day }) => {
+    const s = sim;
+    const owned = withHouse(s);
+    const year = new Date(s.now).getUTCFullYear();
+    for (const part of Object.keys(owned.facts.parts) as (keyof typeof owned.facts.parts)[]) owned.facts.parts[part] = year - Math.round(wear * 40);
+    const out: string[] = [];
+    for (let n = 0; n < 60; n++) out.push(String(upkeepDay(s, s.player, owned, s.now + (day + n) * 86_400_000)));
+    return out.join(',');
+  },
 });

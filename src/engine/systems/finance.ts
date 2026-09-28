@@ -12,7 +12,7 @@ import type { Simulation } from '../core/simulation';
 import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
 import type { Id } from '../domain/model';
-import { homeValue } from './homes';
+import { homesValue } from './homes';
 
 export interface Worth {
   /** In the bank: every account of theirs but a deposit a landlord holds. */
@@ -25,7 +25,7 @@ export interface Worth {
    * keeps it, and nothing adds to it now.
    */
   pension: Money;
-  /** A home they own, at what it's worth now (`systems/homes.ts`); its mortgage is among the liabilities. From 2026-09-28. */
+  /** The homes they own, at what they're worth now (`systems/homes.ts`); the loans on them are among the liabilities. From 2026-09-28. */
   home: Money;
   liabilities: Money;
   total: Money;
@@ -50,7 +50,7 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
     else cash += account.balance;
   }
 
-  const owned = sim.universe.people[ownerId]?.owned;
-  const home = owned ? homeValue(sim, owned) : 0;
+  const person = sim.universe.people[ownerId];
+  const home = person ? homesValue(sim, person) : 0;
   return { cash, held, pension, home, liabilities, total: cash + held + pension + home - liabilities };
 }

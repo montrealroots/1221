@@ -354,6 +354,9 @@ button.link:hover { color: var(--accent-strong); }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }
+/* A row of figures: equal columns, each only as wide as a figure and its note
+   need, so a wide panel keeps them together instead of spreading them apart. */
+.stats { display: grid; gap: var(--s4) var(--s5); grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 200px)); }
 
 .chip {
   display: inline-flex; align-items: center; gap: var(--s1);

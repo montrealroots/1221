@@ -250,7 +250,7 @@ export interface Project {
   /** A lot at least this big, in square feet. */
   lot?: number;
   /** What it adds or changes. */
-  adds?: { features?: readonly Feature[]; drops?: readonly Feature[]; beds?: number; baths?: number; size?: number };
+  adds?: { gains?: readonly Feature[]; drops?: readonly Feature[]; beds?: number; baths?: number; size?: number };
   /** A cap: a bath added only while there are fewer baths than beds and one more, a bedroom only to this many. */
   bathsUpTo?: 'bedsPlusOne';
   bedsUpTo?: number;
@@ -273,7 +273,7 @@ export const PROJECTS: readonly Project[] = [
   { id: 'bath-accessible', label: 'Accessible Bathroom Remodel', usd: 41_000, recoup: 0.62, days: 30, renews: 'bath', on: ALL },
   // The shell, a house's own.
   { id: 'roof-asphalt', label: 'New Asphalt Roof', usd: 30_000, perSize: 2_000, recoup: 0.62, days: 5, renews: 'roof', on: HOUSES, adds: { drops: ['metalRoof'] } },
-  { id: 'roof-metal', label: 'New Metal Roof', usd: 50_000, perSize: 2_000, recoup: 0.52, days: 8, renews: 'roof', on: HOUSES, adds: { features: ['metalRoof'] } },
+  { id: 'roof-metal', label: 'New Metal Roof', usd: 50_000, perSize: 2_000, recoup: 0.52, days: 8, renews: 'roof', on: HOUSES, adds: { gains: ['metalRoof'] } },
   { id: 'windows-vinyl', label: 'Replace The Windows In Vinyl', usd: 21_500, perSize: 1_800, recoup: 0.72, days: 4, renews: 'windows', on: HOUSES },
   { id: 'windows-wood', label: 'Replace The Windows In Wood', usd: 26_500, perSize: 1_800, recoup: 0.66, days: 5, renews: 'windows', on: HOUSES },
   { id: 'siding-vinyl', label: 'New Vinyl Siding', usd: 17_500, perSize: 2_000, recoup: 0.9, days: 7, renews: 'siding', on: DETACHED },
@@ -281,30 +281,30 @@ export const PROJECTS: readonly Project[] = [
   { id: 'door-steel', label: 'New Steel Front Door', usd: 2_400, recoup: 1.5, days: 1, renews: 'door', on: HOUSES },
   { id: 'door-grand', label: 'Fiberglass Grand Entrance', usd: 11_500, recoup: 0.8, days: 3, renews: 'door', on: DETACHED },
   { id: 'garage-door', label: 'New Garage Door', usd: 4_600, recoup: 1.8, days: 1, renews: 'garageDoor', on: HOUSES, needs: ['garage'] },
-  { id: 'stone-veneer', label: 'Stone Veneer On The Front', usd: 11_500, recoup: 1.4, days: 7, on: DETACHED, lacks: ['stone'], adds: { features: ['stone'] } },
+  { id: 'stone-veneer', label: 'Stone Veneer On The Front', usd: 11_500, recoup: 1.4, days: 7, on: DETACHED, lacks: ['stone'], adds: { gains: ['stone'] } },
   // Heating and power.
-  { id: 'heat-pump', label: 'Swap The Furnace For A Heat Pump', usd: 19_000, recoup: 0.62, days: 5, renews: 'hvac', on: HOUSES, needs: ['furnace'], adds: { features: ['heatPump'], drops: ['furnace'] } },
+  { id: 'heat-pump', label: 'Swap The Furnace For A Heat Pump', usd: 19_000, recoup: 0.62, days: 5, renews: 'hvac', on: HOUSES, needs: ['furnace'], adds: { gains: ['heatPump'], drops: ['furnace'] } },
   { id: 'hvac', label: 'Replace The Heating And Cooling', usd: 12_000, recoup: 0.55, days: 3, renews: 'hvac', on: ALL, lacks: ['furnace'] },
   { id: 'furnace', label: 'Replace The Furnace', usd: 7_500, recoup: 0.55, days: 2, renews: 'hvac', on: HOUSES, needs: ['furnace'] },
-  { id: 'generator', label: 'Backup Generator', usd: 13_500, recoup: 0.9, days: 2, on: DETACHED, lacks: ['generator'], adds: { features: ['generator'] } },
-  { id: 'solar', label: 'Solar Panels And Batteries', usd: 55_000, recoup: 0.3, days: 4, on: DETACHED, lacks: ['solar'], adds: { features: ['solar'] } },
+  { id: 'generator', label: 'Backup Generator', usd: 13_500, recoup: 0.9, days: 2, on: DETACHED, lacks: ['generator'], adds: { gains: ['generator'] } },
+  { id: 'solar', label: 'Solar Panels And Batteries', usd: 55_000, recoup: 0.3, days: 4, on: DETACHED, lacks: ['solar'], adds: { gains: ['solar'] } },
   { id: 'solar-renew', label: 'Replace The Solar Panels', usd: 30_000, recoup: 0.3, days: 3, renews: 'solar', on: DETACHED, needs: ['solar'] },
   // Outside.
-  { id: 'deck-wood', label: 'Build A Wood Deck', usd: 18_000, recoup: 0.9, days: 10, on: HOUSES, needs: ['yard'], lacks: ['deck'], adds: { features: ['deck'] } },
-  { id: 'deck-composite', label: 'Build A Composite Deck', usd: 25_000, recoup: 0.85, days: 12, on: HOUSES, needs: ['yard'], lacks: ['deck'], adds: { features: ['deck'] } },
+  { id: 'deck-wood', label: 'Build A Wood Deck', usd: 18_000, recoup: 0.9, days: 10, on: HOUSES, needs: ['yard'], lacks: ['deck'], adds: { gains: ['deck'] } },
+  { id: 'deck-composite', label: 'Build A Composite Deck', usd: 25_000, recoup: 0.85, days: 12, on: HOUSES, needs: ['yard'], lacks: ['deck'], adds: { gains: ['deck'] } },
   { id: 'deck-renew', label: 'Rebuild The Deck', usd: 18_000, recoup: 0.8, days: 10, renews: 'deck', on: HOUSES, needs: ['deck'] },
-  { id: 'patio', label: 'Stone Patio And Outdoor Kitchen', usd: 51_000, recoup: 0.45, days: 21, on: DETACHED, needs: ['yard'], lacks: ['patio'], adds: { features: ['patio'] } },
-  { id: 'pool', label: 'Put In A Pool', usd: 65_000, recoup: 0.45, days: 60, on: DETACHED, needs: ['yard'], lacks: ['pool'], lot: 6_000, adds: { features: ['pool'] } },
+  { id: 'patio', label: 'Stone Patio And Outdoor Kitchen', usd: 51_000, recoup: 0.45, days: 21, on: DETACHED, needs: ['yard'], lacks: ['patio'], adds: { gains: ['patio'] } },
+  { id: 'pool', label: 'Put In A Pool', usd: 65_000, recoup: 0.45, days: 60, on: DETACHED, needs: ['yard'], lacks: ['pool'], lot: 6_000, adds: { gains: ['pool'] } },
   { id: 'pool-renew', label: 'Resurface And Re-Equip The Pool', usd: 20_000, recoup: 0.5, days: 14, renews: 'pool', on: DETACHED, needs: ['pool'] },
   // Room.
-  { id: 'basement', label: 'Finish The Basement', usd: 52_000, recoup: 0.72, days: 45, on: HOUSES, needs: ['basement'], adds: { features: ['finishedBasement'], drops: ['basement'], size: 600 } },
+  { id: 'basement', label: 'Finish The Basement', usd: 52_000, recoup: 0.72, days: 45, on: HOUSES, needs: ['basement'], adds: { gains: ['finishedBasement'], drops: ['basement'], size: 600 } },
   { id: 'attic', label: 'Turn The Attic Into A Bedroom', usd: 70_000, recoup: 0.55, days: 45, on: DETACHED, needs: ['attic'], adds: { drops: ['attic'], beds: 1, size: 300 }, bedsUpTo: 7 },
   { id: 'garage-room', label: 'Turn The Garage Into A Room', usd: 28_000, recoup: 0.5, days: 30, on: DETACHED, needs: ['garage'], adds: { drops: ['garage'], size: 250 } },
   { id: 'bath-add', label: 'Add A Bathroom', usd: 60_000, recoup: 0.52, days: 45, on: HOUSES, adds: { baths: 1, size: 48 }, bathsUpTo: 'bedsPlusOne' },
   { id: 'bath-add-upscale', label: 'Add A Primary Bathroom', usd: 110_000, recoup: 0.36, days: 60, on: DETACHED, adds: { baths: 1, size: 100 }, bathsUpTo: 'bedsPlusOne' },
   { id: 'suite', label: 'Add A Primary Suite', usd: 168_000, recoup: 0.34, days: 90, on: DETACHED, lot: 5_000, adds: { beds: 1, baths: 1, size: 384 }, bedsUpTo: 7 },
   { id: 'suite-upscale', label: 'Add An Upscale Primary Suite', usd: 345_000, recoup: 0.2, days: 120, on: DETACHED, lot: 7_000, adds: { beds: 1, baths: 1, size: 640 }, bedsUpTo: 8 },
-  { id: 'adu', label: 'Build A Backyard Cottage', usd: 162_000, recoup: 0.44, days: 150, on: DETACHED, needs: ['yard'], lacks: ['adu'], lot: 6_000, adds: { features: ['adu'] } },
+  { id: 'adu', label: 'Build A Backyard Cottage', usd: 162_000, recoup: 0.44, days: 150, on: DETACHED, needs: ['yard'], lacks: ['adu'], lot: 6_000, adds: { gains: ['adu'] } },
 ];
 
 /**
@@ -315,3 +315,80 @@ export const PROJECTS: readonly Project[] = [
  */
 export const OVERBUILT_AT = 0.5;
 export const OVERBUILT_RECOUP = 0.5;
+
+// ---------------------------------------------------------------------------
+// Letting
+
+/**
+ * A home's market rent from the town's one-bedroom, by its bedrooms: near
+ * the ratios HUD sets its Fair Market Rents by, from an efficiency at 0.87
+ * of a one-bedroom to a four-bedroom at 1.77, carried on at SLATE's estimate
+ * past four. A backyard cottage lets as a studio.
+ */
+export const BEDROOM_RENT: readonly number[] = [0.87, 1, 1.23, 1.56, 1.77, 1.95, 2.1, 2.25];
+
+// ---------------------------------------------------------------------------
+// England's council tax
+
+/**
+ * England's council tax, as the Local Government Finance Act 1992 has it:
+ * a home's band by what it would have sold for on 1 April 1991, each band a
+ * set share of Band D, 25% off for somebody who lives alone, and a year's
+ * bill in ten monthly instalments from April. Band D is the average England's
+ * councils set for 2025–26, £2,280, held. A home's 1991 value is SLATE's
+ * estimate: today's over how far English prices have risen since, near
+ * five times.
+ */
+export const COUNCIL_TAX = {
+  /** Upper edges of bands A to G, in pounds of 1991; H is above G. */
+  bands: [40_000, 52_000, 68_000, 88_000, 120_000, 160_000, 320_000] as const,
+  letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as const,
+  /** Each band's ninths of Band D. */
+  ninths: [6, 7, 8, 9, 11, 13, 15, 18] as const,
+  bandD: 2_280_00,
+  bandDYear: '2025–26',
+  since1991: 5.1,
+  livingAlone: 0.25,
+  instalments: 10,
+  /** A rented flat's band and a room's: SLATE's estimates, a one-bedroom in B, a shared flat in C split four ways. */
+  rentedBand: { own: 1, shared: 2 } as const,
+  sharedBy: 4,
+};
+
+// ---------------------------------------------------------------------------
+// A home on an American return
+
+/**
+ * What the federal return does with a home, as the law stands after the
+ * 2025 act: mortgage interest on up to $750,000 of what was borrowed to buy
+ * it; state and local taxes to a cap of $40,000 for 2025, a percent more
+ * each year to 2029 and $10,000 from 2030, cut by 30% of income over
+ * $500,000 (a percent more each year too) to no less than $10,000, and only
+ * an American home's property tax; mortgage insurance as interest from 2026;
+ * a home's gain free to $250,000 for somebody who owned it and lived in it
+ * two of the five years before the sale; long-term gains taxed at 0%, 15%
+ * and 20% on 2025's single brackets, held; 3.8% on investment income past
+ * $200,000; rent less its costs and a residential building's depreciation
+ * over 27.5 years, and a loss let against other income to $25,000, less half
+ * of income over $100,000, the rest carried forward. The building is 80% of
+ * what a home cost, SLATE's estimate of the land's share.
+ */
+export const HOME_TAX = {
+  acquisitionCap: 750_000_00,
+  saltCap: { 2025: 40_000_00, 2026: 40_400_00, 2027: 40_804_00, 2028: 41_212_00, 2029: 41_624_00 } as Readonly<Record<number, number>>,
+  saltFloor: 10_000_00,
+  saltPhaseFrom: { 2025: 500_000_00, 2026: 505_000_00, 2027: 510_050_00, 2028: 515_151_00, 2029: 520_302_00 } as Readonly<Record<number, number>>,
+  saltPhaseRate: 0.3,
+  pmiFrom: 2026,
+  exclusion: 250_000_00,
+  exclusionDays: 730,
+  exclusionWindowYears: 5,
+  ltcg: [[48_350_00, 0], [533_400_00, 0.15], [Number.POSITIVE_INFINITY, 0.2]] as const,
+  niitRate: 0.038,
+  niitFrom: 200_000_00,
+  depreciationYears: 27.5,
+  buildingShare: 0.8,
+  passiveAllowance: 25_000_00,
+  passivePhaseFrom: 100_000_00,
+  passivePhaseRate: 0.5,
+};

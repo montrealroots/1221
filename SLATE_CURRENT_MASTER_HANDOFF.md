@@ -14,6 +14,21 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Newest of all, 2026-09-28, later: "the full housing experience".** The owner asked for housing as full as everything else. Built on the homes of `d6dd351`, in one gated commit:
+>
+> - **The market turns over.** Each of a town's fifty places sells on its own one-to-four-month cycle and a new home comes on (decider `homes.listings` by slot and generation); a home unsold two months is cut 3%, at four 3% again.
+> - **Offers.** A price, a down payment, to live in or to let, with or without an inspection. The seller accepts, counters at halfway or refuses by how near the asking price it is, how long the home has sat and how hot the market is (`sellerFloor`, decider `homes.market`). 1% earnest money goes into escrow; the inspection's report (every part's age) comes on day five and the earnest comes back if called off by day ten; closing on day thirty, with a financing contingency.
+> - **Several homes.** `person.homes` replaced `owned` (`migrate` moves an old save's). A home not lived in is an investment: 15% down, 0.625% on the rate; a lender counts 75% of rent. Moving out or relocating leaves a home owned and empty; `home.move_in` moves back.
+> - **Letting** (`home.let`, `home.end_tenancy`): market rent by bedrooms (near HUD's ratios), a tenant found sooner nearer the market, a month's deposit held as a liability, rent on the first, renewals two in three at market or a move-out with damage kept from the deposit. A backyard cottage lets on its own.
+> - **Upkeep** (decider `homes.upkeep`): worn parts fail, likelier with the cube of wear; storms and gales damage worn roofs and hard freezes burst an empty home's pipes, read from the weather; insurance pays over a deductible, never wear, and a claim loads the premium for three years. Big work weighs on whoever lives there.
+> - **Borrowing** (`home.borrow`): a home equity loan to 80% of value less the mortgage, fifteen years.
+> - **Credit**: a mortgage paid on time adds to the record; thirty days late is reported.
+> - **Council tax** in England, by 1991 band from Band D's 2025–26 average, 25% off alone, ten instalments; renters pay it too.
+> - **The return** (`systems/taxreturn.ts`): itemizing when a home's interest (to $750,000 borrowed), property tax and state taxes (the 2025 act's cap and phase-down) and from 2026 mortgage insurance beat the standard deduction; rent less costs and 27.5-year depreciation, a loss only within the passive allowance, carried forward; a sale's gain with the $250,000 exclusion after two of five years, long-term at 0/15/20% plus the 3.8% investment tax.
+> - **Bills** of a home owned grow with its size; solar halves them and a pool adds its upkeep.
+>
+> The owner then asked for homes to be lived in: named kinds (apartment, townhouse, house, penthouse, mansion) with the fixtures of each (a shower, a kitchen to cook in, a bed, a washer and dryer where there's one), used every day, and the fixtures following where the home is. That is the next module, and after it a sweep of the whole game so nothing is decoration.
+>
 > **Newest of all, 2026-09-28: "Build it all".** The owner asked for the three things part B had left out. Each is its own gated commit.
 >
 > - **The pension, finished** (`1e38466`). A production counts to the Plan's $232,000 ceiling (`sagByProject`), a pension can start early from 55 with ten credits (`pension.start`, a quarter of a percent less a month under 65), and it goes on the return (`recordPension`).

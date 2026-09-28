@@ -397,6 +397,18 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
   }
 
+  // A home owned was `owned` on the day homes came in, 2026-09-28, and is the first of `homes` since.
+  for (const person of Object.values(universe.people)) {
+    const row = person as unknown as Record<string, unknown>;
+    const old = row.owned as (Record<string, unknown> & { owed?: unknown[] }) | undefined;
+    if (!old) continue;
+    const id = 'home-1';
+    person.homes = [{ investment: false, closing: 0, occupied: [{ from: Number(old.boughtAt) }], tenancies: [], claims: [], depreciated: 0, ...old, id } as unknown as NonNullable<typeof person.homes>[number]];
+    if (person.home?.kind === 'owned') person.home.homeId = id;
+    delete row.owned;
+    steps.push('Moved a home owned into the list of homes.');
+  }
+
   // Schema 73 took heritage, the parents' heritages, and the adult height and
   // weight off the character. Nothing ever read them after creation, so they
   // are dropped rather than carried: a save that keeps fields nothing reads

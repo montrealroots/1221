@@ -76,6 +76,8 @@ export interface HomeState {
   fedOn?: Instant;
   /** The end of a notice to pay or quit, while one stands. */
   noticeUntil?: Instant;
+  /** The home they own and live in (`systems/homes.ts`), where it's one of theirs. */
+  homeId?: string;
 }
 
 /** What a friend's sofa is, for the screens. */
@@ -97,6 +99,30 @@ export const HOUSING: Readonly<Record<Housing, { label: string; billsUsd: number
  * mortgage, the tax and the insurance are the homes system's.
  */
 export const OWNED = { label: 'A Home You Own', billsUsd: 250 };
+
+/**
+ * A home they own's bills grow with its size, from 1,500 square feet, at the
+ * seven-tenths power, since a bigger home is heated and lit more but not in
+ * proportion; solar panels halve them, and a pool's upkeep adds $120 a month.
+ * SLATE's estimates.
+ */
+const OWNED_BILLS = { size: 1_500, power: 0.7, solar: 0.5, poolUsd: 120 };
+function ownedBillsFactor(person: Person): { factor: number; poolUsd: number } {
+  const facts = person.homes?.find((h) => h.id === person.home?.homeId)?.facts;
+  if (!facts) return { factor: 1, poolUsd: 0 };
+  const factor = Math.pow(facts.size / OWNED_BILLS.size, OWNED_BILLS.power) * (facts.features.includes('solar') ? OWNED_BILLS.solar : 1);
+  return { factor, poolUsd: facts.features.includes('pool') ? OWNED_BILLS.poolUsd : 0 };
+}
+
+/**
+ * Leaves the home they own and live in: its time lived in ends, and it stands
+ * empty for them to let, sell or come back to. The home is theirs still.
+ */
+export function leaveOwnedHome(sim: Simulation, person: Person): void {
+  const owned = person.home?.kind === 'owned' ? person.homes?.find((h) => h.id === person.home?.homeId) : undefined;
+  const open = owned?.occupied.find((o) => o.to === undefined);
+  if (open) open.to = sim.now;
+}
 
 /** A day's groceries and a cooked meal, in US dollars at the American average cost of living. SLATE's estimates. */
 const DAY_OF_FOOD_USD = 8;
@@ -168,7 +194,9 @@ export function billsOf(sim: Simulation, person: Person): Money {
   if (!flat || !person.home) return flat;
   const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone);
   const billed = p.day === 1 ? (p.month === 1 ? 12 : p.month - 1) : p.month;
-  return Math.round(flat * billsFactor(person.home.cityId, billed));
+  if (person.home.kind !== 'owned') return Math.round(flat * billsFactor(person.home.cityId, billed));
+  const { factor, poolUsd } = ownedBillsFactor(person);
+  return Math.round(flat * factor * billsFactor(person.home.cityId, billed) + atTown(person.home.cityId, poolUsd, saveCurrency(sim.universe)));
 }
 
 /**
@@ -521,9 +549,6 @@ export function depositBack(sim: Simulation, person: Person): Money {
 export function moveRefusal(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): string | undefined {
   if (!checkingOf(sim, person)) return 'You don’t have an account to pay from.';
   if (person.home && person.home.kind === kind && person.home.cityId === where) return 'You live in one already.';
-  // A home owned is sold before renting (`home.sell` moves them when it closes); a purchase under way closes into the home bought.
-  if (person.owned) return 'You own your home: selling it moves you into a rented one.';
-  if (person.buying) return 'You’re buying a home: it closes on a day of its own.';
   // A new landlord asks the old one for a reference.
   if (person.home?.noticeUntil !== undefined) return 'There’s a notice to pay or quit on this place, and a new landlord asks this one for a reference: get what you owe under a month’s rent first.';
   const cost = moveCost(sim, person, kind, where);
@@ -567,6 +592,8 @@ export function move(sim: Simulation, person: Person, kind: Housing, where = per
     ],
   });
   const hadRent = sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
+  // Out of a home they own, it's left empty and theirs (`systems/homes.ts`).
+  leaveOwnedHome(sim, person);
   person.home = { kind, cityId: where, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
   // The first rent after the move is next month's: the rest of this one was paid moving in.
   if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
@@ -645,7 +672,7 @@ function landlord(sim: Simulation, person: Person): void {
 }
 
 /** A money trouble, and how much it comes to. */
-export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'card_behind' | 'medical' | 'collections' | 'tax' | 'return_late' | 'home'; amount: Money };
+export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'card_behind' | 'medical' | 'collections' | 'tax' | 'return_late' | 'home' | 'council'; amount: Money };
 
 /**
  * What money is weighing on somebody with today: owing the landlord, the
@@ -679,8 +706,11 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
     .reduce((sum, r) => sum + r.figures.balance + latePenalty(r.figures.balance, deadline(r.year), sim.now, cur), 0);
   if (late > 0) out.push({ kind: 'return_late', amount: late });
   // Payments owed on a home they own (`systems/homes.ts`), from 2026-09-28.
-  const onHome = (person.owned?.owed ?? []).reduce((sum, one) => sum + one.amount + (one.escrow ? one.escrow.tax + one.escrow.insurance + one.escrow.pmi : 0), 0);
+  const onHome = (person.homes ?? []).reduce((sum, h) => sum + h.owed.reduce((s, one) => s + one.amount + (one.escrow ? one.escrow.tax + one.escrow.insurance + one.escrow.pmi : 0), 0), 0);
   if (onHome > 0) out.push({ kind: 'home', amount: onHome });
+  // England's council tax a renter owes, from 2026-09-28.
+  const council = accountsOf(sim, person).filter((a) => a.category === 'council' && a.balance < 0).reduce((sum, a) => sum - a.balance, 0);
+  if (council > 0) out.push({ kind: 'council', amount: council });
   return out;
 }
 

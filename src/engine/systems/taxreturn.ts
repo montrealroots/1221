@@ -3,7 +3,10 @@
  *
  * Each February a year's return is ready for anybody the year left owing or
  * owed: its income (acting wages with residuals, work-study, unemployment),
- * less the performing artist deduction where the year qualifies; the tax on
+ * less the performing artist deduction where the year qualifies, and with a
+ * home's rent less its costs and a sale's short gain (`systems/homes.ts`),
+ * itemized where a home's interest and taxes beat the standard deduction,
+ * and a long-term gain taxed at its own rates; the tax on
  * it where they last lived, with California leaving unemployment out, and
  * payroll tax on the acting wages; the premium tax credit on the marketplace
  * months; California's penalty on the months without cover; and against it
@@ -19,7 +22,8 @@ import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
-import { computeAnnualTax } from '../content/tax';
+import { computeAnnualTax, federalStandardDeduction } from '../content/tax';
+import { HOME_TAX } from '../content/homes';
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
@@ -57,6 +61,14 @@ export interface ReturnFigures {
   interest?: Money;
   /** A pension paid. */
   pension?: Money;
+  /** Rent less its costs and depreciation, a loss only as far as it's allowed; a sale's gain taxed as income, and a long-term one; what was kept free. */
+  rental?: Money;
+  gainShort?: Money;
+  gainLong?: Money;
+  gainExcluded?: Money;
+  /** Itemized deductions, where they beat the standard one; the tax on a long-term gain and investment income. */
+  itemized?: Money;
+  gainTax?: Money;
   income: Money;
   deduction: Money;
   incomeTax: Money;
@@ -175,11 +187,53 @@ export function ukTaxOn(gross: Money, into: string): Money {
   return exchange(tax, 'GBP', into) ?? tax;
 }
 
+/** Income before a home's rent and gains, which the passive loss allowance reads. */
+const incomeBefore = (person: Person, year: number): Money => {
+  const y = yearOf(person, year);
+  return y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (y.interest ?? 0) + (y.pension ?? 0);
+};
+
+/**
+ * A year's rent less its costs as the return takes it: a profit less any loss
+ * carried from before; a loss only to $25,000 less half of income over
+ * $100,000, the rest carried forward to the next profit.
+ */
+export function rentalAllowed(person: Person, year: number, into = 'USD'): Money {
+  const years = Object.keys(earningsOf(person).years).map(Number).filter((y) => y <= year).sort((a, b) => a - b);
+  let carry = 0;
+  let allowed = 0;
+  for (const yr of years) {
+    const y = yearOf(person, yr);
+    const net = (y.rentalRent ?? 0) - (y.rentalCosts ?? 0);
+    if (net >= 0) {
+      const used = Math.min(carry, net);
+      carry -= used;
+      allowed = net - used;
+    } else {
+      const room = Math.max(0, usd(HOME_TAX.passiveAllowance, into) - HOME_TAX.passivePhaseRate * Math.max(0, incomeBefore(person, yr) - usd(HOME_TAX.passivePhaseFrom, into)));
+      allowed = -Math.round(Math.min(-net, room));
+      carry += -net + allowed;
+    }
+  }
+  return allowed;
+}
+
+/** The cap on state and local taxes a year: the 2025 act's, cut by 30% of income over its threshold, to $10,000. */
+export function saltCap(year: number, income: Money, into = 'USD'): Money {
+  const cap = HOME_TAX.saltCap[Math.max(2025, year)];
+  if (cap === undefined) return usd(HOME_TAX.saltFloor, into);
+  const from = HOME_TAX.saltPhaseFrom[Math.max(2025, year)]!;
+  return Math.max(usd(HOME_TAX.saltFloor, into), usd(cap, into) - Math.round(HOME_TAX.saltPhaseRate * Math.max(0, income - usd(from, into))));
+}
+
 export function figuresFor(person: Person, year: number, into = 'USD', filedAt?: Instant): ReturnFigures {
   const y = yearOf(person, year);
   const cityId = y.residence ?? person.currentLocationId;
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
-  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (y.interest ?? 0) + (y.pension ?? 0);
+  const rental = rentalAllowed(person, year, into);
+  const gainShort = y.homeGainShort ?? 0;
+  const gainLong = y.homeGain ?? 0;
+  const income = incomeBefore(person, year) + rental + gainShort;
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // Of the rest of the work's costs, the ones there's a receipt for.
   const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));
@@ -187,7 +241,6 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const performer = income <= usd(RETURN.performingArtistIncome, into) && employers >= RETURN.performingArtistEmployers && expenses > RETURN.performingArtistShare * y.acting;
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);
-  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into }).federal;
   // Work abroad: Canada's comes back under CAD 15,000 in the year, and over it a 216.1 return filed by 30 April gives back what's past its graduated tax; the UK's is settled after its own year. The US credits what stands, to its own tax on that income.
   let foreignIncome = 0;
   let foreignTax = 0;
@@ -212,21 +265,23 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
     foreignRefund += back;
     foreignTax += f.withheld - back;
   }
-  const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
-  const federal = federalBefore - foreignCredit;
   // Each state: what came while living there, and wages for work done there, over all of it.
   const states = new Map<string, { city: string; resident: Money; source: Money }>();
   const entry = (state: string, city: string) => { if (!states.has(state)) states.set(state, { city, resident: 0, source: 0 }); return states.get(state)!; };
   for (const [city, amount] of Object.entries(y.byResidence)) entry(stateOf(city), city).resident += amount;
   for (const [key, amount] of Object.entries(y.elsewhere)) { const city = key.split('>')[1]!; entry(stateOf(city), city).source += amount; }
   const lastState = stateOf(cityId);
+  // A home's rent and gains go to the state they lived in at the year's end, which taxes a long-term gain as income too.
+  const homeIncome = rental + gainShort + gainLong;
+  if (homeIncome !== 0) entry(lastState, cityId).resident += homeIncome;
+  const stateTaxed = Math.max(0, taxed + gainLong);
   // California doesn't tax unemployment, which goes to where they lived at the year's end.
   const benefitOut = (state: string) => (state === 'us-ca' && lastState === 'us-ca' ? y.unemployment : 0);
   // New York and California let the job's costs be itemized above 2% of income, where that beats the standard deduction.
-  const itemized = Math.max(0, expenses - STATE_DEDUCTIONS.floor * income);
+  const itemized = Math.max(0, expenses - STATE_DEDUCTIONS.floor * income) + (y.homeInterest ?? 0) + (y.homeTax ?? 0);
   const extra = (state: string) => Math.max(0, itemized - usd(STATE_DEDUCTIONS.standard[state] ?? Number.POSITIVE_INFINITY, into));
   const full = (state: string) => {
-    const base = Math.max(0, taxed - benefitOut(state));
+    const base = Math.max(0, stateTaxed - benefitOut(state));
     // Connecticut's own schedule; SLATE's tax table carries none for it.
     if (state === 'us-ct') return connecticutTax(base, into);
     return computeAnnualTax(base, states.get(state)!.city, at, { deductions: extra(state), currency: into }).regional;
@@ -234,7 +289,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const taxes = new Map<string, number>();
   for (const [state, part] of states) {
     const own = Math.max(0, part.resident + part.source - benefitOut(state));
-    let tax = taxed > 0 ? Math.round(full(state) * Math.min(1, own / Math.max(1, taxed - benefitOut(state)))) : 0;
+    let tax = stateTaxed > 0 ? Math.round(full(state) * Math.min(1, own / Math.max(1, stateTaxed - benefitOut(state)))) : 0;
     // Georgia leaves a nonresident's small wages alone.
     if (state === 'us-ga' && part.resident === 0 && part.source <= Math.min(usd(STATE_RETURN.georgiaExempt, into), STATE_RETURN.georgiaExemptShare * y.acting)) tax = 0;
     taxes.set(state, tax);
@@ -247,13 +302,33 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
     if (!states.has(lived) || !taxes.get(worked)) continue;
     const part = states.get(worked)!;
     const theirs = taxes.get(worked)! * (amount / Math.max(1, part.resident + part.source));
-    const ours = taxed > 0 ? full(lived) * (amount / taxed) : 0;
+    const ours = stateTaxed > 0 ? full(lived) * (amount / stateTaxed) : 0;
     credits.set(lived, (credits.get(lived) ?? 0) + Math.round(Math.min(theirs, ours)));
   }
   const stateLines = [...states.keys()].map((state) => ({ state, tax: taxes.get(state) ?? 0, credit: Math.min(taxes.get(state) ?? 0, credits.get(state) ?? 0) }));
   // A city's own tax, New York City's, only on what came while living in it.
   const local = taxed > 0 ? Object.entries(y.byResidence).reduce((sum, [city, amount]) => sum + Math.round(computeAnnualTax(taxed, city, at, { currency: into }).local * (amount / taxed)), 0) : 0;
-  const incomeTax = federal + stateLines.reduce((sum, l) => sum + l.tax - l.credit, 0) + local;
+  const stateAndLocal = stateLines.reduce((sum, l) => sum + l.tax - l.credit, 0) + local;
+  // Federal: itemized where a home's interest, its taxes and the state's to their cap, and from 2026 its mortgage insurance, beat the standard deduction.
+  const standard = usd(federalStandardDeduction(cityId, at), into);
+  const itemizedFederal = (y.homeInterest ?? 0) + Math.min(saltCap(year, income + gainLong, into), (y.homeTax ?? 0) + stateAndLocal) + (year >= HOME_TAX.pmiFrom ? y.homePmi ?? 0 : 0);
+  const itemizing = (y.homeInterest ?? 0) + (y.homeTax ?? 0) > 0 && itemizedFederal > standard;
+  const beyond = itemizing ? itemizedFederal - standard : 0;
+  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
+  // A long-term gain on top of the rest, at 0%, 15% and 20%; and 3.8% on investment income over $200,000.
+  const ordinary = Math.max(0, taxed - standard - beyond);
+  let gainTax = 0;
+  let from = 0;
+  for (const [upTo, rate] of HOME_TAX.ltcg) {
+    const edge = upTo === Number.POSITIVE_INFINITY ? upTo : usd(upTo, into);
+    gainTax += Math.max(0, Math.min(ordinary + gainLong, edge) - Math.max(ordinary, from)) * rate;
+    from = edge;
+  }
+  const investment = gainLong + gainShort + Math.max(0, rental) + (y.interest ?? 0);
+  gainTax = Math.round(gainTax + HOME_TAX.niitRate * Math.min(investment, Math.max(0, taxed + gainLong - usd(HOME_TAX.niitFrom, into))));
+  const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
+  const federal = federalBefore - foreignCredit + gainTax;
+  const incomeTax = federal + stateAndLocal;
   // Payroll tax is on the acting wages alone: a student's work-study and a benefit carry none.
   const payroll = computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;
   const premiums = person.health?.premiums[year] ?? [];
@@ -265,7 +340,8 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const months = person.health?.uncoveredInCalifornia[year] ?? 0;
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
-    cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0, income, deduction,
+    cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0,
+    rental, gainShort, gainLong, gainExcluded: y.homeGainExcluded ?? 0, itemized: itemizing ? itemizedFederal : 0, gainTax, income, deduction,
     incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit,
   };

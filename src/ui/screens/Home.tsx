@@ -64,7 +64,8 @@ export function Home() {
       else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
       else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
-      else if (t.kind === 'home') said.push(`You’re behind on your home, ${m(t.amount)} owed.`);
+      else if (t.kind === 'home') said.push(`You’re behind on your homes, ${m(t.amount)} owed.`);
+      else if (t.kind === 'council') said.push(`You owe ${m(t.amount)} of council tax.`);
       else said.push(`You owe ${m(t.amount)} of income tax.`);
     }
     if (clash) said.push('Two things on your calendar in the next month want you at once.');

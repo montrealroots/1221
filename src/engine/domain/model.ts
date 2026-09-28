@@ -15,7 +15,7 @@ import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
-import type { OwnedHome, Purchase } from '../systems/homes';
+import type { Counter, OwnedHome, Purchase } from '../systems/homes';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
@@ -155,9 +155,18 @@ export interface Person {
    * Given to every character from schema 89.
    */
   home?: HomeState;
-  /** A home they own, and one they're buying, until it closes (`systems/homes.ts`). From 2026-09-28. */
-  owned?: OwnedHome;
+  /**
+   * The homes they own, lived in, let or empty; the one they're buying, until
+   * it closes; a seller's counter standing; and offers made on each listing
+   * (`systems/homes.ts`). From 2026-09-28; `owned`, a single home, was the
+   * first day's, and `migrate` makes it the first of `homes`.
+   */
+  homes?: OwnedHome[];
   buying?: Purchase;
+  counter?: Counter;
+  offersMade?: Record<string, number>;
+  /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
+  exclusionUsedAt?: number;
   /** How many homes they've bought: England's first-time buyer's relief is for the first. */
   homesOwned?: number;
   /**

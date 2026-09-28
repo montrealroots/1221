@@ -431,6 +431,12 @@ export function salesTaxRate(cityId: string, at: number, category: string): numb
   return rule.rate;
 }
 
+/** The federal standard deduction where a town is, from the federal layer of its rules. */
+export function federalStandardDeduction(cityId: string, at: number): Money {
+  const path = jurisdictionPath(cityId);
+  return resolveIncomeTaxLayers(cityId, at).find((rule) => path.indexOf(rule.jurisdictionCode) === 0)?.standardDeduction ?? 0;
+}
+
 export function propertyTaxRate(cityId: string, at: number): number {
   return resolveRule(PROPERTY_TAX_RULES, cityId, at)?.rate ?? 0.011;
 }

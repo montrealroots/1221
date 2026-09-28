@@ -76,6 +76,20 @@ describe('navigation', () => {
 });
 
 describe('the whole interface', () => {
+  it('lays a row of figures out on the stats grid, never a flex row that sizes each by its note', () => {
+    // A flex row gives a figure with a long note a wide column and one without
+    // a narrow one, and the row reads as uneven: the owner saw it on the Homes
+    // screen on 2026-09-28. The grid classes give every figure an equal column.
+    for (const file of SOURCES.filter((f) => f.endsWith('.tsx'))) {
+      const lines = readFileSync(file, 'utf8').split('\n');
+      lines.forEach((line, n) => {
+        const opens = /<div className="row[ "]/.test(line);
+        const next = lines.slice(n + 1, n + 3).join(' ');
+        expect(opens && /^\s*(\{[^<]*)?<Stat\b/.test(lines[n + 1] ?? '') && /<Stat\b/.test(next), `${file}:${n + 1} lays stats out in a flex row`).toBe(false);
+      });
+    }
+  });
+
   it('has no emoji anywhere but the brand mark, and that only where it is the brand', () => {
     const weather = Object.values(WEATHER_EMOJI);
     for (const file of SOURCES) {

@@ -397,20 +397,22 @@ part the tool cannot see.
   Test for five-year vesting and television's per-episode ceilings aren't
   modeled. An older save's pension fund from the
   day job, which nothing moved from 2026-09-26, is paid out at 65.
-- **A home owned is partly SLATE's estimate, and some of what owning
-  does isn't there yet.** Since 2026-09-28 fifty homes in every town can be
-  bought, paid for, renovated and sold (`systems/homes.ts`). A US town's
-  typical value is Zillow's, and England's closing tax is its Stamp Duty
-  Land Tax; everything else a buyer pays is SLATE's estimate by country: the
-  rate, the down payment a lender takes, the closing and selling costs, a
-  foreign town's prices from its rent, and what each renovation costs and
-  returns. What owning doesn't do yet: the mortgage's interest and the
-  property tax aren't deducted on the return, and a sale's gain isn't taxed
-  (in America the first $250,000 of a home's gain is free of it); paying the
-  mortgage on time doesn't raise the credit record as the card does; a home
-  can't be let, so a backyard cottage adds value and no rent, and a move to
-  another city waits for the home to be sold; and every country's property
-  tax is a share of the value, where Britain's council tax goes by band.
+- **Homes are partly SLATE's estimate, and a few of the tax rules aren't
+  there.** Since 2026-09-28 homes are bought by offer, owned, let, kept up,
+  borrowed against and sold (`systems/homes.ts`). A US town's typical value
+  is Zillow's; England's Stamp Duty Land Tax and council tax bands, the
+  Homeowners Protection Act's mortgage insurance rule, the 2025 act's cap on
+  state and local taxes, the $750,000 interest cap, the $250,000 exclusion,
+  the long-term gain brackets and the passive loss allowance are law. The
+  rest is SLATE's estimate: rates, down payments and closing and selling
+  costs by country, a foreign town's prices from its rent, how sellers answer
+  offers and how long homes sit, what each renovation costs and returns, how
+  often parts fail and weather damages, and how tenants behave. Not modeled:
+  depreciation recaptured at up to 25% on a sale (the gain is all taxed as
+  long-term), a rental loss carried forward freed on the sale, a main home
+  let before it was lived in losing part of its exclusion, refinancing (the
+  rates don't move), and Scotland's and Wales's own council tax (their homes
+  pay a share of value).
 - **Most of the crafts are said back and nothing more.** Creation asks for
   them and the person look prints them. Since 2026-09-27 a day of work reads
   the genres, Voice Acting, and Film, Television, Theater and Travel
