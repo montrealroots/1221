@@ -85,7 +85,7 @@ import { endTerm, idleAccounts } from './accountlife';
 import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { homeOf } from './earnings';
-import { usBankHoliday } from '../content/usholidays';
+import { businessDay, businessDaysBetween as bankDaysBetween, daysOfAccount } from '../content/bankdays';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -472,22 +472,12 @@ export function chargeReturned(sim: Simulation, person: Person, short: Money): v
   const rule = bank?.returned;
   if (!current || !bank || !rule || short <= 0) return;
   if (rule.ifShortAtLeast !== undefined && short < inSaveMoney(sim, rule.ifShortAtLeast, bank.currency)) return;
-  if (current.returnedAt !== undefined && businessDaysBetween(sim, current.returnedAt, sim.now) < rule.gapDays) return;
+  const kept = daysOfAccount(current, person);
+  if (current.returnedAt !== undefined && bankDaysBetween(current.returnedAt, sim.now, kept.countryId, sim.homeZone, kept.regionId) < rule.gapDays) return;
   current.returnedAt = sim.now;
   charge(sim, current, inSaveMoney(sim, rule.fee, bank.currency), 'Returned payment fee', 'bank_fee', 'Bank Fees');
 }
 
-/** Monday-to-Friday days from one moment to another: only Canada's banks count them, for a returned payment's fee. */
-function businessDaysBetween(sim: Simulation, from: Instant, to: Instant): number {
-  let days = 0;
-  for (let at = addDays(from, 1, sim.homeZone); at <= to; at = addDays(at, 1, sim.homeZone)) {
-    const p = zonedParts(at, sim.homeZone);
-    const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
-    if (weekday !== 0 && weekday !== 6) days += 1;
-    if (days > 30) break;
-  }
-  return days;
-}
 
 /** A debit card purchase's fee, where the bank charges one and the age isn't spared. */
 export function chargeForPurchase(sim: Simulation, person: Person): void {
@@ -655,8 +645,9 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
   const today = dateKey(sim.now, sim.homeZone);
   const grace = terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0;
   const keep: { day: string; count: number }[] = [];
+  const kept = daysOfAccount(current, sim.universe.people[current.ownerId ?? '']);
   for (const one of list) {
-    if (!nextBusinessDayOver(one.day, today, bank.iso === 'US')) { keep.push(one); continue; }
+    if (!nextBusinessDayOver(one.day, today, kept)) { keep.push(one); continue; }
     if (current.balance >= -grace) continue;
     const month = today.slice(0, 7);
     if (current.itemsMonth !== month) { current.itemsMonth = month; current.itemsMonthCount = 0; }
@@ -674,18 +665,16 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
  * US bank a Federal Reserve holiday isn't one: the fees held over Thanksgiving
  * wait for the Friday. Until 2026-09-27 they came on the Thursday.
  */
-function nextBusinessDayOver(day: string, today: string, us: boolean): boolean {
-  return nextBusinessDay(day, us) < today;
+function nextBusinessDayOver(day: string, today: string, kept: { countryId: string; regionId?: string }): boolean {
+  return nextBusinessDay(day, kept.countryId, kept.regionId) < today;
 }
 
-/** The business day after a day, as its date key: a weekday, and at a US bank not a Federal Reserve holiday. */
-export function nextBusinessDay(day: string, us: boolean): string {
+/** The business day after a day, as its date key: a weekday the bank's country keeps no holiday on (`content/bankdays.ts`). */
+export function nextBusinessDay(day: string, countryId: string, regionId?: string): string {
   const [y, m, d] = day.split('-').map(Number) as [number, number, number];
-  for (let i = 1; i < 10; i += 1) {
-    const next = new Date(Date.UTC(y, m - 1, d + i));
-    const key = next.toISOString().slice(0, 10);
-    const weekday = next.getUTCDay();
-    if (weekday !== 0 && weekday !== 6 && !(us && usBankHoliday(key))) return key;
+  for (let i = 1; i < 15; i += 1) {
+    const key = new Date(Date.UTC(y, m - 1, d + i)).toISOString().slice(0, 10);
+    if (businessDay(countryId, key, regionId)) return key;
   }
   return day;
 }

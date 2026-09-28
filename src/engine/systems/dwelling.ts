@@ -259,11 +259,13 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
 /**
  * What a home's own machines add to the month's bills: an electric dryer's
  * 2.4 kWh a load (the DOE standard's 684 kWh over 283 cycles) and a washer's
- * motor's 0.23 kWh (the EIA's 69 kWh a year over ENERGY STAR's 295 loads), at
- * the 18.19 cents a kWh America's homes paid in 2026 (EIA), at the town's cost
- * of living. The hot water isn't counted.
+ * 2.3 kWh, its motor's 0.23 (the EIA's 69 kWh a year over ENERGY STAR's 295
+ * loads) and the hot water it draws, which ENERGY STAR puts at about 90% of
+ * a washer's energy; at the 18.19 cents a kWh America's homes paid in 2026
+ * (EIA), at the town's cost of living. Until 2026-09-28 the hot water wasn't
+ * counted. The water heated by gas is priced as if electric.
  */
-export const MACHINES = { washerUsd: 0.23 * 0.1819, dryerUsd: 2.4 * 0.1819 };
+export const MACHINES = { washerUsd: (0.23 / 0.1) * 0.1819, dryerUsd: 2.4 * 0.1819 };
 
 /** The month's machine loads, in dollars, billed with the month's bills on the first, then counted again. */
 export function machineUsd(person: Person): number {

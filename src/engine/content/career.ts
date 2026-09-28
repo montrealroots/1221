@@ -312,15 +312,16 @@ export const ROLES: readonly Role[] = [
     basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
-    // The 2025 Commercials Contracts' session fee, $822.30 from 1 April 2025 and $855.20 from 1 April 2026; the third year isn't published.
+    // The 2025 Commercials Contracts' session fee, $822.30 from 1 April 2025 and $855.20 from 1 April 2026; the third year's
+    // rate sheet isn't out, and its fee is the contract's ratified 3% raise on the second's.
     id: 'commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'sag',
-    steps: [['2025-04-01', 822_30], ['2026-04-01', 855_20]],
+    steps: [['2025-04-01', 822_30], ['2026-04-01', 855_20], ['2027-04-01', 880_86]],
     units: [1, 1], bar: 55, weight: 6, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, reads: READS.commercial,
     basis: 'day', after: { kind: 'commercial', voice: false }, source: COMMERCIALS,
   },
   {
     id: 'commercial-vo', label: 'A Commercial, Voice-Over', medium: 'voice', union: 'sag',
-    steps: [['2025-04-01', 618_30], ['2026-04-01', 643_00]],
+    steps: [['2025-04-01', 618_30], ['2026-04-01', 643_00], ['2027-04-01', 662_29]],
     units: [1, 1], bar: 55, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, reads: READS.voice,
     sessionHours: 2, after: { kind: 'commercial', voice: true }, source: COMMERCIALS,
   },
@@ -490,12 +491,16 @@ export const COMMERCIAL_RUN = { moreCycles: [0.45, 0.35, 0.2] as readonly number
  * California's seven-year cap, about six in practice; the option is taken
  * or dropped by about mid-June. Freshman network series have been renewed
  * about three in four times (2022–26, tallied); streaming renewed 44% of all
- * its series in 2025. A season's pay rises about 4% a season, built into the
+ * its series in 2025, and a new streaming series reached a second season 48%
+ * to 55% of the time each year from 2022 to 2025 (Luminate, "The Show Must Go
+ * Off", September 2026), which SLATE takes at the middle, 51.5%. Until
+ * 2026-09-28 a first season was renewed at the 44% of all of them. A
+ * season's pay rises about 4% a season, built into the
  * deal. A picked-up season begins about a year after the last began.
  */
 export const SERIES = {
   maxSeasons: 7,
-  renewal: { network: 0.75, svod: 0.44 },
+  renewal: { network: 0.75, svod: 0.44, svodFirst: 0.515 },
   raise: 0.04,
   optionMonth: 6,
   optionDay: 15,

@@ -25,6 +25,7 @@ import { citizenshipFor } from './domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits } from './systems/personality';
 
 import { CITIES, isCountryLoaded, loadCountryCities } from './content/geography';
+import { isHolidaysLoaded, loadCountryHolidays } from './content/holidays';
 
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
@@ -745,18 +746,21 @@ export interface ValidationReport {
  * reads it off the ids. Until 2026-09-26 only resuming did this, after the
  * save screen had already checked the save, so a life begun in a town
  * outside the bundled set (Pittsburgh, Annapolis) was refused as being in
- * an unknown location.
+ * an unknown location. Since 2026-09-28 it brings the same countries'
+ * holidays, which a bank there keeps as business days (`content/bankdays.ts`).
  */
-export async function loadPlacesFor(universe: SaveUniverse, load: (countryId: string) => Promise<number> = loadCountryCities): Promise<void> {
+export async function loadPlacesFor(universe: SaveUniverse, load: (countryId: string) => Promise<number> = loadCountryCities, holidays: (countryId: string) => Promise<number> = loadCountryHolidays): Promise<void> {
   const ids = new Set<string>();
+  const countries = new Set<string>();
   for (const person of Object.values(universe.people ?? {})) {
     for (const cityId of [person.currentLocationId, person.homeRegionId]) {
+      const countryId = cityId?.split('-')[0];
+      if (countryId && !isHolidaysLoaded(countryId)) countries.add(countryId);
       if (!cityId || CITIES.get(cityId)) continue;
-      const countryId = cityId.split('-')[0];
       if (countryId && !isCountryLoaded(countryId)) ids.add(countryId);
     }
   }
-  await Promise.all([...ids].map((id) => load(id).catch(() => 0)));
+  await Promise.all([...[...ids].map((id) => load(id).catch(() => 0)), ...[...countries].map((id) => holidays(id).catch(() => 0))]);
 }
 
 export function validateUniverse(universe: SaveUniverse): ValidationReport {

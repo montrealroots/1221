@@ -1633,7 +1633,7 @@ export function registerCareer(sim: Simulation): void {
     const role = roleById(prior.roleId);
     const life = career.residuals.find((r) => r.bookingId === prior.id);
     const season = (prior.season ?? 1) + 1;
-    const odds = life?.kind === 'network' ? SERIES.renewal.network : SERIES.renewal.svod;
+    const odds = life?.kind === 'network' ? SERIES.renewal.network : season === 2 ? SERIES.renewal.svodFirst : SERIES.renewal.svod;
     const picked = season <= SERIES.maxSeasons && renewed(s, person, prior.id, odds);
     if (!picked) {
       feel(person, 'canceled');

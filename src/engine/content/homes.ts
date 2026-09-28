@@ -477,7 +477,8 @@ export const GYM_LABEL: Readonly<Record<Gym, string>> = { none: 'No Gym', buildi
  * Japan from the Cabinet Office (dishwasher 27.7%, a dryer 49.9%, room air
  * conditioners 88.8%, March 2026); South Korea from Gallup Korea (24%, 46%,
  * 98%, 2025); Mexico from INEGI (washer 79.1%, air conditioning 23.4%, 2025);
- * Brazil from IBGE (washer 70.4%, 2024). What no survey counts is SLATE's
+ * Brazil from IBGE (washer 70.4%, 2024) and the IEA (air conditioning 16%,
+ * 2018; SLATE's estimate of 30% until 2026-09-28). What no survey counts is SLATE's
  * estimate: a bath beside the shower, a balcony, Britain's washer and air
  * conditioning, Iceland's whole row, and the rest where a figure is missing.
  */
@@ -496,7 +497,7 @@ const NORMS: Readonly<Record<string, { dishwasher: number; washer: number; dryer
   kr: { dishwasher: 0.24, washer: 0.98, dryer: 0.46, cooling: 0.98, bathtub: 0.5, balcony: 0.7 },
   is: { dishwasher: 0.7, washer: 0.95, dryer: 0.6, cooling: 0.01, bathtub: 0.6, balcony: 0.4 },
   mx: { dishwasher: 0.1, washer: 0.791, dryer: 0.15, cooling: 0.234, bathtub: 0.2, balcony: 0.3 },
-  br: { dishwasher: 0.1, washer: 0.704, dryer: 0.1, cooling: 0.3, bathtub: 0.1, balcony: 0.5 },
+  br: { dishwasher: 0.1, washer: 0.704, dryer: 0.1, cooling: 0.16, bathtub: 0.1, balcony: 0.5 },
 };
 const NORMS_DEFAULT = { dishwasher: 0.4, washer: 0.8, dryer: 0.2, cooling: 0.3, bathtub: 0.5, balcony: 0.4 };
 

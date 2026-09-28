@@ -20,6 +20,7 @@ import type { Account, LedgerTransaction } from '../core/ledger';
 import type { Money } from '../core/money';
 import { MS_DAY, type Instant } from '../core/time';
 import { PENDING } from '../content/pending';
+import { afterBusinessDays, daysOfAccount } from '../content/bankdays';
 
 /**
  * Business days a card payment stays pending before it posts: SLATE's
@@ -31,9 +32,6 @@ import { PENDING } from '../content/pending';
  */
 export const ESTIMATE_PENDING_DAYS = 2;
 
-/** Business days as calendar days, a week's five in seven. */
-const calendarDays = (business: number) => Math.ceil(business * 7 / 5);
-
 /** The business days a card payment on an account stays pending: SLATE's estimate, never past the most the bank says a hold lasts; and that most. */
 export function pendingDaysOf(account: Account): { days: number; most?: number } {
   const rules = account.bankId ? PENDING[account.bankId] : undefined;
@@ -44,7 +42,9 @@ export function pendingDaysOf(account: Account): { days: number; most?: number }
 /** A card payment just made: held against the available balance until it posts. */
 export function hold(sim: Simulation, txn: LedgerTransaction | undefined, account: Account): void {
   if (!txn) return;
-  txn.postsAt = sim.now + calendarDays(pendingDaysOf(account).days) * MS_DAY;
+  // Posted after the bank's business days, its weekends and holidays not counted (`content/bankdays.ts`); until 2026-09-28 a week's five in seven everywhere.
+  const days = daysOfAccount(account, sim.universe.people[account.ownerId ?? '']);
+  txn.postsAt = afterBusinessDays(sim.now, pendingDaysOf(account).days, days.countryId, sim.homeZone, days.regionId);
 }
 
 /** What's pending on an account, in the ledger's sense (a debit negative). */

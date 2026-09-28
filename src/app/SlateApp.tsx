@@ -46,6 +46,8 @@ export function SlateApp() {
       const seed = `${slot}-${config.firstName}${config.lastName}-${Date.now().toString(36)}`;
       // A life begun here begins with the guide.
       const sim = createSave(slot, seed, { ...config, tutorial: true });
+      // The home country's holidays, which its banks keep as business days.
+      await loadPlacesFor(sim.universe);
       refreshMeta(sim);
       await startup.adapter.save(sim.universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });

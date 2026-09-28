@@ -71,8 +71,8 @@ describe('a card reported lost, stolen or damaged', () => {
     expect(answer.fee).toBe(SECURITY['mx-bbva']!.replaceFeeDebit);
     expect(before - account.balance).toBe(answer.fee);
     expect(account.plastic!.stopped).toBe('lost');
-    // Seven business days, the bank not saying.
-    expect(answer.arrivesAt - sim.now).toBe(10 * MS_DAY);
+    // Seven business days, the bank not saying: from a Monday, the Wednesday of the week after.
+    expect(answer.arrivesAt - sim.now).toBe(9 * MS_DAY);
     expect(run(sim, 'card.report', { which: 'debit', why: 'lost' }).ok).toBe(false);
     sim.advanceTo(answer.arrivesAt + 1000);
     expect(account.plastic!.stopped).toBeUndefined();
@@ -83,7 +83,7 @@ describe('a card reported lost, stolen or damaged', () => {
     const us = lifeIn('us-ny-newyork', 'us-chase', 'sec-rush');
     const rush = us.must<{ arrivesAt: number; fee: number }>({ kind: 'card.report', payload: { which: 'debit', why: 'stolen', rush: true } });
     expect(rush.fee).toBe(15_00);
-    expect(rush.arrivesAt - us.now).toBe(3 * MS_DAY);
+    expect(rush.arrivesAt - us.now).toBe(2 * MS_DAY);
     const gb = lifeIn('uk-eng-london', 'gb-lloyds', 'sec-rush-gb');
     expect(run(gb, 'card.report', { which: 'debit', why: 'lost', rush: true }).error).toMatch(/no rush/);
     const es = lifeIn('es-md-madrid', 'es-santander', 'sec-stolen');

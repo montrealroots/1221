@@ -10,9 +10,15 @@
  *
  * The bills: of a month's bills, the energy part swings with the heating and
  * cooling the town's climate asks, and the rest (the phone, the internet,
- * getting about) doesn't. A year's total stays what it was; only when it is
- * paid moves, since degree days from a smooth climate normal undercount real
- * ones and would understate a year's energy if taken as dollars.
+ * getting about) doesn't. When it's paid follows the town's degree days. How
+ * much a year comes to doesn't, since degree days from a smooth climate
+ * normal miss real ones by too much to price (Los Angeles's normals give 1,025
+ * cooling degree days to ASHRAE's measured 373; Tokyo's 763 heating to 1,559).
+ * In the US the year is the state's instead (`content/energy-us.ts`): what its
+ * households spend on energy against the nation's, in place of the town's
+ * cost of living on that part. Until 2026-09-28 a Connecticut flat's energy
+ * came to what a Florida one's did, but for the cost of living; elsewhere it
+ * still does.
  *
  * The flu: its chance a year stays `CARE.flu`, and its weeks follow the town:
  * the coldest weeks where the coldest month is under 18 °C, the wettest where
@@ -23,6 +29,23 @@
 
 import { CITIES } from '../content/geography';
 import { normalFor } from '../content/climate';
+import { US_ENERGY_AVERAGE, US_ENERGY_BY_STATE } from '../content/energy-us';
+
+/**
+ * What a year's energy comes to in a town against SLATE's flat bills: in the
+ * US its state's household spending over the nation's, with the town's cost
+ * of living taken back off it, since the state's figure carries its prices;
+ * elsewhere one.
+ */
+/** A year of a town's bills against SLATE's flat figure: the rest as it is, the energy by `energyScale`. */
+export const energyYear = (cityId: string): number => (1 - ENERGY.share) + ENERGY.share * energyScale(cityId);
+
+export function energyScale(cityId: string): number {
+  const city = CITIES.get(cityId);
+  const state = city ? US_ENERGY_BY_STATE[city.parentId] : undefined;
+  if (!city || state === undefined || !city.costOfLivingIndex) return 1;
+  return (state / US_ENERGY_AVERAGE) * (100 / city.costOfLivingIndex);
+}
 
 /**
  * Energy on a household's bills, from the EIA's Residential Energy
@@ -110,12 +133,15 @@ export const COOLING_USE = { central: 1, units: 0.6, none: 0 } as const;
  */
 export function billsFactor(cityId: string, month: number, cooling: keyof typeof COOLING_USE = 'central'): number {
   const full = energyByMonth(cityId)[month - 1]!;
-  if (cooling === 'central') return (1 - ENERGY.share) + ENERGY.share * 12 * full;
+  // Against the year's bills, which carry the state's energy already (`energyYear`).
+  const scale = energyScale(cityId);
+  const year = energyYear(cityId);
+  if (cooling === 'central') return ((1 - ENERGY.share) + ENERGY.share * scale * 12 * full) / year;
   const { hdd, cdd } = degreeDays(cityId);
   const cddYear = cdd.reduce((a, b) => a + b, 0);
   const total = ENERGY.baseUsdPerYear + ENERGY.heatUsdPerHddC * hdd.reduce((a, b) => a + b, 0) + ENERGY.coolUsdPerCddC * cddYear;
   const coolPart = cddYear > 0 ? (ENERGY.coolUsdPerCddC * cddYear / total) * (cdd[month - 1]! / cddYear) : 0;
-  return (1 - ENERGY.share) + ENERGY.share * 12 * (full - coolPart * (1 - COOLING_USE[cooling]));
+  return ((1 - ENERGY.share) + ENERGY.share * scale * 12 * (full - coolPart * (1 - COOLING_USE[cooling]))) / year;
 }
 
 /** The share of a year's flu each week of the year carries in a town, fifty-two summing to one. */

@@ -19,6 +19,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import type { Bank } from '@/engine/content/banks';
+import { countryOfIso } from '@/engine/content/bankdays';
 import { SWITCHING } from '@/engine/content/banks-lending';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { END_WORDS } from '@/engine/systems/accountlife';
@@ -170,7 +171,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
         )}
         {(current?.pendingItems?.length ?? 0) > 0 && od?.kind === 'per_item' && (
           <p className="small">
-            {current!.pendingItems!.reduce((n, one) => n + one.count, 0)} overdraft {current!.pendingItems!.reduce((n, one) => n + one.count, 0) === 1 ? 'fee is' : 'fees are'} held, {formatMoney(inSaveMoney(sim, od.fee * current!.pendingItems!.reduce((n, one) => n + one.count, 0), bank.currency), cur)}: each comes off after the end of {dayWords(nextBusinessDay(current!.pendingItems![0]!.day, bank.iso === 'US'))} unless the account is back to {od.graceUpTo !== undefined ? `−${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur)}` : 'zero'} or better.
+            {current!.pendingItems!.reduce((n, one) => n + one.count, 0)} overdraft {current!.pendingItems!.reduce((n, one) => n + one.count, 0) === 1 ? 'fee is' : 'fees are'} held, {formatMoney(inSaveMoney(sim, od.fee * current!.pendingItems!.reduce((n, one) => n + one.count, 0), bank.currency), cur)}: each comes off after the end of {dayWords(nextBusinessDay(current!.pendingItems![0]!.day, countryOfIso(bank.iso)))} unless the account is back to {od.graceUpTo !== undefined ? `−${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur)}` : 'zero'} or better.
           </p>
         )}
         {Math.floor(current?.odAccrued ?? 0) > 0 && (

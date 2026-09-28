@@ -194,9 +194,11 @@ part the tool cannot see.
   - The bachelor's degree the MFA asks for is taken as read, and only the
     birth year is held to it.
   - A student ending the last term on concern or warning still takes the
-    degree: the Bulletin doesn't say what a last term short of its
-    standards does, and SLATE confers it on any standing short of
-    dismissal, which the Standing tab says.
+    degree, SLATE conferring it on any standing short of dismissal, which
+    the Standing tab says. The Bulletin (2026–27) sets no bar either: the
+    degree goes by the faculty's vote to those who complete the program,
+    and a warning not remedied in its time "may lead to dismissal". Whether
+    the faculty would vote it is SLATE's reading.
   - How often an understudy is sent on is SLATE's estimate; since
     2026-09-27 a night on call holds the evening on the calendar and is
     called off when not needed.
@@ -212,13 +214,16 @@ part the tool cannot see.
   stand-alone dental plans, medical prices grown by the index, Yale
   Health's own cost-sharing, Canada's tax on residuals and the UK's April
   tax year. What's still open:
-  - Unpublished: Off-Broadway's categories B and C and every 2027–28 rate;
-    the Commercials Contracts' third year; animation's 2026 rate; SAG-AFTRA's
-    2027 COBRA rate; New York City's exact 2026 benchmark premium;
-    California's 2026 flat penalty and standard deduction; the renewal rate
-    of freshman streaming series; how often meal penalties come and how long
-    a recurring arc runs. Each holds at its last published figure, or is
-    SLATE's estimate, and says so.
+  - Unpublished: Off-Broadway's categories B and C and every 2027–28 rate
+    (Equity keeps the rulebook behind its members' portal); animation's
+    rate from July 2026, the successor agreement's tables not yet out;
+    SAG-AFTRA's 2027 COBRA rate; New York City's exact 2026 benchmark
+    premium; California's 2026 flat penalty and standard deduction; how
+    often meal penalties come and how long a recurring arc runs. Each holds
+    at its last published figure, or is SLATE's estimate, and says so. Since
+    2026-09-28 the Commercials Contracts' third year is the contract's
+    ratified 3% on the second's, its rate sheet not yet out, and a new
+    streaming series is renewed at the middle of Luminate's 48% to 55%.
   - Abroad: Canada's section 216.1 return and the UK's payer-by-payer
     withholding and settlement are built (2026-09-27), with the tax of
     the province the work was done in (British Columbia's, Ontario's and
@@ -371,13 +376,21 @@ part the tool cannot see.
   and the flu comes in the town's cold weeks, or its wet ones where it's warm
   all year, keeping its 8.9% a year (Tamerius et al., 2013). Holidays that
   day too: the Federal Reserve's by a US bank's business days and
-  SAG-AFTRA's by a shoot (`content/usholidays.ts`). What's estimated: the
-  energy share of SLATE's bills and the degree-day rates outside the US. What
-  isn't modeled: a year's energy by the climate (a Reykjavík flat costs what a
-  Los Angeles one does in a year, only paid in other months), since the
-  climate normals are smooth and undercount degree days; air conditioning's
-  ownership by country; humidity; and other countries' holidays and a bank's
-  own, whose files are fetched at run time.
+  SAG-AFTRA's by a shoot (`content/usholidays.ts`), and since 2026-09-28
+  every other bank's by its country's and its customer's region's public
+  and bank holidays (`content/bankdays.ts`), from the holiday files a save
+  now loads with its places; a country whose file can't be fetched keeps
+  weekends only. Since that day a US town's year of energy is its state's
+  household spending against the nation's (the EIA's RECS 2020, Table
+  CE3.6.ST), and air conditioning's ownership by country is each home's
+  own (`content/homes.ts`), read by its bills. What's estimated: the
+  energy share of SLATE's bills and the degree-day rates outside the US.
+  What isn't modeled: a year's energy by the climate outside the US (a
+  Reykjavík flat costs what a Los Angeles one does in a year, only paid in
+  other months), since SLATE's climate normals miss measured degree days by
+  too much to price, Los Angeles's 1,025 cooling to ASHRAE's 373; and
+  humidity, which Minor et al. (2022) found shortens sleep at its highs and
+  more at its lows, but put no figure to.
 - **Some of the machinery is built and nothing in play uses it.** Found
   by the dead-word audit of 2026-09-27; what was plainly dead went that day
   (six preferences, `Booking.weeksPaid`, the rail's locked path, the
@@ -458,7 +471,8 @@ part the tool cannot see.
   weeks, how untidy a day makes a home and what a mess weighs, a rack drying
   overnight, what a gym builds over a workout at home, what's lost in a
   burglary or a fire, and how much less wall units cool than central air.
-  Not modeled: the hot water a washer heats.
+  Since 2026-09-28 a washer's load counts the hot water it draws, about 90%
+  of its energy (ENERGY STAR), priced as electricity whatever heats it.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
   it: nothing in the build produces an official result. It's a Base44 entity
   and a deployed function, so taking it out is a deployment and waits for the

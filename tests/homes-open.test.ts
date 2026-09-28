@@ -159,6 +159,8 @@ describe('what a home has inside', () => {
     sim.player.living = { clean: 0, dirty: 14, drying: [], tidy: 80 };
     doLaundry(sim, sim.player, sim.now);
     expect(machineUsd(sim.player)).toBeCloseTo(2 * (MACHINES.washerUsd + MACHINES.dryerUsd), 6);
+    // A wash is its motor and the hot water it draws, ten times the motor’s 0.23 kWh (ENERGY STAR’s 90%), at 18.19 cents.
+    expect(MACHINES.washerUsd).toBeCloseTo(2.3 * 0.1819, 6);
     const withLoads = billsOf(sim, sim.player);
     sim.player.living.loads = { washer: 0, dryer: 0 };
     expect(withLoads - billsOf(sim, sim.player)).toBeGreaterThan(0);

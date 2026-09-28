@@ -59,7 +59,7 @@ import { cardRoom } from './credit';
 import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
 import { CommandError } from '../core/simulation';
-import { billsFactor } from './seasons';
+import { billsFactor, energyYear } from './seasons';
 import { deadline, latePenalty } from './taxreturn';
 import { drawRental, homePlace, machineUsd, type RentedUnit } from './dwelling';
 import { emptyHomeIn, moveIntoOwned } from './homes';
@@ -179,7 +179,8 @@ export function costsAt(cityId: string, kind: HomeKind, currency: string, at: In
   return {
     rent,
     rentFigure,
-    bills: kind === 'sofa' ? 0 : atTown(cityId, kind === 'owned' ? OWNED.billsUsd : HOUSING[kind].billsUsd, currency),
+    // In the US the energy part is the state's year (`energyScale`), so creation shows what play charges.
+    bills: kind === 'sofa' ? 0 : Math.round(atTown(cityId, kind === 'owned' ? OWNED.billsUsd : HOUSING[kind].billsUsd, currency) * energyYear(cityId) / 100) * 100,
     day: Math.round(atTown(cityId, DAY_OF_FOOD_USD, currency) * tax),
     meal: Math.round(atTown(cityId, MEAL_USD, currency) * tax),
   };

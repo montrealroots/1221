@@ -39,6 +39,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
+import { afterBusinessDays, daysOfAccount } from '../content/bankdays';
 import { FRAUD_LAW, SECURITY } from '../content/security';
 import { cardOf } from './credit';
 import { accountNumber } from './banknumber';
@@ -56,8 +57,6 @@ export const ESTIMATE_REFUND_DAYS = 10;
 export const REPLACED_KIND = 'card.replaced';
 export const REFUND_KIND = 'bank.fraud_refund';
 
-/** Business days as calendar days, a week's five in seven. */
-const calendarDays = (business: number) => Math.ceil(business * 7 / 5);
 
 function currentOf(sim: Simulation, person: Person): Account | undefined {
   const account = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
@@ -124,7 +123,8 @@ function replace(sim: Simulation, account: Account, which: Which, why: NonNullab
   const rules = account.bankId ? SECURITY[account.bankId] : undefined;
   p.stopped = why;
   const days = rush ? rules?.rushDays ?? ESTIMATE_RUSH_DAYS : rules?.standardDays ?? ESTIMATE_DAYS;
-  p.replacementAt = sim.now + Math.max(1, calendarDays(days)) * MS_DAY;
+  const kept = daysOfAccount(account, sim.universe.people[account.ownerId ?? '']);
+  p.replacementAt = afterBusinessDays(sim.now, Math.max(1, days), kept.countryId, sim.homeZone, kept.regionId);
   sim.schedule({ at: p.replacementAt, kind: REPLACED_KIND, label: 'Your New Card Arrives', category: 'home', priority: 38, payload: { accountId: account.id, which } });
   return p.replacementAt;
 }
@@ -275,7 +275,8 @@ export function registerSecurity(sim: Simulation): void {
     const law = bank ? FRAUD_LAW[bank.iso] : undefined;
     one.reportedAt = s.now;
     one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY));
-    const refundAt = s.now + calendarDays(law?.refundDays ?? ESTIMATE_REFUND_DAYS) * MS_DAY;
+    const kept = daysOfAccount(account, person);
+    const refundAt = afterBusinessDays(s.now, law?.refundDays ?? ESTIMATE_REFUND_DAYS, kept.countryId, s.homeZone, kept.regionId);
     s.schedule({ at: refundAt, kind: REFUND_KIND, label: 'A Refund From The Bank', category: 'home', priority: 38, payload: { personId: person.id, index: Number(p.index) } });
     // The card it was used on is stopped and replaced, free.
     if (!account.plastic?.stopped) replace(s, account, one.which, 'fraud', false);
