@@ -68,6 +68,8 @@ describe('one student, one calendar', () => {
       sim.player.awakeSince = night.at - MS_HOUR;
       sim.player.currentLocationId = 'us-ct-newhaven';
       sim.advanceTo(night.at + 60_000);
+      // Sent on: the curtain, three hours later, played.
+      if (night.status === 'done') sim.advanceTo(Number(night.payload.perfAt) + 60_000);
     }
     const needed = onCall.filter((n) => n.status === 'done').length;
     expect(onCall.filter((n) => n.status === 'cancelled').length).toBe(onCall.length - needed);
@@ -445,7 +447,7 @@ describe('work-study', () => {
 });
 
 describe('casting', () => {
-  it('casts a first-year in good standing to understudy at Yale Rep in the first spring, beside the Carlotta Festival, on call at every performance', () => {
+  it('casts a first-year in good standing to understudy at Yale Rep in the first spring, beside the Carlotta Festival, on call at five every performance day, with a run-through', () => {
     const sim = life('seagull');
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const casting = sim.player.school!.rep!;
@@ -458,8 +460,13 @@ describe('casting', () => {
     expect(rehearsals.length).toBe(11);
     expect(rehearsals.every((c) => c.requiresPlayer)).toBe(true);
     expect(onCall.length).toBe(20);
-    // A night on call is held for the Rep: the calendar flags a clash with it.
-    expect(onCall.every((c) => c.requiresPlayer)).toBe(true);
+    // On call is a call at five, three hours before the curtain, and stops no clock: only a night sent on does.
+    expect(onCall.every((c) => !c.requiresPlayer && Number(c.payload.perfAt) - c.at === 3 * MS_HOUR)).toBe(true);
+    const through = calls.filter((c) => c.payload.call === 'runthrough');
+    expect(through).toHaveLength(1);
+    expect(through[0]!.requiresPlayer).toBe(true);
+    expect(zonedParts(through[0]!.at, zone)).toMatchObject({ hour: 14 });
+    expect(new Date(through[0]!.at).getUTCDay()).toBe(1);
   });
 
   it('doesn’t send a student out of good standing to Yale Rep, however good', () => {
@@ -560,16 +567,25 @@ describe('casting', () => {
     const cast = (seed: string) => {
       const sim = life(seed);
       sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
-      const night = pending(sim, CALL_KIND).find((c) => c.payload.call === 'oncall' && goesOn(sim, sim.player, c.at));
+      const night = pending(sim, CALL_KIND).find((c) => c.payload.call === 'oncall' && goesOn(sim, sim.player, Number(c.payload.perfAt)));
       return night ? { sim, night } : undefined;
     };
     const found = ['on-1', 'on-2', 'on-3', 'on-4', 'on-5', 'on-6', 'on-7', 'on-8', 'on-9'].map(cast).filter(Boolean);
     expect(found.length).toBeGreaterThanOrEqual(2);
     const { sim, night } = found[0]!;
     sim.advanceTo(night.at - 60_000);
+    sim.player.currentLocationId = 'us-ct-newhaven';
     const acting = sim.player.craft!.scene;
     sim.advanceTo(night.at + 60_000);
+    // Told at five, and the curtain is theirs, on the calendar.
+    expect(titled(sim, `You’re On Tonight As ${sim.player.school!.rep!.role}`)).toHaveLength(1);
+    const curtain = pending(sim, CALL_KIND).find((c) => c.payload.wentOn === true)!;
+    expect(curtain.at).toBe(Number(night.payload.perfAt));
+    expect(curtain.requiresPlayer).toBe(true);
+    sim.player.awakeSince = curtain.at - 8 * MS_HOUR;
+    sim.advanceTo(curtain.at + 60_000);
     expect(sim.player.school!.rep!.performed).toBe(1);
+    expect(sim.player.school!.rep!.nights).toBeDefined();
     expect(sim.player.craft!.scene).toBeGreaterThan(acting);
     expect(titled(sim, `You Went On As ${sim.player.school!.rep!.role}`)).toHaveLength(1);
     // On the résumé, once the term's casting is done with: the next term's.

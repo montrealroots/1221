@@ -58,7 +58,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
@@ -70,7 +70,7 @@ import { COMPANY_READ, NEW_PLAYS_READ, SHAKESPEARE_PLAYS, THESIS_PLAYS, unnamedP
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent } from './household';
 import { SHOWCASE_KIND, armSummerWork, beginCareer, bookShowcase } from './career';
-import { ATTRIBUTES, earn, nerves } from './attributes';
+import { ATTRIBUTES, earn, nerves, nudge } from './attributes';
 import { YALE_COST_GROWTH } from '../content/career';
 import { recordScholarship, recordWages, yearOf } from './earnings';
 import { computeAnnualTax } from '../content/tax';
@@ -205,10 +205,20 @@ export const ESTIMATE = {
    * last run's nights went, a point and a half a band. SLATE's estimate.
    */
   casting: { balance: { lead: -2, supporting: 0, featured: 2 } as Record<PartSize, number>, nights: 1.5 },
+  /**
+   * A night's reading (`nightOf`): readiness, a point of the part's craft
+   * above 65 worth a fortieth, and luck a fifth either side; under 0.7 an off
+   * night, under 0.95 solid, under 1.1 strong, past it remarkable. What a
+   * band does: a strong or remarkable night lifts morale, and a remarkable
+   * one the presence and, at the Rep, the reputation; an off night stings.
+   */
+  nights: { par: 65, perPoint: 40, luck: 0.4, off: 0.7, solid: 0.95, strong: 1.1, lift: 3, sting: 3, presence: 0.1, reputation: 0.3 },
   /** What a day's classes, a rehearsal, a performance and a shift take out of a body, in energy. */
   energy: { classes: 6, rehearsal: 8, performance: 10, shift: 4 },
   /** The chance, each performance, that an understudy goes on. */
   goesOn: 0.02,
+  /** How many hours before a performance an understudy on call hears whether they're on: at five for an eight o'clock curtain. */
+  onCallAhead: 3,
   /** Attendance under this, or growth under this share of the class's, is short of the program's requirements. */
   attendanceFloor: 0.9,
   growthFloor: 0.5,
@@ -447,11 +457,13 @@ export function admittedClass(sim: Simulation, person: Person): { classmates: Cl
   // A student's talent overall, and each skill around it: admits differ in both.
   const t = ESTIMATE.talent;
   const skills = (talent: number) => Object.fromEntries(SKILL_IDS.map((id) => [id, Math.round(Math.min(95, talent + t.spread * (rng.next() + rng.next() - 1)) * 10) / 10])) as Craft;
+  // Each family name once in a class: until 2026-09-28 they were drawn with repeats, and a class had three Okafors.
+  const families = [...FAMILY];
   const classmates = Array.from({ length: YALE_DRAMA.classSize - 1 }, (): Classmate => {
     const craft = skills(t.from + (t.to - t.from) * (rng.next() + rng.next()) / 2);
     const title = rng.next() < 0.5 ? 'actress' : 'actor';
     const given = title === 'actress' ? GIVEN_ACTRESS : GIVEN_ACTOR;
-    const name = `${given[Math.floor(rng.next() * given.length)]} ${FAMILY[Math.floor(rng.next() * FAMILY.length)]}`;
+    const name = `${given[Math.floor(rng.next() * given.length)]} ${families.splice(Math.floor(rng.next() * families.length), 1)[0]}`;
     const drive = Math.round((1 + ESTIMATE.driveSpread * (2 * rng.next() - 1)) * 1000) / 1000;
     return { name, craft, title, drive };
   });
@@ -964,6 +976,27 @@ export function rehearse(craft: Craft, focus: number): void {
 export const NIGHT_VALUE = { off: -1, solid: 0, strong: 1, remarkable: 2 } as const;
 export type Night = keyof typeof NIGHT_VALUE;
 
+/**
+ * How a night went (`school.night`): how ready they came and what nerves
+ * left of it, how the part sits on their craft, and the night's own luck.
+ * Played at an ordinary readiness, with the part's craft at 65, a night lands
+ * solid; rested and strong for it, strong or better. The bands and their
+ * edges are SLATE's estimate.
+ */
+export function nightOf(sim: Simulation, person: Person, key: string, level: number, ready: number): Night {
+  const n = ESTIMATE.nights;
+  const q = Math.min(1.2, ready) + (level - n.par) / n.perPoint + n.luck * (sim.rng('school.night', person.id, key).next() - 0.5);
+  return q < n.off ? 'off' : q < n.solid ? 'solid' : q < n.strong ? 'strong' : 'remarkable';
+}
+
+/** The director's note on a run, by how its nights went on average. */
+export function directorsNote(mean: number): string {
+  if (mean >= 1.25) return 'Remarkable work: you held the house night after night, and it’s been noticed.';
+  if (mean >= 0.5) return 'Strong, reliable work. The part was yours by the second night.';
+  if (mean >= -0.25) return 'Solid, sound nights. The next step is to risk more in them.';
+  return 'Uneven. Some nights got away from you: come in rested, and have the part in your body before the house does.';
+}
+
 /** A run's nights on average, by what each is worth. */
 export function nightsMean(nights: Partial<Record<Night, number>>): number {
   const all = Object.entries(nights) as [Night, number][];
@@ -981,14 +1014,13 @@ export function castScore(s: { craft: Craft; last?: LastWork }, reads: Partial<C
 
 /**
  * A production's parts given out: the best read first takes the biggest part
- * still open that's written for them, or any part left; past the parts, the
- * company.
+ * still open that's written for them; with none left for them, the company.
  */
 export function partsFor(students: readonly Student[], parts: readonly Part[], reads: Partial<Craft>): { s: Student; part: string; size: PartSize }[] {
   const open = [...parts];
   return [...students].sort((a, b) => castScore(b, reads) - castScore(a, reads)).map((s) => {
-    let k = open.findIndex((p) => p.for === 'either' || p.for === s.title);
-    if (k < 0 && open.length) k = 0;
+    const k = open.findIndex((p) => p.for === 'either' || p.for === s.title);
+    // No part written for them left: the company, not a part written for somebody else.
     if (k < 0) return { s, part: 'In The Company', size: 'featured' as const };
     const [p] = open.splice(k, 1);
     return { s, part: p!.name, size: p!.size };
@@ -1047,7 +1079,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   // over a School one. Until 2026-09-27 each was booked on its own, and a
   // second-year understudy was called to Rep and to a thesis on eight
   // afternoons, and credited with both.
-  type Call = { at: Instant; minutes: number; label: string; call: 'rehearsal' | 'performance' | 'oncall'; which?: 'rep' };
+  type Call = { at: Instant; minutes: number; label: string; call: 'rehearsal' | 'performance' | 'oncall' | 'runthrough'; which?: 'rep'; last?: true };
   const ours: Call[] = [];
   const reps: Call[] = [];
   const production = mine?.production;
@@ -1057,7 +1089,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
       ...(mine.play.title ? { play: mine.play.title, by: mine.play.by } : {}),
     };
     for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) ours.push({ at: at(d, 15), minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
-    for (const d of production.runs) ours.push({ at: at(d, 19), minutes: 150, label: `${production.name}: Performance`, call: 'performance' });
+    production.runs.forEach((d, k) => ours.push({ at: at(d, 19), minutes: 150, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
   }
   if (repTerm(term) && school.standing === 'good') {
     const rep = repProduction(term);
@@ -1076,13 +1108,27 @@ function cast(sim: Simulation, person: Person, term: number): void {
       if (wd === 1) continue;
       reps.push({ at: wd === 0 ? at(d, 14) : at(d, 20), minutes: 180, label: `${rep.name}: ${inRole ? 'Performance' : 'On Call'}`, call: inRole ? 'performance' : 'oncall', which: 'rep' });
     }
+    const final = reps.filter((r) => r.call === 'performance').at(-1);
+    if (final) final.last = true;
+    // An understudy's run-through: the understudies play the show once for the
+    // director and stage management, on the dark Monday of the run's second
+    // week (SLATE's estimate of when).
+    if (!inRole) {
+      let d = addDays(parseKey(rep.run.from), 7);
+      while (weekday(d) !== 1) d = addDays(d, 1);
+      if (keyOf(d) <= rep.run.to) reps.push({ at: at(d, 14), minutes: 180, label: `${rep.name}: Understudy Run-Through`, call: 'runthrough', which: 'rep' });
+    }
   }
   const overlaps = (a: Call, b: Call) => a.at < b.at + b.minutes * 60_000 && b.at < a.at + a.minutes * 60_000;
   const keptOurs = ours.filter((c) => !reps.some((r) => overlaps(c, r) && (c.call === 'rehearsal' || r.call === 'performance')));
   const keptReps = reps.filter((r) => !(r.call === 'oncall' && keptOurs.some((c) => c.call === 'performance' && overlaps(c, r))));
   for (const c of [...keptOurs, ...keptReps]) {
-    // A night on call is a commitment too: sent on and not there is a grave breach (`breach`). It stopped nothing until 2026-09-27.
-    schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload: { call: c.call, ...(c.which ? { which: c.which } : {}) } });
+    // A night on call is a call at five (`ESTIMATE.onCallAt`), in New Haven and reachable, and needs nobody at the theater unless they're sent on. Until 2026-09-28 it held the evening at the theater and stopped the clock every performance night.
+    if (c.call === 'oncall') {
+      schedule(sim, person, c.at - ESTIMATE.onCallAhead * 60 * 60_000, { kind: CALL_KIND, label: c.label, minutes: 0, requiresPlayer: false, payload: { call: 'oncall', check: true, perfAt: c.at, which: 'rep' } });
+      continue;
+    }
+    schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload: { call: c.call, ...(c.which ? { which: c.which } : {}), ...(c.last ? { last: true } : {}) } });
   }
   // The class's others the directors ask into the Rep's company in the third year, the same bar.
   if (repTerm(term) && yearOfTerm(term) === 3) {
@@ -1258,6 +1304,24 @@ export function registerSchool(sim: Simulation): void {
     school.workStudy.owedHours = 0;
   });
 
+  /** A night played: its reading, what it does, and on the last, the director's note. */
+  const reckonNight = (s: Simulation, person: Person, casting: Casting, item: { at: Instant; payload: Record<string, unknown> }, kept: number, rep: boolean): Night => {
+    const n = ESTIMATE.nights;
+    const night = nightOf(s, person, `${casting.production}-${item.at}`, readOf(person.craft!, castingReads(casting)), focusOf(person) * kept);
+    (casting.nights ??= {})[night] = (casting.nights[night] ?? 0) + 1;
+    const w = person.wellbeing;
+    if (night === 'off') w.morale = Math.max(0, w.morale - n.sting);
+    else if (night !== 'solid') w.morale = Math.min(100, w.morale + n.lift);
+    if (night === 'remarkable') {
+      nudge(s, person, 'presence', n.presence, true);
+      if (rep) earn(s, person, n.reputation);
+    }
+    if (item.payload.last !== true) return night;
+    casting.note = directorsNote(nightsMean(casting.nights));
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
+    return night;
+  };
+
   // A production's run over: the classmates in it grew by its rehearsals and nights, as the player does by theirs.
   sim.onSchedule(COMPANY_KIND, (item) => {
     const person = personOf(item);
@@ -1283,9 +1347,38 @@ export function registerSchool(sim: Simulation): void {
     // call isn't theirs to answer. Until 2026-09-27 a sick day excused the
     // classes and not that afternoon's rehearsal.
     if (inHospital(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
+    if (call === 'oncall' && item.payload.check === true) {
+      // At five: most nights they aren't needed, and the evening is theirs.
+      const curtain = Number(item.payload.perfAt);
+      if (!goesOn(s, person, curtain)) { item.status = 'cancelled'; return; }
+      if (person.currentLocationId !== YALE_DRAMA.cityId) {
+        school.tally.calls += 1;
+        breach(s, person, `weren’t in New Haven when called to go on as ${casting.role}`);
+        return;
+      }
+      // Sent on: the night's performance is theirs, on the calendar from now, with three hours' notice.
+      schedule(s, person, curtain, { kind: CALL_KIND, label: `${casting.production}: You’re On As ${casting.role}`, minutes: 180, payload: { call: 'performance', which: 'rep', wentOn: true } });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You’re On Tonight As ${casting.role}`, body: `The role’s actor is out: you go on in Yale Rep’s ${casting.production} tonight at ${formatTime(curtain, zone())}.`, importance: 95, route: '/workspace/school' });
+      return;
+    }
+    if (call === 'runthrough') {
+      // The understudies' run-through: the whole show, played once for the director.
+      school.tally.calls += 1;
+      if (!present(person, item.at)) {
+        item.status = 'missed';
+        if (school.tally.calls - school.tally.answered >= ESTIMATE.missedCallsOut && school.castable) school.castable = false;
+        return;
+      }
+      school.tally.answered += 1;
+      const kept = nerves(s, person, 'performance');
+      playNight(person.craft, castingReads(casting), focusOf(person) * kept, 0.75);
+      tire(person, ESTIMATE.energy.performance);
+      const night = reckonNight(s, person, casting, item, kept, true);
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Your Understudy Run-Through', body: `You played ${casting.role} through for the director today: ${night === 'off' ? 'an off' : `a ${night}`} night.`, importance: 60, route: '/workspace/school' });
+      return;
+    }
     if (call === 'oncall') {
-      // Most nights the understudy isn't needed, and the night is called off: it
-      // holds the evening beforehand, and nothing once it's passed.
+      // A night on call booked before 2026-09-28, at the curtain itself.
       if (!goesOn(s, person, item.at)) { item.status = 'cancelled'; return; }
       school.tally.calls += 1;
       if (present(person, item.at)) {
@@ -1311,6 +1404,8 @@ export function registerSchool(sim: Simulation): void {
         if (item.payload.which === 'rep') earn(s, person, ATTRIBUTES.reputation.repPerformance);
         playNight(person.craft, castingReads(casting), focusOf(person) * kept);
         tire(person, ESTIMATE.energy.performance);
+        reckonNight(s, person, casting, item, kept, item.payload.which === 'rep');
+        if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
       } else {
         rehearse(person.craft, focusOf(person));
         tire(person, ESTIMATE.energy.rehearsal);

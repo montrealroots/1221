@@ -14,6 +14,21 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Newest, 2026-09-28: the school made as perfect as the owner asked, in six parts.** Account 2 found six failings in the school on the owner's question, and the owner said "Do all 6". The commits are `aeb08ee` and the one after it.
+>
+> 1. **The class competes.** Admits differ in overall talent (`ESTIMATE.talent`). The player is drawn from the class's top quarter, not above everyone. Each classmate has their own drive and is an actor or an actress (`Classmate`). `mateOf` fills both in for older saves.
+> 2. **Casting reads the skills.** Each play asks for its own skills (`content/plays.ts`, `readOf`). The chair places the class on the term's first play, then the best read takes the biggest part written for them (`partsFor`), with the balance in `castScore`.
+> 3. **Real plays.** Each save deals its own season of public-domain plays with their own characters (`playOf`), because the seasons the player is cast in aren't announced. A festival's new plays stay unnamed, with parts by size.
+> 4. **A night has a result.** `nightOf` (decider `school.night`) reads each night off, solid, strong or remarkable. The run keeps its nights, the director gives a note on the last one, and `lastWork` carries it to the next casting.
+> 5. **Understudying.** On call is a call at five that needs nobody at the theater and stops no clock. Sent on, the understudy is told, and the curtain goes on their calendar. Every understudy gets a run-through on the run's second dark Monday.
+> 6. **Classmates as people.**
+>    - The whole class is cast each term, with the player's castmates named and "Around The Class" on the Casting tab.
+>    - Classmates grow from their productions (`COMPANY_KIND`).
+>    - The third year's Rep company takes classmates too.
+>    - Each classmate has their own family name.
+>
+> Over six three-year runs, players began from first to eighth and played everything from The Moon to Lady Macbeth. One finished with no agency. The owner is walking through the school screen step by step, and is at Casting.
+>
 > **Parked by the owner, 2026-09-27: what is left, to come back to after the school walkthrough.** The owner asked for this list to be saved as it stood, and is first going through the school screen step by step, with the owner deciding each step. Come back to this list after that walkthrough. The recommendation given was the first item, real competition. It is a large remodel, so the owner sets the plan.
 >
 > 1. **Gameplay gaps a player would notice.**

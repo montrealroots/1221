@@ -28,7 +28,7 @@ import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
-import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft } from './systems/school';
+import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
@@ -271,6 +271,21 @@ defineDecider<{ sim: Simulation; day: number }, string>({
   sample: (seed) => ({ sim: atYale(seed), day: seed % 60 }),
   // A fortnight of class days from the one read, so an absence shows.
   decide: ({ sim, day }) => Array.from({ length: 14 }, (_, n) => classmatesIn(sim, sim.player, `day-${day + n}`).map((x) => (x ? '1' : '0')).join('')).join(' '),
+});
+
+defineDecider<{ sim: Simulation; level: number; ready: number }, string>({
+  id: 'school.night',
+  decides: 'How a night on stage goes: off, solid, strong or remarkable, by readiness, the part on the craft, and the night’s luck.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // The part on their craft.
+    craft: (o, t) => ({ ...o, level: 40 + t * 50 }),
+    // How ready they came.
+    ready: (o, t) => ({ ...o, ready: 0.3 + t * 0.9 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), level: 50 + (seed % 30), ready: 0.6 + (seed % 5) / 10 }),
+  decide: ({ sim, level, ready }) => Array.from({ length: 60 }, (_, n) => nightOf(sim, sim.player, `d${n}`, level, ready)[0]).join(''),
 });
 
 defineDecider<{ sim: Simulation; night: number }, string>({

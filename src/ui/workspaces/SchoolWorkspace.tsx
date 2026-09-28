@@ -299,6 +299,9 @@ const KIND_WORDS: Record<string, string> = {
   carlotta: 'The Carlotta Festival', project: 'A School project', understudy: 'Understudying at Yale Rep', role: 'In the company at Yale Rep',
 };
 
+/** A night's reading as the Casting tab says it. */
+const NIGHT_WORD = { remarkable: 'Remarkable', strong: 'Strong', solid: 'Solid', off: 'Off' } as const;
+
 /** Whether the kind's words only say the production's name again, as the festivals' do. */
 const repeats = (c: { production: string; kind: string }) => c.production.startsWith((KIND_WORDS[c.kind] ?? '-').replace(/^(A|The) /, ''));
 
@@ -325,10 +328,16 @@ function CastingPane() {
         <Panel key={casting.production} title={casting.play ?? casting.production} subtitle={casting.play ? `${casting.production}, by ${casting.by}${left === 0 ? ', finished' : ''}` : left === 0 ? 'Finished' : repeats(casting) ? undefined : KIND_WORDS[casting.kind]}>
           <div className="col gap-3">
             <div className="grid grid-3">
-              <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} note={casting.size && !casting.role.startsWith('A ') ? SIZE_WORD[casting.size] : undefined} />
+              <Stat label="Role" value={casting.kind === 'understudy' && !casting.role.includes('Understudy') ? `${casting.role} (Understudy)` : casting.role} note={casting.size && !casting.role.startsWith('A ') ? SIZE_WORD[casting.size] : undefined} />
               <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
               {left > 0 ? <Stat label="Calls Ahead" value={String(left)} note={casting.kind === 'understudy' ? `${onCallLeft} of them on call` : undefined} /> : <Stat label="Calls Ahead" value="None" note="The run is over" />}
             </div>
+            {casting.nights && (
+              <p className="small" style={{ margin: 0 }}>
+                Your nights: {(['remarkable', 'strong', 'solid', 'off'] as const).filter((b) => casting.nights![b]).map((b) => `${NIGHT_WORD[b]} ${casting.nights![b]}`).join(', ')}.
+                {casting.note ? ` The director’s note: ${casting.note}` : ' How a run goes is read by the chair when casting you next.'}
+              </p>
+            )}
             {casting.cast && casting.cast.length > 0 && (
               <p className="small" style={{ margin: 0 }}>
                 From the class with you: {casting.cast.map((c) => `${c.name} as ${c.part}`).join('; ')}. The rest of the cast are from the other two classes.
@@ -336,7 +345,7 @@ function CastingPane() {
             )}
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
               <p className="small" style={{ margin: 0 }}>
-                {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. {onCallLeft > 0 ? `You’re on call at all ${onCallLeft} performances still ahead: in New Haven and awake, or it’s a grave breach if you’re needed.` : 'The run is over.'}
+                {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. {onCallLeft > 0 ? `On call on ${onCallLeft} performance days still ahead: the Rep calls at five, so be in New Haven then. Not needed, the evening is yours; needed, you’re told and the curtain goes on your calendar. Away when called is a grave breach. Your understudy run-through is on the calendar too.` : 'The run is over.'}
               </p>
             )}
           </div>

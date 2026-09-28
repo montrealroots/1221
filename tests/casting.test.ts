@@ -10,7 +10,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
-import { COMPANY_KIND, ESTIMATE, castScore, evenCraft, mateOf, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
+import { CALL_KIND, COMPANY_KIND, ESTIMATE, castScore, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
 const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
@@ -58,6 +58,8 @@ describe('the chair’s casting', () => {
     const by = Object.fromEntries(given.map((g) => [g.s.name, g.part]));
     // The actor who reads best can't take Hedda: he takes the first part written for him.
     expect(by).toEqual({ S1: 'Løvborg', S2: 'Hedda', S0: 'The Doctor', S3: 'In The Company' });
+    // Only a part written for an actress left, an actor goes into the company rather than take it.
+    expect(partsFor([student(0, 90, 'actor')], [{ name: 'Hedda', size: 'lead', for: 'actress' }], reads)[0]!.part).toBe('In The Company');
   });
 
   it('balances opportunity: a lead last time counts against the next, a featured part for it, and good nights for it', () => {
@@ -146,5 +148,79 @@ describe('a night’s growth', () => {
     expect(a.classical).toBeGreaterThan(b.classical);
     expect(b.script).toBeGreaterThan(a.script);
     expect(a.scene).toBeGreaterThan(50);
+  });
+});
+
+describe('a night’s reading', () => {
+  it('goes better rested and stronger for the part: off when spent and weak for it, remarkable when fresh and strong', () => {
+    const sim = life('nights-bands');
+    const count = (level: number, ready: number) => {
+      const out = { off: 0, solid: 0, strong: 0, remarkable: 0 };
+      for (let n = 0; n < 200; n += 1) out[nightOf(sim, sim.player, `k${n}`, level, ready)] += 1;
+      return out;
+    };
+    const spent = count(45, 0.4);
+    const fresh = count(90, 1.2);
+    expect(spent.off).toBeGreaterThan(150);
+    expect(fresh.remarkable).toBeGreaterThan(150);
+    // The same actor, rested or not.
+    expect(count(65, 1.1).strong + count(65, 1.1).remarkable).toBeGreaterThan(count(65, 0.7).strong + count(65, 0.7).remarkable);
+    expect(directorsNote(2)).not.toBe(directorsNote(-1));
+    expect(nightsMean({ strong: 2, off: 2 })).toBe(0);
+  });
+
+  it('keeps each night of a run, gives the director’s note at the last, and the chair reads the run next term', () => {
+    const sim = life('nights-run');
+    play(sim, on(2027, 1, 6));
+    const shows = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.call === 'performance' && i.payload.which !== 'rep');
+    expect(shows.at(-1)!.payload.last).toBe(true);
+    expect(shows.filter((i) => i.payload.last === true)).toHaveLength(1);
+    const c = sim.player.school!.casting!;
+    for (const show of shows) {
+      play(sim, show.at - 60_000);
+      sim.player.currentLocationId = 'us-ct-newhaven';
+      sim.player.awakeSince = show.at - 8 * MS_HOUR;
+      sim.advanceTo(show.at + 60_000);
+    }
+    const nights = Object.values(c.nights ?? {}).reduce((a, b) => a + b, 0);
+    expect(nights).toBe(shows.length);
+    expect(c.note).toBe(directorsNote(nightsMean(c.nights!)));
+    expect(sim.universe.notifications.some((n) => n.title.startsWith('The Director’s Note'))).toBe(true);
+    play(sim, on(2027, 9, 15));
+    expect(sim.player.school!.lastWork).toEqual({ size: c.size, nights: nightsMean(c.nights!) });
+  }, 180_000);
+});
+
+describe('what a night does', () => {
+  it('lifts the presence of an actor who has remarkable nights, and not one who has off ones', () => {
+    const run = (level: number) => {
+      const sim = life('nights-presence');
+      play(sim, on(2027, 1, 6));
+      sim.player.craft = evenCraft(level);
+      const shows = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.call === 'performance' && i.payload.which !== 'rep');
+      play(sim, shows[0]!.at - 60_000);
+      const start = sim.player.attrs!.presence;
+      for (const show of shows) {
+        play(sim, show.at - 60_000);
+        sim.player.currentLocationId = 'us-ct-newhaven';
+        sim.player.awakeSince = show.at - 8 * MS_HOUR;
+        sim.advanceTo(show.at + 60_000);
+      }
+      return { gain: sim.player.attrs!.presence - start, nights: sim.player.school!.casting!.nights! };
+    };
+    const strong = run(95);
+    const weak = run(40);
+    expect(strong.nights.remarkable ?? 0).toBeGreaterThan(0);
+    expect(weak.nights.remarkable ?? 0).toBe(0);
+    expect(strong.gain).toBeGreaterThan(weak.gain);
+  }, 240_000);
+});
+
+describe('the class’s names', () => {
+  it('gives no two classmates the same family name', () => {
+    for (const seed of ['names-1', 'names-2', 'names-3']) {
+      const families = life(seed).player.school!.classmates.map((m) => m.name.split(' ')[1]);
+      expect(new Set(families).size).toBe(families.length);
+    }
   });
 });
