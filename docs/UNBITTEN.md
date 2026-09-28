@@ -415,6 +415,14 @@ part the tool cannot see.
   intimate scene; `PART_DEMANDS`), read at the audition and grown on the
   job; how often a breakdown asks each is SLATE's estimate. Nobody's skills
   but the player's and the classmates' are kept.
+- **Parts past sixty are partly SLATE's estimate.** Since 2026-09-28 a part
+  drawn for an actor sixty or older is kept at the share of parts written for
+  that age (`AGE_ON_SCREEN`): film 0.48 and television 0.42 of a younger
+  actor's, from USC Annenberg's counts of speaking characters (10.7% of the
+  100 top films of 2016, 9.4% of the most popular series of 2016-17, against
+  19.9% of the population). SLATE's estimates: the stage and on-camera
+  commercials take the two's middle, a voice isn't thinned, and the share
+  holds past eighty; none of these is counted apart in anything published.
 - **An agency's renewal is SLATE's choice.** Rule 16(g) sets the term (a year,
   then up to three) and when a renewal may be signed, and SLATE follows it
   (`AGENCY_TERM`). Whether an agency offers to renew is its own business,

@@ -31,7 +31,7 @@ import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
-import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
+import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
@@ -346,6 +346,21 @@ defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number; managed?: bo
     return weekOfAuditions(sim, sim.player, sim.now + week * 7 * MS_DAY, agency, 'us-ny-newyork', 5, managed ?? false)
       .map((a) => `${a.roleId}@${a.at}/${a.mode}`).join(' ') || 'none';
   },
+});
+
+defineDecider<{ sim: Simulation; week: number; n: number }, string>({
+  id: 'career.age',
+  decides: 'Whether a part drawn for an actor past sixty is one written for their age, at its kind’s share (AGE_ON_SCREEN).',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The week: each is drawn on its own.
+    week: (o, t) => ({ ...o, week: Math.round(t * 52) }),
+    // The part's place in the week.
+    part: (o, t) => ({ ...o, n: Math.round(t * 6) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed % 52, n: seed % 6 }),
+  decide: ({ sim, week, n }) => (keepsPart(sim, sim.player, sim.now + week * 7 * MS_DAY, n, 0.45) ? 'kept' : 'passed over'),
 });
 
 defineDecider<{ sim: Simulation; roleId: string; level: number }, string>({

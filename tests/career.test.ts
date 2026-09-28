@@ -8,7 +8,7 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
-import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
+import { AGE_ON_SCREEN, AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
   AGENCY_TERM, DAY_TRIPS, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
   acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
@@ -371,6 +371,34 @@ describe('auditions', () => {
       expect(Math.max(...counts)).toBeGreaterThanOrEqual(2 * agency.auditionsPerWeek);
       expect(count / 60).toBeLessThan(agency.auditionsPerWeek * 1.25);
     }
+  });
+
+  it('thin past sixty by the parts written for that age: film to 0.48, television to 0.42, a voice not at all', () => {
+    expect(AGE_ON_SCREEN.film).toBeCloseTo(0.482, 3);
+    expect(AGE_ON_SCREEN.tv).toBeCloseTo(0.418, 3);
+    const sim = pro('ageing');
+    attributesOf(sim, sim.player).reputation = 50;
+    const agency = AGENCIES.find((a) => a.tier === 2)!;
+    const tally = (age: number) => {
+      const by = { film: 0, tv: 0, voice: 0 };
+      for (let w = 0; w < 2000; w += 1) {
+        // The same age each week: the part's draw reads the age at the week.
+        const week = sim.now + w * 7 * MS_DAY;
+        sim.player.birthInstant = week - age * 365.2425 * MS_DAY;
+        for (const a of weekOfAuditions(sim, sim.player, week, agency, 'us-ny-newyork', 0)) {
+          const role = roleById(a.roleId);
+          if (role.medium === 'voice') by.voice += 1; else if (role.after?.kind === 'film') by.film += 1; else if (role.after?.kind === 'tv') by.tv += 1;
+        }
+      }
+      return by;
+    };
+    const young = tally(30);
+    const old = tally(70);
+    expect(old.film / young.film).toBeGreaterThan(AGE_ON_SCREEN.film * 0.85);
+    expect(old.film / young.film).toBeLessThan(AGE_ON_SCREEN.film * 1.15);
+    expect(old.tv / young.tv).toBeGreaterThan(AGE_ON_SCREEN.tv * 0.93);
+    expect(old.tv / young.tv).toBeLessThan(AGE_ON_SCREEN.tv * 1.07);
+    if (young.voice > 20) expect(old.voice).toBeGreaterThan(young.voice * 0.8);
   });
 
   it('come to an unrepresented actor only from submitting themselves, for parts that take submissions', () => {

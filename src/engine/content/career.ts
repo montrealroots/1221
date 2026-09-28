@@ -121,6 +121,36 @@ export function rateOn(steps: RateSteps, day: string): Money {
  * (`weight`), the craft each asks (`bar`), how long each runs and how far
  * ahead it starts are SLATE's estimate.
  */
+/**
+ * Parts for an actor sixty or older, as a share of the parts for one younger:
+ * the share of speaking characters sixty or older against that age's share of
+ * the US population (19.9%, the 2015 Census), over the same for everybody
+ * younger. On film 10.7% of the speaking characters in the 100 top films of
+ * 2016 were sixty or older; on television 9.4% across the most popular
+ * Nielsen-rated series of 2016-17 (USC Annenberg with Humana). So a film's
+ * parts for a sixty-year-old are (10.7/19.9) / (89.3/80.1) of a younger
+ * actor's, 0.48, and a series' (9.4/19.9) / (90.6/80.1), 0.42. SLATE's
+ * estimates: the stage and an on-camera commercial take the two's middle, no
+ * count of their casts by age being published; a voice isn't seen, and its
+ * parts aren't thinned; and past eighty the share holds, no count of the
+ * very old on screen being published apart. Until 2026-09-28 an actor of
+ * ninety was sent to as many parts as one of thirty.
+ */
+export const AGE_ON_SCREEN = {
+  from: 60,
+  film: (10.7 / 19.9) / ((100 - 10.7) / (100 - 19.9)),
+  tv: (9.4 / 19.9) / ((100 - 9.4) / (100 - 19.9)),
+  source: 'https://assets.uscannenberg.org/docs/still-rare-still-ridiculed.pdf (film, 2016); https://today.usc.edu/usc-annenberg-humana-studies-suggest-relationship-between-tv-age-bias-and-health-of-seniors/ (television, 2016-17)',
+} as const;
+
+/** The share of a part's kind open to an actor of an age (`AGE_ON_SCREEN`). */
+export function partsForAge(role: Role, age: number): number {
+  if (age < AGE_ON_SCREEN.from || role.medium === 'voice') return 1;
+  if (role.after?.kind === 'film') return AGE_ON_SCREEN.film;
+  if (role.after?.kind === 'tv') return AGE_ON_SCREEN.tv;
+  return (AGE_ON_SCREEN.film + AGE_ON_SCREEN.tv) / 2;
+}
+
 export interface Role {
   id: string;
   label: string;

@@ -66,6 +66,7 @@ import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
   AFTERLIFE, AGENCIES, AGENT_COMMISSION, AUDITION_READ, PART_DEMANDS, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
+  partsForAge,
 } from '../content/career';
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
 import { ABROAD } from '../content/safetynet';
@@ -907,6 +908,11 @@ export function books(sim: Simulation, person: Person, audition: Audition, focus
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
+/** Whether a part drawn for an actor past sixty is one written for their age: kept at its kind's share, on a draw of its own. */
+export function keepsPart(sim: Simulation, person: Person, weekStart: Instant, n: number, share: number): boolean {
+  return sim.rng('career.age', person.id, `${weekStart}-${n}`).next() < share;
+}
+
 export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Instant, agency: Agency | undefined, cityId: CareerCity, submitted: number, managed = false): Omit<Audition, 'id' | 'status'>[] {
   const rng = sim.rng('career.auditions', person.id, String(weekStart));
   const poisson = (mean: number) => { let n = 0; const limit = Math.exp(-mean); for (let p = rng.next(); p > limit; p *= rng.next()) n += 1; return n; };
@@ -935,9 +941,13 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   const theirs = here.filter((r) => r.tiers.includes(2));
   const zone = zoneOf(cityId);
   const out: Omit<Audition, 'id' | 'status'>[] = [];
+  // Past sixty, fewer parts are written for them, and a part drawn is kept at its kind's share (`AGE_ON_SCREEN`).
+  const age = (weekStart - person.birthInstant) / (365.2425 * MS_DAY);
   for (let n = 0; n < count + fromManager + self; n += 1) {
     const mine = n >= count + fromManager;
     const role = pick(mine ? open : n >= count ? theirs : sent);
+    const share = partsForAge(role, age);
+    if (share < 1 && !keepsPart(sim, person, weekStart, n, share)) continue;
     const when = at(weekStart, zone, Math.floor(rng.next() * 5), 10 + Math.floor(rng.next() * 7));
     // Submitted from out of town, casting asks for a tape. An agency's room
     // expects a client who lives in town, and one away there comes back for it;
