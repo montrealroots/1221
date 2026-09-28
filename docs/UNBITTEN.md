@@ -165,8 +165,12 @@ part the tool cannot see.
   Citi's lower first late fee, and Mexico's minimum of 1.25% of the limit.
   Banks whose late fee is a share of nothing the terms name (Equity and
   NCBA in Kenya, QNB, Republic Bank Suriname, Absa Uganda, Bank of Bhutan)
-  keep a flat figure or SLATE's estimate. Not modeled: Japan's and Korea's
-  fixed-sum revolving courses. Caps left out: Japan's Interest Rate
+  keep a flat figure or SLATE's estimate. Since 2026-09-28 a revolving
+  course asks its bank's own minimum (`content/revolving.ts`): MUFG's ¥5,000
+  a ¥100,000, SMBC's ¥5,000 of principal and the interest, Shinhan's and KB
+  Kookmin's 10% to 30% by the credit grade, where the grades fall against
+  SLATE's record being its estimate; the other Japanese cards' courses
+  weren't read and ask the estimated minimum. Caps left out: Japan's Interest Rate
   Restriction Act binds cash advances, not purchases; Monaco's and
   Ukraine's figures weren't the law's own; the British £12 late fee is the
   OFT's 2006 threshold of intervention, not a cap. Since 2026-09-28 every US
@@ -244,15 +248,16 @@ part the tool cannot see.
     the province the work was done in (British Columbia's, Ontario's and
     its surtax). What's estimated: the 2026 federal and provincial
     brackets held for later years, and a payer's UK total expected at the
-    booking's rate. What isn't modeled:
-    Canada's Form T1287, filed before the work, which lowers what's
-    withheld where the tax on the net would be under 23% of the gross (the
-    election's return settles it the same either way). Since 2026-09-28 a
-    British or EEA citizen keeps the UK's personal allowance, tapered past
-    £100,000; a US citizen has none, as HMRC's treaty list says.
+    booking's rate. Since 2026-09-28 a job in Canada can have Form T1287
+    filed for it before the work, and the producer withholds the
+    election's tax on its net instead of 23%; and a British or EEA citizen
+    keeps the UK's personal allowance, tapered past £100,000, a US citizen
+    having none, as HMRC's treaty list says.
   - The body: obesity isn't modeled, since SLATE keeps no weight. A type
-    2 diabetic's test strips aren't, since most on a generic don't test
-    daily. Yale Health is taken as a university's own self-funded plan,
+    2 diabetic's test strips aren't bought, as the ADA's Standards of Care
+    (2026) don't advise routine testing for someone not on insulin, and
+    about one in seven buys enough to test twice a day (JAMA Internal
+    Medicine, 2018). Yale Health is taken as a university's own self-funded plan,
     which Connecticut's $25 insulin and $100 supply caps don't bind: a
     secondary source and an inference, SLATE's estimate. Each kind of
     care's own index grows past August 2026 at its 2019–24 rate, SLATE's
@@ -270,11 +275,13 @@ part the tool cannot see.
   - Connecticut (2026-09-27): unemployment, HUSKY D, Covered Connecticut
     and Access Health CT are built. What's estimated: New Haven's 2026 and
     2027 benchmark premiums, grown from 2025's published grid, and 2027's
-    $45 minimum benefit, by the statute's index. What isn't modeled: the
-    state's 2026 Temporary Premium Assistance on top of the federal credit,
-    which is 2026's only, with 2027's design unpublished; its hospitals'
-    charity care; and a claim paid by the state the wages were earned in,
-    since SLATE files it where the claimant lives.
+    $45 minimum benefit, by the statute's index. Since 2026-09-28 the
+    state's 2026 Temporary Premium Assistance is on the return: what the
+    expired enhanced credits would have paid, in full from 100% to 200% of
+    the poverty line and half over 400% to 500%; it's 2026's only, and no
+    2027 design is published. What isn't modeled: its hospitals' charity
+    care; and a claim paid by the state the wages were earned in, since
+    SLATE files it where the claimant lives.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two
@@ -311,12 +318,16 @@ part the tool cannot see.
   America's, RBC's, TD's, Scotiabank's, BMO's, CIBC's, Santander
   Mexico's), read by hand from the bank's words; a bonus on something a
   card doesn't buy here (dining, drugstores, fuel, travel) would pay the
-  base rate anyway. Santander Mexico's 4% on telecoms isn't paid, as the
-  phone's share of the bills isn't known, and a Korean card's discounts
-  on conditions of last month's spending aren't modeled. A plan's fee is the most the bank says it
-  charges, not the offer it would make on the day, and plans charged as
-  interest (Scotiabank's, Bank of Ireland's, the Spanish banks') aren't
-  offered. A money transfer is charged the card's balance transfer rate,
+  base rate anyway. Since 2026-09-28 Santander Mexico's 4% on telecoms is
+  paid on the phone and internet's share of the bills, INEGI's 4.8 of 19.5
+  of what isn't energy. A Korean card's discounts on conditions of last
+  month's spending aren't modeled: the thresholds of SLATE's Korean cards
+  weren't found (Shinhan's Deep Dream, another card, asks ₩300,000). A
+  plan's fee is the most the bank says it charges, not the offer it would
+  make on the day; since 2026-09-28 plans charged as interest or a fee by
+  their length are offered at the banks' own terms (`content/plans.ts`):
+  Bank of Ireland's, Scotiabank's, CaixaBank's and BBVA's, Santander
+  Spain's rate not being on its page. A money transfer is charged the card's balance transfer rate,
   or its purchase rate where that wasn't found. Introductory rates end
   early by the US rule and, since 2026-09-28, at Barclaycard's one missed
   minimum, as its terms say; Bank of Ireland's terms have no such clause,

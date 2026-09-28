@@ -13,7 +13,7 @@ import { exchange } from '@/engine/content/currency';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CARE, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
-import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, unitRate, type Booking } from '@/engine/systems/career';
+import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, t1287Quote, unitRate, type Booking } from '@/engine/systems/career';
 import { earningsOf, recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
 import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukAllowed, ukTaxOn } from '@/engine/systems/taxreturn';
@@ -33,6 +33,25 @@ function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   beginCareer(sim, sim.player);
   return sim;
 }
+
+describe('Canada’s Form T1287', () => {
+  it('lowers what a job there withholds to the tax on its net, filed before the work, and only for work in Canada', () => {
+    const sim = pro('t1287');
+    const job = { id: 'b-tor', roleId: 'guest-hour', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: sim.now + 30 * 86_400_000, units: 5, rehearsalWeeks: 0, status: 'accepted', dueAt: 0, offeredAt: 0, worked: 0, owed: 0 } as unknown as Booking;
+    careerOf(sim.player).bookings.push(job);
+    const quote = t1287Quote(sim, sim.player, job);
+    expect('rate' in quote && quote.rate).toBeLessThan(ABROAD.canada.rate);
+    sim.must({ kind: 'career.t1287', payload: { bookingId: 'b-tor' } });
+    expect(job.t1287Rate).toBe((quote as { rate: number }).rate);
+    expect(foreignWithholding(sim.player, 'ca-on-toronto', 10_000_00, at(2027, 3, 1), 'USD', { id: 'b-tor', expected: 0 })).toBe(Math.round(10_000_00 * job.t1287Rate!));
+    // Once filed, not again; a job at home has nothing to file; nor one begun.
+    expect(sim.execute({ kind: 'career.t1287', payload: { bookingId: 'b-tor' } }).ok).toBe(false);
+    const home = { ...job, id: 'b-ny', location: undefined, t1287Rate: undefined } as unknown as Booking;
+    expect(t1287Quote(sim, sim.player, home)).toEqual({ refused: 'It’s for work in Canada.' });
+    const begun = { ...job, id: 'b-begun', starts: sim.now - 1, t1287Rate: undefined } as unknown as Booking;
+    expect(t1287Quote(sim, sim.player, begun)).toMatchObject({ refused: expect.stringMatching(/before the work/) });
+  });
+});
 
 describe('working abroad', () => {
   it('withholds Canada’s 23% from every check, and the UK’s 20% from a payer expected past £12,570', () => {

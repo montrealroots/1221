@@ -25,7 +25,7 @@ import { exchange } from '../content/currency';
 import { computeAnnualTax, federalStandardDeduction } from '../content/tax';
 import { HOME_TAX } from '../content/homes';
 import { CITIES } from '../content/geography';
-import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
+import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
 import { payFromCurrent } from './household';
 import { personalityOf } from './personality';
@@ -81,6 +81,8 @@ export interface ReturnFigures {
   local: Money;
   payroll: Money;
   credit: Money;
+  /** Connecticut's 2026 Temporary Premium Assistance (`ENHANCED_CREDIT`), settled with the return. */
+  stateAssistance?: Money;
   mandate: Money;
   withheld: Money;
   /** Positive owed, negative due back. */
@@ -100,6 +102,16 @@ export function deadline(year: number): Instant {
   let day = 15;
   while (dow(day) === 0 || dow(day) === 6 || day === emancipation) day += 1;
   return instantFromZoned({ year: filing, month: 4, day, hour: 23, minute: 59 }, HOME);
+}
+
+/** The enhanced credits' applicable percentage at a share of the poverty line (2021–2025), which Connecticut's assistance reads. */
+export function enhancedPercent(ratio: number): number {
+  let low = 1;
+  for (const [upTo, from, to] of ENHANCED_CREDIT.bands) {
+    if (ratio <= upTo) return from + ((to - from) * (Math.max(ratio, low) - low)) / (upTo - low);
+    low = upTo;
+  }
+  return ENHANCED_CREDIT.above;
 }
 
 /** The applicable percentage of income at a share of the poverty line, in a year (later years hold). */
@@ -364,13 +376,18 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const program = ratio <= PUBLIC_COVER.medicaidShare || (lastState === 'us-ny' && ratio <= PUBLIC_COVER.essentialShare);
   const pct = program ? undefined : applicablePercent(year, ratio);
   const credit = pct === undefined ? 0 : premiums.reduce((sum, premium) => sum + Math.max(0, Math.round(premium - (pct * income) / 12)), 0);
+  // Connecticut's 2026 assistance: what the expired enhanced credits would have added, in full or half by income.
+  const ct = ENHANCED_CREDIT.connecticut;
+  const share = lastState === 'us-ct' && year === ct.year && !program ? (ratio > ct.full[0] && ratio <= ct.full[1] ? 1 : ratio > ct.half[0] && ratio <= ct.half[1] ? 0.5 : 0) : 0;
+  const enhanced = share ? premiums.reduce((sum, premium) => sum + Math.max(0, Math.round(premium - (enhancedPercent(ratio) * income) / 12)), 0) : 0;
+  const stateAssistance = Math.round(Math.max(0, enhanced - credit) * share);
   const months = person.health?.uncoveredInCalifornia[year] ?? 0;
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, pension: y.pension ?? 0,
     rental, gainShort, gainLong: gainLong + gain1250, gainExcluded: y.homeGainExcluded ?? 0, itemized: itemizing ? itemizedFederal : 0, gainTax, income, deduction,
-    incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
-    balance: incomeTax + payroll + mandate - y.withheld - credit,
+    incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, ...(stateAssistance ? { stateAssistance } : {}), mandate, withheld: y.withheld,
+    balance: incomeTax + payroll + mandate - y.withheld - credit - stateAssistance,
   };
 }
 

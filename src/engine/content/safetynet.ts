@@ -115,6 +115,23 @@ export const PREMIUM_CREDIT = {
 } as const;
 
 /**
+ * The enhanced credits of 2021 to 2025 (ARPA §9661, extended by the IRA
+ * §12001): the applicable percentage 0% to 150% of the poverty line, rising
+ * to 2% at 200%, 4% at 250%, 6% at 300% and 8.5% at 400%, and 8.5% with no
+ * cutoff above. Read by Connecticut's 2026 Temporary Premium Assistance,
+ * which replaces what they would have paid: all of it from 100% to 200% of
+ * the poverty line, half from over 400% to 500%, for one year and no 2027
+ * design published (help.accesshealthct.com, premium assistance and state
+ * subsidy, December 2025).
+ */
+export const ENHANCED_CREDIT = {
+  bands: [[1.5, 0, 0], [2, 0, 0.02], [2.5, 0.02, 0.04], [3, 0.04, 0.06], [4, 0.06, 0.085]] as readonly (readonly [number, number, number])[],
+  above: 0.085,
+  connecticut: { year: 2026, full: [1, 2] as const, half: [4, 5] as const },
+  source: 'IRC §36B(b)(3)(A)(iii); https://help.accesshealthct.com/premium-assistance; https://help.accesshealthct.com/state-subsidy',
+} as const;
+
+/**
  * Open enrollment runs 1 November to 15 January; losing other cover opens 60
  * days to enroll. Cover starts on the first of the next month.
  */

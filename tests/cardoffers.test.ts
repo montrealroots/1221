@@ -194,6 +194,28 @@ describe('a plan', () => {
   });
 });
 
+describe('a plan charged as interest', () => {
+  it('pays a Bank of Ireland purchase off in equal months at 6.7%, from €250, over its own lengths', () => {
+    const sim = lifeIn('ie-lei-dublin', { bankId: 'ie-bank-of-ireland' }, 'co-plan-boi');
+    const c = card(sim);
+    give(sim, c.id, -c.balance - 2_000_00);
+    expect(run(sim, 'card.plan', { amount: 1_000_00, months: 3 }).error).toMatch(/6, 12, 24 months/);
+    expect(run(sim, 'card.plan', { amount: 200_00, months: 12 }).error).toMatch(/at least/);
+    sim.must({ kind: 'card.plan', payload: { amount: 1_000_00, months: 12 } });
+    const credit = sim.player.credit!;
+    const plan = credit.plans![0]!;
+    const r = 0.067 / 12;
+    expect(plan.apr).toBe(0.067);
+    expect(plan.monthly).toBe(Math.ceil(1_000_00 * r / (1 - (1 + r) ** -12)));
+    sim.advanceTo(nextStatement(sim) + 1000);
+    // The month's interest on the whole, and the rest of the equal month off it.
+    const interest = sim.universe.transactions.find((t) => t.memo === 'Plan interest')!;
+    expect(interest.postings.find((p) => p.accountId === c.id)!.amount).toBe(-Math.round(1_000_00 * r));
+    expect(credit.statementPlanDue).toBe(plan.monthly);
+    expect(planLeftOf(credit)).toBe(1_000_00 - (plan.monthly - Math.round(1_000_00 * r)));
+  });
+});
+
 describe('a payment to the card', () => {
   it('goes to the dearest balance first and a plan last, a US minimum to the cheapest', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'co-alloc');

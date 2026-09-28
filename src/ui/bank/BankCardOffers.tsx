@@ -14,7 +14,8 @@ import { formatDate } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { CARDS } from '@/engine/content/cards';
 import { cardOf, cardTerms } from '@/engine/systems/credit';
-import { BONUSES, PLAN_MONTHS, planRoom, transferRate, transferRefusal } from '@/engine/systems/cardoffers';
+import { BONUSES, PLAN_MONTHS, planMonthsOf, planRoom, transferRate, transferRefusal } from '@/engine/systems/cardoffers';
+import { INTEREST_PLANS } from '@/engine/content/plans';
 import { limitFor } from '@/engine/systems/cardlife';
 import { inSaveMoney } from '@/engine/systems/banking';
 
@@ -28,6 +29,9 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   const cur = saveCurrency(sim.universe);
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
   const card = useWorld((s) => cardOf(s, s.player));
+  const interestPlan = card?.bankId ? INTEREST_PLANS[card.bankId] : undefined;
+  const lengths = card ? planMonthsOf(card) : [...PLAN_MONTHS];
+  const months = lengths.includes(planMonths) ? planMonths : lengths[0]!;
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
   const cents = centsFromTyped;
@@ -56,7 +60,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   const transfers = credit.transfers ?? [];
   const plans = credit.plans ?? [];
   const room = planRoom(sim.player, card);
-  if (!terms.introUntil && !terms.transfer && !terms.moneyTransferFee && !terms.planFeeShare && !terms.rewardsRate && transfers.length === 0 && plans.length === 0) return null;
+  if (!terms.introUntil && !terms.transfer && !terms.moneyTransferFee && !terms.planFeeShare && !(card?.bankId && INTEREST_PLANS[card.bankId]) && !terms.rewardsRate && transfers.length === 0 && plans.length === 0) return null;
 
   const lines: string[] = [];
   if (terms.standardApr !== undefined && terms.introUntil !== undefined) lines.push(`${pct(terms.apr)} on purchases until ${formatDate(terms.introUntil, sim.zone)}, then ${pct(terms.standardApr)}.${bankById(card.bankId ?? '')?.iso === 'US' ? ' A payment sixty days late ends it early.' : ''}`);
@@ -94,10 +98,12 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
             }}>Move It ({pct(terms.moneyTransferFee)} Fee)</Gated>
           </div>
         )}
-        {terms.planFeeShare && (
+        {(terms.planFeeShare || interestPlan) && (
           <>
             <p className="small" style={{ margin: 0 }}>
-              A plan pays part of what purchases owe off in equal months for {pct(terms.planFeeShare)} of it a month, the most the bank says it charges, instead of interest. {money(room)} can go into one.
+              {interestPlan
+                ? `A plan pays part of what purchases owe off in equal months: ${Object.entries(interestPlan.months).map(([m, t]) => `${m} months ${t.apr !== undefined ? `at ${pct(t.apr)} a year` : t.fee ? `for ${pct(t.fee)} of it` : 'free'}`).join(', ')}${interestPlan.min !== undefined ? `, on ${formatMoney(inSaveMoney(sim, interestPlan.min, bankById(card!.bankId!)!.currency), cur)} or more` : ''}. ${money(room)} can go into one.`
+                : `A plan pays part of what purchases owe off in equal months for ${pct(terms.planFeeShare!)} of it a month, the most the bank says it charges, instead of interest. ${money(room)} can go into one.`}
             </p>
             <div className="field-row">
               <div className="field">
@@ -106,12 +112,12 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
               </div>
               <div className="field">
                 <label htmlFor="card-plan-months">Over</label>
-                <select id="card-plan-months" value={planMonths} onChange={(e) => setPlanMonths(Number(e.target.value))}>
-                  {PLAN_MONTHS.map((m) => <option key={m} value={m}>{m + ' months'}</option>)}
+                <select id="card-plan-months" value={months} onChange={(e) => setPlanMonths(Number(e.target.value))}>
+                  {lengths.map((m) => <option key={m} value={m}>{m + ' months'}</option>)}
                 </select>
               </div>
               <Gated feature="card.plan" className="btn btn-sm" disabled={!planAmount || room <= 0} onClick={() => {
-                const answer = run('card.plan', { amount: cents(planAmount), months: planMonths });
+                const answer = run('card.plan', { amount: cents(planAmount), months });
                 if (answer.ok) setPlanAmount('');
               }}>Make The Plan</Gated>
             </div>

@@ -500,6 +500,23 @@ describe('the tax return', () => {
     expect(figuresFor(cheap.player, 2026).deduction).toBe(0);
   });
 
+  it('adds Connecticut’s 2026 assistance: half of what the expired credits would have paid over 400% of the poverty line, and none elsewhere', () => {
+    const at450 = Math.round(4.5 * 15_650_00);
+    const figures = (seed: string, city: string, gross: number) => {
+      const sim = pro(seed, city);
+      recordWages(sim.player, at(2026, 5, 1), NY, { gross });
+      healthOf(sim.player).premiums[2026] = [1_200_00, 1_200_00];
+      return figuresFor(sim.player, 2026);
+    };
+    const ct = figures('ct-tpa', 'us-ct-newhaven', at450);
+    // No federal credit over 400%; the enhanced one would have been the premium less 8.5% of income.
+    expect(ct.credit).toBe(0);
+    expect(ct.stateAssistance).toBe(Math.round(2 * Math.round(1_200_00 - (0.085 * at450) / 12) * 0.5));
+    expect(figures('ny-tpa', 'us-ny-newyork', at450).stateAssistance).toBeUndefined();
+    // At 350% the federal credit stands and Connecticut adds nothing.
+    expect(figures('ct-350', 'us-ct-newhaven', Math.round(3.5 * 15_650_00)).stateAssistance).toBeUndefined();
+  });
+
   it('gives back the premium tax credit, and adds California’s penalty for months without cover', () => {
     const sim = pro('credit');
     recordWages(sim.player, at(2026, 5, 1), NY, { gross: 40_000_00 });

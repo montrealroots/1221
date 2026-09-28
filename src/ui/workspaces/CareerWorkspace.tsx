@@ -19,7 +19,7 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
@@ -394,7 +394,7 @@ const spanOf = (b: Booking) => {
 
 /** The jobs taken and ahead, and the credits. */
 function WorkPane() {
-  const { sim } = useGame();
+  const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const career = person.career!;
   const cur = saveCurrency(sim.universe);
@@ -411,7 +411,11 @@ function WorkPane() {
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
                   {(b.travelOwed ?? 0) + (b.perDiemOwed ?? 0) > 0 ? `, ${formatMoney((b.travelOwed ?? 0) + (b.perDiemOwed ?? 0), cur)} of travel and per diem owed` : ''}
+                  {b.t1287Rate !== undefined ? `, Canada withholding ${(b.t1287Rate * 100).toFixed(1)}% by your T1287` : ''}
                 </span>
+                {!('refused' in t1287Quote(sim, person, b)) && (
+                  <Gated feature="career.t1287" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ rate: number }>('career.t1287', { bookingId: b.id }); if (r.ok) toast(`Filed: Canada withholds ${(r.value!.rate * 100).toFixed(1)}% instead of 23%.`, 'positive'); }}>File Form T1287</Gated>
+                )}
               </div>
             ))}
           </div>

@@ -58,6 +58,7 @@ import { allocatePayment, cashOwedOn } from './cash';
 import { planLeftOf, statementOffers, transferRate, transfersOwedOn } from './cardoffers';
 import { PENDING } from '../content/pending';
 import { FIRST_LATE_FEE, LATE_FEE_RULES, US_SAFE_HARBOR, lateFeeByRule, type LateFeeRule } from '../content/latefees';
+import { REVOLVING_COURSE, coursePayment, type RevolvingCourse } from '../content/revolving';
 
 /**
  * Cards whose terms end a promotional rate at one missed minimum: Barclaycard
@@ -154,6 +155,8 @@ export interface CardPlan {
   monthly: Money;
   fee: Money;
   monthsLeft: number;
+  /** A plan charged as interest (`content/plans.ts`): its yearly rate on what's left, the equal month then paying it and the principal. */
+  apr?: number;
 }
 
 const SCORE_MIN = 300;
@@ -218,6 +221,9 @@ export interface CardTerms {
   minimumPlusInterest: boolean;
   /** Mexico's: never under a share of the limit (`MEXICO_MINIMUM`). */
   minimumOfLimit?: Money;
+  /** A revolving course that sets the minimum by a table (`content/revolving.ts`), and the record it reads. */
+  course?: RevolvingCourse;
+  score?: number;
   lateFee: Money;
   /** What a bounced payment costs. */
   returnedPaymentFee: Money;
@@ -286,7 +292,8 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   const introUntil = product?.introMonths ? addMonths(card.openedAt, product.introMonths, sim.homeZone) : undefined;
   const standardApr = apr;
   if (introUntil !== undefined && sim.now < introUntil && !owner?.credit?.introLost) apr = Math.min(apr, product!.introApr!);
-  const minimumKnown = product?.minimumShare !== undefined || product?.minimumFloor !== undefined;
+  const course = bank ? REVOLVING_COURSE[bank.id] : undefined;
+  const minimumKnown = product?.minimumShare !== undefined || product?.minimumFloor !== undefined || course !== undefined;
   if (!minimumKnown && product?.kind !== 'charge') estimated.push('minimum');
   const rule = bank ? LATE_FEE_RULES[bank.id] : undefined;
   const lateRule: LateFeeRule | undefined = rule ? {
@@ -324,7 +331,8 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     annualFee: product?.annualFee ? inSave(sim, product.annualFee, money) : 0,
     minimumShare: minimumKnown ? product!.minimumShare ?? 0 : MINIMUM_SHARE,
     minimumFloor: minimumKnown ? (product!.minimumFloor !== undefined ? inSave(sim, product!.minimumFloor, money) : 0) : usdIn(sim, MINIMUM_USD),
-    minimumPlusInterest: product?.minimumPlusInterest ?? false,
+    minimumPlusInterest: course ? course.plusInterest === true : product?.minimumPlusInterest ?? false,
+    ...(course ? { course, score } : {}),
     ...(bank?.iso === 'MX' ? { minimumOfLimit: Math.round((card.creditLimit ?? 0) * MEXICO_MINIMUM.ofLimit) } : {}),
     lateFee,
     returnedPaymentFee,
@@ -408,8 +416,11 @@ function usdIn(sim: Simulation, usd: number): Money {
 export function minimumDue(sim: Simulation, statement: Money, terms = playerCardTerms(sim), interest = sim.player.credit?.statementInterest ?? 0, planDue = sim.player.credit?.statementPlanDue ?? 0): Money {
   if (!terms) return Math.min(statement, Math.max(usdIn(sim, MINIMUM_USD), Math.round(statement * MINIMUM_SHARE)));
   if (terms.kind === 'charge') return statement;
-  // A plan's month is asked in full, on top of the rest's share (C34).
-  const share = Math.round((statement - planDue) * terms.minimumShare) + (terms.minimumPlusInterest ? interest : 0);
+  // A plan's month is asked in full, on top of the rest's share (C34); a revolving course asks its table's payment instead of the share.
+  const money = terms.bankId ? bankById(terms.bankId)?.currency : undefined;
+  const share = terms.course
+    ? coursePayment(terms.course, statement - planDue, terms.score ?? 650, (m) => (money ? inSave(sim, m, money) : m)) + (terms.minimumPlusInterest ? interest : 0)
+    : Math.round((statement - planDue) * terms.minimumShare) + (terms.minimumPlusInterest ? interest : 0);
   return Math.min(statement, Math.max(terms.minimumFloor, share, terms.minimumOfLimit ?? 0) + planDue);
 }
 

@@ -133,6 +133,7 @@ function ReturnsPane() {
           ['Social Security And Medicare', f.payroll],
           ['California’s Penalty For No Cover', f.mandate],
           ['Premium Tax Credit', -f.credit],
+          ['Connecticut’s Premium Assistance', -(f.stateAssistance ?? 0)],
           ['Withheld From Your Pay', -f.withheld],
         ];
         return (

@@ -70,7 +70,7 @@ import {
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
 import { ABROAD } from '../content/safetynet';
 import { armHealth, inHospital } from './health';
-import { armTaxes } from './taxreturn';
+import { armTaxes, canadaElected } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
 import { actingOf, grow, focusOf, summerOf, type Craft } from './school';
 import { rentAt } from '../content/rents';
@@ -252,6 +252,8 @@ export interface Booking {
   /** A series regular's season, and the first season's booking, which names the series. */
   season?: number;
   seriesId?: string;
+  /** Canada's Form T1287, filed before the work: the rate CRA let the producer withhold instead of 23%. */
+  t1287Rate?: number;
   /** Travel days and meal allowance owed, paid with the job. */
   travelOwed?: Money;
   perDiemOwed?: Money;
@@ -423,7 +425,11 @@ export function arcUplift(booking: Booking, episode: number): number {
 export function foreignWithholding(person: Person, workCity: string, gross: Money, when: Instant, into: string, payer?: { id: string; expected: Money }): Money {
   const country = CITIES.get(workCity)?.countryId;
   if (!country || country === 'us') return 0;
-  if (country === 'ca') return Math.round(gross * ABROAD.canada.rate);
+  if (country === 'ca') {
+    // Less where a T1287 was filed for the job (`t1287Quote`).
+    const booking = payer ? careerOf(person).bookings.find((b) => b.id === payer.id) : undefined;
+    return Math.round(gross * (booking?.t1287Rate ?? ABROAD.canada.rate));
+  }
   if (country === 'uk') {
     // Payer by payer, in the UK's tax year: from the first payment, once the payer's total is expected past £12,570.
     const paid = payer ? earningsOf(person).ukPayers?.[ukTaxYear(when)]?.[payer.id] ?? 0 : 0;
@@ -431,6 +437,32 @@ export function foreignWithholding(person: Person, workCity: string, gross: Mone
     return Math.max(paid + gross, payer?.expected ?? 0) > threshold ? Math.round(gross * ABROAD.uk.rate) : 0;
   }
   return 0;
+}
+
+/**
+ * Canada's Form T1287, for a job to be worked there: filed before the work,
+ * it lets the producer withhold what the tax on the net would be, where
+ * that's under the 23% of the gross (CRA, "Application by a Non-Resident of
+ * Canada for a Reduction in the Amount of Non-Resident Tax Required to be
+ * Withheld on Income Earned from Acting"). The rate is the election's tax
+ * on the job's expected pay, less its commission, over that pay, with the
+ * year's acting so far as the income it's measured against. The election's
+ * return settles the year either way. Until 2026-09-28 every Canadian job
+ * was withheld at 23%.
+ */
+export function t1287Quote(sim: Simulation, person: Person, booking: Booking): { rate: number } | { refused: string } {
+  const city = CITIES.get(workCityOf(booking));
+  if (city?.countryId !== 'ca') return { refused: 'It’s for work in Canada.' };
+  if (booking.status !== 'accepted') return { refused: 'Only for a job you’ve taken.' };
+  if (sim.now >= booking.starts) return { refused: 'It has to be filed before the work begins.' };
+  if (booking.t1287Rate !== undefined) return { refused: 'You’ve filed one for it.' };
+  const cur = saveCurrency(sim.universe);
+  const gross = expectedGross(booking, booking.starts, cur);
+  if (gross <= 0) return { refused: 'There’s nothing to withhold from.' };
+  const commission = careerOf(person).agencyId ? Math.round(gross * AGENT_COMMISSION.rate) : 0;
+  const world = earningsOf(person).years[zonedParts(sim.now, sim.homeZone).year]?.acting ?? 0;
+  const tax = canadaElected(gross, commission, world + gross, cur, { [city.parentId]: gross });
+  return { rate: Math.min(ABROAD.canada.rate, Math.max(0, tax / gross)) };
 }
 
 /** What a booking is expected to pay in all, at its rate: its days on screen, its weeks on stage with rehearsal. */
@@ -1918,6 +1950,16 @@ export function registerCareer(sim: Simulation): void {
     } else item.status = 'missed';
     const where = road === 'brooklyn' ? ' at the Brooklyn Film Festival' : road === 'tribeca' ? ' at Tribeca' : '';
     if (isPlayer(person)) s.notify({ category: 'career', title: there ? 'Your Film Premiered' : 'Your Film Premiered Without You', body: there ? `${role.label} premiered${where}, and you walked the carpet and did the press line.` : `${role.label} premiered${where}, and you weren’t there for the press.`, importance: 60, route: '/workspace/career' });
+  });
+
+  sim.onCommand<{ bookingId: string }, { rate: number }>('career.t1287', (p, { sim: s }) => {
+    const person = s.player;
+    const booking = careerOf(person).bookings.find((b) => b.id === p.bookingId);
+    if (!booking) throw new CommandError('There’s no such job.');
+    const quote = t1287Quote(s, person, booking);
+    if ('refused' in quote) throw new CommandError(quote.refused);
+    booking.t1287Rate = quote.rate;
+    return { rate: quote.rate };
   });
 
   sim.onCommand<{ auditionId: string }, { coached: true }>('career.coach', (p, { sim: s }) => {

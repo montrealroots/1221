@@ -43,10 +43,18 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { cardOf, cardRoom, cardTerms, type CardPlan, type CardTerms, type CardTransfer, type CreditState } from './credit';
+import { ENERGY } from './seasons';
+import { INTEREST_PLANS, planPayment } from '../content/plans';
 import { cashOwedOn } from './cash';
 
 /** The months a plan may run: the lengths Chase, Bank of America and the Canadian banks all offer. */
 export const PLAN_MONTHS = [3, 6, 12] as const;
+
+/** The months a card's plan may run: its bank's own where it charges interest or a fee by the length (`content/plans.ts`), else `PLAN_MONTHS`. */
+export function planMonthsOf(card: Account): number[] {
+  const own = card.bankId ? INTEREST_PLANS[card.bankId] : undefined;
+  return own ? Object.keys(own.months).map(Number) : [...PLAN_MONTHS];
+}
 
 /**
  * The bonus categories of the cards that have one on groceries or recurring
@@ -56,6 +64,16 @@ export const PLAN_MONTHS = [3, 6, 12] as const;
  * currency's hundredths.
  */
 export interface Bonus { rate: number; cap?: Money; after?: number }
+/**
+ * The phone and internet's share of SLATE's bills: the part that isn't
+ * energy (`ENERGY.share` in `systems/seasons.ts`) is the phone, the internet
+ * and getting about, and Mexico's households spend 4.8% of what they spend
+ * on communications against 19.5% on transport and communications together
+ * (INEGI, ENIGH 2024, published July 2025), so communications are that
+ * part's 4.8/19.5.
+ */
+export const TELECOM_OF_BILLS = (1 - ENERGY.share) * (4.8 / 19.5);
+
 export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; bills?: Bonus; other?: Bonus; shared?: boolean }>> = {
   // 2% at grocery stores, on the first $2,500 of grocery and choice spending together a quarter; 1% on the rest.
   'us-bank-of-america': { per: 'quarter', food: { rate: 0.02, cap: 2_500_00, after: 0.01 } },
@@ -70,8 +88,8 @@ export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle
   // 2% on groceries, 1% on recurring payments, no cap; 0.5% else.
   'ca-cibc': { per: 'cycle', food: { rate: 0.02 }, bills: { rate: 0.01 } },
   // 1% at supermarkets, the whole cash back to $500 a month, which at 1% is $50,000 of groceries; nothing elsewhere but its named categories.
-  // Its 4% on telecoms isn't paid: SLATE's bills are one sum, and the phone's share of it isn't known.
-  'mx-santander': { per: 'month', food: { rate: 0.01, cap: 50_000_00, after: 0 }, bills: { rate: 0 }, other: { rate: 0 } },
+  // Its 4% on telecoms on the phone and internet's share of the bills (`TELECOM_OF_BILLS`); until 2026-09-28 it wasn't paid, that share unknown.
+  'mx-santander': { per: 'month', food: { rate: 0.01, cap: 50_000_00, after: 0 }, bills: { rate: 0.04 * TELECOM_OF_BILLS }, other: { rate: 0 } },
 };
 
 /** The period a bonus's cap runs over, as a key: a calendar quarter, year or month, or the statement cycle. */
@@ -128,11 +146,14 @@ export function statementOffers(sim: Simulation, card: Account, credit: CreditSt
   credit.transfers = (credit.transfers ?? []).filter((one) => one.owed > 0);
   let planDue = 0;
   for (const plan of credit.plans ?? []) {
-    const month = Math.min(plan.left, plan.monthly);
+    // A plan charged as interest: the month's interest on what's left, and the rest of the equal month off it.
+    const interest = plan.apr ? Math.round(plan.left * plan.apr / 12) : 0;
+    const month = Math.min(plan.left, plan.apr ? Math.max(0, plan.monthly - interest) : plan.monthly);
     plan.left -= month;
     plan.monthsLeft -= 1;
+    if (interest > 0) sim.post({ memo: 'Plan interest', category: 'interest', postings: [{ accountId: sim.nominalAccount('expense', 'Card Interest').id, amount: interest }, { accountId: card.id, amount: -interest }] });
     if (plan.fee > 0) sim.post({ memo: 'Plan fee', category: 'fees', postings: [{ accountId: sim.nominalAccount('expense', 'Card Fees').id, amount: plan.fee }, { accountId: card.id, amount: -plan.fee }] });
-    planDue += month + plan.fee;
+    planDue += month + plan.fee + interest;
   }
   credit.plans = (credit.plans ?? []).filter((plan) => plan.left > 0 && plan.monthsLeft > 0);
   credit.statementPlanDue = planDue;
@@ -225,13 +246,23 @@ export function registerCardOffers(sim: Simulation): void {
     const credit = person.credit;
     if (!card || !credit) throw new CommandError('You don’t have a card.');
     const terms = cardTerms(s, card, credit.score);
-    if (!terms.planFeeShare) throw new CommandError(`The ${card.name} has no plan SLATE has terms for.`);
+    const interestPlan = card.bankId ? INTEREST_PLANS[card.bankId] : undefined;
+    if (!terms.planFeeShare && !interestPlan) throw new CommandError(`The ${card.name} has no plan SLATE has terms for.`);
     const months = Math.round(Number(p.months));
-    if (!(PLAN_MONTHS as readonly number[]).includes(months)) throw new CommandError('A plan runs 3, 6 or 12 months.');
+    const lengths = planMonthsOf(card);
+    if (!lengths.includes(months)) throw new CommandError(`A plan runs ${lengths.join(', ')} months.`);
     const amount = Math.round(Number(p.amount));
     const room = planRoom(person, card);
     if (!(amount > 0) || amount > room) throw new CommandError(`Purchases owe ${formatMoney(room, saveCurrency(s.universe))} that can go into a plan.`);
-    const plan: CardPlan = { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * terms.planFeeShare), monthsLeft: months };
+    const bank = bankById(card.bankId ?? '');
+    const least = interestPlan?.min !== undefined && bank ? (exchange(interestPlan.min, bank.currency, saveCurrency(s.universe)) ?? interestPlan.min) : 0;
+    if (amount < least) throw new CommandError(`A plan takes ${formatMoney(least, saveCurrency(s.universe))} at least.`);
+    const term = interestPlan?.months[months];
+    const plan: CardPlan = term?.apr !== undefined
+      ? { left: amount, monthly: planPayment(amount, term.apr, months), fee: 0, monthsLeft: months, apr: term.apr }
+      : term?.fee !== undefined
+        ? { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * term.fee / months), monthsLeft: months }
+        : { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * terms.planFeeShare!), monthsLeft: months };
     credit.plans = [...(credit.plans ?? []), plan];
     return { plan };
   });

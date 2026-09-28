@@ -456,9 +456,10 @@ describe('a card’s bonus categories', () => {
     expect(bonusRewards(sim, card('ca-cibc'), {} as CreditState, 0.005, { food: big, bills: big, other: 100_00 }, 1)).toBe(Math.round(big * 0.02 + big * 0.01 + 100_00 * 0.005));
   });
 
-  it('pays a card without a bonus its base rate on everything, and Santander Mexico nothing outside its categories', () => {
+  it('pays a card without a bonus its base rate on everything, and Santander Mexico nothing outside its categories but the bills’ telecoms', () => {
     expect(bonusRewards(sim, card('us-chase'), {} as CreditState, 0.015, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(450);
     expect(BONUSES['us-chase']).toBeUndefined();
-    expect(bonusRewards(sim, card('mx-santander'), {} as CreditState, 0.01, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(100);
+    // 1% of the groceries, and 4% of the phone and internet's share of the bills, INEGI's 4.8 of 19.5 of what isn't energy.
+    expect(bonusRewards(sim, card('mx-santander'), {} as CreditState, 0.01, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(100 + Math.round(100_00 * 0.04 * (84 / 180) * (4.8 / 19.5)));
   });
 });
