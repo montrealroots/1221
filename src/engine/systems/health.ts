@@ -42,7 +42,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { UNION_HEALTH, rateOn } from '../content/career';
 import {
-  BENCHMARK, BENEFIT_STATE, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
+  BENCHMARK, BENEFIT_STATE, NHS, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
 import { earningsOf, homeOf, quartersBefore } from './earnings';
@@ -52,6 +52,7 @@ import { clamp } from '../core/rng';
 import { bmiOf } from './body';
 import { ONSET, onsetYearly } from '../content/body';
 import { fluByWeek, weekOfYear } from './seasons';
+import { isoOfCountry } from './documents';
 
 export const HEALTH_MONTH_KIND = 'health.month';
 export const HEALTH_WEEK_KIND = 'health.week';
@@ -421,7 +422,10 @@ export function keepUp(sim: Simulation, person: Person, at: Instant): Money {
   for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }][]) {
     if (!state.treated) continue;
     let cost = 0;
-    if (condition === 'depression') {
+    if (condition === 'depression' && nhsShareOf(person, 'visit', at, cur) === 0) {
+      // NHS Talking Therapies are free; the prescription is the NHS's charge.
+      cost += rxShareOf(person, false, at, cur);
+    } else if (condition === 'depression') {
       const plan = planOf(person, at);
       const session = plan ? usd(plan.visit, cur) : usd(grown(CITIES.get(homeOf(person))?.parentId === 'us-ny' ? CHRONIC.therapy['us-ny'] : CHRONIC.therapy.other, 'therapy', at), cur);
       cost += CHRONIC.therapyPerMonth * session + rxShareOf(person, false, at, cur);
@@ -465,6 +469,8 @@ export function incomeRatio(person: Person, at: Instant, into = 'USD'): number {
  * by the last year's income against the poverty line.
  */
 export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money {
+  const nhs = nhsShareOf(person, care, at, into);
+  if (nhs !== undefined) return nhs;
   if (care === 'rx-generic' || care === 'rx-brand') return rxShareOf(person, care === 'rx-brand', at, into);
   if (!MEDICAL.includes(care)) return teethAndEyesShareOf(person, care as 'cleaning' | 'filling' | 'exam' | 'glasses', at, into);
   const price = usd(grown(CARE.price[care as 'visit' | 'urgent' | 'emergency' | 'stay'], care as 'visit', at), into);
@@ -509,7 +515,38 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
 }
 
 /** A prescription at the counter: the plan's copay, the greater of its dollar and its share, after a brand's deductible; uninsured, the cash price. */
+/**
+ * The NHS's charge for a piece of care, for someone it treats as ordinarily
+ * resident, or nothing where it isn't theirs: free at the point of use for
+ * a doctor, the emergency department and a stay in hospital; England's
+ * charge per prescription item, and nothing in Scotland, Wales or Northern
+ * Ireland; the dental bands (a check-up and cleaning Band 1, a filling Band
+ * 2). A British or Irish citizen living in the UK is ordinarily resident at
+ * once, a returning resident among them (the Charges to Overseas Visitors
+ * guidance); anyone else there is on a visa whose Immigration Health
+ * Surcharge SLATE doesn't charge, and is billed as before. Until 2026-09-29
+ * a Londoner was billed American prices for every illness, uninsured, and a
+ * played British life ended £1.25 million in medical debt.
+ */
+export function nhsShareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money | undefined {
+  const city = CITIES.get(homeOf(person));
+  if (city?.countryId !== 'uk') return undefined;
+  const iso = isoOfCountry(person.citizenshipId);
+  if (iso !== 'GB' && iso !== 'IE') return undefined;
+  const pounds = (x: number) => { const c = Math.round(x * 100); return into === 'GBP' ? c : exchange(c, 'GBP', into) ?? c; };
+  const england = city.parentId === 'uk-eng';
+  const age = (at - person.birthInstant) / (365.25 * MS_DAY);
+  if (care === 'rx-generic' || care === 'rx-brand') return england && age < NHS.prescriptionFreeFrom ? pounds(NHS.prescription) : 0;
+  // A check-up and cleaning is Band 1, a filling Band 2; an eye test and glasses are the optician's, paid for as before.
+  if (care === 'cleaning') return pounds(NHS.dental.band1);
+  if (care === 'filling') return pounds(NHS.dental.band2);
+  if (care === 'exam' || care === 'glasses') return undefined;
+  return 0;
+}
+
 export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD', cash?: Money): Money {
+  const nhs = cash === undefined ? nhsShareOf(person, brand ? 'rx-brand' : 'rx-generic', at, into) : undefined;
+  if (nhs !== undefined) return nhs;
   const price = cash ?? usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
   const key = planKey(person, at);
   const plan = key ? PHARMACY.plans[key] : undefined;

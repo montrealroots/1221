@@ -643,6 +643,14 @@ part the tool cannot see.
   Equity itself; a British actor's Self Assessment as self-employed, since
   pay is withheld as PAYE would be, on the year's tax at the right bands; the
   2026 cinema and theatre rates, not yet published, which stand at 2025's.
+- **The NHS is partly kept.** Since 2026-09-29 a British or Irish citizen
+  living in the UK is treated by the NHS: free at the point of use, England's
+  £9.90 a prescription item (none at 60 or over, nor in Scotland, Wales or
+  Northern Ireland), the dental bands. Not kept: the other exemptions from
+  the prescription charge (a low Universal Credit award, a medical exemption,
+  a prepayment certificate), free sight tests, and the Immigration Health
+  Surcharge a visa holder would pay, so a visa holder in the UK is still
+  billed as before. Ireland's and Mexico's public care aren't in.
 - **Nobody broke is fed by a food bank.** Since 2026-09-29 a body starved
   below a body mass index of 12 ends the life (`BMI_SURVIVAL_LIMIT`), and
   12 to 15 carries Zheng's 2.8. A day the bank can't pay for eats a short

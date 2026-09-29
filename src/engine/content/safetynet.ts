@@ -643,3 +643,18 @@ export const UNIVERSAL_CREDIT = {
   lhaLondon: { sharedRoom: 610.67, oneBed: 1_200 },
   source: 'https://www.gov.uk/universal-credit; https://www.gov.uk/government/publications/universal-credit-local-housing-allowance-rates-2026-to-2027; ADM C1957–C1960',
 } as const;
+
+/**
+ * The NHS, 2026/27 (nhs.uk, gov.uk, the NHSBSA's HC12, researched
+ * 2026-09-29): care free at the point of use for someone ordinarily resident,
+ * a British citizen coming home to settle among them from the day they
+ * arrive; England's prescription charge a item, frozen at £9.90, and none at
+ * 60 or over, nor anywhere in Scotland, Wales or Northern Ireland; the dental
+ * bands, unchanged from 1 April 2025.
+ */
+export const NHS = {
+  prescription: 9.9,
+  prescriptionFreeFrom: 60,
+  dental: { band1: 27.9, band2: 76.6, band3: 332.1, urgent: 27.9 },
+  source: 'https://www.nhsbsa.nhs.uk/ (HC12, April 2026); https://www.gov.uk/guidance/nhs-entitlements-migrant-health-guide',
+} as const;
