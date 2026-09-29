@@ -177,3 +177,18 @@ export const FUEL: Readonly<Record<Jurisdiction, { petrol: number; diesel: numbe
 export const UPKEEP_USD_PER_KM = 11.7 / 1.609344;
 export const UNRATED_FUEL_USD_PER_KM = 17.3 / 1.609344;
 export const RUNNING_SOURCE = 'AAA Your Driving Costs 2026; EIA, DESNZ, AA Ireland, NRCan weekly prices; FHWA VM-1, DfT NTS0901, CSO, Statistics Canada';
+
+/**
+ * Parking a car at home on the street (from 2026-09-29): a resident's
+ * permit a year. London's is Westminster's, the borough SLATE takes for the
+ * city, by the car's CO2 from 2 March 2026 (an electric car's by its
+ * battery, SLATE reading the smaller band), and £60 more for a diesel from
+ * before 2015, which no car on sale is; Dublin City's €50, unchanged since
+ * 2011. A home owned with a garage needs none. New York publishes no garage
+ * average and parks on the street for nothing; elsewhere no permit is kept.
+ */
+export const PERMITS = {
+  london: { cityId: 'uk-eng-london', currency: 'GBP', ev: 40, bands: [[90, 91.85], [130, 126.12], [150, 143.96], [255, 230.05], [Infinity, 353.1]] as readonly (readonly [number, number])[] },
+  dublin: { cityId: 'ie-lei-dublin', currency: 'EUR', flat: 50 },
+  source: 'https://www.westminster.gov.uk/media/document/new-charges-from-mon-2-march-2026; https://www.dublincity.ie/travel-and-transport/apply-or-renew-residential-parking-permit/apply-residential-parking-permit',
+} as const;

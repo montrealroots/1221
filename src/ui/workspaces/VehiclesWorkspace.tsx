@@ -33,7 +33,7 @@ export function VehiclesWorkspace() {
   const financed = months > 0;
   const [coverage, setCoverage] = useState<OwnedVehicle['coverage']>('full');
   const model = modelById(pick) ?? models[0];
-  const q = model ? quote(model, home, sim.now, { age, financed }) : 'SLATE sells no cars where you live yet.';
+  const q = model ? quote(model, home, sim.now, { age, financed, person }) : 'SLATE sells no cars where you live yet.';
   const inHome = (c: number, from: string) => formatMoney(inSaveMoney(sim, c, from), cur);
   const no = model ? buyRefusal(sim, person, model.id, { age, financed, coverage }) : typeof q === 'string' ? q : undefined;
   const ins = j ? monthlyInsurance(j, coverage) : undefined;
@@ -132,7 +132,7 @@ export function VehiclesWorkspace() {
                 if (a.ok) toast(`Bought, for ${money(a.value!.paid)} now${a.value!.monthly ? ` and ${money(a.value!.monthly)} a month` : ''}.`, 'positive');
               }}>Buy It</Gated>
             </div>
-            <Fine>{typeof q !== 'string' ? q.basis : q} Depreciation: {DEPRECIATION_SOURCE}. Loans: {LOAN_RATES.source}. A dealer’s trade-in price, lower than a private sale’s, and repossession aren’t kept; a car’s price is counted as spent, not held against your worth.</Fine>
+            <Fine>{typeof q !== 'string' ? q.basis : q} Depreciation: {DEPRECIATION_SOURCE}. Loans: {LOAN_RATES.source}. A dealer’s trade-in price, lower than a private sale’s, and repossession aren’t kept; a car’s price is counted as spent, not held against your worth. Parking on the street at home is the resident’s permit where one’s kept, London’s by Westminster’s bands and Dublin’s, and nothing with a garage at a home you own.</Fine>
           </div>
         </Panel>
       </div>

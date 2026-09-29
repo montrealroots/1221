@@ -9,7 +9,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
-import { amortized, kept, modelById, modelsFor, monthKm, quote, runningCost, valueOf, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
+import { amortized, kept, modelById, modelsFor, monthKm, parkingYear, quote, runningCost, valueOf, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
 
 const q = (id: string, city: string, opts = {}) => quote(modelById(id)!, city, Date.UTC(2026, 8, 29), opts) as Quote;
 const line = (x: Quote, re: RegExp) => x.lines.find((l) => new RegExp(re.source, 'i').test(l.label))!.amount;
@@ -48,8 +48,8 @@ describe('what a car costs to buy', () => {
     expect(line(tucson, /GST/)).toBe(Math.round(3_549_900 * 0.05));
     expect(line(tucson, /PST, 7%/)).toBe(Math.round(3_549_900 * 0.07));
     expect(line(q('mx-nissan-versa', 'mx-cmx-mexicocity'), /Plates/)).toBe(972_00);
-    // Britain's on-the-road price has it all in.
-    expect(q('gb-ford-puma', 'uk-eng-london').total).toBe(2_714_500);
+    // Britain's on-the-road price has it all in, and in London a year's resident permit: Westminster's for 91 to 130 g/km, £126.12.
+    expect(q('gb-ford-puma', 'uk-eng-london').total).toBe(2_714_500 + 126_12);
   });
 
   it('sells the market’s cars where one lives, and refuses a place SLATE doesn’t keep', () => {
@@ -64,6 +64,19 @@ describe('what a car costs to buy', () => {
     expect(kept(10)).toBeCloseTo(1 - 0.6512, 10);
     expect(kept(4)).toBeCloseTo(1 - (0.2479 + 0.417) / 2, 10);
     expect(q('us-toyota-camry', 'us-ct-newhaven', { age: 5 }).price).toBe(Math.round(2_960_000 * (1 - 0.417)));
+  });
+});
+
+describe('parking', () => {
+  it('charges Westminster’s permit by CO2 in London and Dublin City’s €50, and nothing with a garage at a home owned', () => {
+    const puma = modelById('gb-ford-puma')!;
+    const street = { homes: [] } as unknown as Parameters<typeof parkingYear>[0];
+    expect(parkingYear(street, puma, 'uk-eng-london')).toEqual({ amount: 126_12, currency: 'GBP' });
+    expect(parkingYear(street, modelById('gb-mg-hs')!, 'uk-eng-london')!.amount).toBe(230_05);
+    expect(parkingYear(street, modelById('ie-toyota-corolla')!, 'ie-lei-dublin')).toEqual({ amount: 50_00, currency: 'EUR' });
+    const garaged = { homes: [{ cityId: 'uk-eng-london', facts: { features: ['garage'] } }] } as unknown as Parameters<typeof parkingYear>[0];
+    expect(parkingYear(garaged, puma, 'uk-eng-london')).toBeUndefined();
+    expect(parkingYear(street, modelById('us-honda-cr-v')!, 'us-ny-newyork')).toBeUndefined();
   });
 });
 

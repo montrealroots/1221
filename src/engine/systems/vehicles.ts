@@ -22,7 +22,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { CAR_MODELS, type CarModel } from '../content/vehiclecatalog';
-import { BC, CA_STATE, CMX, CT, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, type Jurisdiction } from '../content/vehiclefees';
+import { BC, CA_STATE, CMX, CT, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
 import { owe, payFromBank } from './household';
 import { mayDrive } from './documents';
@@ -84,6 +84,21 @@ export function jurisdictionOf(cityId: string): Jurisdiction | undefined {
 const MARKET: Record<Jurisdiction, CarModel['market']> = { 'US-NY': 'US', 'US-CT': 'US', 'US-CA': 'US', GB: 'GB', IE: 'IE', 'CA-ON': 'CA', 'CA-BC': 'CA', 'MX-CMX': 'MX' };
 const CURRENCY: Record<Jurisdiction, string> = { 'US-NY': 'USD', 'US-CT': 'USD', 'US-CA': 'USD', GB: 'GBP', IE: 'EUR', 'CA-ON': 'CAD', 'CA-BC': 'CAD', 'MX-CMX': 'MXN' };
 
+/**
+ * A year's resident parking permit for a car kept on the street at home, in
+ * the place's money, cents; nothing with a garage at a home owned there, or
+ * where no permit is kept.
+ */
+export function parkingYear(person: Person, model: CarModel, cityId: string): { amount: Money; currency: string } | undefined {
+  if ((person.homes ?? []).some((h) => h.cityId === cityId && !h.selling && (h.facts?.features ?? []).includes('garage'))) return undefined;
+  if (cityId === PERMITS.london.cityId) {
+    const pounds = model.fuel === 'ev' ? PERMITS.london.ev : bracket(PERMITS.london.bands, model.co2 ?? 150);
+    return { amount: Math.round(pounds * 100), currency: PERMITS.london.currency };
+  }
+  if (cityId === PERMITS.dublin.cityId) return { amount: PERMITS.dublin.flat * 100, currency: PERMITS.dublin.currency };
+  return undefined;
+}
+
 /** The cars on sale where a town is. */
 export function modelsFor(cityId: string): CarModel[] {
   const j = jurisdictionOf(cityId);
@@ -111,7 +126,7 @@ const lbOf = (m: CarModel) => (m.kerbKg ? m.kerbKg * 2.20462 : NY.assumedLb);
 export interface Quote { currency: string; price: Money; lines: { label: string; amount: Money }[]; total: Money; basis: string }
 
 /** What buying a car costs where one lives, in the jurisdiction's money, cents: its price and every tax and fee. */
-export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean } = {}): Quote | string {
+export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean; person?: Person } = {}): Quote | string {
   const j = jurisdictionOf(cityId);
   if (!j) return 'SLATE doesn’t have that place’s car taxes and fees yet: it keeps New York, Connecticut, California, Great Britain, Ireland, Ontario, British Columbia and Mexico City.';
   if (model.market !== MARKET[j]) return 'That car is sold in another market.';
@@ -167,6 +182,9 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
       if (units > CMX.tenenciaWaivedTo) lines.push({ label: 'Tenencia (Its Tariff Above The Waiver Isn’t Kept)', amount: 0 });
       break;
   }
+  // A resident's parking permit, where one's kept, and no garage at home.
+  const permit = opts.person ? parkingYear(opts.person, model, cityId) : cityId === PERMITS.london.cityId || cityId === PERMITS.dublin.cityId ? parkingYear({ homes: [] } as unknown as Person, model, cityId) : undefined;
+  if (permit) lines.push({ label: 'Resident Parking Permit, The Year', amount: permit.currency === CURRENCY[j] ? permit.amount : exchange(permit.amount, permit.currency, CURRENCY[j]) ?? permit.amount });
   const total = price + lines.reduce((a, l) => a + l.amount, 0);
   return { currency: CURRENCY[j], price, lines, total, basis: `${model.make} ${model.model} ${model.trim}: the maker’s price (${model.sourceType}), ${model.deliveryBasis}${used ? `, less ${Math.round((1 - kept(age)) * 100)}% for ${age} ${age === 1 ? 'year' : 'years'} (${'iSeeCars, SLATE’s lines between'})` : ''}.` };
 }
@@ -228,7 +246,7 @@ export const vehiclesOf = (person: Person) => (person.vehicles ??= []);
 export function buyRefusal(sim: Simulation, person: Person, modelId: string, opts: { age?: number; financed?: boolean; coverage?: OwnedVehicle['coverage'] }): string | undefined {
   const model = modelById(modelId);
   if (!model) return 'SLATE doesn’t sell that car.';
-  const q = quote(model, homeOf(person), sim.now, opts);
+  const q = quote(model, homeOf(person), sim.now, { ...opts, person });
   if (typeof q === 'string') return q;
   const j = jurisdictionOf(homeOf(person))!;
   const ins = monthlyInsurance(j, opts.coverage ?? 'full');
@@ -250,7 +268,7 @@ export function registerVehicles(sim: Simulation): void {
     const model = modelById(String(p.modelId))!;
     const cityId = homeOf(person);
     const j = jurisdictionOf(cityId)!;
-    const q = quote(model, cityId, s.now, { age, financed }) as Quote;
+    const q = quote(model, cityId, s.now, { age, financed, person }) as Quote;
     const total = inSave(s, q.total, q.currency);
     const cur = saveCurrency(s.universe);
     // Financed, the price is lent and the taxes and fees paid down, as a dealer arranges it.
@@ -325,6 +343,12 @@ export function registerVehicles(sim: Simulation): void {
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
     if (!person || !v || v.soldAt !== undefined) return;
     const r = renewal(v, s.now);
+    // The year's parking permit comes due with it (`parkingYear`).
+    const permit = parkingYear(person, modelById(v.modelId)!, v.cityId);
+    if (permit) {
+      const due = inSave(s, permit.amount, permit.currency);
+      if (!payFromBank(s, person, due, 'Resident parking permit, the year', 'vehicle')) owe(s, person, due, 'Resident parking permit', 'vehicle');
+    }
     if (r.amount > 0) {
       const due = inSave(s, r.amount, CURRENCY[v.jurisdiction]);
       if (!payFromBank(s, person, due, r.memo, 'vehicle')) owe(s, person, due, r.memo, 'vehicle');

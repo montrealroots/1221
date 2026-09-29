@@ -28,7 +28,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 |---|---|---|---|
 | 1 | Documents: identity, passport, driver's license, entry rules, as records with issuer, validity, fees, processing, and checks that name what's missing | citizenship, geography | Done 2026-09-29 (1a and 1b); open items below |
 | 2 | Journeys: a trip of legs (walk, taxi, rideshare, bus, train, flight), fares, durations on the calendar, time zones, the player's location moving only on arrival; airports; booked accommodation at the far end; the return | 1 | Not begun |
-| 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3c); parking and a home's garage open |
+| 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3d) |
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Not begun |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Not begun |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | Not begun |
@@ -116,7 +116,7 @@ Open in Stage 2, and why: a car of one's own as a leg waits for Stage 3, as SLAT
 - **Buying** where one lives, in eight jurisdictions (`content/vehiclefees.ts`): New York's, Connecticut's and California's sales tax, title and registration (New York by weight, Connecticut's 7.75% over $50,000, Los Angeles's rise on 1 October 2026); Britain's on-the-road price; Ireland's price with VAT and VRT and the motor tax by CO2; Ontario's HST; British Columbia's GST and PST; Mexico City's plates. Outright, or on a loan at the published rate: Experian's US rates by credit tier, the Bank of Canada's, Banxico's, the Central Bank of Ireland's, the Bank of England's £10,000 personal loan rate.
 - **Keeping it**: a month's insurance at the place's average paid (the NAIC's for the US states, full cover or liability only; the ABI's; the Central Bank's; FSRA's; ICBC's; Mexico City's only a comparison site's quote, said so), the loan's payment, the registration renewing on its term, and a month's everyday driving at the place's published mileage (the FHWA's, the DfT's, the CSO's, Statistics Canada's; Mexico's none, SLATE's mean), fuel at the week's pump prices by the car's official economy, and AAA's upkeep a mile.
 - **Its value** falls on iSeeCars' published points, straight lines between (SLATE's); a used car is the catalog at an age on the same curve; Sell It sells at that value, the loan paid off first, and a loan bigger than the car paid from the bank.
-- Not kept, and said so on the screen: a dealer's lower trade-in price, repossession, a car counted in net worth, parking.
+- Not kept, and said so on the screen: a dealer's lower trade-in price, repossession, a car counted in net worth.
 
 Evidence: `tests/vehicles.test.ts` (9); 11 mutations, all killed (one found the Irish diesel mild hybrid filed as a petrol hybrid). Screen: Cars, from Home's Cars panel, opened by the guide's chapter A Car Of Your Own.
 
@@ -125,7 +125,10 @@ Evidence: `tests/vehicles.test.ts` (9); 11 mutations, all killed (one found the 
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.
 - SLATE's estimates, and said so: the band of a speeding ticket, the injury mix of a crash, a ticket's frequency where a place publishes none.
 
-Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed. Open in stage 3: parking and a home's garage.
+Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed.
+
+#### Stage 3d: parking (done 2026-09-29)
+- A car kept on the street at home pays a resident's permit a year, on the quote and then with the registration: London's Westminster's by the car's CO2 (£40 to £353.10, from 2 March 2026), SLATE's borough for the city; Dublin City's €50. A home owned with a garage needs none. New York publishes no garage average and parks on the street for nothing; elsewhere no permit is kept, said so. Evidence: `tests/vehicles.test.ts` (parking); 3 mutations, all killed.
 
 ### Stages 4-8 (to be detailed in turn)
 
