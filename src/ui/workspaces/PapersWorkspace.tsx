@@ -25,6 +25,10 @@ import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { working } from '@/engine/systems/career';
 import { DrivingPane, PassportPane, WorkPane } from '@/ui/papers/Documents';
+import { creditRefusal, livesInBritain } from '@/engine/systems/universalcredit';
+import { CDMX_DESEMPLEO, HAP, IRISH_JA, desempleoRefusal, hapRefusal, hapSplit, jobseekerRefusal, livesInDublinCity, livesInIreland, livesInMexicoCity, netWeeklyEur } from '@/engine/systems/homebenefits';
+import { rentOf } from '@/engine/systems/household';
+import { exchange } from '@/engine/content/currency';
 
 type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
 
@@ -320,6 +324,79 @@ function DentalPanel() {
 const STATE_NAMES: Record<string, string> = { 'us-ny': 'New York', 'us-ca': 'California', 'us-ct': 'Connecticut', 'us-ga': 'Georgia', 'us-il': 'Illinois', 'us-la': 'Louisiana' };
 const stateName = (state: string) => STATE_NAMES[state] ?? state;
 
+/**
+ * A claim where a citizen lives outside the US (from 2026-09-29): Universal
+ * Credit in Britain, Jobseeker's Allowance and HAP in Ireland, the Seguro de
+ * Desempleo in Mexico City. Until then each was claimed only by the engine,
+ * and a player living there had no button for it.
+ */
+function HomeClaimsPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const eur = (c: number) => formatMoney(inSaveMoney(sim, c, 'EUR'), cur);
+  const file = () => { const a = run<{ firstPaymentAt: number }>('benefits.claim'); if (a.ok) toast('Filed.', 'positive'); };
+  if (livesInBritain(person)) {
+    const uc = person.universalCredit;
+    const no = uc && uc.closedAt === undefined ? 'You have a claim open.' : creditRefusal(sim, person);
+    return (
+      <Panel title="Universal Credit" subtitle="Britain’s, a month assessed at a time" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>}>
+        <div className="grid grid-3">
+          <Stat label="Claim" value={uc && uc.closedAt === undefined ? 'Open' : 'None Open'} note={uc ? `Filed ${formatDate(uc.filedAt, sim.zone)}` : no ?? 'You can file now'} />
+          <Stat label="Paid" value={money(uc?.paid ?? 0)} note="Since it was filed" />
+          <Stat label="Months Nothing" value={String(uc?.nils ?? 0)} note="Assessed, and nothing due" />
+        </div>
+      </Panel>
+    );
+  }
+  if (livesInIreland(person)) {
+    const ja = person.jobseekers;
+    const no = jobseekerRefusal(sim, person);
+    const hapNo = hapRefusal(sim, person);
+    const rent = person.home && (person.home.kind === 'own' || person.home.kind === 'shared') ? rentOf(sim, person) : 0;
+    const rentEur = cur === 'EUR' ? rent : exchange(rent, cur, 'EUR') ?? rent;
+    const split = livesInDublinCity(person) && rent > 0 ? hapSplit(rentEur, person.home?.kind === 'own', netWeeklyEur(sim, person)) : undefined;
+    return (
+      <>
+        <Panel title="Jobseeker’s Allowance" subtitle="Ireland’s, a week at a time" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>}>
+          <div className="grid grid-3">
+            <Stat label="Claim" value={ja && ja.closedAt === undefined ? 'Open' : 'None Open'} note={ja ? `Filed ${formatDate(ja.filedAt, sim.zone)}` : no ?? 'You can file now'} />
+            <Stat label="Paid" value={money(ja?.paid ?? 0)} />
+            <Stat label="Full Week" value={eur(IRISH_JA.weekly)} note="Less a fifth a day worked, and savings over €20,000" />
+          </div>
+        </Panel>
+        {livesInDublinCity(person) && (
+          <Panel title="Housing Assistance Payment" subtitle="Dublin City Council pays your landlord" actions={hapNo ? undefined : <Gated feature="benefits.hap" onClick={() => { if (run('benefits.hap').ok) toast('On the council’s scheme from next month’s rent.', 'positive'); }}>Apply For HAP</Gated>}>
+            <div className="col gap-3">
+              <div className="grid grid-3">
+                <Stat label="HAP" value={person.hap ? 'Yes' : 'Not Yet'} note={person.hap ? `Since ${formatDate(person.hap.since, sim.zone)}` : hapNo ?? 'You can apply now'} />
+                <Stat label="The Council Pays" value={split ? eur(split.council) : '—'} note="A month, of your rent" />
+                <Stat label="You Pay" value={split ? eur(split.tenant) : '—'} note="The differential rent, and any over the limit" />
+              </div>
+              <Fine>The council pays the rent to its limit, a single adult’s {eur(HAP.limitOwn)} a month for a place of your own and {eur(HAP.limitShared)} for a room, and {Math.round(HAP.discretion * 100)}% more at its discretion; you pay it 18% of your net weekly income over €55, at least €35.82 a week. SLATE takes an application as joining the social housing list, whose wait it doesn’t keep. Source: {HAP.source}.</Fine>
+            </div>
+          </Panel>
+        )}
+      </>
+    );
+  }
+  if (livesInMexicoCity(person)) {
+    const d = person.desempleo;
+    const no = desempleoRefusal(sim, person);
+    return (
+      <Panel title="Seguro De Desempleo" subtitle="Mexico City’s, for a Mexican come home from abroad" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>}>
+        <div className="grid grid-3">
+          <Stat label="Claimed" value={d ? 'Yes' : 'Not Yet'} note={d ? `Filed ${formatDate(d.filedAt, sim.zone)}` : no ?? 'You can file now'} />
+          <Stat label="Paid" value={`${d?.payments ?? 0} Of ${CDMX_DESEMPLEO.payments}`} note="Months" />
+          <Stat label="A Month" value={formatMoney(inSaveMoney(sim, CDMX_DESEMPLEO.monthly, 'MXN'), cur)} note="The month’s UMA" />
+        </div>
+      </Panel>
+    );
+  }
+  return null;
+}
+
 /** A claim: filing it, what it pays, and what it's paid. */
 function BenefitsPane() {
   const { sim, run, toast } = useGame();
@@ -335,6 +412,7 @@ function BenefitsPane() {
   const partial = state === 'ca' ? `the benefit less the earnings past the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_UI.disregard, 'USD'), cur)} and a quarter of them` : state === 'ct' ? 'the benefit less two-thirds of the pay' : 'by its hours, and nothing where the pay reaches the maximum';
   return (
     <div className="col gap-5">
+      <HomeClaimsPanel />
       <Panel
         title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}

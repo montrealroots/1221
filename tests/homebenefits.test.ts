@@ -7,7 +7,7 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { capitalMeans, desempleoRefusal, jobseekerRefusal, jobseekerWeek } from '@/engine/systems/homebenefits';
+import { capitalMeans, desempleoRefusal, jobseekerRefusal, jobseekerWeek , differentialRent, hapRefusal, hapSplit } from '@/engine/systems/homebenefits';
 import { publicCareShareOf } from '@/engine/systems/health';
 
 describe('Jobseeker’s Allowance', () => {
@@ -69,4 +69,32 @@ describe('the Seguro de Desempleo', () => {
     // Nothing left on the calendar after the third.
     expect(sim.universe.scheduled.some((i) => i.kind === 'benefits.desempleo_month' && i.status === 'pending')).toBe(false);
   }, 60_000);
+});
+
+describe('Dublin’s Housing Assistance Payment', () => {
+  it('has the tenant pay 18% of net weekly income over €55, at least €35.82 a week, and the council the rest to its limit and 35%', () => {
+    expect(differentialRent(0)).toBe(Math.round((35_82 * 52) / 12));
+    expect(differentialRent(355_00)).toBe(Math.round((Math.round(300_00 * 0.18) * 52) / 12));
+    // A room at €600: under €500 and 35% (€675), so the council pays all but the differential rent.
+    const room = hapSplit(600_00, false, 0);
+    expect(room.tenant).toBe(differentialRent(0));
+    expect(room.council).toBe(600_00 - differentialRent(0));
+    // A place at €1,200: the council to €891, and the tenant the rest besides.
+    const own = hapSplit(1_200_00, true, 0);
+    expect(own.council).toBe(891_00 - differentialRent(0));
+    expect(own.tenant).toBe(differentialRent(0) + 1_200_00 - 891_00);
+  });
+
+  it('pays a low-income Dubliner’s landlord its part from the next month’s rent, and refuses someone not renting in Dublin', () => {
+    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true }, 'hap-rent');
+    sim.player.citizenshipId = 'ie';
+    expect(sim.player.home?.kind === 'own' || sim.player.home?.kind === 'shared').toBe(true);
+    const r = sim.execute({ kind: 'benefits.hap', payload: {} });
+    expect(r.ok, r.error).toBe(true);
+    const rent = sim.universe.scheduled.find((i) => i.kind === 'home.rent' && i.status === 'pending')!;
+    sim.advanceTo(rent.at + 60_000);
+    expect(sim.universe.transactions.some((t) => t.memo === 'Housing Assistance Payment: Dublin City Council paid the landlord')).toBe(true);
+    const cork = quickSave({ startLocationId: 'ie-m-cork', homeRegionId: 'ie-m-cork', livesWhereBorn: true }, 'hap-cork');
+    expect(hapRefusal(cork, cork.player)).toMatch(/renting in Dublin/);
+  });
 });

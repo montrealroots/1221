@@ -42,6 +42,7 @@
  * nobody had paid.
  */
 
+import { hapRefusal, hapSplit, netWeeklyEur } from './homebenefits';
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
@@ -387,6 +388,18 @@ function onCard(sim: Simulation, person: Person, amount: Money, memo: string, ca
   if (!card || cardRoom(person, card, true) < amount) return false;
   hold(sim, sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: card.id, amount: -amount }] }), card);
   return true;
+}
+
+/** What the council pays of a month's rent under HAP, posted, in the save's money; nothing without it. */
+function hapPaid(sim: Simulation, person: Person, full: Money): Money {
+  if (!person.hap || hapRefusal(sim, { ...person, hap: undefined })) return 0;
+  const cur = saveCurrency(sim.universe);
+  const eur = (c: Money) => (cur === 'EUR' ? c : exchange(c, cur, 'EUR') ?? c);
+  const back = (c: Money) => (cur === 'EUR' ? c : exchange(c, 'EUR', cur) ?? c);
+  const split = hapSplit(eur(full), person.home?.kind === 'own', netWeeklyEur(sim, person));
+  const council = Math.min(full, back(split.council));
+  if (council > 0) sim.post({ memo: 'Housing Assistance Payment: Dublin City Council paid the landlord', category: 'rent', postings: [{ accountId: sim.nominalAccount('expense', 'Rent').id, amount: council }, { accountId: sim.nominalAccount('income', 'Housing Assistance Payment').id, amount: -council }] });
+  return council;
 }
 
 /** The month's rent, the way it's paid. */
@@ -819,7 +832,9 @@ export function registerHousehold(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId ?? s.universe.playerId)];
     if (!person?.home) return;
     const currency = saveCurrency(s.universe);
-    const rent = rentOf(s, person);
+    const full = rentOf(s, person);
+    // With Dublin's Housing Assistance Payment the council pays its part to the landlord (`systems/homebenefits.ts`).
+    const rent = full - hapPaid(s, person, full);
     const bills = billsOf(s, person);
     const before = arrearsOf(s, person);
     // Paid at the same moment, they post in the bank's order: highest first unless it takes the lowest first.

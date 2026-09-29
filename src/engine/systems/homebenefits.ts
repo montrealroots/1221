@@ -21,6 +21,18 @@
  * asks six months of formal work in the city, which an actor's engagements
  * aren't; SLATE doesn't have it. Mexico has no federal unemployment
  * insurance.
+ *
+ * **Dublin, the Housing Assistance Payment** (from 2026-09-29, Dublin City
+ * Council's pages): the council pays the landlord the rent up to its limit,
+ * a single adult's €660 a month for a place of their own and €500 for a room
+ * shared, and up to 35% over it at its discretion, which SLATE takes; the
+ * tenant pays the council a differential rent, 18% of their net weekly
+ * income over €55, never less than €35.82 a week (the scheme from 6 April
+ * 2026), and anything the rent is over the limit and the discretion. For
+ * someone on the social housing list, with net income to €40,000 a year (the
+ * council's table, dated 2023); SLATE takes an application as joining the
+ * list, the list's wait not kept. Net income is last year's pay less its
+ * tax, and the payments coming in now, pensions and Jobseeker's Allowance.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -30,9 +42,10 @@ import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { homeOf } from './earnings';
 import { payeeAccount } from './cash';
 import { isoOfCountry } from './documents';
+import { earningsOf, homeOf } from './earnings';
+import { computeAnnualTax } from '../content/tax';
 
 export const IRISH_JA = {
   weekly: 254_00,
@@ -49,6 +62,17 @@ export const CDMX_DESEMPLEO = {
   source: 'Gaceta Oficial de la Ciudad de México, 8 June 2026: Reglas de Operación, Seguro de Desempleo',
 } as const;
 
+export const HAP = {
+  limitOwn: 660_00,
+  limitShared: 500_00,
+  discretion: 0.35,
+  share: 0.18,
+  disregardWeekly: 55_00,
+  minimumWeekly: 35_82,
+  incomeLimit: 40_000_00,
+  source: 'https://www.dublincity.ie/residential/housing/housing-assistance-payment (Dublin City Council, 2026-09-29)',
+} as const;
+
 export const JA_WEEK_KIND = 'benefits.ja_week';
 export const DESEMPLEO_KIND = 'benefits.desempleo_month';
 const EU = new Set(['IE', 'GB', 'DE', 'FR', 'ES', 'LV', 'IT', 'NL', 'BE', 'PT', 'AT', 'SE', 'DK', 'FI', 'PL', 'CZ', 'GR']);
@@ -56,6 +80,52 @@ const YEAR = 365.25 * MS_DAY;
 
 export interface JobseekerClaim { filedAt: Instant; waited: number; paid: Money; closedAt?: Instant }
 export interface DesempleoClaim { filedAt: Instant; payments: number }
+
+/** Someone's net income a week, in euro cents: last year's pay less its tax, and what comes in now, pensions and benefits. */
+export function netWeeklyEur(sim: Simulation, person: Person): Money {
+  const cur = saveCurrency(sim.universe);
+  const eur = (c: Money) => (cur === 'EUR' ? c : exchange(c, cur, 'EUR') ?? c);
+  const y = earningsOf(person).years[new Date(sim.now).getUTCFullYear() - 1];
+  const gross = y ? Object.values(y.bySource ?? {}).reduce((a, b) => a + b, 0) || y.acting + y.workStudy : 0;
+  const tax = gross > 0 ? computeAnnualTax(gross, homeOf(person), sim.now, { currency: cur }).total : 0;
+  const mine = new Set(Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id).map((a) => a.id));
+  let coming = 0;
+  for (let i = sim.universe.transactions.length - 1; i >= 0; i -= 1) {
+    const t = sim.universe.transactions[i]!;
+    if (t.at < sim.now - 28 * MS_DAY) break;
+    if (t.category !== 'pension' && t.category !== 'benefit') continue;
+    for (const p of t.postings) if (mine.has(p.accountId) && p.amount > 0) coming += p.amount;
+  }
+  return Math.round(eur(gross - tax) / 52) + Math.round(eur(coming) / 4);
+}
+
+/** A month's differential rent, in euro cents: 18% of net weekly income over €55, at least €35.82 a week. */
+export function differentialRent(netWeeklyEur: Money): Money {
+  const weekly = Math.max(HAP.minimumWeekly, Math.round((netWeeklyEur - HAP.disregardWeekly) * HAP.share));
+  return Math.round((weekly * 52) / 12);
+}
+
+export const livesInDublinCity = (person: Person) => homeOf(person) === 'ie-lei-dublin';
+
+export function hapRefusal(sim: Simulation, person: Person): string | undefined {
+  if (!livesInDublinCity(person)) return 'SLATE keeps Dublin City Council’s scheme: it’s for someone renting in Dublin.';
+  if (!EU.has(isoOfCountry(person.citizenshipId) ?? '')) return 'On a visa, Ireland’s social housing support isn’t yours.';
+  if (person.home?.kind !== 'own' && person.home?.kind !== 'shared') return 'It pays a landlord: it’s for someone renting.';
+  if (person.hap) return 'You have it.';
+  if (netWeeklyEur(sim, person) * 52 > HAP.incomeLimit) return 'Your net income is over the council’s €40,000 a year.';
+  return undefined;
+}
+
+/**
+ * A month's rent with HAP, in euro cents: what the council pays the landlord,
+ * and what the tenant pays, the differential rent and anything over the limit.
+ */
+export function hapSplit(rentEur: Money, own: boolean, netWeekly: Money): { council: Money; tenant: Money } {
+  const limit = Math.round((own ? HAP.limitOwn : HAP.limitShared) * (1 + HAP.discretion));
+  const covered = Math.min(rentEur, limit);
+  const differential = Math.min(covered, differentialRent(netWeekly));
+  return { council: covered - differential, tenant: differential + Math.max(0, rentEur - limit) };
+}
 
 export const livesInIreland = (person: Person) => CITIES.get(homeOf(person))?.countryId === 'ie';
 export const livesInMexicoCity = (person: Person) => { const c = CITIES.get(homeOf(person)); return c?.countryId === 'mx' && (c.parentId === 'mx-09' || c.id.startsWith('mx-cmx')); };
@@ -123,6 +193,14 @@ function pay(sim: Simulation, person: Person, due: Money, memo: string, line: st
 }
 
 export function registerHomeBenefits(sim: Simulation): void {
+  sim.onCommand<Record<string, never>, { council: Money }>('benefits.hap', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = hapRefusal(s, person);
+    if (no) throw new CommandError(no);
+    person.hap = { since: s.now };
+    return { council: 0 };
+  });
+
   sim.onSchedule(JA_WEEK_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const claim = person?.jobseekers;
