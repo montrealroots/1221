@@ -83,7 +83,14 @@ Evidence: `systems/journey.ts`, `systems/airports.ts`, `systems/stays.ts`, `cont
 
 Evidence: `tests/careertrips.test.ts` (3): the plan to London, none already gone and none to New York from New Haven; Toronto on the production's ticket, there when it lands and home again; Los Angeles to New York on the actor's own fare, recorded as a cost of the work. 7 mutations, all killed.
 
-Open in Stage 2: rail (the Northeast Corridor, Eurostar), buses and a car of one's own as legs; a cabin other than economy; jet lag.
+#### Stage 2c: a journey by train (done 2026-09-29)
+- Eleven routes among SLATE's towns: Amtrak's Acela and Northeast Regional (New York to Washington, Boston, Philadelphia and New Haven; Boston to Washington), Metro-North's New Haven Line, Eurostar (London to Paris, Brussels and Amsterdam), Avanti (London to Manchester), Irish Rail (Dublin to Cork) and the Pacific Surfliner (Los Angeles to San Diego). Times are the weekday medians of the operators' own 2026 timetables; punctuality is each operator's on its own measure; fares are the MTA's, Avanti's and Irish Rail's published fares, Amtrak's derived from its FY2025 ticket revenue per passenger-mile (it publishes none), Eurostar's from its 2025 revenue over its passengers (its "from" fares are floors). Each canceled ticket comes back by its operator's rule.
+- Travel's By offers the trains where any run; a job's trips take the train where one runs, the fastest on the production's ticket and the cheapest on the actor's own.
+- SLATE's model, and said so: when in the day trains leave (the weekday count spread from six to nine), the rides to and from the station (thirty minutes by transit, the fare not kept), how late a late train is (a mean of twenty minutes past the operator's line), Philadelphia's, New Haven's and the Surfliner's miles.
+
+Evidence: `content/rail.ts`, `systems/rail.ts`, `docs/research/world/research-rail.json`; `tests/rail.test.ts` (8): Amtrak's fares from its own figures, Metro-North's peak, every route both ways, Eurostar's legs and border before boarding, trains late at the operator's rate, a booked Acela to Washington, Amtrak's refund. 12 mutations, all killed.
+
+Open in Stage 2: buses and a car of one's own as legs; a cabin other than economy; jet lag; train cancellations; Belfast, Edinburgh and Toluca, not yet SLATE's towns.
 ### Stages 3-8 (to be detailed in turn)
 
 ## Coverage record
@@ -106,6 +113,9 @@ Legend: **Verified**, sourced from an authority and dated. **Modeled**, a docume
 | Holding a passport or license at the start | US citizens | Verified | State's FY2025 passports in circulation; FHWA DL-20 (2024) |
 | Holding a license at the start | other citizenships | None | nobody is given one |
 | Journeys | New Haven to New York by rail | Verified | CT Mirror, 2026-01-12 |
+| Rail routes, times, punctuality | 11 routes in the US, UK, Ireland, France, Belgium, the Netherlands | Verified; departure times modeled | operators' timetables and reports, 2026-09-29 (`content/rail.ts`) |
+| Rail fares | Metro-North, Avanti, Irish Rail | Verified | the operators' fare tables, 2026 |
+| Rail fares | Amtrak, Eurostar | Derived from the operators' own revenue figures | Amtrak FY2025 route results; Eurostar 2025, read secondhand |
 | Airports | the world's 3,266 with scheduled flights | Verified (public domain) | OurAirports, downloaded 2026-09-29 |
 | Air routes and schedules | everywhere | Modeled: direct between large airports within reach, else through the ACI's busiest hubs; three departures a day | ACI World 2025 rankings |
 | Airfares | 66 pairs among twelve US markets | Verified | DOT Consumer Airfare Report Q1 2026 |

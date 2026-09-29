@@ -1,0 +1,772 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "purpose": "Real passenger-rail figures for SLATE journey modelling. Every figure carries its source and the date or period it applies to. Nothing here is an estimate presented as published.",
+    "conventions": {
+      "minutes": "Scheduled end-to-end running time in minutes, computed directly from the operator's own published timetable or GTFS feed (departure at origin to arrival at destination). 'fastest' is the minimum over the day's trains, 'median' the middle value. Where a figure comes from an operator's marketing copy instead, 'basis' says so.",
+      "frequencyPerDay": "Count of trains serving BOTH stations of the pair, per direction, on the stated day, counted from the timetable/GTFS. Not an operator claim unless 'basis' says so.",
+      "amounts": "Numbers in the fare's own currency (USD, GBP, EUR, MXN). No conversion.",
+      "sourceQuality": "primary = operator, regulator or government; secondary = clearly labelled press/guide, used only where no primary figure was reachable and flagged in 'uncertain'."
+    },
+    "method": "Amtrak minutes/frequencies were parsed from Amtrak's official route timetable PDFs (content.amtrak.com, generated Sunday 27 Sep 2026) with pdftotext -table and a script; Metro-North from the MTA's official GTFS feed downloaded 2026-09-29 (service dates 2026-09-30 / 2026-10-03); Irish routes from the NTA's official Irish Rail GTFS (feed valid 2026-09-28 to 2027-09-28; service dates 2026-10-07/10/11); Avanti from Avanti's own 17 May - 12 Dec 2026 timetable book PDF. Pages behind JavaScript (brfares, LNER fare search, Amtrak fare search) could not be read and their numbers are null rather than guessed."
+  },
+  "routes": [
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "Washington Union Station (WAS)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "Washington, DC, US",
+      "service": "Acela",
+      "minutes": {
+        "NYP_to_WAS": { "weekdayFastest": 175, "weekdayMedian": 180, "saturdayMedian": 185, "sundayMedian": 185 },
+        "WAS_to_NYP": { "weekdayFastest": 176, "weekdayMedian": 185, "saturdayMedian": 191, "sundayMedian": 183 },
+        "basis": "Computed from Amtrak Acela timetable PDF (generated 27 Sep 2026).",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_WAS": { "weekday": 19, "saturday": 10, "sunday": 15 },
+        "WAS_to_NYP": { "weekday": 24, "saturday": 8, "sunday": 11 },
+        "basis": "Trains in the Acela timetable calling at both stations (weekday = trains running on Wednesday).",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Acela Business / Acela First - Flex", "amount": null, "currency": "USD", "basis": "Dynamic pricing; Amtrak publishes no fixed or 'from' fare for this pair. Fare rules only (see refund).", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" },
+        { "class": "Acela Business / Acela First - Value", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" },
+        { "class": "Acela Business / Acela First - Sale", "amount": null, "currency": "USD", "basis": "Promotional only; no published figure for this pair.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Acela.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "Washington Union Station (WAS)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "Washington, DC, US",
+      "service": "Northeast Regional",
+      "minutes": {
+        "NYP_to_WAS": { "weekdayFastest": 200, "weekdayMedian": 215, "saturdayMedian": 218, "sundayMedian": 217 },
+        "WAS_to_NYP": { "weekdayFastest": 187, "weekdayMedian": 220, "saturdayMedian": 223, "sundayMedian": 217 },
+        "basis": "Computed from Amtrak Northeast Regional timetable PDF (generated 27 Sep 2026). The parse also produced a few implausibly long outliers (max ~477 min) that are likely multi-page or overnight artefacts; medians are robust to them.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_WAS": { "weekday": 37, "saturday": 18, "sunday": 25 },
+        "WAS_to_NYP": { "weekday": 36, "saturday": 18, "sunday": 25 },
+        "basis": "Trains in the Northeast Regional timetable calling at both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Coach - Sale (Falling Fares promotion)", "amount": 42, "currency": "USD", "basis": "'Starting at' one-way coach sale fare, NY-Washington, book by 30 Sep 2026 for travel 14 Oct-17 Dec 2026 (blackouts 11 Nov, 20-30 Nov). Promotion confirmed by Amtrak; the $42 city-pair figure is from secondary press only.", "source": "https://www.timeout.com/usa/news/amtraks-major-fall-sale-is-slashing-train-fares-by-25-nationwide-but-you-have-to-act-fast-092826", "effective": "Travel 2026-10-14 to 2026-12-17", "sourceQuality": "secondary" },
+        { "class": "Coach - Value", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" },
+        { "class": "Coach - Flex", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Northeast%20Regional.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "Boston South Station (BOS)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "Boston, MA, US",
+      "service": "Acela",
+      "minutes": {
+        "NYP_to_BOS": { "weekdayFastest": 227, "weekdayMedian": 238, "saturdayMedian": 238, "sundayMedian": 238 },
+        "BOS_to_NYP": { "weekdayFastest": 221, "weekdayMedian": 241, "saturdayMedian": 247, "sundayMedian": 247 },
+        "basis": "Computed from Amtrak Acela timetable PDF.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_BOS": { "weekday": 10, "saturday": 5, "sunday": 4 },
+        "BOS_to_NYP": { "weekday": 10, "saturday": 7, "sunday": 8 },
+        "basis": "Trains in the Acela timetable calling at both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Acela Business / First (Flex, Value, Sale)", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Acela.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "Boston South Station (BOS)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "Boston, MA, US",
+      "service": "Northeast Regional",
+      "minutes": {
+        "NYP_to_BOS": { "weekdayFastest": 253, "weekdayMedian": 268, "saturdayMedian": 263, "sundayMedian": 261 },
+        "BOS_to_NYP": { "weekdayFastest": 264, "weekdayMedian": 278, "saturdayMedian": 277, "sundayMedian": 278 },
+        "basis": "Computed from Amtrak Northeast Regional timetable PDF.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_BOS": { "weekday": 19, "saturday": 10, "sunday": 13 },
+        "BOS_to_NYP": { "weekday": 19, "saturday": 10, "sunday": 12 },
+        "basis": "Trains in the Northeast Regional timetable calling at both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Coach - Sale (Falling Fares promotion)", "amount": 21, "currency": "USD", "basis": "'Starting at' one-way coach sale fare, Boston-New York, travel 14 Oct-17 Dec 2026. City-pair figure from secondary press only.", "source": "https://www.timeout.com/usa/news/amtraks-major-fall-sale-is-slashing-train-fares-by-25-nationwide-but-you-have-to-act-fast-092826", "effective": "Travel 2026-10-14 to 2026-12-17", "sourceQuality": "secondary" },
+        { "class": "Coach - Value / Flex", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Northeast%20Regional.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "Philadelphia William H. Gray III 30th Street Station (PHL)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "Philadelphia, PA, US",
+      "service": "Acela",
+      "minutes": {
+        "NYP_to_PHL": { "weekdayFastest": 69, "weekdayMedian": 72, "saturdayMedian": 73, "sundayMedian": 73 },
+        "PHL_to_NYP": { "weekdayFastest": 72, "weekdayMedian": 78, "saturdayMedian": 88, "sundayMedian": 77 },
+        "basis": "Computed from Amtrak Acela timetable PDF.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_PHL": { "weekday": 19, "saturday": 10, "sunday": 15 },
+        "PHL_to_NYP": { "weekday": 24, "saturday": 8, "sunday": 11 },
+        "basis": "Trains in the Acela timetable calling at both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Acela Business / First (Flex, Value, Sale)", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Acela.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "Philadelphia William H. Gray III 30th Street Station (PHL)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "Philadelphia, PA, US",
+      "service": "Northeast Regional",
+      "minutes": {
+        "NYP_to_PHL": { "weekdayFastest": 83, "weekdayMedian": 90, "saturdayMedian": 91, "sundayMedian": 90 },
+        "PHL_to_NYP": { "weekdayFastest": 77, "weekdayMedian": 101, "saturdayMedian": 101, "sundayMedian": 100 },
+        "basis": "Computed from Amtrak Northeast Regional timetable PDF.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_PHL": { "weekday": 41, "saturday": 20, "sunday": 28 },
+        "PHL_to_NYP": { "weekday": 40, "saturday": 20, "sunday": 27 },
+        "basis": "Trains in the Northeast Regional timetable calling at both stations. Keystone Service trains (not counted) also run NY-Philadelphia.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Coach - Sale / Value / Flex", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Northeast%20Regional.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "New Haven Union Station (NHV)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "New Haven, CT, US",
+      "service": "Acela",
+      "minutes": {
+        "NYP_to_NHV": { "weekdayFastest": 96, "weekdayMedian": 102, "saturdayMedian": 104, "sundayMedian": 104 },
+        "NHV_to_NYP": { "weekdayFastest": 104, "weekdayMedian": 112, "saturdayMedian": 111, "sundayMedian": 113 },
+        "basis": "Computed from Amtrak Acela timetable PDF. Not every Acela stops at New Haven.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_NHV": { "weekday": 7, "saturday": 4, "sunday": 4 },
+        "NHV_to_NYP": { "weekday": 9, "saturday": 7, "sunday": 8 },
+        "basis": "Acela trains calling at both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Acela Business / First (Flex, Value, Sale)", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Acela.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "New York Penn Station (Moynihan Train Hall) (NYP)",
+      "to": "New Haven Union Station (NHV)",
+      "fromCityHint": "New York, NY, US",
+      "toCityHint": "New Haven, CT, US",
+      "service": "Northeast Regional",
+      "minutes": {
+        "NYP_to_NHV": { "weekdayFastest": 102, "weekdayMedian": 109, "saturdayMedian": 107, "sundayMedian": 108 },
+        "NHV_to_NYP": { "weekdayFastest": 112, "weekdayMedian": 124, "saturdayMedian": 132, "sundayMedian": 132 },
+        "basis": "Computed from Amtrak Northeast Regional timetable PDF (includes Springfield-branch trains that call at New Haven).",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "NYP_to_NHV": { "weekday": 23, "saturday": 12, "sunday": 15 },
+        "NHV_to_NYP": { "weekday": 23, "saturday": 12, "sunday": 15 },
+        "basis": "Northeast Regional trains calling at both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Coach - Sale / Value / Flex", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Northeast%20Regional.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "Boston South Station (BOS)",
+      "to": "Washington Union Station (WAS)",
+      "fromCityHint": "Boston, MA, US",
+      "toCityHint": "Washington, DC, US",
+      "service": "Acela",
+      "minutes": {
+        "BOS_to_WAS": { "weekdayFastest": 418, "weekdayMedian": 422, "saturdayMedian": 443, "sundayMedian": 435 },
+        "WAS_to_BOS": { "weekdayFastest": 417, "weekdayMedian": 428, "saturdayMedian": 426, "sundayMedian": 426 },
+        "basis": "Computed from Amtrak Acela timetable PDF. Amtrak's route page describes the trip as '7 hours'.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "BOS_to_WAS": { "weekday": 9, "saturday": 6, "sunday": 7 },
+        "WAS_to_BOS": { "weekday": 9, "saturday": 5, "sunday": 4 },
+        "basis": "Acela trains running through between both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Acela Business / First (Flex, Value, Sale)", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Acela.pdf"
+    },
+    {
+      "operator": "Amtrak",
+      "from": "Boston South Station (BOS)",
+      "to": "Washington Union Station (WAS)",
+      "fromCityHint": "Boston, MA, US",
+      "toCityHint": "Washington, DC, US",
+      "service": "Northeast Regional",
+      "minutes": {
+        "BOS_to_WAS": { "weekdayFastest": 478, "weekdayMedian": 503, "saturdayMedian": 510, "sundayMedian": 509 },
+        "WAS_to_BOS": { "weekdayFastest": 471, "weekdayMedian": 495, "saturdayMedian": 495, "sundayMedian": 488 },
+        "basis": "Computed from Amtrak Northeast Regional timetable PDF (through trains only).",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "BOS_to_WAS": { "weekday": 15, "saturday": 8, "sunday": 10 },
+        "WAS_to_BOS": { "weekday": 17, "saturday": 9, "sunday": 12 },
+        "basis": "Northeast Regional trains calling at both stations.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "fares": [
+        { "class": "Coach - Sale / Value / Flex", "amount": null, "currency": "USD", "basis": "Dynamic pricing; no published figure.", "source": "https://www.amtrak.com/guide-to-fares", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "amtrakFareFamilies" },
+      "source": "https://content.amtrak.com/content/timetable/Northeast%20Regional.pdf"
+    },
+    {
+      "operator": "MTA Metro-North Railroad",
+      "from": "New Haven Union Station",
+      "to": "Grand Central Terminal",
+      "fromCityHint": "New Haven, CT, US",
+      "toCityHint": "New York, NY, US",
+      "service": "New Haven Line",
+      "minutes": {
+        "NHV_to_GCT": { "weekdayFastest": 88, "weekdayMedian": 122, "weekdayMax": 134, "saturdayMedian": 127 },
+        "GCT_to_NHV": { "weekdayFastest": 91, "weekdayMedian": 125, "weekdayMax": 133, "saturdayMedian": 135 },
+        "basis": "Computed from MTA's official Metro-North GTFS (downloaded 2026-09-29), service on Wed 2026-09-30 and Sat 2026-10-03. The sub-100-minute runs are a handful of peak expresses (e.g. 05:08 and 05:32 from New Haven; 16:11, 16:55, 18:26 from Grand Central).",
+        "effective": "Service dates 2026-09-30 and 2026-10-03"
+      },
+      "frequencyPerDay": {
+        "NHV_to_GCT": { "weekday": 42, "weekdayPeakTrains": 15, "saturday": 34, "sunday": 33 },
+        "GCT_to_NHV": { "weekday": 48, "weekdayPeakTrains": 23, "saturday": 34, "sunday": 33 },
+        "basis": "Trips in the GTFS stopping at both New Haven (Union Station, stop 149) and Grand Central (stop 1); peak flag from the feed's peak_offpeak field.",
+        "effective": "Service dates 2026-09-30, 2026-10-03, 2026-10-04"
+      },
+      "fares": [
+        { "class": "Adult One-Way Peak", "amount": 27.25, "currency": "USD", "basis": "Ticket bought before boarding (app/machine). New Haven / New Haven-State St, Zone 21, to/from Grand Central.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01 (Connecticut stations page of the MTA fare table)" },
+        { "class": "Adult One-Way Off-Peak", "amount": 20.25, "currency": "USD", "basis": "As above.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" },
+        { "class": "Adult One-Way Peak bought on board", "amount": 35.00, "currency": "USD", "basis": "Onboard fare.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" },
+        { "class": "Adult One-Way Off-Peak bought on board", "amount": 28.00, "currency": "USD", "basis": "Onboard fare.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" },
+        { "class": "Senior/Disabled/Medicare One-Way", "amount": 13.50, "currency": "USD", "basis": "Reduced fare.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" },
+        { "class": "Day Pass (weekday)", "amount": 49.00, "currency": "USD", "basis": "Round trip, one day.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" },
+        { "class": "Day Pass (weekend)", "amount": 40.50, "currency": "USD", "basis": "Round trip, one day.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" },
+        { "class": "Weekly", "amount": 184.25, "currency": "USD", "basis": "Commutation ticket.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" },
+        { "class": "Monthly", "amount": 518.50, "currency": "USD", "basis": "Commutation ticket.", "source": "https://www.mta.info/document/194941", "effective": "2026-07-01" }
+      ],
+      "refund": null,
+      "source": "https://rrgtfsfeeds.s3.amazonaws.com/gtfsmnr.zip"
+    },
+    {
+      "operator": "Eurostar",
+      "from": "London St Pancras International",
+      "to": "Paris Gare du Nord",
+      "fromCityHint": "London, GB",
+      "toCityHint": "Paris, FR",
+      "service": "Eurostar",
+      "minutes": {
+        "fastest": 136,
+        "basis": "Eurostar: 'just 2 hours 16 mins' (fastest). Paris is one hour ahead of London, so clock-time differences are 60 min larger eastbound.",
+        "effective": "Page read 2026-09-29"
+      },
+      "frequencyPerDay": null,
+      "fares": [
+        { "class": "Eurostar Standard", "amount": 39, "currency": "GBP", "basis": "'From' one-way price, as part of a return, adult, Standard, for travel 7 Oct 2026-31 Jan 2027, subject to availability.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Travel 2026-10-07 to 2027-01-31" },
+        { "class": "Eurostar Plus", "amount": 70, "currency": "GBP", "basis": "'From' one-way price as part of a return.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Page read 2026-09-29" },
+        { "class": "Eurostar Premier", "amount": 245, "currency": "GBP", "basis": "'From' one-way price as part of a return.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "eurostarClasses" },
+      "source": "https://www.eurostar.com/uk-en/train/france/paris"
+    },
+    {
+      "operator": "Eurostar",
+      "from": "London St Pancras International",
+      "to": "Brussels-Midi/Zuid",
+      "fromCityHint": "London, GB",
+      "toCityHint": "Brussels, BE",
+      "service": "Eurostar",
+      "minutes": {
+        "fastest": 118,
+        "basis": "Eurostar: 'direct ... in just 1 hour and 58 minutes'. Brussels is one hour ahead of London.",
+        "effective": "Page read 2026-09-29"
+      },
+      "frequencyPerDay": null,
+      "fares": [
+        { "class": "Eurostar Standard", "amount": 39, "currency": "GBP", "basis": "'From' one-way as part of a return, travel 7 Oct 2026-31 Jan 2027.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Travel 2026-10-07 to 2027-01-31" },
+        { "class": "Eurostar Plus", "amount": 70, "currency": "GBP", "basis": "'From' one-way as part of a return.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Page read 2026-09-29" },
+        { "class": "Eurostar Premier", "amount": 209, "currency": "GBP", "basis": "'From' one-way as part of a return.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "eurostarClasses" },
+      "source": "https://www.eurostar.com/uk-en/train/belgium/brussels"
+    },
+    {
+      "operator": "Eurostar",
+      "from": "London St Pancras International",
+      "to": "Amsterdam Centraal",
+      "fromCityHint": "London, GB",
+      "toCityHint": "Amsterdam, NL",
+      "service": "Eurostar (direct)",
+      "minutes": {
+        "LON_to_AMS_example": 244,
+        "AMS_to_LON_example": 257,
+        "basis": "Eurostar release of 10 Jul 2025 gives example timings 06:16 London - 11:20 Amsterdam and 06:40 Amsterdam - 09:57 London (local clock times; Amsterdam is UK+1), i.e. 244 and 257 minutes elapsed. Eurostar's route page says 'just under 4 hours' in one place and '4 hours 19 mins' in another.",
+        "effective": "Timetable from 2025-12-15"
+      },
+      "frequencyPerDay": {
+        "eachDirection": 5,
+        "basis": "Eurostar: five direct trains per day in each direction from 15 December 2025.",
+        "source": "https://mediacentre.eurostar.com/mc_view?article_Id=ka4Rz00000Gdi6PIAR&language=",
+        "effective": "From 2025-12-15"
+      },
+      "fares": [
+        { "class": "Eurostar Standard", "amount": 39, "currency": "GBP", "basis": "'From' one-way as part of a return.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Page read 2026-09-29" },
+        { "class": "Eurostar Plus", "amount": 70, "currency": "GBP", "basis": "'From' one-way as part of a return.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Page read 2026-09-29" },
+        { "class": "Eurostar Premier", "amount": 229, "currency": "GBP", "basis": "'From' one-way as part of a return.", "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "eurostarClasses" },
+      "source": "https://www.eurostar.com/uk-en/train/netherlands/amsterdam"
+    },
+    {
+      "operator": "Iarnrod Eireann / NI Railways (Translink) - Enterprise",
+      "from": "Dublin Connolly",
+      "to": "Belfast Grand Central",
+      "fromCityHint": "Dublin, IE",
+      "toCityHint": "Belfast, GB (Northern Ireland)",
+      "service": "Enterprise",
+      "minutes": {
+        "DUB_to_BFS": { "weekdayFastest": 128, "weekdayMedian": 128, "weekdayMax": 138, "sundayMedian": 130 },
+        "BFS_to_DUB": { "weekdayFastest": 133, "weekdayMedian": 133, "weekdayMax": 143, "sundayMedian": 130 },
+        "basis": "Computed from the NTA's official Irish Rail GTFS (feed valid 2026-09-28 to 2027-09-28), service on Wed 2026-10-07 and Sun 2026-10-11.",
+        "effective": "Service dates 2026-10-07, 2026-10-11"
+      },
+      "frequencyPerDay": {
+        "DUB_to_BFS": { "weekday": 15, "saturday": 15, "sunday": 8 },
+        "BFS_to_DUB": { "weekday": 15, "saturday": 15, "sunday": 8 },
+        "basis": "GTFS count; matches Translink's '15 trains per day Monday-Saturday, 8 on Sunday'.",
+        "effective": "Service dates 2026-10-07/10/11"
+      },
+      "fares": [
+        { "class": "Adult Single (from Dublin Connolly, walk-up)", "amount": 30.40, "currency": "EUR", "basis": "Irish Rail fare letter K (Dublin Connolly-Belfast per the page's fare grid). Applies only to journeys starting in the Republic.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-belfast", "effective": "Page read 2026-09-29 (no effective date shown)" },
+        { "class": "Adult Day Return (from Dublin)", "amount": 35.00, "currency": "EUR", "basis": "Fare letter K.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-belfast", "effective": "Page read 2026-09-29" },
+        { "class": "Adult Open Return (from Dublin)", "amount": 44.00, "currency": "EUR", "basis": "Fare letter K.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-belfast", "effective": "Page read 2026-09-29" },
+        { "class": "Young Adult/Student Single (from Dublin)", "amount": 15.20, "currency": "EUR", "basis": "Fare letter K; Leap card required.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-belfast", "effective": "Page read 2026-09-29" },
+        { "class": "Online Flexible Single (from Belfast)", "amount": 16.99, "currency": "GBP", "basis": "Translink online fare from Belfast Grand Central; return 33.98.", "source": "https://www.translink.co.uk/using-translink/cross-border/enterprise", "effective": "Page read 2026-09-29" },
+        { "class": "Online Semi-Flexible Single (from Belfast)", "amount": 15.99, "currency": "GBP", "basis": "Translink online fare; return 31.98.", "source": "https://www.translink.co.uk/using-translink/cross-border/enterprise", "effective": "Page read 2026-09-29" },
+        { "class": "Online Low Single (from Belfast)", "amount": 14.99, "currency": "GBP", "basis": "Translink online fare; return 29.98.", "source": "https://www.translink.co.uk/using-translink/cross-border/enterprise", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": null,
+      "notes": "Belfast terminus is Belfast Grand Central. The Enterprise last served Lanyon Place on 2 July 2024 and moved to Grand Central (per secondary reporting); Translink lists boarding points as Belfast Grand Central, Portadown and Newry only. Translink: book online up to 80 minutes before departure.",
+      "source": "https://www.transportforireland.ie/transitData/Data/GTFS_Irish_Rail.zip"
+    },
+    {
+      "operator": "Iarnrod Eireann (Irish Rail)",
+      "from": "Dublin Heuston",
+      "to": "Cork Kent",
+      "fromCityHint": "Dublin, IE",
+      "toCityHint": "Cork, IE",
+      "service": "Intercity",
+      "minutes": {
+        "DUB_to_CRK": { "weekdayFastest": 148, "weekdayMedian": 155, "weekdayMax": 168, "sundayMedian": 151 },
+        "CRK_to_DUB": { "weekdayFastest": 134, "weekdayMedian": 154, "weekdayMax": 160, "sundayMedian": 150 },
+        "basis": "Computed from the NTA's official Irish Rail GTFS, service on Wed 2026-10-07 and Sun 2026-10-11.",
+        "effective": "Service dates 2026-10-07, 2026-10-11"
+      },
+      "frequencyPerDay": {
+        "DUB_to_CRK": { "weekday": 14, "saturday": 14, "sunday": 10 },
+        "CRK_to_DUB": { "weekday": 15, "saturday": 13, "sunday": 10 },
+        "basis": "GTFS count of direct trains calling at both stations.",
+        "effective": "Service dates 2026-10-07/10/11"
+      },
+      "fares": [
+        { "class": "Adult Single (walk-up)", "amount": 47.35, "currency": "EUR", "basis": "Fare letter T (Dublin Heuston-Cork per the page's fare grid image).", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-cork", "effective": "Page read 2026-09-29 (no effective date shown)" },
+        { "class": "Adult Day Return", "amount": 66.40, "currency": "EUR", "basis": "Fare letter T.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-cork", "effective": "Page read 2026-09-29" },
+        { "class": "Adult Open Return", "amount": 71.20, "currency": "EUR", "basis": "Fare letter T.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-cork", "effective": "Page read 2026-09-29" },
+        { "class": "Adult Day Saver (to Dublin only)", "amount": 54.40, "currency": "EUR", "basis": "Fare letter T; day return to Dublin, Tue-Thu on the 09:25/10:25/11:25 or Saturdays 06:00-11:20; not Mon/Fri/Sun.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-cork", "effective": "Page read 2026-09-29" },
+        { "class": "Young Adult/Student Single", "amount": 23.20, "currency": "EUR", "basis": "Fare letter T; Student or Young Adult Leap Card required.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-cork", "effective": "Page read 2026-09-29" },
+        { "class": "Child Single", "amount": null, "currency": "EUR", "basis": "Rule, not a listed amount: children 5-18 pay half the adult fare, capped at EUR 31; under 5 free.", "source": "https://www.irishrail.ie/en-ie/rail-fares-and-tickets/fares-info/dublin-cork", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": null,
+      "source": "https://www.transportforireland.ie/transitData/Data/GTFS_Irish_Rail.zip"
+    },
+    {
+      "operator": "Avanti West Coast",
+      "from": "London Euston",
+      "to": "Manchester Piccadilly",
+      "fromCityHint": "London, GB",
+      "toCityHint": "Manchester, GB",
+      "service": "Avanti West Coast intercity",
+      "minutes": {
+        "EUS_to_MAN": { "weekdayFastest": 126, "weekdayMedian": 131, "saturdayMedian": 131, "sundayMedian": 132 },
+        "MAN_to_EUS": { "weekdayFastest": 119, "weekdayMedian": 134 },
+        "basis": "Computed from Avanti's 17 May-12 Dec 2026 timetable book. Avanti's own route page copy says 'approximately 2 hours 45 minutes', which the timetable does not support.",
+        "effective": "Timetable 2026-05-17 to 2026-12-12"
+      },
+      "frequencyPerDay": {
+        "EUS_to_MAN": { "weekdayMonThu": 47, "saturday": 38, "sunday": 23 },
+        "MAN_to_EUS": { "weekdayAtLeast": 44 },
+        "basis": "Counted from the timetable book: weekday departures from Euston at :13, :33 and :53 past most hours (3 per hour). Southbound count is a lower bound (two table blocks did not parse). Weekly revised timetables for engineering work are published separately.",
+        "effective": "Timetable 2026-05-17 to 2026-12-12"
+      },
+      "fares": [
+        { "class": "Advance Single (Standard)", "amount": 33.50, "currency": "GBP", "basis": "'From' price when booking about 12 weeks ahead; train-specific.", "source": "https://www.avantiwestcoast.co.uk/tickets-and-savings/ticket-types", "effective": "Page read 2026-09-29" },
+        { "class": "Off-Peak Single (Standard)", "amount": 79.80, "currency": "GBP", "basis": "Walk-up regulated-type fare, London-Manchester.", "source": "https://www.avantiwestcoast.co.uk/tickets-and-savings/ticket-types", "effective": "Page read 2026-09-29" },
+        { "class": "Anytime Single (Standard)", "amount": 193.00, "currency": "GBP", "basis": "Walk-up fare, London-Manchester.", "source": "https://www.avantiwestcoast.co.uk/tickets-and-savings/ticket-types", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "ukNationalRail", "operatorNote": "Avanti: Off-Peak and Anytime refundable before the ticket's start date if unused, GBP 5 admin fee; Advance changeable before travel for GBP 10 admin fee plus fare difference." },
+      "source": "https://www.avantiwestcoast.co.uk/-/media/avanti-pdfs/avanti-timetables/2026/timetable-books/17-may---12-december-2026-timetable-book.pdf"
+    },
+    {
+      "operator": "LNER (London North Eastern Railway)",
+      "from": "London King's Cross",
+      "to": "Edinburgh Waverley",
+      "fromCityHint": "London, GB",
+      "toCityHint": "Edinburgh, GB",
+      "service": "LNER Azuma intercity",
+      "minutes": {
+        "typical": 248,
+        "basis": "LNER: 'faster and more frequent hourly trains now take around 4 hours and 8 minutes' ('Travel time 4h 8m'). The same page's FAQ still says 'usually takes just over four and a half hours'. Not computed from a timetable.",
+        "effective": "Page read 2026-09-29"
+      },
+      "frequencyPerDay": {
+        "weekday": 29,
+        "basis": "LNER: '29 direct LNER trains every weekday'.",
+        "effective": "Page read 2026-09-29"
+      },
+      "fares": [
+        { "class": "Advance Single (Standard)", "amount": 41.40, "currency": "GBP", "basis": "LNER headline 'from' when booked three weeks ahead (railcard from 27.55). The same page showed live 'from' prices of 34.40 (Tue 20 Oct 2026) and 38.20 (Fri 2 Oct 2026).", "source": "https://www.lner.co.uk/routes/london-kings-cross-to-edinburgh-trains/", "effective": "Page read 2026-09-29" },
+        { "class": "First Class Advance Single", "amount": 105.50, "currency": "GBP", "basis": "Live 'from' price shown for Sat 14 Nov 2026.", "source": "https://www.lner.co.uk/routes/london-kings-cross-to-edinburgh-trains/", "effective": "Travel 2026-11-14" },
+        { "class": "Anytime Single (Standard)", "amount": null, "currency": "GBP", "basis": "Not confirmed from a primary source (fare search is JavaScript-only).", "source": null, "effective": null },
+        { "class": "70min Flex", "amount": null, "currency": "GBP", "basis": "LNER pilot ticket on this route (travel up to 70 min either side of booked train); price not published statically.", "source": "https://www.lner.co.uk/routes/london-kings-cross-to-edinburgh-trains/", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "ref": "ukNationalRail", "operatorNote": "LNER: Advance refundable only within 2 hours of purchase, afterwards changeable for GBP 10 admin fee plus fare difference; Off-Peak/Anytime singles bought on/after 1 Apr 2026 refundable up to 23:59 the day before travel, admin charge not exceeding GBP 5; bought on day of travel not refundable." },
+      "source": "https://www.lner.co.uk/routes/london-kings-cross-to-edinburgh-trains/"
+    },
+    {
+      "operator": "Amtrak (Pacific Surfliner, LOSSAN)",
+      "from": "Los Angeles Union Station (LAX)",
+      "to": "San Diego Santa Fe Depot (SAN)",
+      "fromCityHint": "Los Angeles, CA, US",
+      "toCityHint": "San Diego, CA, US",
+      "service": "Pacific Surfliner",
+      "minutes": {
+        "LAX_to_SAN": { "fastest": 174, "median": 177, "max": 177 },
+        "SAN_to_LAX": { "fastest": 166, "median": 176, "max": 192 },
+        "basis": "Computed from Amtrak Pacific Surfliner timetable PDF (generated 27 Sep 2026); same pattern every day of the week.",
+        "effective": "Timetable generated 2026-09-27"
+      },
+      "frequencyPerDay": {
+        "LAX_to_SAN": { "weekday": 13, "saturday": 12, "sunday": 13 },
+        "SAN_to_LAX": { "weekday": 14, "saturday": 14, "sunday": 14 },
+        "basis": "Timetable count. Amtrak/LOSSAN: 13th daily LA-San Diego round trip added from 26 Jan 2026.",
+        "source": "https://media.amtrak.com/2026/01/amtrak-pacific-surfliner-adds-daily-roundtrip-between-san-diego-and-los-angeles/",
+        "effective": "Timetable generated 2026-09-27; 13 round trips from 2026-01-26"
+      },
+      "fares": [
+        { "class": "Unreserved Coach", "amount": null, "currency": "USD", "basis": "No published LA-San Diego fare found; Pacific Surfliner directs to the booking tool. Coach tickets are Flex-type: full refund with no fee if cancelled before departure; unreserved coach valid up to one year.", "source": "https://www.pacificsurfliner.com/plan-your-trip/tickets/", "effective": "Page read 2026-09-29" },
+        { "class": "Business Class", "amount": null, "currency": "USD", "basis": "Reserved; no published fare.", "source": "https://www.pacificsurfliner.com/plan-your-trip/tickets/", "effective": "Page read 2026-09-29" }
+      ],
+      "refund": { "rule": "Flexible fares: full refund to original form of payment with no fees if cancelled before departure; no change fees.", "source": "https://www.pacificsurfliner.com/plan-your-trip/tickets/", "effective": "Page read 2026-09-29" },
+      "source": "https://content.amtrak.com/content/timetable/Pacific%20Surfliner.pdf"
+    },
+    {
+      "operator": "SICT (Government of Mexico) - Tren Interurbano Mexico-Toluca 'El Insurgente'",
+      "from": "Observatorio (Mexico City)",
+      "to": "Toluca Centro",
+      "fromCityHint": "Mexico City, MX",
+      "toCityHint": "Toluca, State of Mexico, MX",
+      "service": "Tren Interurbano El Insurgente (commuter/interurban, not intercity long-distance)",
+      "minutes": {
+        "typical": null,
+        "basis": "Secondary press only: 'under an hour' Observatorio-Toluca Centro (Heraldo de Mexico, 17 Sep 2026) and about 60 min for the full Zinacantepec-Observatorio line (Infobae, 3 Feb 2026). No primary timetable found.",
+        "effective": "Full line opened 2026-02-02 (secondary)"
+      },
+      "frequencyPerDay": {
+        "headwayMinutes": "10-15",
+        "hours": "Weekdays 05:00-24:00, Saturdays 06:00-24:00, Sundays 07:00-24:00",
+        "basis": "Secondary (Infobae, citing SICT).",
+        "source": "https://www.infobae.com/mexico/2026/02/03/tren-interurbano-tarifas-actualizadas-horarios-y-recorrido-entre-cdmx-y-toluca/",
+        "effective": "2026-02-03",
+        "sourceQuality": "secondary"
+      },
+      "fares": [
+        { "class": "Single, Observatorio-Toluca Centro", "amount": 90, "currency": "MXN", "basis": "Per person; distance-based fares 15-100 MXN. Secondary; Infobae (3 Feb 2026) instead gives 100 MXN for the full line to Zinacantepec.", "source": "https://heraldodemexico.com.mx/nacional/2026/9/17/cuanto-cobra-el-tren-de-observatorio-toluca-889985.html", "effective": "Article 2026-09-17", "sourceQuality": "secondary" },
+        { "class": "Single, one station", "amount": 15, "currency": "MXN", "basis": "Secondary.", "source": "https://www.infobae.com/mexico/2026/02/03/tren-interurbano-tarifas-actualizadas-horarios-y-recorrido-entre-cdmx-y-toluca/", "effective": "2026-02-03", "sourceQuality": "secondary" }
+      ],
+      "refund": null,
+      "notes": "Seven stations: Zinacantepec, Toluca Centro, Metepec, Lerma, Santa Fe, Vasco de Quiroga, Observatorio; about 58 km. This is the only passenger rail with a Mexico City terminal found besides the Tren Suburbano (Buenavista-Cuautitlan/AIFA, commuter). Tren Maya does not serve Mexico City. Mexico's announced Mexico City-Queretaro/Pachuca/Nuevo Laredo intercity passenger lines were not confirmed as in service as of this research.",
+      "source": "https://www.infobae.com/mexico/2026/02/03/tren-interurbano-tarifas-actualizadas-horarios-y-recorrido-entre-cdmx-y-toluca/"
+    }
+  ],
+  "fareRules": {
+    "amtrakFareFamilies": {
+      "note": "Amtrak no longer sells 'Saver' or 'Premium' fare families. Current families for Coach, Acela Business and Acela First: Flex, Value, Sale. Non-Acela Business Class is fully refundable.",
+      "Flex": "Fully refundable to original form of payment with no fees if cancelled before departure; changes free (fare difference may apply).",
+      "Value": "Not changeable; 30% of ticket value forfeited on cancellation before departure (70% returned).",
+      "Sale": "Not changeable; 50% forfeited on cancellation before departure.",
+      "riskFreeWindow": "Full refund if cancelled within 24 hours of purchase and before departure (1 hour for unreserved services).",
+      "noShow": "All fares non-refundable and non-changeable after departure; a no-show forfeits the whole value of that segment.",
+      "history": "The Oct 2023 structure gave Value a 75% refund (25% fee); the current page says 30% forfeited.",
+      "source": "https://www.amtrak.com/refund-and-cancellation-policy",
+      "sourceAlso": "https://www.amtrak.com/guide-to-fares",
+      "effective": "Pages read 2026-09-29 (no effective date shown)"
+    },
+    "eurostarClasses": {
+      "classes": "Eurostar Standard, Eurostar Plus, Eurostar Premier",
+      "StandardAndPlus": {
+        "exchange": "Date/time changes free up to 1 hour before original departure (fare difference payable; no refund of a cheaper fare); no destination change; may upgrade to Plus, not to Premier.",
+        "refund": "Refundable 7 or more days before departure for GBP/EUR 25 per person per leg (GBP/EUR 50 for a full return); non-refundable within 7 days."
+      },
+      "Premier": {
+        "exchange": "Free date/time changes up to 48 hours AFTER original departure.",
+        "refund": "Refundable with no fee up to 48 hours after original departure."
+      },
+      "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/eurostar-fares-and-fees",
+      "effective": "Page read 2026-09-29 (no effective date shown)"
+    },
+    "ukNationalRail": {
+      "AnytimeOffPeak": "From 1 April 2026 (National Rail Conditions of Travel v7), Anytime, Off-Peak, Day Travelcards and most Rangers/Rovers are refundable only up to 23:59 on the day before they become valid; admin fee up to GBP 5 per ticket (GBP 10 per season). Tickets bought on/before 31 Mar 2026 keep the old rule (refundable up to 28 days after expiry).",
+      "Advance": "Not refundable (unaffected by the April 2026 change); changeable before travel for a GBP 10 admin fee plus fare difference (per Avanti and LNER). LNER allows a refund within 2 hours of purchase.",
+      "sources": ["https://media.raildeliverygroup.com/news/ticket-refund-changes-media-factsheet", "https://www.lner.co.uk/support/refunds/", "https://www.avantiwestcoast.co.uk/tickets-and-savings/ticket-types"],
+      "effective": "2026-04-01"
+    }
+  },
+  "punctuality": {
+    "amtrak": {
+      "definition": "Customer on-time performance = share of customers arriving at their detraining station on time. Acela is late if more than 10 minutes after schedule; Northeast Regional and state-supported trains more than 15 minutes.",
+      "definitionSource": "https://data.bts.gov/Research-and-Statistics/Amtrak-On-Time-Performance/98fi-ujit",
+      "period": "August 2026 (current month) and the 12 months to August 2026",
+      "Acela": { "customerOTPMonth": 81.0, "customerOTP12Month": 75.3, "allStationsOTPMonth": 85.8, "allStationsOTP12Month": 78.5, "target": 90.0 },
+      "NortheastRegional": { "customerOTPMonth": 75.4, "customerOTP12Month": 76.7, "allStationsOTPMonth": 79.2, "allStationsOTP12Month": 78.8 },
+      "NortheastRegionalNoOnSpine": { "customerOTPMonth": 79.9, "customerOTP12Month": 79.1 },
+      "NECCorridorRoutes": { "customerOTPMonth": 78.9, "customerOTP12Month": 78.5 },
+      "PacificSurfliner": { "customerOTPMonth": 71.7, "customerOTP12Month": 81.3, "allStationsOTPMonth": 77.3, "allStationsOTP12Month": 84.0 },
+      "AmtrakSystem": { "customerOTPMonth": 71.1, "customerOTP12Month": 74.9 },
+      "fraMinimumStandardCustomerOTP": 80.0,
+      "unit": "percent",
+      "note": "Preliminary figures per the report.",
+      "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+      "effective": "Data through August 2026"
+    },
+    "metroNorth": {
+      "systemOTP2025": 97.8,
+      "unit": "percent",
+      "basis": "Metro-North full-year 2025 OTP (all lines). Secondary (Metro Magazine, 5 Jan 2026, reporting the MTA year-end figures). No New Haven Line annual figure found. Metro-North's on-time threshold is not confirmed here.",
+      "source": "https://www.metro-magazine.com/news/new-york-mta-marks-record-year-for-ridership-performance-in-2025",
+      "effective": "Calendar 2025",
+      "sourceQuality": "secondary"
+    },
+    "eurostar": {
+      "period": "April 2025 to end of March 2026",
+      "within5min": 73.1,
+      "within15min": 83.3,
+      "target2026Within15min": 87.0,
+      "unit": "percent of trains",
+      "source": "https://www.eurostar.com/us-en/customer-charter",
+      "effective": "2025-04 to 2026-03"
+    },
+    "ireland": {
+      "definition": "NTA definition: intercity trains on time if within 10 minutes; DART/commuter within 5. Includes delays outside Iarnrod Eireann's control; figures independently verified by the NTA. Four-week periods.",
+      "year": 2026,
+      "yearBasis": "The live page lists 2026 periods 01-09 filled and 10 (7 Sep-4 Oct) blank, with 2025 and earlier as separate archive pages; the year is not printed on the table itself.",
+      "DublinBelfastEnterprise": [
+        { "period": "01", "dates": "1-25 Jan", "punctuality": 95.8, "reliability": 99.70 },
+        { "period": "02", "dates": "26 Jan-22 Feb", "punctuality": 83.9, "reliability": 96.93 },
+        { "period": "03", "dates": "23 Feb-22 Mar", "punctuality": 94.6, "reliability": 100 },
+        { "period": "04", "dates": "23 Mar-19 Apr", "punctuality": 96.0, "reliability": 99.74 },
+        { "period": "05", "dates": "20 Apr-17 May", "punctuality": 92.4, "reliability": 99.87 },
+        { "period": "06", "dates": "18 May-21 Jun", "punctuality": 92.7, "reliability": 99.34 },
+        { "period": "07", "dates": "22 Jun-12 Jul", "punctuality": 90.6, "reliability": 99.49 },
+        { "period": "08", "dates": "13 Jul-9 Aug", "punctuality": 92.59, "reliability": 99.87 },
+        { "period": "09", "dates": "10 Aug-6 Sep", "punctuality": 94.0, "reliability": 99.49 }
+      ],
+      "DublinCork": [
+        { "period": "01", "dates": "1-25 Jan", "punctuality": 92.6, "reliability": 99.71 },
+        { "period": "02", "dates": "26 Jan-22 Feb", "punctuality": 93.0, "reliability": 99.87 },
+        { "period": "03", "dates": "23 Feb-22 Mar", "punctuality": 94.1, "reliability": 100 },
+        { "period": "04", "dates": "23 Mar-19 Apr", "punctuality": 93.9, "reliability": 100 },
+        { "period": "05", "dates": "20 Apr-17 May", "punctuality": 93.9, "reliability": 99.75 },
+        { "period": "06", "dates": "18 May-21 Jun", "punctuality": 92.6, "reliability": 100 },
+        { "period": "07", "dates": "22 Jun-12 Jul", "punctuality": 93.9, "reliability": 100 },
+        { "period": "08", "dates": "13 Jul-9 Aug", "punctuality": 95.11, "reliability": 100 },
+        { "period": "09", "dates": "10 Aug-6 Sep", "punctuality": 90.7, "reliability": 99.87 }
+      ],
+      "unit": "percent",
+      "source": "https://www.irishrail.ie/en-ie/about-us/train-punctuality-reliability-performance",
+      "effective": "2026 periods 01-09"
+    },
+    "uk": {
+      "definitions": "ORR Table 3133, share of recorded station stops reached: within 59 seconds ('On Time'), within 3 minutes ('Time to 3', ORR's headline measure since 2025-26), within 15 minutes. Moving annual average = latest four quarters.",
+      "AvantiWestCoast": {
+        "JanMar2026": { "onTime": 42.2, "timeTo3": 62.4, "timeTo15": 89.5 },
+        "AprJun2026Provisional": { "onTime": 38.0, "timeTo3": 57.4, "timeTo15": 86.5 },
+        "annualAprMar2026": { "onTime": 37.9, "timeTo3": 57.4, "timeTo15": 87.3 },
+        "movingAnnualToJun2026Provisional": { "onTime": 37.7, "timeTo3": 57.2, "timeTo15": 87.1 }
+      },
+      "LNER": {
+        "JanMar2026": { "onTime": 53.0, "timeTo3": 71.0, "timeTo15": 92.7 },
+        "AprJun2026Provisional": { "onTime": 49.2, "timeTo3": 65.9, "timeTo15": 89.5 },
+        "annualAprMar2026": { "onTime": 55.3, "timeTo3": 72.4, "timeTo15": 93.3 },
+        "movingAnnualToJun2026Provisional": { "onTime": 52.8, "timeTo3": 70.0, "timeTo15": 92.0 }
+      },
+      "GreatBritain": {
+        "annualAprMar2026": { "onTime": 66.7, "timeTo3": 84.8, "timeTo15": 98.3 }
+      },
+      "unit": "percent of recorded station stops",
+      "source": "https://dataportal.orr.gov.uk/media/1425/table-3133-train-punctuality-at-recorded-station-stops-by-operator.ods",
+      "sourceAlso": "https://dataportal.orr.gov.uk/media/4pmhex4x/performance-stats-release-jan-mar-2026.pdf",
+      "effective": "Table covers April 2014 to June 2026; Apr-Jun 2026 marked provisional [p]"
+    }
+  },
+  "baggage": {
+    "amtrak": {
+      "personalItem": { "count": 1, "maxLb": 25, "maxInches": "14 x 11 x 7" },
+      "carryOn": { "count": 2, "maxLbEach": 50, "maxInches": "28 x 22 x 14 (Pacific Surfliner 28 x 22 x 11)" },
+      "excessCarryOnFeeUSD": 20,
+      "excessCarryOnMax": 2,
+      "checked": { "free": 2, "maxLbEach": 50, "maxLinearInches": 75, "extraBags": 2, "extraBagFeeUSD": 20, "oversize76to100InFeeUSD": 20, "availability": "Only at some stations and on some trains; 'Not all trains or locations are equipped to handle checked baggage.'" },
+      "sources": ["https://www.amtrak.com/carry-on-baggage", "https://www.amtrak.com/checked-baggage", "https://www.amtrak.com/baggage-policy"],
+      "effective": "Pages read 2026-09-29"
+    },
+    "eurostar": {
+      "StandardAndPlus": { "bags": 2, "handLuggage": 1 },
+      "Premier": { "bags": 3, "handLuggage": 1 },
+      "maxLengthCm": { "routesToFromLondon": 85, "otherRoutes": 75 },
+      "weightLimit": "None strict: 'If you can carry it safely yourself'",
+      "extraBag": { "londonRoutesFromGBP": 35, "londonRoutesMaxKg": 30, "londonRoutesPrebookRequired": true, "otherRoutesEUR": 30 },
+      "source": "https://www.eurostar.com/uk-en/travel-info/travel-planning/luggage",
+      "effective": "Page read 2026-09-29"
+    }
+  },
+  "arriveBefore": {
+    "amtrak": {
+      "recommendedMinutes": 30,
+      "withBaggageOrTicketingHelpMinutes": 60,
+      "autoTrainMinutes": 120,
+      "gatesCloseMinutes": "3-10 at some stations",
+      "boardingGatePostedMinutes": 15,
+      "checkedBaggageDeadline": null,
+      "checkedBaggageNote": "Current checked-baggage page: 'must be checked prior to your train's scheduled departure. Check-in times vary by station.' The widely quoted 45-minute rule was not found on the current page.",
+      "sources": ["https://www.amtrak.com/at-the-station/boarding", "https://www.amtrak.com/checked-baggage"],
+      "effective": "Pages read 2026-09-29"
+    },
+    "eurostar": {
+      "LondonStPancras": { "StandardPlusArrive": 75, "StandardPlusGatesClose": 30, "PremierArrive": 45, "PremierGatesClose": 15 },
+      "ParisGareDuNord": { "StandardPlusArrive": "75-90", "StandardPlusGatesClose": 30, "PremierArrive": "45-60", "PremierGatesClose": 15 },
+      "BrusselsMidi": { "StandardPlusArrive": "45-60", "StandardPlusGatesClose": 30, "PremierArrive": "30-45", "PremierGatesClose": 15 },
+      "AmsterdamCentraal": { "StandardPlusArrive": "75-90", "StandardPlusChecksClose": 30, "PremierArrive": 30, "PremierChecksClose": 15 },
+      "accessibleTravel": { "arrive": 60, "gatesClose": 30 },
+      "unit": "minutes before departure",
+      "source": "https://www.eurostar.com/uk-en/travel-info/your-trip/check-in",
+      "effective": "Page read 2026-09-29"
+    },
+    "translinkEnterprise": {
+      "onlineBookingCutoffMinutes": 80,
+      "note": "Book online up to 80 minutes before departure from the origin station; tickets collected from a machine before boarding.",
+      "source": "https://www.translink.co.uk/using-translink/cross-border/enterprise",
+      "effective": "Page read 2026-09-29"
+    }
+  },
+  "compensation": {
+    "ukDelayRepay": {
+      "AvantiWestCoast": {
+        "scheme": "Delay Repay 15",
+        "bands": [
+          { "delayMin": 15, "delayMax": 29, "singlePct": 25, "returnPct": 12.5 },
+          { "delayMin": 30, "delayMax": 59, "singlePct": 50, "returnPct": 25 },
+          { "delayMin": 60, "delayMax": 119, "singlePct": 100, "returnPct": 50 },
+          { "delayMin": 120, "delayMax": null, "singlePct": 100, "returnPct": 100 }
+        ],
+        "claimWithinDays": 28,
+        "source": "https://www.avantiwestcoast.co.uk/help-and-support/delay-repay",
+        "effective": "Page read 2026-09-29"
+      },
+      "LNER": {
+        "scheme": "Delay Repay 30 (no 15-minute band)",
+        "bands": [
+          { "delayMin": 30, "delayMax": 59, "singlePct": 50, "returnPct": "50% of the relevant portion" },
+          { "delayMin": 60, "delayMax": 119, "singlePct": 100, "returnPct": "100% of the relevant portion" },
+          { "delayMin": 120, "delayMax": null, "singlePct": 100, "returnPct": 100 }
+        ],
+        "claimWithinDays": 28,
+        "source": "https://www.lner.co.uk/support/delay-repay/",
+        "effective": "Page read 2026-09-29"
+      }
+    },
+    "eurostar": {
+      "bands": [
+        { "delayMin": 60, "delayMax": 119, "eVoucherPct": 30, "cashRefundPct": 25 },
+        { "delayMin": 120, "delayMax": 179, "eVoucherPct": 60, "cashRefundPct": 50 },
+        { "delayMin": 180, "delayMax": null, "eVoucherPct": 75, "cashRefundPct": 50 }
+      ],
+      "basis": "Percent of the affected leg (price actually paid); alternative of bonus loyalty points. Claim within 3 months; e-voucher redeemable within 12 months.",
+      "source": "https://www.eurostar.com/us-en/customer-charter",
+      "effective": "Page read 2026-09-29"
+    },
+    "amtrak": null
+  },
+  "uncertain": [
+    "Amtrak fares: Amtrak prices dynamically and publishes no fixed or 'from' fare for any NEC pair. The only city-pair amounts found (NY-Washington from $42, Boston-NY from $21, fall sale, travel 14 Oct-17 Dec 2026) come from Time Out (28 Sep 2026); Amtrak's own sale release confirms the sale and dates but not the city-pair figures.",
+    "Amtrak 'Saver' and 'Premium' fare families asked for do not exist in the current structure (Flex / Value / Sale). Amtrak's page now says Value forfeits 30% on cancellation; the Oct 2023 launch said 25% (75% refund). A search-engine summary citing older Amtrak pages gave a different Saver/Value/Premium schedule; it was not used.",
+    "Acela First vs Business price difference: not published.",
+    "Amtrak checked-bag deadline: the 45-minute figure appears only on older/mirror Amtrak pages. The current page says check-in times vary by station, so it is null.",
+    "Amtrak timetable parsing: counts are for trains calling at both stations. Per-direction asymmetry (e.g. Acela weekday 19 NYP->WAS vs 24 WAS->NYP) comes from the timetable as parsed and was not independently checked. Northeast Regional NYP-WAS max values (~464-477 min) are probably parsing artefacts; fastest and median are the figures to use.",
+    "Amtrak on-time: figures are monthly (August 2026) and 12-month customer OTP from the Host Railroad Report, marked preliminary. No FY2026 full-year figure exists yet (FY ends 30 Sep).",
+    "Metro-North: fares taken from the Connecticut-stations page of the MTA fare table, footer dated 1 July 2026. A secondary source had a Jan 2026 peak fare of $23.25; the gap to $27.25 is more than a 5% July increase, which was not reconciled. Use the MTA document.",
+    "Metro-North on-time: only a system-wide 2025 figure (97.8%) from secondary press; no New Haven Line annual figure, and the on-time threshold (commonly 5 min 59 s) is not confirmed from a primary source.",
+    "Eurostar London-Paris and London-Brussels daily frequency: no primary figure found (Seat61, secondary: London-Paris 'every hour or two'). Left null.",
+    "Eurostar London-Amsterdam journey time: Eurostar gives 'just under 4 hours' and '4 hours 19 mins' on the same page; the example timings in its July 2025 release work out to 244 min eastbound and 257 min westbound.",
+    "Eurostar punctuality: a search-engine summary said 78.1% within 15 min for Apr 2025-Mar 2026, but the Eurostar customer-charter page itself says 83.3%. The primary page's figure is used.",
+    "Enterprise: Irish Rail walk-up fares apply only to journeys from the Republic; Belfast-origin fares are Translink's. Online Irish Rail web fares (from Dublin) are not listed statically. The Enterprise no longer serves Belfast Lanyon Place; the route is to Belfast Grand Central. The Lanyon Place detail comes from secondary sources.",
+    "Irish punctuality year: the table does not print the year; it is inferred as 2026 from the page structure (2025 and earlier are archive pages; period 10, ending 4 Oct, is still blank).",
+    "Irish Rail advance web fares for Dublin-Cork: not listed statically. The 'from EUR 21.49' figure in a search summary was not confirmed.",
+    "LNER London-Edinburgh Anytime and Off-Peak single prices: not confirmed from a primary source (the fare search is JavaScript-only and BR Fares is JavaScript-only). A search summary claimed Anytime GBP 204.80, which was not verified and is not used. LNER's route page lists Advance, Anytime and 70min Flex; whether an Off-Peak fare exists on this flow under LNER's simplified-fares pilot was not confirmed.",
+    "LNER journey time is LNER's marketing figure (4h 8m), not computed from a timetable; the same page also says 'just over four and a half hours'.",
+    "Avanti Off-Peak single: the ticket-types page says GBP 79.80, the route page says 'from GBP 76.30' (probably older copy). The ticket-types page is used.",
+    "Avanti southbound weekday frequency is a lower bound (44) because two timetable blocks did not align during parsing. Weekly engineering-works revised timetables may reduce service to 2 per hour on some dates.",
+    "UK admin fee: Avanti says refunds carry a GBP 5 admin fee; LNER says an admin charge 'will not exceed GBP 5'. The Rail Delivery Group factsheet does not state a fee.",
+    "Pacific Surfliner LA-San Diego fare: no published amount found; the booking tool is JavaScript-only.",
+    "Mexico: all El Insurgente figures are secondary (Heraldo de Mexico 17 Sep 2026; Infobae 3 Feb 2026). They conflict on the full-line fare (90 vs 100 MXN) and give journey time only as 'under an hour' / about 60 minutes. No SICT primary fare table was reached. No Mexico City intercity (long-distance) passenger rail service was confirmed in operation."
+  ]
+}

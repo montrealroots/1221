@@ -40,7 +40,7 @@
  *   fees each 13-week cycle it runs; voice work is a booth session.
  * - **Location.** A screen job may shoot away (`career.location`): flown out
  *   on the production's ticket on the flight that lands in good time, and
- *   home on the first after, there only when it lands (`careerFlight`, from
+ *   home on the first after, there only when it lands (`careerTrip`, from
  *   2026-09-29; until then the actor was there in an instant); travel days
  *   paid, a day's meal allowance, and the wages taxed where the work was
  *   done. A job in another city with no production travel is reached on the
@@ -95,7 +95,7 @@ import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, repo
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
-import { careerFlight, planJourney, startCareerJourney } from './journey';
+import { careerTrip, planBy, planJourney, startCareerJourney } from './journey';
 import { permitAtTheBorder, workRefusal } from './permission';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
@@ -1742,14 +1742,15 @@ export function registerCareer(sim: Simulation): void {
       const cur = saveCurrency(s.universe);
       // Their own fare there, a cost of the work, from 2026-09-29: until then
       // an actor was in the job's city in an instant, and paid nothing to get there.
-      const legs = item.payload.slot !== undefined ? planJourney(s, person.currentLocationId, city, Number(item.payload.day), Number(item.payload.slot), 1) : undefined;
+      const by = item.payload.by === undefined ? undefined : String(item.payload.by);
+      const legs = item.payload.slot !== undefined ? planBy(s, by, person.currentLocationId, city, Number(item.payload.day), Number(item.payload.slot), 1) : undefined;
       if (legs && typeof legs !== 'string') {
         const fare = legs.reduce((a, l) => a + l.fare, 0);
         if (!spend(s, person, fare, `The fare to ${CITIES.require(city).name}, for the job`, 'career')) { turnedBack(s, person, booking, `The fare to ${CITIES.require(city).name}, ${formatMoney(fare, cur)}, is more than the bank or the card can cover.`); return; }
         recordJobCost(person, s.now, fare);
       }
       const go = (stay?: Person['stay']) => {
-        if (item.payload.slot !== undefined && startCareerJourney(s, person, city, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'self', ...(stay ? { onArrival: stay } : {}) })) return;
+        if (item.payload.slot !== undefined && startCareerJourney(s, person, city, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'self', ...(by ? { by } : {}), ...(stay ? { onArrival: stay } : {}) })) return;
         person.currentLocationId = city; s.universe.currentZone = zoneOf(city);
         if (stay) person.stay = stay;
       };
@@ -1789,12 +1790,12 @@ export function registerCareer(sim: Simulation): void {
     const home = person.home?.cityId ?? person.currentLocationId;
     if (person.currentLocationId !== city || stillWorkingIn(s, person, city, booking.id)) return;
     // Home on their own fare, where there's a flight; where neither the bank nor the card can pay it, home anyway, as SLATE doesn't yet have the bus.
-    const flight = careerFlight(s, city, home, s.now, 'back');
+    const flight = careerTrip(s, city, home, s.now, 'back', 'self');
     if (flight) {
       const fare = flight.legs.reduce((a, l) => a + l.fare, 0);
       if (spend(s, person, fare, `The fare home from ${CITIES.require(city).name}, for the job`, 'career')) {
         recordJobCost(person, s.now, fare);
-        if (startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'self' })) return;
+        if (startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'self', ...(flight.by ? { by: flight.by } : {}) })) return;
       }
     }
     person.currentLocationId = home;
@@ -1820,7 +1821,7 @@ export function registerCareer(sim: Simulation): void {
         ?? (permitAtTheBorder(s, person, booking) ? undefined : 'The work permit’s fee at the border is more than the bank can cover.');
       if (no) { turnedBack(s, person, booking, no); return; }
       // The production's flight, from 2026-09-29; until then they were there in an instant.
-      const trip = item.payload.slot !== undefined ? startCareerJourney(s, person, booking.location, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'production', onArrival: { kind: 'hotel', cityId: booking.location } }) : undefined;
+      const trip = item.payload.slot !== undefined ? startCareerJourney(s, person, booking.location, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'production', onArrival: { kind: 'hotel', cityId: booking.location }, ...(item.payload.by !== undefined ? { by: String(item.payload.by) } : {}) }) : undefined;
       if (!trip) {
         person.currentLocationId = booking.location;
         s.universe.currentZone = zoneOf(booking.location);
@@ -1832,8 +1833,8 @@ export function registerCareer(sim: Simulation): void {
     const home = person.home?.cityId ?? booking.cityId;
     const days = Math.round((item.at - Number(item.payload.outAt)) / MS_DAY) + 1;
     booking.perDiemOwed = (booking.perDiemOwed ?? 0) + days * usd(rateOn(LOCATION.perDiem, dayKey(item.at, zoneOf(booking.location))), cur);
-    const flight = careerFlight(s, booking.location, home, s.now, 'back');
-    if (!flight || !startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'production' })) {
+    const flight = careerTrip(s, booking.location, home, s.now, 'back');
+    if (!flight || !startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'production', ...(flight.by ? { by: flight.by } : {}) })) {
       person.currentLocationId = home;
       s.universe.currentZone = zoneOf(home);
       delete person.stay;
@@ -1920,17 +1921,17 @@ export function registerCareer(sim: Simulation): void {
     // Out on the flight that lands in good time for the first call, from 2026-09-29 (`careerFlight`); where there's no flight, the day before at noon.
     const flightFrom = person.home?.cityId ?? person.currentLocationId;
     if (booking.location) {
-      const flight = careerFlight(s, flightFrom, booking.location, days[0]!.at, 'out');
+      const flight = careerTrip(s, flightFrom, booking.location, days[0]!.at, 'out');
       const out = flight ? flight.legs[0]!.departAt : at(days[0]!.at, zone, -1, 12);
-      s.schedule({ at: out, kind: TRAVEL_KIND, label: `Travel To ${CITIES.require(booking.location).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', ...(flight ? { day: flight.day, slot: flight.slot } : {}) } });
+      s.schedule({ at: out, kind: TRAVEL_KIND, label: `Travel To ${CITIES.require(booking.location).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', ...(flight ? { day: flight.day, slot: flight.slot, ...(flight.by ? { by: flight.by } : {}) } : {}) } });
       s.schedule({ at: at(days[days.length - 1]!.at, zone, 1, 12), kind: TRAVEL_KIND, label: 'Travel Home', category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'back', outAt: out } });
     }
     // A job in another city with no production travel: they go and stay, in a room of their own paying.
     const home = person.home?.cityId ?? person.currentLocationId;
     if (!booking.location && workCity !== home) {
-      const flight = careerFlight(s, home, workCity, days[0]!.at, 'out');
+      const flight = careerTrip(s, home, workCity, days[0]!.at, 'out', 'self');
       const out = flight ? flight.legs[0]!.departAt : at(days[0]!.at, zone, -1, 18);
-      s.schedule({ at: out, kind: STAY_KIND, label: `To ${CITIES.require(workCity).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', back: at(days[days.length - 1]!.at, zone, 1, 12), ...(flight ? { day: flight.day, slot: flight.slot } : {}) } });
+      s.schedule({ at: out, kind: STAY_KIND, label: `To ${CITIES.require(workCity).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', back: at(days[days.length - 1]!.at, zone, 1, 12), ...(flight ? { day: flight.day, slot: flight.slot, ...(flight.by ? { by: flight.by } : {}) } : {}) } });
       s.schedule({ at: at(days[days.length - 1]!.at, zone, 1, 12), kind: STAY_KIND, label: 'Home Again', category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'back' } });
     }
     // SAG-AFTRA pays on the Thursday after the week's Saturday; Equity, each Friday.

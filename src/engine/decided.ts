@@ -17,6 +17,8 @@
  * because it cannot land anywhere else without saying what it reads.
  */
 
+import { trainFate } from './systems/rail';
+import { RAIL_ROUTES } from './content/rail';
 import { defineDecider } from './core/deciders';
 import { quickSave } from './index';
 import type { Simulation } from './core/simulation';
@@ -265,6 +267,19 @@ defineDecider<{ sim: Simulation; test: number; attempt: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), test: seed % TESTS.length, attempt: 1 + (seed % 3) }),
   decide: ({ sim, test, attempt }) => { const [j, step] = TESTS[test]!; return passesTest(sim, sim.player, j, step, attempt) ? 'passed' : 'failed'; },
+});
+
+defineDecider<{ sim: Simulation; train: number }, string>({
+  id: 'travel.train',
+  decides: 'Whether a train is on time or late and by how much, at its operator’s own rate on its own measure of late (RAIL_ROUTES).',
+  drawnIn: 'src/engine/systems/rail.ts',
+  reads: {
+    // Each train is drawn on its own.
+    train: (o, t) => ({ ...o, train: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), train: seed }),
+  decide: ({ sim, train }) => { const m = trainFate(sim, sim.player, RAIL_ROUTES[0]!, `r-${train}`); return m === 0 ? 'on time' : m > 30 ? 'late half an hour' : 'late'; },
 });
 
 defineDecider<{ sim: Simulation; flight: number }, string>({

@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
 import { documentsOf, passportOf } from '@/engine/systems/documents';
 import { earningsOf } from '@/engine/systems/earnings';
-import { careerFlight, journeysOf } from '@/engine/systems/journey';
+import { careerTrip, journeysOf } from '@/engine/systems/journey';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
@@ -24,19 +24,23 @@ function pro(seed: string, city = 'us-ny-newyork'): Simulation {
 const walk = (sim: Simulation, to: number) => { while (sim.now < to) sim.advanceTo(Math.min(to, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 
 describe('a job’s trip, flown', () => {
-  it('takes the latest flight that lands ten hours before the call, overnight to London the day before, and none for New Haven to New York', () => {
+  it('takes the latest flight that lands ten hours before the call, overnight to London the day before, and a train for New Haven to New York', () => {
     const sim = pro('trip-plan');
     const call = at(2026, 11, 10, 8);
-    const london = careerFlight(sim, 'us-ny-newyork', 'uk-eng-london', call, 'out')!;
+    const london = careerTrip(sim, 'us-ny-newyork', 'uk-eng-london', call, 'out')!;
     expect(london.legs[london.legs.length - 1]!.arriveAt).toBeLessThanOrEqual(call - 10 * MS_HOUR);
     // The latest such: the one after it lands too late.
-    const later = careerFlight(sim, 'us-ny-newyork', 'uk-eng-london', call + 12 * MS_HOUR, 'out')!;
+    const later = careerTrip(sim, 'us-ny-newyork', 'uk-eng-london', call + 12 * MS_HOUR, 'out')!;
     expect(later.legs[0]!.departAt).toBeGreaterThan(london.legs[0]!.departAt);
     // None that would have left already.
-    expect(careerFlight(sim, 'us-ny-newyork', 'uk-eng-london', sim.now + 20 * MS_HOUR, 'out')).toBeUndefined();
-    expect(careerFlight(sim, 'us-ct-newhaven', 'us-ny-newyork', call, 'out')).toBeUndefined();
+    expect(careerTrip(sim, 'us-ny-newyork', 'uk-eng-london', sim.now + 20 * MS_HOUR, 'out')).toBeUndefined();
+    // New Haven to New York is a train: the Regional on the production’s ticket, Metro-North on the actor’s own.
+    expect(careerTrip(sim, 'us-ct-newhaven', 'us-ny-newyork', call, 'out')!.by).toBe('nec-nyp-nhv-ner');
+    expect(careerTrip(sim, 'us-ct-newhaven', 'us-ny-newyork', call, 'out', 'self')!.by).toBe('mnr-nhv-gct');
+    // Too near to fly, with no train: none.
+    expect(careerTrip(sim, 'us-ny-newyork', 'us-ny-brooklyn', call, 'out')).toBeUndefined();
     // Home, the first that leaves after.
-    const back = careerFlight(sim, 'uk-eng-london', 'us-ny-newyork', call, 'back')!;
+    const back = careerTrip(sim, 'uk-eng-london', 'us-ny-newyork', call, 'back')!;
     expect(back.legs[0]!.departAt).toBeGreaterThanOrEqual(call);
     expect(back.legs[0]!.departAt - call).toBeLessThan(MS_DAY);
   });

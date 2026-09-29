@@ -1,7 +1,8 @@
 /**
- * SLATE — Travel: where you are, a journey by air booked with its legs and
- * a hotel at the far end, and the journeys booked and taken
- * (`systems/journey.ts`, `systems/stays.ts`). Every leg's time is the local
+ * SLATE — Travel: where you are, a journey by air or, where one runs, by
+ * train (from 2026-09-29), booked with its legs and a hotel at the far end,
+ * and the journeys booked and taken (`systems/journey.ts`, `systems/rail.ts`,
+ * `systems/stays.ts`). Every leg's time is the local
  * time where it happens, and every figure names whose it is.
  */
 
@@ -14,12 +15,16 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
-import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, planJourney, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
-const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', arrival: 'Off The Aircraft' };
+const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', train: 'Train', arrival: 'Off The Aircraft' };
+/** A train journey's legs, named for a station. */
+const RAIL_WORD: Partial<Record<JourneyLeg['mode'], string>> = { ground: 'To Or From The Station', 'check-in': 'At The Station' };
+const clock = (h: number) => `${Math.floor(h) % 12 === 0 ? 12 : Math.floor(h) % 12}:${String(Math.round((h % 1) * 60)).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
 const SLOT_WORD = ['Morning', 'Afternoon', 'Evening'];
 const place = (id: string) => CITIES.get(id)?.name ?? airportByCode(id)?.name ?? id;
 
@@ -33,6 +38,7 @@ export function TravelWorkspace() {
   const [to, setTo] = useState('');
   const [days, setDays] = useState(14);
   const [slot, setSlot] = useState(1);
+  const [by, setBy] = useState('air');
   const [bags, setBags] = useState(0);
   const [nights, setNights] = useState(3);
   const [daysThere, setDaysThere] = useState(4);
@@ -40,12 +46,19 @@ export function TravelWorkspace() {
   const p = zonedParts(sim.now + days * MS_DAY, sim.zone);
   const day = instantFromZoned({ ...normalDate(p.year, p.month, p.day), hour: 12 }, sim.zone);
   const fromCity = whereBy(person, day);
+  // The trains between the two towns, where any run; a choice no longer offered falls back to air.
+  const trains = toCity ? railRoutes(fromCity, toCity) : [];
+  const route = trains.find((r) => r.id === by);
+  const mode = route ? route.id : undefined;
+  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
+  const pick = Math.min(slot, slots.length - 1);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
   const round = daysThere > 0;
-  const outLegs = toCity ? planJourney(sim, fromCity, toCity, day, slot, bags) : 'Choose where.';
-  const backLegs = toCity && round ? planJourney(sim, toCity, fromCity, day + daysThere * MS_DAY, slot, bags) : undefined;
-  const outPlan = typeof outLegs === 'string' ? undefined : round ? asRoundTrip(outLegs) : outLegs;
-  const backPlan = backLegs && typeof backLegs !== 'string' ? asRoundTrip(backLegs) : undefined;
+  const outLegs = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags) : 'Choose where.';
+  const backLegs = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags) : undefined;
+  // A round trip's discount is the airlines'; a train's return is two singles.
+  const outPlan = typeof outLegs === 'string' ? undefined : round && !mode ? asRoundTrip(outLegs) : outLegs;
+  const backPlan = backLegs && typeof backLegs !== 'string' ? (mode ? backLegs : asRoundTrip(backLegs)) : undefined;
   // A round trip's hotel runs from the night it lands to the morning it flies home.
   const stayNights = own ? 0 : round && outPlan && backPlan ? nightsBetween(toCity, outPlan[outPlan.length - 1]!.arriveAt, backPlan[0]!.departAt) : nights;
   const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, toCity, outLegs, Math.max(1, stayNights), stayNights)
@@ -61,7 +74,7 @@ export function TravelWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Day</div>
         <h1>Travel</h1>
-        <p className="muted">A journey by air, somewhere to stay at the far end, and the way home.</p>
+        <p className="muted">A journey by air or by train, somewhere to stay at the far end, and the way home.</p>
       </div>
       <div className="col gap-5">
         <Panel title="Where You Are">
@@ -86,14 +99,21 @@ export function TravelWorkspace() {
                 <input id="travel-days" type="number" min={1} max={330} value={days} onChange={(e) => setDays(Math.max(1, Math.min(330, Number(e.target.value) || 1)))} />
               </div>
               <div className="field">
+                <label htmlFor="travel-by">By</label>
+                <select id="travel-by" value={mode ?? 'air'} onChange={(e) => { setBy(e.target.value); setSlot(0); }}>
+                  <option value="air">Air</option>
+                  {trains.map((r) => <option key={r.id} value={r.id}>{r.operator === r.service ? r.service : `${r.operator}, ${r.service}`}</option>)}
+                </select>
+              </div>
+              <div className="field">
                 <label htmlFor="travel-slot">Departure</label>
-                <select id="travel-slot" value={slot} onChange={(e) => setSlot(Number(e.target.value))}>
-                  {AIR.departureHours.map((h, i) => <option key={h} value={i}>{SLOT_WORD[i]}, {h % 12 === 0 ? 12 : h % 12}:00 {h < 12 ? 'AM' : 'PM'}</option>)}
+                <select id="travel-slot" value={pick} onChange={(e) => setSlot(Number(e.target.value))}>
+                  {slots.map((o) => <option key={o.i} value={o.i}>{o.word}</option>)}
                 </select>
               </div>
               <div className="field">
                 <label htmlFor="travel-bags">Checked Bags</label>
-                <select id="travel-bags" value={bags} onChange={(e) => setBags(Number(e.target.value))}>
+                <select id="travel-bags" value={mode ? 0 : bags} disabled={Boolean(mode)} onChange={(e) => setBags(Number(e.target.value))}>
                   {[0, 1, 2].map((n) => <option key={n} value={n}>{n}</option>)}
                 </select>
               </div>
@@ -122,7 +142,7 @@ export function TravelWorkspace() {
                         <Fragment key={i}>
                           {outPlan && i === outPlan.length && <tr><th scope="rowgroup" colSpan={6}>The Way Home</th></tr>}
                           <tr>
-                            <td>{MODE_WORD[l.mode]}</td>
+                            <td>{(mode && RAIL_WORD[l.mode]) || MODE_WORD[l.mode]}</td>
                             <td>{place(l.from)}</td>
                             <td>{place(l.to)}</td>
                             <td>{formatDateTime(l.departAt, departsFar ? end : start)}</td>
@@ -144,12 +164,12 @@ export function TravelWorkspace() {
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', round ? { toCity, day, slot, bags, returnDay: day + daysThere * MS_DAY, returnSlot: slot } : { toCity, day, slot, bags, nights: own ? 0 : nights });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : {}), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>
             <Fine>
-              {plan ? plan.map((l) => l.basis).filter((b, i, all) => all.indexOf(b) === i).join(' ') : ''} {hotel?.basis ?? ''} Booked a week or more ahead, the whole booking is refunded if it’s canceled within a day, the DOT’s rule; after that the fares aren’t, and the hotel is until a day before you arrive. Late and canceled flights come at BTS’s rates for 2025.
+              {plan ? plan.map((l) => l.basis).filter((b, i, all) => all.indexOf(b) === i).join(' ') : ''} {hotel?.basis ?? ''} {route ? `${route.refund.basis} Late at ${route.operator}’s rate, ${Math.round((1 - route.onTime.share) * 1000) / 10}% over ${route.onTime.withinMinutes} minutes (${route.onTime.basis}).` : 'Booked a week or more ahead, the whole booking is refunded if it’s canceled within a day, the DOT’s rule; after that the fares aren’t. Late and canceled flights come at BTS’s rates for 2025.'} The hotel is refunded until a day before you arrive.
             </Fine>
           </div>
         </Panel>
@@ -162,7 +182,7 @@ export function TravelWorkspace() {
                 <tbody>
                   {journeys.map((j) => (
                     <tr key={j.id}>
-                      <td>{place(j.toCity)}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}</td>
+                      <td>{place(j.toCity)}{j.by ? `, By ${railRouteById(j.by)?.service ?? 'Train'}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}</td>
                       <td>{formatDateTime(j.leaveAt, CITIES.require(j.fromCity).timeZone)}</td>
                       <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
                       <td className="mono">{money(j.total)}</td>

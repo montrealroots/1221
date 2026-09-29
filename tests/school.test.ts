@@ -3,6 +3,8 @@
  * against the David Geffen School of Drama's 2026–2027 figures, on played
  * careers: the clock sent on six hours at a time, nights slept alone.
  */
+import { canPay } from '@/engine/systems/household';
+import { journeysOf } from '@/engine/systems/journey';
 import { describe, expect, it } from 'vitest';
 import { SUMMER_PLAYS } from '@/engine/content/plays';
 import { createSave, quickSave } from '@/engine';
@@ -32,6 +34,8 @@ const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.a
 /** Played by somebody who looks after themselves: rested, fed and steady each time the clock moves, as a player keeps a character. Since 2026-09-28 a run of off nights falls short at the evaluation. */
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
+/** Once the last journey is there: a job's trip is a train from New Haven, from 2026-09-29. */
+const landed = (sim: Simulation) => { const j = journeysOf(sim.player).at(-1); if (j) sim.advanceTo(Math.max(sim.now, j.arriveAt + (j.lateMinutes ?? 0) * 60_000 + 60_000)); };
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending');
 const day = (key: string) => { const [year, month, d] = key.split('-').map(Number); return { year: year!, month: month!, day: d! }; };
 
@@ -953,14 +957,21 @@ describe('the summers, for work', () => {
     const job = { id: 'june', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 2, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(job);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'june' } }).ok).toBe(true);
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
-    sim.universe.accounts[sim.player.primaryAccountId!]!.balance = -100_000_00;
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0);
     const stay = pending(sim, 'career.stay')[0]!;
+    sim.advanceTo(stay.at - 60_000);
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0);
+    // The train's fare and no more, an overdraft counted: from 2026-09-29 the way there is a Metro-North ticket, $20.25.
+    const primary = sim.universe.accounts[sim.player.primaryAccountId!]!;
+    primary.balance = 0;
+    primary.balance = 21_00 - canPay(sim, sim.player);
     sim.advanceTo(stay.at + 60_000);
+    landed(sim);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     expect(sim.universe.transactions.some((t) => t.memo.startsWith('A sublet in New York'))).toBe(false);
-    expect(sim.player.earnings?.years[2027]?.jobCosts ?? 0).toBe(0);
+    // The fare, and nothing for a room.
+    const fare = sim.universe.transactions.find((t) => t.memo === 'The fare to New York, for the job')!;
+    expect(sim.player.earnings?.years[2027]?.jobCosts ?? 0).toBe(fare.postings.find((q) => q.amount > 0)!.amount);
     expect(sim.universe.notifications.some((n) => /friend’s sofa/.test(n.body))).toBe(true);
   }, 180_000);
 
@@ -977,11 +988,14 @@ describe('the summers, for work', () => {
     const stays = pending(sim, 'career.stay');
     expect(stays).toHaveLength(2);
     sim.advanceTo(stays[0]!.at + 60_000);
+    landed(sim);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     const sublet = sim.universe.transactions.find((t) => t.memo.startsWith('A sublet in New York'))!;
-    // A cost of the work, for the return.
-    expect(sim.player.earnings!.years[2027]!.jobCosts).toBe(sublet.postings.find((q) => q.amount > 0)!.amount);
+    const fare = sim.universe.transactions.find((t) => t.memo === 'The fare to New York, for the job')!;
+    // Costs of the work, for the return: the room and the train.
+    expect(sim.player.earnings!.years[2027]!.jobCosts).toBe(sublet.postings.find((q) => q.amount > 0)!.amount + fare.postings.find((q) => q.amount > 0)!.amount);
     sim.advanceTo(stays[1]!.at + 60_000);
+    landed(sim);
     expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
     // Gone somewhere else by the job's end, they aren't brought back from it.
     const other = { ...job, id: 'july', starts: at(2027, 7, 12, 7), status: 'offered' as const };
@@ -989,6 +1003,7 @@ describe('the summers, for work', () => {
     sim.must({ kind: 'career.accept', payload: { bookingId: 'july' } });
     const next = pending(sim, 'career.stay');
     sim.advanceTo(next[0]!.at + 60_000);
+    landed(sim);
     sim.player.currentLocationId = 'us-ca-losangeles';
     sim.advanceTo(next[1]!.at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ca-losangeles');
@@ -1009,7 +1024,7 @@ describe('the summers, for work', () => {
     const planned = { one: home('one').at, two: home('two').at };
     play(sim, home('one').at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-    play(sim, home('two').at + 60_000);
+    play(sim, home('two').at + 8 * 3_600_000);
     expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
     // One room kept on: the second job pays only the nights past the first’s.
     const sublets = sim.universe.transactions.filter((t) => t.memo.startsWith('A sublet in New York'));

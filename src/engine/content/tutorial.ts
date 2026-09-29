@@ -213,11 +213,12 @@ export const CHAPTERS: readonly Chapter[] = [
   {
     id: 'travel',
     title: 'Getting Around',
-    lead: 'A journey by air, and somewhere to stay.',
+    lead: 'A journey by air or by train, and somewhere to stay.',
     body: [
       'Travel books a journey from where you are, or where a journey booked before it takes you: a taxi to the airport, check-in two hours before a flight at home and three abroad, the flights, the border and the bags at the far end, and a taxi into town, each at its local time. A US fare is the DOT’s average for the two cities, or its per-mile fare for the distance; abroad it’s SLATE’s estimate from the same, and says so. A first checked bag is $45 at home and included across the ocean.',
       'Somewhere to sleep comes with it: a hotel at the town’s published average rate and its taxes, or your own place there. The papers the far end asks are checked when you book and again at the airport. Book It pays for all of it and puts the whole journey on your calendar, which nothing else may overlap; miss it, and the fare is gone. Days There makes it a round trip, one booking: both flights at the share of two one-way fares a round trip costs, and the hotel from the night you land to the morning you fly home. Cancel It within a day of booking, a week or more before you leave, and it all comes back, as the DOT requires; later, only the hotel does, until a day before you arrive. A round trip is canceled whole, and missing the way out cancels the way home, as airlines do.',
       'A flight is late or canceled at the rates of every US flight in 2025, and a canceled one puts you on the next. You’re in the town, on its clock, when you arrive, not before. Still there at check-out, the hotel keeps you another night if the bank can pay.',
+      'Where a train runs between the two towns, By offers it: the Northeast Corridor from New York to Washington, Boston, Philadelphia and New Haven, Metro-North, Eurostar from London to Paris, Brussels and Amsterdam, Avanti to Manchester, Irish Rail to Cork, and the Pacific Surfliner to San Diego. The times are the operators’ timetables; Amtrak publishes no fares, so its fare is its own ticket revenue per passenger-mile times the miles, and Eurostar’s is its revenue over its passengers. A train is late at its operator’s rate, and a ticket canceled comes back by its operator’s rule. A job’s own trips take the train where one runs, and fly where it’s far.',
     ],
     names: ['Travel', 'Book It', 'Cancel It'],
     opens: ['ui.travel', 'travel.book', 'travel.cancel'],

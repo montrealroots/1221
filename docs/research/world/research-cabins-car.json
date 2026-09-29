@@ -1,0 +1,646 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "purpose": "Real published figures for SLATE journeys: premium airline cabins, jet lag physiology, and a car as a journey leg (US, UK, Ireland).",
+    "rules": "Every figure carries source_url and the date or period it applies to. 'verification' says how the figure was read: 'fetched' = read from the primary page or file itself; 'operator_excerpt' = the operator's own page returned 403 to the fetcher and the figure was read from a search-index excerpt of that same page; 'secondary' = a clearly labelled non-primary source. 'derived' fields are arithmetic on published figures and are marked as such; they are not published numbers. Anything not confirmable is null and explained in 'uncertain'.",
+    "currency_notes": "US figures in USD, UK in GBP (pence for fuel), Ireland in EUR."
+  },
+
+  "cabins": {
+    "dot_consumer_airfare_report_scope": {
+      "finding": "The DOT Domestic Airline Fares Consumer Report's average fares are NOT economy-only. They are averages over all fare-paying passengers and include first-class fares; frequent-flyer award tickets are excluded.",
+      "quote": "cover first class fares paid to carriers offering such service but does not cover free tickets, such as those awarded by carriers offering frequent flyer programs",
+      "source_url": "https://www.transportation.gov/sites/dot.gov/files/2024-07/Domestic%20Airline%20Fares%20Consumer%20Report%202024_Q1.pdf",
+      "period": "Standing methodology wording in DOT Domestic Airline Fares Consumer Reports (seen in the 2024 Q1 edition)",
+      "verification": "operator_excerpt (DOT PDF returned 403; wording read from the search-index excerpt of the DOT PDF)",
+      "implication_for_game": "If SLATE treats the DOT average as the economy fare, it is slightly overstated for economy, because premium fares are blended in. The size of that bias is not published."
+    },
+
+    "db1b_fare_class_codes": {
+      "codes": {
+        "X": "Restricted Coach Class",
+        "Y": "Unrestricted Coach Class",
+        "C": "Unrestricted Business Class",
+        "D": "Restricted Business Class",
+        "F": "Unrestricted First Class",
+        "G": "Restricted First Class",
+        "U": "Unknown"
+      },
+      "note": "There is no premium-economy code in DB1B. 'W' is not a DB1B fare class code; premium economy is filed under whatever class the carrier reports, usually coach.",
+      "caveat": "The GMU DB1B primer reports that DOT warns FareClass is coded inconsistently by carriers and should not be relied on for analysis.",
+      "source_url": "https://helpdesk.cirium.com/s/article/360027629911-Airline-Origin-and-Destination-Survey-DB1B",
+      "caveat_source_url": "https://catsr.vse.gmu.edu/SYST660/BigDataAnalysisInAviation_DB1B.pdf",
+      "period": "Current DB1B coupon-table definitions",
+      "verification": "secondary (data-vendor and university documentation of the BTS field definitions; the BTS field page itself was not fetched)"
+    },
+
+    "average_fare_by_cabin_us": {
+      "domestic_first_or_business_to_coach_ratio": null,
+      "international_business_to_coach_ratio_us": null,
+      "note": "No BTS table or peer-reviewed analysis that publishes average fare or fare per mile by DB1B fare class was found. See 'uncertain'."
+    },
+
+    "iata_premium_share": {
+      "global_premium_to_economy_fare_ratio": {
+        "value": 5,
+        "approximate": true,
+        "unit": "premium (first and business) average fare as a multiple of economy average fare",
+        "quote": "Premium fares, which are approximately five times higher than economy fares on average",
+        "chart_range_note": "The report's chart plots the first-and-business to economy fare ratio on an axis of 4.0 to 8.0, with seasonal swings (premium relatively dearer in Q2 and Q4).",
+        "source_url": "https://www.iata.org/en/iata-repository/publications/economic-reports/the-resurgence-of-premium-class-travel/",
+        "period": "IATA Chart of the Week, 26 July 2024 (data Jan 2023 to May 2024)",
+        "verification": "fetched"
+      },
+      "premium_share_of_all_passengers_global": {
+        "value": 0.03,
+        "quote": "Business and first-class (premium) passengers constitute a mere 3% of all travelers",
+        "source_url": "https://www.iata.org/en/iata-repository/publications/economic-reports/the-resurgence-of-premium-class-travel/",
+        "period": "26 July 2024",
+        "verification": "fetched"
+      },
+      "premium_share_of_passenger_revenue_global": {
+        "value": 0.15,
+        "approximate": true,
+        "quote": "contribute significantly - about 15% - to passenger revenue (excluding ancillary income)",
+        "source_url": "https://www.iata.org/en/iata-repository/publications/economic-reports/the-resurgence-of-premium-class-travel/",
+        "period": "26 July 2024",
+        "verification": "fetched"
+      },
+      "international_premium_passengers_2025": {
+        "passengers": 109700000,
+        "growth_yoy": 0.045,
+        "share_of_international_travelers": 0.055,
+        "share_by_region_of_total_passengers": { "north_america": 0.104, "middle_east": 0.095 },
+        "europe_premium_passengers": 39700000,
+        "latin_america_premium_passengers": 4000000,
+        "source_url": "https://www.iata.org/en/pressroom/2026-releases/07-16-iata-releases-2025-world-air-transport-statistics-report/",
+        "period": "Calendar 2025 (IATA World Air Transport Statistics, released 16 July 2026)",
+        "verification": "fetched"
+      }
+    },
+
+    "carrier_revenue_by_cabin": {
+      "delta_2025": {
+        "premium_products_ticket_revenue_usd_millions": 22097,
+        "main_cabin_ticket_revenue_usd_millions": 23391,
+        "premium_2024_usd_millions": 20599,
+        "main_cabin_2024_usd_millions": 24497,
+        "premium_growth_yoy": 0.07,
+        "derived_premium_share_of_ticket_revenue": { "value": 0.486, "derived": true, "method": "22097 / (22097 + 23391)" },
+        "note": "Revenue split only; Delta does not publish passenger counts or average fare by cabin, so no fare ratio can be derived.",
+        "source_url": "https://ir.delta.com/news/news-details/2026/Delta-Air-Lines-Announces-December-Quarter-and-Full-Year-2025-Financial-Results/default.aspx",
+        "period": "Full year 2025 (released January 2026)",
+        "verification": "fetched"
+      }
+    },
+
+    "premium_economy_vs_economy": {
+      "published_fare_markup_percent": null,
+      "academic": [
+        {
+          "citation": "Hugon-Duprat C, O'Connell JF. The rationale for implementing a premium economy class in the long haul markets - Evidence from the transatlantic market. Journal of Air Transport Management 47 (2015) 11-19. doi:10.1016/j.jairtraman.2015.03.005",
+          "finding": "On British Airways London Heathrow to New York JFK (747-400), a premium economy seat costs about 1.6 times as much as an economy seat to produce, and the paper reports premium economy as the most profitable cabin; it also reports a 2.3 figure for revenue (see 'uncertain' for what it is relative to).",
+          "production_cost_multiple_vs_economy": 1.6,
+          "source_url": "https://ideas.repec.org/a/eee/jaitra/v47y2015icp11-19.html",
+          "period": "Published August 2015; route data from the paper's study period",
+          "verification": "secondary (RePEc abstract listing; full text paywalled)"
+        },
+        {
+          "citation": "Kuo C-W, Jou R-C. Willingness to pay for airlines' premium economy class: The perspective of passengers. Journal of Air Transport Management 59 (2017) 134-142. doi:10.1016/j.jairtraman.2016.12.005",
+          "finding": "Stated willingness to pay to upgrade from economy to premium economy, round trip.",
+          "wtp_upgrade_round_trip_usd": { "short_haul": 138, "medium_haul": 309, "long_haul": 545 },
+          "caution": "This is survey willingness to pay (Taiwanese travellers), not a published fare difference.",
+          "source_url": "https://ideas.repec.org/a/eee/jaitra/v59y2017icp134-142.html",
+          "period": "Published 2017",
+          "verification": "secondary (RePEc abstract listing; full text paywalled)"
+        }
+      ]
+    },
+
+    "cabin_rules_us_carriers": {
+      "checked_bag_fees_economy_2026": {
+        "delta": {
+          "domestic_first_bag_usd": 45, "domestic_second_bag_usd": 55,
+          "previous": { "first": 35, "second": 45 },
+          "effective": "2026-04-08",
+          "source_url": "https://www.delta.com/us/en/baggage/checked-baggage/previous-baggage-fees",
+          "verification": "fetched"
+        },
+        "american": {
+          "domestic_first_bag_usd_airport": 50, "domestic_second_bag_usd_airport": 60, "third_bag_usd": 200,
+          "prepaid_online_first": 45, "prepaid_online_second": 55,
+          "effective": "tickets purchased on or after 2026-04-09",
+          "basic_economy_domestic_first": 55, "basic_economy_domestic_second": 65,
+          "basic_economy_prepaid_first": 50, "basic_economy_prepaid_second": 60,
+          "basic_economy_effective": "tickets purchased on or after 2026-05-18",
+          "source_url": "https://news.aa.com/news/news-details/2026/American-Airlines-updates-bag-fees-and-Basic-Economy-fares-OPS-POL-04/default.aspx",
+          "verification": "fetched"
+        },
+        "united": {
+          "domestic_first_bag_usd_airport": 50, "domestic_first_bag_usd_prepaid": 45,
+          "domestic_second_bag_usd_airport": 60, "domestic_second_bag_usd_prepaid": 55,
+          "effective": "tickets purchased on or after 2026-04-03 (a $10 increase per bag)",
+          "source_url": "https://www.nerdwallet.com/travel/learn/united-airlines-bag-fees-how-they-work-and-how-to-avoid-them",
+          "corroborating_url": "https://www.cnbc.com/2026/04/02/united-airlines-raises-checked-bag-fees-fuel-prices-climb.html",
+          "verification": "secondary (united.com timed out; figures from NerdWallet and CNBC reporting)"
+        }
+      },
+      "premium_cabin_bags": {
+        "delta": {
+          "rule": "Complimentary checked baggage for Delta One, Delta Premium Select, and Delta First and Business Class passengers. Weight: Main, Comfort and Premium Select 50 lb per piece; Delta One and Delta First 70 lb per piece.",
+          "free_bag_count_first_and_delta_one": 2,
+          "free_bag_count_verification": "secondary (Delta's own pages fetched confirm 'complimentary' and the weights but not the count; the count of 2 comes from third-party guides)",
+          "basic_fare_exception": "Delta's Basic versions of premium cabins (First Basic, Premium Select Basic, 'Basic Business' in Delta One) carry a reduced checked-bag allowance.",
+          "source_url": "https://www.delta.com/us/en/baggage/overview",
+          "basic_source_url": "https://news.delta.com/what-know-about-deltas-expanded-basic-fare-options-available-now",
+          "period": "2026",
+          "verification": "fetched (rule and weights); secondary (count)"
+        },
+        "american": {
+          "rule": "Customers who purchase seats in premium cabins on domestic and international flights continue to receive complimentary bags.",
+          "free_bag_count": null,
+          "source_url": "https://news.aa.com/news/news-details/2026/American-Airlines-updates-bag-fees-and-Basic-Economy-fares-OPS-POL-04/default.aspx",
+          "period": "April 2026",
+          "verification": "fetched"
+        },
+        "united": {
+          "rule": "From spring 2026 United splits Polaris (business) and Premium Plus (premium economy) into Base, Standard and Flexible tiers on long-haul international, premium transcontinental and some Hawaii routes. Base: 1 checked bag, United Club (not Polaris lounge) access for Polaris, paid seat selection, nonrefundable and no changes. Standard: 2 checked bags, Polaris lounge access (Polaris only), seat selection, changes allowed, nonrefundable. Flexible: as Standard but refundable. Premium Plus does not automatically include lounge access.",
+          "polaris_base_bags": 1, "polaris_standard_bags": 2, "polaris_flexible_bags": 2,
+          "premium_plus_base_bags": 1, "premium_plus_standard_bags": 2, "premium_plus_flexible_bags": 2,
+          "source_url": "https://www.afar.com/magazine/united-just-announced-new-fare-tiers-in-business-class",
+          "operator_url_not_loaded": "https://www.united.com/en/us/newsroom/announcements/cision-125454",
+          "period": "Announced 9 April 2026; rollout from mid to late April 2026, expanding through 2026",
+          "verification": "secondary (AFAR; United's own release timed out)"
+        }
+      },
+      "lounge_access": {
+        "delta_one_lounge": "Same-day departing or arriving Delta One ticketed passengers may use the Delta One Lounge. Basic Business customers lose Delta One Lounge and Sky Club access for travel on or after 19 January 2027; a Delta One Classic or Extra fare is required.",
+        "source_url": "https://www.delta.com/us/en/delta-sky-club/delta-one-lounge",
+        "period": "2026, with the Basic Business change dated 2027-01-19",
+        "verification": "operator_excerpt"
+      },
+      "priority_boarding": {
+        "delta_one_basic_business": "Zone 1 boarding is included even on the Basic Business fare.",
+        "source_url": "https://news.delta.com/what-know-about-deltas-expanded-basic-fare-options-available-now",
+        "period": "2026",
+        "verification": "fetched"
+      },
+      "refundability": {
+        "delta": {
+          "rule": "Main Cabin and above (non-Basic) fares originating in the US have no change fee. 'Extra' fares are fully refundable to the original form of payment. Basic fares change or cancel for a fee; Main Basic retains a $99 change fee, and reporting says the unbundled premium Basic tiers carry fees up to $500.",
+          "main_basic_change_fee_usd": 99,
+          "premium_basic_cancel_fee_max_usd": 500,
+          "source_url": "https://www.delta.com/us/en/change-cancel/overview",
+          "fee_source_url": "https://www.travelmarketreport.com/air/articles/delta-air-lines-raises-ticket-cancellation-fees-up-to-500-on-unbundled-premium-basic-fares",
+          "period": "2026",
+          "verification": "secondary (the fee amounts come from trade press; Delta's change-cancel page was not fetched)"
+        },
+        "united": {
+          "rule": "Only the Flexible tier of Polaris and Premium Plus is refundable; Standard allows changes but is nonrefundable; Base allows neither.",
+          "source_url": "https://www.afar.com/magazine/united-just-announced-new-fare-tiers-in-business-class",
+          "period": "From April 2026",
+          "verification": "secondary"
+        },
+        "american": {
+          "rule": null,
+          "note": "American's fare-rule pages returned 403. Not confirmed."
+        },
+        "us_law_all_cabins": {
+          "rule": "Under DOT's 2024 refund rule, airlines must refund automatically, in the original form of payment, when they cancel or significantly change a flight and the passenger does not travel, and must refund the checked-bag fee when a bag is not delivered within 12 hours of a domestic flight arriving at the gate (15 to 30 hours for international, depending on flight length).",
+          "domestic_bag_delay_refund_hours": 12,
+          "source_url": "https://www.transportation.gov/briefing-room/what-airline-passengers-need-know-about-dots-automatic-refund-rule",
+          "period": "Final rule April 2024; reinforced by the FAA Reauthorization Act of 16 May 2024",
+          "verification": "operator_excerpt"
+        }
+      }
+    }
+  },
+
+  "jetlag": {
+    "re_entrainment_rate_hours_per_day": {
+      "westward": 1.5,
+      "eastward": 1.0,
+      "quote": "Westward travel: 1.5 hrs/day; eastward travel: 1 hr/day",
+      "reason": "The intrinsic human circadian period is slightly longer than 24 hours, so delaying the clock (westward) is easier than advancing it (eastward).",
+      "source_url": "https://www.cdc.gov/yellow-book/hcp/travel-air-sea/jet-lag-disorder.html",
+      "citation": "Riedy SM, Williams SG. Jet Lag Disorder. CDC Yellow Book: Health Information for International Travel, 2026 edition.",
+      "period": "CDC Yellow Book 2026",
+      "verification": "fetched",
+      "peer_reviewed_corroboration": {
+        "citation": "Eastman CI, Burgess HJ. How to travel the world without jet lag. Sleep Medicine Clinics 2009;4(2):241-255. PMID 20204161",
+        "finding": "Circadian phase delayed about 1.5 h/day after westward flights and advanced about 1 h/day after eastward flights.",
+        "source_url": "https://www.sciencedirect.com/science/article/abs/pii/S0952197624020086",
+        "verification": "secondary (the figure is as cited by a 2024 aircrew resynchronisation paper; the Eastman and Burgess full text could not be retrieved)"
+      },
+      "direction_asymmetry_over_5_zones": {
+        "finding": "After crossing more than five time zones, the average rate of westward adaptation is about 50% higher than eastward (Aschoff, 1995).",
+        "source_url": "https://www.sciencedirect.com/science/article/abs/pii/S0952197624020086",
+        "verification": "secondary"
+      }
+    },
+    "threshold_time_zones": {
+      "clinical_diagnosis_minimum": 2,
+      "clinical_quote": "Insomnia or excessive daytime sleepiness, accompanied by a reduction of total sleep time, associated with trans-meridian travel across at least two time zones.",
+      "clinical_source_url": "https://www.cdc.gov/yellow-book/hcp/travel-air-sea/jet-lag-disorder.html",
+      "clinical_basis": "ICSD-3 criterion A as given in the CDC Yellow Book 2026",
+      "symptom_onset": "Impairment of daytime function, general malaise or somatic symptoms within 1 to 2 days after travel (ICSD-3 criterion B).",
+      "review_definition_minimum": 3,
+      "review_quote": "jet lag refers to a collection of symptoms that occur in the days after flight across three or more time zones",
+      "review_citation": "Roach GD, Sargent C. Interventions to Minimize Jet Lag After Westward and Eastward Flight. Frontiers in Physiology 2019;10:927. PMID 31417411",
+      "review_source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6684967/",
+      "verification": "fetched (CDC); fetched via Europe PMC full text (Roach and Sargent)",
+      "note": "The two sources differ: 2 zones is the diagnostic floor for jet lag disorder, 3 zones is a common working definition. Neither publishes a hard cut-off below which effects are zero."
+    },
+    "effects": {
+      "symptoms": "Sleep disturbances, cognitive impairment, daytime sleepiness, general malaise, gastrointestinal disturbances, and/or other symptoms.",
+      "symptoms_source_url": "https://www.cdc.gov/yellow-book/hcp/travel-air-sea/jet-lag-disorder.html",
+      "prevalence_business_travellers": {
+        "value": 0.68,
+        "quote": "68% of international business travelers experienced negative symptoms on a regular basis",
+        "source_url": "https://www.cdc.gov/yellow-book/hcp/travel-air-sea/jet-lag-disorder.html",
+        "period": "Survey cited in CDC Yellow Book 2026",
+        "verification": "fetched"
+      },
+      "waterhouse_lancet_2007": {
+        "citation": "Waterhouse J, Reilly T, Atkinson G, Edwards B. Jet lag: trends and coping strategies. Lancet 2007;369(9567):1117-1129. PMID 17398311",
+        "finding": "Abstract emphasises sleep loss and decreased performance, caused mainly by the body clock being mistimed for the new time zone; advice differs by direction of flight. The abstract gives no numeric rate.",
+        "source_url": "https://www.thelancet.com/journals/lancet/article/PIIS0140673607605297/abstract",
+        "verification": "fetched (abstract via Europe PMC)"
+      },
+      "sack_nejm_2010": {
+        "citation": "Sack RL. Clinical practice. Jet lag. N Engl J Med 2010;362(5):440-447. doi:10.1056/NEJMcp0909838. PMID 20130253",
+        "finding": null,
+        "note": "Paywalled; no abstract text retrievable. Cited for completeness only; no figures are taken from it.",
+        "source_url": "https://www.nejm.org/doi/abs/10.1056/NEJMcp0909838"
+      },
+      "performance_quantified": [
+        {
+          "citation": "Song A, Severini T, Allada R. How jet lag impairs Major League Baseball performance. PNAS 2017;114(6):1407-1412. PMID 28115724",
+          "finding": "Jet-lag effects appeared largely after eastward travel with very limited effects after westward travel. Jet lag impaired home-team offence (e.g. slugging percentage) and both teams' defence, with most of the effect explained by home runs allowed.",
+          "data_period": "MLB seasons 1992 to 2011",
+          "source_url": "https://www.pnas.org/doi/10.1073/pnas.1608847114",
+          "verification": "fetched (abstract via Europe PMC)"
+        },
+        {
+          "citation": "Leota J, Hoffman D, Czeisler MÉ, Mascaro L, Drummond SPA, Anderson C, Rajaratnam SMW, Facer-Childs ER. Eastward Jet Lag is Associated with Impaired Performance and Game Outcome in the National Basketball Association. Frontiers in Physiology 2022.",
+          "finding": "Eastward, not westward, jet lag was associated with lower winning percentage (-6.03 points, p = 0.051), points differential (-1.29 points, p = 0.015) and rebound differential (-1.29 rebounds, p < 0.0001).",
+          "win_pct_delta": -0.0603,
+          "points_differential_delta": -1.29,
+          "rebound_differential_delta": -1.29,
+          "data_period": "11,481 NBA games, 2011/12 to 2020/21",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9245584/",
+          "verification": "fetched"
+        }
+      ]
+    }
+  },
+
+  "car": {
+    "us_aaa_your_driving_costs": {
+      "2026": {
+        "released": "2026-09-15",
+        "assumptions": { "miles_per_year": 15000, "ownership_years": 5, "total_miles": 75000, "regular_gas_usd_per_gal": 4.152, "gas_price_period": "12 months ending May 2026", "ev_electricity_usd_per_kwh": 0.18 },
+        "all_vehicle_average": {
+          "annual_cost_usd": 12863, "monthly_cost_usd": 1071.92, "weighted_msrp_usd": 39376,
+          "cost_per_mile_usd": { "10000_mi_per_yr": 1.10, "15000_mi_per_yr": 0.86, "20000_mi_per_yr": 0.74 },
+          "operating_cents_per_mile": { "fuel": 17.3, "maintenance_repair_tires": 11.7, "derived_operating_total": { "value": 29.0, "derived": true, "method": "17.3 + 11.7" } },
+          "fixed_per_year_usd": { "depreciation": 4422, "finance": 1184, "insurance": 2098, "license_registration_taxes": 802 }
+        },
+        "cost_per_mile_by_category_cents": {
+          "small_sedan": 61.73, "medium_sedan": 70.37, "subcompact_suv": 71.68, "compact_suv": 77.80,
+          "medium_suv": 96.32, "midsize_pickup": 87.26, "half_ton_pickup": 110.0
+        },
+        "medium_sedan_annual_cost_usd_gas": 10582,
+        "medium_sedan_operating_breakdown": null,
+        "source_url": "https://newsroom.aaa.com/wp-content/uploads/2026/09/AAA_YDC-Fact-Sheet_2026.pdf",
+        "press_release_url": "https://newsroom.aaa.com/2026/09/aaa-new-vehicle-ownership-costs-hit-12863-annually/",
+        "verification": "fetched"
+      },
+      "2025": {
+        "released": "September 2025",
+        "assumptions": { "miles_per_year": 15000, "regular_gas_usd_per_gal": 3.151, "gas_price_period": "12 months ending May 2025", "ev_electricity_usd_per_kwh": 0.167 },
+        "all_vehicle_average": {
+          "annual_cost_usd": 11577, "sales_weighted_msrp_usd": 38938,
+          "cost_per_mile_usd": { "10000_mi_per_yr": 1.00, "15000_mi_per_yr": 0.77, "20000_mi_per_yr": 0.66 },
+          "operating_cents_per_mile": { "fuel": 13.0, "maintenance_repair_tires": 11.04 },
+          "fixed_per_year_usd": { "depreciation": 4334, "finance": 1131, "insurance": 1694, "license_registration_taxes": 813 }
+        },
+        "cost_per_mile_by_category_cents": {
+          "small_sedan": 55.87, "medium_sedan": 66.37, "subcompact_suv": 66.11, "compact_suv": 68.53,
+          "medium_suv": 83.89, "midsize_pickup": 79.11, "half_ton_pickup": 98.54, "hybrid": 63.94, "electric": 71.21
+        },
+        "source_url": "https://newsroom.aaa.com/wp-content/uploads/2025/09/UPDATE-AAA-Fact-Sheet-Your-Driving-Cost-9.2025-1.pdf",
+        "verification": "fetched"
+      }
+    },
+
+    "us_irs_standard_mileage_rate_cents": {
+      "2025": { "business": 70, "medical_moving": 21, "charity": 14, "notice": "IR-2024-312", "period": "2025-01-01 to 2025-12-31" },
+      "2026_h1": { "business": 72.5, "medical_moving": 20.5, "charity": 14, "notice": "IR-2025-128", "period": "2026-01-01 to 2026-06-30" },
+      "2026_h2": { "business": 76, "medical_moving": 23.5, "charity": 14, "notice": "IR-2026-29", "period": "2026-07-01 to 2026-12-31 (a mid-year increase)" },
+      "source_url": "https://www.irs.gov/tax-professionals/standard-mileage-rates",
+      "verification": "fetched"
+    },
+
+    "fuel_prices": {
+      "us_regular_gasoline_usd_per_gal": {
+        "monthly_2026": { "2026-01": 2.809, "2026-02": 2.908, "2026-03": 3.638, "2026-04": 4.103, "2026-05": 4.479, "2026-06": 4.050, "2026-07": 3.932, "2026-08": 4.058, "2026-09": 4.355 },
+        "monthly_2025": { "2025-01": 3.076, "2025-02": 3.121, "2025-03": 3.096, "2025-04": 3.171, "2025-05": 3.150, "2025-06": 3.150, "2025-07": 3.125, "2025-08": 3.133, "2025-09": 3.166, "2025-10": 3.060, "2025-11": 3.050, "2025-12": 2.894 },
+        "latest_weekly": { "2026-09-14": 4.319, "2026-09-21": 4.478, "2026-09-28": 4.465 },
+        "diesel_latest_weekly": { "2026-09-28": 6.382 },
+        "note": "The September 2026 monthly figure is EIA's, published 2026-09-29 alongside the weekly series.",
+        "source_url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EMM_EPMR_PTE_NUS_DPG&f=M",
+        "weekly_source_url": "https://www.eia.gov/petroleum/gasdiesel/",
+        "verification": "fetched"
+      },
+      "uk_pump_price_pence_per_litre": {
+        "petrol_ulsp": { "2026-08-24": 161.63, "2026-08-31": 161.61, "2026-09-07": 164.40, "2026-09-14": 168.14, "2026-09-21": 172.01, "2026-09-28": 173.46 },
+        "diesel_ulsd": { "2026-08-24": 182.82, "2026-08-31": 183.49, "2026-09-07": 186.36, "2026-09-14": 190.72, "2026-09-21": 195.53, "2026-09-28": 197.58 },
+        "duty_pence_per_litre": 52.95,
+        "vat_percent": 20,
+        "note": "Dates are the Monday of each DESNZ weekly observation.",
+        "source_url": "https://assets.publishing.service.gov.uk/media/6aba69e2a9c3d267bcccefa8/CSV__2018_-__.csv",
+        "landing_page": "https://www.gov.uk/government/statistics/weekly-road-fuel-prices",
+        "verification": "fetched (CSV downloaded)"
+      },
+      "ireland_eur_per_litre": {
+        "petrol": { "2026-06": 1.84, "2026-07": 1.75, "2026-08": 1.84, "2026-09": 1.87 },
+        "diesel": { "2026-06": 1.88, "2026-07": 1.73, "2026-08": 1.92, "2026-09": 1.94 },
+        "september_published": "2026-09-14",
+        "source_url": "https://www.theaa.ie/blog/september-fuel-prices-2026/",
+        "earlier_months_url": "https://www.theaa.ie/blog/fuel-prices-july-2026-petrol-diesel-ev-charging/",
+        "verification": "fetched (September and August); secondary search excerpt of AA Ireland's own posts (June, July)",
+        "note": "AA Ireland is a motoring organisation, not a government body; Ireland publishes no official weekly pump-price series equivalent to DESNZ's."
+      }
+    },
+
+    "airport_parking": {
+      "JFK": {
+        "long_term_lot_9_drive_up_usd": { "first_24h": 49.00, "each_additional_12h": 24.50 },
+        "terminal_lots_daily_max_usd": { "yellow": 75.00, "red": 70.00, "blue": 80.00 },
+        "effective": "Schedule of Charges, parking section dated 16 September 2025 (document titled January 2026)",
+        "source_url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges-JFK-JANUARY_26.pdf",
+        "verification": "fetched (PDF)",
+        "note": "Pre-booked rates are lower but vary by date and are not in the schedule."
+      },
+      "LGA": {
+        "drive_up_24h_max_usd": { "terminal_a": 75.00, "terminal_b": 80.00, "terminal_c": 89.00 },
+        "prebook_24h_max_usd": { "terminal_a": 50.00, "terminal_b": 55.00, "terminal_c": 60.00 },
+        "prepaid_economy_usd_per_day": 40.00,
+        "effective": "2024-07-08 (Schedule of Charges, January 2025 edition)",
+        "source_url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges-LGA_Jan%202025.pdf",
+        "verification": "fetched (PDF)"
+      },
+      "EWR": {
+        "drive_up_24h_max_usd": { "short_term_a": 65.00, "short_term_b_c": 70.00, "p4_daily": 60.00 },
+        "prebook_24h_max_usd": { "short_term_a": 50.00, "short_term_b_c": 50.00, "p4_daily": 40.00 },
+        "economy_p6_usd": { "first_24h_drive_up": 35.00, "each_additional_12h": 17.50, "prebook_daily_max": 30.00 },
+        "effective": "2024-07-08 (Schedule of Charges, January 2025 edition)",
+        "source_url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges-EWR%20and%20TEB_JAN%202025.pdf",
+        "verification": "fetched (PDF)"
+      },
+      "LAX": {
+        "cta_structures_max_per_24h_usd": 60,
+        "economy_max_per_24h_usd": 35,
+        "source_url": "https://parking.flylax.com/lax-economy.html",
+        "cta_source_url": "https://parking.flylax.com/lax-terminal.html",
+        "period": "Current as of 2026-09 (no effective date shown)",
+        "verification": "operator_excerpt (flylax.com returned 403; figures read from search-index excerpts of LAX's own parking pages)"
+      },
+      "BOS": {
+        "terminal_b_garage_daily_max_usd": 46,
+        "economy_garage_daily_max_usd": 37,
+        "central_garage_daily_max_usd": null,
+        "source_url": "https://www.massport.com/logan-airport/to-from-logan/parking",
+        "period": "Current as of 2026-09",
+        "verification": "fetched"
+      },
+      "LHR": {
+        "long_stay_drive_up_gbp": { "first_day": 46.80, "each_additional_24h": 37.40 },
+        "source_url": "https://www.heathrow.com/transport-and-directions/heathrow-parking/heathrow-long-stay-parking",
+        "period": "Current as of 2026-09",
+        "verification": "fetched",
+        "note": "Pre-book prices are quote-only and vary by date."
+      },
+      "LGW": {
+        "long_stay_roll_up_gbp": { "0_to_2h": 0, "2_to_24h": 38.00, "each_subsequent_day": 32.00 },
+        "short_stay_roll_up_gbp": { "12_to_24h": 70.00, "each_subsequent_day": 70.00 },
+        "source_url": "https://www.gatwickairport.com/parking/roll-up-car-park-prices.html",
+        "period": "Current as of 2026-09",
+        "verification": "fetched"
+      }
+    },
+
+    "travel_speed": {
+      "uk": {
+        "strategic_road_network_england_avg_mph": { "value": 56.6, "period": "Calendar 2025", "published": "2026-05-14", "avg_delay_seconds_per_vehicle_mile": 11.0,
+          "source_url": "https://www.gov.uk/government/statistics/travel-time-measures-for-the-strategic-road-network-and-local-a-roads-january-to-december-2025/travel-time-measures-for-the-strategic-road-network-january-to-december-2025-report", "verification": "fetched" },
+        "local_a_roads_avg_mph": { "great_britain": 24.6, "england": 24.3, "england_weekday_am_peak": 23.0, "england_weekday_pm_peak": 21.8, "period": "April 2025 to March 2026", "published": "2026-08-06",
+          "source_url": "https://www.gov.uk/government/statistics/travel-time-measures-for-the-strategic-road-network-england-and-local-a-roads-great-britain-april-2025-to-march-2026/travel-time-measures-for-local-a-roads-april-2025-to-march-2026-report", "verification": "fetched" },
+        "free_flow_car_speed_mph": { "motorways": 68, "national_speed_limit_single_carriageway": 51, "30_mph_roads": 30, "period": "2024", "published": "2025-06-25",
+          "note": "Free-flow speeds at sites chosen to exclude junctions, hills and cameras; not journey averages. The 2025 edition is postponed to summer 2027.",
+          "source_url": "https://www.gov.uk/government/statistics/vehicle-speed-compliance-statistics-for-great-britain-2024/vehicle-speed-compliance-statistics-for-great-britain-2024", "verification": "fetched" }
+      },
+      "us": {
+        "fhwa_urban_congestion_report": {
+          "national_travel_time_index": 1.28,
+          "national_planning_time_index": 2.03,
+          "national_congested_hours_per_weekday": "3:52",
+          "city_travel_time_index": { "boston": 1.27, "chicago": 1.30, "houston": 1.34, "atlanta": 1.31, "dallas_fort_worth": 1.32 },
+          "definition": "Travel Time Index = weekday peak-period travel time divided by free-flow travel time (1.28 means peak trips take 28% longer). Planning Time Index is the 95th-percentile equivalent.",
+          "period": "October to December 2025",
+          "source_url": "https://ops.fhwa.dot.gov/perf_measurement/ucr/reports/fy2026_q1.pdf",
+          "definitions_url": "https://ops.fhwa.dot.gov/perf_measurement/ucr/documentation.htm",
+          "verification": "fetched (PDF)",
+          "note": "FHWA publishes ratios, not mph. A travel-time model would multiply a free-flow time by the TTI in peak periods."
+        },
+        "inrix_2025_scorecard": {
+          "us_typical_driver_hours_lost": 49,
+          "us_cost_per_driver_usd": 894,
+          "us_total_cost_usd": 85800000000,
+          "hours_lost_by_city": { "chicago": 112, "new_york": 102, "philadelphia": 101, "los_angeles": 87, "boston": 83 },
+          "downtown_speed_mph": null,
+          "period": "Calendar 2025 (released 2025-12-01)",
+          "source_url": "https://inrix.com/press-releases/2025-global-traffic-scorecard-us/",
+          "national_figures_url": "https://inrix.com/blog/traffic-is-back-insights-from-the-2025-inrix-global-traffic-scorecard/",
+          "verification": "fetched",
+          "note": "INRIX is a private analytics firm (secondary to FHWA). Its blog gives Los Angeles 86 hours against the press release's 87."
+        }
+      }
+    },
+
+    "tolls_and_charges": {
+      "mta_bridges_tunnels_nyc": {
+        "car_usd": {
+          "major_crossings": { "ezpass_ny": 7.46, "mid_tier": 9.79, "tolls_by_mail": 12.03, "applies_to": "Verrazzano-Narrows, Robert F. Kennedy, Bronx-Whitestone and Throgs Neck bridges; Queens Midtown and Hugh L. Carey tunnels" },
+          "cross_bay_and_marine_parkway": { "ezpass_ny": 2.80, "mid_tier": 4.42, "tolls_by_mail": 6.02 },
+          "verrazzano_staten_island_resident_ezpass": 4.19
+        },
+        "effective": "2026-01-04 (7.5% increase)",
+        "source_url": "https://www.mta.info/fares-tolls/tolls/vehicle-types",
+        "verification": "fetched (Staten Island resident rate from search excerpt of NY1 reporting: https://ny1.com/nyc/all-boroughs/news/2026/01/02/mta-fare-and-toll-hikes-to-take-effect-sunday)",
+        "not_found": "Henry Hudson Bridge rate not captured."
+      },
+      "port_authority_hudson_crossings": {
+        "car_usd": { "ezpass_peak": 16.79, "ezpass_off_peak": 14.79, "ezpass_mid_tier": 19.55, "tolls_by_mail": 23.30 },
+        "peak_hours": "Weekdays 6-10 am and 4-8 pm; weekends 11 am-9 pm",
+        "direction": "Collected entering New York only; cashless",
+        "applies_to": "Lincoln and Holland tunnels; George Washington, Bayonne and Goethals bridges; Outerbridge Crossing",
+        "effective": "2026-01-04 (3% increase)",
+        "source_url": "https://www.panynj.gov/bridges-tunnels/en/tolls.html",
+        "verification": "secondary (the PANYNJ page rendered without its table; figures from the Wikipedia PANYNJ toll template and PrePass, both citing PANYNJ: https://en.wikipedia.org/wiki/Template:PANYNJ_toll_rates)"
+      },
+      "manhattan_congestion_relief_zone": {
+        "passenger_vehicle_ezpass_usd": { "peak": 9.00, "overnight": 2.25 },
+        "peak_hours": "5 am-9 pm weekdays; 9 am-9 pm weekends",
+        "charged": "Once per day on entry to Manhattan at or south of 60th Street",
+        "crossing_credit_peak_usd_max": 3.00,
+        "crossing_credit_applies_to": "Entry via Lincoln, Holland, Queens-Midtown or Hugh L. Carey tunnels",
+        "phase_in": { "2028": 12.00, "2031": 15.00 },
+        "tolls_by_mail": null,
+        "start_date": "2025-01-05",
+        "source_url": "https://www.mta.info/fares-tolls/tolls/congestion-relief-zone/about",
+        "verification": "fetched (rates); start_date not fetched, it is the widely reported launch date and the MTA board phase-in release was not opened: https://www.mta.info/press-release/mta-board-approves-phasing-congestion-relief-zone-toll"
+      },
+      "london_congestion_charge": {
+        "daily_gbp": 18.00,
+        "late_within_3_days_gbp": 21.00,
+        "electric_car_on_auto_pay_gbp": 13.50,
+        "cleaner_vehicle_discount": "25% for electric cars, 50% for electric vans/HGVs/quadricycles, Auto Pay only; halves in 2030",
+        "effective": "2026-01-02 (previous charge £15)",
+        "hours": "Mon-Fri 07:00-18:00; Sat, Sun and bank holidays 12:00-18:00",
+        "hours_verification": "secondary (Visit London and trade press; tfl.gov.uk returned 403)",
+        "source_url": "https://haveyoursay.tfl.gov.uk/congestion-charge-proposals",
+        "decision_url": "https://www.london.gov.uk/md3442-changes-congestion-charging-scheme",
+        "verification": "fetched (TfL Have Your Say decision page)"
+      },
+      "london_ulez": {
+        "daily_gbp_non_compliant_car": 12.50,
+        "hours": "24 hours a day, every day except Christmas Day",
+        "penalty_gbp": 180, "penalty_if_paid_within_14_days_gbp": 90,
+        "payment_deadline": "Midnight on the third day after the journey",
+        "note": "Only non-compliant vehicles pay. Most petrol cars from 2006 and diesel from 2015 comply (Euro 4 / Euro 6), so a typical rental or recent car pays nothing.",
+        "compliance_note_verification": "secondary (general TfL rule, not re-fetched)",
+        "source_url": "https://tfl.gov.uk/modes/driving/ultra-low-emission-zone/penalty-charges-for-ulez",
+        "period": "2026 (unchanged by the January 2026 Congestion Charge decision)",
+        "verification": "operator_excerpt"
+      },
+      "dublin_m50": {
+        "car_eur": { "tag": 2.60, "video_account": 3.20, "unregistered": 3.80 },
+        "payment_deadline_unregistered": "8 pm the day after travel",
+        "effective": "2026-01-01",
+        "source_url": "https://www.eflow.ie/news/op/m50-toll-rate-changes-2026",
+        "tii_url": "https://www.tii.ie/en/news/press-releases/toll-charge-increase-from-1st-january-2026/",
+        "verification": "fetched"
+      }
+    }
+  },
+
+  "uncertain": [
+    {
+      "item": "Average fare or fare per mile by cabin from BTS DB1B",
+      "status": "null",
+      "reason": "No BTS table or peer-reviewed paper was found that publishes averages by DB1B fare class (C/D/F/G against X/Y). The GMU DB1B primer reports that DOT itself cautions that FareClass is coded inconsistently across carriers. A ratio could be computed from the raw DB1B coupon files, but it would be SLATE's own analysis, not a published figure."
+    },
+    {
+      "item": "US domestic first/business to coach fare ratio",
+      "status": "null",
+      "reason": "Not published by DOT or BTS. The only published multiple is IATA's global, mostly international ~5x (premium against economy, 2023-24), which blends long-haul business with short-haul first."
+    },
+    {
+      "item": "Premium economy markup over economy (percent)",
+      "status": "null",
+      "reason": "No primary source publishes it. Consumer sites say 50-100% (Simple Flying, Going, Skyscanner): unsourced estimates, not recorded as figures. The academic evidence is a production-cost multiple (1.6x, Hugon-Duprat and O'Connell 2015) and survey willingness to pay (Kuo and Jou 2017), neither of which is a fare markup."
+    },
+    {
+      "item": "Hugon-Duprat and O'Connell (2015) '2.3 times' revenue figure",
+      "status": "not recorded as a number",
+      "reason": "The RePEc summary says premium economy seats 'generate 2.3 times higher revenues' but does not say whether that is relative to economy revenue or to the seat's own production cost; a search excerpt read it as relative to cost. Full text is paywalled."
+    },
+    {
+      "item": "American Airlines free checked-bag count and refund rules by premium cabin",
+      "status": "count null",
+      "reason": "aa.com returned 403. American's April 2026 release confirms that premium cabins get complimentary bags but gives no count."
+    },
+    {
+      "item": "Delta and United free-bag counts on operator pages",
+      "status": "secondary",
+      "reason": "Delta's own pages confirm complimentary bags for premium cabins and the 70 lb limit for Delta One and First, but the count (2) is from third-party guides. United's tiers (1 bag Base, 2 bags Standard or Flexible) come from AFAR; united.com timed out."
+    },
+    {
+      "item": "United 2026 economy bag fees",
+      "status": "secondary",
+      "reason": "united.com timed out; figures from NerdWallet and CNBC."
+    },
+    {
+      "item": "Delta Basic premium change and cancel fees (up to $500)",
+      "status": "secondary",
+      "reason": "Trade-press figure; Delta's change-cancel page was not fetched."
+    },
+    {
+      "item": "Eastman and Burgess (2009) 1.5 h/day west, 1 h/day east; Aschoff (1995) 50% faster west",
+      "status": "secondary citation",
+      "reason": "Full texts not retrieved; figures as cited by a 2024 aircrew paper. The same 1.5 and 1.0 h/day figures are confirmed directly in the CDC Yellow Book 2026 (primary)."
+    },
+    {
+      "item": "Sack, NEJM 2010",
+      "status": "no figures taken",
+      "reason": "Paywalled and no abstract available through Europe PMC."
+    },
+    {
+      "item": "Quantified cognitive or alertness deficit per time zone in the general population",
+      "status": "null",
+      "reason": "No peer-reviewed source found that gives a per-zone or per-day cognitive decrement for ordinary travellers. The quantified effects found are from athletes (MLB, NBA) and show an eastward-only effect."
+    },
+    {
+      "item": "AAA medium-sedan fuel and maintenance cents per mile",
+      "status": "null",
+      "reason": "The AAA fact sheet gives fuel (17.3 cents) and maintenance, repair and tires (11.7 cents) only as all-vehicle averages. Medium sedan is given only as a total (70.37 cents/mile in 2026). The per-model breakdown is behind AAA's 'click here' link, which was not retrieved. Note: some search snippets attribute 66.11 cents to the 2025 medium sedan; that is the 2025 subcompact SUV. The 2025 medium sedan was 66.37 cents."
+    },
+    {
+      "item": "LAX parking daily maximums ($60 CTA, $35 Economy)",
+      "status": "operator_excerpt",
+      "reason": "flylax.com returned 403. Figures come from search-index excerpts of LAX's own pages. An older excerpt gave Economy Lot E as $12/day, which appears stale."
+    },
+    {
+      "item": "Boston Logan Central Parking daily maximum",
+      "status": "null",
+      "reason": "The Massport page fetched gave only Terminal B ($46) and Economy ($37). Third-party sites say Central is also $46, but that is not confirmed from Massport."
+    },
+    {
+      "item": "LGA and EWR parking rates currency",
+      "status": "dated",
+      "reason": "The latest Port Authority schedules found are the January 2025 editions, with rates effective 8 July 2024. JFK's is the January 2026 edition. A 2026 LGA or EWR revision may exist but was not found."
+    },
+    {
+      "item": "Port Authority Hudson crossing tolls",
+      "status": "secondary",
+      "reason": "panynj.gov's toll page rendered without its rate table. Figures agree across the Wikipedia PANYNJ template, PrePass and georgewashingtonbridgetoll.com. One search summary gave a 12 July 2026 effective date, which conflicts with the 4 January 2026 increase and is unexplained."
+    },
+    {
+      "item": "Manhattan Congestion Relief Zone Tolls by Mail rate",
+      "status": "null",
+      "reason": "The MTA page fetched gives only the E-ZPass rates."
+    },
+    {
+      "item": "London Congestion Charge operating hours",
+      "status": "secondary",
+      "reason": "tfl.gov.uk returned 403. The hours come from Visit London and trade press."
+    },
+    {
+      "item": "DOT Consumer Airfare Report includes first class",
+      "status": "operator_excerpt",
+      "reason": "The DOT PDFs returned 403 to the fetcher. The methodology wording was read from search-index excerpts of the DOT report PDFs; it has appeared in the same form in editions from 1997 to 2024."
+    },
+    {
+      "item": "US average driving speed in mph (urban or highway)",
+      "status": "null",
+      "reason": "FHWA publishes travel-time indices, not speeds, in the Urban Congestion Report. INRIX's downtown speeds are in its interactive city pages, which were not retrievable. No federal national average mph was found."
+    },
+    {
+      "item": "Ireland average road speeds",
+      "status": "not researched",
+      "reason": "Not requested beyond tolls and fuel; no figure recorded."
+    }
+  ]
+}

@@ -32,8 +32,9 @@ import { present } from './career';
 import { crossingRefusal, isoOfCity } from './documents';
 import { itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
+import { fareOf, planTrain, railRouteById, railRoutes, trainFate } from './rail';
 
-export type LegMode = 'ground' | 'check-in' | 'flight' | 'arrival';
+export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'arrival';
 
 export interface JourneyLeg {
   mode: LegMode;
@@ -46,6 +47,8 @@ export interface JourneyLeg {
   fare: Money;
   /** Whose figure the fare and the time are. */
   basis: string;
+  /** A train's route (`content/rail.ts`). */
+  routeId?: string;
 }
 
 export interface Journey {
@@ -69,6 +72,8 @@ export interface Journey {
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
   hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant };
+  /** By train, the route's id; by air where not said (from 2026-09-29). */
+  by?: string;
   /** A trip the career makes (from 2026-09-29): the job's, who paid the fares, and where they sleep on arrival. */
   bookingId?: string;
   paidBy?: 'production' | 'self';
@@ -218,6 +223,8 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
   let late = 0;
   let rebooked = false;
   for (const [n, leg] of j.legs.entries()) {
+    const route = leg.mode === 'train' ? railRouteById(leg.routeId) : undefined;
+    if (route) { late += trainFate(sim, person, route, `${j.id}-${n}`); continue; }
     if (leg.mode !== 'flight') continue;
     const fate = flightFate(sim, person, `${j.id}-${n}`);
     if (fate === null) { rebooked = true; late += AIR.rebookHours * 60; } else late += fate;
@@ -228,34 +235,53 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
   sim.schedule({ at: j.arriveAt + late * 60_000, kind: ARRIVE_KIND, label: `Arrive In ${CITIES.require(j.toCity).name}`, category: 'personal', priority: 28, payload: { personId: person.id, journeyId: j.id } });
 }
 
+/** A journey's legs by air, or by a train's route: `by` is the route's id, or nothing for air. */
+export function planBy(sim: Simulation, by: string | undefined, fromCity: string, toCity: string, day: Instant, slot: number, bags: number): JourneyLeg[] | string {
+  if (!by || by === 'air') return planJourney(sim, fromCity, toCity, day, slot, bags);
+  const route = railRouteById(by);
+  if (!route || !railRoutes(fromCity, toCity).includes(route)) return 'That train doesn’t run between those towns.';
+  return planTrain(sim, route, fromCity, day, slot);
+}
+
 /**
- * The flight a job's trip takes, from 2026-09-29: out, the latest of the
- * day's departures that lands at least ten hours before the first call, the
- * day before or the one before that; home, the first that leaves after the
+ * How a job's trip goes, from 2026-09-29: by train where one runs (the
+ * fastest on the production's ticket, the cheapest on the actor's own), else
+ * by air where it's far enough to fly; out, the latest of the day's
+ * departures that arrives at least ten hours before the first call, the day
+ * before or the one before that; home, the first that leaves after the
  * job's done. Until then the career moved an actor between cities in an
  * instant, and an actor's own fare to a job in another city was never paid.
  */
-export function careerFlight(sim: Simulation, fromCity: string, toCity: string, when: Instant, way: 'out' | 'back'): { day: Instant; slot: number; legs: JourneyLeg[] } | undefined {
-  if (distanceKm(CITIES.require(fromCity), CITIES.require(toCity)) < AIR.shortestCareerFlightKm) return undefined;
+export function careerTrip(sim: Simulation, fromCity: string, toCity: string, when: Instant, way: 'out' | 'back', payer: 'production' | 'self' = 'production'): { by?: string; day: Instant; slot: number; legs: JourneyLeg[] } | undefined {
+  const trains = railRoutes(fromCity, toCity).slice().sort((a, b) => (payer === 'production' ? a.minutes - b.minutes : fareUsdOf(a) - fareUsdOf(b)));
+  const route = trains[0];
+  if (!route && distanceKm(CITIES.require(fromCity), CITIES.require(toCity)) < AIR.shortestCareerFlightKm) return undefined;
+  const slots = route ? Array.from({ length: route.perDay }, (_, i) => i) : AIR.departureHours.map((_, i) => i);
   const tries: [Instant, number][] = way === 'out'
-    ? [1, 2].flatMap((before) => [2, 1, 0].map((slot) => [when - before * MS_DAY, slot] as [Instant, number]))
-    : [0, 1].flatMap((after) => [0, 1, 2].map((slot) => [when + after * MS_DAY, slot] as [Instant, number]));
+    ? [1, 2].flatMap((before) => [...slots].reverse().map((slot) => [when - before * MS_DAY, slot] as [Instant, number]))
+    : [0, 1].flatMap((after) => slots.map((slot) => [when + after * MS_DAY, slot] as [Instant, number]));
   for (const [day, slot] of tries) {
-    const legs = planJourney(sim, fromCity, toCity, day, slot, 1);
+    const legs = planBy(sim, route?.id, fromCity, toCity, day, slot, 1);
     if (typeof legs === 'string') return undefined;
     if (legs[0]!.departAt <= sim.now) continue;
-    if (way === 'out' ? legs[legs.length - 1]!.arriveAt <= when - 10 * MS_HOUR : legs[0]!.departAt >= when) return { day, slot, legs };
+    if (way === 'out' ? legs[legs.length - 1]!.arriveAt <= when - 10 * MS_HOUR : legs[0]!.departAt >= when) return { ...(route ? { by: route.id } : {}), day, slot, legs };
   }
   return undefined;
 }
 
+/** A train's fare in dollars, to set two routes side by side. */
+function fareUsdOf(route: import('../content/rail').RailRoute): number {
+  const f = fareOf(route);
+  return f.currency === 'USD' ? f.amount : exchange(f.amount, f.currency, 'USD') ?? f.amount;
+}
+
 /** A job's trip begun: underway at once, on the plan it was booked on, re-planned from wherever they are now. */
-export function startCareerJourney(sim: Simulation, person: Person, toCity: string, day: Instant, slot: number, opts: { bookingId: string; paidBy: 'production' | 'self'; onArrival?: Person['stay'] }): Journey | undefined {
+export function startCareerJourney(sim: Simulation, person: Person, toCity: string, day: Instant, slot: number, opts: { bookingId: string; paidBy: 'production' | 'self'; onArrival?: Person['stay']; by?: string }): Journey | undefined {
   const fromCity = person.currentLocationId;
-  const legs = planJourney(sim, fromCity, toCity, day, slot, 1);
+  const legs = planBy(sim, opts.by, fromCity, toCity, day, slot, 1);
   if (typeof legs === 'string') return undefined;
   const j: Journey = {
-    id: sim.nextId('journey'), fromCity, toCity, legs, status: 'booked', bookedAt: sim.now, bags: 1,
+    id: sim.nextId('journey'), fromCity, toCity, legs, status: 'booked', bookedAt: sim.now, bags: 1, ...(opts.by ? { by: opts.by } : {}),
     total: total(legs), leaveAt: legs[0]!.departAt, arriveAt: legs[legs.length - 1]!.arriveAt,
     bookingId: opts.bookingId, paidBy: opts.paidBy, ...(opts.onArrival ? { onArrival: opts.onArrival } : {}),
   };
@@ -265,7 +291,7 @@ export function startCareerJourney(sim: Simulation, person: Person, toCity: stri
 }
 
 export function registerJourneys(sim: Simulation): void {
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -273,8 +299,9 @@ export function registerJourneys(sim: Simulation): void {
     const fromCity = whereBy(person, day);
     const bags = Math.max(0, Math.min(2, Number(p?.bags ?? 0)));
     const round = p?.returnDay !== undefined && p?.returnDay !== null;
-    let out = planJourney(s, fromCity, toCity, day, Number(p?.slot ?? 0), bags);
-    let back = round ? planJourney(s, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags) : undefined;
+    const by = p?.by && p.by !== 'air' ? String(p.by) : undefined;
+    let out = planBy(s, by, fromCity, toCity, day, Number(p?.slot ?? 0), bags);
+    let back = round ? planBy(s, by, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags) : undefined;
     if (typeof out === 'string') throw new CommandError(out);
     if (typeof back === 'string') throw new CommandError(back);
     const arriveOut = out[out.length - 1]!.arriveAt;
@@ -286,8 +313,8 @@ export function registerJourneys(sim: Simulation): void {
     if (back) {
       const noBack = bookRefusal(s, person, fromCity, back, 1, 1);
       if (noBack && !/Somewhere to sleep|hotels yet/.test(noBack)) throw new CommandError(`The way home: ${noBack}`);
-      out = asRoundTrip(out);
-      back = asRoundTrip(back);
+      // A round trip's discount is the airlines'; a train's return is two singles.
+      if (!by) { out = asRoundTrip(out); back = asRoundTrip(back); }
     }
     const hotel = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights)! : undefined;
     const outCost = total(out) + (hotel?.price ?? 0);
@@ -298,7 +325,7 @@ export function registerJourneys(sim: Simulation): void {
       const id = s.nextId('journey');
       const leaveAt = legs[0]!.departAt;
       const arriveAt = legs[legs.length - 1]!.arriveAt;
-      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}) };
+      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(by ? { by } : {}), ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}) };
       journeysOf(person).push(j);
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;
@@ -321,7 +348,9 @@ export function registerJourneys(sim: Simulation): void {
     let refund = 0;
     for (const h of halves) {
       const hotelBack = h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0;
-      refund += free ? h.total : hotelBack;
+      const route = railRouteById(h.by);
+      if (route) refund += trainRefund(s, h, route) + hotelBack;
+      else refund += free ? h.total : hotelBack;
       h.status = 'canceled';
       for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === h.id) s.timeline.cancel(item.id, s.now);
     }
@@ -376,6 +405,26 @@ export function registerJourneys(sim: Simulation): void {
     }
     if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: `In ${CITIES.require(j.toCity).name}`, body: `${j.lateMinutes ? `${j.lateMinutes} minutes late. ` : ''}You’re here.`, importance: 55 });
   });
+}
+
+/**
+ * What a train ticket canceled brings back, by its operator's rule
+ * (`content/rail.ts`): all of it within its free window after buying; else,
+ * before its last hour, the fare less the share kept and the fee; else
+ * nothing. A rule whose last hour is nought runs to midnight before the day.
+ */
+export function trainRefund(sim: Simulation, j: Journey, route: import('../content/rail').RailRoute): Money {
+  const fare = total(j.legs);
+  const r = route.refund;
+  if (r.freeWithinHours !== undefined && sim.now - j.bookedAt <= r.freeWithinHours * MS_HOUR) return fare;
+  if (r.keepShare >= 1) return 0;
+  let last = j.leaveAt;
+  if (r.untilHoursBefore === 0) { const z = CITIES.require(j.fromCity).timeZone; const p = zonedParts(j.leaveAt, z); last = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 0 }, z); }
+  else if (r.untilHoursBefore !== undefined) last = j.leaveAt - r.untilHoursBefore * MS_HOUR;
+  if (sim.now >= last) return 0;
+  const cur = saveCurrency(sim.universe);
+  const fee = r.fee ? (exchange(r.fee, r.feeCurrency ?? route.fare.currency, cur) ?? r.fee) : 0;
+  return Math.max(0, Math.round(fare * (1 - r.keepShare)) - fee);
 }
 
 /** Check-out: gone from the town, nothing; still there and not home, another night at the rate, or a friend's sofa if the bank can't pay for it. */
