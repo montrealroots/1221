@@ -14,6 +14,15 @@
  * until it is; a refund arrives 21 days on. Filed after 15 April's deadline
  * with a balance, the late penalties are added. Until 2026-09-27 what was
  * withheld from a paycheck was kept by nothing.
+ *
+ * A balance left owing after filing grows by the IRS's interest, 7% a year
+ * compounded daily from the due date, and by the half-point a month for
+ * paying late to a quarter of it; and it's collected as the IRS collects: its
+ * reminders about five weeks apart (CP501, CP503, the CP504 notice of intent
+ * to levy), its final notice (LT11) with 30 days to pay, and then a levy on
+ * the bank accounts, again each quarter while anything is owed (`COLLECTION`).
+ * Until 2026-09-28 a balance owed was never collected: played lives left
+ * fourteen years of returns unpaid.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -27,11 +36,65 @@ import { HOME_TAX } from '../content/homes';
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
-import { payFromBank } from './household';
+import { drawFromBank, expenseFor, payFromBank } from './household';
 import { personalityOf } from './personality';
 import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
+export const TAX_NOTICE_KIND = 'tax.notice';
+
+/**
+ * The IRS's interest and collection on a balance owed: 7% a year for
+ * individuals' underpayments, compounded daily (the rate for the fourth
+ * quarter of 2026, held there); reminders about five weeks apart, the final
+ * notice's 30 days, and a levy on the bank accounts after it, again each
+ * quarter while anything is owed (SLATE's estimate of how often; the IRS
+ * levies until it's paid). A bank holds a levied account 21 days before it
+ * pays the IRS; SLATE takes it on the day.
+ */
+export const COLLECTION = {
+  interest: 0.07,
+  noticeWeeks: 5,
+  finalDays: 30,
+  againDays: 91,
+  notices: [
+    { code: 'CP501', title: 'A Reminder From The IRS', words: 'you still owe it, with the interest and penalty since.' },
+    { code: 'CP503', title: 'A Second Reminder From The IRS', words: 'it has not heard from you, and expects it paid.' },
+    { code: 'CP504', title: 'The IRS Intends To Levy', words: 'it may take a state refund and certain federal payments without further notice.' },
+    { code: 'LT11', title: 'Final Notice Of Intent To Levy', words: 'in 30 days it takes what you owe from your bank accounts.' },
+  ],
+  source: 'https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026; https://www.irsproblemsolve.com/2026/03/24/cp14-cp501-cp503-cp504-lt11/',
+} as const;
+
+/** What a return owes at a moment: the balance, its interest since it was last brought up to date, and the late-payment penalty's months since. */
+export function owedOn(r: TaxReturn, at: Instant): Money {
+  if (!r.owed) return 0;
+  const from = r.accruedAt ?? r.filedAt ?? at;
+  const days = Math.max(0, (at - from) / MS_DAY);
+  const interest = r.owed * ((1 + COLLECTION.interest / 365) ** days - 1);
+  const months = Math.ceil(Math.max(0, at - (r.filedAt ?? at)) / (30.4375 * MS_DAY));
+  const rate = Math.min(RETURN.lateCap, RETURN.payLateMonthly * months);
+  const penalty = Math.max(0, rate - (r.payLateRate ?? 0)) * (r.base ?? r.owed);
+  return Math.round(r.owed + interest + penalty);
+}
+
+/** Brings a return's balance up to a moment. */
+function accrue(r: TaxReturn, at: Instant): void {
+  if (!r.owed) return;
+  const months = Math.ceil(Math.max(0, at - (r.filedAt ?? at)) / (30.4375 * MS_DAY));
+  const owed = owedOn(r, at);
+  r.base ??= r.owed;
+  r.payLateRate = Math.max(r.payLateRate ?? 0, Math.min(RETURN.lateCap, RETURN.payLateMonthly * months));
+  r.owed = owed;
+  r.accruedAt = at;
+}
+
+/** The next step of the IRS's collection on a return, on the calendar. */
+function nextNotice(sim: Simulation, person: Person, r: TaxReturn): void {
+  const step = r.collection ?? 0;
+  const wait = step < COLLECTION.notices.length ? COLLECTION.noticeWeeks * 7 : step === COLLECTION.notices.length ? COLLECTION.finalDays : COLLECTION.againDays;
+  sim.schedule({ at: sim.now + wait * MS_DAY, kind: TAX_NOTICE_KIND, label: 'The IRS', category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
+}
 export const TAX_DUE_KIND = 'tax.due';
 export const TAX_REFUND_KIND = 'tax.refund';
 
@@ -44,8 +107,14 @@ export interface TaxReturn {
   figures: ReturnFigures;
   filedAt?: Instant;
   penalty?: Money;
-  /** What's still owed after filing, if the bank couldn't pay it. */
+  /** What's still owed after filing, if the bank couldn't pay it, as of `accruedAt`. */
   owed?: Money;
+  /** The unpaid tax the late-payment penalty is a share of, the share already charged, and when the balance was last brought up to date. */
+  base?: Money;
+  payLateRate?: number;
+  accruedAt?: Instant;
+  /** How far the IRS's collection has gone: its notices sent, and a levy made. */
+  collection?: number;
   refund?: Money;
   refundAt?: Instant;
 }
@@ -403,7 +472,17 @@ export function latePenalty(balance: Money, due: Instant, filedAt: Instant, into
 }
 
 /** Each February, from the one after the business began. */
+/** A balance owed with no collection on the calendar, as a save from before 2026-09-28 holds one: it begins now. */
+export function armCollection(sim: Simulation, person: Person): void {
+  for (const r of Object.values(person.returns ?? {})) {
+    if (!r.owed || sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) continue;
+    r.accruedAt ??= sim.now;
+    nextNotice(sim, person, r);
+  }
+}
+
 export function armTaxes(sim: Simulation, person: Person): void {
+  armCollection(sim, person);
   if (sim.universe.scheduled.some((i) => i.kind === TAX_SEASON_KIND && i.status === 'pending' && i.payload.personId === person.id)) return;
   const p = zonedParts(sim.now, HOME);
   const next = instantFromZoned({ year: p.month >= 2 ? p.year + 1 : p.year, month: 2, day: 1, hour: 9 }, HOME);
@@ -472,6 +551,32 @@ export function registerTaxReturn(sim: Simulation): void {
     s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(usd(RETURN.lateMinimum, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
   });
 
+  sim.onSchedule(TAX_NOTICE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
+    if (!person || !r?.owed) return;
+    accrue(r, s.now);
+    const cur = saveCurrency(s.universe);
+    const step = r.collection ?? 0;
+    if (step < COLLECTION.notices.length) {
+      const n = COLLECTION.notices[step]!;
+      r.collection = step + 1;
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: n.title, body: `Notice ${n.code}: ${formatMoney(r.owed, cur)} on your ${r.year} return; ${n.words}`, importance: step >= 2 ? 90 : 75, route: '/workspace/papers' });
+      nextNotice(s, person, r);
+      return;
+    }
+    // The levy: what the bank accounts hold, to what's owed.
+    const bank = drawFromBank(s, person, r.owed, false, true);
+    const taken = r.owed - bank.short;
+    if (taken > 0) {
+      s.post({ memo: `IRS levy, ${r.year} return`, category: 'tax', postings: [{ accountId: s.nominalAccount('expense', expenseFor('tax')).id, amount: taken }, ...bank.postings] });
+      r.owed -= taken;
+    }
+    r.collection = step + 1;
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'The IRS Levied Your Accounts', body: `${formatMoney(taken, cur)} taken from your bank accounts for your ${r.year} return${r.owed > 0 ? `; ${formatMoney(r.owed, cur)} is still owed, and it levies again while it is` : ', which is now paid'}.`, importance: 95, route: '/workspace/papers' });
+    if (r.owed > 0) nextNotice(s, person, r); else delete r.owed;
+  });
+
   sim.onSchedule(TAX_REFUND_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
@@ -501,9 +606,12 @@ export function registerTaxReturn(sim: Simulation): void {
       s.schedule({ at: r.refundAt, kind: TAX_REFUND_KIND, label: `Tax Refund: ${r.year}`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
       return { balance: r.figures.balance, penalty: 0, paid: true };
     }
-    const total = r.figures.balance + r.penalty;
-    const paid = total <= 0 || payFromBank(s, person, total, `Income tax, ${r.year}${r.penalty ? ', with late penalties' : ''}`, 'tax');
-    if (!paid) r.owed = total;
+    // Interest runs from the due date on a balance filed late.
+    const late = Math.max(0, (s.now - r.due) / MS_DAY);
+    const interest = r.figures.balance > 0 ? Math.round(r.figures.balance * ((1 + COLLECTION.interest / 365) ** late - 1)) : 0;
+    const total = r.figures.balance + r.penalty + interest;
+    const paid = total <= 0 || payFromBank(s, person, total, `Income tax, ${r.year}${r.penalty || interest ? ', with late penalties and interest' : ''}`, 'tax');
+    if (!paid) { r.owed = total; r.base = r.figures.balance; r.accruedAt = s.now; r.collection = 0; nextNotice(s, person, r); }
     return { balance: r.figures.balance, penalty: r.penalty, paid };
   });
 
@@ -511,11 +619,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.player;
     const r = returnsOf(person)[String(p.year)];
     if (!r?.owed) throw new CommandError('That year is paid.');
-    // Paying late costs 0.5% a month or part from filing.
-    const months = Math.ceil((s.now - (r.filedAt ?? s.now)) / (30.4375 * MS_DAY));
-    const total = Math.round(r.owed * (1 + Math.min(RETURN.lateCap, RETURN.payLateMonthly * months)));
+    // Paying late costs 0.5% a month or part from filing, and the IRS's interest from the due date.
+    const total = owedOn(r, s.now);
     if (!payFromBank(s, person, total, `Income tax owed, ${r.year}`, 'tax')) throw new CommandError(`${formatMoney(total, saveCurrency(s.universe))} is more than the bank can cover.`);
     delete r.owed;
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) s.timeline.cancel(one.id, s.now);
     return { paid: total };
   });
 }

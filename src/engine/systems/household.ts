@@ -334,11 +334,6 @@ export function canPay(sim: Simulation, person: Person, overdraft = true): Money
 }
 
 /**
- * Pays from the current account, its overdraft and any savings linked to it,
- * all of it or none, as a direct debit, standing order or cashed check is
- * paid. True if it went.
- */
-/**
  * A payment the person makes themselves and points at their money, as a tax
  * bill is paid from any account named: checking, then savings, whether or not
  * savings is linked. Until 2026-09-28 a tax bill reached only what
@@ -354,6 +349,11 @@ export function payFromBank(sim: Simulation, person: Person, amount: Money, memo
   return true;
 }
 
+/**
+ * Pays from the current account, its overdraft and any savings linked to it,
+ * all of it or none, as a direct debit, standing order or cashed check is
+ * paid. True if it went.
+ */
 export function payFromCurrent(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
   if (amount <= 0) return true;
   if (reachable(sim, person) + overdraftHeadroom(sim, person) < amount) return false;

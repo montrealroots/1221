@@ -503,6 +503,16 @@ part the tool cannot see.
   and California's 2026 rates. SLATE's estimates: which injury each cause
   brings, a stunt's rate (none is published), and a production's cover
   outside the two states, taken as New York's.
+- **Tax owed is collected, partly by SLATE's estimate.** Since 2026-09-28 a
+  balance left owing after filing grows by the IRS's underpayment interest,
+  7% a year compounded daily (the fourth quarter of 2026), and the
+  late-payment penalty, and is collected as the IRS collects: CP501, CP503,
+  the CP504 notice of intent to levy and the LT11 final notice about five
+  weeks apart, then 30 days on a levy on the bank accounts
+  (`systems/taxreturn.ts` `COLLECTION`). SLATE's estimates: the rate held at
+  2026's; a levy again each quarter while anything is owed; the bank's
+  21-day hold not kept. Not modeled: a levy on wages or on a pension, and
+  the substitute return the IRS makes for somebody who never files.
 - **The pension is partly SLATE's estimate.** Since 2026-09-28 the
   SAG-Producers Pension Plan (`systems/pension.ts`) credits a year of covered
   earnings at the minimum, vests at ten credits or five without a break, and

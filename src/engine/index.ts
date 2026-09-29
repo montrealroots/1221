@@ -55,7 +55,7 @@ import { attributesOf } from './systems/attributes';
 import { upgradeCraft } from './systems/school';
 import { registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
-import { registerTaxReturn } from './systems/taxreturn';
+import { armCollection, registerTaxReturn } from './systems/taxreturn';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -291,6 +291,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   armPayments(sim);
   armCardLife(sim);
   armCredit(sim);
+  for (const person of Object.values(sim.universe.people)) armCollection(sim, person);
   armBirthdays(sim);
   // A save from before the banks banked at "Northbank", which never existed.
   rebank(sim);
