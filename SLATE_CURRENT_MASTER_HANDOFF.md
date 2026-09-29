@@ -14,13 +14,23 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
-> **Newest of all, 2026-09-28, PAUSED MID-WORK: whole lives played to death.** The owner asked for "full life playthroughs to death", every bug and crash fixed, nothing decorative, then said to pause and resume exactly later. Where it stands:
+> **Newest of all, 2026-09-29: whole lives played to death, done.** The owner asked for full-life playthroughs to death until every bug and crash was gone. 45 lives were played: round 1 (17, the engine before the fixes), round 2 (24), round 3 (4, two of them a careless player). Every life reached death, aged 42 to 98, with no crash. Rounds 2 and 3 had 0 errors and 0 anomalies, and every yearly save-reload-diff was unchanged. New lives were started from twelve countries through the screens, and every workspace and tab was walked on saves aged 25 to 95. Found and fixed, each gated and pushed:
 >
-> - **Fixed and pushed** (each gated): `52ab131` opening a save wiped the pay record (the day-job migration keyed on `earnings`); `e2d207d` saves in IndexedDB (a long life overflowed local storage); `52a0ca9` a laid-up student dismissed, and term growth weighed against room to grow; `e8c741d` New Haven to New York by Metro-North day pass ($46.75) and a tape when away on a job; `2a5a9e9` parts past sixty thinned by USC Annenberg's shares (film 0.48, TV 0.42); and the pension held to IRC 415(b) ($290,000, best three years) in the commit after it.
-> - **The harness** (in `probe/`, which is gitignored, so it's on this machine only): `probe/play-to-death.ts <seed> <birthplace> <wealth> <out.json>` plays a sensible person hour by hour to death, checks invariants daily, and saves, reloads and diffs the save yearly (env `SNAP=<dir>` writes saves at 25/40/60/80 and the end; `NOTES=<regex>` logs matching notices; `TRACE_FROM/TRACE_TO` traces hours). `node probe/lives.mjs <outDir> <parallel> <prefix>` runs many (env `LIVES=n`; it skips lives already written); `node probe/summarize-lives.mjs <dir>` pools them; `node probe/ui-lives.mjs <snapDir> [shotDir]` walks every workspace and tab of each save in the built game (`npm run build`, `npx vite preview --port 4173`); `probe/ui-create.mjs` starts new lives from twelve countries through the screens. **Run at most 3 lives at once, and nothing heavy beside them**: at 4 plus a gate, Claude Code killed the batch twice for low memory.
-> - **Results so far.** Round 1: 17 lives (on the engine before these fixes) to death, aged 42 to 91, no crash. Round 2: 19 of 24 lives to death on the fixed engine, aged 61 to 98, 0 errors, 0 anomalies, every yearly reload unchanged. Results are in `%TEMP%\lives2`, saves in `%TEMP%\snaps2` (temporary folders: rerun if they're gone). New lives from 12 countries and every screen on saves aged 25 to 90 showed no errors.
-> - **To resume exactly:** (1) finish round 2: `SNAP="$TEMP/snaps2" LIVES=24 node probe/lives.mjs "$TEMP/lives2" 3 r2` (it skips the 19 done); (2) walk the interface over `snaps2` with `probe/ui-lives.mjs`; (3) fix whatever either finds, gate, commit; (4) report the lives' results to the owner.
-> - **Left for the owner:** acting craft reaches 99+ by the early thirties for anyone working steadily. The growth rate has no real-world figure, so it's a tuning call.
+> - `52ab131` opening a save wiped the pay record (the day-job migration keyed on `earnings`), so the end screen said "Earned $0".
+> - `e2d207d` saves moved to IndexedDB: a long life overflowed local storage.
+> - `52a0ca9` a student laid up by an injury was dismissed; the term review now weighs growth against the room each student had to grow.
+> - `e8c741d` New Haven to New York by Metro-North day pass ($46.75), and a tape for an actor away on a job.
+> - `2a5a9e9` parts past sixty thinned by USC Annenberg's shares (film 0.48, TV 0.42).
+> - `171b3d0` the pension held to IRC 415(b) ($290,000 and the best three years).
+> - `3a9f408` federal tax withheld from the pension (the W-4P default), and a tax bill paid from savings too.
+> - `8d0eefc` tax owed is collected: 7% interest compounded daily, then CP501, CP503, CP504, LT11 and a levy on the bank accounts.
+> - `58da025` the IRS's substitute return for somebody who never files.
+> - `bfe8e8c` a stage run closes when its last call passes, including nights the understudy played; before this, one missed night left the actor on a job for life.
+> - `4a7de53` the Taxes page leads with the home country's returns and says what the IRS does.
+>
+> **The harness** is in `probe/` (gitignored, so it's on this machine only). `probe/play-to-death.ts` plays a life with daily invariants and a yearly reload diff; `PLAYER=careless` gives a player who never moves money, pays or files; `CHECKPOINT` and `CHUNK_SECONDS` let a life run in chunks. `probe/chunk.sh <out> <snaps> seed:place:wealth:player ...` plays the next chunk of a round, and each call fits a foreground command. Background batches get stopped by Claude Code's memory reaper: this machine has about 3 GB free, with OneDrive using 1.5 GB. `probe/summarize-lives.mjs`, `probe/ui-lives.mjs` (the built game walked on saves) and `probe/ui-create.mjs` round it out.
+>
+> **Left for the owner:** acting craft reaches 99+ by the early thirties for anyone working steadily, and every diligent life becomes a wealthy, well-represented actor. How fast work grows skill has no real-world figure, so it's a tuning call.
 >
 > **Newest of all, 2026-09-28, the three remodels.** The owner said "Do those three large remodels." Two commits, each gated:
 >
