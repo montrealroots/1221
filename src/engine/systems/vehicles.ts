@@ -24,7 +24,7 @@ import { CITIES } from '../content/geography';
 import { CAR_MODELS, type CarModel } from '../content/vehiclecatalog';
 import { BC, CA_STATE, CMX, CT, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
-import { owe, payFromBank } from './household';
+import { owe, payFromBank, spend } from './household';
 import { mayDrive } from './documents';
 import { byRoad as roadBetween, drive } from './driving';
 
@@ -351,9 +351,12 @@ export function registerVehicles(sim: Simulation): void {
     if ((v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km);
-      v.km = (v.km ?? 0) + km;
-      if (run > 0 && !payFromBank(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, run, 'Fuel and upkeep', 'vehicle');
-      drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`);
+      // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
+      // 2026-09-29 the fuel went into arrears as if it had been burned, and a New York life starved paying for it.
+      if (spend(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) {
+        v.km = (v.km ?? 0) + km;
+        drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`);
+      }
     }
     // The loan: interest on what's owed, and the rest off it.
     if (v.loan) {

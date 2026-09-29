@@ -120,6 +120,15 @@ describe('owning one', () => {
     sim.advanceBy(31 * MS_DAY);
     expect(sim.universe.transactions.some((t) => t.memo === 'Fuel and upkeep, the Skoda Octavia')).toBe(true);
     expect(v.km).toBeCloseTo(15_196 / 12, 6);
+    // With nothing in the bank or on the card for fuel, it isn't driven that month, and no fuel goes into arrears.
+    const accounts = Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id);
+    const kept = accounts.map((a) => [a, a.balance, a.creditLimit] as const);
+    for (const a of accounts) { if (a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0); else if (!a.nominal) a.balance = -1_000_000_00; }
+    const km0 = v.km!;
+    sim.advanceBy(31 * MS_DAY);
+    expect(v.km).toBe(km0);
+    expect(sim.universe.transactions.some((t) => t.memo === 'Fuel and upkeep, unpaid')).toBe(false);
+    for (const [a, bal] of kept) a.balance = bal;
     // Left in another town, it sits: no fuel that month.
     v.at = 'ie-m-cork';
     const before = sim.universe.transactions.filter((t) => t.memo === 'Fuel and upkeep, the Skoda Octavia').length;
