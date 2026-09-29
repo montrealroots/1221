@@ -147,7 +147,9 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
  * editing a source, and a research file that has been edited is worth less
  * than one that has not. The house style governs what the game says.
  */
-const NOT_OURS = ['docs/research'];
+// The airports' table is nothing but real names as OurAirports records them, a seaplane base's and a flight
+// school's among them, each spelled its owner's way (src/engine/content/airports.ts, tools/build-airports.mjs).
+const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts'];
 const oursToFix = (path) => !NOT_OURS.some((dir) => path.startsWith(dir));
 
 function walk(dir) {

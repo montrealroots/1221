@@ -1,0 +1,308 @@
+/**
+ * SLATE — a journey from one town to another by air, booked, kept and taken
+ * (docs/WORLD.md, stage 2). From 2026-09-29.
+ *
+ * A journey is its legs: the taxi to the airport, the airline's check-in,
+ * the flights, the border and the bags at the far end, and the taxi into
+ * town, each in the local time of where it happens. Booking pays for it,
+ * checks the papers the destination asks (\`systems/documents.ts\`) and puts
+ * the whole of it on the calendar as one commitment, which nothing else may
+ * overlap. On the day the player must be there to leave; the papers are
+ * checked again at the airport, as an airline does; a flight is on time,
+ * late or canceled and rebooked at the published rates; and only on arrival
+ * does the player's town, and the clock they live by, change.
+ *
+ * Airports are real (\`systems/airports.ts\`); schedules and routes are
+ * SLATE's model, as airlines' aren't open data; fares, bag fees, the time to
+ * arrive before a flight, delays, and the taxis at either end are published
+ * figures where \`content/air.ts\` has them, and say so where they're SLATE's.
+ */
+
+import type { Simulation } from '../core/simulation';
+import { CommandError } from '../core/simulation';
+import type { Person } from '../domain/model';
+import { MS_DAY, MS_HOUR, formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { formatMoney, saveCurrency, type Money } from '../core/money';
+import { exchange } from '../content/currency';
+import { CITIES, distanceKm } from '../content/geography';
+import { expenseFor } from './household';
+import { AIR, fareUsd, groundLeg } from '../content/air';
+import { payFromBank } from './household';
+import { present } from './career';
+import { crossingRefusal, isoOfCity } from './documents';
+import { itinerary, tripAirportFor, type Airport } from './airports';
+import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
+
+export type LegMode = 'ground' | 'check-in' | 'flight' | 'arrival';
+
+export interface JourneyLeg {
+  mode: LegMode;
+  /** A town's id, or an airport's IATA code. */
+  from: string;
+  to: string;
+  departAt: Instant;
+  arriveAt: Instant;
+  /** In the save's currency. */
+  fare: Money;
+  /** Whose figure the fare and the time are. */
+  basis: string;
+}
+
+export interface Journey {
+  id: string;
+  fromCity: string;
+  toCity: string;
+  legs: JourneyLeg[];
+  status: 'booked' | 'underway' | 'arrived' | 'missed' | 'canceled';
+  bookedAt: Instant;
+  bags: number;
+  total: Money;
+  /** When they leave for the airport, and reach the town. */
+  leaveAt: Instant;
+  arriveAt: Instant;
+  /** Minutes late on arrival, and whether a flight was canceled and rebooked. */
+  lateMinutes?: number;
+  rebooked?: boolean;
+  /** Why it was missed, where it was. */
+  why?: string;
+  /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant };
+}
+
+export const LEAVE_KIND = 'travel.leave';
+export const ARRIVE_KIND = 'travel.arrive';
+export const CHECKOUT_KIND = 'travel.checkout';
+
+/** A hotel's check-out, eleven in the morning, SLATE's reading of the usual hour. */
+export const CHECKOUT_HOUR = 11;
+/** A hotel booked on a flexible rate is refunded until a day before arrival: SLATE's reading of the usual terms. */
+export const HOTEL_FREE_UNTIL_HOURS = 24;
+
+/** Check-out after some nights from an arrival, at eleven in the town's time. */
+export function checkOutAfter(cityId: string, arriveAt: Instant, nights: number): Instant {
+  const zone = CITIES.require(cityId).timeZone;
+  const p = zonedParts(arriveAt, zone);
+  // A night begins the evening of arrival; one that lands after midnight but before morning is the night before's.
+  const firstNight = p.hour < 6 ? p.day - 1 : p.day;
+  return instantFromZoned({ year: p.year, month: p.month, day: firstNight + nights, hour: CHECKOUT_HOUR }, zone);
+}
+
+/** Where a person will be when they leave: where they are, or where a journey booked before it takes them. */
+export function whereBy(person: Person, at: Instant): string {
+  const before = journeysOf(person).filter((j) => (j.status === 'booked' || j.status === 'underway') && j.arriveAt <= at).sort((a, b) => b.arriveAt - a.arriveAt)[0];
+  return before?.toCity ?? person.currentLocationId;
+}
+
+export function journeysOf(person: Person): Journey[] {
+  person.journeys ??= [];
+  return person.journeys;
+}
+
+function inSave(sim: Simulation, amount: number, currency = 'USD'): Money {
+  const cents = Math.round(amount * 100);
+  const into = saveCurrency(sim.universe);
+  return into === currency ? cents : exchange(cents, currency, into) ?? cents;
+}
+
+/** Minutes in the air between two airports: about 800 km an hour, and half an hour taxiing out and in. SLATE's estimate. */
+export function blockMinutes(a: Airport, b: Airport): number {
+  return Math.round(AIR.taxiMinutes + (distanceKm(a, b) / AIR.cruiseKmh) * 60);
+}
+
+/** The departures a day, at each airport, in its own time: SLATE's model of a schedule. */
+export const DEPARTURES = AIR.departureHours;
+
+/**
+ * A journey's legs, from leaving a town for its airport on a day at one of
+ * the day's departures, to reaching the other town: the plan it's booked on.
+ */
+export function planJourney(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number, bags: number): JourneyLeg[] | string {
+  const abroad = isoOfCity(fromCity) !== isoOfCity(toCity);
+  const from = tripAirportFor(fromCity, abroad);
+  const to = tripAirportFor(toCity, abroad);
+  if (!from || !to) return 'SLATE has no airport for one end of that.';
+  if (from.airport.iata === to.airport.iata) return 'Both towns fly from the same airport: it isn’t a flight.';
+  const path = itinerary(from.airport, to.airport);
+  const international = isoOfCity(fromCity) !== isoOfCity(toCity);
+  const zone0 = CITIES.require(fromCity).timeZone;
+  const p = zonedParts(day, zone0);
+  const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: DEPARTURES[slot] ?? DEPARTURES[0]! }, zone0);
+  const legs: JourneyLeg[] = [];
+  const out = groundLeg(fromCity, from.airport.iata, from.km);
+  const checkIn = (international ? AIR.arriveBeforeInternationalMinutes : AIR.arriveBeforeDomesticMinutes) * 60_000;
+  const atAirport = depart - checkIn;
+  legs.push({ mode: 'ground', from: fromCity, to: from.airport.iata, departAt: atAirport - out.minutes * 60_000, arriveAt: atAirport, fare: inSave(sim, out.amount, out.currency), basis: out.basis });
+  legs.push({ mode: 'check-in', from: from.airport.iata, to: from.airport.iata, departAt: atAirport, arriveAt: depart, fare: bags > 0 ? inSave(sim, AIR.bagUsd(international) * bags) : 0, basis: `${international ? 'Three hours' : 'Two hours'} before, as airlines ask${bags > 0 ? `; a checked bag, ${AIR.bagBasis}` : ''}.` });
+  let t = depart;
+  for (let i = 0; i + 1 < path.length; i += 1) {
+    const a = path[i]!;
+    const b = path[i + 1]!;
+    const minutes = blockMinutes(a, b);
+    const fare = fareUsd(a, b);
+    legs.push({ mode: 'flight', from: a.iata, to: b.iata, departAt: t, arriveAt: t + minutes * 60_000, fare: inSave(sim, fare.usd), basis: `${fare.basis} The schedule and the route are SLATE’s model; about ${Math.round(minutes / 60 * 10) / 10} hours.` });
+    t += minutes * 60_000 + (i + 2 < path.length ? AIR.connectionMinutes * 60_000 : 0);
+  }
+  const last = path[path.length - 1]!;
+  const border = international ? AIR.borderMinutes : 0;
+  const claim = AIR.deplaneMinutes + border + (bags > 0 ? AIR.bagClaimMinutes : 0);
+  legs.push({ mode: 'arrival', from: last.iata, to: last.iata, departAt: t, arriveAt: t + claim * 60_000, fare: 0, basis: `Off the aircraft${international ? ', through the border' : ''}${bags > 0 ? ' and the bags' : ''}: SLATE’s estimate.` });
+  t += claim * 60_000;
+  const back = groundLeg(toCity, last.iata, to.km);
+  legs.push({ mode: 'ground', from: last.iata, to: toCity, departAt: t, arriveAt: t + back.minutes * 60_000, fare: inSave(sim, back.amount, back.currency), basis: back.basis });
+  return legs;
+}
+
+/** What else on the calendar a journey's hours would run into, if anything. */
+function clashWith(sim: Simulation, person: Person, from: Instant, to: Instant): string | undefined {
+  const clash = sim.universe.scheduled.find((i) => i.status === 'pending' && i.requiresPlayer === true && (i.payload.personId === undefined || i.payload.personId === person.id)
+    && i.at < to && i.at + (i.durationMinutes ?? 60) * 60_000 > from);
+  return clash ? `${clash.label}, ${formatDate(clash.at, sim.zone)} at ${formatTime(clash.at, sim.zone)}` : undefined;
+}
+
+/** Why a journey can't be booked, or nothing. */
+export function bookRefusal(sim: Simulation, person: Person, toCity: string, legs: JourneyLeg[] | string, stayDays: number, nights = 0): string | undefined {
+  if (typeof legs === 'string') return legs;
+  if (!CITIES.get(toCity)) return 'SLATE doesn’t have that town.';
+  if (legs[0]!.departAt <= sim.now) return 'That departure has gone.';
+  const from = legs[0]!.from;
+  if (!ownPlaceIn(person, toCity)) {
+    if (nights <= 0) return `Somewhere to sleep in ${CITIES.require(toCity).name}: book the hotel’s nights with it.`;
+    if (!nightRateFor(toCity)) return `SLATE doesn’t have ${CITIES.require(toCity).name}’s hotels yet, and you have no home there.`;
+  }
+  const border = crossingRefusal(person, from, toCity, legs[legs.length - 1]!.arriveAt, stayDays);
+  if (border) return border;
+  const clash = clashWith(sim, person, legs[0]!.departAt, legs[legs.length - 1]!.arriveAt);
+  if (clash) return `It runs into ${clash}.`;
+  if (journeysOf(person).some((j) => (j.status === 'booked' || j.status === 'underway') && j.leaveAt < legs[legs.length - 1]!.arriveAt && j.arriveAt > legs[0]!.departAt)) return 'It runs into another journey you’ve booked.';
+  return undefined;
+}
+
+const total = (legs: JourneyLeg[]) => legs.reduce((a, l) => a + l.fare, 0);
+
+/** Whether a flight is late, canceled, or on time, at the published rates: the minutes it's late, or null canceled. */
+export function flightFate(sim: Simulation, person: Person, key: string): number | null {
+  const rng = sim.rng('travel.delay', person.id, key);
+  const x = rng.next();
+  if (x < AIR.canceledShare) return null;
+  if (x < AIR.canceledShare + AIR.lateShare) return Math.round(AIR.lateMinutesAverage * -Math.log(1 - rng.next() * 0.999));
+  return 0;
+}
+
+export function registerJourneys(sim: Simulation): void {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number }, { journeyId: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+    const person = s.player;
+    const toCity = String(p?.toCity ?? '');
+    const day = Number(p?.day);
+    const nights = Math.max(0, Math.min(90, Math.floor(Number(p?.nights ?? 0))));
+    // From where they'll be by then: here, or where a journey booked before it takes them.
+    const fromCity = whereBy(person, day);
+    const bags = Math.max(0, Math.min(2, Number(p?.bags ?? 0)));
+    const legs = planJourney(s, fromCity, toCity, day, Number(p?.slot ?? 0), bags);
+    const no = bookRefusal(s, person, toCity, legs, Math.max(1, nights), nights);
+    if (no) throw new CommandError(no);
+    const plan = legs as JourneyLeg[];
+    const leaveAt = plan[0]!.departAt;
+    const arriveAt = plan[plan.length - 1]!.arriveAt;
+    const hotel = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights)! : undefined;
+    const cost = total(plan) + (hotel?.price ?? 0);
+    if (!payFromBank(s, person, cost, `A journey to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} in a hotel` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
+    const id = s.nextId('journey');
+    const checkOutAt = hotel ? checkOutAfter(toCity, arriveAt, nights) : undefined;
+    journeysOf(person).push({ id, fromCity, toCity, legs: plan, status: 'booked', bookedAt: s.now, bags, total: cost, leaveAt, arriveAt, ...(hotel ? { hotel: { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAt! } } : {}) });
+    s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(toCity).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: fromCity, payload: { personId: person.id, journeyId: id } });
+    return { journeyId: id, leaveAt, arriveAt, total: cost };
+  });
+
+  sim.onCommand<{ journeyId: string }, { refund: Money }>('travel.cancel', (p, { sim: s }) => {
+    const person = s.player;
+    const j = journeysOf(person).find((x) => x.id === p?.journeyId);
+    if (!j || j.status !== 'booked') throw new CommandError('That isn’t a journey you have booked.');
+    // The DOT's rule: canceled within 24 hours of booking, a week or more before it leaves, the whole fare back.
+    // A hotel on a flexible rate comes back until a day before arrival.
+    const free = s.now - j.bookedAt <= 24 * MS_HOUR && j.leaveAt - j.bookedAt >= 7 * MS_DAY;
+    const hotel = j.hotel?.price ?? 0;
+    const hotelBack = j.hotel && j.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? hotel : 0;
+    const refund = free ? j.total : hotelBack;
+    if (refund > 0) s.post({ memo: `A journey canceled, refunded`, category: 'travel', postings: refundPostings(s, person, refund) });
+    j.status = 'canceled';
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === j.id) s.timeline.cancel(item.id, s.now);
+    return { refund };
+  });
+
+  sim.onSchedule(LEAVE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const j = person ? journeysOf(person).find((x) => x.id === item.payload.journeyId) : undefined;
+    if (!person || !j || j.status !== 'booked') return;
+    const mine = person.id === s.universe.playerId;
+    const tell = (title: string, body: string) => { if (mine) s.notify({ category: 'personal', title, body, importance: 70 }); };
+    if (!present(person, item.at, j.fromCity)) {
+      j.status = 'missed';
+      j.why = 'You weren’t there to leave.';
+      tell('Journey Missed', `${j.why} The fare is gone.`);
+      return;
+    }
+    // At the airport, as the airline checks: the papers the far end asks.
+    const no = crossingRefusal(person, j.fromCity, j.toCity, j.arriveAt, Math.max(1, j.hotel?.nights ?? 1));
+    if (no) {
+      j.status = 'missed';
+      j.why = `The airline wouldn’t board you: ${no}`;
+      tell('Refused At Check-In', `${j.why} The fare is gone.`);
+      return;
+    }
+    let late = 0;
+    let rebooked = false;
+    for (const [n, leg] of j.legs.entries()) {
+      if (leg.mode !== 'flight') continue;
+      const fate = flightFate(s, person, `${j.id}-${n}`);
+      if (fate === null) { rebooked = true; late += AIR.rebookHours * 60; } else late += fate;
+    }
+    j.status = 'underway';
+    j.lateMinutes = late;
+    j.rebooked = rebooked;
+    s.schedule({ at: j.arriveAt + late * 60_000, kind: ARRIVE_KIND, label: `Arrive In ${CITIES.require(j.toCity).name}`, category: 'personal', priority: 28, payload: { personId: person.id, journeyId: j.id } });
+    if (rebooked || late > 15) tell(rebooked ? 'A Flight Canceled' : 'A Flight Late', rebooked ? `The airline put you on the next one: you’ll arrive about ${Math.round(late / 60)} hours late.` : `You’ll arrive about ${late} minutes late.`);
+  });
+
+  sim.onSchedule(CHECKOUT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    if (person) checkOut(s, person, String(item.payload.cityId), String(item.payload.journeyId));
+  });
+
+  sim.onSchedule(ARRIVE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const j = person ? journeysOf(person).find((x) => x.id === item.payload.journeyId) : undefined;
+    if (!person || !j || j.status !== 'underway') return;
+    j.status = 'arrived';
+    person.currentLocationId = j.toCity;
+    if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
+    if (person.home?.cityId === j.toCity) delete person.stay;
+    else if (ownPlaceIn(person, j.toCity)) person.stay = { kind: 'own', cityId: j.toCity };
+    else if (j.hotel) {
+      person.stay = { kind: 'hotel', cityId: j.toCity };
+      s.schedule({ at: j.hotel.checkOutAt, kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
+    }
+    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: `In ${CITIES.require(j.toCity).name}`, body: `${j.lateMinutes ? `${j.lateMinutes} minutes late. ` : ''}You’re here.`, importance: 55 });
+  });
+}
+
+/** Check-out: gone from the town, nothing; still there and not home, another night at the rate, or a friend's sofa if the bank can't pay for it. */
+function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: string): void {
+  if (person.currentLocationId !== cityId || person.stay?.kind !== 'hotel' || person.home?.cityId === cityId) return;
+  // Another journey out before the next check-out takes them; the night before it is still the hotel's.
+  const night = stayPrice(sim, cityId, 1);
+  const mine = person.id === sim.universe.playerId;
+  if (night && payFromBank(sim, person, night.price, `Another night in a hotel in ${CITIES.require(cityId).name}`, 'travel')) {
+    sim.schedule({ at: checkOutAfter(cityId, sim.now, 1), kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId, cityId } });
+    if (mine) sim.notify({ category: 'personal', title: 'Another Night', body: `Still in ${CITIES.require(cityId).name}: the hotel keeps you another night, ${formatMoney(night.price, saveCurrency(sim.universe))}.`, importance: 45 });
+    return;
+  }
+  person.stay = { kind: 'sofa', cityId };
+  if (mine) sim.notify({ category: 'personal', title: 'Out Of The Hotel', body: `The bank can’t cover another night in ${CITIES.require(cityId).name}: a friend’s sofa until you leave.`, importance: 70 });
+}
+
+/** A refund into the current account, from what the journey was paid to. */
+function refundPostings(sim: Simulation, person: Person, amount: Money) {
+  const account = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking');
+  if (!account) throw new CommandError('There’s no account to refund to.');
+  return [{ accountId: account.id, amount }, { accountId: sim.nominalAccount('expense', expenseFor('travel')).id, amount: -amount }];
+}

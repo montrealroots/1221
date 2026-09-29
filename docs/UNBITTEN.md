@@ -619,6 +619,19 @@ part the tool cannot see.
   and nothing enforces more.
   `mayDrive` decides driving, and nothing drives yet (stage 3). A license's
   probation and points aren't kept, since SLATE has no driving offenses.
+- **A journey is partly SLATE's estimate.** Since 2026-09-29 a journey by
+  air is booked, kept and taken (`systems/journey.ts`). SLATE's estimates:
+  the schedule (three departures a day) and the route (direct between large
+  airports within 15,000 km, else through the ACI's busiest hubs), since
+  airlines' schedules aren't open data; the time in the air (800 km an hour
+  and half an hour taxiing); a connection's 90 minutes; the time off the
+  aircraft and at the bags; the border's 45 minutes (the UK Border Force's
+  old standard, and CBP publishes none); the next departure five hours after
+  a cancellation; an international fare, DOT's longest band's per mile
+  carried abroad; a taxi where the city's card wasn't read, at LA's meter;
+  and a hotel night's class, the town's average rate for all classes. The
+  hotel's check-out hour and its day's free cancellation are SLATE's reading
+  of the usual terms.
 - **Nobody broke is fed by a food bank.** Since 2026-09-29 a body starved
   below a body mass index of 12 ends the life (`BMI_SURVIVAL_LIMIT`), and
   12 to 15 carries Zheng's 2.8. A day the bank can't pay for eats a short

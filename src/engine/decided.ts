@@ -33,6 +33,7 @@ import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
 import { startingDocuments } from './systems/documents';
 import { passesTest } from './systems/licensing';
+import { flightFate } from './systems/journey';
 import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
@@ -264,6 +265,19 @@ defineDecider<{ sim: Simulation; test: number; attempt: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), test: seed % TESTS.length, attempt: 1 + (seed % 3) }),
   decide: ({ sim, test, attempt }) => { const [j, step] = TESTS[test]!; return passesTest(sim, sim.player, j, step, attempt) ? 'passed' : 'failed'; },
+});
+
+defineDecider<{ sim: Simulation; flight: number }, string>({
+  id: 'travel.delay',
+  decides: 'Whether a flight is on time, late and by how much, or canceled, at the rates of BTS’s every domestic flight of 2025 (AIR).',
+  drawnIn: 'src/engine/systems/journey.ts',
+  reads: {
+    // Each flight is drawn on its own.
+    flight: (o, t) => ({ ...o, flight: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), flight: seed }),
+  decide: ({ sim, flight }) => { const f = flightFate(sim, sim.player, `j-${flight}`); return f === null ? 'canceled' : f === 0 ? 'on time' : f > 60 ? 'late an hour' : 'late'; },
 });
 
 defineDecider<{ sim: Simulation }, string>({

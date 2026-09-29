@@ -24,7 +24,7 @@ export type Id = string;
  * logs.
  */
 export const ID_NAMESPACES = [
-  'person', 'account', 'txn', 'sched', 'history', 'notice', 'decision', 'document',
+  'person', 'account', 'txn', 'sched', 'history', 'notice', 'decision', 'document', 'journey',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

@@ -66,7 +66,19 @@ one day trip (Metro-North, New Haven to Grand Central).
 - **Done, 2026-09-29: a license exchanged on moving.** New York (a US state's or Canadian province's), Connecticut (those, Germany's and France's, $124), Ontario, British Columbia and New South Wales (their published lists) exchange a full license from elsewhere without the tests, and the old one is surrendered (`LICENSE_EXCHANGES`, `documents.exchange_license`). California's exchange for another state's license wasn't confirmed, and it's refused with that reason. Found by a played life: a British graduate with Connecticut's license took New York's tests again after moving. The same life showed an O-1 read too narrowly: regional and Off-Broadway companies are distinguished organizations, and the experts' letters a petition carries are read from reputation.
 - Probation and points after a first license (Great Britain's New Drivers Act, France's six points, Ireland's novice limit, Brazil's year) aren't kept: SLATE has no driving offenses yet.
 
-### Stage 2: Journeys (to be detailed next)
+### Stage 2: Journeys
+
+#### Stage 2a: a journey by air, and somewhere to stay (done 2026-09-29)
+- Airports are real (OurAirports, public domain), and a town flies from the large airport within about two hours of it, or its nearest airport through a hub.
+- A journey's legs are the taxi to the airport, the airline's check-in, each flight, the border and the bags at the far end, and the taxi into town, each at its own time in its own place; the fares, bag fees, time to arrive before a flight, delays and cancellations, and taxis are published figures where they're found, and SLATE's where they aren't, said so. The schedule and route are SLATE's model: airlines' schedules aren't open data.
+- Booking checks the papers for the far end and the calendar: the whole journey is one commitment, and nothing else on the calendar may overlap it. The bank pays, or it isn't booked. A booking canceled within 24 hours, a week or more before it leaves, is refunded whole (the DOT's rule); otherwise the economy fare isn't.
+- On the day the player must be there to leave, and the airline checks the papers again; a flight is late, on time, or canceled and rebooked, at the published rates. The town and the clock change on arrival, not before.
+- Somewhere to stay: a hotel at the town's published average rate and its taxes, or one's own home there.
+- Tests: a full journey out and back across a border; the bank short; a passport lost before the day; a clash on the calendar; a missed departure; a delay and a cancellation; save and reload mid-journey.
+
+Evidence: `systems/journey.ts`, `systems/airports.ts`, `systems/stays.ts`, `content/air.ts`, `content/airfares.ts` (DOT Q1 2026, built by `tools/build-airfares.mjs`), `content/airports.ts` (3,266 OurAirports airports, built by `tools/build-airports.mjs`), `content/stays.ts`; the research in `docs/research/world/` (air, hubs, hotels, per diem). `tests/journey.test.ts` (12): New York to London on the ETA with a bag and five hotel nights and home again, the town and clock changing on arrival; the DOT's New York–Los Angeles fare to the cent and the $45 bag; no bed, the bank short, a journey or a plan on the calendar in the way; a passport lost before check-in; a player not there; the DOT's 24-hour refund and the hotel's day; BTS's rates of late and canceled flights over 20,000 draws; a night kept on at check-out; a journey saved and opened mid-flight. 18 mutations, all killed. Screens: Travel, from Home's Travel panel, opened by the guide's chapter Getting Around.
+
+Open in Stage 2: rail (the Northeast Corridor, Eurostar), buses and a car of one's own as legs; a cabin other than economy; business travel for the career's own trips, which still move the actor directly; jet lag.
 ### Stages 3-8 (to be detailed in turn)
 
 ## Coverage record
@@ -89,7 +101,14 @@ Legend: **Verified**, sourced from an authority and dated. **Modeled**, a docume
 | Holding a passport or license at the start | US citizens | Verified | State's FY2025 passports in circulation; FHWA DL-20 (2024) |
 | Holding a license at the start | other citizenships | None | nobody is given one |
 | Journeys | New Haven to New York by rail | Verified | CT Mirror, 2026-01-12 |
-| Journeys | everywhere else | None | |
+| Airports | the world's 3,266 with scheduled flights | Verified (public domain) | OurAirports, downloaded 2026-09-29 |
+| Air routes and schedules | everywhere | Modeled: direct between large airports within reach, else through the ACI's busiest hubs; three departures a day | ACI World 2025 rankings |
+| Airfares | 66 pairs among twelve US markets | Verified | DOT Consumer Airfare Report Q1 2026 |
+| Airfares | other US flights | Derived: DOT's per-mile fare by distance | DOT Q1 2026 |
+| Airfares | international | Modeled: DOT's longest band's per-mile fare | no official source publishes them |
+| Flight delays and cancellations | everywhere | Verified for US domestic 2025, applied everywhere | BTS, 2025 |
+| Hotels | 16 cities' average rates, 10 cities' per diems, every city's taxes | Verified; per diems are ceilings, said so | CoStar/STR, national statistics, GSA, State Department, 2026-09-29 |
+| Hotels | anywhere else | None | refused with the reason unless one has a home there |
 | Vehicles | all | None | |
 | Land | all | None | |
 | Construction (new build) | all | None | |

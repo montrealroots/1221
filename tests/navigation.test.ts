@@ -94,13 +94,15 @@ describe('what was taken out', () => {
     // where the character lives (`systems/banking.ts`), and the work screen
     // the same day, as a real employer there. The work screen went again on
     // 2026-09-26 with the job engine, when the owner kept SLATE to acting.
+    // Travel came back on 2026-09-29, at the owner's word, as a journey by air
+    // booked, kept on the calendar and taken (`systems/journey.ts`).
     const removed = [
       'AuditionsWorkspace', 'AwardsWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
       'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
       'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
       'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
       'RelationshipsWorkspace', 'SettingsWorkspace', 'ShoppingWorkspace', 'SocialWorkspace',
-      'TrackWorkspace', 'TravelWorkspace', 'VehiclesWorkspace', 'WellbeingWorkspace', 'WorkWorkspace',
+      'TrackWorkspace', 'VehiclesWorkspace', 'WellbeingWorkspace', 'WorkWorkspace',
     ];
     const files = readdirSync(new URL('ui/workspaces/', ROOT));
     for (const gone of removed) {

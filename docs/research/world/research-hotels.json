@@ -1,0 +1,400 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "method": "Web research. ADR is revenue per room sold (STR/CoStar definition), excluding taxes unless noted. null means no authoritative published figure was found; nothing is estimated. Tax entries are what a guest pays per night on top of (or, where noted, inside) the room rate.",
+    "adrNote": "Scopes differ between cities (whole market vs CBD vs chain-hotel panel), so figures are not strictly comparable across cities. Each entry's 'scope' says what it covers."
+  },
+
+  "us-ny-newyork": {
+    "adr": 333.71,
+    "currency": "USD",
+    "year": 2025,
+    "scope": "All hotels, New York City market (CoStar top-25 market). NYC Tourism + Conventions reports the same year as $334, occupancy 84.2%.",
+    "source": "https://www.hoteldive.com/news/hotel-occupancy-revpar-decline-2025/810212/ (CoStar full-year 2025, released 2026-01-20); https://www.business.nyctourism.com/press-media/press-releases/NYC-Tourism-Annual-Report-March-2026",
+    "taxes": [
+      {"name": "NYS + NYC sales tax", "rate": 0.08875, "basis": "percent of room rate", "source": "https://portal.311.nyc.gov/article/?kanumber=KA-02794"},
+      {"name": "NYC Hotel Room Occupancy Tax", "rate": 0.05875, "basis": "percent of room rate", "source": "https://portal.311.nyc.gov/article/?kanumber=KA-02794"},
+      {"name": "NYC hotel occupancy unit charge", "amount": 2.00, "basis": "per room per night for rooms renting at $40+/night (graduated $0.50-$1.50 below $40)", "source": "https://portal.311.nyc.gov/article/?kanumber=KA-02794"},
+      {"name": "NYS Hotel Unit Fee (Javits Center fee)", "amount": 1.50, "basis": "per room per night, NYC only", "source": "https://helpnewyork.com/nyc-hotel-taxes-explained-2026-what-you-actually-pay-per-night/"}
+    ],
+    "shortTerm": {
+      "avgNightly": 182,
+      "currency": "USD",
+      "period": "trailing 12 months shown on AirDNA overview, retrieved 2026-09",
+      "source": "https://www.airdna.co/vacation-rental-data/app/us/new-york/new-york/overview",
+      "rules": [
+        "Local Law 18 of 2022 (enforced from 5 Sep 2023): stays under 30 days need registration with the Mayor's Office of Special Enforcement; platforms may not process bookings for unregistered listings.",
+        "Host must be a permanent resident present during the stay; at most 2 paying guests; whole-unit rentals under 30 days effectively barred in most multiple dwellings.",
+        "Intro 1107 (Nov 2024) would allow 1-2 family homes to rent without host present; no evidence it has passed."
+      ],
+      "rulesSource": "https://en.wikipedia.org/wiki/Local_Law_18_of_2022; https://www.brickunderground.com/rent/city-council-bill-intro-1107-short-term-rentals-single-two-family-houses-nyc"
+    }
+  },
+
+  "us-ca-losangeles": {
+    "adr": 196,
+    "currency": "USD",
+    "year": "12 months to Nov 2025",
+    "scope": "Los Angeles market, trailing 12 months through November 2025 (CoStar-based). No calendar-2025 figure found. LA Tourism TMD hotels: $207.29 for Jan-Jun 2025 only.",
+    "source": "https://www.hotel-online.com/news/hotel-market-outlook-2026-a-market-by-market-analysis; https://www.discoverlosangeles.com/tmd-lodging-metrics",
+    "taxes": [
+      {"name": "City of Los Angeles Transient Occupancy Tax", "rate": 0.14, "basis": "percent of room rate, stays of 30 days or fewer. Measure TT (to 16%) failed at the June 2, 2026 primary.", "source": "https://finance.lacity.gov/transient-occupancy-tax-requirements; https://www.westsidecurrent.com/elections/hotel-tax-increase-failing-as-city-voters-back-cannabis-and-travel-tax-measures-latest-counts/article_75f9987a-caf2-47ae-af8e-931e617e15ee.html"},
+      {"name": "Los Angeles Tourism Marketing District assessment", "rate": 0.02, "basis": "percent of room revenue, hotels with 50+ rooms (1.5% until 1 May 2022)", "source": "https://www.discoverlosangeles.com/tmd/latmd-overview"}
+    ]
+  },
+
+  "us-il-chicago": {
+    "adr": 243.10,
+    "currency": "USD",
+    "year": 2025,
+    "scope": "Chicago Central Business District hotels only (STR data). Occupancy 69.2%. 2024: $241.59.",
+    "source": "https://cdn.choosechicago.com/uploads/2026/01/Hotel-Performance-2025.pdf",
+    "taxes": [
+      {"name": "Illinois Hotel Operators' Occupation Tax", "rate": 0.06, "basis": "6% of 94% of gross receipts (effective 6.17% of net bill)", "source": "https://www.civicfed.org/civic-federation/blog/how-composite-effective-hotel-tax-rate-calculated-chicago"},
+      {"name": "City of Chicago Hotel Accommodations Tax (home rule)", "rate": 0.045, "basis": "percent of net receipts", "source": "https://www.civicfed.org/civic-federation/blog/how-composite-effective-hotel-tax-rate-calculated-chicago"},
+      {"name": "Chicago municipal hotel tax", "rate": 0.01, "basis": "1% of gross (effective 0.94%)", "source": "https://tax.illinois.gov/research/taxinformation/excise/chicagohotel.html"},
+      {"name": "Metropolitan Pier and Exposition Authority tax", "rate": 0.025, "basis": "percent of net receipts", "source": "https://www.civicfed.org/civic-federation/blog/how-composite-effective-hotel-tax-rate-calculated-chicago"},
+      {"name": "Illinois Sports Facilities Authority tax", "rate": 0.02, "basis": "2% of gross (effective 1.88%)", "source": "https://www.civicfed.org/civic-federation/blog/how-composite-effective-hotel-tax-rate-calculated-chicago"},
+      {"name": "Cook County hotel accommodations tax", "rate": 0.01, "basis": "percent of net receipts", "source": "https://www.civicfed.org/civic-federation/blog/how-composite-effective-hotel-tax-rate-calculated-chicago"},
+      {"name": "Chicago Tourism Improvement District assessment", "rate": 0.015, "basis": "percent of room rate, hotels with 100+ rooms in 16 downtown/McCormick/Medical District/Hyde Park zip codes, from 1 May 2026; brings those hotels to ~19%", "source": "https://www.chicago.gov/city/en/depts/fin/provdrs/tax_division/news/2026/april/ChicagoTourismImprovementDistrictEffectiveMay12026.html"}
+    ],
+    "taxNote": "Composite effective rate 17.39% of net bill before the TID (Civic Federation, 2023)."
+  },
+
+  "us-ga-atlanta": {
+    "adr": null,
+    "currency": "USD",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "taxes": [
+      {"name": "Georgia + Fulton + Atlanta sales tax", "rate": 0.089, "basis": "percent of room rate (4% state, 3% Fulton, 1.5% city incl. MOST, 0.4% T-SPLOST)", "source": "https://www.salestaxhandbook.com/georgia/rates/atlanta"},
+      {"name": "Atlanta hotel-motel tax", "rate": 0.08, "basis": "percent of room rate, stays of 30 days or fewer", "source": "https://ansaritax.com/atlanta-hotel-sales-tax-audit/"},
+      {"name": "Georgia State Hotel-Motel Fee", "amount": 5.00, "basis": "per room per night, first 30 nights", "source": "https://dor.georgia.gov/state-hotel-motel-faq"}
+    ]
+  },
+
+  "us-la-neworleans": {
+    "adr": null,
+    "currency": "USD",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "taxes": [
+      {"name": "Louisiana state sales tax on hotel rooms (Orleans Parish, 10+ rooms)", "rate": 0.03, "basis": "percent of room rate, from 1 Jan 2025 (was 2.45%)", "source": "https://revenue.louisiana.gov/tax-education-and-faqs/faqs/sales-tax-reform/what-is-the-state-sales-tax-rate-for-sleeping-rooms-hotel-rooms-motel-rooms-and-similar-accommodations/"},
+      {"name": "Louisiana Stadium and Exposition District occupancy tax", "rate": 0.04, "basis": "percent of room rate", "source": "https://revenue.louisiana.gov/businesses/sales-taxes/new-orleans-exhibition-hall-authority-hotel-occupancy-additional-paid-occupancy-tax/"},
+      {"name": "Ernest N. Morial New Orleans Exhibition Hall Authority tax", "rate": 0.03, "basis": "percent of room rate", "source": "https://revenue.louisiana.gov/businesses/sales-taxes/new-orleans-exhibition-hall-authority-hotel-occupancy-additional-paid-occupancy-tax/"},
+      {"name": "Exhibition Hall Authority per-night occupancy fee", "amount": "0.50 / 1.00 / 2.00", "basis": "per occupied room per night for hotels of 10-299 / 300-999 / 1,000+ rooms", "source": "https://revenue.louisiana.gov/businesses/sales-taxes/new-orleans-exhibition-hall-authority-hotel-occupancy-additional-paid-occupancy-tax/"},
+      {"name": "Combined Orleans Parish hotel tax (all components)", "rate": 0.1635, "basis": "percent of room rate as of 2019 (BGR); the 2025 state rise of 0.55 points would imply ~16.9% but no current official total was found", "source": "https://www.bgr.org/report-index/bgr-analyzes-the-orleans-parish-hotel-tax-structure/"}
+    ],
+    "context": "New Orleans & Company expected 2025 occupancy of 61.4% (-5.4%). https://www.neworleans.com/articles/post/new-orleans-company-announces-top-10-tourism-industry-accomplishments-for-2025/"
+  },
+
+  "us-dc-washington": {
+    "adr": null,
+    "currency": "USD",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "taxes": [
+      {"name": "DC sales tax on transient accommodations", "rate": 0.1595, "basis": "percent of room rate; temporary rate (base 10.20% + surtax) extended through 30 Sep 2027 by the Hotel Surtax Amendment Act of 2025", "source": "https://otr.cfo.dc.gov/release/notice-oct-1-2025-tax-changes; https://code.dccouncil.gov/us/dc/council/code/sections/47-2202"}
+    ]
+  },
+
+  "us-ma-boston": {
+    "adr": 232,
+    "currency": "USD",
+    "year": 2025,
+    "scope": "CoStar 'Boston market' = Massachusetts east of I-495 excluding Cape Cod; flat vs 2024; occupancy 72.5%. The Boston/Cambridge core runs much higher (a secondary source reports $301.97 for 2025 but it could not be traced to Pinnacle Advisory's publication).",
+    "source": "https://bankerandtradesman.com/for-boston-hotels-2026-is-a-year-of-cautious-optimism/ (CHMWarnick, citing CoStar)",
+    "taxes": [
+      {"name": "Massachusetts room occupancy excise", "rate": 0.057, "basis": "percent of room rate", "source": "https://www.mass.gov/info-details/room-occupancy-excise-tax"},
+      {"name": "Boston local room occupancy excise", "rate": 0.065, "basis": "percent of room rate", "source": "https://www.mass.gov/info-details/room-occupancy-excise-tax"},
+      {"name": "Convention Center Financing Fee", "rate": 0.0275, "basis": "percent of room rate (Boston, Cambridge, Springfield, Worcester)", "source": "https://www.mass.gov/info-details/room-occupancy-excise-tax"}
+    ],
+    "taxNote": "Combined 14.95%."
+  },
+
+  "us-ca-sanfrancisco": {
+    "adr": 225.82,
+    "currency": "USD",
+    "year": 2025,
+    "scope": "All hotels, San Francisco/San Mateo CoStar market; +6.0% vs 2024.",
+    "source": "https://www.hoteldive.com/news/hotel-occupancy-revpar-decline-2025/810212/ (CoStar full-year 2025)",
+    "taxes": [
+      {"name": "San Francisco Transient Occupancy Tax", "rate": 0.14, "basis": "percent of room rate, stays under 30 days", "source": "https://sftreasurer.org/business/taxes-fees/transient-occupancy-tax-tot"},
+      {"name": "Tourism Improvement District assessment", "rate": "0.0225 (Zone 1) / 0.02 (Zone 2)", "basis": "percent of room revenue; may be passed on as a folio line", "source": "https://sftreasurer.org/business/taxes-fees/transient-occupancy-tax-tot"},
+      {"name": "Moscone Expansion District assessment", "rate": null, "basis": "percent of room revenue for hotels in the district; current rate not published on the TOT page", "source": "https://sftreasurer.org/business/taxes-fees/transient-occupancy-tax-tot"}
+    ]
+  },
+
+  "us-fl-miami": {
+    "adr": 222.04,
+    "currency": "USD",
+    "year": 2024,
+    "scope": "All hotels, Miami-Dade County (STR via GMCVB), full-year 2024. The GMCVB's December 2025 report was not locatable; Jan-Aug 2026 YTD ADR was $261.54.",
+    "source": "https://www.miamiandbeaches.com/getmedia/96347a3c-a78e-4a19-baa5-b13e334d317e/2024_Dec_Greater_Miami_Occupancy_and_ADR_1.pdf",
+    "taxes": [
+      {"name": "Florida sales tax + Miami-Dade surtax", "rate": 0.07, "basis": "percent of room rate (6% state + 1% county)", "source": "https://www.roommaster.com/hotel-tax/miami"},
+      {"name": "Miami-Dade Convention Development Tax", "rate": 0.03, "basis": "percent of room rate", "source": "https://www.miamidade.gov/global/service.page?Mduid_service=ser1499797928395868"},
+      {"name": "Miami-Dade Tourist Development Tax", "rate": 0.02, "basis": "percent of room rate", "source": "https://www.miamidade.gov/global/service.page?Mduid_service=ser1499797928395868"},
+      {"name": "Professional Sports Franchise Facilities Tax", "rate": 0.01, "basis": "percent of room rate", "source": "https://www.roommaster.com/hotel-tax/miami"}
+    ],
+    "taxNote": "City of Miami total 13%. Miami Beach, Surfside and Bal Harbour instead levy a municipal Resort Tax (Miami Beach total reported ~14%).",
+    "context": "Home-sharing ADR Jan-Aug 2026 $473.19 incl. taxes (Lighthouse via GMCVB)."
+  },
+
+  "us-nv-lasvegas": {
+    "adr": 199.79,
+    "currency": "USD",
+    "year": 2025,
+    "scope": "All hotels, Las Vegas CoStar market (-4.3%). LVCVA's own citywide average room rate for 2025 is $183.52 (-5%), occupancy 80.3%.",
+    "source": "https://www.hoteldive.com/news/hotel-occupancy-revpar-decline-2025/810212/; https://lasvegassun.com/news/2026/jan/28/las-vegas-tourism-down-75-in-2025-with-385-million/",
+    "taxes": [
+      {"name": "Clark County transient lodging tax (Primary Gaming Corridor / Strip)", "rate": 0.1338, "basis": "percent of room rate; 13.00% outside the corridor", "source": "https://www.clarkcountynv.gov/business-detail/business-detail-t39-r94"},
+      {"name": "Resort fee", "amount": null, "basis": "property-set mandatory daily fee, itself subject to room tax", "source": "https://legalclarity.org/las-vegas-resort-fee-tax-rate-what-youll-pay/"}
+    ]
+  },
+
+  "us-ct-newhaven": {
+    "adr": null,
+    "currency": "USD",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "proxy": {"name": "GSA federal per diem lodging rate, New Haven County", "amount": 130, "fiscalYear": 2025, "note": "Not an ADR; a federal reimbursement cap informed by ADR data. FY2024 $126.", "source": "https://www.federalpay.org/perdiem/2025/connecticut/new-haven"},
+    "taxes": [
+      {"name": "Connecticut room occupancy tax", "rate": 0.15, "basis": "percent of room rate, stays of 30 days or fewer (11% for B&Bs); replaces sales tax on the room", "source": "https://portal.ct.gov/drs/taxes/room-occupancy/tax-information"}
+    ]
+  },
+
+  "uk-eng-london": {
+    "adr": 228,
+    "currency": "GBP",
+    "year": 2024,
+    "scope": "London hotels, Knight Frank (HotStats-based panel, skewed to upscale). 2025 full year reported as 'broadly in line with 2024' with occupancy 82.5%, but no 2025 £ figure published. PwC (STR-based, all classes) forecasts 2026 at £193.50, a different panel.",
+    "source": "https://www.uhy-uk.com/insights/whats-store-london-hotel-sector-2025; https://www.knightfrank.co.uk/research/article/2026/2/uk-hotel-trading-performance-review-and-outlook; https://www.pwc.co.uk/industries/hospitality-leisure/insights/uk-hotels-forecast.html",
+    "taxes": [
+      {"name": "VAT", "rate": 0.20, "basis": "included in quoted price", "source": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"},
+      {"name": "Overnight visitor levy", "rate": null, "basis": "Not in force. Government plans legislation letting English mayors levy one; Mayor Khan said London's would not exceed 5% (Sep 2026).", "source": "https://www.abc.net.au/news/2026-09-12/london-tourist-tax-to-be-capped-at-5-per-cent/107146446"}
+    ],
+    "shortTerm": {
+      "avgNightly": 234,
+      "currency": "USD",
+      "period": "AirDNA overview, retrieved 2026-09 (58% occupancy, ~113k listings)",
+      "source": "https://www.airdna.co/vacation-rental-data/app/gb/london/london/overview",
+      "rules": [
+        "90-night rule: entire homes in Greater London may be let for under 90 nights a calendar year without planning permission for change of use (Greater London Council (General Powers) Act 1973 s.25A, inserted by Deregulation Act 2015 s.44)."
+      ],
+      "rulesSource": "https://www.legislation.gov.uk/ukpga/2015/20/section/44"
+    }
+  },
+
+  "ca-on-toronto": {
+    "adr": 260.77,
+    "currency": "CAD",
+    "year": 2025,
+    "scope": "Toronto market, CoStar.",
+    "source": "https://www.biv.com/news/hospitality-marketing-tourism/vancouver-hotel-metrics-fizzle-to-end-sizzling-2025-11773031",
+    "taxes": [
+      {"name": "HST", "rate": 0.13, "basis": "percent of room rate plus MAT", "source": "https://www.toronto.ca/services-payments/property-taxes-utilities/municipal-accommodation-tax/guests/"},
+      {"name": "Municipal Accommodation Tax", "rate": 0.06, "basis": "percent of room rate; was 8.5% for stays 1 Jun 2025 - 31 Jul 2026 (World Cup), back to 6% from 1 Aug 2026", "source": "https://www.toronto.ca/services-payments/property-taxes-utilities/municipal-accommodation-tax/rates-and-exemptions/"}
+    ]
+  },
+
+  "ca-bc-vancouver": {
+    "adr": 284.44,
+    "currency": "CAD",
+    "year": 2025,
+    "scope": "Vancouver region, CoStar; highest of Canada's major centres; occupancy 78.4%.",
+    "source": "https://www.biv.com/news/hospitality-marketing-tourism/vancouver-hotel-metrics-fizzle-to-end-sizzling-2025-11773031",
+    "taxes": [
+      {"name": "GST", "rate": 0.05, "basis": "percent of room rate, and also on the provincial taxes while the combined provincial rate exceeds 12%", "source": "https://www.mccarthy.ca/en/insights/blogs/mccarthy-tetrault-tax-perspectives/cascading-now-part-tax-landscape-city-vancouver"},
+      {"name": "BC PST on accommodation", "rate": 0.08, "basis": "percent of room rate", "source": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst/publications/accommodation"},
+      {"name": "MRDT", "rate": 0.03, "basis": "percent of room rate", "source": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst/publications/accommodation"},
+      {"name": "Major Events MRDT (City of Vancouver)", "rate": 0.025, "basis": "percent of room rate, temporary for 7 years to fund FIFA 2026", "source": "https://www.roommaster.com/hotel-tax/british-columbia"}
+    ],
+    "taxNote": "Provincial 13.5% + GST 5% on (room + provincial taxes) ≈ 19.2% effective."
+  },
+
+  "ie-lei-dublin": {
+    "adr": 178,
+    "currency": "EUR",
+    "year": 2025,
+    "scope": "Dublin hotels (Crowe/JLL Irish Hotel Market Briefing 2026); occupancy 83.2%, RevPAR €148; 2024 €177. Ireland-wide 2025: €174, occupancy 78.4% (Fáilte Ireland/STR).",
+    "source": "https://www.crowe.com/-/media/crowe/firms/europe/ie/crowe-ireland/files/htl/crowe-jll-irish-hotel-market-briefing-2026.pdf; https://www.irishtimes.com/business/2026/03/31/hotel-room-rates-jumped-3-in-2025-despite-fall-in-overseas-and-domestic-visitors/",
+    "taxes": [
+      {"name": "VAT on accommodation", "rate": 0.135, "basis": "included in quoted price; stays at 13.5% - Budget 2026's 9% rate from 1 Jul 2026 covers food/catering, not accommodation", "source": "https://kpmg.com/ie/en/insights/tax/budget-2026/vat.html"}
+    ]
+  },
+
+  "is-39-reykjavik": {
+    "adr": null,
+    "currency": "ISK",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "taxes": [
+      {"name": "Lodging tax (gistináttaskattur)", "amount": 800, "basis": "ISK per unit (room) per night, hotels/guesthouses, from 1 Jan 2025 (400 for campsites)", "source": "https://www.skatturinn.is/english/companies/tax-issues/lodging-tax/"},
+      {"name": "VAT on accommodation", "rate": 0.11, "basis": "reduced rate, normally included in price", "source": "https://truetripcosts.com/iceland/tourist-tax/"}
+    ]
+  },
+
+  "de-be-berlin": {
+    "adr": null,
+    "currency": "EUR",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "context": "Berlin rates fell in 2025 despite ~73.5-74% occupancy (Christie & Co). DEHOGA Berlin: June 2025 ADR €132.89 vs €157.03 June 2024. Germany-wide 2025 ADR ~€117 (Cushman & Wakefield).",
+    "taxes": [
+      {"name": "Übernachtungsteuer (City Tax)", "rate": 0.075, "basis": "percent of net room price (excl. breakfast etc.), from 1 Jan 2025 (was 5%); business stays taxable since 2024", "source": "https://www.berlin.de/sen/finanzen/steuern/informationen-fuer-steuerzahler-/faq-steuern/artikel.57911.php"},
+      {"name": "VAT on accommodation", "rate": 0.07, "basis": "reduced rate, included in price", "source": "https://www.steuerschroeder.de/City-Tax-Berlin.html"}
+    ]
+  },
+
+  "fr-idf-paris": {
+    "adr": 239,
+    "currency": "EUR",
+    "year": 2025,
+    "scope": "Paris intra-muros, In Extenso TCH panel (all categories); -1% vs 2024; occupancy 82%. Luxury segment €369.",
+    "source": "https://hr-infos.fr/annee-2025-solide-pour-lhotellerie-francaise-et-optimisme-prudent-pour-2026-in-extenso-tch/",
+    "taxes": [
+      {"name": "Taxe de séjour (incl. 10% dept., 15% Société du Grand Paris, 200% Île-de-France Mobilités surcharges)", "amount": {"palace": 15.93, "5star": 11.70, "4star": 8.45, "3star": 5.53, "2star": 3.25, "1star": 2.60}, "basis": "EUR per person (adult) per night, 2026; unclassified: 5% of per-person nightly price HT + surcharges, capped at €15.93", "source": "https://entreprendre.service-public.gouv.fr/actualites/A17929"},
+      {"name": "VAT on accommodation", "rate": 0.10, "basis": "included in price", "source": "https://www.economie.gouv.fr/entreprises/gerer-sa-fiscalite-et-ses-impots/autres-impots-et-taxes/taxe-de-sejour-quelles-sont-les-obligations-des-hebergeurs"}
+    ],
+    "shortTerm": {
+      "avgNightly": 240,
+      "currency": "USD",
+      "period": "AirDNA overview, retrieved 2026-09 (65% occupancy, ~76k listings)",
+      "source": "https://www.airdna.co/vacation-rental-data/app/fr/ile-de-france/paris/overview",
+      "rules": [
+        "Primary residence: limit cut from 120 to 90 nights/year from 1 Jan 2025 (Conseil de Paris, under loi Le Meur of Nov 2024); platforms must block calendars at the cap; fines up to €15,000.",
+        "Secondary residences need change-of-use authorisation with compensation; all furnished tourist lets need a registration number."
+      ],
+      "rulesSource": "https://edito.seloger.com/conseils-d-experts/reglementations/de-120-90-nuitees-conseil-de-paris-renforce-reglementation-anti_5"
+    }
+  },
+
+  "es-md-madrid": {
+    "adr": 169.13,
+    "currency": "EUR",
+    "year": 2025,
+    "scope": "Madrid tourist point, all hotel categories, INE. Computed here as the unweighted mean of INE's 12 monthly 2025 ADRs (range €138.79 Aug - €202.87 Oct); INE does not publish an annual figure, and a room-night-weighted mean would differ slightly.",
+    "source": "https://www.ine.es/jaxiT3/Tabla.htm?t=46298&L=0 (API: https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/46298)",
+    "taxes": [
+      {"name": "IVA on accommodation", "rate": 0.10, "basis": "reduced rate, included in price", "source": "https://www.idealista.com/news/finanzas/economia/2026/07/21/907100-madrid-no-tendra-tasa-turistica-para-no-gravar-actividad-que-genera-empleo"},
+      {"name": "Tourist tax", "rate": null, "basis": "None. City council rejected one in July 2026; regional government not planning one.", "source": "https://www.idealista.com/news/finanzas/economia/2026/07/21/907100-madrid-no-tendra-tasa-turistica-para-no-gravar-actividad-que-genera-empleo"}
+    ]
+  },
+
+  "jp-13-tokyo": {
+    "adr": 34800,
+    "currency": "JPY",
+    "year": 2025,
+    "scope": "Tokyo metropolitan hotels, STR/CoStar Japan Hotel Review (as cited by a secondary source; primary release not located). Japan national 22,450 yen.",
+    "source": "https://thehotelblueprint.com/hotel-market-intel/hotel-performance/japan-full-year-2025/",
+    "taxes": [
+      {"name": "Consumption tax", "rate": 0.10, "basis": "included in price", "source": "https://matcha-jp.com/en/9362"},
+      {"name": "Tokyo accommodation tax", "amount": "100 / 200", "basis": "JPY per person per night for rates of 10,000-14,999 / 15,000+ yen per person; under 10,000 exempt. From 1 Apr 2027: 3% of rate above a 13,000-yen threshold, extended to minpaku.", "source": "https://loyaltylobby.com/2026/07/05/tokyo-government-confirms-implementation-of-3-accommodation-tax-from-april-1-2027/"},
+      {"name": "Service charge", "rate": null, "basis": "commonly 10-15% at full-service hotels; property-set, not a tax", "source": null}
+    ]
+  },
+
+  "kr-11-seoul": {
+    "adr": null,
+    "currency": "KRW",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "context": "STR: Seoul-Incheon ADR ~296,000 won in Sep 2025 (+14.6%); no full-year figure found. https://www.kedglobal.com/travel-leisure/newsView/ked202510160006",
+    "taxes": [
+      {"name": "VAT", "rate": 0.10, "basis": "percent of room rate (foreigners can reclaim at designated hotels for stays of 30 nights or fewer)", "source": "https://verifiedkorea.com/korea-vat-refund-foreign-tourists/"},
+      {"name": "Service charge", "rate": 0.10, "basis": "typical at deluxe hotels (sometimes 11%); property-set, not a tax", "source": "https://www.tripadvisor.com.sg/ShowTopic-g294197-i8161-k7682921-Seoul_Korea_Hotel_VAT_and_Service_Fee-Seoul.html"},
+      {"name": "Lodging/tourist tax", "rate": null, "basis": "None", "source": null}
+    ]
+  },
+
+  "mx-cmx-mexicocity": {
+    "adr": null,
+    "currency": "MXN",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "context": "March 2026: occupancy 63.21%, average rate MXN 2,020.60 (+194 y/y), source unattributed. https://pasilloturistico.com/hoteleria-en-cdmx-tarifas-al-alza-ocupacion-contenida-y-una-nueva-etapa-de-organizacion-del-sector/",
+    "taxes": [
+      {"name": "IVA", "rate": 0.16, "basis": "percent of room rate", "source": "https://www.elcontribuyente.mx/impuesto-sobre-hospedaje/"},
+      {"name": "Impuesto Sobre Hospedaje (CDMX)", "rate": 0.035, "basis": "percent of room rate excl. IVA, hotels (5% for stays booked via digital platforms)", "source": "https://www.jadelrio.com/mx/es/blogs/tasas-actuales-del-impuesto-sobre-hospedaje-2026"}
+    ]
+  },
+
+  "au-nsw-sydney": {
+    "adr": 334,
+    "currency": "AUD",
+    "year": 2025,
+    "scope": "Sydney market; +5%; occupancy 83%, RevPAR $279 (CBRE Hotels Australia Overview and Outlook).",
+    "source": "https://www.hotelnewsresource.com/article140375.html",
+    "taxes": [
+      {"name": "GST", "rate": 0.10, "basis": "included in price", "source": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst"},
+      {"name": "Bed/tourist tax", "rate": null, "basis": "None in NSW", "source": null}
+    ]
+  },
+
+  "br-27-saopaulo": {
+    "adr": 602,
+    "currency": "BRL",
+    "year": 2025,
+    "scope": "City of São Paulo, traditional hotels in the HotelInvest/FOHB panel (chain-affiliated); net of breakfast and taxes; occupancy 62.6%, RevPAR R$377. Short-term rentals in the city: ~R$233/night, ~62% occupancy.",
+    "source": "https://fohb.com.br/wp-content/uploads/2023/03/Panorama-da-Hotelaria-Brasileira-2026.pdf",
+    "taxes": [
+      {"name": "ISS (municipal service tax)", "rate": 0.05, "basis": "on hotel lodging, normally built into the rate", "source": "https://www.contabilizei.com.br/contabilidade-online/tabela-iss-sp/"},
+      {"name": "Service charge (taxa de serviço)", "rate": 0.10, "basis": "commonly added by Brazilian hotels; property-set, not a tax", "source": null},
+      {"name": "Taxa de turismo", "amount": null, "basis": "voluntary per-night contribution some hotels add (reported R$1.50-3.50); not a legal tax", "source": "https://www.hqbeds.com.br/blog/tributos-em-hoteis-e-pousadas"}
+    ],
+    "shortTerm": {"avgNightly": 233, "currency": "BRL", "period": 2025, "source": "https://fohb.com.br/wp-content/uploads/2023/03/Panorama-da-Hotelaria-Brasileira-2026.pdf"}
+  },
+
+  "nz-akl-auckland": {
+    "adr": null,
+    "currency": "NZD",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "context": "Horwath HTL monthly reports exist; Auckland ADR tracked below 2024 through 2025 on new supply. Nov 2024 ADR $254.",
+    "taxes": [
+      {"name": "GST", "rate": 0.15, "basis": "included in price", "source": "https://www.ird.govt.nz/gst"},
+      {"name": "Bed tax", "rate": null, "basis": "None; the government ruled out an accommodation levy in Aug 2026 (Accommodation Provider Targeted Rate ended earlier).", "source": "https://www.1news.co.nz/2026/09/08/national-wants-to-give-councils-cut-of-visitor-levy-after-bed-tax-rule-out/"}
+    ]
+  },
+
+  "lv-25-riga": {
+    "adr": null,
+    "currency": "EUR",
+    "year": null,
+    "scope": null,
+    "source": null,
+    "context": "CSB publishes occupancy (Riga Dec 2025 53.5%) but no room price.",
+    "taxes": [
+      {"name": "VAT on accommodation", "rate": 0.12, "basis": "reduced rate, included in price", "source": "https://gramatvedisriga.lv/en/blog/vat-rates-2026"},
+      {"name": "Riga tourism fee (nodeva par atpūtnieku un tūristu uzņemšanu)", "amount": 1.00, "basis": "EUR per person per night incl. VAT (€0.89 ex VAT) in 2026; rises to €2 (€1.78 ex VAT) from 1 Jan 2027, capped at €17.80 per continuous stay; under-18s exempt", "source": "https://www.riga.lv/en/article/riga-municipality-and-tourism-industry-reach-agreement-increasing-tourism-tax-eu2; https://pip.riga.lv/turisma-nodeva-eng/"}
+    ]
+  },
+
+  "uncertain": [
+    "us-ca-losangeles: no calendar-2025 ADR found; $196 is 12 months to Nov 2025 from a secondary CoStar-based article.",
+    "us-ga-atlanta, us-la-neworleans, us-dc-washington: no full-year 2025 (or 2024) ADR found in public sources; CoStar market figures are paywalled. A search snippet gave Atlanta 2024 ADR $175.03 without a traceable source, so it is not used.",
+    "us-ma-boston: $232 is CoStar's broad eastern-Massachusetts market; the Boston/Cambridge core figure ($301.97, 77.3% occ.) comes from a blog (stay-in-boston.com) attributing it to Pinnacle Advisory/Meet Boston and could not be verified.",
+    "us-fl-miami: latest verified full year is 2024 ($222.04); the 2025 year-end GMCVB PDF could not be located.",
+    "us-la-neworleans taxes: 16.35% total dates from 2019; current official total not found.",
+    "us-fl-miami taxes: Miami Beach resort-tax breakdown not verified (~14% total).",
+    "us-ca-sanfrancisco taxes: Moscone Expansion District rate not captured.",
+    "us-ct-newhaven: no ADR for New Haven or Connecticut found; GSA per diem given only as a proxy.",
+    "uk-eng-london: only 2024 £228 (Knight Frank/HotStats, upscale-skewed); 2025 described as flat without a number. PwC's STR-based series runs ~£190s, so the two panels differ by ~£35.",
+    "jp-13-tokyo: 34,800 yen comes from a secondary site citing STR; primary CoStar release not found.",
+    "es-md-madrid: 2025 figure is an unweighted mean of INE monthly values computed for this file.",
+    "br-27-saopaulo: HotelInvest/FOHB values may be inflation-adjusted (the prior edition stated real Jan-2025 reais) and cover a chain-hotel panel only; ABIH-SP state-level data showed Dec 2025 ADR R$539.25 and +14.46% for 2025.",
+    "de-be-berlin, kr-11-seoul, mx-cmx-mexicocity, nz-akl-auckland, is-39-reykjavik, lv-25-riga: no authoritative full-year hotel ADR found.",
+    "Short-term rental ADRs (AirDNA) are trailing-12-month dashboard values read in Sep 2026 and shown in USD by AirDNA; AirDNA includes cleaning fees in ADR.",
+    "lv-25-riga: 2026 fee stated as €1 incl. VAT by one source and €0.89 ex-VAT by the city; both consistent."
+  ]
+}

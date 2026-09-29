@@ -180,6 +180,8 @@ export interface Person {
    * or work, driving licenses (`systems/documents.ts`). From 2026-09-29.
    */
   documents?: import('../systems/documents').PersonDocument[];
+  /** Journeys booked and taken (`systems/journey.ts`). */
+  journeys?: import('../systems/journey').Journey[];
   /** Their progress toward a driving license where they live (`systems/licensing.ts`). */
   licensing?: import('../systems/licensing').LicensingRecord;
   /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */

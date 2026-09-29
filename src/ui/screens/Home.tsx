@@ -5,6 +5,7 @@
  * attention, how am I doing. A command surface, not a place to bury depth.
  */
 
+import { journeysOf } from '@/engine/systems/journey';
 import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -104,6 +105,7 @@ export function Home() {
     school: useFeature('ui.school').open,
     career: useFeature('ui.career').open,
     papers: useFeature('ui.papers').open,
+    travel: useFeature('ui.travel').open,
   };
 
   return (
@@ -574,6 +576,19 @@ export function Home() {
           <YourPapers cur={cur} />
         </Panel>
         ))}
+        {(player.career || player.school) && (!shows.travel ? <LockedPanel feature="ui.travel" title="Travel" /> : (
+        <Panel
+          title="Travel"
+          tight
+          actions={(
+            <Gated feature="ui.travel" className="btn btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>
+              Travel
+            </Gated>
+          )}
+        >
+          <YourTravel />
+        </Panel>
+        ))}
       </div>
     </>
   );
@@ -616,6 +631,18 @@ function YourSchool() {
  * Taxes and cover (`systems/health.ts`, `systems/taxreturn.ts`,
  * `systems/unemployment.ts`): what covers them, the next return, and a claim.
  */
+/** Where they are, and the next journey booked (`systems/journey.ts`). */
+function YourTravel() {
+  const person = useWorld((s) => s.player);
+  const next = journeysOf(person).filter((j) => j.status === 'booked' || j.status === 'underway').sort((a, b) => a.leaveAt - b.leaveAt)[0];
+  return (
+    <div className="col gap-3">
+      <Stat label="In" value={CITIES.get(person.currentLocationId)?.name ?? person.currentLocationId} />
+      <Stat label="Next Journey" value={next ? `To ${CITIES.get(next.toCity)?.name ?? next.toCity}` : 'None Booked'} note={next ? formatDateTime(next.leaveAt, CITIES.require(next.fromCity).timeZone) : undefined} />
+    </div>
+  );
+}
+
 function YourPapers({ cur }: { cur: string }) {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);

@@ -470,6 +470,8 @@ input[type="range"] {
 
 .field { margin-bottom: var(--s4); }
 .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--s4); }
+/* Five short fields in one row, as Travel's booking asks, without the last one wrapping alone. */
+.field-row.field-row-tight { grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); }
 /* A button among the fields sits level with their boxes, not their labels. */
 .field-row > .btn { align-self: end; justify-self: start; margin-bottom: var(--s4); }
 /* A field and the button that acts on it, side by side, level at the bottom. */
