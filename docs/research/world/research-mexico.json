@@ -1,0 +1,336 @@
+{
+  "_meta": {
+    "subject": "Mexican actor living in Mexico City (CDMX), figures as of 2026",
+    "researched": "2026-09-29",
+    "rule": "Every figure carries a source URL and effective date. null = could not be confirmed from a primary source. Secondary-source figures are flagged as such.",
+    "currency": "MXN"
+  },
+
+  "anda": {
+    "name": "Asociación Nacional de Actores (ANDA)",
+    "founded": 1934,
+    "address": "Ignacio Manuel Altamirano No. 126, Col. San Rafael, Ciudad de México",
+    "site": "https://laanda.org.mx/",
+    "secretary_general": {
+      "value": "Omar Fierro (2026 - present)",
+      "source": "https://en.wikipedia.org/wiki/National_Association_of_Actors",
+      "note": "Secondary source (Wikipedia); not confirmed on laanda.org.mx."
+    },
+    "dues": {
+      "cuota_sindical_pct_of_pay": 15.0,
+      "breakdown": {
+        "cotizacion_ordinaria_pct": 10.0,
+        "cuota_extraordinaria_retiro_pct": 3.5,
+        "cuota_extraordinaria_prevision_social_pct": 1.5
+      },
+      "mechanism": "Deducted by ANDA from each payment that runs through the union.",
+      "isr_retention_by_anda_pct": 10.0,
+      "isr_note": "ANDA withholds 10% ISR and remits it to SAT; it is tax, not dues.",
+      "source": "https://laanda.org.mx/la-voz-del-actor/beneficios-de-ser-parte-de-la-anda/",
+      "effective": "Article dated April 2019; no later ANDA publication found changing it. Treat as current but dated."
+    },
+    "tabulador": {
+      "how_it_works": "The ANDA Secretaría de Trabajo negotiates tabuladores (minimum rates by character category) company by company. The tabulador is the minimum paid through the union; the actor may negotiate more.",
+      "structure": {
+        "doblaje": "One single tabulador: the 'tabulador homologado' applying to every company that signed the Contrato Homologado with ANDA.",
+        "cine": "11 different tabuladores.",
+        "television_teatro_variedades": "A base tabulador is negotiated per production / per company according to the production's characteristics."
+      },
+      "published_amounts": null,
+      "why_null": "ANDA states tabuladores are confidential (result of individual negotiation; publishing them would weaken future negotiations). Members obtain rates by emailing trabajo@laanda.org.mx with name, member number, company, project and character.",
+      "source": "https://laanda.org.mx/la-voz-del-actor/tabuladores-anda/",
+      "effective": "Page current as fetched 2026-09-29"
+    },
+    "legal_frame": {
+      "value": "Ley Federal del Trabajo, Título Sexto, Capítulo XI 'Trabajadores actores y músicos' (arts. 304-310): covers theatre, cinema, nightclubs, circus, radio, TV, dubbing and recording. Employment may be for a fixed or indefinite term, for seasons, or for one or several performances (art. 305); salary may be set per unit of time, per season, or per performance (art. 306); 'equal work, equal pay' does not apply to actors on grounds of prestige/mastery (art. 307).",
+      "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+      "effective": "Text in force 2026 (articles summarized from search results; art. 307 point from secondary summary)"
+    },
+    "ai_voice_image_reform_2026": {
+      "value": "Decree reforming the LFT and Ley Federal del Derecho de Autor: a performer's image, including voice, may be used only with express consent, extending to AI-generated imitations; contracts must state compensation for use of image/voice via AI; separate uses need separate authorization and payment; AI impersonation/voice cloning prohibited except parody/satire; dubbing actors' contracts registered with authorities.",
+      "source": "https://dof.gob.mx/nota_detalle.php?codigo=5787418&fecha=14%2F05%2F2026",
+      "effective": "In force the day after DOF publication of 2026-05-14 (i.e., 2026-05-15)"
+    }
+  },
+
+  "rates": {
+    "federal_minimum_wage": {
+      "salario_minimo_general_daily": 315.04,
+      "salario_minimo_general_monthly": 9582.47,
+      "zona_libre_frontera_norte_daily": 440.87,
+      "zona_libre_frontera_norte_monthly": 13409.80,
+      "increase_general_pct": 13.0,
+      "increase_note": "17.01 pesos MIR (Monto Independiente de Recuperación) plus 6.5%.",
+      "cdmx_zone": "CDMX is in the Zona del Salario Mínimo General (315.04/day).",
+      "previous_2025_daily": 278.80,
+      "source": "https://dof.gob.mx/nota_detalle.php?codigo=5775534&fecha=09%2F12%2F2025",
+      "effective": "2026-01-01"
+    },
+    "salario_minimo_profesional_actor": {
+      "value": null,
+      "note": "The CONASAMI 2026 resolution lists 61 professional minimum wages; none is for actors or performers (the only media occupation is 'reportero(a) en prensa diaria impresa' at 705.46/day). Actors' floors come only from ANDA's confidential tabuladores.",
+      "source": "https://dof.gob.mx/nota_detalle.php?codigo=5775534&fecha=09%2F12%2F2025",
+      "effective": "2026-01-01"
+    },
+    "uma": {
+      "daily": 117.31,
+      "monthly": 3566.22,
+      "annual": 42794.64,
+      "note": "Unidad de Medida y Actualización; referenced by IMSS contribution bands and the employment subsidy. 2025 daily was 113.14.",
+      "source": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/uma/uma2026.pdf",
+      "effective": "2026-02-01"
+    },
+    "telenovela_televisa_tv_azteca": {
+      "value": null,
+      "note": "Paid per the ANDA tabulador negotiated with each network (per production). Amounts not published. LFT art. 306 permits pay per unit of time, per season or per performance (llamado).",
+      "source": "https://laanda.org.mx/la-voz-del-actor/tabuladores-anda/",
+      "effective": null
+    },
+    "streaming_series_netflix_amazon_vix": {
+      "value": null,
+      "note": "No public rate schedule found. Same ANDA mechanism applies where the producer signs an ANDA contract.",
+      "source": null,
+      "effective": null
+    },
+    "film": {
+      "value": null,
+      "note": "ANDA has 11 film tabuladores; amounts confidential.",
+      "source": "https://laanda.org.mx/la-voz-del-actor/tabuladores-anda/",
+      "effective": null
+    },
+    "theater": {
+      "value": null,
+      "note": "Base tabulador set per production; amounts confidential.",
+      "source": "https://laanda.org.mx/la-voz-del-actor/tabuladores-anda/",
+      "effective": null
+    },
+    "doblaje": {
+      "unit": "loop = roughly 15 seconds of voice or 15 words",
+      "unit_source": "https://www.eluniversal.com.mx/espectaculos/alzan-la-voz-contra-el-doblaje-barato-y-chafa/",
+      "per_loop_mxn": null,
+      "per_llamado_mxn": null,
+      "why_null": "The single 'tabulador homologado' exists but ANDA does not publish it. Press pieces give anecdotes, not the rate. laverdadnoticias.com claims a 2026 per-loop figure but returned 403 and cannot be verified.",
+      "anecdotal_secondary": {
+        "monthly_income_range": "9,819 to 30,200 MXN/month (press estimate, not a rate)",
+        "source": "https://www.dineroenimagen.com/management/cuanto-gana-un-actor-de-doblaje/134471",
+        "reliability": "secondary, undated in search snippet; do not use as a rate"
+      },
+      "effective": null
+    },
+    "commercials": {
+      "value": null,
+      "note": "No published ANDA commercial rate found.",
+      "source": null,
+      "effective": null
+    }
+  },
+
+  "agencies": {
+    "verified_on_own_site": [
+      {
+        "name": "Talent On The Road",
+        "represents": "actors, writers, directors",
+        "address": "Heriberto Frías 846, Col. Del Valle, CDMX 03100 (also West Hollywood, CA)",
+        "source": "https://talentontheroad.com/",
+        "verified": "2026-09-29"
+      },
+      {
+        "name": "Shoot Management MX",
+        "represents": "actors and actresses for film, TV and advertising (roster ~50)",
+        "address": "Cerrada Gabriel Mancera 23, Col. del Valle, Benito Juárez, CDMX 03103",
+        "source": "https://www.shootmanagementmx.com/",
+        "verified": "2026-09-29"
+      },
+      {
+        "name": "Glenda Artist Management",
+        "represents": "actors and actresses for film, TV, theatre (roster ~10); director Glenda Reyna",
+        "address": "Mexico City (no street address on site)",
+        "source": "https://glendareyna.com/",
+        "verified": "2026-09-29"
+      },
+      {
+        "name": "LOOK Management",
+        "represents": "actors, hosts, models, influencers, child talent; founder Carolina Kropp",
+        "address": "Del Valle Nte., CDMX 03103",
+        "source": "https://www.lookmanagement.com.mx/",
+        "verified": "2026-09-29"
+      }
+    ],
+    "commission": {
+      "pct": null,
+      "note": "None of the four agencies publishes its commission. The 10% 'typical' figure seen in search results comes from Spanish (Spain) sources, not Mexico, so it is not recorded here.",
+      "source": null,
+      "effective": null
+    }
+  },
+
+  "production": {
+    "imcine_yearbook": "Anuario Estadístico de Cine Mexicano 2025 (IMCINE), presented April 2026",
+    "source": "https://imcine.gob.mx/pdf/anuarios/bbf093980f29f793.pdf",
+    "effective": "Calendar year 2025",
+    "features_in_production_process": 235,
+    "features_breakdown": { "shooting_or_shot": 40, "postproduction": 54, "finished": 141 },
+    "features_with_public_support_pct": 41,
+    "features_originating_in_cdmx_pct": 57.3,
+    "features_shot_in_cdmx_pct": 42.6,
+    "average_feature_cost_mxn_millions": 15.04,
+    "international_coproductions": 63,
+    "streaming_original_features": "Netflix 8; ViX, Disney+ and Canela TV 2 each",
+    "shorts_and_mid_length": 864,
+    "series_in_production_or_released": 66,
+    "series_breakdown": { "shooting_or_shot": 6, "finished": 60, "fiction": 46, "documentary": 18, "animation": 2 },
+    "series_original_production_share": { "ViX": 54, "Netflix": 15, "HBO Max": 15, "Prime Video": 6, "Disney+": 6 },
+    "mexican_films_released_in_theaters": 93,
+    "tickets_sold_total_millions": 186,
+    "tickets_sold_mexican_films_millions": 9.1,
+    "average_ticket_price_mxn": 73.7,
+    "box_office_total_mxn_millions": 13702,
+    "box_office_mexican_films_mxn_millions": 572,
+    "streaming_platforms_with_mexican_content": 32,
+    "average_svod_subscription_mxn_month": 174,
+    "streaming_spend": {
+      "netflix_commitment_usd": 1000000000,
+      "period": "2025-2028 (about 20 productions a year; work with Estudios Churubusco)",
+      "announced": "2025-02-20 at the President's morning press conference (Ted Sarandos with Claudia Sheinbaum)",
+      "source": "https://es.hollywoodreporter.com/netflix-invertira-mil-millones-de-dolares-en-mexico-durante-cuatro-anos-para-producir-peliculas-y-series-en-el-pais/",
+      "reliability": "Press report of an official announcement; no government bulletin fetched."
+    },
+    "total_streaming_production_spend_2025": null
+  },
+
+  "pension": {
+    "regime": "IMSS Ley 97 (individual AFORE accounts)",
+    "retirement_age_vejez": 65,
+    "retirement_age_cesantia": 60,
+    "weeks_required_2026": 875,
+    "weeks_schedule": {
+      "rule": "750 weeks on 2021-01-01, +25 per year until 1,000 in 2031 (LSS decree of 2020-12-16, transitorio Cuarto)",
+      "2021": 750, "2022": 775, "2023": 800, "2024": 825, "2025": 850, "2026": 875,
+      "2027": 900, "2028": 925, "2029": 950, "2030": 975, "2031": 1000
+    },
+    "weeks_sources": [
+      "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+      "https://www.consar.gob.mx/gobmx/aplicativo/calculadora/imss/PDF/Metodolog%C3%ADa_Calculadora_de_Retiro.pdf"
+    ],
+    "weeks_effective": "2026-01-01 (CONSAR 2026 methodology states 875 explicitly)",
+    "pension_garantizada": {
+      "rule": "State-guaranteed pension for those 60+ meeting the year's weeks requirement whose AFORE balance can't buy an annuity or programmed withdrawal. Amount depends on age, weeks and average SBC (in UMA bands), per table in LSS art. 170 / 2020 transitorio; updated each February by INPC.",
+      "amount_2026_min_mxn_month": null,
+      "amount_2026_max_mxn_month": null,
+      "why_null": "Official table is in 2020 pesos (image in the DOF decree); no official 2026-updated table found. Secondary sites cite 3,540.56 (60 yrs, 875 wks, <2 UMA) to 11,128.01 (65+, 1,125+ wks, 5+ UMA) per month for 2026 — unverified.",
+      "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+      "effective": "Table in force since 2021-01-01"
+    },
+    "fondo_de_pensiones_para_el_bienestar": {
+      "value": "For Ley 97 workers retiring at 65+, tops the AFORE pension up to the last salary, capped at 17,885.85 MXN/month (2026 estimate).",
+      "cap_2026_mxn_month": 17885.85,
+      "source": "https://www.consar.gob.mx/gobmx/aplicativo/calculadora/imss/PDF/Metodolog%C3%ADa_Calculadora_de_Retiro.pdf",
+      "effective": "Fund created by decree DOF 2024-05-01; 2026 cap is CONSAR's estimate"
+    },
+    "contributions_to_afore_rcv_pct_of_sbc_2026": {
+      "retiro_employer": 2.0,
+      "cesantia_vejez_employee": 1.125,
+      "cesantia_vejez_employer_2026_by_sbc_band": {
+        "1.00 SM": 3.150,
+        "1.01 SM to 1.50 UMA": 3.676,
+        "1.51 to 2.00 UMA": 4.851,
+        "2.01 to 2.50 UMA": 5.556,
+        "2.51 to 3.00 UMA": 6.026,
+        "3.01 to 3.50 UMA": 6.361,
+        "3.51 to 4.00 UMA": 6.613,
+        "4.01 UMA and above": 7.513
+      },
+      "total_rcv_2026_by_band": {
+        "up to 1 SM": 6.275, "1.01 SM to 1.5 UMA": 6.801, "1.51 to 2 UMA": 7.976, "2.01 to 2.5 UMA": 8.681,
+        "2.51 to 3 UMA": 9.151, "3.01 to 3.5 UMA": 9.486, "3.51 to 4 UMA": 9.738, "4 UMA and above": 10.638
+      },
+      "employer_phase_in": "Employer CEAV rises yearly to its final table in 2030 (final: 3.150 / 4.202 / 6.552 / 7.962 / 8.902 / 9.573 / 10.077 / 11.875%).",
+      "government_cuota_social_mxn_per_day_jan_apr_2026": {
+        "up to 1 SM": 12.15794, "1.01 SM to 1.5 UMA": 11.30970, "1.51 to 2 UMA": 10.46148, "2.01 to 2.5 UMA": 9.61325,
+        "2.51 to 3 UMA": 8.76502, "3.01 to 3.5 UMA": 7.91682, "3.51 to 4 UMA": 7.06856, "above 4 UMA": 0.0,
+        "note": "Updated quarterly by INPC; deposited per day of salary contributed."
+      },
+      "infonavit_employer_pct": 5.0,
+      "sources": [
+        "https://www.consar.gob.mx/gobmx/aplicativo/calculadora/imss/PDF/Metodolog%C3%ADa_Calculadora_de_Retiro.pdf",
+        "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf (art. 168)",
+        "https://www.elcontribuyente.mx/indicadores/cuotas-imss/ (secondary, agrees with CONSAR)"
+      ],
+      "effective": "2026-01-01 to 2026-12-31"
+    }
+  },
+
+  "bienestar": {
+    "program": "Pensión para el Bienestar de las Personas Adultas Mayores",
+    "age": 65,
+    "eligibility": "65 or older, Mexican by birth or naturalization, resident in Mexico; non-contributory, universal",
+    "monthly_mxn": 3200.00,
+    "bimonthly_mxn": 6400.00,
+    "annual_mxn": 38400.00,
+    "paid": "bimonthly, to a Banco del Bienestar account",
+    "previous_2025_bimonthly_mxn": 6200.00,
+    "source": "https://dof.gob.mx/nota_detalle.php?codigo=5779939&fecha=12%2F02%2F2026",
+    "effective": "Reglas de Operación 2026 (DOF 2026-02-12), in effect from 2026-01-01"
+  },
+
+  "tax": {
+    "isr_annual_tariff_art_152_2026": {
+      "columns": ["limite_inferior", "limite_superior", "cuota_fija", "pct_sobre_excedente"],
+      "brackets": [
+        [0.01, 10135.11, 0.00, 1.92],
+        [10135.12, 86022.11, 194.59, 6.40],
+        [86022.12, 151176.19, 5051.37, 10.88],
+        [151176.20, 175735.66, 12140.13, 16.00],
+        [175735.67, 210403.69, 16069.64, 17.92],
+        [210403.70, 424353.97, 22282.14, 21.36],
+        [424353.98, 668840.14, 67981.92, 23.52],
+        [668840.15, 1276925.98, 125485.07, 30.00],
+        [1276925.99, 1702567.97, 307910.81, 32.00],
+        [1702567.98, 5107703.92, 444116.23, 34.00],
+        [5107703.93, null, 1601862.46, 35.00]
+      ],
+      "note": "First update since 2023 (factor 1.1321). Monthly withholding tariff (art. 96) is the annual table divided by 12, also in Anexo 8.",
+      "source": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rmf/anexos/Anexo-8-RMF-2026_DOF-28122025.pdf",
+      "effective": "Ejercicio 2026 (Anexo 8 RMF 2026, DOF 2025-12-28)"
+    },
+    "subsidio_para_el_empleo_2026": {
+      "mechanism": "Monthly credit against the employee's ISR withholding equal to a % of the monthly UMA, for workers whose monthly taxable income is at or below the limit. Not paid out in cash if it exceeds the ISR due.",
+      "pct_of_monthly_uma_january": 15.59,
+      "pct_of_monthly_uma_feb_to_dec": 15.02,
+      "monthly_amount_mxn": 536.22,
+      "monthly_amount_note": "15.02% x 3,566.22 = 535.65 by arithmetic; secondary sources state 536.21 (Jan, on 2025 UMA) / 536.22 (Feb-Dec). The decree sets percentages, not a peso figure.",
+      "income_limit_monthly_mxn": 11492.66,
+      "source": "https://dof.gob.mx/nota_detalle.php?codigo=5777649&fecha=31%2F12%2F2025",
+      "effective": "2026-01-01"
+    },
+    "imss_worker_contributions_pct_of_sbc_2026": {
+      "enfermedad_maternidad_especie_excedente_3_uma": 0.40,
+      "enfermedad_maternidad_dinero": 0.25,
+      "gastos_medicos_pensionados": 0.375,
+      "invalidez_y_vida": 0.625,
+      "cesantia_y_vejez": 1.125,
+      "total_worker_pct_up_to_3_uma": 2.375,
+      "plus": "0.40% on the portion of SBC above 3 UMA",
+      "sbc_cap": "25 UMA per day",
+      "legal_basis": "LSS arts. 25 (0.375), 107 (25% of 1% = 0.25), 147 (0.625), 168-II-b (1.125); art. 106-II excess rate is 0.40% for the worker under the 2001 reform's transitional schedule (text of art. 106 still reads 2%).",
+      "sources": [
+        "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+        "https://www.elcontribuyente.mx/indicadores/cuotas-imss/"
+      ],
+      "effective": "2026 (LSS text last reformed DOF 2026-01-15)",
+      "note": "Actor employed through ANDA contracts may be enrolled in IMSS by the producer; how ANDA-contracted per-call work is registered was not confirmed."
+    }
+  },
+
+  "uncertain": [
+    "ANDA tabulador amounts for TV, streaming, film, theatre, dubbing and commercials: ANDA keeps them confidential; nothing published to confirm.",
+    "Doblaje per-loop and per-llamado rates: the one homologated tabulador exists but is unpublished; press per-loop figures unverifiable.",
+    "ANDA 15% dues and 10% ISR retention come from an April 2019 ANDA article; no later confirmation found.",
+    "ANDA Secretary General (Omar Fierro, 2026-) from Wikipedia only.",
+    "Talent agency commission: not published by any Mexico City agency checked; the 10% 'norm' in search results came from Spain.",
+    "Pensión garantizada 2026 peso amounts: official table in 2020 pesos, INPC-updated; secondary 2026 range 3,540.56-11,128.01/month unverified.",
+    "Total streaming production spend in Mexico for 2025: no official figure; only Netflix's USD 1bn 2025-2028 commitment (press).",
+    "Subsidio para el empleo peso amount: decree gives percentages; 536.22 is a secondary-source figure that differs slightly from 15.02% x 3,566.22 = 535.65.",
+    "IMSS worker 0.40% excess rate: from the transitional schedule, confirmed by secondary source, not re-read in the 2001 decree."
+  ]
+}
