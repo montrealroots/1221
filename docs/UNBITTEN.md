@@ -603,8 +603,19 @@ part the tool cannot see.
   entry, and since 2026-09-29 a job abroad asks it at the offer and on the
   travel day, and a home abroad asks the right to live there; until then a
   production abroad moved the actor with no check. Permission to work is
-  not yet asked (stage 1b), and journeys of the player's own don't exist
-  (stage 2).
+  asked since 2026-09-29 as well (`systems/permission.ts`), and journeys of
+  the player's own don't exist (stage 2). SLATE's estimates in permission to
+  work: USCIS's and IRCC's standard processing times, which neither
+  publishes as one figure (OPT 90 days, an O-1 90 and the union's opinion
+  15, a Canadian permit 30); what counts as a day at work on OPT (inside a
+  job's span, SLATE's reading of twenty hours a week for work that comes in
+  engagements); and which of the O-1's six kinds of evidence the career can
+  show (a lead, a known name, a critical role, high pay; a record of
+  commercial success and critics' recognition aren't kept per actor). An
+  approved O-1 or OPT stands in for the consulate's visa stamp (DS-160,
+  $205) its holder would travel on. Someone whose permission has ended isn't
+  made to leave: they can't work, move into a home or buy one to live in,
+  and nothing enforces more.
   `mayDrive` decides driving, and nothing drives yet (stage 3). A license's
   probation and points aren't kept, since SLATE has no driving offenses.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes

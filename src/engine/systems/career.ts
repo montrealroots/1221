@@ -91,6 +91,7 @@ import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, repo
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { crossingRefusal } from './documents';
+import { permitAtTheBorder, workRefusal } from './permission';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
 import { sagHoliday } from '../content/usholidays';
@@ -1694,7 +1695,8 @@ export function registerCareer(sim: Simulation): void {
     const city = workCityOf(booking);
     if (item.payload.direction === 'out') {
       if (booking.status !== 'accepted') return;
-      const no = crossingRefusal(person, person.currentLocationId, city, s.now, (Number(item.payload.back) - s.now) / MS_DAY);
+      const no = crossingRefusal(person, person.currentLocationId, city, s.now, (Number(item.payload.back) - s.now) / MS_DAY)
+        ?? workRefusal(person, city, workDays(booking)[0]!.at, workDays(booking).at(-1)!.at, booking);
       if (no) { turnedBack(s, person, booking, no); return; }
       // A room, sublet for the nights: the town's room rent by the night, SLATE's estimate of what it costs.
       const cur = saveCurrency(s.universe);
@@ -1753,7 +1755,9 @@ export function registerCareer(sim: Simulation): void {
     booking.travelOwed = (booking.travelOwed ?? 0) + day;
     if (item.payload.direction === 'out') {
       const last = workDays(booking).at(-1)!.at;
-      const no = crossingRefusal(person, person.currentLocationId, booking.location, s.now, (last - s.now) / MS_DAY + 1);
+      const no = crossingRefusal(person, person.currentLocationId, booking.location, s.now, (last - s.now) / MS_DAY + 1)
+        ?? workRefusal(person, booking.location, workDays(booking)[0]!.at, last, booking)
+        ?? (permitAtTheBorder(s, person, booking) ? undefined : 'The work permit’s fee at the border is more than the bank can cover.');
       if (no) { turnedBack(s, person, booking, no); return; }
       person.currentLocationId = booking.location;
       s.universe.currentZone = zoneOf(booking.location);
@@ -2232,7 +2236,8 @@ export function borderRefusal(person: Person, booking: Booking): string | undefi
   const out = at(days[0]!.at, zone, -1, 12);
   const back = at(days[days.length - 1]!.at, zone, 1, 12);
   // Coming home, they come to where they live on the papers they live there on, not as a visitor.
-  return crossingRefusal(person, home, city, out, (back - out) / MS_DAY) ?? crossingRefusal(person, city, home, back, 1);
+  return crossingRefusal(person, home, city, out, (back - out) / MS_DAY) ?? crossingRefusal(person, city, home, back, 1)
+    ?? workRefusal(person, city, days[0]!.at, days[days.length - 1]!.at, booking);
 }
 
 /** Turned away at the border on the travel day: the production recasts, and the days worked are paid. */

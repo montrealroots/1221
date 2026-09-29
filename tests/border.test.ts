@@ -67,13 +67,16 @@ describe('a job abroad', () => {
 });
 
 describe('a job in New York for an actor who lives in Dublin', () => {
-  it('asks the ESTA an Irish citizen enters on, and turns them back if the passport goes before the flight', () => {
+  it('asks the ESTA an Irish citizen enters on and the O-1 they work on, and turns them back if the passport goes before the flight', () => {
     const sim = pro('border-dublin', 'ie-lei-dublin');
     const p = passport(sim, 'IE');
     const b: Booking = { id: 'nyc', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     expect(acceptRefusal(sim, sim.player, b)).toMatch(/ESTA/);
     documentsOf(sim.player).push({ id: 'esta', kind: 'authorization', issuer: 'US', name: 'ESTA', number: 'E1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + YEAR, destination: 'US', passportId: p.id });
+    // In as a visitor, but a visitor doesn't work: an O-1 does.
+    expect(acceptRefusal(sim, sim.player, b)).toMatch(/Work in the United States needs permission/);
+    documentsOf(sim.player).push({ id: 'o1', kind: 'permit', issuer: 'US', name: 'O-1B Status', number: 'O1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + 3 * YEAR, destination: 'US' });
     expect(acceptRefusal(sim, sim.player, b)).toBeUndefined();
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: p.id } }).ok).toBe(true);

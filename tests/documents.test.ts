@@ -65,6 +65,9 @@ describe('entering a country', () => {
     const mx = life('entry-mx', 'mx-cmx-mexicocity');
     holds(mx, { kind: 'passport', issuer: 'MX' });
     expect(mayEnter(mx.player, 'US', mx.now).missing.join(' ')).toMatch(/visa/i);
+    // Permission to work in the US, held in force, is what its holder travels back on: SLATE's stand-in for the consulate's stamp.
+    holds(mx, { kind: 'permit', issuer: 'US', destination: 'US' });
+    expect(mayEnter(mx.player, 'US', mx.now).ok).toBe(true);
     const ie = life('entry-ie', 'ie-lei-dublin');
     holds(ie, { kind: 'passport', issuer: 'IE' });
     expect(mayEnter(ie.player, 'GB', ie.now).ok).toBe(true);

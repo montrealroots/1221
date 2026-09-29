@@ -33,7 +33,7 @@ import { LICENSES, type LicenseRule } from '../content/licenses';
 import { payFromBank } from './household';
 import { PASSPORTS, type PassportRule } from '../content/passports';
 
-export type DocumentKind = 'passport' | 'authorization' | 'visa' | 'license' | 'idp';
+export type DocumentKind = 'passport' | 'authorization' | 'visa' | 'license' | 'idp' | 'permit';
 
 export interface PersonDocument {
   id: string;
@@ -55,6 +55,9 @@ export interface PersonDocument {
   /** A license's stage on a graduated path, and whether its holder may drive with nobody beside them; a license without them is full. */
   stage?: import('../content/licensepaths').LicenseStage;
   alone?: boolean;
+  /** A permission to work tied to one job, and days without work counted against it (`systems/permission.ts`). */
+  bookingId?: string;
+  idleDays?: number;
 }
 
 /** A person's papers, kept on them. */
@@ -157,13 +160,15 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
   }
   if (rule.status === 'authorization' && rule.authorization) {
     const auth = dest.authorizations[rule.authorization]!;
-    const visaHeld = documentsOf(person).some((d) => d.kind === 'visa' && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
+    // A visa for the country answers it, and so does permission to work there held in force: SLATE takes an approved
+    // O-1 or OPT as the visa its holder travels on, and doesn't model the consulate's stamp ($205, DS-160).
+    const visaHeld = documentsOf(person).some((d) => (d.kind === 'visa' || (d.kind === 'permit' && d.bookingId === undefined)) && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
     if (auth.live && !visaHeld && !authorizationFor(person, destination, at, leaving)) {
       missing.push(`${auth.name}, which ${country} asks of citizens of ${theirs}: ${auth.fee > 0 ? formatFee(auth.fee, auth.currency) : 'no fee'}, applied for online, good for ${auth.validityYears} ${auth.validityYears === 1 ? 'year' : 'years'} or until the passport runs out.`);
     }
   }
   if (rule.status === 'visa') {
-    const visa = documentsOf(person).find((d) => d.kind === 'visa' && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
+    const visa = documentsOf(person).find((d) => (d.kind === 'visa' || (d.kind === 'permit' && d.bookingId === undefined)) && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
     if (!visa) missing.push(`A visa for ${country} (${rule.visa ?? 'a visitor visa'}), applied for at its consulate. SLATE doesn’t take visa applications yet.`);
   }
   const stay = rule.status === 'citizen' ? 'As a citizen, as long as you like.'
@@ -204,6 +209,8 @@ export function residenceRefusal(person: Person, cityId: string, at: Instant): s
   const status = own ? ENTRY[to]?.citizens[own]?.status : undefined;
   if (status === 'citizen' || status === 'free-movement') return undefined;
   if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === to && inForce(d, at))) return undefined;
+  // Permission to work there is permission to live there while it lasts, and an OPT filed in time keeps a student while it's decided.
+  if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === to && d.bookingId === undefined && (inForce(d, at) || d.status === 'pending'))) return undefined;
   const there = theCountry(COUNTRIES.get(to.toLowerCase())?.name ?? to);
   return `Living in ${there} needs permission to live there, which you don’t hold, and SLATE doesn’t grant it yet.`;
 }
@@ -415,7 +422,8 @@ export function startingDocuments(sim: Simulation, person: Person): void {
     const own = passport(years);
     docs.push(own);
     if (person.school) {
-      const ends = Date.UTC(classOfYear(person), 4, 31) + STARTING.graceDays * MS_DAY;
+      // At noon UTC, so the day it names is the same day in any US zone.
+      const ends = Date.UTC(classOfYear(person), 4, 31, 12) + STARTING.graceDays * MS_DAY;
       const id = sim.nextId('document');
       docs.push({ id, kind: 'visa', issuer: 'US', name: 'F-1 Student Visa', number: numberFor('F1', id), status: 'valid', issuedAt: sim.now - 30 * MS_DAY, expiresAt: ends, destination: 'US', passportId: own.id });
     }

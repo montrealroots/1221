@@ -13,7 +13,7 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
-import { COUNTRIES } from '@/engine/content/geography';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
 import { LICENSES } from '@/engine/content/licenses';
 import { passRate } from '@/engine/content/licensepaths';
@@ -23,8 +23,11 @@ import {
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument,
 } from '@/engine/systems/documents';
 import { applies, attemptFee, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
+import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal } from '@/engine/systems/permission';
+import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
+import { WORK_RULES } from '@/engine/content/workrules';
 
-const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit' };
+const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work' };
 const STATUS_WORD: Record<PersonDocument['status'], string> = { pending: 'Being Decided', valid: 'In Force', lost: 'Reported Lost', cancelled: 'Canceled' };
 const countryName = (iso: string) => COUNTRIES.get(iso.toLowerCase())?.name ?? iso;
 
@@ -220,6 +223,86 @@ export function DrivingPane() {
         </div>
       </Panel>
       <LicensePath />
+    </div>
+  );
+}
+
+/** Permission to work where they aren't a citizen: what they hold, applying for OPT or an O-1, and a Canadian permit for a production. */
+export function WorkPane() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const usd = (n: number) => money(inSaveMoney(sim, Math.round(n * 100), 'USD'));
+  const here = workRefusal(person, person.currentLocationId, sim.now, sim.now);
+  const end = programEnd(person);
+  const optNo = optRefusal(sim, person);
+  const o1No = o1Refusal(sim, person);
+  const evidence = o1Evidence(sim, person);
+  const canada = careerOf(person).bookings.filter((b) => (b.status === 'offered' || b.status === 'accepted') && b.location && b.location.startsWith('ca-'));
+  const opt = WORK_RULES.opt;
+  const o1 = WORK_RULES.o1;
+  const apply = (kind: string, payload: Record<string, unknown>, what: string) => {
+    const a = run<{ readyAt: number; fee: number }>(kind, payload);
+    if (a.ok) toast(`${what}, for ${money(a.value!.fee)}. Decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
+  };
+  return (
+    <div className="col gap-5">
+      <Panel title="Permission To Work" subtitle="Apart from permission to enter">
+        <div className="col gap-3">
+          <div className="grid grid-3">
+            <Stat label="Here" value={here ? 'Not Permitted' : 'You May Work'} note={here ?? 'As a citizen, or on what you hold'} />
+            <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? 'OPT is filed from 90 days before to 60 after' : 'For a student on an F-1'} />
+            <Stat label="O-1 Evidence" value={`${evidence.filter((e) => e.met).length} Of ${evidence.length}`} note={`USCIS asks ${o1.criteriaNeeded} kinds`} />
+          </div>
+          <DocumentList kinds={['permit', 'visa']} />
+        </div>
+      </Panel>
+
+      <Panel title="OPT" subtitle={`${opt.form}, after the degree`}>
+        <div className="col gap-3">
+          <p className="small" style={{ margin: 0 }}>Twelve months to work in your field, from the later of the program’s end and the approval, with no more than {opt.unemploymentDays} days between jobs in all. {usd(opt.fee)}; premium processing adds {usd(opt.premiumFee)} and decides it in {opt.premiumBusinessDays} business days.</p>
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            <Gated feature="documents.apply_opt" className="btn btn-sm" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', {}, 'Applied for OPT')}>Apply For OPT</Gated>
+            <Gated feature="documents.apply_opt" className="btn btn-sm btn-ghost" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', { premium: true }, 'Applied for OPT, premium')}>Apply With Premium Processing</Gated>
+          </div>
+          <Fine>USCIS publishes no standard processing time; SLATE’s {opt.standardDays} days. Source: {opt.source}.</Fine>
+        </div>
+      </Panel>
+
+      <Panel title="O-1B" subtitle="Extraordinary achievement, petitioned by your agency">
+        <div className="col gap-3">
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Evidence</th><th scope="col">Shown</th></tr></thead>
+              <tbody>{evidence.map((e) => <tr key={e.key}><td>{e.label}</td><td>{e.met ? 'Yes' : 'Not Yet'}</td></tr>)}</tbody>
+            </table>
+          </div>
+          <p className="small" style={{ margin: 0 }}>{usd(o1.fee)} for the petition, {usd(o1.asylumFee)} beside it and {usd(o1.opinionFee)} for SAG-AFTRA’s opinion; premium processing adds {usd(o1.premiumFee)}. Approved, it runs {o1.years} years, and extends a year at a time. Denied, the fees aren’t returned.</p>
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            <Gated feature="documents.petition_o1" className="btn btn-sm" disabled={Boolean(o1No)} title={o1No} onClick={() => apply('documents.petition_o1', {}, 'The petition is in')}>Petition For An O-1</Gated>
+            <Gated feature="documents.petition_o1" className="btn btn-sm btn-ghost" disabled={Boolean(o1No)} title={o1No} onClick={() => apply('documents.petition_o1', { premium: true }, 'The petition is in, premium')}>Petition With Premium Processing</Gated>
+          </div>
+          <Fine>SLATE reads four of the regulation’s six kinds of evidence from the career; a record of commercial success and critics’ recognition aren’t kept per actor. The opinion’s fee is as reported, and the standard processing time SLATE’s {o1.standardDays} days. Source: {o1.source}.</Fine>
+        </div>
+      </Panel>
+
+      {canada.length > 0 && (
+        <Panel title="Working In Canada" subtitle="A work permit for the production (C14)">
+          <div className="col gap-3">
+            {canada.map((b) => {
+              const no = caPermitRefusal(person, b);
+              return (
+                <div key={b.id} className="row gap-2" style={{ justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <span className="small">{roleById(b.roleId).label}, in {CITIES.get(workCityOf(b))?.name ?? 'Canada'}, from {formatDate(b.starts, sim.zone)}{no ? `: ${no}` : ''}</span>
+                  <Gated feature="documents.apply_work_permit" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => apply('documents.apply_work_permit', { bookingId: b.id }, 'Applied for the work permit')}>Apply For A Work Permit</Gated>
+                </div>
+              );
+            })}
+            <Fine>CAD {WORK_RULES.caC14.fee} and CAD {WORK_RULES.caC14.biometricsFee} for biometrics; IRCC’s time varies by country, SLATE’s {WORK_RULES.caC14.standardDays} days. Source: {WORK_RULES.caC14.source}.</Fine>
+          </div>
+        </Panel>
+      )}
     </div>
   );
 }

@@ -24,21 +24,22 @@ import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
 import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { working } from '@/engine/systems/career';
-import { DrivingPane, PassportPane } from '@/ui/papers/Documents';
+import { DrivingPane, PassportPane, WorkPane } from '@/ui/papers/Documents';
 
-type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'driving';
+type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
 
 const PAPERS_TABS: readonly { id: PapersTab; label: string }[] = [
   { id: 'returns', label: 'Tax Returns' },
   { id: 'health', label: 'Health Cover' },
   { id: 'benefits', label: 'Unemployment' },
   { id: 'passport', label: 'Passport And Travel' },
+  { id: 'work', label: 'Permission To Work' },
   { id: 'driving', label: 'Driving' },
 ];
 
 export function PapersWorkspace() {
   const [tab, setTab] = useState<PapersTab>('returns');
-  const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane />, passport: <PassportPane />, driving: <DrivingPane /> };
+  const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane />, passport: <PassportPane />, work: <WorkPane />, driving: <DrivingPane /> };
   return (
     <>
       <div className="page-head">

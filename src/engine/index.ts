@@ -58,6 +58,7 @@ import { registerUnemployment } from './systems/unemployment';
 import { armCollection, registerTaxReturn } from './systems/taxreturn';
 import { registerDocuments, startingDocuments } from './systems/documents';
 import { registerLicensing } from './systems/licensing';
+import { registerPermission } from './systems/permission';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -103,6 +104,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerLending(sim);
   registerDocuments(sim);
   registerLicensing(sim);
+  registerPermission(sim);
 }
 
 /** Recurring world processes every save needs running. */
