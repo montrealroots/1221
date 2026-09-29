@@ -1,0 +1,120 @@
+/**
+ * SLATE — land (docs/WORLD.md, stage 4), from 2026-09-29: vacant parcels
+ * where one lives, their price, the taxes on buying, holding and selling
+ * them, and the rules for splitting and combining them. Researched and kept
+ * with every source in `docs/research/world/research-land.json`.
+ *
+ * **Prices.** A town lot is priced at the published value of land an acre
+ * there, times its acres: the FHFA's average land value an acre under
+ * single-family homes by county (2022, the series' latest; SLATE holds it
+ * there), and for London the government's value of land with residential
+ * planning permission by borough (April 2019, its latest edition; held).
+ * Acreage is priced at the latest farmland survey: USDA's 2026 farm real
+ * estate by state, FCC's 2025 cultivated land by region, Knight Frank's
+ * England index for Q2 2026 and SCSI and Teagasc's Leinster good land for
+ * 2025 (both read secondhand). Mexico City's official land values are
+ * published only as scanned images, so SLATE sells no land there, and says
+ * so.
+ *
+ * **Lots.** A town lot is the zoning's minimum: New York City's R2, 2,850
+ * sq ft since 5 December 2024; Los Angeles's R1, 5,000; New Haven's RS-2,
+ * 4,000 since 4 October 2021. London's plot is SLATE's reading of a
+ * terrace's, 200 m², there being no minimum. Acreage comes in the sizes
+ * SLATE offers.
+ */
+
+export type LandPlace = 'nyc' | 'ny-state' | 'new-haven' | 'ct-state' | 'los-angeles' | 'ca-state' | 'london' | 'england' | 'leinster' | 'ontario' | 'bc';
+
+export interface LandMarket {
+  /** Where it's offered from: the town one lives in. */
+  cityId: string;
+  place: LandPlace;
+  label: string;
+  currency: string;
+  /** The value an acre, whole units, and the year it's for. */
+  perAcre: number;
+  year: string;
+  basis: string;
+  /** A town lot's area in acres, or acreage's sizes. */
+  sizes: readonly number[];
+  kind: 'lot' | 'acreage';
+  /** A lot's zoning, and the least a lot may be to build on, in acres. */
+  zoning?: { name: string; minAcres: number; builds: string };
+  /** The value's yearly change, from the same source where it publishes one; held where it doesn't. */
+  yearlyChange: number;
+}
+
+const SQFT_PER_ACRE = 43_560;
+const M2_PER_ACRE = 4_046.8564224;
+const HA_PER_ACRE = 0.40468564224;
+
+export const LAND_MARKETS: readonly LandMarket[] = [
+  // New York City: Brooklyn, Queens and Staten Island (the FHFA has no Manhattan or Bronx figure).
+  { cityId: 'us-ny-newyork', place: 'nyc', label: 'A Lot In Brooklyn', currency: 'USD', perAcre: 15_217_700, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Kings County, 2022', sizes: [2_850 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R2', minAcres: 2_850 / SQFT_PER_ACRE, builds: 'a one- or two-family house, to a floor area of 0.75 of the lot' }, yearlyChange: 0 },
+  { cityId: 'us-ny-newyork', place: 'nyc', label: 'A Lot In Queens', currency: 'USD', perAcre: 5_922_100, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Queens County, 2022', sizes: [2_850 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R2', minAcres: 2_850 / SQFT_PER_ACRE, builds: 'a one- or two-family house, to a floor area of 0.75 of the lot' }, yearlyChange: 0 },
+  { cityId: 'us-ny-newyork', place: 'nyc', label: 'A Lot On Staten Island', currency: 'USD', perAcre: 3_561_000, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Richmond County, 2022', sizes: [2_850 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R2', minAcres: 2_850 / SQFT_PER_ACRE, builds: 'a one- or two-family house, to a floor area of 0.75 of the lot' }, yearlyChange: 0 },
+  { cityId: 'us-ny-newyork', place: 'ny-state', label: 'Farmland Upstate', currency: 'USD', perAcre: 4_500, year: '2026', basis: 'USDA’s farm real estate value, New York, 1 January 2026', sizes: [10, 40, 100], kind: 'acreage', yearlyChange: 0.047 },
+  { cityId: 'us-ct-newhaven', place: 'new-haven', label: 'A Lot In New Haven', currency: 'USD', perAcre: 269_500, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, New Haven County, 2022', sizes: [4_000 / SQFT_PER_ACRE, 0.25], kind: 'lot', zoning: { name: 'RS-2', minAcres: 4_000 / SQFT_PER_ACRE, builds: 'a single-family house, and an owner’s accessory unit' }, yearlyChange: 0 },
+  { cityId: 'us-ct-newhaven', place: 'ct-state', label: 'Farmland In Connecticut', currency: 'USD', perAcre: 14_600, year: '2026', basis: 'USDA’s farm real estate value, Connecticut, 1 January 2026', sizes: [5, 20, 50], kind: 'acreage', yearlyChange: 0.014 },
+  { cityId: 'us-ca-losangeles', place: 'los-angeles', label: 'A Lot In Los Angeles', currency: 'USD', perAcre: 4_134_000, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Los Angeles County, 2022', sizes: [5_000 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R1', minAcres: 5_000 / SQFT_PER_ACRE, builds: 'a single-family house, and an accessory unit under state law' }, yearlyChange: 0 },
+  { cityId: 'us-ca-losangeles', place: 'ca-state', label: 'Farmland In California', currency: 'USD', perAcre: 14_100, year: '2026', basis: 'USDA’s farm real estate value, California, 1 January 2026', sizes: [10, 40, 160], kind: 'acreage', yearlyChange: 0.029 },
+  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Hackney, With Planning Permission', currency: 'GBP', perAcre: Math.round(39_690_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Hackney, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'planning permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
+  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Croydon, With Planning Permission', currency: 'GBP', perAcre: Math.round(12_315_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Croydon, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'planning permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
+  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Havering, With Planning Permission', currency: 'GBP', perAcre: Math.round(7_610_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Havering, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'planning permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
+  { cityId: 'uk-eng-london', place: 'england', label: 'Farmland In England', currency: 'GBP', perAcre: 8_497, year: 'Q2 2026', basis: 'Knight Frank’s English farmland index, Q2 2026, read secondhand', sizes: [10, 50, 150], kind: 'acreage', yearlyChange: -0.041 },
+  { cityId: 'ie-lei-dublin', place: 'leinster', label: 'Farmland In Leinster', currency: 'EUR', perAcre: 16_603, year: '2025', basis: 'SCSI and Teagasc’s good land in Leinster, 2025, read secondhand; no Dublin figure is published', sizes: [10, 30, 80], kind: 'acreage', yearlyChange: 0.07 },
+  { cityId: 'ca-on-toronto', place: 'ontario', label: 'Farmland In Central East Ontario', currency: 'CAD', perAcre: 13_100, year: '2025', basis: 'FCC’s cultivated land, Central East Ontario, 2025', sizes: [25, 100, 200], kind: 'acreage', yearlyChange: 0 },
+  { cityId: 'ca-bc-vancouver', place: 'bc', label: 'Farmland On The South Coast', currency: 'CAD', perAcre: 104_600, year: '2025', basis: 'FCC’s cultivated land, British Columbia’s South Coast, 2025', sizes: [5, 20, 40], kind: 'acreage', yearlyChange: -0.074 },
+];
+
+/** Land in acres as it's said: square feet for a small US lot, square meters for a plot, acres for acreage. */
+export const areaWords = (acres: number, place: LandPlace) => (place === 'london' ? `${Math.round(acres * M2_PER_ACRE).toLocaleString('en-US')} m²` : acres < 1 ? `${Math.round(acres * SQFT_PER_ACRE).toLocaleString('en-US')} sq ft` : `${acres} acres`);
+
+/** A transfer tax: bands of the price, marginal or on the whole, and who customarily pays it. */
+export interface TransferTax { label: string; payer: 'buyer' | 'seller'; bands: readonly (readonly [number, number])[]; whole?: boolean; basis: string }
+
+/** The taxes on a sale of vacant land, by place. */
+export const LAND_TRANSFER: Readonly<Record<LandPlace, readonly TransferTax[]>> = {
+  nyc: [
+    { label: 'New York State Transfer Tax', payer: 'seller', bands: [[Infinity, 0.004]], basis: 'Tax Department, 0.4%' },
+    { label: 'New York City Real Property Transfer Tax', payer: 'seller', bands: [[500_000, 0.01425], [Infinity, 0.02625]], whole: true, basis: 'Department of Finance, 1.425% to $500,000 and 2.625% above, on land' },
+  ],
+  'ny-state': [{ label: 'New York State Transfer Tax', payer: 'seller', bands: [[Infinity, 0.004]], basis: 'Tax Department, 0.4%' }],
+  'new-haven': [{ label: 'Connecticut And New Haven Conveyance Tax', payer: 'seller', bands: [[Infinity, 0.0125]], basis: 'the state’s 0.75% on unimproved land and New Haven’s 0.5% (OLR, 2020)' }],
+  'ct-state': [{ label: 'Connecticut Conveyance Tax', payer: 'seller', bands: [[Infinity, 0.01]], basis: 'the state’s 0.75% on unimproved land and a town’s base 0.25% (OLR, 2020)' }],
+  'los-angeles': [
+    { label: 'Los Angeles County Documentary Transfer Tax', payer: 'seller', bands: [[Infinity, 0.0011]], basis: 'the Registrar-Recorder, $1.10 per $1,000' },
+    { label: 'City Of Los Angeles Transfer Tax', payer: 'seller', bands: [[5_400_000, 0.0045], [10_900_000, 0.04], [Infinity, 0.055]], whole: true, basis: 'the City’s 0.45%, and Measure ULA’s 4% above $5.4 million and 5.5% from $10.9 million (1 July 2026)' },
+  ],
+  'ca-state': [{ label: 'County Documentary Transfer Tax', payer: 'seller', bands: [[Infinity, 0.0011]], basis: 'California’s county rate, $1.10 per $1,000' }],
+  london: [{ label: 'Stamp Duty Land Tax', payer: 'buyer', bands: [[150_000, 0], [250_000, 0.02], [Infinity, 0.05]], basis: 'HMRC’s non-residential rates, which land takes' }],
+  england: [{ label: 'Stamp Duty Land Tax', payer: 'buyer', bands: [[150_000, 0], [250_000, 0.02], [Infinity, 0.05]], basis: 'HMRC’s non-residential rates, which land takes' }],
+  leinster: [{ label: 'Stamp Duty', payer: 'buyer', bands: [[Infinity, 0.075]], basis: 'Revenue’s 7.5% on non-residential property, land included, since 9 October 2019' }],
+  ontario: [{ label: 'Ontario Land Transfer Tax', payer: 'buyer', bands: [[55_000, 0.005], [250_000, 0.01], [400_000, 0.015], [Infinity, 0.02]], basis: 'the Ministry of Finance’s rates for land without a house' }],
+  bc: [{ label: 'Property Transfer Tax', payer: 'buyer', bands: [[200_000, 0.01], [2_000_000, 0.02], [Infinity, 0.03]], basis: 'the Province’s 1%, 2% and 3%' }],
+};
+
+/**
+ * A year's tax on holding vacant land, as a share of its value, where it's
+ * published or follows from published rates: New York City's Class 1 rate,
+ * 19.843%, on its 6% assessment ratio, about 1.19% (the arithmetic, before
+ * the assessment caps); New Haven's 39.4 mills on 70% of value, about 2.76%
+ * (the mill rate read secondhand); Los Angeles's Proposition 13 base, 1%,
+ * on the price paid grown at most 2% a year, the constitution's cap, which
+ * SLATE takes as the rise every year (voter-approved levies on top not kept). Farmland's, England's (none on
+ * vacant land) and the rest: none kept, said so.
+ */
+export const LAND_TAX: Readonly<Record<LandPlace, { rate: number; basis: string; onPrice?: { cap: number } } | undefined>> = {
+  nyc: { rate: 0.19843 * 0.06, basis: 'New York City’s Class 1 rate, 19.843%, on the 6% assessment ratio' },
+  'new-haven': { rate: 0.0394 * 0.7, basis: 'New Haven’s 39.4 mills on 70% of value' },
+  'los-angeles': { rate: 0.01, basis: 'Proposition 13’s 1% on the price paid, grown at most 2% a year', onPrice: { cap: 0.02 } },
+  'ny-state': undefined, 'ct-state': undefined, 'ca-state': undefined, london: undefined, england: undefined, leinster: undefined, ontario: undefined, bc: undefined,
+};
+
+/**
+ * How long a parcel takes to sell: a broker's 125 days for its 1,300 US land
+ * sales of 2025, read secondhand and the only figure published; SLATE takes
+ * it everywhere.
+ */
+export const DAYS_TO_SELL = 125;
+export const LAND_SOURCE = 'docs/research/world/research-land.json: FHFA WP 19-01 (2024); USDA NASS Land Values 2026; FCC 2025; VOA land values 2019; Knight Frank Q2 2026; SCSI and Teagasc 2026; NYC DOF; NY DTF; CT OLR 2020; LA Registrar-Recorder; HMRC; Revenue; Ontario and BC finance ministries; National Land Realty 2025';

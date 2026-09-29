@@ -1,0 +1,471 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "purpose": "Real published figures for SLATE's land system: buying, holding, selling, combining and splitting vacant lots and acreage.",
+    "sourceTypes": "primary = government, regulator, official statistics, or the authority's own page/document; secondary = press, trade body, broker, law firm or compilation site.",
+    "fieldConvention": "Every figure carries value, unit, source, date, sourceType. Where a figure was not confirmed from a document fetched in this session, value is null and the gap is listed in 'uncertain'. 'confirmedThisSession': false marks a rule stated from a statute or page that was cited but whose text was not re-read in this session.",
+    "currencyNote": "All amounts in the currency of the jurisdiction: USD (NY, CT, CA), GBP (England), EUR (Ireland), CAD (Ontario, BC), MXN (Mexico City).",
+    "correctionsToTheBrief": [
+      "Ireland's 7.5% stamp duty on non-residential property (including land) applies to instruments executed on or after 9 October 2019, not from 2024 (Revenue).",
+      "NYC R2 minimum lot is no longer 3,800 sq ft: since City of Yes (ZR 23-11, last amended 5 Dec 2024) it is 2,850 sq ft and 30 ft wide for a single- or two-family detached house in R2/R2A/R2X/R3/R4/R5.",
+      "New Haven RS-2 minimum lot area was cut to 4,000 sq ft by ordinance OR-2021-0014 (adopted 4 Oct 2021); older sources still quote 7,500 sq ft.",
+      "MHCLG/VOA 'Land value estimates for policy appraisal' has not been updated since the 2019 edition (published 18 Aug 2020, values at April 2019). There is no 2024-2026 edition.",
+      "The FHFA residential land price dataset (Davis, Larson, Oliner, Shui) ends at 2022 (Version 4.0, June 2024); there is no 2025/2026 county figure."
+    ]
+  },
+
+  "prices": {
+    "US": {
+      "USDA_NASS_LandValues2026": {
+        "source": "https://www.nass.usda.gov/Publications/Todays_Reports/reports/land0726.pdf",
+        "date": "Land Values 2026 Summary, released 31 July 2026; values as of 1 January 2026",
+        "sourceType": "primary",
+        "note": "Farm real estate = all land and buildings on farms. Connecticut is reported individually. Values read from the PDF tables (column order verified against the national headline figures).",
+        "unitedStates": {
+          "farmRealEstate": { "value": 4500, "unit": "USD/acre", "change": "+3.4% vs 2025" },
+          "cropland": { "value": 6020, "unit": "USD/acre", "change": "+3.3%" },
+          "pasture": { "value": 2000, "unit": "USD/acre", "change": "+4.2%" }
+        },
+        "newYork": {
+          "farmRealEstate": { "value": 4500, "unit": "USD/acre", "change": "+4.7% vs 2025 (2025: 4,300)" },
+          "cropland": { "value": 4150, "unit": "USD/acre", "change": "+3.5% (2025: 4,010)" }
+        },
+        "connecticut": {
+          "farmRealEstate": { "value": 14600, "unit": "USD/acre", "change": "+1.4% (2025: 14,400)" },
+          "cropland": { "value": 23200, "unit": "USD/acre", "change": "+2.2% (2025: 22,700)" }
+        },
+        "california": {
+          "farmRealEstate": { "value": 14100, "unit": "USD/acre", "change": "+2.9% (2025: 13,700)" },
+          "croplandAll": { "value": 18430, "unit": "USD/acre", "change": "+2.7%" },
+          "croplandIrrigated": { "value": 21500, "unit": "USD/acre", "change": "+2.9%" },
+          "croplandNonIrrigated": { "value": 8150, "unit": "USD/acre", "change": "+1.9%" },
+          "pasture": { "value": 4250, "unit": "USD/acre", "change": "+4.2%" }
+        }
+      },
+      "FHFA_ResidentialLandPrices": {
+        "source": "https://www.fhfa.gov/document/land-prices_2024_20_june.xlsx (FHFA Working Paper 19-01, Davis, Larson, Oliner & Shui; page https://www.fhfa.gov/research/papers/wp1901)",
+        "date": "Year 2022 estimates; dataset Version 4.0, June 2024 (latest)",
+        "sourceType": "primary",
+        "method": "Land under single-family homes, from GSE appraisals interpolated to all SF parcels. 'Standardized' = value of a quarter-acre lot; 'as-is per acre' = average actual land value per acre (small urban lots produce very high per-acre figures).",
+        "counties2022": {
+          "Kings County NY (Brooklyn)": { "quarterAcreLotStandardized": 2329700, "perAcreAsIs": 15217700, "landShareOfPropertyValue": 0.473, "unit": "USD" },
+          "Queens County NY": { "quarterAcreLotStandardized": 710400, "perAcreAsIs": 5922100, "landShareOfPropertyValue": 0.475, "unit": "USD" },
+          "Richmond County NY (Staten Island)": { "quarterAcreLotStandardized": 547300, "perAcreAsIs": 3561000, "landShareOfPropertyValue": 0.447, "unit": "USD" },
+          "Westchester County NY": { "quarterAcreLotStandardized": 356500, "perAcreAsIs": 1006000, "landShareOfPropertyValue": 0.401, "unit": "USD" },
+          "Dutchess County NY": { "quarterAcreLotStandardized": 82700, "perAcreAsIs": 146600, "landShareOfPropertyValue": 0.22, "unit": "USD" },
+          "Albany County NY": { "quarterAcreLotStandardized": 53300, "perAcreAsIs": 170400, "landShareOfPropertyValue": 0.17, "unit": "USD" },
+          "Erie County NY (Buffalo)": { "quarterAcreLotStandardized": 46500, "perAcreAsIs": 162600, "landShareOfPropertyValue": 0.16, "unit": "USD" },
+          "Monroe County NY (Rochester)": { "quarterAcreLotStandardized": 36700, "perAcreAsIs": 117100, "landShareOfPropertyValue": 0.157, "unit": "USD" },
+          "Onondaga County NY (Syracuse)": { "quarterAcreLotStandardized": 32100, "perAcreAsIs": 100300, "landShareOfPropertyValue": 0.148, "unit": "USD" },
+          "New Haven County CT": { "quarterAcreLotStandardized": 114600, "perAcreAsIs": 269500, "landShareOfPropertyValue": 0.376, "unit": "USD" },
+          "Los Angeles County CA": { "quarterAcreLotStandardized": 918300, "perAcreAsIs": 4134000, "landShareOfPropertyValue": 0.667, "unit": "USD" }
+        },
+        "coverageNote": "New York County (Manhattan) and Bronx County are not in the county panel."
+      }
+    },
+    "England": {
+      "agricultural": {
+        "knightFrankEnglishFarmlandIndex": { "value": 8497, "unit": "GBP/acre", "period": "Q2 2026", "change": "-1.5% q/q, -4.1% y/y", "scope": "bare agricultural land, England and Wales (as reported)", "source": "https://www.farminguk.com/news/farmland-values-slide-4-1-as-buyers-hold-back_68882.html", "date": "article 27 July 2026", "sourceType": "secondary", "note": "Knight Frank is a private agent; the figure is reported by FarmingUK. Knight Frank's own PDF was not fetched." },
+        "savillsGBAverage": { "value": 8200, "unit": "GBP/acre", "period": "H1 2025 (end of 2024: 8,300)", "primeArable": { "value": 9900, "unit": "GBP/acre" }, "source": "https://www.savills.co.uk/research_articles/229130/380170-0", "date": "2025", "sourceType": "secondary", "note": "Savills page returned 403 in this session; figures from search extracts of Savills research. No Savills 2026 figure was found." },
+        "voaAgriculturalLandByLEP": { "range": { "min": 16000, "max": 26000 }, "unit": "GBP/hectare", "examples": { "London LEP": 25000, "Cornwall and Isles of Scilly": 21000, "North East": 16000, "Hertfordshire": 26000, "Greater Lincolnshire": 20000 }, "source": "https://assets.publishing.service.gov.uk/media/5f770df5d3bf7f7c30a588c6/VOA_land_values_2019.xlsx", "date": "April 2019 values; published 18 Aug 2020", "sourceType": "primary" }
+      },
+      "residentialDevelopmentLand": {
+        "source": "https://assets.publishing.service.gov.uk/media/5f770df5d3bf7f7c30a588c6/VOA_land_values_2019.xlsx (collection: https://www.gov.uk/government/publications/land-value-estimates-for-policy-appraisal-2019)",
+        "date": "April 2019 values; published 18 Aug 2020; latest edition",
+        "sourceType": "primary",
+        "unit": "GBP/hectare, land with residential planning permission, 'typical' site",
+        "caveat": "VOA/MHCLG state these are for policy appraisal only, not market values, and are highly sensitive to plot characteristics. Non-London figures assume a 35-unit, 3,150 sq m scheme.",
+        "londonBoroughs": {
+          "Kensington & Chelsea": 161475000, "Westminster": 135715000, "City of London": 128050000, "Camden": 74020000, "Hammersmith & Fulham": 56455000, "Islington": 53025000, "Wandsworth": 44575000, "Tower Hamlets": 39885000, "Hackney": 39690000, "Southwark": 38670000, "Lambeth": 36295000, "Haringey": 24310000, "Brent": 24080000, "Ealing": 21310000, "Kingston upon Thames": 21235000, "Greenwich": 20400000, "Hounslow": 16365000, "Harrow": 14540000, "Barnet": 14520000, "Bromley": 12860000, "Croydon": 12315000, "Hillingdon": 11650000, "Enfield": 11220000, "Barking and Dagenham": 8110000, "Bexley": 7640000, "Havering": 7610000
+        },
+        "restOfEnglandExamples": {
+          "South Oxfordshire": 5630000, "Oxford": 5090000, "West Oxfordshire": 3070000, "Harborough": 2650000, "Blaby": 2150000, "Manchester": 2130000, "Cornwall": 1995000, "Richmondshire": 1680000, "Eden": 1430000, "Leicester": 1460000, "Derby": 1000000, "Ashfield": 400000, "Bolsover": 370000, "Erewash": 370000
+        }
+      }
+    },
+    "Ireland": {
+      "agriculturalSCSITeagasc": {
+        "source": "https://scsi.ie/wp-content/uploads/2026/04/SCSI-Teagasc-Annual-Agricultural-Land-Market-Review-Outlook-2026.pdf",
+        "date": "published April 2026; values for 2025",
+        "sourceType": "secondary",
+        "sourceTypeNote": "SCSI is the professional body; Teagasc is the state agriculture agency. Joint survey of agents' opinions, not a transaction register.",
+        "nationalGoodQuality": { "value": 14126, "unit": "EUR/acre", "change": "+7% vs 2024" },
+        "nationalPoorQuality": { "value": 6963, "unit": "EUR/acre", "change": "+5%" },
+        "byPlotSize2025": { "upTo50acres": { "poor": 7151, "good": 14400 }, "51to100acres": { "poor": 6923, "good": 13871 }, "over100acres": { "poor": 6814, "good": 14107 }, "unit": "EUR/acre" },
+        "provincial2025": { "Leinster": { "poor": 8344, "good": 16603 }, "Munster": { "poor": 6868, "good": 15404 }, "ConnachtUlster": { "poor": 5677, "good": 10372 }, "unit": "EUR/acre" },
+        "countyExtremes": { "highestGood": { "county": "Wexford", "value": 19226 }, "secondGood": { "county": "Kildare", "value": 19200 }, "lowestPoor": { "county": "Leitrim", "value": 3772 }, "unit": "EUR/acre" },
+        "forecast2026": { "value": 4, "unit": "% expected rise in land values in 2026" },
+        "dublinNote": "The survey's Leinster county table excludes Dublin; no Dublin agricultural figure is published."
+      },
+      "residentialLand": { "value": null, "note": "No official Irish per-acre or per-hectare residential development land value series found. See uncertain." }
+    },
+    "Canada": {
+      "FCC_FarmlandValues2025": {
+        "source": "https://fian.ca/wp-content/uploads/2026/04/2025-FCC-Farmland-Values-Report.pdf (report page: https://www.fcc-fac.ca/en/knowledge/economics/farmland-values-report)",
+        "date": "covers 1 Jan–31 Dec 2025; published 24 March 2026",
+        "sourceType": "primary",
+        "sourceTypeNote": "Farm Credit Canada is a federal Crown corporation. Values are FCC reference values for cultivated land; range = 90% of sales (top and bottom 5% excluded). The PDF was obtained from a mirror (fian.ca); FCC's own page shows the same provincial % changes.",
+        "canadaAverageChange": { "value": 9.3, "unit": "% change 2025" },
+        "ontario": {
+          "provincialChange": { "value": 2.2, "unit": "% change 2025" },
+          "regionsCultivated": {
+            "Northern": { "value": 5400, "range": [1700, 12100], "change": "+10.6%" },
+            "Eastern": { "value": 13500, "range": [6200, 20500], "change": "+3.9%" },
+            "Central East": { "value": 13100, "range": [7900, 22900], "change": "0.0%" },
+            "Mid Western": { "value": 20300, "range": [11000, 30500], "change": "+5.9%" },
+            "South East": { "value": 21900, "range": [14400, 35000], "change": "+1.8%" },
+            "Southern": { "value": 23400, "range": [15000, 34700], "change": "-1.0%" },
+            "Central West": { "value": 33200, "range": [24300, 50000], "change": "+4.7%" },
+            "South West": { "value": 33700, "range": [18900, 46300], "change": "0.0%" },
+            "unit": "CAD/acre"
+          }
+        },
+        "britishColumbia": {
+          "provincialChangeCultivated": { "value": -1.7, "unit": "% change 2025" },
+          "regionsCultivated": {
+            "Peace-Northern": { "value": 2400, "range": [1000, 3400], "change": "0.0%" },
+            "Cariboo-Chilcotin": { "value": 4400, "range": [2000, 7000], "change": "0.0%" },
+            "Kootenay": { "value": 17000, "range": [16500, 24600], "change": "-21.1%" },
+            "Thompson-Nicola (irrigated)": { "value": 21000, "range": [12200, 40000], "change": "0.0%" },
+            "Okanagan": { "value": 40500, "range": [25000, 100000], "change": "0.0%" },
+            "Vancouver Island": { "value": 65600, "range": [40400, 137500], "change": "+5.3%" },
+            "South Coast": { "value": 104600, "range": [68900, 189000], "change": "-7.4%" },
+            "Thompson-Nicola (dryland)": { "value": null, "note": "N/A in report" },
+            "unit": "CAD/acre"
+          },
+          "pasture": {
+            "Peace-Northern": { "value": 2100, "range": [800, 4200], "change": "+18.4%" },
+            "Cariboo-Chilcotin": { "value": 3300, "range": [1300, 6400], "change": "-6.7%" },
+            "Thompson-Nicola": { "value": 6700, "range": [2300, 7500], "change": "0.0%" },
+            "unit": "CAD/acre"
+          }
+        }
+      }
+    },
+    "MexicoCity": {
+      "cadastralUnitLandValues": {
+        "value": null,
+        "unit": "MXN/m2",
+        "source": "https://transparencia.finanzas.cdmx.gob.mx/repositorio/public/upload/repositorio/Tesoreria/70/XLVIII/a/Criterio_5/valores_unitarios_cfcdmx_2026_parte1.pdf",
+        "date": "2026 tables (Código Fiscal CDMX)",
+        "sourceType": "primary",
+        "note": "The official 2026 'Valores unitarios de suelo y de la construcción' PDF exists at this URL but is a scanned image; no text could be extracted, so no per-m2 figure is recorded. Values are set per colonia catastral of three types: área (A), corredor (C), enclave (E). Per-parcel cadastral values are also in the SIGCDMX open data (https://sig.cdmx.gob.mx/datos/descarga)."
+      }
+    }
+  },
+
+  "buyingCosts": {
+    "NewYork": {
+      "stateTransferTax": { "value": 0.4, "unit": "% of consideration ($2 per $500 or part)", "appliesTo": "all conveyances over $500", "source": "https://www.tax.ny.gov/bus/transfer/rptidx.htm", "date": "current page, fetched 2026-09-29", "sourceType": "primary", "payer": "customarily the seller (grantor)" },
+      "stateAdditionalBaseTaxNYC_nonResidential": { "value": 0.25, "unit": "% of consideration ($1.25 per $500)", "appliesTo": "NYC conveyances of property other than residential real property where consideration is $2 million or more; so non-residential land in NYC at $2M+ pays 0.65% state tax", "source": "https://www.tax.ny.gov/bus/transfer/rptidx.htm", "sourceType": "primary" },
+      "mansionTax": { "value": 1.0, "unit": "% of price", "appliesTo": "residential real property (1-3 family house, co-op, condo) at $1M or more; 'residential real property' is defined as premises that is or may be used as a personal residence", "source": "https://www.tax.ny.gov/bus/transfer/rptidx.htm", "sourceType": "primary", "landNote": "Whether a vacant lot counts: the definition turns on use as a residence. The Tax Department page does not say vacant land is excluded. See uncertain." },
+      "supplementalNYCResidential": { "value": "0.25% to 2.9% incremental", "appliesTo": "NYC residential at $2M or more", "source": "https://www.tax.ny.gov/bus/transfer/rptidx.htm", "sourceType": "primary" },
+      "nycRPTT": {
+        "residential": { "upTo500k": 1.0, "over500k": 1.425, "unit": "% of price" },
+        "allOtherIncludingVacantLand": { "upTo500k": 1.425, "over500k": 2.625, "unit": "% of price" },
+        "threshold": "applies to transfers over $25,000; return must be filed within 30 days even if no tax is due",
+        "source": "https://www.nyc.gov/site/finance/property/property-real-property-transfer-tax-rptt.page",
+        "date": "current, fetched 2026-09-29",
+        "sourceType": "primary"
+      }
+    },
+    "Connecticut": {
+      "stateConveyanceTaxUnimprovedLand": { "value": 0.75, "unit": "% of full sales price", "source": "https://www.cga.ct.gov/2020/rpt/pdf/2020-R-0020.pdf", "date": "OLR report 9 July 2020 (CGS 12-494 as amended by PA 19-117)", "sourceType": "primary", "payer": "seller, before the deed is recorded" },
+      "stateNonresidentialOtherThanLand": { "value": 1.25, "unit": "%" },
+      "municipalBase": { "value": 0.25, "unit": "%" },
+      "municipalNewHaven": { "value": 0.5, "unit": "% (0.25 base + 0.25 optional)", "note": "New Haven is one of the 19 eligible municipalities and, per the 2020 OLR report, imposes the maximum additional 0.25%.", "sourceType": "primary", "source": "https://www.cga.ct.gov/2020/rpt/pdf/2020-R-0020.pdf" },
+      "totalVacantLandNewHaven": { "value": 1.25, "unit": "% of price (0.75 state + 0.50 municipal)", "derivation": "sum of the two published rates above" },
+      "controllingInterestTransferTax": { "value": 1.11, "unit": "%", "note": "when an entity owning CT real property is transferred instead of the deed" }
+    },
+    "California": {
+      "losAngelesCountyDTT": { "value": 1.10, "unit": "USD per $1,000 ($0.55 per $500)", "source": "https://www.lavote.gov/home/recorder/property-document-recording/documentary-transfer-taxes/general-info", "date": "current", "sourceType": "primary" },
+      "cityOfLosAngeles": {
+        "baseTax": { "value": 4.50, "unit": "USD per $1,000 ($2.25 per $500) = 0.45%" },
+        "measureULA_effective_2026_07_01": { "tier1": { "rate": 4.0, "unit": "% of total consideration", "range": "above $5,400,000 and below $10,900,000" }, "tier2": { "rate": 5.5, "unit": "%", "range": "$10,900,000 and above" } },
+        "measureULA_2025_07_01_to_2026_06_30": { "tier1Range": "above $5,300,000 and below $10,600,000", "tier2Range": "$10,600,000 and above" },
+        "appliesTo": "all real property in the City, including vacant land (ULA is not limited to residential)",
+        "source": "https://www.lavote.gov/home/recorder/property-document-recording/documentary-transfer-taxes/general-info",
+        "sourceType": "primary",
+        "note": "Thresholds are CPI-indexed each 1 July. ULA's application to all property types is from secondary summaries (the City FAQ returned 403)."
+      },
+      "reassessmentOnPurchase": { "value": "assessed value resets to purchase price; then grows by the lesser of CPI or 2% a year (Prop 13)", "sourceType": "secondary", "source": "https://auditor.lacounty.gov/wp-content/uploads/2025/05/2024-2025-Taxpayers-Guide.pdf", "confirmedThisSession": false }
+    },
+    "England": {
+      "sdltNonResidential": {
+        "bands": [ { "from": 0, "to": 150000, "rate": 0 }, { "from": 150000, "to": 250000, "rate": 2 }, { "from": 250000, "to": null, "rate": 5 } ],
+        "unit": "GBP bands, % marginal",
+        "appliesToLand": "Yes: agricultural land and 'any other land or property that is not part of a dwelling's garden or grounds' is non-residential. Land sold with a dwelling (e.g. cottage with fields) takes residential rates.",
+        "source": "https://www.gov.uk/stamp-duty-land-tax/nonresidential-and-mixed-rates",
+        "date": "current page, fetched 2026-09-29",
+        "sourceType": "primary"
+      },
+      "landRegistryFees": {
+        "officialCopyOfRegister": { "value": 7, "unit": "GBP per document (electronic), since 9 Dec 2024" },
+        "officialCopyOfTitlePlan": { "value": 3, "unit": "GBP" },
+        "officialSearchWithPriority": { "value": 3, "unit": "GBP per title (priority 30 working days)" },
+        "searchOfIndexMap": { "value": 4, "unit": "GBP" },
+        "scale1RegistrationTransferForValueElectronic": [ { "upTo": 80000, "fee": 20 }, { "upTo": 100000, "fee": 40 }, { "upTo": 200000, "fee": 100 }, { "upTo": 500000, "fee": 150 }, { "upTo": 1000000, "fee": 295 }, { "upTo": null, "fee": 500 } ],
+        "source": "https://www.propertypassport.uk/guides/land-registry-fees-2026",
+        "sourceType": "secondary",
+        "note": "Compiled by a third party from the HM Land Registry fee order; the gov.uk HMLR fees page was not fetched."
+      }
+    },
+    "Ireland": {
+      "stampDutyNonResidential": { "value": 7.5, "unit": "% of consideration", "appliesTo": "non-residential property including land (sites, farmland)", "effective": "instruments executed on or after 9 October 2019", "source": "https://www.revenue.ie/en/property/stamp-duty/property/stamp-duty-property/rates.aspx", "sourceType": "primary" },
+      "residentialDevelopmentRefund": { "value": "refund so that effective rate is 2% where land is developed for residential use (S83D TCA/SDCA)", "source": "https://www.revenue.ie/en/property/stamp-duty/property/stamp-duty-property/rates.aspx", "sourceType": "primary", "confirmedThisSession": false, "note": "Revenue page names S83D; the 2% effective rate is from search extracts of Revenue, not the fetched page text." },
+      "stampDutyResidentialForComparison": { "bands": "1% to €1m; 2% €1m–€1.5m; 6% above €1.5m", "source": "https://www.revenue.ie/en/property/stamp-duty/property/stamp-duty-property/rates.aspx", "sourceType": "primary" }
+    },
+    "Ontario": {
+      "provincialLTTOtherLand": {
+        "bands": [ { "upTo": 55000, "rate": 0.5 }, { "upTo": 250000, "rate": 1.0 }, { "upTo": 400000, "rate": 1.5 }, { "upTo": null, "rate": 2.0 } ],
+        "unit": "CAD bands, % marginal",
+        "appliesTo": "land not containing one or two single-family residences (vacant land, commercial). Land with one or two single-family residences adds 2.5% above $2,000,000.",
+        "source": "https://www.ontario.ca/document/land-transfer-tax/calculating-land-transfer-tax",
+        "date": "rates effective 1 Jan 2017, current",
+        "sourceType": "primary"
+      },
+      "torontoMLTTOtherProperties": {
+        "bands": [ { "upTo": 55000, "rate": 0.5 }, { "upTo": 250000, "rate": 1.0 }, { "upTo": 400000, "rate": 1.5 }, { "upTo": null, "rate": 2.0 } ],
+        "unit": "CAD bands, % marginal",
+        "appliesTo": "properties not containing one or two single-family residences, including vacant land",
+        "source": "https://www.toronto.ca/services-payments/property-taxes-utilities/municipal-land-transfer-tax-mltt/municipal-land-transfer-tax-mltt-rates-and-fees/",
+        "date": "table effective 1 April 2026",
+        "sourceType": "primary"
+      },
+      "torontoMLTTResidentialLuxuryBands_2026_04_01": { "bands": "0.5/1.0/1.5/2.0/2.5% to $3M, then 4.40% ($3-4M), 5.45% ($4-5M), 6.50% ($5-10M), 7.55% ($10-20M), 8.6% (over $20M)", "sourceType": "secondary", "note": "From search extract of toronto.ca; only relevant if the land has one or two single-family residences." },
+      "torontoMunicipalNonResidentSpeculationTax": { "value": 10, "unit": "% of price", "appliesTo": "non-residents buying certain residential property in Toronto, from 1 Jan 2025", "source": "https://www.toronto.ca/services-payments/property-taxes-utilities/municipal-land-transfer-tax-mltt/municipal-land-transfer-tax-mltt-rates-and-fees/", "sourceType": "primary" }
+    },
+    "BritishColumbia": {
+      "propertyTransferTax": {
+        "bands": [ { "upTo": 200000, "rate": 1 }, { "upTo": 2000000, "rate": 2 }, { "upTo": null, "rate": 3 } ],
+        "furtherResidentialOver3M": { "rate": 2, "unit": "% on residential value above $3,000,000" },
+        "unit": "CAD bands, % of fair market value",
+        "source": "https://www2.gov.bc.ca/gov/content/taxes/property-taxes/property-transfer-tax",
+        "date": "current, fetched 2026-09-29",
+        "sourceType": "primary",
+        "note": "PTT is on fair market value, not price. Farm-class land used for a dwelling: up to 0.5 ha treated as residential."
+      },
+      "additionalForeignBuyerTax": { "value": null, "note": "Applies to foreign nationals/corporations/taxable trustees in specified areas; rate not confirmed in this session." }
+    },
+    "MexicoCity": {
+      "ISAI": {
+        "structure": "progressive: cuota fija plus factor applied to the excess over the lower limit of the band (Código Fiscal CDMX art. 113); 11 bands A-K",
+        "tableAsCompiled": [
+          { "band": "A", "lower": 0.12, "upper": 94072.57, "fixed": 216.22, "factorOnExcess": 0.01149 },
+          { "band": "B", "lower": 94072.58, "upper": 150516.06, "fixed": 1297.19, "factorOnExcess": 0.02447 },
+          { "band": "C", "lower": 150516.07, "upper": 225773.88, "fixed": 2678.63, "factorOnExcess": 0.03197 },
+          { "band": "D", "lower": 225773.89, "upper": 451547.89, "fixed": 5085.23, "factorOnExcess": 0.03730 },
+          { "band": "E", "lower": 451547.90, "upper": 1128869.71, "fixed": 13507.06, "factorOnExcess": 0.04143 },
+          { "band": "F", "lower": 1128869.72, "upper": 2257739.43, "fixed": 41569.50, "factorOnExcess": 0.04526 },
+          { "band": "G", "lower": 2257739.44, "upper": 4349334.30, "fixed": 92670.93, "factorOnExcess": 0.04910 },
+          { "band": "H", "lower": 4349334.31, "upper": 11326391.96, "fixed": 195376.77, "factorOnExcess": 0.05106 },
+          { "band": "I", "lower": 11326391.97, "upper": 20887467.14, "fixed": 551662.03, "factorOnExcess": 0.05151 },
+          { "band": "J", "lower": 20887467.15, "upper": 41774934.30, "fixed": 1044196.34, "factorOnExcess": 0.05196 },
+          { "band": "K", "lower": 41774934.31, "upper": null, "fixed": 2129588.57, "factorOnExcess": 0.05646 }
+        ],
+        "unit": "MXN",
+        "source": "https://leyes-mx.com/codigo_fiscal_ciudad_de_mexico/113.htm",
+        "sourceType": "secondary",
+        "vintage": "UNCONFIRMED. The compilation says 'last update 21/09/2026', but the 19 Dec 2025 Gaceta decree updated the ISAI amounts for 2026 and other secondary sources quote different 2026 band limits. These may be the 2025 amounts. See uncertain.",
+        "baseOfTax": "the greater of price, cadastral value or appraised value (CFCDMX art. 116), confirmedThisSession: false"
+      },
+      "notaryAndRegistryFees": { "value": null, "note": "Not researched to a published figure." }
+    },
+    "titleInsuranceSurveyLegal": {
+      "value": null,
+      "note": "No official published price found for title insurance, boundary surveys or legal fees in any jurisdiction. NY title insurance premiums are filed rate manuals (TIRSA, regulated by NY DFS) but a figure was not extracted. See uncertain."
+    }
+  },
+
+  "dueDiligence": {
+    "steps": [
+      { "step": "Title search / official copy of title", "England": "Official copy of register £7, title plan £3 (HM Land Registry; secondary compilation)", "others": "Private abstract/title company search in US; cost not officially published" },
+      { "step": "Zoning check", "NYC": "ZoLa (NYC Planning) is free online; ZR text at zr.planning.nyc.gov", "LosAngeles": "ZIMAS (LA City Planning) is free online", "note": "No fee for looking up zoning online; confirmedThisSession: false for 'free'" },
+      { "step": "Environmental Phase I (ASTM E1527-21)", "cost": { "value": null, "note": "Neither EPA nor any state publishes a price. Vendor-published range: $2,200–$4,000 (2026) for a standard commercial parcel.", "secondaryFigure": { "min": 2200, "max": 4000, "unit": "USD", "source": "https://a3e.com/4-factors-in-the-average-cost-of-phase-i-environmental/", "sourceType": "secondary (vendor)" } } },
+      { "step": "Percolation test for septic (upstate NY)", "example": { "county": "Schenectady County, NY", "value": 100, "unit": "USD non-refundable application fee (county witnesses the test; design professional digs holes; at least one deep hole of 4 ft minimum)", "source": "https://schenectadycountyny.gov/sites/default/files/EVH/Attachment%2015-%20Percolation%20and%20Soil%20Boring%20Application.pdf", "sourceType": "primary", "note": "From a search extract of the county form, not a fetched copy; fee year not stated." }, "stateForm": "NYSDOH percolation test data form DOH-1327: https://www.health.ny.gov/forms/doh-1327.pdf" },
+      { "step": "Wetlands check (NY)", "rule": "Since 1 January 2025 the NYS Freshwater Wetlands Maps no longer define DEC jurisdiction; an owner applies to NYSDEC for a parcel jurisdictional determination (and/or project determination). Previously mapped wetlands remain jurisdictional as wetlands of unusual importance.", "source": "https://dec.ny.gov/get-involved/events/2024/8/nys-freshwater-wetlands-act-regulations-update", "sourceType": "primary", "fee": null },
+      { "step": "Boundary survey", "cost": null, "note": "No official price found anywhere." }
+    ]
+  },
+
+  "zoning": {
+    "NYC_R2": {
+      "minLotArea": { "value": 2850, "unit": "sq ft" },
+      "minLotWidth": { "value": 30, "unit": "ft" },
+      "maxFAR": { "value": 0.75, "unit": "floor area ratio (standard lot); 1.00 for qualifying residential sites; for lots of 4,000 sq ft or more, one dwelling unit is capped at FAR 0.60" },
+      "byRight": "single- or two-family detached or zero-lot-line residence (R2)",
+      "existingSmallLots": "Lots existing on 5 Dec 2024 below the minimum remain buildable if not reduced since.",
+      "multipleBuildings": "Minimum lot area multiplied by number of detached/zero-lot-line buildings on the zoning lot",
+      "otherDistricts": { "R1-1": "7,125 sq ft / 75 ft", "R1-2, R1-2A": "4,750 sq ft / 50 ft", "R3A, R4-1, R4A, R4B, R5A, R5B, R5D": "2,375 sq ft / 25 ft", "otherResidencesR1-R5": "1,700 sq ft / 18 ft" },
+      "source": "https://zr.planning.nyc.gov/article-ii/chapter-3 (ZR 23-10, 23-11, 23-21)",
+      "date": "last amended 5 Dec 2024 (City of Yes for Housing Opportunity)",
+      "sourceType": "primary"
+    },
+    "LosAngeles_R1": {
+      "minLotArea": { "value": 5000, "unit": "sq ft" },
+      "minLotWidth": { "value": 50, "unit": "ft" },
+      "byRight": "one single-family dwelling (plus ADU/JADU under state law)",
+      "source": "https://codelibrary.amlegal.com/codes/los_angeles/latest/lapz/0-0-0-2052 (LAMC 12.08 C)",
+      "sourceType": "primary",
+      "note": "Code page returned 403 to direct fetch; figures from search extract of the code text. Look-up tool: ZIMAS."
+    },
+    "NewHaven_RS2": {
+      "minLotArea": { "value": 4000, "unit": "sq ft" },
+      "byRight": "single-family detached; ADU as of right for owner-occupants",
+      "source": "https://newhaven-ct.legistar.com/LegislationDetail.aspx?ID=4931185&GUID=3311B149-7880-4AA3-86DC-A763853E37C7 (OR-2021-0014)",
+      "date": "adopted as amended 4 Oct 2021",
+      "sourceType": "primary",
+      "otherStandards": { "minAverageLotWidth": { "value": 60, "unit": "ft", "sourceType": "secondary", "note": "pre-2021 figure from zoneomics; may have changed with the 2021 amendment" }, "maxBuildingCoverage": { "value": 30, "unit": "% of lot", "sourceType": "secondary" } }
+    },
+    "England": {
+      "rule": "A new dwelling on vacant land needs planning permission (Town and Country Planning Act 1990). Permitted development rights attach to existing buildings and do not authorise a new house on an empty plot.",
+      "confirmedThisSession": false,
+      "planningFees_from_2026_04_01": {
+        "fullApplicationNewDwellings": { "under10": { "value": 610, "unit": "GBP per dwelling" }, "10to50": { "value": 659, "unit": "GBP per dwelling" }, "over50": "£32,578 + £196 per additional dwelling, max £427,537" },
+        "outline": { "siteUnder0_5ha": { "value": 610, "unit": "GBP per 0.1 ha or part" }, "0_5to2_5ha": { "value": 659, "unit": "GBP per 0.1 ha or part" }, "over2_5ha": "£16,291 + £196 per extra 0.1 ha, max £213,769" },
+        "source": "https://www.stalbans.gov.uk/sites/default/files/documents/publications/planning-building-control/Planning%20fees%20-%20annual%20indexation%20from%201%20April%202026.pdf ; https://new.fylde.gov.uk/wp-content/uploads/2026/03/PLANNING-APPLICATION-FEES-SCHEDULE-1-APRIL-2026.pdf",
+        "sourceType": "primary",
+        "note": "Local planning authority fee schedules (statutory national fees, indexed 1 April 2026); figures from search extracts of these documents."
+      }
+    },
+    "Ireland": {
+      "rule": "A new house on a site requires planning permission from the county/city council; exempted development does not cover a new dwelling.",
+      "confirmedThisSession": false,
+      "planningFeePerHouse": { "value": 65, "unit": "EUR per house", "minimumFee": 34, "maximumFee": 38000, "source": "https://kildarecoco.ie/Forms/Planning/PDRegsSCHEDULE%209.pdf (Planning and Development Regulations 2001, Schedule 9)", "sourceType": "primary", "note": "From search extracts of council-published Schedule 9." }
+    },
+    "Ontario": { "rule": "Creating a new lot needs a consent (severance) from the Committee of Adjustment (Planning Act s.53) or a plan of subdivision (s.51).", "confirmedThisSession": false },
+    "BritishColumbia": { "rule": "Subdivision requires approval by the municipal Approving Officer under the Land Title Act before a new plan can be registered.", "confirmedThisSession": false },
+    "MexicoCity": { "rule": "Land use and density by the alcaldía's Programa Delegacional/Parcial de Desarrollo Urbano; a Certificado Único de Zonificación de Uso del Suelo states what can be built.", "confirmedThisSession": false }
+  },
+
+  "holding": {
+    "NYC": {
+      "taxClassOfVacantLand": "Class 1: vacant land zoned residential outside Manhattan, and (per RPTL 1802) vacant land of up to 10,000 sq ft immediately adjacent to a residence and owned by the same owner since 1 Jan 1989. Class 4: all other vacant land, including all vacant land in Manhattan.",
+      "classSource": "https://www.nysenate.gov/legislation/laws/RPT/1802",
+      "taxRatesFY2026": { "class1": 19.843, "class2": 12.439, "class3": 11.108, "class4": 10.848, "unit": "% of assessed value", "source": "https://www.nyc.gov/site/finance/property/property-tax-rates.page", "date": "Fiscal Year 2026 (July 2025–June 2026); FY2027 rates had not been posted by DOF as found in this session", "sourceType": "primary" },
+      "assessmentRatios": { "class1": 6, "class4": 45, "unit": "% of market value", "sourceType": "primary", "source": "https://www.nyc.gov/site/finance/property/property-determining-your-assessed-value.page" },
+      "assessmentCaps": { "class1": "6% a year, 20% over 5 years", "class4": "no cap; increases phased in (not confirmed this session)" },
+      "effectiveRateDerivation": "Class 1 vacant land ≈ 19.843% × 6% = about 1.19% of DOF market value before caps; Class 4 ≈ 10.848% × 45% = about 4.88% of DOF market value (before phase-in). These are arithmetic from published rates, not published effective rates."
+    },
+    "NewYorkUpstate": { "value": null, "note": "No single rate: town + county + school district levies vary by parcel; equalization rates vary by municipality." },
+    "Connecticut_NewHaven": {
+      "millRateFY2025_26": { "value": 39.4, "unit": "mills (USD per $1,000 of assessed value)", "sourceType": "secondary", "source": "https://www.newhavenindependent.org/2026/05/15/committee-alders-settle-on-752m-budget-1-5-tax-bump/" },
+      "millRateFY2026_27": { "value": null, "note": "Board of Alders approved a $744.3M budget with a 1.42% tax increase (reported 27 May 2026); the Finance Committee settled on 'around 40' mills. The exact adopted mill rate was not confirmed." },
+      "assessmentRatio": { "value": 70, "unit": "% of fair market value (CGS 12-62a)", "confirmedThisSession": false }
+    },
+    "LosAngeles": {
+      "baseRate": { "value": 1.0, "unit": "% of assessed value (Prop 13)", "sourceType": "primary", "confirmedThisSession": false },
+      "cityOfLATotalRate": { "value": null, "note": "Base 1% plus voter-approved debt; secondary sources say about 1.2% in City of LA tax rate areas. The LA County Auditor-Controller Taxpayers' Guide 2025-26 was not retrieved." },
+      "annualAssessmentGrowthCap": { "value": 2, "unit": "% per year max (lesser of CPI or 2%)" }
+    },
+    "England": {
+      "councilTax": { "value": 0, "note": "Council tax is charged on dwellings; a vacant plot with no dwelling has none. confirmedThisSession: false" },
+      "businessRates": { "value": 0, "note": "Agricultural land and buildings are exempt from business rates (exempt since 1929); undeveloped land with no rateable occupation has none. Source for the agricultural exemption: https://www.cannockchasedc.gov.uk/business/business-rates/exemptions-business-rates (local authority)", "sourceType": "primary" }
+    },
+    "Ireland": {
+      "residentialZonedLandTax": { "value": 3, "unit": "% of market value per year (self-assessed)", "firstLiability": "valuation date 1 Feb 2025, paid by 23 May 2025", "2026": "valuation date 1 Feb 2026; return and payment by 23 May 2026; maps published by councils 31 Jan 2026", "revaluation": "every three years", "appliesTo": "land on the councils' annual final RZLT maps: zoned for residential (or mixed) use and serviced", "source": "https://www.limerick.ie/sites/default/files/media/documents/2026-01/rzlt-your-questions-answered-final-2026.pdf ; Revenue TDM Part 22A-01-01 https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-22a/22a-01-01.pdf", "sourceType": "primary", "note": "Figures from search extracts of these documents; the Revenue RZLT page URL tried returned 404." },
+      "localPropertyTax": { "value": 0, "note": "LPT is charged only on residential property suitable for use as a dwelling; a bare site is not liable. confirmedThisSession: false" }
+    },
+    "Toronto": {
+      "residentialTotalRate2026": { "value": 0.767311, "unit": "% of assessed value (city 0.605295 + education 0.153000 + City Building Fund 0.009016)", "source": "https://www.toronto.ca/services-payments/property-taxes-utilities/property-tax/property-tax-rates-and-fees/", "date": "2026", "sourceType": "primary", "note": "Vacant land zoned residential is assessed in the residential class (confirmedThisSession: false)." },
+      "commercialIndustrialVacantLand": { "value": null, "note": "Toronto says taxed at roughly 30% below the full commercial/industrial rate; exact rate not extracted." }
+    },
+    "Vancouver": {
+      "class1Residential2026": { "value": 3.36394, "unit": "CAD per $1,000 of taxable value (general 1.93406, school 0.98001, TransLink 0.35893, BC Assessment 0.03814, Metro Vancouver 0.05260, MFA 0.00020)", "sourceType": "secondary", "source": "https://www.virtuance.com/blog/vancouver-property-taxes/", "note": "City of Vancouver pages and council report (https://council.vancouver.ca/20260414/documents/r4b.pdf) returned 403; figure from search extract." },
+      "emptyHomesTax": { "value": 3, "unit": "% of assessed value (since 2021 tax year)", "appliesTo": "Class 1 residential property in the City of Vancouver deemed or declared vacant; declaration due 3 Feb 2026 for the 2025 year", "sourceType": "secondary", "note": "Whether a bare lot with no dwelling is caught was not confirmed (vancouver.ca returned 403)." }
+    },
+    "BritishColumbia": {
+      "speculationAndVacancyTax": { "2026": { "canadianCitizensPR": 1, "foreignOwnersUntaxedWorldwideEarners": 3 }, "2025AndEarlier": { "canadianCitizensPR": 0.5, "foreignOwnersUntaxedWorldwideEarners": 2 }, "unit": "% of assessed value per year", "source": "https://www2.gov.bc.ca/gov/content/taxes/speculation-vacancy-tax/how-tax-works/tax-rates", "sourceType": "primary", "vacantLand": "Applies to residential property including vacant residential land in specified areas (not properties assessed at $150,000 or less); the no-residence exemption existed only for 2018 and 2019. There is a land-under-development exemption.", "vacantLandSourceType": "secondary (search extract of gov.bc.ca pages)" }
+    },
+    "MexicoCity": {
+      "predial": {
+        "structure": "bimonthly; progressive cuota fija + % on excess of cadastral value (CFCDMX art. 130); for land without construction the cadastral value is land area × valor unitario de suelo",
+        "table": null,
+        "note": "A compilation site shows a 16-band table (A–P) whose figures conflict with 2026 figures quoted elsewhere (e.g. band A upper limit $235,095.02, cuota $231.00, 0.02080%); neither could be confirmed against the 2026 Gaceta. See uncertain.",
+        "sourceType": "secondary"
+      }
+    }
+  },
+
+  "subdivision": {
+    "NewYork": {
+      "NYC": { "rule": "No planning-board subdivision; a lot is split or merged by tax-lot apportionment/merger with the Department of Finance, and new lots must meet ZR minimum lot area/width (R2: 2,850 sq ft / 30 ft).", "fee": null, "confirmedThisSession": false },
+      "upstate": { "rule": "Town/village planning board approves subdivision plats (Town Law 276, Village Law 7-728); fees set locally.", "fee": null, "confirmedThisSession": false }
+    },
+    "Connecticut": {
+      "definition": "Subdivision = division of a tract into three or more parts or lots for sale or building development (CGS 8-18). A single split into two (the 'first cut') is not a subdivision; lot-line changes are not subdivisions.",
+      "source": "https://law.justia.com/codes/connecticut/title-8/chapter-126/section-8-18/",
+      "sourceType": "primary (statute via search extract)",
+      "fee": null
+    },
+    "California": {
+      "subdivisionMapAct": { "rule": "Four or fewer parcels: parcel map; five or more: tentative and final map (Gov. Code 66426).", "confirmedThisSession": false },
+      "SB9UrbanLotSplit": { "rule": "Ministerial parcel-map split of a single-family-zoned lot into two of roughly equal size; each at least 40% of the original and at least 1,200 sq ft (Gov. Code 66411.7), effective 1 Jan 2022.", "source": "https://planning.lacity.gov/odocument/b3901e7e-b25a-4713-87be-d0c7d46e85eb/SB_9_Urban_Lot_Split_Specialized_Requirements.pdf", "sourceType": "primary" },
+      "LAParcelMapFee": { "value": null, "note": "LA City tentative-map fees seen ($13,579 for 5–49 single-family lots) predate the fee update the Council approved 20 Dec 2025, effective 23 Feb 2026; the parcel-map (4 or fewer) fee was not extracted." }
+    },
+    "England": {
+      "rule": "Splitting a plot needs a transfer of part registered at HM Land Registry; building on the new plot needs planning permission (see zoning.England.planningFees).",
+      "fee": "HMLR Scale 1 registration fee applies to a transfer of part for value (secondary)",
+      "confirmedThisSession": false
+    },
+    "Ireland": { "rule": "Splitting a folio is registered with Tailte Éireann (Land Registry); building needs planning permission (€65 per house fee).", "fee": null, "confirmedThisSession": false },
+    "Ontario_Toronto": {
+      "committeeOfAdjustmentFees2026": {
+        "severOneLotIntoTwo": { "value": 8080.65, "unit": "CAD (includes deed stamping) and/or new easement/right-of-way" },
+        "eachAdditionalLot": { "value": 6561.48, "unit": "CAD" },
+        "multipleLotAdditionsCreatingNewLotsPerExistingLot": { "value": 4040.33, "unit": "CAD" },
+        "validationOfTitleTechnicalSeveranceLeasesMortgageDischargeLotAdditions": { "value": 2275.91, "unit": "CAD" },
+        "minorVarianceResidentialUpTo3Units": { "value": 5011.08, "unit": "CAD" },
+        "requires": "Draft reference plan of survey showing parts severed and retained",
+        "source": "https://www.toronto.ca/wp-content/uploads/2025/11/9a22-city-planning-committee-of-adjustment-application-jan-2026.pdf",
+        "date": "effective 1 January 2026",
+        "sourceType": "primary",
+        "note": "Fee table is laid out in two columns; the mapping of $6,561.48 and $4,040.33 to their lines was checked against the City's own summary quoted in search results."
+      }
+    },
+    "BritishColumbia": { "fee": null, "note": "Vancouver subdivision fees not researched to a figure." },
+    "MexicoCity": {
+      "subdivisionRelotificationMergerLicence": { "value": 1.0, "unit": "% of appraised value (valor de avalúo)", "extension": "10% of the original fee", "source": "https://leyes-mx.com/codigo_fiscal_ciudad_de_mexico/188.htm (CFCDMX art. 188)", "sourceType": "secondary", "note": "Compilation of the Código Fiscal; the rate is a percentage and unlikely to be affected by the annual peso-amount update, but not checked against the 2026 Gaceta." }
+    },
+    "lotMerger": { "value": null, "note": "Merger rules exist in each jurisdiction (e.g. CA Gov. Code 66451.10+, NYC DOF tax-lot merger, CDMX 'fusión' at 1% of appraisal) but fees other than CDMX were not confirmed." }
+  },
+
+  "marketing": {
+    "daysOnMarketUS": {
+      "nationalLandRealty2025": { "value": 125, "unit": "days on market (typical)", "basis": "1,300+ land sales closed in 2025 where National Land Realty represented the seller; some counties 2–3 months, others a year", "source": "https://nationalland.com/blog/2025-national-land-realty-industry-report/", "date": "2025 data", "sourceType": "secondary (broker's own listings; not a market-wide statistic)" },
+      "RLI_NAR_LandMarketReport2026": { "value": null, "note": "The 2026 REALTORS Land Institute / NAR Land Market Report (2025 data) publishes sales volume (+0.8%) and price per acre growth (+1.5%) but no days-on-market figure. Region 1 = CT, MA, ME, NH, NY, RI, VT; Region 5 = CA, NV.", "source": "https://www.rliland.com/Portals/0/2026%20Land%20Market%20Report%20Final.pdf", "sourceType": "secondary (trade association survey)" },
+      "olderNARClaim": { "value": null, "note": "A NAR land survey statement that most land sells in under 60 days (25% in under 30) circulates, but its year was not established; not used." }
+    },
+    "otherJurisdictions": { "value": null, "note": "No published time-to-sell for land found for England, Ireland, Ontario, BC or Mexico City." }
+  },
+
+  "uncertain": [
+    "NYC FY2027 (July 2026–June 2027) property tax rates: not found posted; FY2026 rates recorded.",
+    "Whether NYS mansion tax (1%) reaches a vacant lot zoned residential: the statutory definition is 'premises that is or may be used ... as a personal residence'; the Tax Department page does not address vacant land. The brief's premise that it does not apply was not confirmed.",
+    "New Haven FY2026-27 adopted mill rate: budget approved with a 1.42% tax increase (May 2026); exact mills not confirmed (city pages returned 403). FY2025-26 was 39.4 mills (press).",
+    "New Haven municipal conveyance tax 0.5% is from a 2020 legislative report; not re-checked for 2026.",
+    "Los Angeles total property tax rate for City of LA tax rate areas (1% + voter debt, ~1.2% per secondary sources): LA County Auditor 2025-26 guide not retrieved.",
+    "LA City parcel map (4 or fewer lots) filing fee after the fee update effective 23 Feb 2026: not extracted.",
+    "Measure ULA applying to vacant land: from secondary summaries; LA City Finance FAQ returned 403.",
+    "Mexico City ISAI 2026 peso band amounts: the table recorded may be the 2025 amounts; the 19 Dec 2025 Gaceta decree updated them and the official 2026 text could not be retrieved (tjacdmx.gob.mx timed out; consejeria page 404). Also note an SCJN matter on ISAI constitutionality (Acuerdo General 9/2026, Sept 2026) whose outcome was not checked.",
+    "Mexico City predial 2026 tariff (art. 130): conflicting figures between sources; none recorded.",
+    "Mexico City cadastral unit land values per m2 for 2026: the official PDF is scanned images; no figure extracted.",
+    "Mexico City land market prices per m2 (e.g. Polanco, Condesa) exist only from brokers for built property, not land; not used.",
+    "Ireland residential development land value (Dublin or elsewhere): no official series found.",
+    "England: no 2026 Savills or RICS figure confirmed; Knight Frank Q2 2026 (£8,497/acre) is via press. RICS Rural Land Market Survey 2026 not retrieved.",
+    "England residential land values (VOA) are April 2019 and have not been updated; no newer official figure exists.",
+    "US residential land values (FHFA) end at 2022.",
+    "BC additional (foreign buyer) property transfer tax rate: not confirmed this session.",
+    "Vancouver 2026 Class 1 rate ($3.36394 per $1,000) and Empty Homes Tax treatment of bare lots: city pages returned 403; secondary only.",
+    "Toronto vacant commercial/industrial land tax rate: only described as ~30% below the full rate.",
+    "Title insurance premiums, boundary survey costs, conveyancing/legal fees: no official published figures found in any jurisdiction.",
+    "Phase I ESA cost: no EPA or state figure; only a vendor's range ($2,200–$4,000).",
+    "Percolation test fee: only Schenectady County's $100 application fee found (year not stated); other NY counties differ.",
+    "NYSDEC wetland jurisdictional determination fee and turnaround: not found.",
+    "Ireland S83D residential-development stamp duty refund (effective 2%): stated from search extracts, not fetched page text.",
+    "HM Land Registry fees: from a third-party compilation, not the gov.uk fee page.",
+    "England and Ireland planning fees: from council-published schedules via search extracts.",
+    "Days on market for land: only one broker's 2025 figure (125 days); no market-wide official statistic in any jurisdiction.",
+    "Items marked confirmedThisSession:false (statutory rules for CA parcel maps, CT 70% assessment, Ontario/BC subdivision process, England/Ireland planning requirement, LPT/council tax on bare land, NYC tax-lot merger) are standard law but their text was not re-read in this session."
+  ]
+}

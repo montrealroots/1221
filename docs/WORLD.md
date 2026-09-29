@@ -27,9 +27,9 @@ one day trip (Metro-North, New Haven to Grand Central).
 | Stage | What | Depends on | State |
 |---|---|---|---|
 | 1 | Documents: identity, passport, driver's license, entry rules, as records with issuer, validity, fees, processing, and checks that name what's missing | citizenship, geography | Done 2026-09-29 (1a and 1b); open items below |
-| 2 | Journeys: a trip of legs (walk, taxi, rideshare, bus, train, flight), fares, durations on the calendar, time zones, the player's location moving only on arrival; airports; booked accommodation at the far end; the return | 1 | Not begun |
+| 2 | Journeys: a trip of legs (walk, taxi, rideshare, bus, train, flight), fares, durations on the calendar, time zones, the player's location moving only on arrival; airports; booked accommodation at the far end; the return | 1 | Done 2026-09-29 (2a to 2f); this row said "Not begun" until 2026-09-29, after it was |
 | 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3d) |
-| 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Not begun |
+| 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | 4a done 2026-09-29; offers, closing and due diligence open, below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Not begun |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | Not begun |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
@@ -130,7 +130,18 @@ Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed.
 #### Stage 3d: parking (done 2026-09-29)
 - A car kept on the street at home pays a resident's permit a year, on the quote and then with the registration: London's Westminster's by the car's CO2 (£40 to £353.10, from 2 March 2026), SLATE's borough for the city; Dublin City's €50. A home owned with a garage needs none. New York publishes no garage average and parks on the street for nothing; elsewhere no permit is kept, said so. Evidence: `tests/vehicles.test.ts` (parking); 3 mutations, all killed.
 
-### Stages 4-8 (to be detailed in turn)
+### Stage 4: Land
+
+#### Stage 4a: a parcel bought, held, split, combined and sold (done 2026-09-29)
+- **What's for sale** where one lives (`content/land.ts`, researched in `docs/research/world/research-land.json`): New York City lots in Brooklyn, Queens and Staten Island, New Haven's and Los Angeles's, at the FHFA's 2022 value an acre under single-family homes by county (the FHFA has no Manhattan or Bronx figure), each the zoning's smallest buildable lot (R2's 2,850 sq ft, RS-2's 4,000 and a quarter acre, R1's 5,000); London plots with planning permission in Hackney, Croydon and Havering at the government's April 2019 values, its latest edition, on SLATE's 200 m²; farmland at USDA's 1 January 2026 value (New York, Connecticut, California), Knight Frank's English index (Q2 2026, read secondhand), SCSI and Teagasc's Leinster (2025, read secondhand), FCC's Central East Ontario and South Coast (2025). A value moves by its own source's yearly change and is held where the source publishes none. Mexico City's land values are published only as scanned images, so none is sold there, said so.
+- **The taxes of a transfer**, each on the side that customarily pays it: New York State's 0.4% and the city's 1.425% or 2.625% on the whole; Connecticut's conveyance tax and New Haven's; Los Angeles County's and the City's, Measure ULA's bands included; England's SDLT at the non-residential rates land takes; Ireland's 7.5% stamp duty; Ontario's land transfer tax; British Columbia's property transfer tax. The buyer's are on the quote; the seller's are taken from the sale.
+- **Holding it**: a year's property tax where it follows from published rates, New York City's Class 1 rate on its 6% ratio, New Haven's mills on 70% of value, and Los Angeles's Proposition 13, 1% on the price paid grown at the 2% cap (`taxedValue`); none on farmland or in England, said so. What the bank can't pay goes into arrears.
+- **Selling** after 125 days, a broker's figure for its 2025 US land sales, read secondhand and taken everywhere, at the value then less the seller's taxes. **Splitting** where each half keeps the zoning's minimum, or an acre of farmland (SLATE's); a London plot's permission isn't split. **Combining** two parcels of one place.
+- Open, and why: offers, due diligence and a closing period, which land buying has as a home's does (`systems/homes.ts`), are the next module; a buyer's survey, title insurance and lawyer, and a split's fee, have no authority's price and aren't kept; land isn't counted in net worth; nothing is built on it until Stage 5.
+
+Evidence: `tests/land.test.ts` (9); 17 mutations, all killed. Two first survived. One was a redundant guard: a sold parcel's tax was already canceled by the sale, so the guard was removed. The other was a combine refusal that failed only by crashing, and it is now asserted by its words. Screen: Land, from Home's Land panel, opened by the guide's chapter Land.
+
+### Stages 5-8 (to be detailed in turn)
 
 ## Coverage record
 

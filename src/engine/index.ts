@@ -11,6 +11,7 @@
  */
 
 import { registerVehicles } from './systems/vehicles';
+import { registerLand } from './systems/land';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
 import { registerHomeBenefits } from './systems/homebenefits';
@@ -115,6 +116,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerHomePensions(sim);
   registerImss(sim);
   registerVehicles(sim);
+  registerLand(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);

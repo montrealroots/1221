@@ -6,6 +6,9 @@
  */
 
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
+import { landValue, parcelsOf } from '@/engine/systems/land';
+import { inSaveMoney } from '@/engine/systems/banking';
+import { LAND_MARKETS } from '@/engine/content/land';
 import { journeysOf } from '@/engine/systems/journey';
 import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
@@ -108,6 +111,7 @@ export function Home() {
     papers: useFeature('ui.papers').open,
     travel: useFeature('ui.travel').open,
     vehicles: useFeature('ui.vehicles').open,
+    land: useFeature('ui.land').open,
   };
 
   return (
@@ -604,6 +608,19 @@ export function Home() {
           <YourCars />
         </Panel>
         ))}
+        {(player.career || player.school) && (!shows.land ? <LockedPanel feature="ui.land" title="Land" /> : (
+        <Panel
+          title="Land"
+          tight
+          actions={(
+            <Gated feature="ui.land" className="btn btn-sm" onClick={() => navigate('/workspace/land', 'Land')}>
+              Land
+            </Gated>
+          )}
+        >
+          <YourLand />
+        </Panel>
+        ))}
       </div>
     </>
   );
@@ -646,7 +663,7 @@ function YourSchool() {
  * Taxes and cover (`systems/health.ts`, `systems/taxreturn.ts`,
  * `systems/unemployment.ts`): what covers them, the next return, and a claim.
  */
-/** Where they are, and the next journey booked (`systems/journey.ts`). */
+/** The cars they own, and when the first's registration is next due (`systems/vehicles.ts`). */
 function YourCars() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
@@ -661,6 +678,22 @@ function YourCars() {
   );
 }
 
+/** The land they own, and what it's worth (`systems/land.ts`). */
+function YourLand() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const owned = parcelsOf(person).filter((p) => p.soldAt === undefined);
+  const cur = saveCurrency(sim.universe);
+  const worth = owned.reduce((a, p) => { const m = LAND_MARKETS[p.market]!; return a + inSaveMoney(sim, landValue(m, p.acres, sim.now), m.currency); }, 0);
+  return (
+    <div className="col gap-3">
+      <Stat label="Own" value={owned.length ? `${owned.length} ${owned.length === 1 ? 'Parcel' : 'Parcels'}` : 'None'} note={owned[0] ? LAND_MARKETS[owned[0].market]!.label : undefined} />
+      <Stat label="Worth" value={owned.length ? formatMoney(worth, cur, { cents: false }) : '—'} note={owned.some((p) => p.selling) ? 'Some of it for sale' : undefined} />
+    </div>
+  );
+}
+
+/** Where they are, and the next journey booked (`systems/journey.ts`). */
 function YourTravel() {
   const person = useWorld((s) => s.player);
   const next = journeysOf(person).filter((j) => j.status === 'booked' || j.status === 'underway').sort((a, b) => a.leaveAt - b.leaveAt)[0];

@@ -404,6 +404,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/papers': 'Papers',
   '/workspace/travel': 'Travel',
   '/workspace/vehicles': 'Cars',
+  '/workspace/land': 'Land',
   '/workspace/homes': 'Homes',
 };
 
