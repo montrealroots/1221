@@ -29,7 +29,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { rateOn } from '../content/career';
 import { UNIVERSAL_CREDIT } from '../content/safetynet';
-import { homeOf } from './earnings';
+import { earningsOf, homeOf, ukTaxYear } from './earnings';
 import { rentOf } from './household';
 import { workedBetween } from './career';
 import { payeeAccount } from './cash';
@@ -121,6 +121,10 @@ export function registerUniversalCredit(sim: Simulation): void {
     const from = claim.periodStart;
     const to = monthOn(from);
     const { award, lines } = creditAward(s, person, from, to);
+    // A claim credits the year's National Insurance record, as it credits Class 3 (`systems/statepension.ts`).
+    const r = earningsOf(person);
+    const key = ukTaxYear(from);
+    if (!(r.ukCredited ?? []).includes(key)) r.ukCredited = [...(r.ukCredited ?? []), key];
     claim.periodStart = to;
     if (award <= 0) {
       claim.nils += 1;

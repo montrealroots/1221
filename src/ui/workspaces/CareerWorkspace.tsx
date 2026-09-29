@@ -21,6 +21,7 @@ import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf } from '@/engine/systems/career';
+import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
 import { costsAt, HOUSING } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
@@ -483,6 +484,18 @@ function UnionsPane() {
             </div>
             <p className="small" style={{ margin: 0 }}>{pension.years.map((y) => `${y.year}: ${money(y.earnings)}${y.credit ? ', a credit' : ''}`).join('; ')}.</p>
             <Fine>The minimum for a credit, a year adding 2% of its covered earnings, each production’s and each television episode’s ceiling, vesting, the age and the early start are the Plan’s. The law holds a pension to $290,000 a year and to the best three years in a row (IRC section 415(b)); SLATE holds that at 2026’s figure and doesn’t reduce it for a start before 62. Federal tax is withheld as the IRS default for a periodic payment has it. Source: {SAG_PENSION.source}; {SAG_PENSION.lawSource}.</Fine>
+          </div>
+        </Panel>
+      )}
+      {(qualifyingYears(person, cur).length > 0 || person.statePensionFrom !== undefined) && (
+        <Panel title="State Pension" subtitle="The UK’s, on your National Insurance record" actions={statePensionRefusal(sim, person) ? undefined : <Gated feature="pension.state" onClick={() => { const r = run<{ weekly: number }>('pension.state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week, paid every four weeks.`, 'positive'); }}>Claim It</Gated>}>
+          <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Qualifying Years" value={String(qualifyingYears(person, cur).length)} note={`Ten for any, ${STATE_PENSION.yearsForFull} for the full rate`} />
+              <Stat label="A Week" value={money(weeklyPension(person, sim.now, cur))} note={person.statePensionFrom !== undefined ? `Claimed ${formatDate(person.statePensionFrom, sim.zone)}` : `From ${formatDate(statePensionAge(person), sim.zone)}`} />
+              <Stat label="Claimed" value={person.statePensionFrom !== undefined ? 'Yes' : 'Not Yet'} note={statePensionRefusal(sim, person) ?? 'You can claim it now'} />
+            </div>
+            <Fine>A tax year qualifies with UK earnings at the Lower Earnings Limit, £6,708 in 2026/27, or with the credits Universal Credit gives; each is a thirty-fifth of the full £241.30 a week (2026/27). State Pension age is 68 for anyone born after 5 April 1978, by the Pensions Act 2007. SLATE holds the limit and the rate at 2026/27’s. Source: {STATE_PENSION.source}.</Fine>
           </div>
         </Panel>
       )}

@@ -79,6 +79,9 @@ export interface EarningsRecord {
   months: Record<string, Money>;
   /** UK wages by the UK's tax year, keyed by the year it began on 6 April, for its treaty's test; what was withheld, by year and by payer; and the years settled. */
   ukYears: Record<string, Money>;
+  /** Wages earned in the UK by its tax year, in the save's money, and the years National Insurance credits covered: the State Pension's record (`systems/statepension.ts`). */
+  ukEarned?: Record<string, Money>;
+  ukCredited?: string[];
   ukWithheld?: Record<string, Money>;
   ukPayers?: Record<string, Record<string, Money>>;
   ukSettled?: string[];
@@ -117,6 +120,7 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   y.byResidence[home] = (y.byResidence[home] ?? 0) + pay.gross;
   const source = CITIES.get(pay.where ?? home)?.countryId ?? 'us';
   y.bySource = { ...y.bySource, [source]: (y.bySource?.[source] ?? 0) + pay.gross };
+  if (source === 'uk') { const r = earningsOf(person); const key = ukTaxYear(at); r.ukEarned = { ...r.ukEarned, [key]: (r.ukEarned?.[key] ?? 0) + pay.gross }; }
   const lived = stateOf(home);
   const country = pay.where ? CITIES.get(pay.where)?.countryId : undefined;
   if (country && country !== CITIES.get(home)?.countryId) {

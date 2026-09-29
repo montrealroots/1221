@@ -643,6 +643,13 @@ part the tool cannot see.
   Equity itself; a British actor's Self Assessment as self-employed, since
   pay is withheld as PAYE would be, on the year's tax at the right bands; the
   2026 cinema and theatre rates, not yet published, which stand at 2025's.
+- **The State Pension is partly SLATE's estimate.** Since 2026-09-29 a
+  UK National Insurance record of qualifying years pays a thirty-fifth of
+  the full new State Pension a year, from ten, claimed from 68 for anyone
+  born after 5 April 1978 (`systems/statepension.ts`). SLATE holds the Lower
+  Earnings Limit and the rate at 2026/27's for every year, leaves out the
+  starting amount for years before 2016, voluntary Class 3, and the US
+  agreement's combining of records, and doesn't tax it.
 - **The NHS is partly kept.** Since 2026-09-29 a British or Irish citizen
   living in the UK is treated by the NHS: free at the point of use, England's
   £9.90 a prescription item (none at 60 or over, nor in Scotland, Wales or
