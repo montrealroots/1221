@@ -2145,6 +2145,7 @@ export function registerCareer(sim: Simulation): void {
       if (typeof legs === 'string') throw new CommandError(legs);
       const fare = legs.reduce((a, l) => a + l.fare, 0);
       if (!payFromBank(s, person, fare, `The flight to ${CITIES.require(p.cityId).name}, one way, with two bags`, 'travel')) throw new CommandError(`The flight, ${formatMoney(fare, saveCurrency(s.universe))}, is more than the bank can cover.`);
+      if (isoOfCity(p.cityId) === isoOfCountry(person.citizenshipId)) person.returnedHomeAt = s.now;
     }
     // A home of their own there, empty, is where they go.
     const own = emptyHomeIn(person, p.cityId);

@@ -35,6 +35,7 @@ import { workedBetween, working } from './career';
 import { payeeAccount } from './cash';
 import { rateOn } from '../content/career';
 import { claimCredit, livesInBritain } from './universalcredit';
+import { claimAtHome, livesInIreland, livesInMexicoCity } from './homebenefits';
 
 export const BENEFIT_WEEK_KIND = 'benefits.week';
 
@@ -166,6 +167,8 @@ export function registerUnemployment(sim: Simulation): void {
     const person = s.player;
     // Living in Britain, the claim is Universal Credit's (`systems/universalcredit.ts`).
     if (livesInBritain(person)) { const uc = claimCredit(s, person); return { weekly: 0, maxTotal: 0, firstPaymentAt: uc.firstPaymentAt }; }
+    // In Ireland, Jobseeker's Allowance; in Mexico City, its Seguro de Desempleo (`systems/homebenefits.ts`).
+    if (livesInIreland(person) || livesInMexicoCity(person)) { const home = claimAtHome(s, person); return { weekly: 0, maxTotal: 0, firstPaymentAt: home.firstPaymentAt }; }
     const state = claimStateFor(person, s.now) ?? BENEFIT_STATE[homeOf(person)];
     if (!state) throw new CommandError('SLATE pays unemployment in New York, California and Connecticut, where you’d have to have worked or live.');
     const record = unemploymentOf(person);

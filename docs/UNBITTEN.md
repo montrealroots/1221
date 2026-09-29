@@ -657,6 +657,17 @@ part the tool cannot see.
   Earnings Limit and the rate at 2026/27's for every year, leaves out the
   starting amount for years before 2016, voluntary Class 3, and the US
   agreement's combining of records, and doesn't tax it.
+- **Ireland and Mexico City at home are partly kept.** Since 2026-09-29 an
+  Irish citizen at home claims Jobseeker's Allowance and is treated in
+  Ireland's public system, and a Mexican at home in Mexico City is treated by
+  IMSS-Bienestar and, come home from abroad, claims the Seguro de
+  Desempleo's three months (`systems/homebenefits.ts`). SLATE's readings: a
+  day worked takes a fifth of a Jobseeker's week; a GP visit is the middle of
+  what Citizens Information gives, €55; a prescription is held to the Drugs
+  Payment Scheme's €80. Not kept: earnings beyond the days worked and a
+  spouse's in the means test, a GP's letter waiving the emergency charge, the
+  city's ordinary track for six months of formal work. Their acting
+  businesses and pensions aren't in yet.
 - **The NHS is partly kept.** Since 2026-09-29 a British or Irish citizen
   living in the UK is treated by the NHS: free at the point of use, England's
   £9.90 a prescription item (none at 60 or over, nor in Scotland, Wales or

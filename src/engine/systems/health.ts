@@ -42,7 +42,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { UNION_HEALTH, rateOn } from '../content/career';
 import {
-  BENCHMARK, BENEFIT_STATE, NHS, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
+  BENCHMARK, BENEFIT_STATE, IRISH_CARE, NHS, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
 import { earningsOf, homeOf, quartersBefore } from './earnings';
@@ -422,7 +422,7 @@ export function keepUp(sim: Simulation, person: Person, at: Instant): Money {
   for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }][]) {
     if (!state.treated) continue;
     let cost = 0;
-    if (condition === 'depression' && nhsShareOf(person, 'visit', at, cur) === 0) {
+    if (condition === 'depression' && publicCareShareOf(person, 'visit', at, cur) === 0) {
       // NHS Talking Therapies are free; the prescription is the NHS's charge.
       cost += rxShareOf(person, false, at, cur);
     } else if (condition === 'depression') {
@@ -469,7 +469,7 @@ export function incomeRatio(person: Person, at: Instant, into = 'USD'): number {
  * by the last year's income against the poverty line.
  */
 export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money {
-  const nhs = nhsShareOf(person, care, at, into);
+  const nhs = publicCareShareOf(person, care, at, into);
   if (nhs !== undefined) return nhs;
   if (care === 'rx-generic' || care === 'rx-brand') return rxShareOf(person, care === 'rx-brand', at, into);
   if (!MEDICAL.includes(care)) return teethAndEyesShareOf(person, care as 'cleaning' | 'filling' | 'exam' | 'glasses', at, into);
@@ -528,8 +528,10 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
  * a Londoner was billed American prices for every illness, uninsured, and a
  * played British life ended £1.25 million in medical debt.
  */
-export function nhsShareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money | undefined {
+export function publicCareShareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money | undefined {
   const city = CITIES.get(homeOf(person));
+  if (city?.countryId === 'ie') return irishShareOf(person, care, into);
+  if (city?.countryId === 'mx') return mexicanShareOf(person, care);
   if (city?.countryId !== 'uk') return undefined;
   const iso = isoOfCountry(person.citizenshipId);
   if (iso !== 'GB' && iso !== 'IE') return undefined;
@@ -544,8 +546,42 @@ export function nhsShareOf(person: Person, care: Care, at: Instant, into = 'USD'
   return 0;
 }
 
+/**
+ * Ireland's public care for someone living there (Citizens Information,
+ * researched 2026-09-29): a public hospital stay free, the €80 a day
+ * abolished on 17 April 2023; the emergency department €100 (waived with a
+ * GP's letter, which SLATE doesn't keep); a GP private, the middle of the €45
+ * to €65 Citizens Information gives, €55; an injury unit €75 for urgent
+ * care; and the Drugs Payment Scheme's €80 a month for the household's
+ * prescriptions, which SLATE holds a prescription to. An Irish, British or
+ * other EU citizen is eligible; a dentist and an optician are private, as
+ * before.
+ */
+function irishShareOf(person: Person, care: Care, into: string): Money | undefined {
+  if (!new Set(['IE', 'GB', 'DE', 'FR', 'ES', 'LV', 'IT', 'NL']).has(isoOfCountry(person.citizenshipId) ?? '')) return undefined;
+  const euros = (x: number) => { const c = Math.round(x * 100); return into === 'EUR' ? c : exchange(c, 'EUR', into) ?? c; };
+  if (care === 'stay') return 0;
+  if (care === 'emergency') return euros(IRISH_CARE.emergency);
+  if (care === 'urgent') return euros(IRISH_CARE.injuryUnit);
+  if (care === 'visit') return euros(IRISH_CARE.gp);
+  if (care === 'rx-generic' || care === 'rx-brand') return euros(IRISH_CARE.drugsCapMonthly);
+  return undefined;
+}
+
+/**
+ * Mexico's IMSS-Bienestar for a Mexican living there without social
+ * security, as an actor between engagements is: care, medicines and
+ * supplies free (Mexico City joined on 15 June 2023). A dentist and an
+ * optician are private, as before.
+ */
+function mexicanShareOf(person: Person, care: Care): Money | undefined {
+  if (isoOfCountry(person.citizenshipId) !== 'MX') return undefined;
+  if (care === 'cleaning' || care === 'filling' || care === 'exam' || care === 'glasses') return undefined;
+  return 0;
+}
+
 export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD', cash?: Money): Money {
-  const nhs = cash === undefined ? nhsShareOf(person, brand ? 'rx-brand' : 'rx-generic', at, into) : undefined;
+  const nhs = cash === undefined ? publicCareShareOf(person, brand ? 'rx-brand' : 'rx-generic', at, into) : undefined;
   if (nhs !== undefined) return nhs;
   const price = cash ?? usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
   const key = planKey(person, at);

@@ -658,3 +658,13 @@ export const NHS = {
   dental: { band1: 27.9, band2: 76.6, band3: 332.1, urgent: 27.9 },
   source: 'https://www.nhsbsa.nhs.uk/ (HC12, April 2026); https://www.gov.uk/guidance/nhs-entitlements-migrant-health-guide',
 } as const;
+
+/** Ireland's public care charges (Citizens Information, researched 2026-09-29), in euros. */
+export const IRISH_CARE = {
+  emergency: 100,
+  injuryUnit: 75,
+  /** The middle of the €45 to €65 a GP visit costs privately, from a page last edited June 2024: SLATE's reading. */
+  gp: 55,
+  drugsCapMonthly: 80,
+  source: 'https://www.citizensinformation.ie/en/health/health-services/hospital-services/hospital-charges/; https://www.citizensinformation.ie/en/health/drugs-and-medicines/drugs-payment-scheme/',
+} as const;

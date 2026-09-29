@@ -241,6 +241,10 @@ export interface Person {
   statePensionFrom?: number;
   /** Social Security claimed: from when, and the monthly benefit in dollars (`systems/socialsecurity.ts`). */
   socialSecurity?: { from: number; monthlyUsd: number };
+  /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`), and when they moved home from abroad. */
+  jobseekers?: import('../systems/homebenefits').JobseekerClaim;
+  desempleo?: import('../systems/homebenefits').DesempleoClaim;
+  returnedHomeAt?: number;
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
   returns?: Record<string, TaxReturn>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
