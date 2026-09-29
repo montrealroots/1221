@@ -330,6 +330,11 @@ const CALIBRATED_IDS = new Set(CALIBRATED_CITIES.map((c) => c.id));
  * New Haven joined them on 2026-09-26, copied out of `public/geo/us.tsv`: a
  * new life begins at the drama school there (`content/school.ts`), and
  * Connecticut's towns aren't bundled.
+ *
+ * Belfast, Edinburgh and Toluca joined on 2026-09-29, copied out of
+ * `public/geo/uk.tsv` and `mx.tsv`: the Enterprise, LNER and El Insurgente
+ * run to them (`content/rail.ts`), and Belfast is where Northern Ireland's
+ * license path is reached.
  */
 const NEEDED_AT_BOOT: readonly RawCity[] = [
   {
@@ -354,6 +359,9 @@ const NEEDED_AT_BOOT: readonly RawCity[] = [
     population: 130_322,
     kind: '',
   },
+  { id: 'uk-nir-belfast', name: 'Belfast', regionId: 'uk-nir', countryId: 'uk', lat: 54.5968, lon: -5.9254, timeZone: 'Europe/London', population: 348_005, kind: 'a' },
+  { id: 'uk-sct-edinburgh', name: 'Edinburgh', regionId: 'uk-sct', countryId: 'uk', lat: 55.9521, lon: -3.1965, timeZone: 'Europe/London', population: 514_990, kind: 'a' },
+  { id: 'mx-15-toluca', name: 'Toluca', regionId: 'mx-15', countryId: 'mx', lat: 19.2879, lon: -99.6532, timeZone: 'America/Mexico_City', population: 489_333, kind: 'a' },
 ];
 
 const BUNDLED_IDS = new Set(WORLD_CITIES.map((c) => c.id));

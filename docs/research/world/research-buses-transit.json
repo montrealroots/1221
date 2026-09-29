@@ -1,0 +1,3714 @@
+{
+  "_meta": {
+    "title": "SLATE research: intercity buses, local transit, rail cancellations, towns and hotels",
+    "compiled": "2026-09-29",
+    "method": "Web research on 2026-09-29. Every figure carries a source URL, a date or period, and sourceType primary (operator/government/regulator) or secondary. Unconfirmable values are null and listed in uncertain. Figures derived by arithmetic from published data are labelled derived, not published.",
+    "transitMeta": {
+      "compiled": "2026-09-29",
+      "notes": [
+        "Every figure below was seen in the cited source during this session unless its note says otherwise.",
+        "US 'acsMeanTransitCommute' figures were COMPUTED here from two published ACS 2020-2024 5-year tables (aggregate travel time B08136_007 divided by worker count B08301_010, both 'Public transportation (excluding taxicab)'). That is the Census Bureau's own definition of the mean, but the quotient itself is not a printed figure. Values retrieved via the Census Reporter API because the Census API required a key.",
+        "Moovit figures are from Moovit's 2024 Global Public Transport Report (published Dec 2024): 'the average time it takes to commute one way' on public transit, derived from Moovit app trip requests plus user research. Metro-area level, not the city proper. Secondary in the sense of being a private company's app data.",
+        "UK DfT TSGB0111 (2024, published 17 Dec 2025) = Labour Force Survey, Oct-Dec 2024, average usual one-way time to travel to work, by REGION OF WORKPLACE and usual method, minutes."
+      ]
+    },
+    "sections": {
+      "buses": "32 corridor/operator entries",
+      "transit": "17 cities"
+    }
+  },
+  "buses": [
+    {
+      "corridor": "NYC-Washington",
+      "from": "New York, NY",
+      "to": "Washington, DC",
+      "operator": "Megabus (US)",
+      "runningTime": {
+        "minutes": 260,
+        "range": null,
+        "note": "Operator's stated fastest trip: 'The fastest bus from New York to Washington takes 4 hours 20 minutes'.",
+        "source": "https://us.megabus.com/route-guides/new-york-to-washington-bus",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 34,
+        "qualifier": "up to",
+        "firstDeparture": "00:00",
+        "lastDeparture": "21:30",
+        "source": "https://us.megabus.com/route-guides/new-york-to-washington-bus",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 1.5,
+          "currency": "USD",
+          "fareType": "lowest advertised 'from' fare (promotional floor, not walk-up)",
+          "travelDate": "2026-09-29 to 2026-10-05 (shown for each date)",
+          "observedDate": "2026-09-29",
+          "source": "https://us.megabus.com/route-guides/new-york-to-washington-bus",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Non-refundable; can be 'traded in' for another trip more than 3 hours before departure. Trade-in fee $3.00 (>24h before), $5.00 (6-24h), $7.50 (3-6h), plus a $2.99 new-reservation fee ($7 by phone); original fare credited to the new booking. (Megabus terms page, via search snippet only, gives $3.99 for the new-reservation fee.)",
+        "source": "https://us.megabus.com/help/changing-reservations",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "No published on-time figure found for Megabus US.",
+        "Walk-up fare not published; only a 'from $1.50' floor.",
+        "New-reservation fee differs between help page ($2.99) and terms page per search snippet ($3.99)."
+      ]
+    },
+    {
+      "corridor": "NYC-Washington",
+      "from": "New York, NY",
+      "to": "Washington, DC",
+      "operator": "FlixBus / Greyhound (Flix group; the two sites show identical figures)",
+      "runningTime": {
+        "minutes": 210,
+        "range": null,
+        "note": "'3 hr 30 mins' shown as the minimum trip duration.",
+        "source": "https://www.greyhound.com/bus-routes/new-york-ny-washington-dc",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 73,
+        "qualifier": "daily departures across all NYC-area stops, combined FlixBus+Greyhound network",
+        "firstDeparture": "00:50",
+        "lastDeparture": "23:59",
+        "source": "https://www.flixbus.com/bus-routes/bus-new-york-ny-washington-dc",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 31.48,
+          "currency": "USD",
+          "fareType": "cheapest 'from' fare (Greyhound page)",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.greyhound.com/bus-routes/new-york-ny-washington-dc",
+          "sourceType": "primary"
+        },
+        {
+          "amount": 31.98,
+          "currency": "USD",
+          "fareType": "cheapest 'from' fare (FlixBus page)",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.flixbus.com/bus-routes/bus-new-york-ny-washington-dc",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Cancel up to 15 min before departure for a voucher: 100% if 30+ days out, 70% at 7-29 days, 40% at 2-6 days, 20% under 2 days; extras 100%; booking/service fees non-refundable. (Greyhound's page; FlixBus US uses the same Flix policy. Third-party guides describe older Economy/Economy Extra/Flexible fare types and a $20 change fee - not confirmed on an operator page.)",
+        "source": "https://www.greyhound.com/manage-my-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "73/day likely counts every NYC-area origin stop (Midtown, Queens, Newark area etc.), not only Port Authority.",
+        "No published on-time figure found."
+      ]
+    },
+    {
+      "corridor": "NYC-Washington",
+      "from": "New York, NY (Port Authority)",
+      "to": "Washington, DC (Union Station)",
+      "operator": "Peter Pan Bus Lines",
+      "runningTime": {
+        "minutes": 260,
+        "range": "260 fastest / 305 average (Wanderu); 317 (Wanderu carrier page)",
+        "source": "https://www.wanderu.com/en-us/bus/us-ny/new-york/us-dc/washington/",
+        "date": "2026-09-29 (search-result snippet, page not opened)",
+        "sourceType": "secondary"
+      },
+      "departuresPerDay": {
+        "count": 15,
+        "qualifier": "NY->DC; 16 DC->NY; Wanderu carrier page says 17",
+        "source": "https://www.wanderu.com/en-us/bus/us-ny/new-york/us-dc/washington/",
+        "date": "2026-09-29 (search-result snippet)",
+        "sourceType": "secondary"
+      },
+      "fares": [],
+      "refundChangeRules": {
+        "summary": "Refunds only on fares bought with the optional refundable add-on ($18.00); $5 per traveller cancellation fee deducted; request in writing at least 24h before departure. Changes before departure for a $10.00 fee plus fare difference (search-snippet wording from peterpanbus.com help pages); route page says 'Tickets can be changed before the scheduled departure for a small fee' and 'Refundable fares are available ... for an additional fee'.",
+        "source": "https://peterpanbus.com/help/refundablefares/ ; https://peterpanbus.com/help/changes/ ; https://peterpanbus.com/routes/new-york-city-to-boston-bus/",
+        "date": "2026-09-29 (fee amounts from search snippets; route-page wording fetched)",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Operator route page gives no fare, frequency or running time; all timing figures are Wanderu.",
+        "$18 / $5 / $10 fee amounts came from search-result snippets of Peter Pan help pages, not a fetched page.",
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "NYC-Boston",
+      "from": "New York, NY",
+      "to": "Boston, MA",
+      "operator": "Megabus (US)",
+      "runningTime": {
+        "minutes": 260,
+        "range": null,
+        "note": "'4 hours 20 minutes (fastest time)'",
+        "source": "https://us.megabus.com/route-guides/new-york-to-boston",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 37,
+        "qualifier": "up to",
+        "firstDeparture": "06:15",
+        "lastDeparture": "21:15",
+        "source": "https://us.megabus.com/route-guides/new-york-to-boston",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 1.5,
+          "currency": "USD",
+          "fareType": "lowest advertised 'from' fare",
+          "travelDate": "multiple dates shown (week of 2026-09-29)",
+          "observedDate": "2026-09-29",
+          "source": "https://us.megabus.com/route-guides/new-york-to-boston",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Same Megabus US trade-in rules: non-refundable; changes >3h before departure, $3.00/$5.00/$7.50 by lead time plus $2.99 new-reservation fee.",
+        "source": "https://us.megabus.com/help/changing-reservations",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "No published on-time figure.",
+        "37/day may include partner-operated services sold under the megabus brand."
+      ]
+    },
+    {
+      "corridor": "NYC-Boston",
+      "from": "New York, NY",
+      "to": "Boston, MA",
+      "operator": "Greyhound / FlixBus",
+      "runningTime": {
+        "minutes": 185,
+        "range": null,
+        "note": "Greyhound page: fastest '3 hr 5 mins'. A search snippet of the same page said '25 minutes', which is a template error and is disregarded.",
+        "source": "https://www.greyhound.com/bus-routes/new-york-ny-boston-ma",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 53,
+        "qualifier": "daily departures, all NYC-area stops, combined network",
+        "firstDeparture": "00:55",
+        "lastDeparture": "23:59",
+        "source": "https://www.greyhound.com/bus-routes/new-york-ny-boston-ma",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 33.98,
+          "currency": "USD",
+          "fareType": "cheapest 'from' fare (page); search snippet showed $33.48",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.greyhound.com/bus-routes/new-york-ny-boston-ma",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Voucher refund on a sliding scale by days before departure (100%/70%/40%/20%), cancel up to 15 min before; fees non-refundable.",
+        "source": "https://www.greyhound.com/manage-my-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "3h05 fastest seems short for Port Authority-South Station; may reflect an outer-borough or express pairing.",
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "NYC-Boston",
+      "from": "New York, NY (Port Authority)",
+      "to": "Boston, MA (South Station)",
+      "operator": "Peter Pan Bus Lines",
+      "runningTime": {
+        "minutes": 260,
+        "range": "260 fastest / 308 average (Wanderu snippet); 325 (Wanderu carrier page)",
+        "source": "https://www.wanderu.com/en-us/carrier/peter-pan-bus-lines-132/",
+        "date": "2026-09-29",
+        "sourceType": "secondary"
+      },
+      "departuresPerDay": {
+        "count": 35,
+        "qualifier": "weekdays; 40 on weekends (Wanderu snippet); Wanderu carrier page says 44",
+        "source": "https://www.wanderu.com/en-us/carrier/peter-pan-bus-lines-132/",
+        "date": "2026-09-29",
+        "sourceType": "secondary"
+      },
+      "fares": [
+        {
+          "amount": 14,
+          "currency": "USD",
+          "fareType": "'low fares starting at $14 one way' (advance)",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://peterpanbus.com/routes/new-york-city-to-boston-bus/",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Refundable only with the optional refundable-fare add-on; changes before departure for a fee plus fare difference ('Tickets can be changed before the scheduled departure for a small fee'). Help pages (snippet): $18 refundable add-on, $5 cancellation fee, $10 change fee.",
+        "source": "https://peterpanbus.com/routes/new-york-city-to-boston-bus/",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Departures and running time are Wanderu figures, which disagree with each other (35 vs 44/day).",
+        "Fee amounts from search snippets."
+      ]
+    },
+    {
+      "corridor": "NYC-Philadelphia",
+      "from": "New York, NY",
+      "to": "Philadelphia, PA",
+      "operator": "Megabus (US)",
+      "runningTime": {
+        "minutes": 110,
+        "range": null,
+        "note": "'The fastest bus from New York to Philadelphia takes 1 hours 50 minutes'",
+        "source": "https://us.megabus.com/route-guides/new-york-to-philadelphia-bus",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 29,
+        "qualifier": "up to",
+        "firstDeparture": "00:00",
+        "lastDeparture": "21:45",
+        "source": "https://us.megabus.com/route-guides/new-york-to-philadelphia-bus",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 1.5,
+          "currency": "USD",
+          "fareType": "lowest advertised 'from' fare",
+          "travelDate": "2026-09-29 to 2026-10-05",
+          "observedDate": "2026-09-29",
+          "source": "https://us.megabus.com/route-guides/new-york-to-philadelphia-bus",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Megabus US trade-in rules (non-refundable; $3.00/$5.00/$7.50 + $2.99).",
+        "source": "https://us.megabus.com/help/changing-reservations",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "NYC-Philadelphia",
+      "from": "New York, NY",
+      "to": "Philadelphia, PA",
+      "operator": "FlixBus / Greyhound",
+      "runningTime": {
+        "minutes": null,
+        "range": null,
+        "note": "Both operator pages state a minimum of '0 hr 40 mins', which is implausible for the city pair (likely a suburban stop pairing or template error). Not used.",
+        "source": "https://www.flixbus.com/bus-routes/bus-new-york-ny-philadelphia-pa",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 40,
+        "qualifier": "daily departures, all NYC-area stops, combined network",
+        "firstDeparture": "00:50",
+        "lastDeparture": "22:30",
+        "source": "https://www.greyhound.com/bus-routes/new-york-ny-philadelphia-pa",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 14.98,
+          "currency": "USD",
+          "fareType": "cheapest 'from' fare",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.flixbus.com/bus-routes/bus-new-york-ny-philadelphia-pa",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Flix/Greyhound voucher scale (100%/70%/40%/20% by 30+/7-29/2-6/<2 days), cancel up to 15 min before.",
+        "source": "https://www.greyhound.com/manage-my-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Running time: published figure (40 min) not credible; real Midtown-Center City time unconfirmed.",
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "NYC-Philadelphia",
+      "from": "New York, NY",
+      "to": "Philadelphia, PA",
+      "operator": "Peter Pan Bus Lines",
+      "runningTime": {
+        "minutes": 124,
+        "range": null,
+        "note": "Wanderu carrier page duration '2h 4m' (likely average).",
+        "source": "https://www.wanderu.com/en-us/carrier/peter-pan-bus-lines-132/",
+        "date": "2026-09-29",
+        "sourceType": "secondary"
+      },
+      "departuresPerDay": {
+        "count": 19,
+        "qualifier": "Wanderu carrier page",
+        "source": "https://www.wanderu.com/en-us/carrier/peter-pan-bus-lines-132/",
+        "date": "2026-09-29",
+        "sourceType": "secondary"
+      },
+      "fares": [],
+      "refundChangeRules": {
+        "summary": "As for Peter Pan generally: refundable add-on required for refunds; change fee plus fare difference before departure.",
+        "source": "https://peterpanbus.com/routes/new-york-city-to-boston-bus/",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "No operator page for this pair was fetched; all timing figures are Wanderu.",
+        "No fare found."
+      ]
+    },
+    {
+      "corridor": "LA-San Diego",
+      "from": "Los Angeles, CA",
+      "to": "San Diego, CA",
+      "operator": "FlixBus / Greyhound",
+      "runningTime": {
+        "minutes": 155,
+        "range": null,
+        "note": "'2 hr 35 mins' minimum",
+        "source": "https://www.greyhound.com/bus-routes/los-angeles-ca-san-diego-ca",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 9,
+        "firstDeparture": "06:20",
+        "lastDeparture": "20:20",
+        "source": "https://www.flixbus.com/bus-routes/bus-los-angeles-ca-san-diego-ca",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 22.98,
+          "currency": "USD",
+          "fareType": "cheapest 'from' fare",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.greyhound.com/bus-routes/los-angeles-ca-san-diego-ca",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Flix/Greyhound voucher scale by days before departure; cancel up to 15 min before; fees non-refundable.",
+        "source": "https://www.greyhound.com/manage-my-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "No other intercity bus operator researched on this corridor.",
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "LA-Las Vegas",
+      "from": "Los Angeles, CA",
+      "to": "Las Vegas, NV",
+      "operator": "FlixBus / Greyhound",
+      "runningTime": {
+        "minutes": 260,
+        "range": null,
+        "note": "'4 hr 20 mins' minimum",
+        "source": "https://www.flixbus.com/bus-routes/bus-los-angeles-ca-las-vegas-nv",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 14,
+        "firstDeparture": "00:30",
+        "lastDeparture": "19:45",
+        "source": "https://www.greyhound.com/bus-routes/los-angeles-ca-las-vegas-nv",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 37.98,
+          "currency": "USD",
+          "fareType": "cheapest 'from' fare",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.flixbus.com/bus-routes/bus-los-angeles-ca-las-vegas-nv",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Flix/Greyhound voucher scale by days before departure; cancel up to 15 min before.",
+        "source": "https://www.greyhound.com/manage-my-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Other operators on this corridor not researched.",
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "London-Manchester",
+      "from": "London (Victoria / Golders Green)",
+      "to": "Manchester (Central Coach Station)",
+      "operator": "National Express",
+      "runningTime": {
+        "minutes": 255,
+        "range": null,
+        "note": "'4 hrs 15 mins (from Golders Green)' is the fastest; from Victoria is longer.",
+        "source": "https://www.nationalexpress.com/en/destinations/manchester/london-to-manchester",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 27,
+        "qualifier": "up to",
+        "firstDeparture": "07:00",
+        "lastDeparture": "23:30",
+        "source": "https://www.nationalexpress.com/en/destinations/manchester/london-to-manchester",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 9.9,
+          "currency": "GBP",
+          "fareType": "'From £9.90 one-way'",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.nationalexpress.com/en/destinations/manchester/london-to-manchester",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Restricted and Standard fares non-refundable; Standard amendable before the departure date for £5 online (£6 via contact centre) plus any excess fare. Fully Flexible: unlimited amendments free (excess may apply), refundable if cancelled 24h before travel. Booking fee non-refundable. 'Change and Go' add-on £5/journey lets you board any available coach within 12h before/after.",
+        "source": "https://www.nationalexpress.com/en/help/tickets/refunds-amends ; https://faq.nationalexpress.com/s/article/What-is-the-difference-between-a-Restricted-fare-Standard-fare-and-a-Fully-Flexible-fare-1581438956696",
+        "date": "2026-09-29 (fee details via search snippet; Change and Go confirmed on route page)",
+        "sourceType": "primary"
+      },
+      "punctuality": {
+        "value": 86.9,
+        "unit": "% on-time performance (OTP)",
+        "scope": "National Express UK Coach network-wide, FY2023 (FY2022: 88.9%)",
+        "source": "https://www.mobicogroup.com/media/hzvfojcs/uk-germany-annual-report-and-accounts-2023.pdf",
+        "date": "FY2023 (calendar 2023)",
+        "sourceType": "primary"
+      },
+      "uncertain": [
+        "Punctuality is network-wide, not route-specific; OTP definition (tolerance window) not stated in the extract.",
+        "No more recent (2024/2025) coach OTP confirmed.",
+        "Amendment fee amounts from search snippet of NX help pages."
+      ]
+    },
+    {
+      "corridor": "London-Manchester",
+      "from": "London Victoria",
+      "to": "Manchester Coach Station",
+      "operator": "Megabus (UK)",
+      "runningTime": {
+        "minutes": 260,
+        "range": null,
+        "note": "Fastest 4h20 per search-result snippet of uk.megabus.com route guide; page itself redirected/403.",
+        "source": "https://uk.megabus.com/route-guides/london-to-manchester",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 7,
+        "qualifier": "up to; snippet, page not readable (aggregators say 6)",
+        "firstDeparture": "05:30",
+        "lastDeparture": "23:00",
+        "source": "https://uk.megabus.com/route-guides/london-to-manchester",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "primary"
+      },
+      "fares": [],
+      "refundChangeRules": {
+        "summary": "No cancellations/refunds after booking except under the Delays and Cancellations provisions (if Megabus cancels <14 days out: choice of alternative or full refund). Amendments at least 24h before travel: £3.75 online (£2.25 amendment + £1.50 rebooking) or £5.35 via agency, plus fare difference; no credit if the new fare is lower.",
+        "source": "https://www.megabus.co.uk/terms-conditions/conditions-of-carriage/ ; https://www.megabus.co.uk/help/payment-discounts-and-refunds/",
+        "date": "2026-09-29 (search-result snippets; megabus.co.uk returned 403 to direct fetch)",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "megabus.co.uk blocks direct fetch (403); all Megabus UK figures are from search snippets of operator pages.",
+        "No fare observed; Omio lists 'from £' figures for other operators only.",
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "London-Manchester",
+      "from": "London",
+      "to": "Manchester",
+      "operator": "FlixBus (UK)",
+      "runningTime": {
+        "minutes": 240,
+        "range": null,
+        "note": "Page: 'generally takes about 4 hours' (approximate, not a timetable figure).",
+        "source": "https://www.flixbus.co.uk/bus-routes/london-manchester",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 19,
+        "qualifier": "approximately",
+        "firstDeparture": "04:55",
+        "lastDeparture": "23:59",
+        "source": "https://www.flixbus.co.uk/bus-routes/london-manchester",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 8.49,
+          "currency": "GBP",
+          "fareType": "'from' fare",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.flixbus.co.uk/bus-routes/london-manchester",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Cancel up to 15 min before departure for a voucher: 100% (30+ days), 70% (7-29), 40% (2-6), 20% (<2 days); extras 100%; booking/service fees non-refundable. Changes online up to 15 min before, paying any fare increase; a cheaper new ride returns the difference as a voucher (valid 12 months).",
+        "source": "https://www.flixbus.co.uk/service/change-cancel-a-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Change rules and voucher validity from search snippet of FlixBus help pages; cancellation scale confirmed on page.",
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "London-Edinburgh",
+      "from": "London Victoria",
+      "to": "Edinburgh",
+      "operator": "National Express",
+      "runningTime": {
+        "minutes": 580,
+        "range": null,
+        "note": "'9 hrs 40 mins (from London Victoria)' fastest",
+        "source": "https://www.nationalexpress.com/en/destinations/edinburgh/london-to-edinburgh",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 3,
+        "qualifier": "up to",
+        "source": "https://www.nationalexpress.com/en/destinations/edinburgh/london-to-edinburgh",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 33.4,
+          "currency": "GBP",
+          "fareType": "'from' one-way, limited availability",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.nationalexpress.com/en/destinations/edinburgh/london-to-edinburgh",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "As National Express generally: Standard non-refundable, amend £5 online + excess; Fully Flexible refundable 24h before; Change and Go £5.",
+        "source": "https://www.nationalexpress.com/en/help/tickets/refunds-amends",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": {
+        "value": 86.9,
+        "unit": "% OTP",
+        "scope": "UK Coach network-wide FY2023",
+        "source": "https://www.mobicogroup.com/media/hzvfojcs/uk-germany-annual-report-and-accounts-2023.pdf",
+        "date": "FY2023",
+        "sourceType": "primary"
+      },
+      "uncertain": [
+        "Punctuality not route-specific."
+      ]
+    },
+    {
+      "corridor": "London-Edinburgh",
+      "from": "London",
+      "to": "Edinburgh",
+      "operator": "Megabus (UK)",
+      "runningTime": {
+        "minutes": 470,
+        "range": null,
+        "note": "'fastest coach ... 7h 50m' - aggregator (Omio/Rome2Rio) snippet, not operator.",
+        "source": "https://www.omio.co.uk/coaches/london/edinburgh",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "secondary"
+      },
+      "departuresPerDay": {
+        "count": 6,
+        "qualifier": "aggregator snippet",
+        "source": "https://www.omio.co.uk/coaches/london/edinburgh",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "secondary"
+      },
+      "fares": [
+        {
+          "amount": 19,
+          "currency": "GBP",
+          "fareType": "aggregator 'from' fare (Omio title 'from £19 with Megabus'); another snippet gave £32 as cheapest Megabus price",
+          "travelDate": null,
+          "observedDate": "2026-09-29 (search snippet)",
+          "source": "https://www.omio.co.uk/coaches/london/edinburgh",
+          "sourceType": "secondary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Megabus UK: non-refundable; amend ≥24h before, £3.75 online + fare difference.",
+        "source": "https://www.megabus.co.uk/terms-conditions/conditions-of-carriage/",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "megabus.co.uk 403; no operator-page figures for this route.",
+        "Aggregator figures conflict (£19 vs £32)."
+      ]
+    },
+    {
+      "corridor": "London-Edinburgh",
+      "from": "London",
+      "to": "Edinburgh",
+      "operator": "FlixBus (UK)",
+      "runningTime": {
+        "minutes": 435,
+        "range": null,
+        "note": "'7 hr 15 mins' fastest",
+        "source": "https://www.flixbus.co.uk/bus-routes/london-edinburgh",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 8,
+        "qualifier": "approximately",
+        "firstDeparture": "00:25",
+        "lastDeparture": "23:59",
+        "source": "https://www.flixbus.co.uk/bus-routes/london-edinburgh",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 29.49,
+          "currency": "GBP",
+          "fareType": "'from' fare (a search snippet showed £26.99)",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.flixbus.co.uk/bus-routes/london-edinburgh",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "FlixBus voucher scale 100/70/40/20% by lead time; cancel up to 15 min before.",
+        "source": "https://www.flixbus.co.uk/service/change-cancel-a-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "No published on-time figure."
+      ]
+    },
+    {
+      "corridor": "Dublin-Cork",
+      "from": "Dublin Busáras",
+      "to": "Cork Bus Station (Parnell Place)",
+      "operator": "Bus Éireann (route 245X, NTA PSO; successor to Expressway X8 from 2021-09-05)",
+      "runningTime": {
+        "minutes": 240,
+        "range": "230-243 (Dublin->Cork 235-243; Cork->Dublin 230-234)",
+        "note": "Dublin dep 08:00/12:00/14:00/18:00 arr 12:03/16:00/18:00/21:55; Cork dep same times arr 11:54/15:51/17:50/21:52.",
+        "source": "https://bustimes.org/services/245x-2",
+        "date": "NTA timetable data dated 2026-09-28, valid 2026-09-29 to 2026-10-20",
+        "sourceType": "secondary"
+      },
+      "departuresPerDay": {
+        "count": 4,
+        "qualifier": "each direction, Mon-Sun",
+        "source": "https://bustimes.org/services/245x-2",
+        "date": "2026-09-28 NTA data",
+        "sourceType": "secondary"
+      },
+      "fares": [
+        {
+          "amount": 16.5,
+          "currency": "EUR",
+          "fareType": "cash adult single (as announced at 245X launch; 'some fares increased by €1')",
+          "travelDate": null,
+          "observedDate": "published 2021-08-19",
+          "source": "https://www.transportforireland.ie/news/cork-to-dublin-bus-connectivity-to-be-maintained-by-introducing-a-new-public-service-obligation-pso-route-245x/",
+          "sourceType": "primary"
+        },
+        {
+          "amount": 12.25,
+          "currency": "EUR",
+          "fareType": "Leap card adult single (30% discount)",
+          "travelDate": null,
+          "observedDate": "published 2021-08-19",
+          "source": "https://www.transportforireland.ie/news/cork-to-dublin-bus-connectivity-to-be-maintained-by-introducing-a-new-public-service-obligation-pso-route-245x/",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Expressway/Bus Éireann online bookings: reserved seats non-refundable; booking amendable up to 1 hour before departure for €5.00 per passenger plus fare difference; unused-ticket refund requests considered only in writing with the ticket; no refunds on partly used/lost tickets.",
+        "source": "https://www.transportforireland.ie/support/bus-eireann-refund-policy/ ; https://www.expressway.ie/tickets-and-fares",
+        "date": "2026-09-29 (search-result snippet; expressway.ie returned empty on fetch)",
+        "sourceType": "primary"
+      },
+      "punctuality": {
+        "value": null,
+        "series2024": {
+          "P1": 65.6,
+          "P2": 65.4,
+          "P3": 69.5,
+          "P4": 70,
+          "P5": 65.6,
+          "P6": 70,
+          "P7": 68.1,
+          "P8": 63.9,
+          "P9": 66.5,
+          "P10": 56.9,
+          "P11": 60.1,
+          "P12": 66.8,
+          "P13": 68
+        },
+        "series2025": {
+          "values": [
+            69.5,
+            76.1,
+            71.9
+          ],
+          "note": "three 2025 four-week-period values printed in the P3/P2/P1 column positions; PDF text extraction layout, so period attribution not certain"
+        },
+        "unit": "% of stop departures on time (-1 min to +5:59 min of schedule, AVL-recorded)",
+        "standard": "245X is Category C: Minimum Performance Standard 73%",
+        "scope": "route 245X, 4-week periods",
+        "source": "https://www.nationaltransport.ie/wp-content/uploads/2025/11/Q3-2023-to-Q2-2025-Bus-Eireann-Punctuality-Report-Route-by-Route.pdf",
+        "date": "2024 P1-P13; 2025 up to Q2",
+        "sourceType": "primary"
+      },
+      "uncertain": [
+        "Timetable from bustimes.org (NTA GTFS feed) because buseireann.ie route page rendered no times; a timetable change took effect 2026-09-27 per search snippet.",
+        "Current 245X fare not confirmed; the €16.50/€12.25 figures are from 2021.",
+        "2025 punctuality column attribution uncertain."
+      ]
+    },
+    {
+      "corridor": "Dublin-Cork",
+      "from": "Dublin City (Aston Quay)",
+      "to": "Cork (Lower Glanmire Road)",
+      "operator": "Aircoach (route 704X)",
+      "runningTime": {
+        "minutes": 180,
+        "range": "180-210",
+        "note": "Timetable shows 3h00 end to end (e.g. 07:00->10:00); operator blog says 'between 3 and 3.5 hours, depending on traffic'.",
+        "source": "https://www.aircoach.ie/timetables/704X",
+        "date": "timetable valid until 2026-12-23; observed 2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 16,
+        "qualifier": "each direction from Dublin city; operator marketing says '36 daily services' (both directions incl. Dublin Airport)",
+        "source": "https://www.aircoach.ie/timetables/704X",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 16,
+          "currency": "EUR",
+          "fareType": "'start from just €16' (same page also says 'from just €18')",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.aircoach.ie/cork",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Online tickets non-refundable unless Aircoach fails to provide the journey; on-bus singles non-refundable; date/time changes possible within 48h of purchase; optional 'Flexibook Plus' add-on permits changes and cancellation with refund.",
+        "source": "https://www.aircoach.ie/terms-and-conditions",
+        "date": "2026-09-29 (search-result snippet)",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Fare page gives two different 'from' figures (€16 and €18).",
+        "Refund terms from search snippet, not a fetched page.",
+        "Commercial route; not in NTA punctuality reports."
+      ]
+    },
+    {
+      "corridor": "Dublin-Cork",
+      "from": "Dublin City",
+      "to": "Cork (Andersons Quay)",
+      "operator": "Dublin Coach ('The Green Bus', M9 Express route 600 via Kilkenny and Waterford)",
+      "runningTime": {
+        "minutes": 200,
+        "range": null,
+        "note": "Cork 05:05 -> Dublin City 08:25 example (3h20) as read from the timetable page.",
+        "source": "https://www.dublincoach.ie/all-timetables/m9-express-service",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 10,
+        "qualifier": "each direction, Mon-Sun",
+        "source": "https://www.dublincoach.ie/all-timetables/m9-express-service",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 25,
+          "currency": "EUR",
+          "fareType": "adult single, online or onboard (walk-up price same as online)",
+          "travelDate": null,
+          "observedDate": "fare table dated 2026-05-11, viewed 2026-09-29",
+          "source": "https://www.dublincoach.ie/all-timetables/m9-express-service",
+          "sourceType": "primary"
+        },
+        {
+          "amount": 50,
+          "currency": "EUR",
+          "fareType": "adult return",
+          "travelDate": null,
+          "observedDate": "fare table dated 2026-05-11",
+          "source": "https://www.dublincoach.ie/all-timetables/m9-express-service",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": null,
+      "punctuality": null,
+      "uncertain": [
+        "3h20 for a route via Waterford and Kilkenny looks short; the extracted trip may be a partial run - verify on the timetable.",
+        "Refund/change terms not researched.",
+        "Dublin Coach runs no Dublin-Belfast service found."
+      ]
+    },
+    {
+      "corridor": "Dublin-Belfast",
+      "from": "Dublin Busáras / Dublin Airport",
+      "to": "Belfast Grand Central",
+      "operator": "Translink Goldliner & Bus Éireann (route X1)",
+      "runningTime": {
+        "minutes": null,
+        "range": null,
+        "note": "Not confirmed. Search snippets say 'approximately 2 hours' / 'at least 2 hours'.",
+        "source": null,
+        "date": null,
+        "sourceType": null
+      },
+      "departuresPerDay": {
+        "count": 17,
+        "qualifier": "Mon-Fri from Dublin Busáras (07:45 to 23:45 hourly at :45); a Dublin Airport snippet says 21/day and X1/X2 combined run every 30 min 06:00-18:30 in summer",
+        "source": "https://bustimes.org/services/x1-belfast-dublin-airport-dublin",
+        "date": "Translink open data 2026-09-04",
+        "sourceType": "secondary"
+      },
+      "fares": [
+        {
+          "amount": 9,
+          "currency": "GBP",
+          "fareType": "online Low single, Belfast->Dublin Airport (Semi Flexible £11, Flexible £13; returns £14.50/£17.50/£21.00)",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.translink.co.uk/using-translink/cross-border-travel/goldliner-cross-border-coach-service",
+          "sourceType": "primary"
+        },
+        {
+          "amount": 10,
+          "currency": "GBP",
+          "fareType": "online Low single, Belfast->Dublin City (Semi Flexible £12, Flexible £14) - search snippet only",
+          "travelDate": null,
+          "observedDate": "2026-09-29 (snippet)",
+          "source": "https://www.translink.co.uk/using-translink/cross-border-travel/goldliner-cross-border-coach-service",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Three fare tiers (Low / Semi Flexible / Flexible); eTickets sold up to 60 min before departure. Detailed refund/change terms not on the page (refers to full T&Cs). Bus Éireann side: €5 amendment fee rule for Expressway bookings.",
+        "source": "https://www.translink.co.uk/using-translink/cross-border-travel/goldliner-cross-border-coach-service",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Running time not confirmed from a timetable.",
+        "Refund terms per fare tier not confirmed.",
+        "X1 is not in the NTA route-by-route punctuality report extract."
+      ]
+    },
+    {
+      "corridor": "Dublin-Belfast",
+      "from": "Dublin City (Gresham Hotel, O'Connell St)",
+      "to": "Belfast Grand Central",
+      "operator": "Aircoach (route 705X)",
+      "runningTime": {
+        "minutes": 150,
+        "range": "145-150",
+        "note": "00:50 Dublin -> 03:20 Belfast (2h30); Belfast 07:10 -> Dublin city 09:35 (2h25). Airport-Belfast marketed as ~1h50.",
+        "source": "https://www.aircoach.ie/timetables/705X",
+        "date": "timetable valid until 2026-12-23; observed 2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 16,
+        "qualifier": "from Dublin city (Belfast->Dublin 17); operator states '34 daily services to/from Belfast'",
+        "source": "https://www.aircoach.ie/timetables/705X",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 12,
+          "currency": "EUR",
+          "fareType": "'from only £11/€12' (search snippet of Aircoach fare page)",
+          "travelDate": null,
+          "observedDate": "2026-09-29 (snippet)",
+          "source": "https://www.aircoach.ie/plan-journey/fares/route-705-city-express-belfast-dublin-airport-and-dublin-city-centre",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Online tickets non-refundable (unless journey not provided); changes within 48h of purchase; Flexibook Plus add-on allows change/cancel with refund.",
+        "source": "https://www.aircoach.ie/terms-and-conditions",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Extracted departure and arrival lists were misaligned (16 vs 17 entries); running time taken from unambiguous first-trip pairs only.",
+        "Fare from search snippet."
+      ]
+    },
+    {
+      "corridor": "Dublin-Belfast",
+      "from": "Dublin City",
+      "to": "Belfast",
+      "operator": "Dublin Express (Go-Ahead / National Express-branded)",
+      "runningTime": {
+        "minutes": 140,
+        "range": null,
+        "note": "fastest '2 hrs 20 mins' from Dublin City; 1h45 from Dublin Airport",
+        "source": "https://www.dublinexpress.ie/belfast/dublin-city-to-belfast",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 16,
+        "firstDeparture": "05:20",
+        "source": "https://www.dublinexpress.ie/belfast/dublin-city-to-belfast",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 15.5,
+          "currency": "EUR",
+          "fareType": "'From just €15.50' single (FAQ on same page says from €11.50)",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.dublinexpress.ie/belfast/dublin-city-to-belfast",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "'Standard tickets cannot be cancelled or refunded'; refundable tickets need 24 hours' notice before outward departure, via the cancellation portal.",
+        "source": "https://www.dublinexpress.ie/cancellations",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Page shows two different 'from' fares.",
+        "Ownership note: page says 'part of National Express'; not further verified."
+      ]
+    },
+    {
+      "corridor": "Mexico City-Toluca",
+      "from": "Mexico City (Observatorio)",
+      "to": "Toluca (Terminal)",
+      "operator": "Caminante (TMT)",
+      "runningTime": {
+        "minutes": 80,
+        "range": null,
+        "note": "'TIEMPO ESTIMADO: 1H 20MIN'",
+        "source": "https://tmt-caminante.com.mx/Toluca.html",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": null,
+        "qualifier": "every 20-30 min; Toluca->Observatorio weekdays 05:00-20:00, weekends 06:30-20:00 (search snippet elsewhere says every 15 min)",
+        "source": "https://tmt-caminante.com.mx/Toluca.html",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 100,
+          "currency": "MXN",
+          "fareType": "one-way, Terminal Toluca -> Observatorio (primera clase)",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://tmt-caminante.com.mx/Toluca.html",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": null,
+      "punctuality": null,
+      "uncertain": [
+        "Page states Toluca->CDMX direction; reverse hours not confirmed.",
+        "No refund policy found.",
+        "Caminante added because ETN's Toluca-CDMX service could not be confirmed."
+      ]
+    },
+    {
+      "corridor": "Mexico City-Toluca",
+      "from": "Mexico City",
+      "to": "Toluca",
+      "operator": "ETN Turistar",
+      "runningTime": null,
+      "departuresPerDay": null,
+      "fares": [],
+      "refundChangeRules": null,
+      "punctuality": null,
+      "uncertain": [
+        "ETN's Toluca terminal page lists no CDMX service; a search snippet claiming ETN Taxqueña-Toluca in 2h10 from '$6' came from an aggregator and could not be confirmed. Treat as unconfirmed whether ETN runs this pair."
+      ]
+    },
+    {
+      "corridor": "Mexico City-Puebla",
+      "from": "Mexico City (TAPO)",
+      "to": "Puebla (CAPU)",
+      "operator": "ADO",
+      "runningTime": {
+        "minutes": null,
+        "range": "120-150",
+        "note": "'normally takes around 2 to 2:30 hours' - search snippet of ado.com.mx; Rome2Rio snippet says 2h20.",
+        "source": "https://www.ado.com.mx/viajes/terminal-mexico-tapo-a-terminal-puebla-capu",
+        "date": "2026-09-29 (snippet; ado.com.mx returned 403)",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 48,
+        "qualifier": "Rome2Rio snippet: 'every 30 minutes... 48 salidas por día' (CAPU->TAPO); ADO snippet says 'practically every 10 minutes' across all CDMX terminals",
+        "source": "https://www.rome2rio.com/s/Puebla-CAPU/M%C3%A9xico-TAPO",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "secondary"
+      },
+      "fares": [
+        {
+          "amount": 290,
+          "currency": "MXN",
+          "fareType": "'tarifa normal' (full fare), with discounts 'desde $170' - aggregator snippet",
+          "travelDate": null,
+          "observedDate": "2026-09-29 (snippet)",
+          "source": "https://www.rome2rio.com/s/Puebla-CAPU/M%C3%A9xico-TAPO",
+          "sourceType": "secondary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Cancel at least 60 min before departure (not once boarded); credit goes to 'Saldo Max' wallet; tickets bought at promotional 'Compra con tiempo'/'Compra Anticipada' fares are not cancellable. Changes of date/time up to 30 min before departure on participating routes (snippet).",
+        "source": "https://contenido.ado.com.mx/en/movil/politica-cancelacion-boleto ; https://hola.ado.com.mx/hc/es/articles/360060895312-Cancelaci%C3%B3n-de-boletos",
+        "date": "2026-09-29 (60-min rule confirmed on page; rest from snippets)",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "ado.com.mx route page 403; running time and fares not confirmed on operator page.",
+        "Departures/day from aggregator."
+      ]
+    },
+    {
+      "corridor": "Mexico City-Puebla",
+      "from": "Puebla (CAPU)",
+      "to": "Mexico City",
+      "operator": "Estrella Roja",
+      "runningTime": {
+        "minutes": 150,
+        "range": null,
+        "note": "'duración de 2 hrs 30 mins' - search snippet (Reservamos)",
+        "source": "https://www.reservamos.mx/grupo-autobuses/ger/puebla",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "secondary"
+      },
+      "departuresPerDay": {
+        "count": 39,
+        "qualifier": "Puebla->CDMX, 03:00-22:20 (snippet)",
+        "source": "https://www.reservamos.mx/grupo-autobuses/ger/puebla",
+        "date": "2026-09-29 (snippet)",
+        "sourceType": "secondary"
+      },
+      "fares": [
+        {
+          "amount": 218,
+          "currency": "MXN",
+          "fareType": "ER Directo Económico (snippet)",
+          "travelDate": null,
+          "observedDate": "2026-09-29 (snippet)",
+          "source": "https://www.reservamos.mx/grupo-autobuses/ger",
+          "sourceType": "secondary"
+        },
+        {
+          "amount": 258,
+          "currency": "MXN",
+          "fareType": "ER Primera Clase (snippet)",
+          "travelDate": null,
+          "observedDate": "2026-09-29 (snippet)",
+          "source": "https://www.reservamos.mx/grupo-autobuses/ger",
+          "sourceType": "secondary"
+        }
+      ],
+      "refundChangeRules": null,
+      "punctuality": null,
+      "uncertain": [
+        "estrellaroja.com.mx page rendered no content; all figures are from aggregator snippets.",
+        "Old 4 Poniente terminal closed 2020-02-01."
+      ]
+    },
+    {
+      "corridor": "Mexico City-Guadalajara",
+      "from": "Mexico City (Central del Norte / Central del Sur)",
+      "to": "Guadalajara (Nueva Central Camionera)",
+      "operator": "ETN Turistar",
+      "runningTime": {
+        "minutes": null,
+        "range": "360-420",
+        "note": "'6 a 7 horas (aprox.)'",
+        "source": "https://etn.com.mx/rutas/cdmx-a-guadalajara.php",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 10,
+        "qualifier": "'Más de 10 corridas programadas', roughly every two hours",
+        "source": "https://etn.com.mx/rutas/cdmx-a-guadalajara.php",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 635,
+          "currency": "MXN",
+          "fareType": "'desde $635.00 MXN' Gran Lujo, advance/lowest",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://etn.com.mx/rutas/cdmx-a-guadalajara.php",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Free changes from 90 min after purchase up to 90 min before departure; time changes at ticket offices ≥1h before with ID. No cancellation of online purchases, but can convert to an open ticket valid 6 months. Missed trips not refunded. 'Viajero Anticipado' advance fares: no cancellations or refunds.",
+        "source": "https://venta.etn.com.mx/movil/Politicasmovil.htm ; https://etn.com.mx/viajero-anticipado/",
+        "date": "2026-09-29 (search-result snippets)",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "'More than 10' is a floor, recorded as 10.",
+        "Policy text from search snippets, not fetched."
+      ]
+    },
+    {
+      "corridor": "Mexico City-Guadalajara",
+      "from": "Guadalajara (Central, Módulo 2-3)",
+      "to": "Mexico City (Central del Norte)",
+      "operator": "Primera Plus",
+      "runningTime": {
+        "minutes": 390,
+        "range": null,
+        "note": "'Viaje programado de aproximadamente 6h 30min' (e.g. 15:00->21:30, 16:20->22:50, 17:40->00:10)",
+        "source": "https://tickets.primeraplus.com.mx/routes/autobus-guadalajara-a-ciudad-de-mexico",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 19,
+        "qualifier": "'hasta 19 salidas en la fecha de servicio revisada' (GDL->CDMX)",
+        "source": "https://tickets.primeraplus.com.mx/routes/autobus-guadalajara-a-ciudad-de-mexico",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 1335,
+          "currency": "MXN",
+          "fareType": "range 1,335-1,355 MXN CDMX->GDL (search snippet; operator page showed no fares)",
+          "travelDate": null,
+          "observedDate": "2026-09-29 (snippet)",
+          "source": "https://www.reservamos.mx/autobuses/primera-plus/a-guadalajara",
+          "sourceType": "secondary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "One change of date or time allowed, up to 1 hour before departure. Online tickets can be cancelled; refund to the original card within 15 business days.",
+        "source": "https://tickets.primeraplus.com.mx/routes/autobus-guadalajara-a-ciudad-de-mexico",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "Fare is a snippet figure of unclear source.",
+        "ADO also serves this pair; not researched."
+      ]
+    },
+    {
+      "corridor": "Toronto-Montreal",
+      "from": "Toronto",
+      "to": "Montreal",
+      "operator": "Megabus (Canada)",
+      "runningTime": {
+        "minutes": 385,
+        "range": null,
+        "note": "'6 hours 25 minutes (fastest time)'; Montreal->Toronto fastest 6h10 per snippet",
+        "source": "https://ca.megabus.com/route-guides/toronto-to-montreal",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 25,
+        "qualifier": "up to",
+        "firstDeparture": "00:30",
+        "lastDeparture": "23:30",
+        "source": "https://ca.megabus.com/route-guides/toronto-to-montreal",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 2,
+          "currency": "CAD",
+          "fareType": "lowest advertised 'from' fare (currency assumed CAD from .ca site)",
+          "travelDate": "dates shown week of 2026-09-29",
+          "observedDate": "2026-09-29",
+          "source": "https://ca.megabus.com/route-guides/toronto-to-montreal",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": null,
+      "punctuality": null,
+      "uncertain": [
+        "'Up to 25/day' may include partner and multi-stop services; aggregators cite 11-14.",
+        "Canadian Megabus change fees not confirmed (US rules may not apply)."
+      ]
+    },
+    {
+      "corridor": "Toronto-Montreal",
+      "from": "Toronto",
+      "to": "Montreal",
+      "operator": "FlixBus (Canada)",
+      "runningTime": {
+        "minutes": 525,
+        "range": null,
+        "note": "quickest '8 hours 45 minutes'",
+        "source": "https://www.flixbus.ca/bus-routes/toronto-on-montreal-pq",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": 5,
+        "source": "https://www.flixbus.ca/bus-routes/toronto-on-montreal-pq",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [
+        {
+          "amount": 82.96,
+          "currency": "CAD",
+          "fareType": "'from' (average $87.97); currency assumed CAD",
+          "travelDate": null,
+          "observedDate": "2026-09-29",
+          "source": "https://www.flixbus.ca/bus-routes/toronto-on-montreal-pq",
+          "sourceType": "primary"
+        }
+      ],
+      "refundChangeRules": {
+        "summary": "Flix group voucher scale (100/70/40/20% by 30+/7-29/2-6/<2 days), cancel up to 15 min before - assumed same as other Flix markets; Canada page not checked.",
+        "source": "https://global.flixbus.com/service/change-cancel-a-booking/cancellation-policy",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "punctuality": null,
+      "uncertain": [
+        "8h45 fastest suggests FlixBus's trips are indirect/connecting.",
+        "Canada-specific cancellation policy not confirmed."
+      ]
+    },
+    {
+      "corridor": "Toronto-Montreal",
+      "from": "Montreal (downtown)",
+      "to": "Toronto (Union Station Bus Terminal, 81 Bay St)",
+      "operator": "Orléans Express with Red Arrow (transfer at Ottawa VIA station)",
+      "runningTime": {
+        "minutes": null,
+        "range": "< 480",
+        "note": "'Travel Montreal -> Toronto in under 8 h'",
+        "source": "https://orleansexpress.com/en/toronto/",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "departuresPerDay": {
+        "count": null,
+        "qualifier": "Montreal departures 07:00, 09:30, 15:00 and Toronto departures 08:30, 11:30, 14:15, 16:30, 19:00 'depending on the day'",
+        "source": "https://orleansexpress.com/en/toronto/",
+        "date": "2026-09-29",
+        "sourceType": "primary"
+      },
+      "fares": [],
+      "refundChangeRules": null,
+      "punctuality": null,
+      "uncertain": [
+        "Not a direct service - Orléans Express itself does not run Toronto-Montreal end to end.",
+        "Day-of-week pattern and fares not captured.",
+        "Montreal bus station construction from 2026-01-26 may affect service."
+      ]
+    }
+  ],
+  "transit": {
+    "New York": {
+      "fares": {
+        "baseFare": {
+          "value": 3,
+          "unit": "USD",
+          "note": "Subway and local bus, OMNY/tap; raised from $2.90",
+          "effective": "January 2026",
+          "source": "https://www.mta.info/press-release/mta-board-adopts-fare-and-toll-increases-take-effect-january-2026",
+          "sourceType": "primary"
+        },
+        "singleRideTicket": {
+          "value": 3.5,
+          "unit": "USD",
+          "effective": "January 2026",
+          "source": "https://ny1.com/nyc/all-boroughs/news/2025/09/30/mta-board-approves-subway-and-bus-fare-hike-for-2026",
+          "sourceType": "secondary"
+        },
+        "weeklyCap": {
+          "value": 35,
+          "unit": "USD per rolling 7 days",
+          "note": "OMNY 7-day rolling cap, made permanent; = 12 rides at $3.00 then free; reduced fare cap $17.50",
+          "effective": "January 2026",
+          "source": "https://www.mta.info/press-release/mta-board-adopts-fare-and-toll-increases-take-effect-january-2026",
+          "sourceType": "primary"
+        },
+        "expressBus": {
+          "value": 7.25,
+          "unit": "USD",
+          "effective": "January 2026",
+          "source": "https://ny1.com/nyc/all-boroughs/news/2025/09/30/mta-board-approves-subway-and-bus-fare-hike-for-2026",
+          "sourceType": "secondary"
+        },
+        "transferWindow": null
+      },
+      "commute": {
+        "acsMeanTransitCommute": {
+          "value": 48.9,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work, workers 16+ whose means is public transportation (excl. taxi), New York city (place), ACS 2020-2024 5-year; computed as aggregate/count (84,581,264 / 1,728,114)",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "acsMeanAllModes": {
+          "value": 40.3,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work, all workers not working from home, same computation",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "moovit": {
+          "value": 51,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute, New York-New Jersey metro",
+          "source": "https://moovit.com/press-releases/moovit-2024-global-report-usa/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": [
+        "Free transfer window (widely stated as one free bus/subway transfer within 2 hours on OMNY) not re-verified at an MTA page this session; the mta.info press release returned 403 and was read via search snippet only."
+      ]
+    },
+    "Los Angeles": {
+      "fares": {
+        "baseFare": {
+          "value": 1.75,
+          "unit": "USD",
+          "note": "LA Metro bus and rail, one-way",
+          "effective": "in force since 1 July 2023 fare policy; current 2026",
+          "source": "https://www.metro.net/fares/",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 2,
+          "unit": "hours",
+          "note": "Free transfers within 2 hours with TAP/contactless",
+          "source": "https://www.metro.net/fares/",
+          "sourceType": "primary"
+        },
+        "dailyCap": {
+          "value": 5,
+          "unit": "USD",
+          "source": "https://www.metro.net/fares/fare-capping/",
+          "sourceType": "primary"
+        },
+        "weeklyCap": {
+          "value": 18,
+          "unit": "USD per 7 days",
+          "source": "https://www.metro.net/fares/fare-capping/",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "acsMeanTransitCommute": {
+          "value": 48,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work by public transportation (excl. taxi), Los Angeles city, ACS 2020-2024 5-year, computed aggregate/count (5,558,740 / 115,889)",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "acsMeanAllModes": {
+          "value": 30.7,
+          "unit": "minutes",
+          "measures": "All modes, same computation",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "moovit": {
+          "value": 47,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute, LA metro",
+          "source": "https://moovit.com/press-releases/moovit-global-report-2024-toronto/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": []
+    },
+    "New Haven": {
+      "fares": {
+        "baseFare": {
+          "value": 1.75,
+          "unit": "USD",
+          "note": "CTtransit adult 2-Hour Pass, local service: unlimited local rides for 2 hours from activation",
+          "source": "https://www.cttransit.com/fares",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 2,
+          "unit": "hours",
+          "note": "Built into the 2-Hour Pass",
+          "source": "https://www.cttransit.com/fares",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "acsMeanTransitCommute": {
+          "value": 41.1,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work by public transportation (excl. taxi), New Haven city, ACS 2020-2024 5-year, computed (170,545 / 4,151); small sample, wide margin of error",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "acsMeanAllModes": {
+          "value": 21.5,
+          "unit": "minutes",
+          "measures": "All modes, same computation",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "moovit": null
+      },
+      "uncertain": [
+        "cttransit.com failed TLS verification in the fetcher; the $1.75 figure is from the cttransit.com search snippet, not a full page read. No effective date shown.",
+        "Day/7-day/31-day pass prices not captured."
+      ]
+    },
+    "Washington": {
+      "fares": {
+        "metrorailMin": {
+          "value": 2.25,
+          "unit": "USD",
+          "note": "Base fare, first 3 composite miles; +$0.45 per additional composite mile",
+          "effective": "WMATA Tariff #49, effective 1 July 2026",
+          "source": "https://www.wmata.com/content/dam/wmata-com/about/public-records/Tariff%2049.pdf",
+          "sourceType": "primary"
+        },
+        "metrorailMax": {
+          "value": 6.75,
+          "unit": "USD",
+          "note": "Regular (weekday) maximum; late night (9:30pm-close Mon-Fri) and weekend fares $2.25-$2.50",
+          "effective": "1 July 2026",
+          "source": "https://www.wmata.com/content/dam/wmata-com/about/public-records/Tariff%2049.pdf",
+          "sourceType": "primary"
+        },
+        "metrorailLateNightWeekendMax": {
+          "value": 2.5,
+          "unit": "USD",
+          "effective": "1 July 2026",
+          "source": "https://www.wmata.com/content/dam/wmata-com/about/public-records/Tariff%2049.pdf",
+          "sourceType": "primary"
+        },
+        "metrobusBase": {
+          "value": 2.25,
+          "unit": "USD",
+          "note": "Regular Metrobus; express $4.80",
+          "effective": "1 July 2026",
+          "source": "https://www.wmata.com/content/dam/wmata-com/about/public-records/Tariff%2049.pdf",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 120,
+          "unit": "minutes",
+          "note": "SmarTrip transfer period; discount = up to $2.25 of the originating fare subtracted from the next",
+          "source": "https://www.wmata.com/content/dam/wmata-com/about/public-records/Tariff%2049.pdf",
+          "sourceType": "primary"
+        },
+        "weeklyRegionalBusPass": {
+          "value": 13.5,
+          "unit": "USD per 7 days",
+          "source": "https://www.wmata.com/content/dam/wmata-com/about/public-records/Tariff%2049.pdf",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "acsMeanTransitCommute": {
+          "value": 39.2,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work by public transportation (excl. taxi), District of Columbia, ACS 2020-2024 5-year, computed (2,969,205 / 75,680)",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "acsMeanAllModes": {
+          "value": 30,
+          "unit": "minutes",
+          "measures": "All modes, same computation",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "moovit": null
+      },
+      "uncertain": [
+        "Moovit 2024 covers DC-MD-VA but the press release gives no commute figure for it."
+      ]
+    },
+    "Boston": {
+      "fares": {
+        "subwayFare": {
+          "value": 2.4,
+          "unit": "USD",
+          "source": "https://www.mbta.com/fares/2026-fall-fare-pilots",
+          "sourceType": "primary"
+        },
+        "localBusFare": {
+          "value": 1.7,
+          "unit": "USD",
+          "note": "Express bus also $1.70 from 1 Sep 2026 (was $4.25)",
+          "source": "https://www.mbta.com/fares/2026-fall-fare-pilots",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 2,
+          "unit": "hours",
+          "note": "From 1 Sep 2026 (fall fare pilot): unlimited transfers among bus, subway and ferry within 2 hours, paying only the highest single-leg fare; same payment method required",
+          "effective": "1 September 2026 (pilot)",
+          "source": "https://www.mbta.com/fares/2026-fall-fare-pilots",
+          "sourceType": "primary"
+        },
+        "fareCap": null
+      },
+      "commute": {
+        "acsMeanTransitCommute": {
+          "value": 41.5,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work by public transportation (excl. taxi), Boston city, ACS 2020-2024 5-year, computed (3,459,765 / 83,331)",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "acsMeanAllModes": {
+          "value": 30.3,
+          "unit": "minutes",
+          "measures": "All modes, same computation",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "moovit": null
+      },
+      "uncertain": [
+        "No MBTA fare cap found on the pilot page.",
+        "Moovit 2024 press release names Boston but gives no commute figure."
+      ]
+    },
+    "Philadelphia": {
+      "fares": {
+        "baseFare": {
+          "value": 2.9,
+          "unit": "USD",
+          "note": "Bus/Metro, SEPTA Key, contactless, cash or Quick Trip alike",
+          "source": "https://wwww.septa.org/fares/",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 2,
+          "unit": "hours",
+          "note": "Up to two free transfers within 2 hours of first tap, Key/contactless only (a SEPTA news item and a press summary say 90 minutes; the fares page says 2 hours)",
+          "source": "https://wwww.septa.org/fares/",
+          "sourceType": "primary"
+        },
+        "dayPass": {
+          "value": 7.5,
+          "unit": "USD",
+          "source": "https://wwww.septa.org/fares/",
+          "sourceType": "primary"
+        },
+        "weeklyPass": {
+          "value": 31,
+          "unit": "USD",
+          "note": "Weekly TransPass+",
+          "source": "https://wwww.septa.org/fares/",
+          "sourceType": "primary"
+        },
+        "monthlyPass": {
+          "value": 116,
+          "unit": "USD",
+          "note": "Monthly TransPass+",
+          "source": "https://wwww.septa.org/fares/",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "acsMeanTransitCommute": {
+          "value": 43.3,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work by public transportation (excl. taxi), Philadelphia city, ACS 2020-2024 5-year, computed (5,249,305 / 121,228)",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "acsMeanAllModes": {
+          "value": 31.7,
+          "unit": "minutes",
+          "measures": "All modes, same computation",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "moovit": {
+          "value": 43,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute, Philadelphia metro",
+          "source": "https://moovit.com/press-releases/moovit-2024-global-report-usa/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": [
+        "Transfer window conflict: fares page says 2 hours, other SEPTA/press material says 90 minutes.",
+        "Fares page summary said 'last updated December 2024'; no 2026 change found."
+      ]
+    },
+    "San Diego": {
+      "fares": {
+        "baseFare": {
+          "value": 2.5,
+          "unit": "USD",
+          "note": "MTS Regional adult one-way (bus/Trolley), valid to 30 Sep 2026",
+          "effective": "until 30 September 2026",
+          "source": "https://www.sdmts.com/fares/fare-chart",
+          "sourceType": "primary"
+        },
+        "baseFareFromOct2026": {
+          "value": 3,
+          "unit": "USD",
+          "note": "Phase I increase (Phase II Oct 2027); PRONTO LIFE low-income riders keep $2.50",
+          "effective": "1 October 2026",
+          "source": "https://participate.sdmts.com/fare-change/farestudyfaqs",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 2,
+          "unit": "hours",
+          "note": "Unlimited bus/Trolley transfers for 2 hours with PRONTO",
+          "source": "https://www.sdmts.com/fares/pronto",
+          "sourceType": "primary"
+        },
+        "dailyCap": {
+          "value": 6,
+          "unit": "USD",
+          "note": "Until 30 Sep 2026; from 1 Oct 2026 Regional Day Pass reported as $7 (search snippet, unverified)",
+          "source": "https://www.sdmts.com/fares/pronto",
+          "sourceType": "primary"
+        },
+        "monthlyCap": {
+          "value": 72,
+          "unit": "USD per calendar month",
+          "note": "Rises to $85 on 1 Oct 2026, $95 on 1 Oct 2027",
+          "source": "https://www.sandag.org/news/news-release-sandag-transportation-committee-approves-transit-fare-increase-2026-07-17",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "acsMeanTransitCommute": {
+          "value": 43.6,
+          "unit": "minutes",
+          "measures": "Mean one-way travel time to work by public transportation (excl. taxi), San Diego city, ACS 2020-2024 5-year, computed (850,920 / 19,496)",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "acsMeanAllModes": {
+          "value": 23.5,
+          "unit": "minutes",
+          "measures": "All modes, same computation",
+          "source": "https://censusreporter.org/tables/B08136/",
+          "period": "2020-2024",
+          "sourceType": "primary"
+        },
+        "moovit": null
+      },
+      "uncertain": [
+        "New daily cap/day pass from 1 Oct 2026 ($7) seen only in a search snippet; the approved-fares chart is an image."
+      ]
+    },
+    "London": {
+      "fares": {
+        "tubeZone1Peak": {
+          "value": 3.1,
+          "unit": "GBP",
+          "note": "Adult PAYG (Oyster/contactless) Zone 1 peak; was £2.90",
+          "effective": "1 March 2026",
+          "source": "https://railway-news.com/tfl-tube-and-rail-fares-to-rise-from-march-2026/",
+          "sourceType": "secondary"
+        },
+        "tubeZone1OffPeak": {
+          "value": 3,
+          "unit": "GBP",
+          "note": "was £2.80",
+          "effective": "1 March 2026",
+          "source": "https://railway-news.com/tfl-tube-and-rail-fares-to-rise-from-march-2026/",
+          "sourceType": "secondary"
+        },
+        "dailyCapZones1to2": {
+          "value": 8.9,
+          "unit": "GBP",
+          "note": "PAYG daily cap, peak and off-peak alike; Zone 1 only also £8.90",
+          "effective": "2026 (caps frozen to March 2027)",
+          "source": "https://content.tfl.gov.uk/adult-fares.pdf",
+          "sourceType": "primary"
+        },
+        "weeklyCapZones1to2": {
+          "value": 44.7,
+          "unit": "GBP Monday-Sunday",
+          "source": "https://content.tfl.gov.uk/adult-fares.pdf",
+          "sourceType": "primary"
+        },
+        "busFare": {
+          "value": 1.75,
+          "unit": "GBP",
+          "note": "Bus/tram Hopper: unlimited bus and tram journeys within one hour for one fare; frozen",
+          "effective": "frozen to 5 July 2026 per TfL; later extension reported",
+          "source": "https://tfl-newsroom.prgloo.com/news/tfl-reminds-customers-of-changes-to-tube-and-rail-fares-from-1-march-while-bus-and-tram-fares-frozen-until-july-2026",
+          "sourceType": "primary"
+        },
+        "hopperWindow": {
+          "value": 60,
+          "unit": "minutes",
+          "source": "https://tfl-newsroom.prgloo.com/news/tfl-reminds-customers-of-changes-to-tube-and-rail-fares-from-1-march-while-bus-and-tram-fares-frozen-until-july-2026",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "dftByMode": {
+          "value": {
+            "busOrCoach": 40,
+            "otherRail_underground_tram": 49,
+            "nationalRail": 69,
+            "allModes": 45
+          },
+          "unit": "minutes",
+          "measures": "Average usual one-way time to travel to work, London as REGION OF WORKPLACE, by usual method, LFS Oct-Dec 2024 (Central London: bus 41, other rail 48, all modes 54)",
+          "source": "https://assets.publishing.service.gov.uk/media/693863dd6a12691d48491cca/tsgb0111.ods",
+          "period": "Oct-Dec 2024 (published 17 Dec 2025)",
+          "sourceType": "primary"
+        },
+        "moovit": {
+          "value": 50,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute",
+          "source": "https://moovit.com/press-releases/moovit-2024-global-report-london/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": [
+        "Zone 1 single fares (£3.10/£3.00) not read from a TfL page; TfL's newsroom confirmed only '10-20p' rises. The TfL singles PDF was not retrievable.",
+        "A search summary claimed the bus freeze was extended to 1 November 2026 (GLA decision MD3517); london.gov.uk returned 403, so unconfirmed. Bus daily cap £5.25 seen only on secondary sites."
+      ]
+    },
+    "Manchester": {
+      "fares": {
+        "busSingleCap": {
+          "value": 2,
+          "unit": "GBP",
+          "note": "Bee Network adult single, now a 1-hour 'hopper' (unlimited Bee Network buses within an hour); frozen for all of 2026",
+          "effective": "2026",
+          "source": "https://themanc.com/news/tfgm-and-andy-burnham-confirm-all-bee-network-fares-will-be-frozen-for-2026/",
+          "sourceType": "secondary"
+        },
+        "busHopperWindow": {
+          "value": 60,
+          "unit": "minutes",
+          "source": "https://stockport.nub.news/news/local-news/all-bee-network-bus-fares-frozen-for-2026-as-andy-burnham-lifts-930am-rule-full-list-of-prices-283813",
+          "sourceType": "secondary"
+        },
+        "metrolinkSingle1Zone": {
+          "value": 1.4,
+          "unit": "GBP",
+          "note": "Adult single, any one zone; 2 zones (1+2) £2.80; 3 zones (1-3) £3.80; all 4 zones £4.60; valid 2 hours",
+          "source": "https://tfgm.com/tickets-and-passes/tram-peak-single-ticket-adult",
+          "sourceType": "primary"
+        },
+        "metrolinkDailyCap1Zone": {
+          "value": 2.7,
+          "unit": "GBP",
+          "note": "Anytime; off-peak £1.90 (secondary)",
+          "source": "https://www.manchestertourism.org/manchester-transport-passes-tickets/",
+          "sourceType": "secondary"
+        }
+      },
+      "commute": {
+        "dftByMode": {
+          "value": {
+            "busOrCoach": 40,
+            "otherRail_tram": 39,
+            "nationalRail": 68,
+            "allModes": 30
+          },
+          "unit": "minutes",
+          "measures": "Average usual one-way time to travel to work, Greater Manchester as region of workplace, LFS Oct-Dec 2024; DfT flags non-car/walk/bus modes outside London as low-sample",
+          "source": "https://assets.publishing.service.gov.uk/media/693863dd6a12691d48491cca/tsgb0111.ods",
+          "period": "Oct-Dec 2024",
+          "sourceType": "primary"
+        },
+        "moovit": null
+      },
+      "uncertain": [
+        "Bee Network £2 freeze from TfGM press-release search snippet and local press; TfGM newsroom page not read in full.",
+        "Bee Network bus daily/weekly cap not captured."
+      ]
+    },
+    "Dublin": {
+      "fares": {
+        "tfi90": {
+          "value": 2,
+          "unit": "EUR",
+          "note": "TFI 90 Minute fare, adult (24+) Leap: transfers across bus, Luas, DART/commuter rail in the Dublin area for 90 minutes; young adult/student €1.00, child €0.65",
+          "effective": "current 2026",
+          "source": "https://www.transportforireland.ie/fares/leap-card/tfi-90-minute-fare/",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 90,
+          "unit": "minutes",
+          "source": "https://www.transportforireland.ie/fares/leap-card/tfi-90-minute-fare/",
+          "sourceType": "primary"
+        },
+        "tfi90FromJan2027": {
+          "value": 2.3,
+          "unit": "EUR",
+          "note": "Announced 3 Sep 2026, ~15% average adult increase",
+          "effective": "January 2027",
+          "source": "https://www.rte.ie/news/ireland/2026/0903/1590193-transport-fares/",
+          "sourceType": "secondary"
+        }
+      },
+      "commute": {
+        "csoNationalAllModes": {
+          "value": 29.1,
+          "unit": "minutes",
+          "measures": "Average travel time to work, all modes, all of Ireland, Census 2022 (no Dublin-City-by-transit figure found)",
+          "source": "https://www.cso.ie/en/csolatestnews/pressreleases/2023pressreleases/pressstatementcensus2022resultsprofile7-employmentoccupationsandcommuting/",
+          "period": "Census April 2022",
+          "sourceType": "primary"
+        },
+        "csoCitiesResidents": {
+          "value": 28.6,
+          "unit": "minutes",
+          "measures": "Average travel time to work for residents of Cities (all five Irish cities pooled), all modes, Census 2022",
+          "source": "https://www.cso.ie/en/releasesandpublications/ep/p-urli/urbanandrurallifeinireland2025/commuting/",
+          "period": "2022",
+          "sourceType": "primary"
+        },
+        "moovit": null
+      },
+      "uncertain": [
+        "No published average commute time by public transport for Dublin City found.",
+        "TFI Leap daily/weekly caps in Dublin not captured."
+      ]
+    },
+    "Cork": {
+      "fares": {
+        "leapAdultFare": {
+          "value": 1.7,
+          "unit": "EUR",
+          "note": "Flat adult Leap fare with TFI 90 on Cork city buses (replaced €1.35/€1.55); young adult/student €0.85, child €0.55; cash €2.40; fare capping introduced",
+          "effective": "20 July 2026",
+          "source": "https://www.nationaltransport.ie/news/passengers-in-cork-to-benefit-from-faster-boarding-and-more-flexible-travel-with-new-tfi-90-minute-fare/",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 90,
+          "unit": "minutes",
+          "note": "Unlimited transfers between Cork city buses",
+          "source": "https://www.nationaltransport.ie/news/passengers-in-cork-to-benefit-from-faster-boarding-and-more-flexible-travel-with-new-tfi-90-minute-fare/",
+          "sourceType": "primary"
+        },
+        "cashFare": {
+          "value": 2.4,
+          "unit": "EUR",
+          "source": "https://www.nationaltransport.ie/news/passengers-in-cork-to-benefit-from-faster-boarding-and-more-flexible-travel-with-new-tfi-90-minute-fare/",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "csoCitiesResidents": {
+          "value": 28.6,
+          "unit": "minutes",
+          "measures": "Average travel time to work for residents of Cities (pooled), all modes, Census 2022; not Cork-specific",
+          "source": "https://www.cso.ie/en/releasesandpublications/ep/p-urli/urbanandrurallifeinireland2025/commuting/",
+          "period": "2022",
+          "sourceType": "primary"
+        },
+        "moovit": null
+      },
+      "uncertain": [
+        "Cork cap amounts not stated.",
+        "Whether the Jan 2027 increase changes Cork's €1.70 is not stated (RTE mentions 'town fares' to €1.65, a different category)."
+      ]
+    },
+    "Paris": {
+      "fares": {
+        "metroTrainRerTicket": {
+          "value": 2.55,
+          "unit": "EUR",
+          "note": "Single Métro-Train-RER ticket, one price anywhere in Île-de-France (unified from 1 Jan 2025 at €2.50); reduced €1.30",
+          "effective": "1 January 2026",
+          "source": "https://www.iledefrance-mobilites.fr/en/tarifs-titre-de-transport-en-commun-2026",
+          "sourceType": "primary"
+        },
+        "busTramTicket": {
+          "value": 2.05,
+          "unit": "EUR",
+          "note": "Single Bus-Tram ticket, flat; reduced €1.05. Metro-to-bus transfer needs both tickets unless using Navigo Liberté+",
+          "effective": "1 January 2026",
+          "source": "https://www.iledefrance-mobilites.fr/en/tarifs-titre-de-transport-en-commun-2026",
+          "sourceType": "primary"
+        },
+        "transferWindow": null
+      },
+      "commute": {
+        "moovit": {
+          "value": 47,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute",
+          "source": "https://moovit.com/press-releases/moovit-2024-global-report-usa/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": [
+        "IDFM and RATP pages returned 403; figures read from IDFM/RATP search snippets and French press (sortiraparis, cnews), consistent with each other.",
+        "Ticket validity windows (bus-tram 90 minutes; metro-RER transfers within the network) not confirmed this session.",
+        "No INSEE/EGT figure captured for transit commute time."
+      ]
+    },
+    "Brussels": {
+      "fares": {
+        "singleJourney": {
+          "value": 2.4,
+          "unit": "EUR",
+          "note": "STIB single journey (contactless/MOBIB), was €2.30; monthly €56, annual €560",
+          "effective": "1 February 2026",
+          "source": "https://www.lavenir.net/regions/bruxelles/2026/01/27/les-tarifs-de-la-stib-en-hausse-des-ce-dimanche-le-trajet-passe-a-240-labonnement-annuel-a-560-I5HNWDA6A5HLZCJ4YMXY6MULHA/",
+          "sourceType": "secondary"
+        },
+        "transferWindow": {
+          "value": 60,
+          "unit": "minutes",
+          "note": "Transfers within 60 minutes of validation",
+          "source": "https://migaku.com/blog/language-fun/stib-brussels-transit-guide-metro-tram-and-bus-for-newcomers",
+          "sourceType": "secondary"
+        }
+      },
+      "commute": {
+        "moovit": null
+      },
+      "uncertain": [
+        "STIB's own tariff page not read; fares from L'Avenir/DH press.",
+        "No published transit commute time found for Brussels."
+      ]
+    },
+    "Amsterdam": {
+      "fares": {
+        "ovpayBaseFare": {
+          "value": 1.16,
+          "unit": "EUR",
+          "note": "GVB kilometre fare: boarding (instap) tariff, charged on OVpay/OV-chipkaart saldo",
+          "effective": "1 January 2026",
+          "source": "https://www.vervoerregio.nl/artikel/20251119-tarieven-connexxion-ebs-en-gvb-voor-2026-vastgesteld",
+          "sourceType": "primary"
+        },
+        "ovpayPerKm": {
+          "value": 0.217,
+          "unit": "EUR per km",
+          "note": "was €0.207; night tariff €5.70",
+          "effective": "1 January 2026",
+          "source": "https://www.vervoerregio.nl/artikel/20251119-tarieven-connexxion-ebs-en-gvb-voor-2026-vastgesteld",
+          "sourceType": "primary"
+        },
+        "gvbHourTicket": {
+          "value": 3.4,
+          "unit": "EUR",
+          "note": "GVB 1-hour ticket",
+          "effective": "2026",
+          "source": "https://reisinfo.gvb.nl/tarieven",
+          "sourceType": "secondary"
+        }
+      },
+      "commute": {
+        "moovit": null
+      },
+      "uncertain": [
+        "€3.40 hour ticket seen in a search summary of gvb.nl; gvb.nl returned 403.",
+        "Transfer rule (a new check-in within 35 min counts as the same trip, no new base fare) is the national norm but was not verified.",
+        "No published transit commute time found."
+      ]
+    },
+    "Mexico City": {
+      "fares": {
+        "metro": {
+          "value": 5,
+          "unit": "MXN",
+          "note": "Flat, free transfers between lines; unchanged for 2026 and the World Cup",
+          "effective": "2026",
+          "source": "https://www.tvazteca.com/aztecanoticias/cuanto-cuesta-el-pasaje-en-cdmx-las-tarifas-actualizadas-metro-metrobus-trolebus-camiones-mundial-2026/",
+          "sourceType": "secondary"
+        },
+        "metrobus": {
+          "value": 6,
+          "unit": "MXN",
+          "note": "Line 4 airport service 30 MXN",
+          "effective": "2026",
+          "source": "https://www.tvazteca.com/aztecanoticias/cuanto-cuesta-el-pasaje-en-cdmx-las-tarifas-actualizadas-metro-metrobus-trolebus-camiones-mundial-2026/",
+          "sourceType": "secondary"
+        }
+      },
+      "commute": {
+        "inegiEodToWorkCDMX": {
+          "value": 54,
+          "unit": "minutes",
+          "measures": "Average duration of weekday trips with purpose 'work', trips originating in Ciudad de México, ALL modes (ZMVM 57; conurbation 60)",
+          "source": "https://www.inegi.org.mx/contenidos/programas/eod/2017/doc/resultados_eod_2017.pdf",
+          "period": "EOD 2017",
+          "sourceType": "primary"
+        },
+        "moovit": {
+          "value": 67,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute",
+          "source": "https://moovit.com/press-releases/moovit-global-report-2024-toronto/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": [
+        "A secondary claim that an EOD 2017 public-transport trip averages 66 minutes (vs 44 by private vehicle) was not found in INEGI's results PDF; not used.",
+        "Fare figures from press citing the CDMX government, not an official tariff page."
+      ]
+    },
+    "Toronto": {
+      "fares": {
+        "adultFare": {
+          "value": 3.3,
+          "unit": "CAD",
+          "note": "PRESTO/credit/debit; cash $3.35; frozen for 2026",
+          "effective": "2026",
+          "source": "https://www.ttc.ca/Fares-and-passes",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 2,
+          "unit": "hours",
+          "note": "Two-hour transfer on PRESTO/card taps; not for cash",
+          "source": "https://www.ttc.ca/Fares-and-passes",
+          "sourceType": "primary"
+        },
+        "monthlyCap": {
+          "value": 47,
+          "unit": "fares per calendar month",
+          "note": "After 47 paid fares on the same card in a month, rest free (= $155.10 at $3.30 — derived). Adult Monthly Pass discontinued 31 Aug 2026",
+          "source": "https://www.ttc.ca/Fares-and-passes",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "statcanAllModesCMA": {
+          "value": 29.8,
+          "unit": "minutes",
+          "measures": "Average commuting time, all modes, Toronto CMA, 2021 Census",
+          "source": "https://www150.statcan.gc.ca/n1/pub/14-28-0001/2023001/article/00003-eng.htm",
+          "period": "2021",
+          "sourceType": "primary"
+        },
+        "statcanTransitNational": {
+          "value": 42.9,
+          "unit": "minutes",
+          "measures": "Average commute by public transit, all of Canada, 2021 Census (no Toronto-specific transit figure found)",
+          "source": "https://www150.statcan.gc.ca/n1/pub/14-28-0001/2023001/article/00003-eng.htm",
+          "period": "2021",
+          "sourceType": "primary"
+        },
+        "moovit": {
+          "value": 55,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute",
+          "source": "https://moovit.com/press-releases/moovit-global-report-2024-toronto/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": [
+        "Toronto-CMA transit-only duration exists in StatCan table 98-10-0457-01 but was not extracted."
+      ]
+    },
+    "Vancouver": {
+      "fares": {
+        "oneZone": {
+          "value": 2.85,
+          "unit": "CAD",
+          "note": "Compass stored value; cash/contactless $3.50",
+          "effective": "1 July 2026",
+          "source": "https://www.translink.ca/transit-fares/pricing-and-fare-zones",
+          "sourceType": "primary"
+        },
+        "twoZone": {
+          "value": 4.2,
+          "unit": "CAD",
+          "note": "Stored value; cash/contactless $5.10",
+          "effective": "1 July 2026",
+          "source": "https://www.translink.ca/transit-fares/pricing-and-fare-zones",
+          "sourceType": "primary"
+        },
+        "threeZone": {
+          "value": 5.4,
+          "unit": "CAD",
+          "note": "Stored value; cash/contactless $6.70",
+          "effective": "1 July 2026",
+          "source": "https://www.translink.ca/transit-fares/pricing-and-fare-zones",
+          "sourceType": "primary"
+        },
+        "transferWindow": {
+          "value": 90,
+          "unit": "minutes",
+          "note": "Buses always 1-zone; all trips after 6:30pm weekdays and all weekend are 1-zone",
+          "source": "https://www.translink.ca/transit-fares/pricing-and-fare-zones",
+          "sourceType": "primary"
+        },
+        "dayPass": {
+          "value": 12.55,
+          "unit": "CAD",
+          "source": "https://www.translink.ca/transit-fares/pricing-and-fare-zones",
+          "sourceType": "primary"
+        }
+      },
+      "commute": {
+        "statcanAllModesCMA": {
+          "value": 27.3,
+          "unit": "minutes",
+          "measures": "Average commuting time, all modes, Vancouver CMA, 2021 Census",
+          "source": "https://www150.statcan.gc.ca/n1/pub/14-28-0001/2023001/article/00003-eng.htm",
+          "period": "2021",
+          "sourceType": "primary"
+        },
+        "moovit": {
+          "value": 60,
+          "unit": "minutes",
+          "measures": "Moovit average one-way public transit commute",
+          "source": "https://moovit.com/press-releases/moovit-global-report-2024-toronto/",
+          "period": "2024 report",
+          "sourceType": "secondary"
+        }
+      },
+      "uncertain": [
+        "Vancouver-CMA transit-only duration (StatCan 98-10-0457-01) not extracted."
+      ]
+    }
+  },
+  "railCancellations": {
+    "retrieved": "2026-09-29",
+    "operators": {
+      "amtrak_nec": {
+        "cancellationShare": {
+          "value": null,
+          "note": "Amtrak does not publish a share of trains cancelled for Acela or Northeast Regional. Neither the Monthly Performance Report (checked June 2026: ridership, revenue and cost by route, no OTP or cancellations) nor the Host Railroad Report (OTP and delay minutes only) carries one. Individual cancellation events appear only in press reports, e.g. 7 Acela and 10 Northeast Regional trains cancelled in early February 2026 for equipment unavailability after winter storms (Boston Globe, secondary: https://www.bostonglobe.com/2026/02/05/metro/amtrak-cancellations/)."
+        },
+        "acela": {
+          "customerOtp12mo": {
+            "value": 75.3,
+            "unit": "%",
+            "period": "12 months to August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary",
+            "definition": "Customer OTP = share of customers arriving at their detraining station on time; Acela is late if more than 10 min after schedule. Report says figures are preliminary."
+          },
+          "customerOtpMonth": {
+            "value": 81,
+            "unit": "%",
+            "period": "August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          },
+          "allStationsOtp12mo": {
+            "value": 78.5,
+            "unit": "%",
+            "period": "12 months to August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          },
+          "otpTarget": {
+            "value": 90,
+            "unit": "%",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary",
+            "note": "'Acela on-time performance target is 90.0%'"
+          },
+          "avgMinutesLatePerLateRider12mo": {
+            "value": 43,
+            "unit": "minutes",
+            "period": "12 months to August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          }
+        },
+        "northeastRegional": {
+          "customerOtp12mo": {
+            "value": 76.7,
+            "unit": "%",
+            "period": "12 months to August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          },
+          "customerOtpMonth": {
+            "value": 75.4,
+            "unit": "%",
+            "period": "August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          },
+          "allStationsOtp12mo": {
+            "value": 78.8,
+            "unit": "%",
+            "period": "12 months to August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          },
+          "avgMinutesLatePerLateRider12mo": {
+            "value": 45,
+            "unit": "minutes",
+            "period": "12 months to August 2026",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          },
+          "minimumStandard": {
+            "value": 80,
+            "unit": "%",
+            "note": "FRA/Amtrak minimum standard shown for NEC corridor routes",
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/August-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          }
+        },
+        "earlierSnapshots": [
+          {
+            "period": "12 months to June 2026",
+            "acelaCustomerOtp": 76.2,
+            "nerCustomerOtp": 77.2,
+            "acelaAllStations": 78.7,
+            "nerAllStations": 78.9,
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/June-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          },
+          {
+            "period": "12 months to July 2026",
+            "acelaCustomerOtp": 75.6,
+            "nerCustomerOtp": 77,
+            "acelaAllStations": 78.4,
+            "nerAllStations": 78.9,
+            "source": "https://www.amtrak.com/content/dam/projects/dotcom/english/public/documents/corporate/HostRailroadReports/July-2026-Amtrak-Host-Railroad-Report.pdf",
+            "sourceType": "primary"
+          }
+        ]
+      },
+      "metro_north": {
+        "newHavenLineOtpMonthly": {
+          "unit": "%",
+          "definition": "Share of trains arriving at final destination within 5 min 59 s of schedule",
+          "values": {
+            "2025-09": 97.8,
+            "2025-10": 98.3,
+            "2025-11": 98.1,
+            "2025-12": 97.1,
+            "2026-01": 96.4,
+            "2026-02": 95.7,
+            "2026-03": 97.2,
+            "2026-04": 98.3,
+            "2026-05": 98.3,
+            "2026-06": 95.9,
+            "2026-07": 96.8,
+            "2026-08": 97.2
+          },
+          "source": "https://data.ny.gov/Transportation/MTA-Metro-North-On-Time-Performance-Beginning-2020/83hw-i6xw",
+          "sourceType": "primary"
+        },
+        "newHavenLineOtp12moUnweightedMean": {
+          "value": 97.3,
+          "unit": "%",
+          "period": "Sep 2025 to Aug 2026",
+          "sourceType": "derived",
+          "note": "Computed by this research as the simple mean of the 12 published monthly figures above; not a published MTA number (MTA does not publish a train-weighted 12-month figure in this dataset)."
+        },
+        "eastOfHudsonOtpAug2026": {
+          "value": 96.7,
+          "unit": "%",
+          "period": "August 2026",
+          "source": "https://data.ny.gov/Transportation/MTA-Metro-North-On-Time-Performance-Beginning-2020/83hw-i6xw",
+          "sourceType": "primary"
+        },
+        "cancellationShare": {
+          "value": null,
+          "note": "MTA does not publish a share of Metro-North trains cancelled in its open data; no trains-scheduled denominator is in the delays dataset."
+        },
+        "cancelledTrainCounts": {
+          "period": "1 Sep 2025 to 31 Aug 2026",
+          "source": "https://data.ny.gov/d/tgiq-jafi",
+          "sourceType": "primary",
+          "note": "Counts of records in 'MTA Metro-North Delays: Beginning 2012' (one row per delay cause; the 139 system cancelled rows are 139 distinct train-days). Counted by this research via the Socrata API.",
+          "systemwide": {
+            "cancelled": 139,
+            "terminated": 193,
+            "busSubstitution": 166,
+            "late": 6300
+          },
+          "newHavenMainline": {
+            "cancelled": 33,
+            "terminated": 45,
+            "busSubstitution": 1
+          },
+          "newHavenLineInclBranches_distinctTrainDaysCancelledTerminatedOrBus": 263
+        },
+        "customerPerception": {
+          "value": 78,
+          "unit": "% satisfied with on-time performance, New Haven Line",
+          "period": "Spring 2026 survey",
+          "source": "https://www.mta.info/article/mta-customers-count-spring-2026-survey-results",
+          "sourceType": "primary",
+          "note": "From search snippet: New Haven Line down 8 points; not verified by direct fetch."
+        }
+      },
+      "eurostar": {
+        "within5min": {
+          "value": 73.1,
+          "unit": "% of trains arriving <5 min late",
+          "period": "April 2025 to March 2026",
+          "source": "https://www.eurostar.com/us-en/customer-charter",
+          "sourceType": "primary"
+        },
+        "within15min": {
+          "value": 83.3,
+          "unit": "% of trains arriving within 15 min",
+          "period": "April 2025 to March 2026",
+          "source": "https://www.eurostar.com/us-en/customer-charter",
+          "sourceType": "primary"
+        },
+        "target2026within15min": {
+          "value": 87,
+          "unit": "%",
+          "source": "https://www.eurostar.com/us-en/customer-charter",
+          "sourceType": "primary"
+        },
+        "cancellationShare": {
+          "value": null,
+          "note": "Eurostar's customer charter publishes punctuality but no cancellation share; Eurostar is not in ORR's Table 3123. Infrabel publishes monthly Eurostar London-route punctuality (https://opendata.infrabel.be/explore/dataset/stiptheid-van-eurostar-treinen/) but it was not pulled."
+        }
+      },
+      "avanti_west_coast": {
+        "cancellationsScore": {
+          "value": 5.6,
+          "unit": "%",
+          "exact": 5.6125,
+          "period": "April 2025 to March 2026 (moving annual average)",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3123-trains-planned-and-cancellations-by-operator-and-cause/",
+          "sourceType": "primary",
+          "definition": "(full cancellations + 0.5 x part cancellations) / trains planned; timetable as fixed at 22:00 the previous evening"
+        },
+        "cancellationsScorePriorYear": {
+          "value": 6.3,
+          "unit": "%",
+          "exact": 6.2891,
+          "period": "April 2024 to March 2025",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3123-trains-planned-and-cancellations-by-operator-and-cause/",
+          "sourceType": "primary"
+        },
+        "cancellationsScoreLatest12mo": {
+          "value": 6.4,
+          "unit": "%",
+          "exact": 6.3905,
+          "period": "July 2025 to June 2026 (latest quarter provisional)",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3123-trains-planned-and-cancellations-by-operator-and-cause/",
+          "sourceType": "primary"
+        },
+        "quarterly": {
+          "Apr-Jun 2025": 3.82,
+          "Jul-Sep 2025": 4.43,
+          "Oct-Dec 2025": 7.56,
+          "Jan-Mar 2026": 6.4,
+          "Apr-Jun 2026 [p]": 7.11
+        },
+        "timeTo3": {
+          "value": 57.4,
+          "unit": "% of station stops within 3 min",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3133-train-punctuality-at-recorded-station-stops-by-operator/",
+          "sourceType": "primary"
+        },
+        "onTime": {
+          "value": 37.9,
+          "unit": "% of station stops within 59 s",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3133-train-punctuality-at-recorded-station-stops-by-operator/",
+          "sourceType": "primary"
+        },
+        "within15": {
+          "value": 87.3,
+          "unit": "% of station stops within 15 min",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3133-train-punctuality-at-recorded-station-stops-by-operator/",
+          "sourceType": "primary"
+        }
+      },
+      "lner": {
+        "cancellationsScore": {
+          "value": 2.9,
+          "unit": "%",
+          "exact": 2.9474,
+          "period": "April 2025 to March 2026 (moving annual average)",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3123-trains-planned-and-cancellations-by-operator-and-cause/",
+          "sourceType": "primary"
+        },
+        "cancellationsScorePriorYear": {
+          "value": 3.8,
+          "unit": "%",
+          "exact": 3.7817,
+          "period": "April 2024 to March 2025",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3123-trains-planned-and-cancellations-by-operator-and-cause/",
+          "sourceType": "primary"
+        },
+        "cancellationsScoreLatest12mo": {
+          "value": 3.5,
+          "unit": "%",
+          "exact": 3.5274,
+          "period": "July 2025 to June 2026 (latest quarter provisional)",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3123-trains-planned-and-cancellations-by-operator-and-cause/",
+          "sourceType": "primary"
+        },
+        "quarterly": {
+          "Apr-Jun 2025": 2.13,
+          "Jul-Sep 2025": 2.81,
+          "Oct-Dec 2025": 3.23,
+          "Jan-Mar 2026": 3.56,
+          "Apr-Jun 2026 [p]": 4.37
+        },
+        "timeTo3": {
+          "value": 72.4,
+          "unit": "% of station stops within 3 min",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3133-train-punctuality-at-recorded-station-stops-by-operator/",
+          "sourceType": "primary"
+        },
+        "onTime": {
+          "value": 55.3,
+          "unit": "% of station stops within 59 s",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3133-train-punctuality-at-recorded-station-stops-by-operator/",
+          "sourceType": "primary"
+        },
+        "within15": {
+          "value": 93.3,
+          "unit": "% of station stops within 15 min",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3133-train-punctuality-at-recorded-station-stops-by-operator/",
+          "sourceType": "primary"
+        }
+      },
+      "great_britain": {
+        "cancellationsScore": {
+          "value": 3.5,
+          "unit": "%",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/media/4pmhex4x/performance-stats-release-jan-mar-2026.pdf",
+          "sourceType": "primary",
+          "note": "0.5 pp better than the previous year (4.0%)"
+        },
+        "timeTo3": {
+          "value": 84.8,
+          "unit": "%",
+          "period": "April 2025 to March 2026",
+          "source": "https://dataportal.orr.gov.uk/media/4pmhex4x/performance-stats-release-jan-mar-2026.pdf",
+          "sourceType": "primary"
+        },
+        "cancellationsScoreLatest12mo": {
+          "value": 3.7,
+          "unit": "%",
+          "period": "July 2025 to June 2026 (provisional)",
+          "source": "https://dataportal.orr.gov.uk/statistics/performance/passenger-rail-performance/table-3123-trains-planned-and-cancellations-by-operator-and-cause/",
+          "sourceType": "primary"
+        }
+      },
+      "irish_rail": {
+        "dublinCorkPunctualityMAA_NTA": {
+          "value": 88.9,
+          "unit": "% arrivals at timing points within 10 min (moving annual average, after exclusions)",
+          "period": "Moving annual average at Period 6 2025 (roughly year to June 2025)",
+          "target": 92,
+          "series2025": {
+            "P1": 88.7,
+            "P2": 88.4,
+            "P3": 88.3,
+            "P4": 88,
+            "P5": 88.3,
+            "P6": 88.9
+          },
+          "value2024P13": 88.9,
+          "source": "https://www.nationaltransport.ie/wp-content/uploads/2025/11/Q3-2023-to-Q2-2025-Iarnrod-Eireann-Performance-Report-Punctuality.pdf",
+          "sourceType": "primary",
+          "note": "Latest NTA PSO punctuality report on the NTA page ends Q2 2025; no 2026 NTA report found. Row labels in the PDF extraction were read in raw mode; Heuston/Cork is the first Intercity row."
+        },
+        "dublinCorkPeriodFigures_IrishRail": {
+          "unit": "% within 10 min; reliability = share of trains that operate",
+          "periods": [
+            {
+              "period": "P01 (1-25 Jan)",
+              "punctuality": 92.6,
+              "reliability": 99.71
+            },
+            {
+              "period": "P02 (26 Jan-22 Feb)",
+              "punctuality": 93,
+              "reliability": 99.87
+            },
+            {
+              "period": "P03 (23 Feb-22 Mar)",
+              "punctuality": 94.1,
+              "reliability": 100
+            },
+            {
+              "period": "P04 (23 Mar-19 Apr)",
+              "punctuality": 93.9,
+              "reliability": 100
+            },
+            {
+              "period": "P05 (20 Apr-17 May)",
+              "punctuality": 93.9,
+              "reliability": 99.75
+            },
+            {
+              "period": "P06 (18 May-21 Jun)",
+              "punctuality": 92.6,
+              "reliability": 100
+            },
+            {
+              "period": "P07 (22 Jun-12 Jul)",
+              "punctuality": 93.9,
+              "reliability": 100
+            },
+            {
+              "period": "P08 (13 Jul-9 Aug)",
+              "punctuality": 95.11,
+              "reliability": 100
+            },
+            {
+              "period": "P09 (10 Aug-6 Sep)",
+              "punctuality": 90.7,
+              "reliability": 99.87
+            }
+          ],
+          "impliedCancellationShare": "0 to 0.29% per period (100 minus reliability)",
+          "source": "https://www.irishrail.ie/en-ie/about-us/train-punctuality-reliability-performance",
+          "sourceType": "primary",
+          "note": "Page states figures are independently verified by the NTA. The page does not print the year; see uncertain."
+        }
+      }
+    },
+    "passengerRemedies": {
+      "amtrak": {
+        "rebooking": "'Every reasonable effort will be made to rebook you on the next available service and to reroute your checked baggage on the same service'; no additional fees on rebooking/refunds for Amtrak schedule changes or cancellations.",
+        "alternateTransport": "In significant disruptions: other Amtrak trains, chartered or scheduled buses, or air when feasible.",
+        "refund": "Eligible unused tickets bought by credit card refunded to the original card within 14 days; tickets paid by eVoucher, gift card, check or cash refunded as an eVoucher. Where Amtrak cancels for events beyond its control, refund in original form of payment.",
+        "compensation": "Discretionary, not statutory: 'may be offered in the form of Amtrak Guest Rewards points, a Transportation Voucher, and/or a refund for the affected travel segment.' Hotel/food when an Amtrak-controlled disruption forces an overnight stay.",
+        "fareAdjustmentRule": "Normal rule that changes must be made before departure 'will not apply if there is a service disruption.'",
+        "sources": [
+          "https://www.amtrak.com/amtrak-customer-service-commitments",
+          "https://www.amtrak.com/refund-and-cancellation-policy"
+        ],
+        "sourceType": "primary"
+      },
+      "uk_delay_repay": {
+        "coversCancellations": true,
+        "howCancellationsWork": "A cancellation is compensated by the resulting delay at destination (e.g. taking the next train and arriving 60+ min late pays the 60-119 band). If you choose not to travel because of a delay or cancellation, the unused ticket is refunded with no fee by the original retailer.",
+        "nationalRailSource": "https://www.nationalrail.co.uk/help-and-assistance/compensation-and-refunds/",
+        "avantiWestCoast": {
+          "scheme": "DR15",
+          "bands": [
+            {
+              "delay": "15-29 min",
+              "single": 25,
+              "return": 12.5,
+              "season": 25
+            },
+            {
+              "delay": "30-59 min",
+              "single": 50,
+              "return": 25,
+              "season": 50
+            },
+            {
+              "delay": "60-119 min",
+              "single": 100,
+              "return": 50,
+              "season": 100
+            },
+            {
+              "delay": "120+ min",
+              "single": 100,
+              "return": 100,
+              "season": 100
+            }
+          ],
+          "claimWindow": "28 days",
+          "source": "https://www.avantiwestcoast.co.uk/help-and-support/delay-repay",
+          "sourceType": "primary"
+        },
+        "lner": {
+          "scheme": "DR30 (no 15-29 min band)",
+          "bands": [
+            {
+              "delay": "30-59 min",
+              "single": 50,
+              "return": 25
+            },
+            {
+              "delay": "60-119 min",
+              "single": 100,
+              "return": 50
+            },
+            {
+              "delay": "120+ min",
+              "single": 100,
+              "return": 100
+            }
+          ],
+          "claimWindow": "28 days",
+          "source": "https://refundmyrail.co.uk/operators/lner-delay-repay",
+          "sourceType": "secondary",
+          "note": "lner.co.uk/support/delay-repay returned HTTP 403 to automated fetches; bands confirmed via secondary sources (refundmyrail, myrailbuddy 'DR30') and consistent with the standard DR30 scheme."
+        }
+      },
+      "eurostar": {
+        "delayCompensation": [
+          {
+            "delay": "60-119 min",
+            "eVoucher": "30% of affected leg",
+            "cash": "25%"
+          },
+          {
+            "delay": "120-179 min",
+            "eVoucher": "60%",
+            "cash": "50%"
+          },
+          {
+            "delay": "180+ min",
+            "eVoucher": "75%",
+            "cash": "50%"
+          }
+        ],
+        "alternative": "Bonus loyalty points instead of voucher/cash.",
+        "claimWindow": "3 months to claim; e-vouchers redeemable within 12 months of the delay",
+        "cancellation": "Same information, help and compensation policy as delays; where cancellation means 60+ min late arrival the passenger may take a full refund for the affected journey if not travelling, or postpone to a later date/time.",
+        "source": "https://www.eurostar.com/us-en/customer-charter",
+        "sourceType": "primary",
+        "legalBasis": "EU Regulation 2021/782 (cash floor 25% at 60 min, 50% at 120 min); Eurostar's voucher rates exceed it. UK leg is under the UK's retained version of EU rail passenger rights. Passenger-rights page: https://www.eurostar.com/us-en/rail-passengers-rights"
+      },
+      "irish_rail": {
+        "euRule": "Regulation (EU) 2021/782 Art. 19: minimum 25% of ticket price for 60-119 min delay, 50% for 120+ min; no payment below EUR 4.",
+        "euRuleSource": "https://www.nationaltransport.ie/wp-content/uploads/2024/04/Rail-passengers-EU-Regulation-2021-782.pdf",
+        "irishRailApplied": [
+          {
+            "delay": "60-119 min",
+            "intercity": "50% of single-journey value in vouchers or 25% in cash",
+            "season": "25% cash for that day pro rata"
+          },
+          {
+            "delay": "120+ min",
+            "intercity": "100% of single-journey value in vouchers or 50% in cash",
+            "season": "50% cash for that day pro rata"
+          }
+        ],
+        "cancellationOr60minDelay": "Choose: full refund if journey abandoned before starting; refund of untravelled part if discontinued; or return to origin by train with full refund. Hotel and notification costs possibly covered if a missed connection strands you overnight.",
+        "source": "https://www.irishrail.ie/en-ie/legal/passengers-charter/irish-domestic-rail-travel",
+        "sourceType": "primary"
+      }
+    },
+    "uncertain": [
+      "Amtrak Acela / Northeast Regional share of trains cancelled: null. Amtrak publishes no cancellation share (checked Monthly Performance Report and Host Railroad Reports); the FRA quarterly PRIIA service-quality report returned HTTP 403 and was not checked.",
+      "Metro-North share of trains cancelled: null. Only raw counts of cancelled/terminated/bus-substituted trains are published (data.ny.gov tgiq-jafi); no scheduled-trains denominator was found. MTA board 'Key Performance Metrics' books may contain one but were not located.",
+      "Metro-North New Haven Line 12-month OTP 97.3% is an unweighted mean computed here from published monthly figures, not a published number.",
+      "Eurostar share of trains cancelled: null; not published in the customer charter.",
+      "Irish Rail period figures on irishrail.ie: the page does not state the year. Period end dates (25 Jan ... 6 Sep) fit both 2025 (Saturdays) and 2026 (Sundays); a search-engine summary attributed them to 2025. Treat year as unconfirmed.",
+      "Irish Rail Dublin-Cork NTA moving-annual-average figures are only available to P6 2025; nothing later found on the NTA page.",
+      "LNER Delay Repay bands come from secondary sources because LNER's site blocked fetches (HTTP 403).",
+      "MTA Spring 2026 customer survey New Haven Line 78% figure is from a search snippet and was not fetched directly."
+    ]
+  },
+  "towns": {
+    "retrieved": "2026-09-29",
+    "repoNote": "The repo stores towns in public/geo/<cc>.tsv as: id, name, admin id, lat (4dp), lng (4dp), timezone, population, flag. It uses 'uk' (not 'gb') for the United Kingdom and lowercase admin codes. All four towns are ALREADY in the repo; no geonameid is stored in these rows. GeoNames IDs were grepped for across the repo and do not appear anywhere.",
+    "towns": {
+      "belfast": {
+        "geonameid": 2655984,
+        "name": "Belfast",
+        "asciiname": "Belfast",
+        "latitude": 54.59682,
+        "longitude": -5.92541,
+        "featureCode": "PPLA",
+        "countryCode": "GB",
+        "admin1Code": "NIR",
+        "admin1Name": "Northern Ireland",
+        "timezone": "Europe/London",
+        "population": 348005,
+        "url": "https://www.geonames.org/2655984",
+        "sourceType": "primary",
+        "repoHas": "public/geo/uk.tsv: uk-nir-belfast\tBelfast\tuk-nir\t54.5968\t-5.9254\tEurope/London\t348005\ta"
+      },
+      "edinburgh": {
+        "geonameid": 2650225,
+        "name": "Edinburgh",
+        "asciiname": "Edinburgh",
+        "latitude": 55.95206,
+        "longitude": -3.19648,
+        "featureCode": "PPLA",
+        "countryCode": "GB",
+        "admin1Code": "SCT",
+        "admin1Name": "Scotland",
+        "timezone": "Europe/London",
+        "population": 514990,
+        "url": "https://www.geonames.org/2650225",
+        "sourceType": "primary",
+        "repoHas": "public/geo/uk.tsv: uk-sct-edinburgh\tEdinburgh\tuk-sct\t55.9521\t-3.1965\tEurope/London\t514990\ta"
+      },
+      "toluca": {
+        "geonameid": 3515302,
+        "name": "Toluca",
+        "asciiname": "Toluca",
+        "officialName": "Toluca de Lerdo",
+        "latitude": 19.28786,
+        "longitude": -99.65324,
+        "featureCode": "PPLA",
+        "countryCode": "MX",
+        "admin1Code": "15",
+        "admin1Name": "México (State of Mexico)",
+        "timezone": "America/Mexico_City",
+        "population": 489333,
+        "url": "https://www.geonames.org/3515302",
+        "sourceType": "primary",
+        "repoHas": "public/geo/mx.tsv: mx-15-toluca\tToluca\tmx-15\t19.2879\t-99.6532\tAmerica/Mexico_City\t489333\ta"
+      },
+      "cork": {
+        "geonameid": 2965140,
+        "name": "Cork",
+        "asciiname": "Cork",
+        "latitude": 51.89797,
+        "longitude": -8.47061,
+        "featureCode": "PPLA2",
+        "countryCode": "IE",
+        "admin1Code": "M",
+        "admin1Name": "Munster",
+        "timezone": "Europe/Dublin",
+        "population": 224004,
+        "url": "https://www.geonames.org/2965140",
+        "sourceType": "primary",
+        "repoHas": "public/geo/ie.tsv: ie-m-cork\tCork\tie-m\t51.8980\t-8.4706\tEurope/Dublin\t224004\t(empty flag)"
+      }
+    },
+    "hotels": {
+      "belfast": {
+        "occupancy": {
+          "value": 0.724,
+          "unrounded": 0.7241455561521366,
+          "metric": "hotel room occupancy, Belfast City Council area",
+          "period": "calendar year 2025",
+          "priorYear": {
+            "value": 0.752,
+            "period": "2024"
+          },
+          "source": "NISRA, Hotel Occupancy Survey, NI Annual Tourism Statistics 2025 (published 21 May 2026), 'Hotel Occupancy 2025' workbook, Table 4",
+          "url": "https://www.nisra.gov.uk/system/files/statistics/2026-05/2025%20Hotel%20publication.XLSX",
+          "pageUrl": "https://www.nisra.gov.uk/publications/ni-annual-tourism-statistics-2025",
+          "sourceType": "primary"
+        },
+        "northernIrelandOccupancy": {
+          "value": 0.65,
+          "unrounded": 0.6504444203408057,
+          "metric": "hotel room occupancy, all Northern Ireland",
+          "period": "calendar year 2025 (2024: 0.679)",
+          "hotelStock2025": {
+            "hotels": 140,
+            "rooms": 9697
+          },
+          "url": "https://www.nisra.gov.uk/system/files/statistics/2026-05/2025%20Hotel%20publication.XLSX",
+          "sourceType": "primary"
+        },
+        "adr": {
+          "value": null,
+          "currency": "GBP",
+          "note": "NISRA publishes occupancy and rooms/beds sold only; it publishes no room rate. No Belfast-specific ADR for 2025 was found in a readable source. See northernIrelandAdr for the nearest figure."
+        },
+        "northernIrelandAdr": {
+          "value": 116.18,
+          "currency": "GBP",
+          "priorYear": {
+            "value": 114.02,
+            "period": "2024"
+          },
+          "revpar": 83.48,
+          "occupancyReported": 0.719,
+          "period": "calendar year 2025",
+          "scope": "Northern Ireland hotels (article says Northern Ireland, not Belfast)",
+          "source": "Northern Ireland Hotels Federation Business Outlook seminar, reported by the Irish News, 4 May 2026; underlying data provider not named",
+          "url": "https://www.irishnews.com/news/business/hotel-occupancy-falls-for-first-time-in-five-years-but-room-rates-rise-EF5JPUWFFRCRBM5BRTRUJ3GJHU/",
+          "sourceType": "secondary"
+        }
+      },
+      "edinburgh": {
+        "occupancy": {
+          "value": 0.842,
+          "period": "calendar year 2024",
+          "source": "CoStar (STR) hospitality data, CoStar News article 'Edinburgh's booming hotel demand could feel effects of UK's first tourism tax'",
+          "url": "https://www.costar.com/article/2076557049/edinburghs-booming-hotel-demand-could-feel-effects-of-uks-first-tourism-tax",
+          "sourceType": "secondary",
+          "note": "Page returned 403 to direct fetch; figures taken from search-engine extracts of it. CoStar forecast 2025 occupancy at 83.8% (a forecast, not an outturn)."
+        },
+        "adr": {
+          "value": 161.08,
+          "currency": "GBP",
+          "revpar": 135.56,
+          "period": "calendar year 2024",
+          "source": "CoStar (STR), same article",
+          "url": "https://www.costar.com/article/2076557049/edinburghs-booming-hotel-demand-could-feel-effects-of-uks-first-tourism-tax",
+          "sourceType": "secondary",
+          "note": "CoStar forecast 2025 ADR +2.9%; that is a forecast. No published 2025 full-year Edinburgh ADR was found."
+        },
+        "alternative": {
+          "adr": 220,
+          "occupancy": 0.841,
+          "currency": "GBP",
+          "period": "12 months to May 2025",
+          "scope": "Cushman & Wakefield sample of branded full-service hotels only (upscale; not the whole market)",
+          "source": "Cushman & Wakefield, Edinburgh Hotel Market Spotlight, 28 May 2025",
+          "url": "https://www.cushmanwakefield.com/en/united-kingdom/insights/edinburgh-hotel-market-spotlight",
+          "sourceType": "secondary"
+        },
+        "officialSurvey": {
+          "value": null,
+          "note": "VisitScotland retired the Scottish Accommodation Occupancy Survey at the end of 2024; no official 2025 Edinburgh figure exists. Last edition: 2024 report (April 2025).",
+          "url": "https://www.visitscotland.org/research-insights/about-our-industry/accommodation",
+          "sourceType": "primary"
+        }
+      },
+      "toluca": {
+        "occupancy": {
+          "value": 0.43,
+          "metric": "hotel room occupancy (DataTur monitoreo hotelero, centro 'TOLUCA, MÉX.')",
+          "period": "1 Jan - 31 Dec 2025 (preliminary)",
+          "detail": {
+            "roomsAvailableDailyAvg": 4306,
+            "roomsOccupiedDailyAvg": 1853,
+            "prior": {
+              "2023": 0.463,
+              "2024": 0.495
+            }
+          },
+          "source": "Secretaría de Turismo, DataTur, Reporte de Monitoreo Hotelero, resultados preliminares acumulados a diciembre 2025",
+          "url": "https://datatur.sectur.gob.mx/Documentoscompartidos/monitoreo/2025-MES_12_Publico.pdf",
+          "sourceType": "primary"
+        },
+        "occupancyLatest": {
+          "value": 0.45,
+          "period": "1 Jan - 31 Jul 2026 (preliminary); same period 2025: 0.546",
+          "detail": {
+            "roomsAvailableDailyAvg": 3864,
+            "roomsOccupiedDailyAvg": 1740
+          },
+          "url": "https://datatur.sectur.gob.mx/Documentoscompartidos/monitoreo/2026-MES_07_Publico.pdf",
+          "sourceType": "primary"
+        },
+        "adr": {
+          "value": null,
+          "currency": "MXN",
+          "note": "DataTur publishes no room rate for Toluca. The only figure found is anecdotal: the president of a local hotel association told El Sol de Toluca (24 Jul 2025) that large business hotels charge MXN 1,000-1,500 a night. That is a quoted range, not a measured ADR.",
+          "anecdote": {
+            "low": 1000,
+            "high": 1500,
+            "currency": "MXN",
+            "url": "https://oem.com.mx/elsoldetoluca/local/turismo-de-negocios-impulsa-la-ocupacion-hotelera-en-valle-de-toluca-y-de-mexico-24896015",
+            "sourceType": "secondary"
+          }
+        }
+      }
+    },
+    "taxes": {
+      "edinburgh": {
+        "visitorLevy": {
+          "rate": 0.05,
+          "base": "accommodation-only portion of the chargeable transaction, net of VAT (excludes meals/drinks, parking, laundry, entertainment, transport); OTA commission paid by the visitor is included if part of the initial transaction",
+          "stayStart": "2026-07-24",
+          "bookingRule": "applies to bookings made on or after 2025-10-01 for stays on or after 2026-07-24",
+          "nightCap": "first 5 consecutive nights",
+          "vatOnLevy": "the levy counts as turnover and is itself liable to VAT for VAT-registered providers (VisitScotland 2026 guidance)",
+          "coverage": "all overnight accommodation in the City of Edinburgh Council boundary, incl. hotels, hostels, guest houses, B&Bs, self-catering/short-term lets, caravan and campsites, vehicles/vessels; including providers below the VAT threshold",
+          "exemptions": [
+            "people whose accommodation is their only or usual place of residence",
+            "people homeless or at risk of homelessness, in very poor housing conditions, or experiencing domestic abuse",
+            "asylum seekers and refugees",
+            "Gypsy/Traveller community members on dedicated sites",
+            "recipients of listed disability benefits (e.g. DLA, PIP, Adult Disability Payment, Attendance Allowance, Pension Age Disability Payment, ESA, IIDB, UC LCW/LCWRA, war disablement pensions) — by refund claimed from the Council after the stay ends",
+            "discretionary site exemption for charitable accommodation providers"
+          ],
+          "remittance": "provider files quarterly returns and pays via the national visitor levy portal",
+          "legalBasis": "Visitor Levy (Scotland) Act 2024, as amended 2026",
+          "sources": [
+            {
+              "url": "https://www.edinburgh.gov.uk/visitorlevyinformation",
+              "title": "Edinburgh Visitor Levy Scheme: Information for accommodation providers, Version 2.1, September 2026",
+              "sourceType": "primary"
+            },
+            {
+              "url": "https://www.edinburgh.gov.uk/business/scheme-edinburgh-visitor-levy/2",
+              "sourceType": "primary"
+            },
+            {
+              "url": "https://www.edinburgh.gov.uk/business/information-visitors-exemptions/1",
+              "sourceType": "primary"
+            },
+            {
+              "url": "https://www.edinburgh.gov.uk/news/article/14452/edinburgh-visitor-levy-comes-into-effect",
+              "sourceType": "primary"
+            }
+          ]
+        },
+        "vat": {
+          "rate": 0.2,
+          "note": "UK standard rate on hotel accommodation since 1 Apr 2022; for continuous stays over 28 days, from day 29 VAT is charged only on the non-accommodation part (at least 20% of the remainder treated as facilities).",
+          "url": "https://www.gov.uk/guidance/hotels-holiday-accommodation-and-vat-notice-7093",
+          "sourceType": "primary"
+        }
+      },
+      "belfast": {
+        "visitorLevy": {
+          "rate": null,
+          "exists": false,
+          "note": "No visitor levy in Northern Ireland. As of 21 Sep 2026 Belfast councillors were floating a £2/night charge capped at 3 nights; Belfast City Council officers are only researching levies elsewhere, and the decision rests with the NI Executive (councils have no power to levy one). No formal consultation found.",
+          "url": "https://www.irishnews.com/news/northern-ireland/would-belfast-benefit-from-a-tourist-tax-LRSETDBUURAKJP4X7JR6OSLPAE/",
+          "sourceType": "secondary"
+        },
+        "vat": {
+          "rate": 0.2,
+          "note": "Same UK rule as Edinburgh (HMRC VAT Notice 709/3).",
+          "url": "https://www.gov.uk/guidance/hotels-holiday-accommodation-and-vat-notice-7093",
+          "sourceType": "primary"
+        }
+      },
+      "toluca": {
+        "stateLodgingTax": {
+          "name": "Impuesto sobre la Prestación de Servicios de Hospedaje (Estado de México)",
+          "rate": 0.04,
+          "dueDate": "by the 10th of the month after the tax accrues",
+          "legalBasis": "Arts. 69 A, 69 B, 69 B Bis and 69 C, Código Financiero del Estado de México y Municipios; Reglas I.15-I.15.3 of the Secretaría de Finanzas",
+          "url": "https://pagosytramites.edomex.gob.mx/recaudacion/ReadFile.jsp?File=TOI_Impuesto_Sobre_Prestacion_Servicios_Hospedaje.pdf",
+          "sourceType": "primary",
+          "note": "Secretaría de Finanzas leaflet (ref. CE:207/F/080/24) states 'Tasa aplicable: 4.0 %'. A secondary 2026 summary says 4% is unchanged for 2026, with a 50% fiscal subsidy (effective 2%) for stays over 15 consecutive days.",
+          "longStaySubsidy": {
+            "effectiveRate": 0.02,
+            "condition": "stays over 15 consecutive days",
+            "url": "https://www.jadelrio.com/mx/es/blogs/tasas-actuales-del-impuesto-sobre-hospedaje-2026",
+            "sourceType": "secondary"
+          }
+        },
+        "vat": {
+          "rate": 0.16,
+          "note": "Ley del Impuesto al Valor Agregado, art. 1: general rate 16%. Toluca is not in the northern/southern border region, so the 8% border incentive does not apply.",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf",
+          "sourceType": "primary"
+        }
+      }
+    },
+    "uncertain": [
+      "Belfast-specific ADR for 2025: not found. The NIHF figure (GBP 116.18, 2025) is for Northern Ireland, its data provider is unnamed, and its 71.9% occupancy differs from NISRA's 65.0% NI figure (different samples).",
+      "Edinburgh 2025 full-year ADR/occupancy: not found published; only the 2024 CoStar outturn (GBP 161.08, 84.2%) and a CoStar 2025 forecast. The CoStar article could not be fetched directly (403); figures are from search extracts.",
+      "Edinburgh official occupancy: none after 2024 (Scottish Accommodation Occupancy Survey retired).",
+      "Toluca ADR: DataTur publishes none; only an anecdotal MXN 1,000-1,500/night quote for large business hotels.",
+      "Toluca DataTur figures are labelled preliminary.",
+      "Estado de México 50% long-stay subsidy for 2026 is from a secondary summary; the 2026 state budget decree was not read.",
+      "Whether Edomex hospedaje tax and IVA stack (IVA base including the state tax) was not confirmed from a primary source.",
+      "GeoNames API (demo account) was over its daily limit; the four records were read from the geonames.org pages instead, which do not show asciiname or admin1 code numerically for all — admin1 codes NIR, SCT, 15, M are the standard GeoNames codes and match the repo's admin ids."
+    ]
+  },
+  "uncertain": [
+    {
+      "section": "buses",
+      "item": "NYC-Washington / Megabus (US)",
+      "note": "No published on-time figure found for Megabus US."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Washington / Megabus (US)",
+      "note": "Walk-up fare not published; only a 'from $1.50' floor."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Washington / Megabus (US)",
+      "note": "New-reservation fee differs between help page ($2.99) and terms page per search snippet ($3.99)."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Washington / FlixBus / Greyhound (Flix group; the two sites show identical figures)",
+      "note": "73/day likely counts every NYC-area origin stop (Midtown, Queens, Newark area etc.), not only Port Authority."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Washington / FlixBus / Greyhound (Flix group; the two sites show identical figures)",
+      "note": "No published on-time figure found."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Washington / Peter Pan Bus Lines",
+      "note": "Operator route page gives no fare, frequency or running time; all timing figures are Wanderu."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Washington / Peter Pan Bus Lines",
+      "note": "$18 / $5 / $10 fee amounts came from search-result snippets of Peter Pan help pages, not a fetched page."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Washington / Peter Pan Bus Lines",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Boston / Megabus (US)",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Boston / Megabus (US)",
+      "note": "37/day may include partner-operated services sold under the megabus brand."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Boston / Greyhound / FlixBus",
+      "note": "3h05 fastest seems short for Port Authority-South Station; may reflect an outer-borough or express pairing."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Boston / Greyhound / FlixBus",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Boston / Peter Pan Bus Lines",
+      "note": "Departures and running time are Wanderu figures, which disagree with each other (35 vs 44/day)."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Boston / Peter Pan Bus Lines",
+      "note": "Fee amounts from search snippets."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Philadelphia / Megabus (US)",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Philadelphia / FlixBus / Greyhound",
+      "note": "Running time: published figure (40 min) not credible; real Midtown-Center City time unconfirmed."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Philadelphia / FlixBus / Greyhound",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Philadelphia / Peter Pan Bus Lines",
+      "note": "No operator page for this pair was fetched; all timing figures are Wanderu."
+    },
+    {
+      "section": "buses",
+      "item": "NYC-Philadelphia / Peter Pan Bus Lines",
+      "note": "No fare found."
+    },
+    {
+      "section": "buses",
+      "item": "LA-San Diego / FlixBus / Greyhound",
+      "note": "No other intercity bus operator researched on this corridor."
+    },
+    {
+      "section": "buses",
+      "item": "LA-San Diego / FlixBus / Greyhound",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "LA-Las Vegas / FlixBus / Greyhound",
+      "note": "Other operators on this corridor not researched."
+    },
+    {
+      "section": "buses",
+      "item": "LA-Las Vegas / FlixBus / Greyhound",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / National Express",
+      "note": "Punctuality is network-wide, not route-specific; OTP definition (tolerance window) not stated in the extract."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / National Express",
+      "note": "No more recent (2024/2025) coach OTP confirmed."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / National Express",
+      "note": "Amendment fee amounts from search snippet of NX help pages."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / Megabus (UK)",
+      "note": "megabus.co.uk blocks direct fetch (403); all Megabus UK figures are from search snippets of operator pages."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / Megabus (UK)",
+      "note": "No fare observed; Omio lists 'from £' figures for other operators only."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / Megabus (UK)",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / FlixBus (UK)",
+      "note": "Change rules and voucher validity from search snippet of FlixBus help pages; cancellation scale confirmed on page."
+    },
+    {
+      "section": "buses",
+      "item": "London-Manchester / FlixBus (UK)",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "London-Edinburgh / National Express",
+      "note": "Punctuality not route-specific."
+    },
+    {
+      "section": "buses",
+      "item": "London-Edinburgh / Megabus (UK)",
+      "note": "megabus.co.uk 403; no operator-page figures for this route."
+    },
+    {
+      "section": "buses",
+      "item": "London-Edinburgh / Megabus (UK)",
+      "note": "Aggregator figures conflict (£19 vs £32)."
+    },
+    {
+      "section": "buses",
+      "item": "London-Edinburgh / FlixBus (UK)",
+      "note": "No published on-time figure."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Bus Éireann (route 245X, NTA PSO; successor to Expressway X8 from 2021-09-05)",
+      "note": "Timetable from bustimes.org (NTA GTFS feed) because buseireann.ie route page rendered no times; a timetable change took effect 2026-09-27 per search snippet."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Bus Éireann (route 245X, NTA PSO; successor to Expressway X8 from 2021-09-05)",
+      "note": "Current 245X fare not confirmed; the €16.50/€12.25 figures are from 2021."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Bus Éireann (route 245X, NTA PSO; successor to Expressway X8 from 2021-09-05)",
+      "note": "2025 punctuality column attribution uncertain."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Aircoach (route 704X)",
+      "note": "Fare page gives two different 'from' figures (€16 and €18)."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Aircoach (route 704X)",
+      "note": "Refund terms from search snippet, not a fetched page."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Aircoach (route 704X)",
+      "note": "Commercial route; not in NTA punctuality reports."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Dublin Coach ('The Green Bus', M9 Express route 600 via Kilkenny and Waterford)",
+      "note": "3h20 for a route via Waterford and Kilkenny looks short; the extracted trip may be a partial run - verify on the timetable."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Dublin Coach ('The Green Bus', M9 Express route 600 via Kilkenny and Waterford)",
+      "note": "Refund/change terms not researched."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Cork / Dublin Coach ('The Green Bus', M9 Express route 600 via Kilkenny and Waterford)",
+      "note": "Dublin Coach runs no Dublin-Belfast service found."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Belfast / Translink Goldliner & Bus Éireann (route X1)",
+      "note": "Running time not confirmed from a timetable."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Belfast / Translink Goldliner & Bus Éireann (route X1)",
+      "note": "Refund terms per fare tier not confirmed."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Belfast / Translink Goldliner & Bus Éireann (route X1)",
+      "note": "X1 is not in the NTA route-by-route punctuality report extract."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Belfast / Aircoach (route 705X)",
+      "note": "Extracted departure and arrival lists were misaligned (16 vs 17 entries); running time taken from unambiguous first-trip pairs only."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Belfast / Aircoach (route 705X)",
+      "note": "Fare from search snippet."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Belfast / Dublin Express (Go-Ahead / National Express-branded)",
+      "note": "Page shows two different 'from' fares."
+    },
+    {
+      "section": "buses",
+      "item": "Dublin-Belfast / Dublin Express (Go-Ahead / National Express-branded)",
+      "note": "Ownership note: page says 'part of National Express'; not further verified."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Toluca / Caminante (TMT)",
+      "note": "Page states Toluca->CDMX direction; reverse hours not confirmed."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Toluca / Caminante (TMT)",
+      "note": "No refund policy found."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Toluca / Caminante (TMT)",
+      "note": "Caminante added because ETN's Toluca-CDMX service could not be confirmed."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Toluca / ETN Turistar",
+      "note": "ETN's Toluca terminal page lists no CDMX service; a search snippet claiming ETN Taxqueña-Toluca in 2h10 from '$6' came from an aggregator and could not be confirmed. Treat as unconfirmed whether ETN runs this pair."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Puebla / ADO",
+      "note": "ado.com.mx route page 403; running time and fares not confirmed on operator page."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Puebla / ADO",
+      "note": "Departures/day from aggregator."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Puebla / Estrella Roja",
+      "note": "estrellaroja.com.mx page rendered no content; all figures are from aggregator snippets."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Puebla / Estrella Roja",
+      "note": "Old 4 Poniente terminal closed 2020-02-01."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Guadalajara / ETN Turistar",
+      "note": "'More than 10' is a floor, recorded as 10."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Guadalajara / ETN Turistar",
+      "note": "Policy text from search snippets, not fetched."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Guadalajara / Primera Plus",
+      "note": "Fare is a snippet figure of unclear source."
+    },
+    {
+      "section": "buses",
+      "item": "Mexico City-Guadalajara / Primera Plus",
+      "note": "ADO also serves this pair; not researched."
+    },
+    {
+      "section": "buses",
+      "item": "Toronto-Montreal / Megabus (Canada)",
+      "note": "'Up to 25/day' may include partner and multi-stop services; aggregators cite 11-14."
+    },
+    {
+      "section": "buses",
+      "item": "Toronto-Montreal / Megabus (Canada)",
+      "note": "Canadian Megabus change fees not confirmed (US rules may not apply)."
+    },
+    {
+      "section": "buses",
+      "item": "Toronto-Montreal / FlixBus (Canada)",
+      "note": "8h45 fastest suggests FlixBus's trips are indirect/connecting."
+    },
+    {
+      "section": "buses",
+      "item": "Toronto-Montreal / FlixBus (Canada)",
+      "note": "Canada-specific cancellation policy not confirmed."
+    },
+    {
+      "section": "buses",
+      "item": "Toronto-Montreal / Orléans Express with Red Arrow (transfer at Ottawa VIA station)",
+      "note": "Not a direct service - Orléans Express itself does not run Toronto-Montreal end to end."
+    },
+    {
+      "section": "buses",
+      "item": "Toronto-Montreal / Orléans Express with Red Arrow (transfer at Ottawa VIA station)",
+      "note": "Day-of-week pattern and fares not captured."
+    },
+    {
+      "section": "buses",
+      "item": "Toronto-Montreal / Orléans Express with Red Arrow (transfer at Ottawa VIA station)",
+      "note": "Montreal bus station construction from 2026-01-26 may affect service."
+    },
+    {
+      "section": "transit",
+      "item": "New York",
+      "note": "Free transfer window (widely stated as one free bus/subway transfer within 2 hours on OMNY) not re-verified at an MTA page this session; the mta.info press release returned 403 and was read via search snippet only."
+    },
+    {
+      "section": "transit",
+      "item": "New Haven",
+      "note": "cttransit.com failed TLS verification in the fetcher; the $1.75 figure is from the cttransit.com search snippet, not a full page read. No effective date shown."
+    },
+    {
+      "section": "transit",
+      "item": "New Haven",
+      "note": "Day/7-day/31-day pass prices not captured."
+    },
+    {
+      "section": "transit",
+      "item": "Washington",
+      "note": "Moovit 2024 covers DC-MD-VA but the press release gives no commute figure for it."
+    },
+    {
+      "section": "transit",
+      "item": "Boston",
+      "note": "No MBTA fare cap found on the pilot page."
+    },
+    {
+      "section": "transit",
+      "item": "Boston",
+      "note": "Moovit 2024 press release names Boston but gives no commute figure."
+    },
+    {
+      "section": "transit",
+      "item": "Philadelphia",
+      "note": "Transfer window conflict: fares page says 2 hours, other SEPTA/press material says 90 minutes."
+    },
+    {
+      "section": "transit",
+      "item": "Philadelphia",
+      "note": "Fares page summary said 'last updated December 2024'; no 2026 change found."
+    },
+    {
+      "section": "transit",
+      "item": "San Diego",
+      "note": "New daily cap/day pass from 1 Oct 2026 ($7) seen only in a search snippet; the approved-fares chart is an image."
+    },
+    {
+      "section": "transit",
+      "item": "London",
+      "note": "Zone 1 single fares (£3.10/£3.00) not read from a TfL page; TfL's newsroom confirmed only '10-20p' rises. The TfL singles PDF was not retrievable."
+    },
+    {
+      "section": "transit",
+      "item": "London",
+      "note": "A search summary claimed the bus freeze was extended to 1 November 2026 (GLA decision MD3517); london.gov.uk returned 403, so unconfirmed. Bus daily cap £5.25 seen only on secondary sites."
+    },
+    {
+      "section": "transit",
+      "item": "Manchester",
+      "note": "Bee Network £2 freeze from TfGM press-release search snippet and local press; TfGM newsroom page not read in full."
+    },
+    {
+      "section": "transit",
+      "item": "Manchester",
+      "note": "Bee Network bus daily/weekly cap not captured."
+    },
+    {
+      "section": "transit",
+      "item": "Dublin",
+      "note": "No published average commute time by public transport for Dublin City found."
+    },
+    {
+      "section": "transit",
+      "item": "Dublin",
+      "note": "TFI Leap daily/weekly caps in Dublin not captured."
+    },
+    {
+      "section": "transit",
+      "item": "Cork",
+      "note": "Cork cap amounts not stated."
+    },
+    {
+      "section": "transit",
+      "item": "Cork",
+      "note": "Whether the Jan 2027 increase changes Cork's €1.70 is not stated (RTE mentions 'town fares' to €1.65, a different category)."
+    },
+    {
+      "section": "transit",
+      "item": "Paris",
+      "note": "IDFM and RATP pages returned 403; figures read from IDFM/RATP search snippets and French press (sortiraparis, cnews), consistent with each other."
+    },
+    {
+      "section": "transit",
+      "item": "Paris",
+      "note": "Ticket validity windows (bus-tram 90 minutes; metro-RER transfers within the network) not confirmed this session."
+    },
+    {
+      "section": "transit",
+      "item": "Paris",
+      "note": "No INSEE/EGT figure captured for transit commute time."
+    },
+    {
+      "section": "transit",
+      "item": "Brussels",
+      "note": "STIB's own tariff page not read; fares from L'Avenir/DH press."
+    },
+    {
+      "section": "transit",
+      "item": "Brussels",
+      "note": "No published transit commute time found for Brussels."
+    },
+    {
+      "section": "transit",
+      "item": "Amsterdam",
+      "note": "€3.40 hour ticket seen in a search summary of gvb.nl; gvb.nl returned 403."
+    },
+    {
+      "section": "transit",
+      "item": "Amsterdam",
+      "note": "Transfer rule (a new check-in within 35 min counts as the same trip, no new base fare) is the national norm but was not verified."
+    },
+    {
+      "section": "transit",
+      "item": "Amsterdam",
+      "note": "No published transit commute time found."
+    },
+    {
+      "section": "transit",
+      "item": "Mexico City",
+      "note": "A secondary claim that an EOD 2017 public-transport trip averages 66 minutes (vs 44 by private vehicle) was not found in INEGI's results PDF; not used."
+    },
+    {
+      "section": "transit",
+      "item": "Mexico City",
+      "note": "Fare figures from press citing the CDMX government, not an official tariff page."
+    },
+    {
+      "section": "transit",
+      "item": "Toronto",
+      "note": "Toronto-CMA transit-only duration exists in StatCan table 98-10-0457-01 but was not extracted."
+    },
+    {
+      "section": "transit",
+      "item": "Vancouver",
+      "note": "Vancouver-CMA transit-only duration (StatCan 98-10-0457-01) not extracted."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "Amtrak Acela / Northeast Regional share of trains cancelled: null. Amtrak publishes no cancellation share (checked Monthly Performance Report and Host Railroad Reports); the FRA quarterly PRIIA service-quality report returned HTTP 403 and was not checked."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "Metro-North share of trains cancelled: null. Only raw counts of cancelled/terminated/bus-substituted trains are published (data.ny.gov tgiq-jafi); no scheduled-trains denominator was found. MTA board 'Key Performance Metrics' books may contain one but were not located."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "Metro-North New Haven Line 12-month OTP 97.3% is an unweighted mean computed here from published monthly figures, not a published number."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "Eurostar share of trains cancelled: null; not published in the customer charter."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "Irish Rail period figures on irishrail.ie: the page does not state the year. Period end dates (25 Jan ... 6 Sep) fit both 2025 (Saturdays) and 2026 (Sundays); a search-engine summary attributed them to 2025. Treat year as unconfirmed."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "Irish Rail Dublin-Cork NTA moving-annual-average figures are only available to P6 2025; nothing later found on the NTA page."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "LNER Delay Repay bands come from secondary sources because LNER's site blocked fetches (HTTP 403)."
+    },
+    {
+      "section": "railCancellations",
+      "item": "",
+      "note": "MTA Spring 2026 customer survey New Haven Line 78% figure is from a search snippet and was not fetched directly."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "Belfast-specific ADR for 2025: not found. The NIHF figure (GBP 116.18, 2025) is for Northern Ireland, its data provider is unnamed, and its 71.9% occupancy differs from NISRA's 65.0% NI figure (different samples)."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "Edinburgh 2025 full-year ADR/occupancy: not found published; only the 2024 CoStar outturn (GBP 161.08, 84.2%) and a CoStar 2025 forecast. The CoStar article could not be fetched directly (403); figures are from search extracts."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "Edinburgh official occupancy: none after 2024 (Scottish Accommodation Occupancy Survey retired)."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "Toluca ADR: DataTur publishes none; only an anecdotal MXN 1,000-1,500/night quote for large business hotels."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "Toluca DataTur figures are labelled preliminary."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "Estado de México 50% long-stay subsidy for 2026 is from a secondary summary; the 2026 state budget decree was not read."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "Whether Edomex hospedaje tax and IVA stack (IVA base including the state tax) was not confirmed from a primary source."
+    },
+    {
+      "section": "towns",
+      "item": "",
+      "note": "GeoNames API (demo account) was over its daily limit; the four records were read from the geonames.org pages instead, which do not show asciiname or admin1 code numerically for all — admin1 codes NIR, SCT, 15, M are the standard GeoNames codes and match the repo's admin ids."
+    }
+  ]
+}

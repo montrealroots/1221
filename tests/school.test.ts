@@ -961,10 +961,10 @@ describe('the summers, for work', () => {
     sim.advanceTo(stay.at - 60_000);
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0);
-    // The train's fare and no more, an overdraft counted: from 2026-09-29 the way there is a Metro-North ticket, $20.25.
+    // The journey's fares and no more, an overdraft counted: from 2026-09-29 the way there is a Metro-North ticket, $20.25, and the rides to and from the stations, $1.75 and $3.00.
     const primary = sim.universe.accounts[sim.player.primaryAccountId!]!;
     primary.balance = 0;
-    primary.balance = 21_00 - canPay(sim, sim.player);
+    primary.balance = 26_00 - canPay(sim, sim.player);
     sim.advanceTo(stay.at + 60_000);
     landed(sim);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');

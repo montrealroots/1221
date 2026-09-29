@@ -6,7 +6,9 @@
  * asks you there before the train (with the border first, where it's at the
  * departure, as Eurostar's is), the train, and the ride from the station. The
  * rides to and from the station are by the city's own transit, SLATE's
- * estimate of thirty minutes each, and their fare isn't kept yet. When the
+ * estimate of thirty minutes each, at its single fare (`content/transit.ts`)
+ * from 2026-09-29, and free in a town whose fare isn't kept yet, said so. A
+ * coach is the same, from its stand. When the
  * day's trains leave is SLATE's model: the operator's weekday count, spread
  * evenly from six in the morning to nine at night.
  */
@@ -19,6 +21,8 @@ import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { AMTRAK_PER_MILE, NEC_MILES, RAIL_LATE_MEAN_MINUTES, RAIL_ROUTES, type RailFare, type RailRoute } from '../content/rail';
 import type { JourneyLeg } from './journey';
+import { TRANSIT } from '../content/transit';
+import { rateOn } from '../content/career';
 
 const KM_PER_MILE = 1.609344;
 /** The ride to or from a station, by the city's transit: SLATE's estimate. */
@@ -85,20 +89,43 @@ export function planTrain(sim: Simulation, route: RailRoute, fromCity: string, d
   const [fromStation, toStation] = route.from === fromCity ? [route.fromStation, route.toStation] : [route.toStation, route.fromStation];
   const board = depart - route.arriveBeforeMinutes * 60_000;
   const arrive = depart + route.minutes * 60_000;
-  const transit = 'By the city’s transit: SLATE’s estimate of 30 minutes, and its fare not kept yet.';
+  const ride = (cityId: string, at: Instant) => {
+    const t = TRANSIT[cityId];
+    if (!t) return { fare: 0, basis: 'By the town’s transit: SLATE’s estimate of 30 minutes, and its fare not kept yet.' };
+    const amount = rateOn(t.steps, new Date(at).toISOString().slice(0, 10));
+    return { fare: cur === t.currency ? amount : exchange(amount, t.currency, cur) ?? amount, basis: `By the town’s transit, SLATE’s estimate of 30 minutes: ${t.basis}` };
+  };
+  const there = ride(fromCity, board);
+  const away = ride(toCity, arrive);
   return [
-    { mode: 'ground', from: fromCity, to: fromStation, departAt: board - STATION_RIDE_MINUTES * 60_000, arriveAt: board, fare: 0, basis: transit },
+    { mode: 'ground', from: fromCity, to: fromStation, departAt: board - STATION_RIDE_MINUTES * 60_000, arriveAt: board, fare: there.fare, basis: there.basis },
     { mode: 'check-in', from: fromStation, to: fromStation, departAt: board, arriveAt: depart, fare: 0, basis: `${route.arriveBasis}${route.borderBeforeBoarding ? ' The border is here, before boarding.' : ''}` },
-    { mode: 'train', from: fromStation, to: toStation, departAt: depart, arriveAt: arrive, fare: inSave, routeId: route.id, basis: `${route.operator}, ${route.service}: ${fare.basis} The time is the timetable’s weekday median; when it leaves is SLATE’s model.` },
-    { mode: 'ground', from: toStation, to: toCity, departAt: arrive, arriveAt: arrive + STATION_RIDE_MINUTES * 60_000, fare: 0, basis: transit },
+    { mode: route.vehicle === 'bus' ? 'bus' : 'train', from: fromStation, to: toStation, departAt: depart, arriveAt: arrive, fare: inSave, routeId: route.id, basis: `${route.operator}, ${route.service}: ${fare.basis} The time is the timetable’s weekday median; when it leaves is SLATE’s model.` },
+    { mode: 'ground', from: toStation, to: toCity, departAt: arrive, arriveAt: arrive + STATION_RIDE_MINUTES * 60_000, fare: away.fare, basis: away.basis },
   ];
 }
 
-/** Whether a train is late at the operator's rate, and by how much: late trains a mean of SLATE's twenty minutes past the operator's line. */
-export function trainFate(sim: Simulation, person: Person, route: RailRoute, key: string): number {
+/**
+ * Whether a train or coach is late at the operator's rate, and by how much
+ * (late ones a mean of SLATE's twenty minutes past the operator's line), or
+ * canceled at the operator's published share, when the next one is taken.
+ */
+export function trainFateOf(sim: Simulation, person: Person, route: RailRoute, key: string): { late: number; canceled: boolean } {
   const rng = sim.rng('travel.train', person.id, key);
-  if (rng.next() < route.onTime.share) return 0;
-  return route.onTime.withinMinutes + Math.round(RAIL_LATE_MEAN_MINUTES * -Math.log(1 - rng.next() * 0.999));
+  const x = rng.next();
+  if (x < (route.cancelShare ?? 0)) return { late: Math.round(headwayMinutes(route)), canceled: true };
+  if (rng.next() < route.onTime.share) return { late: 0, canceled: false };
+  return { late: route.onTime.withinMinutes + Math.round(RAIL_LATE_MEAN_MINUTES * -Math.log(1 - rng.next() * 0.999)), canceled: false };
+}
+
+/** Minutes late, a cancellation counted as the wait for the next. */
+export function trainFate(sim: Simulation, person: Person, route: RailRoute, key: string): number {
+  return trainFateOf(sim, person, route, key).late;
+}
+
+/** The minutes between a route's departures in SLATE's model of its day. */
+export function headwayMinutes(route: RailRoute): number {
+  return route.perDay > 1 ? ((LAST_HOUR - FIRST_HOUR) * 60) / (route.perDay - 1) : 24 * 60;
 }
 
 export const railRouteById = (id: string | undefined) => RAIL_ROUTES.find((r) => r.id === id);

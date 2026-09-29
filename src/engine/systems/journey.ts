@@ -32,9 +32,9 @@ import { present } from './career';
 import { crossingRefusal, isoOfCity } from './documents';
 import { itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
-import { fareOf, planTrain, railRouteById, railRoutes, trainFate } from './rail';
+import { fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
-export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'arrival';
+export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'bus' | 'arrival';
 export type Cabin = 'economy' | 'premium';
 
 export interface JourneyLeg {
@@ -228,8 +228,8 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
   let late = 0;
   let rebooked = false;
   for (const [n, leg] of j.legs.entries()) {
-    const route = leg.mode === 'train' ? railRouteById(leg.routeId) : undefined;
-    if (route) { late += trainFate(sim, person, route, `${j.id}-${n}`); continue; }
+    const route = leg.mode === 'train' || leg.mode === 'bus' ? railRouteById(leg.routeId) : undefined;
+    if (route) { const fate = trainFateOf(sim, person, route, `${j.id}-${n}`); late += fate.late; if (fate.canceled) rebooked = true; continue; }
     if (leg.mode !== 'flight') continue;
     const fate = flightFate(sim, person, `${j.id}-${n}`);
     if (fate === null) { rebooked = true; late += AIR.rebookHours * 60; } else late += fate;

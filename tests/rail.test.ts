@@ -9,7 +9,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { AMTRAK_PER_MILE, NEC_MILES, RAIL_ROUTES } from '@/engine/content/rail';
-import { departureHours, fareAt, fareOf, necStretch, planTrain, railRouteById, railRoutes, routeMiles, trainFate } from '@/engine/systems/rail';
+import { departureHours, fareAt, fareOf, headwayMinutes, necStretch, planTrain, railRouteById, railRoutes, routeMiles, trainFate, trainFateOf } from '@/engine/systems/rail';
 import { journeysOf, startCareerJourney } from '@/engine/systems/journey';
 import { documentsOf, passportOf } from '@/engine/systems/documents';
 
@@ -142,5 +142,46 @@ describe('a train, booked and taken', () => {
     const late = sim.execute<{ refund: number }>({ kind: 'travel.cancel', payload: { journeyId: b.value!.journeyId } });
     // The fare less the 30% kept, and the hotel back, being more than a day out.
     expect(late.value!.refund).toBe(Math.round(fare * 0.7) + (j.hotel?.price ?? 0));
+  });
+});
+
+describe('coaches, the rides to the station, and cancellations', () => {
+  it('runs a coach as a coach leg at the operator’s lowest fare, and charges each town’s own transit to and from the stand', () => {
+    const sim = at('us-ny-newyork', 'coach-legs');
+    const legs = planTrain(sim, route('flix-nyc-was'), 'us-ny-newyork', sim.now + 5 * MS_DAY, 10);
+    if (typeof legs === 'string') throw new Error(legs);
+    expect(legs.find((l) => l.routeId === 'flix-nyc-was')!.mode).toBe('bus');
+    const cur = saveCurrency(sim.universe);
+    const usd = (c: number) => (cur === 'USD' ? c : exchange(c, 'USD', cur)!);
+    expect(legs.find((l) => l.mode === 'bus')!.fare).toBe(usd(31_48));
+    // The subway in New York, $3.00; the Metro in Washington, $2.25.
+    expect(legs[0]!.fare).toBe(usd(3_00));
+    expect(legs[legs.length - 1]!.fare).toBe(usd(2_25));
+    // A town whose transit isn't kept rides free, and says so.
+    const tol = planTrain(sim, route('insurgente-obs-tol'), 'mx-cmx-mexicocity', sim.now + 5 * MS_DAY, 3);
+    if (typeof tol === 'string') throw new Error(tol);
+    expect(tol[tol.length - 1]!.fare).toBe(0);
+    expect(tol[tol.length - 1]!.basis).toMatch(/not kept yet/);
+  });
+
+  it('reaches Belfast, Edinburgh and Toluca by train and by coach', () => {
+    expect(railRoutes('ie-lei-dublin', 'uk-nir-belfast').map((r) => r.id).sort()).toEqual(['dx-dub-bfs', 'enterprise-dub-bfs']);
+    expect(railRoutes('uk-eng-london', 'uk-sct-edinburgh').map((r) => r.id).sort()).toEqual(['lner-kgx-edb', 'nx-lon-edb']);
+    expect(railRoutes('mx-cmx-mexicocity', 'mx-15-toluca').length).toBe(2);
+  });
+
+  it('cancels Avanti’s trains at ORR’s 5.6%, and the traveler waits for the next', () => {
+    const sim = at('uk-eng-london', 'rail-cancel-avanti');
+    const r = route('avanti-eus-man');
+    let canceled = 0;
+    const N = 20_000;
+    for (let i = 0; i < N; i += 1) {
+      const f = trainFateOf(sim, sim.player, r, `c${i}`);
+      if (f.canceled) { canceled += 1; expect(f.late).toBe(Math.round(headwayMinutes(r))); }
+    }
+    expect(Math.abs(canceled / N - 0.056)).toBeLessThan(0.006);
+    // Amtrak publishes no share: none canceled.
+    const acela = route('nec-nyp-was-acela');
+    for (let i = 0; i < 2_000; i += 1) expect(trainFateOf(sim, sim.player, acela, `a${i}`).canceled).toBe(false);
   });
 });

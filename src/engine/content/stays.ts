@@ -45,6 +45,10 @@ export const STAYS: Readonly<Record<string, StayRate>> = {
   'uk-eng-london': s(228, 'GBP', '2024', 'Knight Frank’s London panel, leaning upscale; 2025 was reported broadly in line', 'research-hotels.json', 0, 0, 0, 'VAT of 20% is in the price, and London has no visitor levy yet.'),
   'ca-on-toronto': s(260.77, 'CAD', '2025', 'All hotels, Toronto, CoStar', 'research-hotels.json', 1.06 * 1.13 - 1, 0, 0, 'The 6% Municipal Accommodation Tax since 1 August 2026, and 13% HST on the room and the tax.'),
   'ca-bc-vancouver': s(284.44, 'CAD', '2025', 'All hotels, Vancouver, CoStar', 'research-hotels.json', 0.16, 0, 0, 'GST 5%, PST 8% and the 3% Municipal and Regional District Tax; a temporary 2.5% for the World Cup isn’t kept.'),
+  // Belfast and Edinburgh from 2026-09-29 (docs/research/world/research-buses-transit.json): both averages read secondhand.
+  'uk-nir-belfast': s(116.18, 'GBP', '2025', 'All of Northern Ireland, the NI Hotels Federation as the Irish News reported it; NISRA publishes no rate', 'research-buses-transit.json', 0, 0, 0, 'VAT of 20% is in the price, and Belfast has no visitor levy.'),
+  // Edinburgh's visitor levy is 5% of the price before VAT, so about 4.17% of a price with it; its cap at five nights isn't kept.
+  'uk-sct-edinburgh': s(161.08, 'GBP', '2024', 'Edinburgh, CoStar as reported; VisitScotland ended its survey after 2024', 'research-buses-transit.json', 0.05 / 1.2, 0, 0, 'VAT of 20% is in the price; the city’s visitor levy, 5% of the price before VAT, on stays from 24 July 2026.'),
   'ie-lei-dublin': s(178, 'EUR', '2025', 'Dublin, Crowe and JLL', 'research-hotels.json', 0, 0, 0, 'VAT of 13.5% is in the price.'),
   'is-39-reykjavik': s(null, 'ISK', '', '', '', 0, 800, 0, 'ISK 800 a room a night; VAT of 11% is in the price.'),
   'de-be-berlin': s(null, 'EUR', '', '', '', 0.075, 0, 0, 'Berlin’s City Tax of 7.5%; VAT of 7% is in the price.'),

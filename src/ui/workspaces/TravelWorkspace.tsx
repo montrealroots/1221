@@ -21,7 +21,7 @@ import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
-const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', train: 'Train', arrival: 'Off The Aircraft' };
+const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', train: 'Train', bus: 'Coach', arrival: 'Off The Aircraft' };
 /** A train journey's legs, named for a station. */
 const RAIL_WORD: Partial<Record<JourneyLeg['mode'], string>> = { ground: 'To Or From The Station', 'check-in': 'At The Station' };
 const clock = (h: number) => `${Math.floor(h) % 12 === 0 ? 12 : Math.floor(h) % 12}:${String(Math.round((h % 1) * 60)).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
