@@ -22,7 +22,7 @@ import {
   authorizationFor, authorizationRefusal, documentsOf, isoOfCity, licenseOf, licensingOf, mayDrive, mayEnter,
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument,
 } from '@/engine/systems/documents';
-import { applies, attemptFee, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
+import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
 import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal } from '@/engine/systems/permission';
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -173,6 +173,15 @@ function LicensePath() {
             </tbody>
           </table>
         </div>
+        {exchangeable(person, sim.now) && (
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <span className="small">{exchangeable(person, sim.now)!.exchange.note}</span>
+            <Gated feature="documents.exchange_license" className="btn btn-sm" disabled={Boolean(exchangeRefusal(person, sim.now))} title={exchangeRefusal(person, sim.now)} onClick={() => {
+              const a = run<{ expiresAt: number; fee: number }>('documents.exchange_license', {});
+              if (a.ok) toast(`Exchanged, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}; good until ${formatDate(a.value!.expiresAt, sim.zone)}.`, 'positive');
+            }}>Exchange It</Gated>
+          </div>
+        )}
         <p className="small" style={{ margin: 0 }}>Each step is booked on a business day here, and kept on the calendar like any call; miss a test and its fee is gone. {path.note}</p>
         <Fine>
           {steps.map((st) => `${st.name}: ${st.note}${st.feeBasis ? ` ${st.feeBasis}` : ''}${st.pass ? ` ${passRate(st.pass).basis}` : ''}`).join(' ')} How far ahead a step is booked is SLATE’s estimate. Fees are the authority’s own unless said otherwise; sources: {[...new Set([...LICENSES[jurisdiction]!.sources.map((x) => x.url), ...steps.flatMap((st) => (st.source ? [st.source] : []))])].join('; ')}.
@@ -283,7 +292,7 @@ export function WorkPane() {
             <Gated feature="documents.petition_o1" className="btn btn-sm" disabled={Boolean(o1No)} title={o1No} onClick={() => apply('documents.petition_o1', {}, 'The petition is in')}>Petition For An O-1</Gated>
             <Gated feature="documents.petition_o1" className="btn btn-sm btn-ghost" disabled={Boolean(o1No)} title={o1No} onClick={() => apply('documents.petition_o1', { premium: true }, 'The petition is in, premium')}>Petition With Premium Processing</Gated>
           </div>
-          <Fine>SLATE reads four of the regulation’s six kinds of evidence from the career; a record of commercial success and critics’ recognition aren’t kept per actor. The opinion’s fee is as reported, and the standard processing time SLATE’s {o1.standardDays} days. Source: {o1.source}.</Fine>
+          <Fine>SLATE reads five of the regulation’s six kinds of evidence from the career, the experts’ letters from your reputation; a record of commercial success isn’t kept per actor. The opinion’s fee is as reported, and the standard processing time SLATE’s {o1.standardDays} days. Source: {o1.source}.</Fine>
         </div>
       </Panel>
 

@@ -26,7 +26,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { businessDay } from '../content/bankdays';
 import { LICENSES } from '../content/licenses';
-import { LEAD_DAYS, LICENSE_PATHS, PASS_RATES, passRate, type LicenseGrant, type LicensePath, type PathStep } from '../content/licensepaths';
+import { LEAD_DAYS, LICENSE_EXCHANGES, LICENSE_PATHS, PASS_RATES, passRate, type LicenseExchange, type LicenseGrant, type LicensePath, type PathStep } from '../content/licensepaths';
 import { payFromBank } from './household';
 import { present } from './career';
 import { addYears, documentsOf, inForce, licenseOf, licensingOf, numberFor, type PersonDocument } from './documents';
@@ -132,6 +132,8 @@ export function stepRefusal(sim: Simulation, person: Person, stepId: string): st
   const rule = LICENSES[jurisdiction]!;
   if (ageAt(person, sim.now) < rule.minAge.learner) return `${rule.authority} starts a learner at ${rule.minAge.learner}.`;
   if (heldHere(person, jurisdiction, sim.now)) return `You hold ${rule.name} already.`;
+  const swap = exchangeable(person, sim.now);
+  if (swap) return `Your license from ${LICENSES[swap.held.issuer]?.authority ?? 'elsewhere'} exchanges here without the tests: Exchange It.`;
   const r = recordFor(person, jurisdiction);
   if (r.booked) return r.booked.step === stepId ? 'It’s booked.' : `${path.steps.find((s) => s.id === r.booked!.step)?.name ?? 'A step'} is booked first.`;
   if (r.unpaid === stepId) return undefined;
@@ -223,6 +225,29 @@ function complete(sim: Simulation, person: Person, jurisdiction: string, step: P
   }
   const doc = grant(sim, person, jurisdiction, step.grants, step.issueDays);
   return `${step.name}: ${step.kind === 'test' ? 'passed' : 'done'}. ${doc.name}${step.issueDays ? `, in the post, arriving ${formatDate(doc.issuedAt!, sim.zone)}` : ''}, good until ${formatDate(doc.expiresAt!, sim.zone)}.`;
+}
+
+// ---------------------------------------------------------------------------
+// Exchanging a license from elsewhere
+// ---------------------------------------------------------------------------
+
+/** A full license from elsewhere they could exchange where they are now, and the exchange. */
+export function exchangeable(person: Person, at: Instant): { jurisdiction: string; held: PersonDocument; exchange: LicenseExchange } | undefined {
+  const here = pathHere(person);
+  const exchange = here ? LICENSE_EXCHANGES[here.jurisdiction] : undefined;
+  if (!here || !exchange || heldHere(person, here.jurisdiction, at)) return undefined;
+  const held = documentsOf(person).find((d) => d.kind === 'license' && d.issuer !== here.jurisdiction && inForce(d, at) && (d.stage ?? 'full') === 'full'
+    && (exchange.from.includes(d.issuer) || exchange.from.includes(d.issuer.split('-')[0]!)));
+  return held ? { jurisdiction: here.jurisdiction, held, exchange } : undefined;
+}
+
+export function exchangeRefusal(person: Person, at: Instant): string | undefined {
+  if (exchangeable(person, at)) return undefined;
+  const here = pathHere(person);
+  if (!here) return `SLATE doesn’t have the license rules for ${CITIES.get(person.currentLocationId)?.name ?? 'this place'} yet.`;
+  if (heldHere(person, here.jurisdiction, at)) return 'You hold this license already.';
+  if (!LICENSE_EXCHANGES[here.jurisdiction]) return `SLATE couldn’t confirm that ${LICENSES[here.jurisdiction]!.authority} exchanges a license from elsewhere: the path is the way.`;
+  return `${LICENSES[here.jurisdiction]!.authority} doesn’t exchange a license you hold: the path is the way.`;
 }
 
 // ---------------------------------------------------------------------------
@@ -330,6 +355,20 @@ export function registerLicensing(sim: Simulation): void {
       r.failedAt[step.id] = s.now;
       tell(`${step.name} Failed`, `Not this time${step.retakeDays ? `; it can be taken again from ${formatDate(s.now + step.retakeDays * MS_DAY, s.zone)}` : ''}.`);
     }
+  });
+
+  sim.onCommand<Record<string, never>, { expiresAt: Instant; fee: Money }>('documents.exchange_license', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = exchangeRefusal(person, s.now);
+    if (no) throw new CommandError(no);
+    const { jurisdiction, held, exchange } = exchangeable(person, s.now)!;
+    const fee = inSave(s, exchange.fee, exchange.currency);
+    if (!payFromBank(s, person, fee, `${LICENSES[jurisdiction]!.name}, exchanged`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    // The old one is surrendered.
+    held.status = 'cancelled';
+    const full = LICENSE_PATHS[jurisdiction]!.steps.map((st) => st.grants).filter((g): g is LicenseGrant => g?.stage === 'full').at(-1)!;
+    const doc = grant(s, person, jurisdiction, { ...full, years: exchange.years });
+    return { expiresAt: doc.expiresAt!, fee };
   });
 
   sim.onCommand<Record<string, never>, { expiresAt: Instant; fee: Money }>('documents.renew_license', (_p, { sim: s }) => {

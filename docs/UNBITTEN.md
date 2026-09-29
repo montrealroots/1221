@@ -610,8 +610,9 @@ part the tool cannot see.
   15, a Canadian permit 30); what counts as a day at work on OPT (inside a
   job's span, SLATE's reading of twenty hours a week for work that comes in
   engagements); and which of the O-1's six kinds of evidence the career can
-  show (a lead, a known name, a critical role, high pay; a record of
-  commercial success and critics' recognition aren't kept per actor). An
+  show (a lead, a known name, a critical role, the experts' letters read
+  from reputation past 50, high pay; a record of commercial success isn't
+  kept per actor). An
   approved O-1 or OPT stands in for the consulate's visa stamp (DS-160,
   $205) its holder would travel on. Someone whose permission has ended isn't
   made to leave: they can't work, move into a home or buy one to live in,

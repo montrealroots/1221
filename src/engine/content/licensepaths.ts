@@ -485,3 +485,27 @@ export function passRate(key: string): { rate: number; published: boolean; basis
   const mean = publishedMean(kind);
   return { rate: mean, published: false, basis: `Nobody publishes this test’s pass rate; SLATE uses ${Math.round(mean * 100)}%, the mean of the ${kind === 'theory' ? 'written' : 'road'} tests that publish one.` };
 }
+
+export interface LicenseExchange {
+  /** Issuers whose full license exchanges without tests: a country code, or a jurisdiction's own id. */
+  from: readonly string[];
+  fee: number;
+  currency: string;
+  years: number;
+  note: string;
+}
+
+/**
+ * A full license from elsewhere exchanged for this jurisdiction's, without
+ * its tests, as a new resident's is, and the old one surrendered; from each
+ * authority's rules for new residents in `content/licenses.ts`. Where the
+ * research didn't find an exchange (California's for another state wasn't
+ * confirmed on its pages), there's none here, and the path is the way.
+ */
+export const LICENSE_EXCHANGES: Readonly<Record<string, LicenseExchange>> = {
+  'us-ny': { from: ['us', 'ca'], fee: 64.25, currency: 'USD', years: 8, note: 'A US state’s or a Canadian province’s, within 30 days of moving; the fee is the license’s own, which SLATE takes for the exchange.' },
+  'us-ct': { from: ['us', 'ca', 'de', 'fr'], fee: 124, currency: 'USD', years: 6, note: 'A US state’s, Canada’s, Germany’s or France’s: the $40 application and the $84 license, with a vision test, within 90 days.' },
+  'ca-on': { from: ['ca', 'us', 'au', 'at', 'be', 'hr', 'dk', 'fr', 'de', 'gb', 'gb-nir', 'jp', 'kr', 'nz', 'ie', 'ch', 'tw', 'ua'], fee: 90, currency: 'CAD', years: 5, note: 'Another province’s, a US state’s, or one of the countries Ontario lists, after 60 days on it; the five-year license’s fee.' },
+  'ca-bc': { from: ['ca', 'us', 'at', 'au', 'be', 'fr', 'de', 'ie', 'jp', 'nl', 'nz', 'kr', 'ch', 'tw', 'gb', 'gb-nir'], fee: 31, currency: 'CAD', years: 2, note: 'Another province’s, most US states’, or one of the countries ICBC lists, within 90 days: a first two-year license, $31.' },
+  'au-nsw': { from: ['at', 'be', 'ca', 'hr', 'dk', 'fi', 'fr', 'de', 'gr', 'ie', 'it', 'jp', 'lu', 'mt', 'nl', 'nz', 'no', 'pt', 'sg', 'es', 'se', 'ch', 'gb', 'gb-nir', 'us'], fee: 234, currency: 'AUD', years: 5, note: 'A recognized country’s, current or expired under five years, within three months: the five-year license’s fee.' },
+};

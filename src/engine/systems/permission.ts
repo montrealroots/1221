@@ -126,18 +126,24 @@ export function optRefusal(sim: Simulation, person: Person): string | undefined 
 export interface O1Evidence { key: string; label: string; met: boolean }
 
 const LEADS = new Set(['series-half', 'series-hour', 'broadway', 'lort-a-plus']);
-const DISTINGUISHED = new Set(['guest-half', 'guest-hour', 'recurring', 'film-weekly']);
+// Regional (LORT) and Off-Broadway companies are distinguished organizations as the regulation means them.
+const DISTINGUISHED = new Set(['guest-half', 'guest-hour', 'recurring', 'film-weekly', 'lort-b', 'offb-commercial', 'offb-nonprofit']);
+/** Reputation past which directors and casting directors would write for the petition: SLATE's estimate. */
+export const EXPERT_LETTERS_AT = 50;
 
 /**
  * What an O-1B petition shows of the six kinds of evidence, as SLATE reads
  * its career: a lead in a distinguished production (a series regular, or
  * Broadway); a name the public knows (recognition past the point it lifts
  * pay, `ATTRIBUTES.overscale`); a critical role for a distinguished
- * organization (a guest star, a recurring role, a studio film); and
- * remuneration high in the field (a year's acting at SAG-AFTRA's health
- * plan threshold). A record of commercial or critical success and
- * recognition from critics aren't kept per actor, so SLATE can't show them:
- * three of these four are needed.
+ * organization (a guest star, a recurring role, a studio film, a regional or
+ * Off-Broadway company); recognition from experts in the field, the letters
+ * from directors and casting directors a petition carries (reputation past
+ * `EXPERT_LETTERS_AT`); and remuneration high in the field (a year's acting
+ * at SAG-AFTRA's health plan threshold). A record of commercial or critical
+ * success isn't kept per actor, so SLATE can't show it: three of these five
+ * are needed. Until 2026-09-29, the day it was written, it read four, and
+ * left a stage actor's companies and the experts' letters out.
  */
 export function o1Evidence(sim: Simulation, person: Person): O1Evidence[] {
   const career = careerOf(person);
@@ -148,6 +154,7 @@ export function o1Evidence(sim: Simulation, person: Person): O1Evidence[] {
     { key: 'lead', label: 'A Lead In A Distinguished Production', met: credits.some((r) => LEADS.has(r)) },
     { key: 'known', label: 'A Name The Public Knows', met: attributesOf(sim, person).recognition >= ATTRIBUTES.overscale.from },
     { key: 'critical', label: 'A Critical Role For A Distinguished Organization', met: credits.some((r) => DISTINGUISHED.has(r)) },
+    { key: 'experts', label: 'Recognition From Experts In The Field', met: attributesOf(sim, person).reputation >= EXPERT_LETTERS_AT },
     { key: 'paid', label: 'High Pay For The Field', met: paid },
   ];
 }

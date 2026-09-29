@@ -332,3 +332,44 @@ describe('every path', () => {
     }
   }, 120_000);
 });
+
+describe('a license from elsewhere', () => {
+  const held = (sim: Simulation, issuer: string): PersonDocument => {
+    const d: PersonDocument = { id: `lic-${issuer}`, kind: 'license', issuer, name: 'License', number: 'D1', status: 'valid', issuedAt: sim.now - 2 * YEAR, expiresAt: sim.now + 3 * YEAR };
+    documentsOf(sim.player).push(d);
+    return d;
+  };
+
+  it('is exchanged in New York for its fee, without the tests, and the old one surrendered', () => {
+    const sim = life('exchange-ny');
+    const ct = held(sim, 'us-ct');
+    expect(stepRefusal(sim, sim.player, 'permit')).toMatch(/exchanges here without the tests/);
+    const before = bank(sim);
+    const a = sim.execute<{ expiresAt: number; fee: number }>({ kind: 'documents.exchange_license', payload: {} });
+    expect(a.ok).toBe(true);
+    expect(before - bank(sim)).toBe(64_25);
+    expect(ct.status).toBe('cancelled');
+    const ny = licenseOf(sim.player, sim.now)!;
+    expect(ny.issuer).toBe('us-ny');
+    expect(ny.name).toBe('Class D Driver License');
+    expect(ny.expiresAt).toBe(addYears(ny.issuedAt!, 8));
+    expect(sim.execute({ kind: 'documents.exchange_license', payload: {} }).error).toMatch(/already/);
+  });
+
+  it('is exchanged in British Columbia from Britain for a first two-year license, and not in California, whose exchange wasn’t confirmed', () => {
+    const bc = life('exchange-bc', 'ca-bc-vancouver');
+    held(bc, 'gb');
+    const a = bc.execute<{ expiresAt: number; fee: number }>({ kind: 'documents.exchange_license', payload: {} });
+    expect(a.ok).toBe(true);
+    const lic = licenseOf(bc.player, bc.now)!;
+    expect(lic.issuer).toBe('ca-bc');
+    expect(lic.expiresAt).toBe(addYears(lic.issuedAt!, 2));
+    const ca = life('exchange-ca', 'us-ca-losangeles');
+    held(ca, 'us-ny');
+    expect(ca.execute({ kind: 'documents.exchange_license', payload: {} }).error).toMatch(/couldn’t confirm/);
+    // A license from a country Ontario doesn't list isn't exchanged there.
+    const on = life('exchange-on', 'ca-on-toronto');
+    held(on, 'br');
+    expect(on.execute({ kind: 'documents.exchange_license', payload: {} }).error).toMatch(/doesn’t exchange/);
+  });
+});
