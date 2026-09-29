@@ -27,7 +27,7 @@ import { HOME_TAX } from '../content/homes';
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
-import { payFromCurrent } from './household';
+import { payFromBank } from './household';
 import { personalityOf } from './personality';
 import { payeeAccount } from './cash';
 
@@ -502,7 +502,7 @@ export function registerTaxReturn(sim: Simulation): void {
       return { balance: r.figures.balance, penalty: 0, paid: true };
     }
     const total = r.figures.balance + r.penalty;
-    const paid = total <= 0 || payFromCurrent(s, person, total, `Income tax, ${r.year}${r.penalty ? ', with late penalties' : ''}`, 'tax');
+    const paid = total <= 0 || payFromBank(s, person, total, `Income tax, ${r.year}${r.penalty ? ', with late penalties' : ''}`, 'tax');
     if (!paid) r.owed = total;
     return { balance: r.figures.balance, penalty: r.penalty, paid };
   });
@@ -514,7 +514,7 @@ export function registerTaxReturn(sim: Simulation): void {
     // Paying late costs 0.5% a month or part from filing.
     const months = Math.ceil((s.now - (r.filedAt ?? s.now)) / (30.4375 * MS_DAY));
     const total = Math.round(r.owed * (1 + Math.min(RETURN.lateCap, RETURN.payLateMonthly * months)));
-    if (!payFromCurrent(s, person, total, `Income tax owed, ${r.year}`, 'tax')) throw new CommandError(`${formatMoney(total, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (!payFromBank(s, person, total, `Income tax owed, ${r.year}`, 'tax')) throw new CommandError(`${formatMoney(total, saveCurrency(s.universe))} is more than the bank can cover.`);
     delete r.owed;
     return { paid: total };
   });

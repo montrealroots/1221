@@ -25,6 +25,13 @@
  * credit once one is earned. Until 2026-09-28 none of the ceilings, the
  * early start and the return were.
  *
+ * Federal income tax is withheld from each month as the IRS has a periodic
+ * payment withheld by default (Form W-4P, from 2023): as for somebody single,
+ * with nothing claimed, on the year the month makes (IRS Publication 15-T).
+ * Until 2026-09-28 none was, and a retired actor ended each year owing tens of
+ * thousands. SLATE's estimate: a state's own withholding on a pension, which
+ * the states set apart, isn't taken; it's settled on the return.
+ *
  * A pension fund from before (the day job's, until 2026-09-26) sat in a
  * save, counted in its net worth and moved by nothing. It's paid out at 65
  * too, into the bank.
@@ -39,6 +46,9 @@ import { earningsOf, recordPension } from './earnings';
 import { CommandError } from '../core/simulation';
 import { payeeAccount } from './cash';
 import { careerOf, roleById } from './career';
+import { computeAnnualTax } from '../content/tax';
+import { CITIES } from '../content/geography';
+import { homeOf } from './earnings';
 
 export const SAG_PENSION = {
   creditEarnings: 20_000_00,
@@ -168,8 +178,12 @@ export function registerPension(sim: Simulation): void {
       // Begun at 65, or early and reduced.
       person.pensionStart ??= { at: s.now, factor: 1 };
       const month = Math.round((p.yearly * person.pensionStart.factor) / 12);
-      s.post({ memo: 'SAG-Producers Pension Plan, the month', category: 'salary', postings: [{ accountId: into.id, amount: month }, { accountId: s.nominalAccount('income', 'Pension').id, amount: -month }] });
-      recordPension(person, s.now, s.homeZone, month);
+      // The federal default for a periodic payment: the year's tax, single, on twelve such months, a twelfth of it.
+      const home = homeOf(person);
+      const us = CITIES.get(home)?.countryId === 'us';
+      const withheld = us ? Math.max(0, Math.round(computeAnnualTax(month * 12, home, s.now, { currency: cur }).federal / 12)) : 0;
+      s.post({ memo: 'SAG-Producers Pension Plan, the month', category: 'salary', postings: [{ accountId: into.id, amount: month - withheld }, { accountId: s.nominalAccount('income', 'Pension').id, amount: -month }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
+      recordPension(person, s.now, s.homeZone, month, withheld);
       if (person.id === s.universe.playerId && !item.payload.begun) s.notify({ category: 'career', title: 'Your SAG-AFTRA Pension Begins', body: `${formatMoney(month, cur)} a month from the SAG-Producers Pension Plan, on ${p.credits} Pension Credits, from ${formatDate(s.now, s.zone)}.`, importance: 70, route: '/workspace/career' });
     }
     s.schedule({ at: item.at + 30.44 * MS_DAY, kind: PENSION_KIND, label: 'Pension', category: 'system', priority: 20, payload: { personId: person.id, begun: true } });

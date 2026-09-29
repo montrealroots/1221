@@ -338,6 +338,22 @@ export function canPay(sim: Simulation, person: Person, overdraft = true): Money
  * all of it or none, as a direct debit, standing order or cashed check is
  * paid. True if it went.
  */
+/**
+ * A payment the person makes themselves and points at their money, as a tax
+ * bill is paid from any account named: checking, then savings, whether or not
+ * savings is linked. Until 2026-09-28 a tax bill reached only what
+ * checking and linked savings held, and was refused as more than the bank
+ * could cover with millions in savings.
+ */
+export function payFromBank(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
+  if (amount <= 0) return true;
+  if (inTheBank(sim, person) < amount) return false;
+  const bank = drawFromBank(sim, person, amount, false, true);
+  if (bank.short > 0) return false;
+  sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, ...bank.postings] });
+  return true;
+}
+
 export function payFromCurrent(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
   if (amount <= 0) return true;
   if (reachable(sim, person) + overdraftHeadroom(sim, person) < amount) return false;

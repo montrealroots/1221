@@ -178,10 +178,11 @@ export function recordInterest(person: Person, at: Instant, zone: string, amount
 }
 
 /** A pension paid, to the year it's paid and where they lived: income for the return, and the month's. */
-export function recordPension(person: Person, at: Instant, zone: string, amount: Money): void {
+export function recordPension(person: Person, at: Instant, zone: string, amount: Money, withheld = 0): void {
   const p = zonedParts(at, zone);
   const y = yearOf(person, p.year);
   y.pension = (y.pension ?? 0) + amount;
+  y.withheld += withheld;
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;

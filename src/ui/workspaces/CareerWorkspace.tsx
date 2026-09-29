@@ -475,10 +475,13 @@ function UnionsPane() {
             <div className="grid grid-3">
               <Stat label="Pension Credits" value={String(pension.credits)} note={`A year of ${dollars(SAG_PENSION.creditEarnings)} in covered earnings is one`} />
               <Stat label="Vested" value={pension.vested ? 'Yes' : 'Not Yet'} note={`At ${SAG_PENSION.vestAt} credits, or ${SAG_PENSION.vestEarlyAt} without a long break`} />
-              <Stat label="A Year At 65" value={money(pension.yearly)} note={`Paid monthly from ${formatDate(pensionAge(person), sim.zone)}${pension.vested ? '' : ', once vested'}`} />
+              {/* Begun, what it pays now, early starts' cut included; before, what it would at 65. Until 2026-09-28 it said "at 65" for life. */}
+              {person.pensionStart
+                ? <Stat label="A Year Now" value={money(Math.round(pension.yearly * person.pensionStart.factor))} note={`Paid monthly since ${formatDate(person.pensionStart.at, sim.zone)}, before the federal tax withheld from it`} />
+                : <Stat label="A Year At 65" value={money(pension.yearly)} note={`Paid monthly from ${formatDate(pensionAge(person), sim.zone)}${pension.vested ? '' : ', once vested'}`} />}
             </div>
             <p className="small" style={{ margin: 0 }}>{pension.years.map((y) => `${y.year}: ${money(y.earnings)}${y.credit ? ', a credit' : ''}`).join('; ')}.</p>
-            <Fine>The vesting and the age are the Plan’s. The minimum for a credit, held at the Plan’s 2012 figure, and a year adding 2% of its covered earnings, the Plan’s own example, are SLATE’s estimate; the earnings ceilings and early retirement aren’t modeled. Source: {SAG_PENSION.source}.</Fine>
+            <Fine>The minimum for a credit, a year adding 2% of its covered earnings, each production’s and each television episode’s ceiling, vesting, the age and the early start are the Plan’s. The law holds a pension to $290,000 a year and to the best three years in a row (IRC section 415(b)); SLATE holds that at 2026’s figure and doesn’t reduce it for a start before 62. Federal tax is withheld as the IRS default for a periodic payment has it. Source: {SAG_PENSION.source}; {SAG_PENSION.lawSource}.</Fine>
           </div>
         </Panel>
       )}
