@@ -49,6 +49,13 @@ export const AIR = {
   deplaneMinutes: 15,
   borderMinutes: 45,
   bagClaimMinutes: 25,
+  /**
+   * A round trip's fares against two one-way fares: BTS's Q2 2026 averages,
+   * $535 a round trip against $307 one way, so 0.871. The two kinds of
+   * ticket are bought for different journeys, so the share is SLATE's
+   * reading of the discount, not a fare any airline quotes.
+   */
+  roundTripShare: 535 / (2 * 307),
 } as const;
 
 /** A one-way economy fare between two airports, and whose figure it is. */

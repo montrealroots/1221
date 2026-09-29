@@ -5,7 +5,7 @@
  * time where it happens, and every figure names whose it is.
  */
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -14,7 +14,7 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
-import { bookRefusal, journeysOf, planJourney, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, planJourney, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { airportByCode } from '@/engine/systems/airports';
 
@@ -22,8 +22,6 @@ const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', under
 const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', arrival: 'Off The Aircraft' };
 const SLOT_WORD = ['Morning', 'Afternoon', 'Evening'];
 const place = (id: string) => CITIES.get(id)?.name ?? airportByCode(id)?.name ?? id;
-/** The zone a leg's end is in: its town's, or the airport's town's. */
-const zoneAt = (id: string, fallback: string) => CITIES.get(id)?.timeZone ?? fallback;
 
 export function TravelWorkspace() {
   const { sim, run, toast } = useGame();
@@ -37,15 +35,23 @@ export function TravelWorkspace() {
   const [slot, setSlot] = useState(1);
   const [bags, setBags] = useState(0);
   const [nights, setNights] = useState(3);
+  const [daysThere, setDaysThere] = useState(4);
   const toCity = to || destinations[0] || '';
   const p = zonedParts(sim.now + days * MS_DAY, sim.zone);
   const day = instantFromZoned({ ...normalDate(p.year, p.month, p.day), hour: 12 }, sim.zone);
   const fromCity = whereBy(person, day);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
-  const legs = toCity ? planJourney(sim, fromCity, toCity, day, slot, bags) : 'Choose where.';
-  const no = toCity ? bookRefusal(sim, person, toCity, legs, Math.max(1, nights), own ? 0 : nights) : 'Choose where.';
-  const hotel = toCity && !own ? stayPrice(sim, toCity, nights) : undefined;
-  const plan = typeof legs === 'string' ? undefined : legs;
+  const round = daysThere > 0;
+  const outLegs = toCity ? planJourney(sim, fromCity, toCity, day, slot, bags) : 'Choose where.';
+  const backLegs = toCity && round ? planJourney(sim, toCity, fromCity, day + daysThere * MS_DAY, slot, bags) : undefined;
+  const outPlan = typeof outLegs === 'string' ? undefined : round ? asRoundTrip(outLegs) : outLegs;
+  const backPlan = backLegs && typeof backLegs !== 'string' ? asRoundTrip(backLegs) : undefined;
+  // A round trip's hotel runs from the night it lands to the morning it flies home.
+  const stayNights = own ? 0 : round && outPlan && backPlan ? nightsBetween(toCity, outPlan[outPlan.length - 1]!.arriveAt, backPlan[0]!.departAt) : nights;
+  const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, toCity, outLegs, Math.max(1, stayNights), stayNights)
+    ?? (typeof backLegs === 'string' ? backLegs : backPlan && outPlan && backPlan[0]!.departAt <= outPlan[outPlan.length - 1]!.arriveAt ? 'The way home leaves before the way out arrives.' : undefined);
+  const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights) : undefined;
+  const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
   const fares = plan ? plan.reduce((a, l) => a + l.fare, 0) : 0;
   const journeys = journeysOf(person).slice().sort((a, b) => b.leaveAt - a.leaveAt);
   const here = CITIES.get(person.currentLocationId);
@@ -92,8 +98,12 @@ export function TravelWorkspace() {
                 </select>
               </div>
               <div className="field">
+                <label htmlFor="travel-there">Days There</label>
+                <input id="travel-there" type="number" min={0} max={90} value={daysThere} onChange={(e) => setDaysThere(Math.max(0, Math.min(90, Number(e.target.value) || 0)))} />
+              </div>
+              <div className="field">
                 <label htmlFor="travel-nights">Hotel Nights</label>
-                <input id="travel-nights" type="number" min={0} max={90} value={own ? 0 : nights} disabled={own} onChange={(e) => setNights(Math.max(0, Math.min(90, Number(e.target.value) || 0)))} />
+                <input id="travel-nights" type="number" min={0} max={90} value={stayNights} disabled={own || round} onChange={(e) => setNights(Math.max(0, Math.min(90, Number(e.target.value) || 0)))} />
               </div>
             </div>
             {plan && (
@@ -101,29 +111,40 @@ export function TravelWorkspace() {
                 <table>
                   <thead><tr><th scope="col">Leg</th><th scope="col">From</th><th scope="col">To</th><th scope="col">Leaves</th><th scope="col">Arrives</th><th scope="col">Fare</th></tr></thead>
                   <tbody>
-                    {plan.map((l, i) => (
-                      <tr key={i}>
-                        <td>{MODE_WORD[l.mode]}</td>
-                        <td>{place(l.from)}</td>
-                        <td>{place(l.to)}</td>
-                        <td>{formatDateTime(l.departAt, zoneAt(l.from, CITIES.require(fromCity).timeZone))}</td>
-                        <td>{formatDateTime(l.arriveAt, zoneAt(l.to === l.from ? toCity : l.to, CITIES.require(toCity).timeZone))}</td>
-                        <td className="mono">{l.fare > 0 ? money(l.fare) : 'None'}</td>
-                      </tr>
-                    ))}
+                    {plan.map((l, i) => {
+                      // Each half's legs read in its own places' time: leaving where it starts, arriving where it ends.
+                      const outbound = !outPlan || i < outPlan.length;
+                      const start = CITIES.require(outbound ? fromCity : toCity).timeZone;
+                      const end = CITIES.require(outbound ? toCity : fromCity).timeZone;
+                      const departsFar = l.mode === 'arrival' || (l.mode === 'ground' && CITIES.get(l.to) !== undefined);
+                      const arrivesNear = l.mode === 'check-in' || (l.mode === 'ground' && CITIES.get(l.to) === undefined);
+                      return (
+                        <Fragment key={i}>
+                          {outPlan && i === outPlan.length && <tr><th scope="rowgroup" colSpan={6}>The Way Home</th></tr>}
+                          <tr>
+                            <td>{MODE_WORD[l.mode]}</td>
+                            <td>{place(l.from)}</td>
+                            <td>{place(l.to)}</td>
+                            <td>{formatDateTime(l.departAt, departsFar ? end : start)}</td>
+                            <td>{formatDateTime(l.arriveAt, arrivesNear ? start : end)}</td>
+                            <td className="mono">{l.fare > 0 ? money(l.fare) : 'None'}</td>
+                          </tr>
+                        </Fragment>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
             )}
             <div className="grid grid-3">
               <Stat label="Fares" value={plan ? money(fares) : '—'} />
-              <Stat label="Hotel" value={own ? 'Your Own Place' : hotel ? money(hotel.price) : '—'} note={own ? 'No hotel needed' : `${nights} ${nights === 1 ? 'night' : 'nights'}, taxes in`} />
+              <Stat label="Hotel" value={own ? 'Your Own Place' : hotel ? money(hotel.price) : '—'} note={own ? 'No hotel needed' : `${stayNights} ${stayNights === 1 ? 'night' : 'nights'}, taxes in`} />
               <Stat label="In All" value={plan ? money(fares + (hotel?.price ?? 0)) : '—'} />
             </div>
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot, bags, nights: own ? 0 : nights });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', round ? { toCity, day, slot, bags, returnDay: day + daysThere * MS_DAY, returnSlot: slot } : { toCity, day, slot, bags, nights: own ? 0 : nights });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>

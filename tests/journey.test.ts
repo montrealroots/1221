@@ -47,7 +47,7 @@ function liveTo(sim: Simulation, target: number): void {
     sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
   }
 }
-const book = (sim: Simulation, payload: Record<string, unknown>) => sim.execute<{ journeyId: string; leaveAt: number; arriveAt: number; total: number }>({ kind: 'travel.book', payload });
+const book = (sim: Simulation, payload: Record<string, unknown>) => sim.execute<{ journeyId: string; returnId?: string; leaveAt: number; arriveAt: number; total: number }>({ kind: 'travel.book', payload });
 const journey = (sim: Simulation, id: string): Journey => journeysOf(sim.player).find((j) => j.id === id)!;
 
 describe('a journey out and back', () => {
@@ -221,4 +221,50 @@ describe('the rest of the rules', () => {
     const sim = life('ny-night');
     expect(stayPrice(sim, 'us-ny-newyork', 1)!.price).toBe(Math.round((333.71 * 1.1475 + 3.5) * 100));
   });
+});
+
+describe('a round trip', () => {
+  it('is one booking: both flights at BTS’s round-trip share, the hotel from the night it lands to the morning it flies home', () => {
+    const sim = life('round');
+    const day = saturday(sim, 10);
+    const one = planJourney(sim, 'us-ny-newyork', 'us-ca-losangeles', day, 1, 0);
+    if (typeof one === 'string') throw new Error(one);
+    const a = book(sim, { toCity: 'us-ca-losangeles', day, slot: 1, returnDay: day + 4 * MS_DAY, returnSlot: 1 });
+    expect(a.ok, a.error).toBe(true);
+    const out = journey(sim, a.value!.journeyId);
+    const back = journey(sim, a.value!.returnId!);
+    expect(out.tripId).toBeDefined();
+    expect(back.tripId).toBe(out.tripId);
+    expect(back.fromCity).toBe('us-ca-losangeles');
+    const flight = (legs: { mode: string; fare: number }[]) => legs.find((l) => l.mode === 'flight')!.fare;
+    expect(flight(out.legs)).toBe(Math.round(flight(one) * AIR.roundTripShare));
+    expect(AIR.roundTripShare).toBeCloseTo(535 / 614, 6);
+    // Lands Saturday evening, flies home Wednesday afternoon: four nights.
+    expect(out.hotel!.nights).toBe(4);
+    expect(out.hotel!.price).toBe(stayPrice(sim, 'us-ca-losangeles', 4)!.price);
+  });
+
+  it('is canceled whole, either half, and refunded whole within the DOT’s day', () => {
+    const sim = life('round-cancel');
+    const day = saturday(sim, 10);
+    const before = bank(sim);
+    const a = book(sim, { toCity: 'us-ca-losangeles', day, slot: 1, returnDay: day + 3 * MS_DAY, returnSlot: 1 });
+    const back = a.value!.returnId!;
+    const c = sim.execute<{ refund: number }>({ kind: 'travel.cancel', payload: { journeyId: back } });
+    expect(c.value!.refund).toBe(a.value!.total);
+    expect(bank(sim)).toBe(before);
+    expect(journeysOf(sim.player).every((j) => j.status === 'canceled')).toBe(true);
+  });
+
+  it('loses the way home when the way out goes unflown, as an airline cancels the rest of the ticket', () => {
+    const sim = life('round-noshow');
+    const day = saturday(sim, 10);
+    const a = book(sim, { toCity: 'us-ca-losangeles', day, slot: 1, returnDay: day + 3 * MS_DAY, returnSlot: 1 });
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    liveTo(sim, a.value!.leaveAt + MS_HOUR);
+    const back = journey(sim, a.value!.returnId!);
+    expect(journey(sim, a.value!.journeyId).status).toBe('missed');
+    expect(back.status).toBe('canceled');
+    expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.payload.journeyId === back.id)).toBe(false);
+  }, 60_000);
 });

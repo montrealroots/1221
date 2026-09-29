@@ -65,6 +65,8 @@ export interface Journey {
   rebooked?: boolean;
   /** Why it was missed, where it was. */
   why?: string;
+  /** A round trip's two journeys share a trip, booked, paid and canceled together. */
+  tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
   hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant };
 }
@@ -85,6 +87,25 @@ export function checkOutAfter(cityId: string, arriveAt: Instant, nights: number)
   // A night begins the evening of arrival; one that lands after midnight but before morning is the night before's.
   const firstNight = p.hour < 6 ? p.day - 1 : p.day;
   return instantFromZoned({ year: p.year, month: p.month, day: firstNight + nights, hour: CHECKOUT_HOUR }, zone);
+}
+
+/** The nights between arriving in a town and leaving it: from the night of arrival to the morning of the day one leaves. */
+export function nightsBetween(cityId: string, arriveAt: Instant, leaveAt: Instant): number {
+  const zone = CITIES.require(cityId).timeZone;
+  const a = zonedParts(arriveAt, zone);
+  const firstNight = Date.UTC(a.year, a.month - 1, a.hour < 6 ? a.day - 1 : a.day);
+  const b = zonedParts(leaveAt, zone);
+  return Math.max(0, Math.round((Date.UTC(b.year, b.month - 1, b.day) - firstNight) / MS_DAY));
+}
+
+/** A round trip's flights at the share BTS's averages give a round trip against two one-ways. */
+export function asRoundTrip(legs: JourneyLeg[]): JourneyLeg[] {
+  return legs.map((l) => (l.mode === 'flight' ? { ...l, fare: Math.round(l.fare * AIR.roundTripShare), basis: `${l.basis} A round trip: ${Math.round(AIR.roundTripShare * 1000) / 10}% of two one-way fares, BTS’s averages for Q2 2026.` } : l));
+}
+
+/** The other half of a round trip, if a journey has one. */
+export function partnerOf(person: Person, j: Journey): Journey | undefined {
+  return j.tripId ? journeysOf(person).find((x) => x.tripId === j.tripId && x.id !== j.id) : undefined;
 }
 
 /** Where a person will be when they leave: where they are, or where a journey booked before it takes them. */
@@ -189,43 +210,67 @@ export function flightFate(sim: Simulation, person: Person, key: string): number
 }
 
 export function registerJourneys(sim: Simulation): void {
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number }, { journeyId: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
-    const nights = Math.max(0, Math.min(90, Math.floor(Number(p?.nights ?? 0))));
     // From where they'll be by then: here, or where a journey booked before it takes them.
     const fromCity = whereBy(person, day);
     const bags = Math.max(0, Math.min(2, Number(p?.bags ?? 0)));
-    const legs = planJourney(s, fromCity, toCity, day, Number(p?.slot ?? 0), bags);
-    const no = bookRefusal(s, person, toCity, legs, Math.max(1, nights), nights);
+    const round = p?.returnDay !== undefined && p?.returnDay !== null;
+    let out = planJourney(s, fromCity, toCity, day, Number(p?.slot ?? 0), bags);
+    let back = round ? planJourney(s, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags) : undefined;
+    if (typeof out === 'string') throw new CommandError(out);
+    if (typeof back === 'string') throw new CommandError(back);
+    const arriveOut = out[out.length - 1]!.arriveAt;
+    if (back && back[0]!.departAt <= arriveOut) throw new CommandError('The way home leaves before the way out arrives.');
+    // A round trip's hotel runs from the night it lands to the morning it flies home.
+    const nights = back ? nightsBetween(toCity, arriveOut, back[0]!.departAt) : Math.max(0, Math.min(90, Math.floor(Number(p?.nights ?? 0))));
+    const no = bookRefusal(s, person, toCity, out, Math.max(1, nights), nights);
     if (no) throw new CommandError(no);
-    const plan = legs as JourneyLeg[];
-    const leaveAt = plan[0]!.departAt;
-    const arriveAt = plan[plan.length - 1]!.arriveAt;
+    if (back) {
+      const noBack = bookRefusal(s, person, fromCity, back, 1, 1);
+      if (noBack && !/Somewhere to sleep|hotels yet/.test(noBack)) throw new CommandError(`The way home: ${noBack}`);
+      out = asRoundTrip(out);
+      back = asRoundTrip(back);
+    }
     const hotel = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights)! : undefined;
-    const cost = total(plan) + (hotel?.price ?? 0);
-    if (!payFromBank(s, person, cost, `A journey to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} in a hotel` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
-    const id = s.nextId('journey');
-    const checkOutAt = hotel ? checkOutAfter(toCity, arriveAt, nights) : undefined;
-    journeysOf(person).push({ id, fromCity, toCity, legs: plan, status: 'booked', bookedAt: s.now, bags, total: cost, leaveAt, arriveAt, ...(hotel ? { hotel: { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAt! } } : {}) });
-    s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(toCity).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: fromCity, payload: { personId: person.id, journeyId: id } });
-    return { journeyId: id, leaveAt, arriveAt, total: cost };
+    const outCost = total(out) + (hotel?.price ?? 0);
+    const cost = outCost + (back ? total(back) : 0);
+    if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} in a hotel` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
+    const tripId = back ? s.nextId('journey') : undefined;
+    const add = (legs: JourneyLeg[], from: string, to: string, price: Money, stay?: Journey['hotel']): Journey => {
+      const id = s.nextId('journey');
+      const leaveAt = legs[0]!.departAt;
+      const arriveAt = legs[legs.length - 1]!.arriveAt;
+      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}) };
+      journeysOf(person).push(j);
+      s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
+      return j;
+    };
+    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights) } : undefined);
+    const second = back ? add(back, toCity, fromCity, total(back)) : undefined;
+    return { journeyId: first.id, ...(second ? { returnId: second.id } : {}), leaveAt: first.leaveAt, arriveAt: first.arriveAt, total: cost };
   });
 
   sim.onCommand<{ journeyId: string }, { refund: Money }>('travel.cancel', (p, { sim: s }) => {
     const person = s.player;
     const j = journeysOf(person).find((x) => x.id === p?.journeyId);
     if (!j || j.status !== 'booked') throw new CommandError('That isn’t a journey you have booked.');
+    // A round trip is one ticket: canceled, both halves go, the way home too once the way out is flown.
+    const halves = [j, ...[partnerOf(person, j)].filter((x): x is Journey => x !== undefined && x.status === 'booked')];
+    const first = halves.reduce((a, b) => (a.leaveAt <= b.leaveAt ? a : b));
     // The DOT's rule: canceled within 24 hours of booking, a week or more before it leaves, the whole fare back.
     // A hotel on a flexible rate comes back until a day before arrival.
-    const free = s.now - j.bookedAt <= 24 * MS_HOUR && j.leaveAt - j.bookedAt >= 7 * MS_DAY;
-    const hotel = j.hotel?.price ?? 0;
-    const hotelBack = j.hotel && j.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? hotel : 0;
-    const refund = free ? j.total : hotelBack;
-    if (refund > 0) s.post({ memo: `A journey canceled, refunded`, category: 'travel', postings: refundPostings(s, person, refund) });
-    j.status = 'canceled';
-    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === j.id) s.timeline.cancel(item.id, s.now);
+    const free = s.now - first.bookedAt <= 24 * MS_HOUR && first.leaveAt - first.bookedAt >= 7 * MS_DAY;
+    let refund = 0;
+    for (const h of halves) {
+      const hotelBack = h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0;
+      refund += free ? h.total : hotelBack;
+      h.status = 'canceled';
+      for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === h.id) s.timeline.cancel(item.id, s.now);
+    }
+    if (refund > 0) s.post({ memo: `A ${halves.length > 1 ? 'round trip' : 'journey'} canceled, refunded`, category: 'travel', postings: refundPostings(s, person, refund) });
     return { refund };
   });
 
@@ -238,7 +283,7 @@ export function registerJourneys(sim: Simulation): void {
     if (!present(person, item.at, j.fromCity)) {
       j.status = 'missed';
       j.why = 'You weren’t there to leave.';
-      tell('Journey Missed', `${j.why} The fare is gone.`);
+      tell('Journey Missed', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the airline canceled the way home with it, as it does a round trip whose first flight goes unflown' : ''}.`);
       return;
     }
     // At the airport, as the airline checks: the papers the far end asks.
@@ -246,7 +291,7 @@ export function registerJourneys(sim: Simulation): void {
     if (no) {
       j.status = 'missed';
       j.why = `The airline wouldn’t board you: ${no}`;
-      tell('Refused At Check-In', `${j.why} The fare is gone.`);
+      tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
       return;
     }
     let late = 0;
@@ -298,6 +343,16 @@ function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: st
   }
   person.stay = { kind: 'sofa', cityId };
   if (mine) sim.notify({ category: 'personal', title: 'Out Of The Hotel', body: `The bank can’t cover another night in ${CITIES.require(cityId).name}: a friend’s sofa until you leave.`, importance: 70 });
+}
+
+/** An unflown way out cancels a round trip's way home, as airlines cancel the rest of a ticket after a no-show; true if it did. */
+function forfeitReturn(sim: Simulation, person: Person, j: Journey): boolean {
+  const back = partnerOf(person, j);
+  if (!back || back.status !== 'booked' || back.leaveAt < j.leaveAt) return false;
+  back.status = 'canceled';
+  back.why = 'The way out went unflown.';
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === back.id) sim.timeline.cancel(item.id, sim.now);
+  return true;
 }
 
 /** A refund into the current account, from what the journey was paid to. */
