@@ -11,7 +11,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { AGE_ON_SCREEN, AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
   AGENCY_TERM, DAY_TRIPS, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  acceptRefusal, beginCareer, closeStaleBookings, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { actingOf, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
@@ -666,6 +666,48 @@ describe('the unions', () => {
     expect(billDues(broke, broke.player, 2026, 11)).toBe(Math.round(SAG_AFTRA.basicDues / 2));
     expect(yearOf(broke.player, 2026).dues).toBe(0);
     expect(careerOf(broke.player).unions.owed).toBe(Math.round(SAG_AFTRA.basicDues / 2));
+  });
+});
+
+describe('a stage run with nights the understudy played', () => {
+  it('ends when its last call passes, the covered nights unpaid, and credits it', () => {
+    // Until 2026-09-28 a night missed laid up left the run open for good, and the actor on a job for life.
+    const sim = signed('covered', 2);
+    const b = offer(sim, 'lort-b', 1, 1, sim.now + MS_DAY);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    const days = workDays(b);
+    const credits = careerOf(sim.player).credits.length;
+    // Laid up from the last three calls on.
+    tended(sim, days[days.length - 3]!.at - MS_HOUR);
+    healthOf(sim.player).injury = { kind: 'sprain', at: sim.now, until: sim.now + 30 * MS_DAY, offWorkUntil: sim.now + 30 * MS_DAY };
+    sim.advanceTo(days[days.length - 1]!.at + MS_HOUR);
+    expect(b.status).toBe('worked');
+    expect(b.missedNights).toBe(3);
+    expect(b.worked).toBe(days.length - 3);
+    expect(careerOf(sim.player).credits.length).toBe(credits + 1);
+  });
+
+  it('ends on a night worked after nights covered in the middle of it', () => {
+    const sim = signed('covered-middle', 2);
+    const b = offer(sim, 'lort-b', 1, 1, sim.now + MS_DAY);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    const days = workDays(b);
+    tended(sim, days[days.length - 5]!.at - MS_HOUR);
+    // Laid up for two calls, then back for the last three.
+    healthOf(sim.player).injury = { kind: 'sprain', at: sim.now, until: days[days.length - 3]!.at - MS_HOUR, offWorkUntil: days[days.length - 3]!.at - MS_HOUR };
+    tended(sim, days[days.length - 1]!.at + MS_HOUR);
+    expect(b.missedNights).toBe(2);
+    expect(b.status).toBe('worked');
+  });
+
+  it('is closed on opening a save that holds one left open', () => {
+    const sim = signed('left-open', 2);
+    const b = offer(sim, 'lort-b', 1, 1, sim.now - 60 * MS_DAY);
+    b.status = 'accepted';
+    b.worked = 5;
+    closeStaleBookings(sim, sim.player);
+    expect(b.status).toBe('worked');
+    expect(b.missedNights).toBe(workDays(b).length - 5);
   });
 });
 

@@ -236,6 +236,8 @@ export interface Audition {
 
 export interface Booking {
   id: string;
+  /** Stage nights an understudy played for them, laid up or in hospital: part of the run, unpaid. */
+  missedNights?: number;
   roleId: string;
   cityId: CareerCity;
   starts: Instant;
@@ -1143,6 +1145,66 @@ export function mayLeave(sim: Simulation, person: Person): { ok: boolean; why: s
 // Handlers and commands
 // ---------------------------------------------------------------------------
 
+/**
+ * A job's last call past: its credit, its recognition, its afterlife, and
+ * the calls a job seen can bring. Reached when the days worked and the stage
+ * nights an understudy covered come to the job's days; until 2026-09-28 a
+ * night missed laid up or in hospital left the run open for good, and the
+ * actor on a job for the rest of their life.
+ */
+function finishJob(s: Simulation, person: Person, career: CareerRecord, booking: Booking, role: Role, item: ScheduledItem): void {
+  if (!person.craft) return;
+    booking.status = 'worked';
+    earn(s, person, ATTRIBUTES.reputation.job);
+    // Recognition comes when the work is seen: a commercial and Broadway as they run; television when it airs, by its audience; a film at its premiere or release (`FILM_ROAD`).
+    const television = role.series !== undefined || role.arc === true || role.id.startsWith('guest') || role.id === 'costar';
+    if (!television && !role.id.startsWith('film')) nudge(s, person, 'recognition', recognitionFrom(role));
+    if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
+    career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
+    const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
+    if (television) {
+      const a = FILM_ROAD.audience;
+      const audience = life?.kind === 'network' ? a.network : life?.kind === 'svod' ? a[life.size ?? 'middle'] * (life.hit ? a.hit : 1) : 1;
+      s.schedule({ at: Math.max(s.now + 60_000, life?.airsAt ?? s.now + 60_000), kind: AIRS_KIND, label: `It Airs: ${role.label}`, category: 'system', priority: 20, payload: { personId: person.id, roleId: role.id, audience } });
+    }
+    // A season done, the series holds its option until it's picked up or dropped, by mid-June.
+    if (role.series && life) {
+      const q = zonedParts(item.at, s.homeZone);
+      const june = instantFromZoned({ year: q.month > SERIES.optionMonth || (q.month === SERIES.optionMonth && q.day >= SERIES.optionDay) ? q.year + 1 : q.year, month: SERIES.optionMonth, day: SERIES.optionDay, hour: 10 }, s.homeZone);
+      career.option = { seriesId: booking.seriesId ?? booking.id, decidedAt: june };
+      s.schedule({ at: june, kind: RENEWAL_KIND, label: `The Option: ${role.label}`, category: 'system', priority: 20, payload: { personId: person.id, bookingId: booking.id } });
+    }
+    if (!career.managerId && role.tiers.some((t) => t <= 2)) {
+      const managers = managerOffersFor(s, person, levelFor(person.craft, role), booking.id);
+      if (managers.length) offerManagement(s, person, managers, `Having seen your ${role.label.toLowerCase()},`);
+    }
+    // Worked while unrepresented, a job an agency notices can bring its call (`career.offers`).
+    if (!career.agencyId && role.tiers.some((t) => t <= 2)) {
+      const score = levelFor(person.craft, role);
+      const offers = offersFor(s, person, score, booking.id);
+      if (offers.length) offerRepresentation(s, person, offers, booking.cityId, `Having seen your ${role.label.toLowerCase()},`);
+    }
+}
+
+/**
+ * A stage run left open by a night an understudy covered, as a save from
+ * before 2026-09-28 holds one: its last call past and none still to come, it
+ * closes now as a finished run, its missed nights counted as covered.
+ */
+export function closeStaleBookings(sim: Simulation, person: Person): void {
+  const career = person.career;
+  if (!career || !person.craft) return;
+  for (const booking of career.bookings) {
+    if (booking.status !== 'accepted') continue;
+    const days = workDays(booking);
+    const last = days[days.length - 1];
+    if (!last || last.at > sim.now) continue;
+    if (sim.universe.scheduled.some((i) => i.kind === WORK_KIND && i.status === 'pending' && i.payload.bookingId === booking.id)) continue;
+    booking.missedNights = Math.max(booking.missedNights ?? 0, days.length - booking.worked);
+    finishJob(sim, person, career, booking, roleById(booking.roleId), { at: last.at } as ScheduledItem);
+  }
+}
+
 export function registerCareer(sim: Simulation): void {
   const personOf = (item: { payload: Record<string, unknown> }) => sim.universe.people[String(item.payload.personId)];
   const isPlayer = (person: Person) => person.id === sim.universe.playerId;
@@ -1374,7 +1436,11 @@ export function registerCareer(sim: Simulation): void {
         // night isn't paid. On screen or in the booth the production can't
         // wait, and recasts: the days worked are paid, and nobody walked off.
         // An injury that keeps them off work is taken as a stay in hospital is.
-        if (role.medium === 'stage') return;
+        if (role.medium === 'stage') {
+          booking.missedNights = (booking.missedNights ?? 0) + 1;
+          if (booking.worked + booking.missedNights >= workDays(booking).length) finishJob(s, person, career, booking, role, item);
+          return;
+        }
         booking.status = 'released';
         for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
         if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
@@ -1396,7 +1462,7 @@ export function registerCareer(sim: Simulation): void {
     booking.worked += 1;
     booking.owed += 1;
     const cur = saveCurrency(s.universe);
-    const call = workDays(booking)[booking.worked - 1]!;
+    const call = workDays(booking)[booking.worked + (booking.missedNights ?? 0) - 1]!;
     const unit = unitRate(booking, item.at, cur);
     const scale = role.series ? Math.round((unit * role.series.episodes) / (role.series.weeks * 5)) : role.medium !== 'stage' ? unit : Math.round(unit / 6);
     const hours = role.medium === 'screen' ? hoursOf(s, person, `${booking.id}-${booking.worked}`) : role.medium === 'voice' ? role.sessionHours ?? 4 : call.rehearsal ? 8 : 3;
@@ -1440,37 +1506,8 @@ export function registerCareer(sim: Simulation): void {
     enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), ...(booking.product ? { product: booking.product } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true, role: role.id });
     // An early call, or a performance that runs late, as the body clock takes it.
     person.wellbeing.stress = Math.min(100, person.wellbeing.stress + callStress(person, zonedParts(item.at, zoneOf(workCityOf(booking))).hour, role.medium === 'stage' && !call.rehearsal));
-    if (booking.worked < workDays(booking).length) return;
-    booking.status = 'worked';
-    earn(s, person, ATTRIBUTES.reputation.job);
-    // Recognition comes when the work is seen: a commercial and Broadway as they run; television when it airs, by its audience; a film at its premiere or release (`FILM_ROAD`).
-    const television = role.series !== undefined || role.arc === true || role.id.startsWith('guest') || role.id === 'costar';
-    if (!television && !role.id.startsWith('film')) nudge(s, person, 'recognition', recognitionFrom(role));
-    if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
-    career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
-    const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
-    if (television) {
-      const a = FILM_ROAD.audience;
-      const audience = life?.kind === 'network' ? a.network : life?.kind === 'svod' ? a[life.size ?? 'middle'] * (life.hit ? a.hit : 1) : 1;
-      s.schedule({ at: Math.max(s.now + 60_000, life?.airsAt ?? s.now + 60_000), kind: AIRS_KIND, label: `It Airs: ${role.label}`, category: 'system', priority: 20, payload: { personId: person.id, roleId: role.id, audience } });
-    }
-    // A season done, the series holds its option until it's picked up or dropped, by mid-June.
-    if (role.series && life) {
-      const q = zonedParts(item.at, s.homeZone);
-      const june = instantFromZoned({ year: q.month > SERIES.optionMonth || (q.month === SERIES.optionMonth && q.day >= SERIES.optionDay) ? q.year + 1 : q.year, month: SERIES.optionMonth, day: SERIES.optionDay, hour: 10 }, s.homeZone);
-      career.option = { seriesId: booking.seriesId ?? booking.id, decidedAt: june };
-      s.schedule({ at: june, kind: RENEWAL_KIND, label: `The Option: ${role.label}`, category: 'system', priority: 20, payload: { personId: person.id, bookingId: booking.id } });
-    }
-    if (!career.managerId && role.tiers.some((t) => t <= 2)) {
-      const managers = managerOffersFor(s, person, levelFor(person.craft, role), booking.id);
-      if (managers.length) offerManagement(s, person, managers, `Having seen your ${role.label.toLowerCase()},`);
-    }
-    // Worked while unrepresented, a job an agency notices can bring its call (`career.offers`).
-    if (!career.agencyId && role.tiers.some((t) => t <= 2)) {
-      const score = levelFor(person.craft, role);
-      const offers = offersFor(s, person, score, booking.id);
-      if (offers.length) offerRepresentation(s, person, offers, booking.cityId, `Having seen your ${role.label.toLowerCase()},`);
-    }
+    if (booking.worked + (booking.missedNights ?? 0) < workDays(booking).length) return;
+    finishJob(s, person, career, booking, role, item);
   });
 
   sim.onSchedule(PAY_KIND, (item, s) => {

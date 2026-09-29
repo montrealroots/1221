@@ -45,7 +45,7 @@ import { registerAccountLife } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
-import { agencyById, registerCareer } from './systems/career';
+import { agencyById, closeStaleBookings, registerCareer } from './systems/career';
 import { registerPension } from './systems/pension';
 import { registerCommercial } from './systems/commercial';
 import { registerHomes } from './systems/homes';
@@ -291,7 +291,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   armPayments(sim);
   armCardLife(sim);
   armCredit(sim);
-  for (const person of Object.values(sim.universe.people)) armCollection(sim, person);
+  for (const person of Object.values(sim.universe.people)) { armCollection(sim, person); closeStaleBookings(sim, person); }
   armBirthdays(sim);
   // A save from before the banks banked at "Northbank", which never existed.
   rebank(sim);
