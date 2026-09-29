@@ -2128,7 +2128,7 @@ export function registerCareer(sim: Simulation): void {
   sim.onCommand<{ cityId: string; kind: Housing }, { cityId: string }>('career.relocate', (p, { sim: s }) => {
     const person = s.player;
     const home = homeTownOf(person);
-    if (![...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].includes(p.cityId as CareerCity)) throw new CommandError(`New York, Los Angeles, London or New Haven${home ? `, or home to ${CITIES.require(home).name}` : ''}.`);
+    if (![...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].includes(p.cityId as CareerCity)) throw new CommandError(`New York, Los Angeles, London, Dublin or New Haven${home ? `, or home to ${CITIES.require(home).name}` : ''}.`);
     if (person.currentLocationId === p.cityId && person.home?.cityId === p.cityId && person.home.kind === p.kind) throw new CommandError('You live there already.');
     // Until 2026-09-27 a student could move to Los Angeles mid-term, and miss every class after.
     const school = person.school;

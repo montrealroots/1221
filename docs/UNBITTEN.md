@@ -666,8 +666,20 @@ part the tool cannot see.
   what Citizens Information gives, €55; a prescription is held to the Drugs
   Payment Scheme's €80. Not kept: earnings beyond the days worked and a
   spouse's in the means test, a GP's letter waiving the emergency charge, the
-  city's ordinary track for six months of formal work. Their acting
-  businesses and pensions aren't in yet.
+  city's ordinary track for six months of formal work. Until later the same
+  day neither country had its acting business or pensions. Dublin now has
+  its films at the 2021 Irish Film Agreement's three budgets, six Dublin
+  agencies and Spotlight Ireland (`content/career.ts`); Ireland its State
+  Pension (Contributory) on the Total Contributions Approach, and Mexico
+  the Pensión para el Bienestar (`systems/homepensions.ts`). Not kept:
+  Dublin's television, theater and radio, whose Irish Equity rates are for
+  members only; the cast's share of a film's net profits; Mexico City's
+  whole acting business, because ANDA keeps its tabuladores confidential
+  and no published figure prices a part there; IMSS's own pension, with no
+  Mexican work to earn its weeks; Ireland's credited contributions, its
+  non-contributory pension, and a record combined with Britain's or
+  another EU country's. SLATE's reading: a calendar year of Irish earnings
+  at €5,000 or more is 52 contributions.
 - **The NHS is partly kept.** Since 2026-09-29 a British or Irish citizen
   living in the UK is treated by the NHS: free at the point of use, England's
   £9.90 a prescription item (none at 60 or over, nor in Scotland, Wales or

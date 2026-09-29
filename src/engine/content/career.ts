@@ -13,9 +13,10 @@ import type { Craft } from '../systems/school';
  * Where the business is: the cities agencies, casting and the work are in.
  * London from 2026-09-29, for a British actor at home (`UK_ROLES`,
  * `UK_AGENCIES`); until then the business was American only, and a British
- * graduate without permission to work in the US had nowhere to work.
+ * graduate without permission to work in the US had nowhere to work. Dublin
+ * from the same day, for an Irish actor at home, though only its films.
  */
-export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london'] as const;
+export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin'] as const;
 export type CareerCity = (typeof CAREER_CITIES)[number];
 
 /**
@@ -80,6 +81,17 @@ export const AGENCIES: readonly Agency[] = [
   { id: 'gordon-and-french', name: 'Gordon & French', tier: 3, bar: 62, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
   { id: 'scott-marshall', name: 'Scott Marshall Partners', tier: 3, bar: 61, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
   { id: 'lou-coulson', name: 'Lou Coulson Associates', tier: 3, bar: 60, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
+  // Dublin: names checked against each agency's own site on 2026-09-29
+  // (docs/research/world/research-ireland.json). None publishes its
+  // commission; 12.5% is the middle of the 10% to 15% Irish guides give,
+  // SLATE's reading, and the tiers, bars and auditions a week are SLATE's
+  // estimates, by London's. Castaway is a co-operative its actors run.
+  { id: 'lisa-richards', name: 'The Lisa Richards Agency', tier: 1, bar: 72, auditionsPerWeek: 2.5, countryId: 'ie', commission: 0.125 },
+  { id: 'the-agency', name: 'The Agency', tier: 1, bar: 72, auditionsPerWeek: 2.5, countryId: 'ie', commission: 0.125 },
+  { id: 'macfarlane-chard-ie', name: 'MacFarlane Chard Associates Ireland', tier: 2, bar: 66, auditionsPerWeek: 2, countryId: 'ie', commission: 0.125 },
+  { id: 'first-call', name: 'First Call Management', tier: 2, bar: 65, auditionsPerWeek: 2, countryId: 'ie', commission: 0.125 },
+  { id: 'morgan-the-agency', name: 'Morgan The Agency', tier: 3, bar: 60, auditionsPerWeek: 1.5, countryId: 'ie', commission: 0.125 },
+  { id: 'castaway', name: 'Castaway Actors Agency', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'ie', commission: 0.125 },
 ];
 export const AGENCY_SOURCE = 'https://oir.yale.edu/sites/default/files/alum_activities_drama_1.pdf; https://ocs.yale.edu/resources/entertainment-talent-agency-management-company-list/';
 
@@ -180,7 +192,7 @@ export interface Role {
   label: string;
   /** Screen and stage work, or a voice session in a booth. */
   medium: 'screen' | 'stage' | 'voice';
-  union: 'sag' | 'equity' | 'equity-uk';
+  union: 'sag' | 'equity' | 'equity-uk' | 'irish-equity';
   /** Per day on screen, per week on stage, per episode for a series regular. */
   steps: RateSteps;
   /** The money its steps are written in; dollars where not said. */
@@ -222,6 +234,7 @@ const UK_TV = 'Pact/Equity TV Agreement rate card (casting directors’ guild mi
 const UK_CINEMA = 'Pact/Equity Cinema Films Agreement rates, 6 April 2025 to 5 January 2026';
 const UK_THEATRE = 'SOLT/Equity West End and UK Theatre/Equity agreements, 31 March 2025 to 5 April 2026';
 const UK_RADIO = 'Equity’s BBC audio rates summary, July 2023';
+const IE_FILM = 'Screen Producers Ireland and Irish Equity, Irish Film Agreement, from 1 February 2021';
 const AMPTP = 'https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf';
 const SAGINDIE = 'https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/';
 const LORT = 'https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf';
@@ -475,6 +488,31 @@ export const ROLES: readonly Role[] = [
     steps: [['2023-07-01', 294_00]],
     units: [1, 1], bar: 60, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 7, reads: READS.voice ?? READS.screen, sessionHours: 8, source: UK_RADIO,
   },
+  // Ireland, from 2026-09-29: the one performers' schedule Irish Equity
+  // publishes, the 2021 film agreement with Screen Producers Ireland, which
+  // runs on until replaced; no successor was found. A day is its €158 basic,
+  // the use fee for the budget, and 8% holiday pay on the basic. Irish
+  // Equity's television, theater and radio rates are for its members only,
+  // so Dublin has no such parts in SLATE yet, and the cast's share of net
+  // profits isn't kept. What a part asks is SLATE's estimate, by London's.
+  {
+    // A film of €2.5 million and over, the use fee 280% of the basic: the Irish features and the productions that come to shoot there.
+    id: 'ie-film-major', label: 'A Role, An Irish Feature Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2021-02-01', 613_00]],
+    units: [5, 15], bar: 74, weight: 3, tiers: [1, 2], selfSubmit: false, cities: ['ie-lei-dublin'], leadDays: 21, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
+  {
+    // Over €1.25 million and up to €2.5 million: the use fee 75%.
+    id: 'ie-film-low', label: 'A Role, A Low Budget Irish Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2021-02-01', 289_00]],
+    units: [3, 10], bar: 64, weight: 4, tiers: [2, 3], selfSubmit: false, cities: ['ie-lei-dublin'], leadDays: 14, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
+  {
+    // €1.25 million and under: the use fee 50%.
+    id: 'ie-film-verylow', label: 'A Role, A Very Low Budget Irish Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2021-02-01', 250_00]],
+    units: [3, 10], bar: 58, weight: 5, tiers: [2, 3], selfSubmit: true, cities: ['ie-lei-dublin'], leadDays: 14, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
 ];
 
 /**
@@ -550,6 +588,8 @@ export const WORK_COSTS = {
     'casting-networks': { label: 'Casting Networks Premium', price: 299_90 },
     // Britain's: £210 a year with VAT (£175 before it), the performer's membership (spotlight.com, 2026-09-29).
     spotlight: { label: 'Spotlight', price: 210_00, currency: 'GBP', countryId: 'uk' },
+    // Ireland's: €196.50 a year and 23% VAT (spotlight.com/join-us/ireland, 2026-09-29).
+    'spotlight-ie': { label: 'Spotlight Ireland', price: 241_70, currency: 'EUR', countryId: 'ie' },
   },
   reel: 250_00,
   wantReel: 0.4,

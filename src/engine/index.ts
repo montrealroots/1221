@@ -10,6 +10,7 @@
  * to hang off this file went with the screens that showed them.
  */
 
+import { registerHomePensions } from './systems/homepensions';
 import { registerHomeBenefits } from './systems/homebenefits';
 import { registerSocialSecurity } from './systems/socialsecurity';
 import { registerStatePension } from './systems/statepension';
@@ -109,6 +110,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerStatePension(sim);
   registerSocialSecurity(sim);
   registerHomeBenefits(sim);
+  registerHomePensions(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);

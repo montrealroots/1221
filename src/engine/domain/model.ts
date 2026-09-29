@@ -241,6 +241,9 @@ export interface Person {
   statePensionFrom?: number;
   /** Social Security claimed: from when, and the monthly benefit in dollars (`systems/socialsecurity.ts`). */
   socialSecurity?: { from: number; monthlyUsd: number };
+  /** Ireland's State Pension claimed, and its week in euro cents; Mexico's Pensión para el Bienestar claimed (`systems/homepensions.ts`). */
+  irishPension?: { from: number; weeklyEur: number };
+  bienestarFrom?: number;
   /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`), and when they moved home from abroad. */
   jobseekers?: import('../systems/homebenefits').JobseekerClaim;
   desempleo?: import('../systems/homebenefits').DesempleoClaim;

@@ -90,11 +90,11 @@ describe('who it isn’t for', () => {
     sim.player.citizenshipId = 'us';
     expect(creditRefusal(sim, sim.player)).toMatch(/recourse to public funds/);
     expect(homeTownOf(sim.player)).toBeUndefined();
-    // London is one of the business's cities, open to anyone who may live there; a home town is somewhere else.
+    // London and, from 2026-09-29, Dublin are the business's cities, open to anyone who may live there; a home town is somewhere else.
     expect(homeTownOf(sim.player)).toBeUndefined();
-    const dub = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'ie-lei-dublin', livesWhereBorn: false }, 'uc-dublin');
-    expect(homeTownOf(dub.player)).toBe('ie-lei-dublin');
-    dub.player.citizenshipId = 'us';
-    expect(homeTownOf(dub.player)).toBeUndefined();
+    const cork = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'ie-m-cork', livesWhereBorn: false }, 'uc-cork');
+    expect(homeTownOf(cork.player)).toBe('ie-m-cork');
+    cork.player.citizenshipId = 'us';
+    expect(homeTownOf(cork.player)).toBeUndefined();
   });
 });

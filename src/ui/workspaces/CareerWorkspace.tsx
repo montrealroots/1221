@@ -24,6 +24,8 @@ import {
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
+import { BIENESTAR, IRISH_PENSION, bienestarRefusal, irishContributions, irishPensionRefusal, irishWeekly } from '@/engine/systems/homepensions';
+import { isoOfCountry } from '@/engine/systems/documents';
 import { costsAt, HOUSING } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
@@ -131,6 +133,9 @@ function CommercialPane() {
     </div>
   );
 }
+
+/** Who a part's contract is with. Until 2026-09-29 every part not SAG-AFTRA's read Equity, a British one too. */
+const UNION_NAMES = { sag: 'SAG-AFTRA', equity: 'Actors’ Equity', 'equity-uk': 'Equity (UK)', 'irish-equity': 'Irish Equity' } as const;
 
 export function CareerWorkspace() {
   const person = useWorld((s) => s.player);
@@ -369,7 +374,7 @@ function AuditionsPane() {
                 {ROLES.map((r) => (
                   <tr key={r.id}>
                     <td>{r.label}</td>
-                    <td>{r.union === 'sag' ? 'SAG-AFTRA' : 'Equity'}</td>
+                    <td>{UNION_NAMES[r.union]}</td>
                     <td className="num mono">{formatMoney(rateOf(r, sim.now, r.cities[0]!, cur), cur)}</td>
                     <td>{r.series ? 'Episode' : r.medium === 'voice' ? 'Session' : r.medium === 'stage' ? 'Week' : 'Day'}</td>
                     <td className="num mono">{pct(bookingChance(person.craft!, r, focus, 'room', true, false, person.attrs?.presence))}</td>
@@ -518,6 +523,26 @@ function UnionsPane() {
           </div>
         </Panel>
       )}
+      {(irishContributions(person, cur) > 0 || person.irishPension) && (
+        <Panel title="State Pension (Ireland)" subtitle="Ireland’s, on your PRSI contributions" actions={irishPensionRefusal(sim, person) ? undefined : <Gated feature="pension.ie_state" onClick={() => { const r = run<{ weekly: number }>('pension.ie_state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week.`, 'positive'); }}>Claim It</Gated>}>
+          <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Contributions" value={String(irishContributions(person, cur))} note={`${IRISH_PENSION.paidNeeded} for any, ${IRISH_PENSION.forFull.toLocaleString('en-US')} for the full rate`} />
+              <Stat label="A Week At 66" value={formatMoney(inSaveMoney(sim, person.irishPension?.weeklyEur ?? irishWeekly(irishContributions(person, cur), IRISH_PENSION.age), 'EUR'), cur)} note={person.irishPension ? `Claimed ${formatDate(person.irishPension.from, sim.zone)}` : 'More claimed at 67, and at 68'} />
+              <Stat label="Claimed" value={person.irishPension ? 'Yes' : 'Not Yet'} note={irishPensionRefusal(sim, person) ?? 'You can claim it now'} />
+            </div>
+            <Fine>A calendar year of Irish earnings at €5,000 or more counts as 52 contributions; the week is the full rate times your contributions over 2,080: €299.30 at 66, €313.40 claimed at 67, €328.90 at 68 (2026). SLATE holds the rates at 2026’s. Source: {IRISH_PENSION.source}.</Fine>
+          </div>
+        </Panel>
+      )}
+      {isoOfCountry(person.citizenshipId) === 'MX' && (
+        <Panel title="Pensión Para El Bienestar" subtitle="Mexico’s, for every Mexican living there from 65" actions={bienestarRefusal(sim, person) ? undefined : <Gated feature="pension.bienestar" onClick={() => { const r = run<{ bimonthly: number }>('pension.bienestar'); if (r.ok) toast(`Claimed: ${money(r.value!.bimonthly)} every two months.`, 'positive'); }}>Claim It</Gated>}>
+          <div className="col gap-3">
+            <Stat label="Claimed" value={person.bienestarFrom !== undefined ? 'Yes' : 'Not Yet'} note={bienestarRefusal(sim, person) ?? 'You can claim it now'} />
+            <Fine>MXN 6,400 every two months, not contributory, paid while you live in Mexico (2026 rules). Source: {BIENESTAR.source}.</Fine>
+          </div>
+        </Panel>
+      )}
       {(career.unions.owed ?? 0) > 0 && (
         <Stat label="Owed To The Union" value={money(career.unions.owed!)} note="Dues and fees the bank couldn’t cover, taken from the next check" tone="warning" />
       )}
@@ -621,7 +646,7 @@ function WorkCostsPanel() {
           const on = onSite(career, site, sim.now);
           return (
             <div key={site} className="row-between small">
-              <span>{WORK_COSTS.sites[site].label}, {dollars(WORK_COSTS.sites[site].price)} a year: {on ? `to ${formatDate(held!.until, sim.zone)}${held!.renews ? ', renewing' : ''}` : 'Not Joined'}</span>
+              <span>{WORK_COSTS.sites[site].label}, {formatMoney(inSaveMoney(sim, WORK_COSTS.sites[site].price, (WORK_COSTS.sites[site] as { currency?: string }).currency ?? 'USD'), cur)} a year: {on ? `to ${formatDate(held!.until, sim.zone)}${held!.renews ? ', renewing' : ''}` : 'Not Joined'}</span>
               {on && held!.renews
                 ? <Gated feature="career.subscribe" onClick={() => { if (run('career.subscribe', { site, on: false }).ok) toast('It runs to its date and stops.', 'positive'); }}>Stop Renewing</Gated>
                 : <Gated feature="career.subscribe" onClick={() => { if (run('career.subscribe', { site, on: true }).ok) toast('Joined for the year.', 'positive'); }}>{on ? 'Renew' : 'Join'}</Gated>}
