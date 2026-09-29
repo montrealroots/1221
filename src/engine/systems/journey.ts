@@ -69,6 +69,10 @@ export interface Journey {
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
   hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant };
+  /** A trip the career makes (from 2026-09-29): the job's, who paid the fares, and where they sleep on arrival. */
+  bookingId?: string;
+  paidBy?: 'production' | 'self';
+  onArrival?: Person['stay'];
 }
 
 export const LEAVE_KIND = 'travel.leave';
@@ -209,6 +213,57 @@ export function flightFate(sim: Simulation, person: Person, key: string): number
   return 0;
 }
 
+/** Each flight's fate at the published rates: the minutes late in all, and whether one was canceled and rebooked. */
+function fly(sim: Simulation, person: Person, j: Journey): void {
+  let late = 0;
+  let rebooked = false;
+  for (const [n, leg] of j.legs.entries()) {
+    if (leg.mode !== 'flight') continue;
+    const fate = flightFate(sim, person, `${j.id}-${n}`);
+    if (fate === null) { rebooked = true; late += AIR.rebookHours * 60; } else late += fate;
+  }
+  j.status = 'underway';
+  j.lateMinutes = late;
+  j.rebooked = rebooked;
+  sim.schedule({ at: j.arriveAt + late * 60_000, kind: ARRIVE_KIND, label: `Arrive In ${CITIES.require(j.toCity).name}`, category: 'personal', priority: 28, payload: { personId: person.id, journeyId: j.id } });
+}
+
+/**
+ * The flight a job's trip takes, from 2026-09-29: out, the latest of the
+ * day's departures that lands at least ten hours before the first call, the
+ * day before or the one before that; home, the first that leaves after the
+ * job's done. Until then the career moved an actor between cities in an
+ * instant, and an actor's own fare to a job in another city was never paid.
+ */
+export function careerFlight(sim: Simulation, fromCity: string, toCity: string, when: Instant, way: 'out' | 'back'): { day: Instant; slot: number; legs: JourneyLeg[] } | undefined {
+  if (distanceKm(CITIES.require(fromCity), CITIES.require(toCity)) < AIR.shortestCareerFlightKm) return undefined;
+  const tries: [Instant, number][] = way === 'out'
+    ? [1, 2].flatMap((before) => [2, 1, 0].map((slot) => [when - before * MS_DAY, slot] as [Instant, number]))
+    : [0, 1].flatMap((after) => [0, 1, 2].map((slot) => [when + after * MS_DAY, slot] as [Instant, number]));
+  for (const [day, slot] of tries) {
+    const legs = planJourney(sim, fromCity, toCity, day, slot, 1);
+    if (typeof legs === 'string') return undefined;
+    if (legs[0]!.departAt <= sim.now) continue;
+    if (way === 'out' ? legs[legs.length - 1]!.arriveAt <= when - 10 * MS_HOUR : legs[0]!.departAt >= when) return { day, slot, legs };
+  }
+  return undefined;
+}
+
+/** A job's trip begun: underway at once, on the plan it was booked on, re-planned from wherever they are now. */
+export function startCareerJourney(sim: Simulation, person: Person, toCity: string, day: Instant, slot: number, opts: { bookingId: string; paidBy: 'production' | 'self'; onArrival?: Person['stay'] }): Journey | undefined {
+  const fromCity = person.currentLocationId;
+  const legs = planJourney(sim, fromCity, toCity, day, slot, 1);
+  if (typeof legs === 'string') return undefined;
+  const j: Journey = {
+    id: sim.nextId('journey'), fromCity, toCity, legs, status: 'booked', bookedAt: sim.now, bags: 1,
+    total: total(legs), leaveAt: legs[0]!.departAt, arriveAt: legs[legs.length - 1]!.arriveAt,
+    bookingId: opts.bookingId, paidBy: opts.paidBy, ...(opts.onArrival ? { onArrival: opts.onArrival } : {}),
+  };
+  journeysOf(person).push(j);
+  fly(sim, person, j);
+  return j;
+}
+
 export function registerJourneys(sim: Simulation): void {
   sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
@@ -294,17 +349,9 @@ export function registerJourneys(sim: Simulation): void {
       tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
       return;
     }
-    let late = 0;
-    let rebooked = false;
-    for (const [n, leg] of j.legs.entries()) {
-      if (leg.mode !== 'flight') continue;
-      const fate = flightFate(s, person, `${j.id}-${n}`);
-      if (fate === null) { rebooked = true; late += AIR.rebookHours * 60; } else late += fate;
-    }
-    j.status = 'underway';
-    j.lateMinutes = late;
-    j.rebooked = rebooked;
-    s.schedule({ at: j.arriveAt + late * 60_000, kind: ARRIVE_KIND, label: `Arrive In ${CITIES.require(j.toCity).name}`, category: 'personal', priority: 28, payload: { personId: person.id, journeyId: j.id } });
+    fly(s, person, j);
+    const late = j.lateMinutes ?? 0;
+    const rebooked = j.rebooked === true;
     if (rebooked || late > 15) tell(rebooked ? 'A Flight Canceled' : 'A Flight Late', rebooked ? `The airline put you on the next one: you’ll arrive about ${Math.round(late / 60)} hours late.` : `You’ll arrive about ${late} minutes late.`);
   });
 
@@ -321,6 +368,7 @@ export function registerJourneys(sim: Simulation): void {
     person.currentLocationId = j.toCity;
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;
+    else if (j.onArrival) person.stay = j.onArrival;
     else if (ownPlaceIn(person, j.toCity)) person.stay = { kind: 'own', cityId: j.toCity };
     else if (j.hotel) {
       person.stay = { kind: 'hotel', cityId: j.toCity };

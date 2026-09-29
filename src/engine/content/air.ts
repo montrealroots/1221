@@ -37,6 +37,8 @@ export const AIR = {
   taxiMinutes: 30,
   /** A connection's time between flights: SLATE's estimate. */
   connectionMinutes: 90,
+  /** A job's trip shorter than this isn't flown: New Haven to New York is a train. SLATE's estimate, until rail is kept. */
+  shortestCareerFlightKm: 400,
   arriveBeforeDomesticMinutes: 120,
   arriveBeforeInternationalMinutes: 180,
   bagUsd: (international: boolean) => (international ? 0 : 45),

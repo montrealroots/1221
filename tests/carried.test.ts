@@ -255,9 +255,9 @@ describe('home from a job, however it went', () => {
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('fired');
     expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.replaced.morale / 2);
-    // Home the next day, not at the day the job would have ended.
+    // Home on the next day's flight (from 2026-09-29, when it lands, not the moment the job's done), not at the day the job would have ended.
     const fired = sim.now;
-    while (sim.now < fired + 26 * 3_600_000) sim.advanceTo(Math.min(fired + 26 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    while (sim.now < fired + 36 * 3_600_000) sim.advanceTo(Math.min(fired + 36 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
   }, 60_000);
 
@@ -276,9 +276,9 @@ describe('home from a job, however it went', () => {
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('released');
     expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.recast.morale / 2);
-    // Recast on location, home the next day.
+    // Recast on location, home on the next day's flight.
     const recast = sim.now;
-    while (sim.now < recast + 26 * 3_600_000) sim.advanceTo(Math.min(recast + 26 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    while (sim.now < recast + 36 * 3_600_000) sim.advanceTo(Math.min(recast + 36 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     expect(career.agencyId).toBe('caa');
     expect(sim.universe.scheduled.filter((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')).toHaveLength(0);

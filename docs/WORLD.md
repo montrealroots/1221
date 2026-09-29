@@ -78,7 +78,12 @@ one day trip (Metro-North, New Haven to Grand Central).
 
 Evidence: `systems/journey.ts`, `systems/airports.ts`, `systems/stays.ts`, `content/air.ts`, `content/airfares.ts` (DOT Q1 2026, built by `tools/build-airfares.mjs`), `content/airports.ts` (3,266 OurAirports airports, built by `tools/build-airports.mjs`), `content/stays.ts`; the research in `docs/research/world/` (air, hubs, hotels, per diem). `tests/journey.test.ts` (12): New York to London on the ETA with a bag and five hotel nights and home again, the town and clock changing on arrival; the DOT's New York–Los Angeles fare to the cent and the $45 bag; no bed, the bank short, a journey or a plan on the calendar in the way; a passport lost before check-in; a player not there; the DOT's 24-hour refund and the hotel's day; BTS's rates of late and canceled flights over 20,000 draws; a night kept on at check-out; a journey saved and opened mid-flight. 18 mutations, all killed. Screens: Travel, from Home's Travel panel, opened by the guide's chapter Getting Around.
 
-Open in Stage 2: rail (the Northeast Corridor, Eurostar), buses and a car of one's own as legs; a cabin other than economy; business travel for the career's own trips, which still move the actor directly; jet lag.
+#### Stage 2b: the career's own trips, flown (done 2026-09-29)
+- A location shoot flies out on the production's ticket, on the latest of the day's departures that lands ten hours before the first call, and home on the first after the job; a job in another city with no production travel is reached on the actor's own fare, a cost of the work, and the fare home too. Each is a journey (`careerFlight`, `startCareerJourney` in `systems/journey.ts`), with the flights' delays and cancellations, and the town changes when it lands. A trip under 400 km isn't flown (SLATE's estimate) and is still instant until rail is kept.
+
+Evidence: `tests/careertrips.test.ts` (3): the plan to London, none already gone and none to New York from New Haven; Toronto on the production's ticket, there when it lands and home again; Los Angeles to New York on the actor's own fare, recorded as a cost of the work. 7 mutations, all killed.
+
+Open in Stage 2: rail (the Northeast Corridor, Eurostar), buses and a car of one's own as legs; a cabin other than economy; jet lag.
 ### Stages 3-8 (to be detailed in turn)
 
 ## Coverage record

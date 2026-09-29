@@ -39,8 +39,12 @@
  * - **Commercials and voice.** A commercial shoots a day and pays its use
  *   fees each 13-week cycle it runs; voice work is a booth session.
  * - **Location.** A screen job may shoot away (`career.location`): flown out
- *   the day before and home the day after, travel days paid, a day's meal
- *   allowance, and the wages taxed where the work was done.
+ *   on the production's ticket on the flight that lands in good time, and
+ *   home on the first after, there only when it lands (`careerFlight`, from
+ *   2026-09-29; until then the actor was there in an instant); travel days
+ *   paid, a day's meal allowance, and the wages taxed where the work was
+ *   done. A job in another city with no production travel is reached on the
+ *   actor's own fare, a cost of the work.
  * - **Later seasons.** A series regular is under option after a season; by
  *   mid-June it's picked up or not (`career.renewal`), a picked-up season
  *   starting about a year after the last, at 4% more, taking precedence over
@@ -91,7 +95,7 @@ import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, repo
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
-import { planJourney } from './journey';
+import { careerFlight, planJourney, startCareerJourney } from './journey';
 import { permitAtTheBorder, workRefusal } from './permission';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
@@ -1731,8 +1735,21 @@ export function registerCareer(sim: Simulation): void {
       const no = crossingRefusal(person, person.currentLocationId, city, s.now, (Number(item.payload.back) - s.now) / MS_DAY)
         ?? workRefusal(person, city, workDays(booking)[0]!.at, workDays(booking).at(-1)!.at, booking);
       if (no) { turnedBack(s, person, booking, no); return; }
-      // A room, sublet for the nights: the town's room rent by the night, SLATE's estimate of what it costs.
       const cur = saveCurrency(s.universe);
+      // Their own fare there, a cost of the work, from 2026-09-29: until then
+      // an actor was in the job's city in an instant, and paid nothing to get there.
+      const legs = item.payload.slot !== undefined ? planJourney(s, person.currentLocationId, city, Number(item.payload.day), Number(item.payload.slot), 1) : undefined;
+      if (legs && typeof legs !== 'string') {
+        const fare = legs.reduce((a, l) => a + l.fare, 0);
+        if (!spend(s, person, fare, `The fare to ${CITIES.require(city).name}, for the job`, 'career')) { turnedBack(s, person, booking, `The fare to ${CITIES.require(city).name}, ${formatMoney(fare, cur)}, is more than the bank or the card can cover.`); return; }
+        recordJobCost(person, s.now, fare);
+      }
+      const go = (stay?: Person['stay']) => {
+        if (item.payload.slot !== undefined && startCareerJourney(s, person, city, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'self', ...(stay ? { onArrival: stay } : {}) })) return;
+        person.currentLocationId = city; s.universe.currentZone = zoneOf(city);
+        if (stay) person.stay = stay;
+      };
+      // A room, sublet for the nights: the town's room rent by the night, SLATE's estimate of what it costs.
       // Only the nights no earlier stay in the city already has a room for:
       // back to back, the first room is kept on. Until 2026-09-27 each job
       // sublet its own, and the nights they shared were paid twice.
@@ -1744,8 +1761,7 @@ export function registerCareer(sim: Simulation): void {
       // A home of their own in the city, empty, is where they stay: no sublet.
       const own = (person.homes ?? []).some((h) => h.cityId === city && !h.tenancies.some((t) => t.unit === 'main' && t.status === 'let') && !h.selling);
       if (from >= Number(item.payload.back) || own) {
-        person.currentLocationId = city; s.universe.currentZone = zoneOf(city);
-        if (own) person.stay = { kind: 'own', cityId: city };
+        go(own ? { kind: 'own', cityId: city } : undefined);
         if (own && isPlayer(person) && from < Number(item.payload.back)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: `${roleById(booking.roleId).label}: you’re staying in your own home there.`, importance: 50, route: '/workspace/career' });
         return;
       }
@@ -1757,10 +1773,8 @@ export function registerCareer(sim: Simulation): void {
       // it was taken whether or not the bank could pay, and the room was free.
       const paid = spend(s, person, cost, `A sublet in ${CITIES.require(city).name}, ${howLong}`, 'career');
       if (paid) recordJobCost(person, s.now, cost);
-      person.currentLocationId = city;
-      s.universe.currentZone = zoneOf(city);
       // A room in somebody's flat, as it is inside, or a friend's sofa (`systems/dwelling.ts`).
-      person.stay = paid ? { kind: 'sublet', cityId: city, unit: drawRental(s, person, city, true, item.at) } : { kind: 'sofa', cityId: city };
+      go(paid ? { kind: 'sublet', cityId: city, unit: drawRental(s, person, city, true, item.at) } : { kind: 'sofa', cityId: city });
       if (isPlayer(person)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: paid ? `${roleById(booking.roleId).label}: a room sublet for ${howLong}, ${formatMoney(cost, cur)}.` : `${roleById(booking.roleId).label}: a sublet for ${howLong} is ${formatMoney(cost, cur)}, which neither the bank nor the card could cover, so it’s a friend’s sofa.`, importance: 55, route: '/workspace/career' });
       return;
     }
@@ -1770,6 +1784,15 @@ export function registerCareer(sim: Simulation): void {
     // them home in the middle of the next, and the next was lost to it.
     const home = person.home?.cityId ?? person.currentLocationId;
     if (person.currentLocationId !== city || stillWorkingIn(s, person, city, booking.id)) return;
+    // Home on their own fare, where there's a flight; where neither the bank nor the card can pay it, home anyway, as SLATE doesn't yet have the bus.
+    const flight = careerFlight(s, city, home, s.now, 'back');
+    if (flight) {
+      const fare = flight.legs.reduce((a, l) => a + l.fare, 0);
+      if (spend(s, person, fare, `The fare home from ${CITIES.require(city).name}, for the job`, 'career')) {
+        recordJobCost(person, s.now, fare);
+        if (startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'self' })) return;
+      }
+    }
     person.currentLocationId = home;
     s.universe.currentZone = zoneOf(home);
     delete person.stay;
@@ -1792,18 +1815,25 @@ export function registerCareer(sim: Simulation): void {
         ?? workRefusal(person, booking.location, workDays(booking)[0]!.at, last, booking)
         ?? (permitAtTheBorder(s, person, booking) ? undefined : 'The work permit’s fee at the border is more than the bank can cover.');
       if (no) { turnedBack(s, person, booking, no); return; }
-      person.currentLocationId = booking.location;
-      s.universe.currentZone = zoneOf(booking.location);
-      person.stay = { kind: 'hotel', cityId: booking.location };
-      if (isPlayer(person)) s.notify({ category: 'career', title: `On Location In ${CITIES.require(booking.location).name}`, body: `The production flew you out for ${role.label}, with a room of your own and a meal allowance each day.`, importance: 55, route: '/workspace/career' });
+      // The production's flight, from 2026-09-29; until then they were there in an instant.
+      const trip = item.payload.slot !== undefined ? startCareerJourney(s, person, booking.location, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'production', onArrival: { kind: 'hotel', cityId: booking.location } }) : undefined;
+      if (!trip) {
+        person.currentLocationId = booking.location;
+        s.universe.currentZone = zoneOf(booking.location);
+        person.stay = { kind: 'hotel', cityId: booking.location };
+      }
+      if (isPlayer(person)) s.notify({ category: 'career', title: `On Location In ${CITIES.require(booking.location).name}`, body: `The production ${trip ? 'is flying' : 'flew'} you out for ${role.label}, with a room of your own and a meal allowance each day.`, importance: 55, route: '/workspace/career' });
       return;
     }
     const home = person.home?.cityId ?? booking.cityId;
     const days = Math.round((item.at - Number(item.payload.outAt)) / MS_DAY) + 1;
     booking.perDiemOwed = (booking.perDiemOwed ?? 0) + days * usd(rateOn(LOCATION.perDiem, dayKey(item.at, zoneOf(booking.location))), cur);
-    person.currentLocationId = home;
-    s.universe.currentZone = zoneOf(home);
-    delete person.stay;
+    const flight = careerFlight(s, booking.location, home, s.now, 'back');
+    if (!flight || !startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'production' })) {
+      person.currentLocationId = home;
+      s.universe.currentZone = zoneOf(home);
+      delete person.stay;
+    }
     schedulePay(s, person, booking, item.at + MS_HOUR, true);
   });
 
@@ -1883,16 +1913,20 @@ export function registerCareer(sim: Simulation): void {
         locationId: workCity, payload: { personId: person.id, bookingId: booking.id },
       });
     }
+    // Out on the flight that lands in good time for the first call, from 2026-09-29 (`careerFlight`); where there's no flight, the day before at noon.
+    const flightFrom = person.home?.cityId ?? person.currentLocationId;
     if (booking.location) {
-      const out = at(days[0]!.at, zone, -1, 12);
-      s.schedule({ at: out, kind: TRAVEL_KIND, label: `Travel To ${CITIES.require(booking.location).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out' } });
+      const flight = careerFlight(s, flightFrom, booking.location, days[0]!.at, 'out');
+      const out = flight ? flight.legs[0]!.departAt : at(days[0]!.at, zone, -1, 12);
+      s.schedule({ at: out, kind: TRAVEL_KIND, label: `Travel To ${CITIES.require(booking.location).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', ...(flight ? { day: flight.day, slot: flight.slot } : {}) } });
       s.schedule({ at: at(days[days.length - 1]!.at, zone, 1, 12), kind: TRAVEL_KIND, label: 'Travel Home', category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'back', outAt: out } });
     }
     // A job in another city with no production travel: they go and stay, in a room of their own paying.
     const home = person.home?.cityId ?? person.currentLocationId;
     if (!booking.location && workCity !== home) {
-      const out = at(days[0]!.at, zone, -1, 18);
-      s.schedule({ at: out, kind: STAY_KIND, label: `To ${CITIES.require(workCity).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', back: at(days[days.length - 1]!.at, zone, 1, 12) } });
+      const flight = careerFlight(s, home, workCity, days[0]!.at, 'out');
+      const out = flight ? flight.legs[0]!.departAt : at(days[0]!.at, zone, -1, 18);
+      s.schedule({ at: out, kind: STAY_KIND, label: `To ${CITIES.require(workCity).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', back: at(days[days.length - 1]!.at, zone, 1, 12), ...(flight ? { day: flight.day, slot: flight.slot } : {}) } });
       s.schedule({ at: at(days[days.length - 1]!.at, zone, 1, 12), kind: STAY_KIND, label: 'Home Again', category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'back' } });
     }
     // SAG-AFTRA pays on the Thursday after the week's Saturday; Equity, each Friday.
