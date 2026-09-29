@@ -130,6 +130,8 @@ export interface LastWork { size: PartSize; nights?: number; heeded?: boolean }
  */
 export interface Classmate {
   name: string; craft: Craft; title?: 'actor' | 'actress'; drive?: number; last?: LastWork;
+  /** How far their craft can grow (`CEILING`). */
+  ceiling?: Craft;
   /** Their presence, drawn once as the player's is (`classmatePresence`). */
   presence?: number;
   /** Where they stand with the player, -100 to 100: a cast shared draws them closer, a lead taken from the other apart (`BONDS`). */
@@ -501,9 +503,52 @@ export function upgradeCraft(craft: Craft): boolean {
   return true;
 }
 
-/** What a session adds to a skill: more when ready, less the better it already is. */
-export function sessionGain(level: number, focus: number, weight = 1): number {
-  return ESTIMATE.sessionGain * weight * focus * (1 - level / 100) ** 1.5;
+/**
+ * How far each actor can grow: each skill to what it was on admission and 26
+ * points more, never past 100. Fitted to McDaniel, Schmidt and Hunter's
+ * meta-analysis of 16,058 workers (Journal of Applied Psychology, 1988):
+ * experience correlates .49 with performance in the first three years and
+ * only .15 past twelve. A population drawn as SLATE draws its actors, with
+ * their years of work and how much of it each does, growing as a session
+ * grows here, reaches those two figures with 26 points of room above where
+ * each began (`probe/calibrate-craft.mjs`). It agrees with Macnamara,
+ * Hambrick and Oswald's meta-analysis (Psychological Science, 2014):
+ * practice explains a fifth of performance in music and sports, and what an
+ * actor brings the rest. Until 2026-09-28 everybody grew toward 100, and
+ * anybody who kept working reached 99 by thirty. A save from before keeps its
+ * skills and grows each to the average admit's ceiling at most, 48 and 26.
+ */
+export const CEILING = {
+  headroom: 26,
+  averageTalent: 48,
+  source: 'McDaniel, Schmidt & Hunter, Job experience correlates of job performance, J. Applied Psychology 73(2), 1988; Macnamara, Hambrick & Oswald, Psychological Science 25(8), 2014',
+} as const;
+
+const CEILINGS = new WeakMap<Craft, Craft>();
+
+/** Ties an actor's ceiling to their craft, so every session reads it. */
+export function bindCeiling(craft: Craft, ceiling: Craft): void {
+  CEILINGS.set(craft, ceiling);
+}
+
+/** The ceiling of a craft as admitted: each skill and the headroom. */
+export function ceilingFrom(craft: Craft): Craft {
+  return Object.fromEntries(Object.entries(craft).map(([k, v]) => [k, Math.min(100, Math.round((v + CEILING.headroom) * 10) / 10)])) as Craft;
+}
+
+/** A ceiling for a craft from before ceilings: where each skill stands, or the average admit's ceiling where that's higher. */
+export function ceilingBefore(craft: Craft): Craft {
+  return Object.fromEntries(Object.entries(craft).map(([k, v]) => [k, Math.min(100, Math.max(v, CEILING.averageTalent + CEILING.headroom))])) as Craft;
+}
+
+/** How far a skill can grow: its actor's ceiling, or 100 where none is tied to it. */
+export function ceilingOf(craft: Craft, skill: Skill): number {
+  return CEILINGS.get(craft)?.[skill] ?? 100;
+}
+
+/** What a session adds to a skill: more when ready, less the nearer it is to how far it can go. */
+export function sessionGain(level: number, focus: number, weight = 1, ceiling = 100): number {
+  return ESTIMATE.sessionGain * weight * focus * Math.max(0, 1 - level / ceiling) ** 1.5;
 }
 
 /** How ready a person comes to a session, as a share of an ordinary day's. */
@@ -512,7 +557,8 @@ export function focusOf(person: Person): number {
 }
 
 export function grow(craft: Craft, skill: Skill, focus: number, weight = 1): void {
-  craft[skill] = Math.min(100, craft[skill] + sessionGain(craft[skill], focus, weight));
+  // The gain falls to nothing at the ceiling, so a session never passes it.
+  craft[skill] += sessionGain(craft[skill], focus, weight, ceilingOf(craft, skill));
 }
 
 /** Names classmates are given: common American given names and surnames, not real students'. An actress's from the first list, an actor's from the second. */
@@ -789,6 +835,10 @@ export function summerRuns(year: number): { from: SchoolDate; to: SchoolDate }[]
 export function enroll(sim: Simulation, person: Person): void {
   const admitted = admittedClass(sim, person);
   person.craft = admitted.player;
+  // How far each can grow, from what each brought (`CEILING`).
+  person.craftCeiling = ceilingFrom(admitted.player);
+  bindCeiling(person.craft, person.craftCeiling);
+  for (const mate of admitted.classmates) { mate.ceiling = ceilingFrom(mate.craft); bindCeiling(mate.craft, mate.ceiling); }
   const school: SchoolRecord = {
     classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true,
     classmates: admitted.classmates, tally: undefined as unknown as TermTally, history: [],
@@ -1371,6 +1421,29 @@ function cast(sim: Simulation, person: Person, term: number): void {
 }
 
 /**
+ * The term's growth, the student's and the class's median, each weighed
+ * against the room it had to grow, as a session's gain shrinks toward the
+ * student's own ceiling (`sessionGain`, `CEILING`): until 2026-09-28 raw
+ * points were compared, and the class's best, with the least room, was
+ * warned and then dismissed for growing less than the rest. The evaluation
+ * and the School's screen both read it.
+ */
+export function termGrowth(person: Person): { growth: number; classGrowth: number; grewTooLittle: boolean; pace: 'ahead of' | 'in line with' | 'behind' } {
+  const school = person.school!;
+  const t = school.tally;
+  const room = (start: number, ceiling: number) => Math.max(0.01, Math.max(0, 1 - start / ceiling) ** 1.5);
+  const growth = meanCraft(person.craft!) - meanCraft(t.craftAtStart);
+  const gains = school.classmates.map((m, i) => meanCraft(m.craft) - (t.classAtStart[i] ?? meanCraft(m.craft))).sort((a, b) => a - b);
+  const classGrowth = gains[Math.floor(gains.length / 2)] ?? 0;
+  const paced = growth / room(meanCraft(t.craftAtStart), person.craftCeiling ? meanCraft(person.craftCeiling) : 100);
+  const classPaced = school.classmates.map((m, i) => { const start = t.classAtStart[i] ?? meanCraft(m.craft); return (meanCraft(m.craft) - start) / room(start, m.ceiling ? meanCraft(m.ceiling) : 100); }).sort((a, b) => a - b);
+  const classPace = classPaced[Math.floor(classPaced.length / 2)] ?? 0;
+  const grewTooLittle = paced < ESTIMATE.growthFloor * classPace;
+  const pace = classPace <= 0 ? 'in line with' : paced >= 1.1 * classPace ? 'ahead of' : grewTooLittle ? 'behind' : 'in line with';
+  return { growth, classGrowth, grewTooLittle, pace };
+}
+
+/**
  * The faculty's evaluation at the end of a term's classes: attendance at
  * classes, calls and shifts, and growth against the class's median, each
  * measured against the room they had to grow. Short of
@@ -1384,19 +1457,7 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const t = school.tally;
   const expected = (t.classDays - t.excused) + t.calls + t.shifts;
   const attendance = expected > 0 ? (t.attended + t.answered + t.worked) / expected : 1;
-  const growth = meanCraft(person.craft) - meanCraft(t.craftAtStart);
-  const gains = school.classmates.map((m, i) => meanCraft(m.craft) - (t.classAtStart[i] ?? meanCraft(m.craft))).sort((a, b) => a - b);
-  const classGrowth = gains[Math.floor(gains.length / 2)] ?? 0;
-  // Growth against the room each had to grow, as a session's gain shrinks
-  // near the top (`sessionGain`): until 2026-09-28 raw points were compared,
-  // and the class's best, with the least room, was warned and then dismissed
-  // for growing less than the rest.
-  const room = (start: number) => Math.max(0.01, (1 - start / 100) ** 1.5);
-  const paced = growth / room(meanCraft(t.craftAtStart));
-  const classPaced = school.classmates.map((m, i) => { const start = t.classAtStart[i] ?? meanCraft(m.craft); return (meanCraft(m.craft) - start) / room(start); }).sort((a, b) => a - b);
-  const classPace = classPaced[Math.floor(classPaced.length / 2)] ?? 0;
-  const grewTooLittle = paced < ESTIMATE.growthFloor * classPace;
-  const pace = classPace <= 0 ? 'in line with' : paced >= 1.1 * classPace ? 'ahead of' : grewTooLittle ? 'behind' : 'in line with';
+  const { growth, classGrowth, grewTooLittle, pace } = termGrowth(person);
   // The term's work on stage, as the faculty see it: a run gone mostly off falls short, as poor production work does; a strong one is noted.
   const run = [school.casting, school.rep].find((c) => c && c.term === term && c.nights && Object.values(c.nights).reduce((a, b) => a + b, 0) >= ESTIMATE.workNights);
   const work = run?.nights ? nightsMean(run.nights) : undefined;

@@ -73,7 +73,7 @@ import { ABROAD } from '../content/safetynet';
 import { armHealth, inHospital } from './health';
 import { armTaxes, canadaElected } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
-import { actingOf, grow, focusOf, summerOf, type Craft } from './school';
+import { actingOf, ceilingOf, grow, focusOf, summerOf, type Craft } from './school';
 import { rentAt } from '../content/rents';
 import { CRAFTS_AT, enjoyCrafts, enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { ATTRIBUTES, attributesOf, classmatePresence, earn, fadeRecognition, nerves, nudge, overscaleOf, presenceSwing, sendsFactor } from './attributes';
@@ -1485,7 +1485,8 @@ export function registerCareer(sim: Simulation): void {
     const focus = focusOf(person) * (event ? nerves(s, person, event) : 1);
     earn(s, person, ATTRIBUTES.reputation.day);
     for (const [skill, weight] of Object.entries(growsFor(role, booking.genre, booking.demands ?? [])) as [keyof Craft, number][]) {
-      person.craft[skill] = Math.min(100, person.craft[skill] + ESTIMATE.workGain * weight * focus * (1 - person.craft[skill] / 100) ** 1.5);
+      // Toward how far they can grow (`CEILING`), the gain falling to nothing there.
+      person.craft[skill] += ESTIMATE.workGain * weight * focus * Math.max(0, 1 - person.craft[skill] / ceilingOf(person.craft, skill)) ** 1.5;
     }
     const spent = role.medium === 'stage' && !call.rehearsal ? ESTIMATE.performanceEnergy : (ESTIMATE.workEnergy * hours) / 8;
     person.wellbeing.energy = Math.max(0, person.wellbeing.energy - spent);

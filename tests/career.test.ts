@@ -14,7 +14,7 @@ import {
   acceptRefusal, beginCareer, closeStaleBookings, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
-import { actingOf, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
+import { actingOf, bindCeiling, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
 import { ATTRIBUTES, attributesOf } from '@/engine/systems/attributes';
 import { rehome } from '@/engine/systems/household';
 import { healthOf } from '@/engine/systems/health';
@@ -666,6 +666,24 @@ describe('the unions', () => {
     expect(billDues(broke, broke.player, 2026, 11)).toBe(Math.round(SAG_AFTRA.basicDues / 2));
     expect(yearOf(broke.player, 2026).dues).toBe(0);
     expect(careerOf(broke.player).unions.owed).toBe(Math.round(SAG_AFTRA.basicDues / 2));
+  });
+});
+
+describe('the work', () => {
+  it('grows an actor toward how far they can grow, and never past it', () => {
+    const sim = signed('work-ceiling', 2);
+    const craft = sim.player.craft!;
+    // A point of room left in every skill: the work comes near it and slows, and never passes it.
+    const ceiling = Object.fromEntries(Object.entries(craft).map(([k, v]) => [k, v + 1])) as typeof craft;
+    sim.player.craftCeiling = ceiling;
+    bindCeiling(craft, ceiling);
+    const before = { ...craft };
+    const b = offer(sim, 'lort-b', 4, 4, sim.now + MS_DAY);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    tended(sim, workDays(b)[workDays(b).length - 1]!.at + MS_HOUR);
+    const keys = Object.keys(craft) as (keyof typeof craft)[];
+    expect(keys.some((k) => craft[k] > before[k])).toBe(true);
+    for (const k of keys) expect(craft[k]).toBeLessThanOrEqual(ceiling[k] + 1e-9);
   });
 });
 

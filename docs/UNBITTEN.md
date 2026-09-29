@@ -415,6 +415,17 @@ part the tool cannot see.
   intimate scene; `PART_DEMANDS`), read at the audition and grown on the
   job; how often a breakdown asks each is SLATE's estimate. Nobody's skills
   but the player's and the classmates' are kept.
+- **How far an actor grows is fitted, and partly SLATE's estimate.** Since
+  2026-09-28 each skill grows toward where it began and 26 points more
+  (`CEILING` in `systems/school.ts`), the headroom fitted so that experience
+  correlates .49 with skill in the first three years and .15 past twelve, as
+  McDaniel, Schmidt and Hunter found across 16,058 workers (1988); it agrees
+  with practice explaining about a fifth of performance in the performing
+  arts (Macnamara, Hambrick and Oswald, 2014). SLATE's estimates: the 0-100
+  scale itself and a session's rate, which no study measures in points; the
+  population the fit is drawn over (SLATE's own admits, a lognormal spread of
+  work); and a save from before, whose skills keep their levels and grow to
+  the average admit's ceiling, 74, at most.
 - **Parts past sixty are partly SLATE's estimate.** Since 2026-09-28 a part
   drawn for an actor sixty or older is kept at the share of parts written for
   that age (`AGE_ON_SCREEN`): film 0.48 and television 0.42 of a younger

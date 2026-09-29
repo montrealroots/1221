@@ -207,6 +207,8 @@ export interface Person {
   school?: SchoolRecord;
   /** Their craft as an actor, 0 to 100 in each area (`content/school.ts`). */
   craft?: Craft;
+  /** How far their craft can grow, skill by skill (`CEILING` in `systems/school.ts`). */
+  craftCeiling?: Craft;
   /**
    * Presence, composure, reputation and recognition (`systems/attributes.ts`).
    * Kept as `attrs`: the migration sheds `attributes` and `reputation` from

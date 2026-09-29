@@ -52,7 +52,7 @@ import { registerHomes } from './systems/homes';
 import { registerDwelling } from './systems/dwelling';
 import { registerInjury } from './systems/injury';
 import { attributesOf } from './systems/attributes';
-import { upgradeCraft } from './systems/school';
+import { bindCeiling, ceilingBefore, upgradeCraft } from './systems/school';
 import { registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
 import { armCollection, registerTaxReturn } from './systems/taxreturn';
@@ -226,6 +226,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
     if (person.craft) upgradeCraft(person.craft);
     for (const mate of person.school?.classmates ?? []) upgradeCraft(mate.craft);
     if (person.school?.tally) upgradeCraft(person.school.tally.craftAtStart);
+    // How far each can grow: the ceiling kept, or one for a save from before ceilings (`CEILING`).
+    if (person.craft) { person.craftCeiling ??= ceilingBefore(person.craft); bindCeiling(person.craft, person.craftCeiling); }
+    for (const mate of person.school?.classmates ?? []) { mate.ceiling ??= ceilingBefore(mate.craft); bindCeiling(mate.craft, mate.ceiling); }
   }
   const zone = sim.homeZone;
 

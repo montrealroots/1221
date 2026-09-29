@@ -22,7 +22,7 @@ import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABA
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -123,13 +123,14 @@ function StandingPane() {
   const t = school.tally;
   const expected = (t.classDays - t.excused) + t.calls + t.shifts;
   const attendance = expected > 0 ? (t.attended + t.answered + t.worked) / expected : undefined;
-  const growth = meanCraft(craft) - meanCraft(t.craftAtStart);
-  const classGrowth = median(school.classmates.map((m, i) => meanCraft(m.craft) - (t.classAtStart[i] ?? meanCraft(m.craft))));
+  // As the evaluation weighs it (`termGrowth`): until 2026-09-28 this screen warned on raw points while the faculty weighed the room each had.
+  const { growth, classGrowth, grewTooLittle, pace } = termGrowth(person);
+  const reach = person.craftCeiling;
   const evaluation = ahead(sim, person, [EVALUATION_KIND])[0];
-  const skills: { id?: Skill; label: string; mine: number; theirs: number[] }[] = [
-    ...SKILLS.map((s) => ({ id: s.id, label: s.label, mine: craft[s.id], theirs: school.classmates.map((m) => m.craft[s.id]) })),
-    { label: 'Acting', mine: actingOf(craft), theirs: school.classmates.map((m) => actingOf(m.craft)) },
-    { label: 'Overall', mine: meanCraft(craft), theirs: school.classmates.map((m) => meanCraft(m.craft)) },
+  const skills: { id?: Skill; label: string; mine: number; reach: number; theirs: number[] }[] = [
+    ...SKILLS.map((s) => ({ id: s.id, label: s.label, mine: craft[s.id], reach: ceilingOf(craft, s.id), theirs: school.classmates.map((m) => m.craft[s.id]) })),
+    { label: 'Acting', mine: actingOf(craft), reach: reach ? actingOf(reach) : 100, theirs: school.classmates.map((m) => actingOf(m.craft)) },
+    { label: 'Overall', mine: meanCraft(craft), reach: reach ? meanCraft(reach) : 100, theirs: school.classmates.map((m) => meanCraft(m.craft)) },
   ];
 
   return (
@@ -139,7 +140,7 @@ function StandingPane() {
             <div className="grid grid-3">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
               <Stat label="Attendance This Term" value={attendance === undefined ? 'None Yet' : pct(attendance)} note={`${pct(ESTIMATE.attendanceFloor)} is the floor`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
-              <Stat label="Growth This Term" value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}; half of it is the floor`} tone={classGrowth > 0 && growth < ESTIMATE.growthFloor * classGrowth ? 'warning' : undefined} />
+              <Stat label="Growth This Term" value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}: for the room each has, ${pace} it, and half its pace is the floor`} tone={grewTooLittle ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
               Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, standing falls a step, from good to concern, to warning, to dismissal; meeting both restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree on any standing short of dismissal.
@@ -176,13 +177,14 @@ function StandingPane() {
           <div className="table-scroll">
             <table>
               <thead>
-                <tr><th scope="col">Skill</th><th scope="col" className="num">You</th><th scope="col" className="num">Class Best</th><th scope="col" className="num">Class Median</th><th scope="col" className="num">Your Place</th></tr>
+                <tr><th scope="col">Skill</th><th scope="col" className="num">You</th><th scope="col" className="num">You Can Reach</th><th scope="col" className="num">Class Best</th><th scope="col" className="num">Class Median</th><th scope="col" className="num">Your Place</th></tr>
               </thead>
               <tbody>
                 {skills.map((row) => (
                   <tr key={row.label} className={row.id ? undefined : 'strong'}>
                     <td>{row.label}</td>
                     <td className="num mono">{row.mine.toFixed(1)}</td>
+                    <td className="num mono">{row.reach.toFixed(1)}</td>
                     <td className="num mono">{Math.max(...row.theirs).toFixed(1)}</td>
                     <td className="num mono">{median(row.theirs).toFixed(1)}</td>
                     <td className="num mono">{rankIn(person, row.id)} of {YALE_DRAMA.classSize}</td>
@@ -192,7 +194,7 @@ function StandingPane() {
             </table>
           </div>
           <Fine>
-            You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals and performances grow craft, more when you come rested and less the better you already are; your classmates grow too. The scale and the rates are SLATE’s.
+            You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals, performances and later the work grow craft, more when you come rested and less the nearer you are to what you can reach: each skill where it began and {CEILING.headroom} points more. Experience gives most in the first years and little past twelve (McDaniel, Schmidt and Hunter, 1988), and practice is a fifth of what an actor becomes in the performing arts (Macnamara, Hambrick and Oswald, 2014); the ceiling is fitted to both. The scale and the rates of a session are SLATE’s.
           </Fine>
         </div>
       </Panel>
