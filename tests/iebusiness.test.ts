@@ -49,6 +49,14 @@ describe('the business in Dublin', () => {
     expect([...uk].every((id) => AGENCIES.find((a) => a.id === id)!.countryId === 'uk')).toBe(true);
   });
 
+  it('gets an actor in Dublin no auditions from an American agency', () => {
+    const sim = dubliner('ie-uta');
+    const uta = AGENCIES.find((a) => a.id === 'uta')!;
+    let n = 0;
+    for (let w = 0; w < 30; w += 1) n += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, uta, DUBLIN, 0).length;
+    expect(n).toBe(0);
+  });
+
   it('counts Spotlight Ireland for Dublin’s casting, and not London’s Spotlight', () => {
     const sim = dubliner('ie-spotlight');
     const run = () => { let n = 0; for (let w = 0; w < 40; w += 1) n += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, DUBLIN, 5).length; return n; };

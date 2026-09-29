@@ -960,13 +960,15 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   const look = staleHeadshots(career, weekStart) ? WORK_COSTS.staleHeadshots : 1;
   // Known to the offices, an actor is called in more (`attributes.ts`).
   const known = sendsFactor(attributesOf(sim, person).reputation);
-  const count = agency ? poisson(agency.auditionsPerWeek * look * known) : 0;
+  // An agency, and a manager (American, all of them), sends work in its own country only. Until
+  // 2026-09-29 an American agency sent Irish parts to an actor living in Dublin, and kept them for 62 years.
+  const country = CITIES.get(cityId)?.countryId ?? 'us';
+  const count = agency && (agency.countryId ?? 'us') === country ? poisson(agency.auditionsPerWeek * look * known) : 0;
   // A manager's relationships: the work a middling agency's reach sends.
-  const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek * look * known) : 0;
+  const fromManager = managed && country === 'us' ? poisson(MANAGEMENT.auditionsPerWeek * look * known) : 0;
   let self = 0;
   // A free submission sends a name and a résumé; a paid site's, the headshot, and the reel where there is one, without which the breakdowns that ask for one are shut.
   // A site casts in its own country: Spotlight in Britain, the American ones there.
-  const country = CITIES.get(cityId)?.countryId ?? 'us';
   const onAny = (Object.keys(WORK_COSTS.sites) as CastingSite[]).some((site) => siteCountry(site) === country && onSite(career, site, weekStart));
   const paid = onAny ? (career.reelAt !== undefined ? 1 : 1 - WORK_COSTS.wantReel) : WORK_COSTS.freeSubmissionShare;
   for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look * known) self += 1;
