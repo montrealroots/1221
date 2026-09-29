@@ -643,6 +643,13 @@ part the tool cannot see.
   Equity itself; a British actor's Self Assessment as self-employed, since
   pay is withheld as PAYE would be, on the year's tax at the right bands; the
   2026 cinema and theatre rates, not yet published, which stand at 2025's.
+- **Social Security is partly SLATE's estimate.** Since 2026-09-29 US wages
+  earn Social Security, claimed from 62 to 70 at SSA's 2026 formula
+  (`systems/socialsecurity.ts`). Held at the last published: the wage index
+  after 2024, the taxable maximum, bend points and credit after 2026, and
+  every later cost-of-living increase. Left out: the earnings test on a
+  benefit claimed early while working, its taxation on the return, a
+  spouse's benefit, and combining a UK record under the agreement.
 - **The State Pension is partly SLATE's estimate.** Since 2026-09-29 a
   UK National Insurance record of qualifying years pays a thirty-fifth of
   the full new State Pension a year, from ten, claimed from 68 for anyone

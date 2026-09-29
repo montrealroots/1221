@@ -239,6 +239,8 @@ export interface Person {
   universalCredit?: import('../systems/universalcredit').CreditClaim;
   /** When they claimed the UK State Pension (`systems/statepension.ts`). */
   statePensionFrom?: number;
+  /** Social Security claimed: from when, and the monthly benefit in dollars (`systems/socialsecurity.ts`). */
+  socialSecurity?: { from: number; monthlyUsd: number };
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
   returns?: Record<string, TaxReturn>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */

@@ -55,6 +55,7 @@ export interface PayrollTaxRule {
   /** Self-employed pay both halves. */
   selfEmployedMultiplier: number;
   effectiveFrom: number;
+  effectiveTo?: number;
   /** Earnings below which the social rate doesn't start, as the UK's primary threshold. */
   socialFloor?: Money;
   /** The money its bases and thresholds are written in; dollars where not said. */
@@ -183,7 +184,10 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
 ];
 
 export const PAYROLL_TAX_RULES: readonly PayrollTaxRule[] = [
-  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 168_600_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2024) },
+  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 168_600_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2024), effectiveTo: YEAR(2025) },
+  // The Social Security wage base, SSA's: $176,100 in 2025 and $184,500 in 2026, held after. Until 2026-09-29 it stopped at 2024's $168,600.
+  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 176_100_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026) },
+  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 184_500_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2026) },
   { jurisdictionCode: 'CA', socialRate: 0.0595, socialWageBase: 68_500_00, medicalRate: 0.0166, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2024), currency: 'CAD' },
   // Class 1 National Insurance: 8% between the primary threshold and the upper
   // earnings limit, 2% above it, both frozen at £12,570 and £50,270 to 2028.

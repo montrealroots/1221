@@ -21,6 +21,8 @@ import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf } from '@/engine/systems/career';
+import { exchange } from '@/engine/content/currency';
+import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
 import { costsAt, HOUSING } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
@@ -487,6 +489,23 @@ function UnionsPane() {
           </div>
         </Panel>
       )}
+      {(socialSecurityOf(person, cur).credits > 0 || person.socialSecurity) && (() => {
+        const ss = socialSecurityOf(person, cur);
+        const no = socialSecurityRefusal(sim, person);
+        const usd = (d: number) => money(cur === 'USD' ? d * 100 : exchange(d * 100, 'USD', cur) ?? d * 100);
+        return (
+          <Panel title="Social Security" subtitle="Your US earnings record" actions={no ? undefined : <Gated feature="pension.social_security" onClick={() => { const r = run<{ monthly: number; factor: number }>('pension.social_security'); if (r.ok) toast(`Claimed: ${money(r.value!.monthly)} a month, ${Math.round(r.value!.factor * 1000) / 10}% of the full benefit.`, 'positive'); }}>Claim Social Security</Gated>}>
+            <div className="col gap-3">
+              <div className="grid grid-3">
+                <Stat label="Credits" value={String(ss.credits)} note="Forty qualify" />
+                <Stat label="At 67, A Month" value={usd(ss.pia)} note={`62: ${usd(Math.floor(ss.pia * claimFactor(-60)))}; 70: ${usd(Math.floor(ss.pia * claimFactor(36)))}`} />
+                <Stat label="Claimed" value={person.socialSecurity ? usd(person.socialSecurity.monthlyUsd) : 'Not Yet'} note={person.socialSecurity ? `A month since ${formatDate(person.socialSecurity.from, sim.zone)}` : no ?? 'You can claim it now'} />
+              </div>
+              <Fine>Your highest 35 years of US wages, each to its year’s taxable maximum and indexed by the national wage index to the year you turn 60, averaged a month, then 90%, 32% and 15% across SSA’s 2026 bend points. Claimed early it’s cut, delayed it rises 8% a year to 70. SLATE holds what SSA hasn’t published at the last it did. Source: {SOCIAL_SECURITY.source}.</Fine>
+            </div>
+          </Panel>
+        );
+      })()}
       {(qualifyingYears(person, cur).length > 0 || person.statePensionFrom !== undefined) && (
         <Panel title="State Pension" subtitle="The UK’s, on your National Insurance record" actions={statePensionRefusal(sim, person) ? undefined : <Gated feature="pension.state" onClick={() => { const r = run<{ weekly: number }>('pension.state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week, paid every four weeks.`, 'positive'); }}>Claim It</Gated>}>
           <div className="col gap-3">

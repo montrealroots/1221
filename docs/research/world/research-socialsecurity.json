@@ -1,0 +1,244 @@
+{
+  "_meta": {
+    "compiledOn": "2026-09-29",
+    "method": "ssa.gov returns HTTP 403 (Akamai) to automated fetches from this machine, so every page was read from its Internet Archive capture of the official ssa.gov URL. Each figure lists the ssa.gov URL as source and the capture actually read as archiveCapture. Nothing below is from memory; anything not read on an SSA page is null or in 'uncertain'.",
+    "latestPublishedCycle": "The 2026 amounts (announced with the December 2025 COLA) are the latest on every SSA page read as of captures dated 2026-09-12 to 2026-09-28. The 2027 amounts had not been published on those pages (SSA publishes them with the October COLA announcement)."
+  },
+
+  "pia": {
+    "formula": {
+      "rates": [0.90, 0.32, 0.15],
+      "text": "PIA = 90% of AIME up to the first bend point + 32% of AIME over the first and through the second bend point + 15% of AIME over the second bend point; rounded to the next lower multiple of $0.10.",
+      "source": "https://www.ssa.gov/oact/cola/piaformula.html",
+      "archiveCapture": "https://web.archive.org/web/20260927061756/https://www.ssa.gov/oact/cola/piaformula.html",
+      "effective": "Workers first eligible (age 62, disability, or death) in 2026"
+    },
+    "bendPoints": {
+      "note": "Keyed by year of eligibility (year the worker attains 62, becomes disabled before 62, or dies before 62), not by year of claiming.",
+      "2020": { "first": 960, "second": 5785 },
+      "2021": { "first": 996, "second": 6002 },
+      "2022": { "first": 1024, "second": 6172 },
+      "2023": { "first": 1115, "second": 6721 },
+      "2024": { "first": 1174, "second": 7078 },
+      "2025": { "first": 1226, "second": 7391 },
+      "2026": { "first": 1286, "second": 7749 },
+      "2027": null,
+      "derivation2026": "1979 bend points $180 and $1,085 x AWI(2024) 69,846.57 / AWI(1977) 9,779.44 = $1,285.59 -> $1,286 and $7,749.27 -> $7,749",
+      "source": "https://www.ssa.gov/oact/cola/bendpoints.html",
+      "archiveCapture": "https://web.archive.org/web/20260927195735/https://www.ssa.gov/oact/cola/bendpoints.html",
+      "effective": "2026 = eligibility year 2026"
+    },
+    "familyMaximumBendPoints2026": {
+      "first": 1643, "second": 2371, "third": 3093,
+      "source": "https://www.ssa.gov/oact/cola/bendpoints.html",
+      "effective": "Eligibility year 2026"
+    },
+    "workedExample2026": {
+      "text": "Maximum-taxable earnings every year since 22, retiring at 62 in 2026: AIME $14,358, PIA $4,216.90; benefit at exactly 62 is 30% less than PIA; first COLA receivable is the one effective December 2026.",
+      "source": "https://www.ssa.gov/oact/cola/Benefits.html",
+      "archiveCapture": "https://web.archive.org/web/20260928003424/https://www.ssa.gov/oact/cola/Benefits.html"
+    }
+  },
+
+  "aime": {
+    "method": "Index each year's earnings (capped at that year's taxable maximum) by AWI(year of eligibility - 2) / AWI(year of earnings); earnings in or after the indexing year are taken at face value. Take the highest-indexed years (up to 35), sum, divide by the number of months in those years (35 x 12 = 420), and round down to the next lower dollar.",
+    "yearsUsed": 35,
+    "indexingYear": "Year of first eligibility minus 2 (i.e. the year the worker turns 60). For eligibility in 2026 the index is AWI 2024 = 69,846.57.",
+    "roundDown": "to next lower dollar",
+    "source": "https://www.ssa.gov/oact/cola/Benefits.html",
+    "archiveCapture": "https://web.archive.org/web/20260928003424/https://www.ssa.gov/oact/cola/Benefits.html",
+    "supportingSource": "https://www.ssa.gov/oact/cola/AWI.html",
+    "effective": "Current law; 2026 eligibility example quoted by SSA"
+  },
+
+  "awi": {
+    "series": {
+      "2000": 32154.82, "2001": 32921.92, "2002": 33252.09, "2003": 34064.95, "2004": 35648.55,
+      "2005": 36952.94, "2006": 38651.41, "2007": 40405.48, "2008": 41334.97, "2009": 40711.61,
+      "2010": 41673.83, "2011": 42979.61, "2012": 44321.67, "2013": 44888.16, "2014": 46481.52,
+      "2015": 48098.63, "2016": 48642.15, "2017": 50321.89, "2018": 52145.80, "2019": 54099.99,
+      "2020": 55628.60, "2021": 60575.07, "2022": 63795.13, "2023": 66621.80, "2024": 69846.57
+    },
+    "earlierAnchors": { "1976": 9226.48, "1977": 9779.44 },
+    "latestPublished": { "year": 2024, "value": 69846.57, "changeFromPrior": "4.84%", "usedFor": "2026 bend points, QC, taxable maximum, earnings test; indexing year for workers first eligible in 2026" },
+    "awi2025": null,
+    "awi2025Note": "Not published on SSA's AWI pages as of the 2026-09-15/2026-09-21 captures; SSA normally publishes it with the October COLA announcement.",
+    "source": "https://www.ssa.gov/oact/cola/AWI.html",
+    "seriesSource": "https://www.ssa.gov/OACT/COLA/awiseries.html",
+    "archiveCapture": "https://web.archive.org/web/20260915234644/https://www.ssa.gov/oact/cola/AWI.html",
+    "effective": "Series 1951-2024 as published"
+  },
+
+  "taxableMax": {
+    "byYear": { "2020": 137700, "2021": 142800, "2022": 147000, "2023": 160200, "2024": 168600, "2025": 176100, "2026": 184500, "2027": null },
+    "oasdiRate2026": { "employee": 0.062, "employer": 0.062, "selfEmployed": 0.124, "maxEmployeeTax2026": 11439.00 },
+    "hiRate": { "employee": 0.0145, "employer": 0.0145, "selfEmployed": 0.029, "cap": "none since 1994" },
+    "source": "https://www.ssa.gov/oact/cola/cbb.html",
+    "archiveCapture": "https://web.archive.org/web/20260928090102/https://www.ssa.gov/OACT/COLA/cbb.html",
+    "effective": "Calendar-year earnings for each year shown"
+  },
+
+  "credits": {
+    "neededForRetirement": 40,
+    "maxPerYear": 4,
+    "earningsPerCredit": { "2020": 1410, "2021": 1470, "2022": 1510, "2023": 1640, "2024": 1730, "2025": 1810, "2026": 1890, "2027": null },
+    "earningsForFourCredits2026": 7560,
+    "derivation2026": "$250 x AWI(2024) 69,846.57 / AWI(1976) 9,226.48 = $1,892.56 -> rounded to nearest $10 = $1,890 (or the prior year's amount if larger)",
+    "note": "Credits are based on total wages and self-employment income for the year, not on when in the year it was earned; extra credits beyond 40 do not raise the benefit.",
+    "source": "https://www.ssa.gov/oact/cola/QC.html",
+    "archiveCapture": "https://web.archive.org/web/20260922194019/https://www.ssa.gov/oact/cola/QC.html",
+    "supportingSource": "https://www.ssa.gov/benefits/retirement/planner/credits.html",
+    "supportingCapture": "https://web.archive.org/web/20260928003424/https://www.ssa.gov/benefits/retirement/planner/credits.html",
+    "effective": "Calendar year of earnings"
+  },
+
+  "fra": {
+    "byBirthYear": {
+      "1943-1954": { "years": 66, "months": 0 },
+      "1955": { "years": 66, "months": 2 },
+      "1956": { "years": 66, "months": 4 },
+      "1957": { "years": 66, "months": 6 },
+      "1958": { "years": 66, "months": 8 },
+      "1959": { "years": 66, "months": 10 },
+      "1960+": { "years": 67, "months": 0 }
+    },
+    "birthdayRules": "Born January 1: use the previous year. Born on the 1st of any month: benefit and FRA figured as if the birthday were in the previous month.",
+    "source": "https://www.ssa.gov/benefits/retirement/planner/agereduction.html",
+    "archiveCapture": "https://web.archive.org/web/20260928153829/https://www.ssa.gov/benefits/retirement/planner/agereduction.html",
+    "supportingSource": "https://www.ssa.gov/benefits/retirement/planner/ageincrease.html",
+    "effective": "Current law (1983 amendments)"
+  },
+
+  "early": {
+    "earliestAge": 62,
+    "mustBe62ForWholeMonth": true,
+    "reductionPerMonthFirst36": "5/9 of 1%",
+    "reductionPerMonthBeyond36": "5/12 of 1%",
+    "spouseReductionPerMonthFirst36": "25/36 of 1%",
+    "spouseReductionPerMonthBeyond36": "5/12 of 1%",
+    "maxReductionFRA67": "30% (60 months: 36 x 5/9% + 24 x 5/12%); $1,000 PIA -> $700 at 62",
+    "reductionByBirthYearAt62": { "1943-1954": 0.25, "1955": 0.2583, "1956": 0.2667, "1957": 0.275, "1958": 0.2833, "1959": 0.2917, "1960+": 0.30 },
+    "source": "https://www.ssa.gov/oact/quickcalc/early_late.html",
+    "archiveCapture": "https://web.archive.org/web/20260928212222/https://www.ssa.gov/oact/quickcalc/early_late.html",
+    "supportingSource": "https://www.ssa.gov/oact/quickcalc/earlyretire.html",
+    "supportingCapture": "https://web.archive.org/web/20260908221901/https://www.ssa.gov/oact/quickcalc/earlyretire.html",
+    "effective": "Current law; both pages still live but stamped 'Last reviewed or modified Nov 25, 2008'"
+  },
+
+  "delayed": {
+    "ratePerYear": 0.08,
+    "ratePerMonth": "2/3 of 1%",
+    "appliesTo": "Born 1943 or later",
+    "stopsAt": 70,
+    "maxIncreaseFRA67": null,
+    "maxIncreaseFRA67Note": "Not stated as a figure on the pages read; arithmetic from SSA's own rate would be 36 months x 2/3% = 24%.",
+    "timing": "If benefits start before 70, credits earned in the year benefits start are added the following January.",
+    "retroactivity": "After FRA, benefits can be started up to 6 months retroactively, but never for a month before FRA.",
+    "source": "https://www.ssa.gov/benefits/retirement/planner/delayret.html",
+    "archiveCapture": "https://web.archive.org/web/20260915041731/https://www.ssa.gov/benefits/retirement/planner/delayret.html",
+    "effective": "Current law"
+  },
+
+  "cola": {
+    "note": "SSA's COLA table keys each COLA to the December it takes effect; it is payable in the following January.",
+    "series": {
+      "Dec2020": 1.3, "Dec2021": 5.9, "Dec2022": 8.7, "Dec2023": 3.2, "Dec2024": 2.5, "Dec2025": 2.8
+    },
+    "paidIn2025": { "percent": 2.5, "effective": "December 2024 benefits, payable January 2025" },
+    "paidIn2026": { "percent": 2.8, "effective": "December 2025 benefits, payable January 2026" },
+    "nextCola": null,
+    "nextColaNote": "The COLA effective December 2026 had not been announced as of the 2026-09-22 capture.",
+    "method": "CPI-W, Q3 average of current year over Q3 average of the last year a COLA took effect, rounded to nearest 0.1%.",
+    "source": "https://www.ssa.gov/oact/cola/latestCOLA.html",
+    "archiveCapture": "https://web.archive.org/web/20260922194020/https://www.ssa.gov/oact/cola/latestCOLA.html",
+    "seriesSource": "https://www.ssa.gov/OACT/COLA/colaseries.html",
+    "seriesCapture": "https://web.archive.org/web/20260918114455/https://www.ssa.gov/OACT/COLA/colaseries.html"
+  },
+
+  "earningsTest": {
+    "appliesOnlyBelowFRA": true,
+    "byYear": {
+      "2024": { "lower": 22320, "higher": 59520 },
+      "2025": { "lower": 23400, "higher": 62160 },
+      "2026": { "lower": 24480, "higher": 65160 },
+      "2027": null
+    },
+    "lowerAppliesTo": "Years before the year the person reaches FRA; withhold $1 of benefits for every $2 earned above it",
+    "higherAppliesTo": "The year the person reaches FRA, counting only earnings in months before the FRA month; withhold $1 for every $3 above it",
+    "afterFRA": "Earnings in or after the FRA month do not count.",
+    "notLost": "Benefits withheld are not lost: at FRA the monthly benefit is permanently increased to account for months withheld.",
+    "source": "https://www.ssa.gov/oact/cola/rtea.html",
+    "archiveCapture": "https://web.archive.org/web/20260912232637/https://www.ssa.gov/oact/cola/rtea.html",
+    "effective": "Calendar year shown"
+  },
+
+  "taxation": {
+    "combinedIncomeDefinition": "Adjusted gross income + nontaxable interest + half of Social Security benefits",
+    "single": { "threshold50pct": 25000, "threshold85pct": 34000, "text": "Combined income $25,000-$34,000: up to 50% taxable; over $34,000: up to 85%" },
+    "joint": { "threshold50pct": 32000, "threshold85pct": 44000, "text": "Combined income $32,000-$44,000: up to 50% taxable; over $44,000: up to 85%" },
+    "marriedFilingSeparately": "SSA: 'you'll probably pay taxes on your benefits' (no threshold stated on the SSA page)",
+    "indexed": false,
+    "indexedNote": "Thresholds date from 1983 (50%) and 1993 (85%) legislation; SSA pages show no indexing.",
+    "source": "https://www.ssa.gov/pubs/EN-05-10035.pdf",
+    "sourceEdition": "Publication No. 05-10035, Retirement Benefits, January 2026",
+    "archiveCapture": "https://web.archive.org/web/20260923225040/https://www.ssa.gov/pubs/EN-05-10035.pdf",
+    "supportingSource": "https://www.ssa.gov/oact/progdata/taxbenefits.html",
+    "supportingCapture": "https://web.archive.org/web/20260831082657/https://www.ssa.gov/oact/progdata/taxbenefits.html",
+    "nonresidentAlienWithholding": "Non-citizens who are not US permanent residents: 30% withheld on 85% of the benefit (25.5%) unless a treaty applies; the US-UK treaty eliminates this tax for UK residents (UK = England, Scotland, Wales, Northern Ireland).",
+    "nonresidentSource": "https://www.ssa.gov/pubs/EN-05-10137.pdf (April 2026 edition)"
+  },
+
+  "abroad": {
+    "usCitizen": "A US citizen may keep receiving payments while outside the US, if eligible and in a country where SSA can send payments.",
+    "restrictedCountries": ["Azerbaijan", "Belarus", "Kazakhstan", "Kyrgyzstan", "Tajikistan", "Turkmenistan", "Uzbekistan", "(Treasury-sanctioned: Cuba, North Korea)"],
+    "ukResidentPayable": true,
+    "ukCitizenNonUSCitizen": "UK is on SSA's list of countries whose citizens' payments continue while outside the US (Pub 05-10137 condition 3).",
+    "ukIsAgreementCountry": true,
+    "outsideUSDefinition": "Out of the 50 states, DC, PR, USVI, Guam, NMI, American Samoa for 30+ days in a row; non-citizens not meeting a condition are stopped after 6 full calendar months.",
+    "questionnaire": "UK residents are on the list receiving the foreign enforcement questionnaire every 2 years (unless an annual-questionnaire condition applies).",
+    "ukTaxOnUSBenefit": "US-UK treaty eliminates the 25.5% US nonresident-alien withholding for UK residents.",
+    "source": "https://www.ssa.gov/pubs/EN-05-10137.pdf",
+    "sourceEdition": "Publication No. 05-10137, Your Payments While You Are Outside the United States, April 2026",
+    "archiveCapture": "https://web.archive.org/web/20260910131254/https://www.ssa.gov/pubs/EN-05-10137.pdf",
+    "screeningTool": "https://www.ssa.gov/international/payments_outsideUS.html",
+    "wepRepeal": {
+      "law": "Social Security Fairness Act, signed January 5, 2025",
+      "effect": "Ends the Windfall Elimination Provision (WEP) and Government Pension Offset (GPO).",
+      "lastMonthApplied": "December 2023; neither applies to benefits payable for January 2024 and later.",
+      "foreignPensionRelevance": "SSA names 'people whose work had been covered by a foreign social security system' among those helped. Pub 05-10137 (April 2026) confines the foreign-pension WEP reduction to benefits payable before January 2024. So a UK State Pension or other foreign pension from non-US-covered work no longer reduces the US retirement benefit from January 2024 on.",
+      "rollout": "Adjustments began February 25, 2025; retroactive lump sums back to January 2024; over 3.1 million payments totaling $17 billion completed by July 7, 2025.",
+      "source": "https://www.ssa.gov/benefits/retirement/social-security-fairness-act.html",
+      "sourcePageUpdated": "2025-07-21",
+      "archiveCapture": "https://web.archive.org/web/20260927230943/https://www.ssa.gov/benefits/retirement/social-security-fairness-act.html"
+    }
+  },
+
+  "totalization": {
+    "agreement": "US-UK Social Security (Totalization) Agreement",
+    "entryIntoForce": "1985-01-01",
+    "entryIntoForceSource": "https://www.ssa.gov/international/agreements_overview.html",
+    "entryIntoForceCapture": "https://web.archive.org/web/20260926080438/https://www.ssa.gov/international/agreements_overview.html",
+    "usSideRule": "If the worker lacks enough US credits (40) for a regular benefit, US and UK coverage can be combined to qualify for a partial US benefit.",
+    "minimumUSCredits": 6,
+    "minimumUSCreditsText": "At least six US credits (generally one and one-half years of work) are required before UK credits can be counted.",
+    "ifAlreadyInsured": "If the worker already has enough US credits, the US cannot count UK credits.",
+    "ukSideRule": "UK credits are measured in weeks; US credits may help qualify for the UK basic (first-tier) pension, but not the additional pension, which needs as little as one year of UK coverage.",
+    "eachCountryPays": "Each country pays its own benefit; US payments are made monthly by Treasury for the preceding month.",
+    "partialBenefitFormula": null,
+    "partialBenefitFormulaNote": "The pamphlet says 'partial benefit' but does not give the pro-rata computation; not confirmed from the pages read.",
+    "coverageRules": "Self-employed residents of the US are covered by the US, those resident in the UK by the UK; certificates of coverage document exemptions.",
+    "source": "https://www.ssa.gov/international/Agreement_Pamphlets/uk.html",
+    "archiveCapture": "https://web.archive.org/web/20260612225852/https://www.ssa.gov/international/Agreement_Pamphlets/uk.html",
+    "pamphletCaveat": "The pamphlet's worked credit example still uses 2022 ($1,410 per credit) and says UK credits help qualify for the 'basic pension'; the UK replaced basic/additional with the new State Pension for people reaching pension age from 6 April 2016. SSA's pamphlet has not been updated for that."
+  },
+
+  "uncertain": [
+    "All ssa.gov pages were read via Internet Archive captures (2026-06-12 to 2026-09-28) because ssa.gov blocks automated fetches here; figures are SSA's, but the live page was not seen directly.",
+    "2027 figures (bend points, taxable maximum, QC, earnings test, COLA effective December 2026) and the 2025 AWI were not yet published on the pages read; they are expected with SSA's October 2026 announcement. All null.",
+    "The date SSA announced the 2026 figures is not stated on the pages read; not recorded.",
+    "The totalization partial-benefit (pro-rata) formula is not given in the SSA UK pamphlet; null.",
+    "Maximum delayed-credit increase for FRA 67 (24%) is arithmetic from SSA's 8%/year and 2/3%/month rates, not a figure quoted on the page.",
+    "Taxation thresholds are SSA's statement of IRS rules; the IRS (Publication 915) is the controlling source and was not read. Any 2025+ federal senior deduction was not researched.",
+    "The early-reduction pages (oact/quickcalc) are stamped last modified November 2008; their rates match the 2026 agereduction table (30% at 62 for FRA 67)."
+  ]
+}
