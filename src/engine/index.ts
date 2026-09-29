@@ -10,6 +10,7 @@
  * to hang off this file went with the screens that showed them.
  */
 
+import { registerUniversalCredit } from './systems/universalcredit';
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Personality, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
@@ -101,6 +102,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerHealth(sim);
   registerInjury(sim);
   registerUnemployment(sim);
+  registerUniversalCredit(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);

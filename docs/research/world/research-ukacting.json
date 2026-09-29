@@ -1,0 +1,325 @@
+{
+  "_meta": {
+    "compiledOn": "2026-09-29",
+    "currency": "GBP",
+    "method": "Primary rate cards (Pact/Equity, SOLT, UK Theatre, Equity digests hosted by the Casting Directors' Guild and focal.ch) read from the PDFs themselves. equity.org.uk blocks this crawler, so Equity's own pages were never read directly; the Equity figures here come from Equity documents mirrored by third parties, or from secondary press, and are flagged as such. Null means unconfirmed.",
+    "note": "Every figure is a MINIMUM, and minimums can be negotiated upward."
+  },
+
+  "tvRates": {
+    "pactEquityTV": {
+      "agreement": "Pact/Equity TV Agreement: independent productions for BBC, ITV, Channel 4, Channel 5, Sky and SVOD",
+      "source": "https://www.thecdg.co.uk/Secure/Rate%20Card%20for%20the%20Pact%20Equity%20TV%20Agreement%202024-2026.pdf",
+      "sourceMirror": "https://focal.ch/prodvalue/working_conditions/docs/UK/PACT-Equity-TV-Agreement-Rates-2024-2026.pdf",
+      "effectiveDate": "Column headed '2026' on the Pact/Equity 2024-2026 rate card. The card gives no exact start day. The '2024' column (£596 engagement fee) matches Equity's 'TV Agreements 2024' digest, so each column appears to start around April of its year. Treat the start as April 2026 (unconfirmed).",
+      "rates2026": {
+        "engagementFee_perWeekAndPerEpisode": 635.50,
+        "productionDay_eachDayBeyondFirstIn7": 70.00,
+        "enhancedProductionDay": 105.00,
+        "oneDayEngagement_T8_4a": 309.50,
+        "oneDayEngagement_T8_4b": 402.00,
+        "regionalEngagementFee": 158.50,
+        "multiEpisodicCatB": 178.00,
+        "rehearsalWeek": 528.00,
+        "rehearsalDay": 132.50,
+        "secondCallPostSync": 333.50,
+        "holidayPayPerDay": 17.50,
+        "overtimePer30Min": 25.50,
+        "nightWork": 35.00,
+        "svodEngagementFee_AppendixTL": 848.00,
+        "svodOneDayEngagementFee_AppendixTL": 474.50,
+        "stuntPerformerDaily": 529.50,
+        "stuntPerformerWeekly": 2116.50,
+        "peakRepeatPaymentMinimum": 133.50
+      },
+      "rates2025": { "engagementFee": 617.00, "productionDay": 68.00, "oneDayEngagement_T8_4b": 390.50, "svodEngagementFee": 823.50 },
+      "rates2024": { "engagementFee": 596.00, "productionDay": 66.00, "oneDayEngagement_T8_4b": 377.00, "svodEngagementFee": 795.50 },
+      "howItWorks": "The engagement fee is paid per episode and covers one day's work. Each further day worked within a 7-day period adds a production day payment (Equity TV Digest 2024). Normal working day: 10 hours including a 1-hour lunch."
+    },
+    "bbcInHouseTV": {
+      "agreement": "BBC/Equity Television Agreement: in-house BBC drama, comedy and children's, e.g. EastEnders, Casualty, Doctor Who, Silent Witness",
+      "source": "https://www.thecdg.co.uk/Secure/equity-tv-digest-agreement-2024.pdf",
+      "effectiveDate": "Equity 'TV Agreements 2024' digest (the 2024-25 rates)",
+      "rates2024": {
+        "engagementFee_generallyOneWeek": 640.00,
+        "additionalDay": 99.00,
+        "dailyRate": 417.00,
+        "holidayPay": 14.70,
+        "travelDay": 65.00,
+        "postSync": 217.00
+      },
+      "change2025": {
+        "effectiveDate": "2025-04-07",
+        "detail": "A new BBC/Equity TV agreement took effect on 7 April 2025: minimum episodic fees and associated payments (production days, overtime, supplementary attendances) rose 13%, and minimum weekly and all other fees rose 10%.",
+        "source": "https://www.employeebenefits.co.uk/pay-strategy/2025/03/26/bbc-tv-performers-accept-pay-increase/",
+        "sourceAlt": "https://deadline.com/2025/03/equity-bbc-agreement-pay-actors-royalties-1236347624/",
+        "published2025Or2026CashFigures": null
+      }
+    },
+    "itvSoaps": {
+      "agreement": "ITV/Equity: Coronation Street, Emmerdale, Hollyoaks",
+      "source": "https://www.thecdg.co.uk/Secure/equity-tv-digest-agreement-2024.pdf",
+      "effectiveDate": "Equity 'TV Agreements 2024' digest",
+      "rates2024": { "engagementFee": 479.24, "productionDay": 64.90, "oneDayEngagement": 675.54, "holidayPay": 16.50, "postSync": 310.43 },
+      "rates2026": null
+    }
+  },
+
+  "cinemaRates": {
+    "agreement": "Pact/Equity Cinema Films Agreement 2021",
+    "source": "https://focal.ch/prodvalue/working_conditions/docs/UK/Pact-Equity-Cinema-Digest-2025.pdf",
+    "effectiveDate": "6 April 2025 to 5 January 2026 (Pact digest)",
+    "structure": "A Basic Performance Salary is paid, plus pre-purchased Use Fees. The Use Fee share depends on the production budget: 280% at £3m and over (the 'major' band), 75% for a Low Budget Film (£1m-£3m, LBF), 50% for a Very Low Budget Film (under £1m, VLBF). The LBF and VLBF concessions require an enhanced net profit share of 5% instead of the standard 3% (Option A).",
+    "basicPerformanceSalary": { "daily": 166.00, "weekly5Days": 664.00 },
+    "performanceSalaryIncludingUseFees": {
+      "major_3mAndOver_plus280pct": { "daily": 630.80, "weekly": 2523.20 },
+      "lowBudget_1mTo3m_plus75pct": { "daily": 290.50, "weekly": 1162.00 },
+      "veryLowBudget_under1m_plus50pct": { "daily": 249.00, "weekly": 996.00 }
+    },
+    "other": {
+      "stuntPerformerDaily": 687.00, "stuntPerformerWeekly": 2748.00,
+      "voiceoverSession4h_plusUseFees": 122.00,
+      "adrSession4h_inclUseFees": 358.00, "adrSession_LBF_VLBF_plusUseFees": 116.00,
+      "holidayPayPerDay": 20.04,
+      "workingDay": "10 hours including 1 hour lunch",
+      "backEndOptionA": "3% of the film's net profits, shared among artists pro rata by points (5% on LBF/VLBF)"
+    },
+    "jan2026ToApr2026": {
+      "effectiveDate": "6 January 2026 to 5 April 2026",
+      "basicDaily": 166.00, "basicWeekly": 664.00,
+      "confidence": "medium: from search-result excerpts of the Pact 2026 digest, not read in full",
+      "source": "https://www.pact.co.uk/resource/pact-equity-cinema-films-agreement-digest-2026.html"
+    },
+    "fromApril2026": {
+      "effectiveDate": "Monday 6 April 2026 to 5 April 2027, or until a new agreement is ratified",
+      "basicDaily": null, "basicWeekly": null,
+      "why": "The Pact rate card 'Applies from 6th April 2026' is for Pact members only",
+      "source": "https://www.pact.co.uk/resource/pact-equity-cinema-films-agreement-rate-card-from-6th-april-2026.html"
+    }
+  },
+
+  "theatreRates": {
+    "soltWestEnd": {
+      "agreement": "SOLT/Equity (West End) 2023-2026, minimum weekly salary, 8-show week, performer/ASM",
+      "source": "https://solt.co.uk/wp-content/uploads/210225-SOLT-Equity-Performer-and-Stage-Manager-rates-2023-2026-plus-A-Ms.pdf",
+      "effectiveDate": "31 March 2025 to 5 April 2026 (year 3 = +3.5%)",
+      "weekly8Show": {
+        "categoryA_1100PlusSeats": 910.90,
+        "categoryB_800to1099Seats": 828.60,
+        "categoryC_upTo799Seats": 745.57
+      },
+      "weekly12Show": { "categoryA": 1066.53, "categoryB": 969.55, "categoryC": 872.60 },
+      "extras": {
+        "understudyLeadingRolePerPerformance": 54.34, "understudySupportingPerPerformance": 32.60,
+        "westEndRelocationPerWeek": 239.09, "sundayPerformancePayment": 82.86, "swing": 130.41, "danceCaptain": 146.71,
+        "pension": "Equity Pension Scheme: employer 5%, employee 3%"
+      },
+      "from2026": {
+        "agreement": "New three-year SOLT/Equity deal, April 2026 to April 2029, announced by SOLT on 13 July 2026, subject to an Equity member ballot",
+        "source": "https://solt.co.uk/solt-and-equity-reach-agreement-on-west-end-pay-and-conditions/",
+        "increaseReported": "+6% from April 2026, +5% from April 2027, CPI+0.5% from April 2028 (at least 13.5% over the period)",
+        "increaseSource": "https://www.artsprofessional.co.uk/news/equity-and-solt-reach-proposed-three-year-agreement-on-west-end-pay-and-conditions",
+        "increaseConfidence": "medium: from a search-engine summary of Arts Professional. SOLT's own article gives no percentages.",
+        "derivedCategoryA8Show_ifPlus6pct": 965.55,
+        "derivedNote": "910.90 x 1.06. This is arithmetic, not a published rate. Ratification status unconfirmed.",
+        "publishedWeeklyRates2026": null
+      }
+    },
+    "ukTheatreCommercial": {
+      "agreement": "UK Theatre/Equity Commercial Theatre Agreement: touring and regional commercial theatre, 8-show week",
+      "source": "https://solt.co.uk/wp-content/uploads/280225-UK-Theatre-Equity-Commercial-Theatre-rates-2023-2026.pdf",
+      "effectiveDate": "31 March 2025 to 5 April 2026",
+      "performerASM_performanceMinimaWeekly": {
+        "tierAStar_1500PlusSeats": 590.33,
+        "tierA_500to1499Seats": 569.14,
+        "tierB_250to499Seats": 561.93,
+        "tierC_0to249Seats": 561.66
+      },
+      "performerASM_rehearsalMinimaWeekly": { "tierAStar": 551.57, "tierA": 545.58, "tierB": 531.69, "tierC": 525.03 },
+      "note": "Tier C is pegged to the National Living Wage (£12.21 an hour from 1 April 2025). Allowances: touring £350/week, subsistence £227.50/week.",
+      "rates2026_27": null
+    },
+    "ukTheatreSubsidised": {
+      "agreement": "UK Theatre/Equity Subsidised Theatre Agreement: repertory and producing houses, graded by MRSL",
+      "source": "https://uktheatre.org/wp-content/uploads/sites/2/2025/03/200325-UK-Theatre-Equity-Subsidised-Theatre-rates-2024-2026.pdf",
+      "effectiveDate": "31 March 2025 to 5 April 2026 (year 3 = +4%)",
+      "performerMinimumWeekly_allGrades": 547.29,
+      "mrslGradeRates": { "grade1": 637.19, "grade2": 561.88, "grade3": 547.29 },
+      "performerWeeklyCeilingSalary": 1094.58,
+      "allowances": { "touringPerWeek": 300, "relocationPerWeek": 235, "commutingPerWeek": 183.58 },
+      "rates2026_27": null
+    }
+  },
+
+  "commercials": {
+    "equitySetsRates": false,
+    "framework": "IPA/Equity Agreed Document for Commercials (2011): recommended best practice, not legally enforceable. The artist is paid a Basic Studio Fee (BSF) plus use fees. On TV, use fees are calculated from TVRs (BARB ratings) x BSF. The PMA's usefee.tv sets out recommended minimums, and online use is recommended at 400% x BSF for one year on one website.",
+    "voiceOverBSF_perHour": 200,
+    "source": "https://www.thecdg.co.uk/Secure/equity-audio-rates-last-updated-13-july-2023.pdf",
+    "effectiveDate": "Equity audio rates summary, last updated 13 July 2023",
+    "onCameraTypicalBSF": null,
+    "radioCommercials_GlobalBauer": {
+      "note": "One fee per voice, per script, per station, banded by RAJAR reach (Feb 2023 rates)",
+      "bands": { "band1_0to250k": 30, "band2": 42, "band3": 54, "band4": 75, "band5": 105, "band6": 225, "band7": 335, "band8_5mPlus": 855 },
+      "source": "https://www.thecdg.co.uk/Secure/equity-audio-rates-last-updated-13-july-2023.pdf"
+    }
+  },
+
+  "audioRates": {
+    "bbcRadio": {
+      "agreement": "BBC Equity Audio Agreement (August 2022)",
+      "source": "https://www.thecdg.co.uk/Secure/equity-audio-rates-last-updated-13-july-2023.pdf",
+      "effectiveDate": "Equity summary, last updated 13 July 2023. No 2025 or 2026 figures were found.",
+      "minimumEngagementFees": {
+        "fullDay_2TX": 294, "fullDay_1TX": 201,
+        "additionalDay_2TX": 157, "additionalDay_1TX": 111,
+        "additionalPartDayRecall_2TX": 105, "additionalPartDayRecall_1TX": 71,
+        "readThroughPartDay": 101
+      },
+      "theArchersPerProgramme": { "min": 294, "max": 333 },
+      "hours": "Full day: 7 hours of work in a 9-hour period",
+      "knockOnScale": "The BBC moves an artist up a 'knock-on' scale above the minimum (the artist's '1A fee') according to experience and public recognition, on request",
+      "rates2026": null
+    },
+    "videoGamesOMUK": { "standard_over5m_perHour": 300, "indie_0_5to5m": 200, "micro_under0_5m": 175, "firstHourPaidDouble": true, "source": "https://www.thecdg.co.uk/Secure/equity-audio-rates-last-updated-13-july-2023.pdf", "effectiveDate": "OMUK/Equity agreement, October 2021" }
+  },
+
+  "fees": {
+    "spotlight": {
+      "performerAnnualGBP": 210.00,
+      "performerAnnualExVAT": 175.00,
+      "performerMonthlyDirectDebit": 19.20,
+      "graduateAnnual": 136.50,
+      "youngPerformerUnder18Annual": 136.50,
+      "source": "https://www.spotlight.com/memberships/performers/",
+      "graduateSource": "https://www.spotlight.com/join-us/graduates/",
+      "effectiveDate": "Current on 2026-09-29 (page undated)",
+      "graduateConfidence": "medium: graduate and young-performer figures come from a search summary"
+    },
+    "equity": {
+      "model": "Banded by average UK gross industry income over the last 3 tax years. This is NOT a flat 1% of earnings.",
+      "bands2026": [
+        { "earningsBand": "under £40,000", "annual": 198, "monthlyDD": 16.00 },
+        { "earningsBand": "£40,001-£80,000", "annual": 396, "monthlyDD": 32.50 },
+        { "earningsBand": "£80,001-£120,000", "annual": 792, "monthlyDD": 65.50 },
+        { "earningsBand": "£120,001-£240,000", "annual": 1584, "monthlyDD": 131.50 },
+        { "earningsBand": "over £240,000", "annual": 3840, "monthlyDD": 319.50 }
+      ],
+      "joiningFee": 49.50,
+      "joiningFeeByDirectDebit": 32.00,
+      "directDebitDiscountPerYear": 6,
+      "subsidisedMembers": "50% off the lowest band for members earning under £40k who are aged 10-17, aged 66+, or graduated from an eligible course within the last 2 years",
+      "minimumAnnual": 198, "maximumAnnual": 3840,
+      "sources": ["https://www.mandy.com/uk/magazine/article/how-to-become-an-equity-member-79302/", "https://www.thestage.co.uk/news/equity-to-hike-monthly-membership-fees-by-22-percent-for-lowest-earners-performing-arts-entertainment-trade-union"],
+      "effectiveDate": "2026 (restructured in 2025)",
+      "confidence": "medium: secondary sources, seen only as search excerpts. equity.org.uk could not be read. One search excerpt gave a conflicting lower set (£168 for under £40k, £336, £672, £2,016, £3,360) that looks like an earlier year.",
+      "membership": { "count": 48606, "year": 2024, "source": "https://en.wikipedia.org/wiki/Equity_(British_trade_union)" }
+    },
+    "commission": {
+      "setByTradeBody": false,
+      "pmaPosition": "The PMA Approved Code of Practice (effective 1 January 2026) sets no commission rate. It requires rates to be stated in writing and agreed at the start of representation (clause 4.3). It also sets how commission is split when a client changes agent: a sunset sliding scale of 100/75/50/25%, then 10% in perpetuity to the former agent.",
+      "pmaSource": "https://thepma.com/wp-content/uploads/2026/01/acop-representing-artists-2026.pdf",
+      "typicalRange": "10-15% for most acting work. Theatre and lower-paid screen work is usually 10-12.5%; commercials and voiceover are usually around 15%. VAT at 20% is added to commission if the agency is VAT-registered.",
+      "typicalRangeSource": "https://agent.co.uk/guides/how-acting-agents-make-money/",
+      "typicalRangeConfidence": "low-medium: a secondary guide, not a trade body. The brief's '15-20% screen' figure could not be confirmed for UK agencies.",
+      "legalFramework": "Conduct of Employment Agencies and Employment Businesses Regulations 2003. Client money must be remitted within 10 days of bank clearance (PMA ACOP 4.8).",
+      "agentUsage": "86.1% of surveyed audiovisual performers had an agent in the last 5 years (CREATe/BECS 2024)"
+    }
+  },
+
+  "agencies": {
+    "note": "Names only. Each entry was checked against the agency's own website on 2026-09-29, except where marked. Tiers are indicative, from press rankings.",
+    "majorFullService": [
+      { "name": "United Agents", "url": "https://www.unitedagents.co.uk" },
+      { "name": "Curtis Brown", "url": "https://www.curtisbrown.co.uk" },
+      { "name": "Independent Talent Group", "url": "https://www.independenttalent.com" },
+      { "name": "Casarotto Ramsay & Associates", "url": null, "note": "Named in press rankings. Mainly represents writers and directors." },
+      { "name": "CAA (London office)", "url": "https://www.caa.com" },
+      { "name": "WME (London office)", "url": "https://www.wmeagency.com" },
+      { "name": "UTA (London office)", "url": "https://www.unitedtalent.com" }
+    ],
+    "establishedActorAgencies": [
+      { "name": "Hamilton Hodell", "url": "https://www.hamiltonhodell.co.uk" },
+      { "name": "Conway van Gelder Grant", "url": "https://www.conwayvangeldergrant.com" },
+      { "name": "Troika", "url": null, "note": "troikatalent.com now serves unrelated content, so the agency's current site is unverified" },
+      { "name": "Tavistock Wood (part of the Curtis Brown Group)", "url": "https://www.tavistockwood.com" },
+      { "name": "42", "url": "https://www.42mp.com" },
+      { "name": "The Artists Partnership", "url": null, "note": "Site behind a Cloudflare check. Named in the krugercowne.com list." }
+    ],
+    "boutiqueActorAgencies": [
+      { "name": "Gordon & French", "url": "https://www.gordonandfrench.co.uk" },
+      { "name": "Lou Coulson Associates", "url": "https://www.loucoulson.co.uk" },
+      { "name": "Scott Marshall Partners", "url": "https://www.scottmarshall.co.uk" }
+    ],
+    "rankingSources": ["https://vitrina.ai/blog/discover-the-best-entertainment-talent-management-agencies-in-united-kingdom/", "https://krugercowne.com/articles/top-talent-management-agencies-in-uk/", "https://www.backstage.com/uk/magazine/article/top-acting-agencies-in-the-uk-77440/"],
+    "pmaScale": "The PMA reaches more than 1,000 individual agents representing about 50,000 artists, writers, directors and creatives (https://thepma.com/)"
+  },
+
+  "production": {
+    "year": 2025,
+    "source": "https://www.bfi.org.uk/news/official-bfi-statistics-2025",
+    "published": "2026-02-05",
+    "filmAndHETVTotalSpend_GBPbn": 6.8,
+    "changeVs2024": "+22%",
+    "film": { "spend_GBPbn": 2.77, "change": "+31%, the highest on record", "inwardInvestment_GBPbn": 2.51, "domesticUK_GBPm": 193, "coProductions_GBPm": 68, "productions": 193 },
+    "hetv": { "spend_GBPbn": 4.03, "change": "+17%", "inwardInvestment_GBPbn": 3.26, "domestic_GBPm": 688, "coProductions_GBPm": 84, "shows": 168 },
+    "inwardInvestmentShare": "85% (£5.8bn)",
+    "boxOffice2025": { "gross_GBPm": 996.8, "admissions_m": 123.5 },
+    "londonAndSouthEastShare": {
+      "spendShare2025": null,
+      "hetvOutsideLondonSE_2017to2019": "about 33% of HETV spend took place in the nations and English regions outside London, which implies roughly two-thirds in London and the South East. From a search excerpt of British Film Commission evidence to Parliament; not read directly.",
+      "hetvSource": "https://committees.parliament.uk/writtenevidence/125657/pdf",
+      "performersLivingInLondon": "nearly 50% of UK audiovisual performers surveyed live in London (CREATe/BECS 2024)",
+      "performersSource": "https://www.becs.org.uk/wp-content/uploads/2024/10/Behind-the-Scenes_-The-Realities-Facing-UK-Audiovisual-Performers.pdf"
+    },
+    "mainCentres": null,
+    "mainCentresNote": "No primary source was found that ranks the production centres. The industry is concentrated in London and the South East (studio clusters around London); the specific studios were not verified here."
+  },
+
+  "earnings": {
+    "survey": "UK Audiovisual Performers: A survey of earnings and contracts. CREATe, University of Glasgow (Ehlinger, Thomas, Kretschmer, Battisti), commissioned by BECS. Online survey of BECS members, February-March 2024, 2,469 respondents.",
+    "published": "2024-10-03",
+    "sources": ["https://www.becs.org.uk/wp-content/uploads/2024/10/Behind-the-Scenes_-The-Realities-Facing-UK-Audiovisual-Performers.pdf", "https://www.becs.org.uk/report-on-actors-earnings-survey-2024/", "https://www.gla.ac.uk/news/archiveofnews/2024/october/headline_1115071_en.html"],
+    "medianPerformingEarnings_primaryOccupation": 17500,
+    "shareEarningUnder17500": "50% (by definition of the median)",
+    "medianIndividualEarnings_allSources": 22500,
+    "medianHouseholdEarnings": 45000,
+    "medianPerformingEarnings_disabled": 7500,
+    "ukMedianComparator": 34963,
+    "minimumWageFullTimeComparator": 23795,
+    "otherFindings": {
+      "believeInitialFeesDecreasing": "69.3%",
+      "believeResidualsDecreasing": "84%",
+      "perceiveBuyoutsIncreasing": "96%",
+      "notConfidentReceivingAllFeesOwed": "64%",
+      "haveDiplomaOrAbove": "73%",
+      "reliedOnAgentForLegalAdvice": "81.1%",
+      "incomeFromDigitalPlatforms": "12%",
+      "streamingResidualsReceived": "25%"
+    },
+    "secondJobs": "Performers commonly supplement their income with a second, flexible job or with family support (qualitative finding; no share was published in the highlights report)",
+    "averageWeeksWorkedPerYear": null,
+    "shareEquityMembersUnderThreshold": null,
+    "weeksWorkedNote": "No primary UK source for weeks worked was found. The often-quoted '90% out of work' and '17% work more than 20 weeks' figures were attributed to US data in search results and are excluded."
+  },
+
+  "auditions": {
+    "auditionsPerYear": null,
+    "note": "No primary UK survey reporting auditions or castings per working actor per year was found. CREATe/BECS 2024 records only that self-taping has become the norm since COVID-19, adds unpaid labour and raises competition. Equity's 2020 self-tape survey (the most-answered questionnaire in the union's history) reported tapes demanded in under 5 hours and up to nearly 50 pages at a few days' notice, but gave no annual count.",
+    "anecdotal": "A press quote that self-tapes took one actor from about 50 auditions a year to 100 is unsourced anecdote and must not be modelled as data.",
+    "sources": ["https://www.becs.org.uk/wp-content/uploads/2024/10/Behind-the-Scenes_-The-Realities-Facing-UK-Audiovisual-Performers.pdf", "https://www.thestage.co.uk/news/actors-given-less-than-five-hours-to-prepare-self-taped-auditions--survey"]
+  },
+
+  "uncertain": [
+    "Pact/Equity Cinema rates from 6 April 2026 are for Pact members only and are unknown. Last confirmed: £166/day and £664/week basic, effective 6 Apr 2025 to 5 Jan 2026 (and reportedly the same to 5 Apr 2026).",
+    "The Pact/Equity TV '2026' column (£635.50 engagement fee) has no printed start day. April 2026 is inferred.",
+    "No cash figures for BBC in-house TV after April 2025 were found. Only the percentages are known: +13% episodic, +10% weekly and other fees, from 7 Apr 2025.",
+    "The SOLT West End 2026-2029 rates are reported as +6% from April 2026 (Category A about £965.55, which is derived, not published). Ratification is unconfirmed.",
+    "No 2026-27 rates were found for the UK Theatre Commercial and Subsidised agreements. The 2023-2026 deals expired on 5 April 2026, and the successor rates are unconfirmed.",
+    "The latest BBC radio rates found are from a July 2023 summary (£294 full day, 2TX). No 2025 or 2026 update was found.",
+    "The Equity subscription bands come from secondary sources (£198 to £3,840 a year, £49.50 joining fee). A second secondary source gives lower figures. equity.org.uk was not readable.",
+    "Agent commission of 10-15% is from a secondary guide. The PMA sets no rate. 15-20% for screen work is unconfirmed.",
+    "No primary 2025 figure was found for the London and South East share of production spend.",
+    "No primary source was found for average weeks worked per year or auditions per year for UK actors."
+  ]
+}

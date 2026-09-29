@@ -34,6 +34,7 @@ import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from '.
 import { workedBetween, working } from './career';
 import { payeeAccount } from './cash';
 import { rateOn } from '../content/career';
+import { claimCredit, livesInBritain } from './universalcredit';
 
 export const BENEFIT_WEEK_KIND = 'benefits.week';
 
@@ -161,8 +162,10 @@ function close(sim: Simulation, person: Person, why: string): void {
 }
 
 export function registerUnemployment(sim: Simulation): void {
-  sim.onCommand<Record<string, never>, { weekly: Money; maxTotal: Money }>('benefits.claim', (_p, { sim: s }) => {
+  sim.onCommand<Record<string, never>, { weekly: Money; maxTotal: Money; firstPaymentAt?: Instant }>('benefits.claim', (_p, { sim: s }) => {
     const person = s.player;
+    // Living in Britain, the claim is Universal Credit's (`systems/universalcredit.ts`).
+    if (livesInBritain(person)) { const uc = claimCredit(s, person); return { weekly: 0, maxTotal: 0, firstPaymentAt: uc.firstPaymentAt }; }
     const state = claimStateFor(person, s.now) ?? BENEFIT_STATE[homeOf(person)];
     if (!state) throw new CommandError('SLATE pays unemployment in New York, California and Connecticut, where you’d have to have worked or live.');
     const record = unemploymentOf(person);

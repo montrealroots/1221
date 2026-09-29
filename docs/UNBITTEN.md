@@ -611,7 +611,7 @@ part the tool cannot see.
   job's span, SLATE's reading of twenty hours a week for work that comes in
   engagements); and which of the O-1's six kinds of evidence the career can
   show (a lead, a known name, a critical role, the experts' letters read
-  from reputation past 20, high pay; a record of commercial success isn't
+  from three productions' directors, high pay; a record of commercial success isn't
   kept per actor). An
   approved O-1 or OPT stands in for the consulate's visa stamp (DS-160,
   $205) its holder would travel on. Someone whose permission has ended isn't

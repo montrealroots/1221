@@ -235,6 +235,8 @@ export interface Person {
   health?: HealthRecord;
   /** Unemployment insurance claims (`systems/unemployment.ts`). */
   unemployment?: UnemploymentRecord;
+  /** A Universal Credit claim, living in Britain (`systems/universalcredit.ts`). From 2026-09-29. */
+  universalCredit?: import('../systems/universalcredit').CreditClaim;
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
   returns?: Record<string, TaxReturn>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */

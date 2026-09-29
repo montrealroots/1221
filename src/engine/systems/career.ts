@@ -88,9 +88,10 @@ import { BODY } from '../content/body';
 const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, reportBooking, signTheClass, type NewsItem } from './rivals';
-import { move, payFromCurrent, type Housing, spend } from './household';
+import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
 import { emptyHomeIn, moveIntoOwned } from './homes';
-import { crossingRefusal } from './documents';
+import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
+import { planJourney } from './journey';
 import { permitAtTheBorder, workRefusal } from './permission';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
@@ -593,6 +594,19 @@ function offerManagement(sim: Simulation, person: Person, managers: string[], wh
     route: '/workspace/career', dueAt: until, refType: 'management', refId: `${sim.now}`,
     actions: fresh.map((managerId) => ({ label: `Sign With ${managerById(managerId)!.name}`, commandKind: 'career.sign_manager', payload: { managerId } })),
   });
+}
+
+/**
+ * The town a person can move home to abroad: where they were born, in the
+ * country they're a citizen of, if it isn't one of the business's own. From
+ * 2026-09-29: until then a British graduate out of permission to work in the
+ * United States had nowhere to go.
+ */
+export function homeTownOf(person: Person): string | undefined {
+  const born = person.homeRegionId;
+  if (!born || !CITIES.get(born)) return undefined;
+  if ((CAREER_CITIES as readonly string[]).includes(born) || born === YALE_DRAMA.cityId) return undefined;
+  return isoOfCity(born) === isoOfCountry(person.citizenshipId) ? born : undefined;
 }
 
 /** Both showcases on the calendar, for a student in their last term. */
@@ -2094,7 +2108,8 @@ export function registerCareer(sim: Simulation): void {
 
   sim.onCommand<{ cityId: string; kind: Housing }, { cityId: string }>('career.relocate', (p, { sim: s }) => {
     const person = s.player;
-    if (![...CAREER_CITIES, YALE_DRAMA.cityId].includes(p.cityId as CareerCity)) throw new CommandError('New York, Los Angeles or New Haven.');
+    const home = homeTownOf(person);
+    if (![...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].includes(p.cityId as CareerCity)) throw new CommandError(`New York, Los Angeles or New Haven${home ? `, or home to ${CITIES.require(home).name}` : ''}.`);
     if (person.currentLocationId === p.cityId && person.home?.cityId === p.cityId && person.home.kind === p.kind) throw new CommandError('You live there already.');
     // Until 2026-09-27 a student could move to Los Angeles mid-term, and miss every class after.
     const school = person.school;
@@ -2102,6 +2117,16 @@ export function registerCareer(sim: Simulation): void {
     // Away on a job, the move waits for home; a home being bought to live in is where they're moving already.
     if (person.home && person.currentLocationId !== person.home.cityId && working(s, person)) throw new CommandError('You’re away on a job: move when you’re home.');
     if (person.buying?.live && person.buying.cityId !== p.cityId) throw new CommandError(`You’re buying a home to live in, in ${CITIES.get(person.buying.cityId)?.name ?? 'another town'}: call it off first.`);
+    // Across a border it's a move abroad: the papers to go and the right to live there, and the flight, one way.
+    const from = person.home?.cityId ?? person.currentLocationId;
+    if (isoOfCity(from) !== isoOfCity(p.cityId)) {
+      const no = crossingRefusal(person, person.currentLocationId, p.cityId, s.now + MS_DAY, 30) ?? residenceRefusal(person, p.cityId, s.now);
+      if (no) throw new CommandError(no);
+      const legs = planJourney(s, person.currentLocationId, p.cityId, s.now + MS_DAY, 1, 2);
+      if (typeof legs === 'string') throw new CommandError(legs);
+      const fare = legs.reduce((a, l) => a + l.fare, 0);
+      if (!payFromBank(s, person, fare, `The flight to ${CITIES.require(p.cityId).name}, one way, with two bags`, 'travel')) throw new CommandError(`The flight, ${formatMoney(fare, saveCurrency(s.universe))}, is more than the bank can cover.`);
+    }
     // A home of their own there, empty, is where they go.
     const own = emptyHomeIn(person, p.cityId);
     if (own) { moveIntoOwned(s, person, own); s.universe.currentZone = zoneOf(p.cityId); return { cityId: p.cityId }; }

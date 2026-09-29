@@ -617,3 +617,29 @@ export const DENTAL_PLANS = {
   yale: { premium: 312_72, deductible: 50_00, preventive: 1, basic: 0.8, max: 1_000_00, label: 'Yale Delta Dental Basic', yearly: true },
   source: 'https://www.coveredca.com (2026 dental standard benefit designs); https://info.nystateofhealth.ny.gov; https://yalehealth.yale.edu (student dental, 2026–27)',
 } as const;
+
+/**
+ * Universal Credit, 2026/27 (gov.uk and the DWP, researched 2026-09-29): the
+ * standard allowance a month for a single claimant, from the April uprating
+ * (£400.14 at 25 and over in 2025/26); the 55% taper, with no work allowance
+ * for a single claimant without children or a limited capability for work;
+ * capital ignored to £6,000, £4.35 a month for each £250 over it, and none
+ * over £16,000; the first payment seven days after the first month's
+ * assessment period; six nil awards close a claim. The London Local Housing
+ * Allowance is the median of its fourteen Broad Rental Market Areas' monthly
+ * rates, frozen from April 2024 into 2026/27: SLATE's London is one town, and
+ * the median is its reading of which area it is.
+ */
+export const UNIVERSAL_CREDIT = {
+  standard: [['2025-04-07', 400_14], ['2026-04-06', 424_90]] as RateSteps,
+  standardUnder25: [['2026-04-06', 338_58]] as RateSteps,
+  taper: 0.55,
+  capitalLower: 6_000,
+  capitalUpper: 16_000,
+  tariffPer250: 4.35,
+  payDaysAfter: 7,
+  nilsToClose: 6,
+  pensionAge: 66,
+  lhaLondon: { sharedRoom: 610.67, oneBed: 1_200 },
+  source: 'https://www.gov.uk/universal-credit; https://www.gov.uk/government/publications/universal-credit-local-housing-allowance-rates-2026-to-2027; ADM C1957–C1960',
+} as const;

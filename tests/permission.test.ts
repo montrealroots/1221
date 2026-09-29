@@ -163,14 +163,13 @@ describe('an O-1', () => {
     expect(next[0]!.expiresAt).toBe(addYears(was, 1));
   }, 120_000);
 
-  it('reads the experts’ letters from reputation, and a regional theater as a distinguished organization', () => {
+  it('reads the experts’ letters from three productions whose directors know the work, and a regional theater as a distinguished organization', () => {
     const sim = graduate('o1-stage', -200);
-    careerOf(sim.player).credits.push({ roleId: 'lort-b', year: 2027, cityId: 'us-ny-newyork' });
-    attributesOf(sim, sim.player).reputation = 25;
-    const met = o1Evidence(sim, sim.player).filter((e) => e.met).map((e) => e.key);
-    expect(met).toEqual(['critical', 'experts']);
-    attributesOf(sim, sim.player).reputation = 15;
+    const credits = careerOf(sim.player).credits;
+    credits.push({ roleId: 'lort-b', year: 2027, cityId: 'us-ny-newyork' }, { roleId: 'costar', year: 2027, cityId: 'us-ny-newyork' }, { roleId: 'commercial', year: 2027, cityId: 'us-ny-newyork' });
     expect(o1Evidence(sim, sim.player).filter((e) => e.met).map((e) => e.key)).toEqual(['critical']);
+    credits.push({ roleId: 'offb-nonprofit', year: 2027, cityId: 'us-ny-newyork' }, { roleId: 'film-ulb', year: 2027, cityId: 'us-ny-newyork' });
+    expect(o1Evidence(sim, sim.player).filter((e) => e.met).map((e) => e.key)).toEqual(['critical', 'experts']);
   });
 
   it('is denied on less, and the fees are gone', () => {

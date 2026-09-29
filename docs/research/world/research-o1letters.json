@@ -1,0 +1,311 @@
+{
+  "_meta": {
+    "researched": "2026-09-29",
+    "note": "Every claim carries the source URL and the date of the source (or the date it was retrieved when the source shows none). 'retrieved' means the date this research read it. Quotes are verbatim from the fetched text.",
+    "twoTracksForActors": "An actor on film/TV is petitioned as O-1B 'extraordinary achievement in the motion picture or television industry' (8 CFR 214.2(o)(3)(v)); a stage actor is O-1B 'extraordinary ability in the arts' (8 CFR 214.2(o)(3)(iv)). The six criteria are worded almost identically; the significant-recognition criterion is (iv)(B)(5) for arts and (v)(B)(5) for MPTV. Standard differs: arts = 'distinction' ('prominent ... renowned, leading, or well-known'); MPTV = 'extraordinary achievement' ('outstanding, notable, or leading'). Arts petitions may use comparable evidence; MPTV petitions may not."
+  },
+
+  "lettersCriterion": [
+    {
+      "claim": "Regulatory text of the MPTV significant-recognition criterion, which is the criterion testimonial letters are primarily filed under.",
+      "quote": "(5) Evidence that the alien has received significant recognition for achievements from organizations, critics, government agencies, or other recognized experts in the field in which the alien is engaged. Such testimonials must be in a form which clearly indicates the author's authority, expertise, and knowledge of the alien's achievements;",
+      "cite": "8 CFR 214.2(o)(3)(v)(B)(5) (identical wording at (o)(3)(iv)(B)(5) for arts)",
+      "source": "https://www.govinfo.gov/content/pkg/CFR-2024-title8-vol1/xml/CFR-2024-title8-vol1-sec214-2.xml",
+      "date": "CFR revised as of 2024-01-01; retrieved 2026-09-29"
+    },
+    {
+      "claim": "MPTV threshold: a nomination/award such as an Academy Award, Emmy, Grammy or DGA Award, OR at least three of six criteria.",
+      "quote": "(A) Evidence that the alien has been nominated for, or has been the recipient of, significant national or international awards or prizes in the particular field such as an Academy Award, an Emmy, a Grammy, or a Director's Guild Award; or (B) At least three of the following forms of documentation:",
+      "cite": "8 CFR 214.2(o)(3)(v)(A)-(B)",
+      "source": "https://www.govinfo.gov/content/pkg/CFR-2024-title8-vol1/xml/CFR-2024-title8-vol1-sec214-2.xml",
+      "date": "CFR revised as of 2024-01-01; retrieved 2026-09-29"
+    },
+    {
+      "claim": "Testimonials are also named as permissible evidence in criterion 3 (lead, starring, or critical role for organizations/establishments with a distinguished reputation).",
+      "quote": "(3) Evidence that the alien has performed, and will perform, in a lead, starring, or critical role for organizations and establishments that have a distinguished reputation evidenced by articles in newspapers, trade journals, publications, or testimonials;",
+      "cite": "8 CFR 214.2(o)(3)(v)(B)(3)",
+      "source": "https://www.govinfo.gov/content/pkg/CFR-2024-title8-vol1/xml/CFR-2024-title8-vol1-sec214-2.xml",
+      "date": "CFR revised as of 2024-01-01; retrieved 2026-09-29"
+    },
+    {
+      "claim": "Policy Manual on criterion 3: detailed letters from people with personal knowledge help establish a critical role.",
+      "quote": "Detailed letters from persons with personal knowledge of the significance of the beneficiary's role can be particularly helpful in analyzing this criterion. The organization need not have directly employed the beneficiary.",
+      "cite": "USCIS Policy Manual Vol. 2, Part M, Ch. 4, Sec. D.2, Criterion 3",
+      "source": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+      "date": "Policy Manual 'Current as of September 23, 2026'; O-1B guidance issued 2023-03-03"
+    },
+    {
+      "claim": "Letters do NOT count toward criterion 1 (lead/starring in distinguished productions); that criterion's evidence list is exhaustive and excludes unpublished letters.",
+      "quote": "To meet this criterion, the petitioner must submit evidence in the form of critical reviews, advertisements, publicity releases, publications, contracts, or endorsements. ... This exhaustive list does not include unpublished testimonial or recommendation letters.",
+      "cite": "USCIS Policy Manual Vol. 2, Part M, Ch. 4, Sec. D.2, Criterion 1",
+      "source": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+      "date": "Current as of 2026-09-23"
+    },
+    {
+      "claim": "Separately from the testimonials, a film/TV O-1 petition requires written advisory opinions (consultations) from BOTH a union representing the beneficiary's peers (for actors, SAG-AFTRA) and a management organization; a favorable opinion should describe the beneficiary's achievements.",
+      "quote": "In the case of an alien of extraordinary achievement who will be working on a motion picture or television production, consultation shall be made with the appropriate union representing the alien's occupational peers and a management organization in the area of the alien's ability. ... If the advisory opinion is favorable to the petitioner, the written advisory opinion from the labor and management organizations should describe the alien's achievements in the motion picture or television field and state whether the position requires the services of an alien of extraordinary achievement. If a consulting organization has no objection to the approval of the petition, the organization may submit a letter of no objection in lieu of the above.",
+      "cite": "8 CFR 214.2(o)(5)(iii)",
+      "source": "https://www.govinfo.gov/content/pkg/CFR-2024-title8-vol1/xml/CFR-2024-title8-vol1-sec214-2.xml",
+      "date": "CFR revised as of 2024-01-01; retrieved 2026-09-29"
+    },
+    {
+      "claim": "MPTV petitions may not substitute comparable evidence for the listed criteria (arts petitions may).",
+      "quote": "Petitioners for beneficiaries working in motion picture or television productions must submit evidence that applies evidentiary criteria described above; they may not rely on comparable evidence.",
+      "cite": "USCIS Policy Manual Vol. 2, Part M, Ch. 4, Sec. E.2 (fn. 75)",
+      "source": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+      "date": "Current as of 2026-09-23"
+    },
+    {
+      "claim": "USCIS added an appendix chart of O-1B evidence examples to the Policy Manual on 2023-03-03. (The standalone Part M appendix page now reads 'No appendices available at this time'; the examples/considerations appear inline in Chapter 4.)",
+      "source": "https://www.uscis.gov/newsroom/alerts/uscis-issues-clarifying-guidance-on-eligibility-for-the-o-1b-visa-classification",
+      "date": "2023-03-03",
+      "secondarySource": "https://www.uscis.gov/policy-manual/volume-2-part-m (retrieved 2026-09-29)"
+    }
+  ],
+
+  "letters": {
+    "sufficiencyAndDetail": [
+      {
+        "claim": "Regulation: expert/employer affidavits must state recognition and achievement in factual terms, the affiant's expertise, and how the affiant knows.",
+        "quote": "Affidavits written by present or former employers or recognized experts certifying to the recognition and extraordinary ability, or in the case of a motion picture or television production, the extraordinary achievement of the alien, shall specifically describe the alien's recognition and ability or achievement in factual terms and set forth the expertise of the affiant and the manner in which the affiant acquired such information.",
+        "cite": "8 CFR 214.2(o)(2)(iii)(B)",
+        "source": "https://www.govinfo.gov/content/pkg/CFR-2024-title8-vol1/xml/CFR-2024-title8-vol1-sec214-2.xml",
+        "date": "CFR revised as of 2024-01-01; retrieved 2026-09-29"
+      },
+      {
+        "claim": "Policy Manual: 'significant' modifies recognition, so what counts is WHO recognizes the achievement; the letter must establish the author's (or organization's) standing and detail the achievements.",
+        "quote": "The word significant in this criterion modifies recognition rather than achievements. Accordingly, although the beneficiary must have one or more achievements, the significance of the recognition is based on who is recognizing the achievements. A testimonial written on behalf of an organization or government agency should explain the basis for the author's knowledge including the author's connection to the organization or agency, and the significance of the organization or agency within the relevant field. Likewise, a testimonial from a critic or a recognized expert should explain the basis of the author's knowledge and describe the author's credentials including the author's expertise in the relevant field. The author should also describe and explain the significance of the achievements the author is recognizing.",
+        "cite": "USCIS Policy Manual Vol. 2, Part M, Ch. 4, Sec. D.2, Criterion 5 (fns. 63-64)",
+        "source": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+        "date": "Current as of 2026-09-23"
+      },
+      {
+        "claim": "Policy Manual: a letter CAN by itself be the significant recognition for criterion 5, provided the recognizer's significance is established — i.e., letters alone can satisfy criterion 5, but only from an author/organization shown to be significant, and with specific detail.",
+        "quote": "In all cases, a submitted testimonial should detail any achievements that are being recognized by the organization, agency, or individual. However, the testimonial need not describe other types of recognition that the beneficiary has received for a noted achievement. Instead, the testimonial itself may qualify as significant recognition under this criterion when the significance of the recognizing organization, agency, or individual is established.",
+        "cite": "USCIS Policy Manual Vol. 2, Part M, Ch. 4, Sec. D.2, Criterion 5",
+        "source": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+        "date": "Current as of 2026-09-23"
+      },
+      {
+        "claim": "Meeting three criteria is not the end: USCIS then weighs the totality of the record (two-step review).",
+        "quote": "When the evidentiary requirements mentioned above are satisfied, an officer proceeds to evaluate the totality of all the evidence in the record in order to determine whether the beneficiary has extraordinary achievement in the motion picture and television industry as described in the O statute and regulations.",
+        "cite": "USCIS Policy Manual Vol. 2, Part M, Ch. 4, Sec. E.3",
+        "source": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+        "date": "Current as of 2026-09-23"
+      },
+      {
+        "claim": "AAO non-precedent decision (performer; letters from faculty at the beneficiary's former schools and colleagues): criterion 5 not met because letters praised talent without factual detail of recognized achievements; 'recognition as having the necessary talent to work in the field' is not the recognition the rule contemplates; an unsigned letter not on letterhead had 'no evidentiary value'.",
+        "quote": "While the letters praise the beneficiary's talents, their testimony fails to describe with any specificity the beneficiary's recognition and achievements in factual terms. USCIS need not accept primarily conclusory assertions. 1756, Inc. v. United States Att'y Gen., 745 F. Supp. 9 (D.C. Dist. 1990).",
+        "additionalQuote": "Recognition as having the necessary talent to work in the field, even a competitive field, is not the type of achievement contemplated by the regulation",
+        "directorFindingQuoted": "letters ... from faculty at the beneficiary's former schools or from those familiar with the beneficiary's work as a student ... [t]he testimonials did not demonstrate the beneficiary had received significant recognition.",
+        "outcome": "Appeal dismissed (O-1, arts track)",
+        "source": "https://www.uscis.gov/sites/default/files/err/D8-Aliens-of-Extraordinary-Ability-or-Achievement_O-1_O-2_and_O-3/Decisions_Issued_in_2015/JAN062015_01D8101.pdf",
+        "date": "2015-01-06"
+      },
+      {
+        "claim": "AAO non-precedent decision (fine artist, BFA 2015 / MFA 2019, petitioner was her graduate professor and mentor; most letters from her professors): Director found letters from colleagues and recognized experts could not stand in as comparable evidence for criteria 1-3; AAO found criteria 1 and 2 unmet (letters did not show lead role in a distinguished event, and the rule requires reviews/ads/publications), reserved criterion 5. Illustrates a recent-graduate petition built largely on faculty letters failing. Footnote 1 notes the record also would not meet the MPTV criteria, 'which mirror the criteria for extraordinary ability in the arts'.",
+        "outcome": "Appeal dismissed",
+        "source": "https://www.uscis.gov/sites/default/files/err/D8-Aliens-of-Extraordinary-Ability-or-Achievement_O-1_O-2_and_O-3/Decisions_Issued_in_2022/JAN142022_01D8101.pdf",
+        "date": "2022-01-14"
+      },
+      {
+        "claim": "AAO restates that quality, not quantity, of evidence decides (Matter of Chawathe).",
+        "quote": "truth is to be determined not by the quantity of evidence alone but by its quality.",
+        "cite": "Matter of Chawathe, 25 I&N Dec. 369, 376 (AAO 2010), quoted in the 2022 decision",
+        "source": "https://www.uscis.gov/sites/default/files/err/D8-Aliens-of-Extraordinary-Ability-or-Achievement_O-1_O-2_and_O-3/Decisions_Issued_in_2022/JAN142022_01D8101.pdf",
+        "date": "2022-01-14"
+      }
+    ],
+    "howManyStatedRanges": [
+      {
+        "range": "3-5",
+        "quote": "Ideally, you'll include three to five letters of recommendation in your O-1 visa petition.",
+        "who": "Manifest Law (law firm); general O-1, not actor-specific",
+        "source": "https://manifestlaw.com/blog/o-1-visa-recommendation-letter-samples",
+        "date": "updated 2026-05-16"
+      },
+      {
+        "range": "3-6",
+        "quote": "There is no fixed number, but quality consistently outperforms quantity. Three to six detailed, specific letters from recognized experts in your field — directors, producers, conductors, choreographers, or senior industry figures — typically carry more persuasive weight than a larger volume of superficial endorsements.",
+        "who": "Stelmakh & Associates LLC (law firm, Seattle); performing arts",
+        "source": "https://stelmakhlaw.com/blog/building-a-strong-case-for-an-o1-visa/",
+        "date": "2025-01-08"
+      },
+      {
+        "range": "4-6",
+        "quote": "Four to six letters from U.S.-based entertainment professionals like directors, producers, or agents",
+        "who": "VoiceActor.com article by Alan Shires (NOT a law firm); actors",
+        "source": "https://voiceactor.com/articles/seeking-a-o1-visa-for-actors",
+        "date": "2023-10-20, updated 2023-10-26"
+      },
+      {
+        "range": "5-8",
+        "quote": "O-1A petitions typically include five to eight recommendation letters.",
+        "who": "Beyond Border (states it is NOT a law firm); O-1A, not O-1B",
+        "source": "https://www.beyondborderglobal.com/resources/o-1-visa-reference-letter-complete-guide-with-samples-templates-and-requirements",
+        "date": "updated 2026-06-18"
+      },
+      {
+        "range": "6-10",
+        "quote": "Though there is no official requirement for how many letters to include in an O-1 application, we recommend acquiring 6 to 10 letters.",
+        "who": "Lightman Immigration (law firm); O-1 generally, artists focus",
+        "source": "https://www.lightmanimmigration.com/o-1-visa/common-questions/",
+        "date": "no date shown; page references 2013 processing times; retrieved 2026-09-29"
+      },
+      {
+        "range": "no limit stated",
+        "quote": "As long as they're truthful, viable, and carefully crafted, there are no limits to the amount of letters of recommendation you can submit for the O-1 visa.",
+        "who": "VisaNation Law Group PLLC (law firm)",
+        "source": "https://www.immi-usa.com/o-1-visa-recommendation-letter/",
+        "date": "updated 2026-05-05"
+      },
+      {
+        "range": "1 required advisory opinion; testimonials additional",
+        "quote": "While only one Advisory Opinion letter is officially required, additional testimonial letters often prove crucial",
+        "who": "Deel (not a law firm); O-1A focus. Also states typical petitions exceed 500 pages.",
+        "source": "https://www.deel.com/blog/how-many-letters-do-you-need-for-an-o-1-visa/",
+        "date": "updated 2026-06-26"
+      }
+    ],
+    "whoWritesThem": [
+      {
+        "claim": "Regulation names the categories: organizations, critics, government agencies, other recognized experts; affidavits may come from present or former employers or recognized experts.",
+        "source": "https://www.govinfo.gov/content/pkg/CFR-2024-title8-vol1/xml/CFR-2024-title8-vol1-sec214-2.xml",
+        "date": "CFR revised as of 2024-01-01"
+      },
+      {
+        "claim": "Directors, producers, conductors, choreographers, senior industry figures.",
+        "source": "https://stelmakhlaw.com/blog/building-a-strong-case-for-an-o1-visa/",
+        "date": "2025-01-08"
+      },
+      {
+        "claim": "U.S.-based directors, producers, or agents (for actors).",
+        "source": "https://voiceactor.com/articles/seeking-a-o1-visa-for-actors",
+        "date": "2023-10-26"
+      },
+      {
+        "claim": "For artists: curators, producers, editors, creative directors, or critics.",
+        "source": "https://www.beyondborderglobal.com/resources/o-1-visa-reference-letter-complete-guide-with-samples-templates-and-requirements",
+        "date": "2026-06-18"
+      },
+      {
+        "claim": "Industry experts, peers, leaders of professional associations, notable collaborators or clients; award committee members for entertainers.",
+        "source": "https://manifestlaw.com/blog/o-1-visa-recommendation-letter-samples",
+        "date": "2026-05-16"
+      },
+      {
+        "claim": "Faculty letters appear in real petitions (both AAO decisions above), but in both cases USCIS/AAO found them insufficient when they praised talent or described student work rather than recognized professional achievements.",
+        "source": "https://www.uscis.gov/sites/default/files/err/D8-Aliens-of-Extraordinary-Ability-or-Achievement_O-1_O-2_and_O-3/Decisions_Issued_in_2015/JAN062015_01D8101.pdf",
+        "date": "2015-01-06"
+      },
+      {
+        "claim": "No source found that names casting directors specifically as typical O-1B letter writers; not asserted.",
+        "source": null,
+        "date": "2026-09-29"
+      }
+    ]
+  },
+
+  "approvalRates": {
+    "scope": "USCIS publishes these for the whole O class on Form I-129 (O-1A, O-1B and O-2 together), initial and extension filings combined, initial decisions only. No O-1B-only or actor-only split is published (the FY2015-FY2019 file is also combined: 'Class Preference: O-1, O-1A, O-1B, O-2').",
+    "definitionsFromSheet": "Approved (%) = approved / total completions. Completions with RFE (%) = RFE'd completions / total completions. NOTE: the sheet's 'Approved with RFE (%)' column is footnoted as approvals-with-RFE over completions-with-RFE, but its values equal approvals-with-RFE over ALL completions (e.g. FY2024 3846/28093 = 0.137). The approval rate of petitions that received an RFE, computed here from the sheet's own counts, is given as rfeApprovalRateComputed.",
+    "byFiscalYear": [
+      {
+        "fy": "FY2023 (Oct 2022-Sep 2023)",
+        "received": 27898, "approved": 26425, "denied": 1927, "completions": 28352,
+        "approvalRate": 0.932,
+        "completionsWithRFE": 6413, "rfeRate": 0.226, "approvedWithRFE": 4570,
+        "rfeApprovalRateComputed": 0.713,
+        "source": "https://www.uscis.gov/sites/default/files/document/data/i129_quarterly_request_for_evidence_fy2017_fy2024_q4.xlsx",
+        "sheet": "i129_FY24q4_O",
+        "date": "data queried 10/2024 (PAER0015825)"
+      },
+      {
+        "fy": "FY2024 (Oct 2023-Sep 2024)",
+        "received": 29672, "approved": 26535, "denied": 1558, "completions": 28093,
+        "approvalRate": 0.945,
+        "completionsWithRFE": 5327, "rfeRate": 0.190, "approvedWithRFE": 3846,
+        "rfeApprovalRateComputed": 0.722,
+        "source": "https://www.uscis.gov/sites/default/files/document/data/i129_quarterly_request_for_evidence_fy2017_fy2024_q4.xlsx",
+        "sheet": "i129_FY24q4_O",
+        "date": "data queried 10/2024 (PAER0015825)"
+      },
+      {
+        "fy": "FY2025 (Oct 2024-Sep 2025)",
+        "received": 33808, "approved": 29733, "denied": 1948, "completions": 31681,
+        "approvalRate": 0.939,
+        "completionsWithRFE": 6244, "rfeRate": 0.197, "approvedWithRFE": 4427,
+        "rfeApprovalRateComputed": 0.709,
+        "source": "https://www.uscis.gov/sites/default/files/document/data/i129_quarterly_request_for_evidence_fy2025_q4_v1.xlsx",
+        "sheet": "i129_FY25q4_O",
+        "date": "FY2025 Q4 release; retrieved 2026-09-29"
+      },
+      {
+        "fy": "FY2026 Q1-Q3 (Oct 2025-Jun 2026), partial year",
+        "received": 25722, "approved": 21321, "denied": 2096, "completions": 23417,
+        "approvalRate": 0.910,
+        "completionsWithRFE": 5678, "rfeRate": 0.242, "approvedWithRFE": 3793,
+        "rfeApprovalRateComputed": 0.668,
+        "pendingEndOfJune2026": 8925,
+        "source": "https://www.uscis.gov/sites/default/files/document/data/i129_quarterly_request_for_evidence_fy2026_q3_v1.xlsx",
+        "sheet": "i129_FY26q3_O",
+        "date": "data queried 07/2026 (PAER0021784)"
+      }
+    ],
+    "earlierYearsSameFile": {
+      "FY2017": 0.941, "FY2018": 0.928, "FY2019": 0.908, "FY2020": 0.897, "FY2021": 0.914, "FY2022": 0.946,
+      "rfeRates": {"FY2019": 0.264, "FY2020": 0.304, "FY2021": 0.278, "FY2022": 0.207},
+      "source": "https://www.uscis.gov/sites/default/files/document/data/i129_quarterly_request_for_evidence_fy2017_fy2024_q4.xlsx"
+    },
+    "indexPage": {
+      "source": "https://www.uscis.gov/tools/reports-and-studies/immigration-and-citizenship-data",
+      "title": "Nonimmigrant Worker Petitions by Case Status and Request for Evidence (RFE)",
+      "date": "retrieved 2026-09-29"
+    },
+    "corroboration": {
+      "claim": "Manifest Law's table matches the USCIS counts for FY2023, FY2024, FY2025 and FY2026 Q1-Q3 exactly.",
+      "source": "https://manifestlaw.com/blog/o-1-visa-approval-rate",
+      "date": "updated 2026-09-25"
+    }
+  },
+
+  "timing": [
+    {
+      "claim": "F-1 graduates get 12 months of post-completion OPT per degree level; the 24-month STEM extension does not ordinarily reach acting/drama degrees, so OPT is the usual window in which a foreign actor must assemble an O-1 record.",
+      "quote": "A student may be authorized 12 months of practical training, and becomes eligible for another 12 months of practical training when they change to a higher educational level.",
+      "cite": "8 CFR 214.2(f)(10)",
+      "source": "https://www.govinfo.gov/content/pkg/CFR-2024-title8-vol1/xml/CFR-2024-title8-vol1-sec214-2.xml",
+      "date": "CFR revised as of 2024-01-01",
+      "caveat": "That acting degrees are not on the STEM list is my reading, not verified against the DHS STEM Designated Degree Program List in this research."
+    },
+    {
+      "claim": "Anecdote (one actor, not a survey): Broadway actor Joomin Hwang describes OPT as one year after graduation to build credits, then the O-1 as the next visa, needing 'around 800 pages of proof', and about six months of preparation; he ultimately did not complete the O-1 path (changed status through marriage).",
+      "quote": "After you graduate, you get one year to do everything you can to make your credits.",
+      "source": "https://www.actoraesthetic.com/blog/international-actors",
+      "date": "2020-02-18"
+    },
+    {
+      "claim": "Firm statement: most students and recent graduates do not yet qualify; only prodigies clearly do.",
+      "quote": "Sometimes young artists students and recent graduates (i.e. prodigies) will clearly qualify for O-1 visa status. In most cases, however, students & recent graduates are more likely to fit in with other visa options that are more appropriate for the average successful young artist such as H-3 or J-1 or possibly H-1b.",
+      "who": "Immigration Law Office of David Yurkofsky, Esq.",
+      "source": "https://www.immigrationbureau.com/visa-services/o1-visa",
+      "date": "copyright 2026; retrieved 2026-09-29"
+    },
+    {
+      "claim": "Case data point: the 2022 AAO decision concerned an artist who finished her MFA in 2019 and was petitioned roughly within a year or two after (the decision is dated January 2022, the evidence cited runs to 2020); the petition failed.",
+      "source": "https://www.uscis.gov/sites/default/files/err/D8-Aliens-of-Extraordinary-Ability-or-Achievement_O-1_O-2_and_O-3/Decisions_Issued_in_2022/JAN142022_01D8101.pdf",
+      "date": "2022-01-14"
+    }
+  ],
+
+  "uncertain": [
+    "No survey or firm statement was found giving a typical number of years between graduation and a foreign actor's first O-1 approval. Any such figure would be a guess and none is given here.",
+    "USCIS does not publish O-1B-only, MPTV-only, or actor-only approval or RFE rates for FY2023-FY2025; the published figures combine O-1A, O-1B and O-2, initial and extension filings. Actor-specific approval rates are unknown.",
+    "No USCIS or AAO source states how many letters a petition should contain. The ranges (3-5, 3-6, 4-6, 5-8, 6-10) are firm/platform recommendations; only Manifest Law, Stelmakh, Lightman and VisaNation are law firms; VoiceActor.com, Beyond Border and Deel are not. None of these ranges is based on a published sample of petitions.",
+    "No source found naming casting directors specifically as common O-1B letter writers; directors, producers, agents, critics and faculty are the ones named.",
+    "No actor-specific (film/TV) AAO decision on letters was fully read in this research; the two AAO decisions read are arts-track (a performer in 2015, a fine artist in 2022). The AAO said in 2022 that the MPTV criteria 'mirror' the arts criteria, so the reasoning carries over, but the 2015 beneficiary's exact occupation (the letters mention acting and dance) is partly redacted.",
+    "The USCIS FY2026 sheet's 'Approved with RFE (%)' footnote contradicts its own values (see approvalRates.definitionsFromSheet); rfeApprovalRateComputed is derived from the sheet's counts, not published as such.",
+    "The 2023-03-03 O-1B evidence appendix chart could not be retrieved as a separate page (the Part M appendices page says none are available); its content was not verified beyond what Chapter 4 now says inline.",
+    "SAG-AFTRA's O/P visa page returned HTTP 403, so its consultation fee and turnaround were not verified."
+  ]
+}

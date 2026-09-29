@@ -19,7 +19,7 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf } from '@/engine/systems/career';
 import { costsAt, HOUSING } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
@@ -532,7 +532,8 @@ function HomePane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
-  const cities = [...CAREER_CITIES, YALE_DRAMA.cityId];
+  const home = homeTownOf(person);
+  const cities = [...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])];
   return (
     <Panel title="Where You Live" subtitle={`${cityName(person.currentLocationId)}, ${person.home ? (person.home.kind === 'sofa' ? 'on a friend’s sofa' : person.home.kind === 'owned' ? 'in a home you own' : HOUSING[person.home.kind].label.toLowerCase()) : 'without a home'}`}>
       <div className="col gap-3">

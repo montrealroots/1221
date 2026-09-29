@@ -129,14 +129,19 @@ const LEADS = new Set(['series-half', 'series-hour', 'broadway', 'lort-a-plus'])
 // Regional (LORT) and Off-Broadway companies are distinguished organizations as the regulation means them.
 const DISTINGUISHED = new Set(['guest-half', 'guest-hour', 'recurring', 'film-weekly', 'lort-b', 'offb-commercial', 'offb-nonprofit']);
 /**
- * Reputation past which directors, teachers and casting directors who know
- * the work would write for the petition: SLATE's estimate, about a year or
- * two of professional work after the degree's 8. Such letters are in nearly
- * every O-1B petition. It was 50 on the day it was written, 2026-09-29, a
- * reputation a working actor reaches after a decade, and a foreign
- * graduate's OPT year could never show it.
+ * The letters a petition carries for recognition from experts (8 CFR
+ * 214.2(o)(3)(v)(B)(5)): one from a director or producer of each
+ * production they worked on in a part that person would know, and at least
+ * three, the low end of the three to six the immigration firms advise (no
+ * USCIS source sets a number). A co-star's day or a commercial doesn't leave
+ * a director who knows the work, and a teacher's letter isn't one: the
+ * Administrative Appeals Office dismissed petitions resting on faculty
+ * letters as conclusory (2015-01-06; 2022-01-14). Until 2026-09-29 it was
+ * read from reputation, SLATE's guess at a threshold; researched the same
+ * day, it's read from the credits.
  */
-export const EXPERT_LETTERS_AT = 20;
+export const LETTERS_NEEDED = 3;
+const LETTER_ROLES = new Set(['guest-half', 'guest-hour', 'recurring', 'series-half', 'series-hour', 'film-weekly', 'film-low', 'film-mlb', 'film-ulb', 'lort-b', 'lort-a-plus', 'broadway', 'offb-commercial', 'offb-nonprofit']);
 
 /**
  * What an O-1B petition shows of the six kinds of evidence, as SLATE reads
@@ -145,8 +150,8 @@ export const EXPERT_LETTERS_AT = 20;
  * pay, `ATTRIBUTES.overscale`); a critical role for a distinguished
  * organization (a guest star, a recurring role, a studio film, a regional or
  * Off-Broadway company); recognition from experts in the field, the letters
- * from directors and casting directors a petition carries (reputation past
- * `EXPERT_LETTERS_AT`); and remuneration high in the field (a year's acting
+ * from directors and producers a petition carries (`LETTERS_NEEDED`); and
+ * remuneration high in the field (a year's acting
  * at SAG-AFTRA's health plan threshold). A record of commercial or critical
  * success isn't kept per actor, so SLATE can't show it: three of these five
  * are needed. Until 2026-09-29, the day it was written, it read four, and
@@ -161,7 +166,7 @@ export function o1Evidence(sim: Simulation, person: Person): O1Evidence[] {
     { key: 'lead', label: 'A Lead In A Distinguished Production', met: credits.some((r) => LEADS.has(r)) },
     { key: 'known', label: 'A Name The Public Knows', met: attributesOf(sim, person).recognition >= ATTRIBUTES.overscale.from },
     { key: 'critical', label: 'A Critical Role For A Distinguished Organization', met: credits.some((r) => DISTINGUISHED.has(r)) },
-    { key: 'experts', label: 'Recognition From Experts In The Field', met: attributesOf(sim, person).reputation >= EXPERT_LETTERS_AT },
+    { key: 'experts', label: 'Recognition From Experts In The Field', met: credits.filter((r) => LETTER_ROLES.has(r)).length >= LETTERS_NEEDED },
     { key: 'paid', label: 'High Pay For The Field', met: paid },
   ];
 }
