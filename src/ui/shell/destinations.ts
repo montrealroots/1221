@@ -35,7 +35,9 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     items: [
       { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', homeOnly: true },
       // Opened from the Travel panel on Home.
-      { route: '/workspace/travel', label: 'Travel', detail: 'A journey by air, a hotel, and the way home', homeOnly: true },
+      { route: '/workspace/travel', label: 'Travel', detail: 'A journey by air or train, a hotel, and the way home', homeOnly: true },
+      // Opened from the Cars panel on Home.
+      { route: '/workspace/vehicles', label: 'Cars', detail: 'A car of your own, to buy, keep and run', homeOnly: true },
     ],
   },
   {

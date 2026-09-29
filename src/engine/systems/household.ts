@@ -367,7 +367,7 @@ export function payFromCurrent(sim: Simulation, person: Person, amount: Money, m
 }
 
 /** Owes an amount to the landlord, for what went unpaid. */
-function owe(sim: Simulation, person: Person, amount: Money, memo: string, category: string): void {
+export function owe(sim: Simulation, person: Person, amount: Money, memo: string, category: string): void {
   if (amount <= 0) return;
   sim.post({ memo: `${memo}, unpaid`, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: arrearsAccount(sim, person).id, amount: -amount }] });
 }
@@ -377,7 +377,7 @@ function owe(sim: Simulation, person: Person, amount: Money, memo: string, categ
  * anything not rent or bills went to Food, so union dues, health premiums,
  * tax paid and the work's costs all read as food.
  */
-const EXPENSE_LINE: Record<string, string> = { rent: 'Rent', bills: 'Bills', food: 'Food', dues: 'Union Dues', health: 'Medical Care', tax: 'Tax Paid', career: 'Work Costs', school: 'School', documents: 'Documents And Their Fees', travel: 'Travel' };
+const EXPENSE_LINE: Record<string, string> = { rent: 'Rent', bills: 'Bills', food: 'Food', dues: 'Union Dues', health: 'Medical Care', tax: 'Tax Paid', career: 'Work Costs', school: 'School', documents: 'Documents And Their Fees', travel: 'Travel', vehicle: 'Vehicles' };
 export const expenseFor = (category: string) => EXPENSE_LINE[category] ?? 'Other';
 
 setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amount) => chargeReturned(sim, person, amount) });

@@ -1,0 +1,584 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "purpose": "Real published figures for SLATE's own-car driving: crash risk, offences and points, how often drivers are ticketed, travel speeds, tolls, fuel and rental cars.",
+    "conventions": {
+      "sourceType": "primary = government, regulator, court, official statistics or the operator's own published tariff; secondary = press, trade body, law firm, private survey or aggregator",
+      "derived": "Any field whose key ends in 'Derived' or whose note says 'derived' was computed here by arithmetic from the published figures cited beside it. It is not itself a published figure.",
+      "null": "A null value means the figure could not be confirmed. The reason is in 'uncertain'."
+    },
+    "verificationNotes": [
+      "Where a primary page could be read directly (NHTSA PDF, IIHS table, DfT release, NY regulation text, CT regulation and court schedule, CA bail schedule, NJTA toll PDF, MDTA, DelDOT, DRBA, NRCan, gov.uk, service-public.gouv.fr, Ontario Court of Justice), the figure was taken from that document.",
+      "Several Irish government sites (rsa.ie, oireachtas.ie) and ICBC returned HTTP 403 or loaded their data by script, so those figures fall back to secondary sources or the Citizens Information Board, and are labelled that way.",
+      "New York changed its point regulation on 2026-02-16. The task brief's '11 points in 18 months' is the old rule; the current text is below."
+    ]
+  },
+
+  "crashRisk": {
+    "unitedStates": {
+      "national2024": {
+        "period": "calendar 2024",
+        "fatalities": 39254,
+        "fatalityRatePer100MVMT": 1.19,
+        "peopleInjured": 2420000,
+        "injuryRatePer100MVMT": 74,
+        "policeReportedCrashes": 6180241,
+        "fatalCrashes": 36297,
+        "injuryCrashes": 1676700,
+        "propertyDamageOnlyCrashes": 4467244,
+        "vmtMillions": 3294031,
+        "policeReportedCrashesPer100MVMTDerived": 187.6,
+        "injuryCrashesPer100MVMTDerived": 50.9,
+        "pdoCrashesPer100MVMTDerived": 135.6,
+        "derivationNote": "derived = crashes / (VMT in millions / 100). NHTSA publishes the fatality and injury rates; the crash-per-VMT rates are this file's arithmetic on NHTSA's counts.",
+        "source": "NHTSA, Overview of Motor Vehicle Traffic Crashes in 2024, DOT HS 813 791 (April 2026), Tables 1-2; VMT from FHWA Highway Statistics",
+        "url": "https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813791",
+        "sourceType": "primary"
+      },
+      "byState2024": {
+        "period": "calendar 2024",
+        "source": "IIHS Fatality Facts 2024: State by state (FARS deaths; VMT from FHWA)",
+        "url": "https://www.iihs.org/research-areas/fatality-statistics/detail/state-by-state",
+        "sourceType": "secondary",
+        "note": "IIHS compiles the federal FARS and FHWA data. The inputs are primary; the table is IIHS's.",
+        "NY": { "deaths": 1101, "vmtMillions": 120869, "deathsPer100MVMT": 0.91, "deathsPer100kPopulation": 5.5 },
+        "CT": { "deaths": 310, "vmtMillions": 30947, "deathsPer100MVMT": 1.00, "deathsPer100kPopulation": 8.4 },
+        "CA": { "deaths": 3876, "vmtMillions": 325959, "deathsPer100MVMT": 1.19, "deathsPer100kPopulation": 9.8 },
+        "MA": { "deaths": 363, "vmtMillions": 62013, "deathsPer100MVMT": 0.59, "deathsPer100kPopulation": 5.1 },
+        "US": { "deaths": 39254, "vmtMillions": 3294031, "deathsPer100MVMT": 1.19, "deathsPer100kPopulation": 11.5 }
+      },
+      "byDriverAge": {
+        "period": "2014-2015",
+        "unit": "driver involvements per 100 million miles driven",
+        "rows": [
+          { "age": "16-17", "allPoliceReportedCrashes": 1432, "injuryCrashes": 361, "fatalCrashes": 3.75 },
+          { "age": "18-19", "allPoliceReportedCrashes": 730, "injuryCrashes": 197, "fatalCrashes": 2.47 },
+          { "age": "20-24", "allPoliceReportedCrashes": 572, "injuryCrashes": 157, "fatalCrashes": 2.15 },
+          { "age": "25-29", "allPoliceReportedCrashes": 526, "injuryCrashes": 150, "fatalCrashes": 1.99 },
+          { "age": "30-39", "allPoliceReportedCrashes": 328, "injuryCrashes": 92, "fatalCrashes": 1.20 },
+          { "age": "40-49", "allPoliceReportedCrashes": 314, "injuryCrashes": 90, "fatalCrashes": 1.12 },
+          { "age": "50-59", "allPoliceReportedCrashes": 315, "injuryCrashes": 88, "fatalCrashes": 1.25 },
+          { "age": "60-69", "allPoliceReportedCrashes": 241, "injuryCrashes": 67, "fatalCrashes": 1.04 },
+          { "age": "70-79", "allPoliceReportedCrashes": 301, "injuryCrashes": 86, "fatalCrashes": 1.79 },
+          { "age": "80+", "allPoliceReportedCrashes": 432, "injuryCrashes": 131, "fatalCrashes": 3.85 }
+        ],
+        "source": "AAA Foundation for Traffic Safety, Rates of Motor Vehicle Crashes, Injuries, and Deaths in Relation to Driver Age, United States, 2014-2015 (research brief, Table 1)",
+        "url": "https://aaafoundation.org/wp-content/uploads/2026/01/CrashesInjuriesDeathsInRelationToAge2014-2015Brief.pdf",
+        "sourceType": "secondary",
+        "note": "The AAA Foundation is a research charity, not a government body; its inputs are NHTSA crash data and FHWA NHTS mileage. The figures are ten years old; no newer table of all police-reported crashes per mile by age was found."
+      },
+      "teenFatalCrashRatePerMile": {
+        "period": "2022 miles (NHTS 2022), fatal crashes of the same period",
+        "unit": "drivers in fatal crashes per 100 million miles driven",
+        "ages16to19": 7.5,
+        "ages20to29": 5.1,
+        "males16to19": 9.2,
+        "females16to19": 5.2,
+        "statement": "IIHS: the fatal crash rate per mile for ages 16-19 is just over 3 times the rate for drivers 20 and over.",
+        "source": "IIHS Fatality Facts 2024: Teenagers",
+        "url": "https://www.iihs.org/research-areas/fatality-statistics/detail/teenagers",
+        "sourceType": "secondary"
+      },
+      "noviceFirstMonths": {
+        "findings": [
+          "Teen drivers are 50% more likely to crash in the first month of having a licence than after a full year of experience.",
+          "Drivers in their first month are nearly twice as likely to crash as after two years of experience."
+        ],
+        "period": "North Carolina data; report published September 2011",
+        "source": "AAA Foundation for Traffic Safety, The Transition to Unsupervised Driving (Goodwin, Foss, O'Brien, UNC HSRC)",
+        "url": "https://aaafoundation.org/research/transition-unsupervised-driving/",
+        "sourceType": "secondary",
+        "relatedStudy": {
+          "finding": "Novice crash rates are highest in the first month after licensure, fall steeply through about month 7, then decline slowly to month 24.",
+          "source": "Mayhew, Simpson & Pak (2003), Accident Analysis & Prevention 35(5), Nova Scotia novice drivers",
+          "url": "https://www.sciencedirect.com/science/article/abs/pii/S0001457502000477",
+          "sourceType": "secondary",
+          "note": "Peer-reviewed. The abstract could not be opened (403); a secondary summary quoted 2.3, 1.1 and under 0.5 crashes per 10,000 miles for months 1, 2 and 11, which is not verified here."
+        }
+      }
+    },
+    "greatBritain": {
+      "period": "calendar 2024, published 25 September 2025",
+      "fatalities": 1602,
+      "killedOrSeriouslyInjured": 29467,
+      "casualtiesAllSeverities": 128272,
+      "vehicleMilesBillions": 340,
+      "fatalitiesPerBillionVehicleMiles": 4.7,
+      "ksiPerBillionVehicleMiles": 86.7,
+      "casualtiesPerBillionVehicleMiles": 377.6,
+      "carOccupants": {
+        "fatalities": 692,
+        "fatalitiesPerBillionVehicleMiles": 2.7,
+        "note": "DfT's car occupant rate. A separate car-driver-only rate and a car-occupant KSI rate were not found in the release text."
+      },
+      "source": "DfT, Reported road casualties Great Britain, annual report: 2024",
+      "url": "https://www.gov.uk/government/statistics/reported-road-casualties-great-britain-annual-report-2024/reported-road-casualties-great-britain-annual-report-2024",
+      "sourceType": "primary"
+    },
+    "ireland": {
+      "deaths2025": 185,
+      "fatalCollisions2025": 174,
+      "deaths2024": 171,
+      "fatalCollisions2024": 157,
+      "deathsPer100kPopulation2024": 3.2,
+      "period": "calendar 2024 and 2025 (provisional)",
+      "source": "RSA, Road Deaths Increase in 2025 (1 January 2026), as reported; RSA page itself returned 403",
+      "url": "https://www.rsa.ie/news-events/news/details/2026/01/01/road-deaths-increase-in-2025",
+      "sourceType": "secondary",
+      "note": "RTE and TheJournal reported 190 deaths for 2025, the Garda count; the RSA's provisional review gives 185 in 174 collisions. A per-vehicle-km rate was not found."
+    },
+    "ontario": {
+      "prelim2024": {
+        "period": "calendar 2024, preliminary, published 2026-02-05",
+        "personsKilled": 617,
+        "personsInjured": 37952,
+        "fatalCollisions": 562,
+        "personalInjuryCollisions": 27292,
+        "licensedDrivers": 11844557,
+        "killedPer100kPopulation": 3.82,
+        "killedPer10000LicensedDrivers": 0.52,
+        "killedPer100MillionKm": null,
+        "driversKilledAge16to19": 24,
+        "driversInjuredAge16to19": 1399,
+        "speedRelatedFatalShare": 0.25,
+        "source": "MTO, Preliminary 2024 Ontario Road Safety Annual Report Selected Statistics",
+        "url": "https://www.ontario.ca/files/2026-02/mto-orsar-preliminary-selected-statistics-en-2024-2026-02-05.pdf",
+        "sourceType": "primary",
+        "note": "MTO has not yet published 2024 vehicle-km, so per-distance rates for 2024 are N/A in the report."
+      },
+      "prelim2022": {
+        "period": "calendar 2022, preliminary",
+        "personsKilled": 606,
+        "licensedDrivers": 11164837,
+        "vehicleKmMillions": 155303,
+        "killedPer100MillionKm": 0.39,
+        "killedPer100MillionMilesDerived": 0.63,
+        "killedPer10000LicensedDrivers": 0.56,
+        "source": "MTO, Preliminary 2022 ORSAR Selected Statistics",
+        "url": "https://www.ontario.ca/files/2024-07/mto-orsar-preliminary2022-en.pdf",
+        "sourceType": "primary",
+        "note": "Taken from search-result text of the MTO PDF; the PDF itself did not download. Miles figure derived (x 1.609)."
+      }
+    }
+  },
+
+  "offenses": {
+    "newYork": {
+      "points": {
+        "speeding1to10": 3, "speeding11to20": 4, "speeding21to30": 6, "speeding31to40": 8, "speedingOver40": 11,
+        "speedingWorkZone": 8, "trafficSignalOrStopSign": 3, "failToYield": 3, "improperPassingOrUnsafeLaneChange": 3,
+        "mobileDevice": 5, "recklessDriving": 5, "failureToExerciseDueCare": 5, "tailgating": 4,
+        "passingStoppedSchoolBus": 8, "alcoholOrDrugRelated": 11, "otherMovingViolations": 2,
+        "source": "NYS DMV, About the NYS Driver Point System",
+        "url": "https://dmv.ny.gov/tickets/about-nys-driver-point-system",
+        "sourceType": "primary"
+      },
+      "thresholds": {
+        "effective": "2026-02-16 (amended 15 NYCRR 131.3 and 131.4)",
+        "warningLetter": "4 to 6 points within 24 months (was 18)",
+        "driverImprovementClinic": "7 to 10 points within 24 months may be required",
+        "suspensionHearing": "11 or more points within 24 months (was 18), or 9 or more speeding points within 24 months; suspension or revocation may follow the hearing",
+        "pointsDatedFrom": "date of the violation, not the conviction",
+        "pirpReduction": "Point and Insurance Reduction Program course removes up to 4 points for suspension purposes, once per 18 months",
+        "sources": [
+          { "url": "https://dmv.ny.gov/tickets/about-nys-driver-point-system", "sourceType": "primary", "quote": "If you get 11 points in 24 months, your driver license may be suspended." },
+          { "url": "https://cdn.ymaws.com/www.nysda.org/resource/resmgr/news_picks_items/DMV_regulation_amendments_11.pdf", "sourceType": "secondary", "note": "NYS Defenders Association marked-up copy of the amended regulation text" }
+        ],
+        "conflict": "Several press and law-firm pieces (Erie County Clerk, ABC7, ticketschool.com) say the threshold dropped to 10 points. Both the regulation text and the DMV page say 11; 10 is where the clinic range ends."
+      },
+      "driverResponsibilityAssessment": {
+        "trigger": "6 or more points within 18 months (unchanged by the 2026 amendment), or certain convictions",
+        "amount": "$100 a year for 3 years ($300) plus $25 a year ($75 total) for each point above 6",
+        "alcoholDrugConviction": "$250 a year for 3 years ($750)",
+        "source": "NY VTL s.503(4); DMV page confirms the 6-points-in-18-months trigger",
+        "url": "https://dmv.ny.gov/driver-license-points-and-penalties",
+        "sourceType": "primary",
+        "note": "The DMV pages read here give the trigger but not the dollar amounts; the amounts come from multiple law-firm and course-provider pages that agree (e.g. https://www.myimprov.com/driver-responsibility-assessment-new-york/). Treat amounts as secondary."
+      },
+      "fines": {
+        "speedingFirstOffence": {
+          "1to10OverUSD": [45, 150],
+          "11to30OverUSD": [90, 300],
+          "over30OverUSD": [180, 600],
+          "note": "Plus up to 15 days' jail (11-30 over) or 30 days (over 30). Court sets the fine within the range.",
+          "source": "NY VTL s.1180(h)(1)",
+          "url": "https://www.nysenate.gov/legislation/laws/VAT/1180",
+          "sourceType": "primary"
+        },
+        "mandatorySurchargeUSD": null,
+        "redLightUSD": null
+      }
+    },
+    "connecticut": {
+      "points": {
+        "speeding": 1, "unreasonableSpeed": 1, "failToObeyTrafficSignal": 2, "failToObeyStopSign": 2,
+        "followingTooClosely": 3, "improperPassing": 3, "failToGrantRightOfWay": 3,
+        "source": "Regs. Conn. State Agencies s.14-137a-5",
+        "url": "https://eregulations.ct.gov/eRegsPortal/Browse/getDocument?guid=%7B909DE155-0B00-CE59-8276-8652AE047235%7D",
+        "sourceType": "primary"
+      },
+      "thresholds": {
+        "pointsLast": "24 months from assessment",
+        "warningLetter": "at 6 points",
+        "suspension": "above 10 points within 24 months: 30-day suspension; if again above 10 within 5 years of that suspension, suspended until the total is 10 or below",
+        "source": "Regs. Conn. State Agencies s.14-137a-6 to -8",
+        "url": "https://eregulations.ct.gov/eRegsPortal/Browse/getDocument?guid=%7B909DE155-0B00-CE59-8276-8652AE047235%7D",
+        "sourceType": "primary",
+        "note": "Law-firm pages describe a retraining class at 7 points and longer suspensions at 12/15/18 points; those were not in the regulation text read here."
+      },
+      "fines": {
+        "effective": "2025-10-01",
+        "speeding14_219bTotalDueUSD": { "1to9Over": 162, "10Over": 167, "15Over": 191, "20Over": 216, "22PlusOver": 226 },
+        "speedingNote": "Appendix A-1 table for 14-219(b) (56-70 mph on multi-lane limited access, 56-60 elsewhere). Work zone or school zone totals are higher.",
+        "failToObeyControlSignalTotalUSD": 139,
+        "source": "Connecticut Judicial Branch, Mail-In Violations and Infractions Schedule, effective October 1, 2025",
+        "url": "https://www.jud.ct.gov/webforms/forms/infractions.pdf",
+        "sourceType": "primary"
+      }
+    },
+    "california": {
+      "negligentOperator": {
+        "warningLetter": "2 points in 12 months, 4 in 24, or 6 in 36",
+        "noticeOfIntentToSuspend": "3 in 12, 5 in 24, or 7 in 36",
+        "probationAndSuspension": "4 points in 12 months, 6 in 24, or 8 in 36: 6-month suspension and 1-year probation",
+        "source": "California DMV, Negligent Operator Actions",
+        "url": "https://www.dmv.ca.gov/portal/driver-education-and-safety/dmv-safety-guidelines-actions/negligence/negligent-operator-actions/",
+        "sourceType": "primary",
+        "note": "Thresholds read from search snippets of the DMV page and matching law-firm pages; the DMV page was not opened directly."
+      },
+      "points": { "speeding": 1, "redLight": 1, "source": "Judicial Council Uniform Bail and Penalty Schedule 2026 (DMV points column)", "url": "https://www.fresno.courts.ca.gov/system/files/general/ubps-2026-final.pdf", "sourceType": "primary" },
+      "fines": {
+        "effective": "2026-01-01",
+        "speeding1to15OverTotalBailUSD": 234,
+        "speeding16to25OverTotalBailUSD": 363,
+        "speeding26PlusOverTotalBailUSD": 486,
+        "baseFinesUSD": { "1to15": 35, "16to25": 70, "26plus": 100 },
+        "redLight21453aBaseFineUSD": 100,
+        "redLightTotalBailUSDDerived": 486,
+        "note": "Total bail = base fine + state and county penalty assessments + fees. The red-light row's total did not extract cleanly; $486 is the total the schedule gives other $100-base infractions, so it is derived, not read. Counties may exceed the schedule; court operations and conviction fees are included.",
+        "source": "Judicial Council of California, Uniform Bail and Penalty Schedules, 2026 Edition (county copy of the statewide schedule)",
+        "url": "https://www.fresno.courts.ca.gov/system/files/general/ubps-2026-final.pdf",
+        "sourceType": "primary"
+      }
+    },
+    "greatBritain": {
+      "totting": "12 or more points within 3 years: may be disqualified",
+      "newDrivers": "Licence revoked if 6 or more points within 2 years of passing the test (Road Traffic (New Drivers) Act 1995)",
+      "endorsementDuration": "4 or 11 years on the record depending on the offence",
+      "points": { "SP30speeding": "3-6", "TS10trafficLights": 3, "CU80mobilePhone": "3-6", "CD10carelessDriving": "3-9", "IN10noInsurance": "6-8", "DR10drinkDriving": "3-11" },
+      "speedingMinimum": "£100 fine and 3 penalty points",
+      "courtMaximum": "£1,000, or £2,500 on a motorway",
+      "speedAwarenessCourse": "Offered at police discretion if none attended in the past 3 years; avoids the fine and points. Fee set by the provider.",
+      "speedAwarenessFeeGBP": { "range": [82, 100], "examples": { "Hartlepool": 82, "Staffordshire": 93, "Hampshire": 96, "AA Drivetech": 96.20, "Lincolnshire": 98, "TTC": 100 }, "sourceType": "secondary", "url": "https://www.adrianflux.co.uk/blog/2024/03/complete-guide-ndors-courses/", "note": "Council course pages (staffordshire.gov.uk, hartlepool.gov.uk, lincolnshire.gov.uk) are primary for their own fee but were only seen in search snippets." },
+      "redLightFixedPenaltyGBP": 100,
+      "redLightNote": "TS10 is a £100 fixed penalty offence with 3 points; the £100 figure is the standard endorsable fixed penalty and was not read on a separate gov.uk page.",
+      "sources": [
+        { "url": "https://www.gov.uk/speeding-penalties", "sourceType": "primary" },
+        { "url": "https://www.gov.uk/penalty-points-endorsements/new-drivers", "sourceType": "primary" },
+        { "url": "https://www.gov.uk/penalty-points-endorsements/endorsement-codes-and-penalty-points", "sourceType": "primary" },
+        { "url": "https://www.gov.uk/penalty-points-endorsements/endorsements-and-penalty-points", "sourceType": "primary" }
+      ]
+    },
+    "ireland": {
+      "disqualification": "12 points in any 3 years: 6-month disqualification. Learner permit holders, and drivers in the first 2 years of their first full licence, are disqualified at 7 points.",
+      "pointsLast": "3 years",
+      "speeding": { "fixedChargeEUR": 160, "points": 3, "after28DaysEUR": 240, "beforeCourtEUR": 320, "onConvictionPoints": 5, "onConvictionMaxFineEUR": 1000 },
+      "seatbelt": { "fixedChargeEUR": 120, "points": 3 },
+      "source": "Citizens Information Board (statutory body), Penalty points for driving offences",
+      "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-offences/penalty-points-for-driving-offences/",
+      "sourceType": "primary",
+      "redLightAndPhone": { "redLightEUR": null, "mobilePhoneEUR": null, "note": "Secondary pages give traffic lights €80 + 3 points and mobile phone €120 + 3 points, but Ireland raised several fixed charges in 2025 and the RSA list returned 403; not confirmed." }
+    },
+    "france": {
+      "permisProbatoire": "First licence starts at 6 points; +2 points a year without a point-losing offence, reaching 12 after 3 years (2 years after supervised accompanied driving, AAC)",
+      "speeding": [
+        { "over": "<5 km/h", "points": 0, "fineEUR": 68, "note": "No points since 1 Jan 2024; fine unchanged" },
+        { "over": "5-19 km/h, limit above 50", "points": 1, "fineEUR": 68 },
+        { "over": "5-19 km/h, limit 50 or below", "points": 1, "fineEUR": 135 },
+        { "over": "20-29 km/h", "points": 2, "fineEUR": 135 },
+        { "over": "30-39 km/h", "points": 3, "fineEUR": 135 },
+        { "over": "40-49 km/h", "points": 4, "fineEUR": 135 },
+        { "over": "50+ km/h", "points": 6, "fineEUR": "up to 3,750 (délit)", "note": "Criminal offence; up to 3 months' prison" }
+      ],
+      "redLight": { "points": 4, "fineEUR": 135, "fineNote": "4th-class contravention; 135 is the standard 4th-class forfait, not read on the page" },
+      "handheldPhone": { "points": 3 },
+      "sources": [
+        { "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F31551?lang=fr", "sourceType": "primary", "date": "verified 2026-02-27" },
+        { "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F19460?lang=fr", "sourceType": "primary", "date": "updated 2025-12-29" },
+        { "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2390?lang=en", "sourceType": "primary" }
+      ]
+    },
+    "ontario": {
+      "demeritPoints": { "speeding16to29": 3, "speeding30to49": 4, "speeding50plus": 6, "failToObeySignal": 3, "improperTurn": 2, "seatbelt": 2 },
+      "pointsLast": "2 years from the offence date",
+      "fullyLicensed": "6-8 points warning letter; 9-14 second warning; 15+ 30-day suspension",
+      "novice": "G1/G2/M1/M2: 2-5 warning; 6-8 second warning; 9+ 60-day suspension",
+      "setFines": {
+        "speedingPerKmhOver": { "1to19": 2.50, "20to29": 3.75, "30to49": 6.00 },
+        "redLightSetFineCAD": 260,
+        "redLightTotalPayableCAD": 325,
+        "handheldDeviceSetFineCAD": 500,
+        "note": "Total payable = set fine + victim fine surcharge + $5 costs. Red-light total ($260 + $60 + $5) is from secondary pages.",
+        "source": "Ontario Court of Justice, Set Fines, Schedule 43 (Highway Traffic Act), last updated 2026-01-22",
+        "url": "https://www.ontariocourts.ca/ocj/provincial-offences/set-fines/set-fines-i/schedule-43/",
+        "sourceType": "primary"
+      },
+      "source": "Ontario.ca, Understanding demerit points",
+      "url": "https://www.ontario.ca/page/understanding-demerit-points",
+      "sourceType": "primary"
+    },
+    "britishColumbia": {
+      "speeding1to20OverCAD": 138,
+      "speeding21to40OverCAD": 196,
+      "excessiveSpeedCAD": "368-483",
+      "speedingPoints": 3,
+      "driverPenaltyPointPremium4PointsCAD": 214,
+      "novicePenaltyThreshold": "Learner/novice (Class 7) drivers face a driving prohibition review at 4 points",
+      "sourceType": "secondary",
+      "urls": ["https://lets-canada.com/en/bc-traffic-ticket-fines-guide-speeding-red-lights-distracted-driving-penalties-2026/", "https://www.peopleslawschool.ca/points-system-and-icbc/"],
+      "note": "ICBC's own fines table loads by script and could not be read. The DPP premium amount especially should be checked against ICBC."
+    },
+    "mexicoCity": {
+      "fotocivicas": "Each CDMX-plated vehicle owned by an individual starts a cycle with 10 points. Each camera-detected infraction takes 1 point (speeding, red light, phone, seatbelt); speeding more than 40% over the limit takes 5 points and carries a cash fine. Losing 2 or more points requires an online course or community service before the vehicle can pass its emissions verification.",
+      "cashFinesApply": "Camera fines are cash for speeding over 40%, bus-lane invasion, and any vehicle from another state or country, taxis, freight and public transport.",
+      "uma2026MXN": 117.31,
+      "exampleFinesMXN": { "30UMA": 3519.30, "60UMA": 7038.60 },
+      "earlyPaymentDiscount": "50% within 30 calendar days of notice",
+      "sources": [
+        { "url": "https://politica.expansion.mx/cdmx/2026/09/28/multas-transito-cdmx-2026-cuanto-cuestan", "sourceType": "secondary", "date": "2026-09-28" },
+        { "url": "https://www.tramites.cdmx.gob.mx/fotocivicas/public/", "sourceType": "primary", "note": "Official portal; not read in detail" }
+      ]
+    },
+    "germany": {
+      "speedingInTown16to20EUR": 70, "speedingInTown16to20Points": 0,
+      "redLightUnder1sEUR": 90, "redLightPoints": 1,
+      "revocationAt": "8 points (Fahreignungsregister)",
+      "probationPeriod": "2 years (Probezeit)",
+      "sourceType": "secondary",
+      "url": "https://www.bussgeldkatalog.org/",
+      "note": "From the national Bußgeldkatalog as summarised by an aggregator; not read on a Federal ministry page."
+    },
+    "spain": {
+      "startingPoints": 12, "maxPoints": 15, "noviceStartingPoints": 8, "noviceYears": 3,
+      "speedingPointsRange": "0-6 depending on excess", "redLightPoints": 4,
+      "sourceType": "secondary",
+      "url": "https://www.dgt.es/nuestros-servicios/permisos-de-conducir/tus-puntos-y-tus-permisos/como-funciona-el-permiso-por-puntos/",
+      "note": "DGT page appeared in search only; fine amounts (commonly €100 without points, €200 + 4 points for red light) not confirmed."
+    },
+    "newSouthWales": {
+      "thresholds": { "unrestricted": 13, "P2": 7, "P1": 4 },
+      "speeding10OrLessPoints": 1,
+      "redLightCameraAUD": 562, "redLightCameraPoints": 3, "redLightSchoolZoneAUD": 704, "redLightSchoolZonePoints": 4,
+      "period": "from 1 July 2025",
+      "sourceType": "secondary",
+      "url": "https://www.transport.nsw.gov.au/roadsafety/topics-tips/demerit-points",
+      "note": "Thresholds from the Transport for NSW page as surfaced in search; fines from law-firm pages."
+    }
+  },
+
+  "violationRates": {
+    "newYork": {
+      "unit": "tickets issued (each charged violation is a row; one stop can produce several tickets)",
+      "ticketsAllByViolationYear": { "2022": 2584657, "2023": 2851858, "2024": 2912196, "2025": 3020647 },
+      "ticketsToNYLicenceHolders": { "2022": 2015314, "2023": 2213065, "2024": 2248023, "2025": 2401044 },
+      "speedingTickets_VTL1180": { "2022": 521826, "2023": 529554, "2024": 524215, "2025": 534906 },
+      "top2025Violations": { "SPEED IN ZONE": 335106, "DISOBEYED TRAFFIC DEVICE": 195186, "UNINSPECTED MOTOR VEHICLE": 182608, "UNLICENSED OPERATOR": 182166, "SPEED OVER 55 ZONE": 136159, "PORTABLE ELECTRONIC DEVICE": 83585, "FAILED TO STOP AT STOP SIGN": 76031 },
+      "source": "NYS DMV, Traffic Tickets Issued: Four Year Window (data.ny.gov q4hy-kbtf), queried 2026-09-29",
+      "url": "https://data.ny.gov/Transportation/Traffic-Tickets-Issued-Four-Year-Window/q4hy-kbtf",
+      "sourceType": "primary",
+      "licensedDriversNY2024": 12439380,
+      "licensedDriversSource": { "url": "https://data.transportation.gov/Roadways-and-Bridges/Licensed-Drivers-by-state-gender-and-age-group/xfkb-3bxx", "table": "FHWA DL-22", "sourceType": "primary" },
+      "ticketsPerNYLicensedDriverYear2024Derived": 0.181,
+      "speedingTicketsPerLicensedDriverYear2024Derived": 0.042,
+      "derivationNote": "derived: 2,248,023 NY-licensed tickets / 12,439,380 = 0.181; 524,215 VTL 1180 tickets (all licence states) / 12,439,380 = 0.042. These are tickets, not convictions and not distinct drivers; many drivers get several and most get none. NYC camera tickets (owner liability, no points) are not in this dataset."
+    },
+    "connecticut": { "licensedDrivers2024": 2635139, "ticketCounts": null, "url": "https://data.transportation.gov/Roadways-and-Bridges/Licensed-Drivers-by-state-gender-and-age-group/xfkb-3bxx", "sourceType": "primary" },
+    "california": {
+      "infractionFilingsFY2023_24": 2823487,
+      "note": "All infraction filings in superior courts, traffic and non-traffic, so an upper bound for traffic tickets.",
+      "source": "Judicial Council of California, 2025 Court Statistics Report (as surfaced in search; figure not read in the PDF)",
+      "url": "https://www.slocounty.ca.gov/getmedia/a145962b-d102-45a5-bad4-2640b279b54d/2025-court-statistics-report",
+      "sourceType": "primary",
+      "licensedDrivers2024": 27815343,
+      "infractionFilingsPerLicensedDriverYearDerived": 0.10,
+      "derivationNote": "derived: 2,823,487 / 27,815,343 = 0.10; includes non-traffic infractions and out-of-state drivers."
+    },
+    "englandAndWales": {
+      "period": "calendar 2024, published 19 March 2026 (Official Statistics in Development)",
+      "coverage": "43 territorial forces in England and Wales, excluding the Metropolitan Police Service",
+      "motoringOffencesRecorded": 2934790,
+      "speedLimitOffences": 2536194,
+      "outcomes": { "driverRetrainingCourse": 1501618, "fixedPenaltyNotice": 1074062, "courtAction": 359110 },
+      "fpnEndorsable": 961861,
+      "carelessDriving": 51093,
+      "source": "Home Office, Police powers and procedures: Roads policing, to December 2024",
+      "url": "https://www.gov.uk/government/statistics/police-powers-and-procedures-roads-policing-to-december-2024/police-powers-and-procedures-roads-policing-to-december-2024",
+      "sourceType": "primary",
+      "fullLicenceHoldersGB": 42120966,
+      "fullLicenceHoldersSource": { "url": "https://www.data.gov.uk/dataset/d0be1ed2-9907-4ec4-b552-c048f6aec16a/driving-licence-data", "sourceType": "primary", "note": "Figure seen via secondary reporting of DVLA data; the exact snapshot date was not confirmed." },
+      "speedingOffencesPerLicenceHolderYearDerived": 0.06,
+      "derivationNote": "derived: 2,536,194 / 42.1 million = 0.060. The numerator excludes London's Met and Scotland while the denominator is all of GB, so the true rate outside London is somewhat higher."
+    },
+    "ireland": {
+      "driversReceivingPenaltyPoints": { "2022": 181097, "2023": 170316, "2024": 166188, "2025toAug31": 117502 },
+      "driversWithPointsOnLicenceApril2025": 512791,
+      "source": "Dáil written answer, 23 September 2025 (Minister of State, Department of Transport), and RSA monthly penalty point report, as reported",
+      "url": "https://www.oireachtas.ie/en/debates/question/2025-09-23/164/",
+      "sourceType": "secondary",
+      "note": "The Oireachtas and RSA pages returned 403; numbers are from search summaries of them. Licence-holder denominator not confirmed."
+    }
+  },
+
+  "speeds": {
+    "unitedStates": {
+      "commuteByPrivateVehicle2022": { "avgMiles": 13.56, "avgMinutes": 26.94, "avgMph": 26.59 },
+      "commuteAllModesByMSASize2022Mph": { "ruralNotInMSA": 31.4, "msa3MillionPlus": 23.2 },
+      "note": "NHTS publishes average commute speed; an average door-to-door speed for intercity trips specifically was not found in the Summary of Travel Trends.",
+      "source": "FHWA, Summary of Travel Trends: 2022 National Household Travel Survey, Tables 7-4 and 7-5",
+      "url": "https://nhts.ornl.gov/assets/2022/pub/2022_NHTS_Summary_Travel_Trends.pdf",
+      "sourceType": "primary"
+    },
+    "greatBritain": {
+      "strategicRoadNetworkAvgMph": 56.6,
+      "strategicRoadNetworkDelaySecPerVehMile": 10.9,
+      "localARoadsGBAvgMph": 24.6,
+      "localARoadsLondonAvgMph": 23.1,
+      "period": "April 2025 to March 2026, published 6 August 2026",
+      "source": "DfT, Travel time measures for the Strategic Road Network, England and local 'A' roads, Great Britain: April 2025 to March 2026",
+      "url": "https://www.gov.uk/government/statistics/travel-time-measures-for-the-strategic-road-network-england-and-local-a-roads-great-britain-april-2025-to-march-2026",
+      "sourceType": "primary",
+      "note": "Local A road series had a step change in April 2025 and is not comparable with earlier years. London's 23.1 comes from secondary reporting of this release.",
+      "freeFlowCarSpeeds2024": {
+        "motorwaysMph": 68, "nslSingleCarriagewayMph": 51, "thirtyMphRoadsMph": 30,
+        "shareOver10mphAboveLimit": { "motorways": 0.07, "nslSingleCarriageway": 0.01, "thirtyMph": 0.04, "twentyMph": 0.10 },
+        "shareExceedingLimit": { "motorways": 0.44, "thirtyMph": 0.43, "nslSingleCarriageway": 0.09 },
+        "source": "DfT, Vehicle speed compliance statistics for Great Britain: 2024 (25 June 2025)",
+        "url": "https://www.gov.uk/government/statistics/vehicle-speed-compliance-statistics-for-great-britain-2024/vehicle-speed-compliance-statistics-for-great-britain-2024",
+        "sourceType": "primary"
+      }
+    },
+    "congestionINRIX2025": {
+      "unit": "hours lost per driver in 2025 versus free-flow",
+      "cities": {
+        "Mexico City": { "hours": 108, "hours2024": 97, "downtownMph": 11 },
+        "New York City": { "hours": 102, "hours2024": 102, "downtownMph": 11 },
+        "Chicago": { "hours": 112 },
+        "Philadelphia": { "hours": 101 },
+        "London": { "hours": 91, "hours2024": 101, "downtownMph": 11 },
+        "Paris": { "hours": 90 },
+        "Dublin": { "hours": 95, "hours2024": 81, "downtownMph": 11 },
+        "Los Angeles": { "hours": 87, "hours2024": 88, "downtownMph": 17 },
+        "Boston": { "hours": 83 },
+        "Washington DC": { "hours": 70 },
+        "Toronto": { "hours": 59, "sourceType": "secondary", "url": "https://dailyhive.com/canada/canadian-cities-worst-traffic-2025" },
+        "Montreal": { "hours": 63, "sourceType": "secondary" },
+        "Vancouver": { "hours": 46, "sourceType": "secondary" },
+        "Berlin": { "hours": 60 }
+      },
+      "nationalAverages": { "US": 49, "UK": 59 },
+      "source": "INRIX 2025 Global Traffic Scorecard (published December 2025)",
+      "url": "https://storage.pardot.com/171932/1764190109BRPoNcYU/INRIX_2025_Global_Traffic_Scorecard.pdf",
+      "sourceType": "secondary",
+      "note": "INRIX is a private data firm. Canadian cities are not in the report's top-25 table; their figures come from press coverage of INRIX's city pages."
+    }
+  },
+
+  "tollsAndFuel": {
+    "newYorkToWashington": {
+      "georgeWashingtonBridge": { "ezpassPeakUSD": 16.79, "ezpassOffPeakUSD": 14.79, "tollsByMailUSD": 23.30, "direction": "eastbound into New York only", "effective": "2026-01-04", "sourceType": "secondary", "url": "https://georgewashingtonbridgetoll.com/2026-toll-rates", "note": "The Port Authority's toll page loads by script; not confirmed there." },
+      "newJerseyTurnpikeExit1toExit18W": { "cashOrTollByPlateUSD": 22.00, "ezpassPeakUSD": 21.88, "njEzpassOffPeakUSD": 16.41, "miles": 117, "effective": "2026-01-01", "note": "Off-peak discount applies to NJ E-ZPass only. Peak: weekdays 7-9 am and 4:30-6:30 pm, and all day Saturday and Sunday, by entry time.", "source": "NJTA, 2026 Toll Rate Schedule, Class 1 Passenger Cars", "url": "https://www.njta.gov/document/2026-turnpike-class-1-passenger-cars-2-axles/", "sourceType": "primary" },
+      "delawareMemorialBridge": { "ezpassUSD": 5.00, "cashUSD": 6.00, "direction": "southbound into Delaware only", "effective": "2025-04-01", "source": "DRBA", "url": "https://www.delawarememorialbridge.com/toll-rates", "sourceType": "primary" },
+      "delawareI95NewarkPlaza": { "carUSD": 5.00, "note": "Same for cash and E-ZPass; both directions", "source": "DelDOT toll calculator", "url": "https://deldot.gov/public.ejs?command=PublicTollRateI95", "sourceType": "primary" },
+      "marylandJFKMemorialHighway": { "ezpassMarylandUSD": 6.00, "otherEzpassOrPayByPlateUSD": 8.00, "videoUSD": 12.00, "direction": "northbound only", "source": "MDTA", "url": "https://mdta.maryland.gov/Toll_Rates/jfk_rates.html", "sourceType": "primary" },
+      "baltimoreFortMcHenryTunnel": { "ezpassMarylandUSD": 3.00, "otherEzpassOrPayByPlateUSD": 4.00, "videoUSD": 6.00, "direction": "both", "source": "MDTA FY2024 Traffic and Toll Revenue Forecast Update, Table 1-1 (Nov 2023); current MDTA page blocked", "url": "https://msa.maryland.gov/megafile/msa/speccol/sc5300/sc5339/000113/026100/026120/20240101e.pdf", "sourceType": "primary", "note": "Unchanged since 2024 per secondary 2026 listings; the JFK rates from the same table still match MDTA's live page." },
+      "oneWaySouthboundDerivedUSD": 35.88,
+      "oneWayNorthboundDerivedUSD": 55.67,
+      "derivationNote": "derived for a car with a non-Maryland (e.g. New York) E-ZPass at peak, via GWB, NJ Turnpike, Delaware Memorial Bridge, I-95 Delaware, I-95 Maryland. Southbound: NJTP $21.88 + DMB $5.00 + Delaware $5.00 + Fort McHenry $4.00 = $35.88 (GWB is charged only into New York; JFK Highway only northbound). Northbound: Fort McHenry $4.00 + JFK $8.00 + Delaware $5.00 + NJTP $21.88 + GWB $16.79 = $55.67 (DMB free northbound). Leaving Manhattan by the Lincoln or Holland tunnel instead changes only the Port Authority leg."
+    },
+    "newYorkToBoston": {
+      "connecticutI95": "No tolls (Connecticut has no highway tolls)",
+      "massPikeFullLength": { "ezpassMAUSD": 7.50, "outOfStateEzpassUSD": 9.35, "payByPlateUSD": 14.00, "payByPlateFeeUSD": 0.60, "sourceType": "secondary", "url": "https://www.sixt.com/rental-guide/toll-roads/usa/massachusetts/", "note": "Full 138-mile length; the I-84 route joins at Sturbridge, so the NY-Boston portion is shorter. MassDOT's own table was not read." },
+      "newRochelleThruwayToll": null
+    },
+    "fuel": {
+      "canada": {
+        "unit": "cents per litre, regular gasoline, self-serve, taxes included",
+        "week": "2026-09-29",
+        "canadaAverage": 188.4, "toronto": 184.0, "vancouver": 208.6,
+        "recentWeeksToronto": { "2026-09-22": 184.4, "2026-09-15": 184.0, "2026-09-08": 183.3, "2026-09-01": 178.4, "2026-08-25": 175.0, "2026-08-18": 168.8, "2026-08-11": 163.3 },
+        "recentWeeksVancouver": { "2026-09-22": 206.8, "2026-09-15": 208.8, "2026-09-08": 214.1, "2026-09-01": 208.5, "2026-08-25": 210.0, "2026-08-18": 208.9, "2026-08-11": 202.2 },
+        "source": "Natural Resources Canada, Weekly Average Retail Prices for Regular Gasoline in 2026",
+        "url": "https://www2.nrcan.gc.ca/eneene/sources/pripri/prices_bycity_e.cfm?productID=1&locationID=66,8,39,17,38,3,2,59&frequency=W&priceYear=2026&Redisplay=",
+        "sourceType": "primary"
+      },
+      "mexico": {
+        "unit": "MXN per litre, Magna (regular)",
+        "cdmxAverage": 23.814, "date": "2026-09-22",
+        "septemberRange": [23.799, 23.818],
+        "source": "Infobae daily reports citing CNE (Comisión Nacional de Energía) and Profeco station data",
+        "url": "https://www.infobae.com/mexico/2026/09/23/precio-de-la-gasolina-en-ciudad-de-mexico-este-22-de-septiembre/",
+        "sourceType": "secondary",
+        "note": "Magna has been held just under 24 pesos by a voluntary price agreement between the federal government and retailers since 2025; not confirmed on a CNE/Profeco page here."
+      }
+    }
+  },
+
+  "rental": {
+    "unitedStatesAverageDaily": {
+      "summer2026All100AirportsUSD": 82.90,
+      "winter2025_26All100AirportsUSD": 62.25,
+      "summer2026ByAirportUSD": { "BOS": 136, "LGA": 115, "PVD": 110, "BDL": 108, "EWR": 107, "JFK": 104, "DCA": 102, "BWI": 101, "SFO": 98, "IAD": 98, "LAX": 90, "PHL": 89, "SAN": 69 },
+      "basis": "Average rate for the cheapest available car, 1 June to 31 August 2026 (summer) and December 2025 to February 2026 (winter), before extras",
+      "source": "CheapCarRental.com survey, Summer 2026 and Winter 2025-26",
+      "url": "https://www.cheapcarrental.com/survey/summer2026.php",
+      "sourceType": "secondary",
+      "note": "No government statistic of average daily rental price exists; BLS publishes only a CPI index for car and truck rental."
+    },
+    "youngDriverUS": {
+      "enterprise": { "minimumAge": 21, "youngRenterFeeUSDPerDay": 25, "newYork": { "minimumAge": 18, "age18to20USD": 68.75, "age21to24USD": 33.25 }, "michigan": { "age18to20USD": 34, "age21to24USD": 15.50 }, "url": "https://www.enterprise.com/en/car-rental-faqs/us-renter-requirements/car-rental-under-25.html", "sourceType": "primary", "note": "Company's own published fee (primary for its own terms); $25 is described as approximate and location-dependent." },
+      "avis": { "minimumAge": 21, "newYork": { "minimumAge": 18, "age18to20USD": 84, "age21to24USD": 35 }, "michigan": { "age18to20USD": 41, "age21to24USD": 28 }, "url": "https://www.avis.com/en/help/usa-faqs/age-requirements", "sourceType": "primary" },
+      "hertz": { "minimumAge": 20, "youngRenterFeeUSDPerDay": 19, "waivers": "AAA and USAA members 20-24", "sourceType": "secondary", "url": "https://upgradedpoints.com/travel/car-rentals/car-rental-age-requirements/", "note": "Hertz's own page loads by script; not confirmed there." },
+      "newYorkLaw": { "rule": "Rental companies may not refuse a licensed renter aged 18 or over on age alone; they may pass through the actual extra insurance cost tied to age. No cap is set.", "source": "NY General Business Law s.391-g", "url": "https://www.nysenate.gov/legislation/laws/GBS/391-G", "sourceType": "primary" }
+    },
+    "youngDriverUK": {
+      "legalMinimumAge": "21 in practice (company policy; no statute read)",
+      "companies": {
+        "Avis": { "minimumAge": 23, "feeGBPPerDay": "approx. 40, capped at 10 days" },
+        "Budget": { "minimumAge": 23, "feeGBPPerDay": "32.50-37.70, capped at 10 days" },
+        "Europcar": { "minimumAge": 22, "feeGBPPerDay": "33 (under 26)" },
+        "Hertz": { "minimumAge": 21, "feeGBP": "61.43 a day or 430 a week, max 1,719.98" },
+        "SIXT": { "minimumAge": 21, "feeGBPPerDay": "approx. 18 (under 28)" },
+        "Thrifty": { "minimumAge": 22, "feeGBPPerDay": "35" }
+      },
+      "date": "updated 2026-05-19",
+      "source": "KAYAK UK, How old do you have to be to rent a car?",
+      "url": "https://www.kayak.co.uk/news/car-hire-age-requirement/",
+      "sourceType": "secondary"
+    },
+    "youngDriverIreland": { "value": null, "note": "Secondary pages disagree (Hertz 21-24 at €20/day or 23-24 at €26/day; Enterprise 21-24 at €15/day or minimum 25). Not confirmed." },
+    "averageDailyUK": null,
+    "averageDailyIreland": null
+  },
+
+  "uncertain": [
+    "New York suspension threshold: press says 10 points in 24 months from 2026-02-16; regulation text and DMV page say a hearing at 11+ points (or 9+ speeding points) in 24 months. This file follows the regulation.",
+    "New York Driver Responsibility Assessment dollar amounts ($300 + $75 per point over 6; $750 alcohol) are from secondary pages; the DMV pages read gave only the trigger.",
+    "New York mandatory state surcharge on a speeding conviction ($88 in city courts, $93 in town and village courts, as widely quoted) was not confirmed in VTL s.1809; left null.",
+    "New York red-light fine range not read in VTL s.1111; left null.",
+    "California red-light total bail ($486) is inferred from the schedule's structure for $100-base infractions, not read from the row.",
+    "California NOTS thresholds read from DMV search snippets, not the page itself.",
+    "Connecticut point thresholds beyond the regulation (7-point retraining; 12/15/18-point suspension lengths) are from law firms only.",
+    "Ireland: RSA, Oireachtas and Garda pages returned 403. Red-light (€80?) and mobile-phone (€120?) fixed charges, drivers-with-points counts, and 2025 deaths (185 RSA vs 190 Garda/RTE) are secondary.",
+    "Ireland: no per-vehicle-km fatality or casualty rate found.",
+    "Ontario 2022 per-100-million-km rates came from search text of the MTO PDF, which did not download.",
+    "Great Britain: no car-driver-only casualty rate per mile, and no official novice first-year crash rate, was found in the 2024 release.",
+    "US: no NHTSA fatality or crash rate per VMT for car drivers alone; the age table (AAA Foundation) is 2014-2015 data.",
+    "US: no FHWA/NHTS figure for average door-to-door intercity driving speed; only commute speeds are published.",
+    "Police-reported crashes per VMT for NY, CT and CA individually were not found; only national.",
+    "GWB, Mass Pike, BC fines and ICBC DPP premium, Germany, Spain, NSW figures are secondary.",
+    "New Rochelle (I-95 New England Thruway) toll on the NY-Boston route was not researched.",
+    "Mexico City Magna price is from press citing CNE/Profeco, not the regulator's own table.",
+    "Rental: no official average daily rate anywhere; UK and Ireland averages not found; Irish young-driver fees conflict.",
+    "GB licence-holder denominator (42.1 million) came via secondary reporting of DVLA data; snapshot date unconfirmed."
+  ]
+}

@@ -244,6 +244,8 @@ export interface Person {
   /** Ireland's State Pension claimed, and its week in euro cents; Mexico's Pensión para el Bienestar claimed (`systems/homepensions.ts`). */
   irishPension?: { from: number; weeklyEur: number };
   bienestarFrom?: number;
+  /** The cars they own and have owned (`systems/vehicles.ts`). */
+  vehicles?: import('../systems/vehicles').OwnedVehicle[];
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */
   hap?: { since: number };
   /** Their IMSS record under the 1997 law: days contributed, the AFORE account, the pension claimed (`systems/imss.ts`). */

@@ -130,7 +130,7 @@ night that a stop in its first hour left unpaid. `life.waking` charges each
 person for the hours they are awake, wherever the clock stops, so Home's dials
 move during a day of play and midnight no longer charges the day ahead.
 
-The routes are `/workspace/calendar`, `/workspace/bank`, `/workspace/school`, `/workspace/career`, `/workspace/papers`, `/workspace/homes` and `/workspace/travel`; Home is served by the shell itself. `/workspace/work` went with the job engine.
+The routes are `/workspace/calendar`, `/workspace/bank`, `/workspace/school`, `/workspace/career`, `/workspace/papers`, `/workspace/homes`, `/workspace/travel` and `/workspace/vehicles`; Home is served by the shell itself. `/workspace/work` went with the job engine.
 
 ## The guide, chapter by chapter
 
@@ -154,14 +154,15 @@ chapter or to two, or if a chapter opens nothing.
 | 12 | The Business | `ui.career` `career.sign` `career.self_submit` `career.accept` `career.pass` `career.leave` `career.renew` `career.sign_manager` `career.leave_manager` `career.relocate` `career.subscribe` `career.headshots` `career.reel` `career.buy_kit` `career.class` `career.coach` `career.t1287` `career.improv` `career.workshop` `career.publicist` `pension.start` `pension.state` `pension.ie_state` `pension.bienestar` `pension.imss` `pension.social_security` `career.commercial_meet` `career.commercial_leave` |
 | 13 | Between Jobs | `ui.papers` `health.enroll` `health.drop` `health.elect_cobra` `health.pay_bill` `health.apply_aid` `health.treat` `health.dental` `benefits.claim` `benefits.hap` `tax.file` `tax.pay` |
 | 14 | Getting Around | `ui.travel` `travel.book` `travel.cancel` |
-| 15 | Passports And Licenses | `documents.apply_passport` `documents.apply_authorization` `documents.apply_visa` `documents.report_lost` `documents.license_step` `documents.renew_license` `documents.apply_idp` `documents.apply_opt` `documents.petition_o1` `documents.apply_work_permit` `documents.exchange_license` |
-| 16 | Rent And A Roof | `ui.home` `home.pay_landlord` `home.move` `home.cleaner` `home.renters_insurance` `ui.homes` `home.offer` `home.cancel` `home.pay_mortgage` `home.refinance` `home.borrow` `home.renovate` `home.let` `home.end_tenancy` `home.move_in` `home.sell` |
-| 17 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
-| 18 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.update_billers` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_everyday` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.stop_check` `bank.reclaim_debit` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` |
-| 19 | A Whole Life | `look.person` |
+| 15 | A Car Of Your Own | `ui.vehicles` `vehicle.buy` `vehicle.sell` |
+| 16 | Passports And Licenses | `documents.apply_passport` `documents.apply_authorization` `documents.apply_visa` `documents.report_lost` `documents.license_step` `documents.renew_license` `documents.apply_idp` `documents.apply_opt` `documents.petition_o1` `documents.apply_work_permit` `documents.exchange_license` |
+| 17 | Rent And A Roof | `ui.home` `home.pay_landlord` `home.move` `home.cleaner` `home.renters_insurance` `ui.homes` `home.offer` `home.cancel` `home.pay_mortgage` `home.refinance` `home.borrow` `home.renovate` `home.let` `home.end_tenancy` `home.move_in` `home.sell` |
+| 18 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
+| 19 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.update_billers` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_everyday` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.stop_check` `bank.reclaim_debit` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` |
+| 20 | A Whole Life | `look.person` |
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 126 commands, 79 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 7 routes.
+Generated by `node tools/inventory.mjs --markdown`. 128 commands, 81 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 8 routes.
 
 ### Commands
 
@@ -183,6 +184,7 @@ Generated by `node tools/inventory.mjs --markdown`. 126 commands, 79 scheduled k
 | tax | `tax.file` `tax.pay` | `src/engine/systems/taxreturn.ts` |
 | travel | `travel.book` `travel.cancel` | `src/engine/systems/journey.ts` |
 | tutorial | `tutorial.read` | `src/engine/world/tutorial.ts` |
+| vehicle | `vehicle.buy` `vehicle.sell` | `src/engine/systems/vehicles.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 
 ### Scheduled kinds
@@ -202,6 +204,7 @@ Generated by `node tools/inventory.mjs --markdown`. 126 commands, 79 scheduled k
 | school | `school.cabaret` `school.call` `school.classes` `school.commencement` `school.company` `school.evaluation` `school.lab` `school.payday` `school.recess` `school.shift` `school.stipend` `school.summer` `school.term` `school.week` | `src/engine/systems/school.ts` |
 | tax | `tax.due` `tax.notice` `tax.refund` `tax.season` `tax.substitute` | `src/engine/systems/taxreturn.ts` |
 | travel | `travel.arrive` `travel.checkout` `travel.leave` | `src/engine/systems/journey.ts` |
+| vehicle | `vehicle.month` `vehicle.renewal` | `src/engine/systems/vehicles.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
 
 ### Passage reactors
@@ -230,5 +233,5 @@ Generated by `node tools/inventory.mjs --markdown`. 126 commands, 79 scheduled k
 
 ### Routes
 
-`/workspace/bank` · `/workspace/calendar` · `/workspace/career` · `/workspace/homes` · `/workspace/papers` · `/workspace/school` · `/workspace/travel`
+`/workspace/bank` · `/workspace/calendar` · `/workspace/career` · `/workspace/homes` · `/workspace/papers` · `/workspace/school` · `/workspace/travel` · `/workspace/vehicles`
 <!-- inventory:end -->

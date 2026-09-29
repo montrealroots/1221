@@ -5,6 +5,7 @@
  * attention, how am I doing. A command surface, not a place to bury depth.
  */
 
+import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { journeysOf } from '@/engine/systems/journey';
 import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
@@ -106,6 +107,7 @@ export function Home() {
     career: useFeature('ui.career').open,
     papers: useFeature('ui.papers').open,
     travel: useFeature('ui.travel').open,
+    vehicles: useFeature('ui.vehicles').open,
   };
 
   return (
@@ -589,6 +591,19 @@ export function Home() {
           <YourTravel />
         </Panel>
         ))}
+        {(player.career || player.school) && (!shows.vehicles ? <LockedPanel feature="ui.vehicles" title="Cars" /> : (
+        <Panel
+          title="Cars"
+          tight
+          actions={(
+            <Gated feature="ui.vehicles" className="btn btn-sm" onClick={() => navigate('/workspace/vehicles', 'Cars')}>
+              Cars
+            </Gated>
+          )}
+        >
+          <YourCars />
+        </Panel>
+        ))}
       </div>
     </>
   );
@@ -632,6 +647,20 @@ function YourSchool() {
  * `systems/unemployment.ts`): what covers them, the next return, and a claim.
  */
 /** Where they are, and the next journey booked (`systems/journey.ts`). */
+function YourCars() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const owned = vehiclesOf(person).filter((v) => v.soldAt === undefined);
+  const first = owned[0];
+  const m = first ? modelById(first.modelId) : undefined;
+  return (
+    <div className="col gap-3">
+      <Stat label="Own" value={owned.length ? `${owned.length} ${owned.length === 1 ? 'Car' : 'Cars'}` : 'None'} note={m ? `${m.make} ${m.model}` : undefined} />
+      <Stat label="Registration" value={first ? formatDateTime(first.registrationDue, sim.zone).split(' at ')[0]! : '—'} note={first ? 'Next due' : undefined} />
+    </div>
+  );
+}
+
 function YourTravel() {
   const person = useWorld((s) => s.player);
   const next = journeysOf(person).filter((j) => j.status === 'booked' || j.status === 'underway').sort((a, b) => a.leaveAt - b.leaveAt)[0];

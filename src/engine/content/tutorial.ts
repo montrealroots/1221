@@ -225,6 +225,17 @@ export const CHAPTERS: readonly Chapter[] = [
     opens: ['ui.travel', 'travel.book', 'travel.cancel'],
   },
   {
+    id: 'vehicles',
+    title: 'A Car Of Your Own',
+    lead: 'Buying one where you live, and what it costs to keep.',
+    body: [
+      'Cars sells the eight best-selling new cars where you live, at the maker’s price, new or up to ten years old at what a car keeps of its value by its age. Every tax and fee of the place is on the quote before you buy: New York’s, Connecticut’s or California’s sales tax, title and registration; Britain’s and Ireland’s price with VAT and VRT in it, and the year’s vehicle or motor tax; Ontario’s HST and British Columbia’s GST and PST; Mexico City’s plates and refrendo. Paid outright, or with a loan at the rate published there for your record, the taxes and fees paid down.',
+      'Keeping it costs a month’s insurance, the average paid there, full cover or, in the US, liability only, which a lender won’t take; the registration renews on its term; a loan is paid each month, and what the bank can’t pay goes into arrears. Sell It sells it for what it’s worth, the loan paid off from it first.',
+    ],
+    names: ['Cars', 'Buy It', 'Sell It'],
+    opens: ['ui.vehicles', 'vehicle.buy', 'vehicle.sell'],
+  },
+  {
     id: 'documents',
     title: 'Passports And Licenses',
     lead: 'Crossing a border, and driving.',

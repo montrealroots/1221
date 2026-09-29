@@ -1,0 +1,330 @@
+/**
+ * SLATE — owning a car (docs/WORLD.md, stage 3), from 2026-09-29: bought
+ * new or used from the market where one lives, taxed, registered, insured
+ * and financed at that place's published figures (\`content/vehiclefees.ts\`,
+ * \`content/vehiclecatalog.ts\`), losing value as the studies find cars do,
+ * and sold at what it's worth.
+ *
+ * A used car is SLATE's model of the used market: a model from the same
+ * catalog at an age, priced at the new price less what the curve says it's
+ * lost, taxed as a used car is where that differs. A car is sold at its
+ * value, SLATE's estimate of a private sale; a dealer's trade-in, lower, and
+ * repossession of a car whose loan isn't paid aren't kept. A missed payment
+ * goes into arrears, as rent does. What a car cost is counted as spent, not
+ * as something held against a net worth, as a home is; SLATE's simplification.
+ */
+
+import type { Simulation } from '../core/simulation';
+import { CommandError } from '../core/simulation';
+import type { Person } from '../domain/model';
+import { MS_DAY, formatDate, type Instant } from '../core/time';
+import { formatMoney, saveCurrency, type Money } from '../core/money';
+import { exchange } from '../content/currency';
+import { CITIES } from '../content/geography';
+import { CAR_MODELS, type CarModel } from '../content/vehiclecatalog';
+import { BC, CA_STATE, CMX, CT, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, type Jurisdiction } from '../content/vehiclefees';
+import { homeOf } from './earnings';
+import { owe, payFromBank } from './household';
+
+const YEAR_MS = 365.2425 * MS_DAY;
+const NYC = new Set(['us-ny-newyork', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-manhattan', 'us-ny-thebronx', 'us-ny-statenisland']);
+export const VEHICLE_MONTH_KIND = 'vehicle.month';
+export const VEHICLE_RENEWAL_KIND = 'vehicle.renewal';
+
+const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
+
+export interface OwnedVehicle {
+  id: string;
+  modelId: string;
+  /** When it was bought, and how old it was then: a used one's years. */
+  boughtAt: Instant;
+  ageAtPurchase: number;
+  /** Its price new, in the model's money, cents: what its value falls from. */
+  listPrice: Money;
+  jurisdiction: Jurisdiction;
+  cityId: string;
+  coverage: 'full' | 'liability';
+  /** The loan, where financed: what's owed, in the save's money, and the month's payment. */
+  loan?: { owed: Money; monthly: Money; apr: number; monthsLeft: number };
+  registrationDue: Instant;
+  soldAt?: Instant;
+  /** Kilometers driven since it was bought: every day's, and the journeys'. */
+  km?: number;
+}
+
+/** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep. */
+export function runningCost(sim: Simulation, v: OwnedVehicle, km: number): Money {
+  const m = modelById(v.modelId)!;
+  const fuel = FUEL[v.jurisdiction];
+  const litre = m.fuel === 'diesel' ? fuel.diesel : fuel.petrol;
+  const fuelCost = m.per100km !== null ? inSave(sim, Math.round((km * m.per100km * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD');
+  return fuelCost + inSave(sim, Math.round(km * UPKEEP_USD_PER_KM), 'USD');
+}
+
+/** A month of everyday driving, in kilometers: the place's published year, over twelve. */
+export const monthKm = (v: OwnedVehicle) => KM_A_YEAR[v.jurisdiction] / 12;
+
+/** The jurisdiction a town's car is registered in, where SLATE has its rules. */
+export function jurisdictionOf(cityId: string): Jurisdiction | undefined {
+  const city = CITIES.get(cityId);
+  if (!city) return undefined;
+  const region = city.parentId ?? '';
+  if (city.countryId === 'us') return region === 'us-ny' ? 'US-NY' : region === 'us-ct' ? 'US-CT' : region === 'us-ca' ? 'US-CA' : undefined;
+  if (city.countryId === 'uk') return 'GB';
+  if (city.countryId === 'ie') return 'IE';
+  if (city.countryId === 'ca') return region === 'ca-08' || cityId.startsWith('ca-on-') ? 'CA-ON' : region === 'ca-02' || cityId.startsWith('ca-bc-') ? 'CA-BC' : undefined;
+  if (city.countryId === 'mx') return region === 'mx-09' || cityId.startsWith('mx-cmx') ? 'MX-CMX' : undefined;
+  return undefined;
+}
+
+const MARKET: Record<Jurisdiction, CarModel['market']> = { 'US-NY': 'US', 'US-CT': 'US', 'US-CA': 'US', GB: 'GB', IE: 'IE', 'CA-ON': 'CA', 'CA-BC': 'CA', 'MX-CMX': 'MX' };
+const CURRENCY: Record<Jurisdiction, string> = { 'US-NY': 'USD', 'US-CT': 'USD', 'US-CA': 'USD', GB: 'GBP', IE: 'EUR', 'CA-ON': 'CAD', 'CA-BC': 'CAD', 'MX-CMX': 'MXN' };
+
+/** The cars on sale where a town is. */
+export function modelsFor(cityId: string): CarModel[] {
+  const j = jurisdictionOf(cityId);
+  return j ? CAR_MODELS.filter((m) => m.market === MARKET[j]) : [];
+}
+
+export const modelById = (id: string) => CAR_MODELS.find((m) => m.id === id);
+
+/** The share of its value new a car keeps at an age: iSeeCars' points, straight lines between. */
+export function kept(ageYears: number): number {
+  const pts = DEPRECIATION;
+  if (ageYears <= 0) return 1;
+  for (let i = 1; i < pts.length; i += 1) {
+    const [a1, l1] = pts[i]!;
+    const [a0, l0] = pts[i - 1]!;
+    if (ageYears <= a1) return 1 - (l0 + ((l1 - l0) * (ageYears - a0)) / (a1 - a0));
+  }
+  return 1 - pts[pts.length - 1]![1];
+}
+
+const bracket = (table: readonly (readonly [number, number])[], x: number) => table.find(([upTo]) => x <= upTo)?.[1] ?? table[table.length - 1]![1];
+const stepOn = (steps: readonly (readonly [string, number])[], at: Instant) => { const day = new Date(at).toISOString().slice(0, 10); let v = steps[0]![1]; for (const [d, r] of steps) if (d <= day) v = r; return v; };
+const lbOf = (m: CarModel) => (m.kerbKg ? m.kerbKg * 2.20462 : NY.assumedLb);
+
+export interface Quote { currency: string; price: Money; lines: { label: string; amount: Money }[]; total: Money; basis: string }
+
+/** What buying a car costs where one lives, in the jurisdiction's money, cents: its price and every tax and fee. */
+export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean } = {}): Quote | string {
+  const j = jurisdictionOf(cityId);
+  if (!j) return 'SLATE doesn’t have that place’s car taxes and fees yet: it keeps New York, Connecticut, California, Great Britain, Ireland, Ontario, British Columbia and Mexico City.';
+  if (model.market !== MARKET[j]) return 'That car is sold in another market.';
+  const age = opts.age ?? 0;
+  const used = age > 0;
+  const price = Math.round((model.price + (used ? 0 : model.delivery)) * kept(age));
+  const lines: { label: string; amount: Money }[] = [];
+  const c = (x: number) => Math.round(x * 100);
+  const units = price / 100;
+  switch (j) {
+    case 'US-NY': {
+      const rate = NYC.has(cityId) ? NY.nycRate : NY.stateRate;
+      lines.push({ label: `Sales tax, ${(rate * 100).toFixed(3).replace(/0+$/, '')}%${NYC.has(cityId) ? '' : ' (the state’s; the county’s not kept)'}`, amount: Math.round(price * rate) });
+      lines.push({ label: 'Title', amount: c(NY.title) }, { label: 'Plates', amount: c(NY.plates) });
+      lines.push({ label: 'Registration, two years', amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(model)) + (NYC.has(cityId) ? NY.nycUseTax + NY.mctd : 0)) });
+      break;
+    }
+    case 'US-CT': {
+      lines.push({ label: units > CT.luxuryOver ? 'Sales tax, 7.75% (over $50,000)' : 'Sales tax, 6.35%', amount: Math.round(price * (units > CT.luxuryOver ? CT.luxuryRate : CT.rate)) });
+      lines.push({ label: 'Registration and its fees, three years', amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks) });
+      lines.push({ label: 'Title and plate', amount: c(CT.title + CT.plate) });
+      if (!used) lines.push({ label: 'Greenhouse gas fee and emissions exemption', amount: c(CT.greenhouseNew + CT.emissionsExemption) });
+      if (opts.financed) lines.push({ label: 'Lien', amount: c(CT.lien) });
+      break;
+    }
+    case 'US-CA': {
+      const rate = cityId === 'us-ca-losangeles' ? stepOn(CA_STATE.losAngeles, at) : cityId === 'us-ca-sanfrancisco' ? CA_STATE.sanFrancisco : CA_STATE.baseRate;
+      lines.push({ label: `Sales tax, ${(rate * 100).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')}%`, amount: Math.round(price * rate) });
+      lines.push({ label: 'Registration, the year', amount: caYear(model, price) });
+      break;
+    }
+    case 'GB':
+      // The makers' on-the-road prices include VAT, the first registration fee and the first year's VED.
+      break;
+    case 'IE':
+      // The price includes VAT and VRT; the first year's motor tax is due.
+      lines.push({ label: 'Motor tax, the first year', amount: c(bracket(IE_MOTOR_TAX, model.co2 ?? 150)) });
+      break;
+    case 'CA-ON':
+      lines.push({ label: 'HST, 13%', amount: Math.round(price * ON.hst) });
+      lines.push({ label: 'Permit and plates', amount: c(ON.permit + ON.plate) });
+      break;
+    case 'CA-BC': {
+      lines.push({ label: 'GST, 5%', amount: used ? 0 : Math.round(price * BC.gst) });
+      const pst = bracket(BC.pst, units);
+      lines.push({ label: `PST, ${Math.round(pst * 100)}%`, amount: Math.round(price * pst) });
+      lines.push({ label: 'Registration, plates and the year’s license', amount: c(BC.registration + BC.plate + bracket(BC.licence, model.kerbKg ?? BC.assumedKg)) });
+      break;
+    }
+    case 'MX-CMX':
+      // The price includes IVA and ISAN; the tenencia is waived under MXN 638,000.
+      lines.push({ label: 'Plates and circulation card', amount: c(CMX.plates) });
+      if (units > CMX.tenenciaWaivedTo) lines.push({ label: 'Tenencia (its tariff above the waiver isn’t kept)', amount: 0 });
+      break;
+  }
+  const total = price + lines.reduce((a, l) => a + l.amount, 0);
+  return { currency: CURRENCY[j], price, lines, total, basis: `${model.make} ${model.model} ${model.trim}: the maker’s price (${model.sourceType}), ${model.deliveryBasis}${used ? `, less ${Math.round((1 - kept(age)) * 100)}% for ${age} ${age === 1 ? 'year' : 'years'} (${'iSeeCars, SLATE’s lines between'})` : ''}.` };
+}
+
+/** California's year: registration, the CHP fee, the vehicle license fee on the value, the transportation improvement fee, and the ZEV fee. */
+function caYear(model: CarModel, value: Money): Money {
+  const v = value / 100;
+  return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0)) * 100 + value * CA_STATE.vlf);
+}
+
+/** A car's value now, in its money: its price new less what the curve says it's lost. */
+export function valueOf(v: OwnedVehicle, at: Instant): Money {
+  return Math.round(v.listPrice * kept(v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS));
+}
+
+/** A renewal's fee in the jurisdiction's money, cents, and when the next is due. */
+export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: Instant; label: string } {
+  const m = modelById(v.modelId)!;
+  const age = v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS;
+  const year = (n: number) => at + n * YEAR_MS;
+  const c = (x: number) => Math.round(x * 100);
+  switch (v.jurisdiction) {
+    case 'US-NY': return { amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(m)) + (NYC.has(v.cityId) ? NY.nycUseTax + NY.mctd : 0)), next: year(2), label: 'Registration renewed, two years' };
+    case 'US-CT': return { amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks), next: year(3), label: 'Registration renewed, three years' };
+    case 'US-CA': return { amount: caYear(m, valueOf(v, at)), next: year(1), label: 'Registration renewed, the year' };
+    case 'GB': return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), label: 'Vehicle tax, the year' };
+    case 'IE': return { amount: c(bracket(IE_MOTOR_TAX, m.co2 ?? 150)), next: year(1), label: 'Motor tax, the year' };
+    case 'CA-ON': return { amount: 0, next: year(1), label: 'Plate renewed, the year (free since 2022)' };
+    case 'CA-BC': return { amount: c(bracket(BC.licence, m.kerbKg ?? BC.assumedKg)), next: year(1), label: 'License renewed, the year' };
+    case 'MX-CMX': return { amount: c(CMX.refrendo), next: year(1), label: 'Refrendo, the year' };
+  }
+}
+
+/** A month's insurance in the jurisdiction's money, cents, or why there isn't one. */
+export function monthlyInsurance(j: Jurisdiction, coverage: OwnedVehicle['coverage']): Money | string {
+  const ins = INSURANCE[j];
+  if (!ins) return 'SLATE doesn’t have that place’s insurance premiums yet.';
+  const year = coverage === 'liability' && ins.liability ? ins.liability : ins.full;
+  return Math.round((year * 100) / 12);
+}
+
+/** The loan rate for a car where one lives, and for a record: the US's by credit tier, new or used; elsewhere the published rate. */
+export function loanRate(j: Jurisdiction, score: number, used: boolean): number | undefined {
+  if (j.startsWith('US-')) return (used ? LOAN_RATES.usUsed : LOAN_RATES.usNew).find(([from]) => score >= from)![1];
+  if (j === 'CA-ON' || j === 'CA-BC') return LOAN_RATES.CA;
+  if (j === 'MX-CMX') return LOAN_RATES.MX;
+  if (j === 'IE') return LOAN_RATES.IE;
+  if (j === 'GB') return LOAN_RATES.GB;
+  return undefined;
+}
+
+export function amortized(principal: Money, apr: number, months: number): Money {
+  const r = apr / 12;
+  return r === 0 ? Math.round(principal / months) : Math.round((principal * r) / (1 - (1 + r) ** -months));
+}
+
+export const vehiclesOf = (person: Person) => (person.vehicles ??= []);
+
+export function buyRefusal(sim: Simulation, person: Person, modelId: string, opts: { age?: number; financed?: boolean; coverage?: OwnedVehicle['coverage'] }): string | undefined {
+  const model = modelById(modelId);
+  if (!model) return 'SLATE doesn’t sell that car.';
+  const q = quote(model, homeOf(person), sim.now, opts);
+  if (typeof q === 'string') return q;
+  const j = jurisdictionOf(homeOf(person))!;
+  const ins = monthlyInsurance(j, opts.coverage ?? 'full');
+  if (typeof ins === 'string') return ins;
+  if (opts.financed && opts.coverage === 'liability') return 'A lender asks for full cover on a car it finances.';
+  if (opts.financed && loanRate(j, person.credit?.score ?? 0, (opts.age ?? 0) > 0) === undefined) return 'SLATE doesn’t have a published car loan rate there yet: buy it outright.';
+  if ((opts.age ?? 0) < 0 || (opts.age ?? 0) > 15) return 'A used car of up to fifteen years.';
+  return undefined;
+}
+
+export function registerVehicles(sim: Simulation): void {
+  sim.onCommand<{ modelId: string; age?: number; financed?: boolean; months?: number; coverage?: OwnedVehicle['coverage'] }, { vehicleId: string; paid: Money; monthly?: Money }>('vehicle.buy', (p, { sim: s }) => {
+    const person = s.player;
+    const age = Math.max(0, Math.round(Number(p?.age ?? 0)));
+    const financed = p?.financed === true;
+    const coverage = p?.coverage === 'liability' ? 'liability' : 'full';
+    const no = buyRefusal(s, person, String(p?.modelId), { age, financed, coverage });
+    if (no) throw new CommandError(no);
+    const model = modelById(String(p.modelId))!;
+    const cityId = homeOf(person);
+    const j = jurisdictionOf(cityId)!;
+    const q = quote(model, cityId, s.now, { age, financed }) as Quote;
+    const total = inSave(s, q.total, q.currency);
+    const cur = saveCurrency(s.universe);
+    // Financed, the price is lent and the taxes and fees paid down, as a dealer arranges it.
+    const lent = financed ? inSave(s, q.price, q.currency) : 0;
+    const down = total - lent;
+    if (!payFromBank(s, person, down, `${model.make} ${model.model}${age ? `, ${age} years old` : ', new'}${financed ? ', the taxes and fees' : ''}`, 'vehicle')) throw new CommandError(`${formatMoney(down, cur)} is more than the bank can cover.`);
+    const id = s.nextId('vehicle');
+    const v: OwnedVehicle = { id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
+    if (financed) {
+      const months = Math.max(12, Math.min(84, Math.round(Number(p?.months ?? 60))));
+      const apr = loanRate(j, person.credit?.score ?? 0, age > 0)!;
+      v.loan = { owed: lent, monthly: amortized(lent, apr, months), apr, monthsLeft: months };
+      s.post({ memo: `A car loan, ${model.make} ${model.model}`, category: 'vehicle', postings: [{ accountId: s.nominalAccount('expense', 'Vehicles').id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: -lent }] });
+    }
+    vehiclesOf(person).push(v);
+    s.schedule({ at: s.now + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
+    s.schedule({ at: v.registrationDue, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
+    return { vehicleId: id, paid: down, ...(v.loan ? { monthly: v.loan.monthly } : {}) };
+  });
+
+  sim.onCommand<{ vehicleId: string }, { value: Money }>('vehicle.sell', (p, { sim: s }) => {
+    const person = s.player;
+    const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
+    if (!v) throw new CommandError('That isn’t a car you own.');
+    const value = inSave(s, valueOf(v, s.now), modelById(v.modelId)!.currency);
+    const payoff = v.loan?.owed ?? 0;
+    const into = person.primaryAccountId!;
+    // The sale pays the loan off first; what's left comes to the bank, and a loan bigger than the car is paid from it.
+    s.post({ memo: `Sold the ${modelById(v.modelId)!.make} ${modelById(v.modelId)!.model}`, category: 'vehicle', postings: [{ accountId: into, amount: value - payoff }, { accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: payoff }, { accountId: s.nominalAccount('income', 'Car Sold').id, amount: -value }] });
+    v.soldAt = s.now;
+    delete v.loan;
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === v.id) s.timeline.cancel(item.id, s.now);
+    return { value: value - payoff };
+  });
+
+  sim.onSchedule(VEHICLE_MONTH_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
+    if (!person || !v || v.soldAt !== undefined) return;
+    const m = modelById(v.modelId)!;
+    // Insurance, the month's share of the year.
+    const ins = monthlyInsurance(v.jurisdiction, v.coverage);
+    if (typeof ins === 'number' && ins > 0) {
+      const due = inSave(s, ins, CURRENCY[v.jurisdiction]);
+      if (!payFromBank(s, person, due, `Car insurance, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, due, 'Car insurance', 'vehicle');
+    }
+    // A month's everyday driving: fuel and upkeep.
+    const km = monthKm(v);
+    const run = runningCost(s, v, km);
+    v.km = (v.km ?? 0) + km;
+    if (run > 0 && !payFromBank(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, run, 'Fuel and upkeep', 'vehicle');
+    // The loan: interest on what's owed, and the rest off it.
+    if (v.loan) {
+      const interest = Math.round((v.loan.owed * v.loan.apr) / 12);
+      const payment = Math.min(v.loan.monthly, v.loan.owed + interest);
+      const principal = payment - interest;
+      if (!payFromBank(s, person, payment, `Car loan payment, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, payment, 'Car loan payment', 'vehicle');
+      // The payment above was booked to Vehicles; its principal part moves off the loan, the interest stays the cost.
+      s.post({ memo: 'Car loan, principal repaid', category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', 'Vehicles').id, amount: -principal }] });
+      v.loan.owed -= principal;
+      v.loan.monthsLeft -= 1;
+      if (v.loan.owed <= 0 || v.loan.monthsLeft <= 0) delete v.loan;
+    }
+    s.schedule({ at: item.at + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } });
+  });
+
+  sim.onSchedule(VEHICLE_RENEWAL_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
+    if (!person || !v || v.soldAt !== undefined) return;
+    const r = renewal(v, s.now);
+    if (r.amount > 0) {
+      const due = inSave(s, r.amount, CURRENCY[v.jurisdiction]);
+      if (!payFromBank(s, person, due, r.label, 'vehicle')) owe(s, person, due, r.label, 'vehicle');
+    }
+    v.registrationDue = r.next;
+    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Registration Renewed', body: `${r.label}, until ${formatDate(r.next, s.zone)}.`, importance: 30, route: '/workspace/vehicles' });
+    s.schedule({ at: r.next, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } });
+  });
+}
+
