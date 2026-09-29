@@ -241,12 +241,12 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Land',
     lead: 'A parcel of your own, where you live.',
     body: [
-      'Land sells what’s published for land where you live: a town lot at the smallest the zoning builds on, New York’s R2, New Haven’s RS-2, Los Angeles’s R1, or a London plot with planning permission; or acreage, farmland at the government’s or the lender’s value an acre. Mexico City’s values are published only as scanned images, so none is sold there yet.',
-      'The quote carries the buyer’s taxes where the buyer pays them: Britain’s Stamp Duty Land Tax, Ireland’s stamp duty, Ontario’s and British Columbia’s land transfer taxes. In New York, Connecticut and California the seller pays, out of the sale. Buy It pays the price and those taxes from the bank. A town lot in New York City, New Haven or Los Angeles pays property tax every year.',
+      'Land lists what’s for sale where you live, a few each month, at asking prices around what’s published for land there: a town lot at the smallest the zoning builds on, New York’s R2, New Haven’s RS-2, Los Angeles’s R1, or a London plot with planning permission; or acreage, farmland at the government’s or the lender’s value an acre. Mexico City’s values are published only as scanned images, so none is sold there yet.',
+      'Make An Offer at a price: the seller accepts, turns it down, or counters at halfway, and the counter stands two days. The seller asks to see the price and what buying costs in the bank. Accepted, the searches with a published fee are paid, and the deposit as the place does it: 1% earnest money in America and 5% in Canada at once, 10% in England and Ireland when contracts are exchanged. For thirty days you can Walk Away with it back; after that, walking away or not paying at the closing on the forty-fifth day loses it. The closing pays the rest, with the buyer’s taxes: Britain’s Stamp Duty Land Tax and the Land Registry’s fee, Ireland’s stamp duty, Ontario’s and British Columbia’s land transfer taxes. In New York, Connecticut and California the seller pays, out of the sale. A town lot in New York City, New Haven or Los Angeles pays property tax every year.',
       'Put It Up For Sale, and it sells in about 125 days, a broker’s figure for US land sales, at what it’s worth then, the seller’s taxes taken from the price. Split It halves a parcel where each half keeps the zoning’s minimum, or an acre of farmland; Combine Them joins two parcels in the same place.',
     ],
-    names: ['Land', 'Buy It', 'Put It Up For Sale', 'Split It', 'Combine Them'],
-    opens: ['ui.land', 'land.buy', 'land.sell', 'land.split', 'land.combine'],
+    names: ['Land', 'Make An Offer', 'Walk Away', 'Put It Up For Sale', 'Split It', 'Combine Them'],
+    opens: ['ui.land', 'land.offer', 'land.withdraw', 'land.sell', 'land.split', 'land.combine'],
   },
   {
     id: 'documents',

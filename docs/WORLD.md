@@ -29,7 +29,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 1 | Documents: identity, passport, driver's license, entry rules, as records with issuer, validity, fees, processing, and checks that name what's missing | citizenship, geography | Done 2026-09-29 (1a and 1b); open items below |
 | 2 | Journeys: a trip of legs (walk, taxi, rideshare, bus, train, flight), fares, durations on the calendar, time zones, the player's location moving only on arrival; airports; booked accommodation at the far end; the return | 1 | Done 2026-09-29 (2a to 2f); this row said "Not begun" until 2026-09-29, after it was |
 | 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3d) |
-| 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | 4a done 2026-09-29; offers, closing and due diligence open, below |
+| 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Not begun |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | Not begun |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
@@ -137,9 +137,19 @@ Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed.
 - **The taxes of a transfer**, each on the side that customarily pays it: New York State's 0.4% and the city's 1.425% or 2.625% on the whole; Connecticut's conveyance tax and New Haven's; Los Angeles County's and the City's, Measure ULA's bands included; England's SDLT at the non-residential rates land takes; Ireland's 7.5% stamp duty; Ontario's land transfer tax; British Columbia's property transfer tax. The buyer's are on the quote; the seller's are taken from the sale.
 - **Holding it**: a year's property tax where it follows from published rates, New York City's Class 1 rate on its 6% ratio, New Haven's mills on 70% of value, and Los Angeles's Proposition 13, 1% on the price paid grown at the 2% cap (`taxedValue`); none on farmland or in England, said so. What the bank can't pay goes into arrears.
 - **Selling** after 125 days, a broker's figure for its 2025 US land sales, read secondhand and taken everywhere, at the value then less the seller's taxes. **Splitting** where each half keeps the zoning's minimum, or an acre of farmland (SLATE's); a London plot's permission isn't split. **Combining** two parcels of one place.
-- Open, and why: offers, due diligence and a closing period, which land buying has as a home's does (`systems/homes.ts`), are the next module; a buyer's survey, title insurance and lawyer, and a split's fee, have no authority's price and aren't kept; land isn't counted in net worth; nothing is built on it until Stage 5.
+- Until 4b, a parcel was bought at once at its value; that's no longer so.
 
 Evidence: `tests/land.test.ts` (9); 17 mutations, all killed. Two first survived. One was a redundant guard: a sold parcel's tax was already canceled by the sale, so the guard was removed. The other was a combine refusal that failed only by crashing, and it is now asserted by its words. Screen: Land, from Home's Land panel, opened by the guide's chapter Land.
+
+#### Stage 4b: listings, an offer, the deposit, due diligence and the closing (done 2026-09-29)
+- **Listings**: each market where one lives lists three a month (decider `land.listings`), a size it offers at an asking price from 5% under its value to 15% over (SLATE's spread), listed up to 250 days before the month began. None is a real listing, and the screen says so.
+- **An offer** at a price: the seller accepts, counters at halfway for two days, or turns it down (decider `land.market`), against a floor of 90% of the asking price falling 16% a year it has sat, 8% at most: SLATE's estimates, a home's seller's shape. The seller asks to see the whole cost in the bank; a land loan isn't kept.
+- **The deposit as each place takes it**: England's Standard Conditions of Sale and Ireland's Law Society conditions, 10% on exchange, subject to contract till then; America's earnest money, 1% on acceptance (SLATE's figure for a home); Canada's 5% on acceptance (SLATE's reading of custom). Until the thirtieth day the buyer can Walk Away, a deposit paid coming back; after it, walking away or not paying at the closing on the forty-fifth loses it (both days SLATE's estimates).
+- **Due diligence with published fees**, paid on acceptance: HM Land Registry's official copies and search (£13); upstate, Schenectady County's $100 percolation test application, one county's fee. **The closing** pays the rest, the buyer's taxes and, in England, the Land Registry's Scale 1 fee.
+- Fixed with it: New York State's transfer tax on land in the city from $2 million, 0.65%, not 0.4%.
+- Open, and why: a Phase I environmental assessment (only a vendor's range), a survey, title insurance and a lawyer have no authority's price and aren't kept, nor a split's fee; land isn't counted in net worth; nothing is built on it until Stage 5.
+
+Evidence: `tests/land.test.ts` (14); 20 mutations, all killed. Two first survived. One was the seller's "yes at the asking price", which the odds already give, so it was removed. The other was the counter spent on acceptance, which is now asserted.
 
 ### Stages 5-8 (to be detailed in turn)
 

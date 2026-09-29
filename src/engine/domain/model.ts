@@ -248,6 +248,8 @@ export interface Person {
   vehicles?: import('../systems/vehicles').OwnedVehicle[];
   /** The land they own and have owned (`systems/land.ts`). */
   land?: import('../systems/land').Parcel[];
+  /** An offer on land accepted, a seller's counter, and the offers made (`systems/land.ts`). */
+  landBuying?: import('../systems/land').LandBuying;
   /** Their driving record: points and a suspension (`systems/driving.ts`). */
   driving?: import('../systems/driving').DrivingRecord;
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */

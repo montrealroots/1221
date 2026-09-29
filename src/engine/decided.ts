@@ -18,6 +18,7 @@
  */
 
 import { drive } from './systems/driving';
+import { landAnswer, listingsFor } from './systems/land';
 import { trainFate } from './systems/rail';
 import { RAIL_ROUTES } from './content/rail';
 import { defineDecider } from './core/deciders';
@@ -776,4 +777,35 @@ defineDecider<{ sim: Simulation; source: 'run' | 'stage' | 'fall'; key: number }
     const hurt = mayHurt(sim, sim.player, source, 0.5, sim.now + (key + n) * 3_600_000);
     return hurt ? `${hurt.kind[0]}${Math.round((hurt.until - hurt.at) / 86_400_000)}` : '-';
   }).join(''),
+});
+
+defineDecider<{ sim: Simulation; month: number }, string>({
+  id: 'land.listings',
+  decides: 'The land a market lists in a month: each listing’s size, its asking price over or under the value, and how long it has sat (LAND_DEAL).',
+  drawnIn: 'src/engine/systems/land.ts',
+  reads: {
+    // Each month's listings are drawn anew.
+    month: (o, t) => ({ ...o, month: Math.round(t * 60) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), month: seed }),
+  decide: ({ sim, month }) => listingsFor(sim, sim.player, 'us-ny-newyork', Date.UTC(2026, month, 15)).map((l) => `${l.acres}@${l.asking}`).join(' '),
+});
+
+defineDecider<{ sim: Simulation; ratio: number; tries: number }, string>({
+  id: 'land.market',
+  decides: 'How a seller of land answers an offer between the least they’d take and the asking price: yes, or a counter at halfway.',
+  drawnIn: 'src/engine/systems/land.ts',
+  reads: {
+    // How near the asking price the offer is.
+    ratio: (o, t) => ({ ...o, ratio: 0.9 + t * 0.1 }),
+    // Each offer is its own draw.
+    tries: (o, t) => ({ ...o, tries: Math.round(t * 40) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), ratio: 0.9 + (seed % 10) / 100, tries: seed }),
+  decide: ({ sim, ratio, tries }) => {
+    const listing = { id: 'x', market: 0, acres: 0.1, asking: 1_000_000_00, listedAt: sim.now };
+    return Array.from({ length: 20 }, (_, n) => landAnswer(sim, sim.player, listing, Math.round(listing.asking * ratio), tries + n).answer[0]).join('');
+  },
 });

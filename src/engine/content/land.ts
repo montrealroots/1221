@@ -58,9 +58,9 @@ export const LAND_MARKETS: readonly LandMarket[] = [
   { cityId: 'us-ct-newhaven', place: 'ct-state', label: 'Farmland In Connecticut', currency: 'USD', perAcre: 14_600, year: '2026', basis: 'USDA’s farm real estate value, Connecticut, 1 January 2026', sizes: [5, 20, 50], kind: 'acreage', yearlyChange: 0.014 },
   { cityId: 'us-ca-losangeles', place: 'los-angeles', label: 'A Lot In Los Angeles', currency: 'USD', perAcre: 4_134_000, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Los Angeles County, 2022', sizes: [5_000 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R1', minAcres: 5_000 / SQFT_PER_ACRE, builds: 'a single-family house, and an accessory unit under state law' }, yearlyChange: 0 },
   { cityId: 'us-ca-losangeles', place: 'ca-state', label: 'Farmland In California', currency: 'USD', perAcre: 14_100, year: '2026', basis: 'USDA’s farm real estate value, California, 1 January 2026', sizes: [10, 40, 160], kind: 'acreage', yearlyChange: 0.029 },
-  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Hackney, With Planning Permission', currency: 'GBP', perAcre: Math.round(39_690_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Hackney, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'planning permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
-  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Croydon, With Planning Permission', currency: 'GBP', perAcre: Math.round(12_315_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Croydon, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'planning permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
-  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Havering, With Planning Permission', currency: 'GBP', perAcre: Math.round(7_610_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Havering, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'planning permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
+  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Hackney, With Planning Permission', currency: 'GBP', perAcre: Math.round(39_690_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Hackney, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'Planning Permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
+  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Croydon, With Planning Permission', currency: 'GBP', perAcre: Math.round(12_315_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Croydon, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'Planning Permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
+  { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Havering, With Planning Permission', currency: 'GBP', perAcre: Math.round(7_610_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Havering, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'Planning Permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
   { cityId: 'uk-eng-london', place: 'england', label: 'Farmland In England', currency: 'GBP', perAcre: 8_497, year: 'Q2 2026', basis: 'Knight Frank’s English farmland index, Q2 2026, read secondhand', sizes: [10, 50, 150], kind: 'acreage', yearlyChange: -0.041 },
   { cityId: 'ie-lei-dublin', place: 'leinster', label: 'Farmland In Leinster', currency: 'EUR', perAcre: 16_603, year: '2025', basis: 'SCSI and Teagasc’s good land in Leinster, 2025, read secondhand; no Dublin figure is published', sizes: [10, 30, 80], kind: 'acreage', yearlyChange: 0.07 },
   { cityId: 'ca-on-toronto', place: 'ontario', label: 'Farmland In Central East Ontario', currency: 'CAD', perAcre: 13_100, year: '2025', basis: 'FCC’s cultivated land, Central East Ontario, 2025', sizes: [25, 100, 200], kind: 'acreage', yearlyChange: 0 },
@@ -76,7 +76,8 @@ export interface TransferTax { label: string; payer: 'buyer' | 'seller'; bands: 
 /** The taxes on a sale of vacant land, by place. */
 export const LAND_TRANSFER: Readonly<Record<LandPlace, readonly TransferTax[]>> = {
   nyc: [
-    { label: 'New York State Transfer Tax', payer: 'seller', bands: [[Infinity, 0.004]], basis: 'Tax Department, 0.4%' },
+    // Until 2026-09-29 this was 0.4% at any price; the research had 0.25% more on land in the city from $2 million.
+    { label: 'New York State Transfer Tax', payer: 'seller', bands: [[1_999_999.99, 0.004], [Infinity, 0.0065]], whole: true, basis: 'Tax Department, 0.4%, and 0.65% on the whole on property in the city other than a home from $2 million' },
     { label: 'New York City Real Property Transfer Tax', payer: 'seller', bands: [[500_000, 0.01425], [Infinity, 0.02625]], whole: true, basis: 'Department of Finance, 1.425% to $500,000 and 2.625% above, on land' },
   ],
   'ny-state': [{ label: 'New York State Transfer Tax', payer: 'seller', bands: [[Infinity, 0.004]], basis: 'Tax Department, 0.4%' }],
@@ -118,3 +119,64 @@ export const LAND_TAX: Readonly<Record<LandPlace, { rate: number; basis: string;
  */
 export const DAYS_TO_SELL = 125;
 export const LAND_SOURCE = 'docs/research/world/research-land.json: FHFA WP 19-01 (2024); USDA NASS Land Values 2026; FCC 2025; VOA land values 2019; Knight Frank Q2 2026; SCSI and Teagasc 2026; NYC DOF; NY DTF; CT OLR 2020; LA Registrar-Recorder; HMRC; Revenue; Ontario and BC finance ministries; National Land Realty 2025';
+
+/**
+ * Buying land as it's bought (from 2026-09-29): an offer on a listing, the
+ * seller's answer, a deposit, a time to look into the land before one's
+ * bound, and the closing.
+ *
+ * The deposit follows the place's custom. England's is the Standard
+ * Conditions of Sale's 10%, and Ireland's the Law Society's general
+ * conditions' 10%, paid when contracts are exchanged or signed. Before that
+ * the sale is subject to contract, and either side walks away owing nothing.
+ * America's earnest money is paid when the offer is accepted, at the 1% SLATE
+ * takes for a home. Canada's deposit is paid on acceptance at 5%, SLATE's
+ * reading of Ontario's and British Columbia's custom, which no rule fixes.
+ * Before the day, the buyer walks away with it back. After it, walking away
+ * or not paying at the closing loses it.
+ *
+ * The time to look into the land and the day of the closing are SLATE's
+ * estimates, no authority publishing either: thirty days and forty-five.
+ */
+export const LAND_DEAL = {
+  diligenceDays: 30,
+  closingDays: 45,
+  deposit: {
+    nyc: { share: 0.01, at: 'accept' }, 'ny-state': { share: 0.01, at: 'accept' }, 'new-haven': { share: 0.01, at: 'accept' }, 'ct-state': { share: 0.01, at: 'accept' },
+    'los-angeles': { share: 0.01, at: 'accept' }, 'ca-state': { share: 0.01, at: 'accept' },
+    london: { share: 0.1, at: 'exchange' }, england: { share: 0.1, at: 'exchange' }, leinster: { share: 0.1, at: 'exchange' },
+    ontario: { share: 0.05, at: 'accept' }, bc: { share: 0.05, at: 'accept' },
+  } as Readonly<Record<LandPlace, { share: number; at: 'accept' | 'exchange' }>>,
+  /**
+   * What an asking price is over the value, and the least a seller takes of
+   * it, falling the longer the land has sat: SLATE's estimates, as a home's.
+   */
+  askOver: [-0.05, 0.15] as const,
+  floor: 0.9,
+  floorFallsAYear: 0.16,
+  floorFallsAtMost: 0.08,
+  /** Listings a market shows in a month. None is a real listing. */
+  listingsAMonth: 3,
+} as const;
+
+/**
+ * Looking into the land, where a search has a published fee, in the place's
+ * money: HM Land Registry's official copy of the register (£7), of the title
+ * plan (£3), and an official search with priority (£3), read from a third
+ * party's compilation of the fee order; upstate, a percolation test for a
+ * septic system, Schenectady County's $100 application, one county's fee,
+ * taken for the state. A Phase I environmental assessment, a survey, title
+ * insurance and a lawyer have no authority's price and aren't kept.
+ */
+export const LAND_SEARCHES: Readonly<Partial<Record<LandPlace, readonly { label: string; amount: number }[]>>> = {
+  london: [{ label: 'Official Copy Of The Register', amount: 7 }, { label: 'Official Copy Of The Title Plan', amount: 3 }, { label: 'Official Search With Priority', amount: 3 }],
+  england: [{ label: 'Official Copy Of The Register', amount: 7 }, { label: 'Official Copy Of The Title Plan', amount: 3 }, { label: 'Official Search With Priority', amount: 3 }],
+  'ny-state': [{ label: 'Percolation Test Application', amount: 100 }],
+};
+
+/**
+ * HM Land Registry's Scale 1 fee for registering a transfer for value,
+ * lodged electronically, by the price, paid at completion in England; from a
+ * third party's compilation of the fee order.
+ */
+export const LAND_REGISTRATION: readonly (readonly [number, number])[] = [[80_000, 20], [100_000, 40], [200_000, 100], [500_000, 150], [1_000_000, 295], [Infinity, 500]];
