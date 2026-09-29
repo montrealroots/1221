@@ -1302,7 +1302,9 @@ export function registerCareer(sim: Simulation): void {
       const found = showcaseBuzz(s, person, item.at);
       if (found.length) offerManagement(s, person, found, `Still talking about your showcase,`);
     }
-    if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
+    // An American manager finds an American agency, for an actor whose work is in the US: until 2026-09-29 one
+    // found an actor living in Dublin a New York agency, a year at a time, for forty years.
+    if (career.managerId && !career.agencyId && month.day <= 7 && (CITIES.get(workCity(person))?.countryId ?? 'us') === 'us' && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
       const found = offersFor(s, person, showcaseScore(person.craft, 1, attributesOf(s, person).presence), `manager-${item.at}`);
       if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
     }

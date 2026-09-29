@@ -9,7 +9,7 @@ import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { exchange } from '@/engine/content/currency';
 import { saveCurrency } from '@/engine/core/money';
-import { AGENCIES, ROLES } from '@/engine/content/career';
+import { AGENCIES, MANAGERS, ROLES } from '@/engine/content/career';
 import { beginCareer, careerOf, offersFor, rateOf, roleById, weekOfAuditions, workCity } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
 
@@ -56,6 +56,19 @@ describe('the business in Dublin', () => {
     for (let w = 0; w < 30; w += 1) n += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, uta, DUBLIN, 0).length;
     expect(n).toBe(0);
   });
+
+  it('has an American manager find no New York agency for an actor living in Dublin', () => {
+    const sim = dubliner('ie-manager');
+    const career = careerOf(sim.player);
+    career.managerId = MANAGERS[0]!.id;
+    delete career.agencyId;
+    let american = 0;
+    for (let d = 0; d < 400; d += 3) {
+      sim.advanceTo(sim.now + 3 * MS_DAY);
+      american += career.offers.filter((o) => (AGENCIES.find((a) => a.id === o.agencyId)!.countryId ?? 'us') === 'us').length;
+    }
+    expect(american).toBe(0);
+  }, 120_000);
 
   it('counts Spotlight Ireland for Dublin’s casting, and not London’s Spotlight', () => {
     const sim = dubliner('ie-spotlight');
