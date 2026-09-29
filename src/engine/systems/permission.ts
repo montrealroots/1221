@@ -128,8 +128,15 @@ export interface O1Evidence { key: string; label: string; met: boolean }
 const LEADS = new Set(['series-half', 'series-hour', 'broadway', 'lort-a-plus']);
 // Regional (LORT) and Off-Broadway companies are distinguished organizations as the regulation means them.
 const DISTINGUISHED = new Set(['guest-half', 'guest-hour', 'recurring', 'film-weekly', 'lort-b', 'offb-commercial', 'offb-nonprofit']);
-/** Reputation past which directors and casting directors would write for the petition: SLATE's estimate. */
-export const EXPERT_LETTERS_AT = 50;
+/**
+ * Reputation past which directors, teachers and casting directors who know
+ * the work would write for the petition: SLATE's estimate, about a year or
+ * two of professional work after the degree's 8. Such letters are in nearly
+ * every O-1B petition. It was 50 on the day it was written, 2026-09-29, a
+ * reputation a working actor reaches after a decade, and a foreign
+ * graduate's OPT year could never show it.
+ */
+export const EXPERT_LETTERS_AT = 20;
 
 /**
  * What an O-1B petition shows of the six kinds of evidence, as SLATE reads

@@ -166,10 +166,10 @@ describe('an O-1', () => {
   it('reads the experts’ letters from reputation, and a regional theater as a distinguished organization', () => {
     const sim = graduate('o1-stage', -200);
     careerOf(sim.player).credits.push({ roleId: 'lort-b', year: 2027, cityId: 'us-ny-newyork' });
-    attributesOf(sim, sim.player).reputation = 60;
+    attributesOf(sim, sim.player).reputation = 25;
     const met = o1Evidence(sim, sim.player).filter((e) => e.met).map((e) => e.key);
     expect(met).toEqual(['critical', 'experts']);
-    attributesOf(sim, sim.player).reputation = 40;
+    attributesOf(sim, sim.player).reputation = 15;
     expect(o1Evidence(sim, sim.player).filter((e) => e.met).map((e) => e.key)).toEqual(['critical']);
   });
 
