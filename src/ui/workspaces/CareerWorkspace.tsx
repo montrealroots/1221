@@ -15,6 +15,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
+import { residenceRefusal } from '@/engine/systems/documents';
 import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029 } from '@/engine/content/career';
 import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
@@ -278,7 +279,7 @@ function AgencyPane() {
             <table>
               <thead><tr><th scope="col">Agency</th><th scope="col">Reach</th><th scope="col" className="num">Showing It Needs</th></tr></thead>
               <tbody>
-                {AGENCIES.map((a) => (
+                {AGENCIES.filter((a) => (a.countryId ?? 'us') === 'us').map((a) => (
                   <tr key={a.id}><td>{a.name}</td><td>{a.tier === 1 ? 'Widest' : a.tier === 2 ? 'Wide' : 'Growing'}</td><td className="num mono">{a.bar}</td></tr>
                 ))}
               </tbody>
@@ -533,7 +534,8 @@ function HomePane() {
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const home = homeTownOf(person);
-  const cities = [...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])];
+  // Only the places they may live: an American isn't offered London, nor a British graduate out of permission New York.
+  const cities = [...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].filter((id) => id === (person.home?.cityId ?? person.currentLocationId) || !residenceRefusal(person, id, sim.now));
   return (
     <Panel title="Where You Live" subtitle={`${cityName(person.currentLocationId)}, ${person.home ? (person.home.kind === 'sofa' ? 'on a friend’s sofa' : person.home.kind === 'owned' ? 'in a home you own' : HOUSING[person.home.kind].label.toLowerCase()) : 'without a home'}`}>
       <div className="col gap-3">

@@ -408,13 +408,29 @@ export const managerById = (id: string): Manager | undefined => MANAGERS.find((m
 
 const zoneOf = (cityId: string) => CITIES.require(cityId).timeZone;
 const usd = (cents: Money, into: string) => (into === 'USD' ? cents : exchange(cents, 'USD', into) ?? cents);
+/** An amount in a currency, in the save's: a British part's pounds as a dollar figure is converted. */
+const inMoney = (cents: Money, from: string, into: string) => (into === from ? cents : exchange(cents, from, into) ?? cents);
+/** A casting site's money and country: dollars and America where it doesn't say. */
+const siteMoney = (site: CastingSite) => (WORK_COSTS.sites[site] as { currency?: string }).currency ?? 'USD';
+const siteCountry = (site: CastingSite) => (WORK_COSTS.sites[site] as { countryId?: string }).countryId ?? 'us';
+/** A role's own money: dollars where it doesn't say. */
+const roleMoney = (role: Role) => role.currency ?? 'USD';
 const dayKey = (at: Instant, zone: string) => { const p = zonedParts(at, zone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
 const weekday = (at: Instant, zone: string) => { const p = zonedParts(at, zone); return new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay(); };
 const at = (from: Instant, zone: string, days: number, hour: number) => { const p = zonedParts(from, zone); return instantFromZoned({ ...normalDate(p.year, p.month, p.day + days), hour }, zone); };
 
-/** Where the business is for them: the agency's city, or where they live if it's one of the two, or New York. */
+/**
+ * Where the business is for them: the agency's city, where it's in the
+ * country they live in; else where they live, if it's one of the business's
+ * cities; else New York. From 2026-09-29 an American agency's city doesn't
+ * hold an actor who has moved home to London: London's work is theirs.
+ */
 export function workCity(person: Person): CareerCity {
-  if (person.career?.agencyCity) return person.career.agencyCity;
+  const home = person.home?.cityId ?? person.currentLocationId;
+  const homeIsWork = (CAREER_CITIES as readonly string[]).includes(home);
+  const agencyCity = person.career?.agencyCity;
+  if (agencyCity && (!homeIsWork || CITIES.get(agencyCity)?.countryId === CITIES.get(home)?.countryId)) return agencyCity;
+  if (homeIsWork) return home as CareerCity;
   return (CAREER_CITIES as readonly string[]).includes(person.currentLocationId) ? (person.currentLocationId as CareerCity) : 'us-ny-newyork';
 }
 
@@ -507,12 +523,12 @@ export function recognitionFrom(role: Role): number {
 export function unitRate(booking: Booking, when: Instant, into: string): Money {
   const role = roleById(booking.roleId);
   const minimum = rateOf(role, when, workCityOf(booking), into);
-  return booking.rate !== undefined ? Math.max(minimum, usd(booking.rate, into)) : minimum;
+  return booking.rate !== undefined ? Math.max(minimum, inMoney(booking.rate, roleMoney(role), into)) : minimum;
 }
 
 /** What a part pays a unit (a day on screen, a week on stage) on a day, in the save's money. */
 export function rateOf(role: Role, when: Instant, cityId: string, into: string): Money {
-  return usd(rateOn(role.steps, dayKey(when, zoneOf(cityId))), into);
+  return inMoney(rateOn(role.steps, dayKey(when, zoneOf(cityId))), roleMoney(role), into);
 }
 
 // ---------------------------------------------------------------------------
@@ -548,13 +564,14 @@ export function thesisSeen(person: Person): number {
 }
 
 /** Which agencies offer after a showing (`career.offers`): those whose bar it clears and who want the actor. */
-export function offersFor(sim: Simulation, person: Person, showing: number, key: string, rivals: readonly number[] = []): string[] {
+export function offersFor(sim: Simulation, person: Person, showing: number, key: string, rivals: readonly number[] = [], countryId = 'us'): string[] {
   const rng = sim.rng('career.offers', person.id, key);
   // A track record reads beside the showing (`attributes.ts`).
   const score = showing + ATTRIBUTES.reputationShowing * attributesOf(sim, person).reputation / 100;
   // Shown beside the class, an agency takes its best two: a classmate who outshone them cleared its bar too.
   const ahead = rivals.filter((r) => r > score).length;
-  return AGENCIES.filter((agency) => rng.next() < ESTIMATE.agencyInterest && score >= agency.bar && ahead < ESTIMATE.agencyTakes).map((a) => a.id);
+  // An agency offers where its clients work: New York's and Los Angeles's for a showing there, London's for London's.
+  return AGENCIES.filter((agency) => (agency.countryId ?? 'us') === countryId && rng.next() < ESTIMATE.agencyInterest && score >= agency.bar && ahead < ESTIMATE.agencyTakes).map((a) => a.id);
 }
 
 /** A showcase's buzz: how long a manager may still call after it, and how likely in a month. SLATE's estimates. */
@@ -657,7 +674,7 @@ export function workCostsWeek(sim: Simulation, person: Person, when: Instant): v
   for (const [site, held] of Object.entries(career.sites ?? {}) as [CastingSite, { until: Instant; renews: boolean }][]) {
     if (held.until > when || !held.renews) continue;
     const { label, price } = WORK_COSTS.sites[site];
-    if (payForWork(sim, person, usd(price, cur), `${label}, a year`)) held.until += 365 * MS_DAY;
+    if (payForWork(sim, person, inMoney(price, siteMoney(site), cur), `${label}, a year`)) held.until += 365 * MS_DAY;
     else held.renews = false;
   }
   // A publicist's month: the retainer, and press by the work there is to sell (`attributes.ts`).
@@ -845,7 +862,7 @@ function offerRepresentation(sim: Simulation, person: Person, agencies: string[]
   const city = CITIES.require(cityId).name;
   sim.requireDecision({
     urgency: 90, category: 'career', title: fresh.length === 1 ? 'An Offer Of Representation' : `${fresh.length} Offers Of Representation`,
-    detail: `${why} ${fresh.map((id) => agencyById(id)!.name).join(', ')}, in ${city}, offered to represent you. An agency takes ${Math.round(AGENT_COMMISSION.rate * 100)}% of what you earn. The offers stand until ${formatDate(until, zoneOf(cityId))}.`,
+    detail: `${why} ${fresh.map((id) => agencyById(id)!.name).join(', ')}, in ${city}, offered to represent you. An agency takes ${Math.round((agencyById(fresh[0]!)?.commission ?? AGENT_COMMISSION.rate) * 1000) / 10}% of what you earn. The offers stand until ${formatDate(until, zoneOf(cityId))}.`,
     route: '/workspace/career', dueAt: until, refType: 'representation', refId: `${cityId}-${sim.now}`,
     actions: fresh.map((agencyId) => ({ label: `Sign With ${agencyById(agencyId)!.name}`, commandKind: 'career.sign', payload: { agencyId, cityId } })),
   });
@@ -944,7 +961,9 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek * look * known) : 0;
   let self = 0;
   // A free submission sends a name and a résumé; a paid site's, the headshot, and the reel where there is one, without which the breakdowns that ask for one are shut.
-  const onAny = (Object.keys(WORK_COSTS.sites) as CastingSite[]).some((site) => onSite(career, site, weekStart));
+  // A site casts in its own country: Spotlight in Britain, the American ones there.
+  const country = CITIES.get(cityId)?.countryId ?? 'us';
+  const onAny = (Object.keys(WORK_COSTS.sites) as CastingSite[]).some((site) => siteCountry(site) === country && onSite(career, site, weekStart));
   const paid = onAny ? (career.reelAt !== undefined ? 1 : 1 - WORK_COSTS.wantReel) : WORK_COSTS.freeSubmissionShare;
   for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look * known) self += 1;
   const pick = (open: readonly Role[]) => {
@@ -1052,9 +1071,9 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
  * check makes to the year's tax on the year's wages at the job's town, so a
  * year's withholding comes to the year's tax on what was earned.
  */
-export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant; resident?: boolean; currency?: string }) {
+export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant; resident?: boolean; currency?: string; commission?: number }) {
   const { scale, role, rehearsal, represented, before, cityId } = opts;
-  const agentRate = role.union === 'equity' && rehearsal ? AGENT_COMMISSION.equityRehearsalRate : AGENT_COMMISSION.rate;
+  const agentRate = role.union === 'equity' && rehearsal ? AGENT_COMMISSION.equityRehearsalRate : opts.commission ?? AGENT_COMMISSION.rate;
   // A commercial is commissioned at scale; other SAG-AFTRA work is paid scale plus 10% for the agent's share.
   const plusTen = represented && role.union === 'sag' && role.after?.kind !== 'commercial';
   const gross = (plusTen ? Math.round(scale * (1 + AGENT_COMMISSION.rate)) : scale) + (opts.overtime ?? 0);
@@ -1197,7 +1216,7 @@ function finishJob(s: Simulation, person: Person, career: CareerRecord, booking:
     // Worked while unrepresented, a job an agency notices can bring its call (`career.offers`).
     if (!career.agencyId && role.tiers.some((t) => t <= 2)) {
       const score = levelFor(person.craft, role);
-      const offers = offersFor(s, person, score, booking.id);
+      const offers = offersFor(s, person, score, booking.id, [], CITIES.get(booking.cityId)?.countryId ?? 'us');
       if (offers.length) offerRepresentation(s, person, offers, booking.cityId, `Having seen your ${role.label.toLowerCase()},`);
     }
 }
@@ -1241,7 +1260,7 @@ export function registerCareer(sim: Simulation): void {
     const rivals = person.school.classmates.map((m, i) => showcaseScore(m.craft, 1, classmatePresence(s, person, i)));
     // The class is signed too, at the first showing, by the same rule (`systems/rivals.ts`).
     signTheClass(s, person, score);
-    const offers = focus > 0 && !career.agencyId ? offersFor(s, person, score, cityId, rivals) : [];
+    const offers = focus > 0 && !career.agencyId ? offersFor(s, person, score, cityId, rivals, CITIES.get(cityId)?.countryId ?? 'us') : [];
     const city = CITIES.require(cityId).name;
     const managers = focus > 0 && !career.managerId ? managerOffersFor(s, person, score, cityId) : [];
     if (managers.length) offerManagement(s, person, managers, `After the showcase in ${city},`);
@@ -1565,7 +1584,7 @@ export function registerCareer(sim: Simulation): void {
       // A series regular's episodes, spread over the season's workweeks.
       const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium !== 'stage' ? rate * line.days : Math.round((rate * line.days) / 6);
       // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
-      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur });
+      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission });
       overtime = 0;
       const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
       recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id, where: workCity, foreignWithheld: foreign });
@@ -1919,7 +1938,7 @@ export function registerCareer(sim: Simulation): void {
     }
     if (onSite(career, p.site, s.now)) { now!.renews = true; return { until: now!.until, renews: true }; }
     const cur = saveCurrency(s.universe);
-    if (!payForWork(s, person, usd(site.price, cur), `${site.label}, a year`)) throw new CommandError(`A year is ${formatMoney(usd(site.price, cur), cur)}, which the bank can’t cover.`);
+    if (!payForWork(s, person, inMoney(site.price, siteMoney(p.site), cur), `${site.label}, a year`)) throw new CommandError(`A year is ${formatMoney(inMoney(site.price, siteMoney(p.site), cur), cur)}, which the bank can’t cover.`);
     career.sites ??= {};
     career.sites[p.site] = { until: s.now + 365 * MS_DAY, renews: true };
     return { until: career.sites[p.site]!.until, renews: true };
@@ -2109,7 +2128,7 @@ export function registerCareer(sim: Simulation): void {
   sim.onCommand<{ cityId: string; kind: Housing }, { cityId: string }>('career.relocate', (p, { sim: s }) => {
     const person = s.player;
     const home = homeTownOf(person);
-    if (![...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].includes(p.cityId as CareerCity)) throw new CommandError(`New York, Los Angeles or New Haven${home ? `, or home to ${CITIES.require(home).name}` : ''}.`);
+    if (![...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].includes(p.cityId as CareerCity)) throw new CommandError(`New York, Los Angeles, London or New Haven${home ? `, or home to ${CITIES.require(home).name}` : ''}.`);
     if (person.currentLocationId === p.cityId && person.home?.cityId === p.cityId && person.home.kind === p.kind) throw new CommandError('You live there already.');
     // Until 2026-09-27 a student could move to Los Angeles mid-term, and miss every class after.
     const school = person.school;

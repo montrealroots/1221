@@ -9,8 +9,13 @@ import type { Money } from '../core/money';
 import type { Skill } from './school';
 import type { Craft } from '../systems/school';
 
-/** Where the business is: the two cities agencies, casting and the work are in. */
-export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles'] as const;
+/**
+ * Where the business is: the cities agencies, casting and the work are in.
+ * London from 2026-09-29, for a British actor at home (`UK_ROLES`,
+ * `UK_AGENCIES`); until then the business was American only, and a British
+ * graduate without permission to work in the US had nowhere to work.
+ */
+export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london'] as const;
 export type CareerCity = (typeof CAREER_CITIES)[number];
 
 /**
@@ -45,6 +50,10 @@ export interface Agency {
   /** The showing it must see to offer. */
   bar: number;
   auditionsPerWeek: number;
+  /** The country its clients work in; American where not said. */
+  countryId?: string;
+  /** Its commission, where it isn't `AGENT_COMMISSION.rate`. */
+  commission?: number;
 }
 
 export const AGENCIES: readonly Agency[] = [
@@ -56,6 +65,21 @@ export const AGENCIES: readonly Agency[] = [
   { id: 'paradigm', name: 'Paradigm', tier: 2, bar: 66, auditionsPerWeek: 2.5 },
   { id: 'innovative', name: 'Innovative Artists', tier: 3, bar: 62, auditionsPerWeek: 2 },
   { id: 'buchwald', name: 'Buchwald', tier: 3, bar: 60, auditionsPerWeek: 2 },
+  // London (`UK_AGENCIES`): names checked against each agency's own site on
+  // 2026-09-29 and tiered as the trade press ranks them. What a showing must
+  // clear and the auditions a week are SLATE's estimates, by the American
+  // tiers'. The Personal Managers' Association sets no commission and only
+  // asks it agreed in writing; 12.5% is the middle of the 10% to 15% a
+  // guide gives, SLATE's reading.
+  { id: 'united-agents', name: 'United Agents', tier: 1, bar: 74, auditionsPerWeek: 3, countryId: 'uk', commission: 0.125 },
+  { id: 'curtis-brown', name: 'Curtis Brown', tier: 1, bar: 74, auditionsPerWeek: 3, countryId: 'uk', commission: 0.125 },
+  { id: 'independent-talent', name: 'Independent Talent Group', tier: 1, bar: 73, auditionsPerWeek: 3, countryId: 'uk', commission: 0.125 },
+  { id: 'hamilton-hodell', name: 'Hamilton Hodell', tier: 2, bar: 68, auditionsPerWeek: 2.5, countryId: 'uk', commission: 0.125 },
+  { id: 'conway-van-gelder-grant', name: 'Conway van Gelder Grant', tier: 2, bar: 67, auditionsPerWeek: 2.5, countryId: 'uk', commission: 0.125 },
+  { id: 'tavistock-wood', name: 'Tavistock Wood', tier: 2, bar: 66, auditionsPerWeek: 2.5, countryId: 'uk', commission: 0.125 },
+  { id: 'gordon-and-french', name: 'Gordon & French', tier: 3, bar: 62, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
+  { id: 'scott-marshall', name: 'Scott Marshall Partners', tier: 3, bar: 61, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
+  { id: 'lou-coulson', name: 'Lou Coulson Associates', tier: 3, bar: 60, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
 ];
 export const AGENCY_SOURCE = 'https://oir.yale.edu/sites/default/files/alum_activities_drama_1.pdf; https://ocs.yale.edu/resources/entertainment-talent-agency-management-company-list/';
 
@@ -156,9 +180,11 @@ export interface Role {
   label: string;
   /** Screen and stage work, or a voice session in a booth. */
   medium: 'screen' | 'stage' | 'voice';
-  union: 'sag' | 'equity';
+  union: 'sag' | 'equity' | 'equity-uk';
   /** Per day on screen, per week on stage, per episode for a series regular. */
   steps: RateSteps;
+  /** The money its steps are written in; dollars where not said. */
+  currency?: string;
   /** Days on screen; on stage, rehearsal weeks, and weeks of performances. */
   units: readonly [number, number];
   rehearsalWeeks?: readonly [number, number];
@@ -192,6 +218,10 @@ export interface Role {
   source: string;
 }
 
+const UK_TV = 'Pact/Equity TV Agreement rate card (casting directors’ guild mirror), 2024–2026 columns';
+const UK_CINEMA = 'Pact/Equity Cinema Films Agreement rates, 6 April 2025 to 5 January 2026';
+const UK_THEATRE = 'SOLT/Equity West End and UK Theatre/Equity agreements, 31 March 2025 to 5 April 2026';
+const UK_RADIO = 'Equity’s BBC audio rates summary, July 2023';
 const AMPTP = 'https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf';
 const SAGINDIE = 'https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/';
 const LORT = 'https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf';
@@ -391,6 +421,60 @@ export const ROLES: readonly Role[] = [
     units: [3, 6], bar: 50, weight: 4, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 10, reads: READS.audiobook,
     sessionHours: 6, source: AUDIOBOOKS,
   },
+  // Britain, from 2026-09-29: Equity's minimums in pounds, researched the same
+  // day (docs/research/world/research-ukacting.json). The rates' dates are the
+  // agreements'; a 2026 figure where none was published stands at its last.
+  // No British residuals are kept. What a part asks (its bar, its weight,
+  // the tiers that send clients, how long before it starts) are SLATE's
+  // estimates by the American parts like them.
+  {
+    // Pact/Equity TV: the engagement fee, per episode, covering a day; £617 in 2025 and £596 in 2024.
+    id: 'uk-tv', label: 'A Part, A British Television Series', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2024-04-01', 596_00], ['2025-04-01', 617_00], ['2026-04-01', 635_50]],
+    units: [1, 2], bar: 62, weight: 10, tiers: [1, 2, 3], selfSubmit: true, cities: ['uk-eng-london'], leadDays: 5, reads: READS.screen, basis: 'day', source: UK_TV,
+  },
+  {
+    // Pact/Equity TV: the streaming service engagement fee.
+    id: 'uk-streaming', label: 'A Part, A Series For A Streaming Service', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2026-04-01', 848_00]],
+    units: [2, 5], bar: 68, weight: 4, tiers: [1, 2], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 7, reads: READS.screen, basis: 'day', source: UK_TV,
+  },
+  {
+    // Pact/Equity cinema, £3m and over: £166 a day and the pre-bought uses, 280% more, from 6 April 2025.
+    id: 'uk-film-major', label: 'A Role, A British Feature Film', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-04-06', 630_80]],
+    units: [5, 15], bar: 76, weight: 2, tiers: [1], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 21, reads: READS.screen, basis: 'day', source: UK_CINEMA,
+  },
+  {
+    // Pact/Equity cinema, £1m to £3m: 75% more for the uses.
+    id: 'uk-film-low', label: 'A Role, A Low Budget British Film', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-04-06', 290_50]],
+    units: [3, 10], bar: 64, weight: 4, tiers: [2, 3], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 14, reads: READS.screen, basis: 'day', source: UK_CINEMA,
+  },
+  {
+    // Pact/Equity cinema, under £1m: 50% more for the uses.
+    id: 'uk-film-verylow', label: 'A Role, A Very Low Budget British Film', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-04-06', 249_00]],
+    units: [3, 10], bar: 58, weight: 5, tiers: [2, 3], selfSubmit: true, cities: ['uk-eng-london'], leadDays: 14, reads: READS.screen, basis: 'day', source: UK_CINEMA,
+  },
+  {
+    // SOLT/Equity West End, a theater of up to 799 seats, eight shows a week, 31 March 2025 to 5 April 2026.
+    id: 'uk-west-end', label: 'A Play In The West End', medium: 'stage', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-03-31', 745_57]],
+    units: [10, 16], rehearsalWeeks: [4, 5], bar: 74, weight: 2, tiers: [1, 2], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 35, reads: READS.stage, source: UK_THEATRE,
+  },
+  {
+    // UK Theatre/Equity subsidized, the same at every grade.
+    id: 'uk-subsidised', label: 'A Play, A Subsidized British Theater', medium: 'stage', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-03-31', 547_29]],
+    units: [4, 6], rehearsalWeeks: [3, 4], bar: 62, weight: 4, tiers: [2, 3], selfSubmit: true, cities: ['uk-eng-london'], leadDays: 28, reads: READS.classical, source: UK_THEATRE,
+  },
+  {
+    // BBC radio drama: a full day, two broadcasts, from Equity's 2023 summary, the latest published.
+    id: 'uk-radio', label: 'A Part, BBC Radio Drama', medium: 'voice', union: 'equity-uk', currency: 'GBP',
+    steps: [['2023-07-01', 294_00]],
+    units: [1, 1], bar: 60, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 7, reads: READS.voice ?? READS.screen, sessionHours: 8, source: UK_RADIO,
+  },
 ];
 
 /**
@@ -464,6 +548,8 @@ export const WORK_COSTS = {
     'actors-access': { label: 'Actors Access PLUS', price: 68_00 },
     backstage: { label: 'Backstage', price: 199_92 },
     'casting-networks': { label: 'Casting Networks Premium', price: 299_90 },
+    // Britain's: £210 a year with VAT (£175 before it), the performer's membership (spotlight.com, 2026-09-29).
+    spotlight: { label: 'Spotlight', price: 210_00, currency: 'GBP', countryId: 'uk' },
   },
   reel: 250_00,
   wantReel: 0.4,

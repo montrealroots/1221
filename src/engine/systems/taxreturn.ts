@@ -36,6 +36,7 @@ import { HOME_TAX } from '../content/homes';
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
+import { isoOfCountry } from './documents';
 import { drawFromBank, expenseFor, payFromBank } from './household';
 import { personalityOf } from './personality';
 import { payeeAccount } from './cash';
@@ -506,6 +507,15 @@ export function armCollection(sim: Simulation, person: Person): void {
   }
 }
 
+/** Whether a year asks a US return of them: a citizen, or anyone with wages or benefit earned in the US. */
+export function owesUsReturn(person: Person, year: number): boolean {
+  if (isoOfCountry(person.citizenshipId) === 'US' || person.citizenshipId === undefined) return true;
+  const y = earningsOf(person).years[year];
+  if (!y) return false;
+  if (y.bySource === undefined) return y.acting + y.workStudy + y.unemployment > 0;
+  return (y.bySource.us ?? 0) + y.workStudy + y.unemployment > 0;
+}
+
 export function armTaxes(sim: Simulation, person: Person): void {
   armCollection(sim, person);
   if (sim.universe.scheduled.some((i) => i.kind === TAX_SEASON_KIND && i.status === 'pending' && i.payload.personId === person.id)) return;
@@ -554,6 +564,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     // A UK tax year whose return fell due yesterday, 31 January, is settled first, into this year's foreign tax.
     settleUkYears(s, person, p.year);
+    // The US taxes a citizen on everything, and anyone else on what they earned
+    // in the US: someone who isn't a citizen and earned nothing there that year
+    // has no US return. Until 2026-09-29 a British actor working in London was
+    // given one on their pounds.
+    if (!owesUsReturn(person, year)) return;
     const figures = figuresFor(person, year, cur);
     // Nothing owed and nothing due back: no return to file.
     if (figures.balance === 0 && figures.income === 0 && figures.foreignRefund === 0) return;

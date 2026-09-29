@@ -56,6 +56,12 @@ export interface YearEarnings {
   residence?: string;
   /** Income by the town they lived in when it was paid, for a part-year return. */
   byResidence: Record<string, Money>;
+  /**
+   * Wages by the country they were earned in, from 2026-09-29: what a US
+   * return taxes of someone who isn't a citizen is what they earned there.
+   * A year from before it has none, and is read as all American.
+   */
+  bySource?: Record<string, Money>;
   /** Wages for work done in a state they didn't live in, by `livedInState>workedInTown`. */
   elsewhere: Record<string, Money>;
   /** Wages for work done abroad, and what the country withheld, by country; and by the town it was done in. */
@@ -109,6 +115,8 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   const y = yearOf(person, p.year);
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + pay.gross;
+  const source = CITIES.get(pay.where ?? home)?.countryId ?? 'us';
+  y.bySource = { ...y.bySource, [source]: (y.bySource?.[source] ?? 0) + pay.gross };
   const lived = stateOf(home);
   const country = pay.where ? CITIES.get(pay.where)?.countryId : undefined;
   if (country && country !== CITIES.get(home)?.countryId) {

@@ -632,6 +632,17 @@ part the tool cannot see.
   and a hotel night's class, the town's average rate for all classes. The
   hotel's check-out hour and its day's free cancellation are SLATE's reading
   of the usual terms.
+- **The business in London is partly SLATE's estimate.** Since 2026-09-29 a
+  British actor can work at home: London's parts at Equity's minimums in
+  pounds, its agencies, Spotlight (`UK_ROLES` and `UK_AGENCIES` in
+  `content/career.ts`). SLATE's estimates: each part's bar, weight, tiers
+  and lead time, and each agency's bar and auditions a week, set by the
+  American ones like them; the 12.5% commission, the middle of the 10% to 15%
+  a guide gives, since the Personal Managers' Association sets none. Not
+  kept: British residuals; Equity's membership, whose bands weren't read from
+  Equity itself; a British actor's Self Assessment as self-employed, since
+  pay is withheld as PAYE would be, on the year's tax at the right bands; the
+  2026 cinema and theatre rates, not yet published, which stand at 2025's.
 - **Nobody broke is fed by a food bank.** Since 2026-09-29 a body starved
   below a body mass index of 12 ends the life (`BMI_SURVIVAL_LIMIT`), and
   12 to 15 carries Zheng's 2.8. A day the bank can't pay for eats a short

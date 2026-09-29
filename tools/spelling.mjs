@@ -121,6 +121,8 @@ const REAL_NAMES = [
   'Provisional Driving Licence', 'Full Driving Licence', 'Full Licence', 'Provisional Licence', 'Learner Licence',
   'Restricted Licence', 'Unrestricted Licence', 'Novice Licence', 'Driver’s Licence', 'G1 Licence', 'G2 Licence',
   'G Licence', 'P1 Licence', 'P2 Licence',
+  // The managers' body the UK Theatre/Equity agreements are named for.
+  'UK Theatre',
   // Watch and jewelry names the maker itself spells this way, on its own American pages.
   'Bulgari Aluminium', 'Aluminium Watch', 'Aluminium Chronograph', 'Calibre 321', 'Grey Side Of The Moon', 'Grey Mother Of Pearl',
   // Christian Louboutin Beaute prints the British spelling on the tube everywhere.

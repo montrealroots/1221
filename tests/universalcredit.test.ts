@@ -78,9 +78,9 @@ describe('going home', () => {
     expect(creditRefusal(sim, sim.player) ?? '').not.toMatch(/living in Britain|recourse/);
   });
 
-  it('isn’t a move an American can make to London', () => {
+  it('isn’t a move an American can make to London: the border and the right to live there refuse it', () => {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'no-home');
-    expect(sim.execute({ kind: 'career.relocate', payload: { cityId: 'uk-eng-london', kind: 'shared' } }).error).toMatch(/New York, Los Angeles or New Haven\./);
+    expect(sim.execute({ kind: 'career.relocate', payload: { cityId: 'uk-eng-london', kind: 'shared' } }).error).toMatch(/ETA|permission to live there/);
   });
 });
 
@@ -90,7 +90,11 @@ describe('who it isn’t for', () => {
     sim.player.citizenshipId = 'us';
     expect(creditRefusal(sim, sim.player)).toMatch(/recourse to public funds/);
     expect(homeTownOf(sim.player)).toBeUndefined();
-    sim.player.citizenshipId = 'uk';
-    expect(homeTownOf(sim.player)).toBe('uk-eng-london');
+    // London is one of the business's cities, open to anyone who may live there; a home town is somewhere else.
+    expect(homeTownOf(sim.player)).toBeUndefined();
+    const dub = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'ie-lei-dublin', livesWhereBorn: false }, 'uc-dublin');
+    expect(homeTownOf(dub.player)).toBe('ie-lei-dublin');
+    dub.player.citizenshipId = 'us';
+    expect(homeTownOf(dub.player)).toBeUndefined();
   });
 });
