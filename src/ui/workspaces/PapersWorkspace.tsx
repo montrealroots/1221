@@ -83,24 +83,6 @@ function ReturnsPane() {
   const treaty = inSaveMoney(sim, ABROAD.uk.treatyUsd, 'USD');
   return (
     <div className="col gap-5">
-      {ukYears.length > 0 && (
-        <Panel title="UK Tax Years" subtitle="April to April, each settled the 31 January after">
-          <div className="col gap-2">
-            {ukYears.map(([key, gross]) => {
-              const withheld = record.ukWithheld?.[key] ?? 0;
-              const settled = record.ukSettled?.includes(key);
-              const change = (gross <= treaty ? 0 : ukTaxOn(gross, cur)) - withheld;
-              const years = `${key}–${String(Number(key) + 1).slice(2)}`;
-              return (
-                <p key={key} className="small" style={{ margin: 0 }}>
-                  {years}: {money(gross)} earned, {money(withheld)} taken by payers. {settled ? 'Settled.' : `Settles 31 January ${Number(key) + 2}: ${change < 0 ? `${money(-change)} back` : change > 0 ? `${money(change)} to pay` : 'nothing either way'}, as it stands.`}
-                </p>
-              );
-            })}
-            <Fine>Under the treaty’s {money(treaty)} in a year all that was withheld comes back; over it, the UK’s bands on it all. Source: {ABROAD.source}.</Fine>
-          </div>
-        </Panel>
-      )}
       {returns.length === 0 && (
         <Panel title="No Returns Yet">
           <p className="small" style={{ margin: 0 }}>
@@ -134,13 +116,13 @@ function ReturnsPane() {
           ['California’s Penalty For No Cover', f.mandate],
           ['Premium Tax Credit', -f.credit],
           ['Connecticut’s Premium Assistance', -(f.stateAssistance ?? 0)],
-          ['Withheld From Your Pay', -f.withheld],
+          ['Withheld From Your Pay And Pension', -f.withheld],
         ];
         return (
           <Panel
             key={r.year}
             title={`${r.year} Return`}
-            subtitle={r.filedAt !== undefined ? `Filed ${formatDate(r.filedAt, sim.zone)}` : `Due ${formatDate(r.due, sim.zone)}`}
+            subtitle={r.filedAt !== undefined ? `${r.substitute ? 'Filed by the IRS' : 'Filed'} ${formatDate(r.filedAt, sim.zone)}` : `Due ${formatDate(r.due, sim.zone)}`}
             actions={r.filedAt === undefined
               ? <Gated feature="tax.file" onClick={() => { const a = run<{ balance: number; penalty: number; paid: boolean }>('tax.file', { year: r.year }); if (a.ok) toast(a.value!.balance < 0 ? `Filed. ${money(-a.value!.balance)} comes back in ${RETURN.refundDays} days.` : a.value!.paid ? 'Filed and paid.' : 'Filed. The bank couldn’t pay it: it’s owed.', 'positive'); }}>File It</Gated>
               : r.owed ? <Gated feature="tax.pay" onClick={() => { if (run('tax.pay', { year: r.year }).ok) toast('Paid.', 'positive'); }}>Pay What’s Owed</Gated> : undefined}
@@ -162,8 +144,26 @@ function ReturnsPane() {
           </Panel>
         );
       })}
+      {ukYears.length > 0 && (
+        <Panel title="UK Tax Years" subtitle="April to April, each settled the 31 January after">
+          <div className="col gap-2">
+            {ukYears.map(([key, gross]) => {
+              const withheld = record.ukWithheld?.[key] ?? 0;
+              const settled = record.ukSettled?.includes(key);
+              const change = (gross <= treaty ? 0 : ukTaxOn(gross, cur)) - withheld;
+              const years = `${key}–${String(Number(key) + 1).slice(2)}`;
+              return (
+                <p key={key} className="small" style={{ margin: 0 }}>
+                  {years}: {money(gross)} earned, {money(withheld)} taken by payers. {settled ? 'Settled.' : `Settles 31 January ${Number(key) + 2}: ${change < 0 ? `${money(-change)} back` : change > 0 ? `${money(change)} to pay` : 'nothing either way'}, as it stands.`}
+                </p>
+              );
+            })}
+            <Fine>Under the treaty’s {money(treaty)} in a year all that was withheld comes back; over it, the UK’s bands on it all. Source: {ABROAD.source}.</Fine>
+          </div>
+        </Panel>
+      )}
       <Fine>
-        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission, dues and the job’s other costs you kept receipts for off an income of {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, from two employers paying {formatMoney(inSaveMoney(sim, RETURN.performingArtistEmployerPay, 'USD'), cur)} or more, where the costs are over a tenth of the acting wages; otherwise federally they aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under {formatMoney(inSaveMoney(sim, ABROAD.canada.treatyCad, 'CAD'), cur)} (CAD 15,000) in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past {formatMoney(inSaveMoney(sim, ABROAD.uk.payerThresholdGbp, 'GBP'), cur)} (£12,570) in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
+        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} past 60 days; paid late, 0.5% a month to a quarter, and the IRS’s interest, 7% a year compounded daily, from the due date. Left owing, the IRS writes about every five weeks, sends its final notice, and 30 days on levies your bank accounts; a return never filed that owes, it files itself a year on, yours to replace for 120 days. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission, dues and the job’s other costs you kept receipts for off an income of {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, from two employers paying {formatMoney(inSaveMoney(sim, RETURN.performingArtistEmployerPay, 'USD'), cur)} or more, where the costs are over a tenth of the acting wages; otherwise federally they aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under {formatMoney(inSaveMoney(sim, ABROAD.canada.treatyCad, 'CAD'), cur)} (CAD 15,000) in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past {formatMoney(inSaveMoney(sim, ABROAD.uk.payerThresholdGbp, 'GBP'), cur)} (£12,570) in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
       </Fine>
     </div>
   );
