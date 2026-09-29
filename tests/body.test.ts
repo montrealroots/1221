@@ -6,8 +6,9 @@
 
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { MS_DAY } from '@/engine/core/time';
 import type { Person } from '@/engine/domain/model';
-import { BODY, bmiHazard, onsetYearly } from '@/engine/content/body';
+import { BMI_SURVIVAL_LIMIT, BODY, bmiHazard, onsetYearly } from '@/engine/content/body';
 import { bmiOf, bodyDay, bodyOf, eatsOut, eatsShort, exerts, restingKcal, settle } from '@/engine/systems/body';
 import { chanceOfEndingYear } from '@/engine/systems/mortality';
 
@@ -113,5 +114,19 @@ describe('what the weight raises', () => {
     const heavy = person(40);
     heavy.body = settle({ heightCm: 170, weightKg: 120 }, heavy, at);
     expect(chanceOfEndingYear(heavy, 40, 'us') / chanceOfEndingYear(lean, 40, 'us')).toBeCloseTo(2.76, 6);
+    // At 15 and under, Zheng's pooled 2.8.
+    expect(bmiHazard(14)).toBe(2.8);
+    expect(bmiHazard(15)).toBe(1.51);
+  });
+
+  it('ends a life starved below the body mass index an adult can live at, and not one above it', () => {
+    for (const [bmi, ends] of [[11.8, true], [12.4, false]] as const) {
+      const sim = quickSave({ wealth: 'wealthy' }, `starve-${bmi}`);
+      const body = bodyOf(sim, sim.player);
+      body.weightKg = Math.round(bmi * (body.heightCm / 100) ** 2 * 10) / 10;
+      sim.advanceBy(MS_DAY + 60_000);
+      expect(sim.universe.meta.endedAt !== undefined, String(bmi)).toBe(ends);
+    }
+    expect(BMI_SURVIVAL_LIMIT).toBe(12);
   });
 });

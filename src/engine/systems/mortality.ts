@@ -34,13 +34,13 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { zonedParts, type Instant } from '../core/time';
+import { MS_DAY, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { ceilingAt } from '../content/lifespan';
 import { clamp } from '../core/rng';
 import { homeOf } from './earnings';
 import { bmiOf } from './body';
-import { bmiHazard } from '../content/body';
+import { BMI_SURVIVAL_LIMIT, bmiHazard } from '../content/body';
 
 export const END_KIND = 'life.end';
 const MS_YEAR = 365.2425 * 86_400_000;
@@ -132,6 +132,14 @@ export function ageOn(sim: Simulation, person: Person, at: Instant): number {
   const then = zonedParts(at, sim.homeZone);
   const had = then.month > born.month || (then.month === born.month && then.day >= born.day);
   return then.year - born.year - (had ? 0 : 1);
+}
+
+/** Starved past the body's limit (`BMI_SURVIVAL_LIMIT`): the life ends that day, where it isn't already ending. */
+export function starvedPastTheLimit(sim: Simulation, person: Person): boolean {
+  if (!person.body || bmiOf(person.body) >= BMI_SURVIVAL_LIMIT || sim.universe.meta.endedAt !== undefined) return false;
+  if (sim.universe.scheduled.some((i) => i.kind === END_KIND && i.status === 'pending' && (i.payload.personId ?? sim.universe.playerId) === person.id && i.at <= sim.now + MS_DAY)) return false;
+  sim.schedule({ at: sim.now + 60_000, kind: END_KIND, label: 'World Simulation', category: 'system', priority: 1, payload: { personId: person.id } });
+  return true;
 }
 
 export function registerMortality(sim: Simulation): void {

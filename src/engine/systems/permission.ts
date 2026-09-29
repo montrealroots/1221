@@ -197,7 +197,15 @@ export function permitAtTheBorder(sim: Simulation, person: Person, booking: Book
 // Unemployment on OPT
 // ---------------------------------------------------------------------------
 
-/** Whether a day falls inside a job they're on, from its first call to its last: SLATE's reading of OPT's twenty hours a week, for work that comes in engagements. */
+/**
+ * Whether a day falls inside a job they're on, from its first call to its
+ * last. Beside it, an actor an agency represents counts as employed: SEVP
+ * lets OPT be self-employment in the field, worked full time, and a
+ * represented actor auditioning, taping and booking through an agent is a
+ * performer in business. SLATE's reading of the twenty hours a week; until
+ * 2026-09-29, the day it was written, only a job's days counted, and a
+ * represented British graduate lost OPT four months in.
+ */
 function onAJob(person: Person, day: Instant): boolean {
   return careerOf(person).bookings.some((b) => (b.status === 'accepted' || b.status === 'worked') && (() => { const s = jobSpan(b); return s.from - MS_DAY < day && day <= s.to + MS_DAY; })());
 }
@@ -297,7 +305,8 @@ export function registerPermission(sim: Simulation): void {
     const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
     if (!person || !doc || !inForce(doc, item.at - MS_HOUR)) return;
     let idle = 0;
-    for (let d = 7; d >= 1; d -= 1) if (!onAJob(person, item.at - d * MS_DAY)) idle += 1;
+    const represented = careerOf(person).agencyId !== undefined;
+    for (let d = 7; d >= 1; d -= 1) if (!represented && !onAJob(person, item.at - d * MS_DAY)) idle += 1;
     doc.idleDays = (doc.idleDays ?? 0) + idle;
     if (doc.idleDays > WORK_RULES.opt.unemploymentDays) {
       doc.status = 'cancelled';

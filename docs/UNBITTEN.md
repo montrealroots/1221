@@ -619,6 +619,16 @@ part the tool cannot see.
   and nothing enforces more.
   `mayDrive` decides driving, and nothing drives yet (stage 3). A license's
   probation and points aren't kept, since SLATE has no driving offenses.
+- **Nobody broke is fed by a food bank.** Since 2026-09-29 a body starved
+  below a body mass index of 12 ends the life (`BMI_SURVIVAL_LIMIT`), and
+  12 to 15 carries Zheng's 2.8. A day the bank can't pay for eats a short
+  plate (`BODY.shortDay`), and a life with nothing coming in loses weight
+  toward that limit. In the United States a pantry or a soup kitchen feeds
+  anyone, whatever their status: Feeding America's 60,000 agencies, and a
+  charity needn't check eligibility (8 U.S.C. §1642(d)). SLATE doesn't have
+  them, so a British graduate out of permission to work, played broke,
+  starved in New York; a pantry's plate would be the fix, and its size
+  isn't researched.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
   it: nothing in the build produces an official result. It's a Base44 entity
   and a deployed function, so taking it out is a deployment and waits for the

@@ -103,6 +103,16 @@ describe('OPT', () => {
     expect(sim.universe.notifications.some((n) => n.title === 'OPT Ended')).toBe(true);
   }, 60_000);
 
+  it('counts days an agency represents them as work, a performer in business', () => {
+    const sim = graduate('opt-agent', 0);
+    careerOf(sim.player).agencyId = 'gersh';
+    sim.execute({ kind: 'documents.apply_opt', payload: { premium: true } });
+    sim.advanceBy(150 * MS_DAY);
+    const opt = permit(sim, /OPT/)!;
+    expect(opt.status).toBe('valid');
+    expect(opt.idleDays).toBe(0);
+  }, 60_000);
+
   it('counts a day on a job as work, not as time between jobs', () => {
     const sim = graduate('opt-working', 0);
     sim.execute({ kind: 'documents.apply_opt', payload: { premium: true } });

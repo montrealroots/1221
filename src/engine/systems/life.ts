@@ -22,6 +22,7 @@ import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { bodyDay, bodyOf, eatsOut, eatsShort, exerts } from './body';
+import { starvedPastTheLimit } from './mortality';
 import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
@@ -776,6 +777,7 @@ export function dailyRollover(sim: Simulation): void {
     // The day just gone on the scale: what it ate against what it spent (`systems/body.ts`).
     bodyOf(sim, person);
     bodyDay(person, sim.now);
+    if (person.id === sim.universe.playerId) starvedPastTheLimit(sim, person);
   }
 
   // After the drift, so a night paid here and one paid at the clock's next

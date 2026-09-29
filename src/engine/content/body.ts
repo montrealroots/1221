@@ -98,8 +98,21 @@ export const BODY = {
  * apart from it.
  */
 export const BMI_MORTALITY: readonly (readonly [number, number])[] = [
+  // At 15 and under, the Asian cohorts' pooled figure (Zheng et al., NEJM 2011;364:719), the only large one below 15.
+  [15, 2.8],
   [18.5, 1.51], [20, 1.13], [22.5, 1.0], [25, 1.0], [27.5, 1.07], [30, 1.2], [35, 1.45], [40, 1.94], [Number.POSITIVE_INFINITY, 2.76],
 ];
+
+/**
+ * The body mass index below which an adult starving can't live: 12, the mean
+ * of the lower limits, fatal near 13 in men and survived to about 11 by women
+ * (Henry's review, 2001, after James et al., 1988). Below 10 has been
+ * survived only in specialized care (Collins, Nature Medicine 1995), which
+ * SLATE doesn't give. Until 2026-09-29 the weight's hazard stopped at the
+ * study's lowest band, and a life played broke lived on for years at a body
+ * mass index of 12.6.
+ */
+export const BMI_SURVIVAL_LIMIT = 12;
 
 /** The hazard at a body mass index: its band's, up to each band's top. */
 export function bmiHazard(bmi: number): number {
