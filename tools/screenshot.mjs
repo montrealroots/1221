@@ -50,6 +50,16 @@ if (await start.count()) { await start.click().catch(() => {}); await page.waitF
 // walk never leaves the first step.
 const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
 if (await billed.count()) { await billed.click().catch(() => {}); await page.waitForTimeout(300); }
+// Identity asks where you were born, from a town picker: New York, the first match.
+const town = page.getByPlaceholder(/start typing a town name/i).first();
+if (await town.count()) {
+  await town.fill('New York').catch(() => {});
+  const match = page.locator('.picker-results [role="option"]').first();
+  await match.waitFor({ timeout: 5000 }).catch(() => {});
+  await match.scrollIntoViewIfNeeded().catch(() => {});
+  await match.click({ timeout: 3000 }).catch((e) => console.log('  birthplace click:', String(e).slice(0, 160)));
+  await page.waitForTimeout(400);
+}
 await shoot('02-identity');
 
 // Walk the creation steps, and say so when one of them does not open. A walk
@@ -109,6 +119,36 @@ if (await begin.count()) {
     const gotIt = page.getByRole('button', { name: /^got it$/i }).first();
     if (await gotIt.count()) { await gotIt.click().catch(() => {}); await page.waitForTimeout(400); }
     await shoot(name);
+  }
+
+  // Every chapter of the guide read first (SHOT_READ_GUIDE=1), so what it gates is open.
+  if (process.env.SHOT_READ_GUIDE) {
+    for (let i = 0; i < 80; i += 1) {
+      const read = page.getByRole('button', { name: /^i’ve read it$/i }).first();
+      if (await read.count()) { await read.click({ timeout: 2000 }).catch(() => {}); await page.waitForTimeout(300); continue; }
+      const onward = page.getByRole('button', { name: /^next: /i }).first();
+      if (await onward.count()) { await onward.click({ timeout: 2000 }).catch(() => {}); await page.waitForTimeout(300); continue; }
+      const open = page.getByRole('button', { name: /^read$/i }).first();
+      if (!(await open.count())) break;
+      await open.click({ timeout: 2000 }).catch(() => {});
+      await page.waitForTimeout(400);
+    }
+    await page.keyboard.press('Escape').catch(() => {});
+    await page.waitForTimeout(300);
+  }
+
+  // Screens asked for by name (SHOT_ROUTES, comma separated, e.g. workspace/travel):
+  // the app routes from its own state, not the address bar, so the button named
+  // for the route's last part is pressed, as a player would press it.
+  for (const route of (process.env.SHOT_ROUTES ?? '').split(',').map((r) => r.trim()).filter(Boolean)) {
+    const word = route.split('/').filter(Boolean).pop() ?? '';
+    const button = page.getByRole('button', { name: new RegExp('^' + word + '$', 'i') }).first();
+    if (await button.count()) await button.click({ timeout: 2000 }).catch(() => {});
+    else console.log('  (no button for', route, ')');
+    await page.waitForTimeout(1300);
+    const gotIt = page.getByRole('button', { name: /^got it$/i }).first();
+    if (await gotIt.count()) { await gotIt.click({ timeout: 2000 }).catch(() => {}); await page.waitForTimeout(400); }
+    await shoot('route-' + route.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, ''));
   }
 
   // There used to be a Go Anywhere palette on `/` and this walk shot it every
