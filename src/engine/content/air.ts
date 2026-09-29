@@ -43,6 +43,17 @@ export const AIR = {
   arriveBeforeInternationalMinutes: 180,
   bagUsd: (international: boolean) => (international ? 0 : 45),
   bagBasis: '$45 one way on US carriers’ economy fares in 2026; included across the ocean in standard economy',
+  /**
+   * Business or first (from 2026-09-29): IATA's premium fares, about five
+   * times economy's on average (IATA, "The Resurgence of Premium Class
+   * Travel", 26 July 2024), worldwide, first and business together. No one
+   * publishes the multiple by route or for the US alone, so SLATE carries the
+   * world's. Checked bags come with it; Delta calls them complimentary without
+   * a count, and SLATE reads two.
+   */
+  premiumMultiple: 5,
+  premiumBags: 2,
+  premiumBasis: 'Business or first: IATA’s premium fares, about five times economy’s worldwide (26 July 2024); SLATE carries the world’s multiple, none being published by route. Two checked bags come with it, SLATE’s reading of the carriers’ “complimentary”.',
   lateShare: 0.219,
   lateMinutesAverage: 72.9,
   canceledShare: 0.0147,
@@ -66,7 +77,7 @@ export function fareUsd(a: Airport, b: Airport): { usd: number; basis: string } 
   const mb = marketOf(b.iata);
   if (ma && mb && ma !== mb) {
     const pair = DOT_PAIRS[[ma, mb].sort().join('|')];
-    if (pair) return { usd: pair.usd, basis: `The DOT’s average fare between the two markets, Q1 2026.` };
+    if (pair) return { usd: pair.usd, basis: `The DOT’s average fare between the two markets, Q1 2026, which counts first-class fares paid with the rest.` };
   }
   const miles = distanceKm(a, b) / KM_PER_MILE;
   const domestic = a.country === 'US' && b.country === 'US';

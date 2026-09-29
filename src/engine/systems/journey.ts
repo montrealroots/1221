@@ -35,6 +35,7 @@ import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { fareOf, planTrain, railRouteById, railRoutes, trainFate } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'arrival';
+export type Cabin = 'economy' | 'premium';
 
 export interface JourneyLeg {
   mode: LegMode;
@@ -72,6 +73,8 @@ export interface Journey {
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
   hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant };
+  /** Business or first, where not economy (from 2026-09-29). */
+  cabin?: Cabin;
   /** By train, the route's id; by air where not said (from 2026-09-29). */
   by?: string;
   /** A trip the career makes (from 2026-09-29): the job's, who paid the fares, and where they sleep on arrival. */
@@ -146,7 +149,8 @@ export const DEPARTURES = AIR.departureHours;
  * A journey's legs, from leaving a town for its airport on a day at one of
  * the day's departures, to reaching the other town: the plan it's booked on.
  */
-export function planJourney(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number, bags: number): JourneyLeg[] | string {
+export function planJourney(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number, bags: number, cabin: Cabin = 'economy'): JourneyLeg[] | string {
+  const premium = cabin === 'premium';
   const abroad = isoOfCity(fromCity) !== isoOfCity(toCity);
   const from = tripAirportFor(fromCity, abroad);
   const to = tripAirportFor(toCity, abroad);
@@ -162,14 +166,15 @@ export function planJourney(sim: Simulation, fromCity: string, toCity: string, d
   const checkIn = (international ? AIR.arriveBeforeInternationalMinutes : AIR.arriveBeforeDomesticMinutes) * 60_000;
   const atAirport = depart - checkIn;
   legs.push({ mode: 'ground', from: fromCity, to: from.airport.iata, departAt: atAirport - out.minutes * 60_000, arriveAt: atAirport, fare: inSave(sim, out.amount, out.currency), basis: out.basis });
-  legs.push({ mode: 'check-in', from: from.airport.iata, to: from.airport.iata, departAt: atAirport, arriveAt: depart, fare: bags > 0 ? inSave(sim, AIR.bagUsd(international) * bags) : 0, basis: `${international ? 'Three hours' : 'Two hours'} before, as airlines ask${bags > 0 ? `; a checked bag, ${AIR.bagBasis}` : ''}.` });
+  const paidBags = premium ? Math.max(0, bags - AIR.premiumBags) : bags;
+  legs.push({ mode: 'check-in', from: from.airport.iata, to: from.airport.iata, departAt: atAirport, arriveAt: depart, fare: paidBags > 0 ? inSave(sim, AIR.bagUsd(international) * paidBags) : 0, basis: `${international ? 'Three hours' : 'Two hours'} before, as airlines ask${bags > 0 ? (premium ? '; the bags come with the cabin' : `; a checked bag, ${AIR.bagBasis}`) : ''}.` });
   let t = depart;
   for (let i = 0; i + 1 < path.length; i += 1) {
     const a = path[i]!;
     const b = path[i + 1]!;
     const minutes = blockMinutes(a, b);
     const fare = fareUsd(a, b);
-    legs.push({ mode: 'flight', from: a.iata, to: b.iata, departAt: t, arriveAt: t + minutes * 60_000, fare: inSave(sim, fare.usd), basis: `${fare.basis} The schedule and the route are SLATE’s model; about ${Math.round(minutes / 60 * 10) / 10} hours.` });
+    legs.push({ mode: 'flight', from: a.iata, to: b.iata, departAt: t, arriveAt: t + minutes * 60_000, fare: inSave(sim, fare.usd * (premium ? AIR.premiumMultiple : 1)), basis: `${fare.basis}${premium ? ` ${AIR.premiumBasis}` : ''} The schedule and the route are SLATE’s model; about ${Math.round(minutes / 60 * 10) / 10} hours.` });
     t += minutes * 60_000 + (i + 2 < path.length ? AIR.connectionMinutes * 60_000 : 0);
   }
   const last = path[path.length - 1]!;
@@ -236,8 +241,8 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
 }
 
 /** A journey's legs by air, or by a train's route: `by` is the route's id, or nothing for air. */
-export function planBy(sim: Simulation, by: string | undefined, fromCity: string, toCity: string, day: Instant, slot: number, bags: number): JourneyLeg[] | string {
-  if (!by || by === 'air') return planJourney(sim, fromCity, toCity, day, slot, bags);
+export function planBy(sim: Simulation, by: string | undefined, fromCity: string, toCity: string, day: Instant, slot: number, bags: number, cabin: Cabin = 'economy'): JourneyLeg[] | string {
+  if (!by || by === 'air') return planJourney(sim, fromCity, toCity, day, slot, bags, cabin);
   const route = railRouteById(by);
   if (!route || !railRoutes(fromCity, toCity).includes(route)) return 'That train doesn’t run between those towns.';
   return planTrain(sim, route, fromCity, day, slot);
@@ -291,7 +296,7 @@ export function startCareerJourney(sim: Simulation, person: Person, toCity: stri
 }
 
 export function registerJourneys(sim: Simulation): void {
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -300,8 +305,10 @@ export function registerJourneys(sim: Simulation): void {
     const bags = Math.max(0, Math.min(2, Number(p?.bags ?? 0)));
     const round = p?.returnDay !== undefined && p?.returnDay !== null;
     const by = p?.by && p.by !== 'air' ? String(p.by) : undefined;
-    let out = planBy(s, by, fromCity, toCity, day, Number(p?.slot ?? 0), bags);
-    let back = round ? planBy(s, by, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags) : undefined;
+    // A cabin is the airlines': a train is booked as it comes.
+    const cabin: Cabin = !by && p?.cabin === 'premium' ? 'premium' : 'economy';
+    let out = planBy(s, by, fromCity, toCity, day, Number(p?.slot ?? 0), bags, cabin);
+    let back = round ? planBy(s, by, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags, cabin) : undefined;
     if (typeof out === 'string') throw new CommandError(out);
     if (typeof back === 'string') throw new CommandError(back);
     const arriveOut = out[out.length - 1]!.arriveAt;
@@ -325,7 +332,7 @@ export function registerJourneys(sim: Simulation): void {
       const id = s.nextId('journey');
       const leaveAt = legs[0]!.departAt;
       const arriveAt = legs[legs.length - 1]!.arriveAt;
-      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(by ? { by } : {}), ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}) };
+      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(by ? { by } : {}), ...(cabin === 'premium' ? { cabin } : {}), ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}) };
       journeysOf(person).push(j);
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;

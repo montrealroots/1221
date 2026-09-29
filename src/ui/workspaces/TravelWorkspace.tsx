@@ -39,6 +39,7 @@ export function TravelWorkspace() {
   const [days, setDays] = useState(14);
   const [slot, setSlot] = useState(1);
   const [by, setBy] = useState('air');
+  const [cabin, setCabin] = useState<'economy' | 'premium'>('economy');
   const [bags, setBags] = useState(0);
   const [nights, setNights] = useState(3);
   const [daysThere, setDaysThere] = useState(4);
@@ -54,8 +55,9 @@ export function TravelWorkspace() {
   const pick = Math.min(slot, slots.length - 1);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
   const round = daysThere > 0;
-  const outLegs = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags) : 'Choose where.';
-  const backLegs = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags) : undefined;
+  const seat = mode ? 'economy' : cabin;
+  const outLegs = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
+  const backLegs = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat) : undefined;
   // A round trip's discount is the airlines'; a train's return is two singles.
   const outPlan = typeof outLegs === 'string' ? undefined : round && !mode ? asRoundTrip(outLegs) : outLegs;
   const backPlan = backLegs && typeof backLegs !== 'string' ? (mode ? backLegs : asRoundTrip(backLegs)) : undefined;
@@ -112,6 +114,13 @@ export function TravelWorkspace() {
                 </select>
               </div>
               <div className="field">
+                <label htmlFor="travel-cabin">Cabin</label>
+                <select id="travel-cabin" value={seat} disabled={Boolean(mode)} onChange={(e) => setCabin(e.target.value === 'premium' ? 'premium' : 'economy')}>
+                  <option value="economy">Economy</option>
+                  <option value="premium">Business Or First</option>
+                </select>
+              </div>
+              <div className="field">
                 <label htmlFor="travel-bags">Checked Bags</label>
                 <select id="travel-bags" value={mode ? 0 : bags} disabled={Boolean(mode)} onChange={(e) => setBags(Number(e.target.value))}>
                   {[0, 1, 2].map((n) => <option key={n} value={n}>{n}</option>)}
@@ -164,7 +173,7 @@ export function TravelWorkspace() {
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : {}), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }) });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>
@@ -182,7 +191,7 @@ export function TravelWorkspace() {
                 <tbody>
                   {journeys.map((j) => (
                     <tr key={j.id}>
-                      <td>{place(j.toCity)}{j.by ? `, By ${railRouteById(j.by)?.service ?? 'Train'}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}</td>
+                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, By ${railRouteById(j.by)?.service ?? 'Train'}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}</td>
                       <td>{formatDateTime(j.leaveAt, CITIES.require(j.fromCity).timeZone)}</td>
                       <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
                       <td className="mono">{money(j.total)}</td>

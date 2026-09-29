@@ -90,7 +90,12 @@ Evidence: `tests/careertrips.test.ts` (3): the plan to London, none already gone
 
 Evidence: `content/rail.ts`, `systems/rail.ts`, `docs/research/world/research-rail.json`; `tests/rail.test.ts` (8): Amtrak's fares from its own figures, Metro-North's peak, every route both ways, Eurostar's legs and border before boarding, trains late at the operator's rate, a booked Acela to Washington, Amtrak's refund. 12 mutations, all killed.
 
-Open in Stage 2: buses and a car of one's own as legs; a cabin other than economy; jet lag; train cancellations; Belfast, Edinburgh and Toluca, not yet SLATE's towns.
+#### Stage 2d: business or first (done 2026-09-29)
+- A flight can be booked business or first, at IATA's premium fares, about five times economy's worldwide (26 July 2024), with two checked bags that come with it (SLATE's reading of the carriers' "complimentary"). No one publishes the multiple by route or for the US alone. The DOT's average fare, which SLATE carries as economy, counts first-class fares too, by a share it doesn't publish; each fare now says so.
+
+Evidence: `AIR.premiumMultiple` in `content/air.ts`, `planJourney`'s cabin; `tests/journey.test.ts` (a cabin other than economy). 3 mutations, all killed. The research is `docs/research/world/research-cabins-car.json`.
+
+Open in Stage 2, and why: a car of one's own as a leg waits for Stage 3, as SLATE has no vehicles to drive (AAA's 2026 costs, the IRS rate, fuel, parking and tolls are researched); jet lag's recovery is published (the CDC: 1.5 hours a day west, 1 east, from two time zones), but what it does to someone's work is measured only on athletes, so what it would change in SLATE isn't yet settled; buses; train cancellations; Belfast, Edinburgh and Toluca, not yet SLATE's towns.
 ### Stages 3-8 (to be detailed in turn)
 
 ## Coverage record

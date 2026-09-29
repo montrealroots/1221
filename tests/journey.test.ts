@@ -268,3 +268,29 @@ describe('a round trip', () => {
     expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.payload.journeyId === back.id)).toBe(false);
   }, 60_000);
 });
+
+describe('a cabin other than economy', () => {
+  it('prices business or first at IATA’s five times economy, with two bags that come with it, and books it', () => {
+    const sim = life('cabin-premium');
+    papers(sim);
+    const day = saturday(sim, 10);
+    const economy = planJourney(sim, 'us-ny-newyork', 'us-ca-losangeles', day, 1, 2);
+    const premium = planJourney(sim, 'us-ny-newyork', 'us-ca-losangeles', day, 1, 2, 'premium');
+    if (typeof economy === 'string' || typeof premium === 'string') throw new Error('no plan');
+    const flight = (legs: typeof economy) => legs.filter((l) => l.mode === 'flight').reduce((a, l) => a + l.fare, 0);
+    const bags = (legs: typeof economy) => legs.find((l) => l.mode === 'check-in')!.fare;
+    expect(AIR.premiumMultiple).toBe(5);
+    expect(Math.abs(flight(premium) - flight(economy) * 5)).toBeLessThanOrEqual(5);
+    expect(bags(economy)).toBeGreaterThan(0);
+    expect(bags(premium)).toBe(0);
+    const r = book(sim, { toCity: 'us-ca-losangeles', day, slot: 1, bags: 2, nights: 2, cabin: 'premium' });
+    expect(r.ok, r.error).toBe(true);
+    expect(journey(sim, r.value!.journeyId).cabin).toBe('premium');
+    // A train takes no cabin: the Acela booked as business or first is booked as it comes.
+    const other = life('cabin-train');
+    papers(other);
+    const t = book(other, { toCity: 'us-dc-washington', day, slot: 4, nights: 1, by: 'nec-nyp-was-acela', cabin: 'premium' });
+    expect(t.ok, t.error).toBe(true);
+    expect(journey(other, t.value!.journeyId).cabin).toBeUndefined();
+  });
+});
