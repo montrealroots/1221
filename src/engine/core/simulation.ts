@@ -827,9 +827,23 @@ function restoreObject(live: Record<string, unknown>, before: Record<string, unk
       continue;
     }
     if (Array.isArray(wasValue) && Array.isArray(isValue)) {
-      // Keep the array object itself; anything holding it stays correct.
+      // Keep the array object itself, and each record in it, restored in place:
+      // by its id, or its name, where it has one, else by its place. Until 2026-09-28 the
+      // snapshot's copies went in, and after any refused command a class's
+      // classmates, a career's bookings and a person's homes were new objects
+      // that nothing holding the old ones could see.
+      const keyOf = (entry: Record<string, unknown>) => entry['id'] ?? entry['name'];
+      const byKey = new Map<unknown, Record<string, unknown>>();
+      for (const entry of isValue) if (isPlainRecord(entry) && keyOf(entry) !== undefined) byKey.set(keyOf(entry), entry);
+      const restored = wasValue.map((was, i) => {
+        if (!isPlainRecord(was)) return was;
+        const live = keyOf(was) !== undefined ? byKey.get(keyOf(was)) : isValue[i];
+        if (!isPlainRecord(live)) return was;
+        restoreObject(live, was);
+        return live;
+      });
       isValue.length = 0;
-      for (const entry of wasValue) isValue.push(entry);
+      for (const entry of restored) isValue.push(entry);
       continue;
     }
     live[field] = wasValue;
