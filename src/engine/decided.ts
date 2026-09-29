@@ -31,6 +31,9 @@ import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
+import { startingDocuments } from './systems/documents';
+import { passesTest } from './systems/licensing';
+import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
 import { illnessWeek } from './systems/health';
@@ -233,6 +236,35 @@ function livingIn(cityId: string, seed: number): Simulation {
 function atYale(seed: number): Simulation {
   return quickSave({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork' }, `yale-${seed}`);
 }
+
+defineDecider<{ sim: Simulation; born: string }, string>({
+  id: 'documents.start',
+  decides: 'The papers a life begins with: a US citizen’s passport and birth state’s license at the shares that hold them, and when each was issued (STARTING).',
+  drawnIn: 'src/engine/systems/documents.ts',
+  reads: {
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), born: 'us-ny-newyork' }),
+  decide: ({ sim }) => { delete sim.player.documents; startingDocuments(sim, sim.player); return ((sim.player.documents as { kind: string; issuedAt?: number }[] | undefined) ?? []).map((d) => `${d.kind}@${Math.round((d.issuedAt ?? 0) / 86_400_000)}`).join(' ') || 'none'; },
+});
+
+/** Every driving test on a path, with its jurisdiction. */
+const TESTS = Object.entries(LICENSE_PATHS).flatMap(([j, p]) => p.steps.filter((x) => x.kind === 'test').map((x) => [j, x] as const));
+
+defineDecider<{ sim: Simulation; test: number; attempt: number }, string>({
+  id: 'documents.test',
+  decides: 'Whether an attempt at a driving test passes, at the rate its authority publishes or SLATE’s mean of those published (PASS_RATES).',
+  drawnIn: 'src/engine/systems/licensing.ts',
+  reads: {
+    // Which test: each has its own rate and draw.
+    test: (o, t) => ({ ...o, test: Math.round(t * (TESTS.length - 1)) }),
+    // Each attempt is drawn on its own.
+    attempt: (o, t) => ({ ...o, attempt: 1 + Math.round(t * 5) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), test: seed % TESTS.length, attempt: 1 + (seed % 3) }),
+  decide: ({ sim, test, attempt }) => { const [j, step] = TESTS[test]!; return passesTest(sim, sim.player, j, step, attempt) ? 'passed' : 'failed'; },
+});
 
 defineDecider<{ sim: Simulation }, string>({
   id: 'attributes.presence',

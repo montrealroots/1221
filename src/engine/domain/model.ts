@@ -174,6 +174,14 @@ export interface Person {
   stay?: Stay;
   /** Their clothes, the state of the place, and a cleaner (`systems/dwelling.ts`). From 2026-09-28. */
   living?: Living;
+  /**
+   * The papers they hold, each a record with its issuer, number, dates and
+   * status: passports, travel authorizations, visas and permissions to stay
+   * or work, driving licenses (`systems/documents.ts`). From 2026-09-29.
+   */
+  documents?: import('../systems/documents').PersonDocument[];
+  /** Their progress toward a driving license where they live (`systems/licensing.ts`). */
+  licensing?: import('../systems/licensing').LicensingRecord;
   /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
   exclusionUsedAt?: number;
   /** How many homes they've bought: England's first-time buyer's relief is for the first. */

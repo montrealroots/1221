@@ -986,7 +986,7 @@ function reaches(sim: Simulation, person: Person, when: Instant, cityId: string,
   return payForWork(sim, person, exchange(trip.fare, trip.currency, cur) ?? trip.fare, `The train to ${CITIES.get(cityId)?.name ?? 'the city'} and back: ${memo}`);
 }
 
-function present(person: Person, when: Instant, cityId?: string): boolean {
+export function present(person: Person, when: Instant, cityId?: string): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're nowhere else (`systems/health.ts`).
   return !asleep && !inHospital(person, when) && !laidUp(person, when) && (cityId === undefined || person.currentLocationId === cityId);

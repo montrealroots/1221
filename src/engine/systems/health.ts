@@ -309,7 +309,7 @@ export function onsetMonth(sim: Simulation, person: Person, at: Instant): Condit
     const chance = onsetYearly(condition, age, bmi) / 12;
     if (rng.next() >= chance) continue;
     (h.chronic ??= {})[condition] = { treated: true };
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Taxes And Cover stops it.`, importance: 75, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Papers stops it.`, importance: 75, route: '/workspace/papers' });
     return condition;
   }
   return undefined;

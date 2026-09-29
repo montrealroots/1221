@@ -401,7 +401,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/calendar': 'Calendar',
   '/workspace/school': 'Your School',
   '/workspace/career': 'Your Career',
-  '/workspace/papers': 'Taxes And Cover',
+  '/workspace/papers': 'Papers',
   '/workspace/homes': 'Homes',
 };
 

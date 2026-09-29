@@ -54,7 +54,7 @@ const SPELLINGS = {
   memorise: 'memorize', memorised: 'memorized', criticise: 'criticize', criticised: 'criticized',
   emphasise: 'emphasize', emphasised: 'emphasized', specialise: 'specialize', specialised: 'specialized',
   summarise: 'summarize', summarised: 'summarized',
-  defence: 'defense', offence: 'offense', pretence: 'pretense', licence: 'license',
+  defence: 'defense', offence: 'offense', pretence: 'pretense', licence: 'license', licences: 'licenses', licenced: 'licensed',
   practise: 'practice', practising: 'practicing',
   travelled: 'traveled', travelling: 'traveling', traveller: 'traveler', travellers: 'travelers',
   cancelled: 'canceled', cancelling: 'canceling', modelled: 'modeled', modelling: 'modeling',
@@ -115,6 +115,12 @@ const REAL_NAMES = [
   'Micro Colour', 'Face Colour', 'Cream Colour Base', 'Duo Fibre', 'Fibre Gel', 'Bravia Theatre',
   // Offices and insurers that spell themselves that way.
   'National Driver Licence Service', 'Driving Licence Testing Centre', 'Defence Health',
+  // Driving documents as the authority that issues them names them, in its own
+  // English: the DVLA and DVA, the RSA, Ontario, ICBC, Transport for NSW and
+  // NZTA (src/engine/content/licensepaths.ts). A translated name is American.
+  'Provisional Driving Licence', 'Full Driving Licence', 'Full Licence', 'Provisional Licence', 'Learner Licence',
+  'Restricted Licence', 'Unrestricted Licence', 'Novice Licence', 'Driver’s Licence', 'G1 Licence', 'G2 Licence',
+  'G Licence', 'P1 Licence', 'P2 Licence',
   // Watch and jewelry names the maker itself spells this way, on its own American pages.
   'Bulgari Aluminium', 'Aluminium Watch', 'Aluminium Chronograph', 'Calibre 321', 'Grey Side Of The Moon', 'Grey Mother Of Pearl',
   // Christian Louboutin Beaute prints the British spelling on the tube everywhere.

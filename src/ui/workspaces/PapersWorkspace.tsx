@@ -1,6 +1,6 @@
 /**
- * SLATE — taxes and cover: the returns, health cover after school, and
- * unemployment insurance (`systems/taxreturn.ts`, `systems/health.ts`,
+ * SLATE — papers: the returns, health cover after school, unemployment
+ * insurance, and since 2026-09-29 the passport, travel and driving papers (`systems/taxreturn.ts`, `systems/health.ts`,
  * `systems/unemployment.ts`), in three tabs. Every figure is one those
  * systems read or write: each year's return worked out line by line, what
  * covers them this month and what it costs, and a claim's weekly benefit and
@@ -24,26 +24,29 @@ import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
 import { zonedParts } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { working } from '@/engine/systems/career';
+import { DrivingPane, PassportPane } from '@/ui/papers/Documents';
 
-type PapersTab = 'returns' | 'health' | 'benefits';
+type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'driving';
 
 const PAPERS_TABS: readonly { id: PapersTab; label: string }[] = [
   { id: 'returns', label: 'Tax Returns' },
   { id: 'health', label: 'Health Cover' },
   { id: 'benefits', label: 'Unemployment' },
+  { id: 'passport', label: 'Passport And Travel' },
+  { id: 'driving', label: 'Driving' },
 ];
 
 export function PapersWorkspace() {
   const [tab, setTab] = useState<PapersTab>('returns');
-  const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane /> };
+  const panes: Record<PapersTab, JSX.Element> = { returns: <ReturnsPane />, health: <HealthPane />, benefits: <BenefitsPane />, passport: <PassportPane />, driving: <DrivingPane /> };
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Money</div>
-        <h1>Taxes And Cover</h1>
-        <p className="muted">Your returns, your health cover, and unemployment between jobs.</p>
+        <div className="eyebrow">Your Affairs</div>
+        <h1>Papers</h1>
+        <p className="muted">Your returns, your health cover, unemployment between jobs, your passport and your license.</p>
       </div>
-      <div className="tabs" role="tablist" aria-label="Taxes And Cover">
+      <div className="tabs" role="tablist" aria-label="Papers">
         {PAPERS_TABS.map((one, i) => (
           <button
             key={one.id} id={`papers-tab-${one.id}`} type="button" role="tab" className="tab"

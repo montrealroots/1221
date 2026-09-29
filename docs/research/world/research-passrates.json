@@ -1,0 +1,389 @@
+[
+  {
+    "id": "gb",
+    "theory": {
+      "rate": 0.448,
+      "firstTimeRate": null,
+      "basis": "Car theory tests passed / conducted, all attempts, Great Britain (DVSA table DRT111A): 1,311,480 / 2,924,430. FY2024-25 was 0.449. DVSA does not publish a first-attempt theory rate.",
+      "period": "Financial year April 2025 - March 2026",
+      "source": "https://assets.publishing.service.gov.uk/media/6a86e328b0504df9f2c89863/drt111a-car-theory-tests-great-britain.ods (page: https://www.gov.uk/government/statistical-data-sets/driving-test-and-theory-test-data-cars, updated 9 Sep 2026)"
+    },
+    "practical": {
+      "rate": 0.500,
+      "firstTimeRate": 0.505,
+      "basis": "Car practical tests passed / conducted, all attempts (DRT121A): 1,000,043 / 1,998,621. First attempt (DRT121D, attempt 1): 497,361 / 984,415. FY2024-25 overall was 0.487; Q1 2026-27 (Apr-Jun 2026) running 0.513.",
+      "period": "Financial year April 2025 - March 2026",
+      "source": "https://assets.publishing.service.gov.uk/media/6a8730fb8346e5bc7c6db21f/drt121a-car-driving-tests-great-britain.ods ; https://assets.publishing.service.gov.uk/media/6a9e8b1b01bbff0bf8f97ea5/drt121d-car-driving-tests-attempts-year-gender-age-great-britain.ods"
+    },
+    "uncertain": []
+  },
+  {
+    "id": "gb-nir",
+    "theory": {
+      "rate": 0.432,
+      "firstTimeRate": null,
+      "basis": "DVA private car theory tests passed / conducted (DfI Table 3.4/3.6): 35,275 / 81,590. No first-attempt split published.",
+      "period": "Financial year April 2025 - March 2026",
+      "source": "https://www.infrastructure-ni.gov.uk/sites/default/files/2026-05/dfi-driver-vehicle-operator-and-enforcement-statistics-2025-26-q4-tables-section-3-theory-testing_0.xlsx"
+    },
+    "practical": {
+      "rate": 0.527,
+      "firstTimeRate": null,
+      "basis": "DVA private car driving tests pass rate (DfI Table 4.5), 58,424 private car tests conducted. No first-attempt split published.",
+      "period": "Financial year April 2025 - March 2026",
+      "source": "https://www.infrastructure-ni.gov.uk/sites/default/files/2026-05/dfi-driver-vehicle-operator-and-enforcement-statistics-2025-26-q4-tables-section-4-driver-testing_0.xlsx"
+    },
+    "uncertain": [
+      "Press and third-party sites quote 55.8% for NI in 2024/25; the DfI table for 2025/26 gives 52.7% for private cars. The DfI figure is used."
+    ]
+  },
+  {
+    "id": "ie",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "No official national pass rate for the Driver Theory Test (run by Prometric for the RSA) was found.",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": 0.518,
+      "firstTimeRate": null,
+      "basis": "Category B (car or light van) tests, national. Derived from CSO/RSA table ROA31 monthly pass rates weighted by monthly tests delivered: about 123,574 passes / 238,409 tests. The 12 months Sep 2025 - Aug 2026 give 0.524. Monthly rates run 49-53%.",
+      "period": "Calendar year 2025",
+      "source": "https://data.gov.ie/dataset/roa31-driving-tests-delivered-and-pass-rate (CSO PxStat ROA31: https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/ROA31/CSV/1.0/en)"
+    },
+    "uncertain": [
+      "Theory: no official figure found. Third-party guides quote about 55% or 67% without a source, so neither is used.",
+      "Practical: the annual figure is my weighting of official monthly rates. The RSA does not publish it as one number. rsa.ie/road-safety/statistics/driving-test refused automated access (403)."
+    ]
+  },
+  {
+    "id": "us-ny",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "NY DMV publishes no permit (written) test pass rate.",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": 0.57,
+      "firstTimeRate": null,
+      "basis": "Statewide road test failure rate of 43% (so 57% passed) in NY DMV data obtained by Gothamist. The NYC failure rate was 48%.",
+      "period": "2024 (reported 29 Nov 2024, year to date)",
+      "source": "https://gothamist.com/news/nearly-half-of-nycs-aspiring-drivers-failed-their-dmv-road-tests-this-year"
+    },
+    "uncertain": [
+      "Practical: DMV data reported secondhand by a news outlet, not a DMV publication. Rounded to whole percent. Probably a partial year.",
+      "Theory: no official figure. Sites like dmvpermit.com publish state 'pass rates' built from practice-test users, not DMV data."
+    ]
+  },
+  {
+    "id": "us-ca",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "No current official knowledge-test pass rate found. Older CA DMV research reports on the Class C knowledge test exist but are not current annual statistics.",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": 0.668,
+      "firstTimeRate": null,
+      "basis": "Non-commercial drive tests passed / taken, all attempts: 66.83% of 1,269,906 tests (421,284 failed). Attributed to the CA DMV 'FO21 Drive Test Data' report. 2024 was 66.74%.",
+      "period": "Calendar year 2025",
+      "source": "https://zutobi.com/us/driver-guides/california-driving-test-pass-rates-1-in-3-fail-official-dmv-data (cites California DMV FO21 Drive Test Data report)"
+    },
+    "uncertain": [
+      "Practical: the DMV data was obtained and reported by a third party (Zutobi), and I could not find the FO21 report published on dmv.ca.gov. It covers all non-commercial drive tests, which may include motorcycle and renewal tests, not only first-licence Class C.",
+      "Theory: a figure of about 60.5% for first-time new applicants circulates, but its source and year could not be verified."
+    ]
+  },
+  {
+    "id": "us-ct",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "CT DMV publishes no knowledge-test pass rate. There is no data.ct.gov dataset.",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "CT DMV publishes no road-test pass rate.",
+      "period": null,
+      "source": null
+    },
+    "uncertain": [
+      "A claim that about 30% fail the CT knowledge test on the first attempt appears only on practice-test sites, without an official source. Not used."
+    ]
+  },
+  {
+    "id": "ca-on",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "MTO/DriveTest publishes no G1 knowledge-test pass rate.",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": 0.69,
+      "firstTimeRate": null,
+      "basis": "Average road-test pass rate across Ontario DriveTest centres, G2 and G road tests combined, in MTO data released to CBC Hamilton under freedom of information. Centres ranged from 59% (Brampton) to 88% (Bancroft).",
+      "period": "2022 (FOI data published 2023)",
+      "source": "https://www.cbc.ca/news/canada/hamilton/ontario-drive-test-pass-rates-1.6928311"
+    },
+    "uncertain": [
+      "Practical: combines G2 (first road test) and G (second road test). It may be an unweighted average of centres. The data is from 2022 and was obtained by FOI, not routinely published.",
+      "Theory: third-party sites claim 50-70% fail the G1 test, with no official source. Not used."
+    ]
+  },
+  {
+    "id": "ca-bc",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "ICBC publishes no knowledge-test pass rate.",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": 0.50,
+      "firstTimeRate": null,
+      "basis": "ICBC: 'the pass rate for Class 5 and 7 licences was about 50%' last fiscal year. It rose to 58% in the early months of FY2020/21. In June 2023 an ICBC manager said about half of new drivers fail their first road test and that this had held for years.",
+      "period": "ICBC fiscal year 2019/20 (stated Aug 2020); corroborated June 2023",
+      "source": "https://www.icbc.com/about-icbc/newsroom/2020-aug28"
+    },
+    "uncertain": [
+      "Practical: an approximate figure ('about 50%') stated by ICBC, not a published statistic. Classes 5 and 7 combined. Dated."
+    ]
+  },
+  {
+    "id": "au-nsw",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "TfNSW open data has Driver Knowledge Test (C Knowledge Test) results, but most cells are suppressed ('<=5') at the published level of detail, so a rate cannot be recovered reliably. Pass rate on unsuppressed cells alone is 0.795; imputing suppressed cells at 3 gives 0.618; full bounds are 0.18-0.96.",
+      "period": "Calendar year 2025",
+      "source": "https://opendata.transport.nsw.gov.au/data/dataset/edb4bd99-0d9f-4857-be19-7eb3704259b0/resource/417488f7-b266-455c-b921-c212082203a6/download/tfnsw_driver_licence_tests_2025.zip"
+    },
+    "practical": {
+      "rate": 0.54,
+      "firstTimeRate": 0.55,
+      "basis": "Derived from TfNSW open data (C Class Driving Test, all months of 2025). Unsuppressed cells: 124,984 passes, 91,746 fails (0.577). 37,447 pass cells and 36,818 fail cells are suppressed ('<=5'); imputing each at 3 gives 0.540 overall and 0.549 on attempt 1 (unsuppressed attempt-1 cells alone: 0.578).",
+      "period": "Calendar year 2025",
+      "source": "https://opendata.transport.nsw.gov.au/data/dataset/edb4bd99-0d9f-4857-be19-7eb3704259b0/resource/417488f7-b266-455c-b921-c212082203a6/download/tfnsw_driver_licence_tests_2025.zip"
+    },
+    "uncertain": [
+      "Practical: my estimate from official microdata with small-cell suppression. The true value is most likely 0.54-0.58. TfNSW's own pass-rate figure is only on its interactive Registration and Licensing Statistics Portal, which was not machine-readable here.",
+      "Theory: suppression is too heavy to state a figure. Third-party claims of about 95% or 70% are unsupported."
+    ]
+  },
+  {
+    "id": "nz",
+    "theory": {
+      "rate": 0.643,
+      "firstTimeRate": null,
+      "basis": "Learner licence (theory) tests passed / taken, all regions and ages: 122,024 / 189,780.",
+      "period": "Calendar year 2025",
+      "source": "https://opendata-nzta.opendata.arcgis.com/datasets/NZTA::driver-licence-pass-rates-dataset/about (FeatureServer table DLPRFeb2026, updated Feb 2026)"
+    },
+    "practical": {
+      "rate": 0.533,
+      "firstTimeRate": null,
+      "basis": "Restricted licence practical test (the first road test) passed / taken: 79,569 / 149,229. The full licence test (the second road test) was 103,053 / 172,550 = 0.597.",
+      "period": "Calendar year 2025",
+      "source": "https://opendata-nzta.opendata.arcgis.com/datasets/NZTA::driver-licence-pass-rates-dataset/about"
+    },
+    "uncertain": [
+      "The dataset does not label a licence class. Earlier NZTA OIA releases of the same series were Class 1 (car), so it is taken to be car-only. It gives all-attempt rates with no first-attempt split."
+    ]
+  },
+  {
+    "id": "de",
+    "theory": {
+      "rate": 0.56,
+      "firstTimeRate": 0.63,
+      "basis": "Klasse B/BF17 theory exams: 44% failed (about 1.46 million exams). First-attempt pass rate 63%. 2024 failure rate was 45%.",
+      "period": "Calendar year 2025 (TÜV | DEKRA arge tp 21 data as at 30 Jan 2026)",
+      "source": "https://www.tuev-verband.de/pressemitteilungen/zahl-der-fuehrerscheinpruefungen-auf-neuem-hoechststand"
+    },
+    "practical": {
+      "rate": 0.63,
+      "firstTimeRate": 0.65,
+      "basis": "Klasse B/BF17 practical exams: 37% failed (about 1.38 million exams). First-attempt pass rate 65%. 2024 failure rate was 37%.",
+      "period": "Calendar year 2025",
+      "source": "https://www.tuev-verband.de/pressemitteilungen/zahl-der-fuehrerscheinpruefungen-auf-neuem-hoechststand"
+    },
+    "uncertain": [
+      "Published as whole-percent failure rates by the TÜV-Verband from arge tp 21 data. The KBA's final Fahrerlaubnisprüfungen statistics may differ slightly because of late reporting."
+    ]
+  },
+  {
+    "id": "fr",
+    "theory": {
+      "rate": 0.493,
+      "firstTimeRate": null,
+      "basis": "Épreuve théorique générale (code de la route) pass rate, all presentations. 2024 was 52.8%.",
+      "period": "Calendar year 2025",
+      "source": "https://www.securite-routiere.gouv.fr/les-chiffres-des-examens-du-permis-de-conduire/bilans-des-examens-du-permis (Bilan annuel 2025; 2024 bilan PDF: https://www.securite-routiere.gouv.fr/sites/default/files/2025-08/bilan_annuel_2024_des_examens_du_permis_de_conduire.pdf)"
+    },
+    "practical": {
+      "rate": 0.599,
+      "firstTimeRate": 0.603,
+      "basis": "Permis B practical exam: 59.9% all presentations, 60.3% at first presentation. Accompanied-driving (AAC) candidates passed at 76.3%. 2024 overall was about 58.2%.",
+      "period": "Calendar year 2025",
+      "source": "https://www.securite-routiere.gouv.fr/les-chiffres-des-examens-du-permis-de-conduire/bilans-des-examens-du-permis"
+    },
+    "uncertain": [
+      "securite-routiere.gouv.fr dropped automated connections, so the 2025 figures were confirmed through two secondary sources that cite the official bilan (Codes Rousseau, updated 19 Jun 2026, and centrestagepermis.fr), not from the PDF itself."
+    ]
+  },
+  {
+    "id": "es",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "No official annual DGT pass rate for the permiso B theory exam could be retrieved. The DGT publishes monthly exam microdata, but dgt.es timed out from here.",
+      "period": null,
+      "source": "https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-examenes-por-Seccion-Autoescuela-mensual/"
+    },
+    "practical": {
+      "rate": 0.469,
+      "firstTimeRate": null,
+      "basis": "Permiso B circulación (road) exam: 46,655 passed / 99,386 taken in one month, computed by misfaltasdeconducir.com from the DGT monthly microdata. February 2026 was 47.1% on the same basis.",
+      "period": "June 2026 (single month)",
+      "source": "https://misfaltasdeconducir.com/articulos/mejores-autoescuelas-tasa-aprobados-junio-2026 (from DGT 'Microdatos de exámenes por Sección/Autoescuela (mensual)')"
+    },
+    "uncertain": [
+      "Practical: a single month from official microdata, computed by a third party. Not an annual figure. Could not be checked against dgt.es, which timed out.",
+      "Theory: traficotest.es gives 50.31% for 2025 without naming its source. Other sites give about 46% first-time theory and about 27% or 55% first-time practical, with conflicting claims. None used."
+    ]
+  },
+  {
+    "id": "jp",
+    "theory": {
+      "rate": 0.728,
+      "firstTimeRate": null,
+      "basis": "NPA: 普通 (ordinary, first-class) licence examinations at prefectural test centres, 1,111,893 passed / 1,528,263 examinees. 2024 was 0.696. Most examinees are graduates of designated driving schools, who are exempt from the skills test and sit only the written (学科) and aptitude tests at the centre. Direct candidates sit both. So this is mostly, but not purely, a written-test rate.",
+      "period": "Calendar year 2025 (運転免許統計 令和7年版)",
+      "source": "https://www.npa.go.jp/publications/statistics/koutsuu/r07main.pdf (2024 edition: https://www.npa.go.jp/publications/statistics/koutsuu/r06main.pdf, table (2) 運転免許試験実施状況)"
+    },
+    "practical": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "The NPA does not publish a separate skills-test (技能試験) pass rate for 普通.",
+      "period": null,
+      "source": "https://www.npa.go.jp/publications/statistics/koutsuu/r07main.pdf"
+    },
+    "uncertain": [
+      "The theory figure mixes written-only examinees (school graduates) with direct candidates who sit both parts.",
+      "Related official figure: 普通仮免許 (provisional licence) tests had a 78.3% pass rate in 2025 (1,270,945 examinees) and 79.5% in 2024 (1,021,831 / 1,285,064). It combines a written test and a closed-course skills test, and includes driving schools' own 修了検定, so it is not used as the practical rate.",
+      "The 2025 edition's PDF text layer has no Japanese labels. The 2025 figures were matched to rows by the 2024 values printed alongside them, which agree exactly with the labelled 2024 edition."
+    ]
+  },
+  {
+    "id": "kr",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "The Korea Road Traffic Authority (KoROAD) publishes a '운전면허 시험현황' disclosure page, but koroad.or.kr refused connections from here. Its open dataset on data.go.kr (3039819) has only examinee counts (응시인원), not passes.",
+      "period": null,
+      "source": "https://www.koroad.or.kr/main/content/view/MN0103020306.do"
+    },
+    "practical": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "Same as theory. The 기능 (closed-course) and 도로주행 (road) pass rates could not be retrieved.",
+      "period": null,
+      "source": "https://www.koroad.or.kr/main/content/view/MN0103020306.do"
+    },
+    "uncertain": [
+      "Official figures probably exist on the KoROAD disclosure page but could not be reached or verified. Worth retrying from a Korean network or by hand."
+    ]
+  },
+  {
+    "id": "is",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "Samgöngustofa publishes no pass rate for the B theory test (46 of 50 statements to pass; tests run by Frumherji).",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "No published pass rate for the B practical test.",
+      "period": null,
+      "source": null
+    },
+    "uncertain": [
+      "No official or clearly authoritative figure was found. It might be obtainable from Samgöngustofa or Frumherji on request."
+    ]
+  },
+  {
+    "id": "lv",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "CSDD publishes theory-exam first-attempt success rates only per driving school, in rolling 6-month tables. No national figure was found.",
+      "period": null,
+      "source": "https://www.csdd.lv/viegla-automobila-vaditaja-aplieciba-b/teoretiskais-eksamens-un-pieteiksanas-eksamenam"
+    },
+    "practical": {
+      "rate": 0.33,
+      "firstTimeRate": 0.33,
+      "basis": "CSDD data reported by LSM: B-category driving exam passed at the first attempt by 33%, second attempt 36%, third attempt 33%. About 50,000 candidates.",
+      "period": "May 2024 - May 2025",
+      "source": "https://www.lsm.lv/raksts/zinas/latvija/10.06.2025-brauksanas-eksamenos-izkrit-divi-no-trim-iemesli-celoni-un-iespejamie-risinajumi.a602532/"
+    },
+    "uncertain": [
+      "Practical: CSDD data reported secondhand by public broadcaster LSM, not a CSDD table. The rate is by attempt number. No all-attempt figure is given, though attempts 1-3 all fall between 33% and 36%.",
+      "Theory: a national figure could be built from CSDD's per-school tables, but those cover only schools, not all candidates."
+    ]
+  },
+  {
+    "id": "br",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "DETRAN-SP publishes no pass rate for the exame teórico.",
+      "period": null,
+      "source": null
+    },
+    "practical": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "DETRAN-SP publishes no pass rate for the category B exame prático.",
+      "period": null,
+      "source": null
+    },
+    "uncertain": [
+      "In 2026 DETRAN-SP changed the practical exam to a points system under Contran Resolução 1.020/2025 (pass at 10 points or fewer, no automatic eliminatory faults). Any pre-2026 rate would not describe the current exam."
+    ]
+  },
+  {
+    "id": "mx-cmx",
+    "theory": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "SEMOVI publishes no pass rate for the licencia tipo A exam (20 questions, pass mark 8.0, also available online), which returned with the permanent licence in 2025.",
+      "period": null,
+      "source": "https://www.semovi.cdmx.gob.mx/tramites-y-servicios/vehiculos-particulares/licencia-permanente-preguntas-frecuentes/emision-licencia-primera-vez"
+    },
+    "practical": {
+      "rate": null,
+      "firstTimeRate": null,
+      "basis": "No pass rate published for the practical assessment at SEMOVI's centros evaluadores.",
+      "period": null,
+      "source": "https://www.semovi.cdmx.gob.mx/tramites-y-servicios/vehiculos-particulares/motocicleta/licencia/centros-evaluadores"
+    },
+    "uncertain": [
+      "SEMOVI reported only that 17% of applicants had to sit the exam (16 Nov - 30 Dec, the rest had a prior tipo A record). That is not a pass rate."
+    ]
+  }
+]

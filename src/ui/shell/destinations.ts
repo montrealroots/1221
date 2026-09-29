@@ -57,8 +57,14 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       { route: '/workspace/bank', label: 'Your Bank', detail: 'Your accounts, and moving money between them', homeOnly: true },
       // Opened from the Home panel: the homes for sale in town, and the one owned.
       { route: '/workspace/homes', label: 'Homes', detail: 'Homes for sale where you live, and the one you own', homeOnly: true },
-      // Opened from the Taxes And Cover panel.
-      { route: '/workspace/papers', label: 'Taxes And Cover', detail: 'Your returns, health cover and unemployment', homeOnly: true },
+    ],
+  },
+  {
+    // Until 2026-09-29 Papers sat under Your Money; with the passport and the license it's more than money.
+    label: 'Your Affairs',
+    items: [
+      // Opened from the Papers panel.
+      { route: '/workspace/papers', label: 'Papers', detail: 'Your returns, health cover, unemployment, passport and license', homeOnly: true },
     ],
   },
 ];

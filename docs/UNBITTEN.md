@@ -590,6 +590,21 @@ part the tool cannot see.
   burglary or a fire, and how much less wall units cool than central air.
   Since 2026-09-28 a washer's load counts the hot water it draws, about 90%
   of its energy (ENERGY STAR), priced as electricity whatever heats it.
+- **Papers are partly SLATE's estimate, and a border isn't checked yet.**
+  Since 2026-09-29 a person holds a passport, travel authorizations, visas,
+  a driver's license and an International Driving Permit
+  (`systems/documents.ts`, `systems/licensing.ts`; docs/WORLD.md, stage 1).
+  The fees, days, terms, entry rules, license steps, waits and most pass
+  rates are the authorities' own. SLATE's estimates: how many days ahead a
+  step is booked; a test's pass rate where nobody publishes one (the mean of
+  the published rates of its kind); a course's price, the middle of the
+  prices published; France's passport days; a few license terms the
+  authority's pages didn't give, marked `yearsEstimated`. Not yet read by
+  anything: `mayEnter` decides entry, and nothing crosses a border by asking
+  it, because the career's productions in London, Vancouver and Toronto move
+  the actor without a check (stage 1b), and journeys don't exist (stage 2).
+  `mayDrive` decides driving, and nothing drives yet (stage 3). A license's
+  probation and points aren't kept, since SLATE has no driving offenses.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
   it: nothing in the build produces an official result. It's a Base44 entity
   and a deployed function, so taking it out is a deployment and waits for the
@@ -643,9 +658,15 @@ log.
 
 ## Unreachable: correct, and nothing can get there
 
-Nothing, since 2026-09-27. What a bank reads from wages is reached again by
-acting pay, and the Decision Center by offers of representation, management
-and work and by each year's return.
+- **Northern Ireland's license path.** Its steps and fees are set down
+  (`content/licensepaths.ts`, `gb-nir`) and `licensingOf` maps Northern
+  Ireland's towns to it, but SLATE's list of towns has none in Northern
+  Ireland, so no life can stand there to take it. It's reached when the list
+  gains Belfast.
+
+Until 2026-09-29 nothing was here, since 2026-09-27. What a bank reads from
+wages is reached again by acting pay, and the Decision Center by offers of
+representation, management and work and by each year's return.
 
 ## Settled on 2026-09-27, by deletion
 

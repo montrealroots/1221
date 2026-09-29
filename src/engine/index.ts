@@ -56,6 +56,8 @@ import { bindCeiling, ceilingBefore, upgradeCraft } from './systems/school';
 import { registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
 import { armCollection, registerTaxReturn } from './systems/taxreturn';
+import { registerDocuments, startingDocuments } from './systems/documents';
+import { registerLicensing } from './systems/licensing';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -99,6 +101,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerUnemployment(sim);
   registerTaxReturn(sim);
   registerLending(sim);
+  registerDocuments(sim);
+  registerLicensing(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -212,6 +216,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   populateWorld(sim, config);
   // The attributes, drawn at the start of the life (`systems/attributes.ts`).
   attributesOf(sim, sim.player);
+  // The papers the life begins with (`systems/documents.ts`).
+  startingDocuments(sim, sim.player);
   return sim;
 }
 
@@ -221,6 +227,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   registerAllSystems(sim);
   // A save from before the attributes draws them on opening, the same draw a new life makes.
   if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
+  // A save from before papers: the ones the life would have begun with (`startingDocuments`).
+  if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.
   for (const person of Object.values(universe.people)) {
     if (person.craft) upgradeCraft(person.craft);

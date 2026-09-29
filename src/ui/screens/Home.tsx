@@ -561,13 +561,13 @@ export function Home() {
         </Panel>
         ))}
         {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
-        {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Taxes And Cover" /> : (
+        {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Papers" /> : (
         <Panel
-          title="Taxes And Cover"
+          title="Papers"
           tight
           actions={(
-            <Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Taxes And Cover')}>
-              Taxes
+            <Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>
+              Papers
             </Gated>
           )}
         >
