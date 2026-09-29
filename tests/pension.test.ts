@@ -41,6 +41,27 @@ describe('the Plan', () => {
     expect(pensionOf(early, early.player).credits).toBe(5);
   });
 
+  it('is held to the law’s ceiling: $290,000 a year, and never more than the best three years in a row', () => {
+    // Until 2026-09-28 a long career's pension had no ceiling (IRC section 415(b), IRS Notice 2025-67).
+    const big = life('pension-415');
+    const years: Record<number, number> = {};
+    for (let y = 1976; y < 2026; y += 1) years[y] = 400_000_00;
+    earned(big, years);
+    expect(pensionOf(big, big.player).yearly).toBe(290_000_00);
+    // Twenty years of $60,000: 2% of them is $24,000, under both.
+    const modest = life('pension-415-modest');
+    const small: Record<number, number> = {};
+    for (let y = 2006; y < 2026; y += 1) small[y] = 60_000_00;
+    earned(modest, small);
+    expect(pensionOf(modest, modest.player).yearly).toBe(24_000_00);
+    // Fifty years at the Plan's minimum and three late years: the accrual passes the best three's average.
+    const late = life('pension-415-three');
+    const lean: Record<number, number> = {};
+    for (let y = 1960; y < 2023; y += 1) lean[y] = 20_000_00;
+    earned(late, lean);
+    expect(pensionOf(late, late.player).yearly).toBe(20_000_00);
+  });
+
   it('pays monthly from 65, vested, and pays out a fund from before once', () => {
     const sim = life('pension-pay');
     earned(sim, { 2016: 50_000_00, 2017: 50_000_00, 2018: 50_000_00, 2019: 50_000_00, 2020: 50_000_00, 2021: 50_000_00, 2022: 50_000_00, 2023: 50_000_00, 2024: 50_000_00, 2025: 50_000_00 });

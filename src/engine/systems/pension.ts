@@ -54,6 +54,15 @@ export const SAG_PENSION = {
   earliest: 55,
   earlyCredits: 10,
   earlyPerMonth: 0.0025,
+  /**
+   * The law's most a year from a defined benefit plan, IRC section 415(b):
+   * the lesser of $290,000 (2026, IRS Notice 2025-67) and the average of the
+   * participant's three highest consecutive years. Until 2026-09-28 a long
+   * career's pension had no ceiling. SLATE holds the figure at 2026's and
+   * doesn't reduce it for a start before 62, as the law does.
+   */
+  lawLimit: 290_000_00,
+  lawSource: 'https://www.irs.gov/pub/irs-drop/n-25-67.pdf',
   source: 'https://www.sagaftraplans.org/sag-pension/starting-your-pension-benefit/how-do-i-know-if-i-am-vested; the SAG-Producers Pension Plan Summary Plan Description, 2019',
 } as const;
 
@@ -88,7 +97,14 @@ export function pensionOf(sim: Simulation, person: Person): { years: { year: num
   for (let i = 1; i < creditYears.length; i += 1) if (creditYears[i]! - creditYears[i - 1]! - 1 >= SAG_PENSION.breakYears) broken = true;
   if (credits && now - 1 - creditYears[creditYears.length - 1]! >= SAG_PENSION.breakYears) broken = true;
   const vested = credits >= SAG_PENSION.vestAt || (credits >= SAG_PENSION.vestEarlyAt && !broken);
-  const yearly = Math.round(years.reduce((sum, y) => sum + y.earnings, 0) * SAG_PENSION.accrual);
+  // The law's ceiling: the dollar limit, and the best three years in a row (section 415(b)).
+  let best3 = 0;
+  for (let i = 0; i + 2 < years.length; i += 1) {
+    if (years[i + 2]!.year - years[i]!.year !== 2) continue;
+    best3 = Math.max(best3, (years[i]!.earnings + years[i + 1]!.earnings + years[i + 2]!.earnings) / 3);
+  }
+  const accrued = Math.round(years.reduce((sum, y) => sum + y.earnings, 0) * SAG_PENSION.accrual);
+  const yearly = Math.min(accrued, inSave(sim, SAG_PENSION.lawLimit), best3 > 0 ? Math.round(best3) : accrued);
   return { years, credits, vested, yearly };
 }
 

@@ -514,6 +514,10 @@ part the tool cannot see.
   television episode to $25,000 a half hour and $35,000 an hour; an early
   start from 55 with ten credits is a quarter of a percent less a month under
   65, and the pension is on the year's return, all as the Plan's pages say.
+  Since 2026-09-28 it is held to the law's ceiling, IRC section 415(b):
+  the lesser of $290,000 (IRS Notice 2025-67) and the best three years in a
+  row. SLATE's estimates: the figure held at 2026's, and not reduced for a
+  start before 62, as the law reduces it.
   The Activity Test binds only who had five to nine credits at the end of
   1998, which no life SLATE begins did. SLATE's estimate: a Permanent Break
   as five years in a row without a credit. An older save's pension fund from the
