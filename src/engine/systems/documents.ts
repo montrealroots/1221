@@ -21,6 +21,7 @@
  * let the action through on a guess.
  */
 
+import { VISAS } from '../content/visas';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -169,7 +170,7 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
   }
   if (rule.status === 'visa') {
     const visa = documentsOf(person).find((d) => (d.kind === 'visa' || (d.kind === 'permit' && d.bookingId === undefined)) && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
-    if (!visa) missing.push(`A visa for ${country} (${rule.visa ?? 'a visitor visa'}), applied for at its consulate. SLATE doesn’t take visa applications yet.`);
+    if (!visa) missing.push(`A visa for ${country}: ${VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`]?.name ?? rule.visa ?? 'a visitor visa'}, applied for on Papers.`);
   }
   const stay = rule.status === 'citizen' ? 'As a citizen, as long as you like.'
     : rule.status === 'free-movement' ? 'Free movement: to live and work as well as visit.'
@@ -246,6 +247,16 @@ const VALIDITY_BY_CITIZEN: Readonly<Record<string, Readonly<Record<string, numbe
 const PAID_BESIDE: Readonly<Record<string, { amount: number; currency: string; name: string }>> = { 'NZ/NZeTA': { amount: 100, currency: 'NZD', name: 'International Visitor Conservation And Tourism Levy' } };
 
 /** Why an authorization can't be applied for now, or nothing. */
+/** Why a visa can't be applied for, or nothing. */
+export function visaRefusal(person: Person, destination: string, at: Instant): string | undefined {
+  const rule = VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`];
+  if (!rule) return 'Your citizenship doesn’t need a visa there, or SLATE doesn’t have that one.';
+  if (!passportOf(person, at)) return 'A visa is issued on a passport, and you have none in force.';
+  if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === destination && inForce(d, at))) return 'You hold one in force already.';
+  if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === destination && d.status === 'pending')) return 'One is being decided.';
+  return undefined;
+}
+
 export function authorizationRefusal(person: Person, destination: string, at: Instant): string | undefined {
   const dest = ENTRY[destination];
   const citizenship = isoOfCountry(person.citizenshipId);
@@ -293,6 +304,24 @@ export function registerDocuments(sim: Simulation): void {
       status: 'pending', appliedAt: s.now, readyAt, destination, passportId: passportOf(person, s.now)!.id,
     });
     s.schedule({ at: readyAt, kind: DECIDED_KIND, label: `${auth.name} Decided`, category: 'system', priority: 20, payload: { personId: person.id } });
+    return { readyAt, fee };
+  });
+
+  sim.onCommand<{ destination: string }, { readyAt: Instant; fee: Money }>('documents.apply_visa', (p, { sim: s }) => {
+    const person = s.player;
+    const destination = String(p.destination).toUpperCase();
+    const no = visaRefusal(person, destination, s.now);
+    if (no) throw new CommandError(no);
+    const rule = VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`]!;
+    const fee = inSave(s, rule.fee, rule.currency);
+    if (!payFromBank(s, person, fee, rule.name, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    const readyAt = s.now + rule.days * MS_DAY;
+    const id = s.nextId('document');
+    documentsOf(person).push({
+      id, kind: 'visa', issuer: destination, name: rule.name, number: numberFor('V', id),
+      status: 'pending', appliedAt: s.now, readyAt, destination, passportId: passportOf(person, s.now)!.id,
+    });
+    s.schedule({ at: readyAt, kind: DECIDED_KIND, label: `${rule.name} Decided`, category: 'system', priority: 20, payload: { personId: person.id } });
     return { readyAt, fee };
   });
 
@@ -463,6 +492,12 @@ function issue(sim: Simulation, person: Person, doc: PersonDocument): void {
     const years = VALIDITY_BY_CITIZEN[`${doc.destination}/${key}`]?.[isoOfCountry(person.citizenshipId) ?? ''] ?? auth?.validityYears ?? 1;
     const passport = documentsOf(person).find((d) => d.id === doc.passportId);
     doc.expiresAt = Math.min(addYears(sim.now, years), passport?.expiresAt ?? Infinity);
+  }
+  // A visitor visa, for its term and no longer than the passport it's in (from 2026-09-29).
+  if (doc.kind === 'visa' && doc.destination && doc.bookingId === undefined) {
+    const rule = VISAS[`${doc.destination}<${isoOfCountry(person.citizenshipId)}`];
+    const passport = documentsOf(person).find((d) => d.id === doc.passportId);
+    if (rule) doc.expiresAt = Math.min(rule.years ? addYears(sim.now, rule.years) : sim.now + (rule.validDays ?? 180) * MS_DAY, passport?.expiresAt ?? Infinity);
   }
   if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: `${doc.name} Issued`, body: `${doc.name}, ${doc.number}${doc.expiresAt ? `, good until ${formatDate(doc.expiresAt, sim.zone)}` : ''}.`, importance: 60, route: '/workspace/papers' });
 }

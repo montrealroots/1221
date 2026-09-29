@@ -19,9 +19,10 @@ import { LICENSES } from '@/engine/content/licenses';
 import { passRate } from '@/engine/content/licensepaths';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
-  authorizationFor, authorizationRefusal, documentsOf, isoOfCity, licenseOf, licensingOf, mayDrive, mayEnter,
+  authorizationFor, authorizationRefusal, visaRefusal, isoOfCountry, documentsOf, isoOfCity, licenseOf, licensingOf, mayDrive, mayEnter,
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument,
 } from '@/engine/systems/documents';
+import { VISAS } from '@/engine/content/visas';
 import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
 import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal } from '@/engine/systems/permission';
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
@@ -79,6 +80,8 @@ export function PassportPane() {
   const chosen = dest || destinations[0] || '';
   const answer = chosen ? mayEnter(person, chosen, sim.now) : undefined;
   const authNo = chosen ? authorizationRefusal(person, chosen, sim.now) : 'Choose a country.';
+  const visaNo = chosen ? visaRefusal(person, chosen, sim.now) : 'Choose a country.';
+  const visa = chosen ? VISAS[`${chosen}<${isoOfCountry(person.citizenshipId)}`] : undefined;
   const apply = (expedite: boolean) => {
     const a = run<{ readyAt: number; fee: number }>('documents.apply_passport', { expedite });
     if (a.ok) toast(`Applied, for ${money(a.value!.fee)}. It comes by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
@@ -117,12 +120,17 @@ export function PassportPane() {
               const a = run<{ readyAt: number; fee: number }>('documents.apply_authorization', { destination: chosen });
               if (a.ok) toast(`Applied, for ${money(a.value!.fee)}. Decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
             }}>Apply For The Authorization</Gated>
+            <Gated feature="documents.apply_visa" className="btn btn-sm" disabled={Boolean(visaNo)} title={visaNo} onClick={() => {
+              const a = run<{ readyAt: number; fee: number }>('documents.apply_visa', { destination: chosen });
+              if (a.ok) toast(`Applied, for ${money(a.value!.fee)}. Decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
+            }}>Apply For The Visa</Gated>
           </div>
           {answer && (
             answer.ok
               ? <p className="small" style={{ margin: 0 }}>You may go. {answer.stay ?? ''}{authorizationFor(person, chosen, sim.now) ? ' Your authorization is in force.' : ''}</p>
               : <ul className="small" style={{ margin: 0 }}>{answer.missing.map((m) => <li key={m}>{m}</li>)}</ul>
           )}
+          {visa && <Fine>{visa.name}: {visa.basis} Source: {visa.source}.</Fine>}
           {answer?.rule && <Fine>{answer.rule.note} Source: {answer.rule.source}. Researched {ENTRY_AS_OF}; permission to live or work there is a different permission.</Fine>}
         </div>
       </Panel>
