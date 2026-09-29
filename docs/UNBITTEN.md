@@ -511,8 +511,13 @@ part the tool cannot see.
   weeks apart, then 30 days on a levy on the bank accounts
   (`systems/taxreturn.ts` `COLLECTION`). SLATE's estimates: the rate held at
   2026's; a levy again each quarter while anything is owed; the bank's
-  21-day hold not kept. Not modeled: a levy on wages or on a pension, and
-  the substitute return the IRS makes for somebody who never files.
+  21-day hold not kept. Since 2026-09-28 too, a return never filed that
+  owes is filed by the IRS a year after it was due (the CP2566 notice), theirs
+  to replace for 120 days, then assessed with the late-filing penalty and the
+  interest and collected (`SUBSTITUTE`); the year and the 120 days, and the
+  IRS reaching SLATE's own figures, are SLATE's estimates. Not modeled: a
+  levy on wages or on a pension, and a refund forfeited for a return never
+  filed in three years.
 - **The pension is partly SLATE's estimate.** Since 2026-09-28 the
   SAG-Producers Pension Plan (`systems/pension.ts`) credits a year of covered
   earnings at the minimum, vests at ten credits or five without a break, and

@@ -16,7 +16,7 @@ import { payFromBank } from '@/engine/systems/household';
 import { recordWages } from '@/engine/systems/earnings';
 import { beginCareer } from '@/engine/systems/career';
 import { instantFromZoned } from '@/engine/core/time';
-import { TAX_NOTICE_KIND, armCollection, owedOn, returnsOf } from '@/engine/systems/taxreturn';
+import { SUBSTITUTE, TAX_NOTICE_KIND, armCollection, latePenalty, owedOn, returnsOf } from '@/engine/systems/taxreturn';
 
 const life = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
 function earned(sim: Simulation, byYear: Record<number, number>): void {
@@ -109,5 +109,46 @@ describe('a balance left owing', () => {
     for (const one of sim.universe.scheduled) if (one.kind === TAX_NOTICE_KIND && one.status === 'pending') sim.timeline.cancel(one.id, sim.now);
     armCollection(sim, sim.player);
     expect(sim.universe.scheduled.filter((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending')).toHaveLength(1);
+  });
+});
+
+describe('a return never filed', () => {
+  it('is filed by the IRS a year after it was due, answerable for 120 days, then assessed and collected', () => {
+    // Until 2026-09-28 a return never filed was never asked for.
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'never-filed');
+    beginCareer(sim, sim.player);
+    recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
+    const step = (until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 12 * 3_600_000)); };
+    step(instantFromZoned({ year: 2027, month: 2, day: 2, hour: 12 }, 'America/New_York'));
+    const r = returnsOf(sim.player)['2026']!;
+    expect(r.figures.balance).toBeGreaterThan(0);
+    const titles = () => sim.universe.notifications.filter((n) => n.category === 'tax').map((n) => n.title);
+    step(r.due + (SUBSTITUTE.afterDays - 1) * MS_DAY);
+    expect(titles()).not.toContain('The IRS Figured Your 2026 Return');
+    step(r.due + (SUBSTITUTE.afterDays + 1) * MS_DAY);
+    expect(titles()).toContain('The IRS Figured Your 2026 Return');
+    expect(r.filedAt).toBeUndefined();
+    step(r.due + (SUBSTITUTE.afterDays + SUBSTITUTE.answerDays + 1) * MS_DAY);
+    expect(titles()).toContain('The IRS Assessed Your 2026 Return');
+    expect(r.substitute).toBe(true);
+    // Its File It lapsed on the due date; nothing asks them to file it now.
+    expect(Object.values(sim.universe.decisions).filter((d) => d.refType === 'return' && d.refId === '2026' && !d.resolvedAt)).toHaveLength(0);
+    // The late-filing penalty and the interest from the due date, on the balance.
+    expect(r.penalty).toBe(latePenalty(r.figures.balance, r.due, r.filedAt!, 'USD'));
+    expect(r.owed).toBeGreaterThan(r.figures.balance + r.penalty!);
+    expect(sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending')).toBe(true);
+  });
+
+  it('is left to them if they file in the months the IRS gives', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'files-late');
+    beginCareer(sim, sim.player);
+    recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
+    const step = (until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 12 * 3_600_000)); };
+    step(instantFromZoned({ year: 2027, month: 2, day: 2, hour: 12 }, 'America/New_York'));
+    const r = returnsOf(sim.player)['2026']!;
+    step(r.due + (SUBSTITUTE.afterDays + 10) * MS_DAY);
+    expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).ok).toBe(true);
+    step(r.due + (SUBSTITUTE.afterDays + SUBSTITUTE.answerDays + 5) * MS_DAY);
+    expect(r.substitute).toBeUndefined();
   });
 });

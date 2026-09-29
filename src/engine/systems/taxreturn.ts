@@ -42,6 +42,25 @@ import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
 export const TAX_NOTICE_KIND = 'tax.notice';
+export const TAX_SFR_KIND = 'tax.substitute';
+
+/**
+ * A return never filed that owes: the IRS files one for them, a substitute
+ * for return, from what employers and banks reported (the CP2566 notice), and
+ * it's theirs to replace with their own until the Notice of Deficiency's 90
+ * days run out; then it's assessed, with the penalty for filing late and the
+ * interest from the due date, and collected as any balance is. SLATE's
+ * estimates: the year after the due date it comes, the 30 days to answer the
+ * CP2566 before the 90 of the notice, and the figures SLATE's own return
+ * reaches, the IRS's taking only the standard deduction. Until 2026-09-28 a
+ * return never filed was never asked for: a careless life filed none in 35
+ * years and nothing came of it.
+ */
+export const SUBSTITUTE = {
+  afterDays: 365,
+  answerDays: 30 + 90,
+  source: 'https://www.irs.gov/individuals/understanding-your-cp2566-notice',
+} as const;
 
 /**
  * The IRS's interest and collection on a balance owed: 7% a year for
@@ -115,6 +134,8 @@ export interface TaxReturn {
   accruedAt?: Instant;
   /** How far the IRS's collection has gone: its notices sent, and a levy made. */
   collection?: number;
+  /** Filed by the IRS, never by them (`SUBSTITUTE`). */
+  substitute?: boolean;
   refund?: Money;
   refundAt?: Instant;
 }
@@ -475,6 +496,10 @@ export function latePenalty(balance: Money, due: Instant, filedAt: Instant, into
 /** A balance owed with no collection on the calendar, as a save from before 2026-09-28 holds one: it begins now. */
 export function armCollection(sim: Simulation, person: Person): void {
   for (const r of Object.values(person.returns ?? {})) {
+    // Owing, unfiled and past due, with nothing coming of it: the IRS's substitute return, on the calendar.
+    if (r.filedAt === undefined && r.figures.balance > 0 && r.due < sim.now && !sim.universe.scheduled.some((i) => i.kind === TAX_SFR_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) {
+      sim.schedule({ at: Math.max(sim.now + MS_DAY, r.due + SUBSTITUTE.afterDays * MS_DAY), kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
+    }
     if (!r.owed || sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) continue;
     r.accruedAt ??= sim.now;
     nextNotice(sim, person, r);
@@ -547,8 +572,38 @@ export function registerTaxReturn(sim: Simulation): void {
   sim.onSchedule(TAX_DUE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
-    if (!person || !r || r.filedAt !== undefined || person.id !== s.universe.playerId) return;
+    if (!person || !r || r.filedAt !== undefined) return;
+    // Owing and unfiled, the IRS files it for them in a year (`SUBSTITUTE`).
+    if (r.figures.balance > 0) s.schedule({ at: r.due + SUBSTITUTE.afterDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
+    if (person.id !== s.universe.playerId) return;
     s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(usd(RETURN.lateMinimum, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
+  });
+
+  sim.onSchedule(TAX_SFR_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
+    if (!person || !r || r.filedAt !== undefined) return;
+    const cur = saveCurrency(s.universe);
+    const late = Math.max(0, (s.now - r.due) / MS_DAY);
+    const penalty = latePenalty(r.figures.balance, r.due, s.now, cur);
+    const interest = Math.round(r.figures.balance * ((1 + COLLECTION.interest / 365) ** late - 1));
+    const total = r.figures.balance + penalty + interest;
+    if (item.payload.step === 'proposed') {
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Figured Your ${r.year} Return`, body: `Notice CP2566: with no return from you, the IRS worked out ${formatMoney(total, cur)} from what your employers and banks reported, with the penalty for filing late and the interest. File your own within ${SUBSTITUTE.answerDays} days to replace it.`, importance: 90, route: '/workspace/papers' });
+      s.schedule({ at: s.now + SUBSTITUTE.answerDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'assessed' } });
+      return;
+    }
+    // Unanswered: assessed as the IRS figured it, and collected.
+    r.filedAt = s.now;
+    r.penalty = penalty;
+    r.substitute = true;
+    r.owed = total;
+    r.base = r.figures.balance;
+    r.accruedAt = s.now;
+    r.collection = 0;
+    // Its File It lapsed on the due date (`expireDecisions`); the Taxes screen's is gone once it's filed.
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Assessed Your ${r.year} Return`, body: `${formatMoney(total, cur)} is owed as the IRS figured it, and its collection begins.`, importance: 90, route: '/workspace/papers' });
+    nextNotice(s, person, r);
   });
 
   sim.onSchedule(TAX_NOTICE_KIND, (item, s) => {
