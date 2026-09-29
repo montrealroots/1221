@@ -40,8 +40,8 @@
  * is universal and not contributory: MXN 6,400 every two months to a
  * Mexican of 65 or over living in Mexico, from the 2026 rules (DOF 12
  * February 2026). Paid only while they live there. IMSS's own pension under
- * the 1997 law asks 875 weeks of Mexican social security in 2026, rising to
- * 1,000 by 2031; SLATE has no Mexican work to earn them in yet.
+ * the 1997 law, on weeks of Mexican work, is `systems/imss.ts`; until
+ * 2026-09-29 SLATE had no Mexican work to earn them in.
  *
  * Both held at 2026's figures, later increases not being known.
  */

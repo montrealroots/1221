@@ -671,9 +671,9 @@ part the tool cannot see.
   its films at the 2021 Irish Film Agreement's three budgets, six Dublin
   agencies and Spotlight Ireland (`content/career.ts`); Ireland its State
   Pension (Contributory) on the Total Contributions Approach, and Mexico
-  the Pensión para el Bienestar (`systems/homepensions.ts`). Not kept: the cast's share of a film's net profits; IMSS's own pension, with no
-  Mexican work to earn its weeks; Ireland's credited contributions, and a record combined with Britain's or
-  another EU country's. Its non-contributory pension wasn't kept either until
+  the Pensión para el Bienestar (`systems/homepensions.ts`). Not kept: the cast's share of a film's net profits; Ireland's credited contributions, and a record combined with Britain's or
+  another EU country's. IMSS's own pension wasn't kept until later the same day,
+  when Mexico City's work gave it weeks (`systems/imss.ts`). Its non-contributory pension wasn't kept either until
   later the same day, and a played Irish life ended its days broke; it is now,
   with the Living Alone Increase and the Fuel Allowance (`irishWeekPaid`). SLATE's reading: a calendar year of Irish earnings
   at €5,000 or more is 52 contributions. Dublin's television, theater and radio were left

@@ -5,12 +5,12 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { exchange } from '@/engine/content/currency';
 import { saveCurrency } from '@/engine/core/money';
 import { AGENCIES, MEXICO_SCALE, ROLES } from '@/engine/content/career';
-import { beginCareer, offersFor, paycheck, rateOf, roleById, weekOfAuditions, workCity } from '@/engine/systems/career';
+import { beginCareer, careerOf, offersFor, paycheck, rateOf, roleById, weekOfAuditions, workCity, type Booking } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
 
 const MXC = 'mx-cmx-mexicocity';
@@ -53,5 +53,19 @@ describe('the business in Mexico City', () => {
     const anda = paycheck({ scale: 10_000_00, role: roleById('mx-telenovela'), rehearsal: false, represented: false, before: 0, cityId: MXC, at, currency: 'MXN' });
     expect(anda.dues).toBe(1_500_00);
     expect(paycheck({ scale: 10_000_00, role: roleById('costar'), rehearsal: false, represented: false, before: 0, cityId: 'us-ny-newyork', at }).dues).toBe(0);
+  });
+
+  it('registers a rehearsal day in a Mexico City theater with IMSS, seven sixths of a day, and pays into the AFORE account', () => {
+    const sim = capitalino('mx-imss');
+    const p = zonedParts(sim.now + 5 * MS_DAY, 'America/Mexico_City');
+    const starts = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 8 }, 'America/Mexico_City');
+    const b: Booking = { id: 'obra', roleId: 'mx-theater', cityId: MXC, starts, units: 1, rehearsalWeeks: 1, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
+    careerOf(sim.player).bookings.push(b);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'obra' } }).ok).toBe(true);
+    const until = starts + 31 * 3_600_000;
+    while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * 3_600_000));
+    expect(b.worked).toBeGreaterThanOrEqual(1);
+    expect(sim.player.imss!.days).toBeCloseTo((7 / 6) * b.worked, 6);
+    expect(sim.player.imss!.balance).toBeGreaterThan(0);
   });
 });

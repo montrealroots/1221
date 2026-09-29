@@ -96,6 +96,7 @@ import { move, payFromCurrent, type Housing, spend, payFromBank } from './househ
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
 import { careerTrip, planBy, planJourney, startCareerJourney } from './journey';
+import { contribute as contributeImss } from './imss';
 import { permitAtTheBorder, workRefusal } from './permission';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
@@ -1516,6 +1517,8 @@ export function registerCareer(sim: Simulation): void {
         + usd(mealPenalty(s, person, `${booking.id}-${booking.worked}`), cur);
     }
     career.days.push({ at: item.at, hours, pay: scale });
+    // A day's work in Mexico is a day registered with IMSS; a stage run's week is registered whole (`systems/imss.ts`).
+    if (CITIES.get(workCityOf(booking))?.countryId === 'mx') contributeImss(s, person, item.at, scale, role.medium === 'stage' ? 7 / 6 : 1);
     career.days = career.days.slice(-400);
     if (role.union === 'equity') {
       const monday = at(item.at, zoneOf(booking.cityId), -((weekday(item.at, zoneOf(booking.cityId)) + 6) % 7), 12);
