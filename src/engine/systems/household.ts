@@ -42,6 +42,7 @@
  * nobody had paid.
  */
 
+import { carryCars } from './vehicles';
 import { hapRefusal, hapSplit, netWeeklyEur } from './homebenefits';
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -668,7 +669,10 @@ export function move(sim: Simulation, person: Person, kind: Housing, where = per
   leaveOwnedHome(sim, person);
   refundRentAhead(sim, person);
   const carried = arrearsOf(sim, person);
+  const left = person.home?.cityId;
   person.home = { kind, cityId: where, since: sim.now, unit: drawRental(sim, person, where, kind === 'shared', sim.now), ...(carried > 0 ? { arrearsAtStart: carried } : {}), ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
+  // The car comes along where a road reaches (`systems/vehicles.ts`).
+  if (left) carryCars(sim, person, left, where);
   // The first rent after the move is next month's: the rest of this one was paid moving in.
   if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(person.home.cityId).timeZone);

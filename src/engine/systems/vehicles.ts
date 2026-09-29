@@ -26,7 +26,7 @@ import { BC, CA_STATE, CMX, CT, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE,
 import { homeOf } from './earnings';
 import { owe, payFromBank } from './household';
 import { mayDrive } from './documents';
-import { drive } from './driving';
+import { byRoad as roadBetween, drive } from './driving';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 const NYC = new Set(['us-ny-newyork', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-manhattan', 'us-ny-thebronx', 'us-ny-statenisland']);
@@ -193,6 +193,37 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
 function caYear(model: CarModel, value: Money): Money {
   const v = value / 100;
   return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0)) * 100 + value * CA_STATE.vlf);
+}
+
+/**
+ * Moving home takes the car where a road reaches (from 2026-09-29): it's
+ * driven there, and within one country it's registered in the new state or
+ * province at that place's registration, and its title and plates where
+ * they're charged. Across a border the car keeps its registration: importing
+ * one isn't kept. Until then a car stayed where it was bought, and a life
+ * that moved on left it there.
+ */
+export function carryCars(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
+  if (fromCity === toCity) return;
+  for (const v of vehiclesOf(person)) {
+    if (v.soldAt !== undefined || (v.at ?? v.cityId) !== fromCity || !roadBetween(fromCity, toCity)) continue;
+    v.at = toCity;
+    const j = jurisdictionOf(toCity);
+    const sameCountry = CITIES.get(fromCity)?.countryId === CITIES.get(toCity)?.countryId;
+    if (!j || j === v.jurisdiction || !sameCountry) continue;
+    const moved: OwnedVehicle = { ...v, jurisdiction: j, cityId: toCity };
+    const r = renewal(moved, sim.now);
+    const c = (x: number) => Math.round(x * 100);
+    const once = j === 'US-NY' ? c(NY.title + NY.plates) : j === 'US-CT' ? c(CT.title + CT.plate + CT.admin) : j === 'US-CA' ? c(15) : j === 'CA-ON' ? c(ON.permit + ON.plate) : j === 'CA-BC' ? c(BC.registration + BC.plate) : 0;
+    const due = inSave(sim, r.amount + once, CURRENCY[j]);
+    const m = modelById(v.modelId)!;
+    if (due > 0 && !payFromBank(sim, person, due, `Registering the ${m.make} ${m.model} in its new home`, 'vehicle')) owe(sim, person, due, 'Registering the car', 'vehicle');
+    v.jurisdiction = j;
+    v.cityId = toCity;
+    v.registrationDue = r.next;
+    for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.kind === VEHICLE_RENEWAL_KIND && item.payload.vehicleId === v.id) sim.timeline.cancel(item.id, sim.now);
+    sim.schedule({ at: r.next, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } });
+  }
 }
 
 /** A car's value now, in its money: its price new less what the curve says it's lost. */

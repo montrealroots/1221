@@ -73,6 +73,7 @@
  * rent and its costs and depreciation on one they let, and a sale's gain.
  */
 
+import { carryCars } from './vehicles';
 import { residenceRefusal } from './documents';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -1328,7 +1329,10 @@ function moveInto(sim: Simulation, person: Person, owned: OwnedHome): Money {
   leaveOwnedHome(sim, person);
   owned.tenancies = owned.tenancies.filter((t) => t.unit !== 'main');
   occupy(sim, owned);
+  const left = person.home?.cityId;
   person.home = { kind: 'owned', cityId: owned.cityId, homeId: owned.id, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
+  // The car comes along where a road reaches (`systems/vehicles.ts`).
+  if (left) carryCars(sim, person, left, owned.cityId);
   scheduleRentFor(sim, person);
   return back;
 }

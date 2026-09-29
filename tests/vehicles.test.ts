@@ -9,6 +9,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
+import { move } from '@/engine/systems/household';
 import { amortized, kept, modelById, modelsFor, monthKm, parkingYear, quote, runningCost, valueOf, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
 
 const q = (id: string, city: string, opts = {}) => quote(modelById(id)!, city, Date.UTC(2026, 8, 29), opts) as Quote;
@@ -64,6 +65,25 @@ describe('what a car costs to buy', () => {
     expect(kept(10)).toBeCloseTo(1 - 0.6512, 10);
     expect(kept(4)).toBeCloseTo(1 - (0.2479 + 0.417) / 2, 10);
     expect(q('us-toyota-camry', 'us-ct-newhaven', { age: 5 }).price).toBe(Math.round(2_960_000 * (1 - 0.417)));
+  });
+});
+
+describe('moving home', () => {
+  it('takes the car from New Haven to New York and registers it there, and leaves it registered where it was across the border', () => {
+    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'wealthy' }, 'car-move');
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }).ok).toBe(true);
+    const v = vehiclesOf(sim.player)[0]!;
+    expect(v.jurisdiction).toBe('US-CT');
+    move(sim, sim.player, 'shared', 'us-ny-newyork');
+    expect(v.at).toBe('us-ny-newyork');
+    expect(v.jurisdiction).toBe('US-NY');
+    expect(sim.universe.transactions.some((t) => t.memo === 'Registering the Toyota Camry in its new home')).toBe(true);
+    move(sim, sim.player, 'shared', 'ca-on-toronto');
+    expect(v.at).toBe('ca-on-toronto');
+    expect(v.jurisdiction).toBe('US-NY');
+    // No road to London: the car stays in Toronto.
+    move(sim, sim.player, 'shared', 'uk-eng-london');
+    expect(v.at).toBe('ca-on-toronto');
   });
 });
 
