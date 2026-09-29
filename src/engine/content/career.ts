@@ -15,7 +15,8 @@ import { exchange } from './currency';
  * London from 2026-09-29, for a British actor at home (`UK_ROLES`,
  * `UK_AGENCIES`); until then the business was American only, and a British
  * graduate without permission to work in the US had nowhere to work. Dublin
- * from the same day, for an Irish actor at home, though only its films; and
+ * from the same day, for an Irish actor at home, its films at the published
+ * agreement and the rest at SLATE's estimate (`IRELAND_SCALE`); and
  * Mexico City, at SLATE's estimate of its rates (`MEXICO_SCALE`).
  */
 export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin', 'mx-cmx-mexicocity'] as const;
@@ -264,6 +265,20 @@ const MX_EST = 'SLATE’s estimate: the American minimum for the like part, scal
 /** An American minimum in dollar cents, as SLATE's Mexico City rate in peso cents. */
 const inMexico = (usd: Money): Money => Math.round((exchange(usd, 'USD', 'MXN') ?? usd * 18) * MEXICO_SCALE / 100) * 100;
 const MX: readonly CareerCity[] = ['mx-cmx-mexicocity'];
+
+/**
+ * Dublin's television, theater and radio rates are SLATE's estimate too, from
+ * 2026-09-29: Irish Equity's rate cards for them are for its members only.
+ * Each is British Equity's minimum for the like part, scaled by what a worker
+ * earns in Ireland against Britain: the CSO's average weekly earnings, €1,046.88
+ * in the second quarter of 2026 (preliminary), against the ONS's £756 in July
+ * 2026. It comes to a little over a sixth more, in euros.
+ */
+export const IRELAND_SCALE = 1_046_88 / (exchange(756_00, 'GBP', 'EUR') ?? 756_00 * 1.17);
+const IE_EST = 'SLATE’s estimate: British Equity’s minimum for the like part, scaled by the CSO’s average weekly earnings against the ONS’s (IRELAND_SCALE); Irish Equity’s rates are members-only';
+/** A British minimum in pence, as SLATE's Dublin rate in euro cents. */
+const inIreland = (gbp: Money): Money => Math.round((exchange(gbp, 'GBP', 'EUR') ?? gbp * 1.17) * IRELAND_SCALE);
+const IE: readonly CareerCity[] = ['ie-lei-dublin'];
 const AMPTP = 'https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf';
 const SAGINDIE = 'https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/';
 const LORT = 'https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf';
@@ -541,6 +556,25 @@ export const ROLES: readonly Role[] = [
     id: 'ie-film-verylow', label: 'A Role, A Very Low Budget Irish Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
     steps: [['2021-02-01', 250_00]],
     units: [3, 10], bar: 58, weight: 5, tiers: [2, 3], selfSubmit: true, cities: ['ie-lei-dublin'], leadDays: 14, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
+  // Dublin's television, theater and radio, from 2026-09-29, each SLATE's estimate (`IRELAND_SCALE`) from the British part beside it.
+  {
+    // By Pact/Equity TV's episode fee, £635.50 from April 2026: RTÉ's and the streamers' Irish drama.
+    id: 'ie-tv', label: 'A Part, An Irish Television Series', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2026-04-01', inIreland(635_50)]],
+    units: [1, 2], bar: 62, weight: 8, tiers: [1, 2, 3], selfSubmit: true, cities: IE, leadDays: 5, reads: READS.screen, basis: 'day', source: IE_EST,
+  },
+  {
+    // By UK Theatre/Equity's subsidized minimum, £547.29 a week: the Abbey, the Gate and the companies that tour.
+    id: 'ie-theater', label: 'A Play, An Irish Theater', medium: 'stage', union: 'irish-equity', currency: 'EUR',
+    steps: [['2025-03-31', inIreland(547_29)]],
+    units: [4, 6], rehearsalWeeks: [3, 4], bar: 62, weight: 4, tiers: [2, 3], selfSubmit: true, cities: IE, leadDays: 28, reads: READS.classical, source: IE_EST,
+  },
+  {
+    // By BBC radio drama's day, £294: RTÉ's radio drama.
+    id: 'ie-radio', label: 'A Part, RTÉ Radio Drama', medium: 'voice', union: 'irish-equity', currency: 'EUR',
+    steps: [['2023-07-01', inIreland(294_00)]],
+    units: [1, 1], bar: 60, weight: 2, tiers: [1, 2, 3], selfSubmit: false, cities: IE, leadDays: 7, reads: READS.voice ?? READS.screen, sessionHours: 8, source: IE_EST,
   },
   // Mexico City, from 2026-09-29, each rate SLATE's estimate (`MEXICO_SCALE`)
   // from the American part named beside it. What a part asks is SLATE's

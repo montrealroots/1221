@@ -9,7 +9,7 @@ import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { exchange } from '@/engine/content/currency';
 import { saveCurrency } from '@/engine/core/money';
-import { AGENCIES, MANAGERS, ROLES } from '@/engine/content/career';
+import { AGENCIES, IRELAND_SCALE, MANAGERS, ROLES } from '@/engine/content/career';
 import { beginCareer, careerOf, offersFor, rateOf, roleById, weekOfAuditions, workCity } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
 
@@ -34,6 +34,15 @@ describe('the business in Dublin', () => {
     const cur = saveCurrency(sim.universe);
     expect(rateOf(roleById('ie-film-major'), Date.UTC(2026, 9, 1), DUBLIN, cur)).toBe(cur === 'EUR' ? 613_00 : exchange(613_00, 'EUR', cur));
     expect(ROLES.filter((r) => r.cities.includes(DUBLIN)).every((r) => r.currency === 'EUR' && r.union === 'irish-equity')).toBe(true);
+  });
+
+  it('prices Dublin’s television, theater and radio at SLATE’s estimate, British Equity’s scaled by the CSO’s earnings against the ONS’s', () => {
+    expect(IRELAND_SCALE).toBeCloseTo(1_046_88 / exchange(756_00, 'GBP', 'EUR')!, 10);
+    expect(IRELAND_SCALE).toBeGreaterThan(1);
+    const tv = roleById('ie-tv');
+    expect(Math.abs(tv.steps[0]![1] - exchange(635_50, 'GBP', 'EUR')! * IRELAND_SCALE)).toBeLessThanOrEqual(1);
+    expect(tv.source).toMatch(/SLATE’s estimate/);
+    expect(['ie-tv', 'ie-theater', 'ie-radio'].map((id) => roleById(id).medium)).toEqual(['screen', 'stage', 'voice']);
   });
 
   it('brings Dublin’s agencies to a Dublin showing, and London’s to London’s', () => {

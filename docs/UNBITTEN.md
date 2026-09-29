@@ -671,14 +671,15 @@ part the tool cannot see.
   its films at the 2021 Irish Film Agreement's three budgets, six Dublin
   agencies and Spotlight Ireland (`content/career.ts`); Ireland its State
   Pension (Contributory) on the Total Contributions Approach, and Mexico
-  the Pensión para el Bienestar (`systems/homepensions.ts`). Not kept:
-  Dublin's television, theater and radio, whose Irish Equity rates are for
-  members only; the cast's share of a film's net profits; IMSS's own pension, with no
+  the Pensión para el Bienestar (`systems/homepensions.ts`). Not kept: the cast's share of a film's net profits; IMSS's own pension, with no
   Mexican work to earn its weeks; Ireland's credited contributions, and a record combined with Britain's or
   another EU country's. Its non-contributory pension wasn't kept either until
   later the same day, and a played Irish life ended its days broke; it is now,
   with the Living Alone Increase and the Fuel Allowance (`irishWeekPaid`). SLATE's reading: a calendar year of Irish earnings
-  at €5,000 or more is 52 contributions. Mexico City's business was left shut
+  at €5,000 or more is 52 contributions. Dublin's television, theater and radio were left
+  out at first, Irish Equity's rates being members-only; from later the same
+  day they're SLATE's estimate, British Equity's scaled by the CSO's earnings
+  against the ONS's (`IRELAND_SCALE`). Mexico City's business was left shut
   at first too, because ANDA keeps its tabuladores confidential; a played
   Mexican life home there starved at 36, so it opened the same day at
   SLATE's estimate (`MEXICO_SCALE`): each American minimum for the like
