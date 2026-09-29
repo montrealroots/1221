@@ -4,6 +4,7 @@
  * cover and COBRA, illness and its bills, and part-year and nonresident
  * returns (`systems/career.ts`, `systems/health.ts`, `systems/taxreturn.ts`).
  */
+import { documentsOf, passportOf } from '@/engine/systems/documents';
 import { describe, expect, it } from 'vitest';
 import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
@@ -33,6 +34,8 @@ function pro(seed: string, city = 'us-ny-newyork', level = 75): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
   sim.player.craft = craft(level);
   beginCareer(sim, sim.player);
+  // An actor sent abroad holds a passport, and nothing here is about papers (docs/WORLD.md, stage 1b).
+  if (!passportOf(sim.player, sim.now)) documentsOf(sim.player).push({ id: 'pp', kind: 'passport', issuer: 'US', name: 'Passport', number: 'P1', status: 'valid', issuedAt: sim.now - 86_400_000, expiresAt: sim.now + 3650 * 86_400_000 });
   return sim;
 }
 function booking(sim: Simulation, roleId: string, units: number, starts = sim.now + 7 * MS_DAY, extra: Partial<Booking> = {}): Booking {

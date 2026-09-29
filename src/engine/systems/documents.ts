@@ -172,6 +172,42 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
   return { ok: missing.length === 0, rule, missing, ...(stay ? { stay } : {}) };
 }
 
+// ---------------------------------------------------------------------------
+// Crossing a border, and living across one
+// ---------------------------------------------------------------------------
+
+/**
+ * Why a person can't go from one town to another, arriving on a day for some
+ * days, where a border lies between them, or nothing: the destination's rule
+ * for their citizenship, as `mayEnter` reads it. Within one country there's
+ * nothing to ask.
+ */
+export function crossingRefusal(person: Person, fromCity: string, toCity: string, at: Instant, stayDays: number): string | undefined {
+  const to = isoOfCity(toCity);
+  if (!to || isoOfCity(fromCity) === to) return undefined;
+  const answer = mayEnter(person, to, at, Math.max(1, Math.ceil(stayDays)));
+  return answer.ok ? undefined : answer.missing.join(' ');
+}
+
+/**
+ * Why a person can't make a home in a town's country, or nothing: a citizen
+ * may, and so may someone with free movement there (the EU and EEA's, the
+ * Common Travel Area's between Ireland and the UK), or someone holding a
+ * visa for the country in force, as a student's F-1 lets them live in the
+ * United States while they study. Anyone else would need permission to live
+ * there, which SLATE doesn't grant yet.
+ */
+export function residenceRefusal(person: Person, cityId: string, at: Instant): string | undefined {
+  const to = isoOfCity(cityId);
+  const own = isoOfCountry(person.citizenshipId);
+  if (!to || to === own) return undefined;
+  const status = own ? ENTRY[to]?.citizens[own]?.status : undefined;
+  if (status === 'citizen' || status === 'free-movement') return undefined;
+  if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === to && inForce(d, at))) return undefined;
+  const there = theCountry(COUNTRIES.get(to.toLowerCase())?.name ?? to);
+  return `Living in ${there} needs permission to live there, which you don’t hold, and SLATE doesn’t grant it yet.`;
+}
+
 /** An authorization in force for a destination, on the passport they'd travel on, through a day. */
 export function authorizationFor(person: Person, destination: string, at: Instant, through = at): PersonDocument | undefined {
   const passport = passportOf(person, at);
@@ -200,7 +236,7 @@ export const DECIDED_IN_HOURS: Readonly<Record<string, number>> = {
 const VALIDITY_BY_CITIZEN: Readonly<Record<string, Readonly<Record<string, number>>>> = { 'BR/e-Visa': { US: 10, CA: 5, AU: 5 } };
 
 /** A charge paid with an authorization: New Zealand's International Visitor Conservation and Tourism Levy, NZD 100 since 1 October 2024. */
-const PAID_BESIDE: Readonly<Record<string, { amount: number; currency: string; name: string }>> = { 'NZ/NZeTA': { amount: 100, currency: 'NZD', name: 'the International Visitor Conservation and Tourism Levy' } };
+const PAID_BESIDE: Readonly<Record<string, { amount: number; currency: string; name: string }>> = { 'NZ/NZeTA': { amount: 100, currency: 'NZD', name: 'International Visitor Conservation And Tourism Levy' } };
 
 /** Why an authorization can't be applied for now, or nothing. */
 export function authorizationRefusal(person: Person, destination: string, at: Instant): string | undefined {
@@ -242,7 +278,7 @@ export function registerDocuments(sim: Simulation): void {
     const auth = dest.authorizations[key]!;
     const beside = PAID_BESIDE[`${destination}/${key}`];
     const fee = inSave(s, auth.fee, auth.currency) + (beside ? inSave(s, beside.amount, beside.currency) : 0);
-    if (fee > 0 && !payFromBank(s, person, fee, `${auth.name}${beside ? `, and ${beside.name}` : ''}`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (fee > 0 && !payFromBank(s, person, fee, `${auth.name}${beside ? `, and the ${beside.name}` : ''}`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
     const readyAt = s.now + (DECIDED_IN_HOURS[key] ?? 24) * MS_HOUR;
     const id = s.nextId('document');
     documentsOf(person).push({

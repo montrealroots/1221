@@ -73,6 +73,7 @@
  * rent and its costs and depreciation on one they let, and a sale's gain.
  */
 
+import { residenceRefusal } from './documents';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -828,6 +829,8 @@ export function offerRefusal(sim: Simulation, person: Person, listingId: string,
   if (!listing) return 'That home isn’t for sale any more.';
   if (person.buying) return 'You have an offer accepted already.';
   if (live && listing.cityId !== (person.home?.cityId ?? person.currentLocationId)) return 'A home to live in is bought where you live; one elsewhere is bought to let.';
+  const abroad = live ? residenceRefusal(person, listing.cityId, sim.now) : undefined;
+  if (abroad) return abroad;
   if (live && person.home?.noticeUntil !== undefined) return 'There’s a notice to pay or quit on your home: a lender won’t lend over it.';
   if (!(price >= askingPrice(sim, listing) * 0.5)) return 'The seller won’t read an offer under half the asking price.';
   const country = CITIES.require(listing.cityId).countryId;
@@ -1932,9 +1935,12 @@ export function refinanceRefusal(sim: Simulation, person: Person, owned: OwnedHo
 }
 
 /** Why they can't move into a home they own, or nothing where they can. */
-export function moveInRefusal(_sim: Simulation, person: Person, owned: OwnedHome): string | undefined {
+export function moveInRefusal(sim: Simulation, person: Person, owned: OwnedHome): string | undefined {
   if (livingIn(person)?.id === owned.id) return 'You live in it.';
   if (owned.cityId !== person.currentLocationId) return `You’re not in ${CITIES.get(owned.cityId)?.name ?? 'its town'}.`;
+  // Until 2026-09-29 an actor on a shoot in London could move into a home they owned there, and live abroad on a visitor's stay.
+  const abroad = residenceRefusal(person, owned.cityId, sim.now);
+  if (abroad) return abroad;
   const main = owned.tenancies.find((t) => t.unit === 'main' && t.status === 'let');
   if (main) return `A tenant lives in it until ${formatDate(main.leaseEnds!, CITIES.require(owned.cityId).timeZone)}: end the tenancy, and move in when they've left.`;
   if (owned.selling) return 'It’s listed for sale.';

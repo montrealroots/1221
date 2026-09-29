@@ -90,6 +90,7 @@ import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type C
 import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { emptyHomeIn, moveIntoOwned } from './homes';
+import { crossingRefusal } from './documents';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
 import { sagHoliday } from '../content/usholidays';
@@ -1693,6 +1694,8 @@ export function registerCareer(sim: Simulation): void {
     const city = workCityOf(booking);
     if (item.payload.direction === 'out') {
       if (booking.status !== 'accepted') return;
+      const no = crossingRefusal(person, person.currentLocationId, city, s.now, (Number(item.payload.back) - s.now) / MS_DAY);
+      if (no) { turnedBack(s, person, booking, no); return; }
       // A room, sublet for the nights: the town's room rent by the night, SLATE's estimate of what it costs.
       const cur = saveCurrency(s.universe);
       // Only the nights no earlier stay in the city already has a room for:
@@ -1749,6 +1752,9 @@ export function registerCareer(sim: Simulation): void {
     const day = role.series ? Math.round((unit * role.series.episodes) / (role.series.weeks * 5)) : unit;
     booking.travelOwed = (booking.travelOwed ?? 0) + day;
     if (item.payload.direction === 'out') {
+      const last = workDays(booking).at(-1)!.at;
+      const no = crossingRefusal(person, person.currentLocationId, booking.location, s.now, (last - s.now) / MS_DAY + 1);
+      if (no) { turnedBack(s, person, booking, no); return; }
       person.currentLocationId = booking.location;
       s.universe.currentZone = zoneOf(booking.location);
       person.stay = { kind: 'hotel', cityId: booking.location };
@@ -2209,7 +2215,33 @@ export function acceptRefusal(sim: Simulation, person: Person, booking: Booking)
   if (role.series && career.option && career.option.seriesId !== (booking.seriesId ?? booking.id)) return 'Another series holds an option on you until it’s decided.';
   const other = career.bookings.find((b) => b.status === 'accepted' && b.id !== booking.id && jobsClash(person, booking, b));
   if (other) return `It clashes with ${roleById(other.roleId).label}.`;
-  return undefined;
+  return borderRefusal(person, booking);
+}
+
+/**
+ * A job across a border: why the actor couldn't go on its travel day, or
+ * come home after, with the papers they hold, or nothing. Until 2026-09-29 a
+ * production in London, Vancouver or Toronto flew an actor out with no
+ * passport asked.
+ */
+export function borderRefusal(person: Person, booking: Booking): string | undefined {
+  const home = person.home?.cityId ?? person.currentLocationId;
+  const city = workCityOf(booking);
+  const days = workDays(booking);
+  const zone = zoneOf(city);
+  const out = at(days[0]!.at, zone, -1, 12);
+  const back = at(days[days.length - 1]!.at, zone, 1, 12);
+  // Coming home, they come to where they live on the papers they live there on, not as a visitor.
+  return crossingRefusal(person, home, city, out, (back - out) / MS_DAY) ?? crossingRefusal(person, city, home, back, 1);
+}
+
+/** Turned away at the border on the travel day: the production recasts, and the days worked are paid. */
+function turnedBack(sim: Simulation, person: Person, booking: Booking, why: string): void {
+  booking.status = 'released';
+  for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.payload.bookingId === booking.id) sim.timeline.cancel(one.id, sim.now);
+  if (booking.owed > 0) schedulePay(sim, person, booking, sim.now + 60_000, true);
+  feel(person, 'recast');
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Turned Back At The Border', body: `${roleById(booking.roleId).label} went to somebody else: you couldn’t travel. ${why}`, importance: 90, route: '/workspace/papers' });
 }
 
 /**

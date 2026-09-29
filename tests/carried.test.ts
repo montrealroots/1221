@@ -5,6 +5,7 @@
  * dentist and the optician (`systems/career.ts`, `systems/health.ts`,
  * `systems/taxreturn.ts`).
  */
+import { documentsOf, passportOf } from '@/engine/systems/documents';
 import { describe, expect, it } from 'vitest';
 import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
@@ -31,6 +32,8 @@ const at = (year: number, month: number, day: number, hour = 9) => instantFromZo
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
   beginCareer(sim, sim.player);
+  // An actor sent abroad holds a passport, and nothing here is about papers (docs/WORLD.md, stage 1b).
+  if (!passportOf(sim.player, sim.now)) documentsOf(sim.player).push({ id: 'pp', kind: 'passport', issuer: 'US', name: 'Passport', number: 'P1', status: 'valid', issuedAt: sim.now - 86_400_000, expiresAt: sim.now + 3650 * 86_400_000 });
   return sim;
 }
 

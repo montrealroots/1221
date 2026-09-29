@@ -599,10 +599,12 @@ part the tool cannot see.
   step is booked; a test's pass rate where nobody publishes one (the mean of
   the published rates of its kind); a course's price, the middle of the
   prices published; France's passport days; a few license terms the
-  authority's pages didn't give, marked `yearsEstimated`. Not yet read by
-  anything: `mayEnter` decides entry, and nothing crosses a border by asking
-  it, because the career's productions in London, Vancouver and Toronto move
-  the actor without a check (stage 1b), and journeys don't exist (stage 2).
+  authority's pages didn't give, marked `yearsEstimated`. `mayEnter` decides
+  entry, and since 2026-09-29 a job abroad asks it at the offer and on the
+  travel day, and a home abroad asks the right to live there; until then a
+  production abroad moved the actor with no check. Permission to work is
+  not yet asked (stage 1b), and journeys of the player's own don't exist
+  (stage 2).
   `mayDrive` decides driving, and nothing drives yet (stage 3). A license's
   probation and points aren't kept, since SLATE has no driving offenses.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes

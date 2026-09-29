@@ -56,10 +56,10 @@ one day trip (Metro-North, New Haven to Grand Central).
 
 - **The research.** `docs/research/world/`: entry rules, licenses, passports, the shares holding them, pass rates and course prices, each with its sources, dates and what it couldn’t confirm. `tools/build-entry.mjs`, `tools/build-licenses.mjs` and `tools/build-passports.mjs` build the content from it.
 
-#### Stage 1b: open
+#### Stage 1b: in progress
 
+- **Done, 2026-09-29: the border is checked.** A job across a border is taken only if the actor could go on its travel day and come home after (`borderRefusal` in `systems/career.ts`, read by `acceptRefusal`, so an offer says why it can't be taken). On the travel day it's asked again: papers lost or run out since, and the actor is turned back and the production recasts. A home abroad is lived in, or bought to live in, only with the right to live there (`residenceRefusal`): a citizen, free movement (the EU and EEA's, the Common Travel Area's), or a visa for the country in force. Until then a production in London, Vancouver or Toronto flew an actor out with no passport asked, and an actor on a London shoot could move into a London home they owned. Tests: `tests/border.test.ts`; 10 mutations, all killed.
 - Permission to work, apart from entry: a foreign graduate's F-1 OPT (I-765, $470) and O-1 (I-129, $1,055 and the $600 Asylum Program Fee; premium processing $2,965 in 15 business days; three years), and the UK's and Canada's rules for a visiting performer.
-- The entry check on the career's own travel: a production in London, Vancouver or Toronto moves the actor without asking for a passport today. Until Stage 2 lands, that is the one way across a border, and it doesn't check.
 - Visa applications: SLATE names the visa a citizenship needs and doesn't take the application.
 - Northern Ireland's license path is set down but no town in SLATE's list is in Northern Ireland, so it can't be reached.
 - A license held from one jurisdiction isn't exchanged for another's on moving; each jurisdiction's exchange rules weren't researched.
