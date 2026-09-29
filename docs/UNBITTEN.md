@@ -673,13 +673,17 @@ part the tool cannot see.
   Pension (Contributory) on the Total Contributions Approach, and Mexico
   the Pensión para el Bienestar (`systems/homepensions.ts`). Not kept:
   Dublin's television, theater and radio, whose Irish Equity rates are for
-  members only; the cast's share of a film's net profits; Mexico City's
-  whole acting business, because ANDA keeps its tabuladores confidential
-  and no published figure prices a part there; IMSS's own pension, with no
+  members only; the cast's share of a film's net profits; IMSS's own pension, with no
   Mexican work to earn its weeks; Ireland's credited contributions, its
   non-contributory pension, and a record combined with Britain's or
   another EU country's. SLATE's reading: a calendar year of Irish earnings
-  at €5,000 or more is 52 contributions.
+  at €5,000 or more is 52 contributions. Mexico City's business was left shut
+  at first too, because ANDA keeps its tabuladores confidential; a played
+  Mexican life home there starved at 36, so it opened the same day at
+  SLATE's estimate (`MEXICO_SCALE`): each American minimum for the like
+  part, scaled by IMSS's average wage against SSA's. Estimated, and said
+  so on every part; ANDA's 15% dues are its own, from 2019. Its agencies'
+  commission is America's, SLATE's estimate.
 - **The NHS is partly kept.** Since 2026-09-29 a British or Irish citizen
   living in the UK is treated by the NHS: free at the point of use, England's
   £9.90 a prescription item (none at 60 or over, nor in Scotland, Wales or

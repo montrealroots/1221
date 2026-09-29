@@ -8,15 +8,17 @@
 import type { Money } from '../core/money';
 import type { Skill } from './school';
 import type { Craft } from '../systems/school';
+import { exchange } from './currency';
 
 /**
  * Where the business is: the cities agencies, casting and the work are in.
  * London from 2026-09-29, for a British actor at home (`UK_ROLES`,
  * `UK_AGENCIES`); until then the business was American only, and a British
  * graduate without permission to work in the US had nowhere to work. Dublin
- * from the same day, for an Irish actor at home, though only its films.
+ * from the same day, for an Irish actor at home, though only its films; and
+ * Mexico City, at SLATE's estimate of its rates (`MEXICO_SCALE`).
  */
-export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin'] as const;
+export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin', 'mx-cmx-mexicocity'] as const;
 export type CareerCity = (typeof CAREER_CITIES)[number];
 
 /**
@@ -92,6 +94,14 @@ export const AGENCIES: readonly Agency[] = [
   { id: 'first-call', name: 'First Call Management', tier: 2, bar: 65, auditionsPerWeek: 2, countryId: 'ie', commission: 0.125 },
   { id: 'morgan-the-agency', name: 'Morgan The Agency', tier: 3, bar: 60, auditionsPerWeek: 1.5, countryId: 'ie', commission: 0.125 },
   { id: 'castaway', name: 'Castaway Actors Agency', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'ie', commission: 0.125 },
+  // Mexico City: the four agencies checked on their own sites on
+  // 2026-09-29. None publishes its commission, and the 10% a search gives is
+  // Spain's; SLATE charges America's, its estimate. Tiers, bars and
+  // auditions a week are SLATE's, by Dublin's.
+  { id: 'talent-on-the-road', name: 'Talent On The Road', tier: 1, bar: 70, auditionsPerWeek: 2.5, countryId: 'mx' },
+  { id: 'shoot-management', name: 'Shoot Management MX', tier: 2, bar: 64, auditionsPerWeek: 2, countryId: 'mx' },
+  { id: 'look-management', name: 'LOOK Management', tier: 2, bar: 62, auditionsPerWeek: 2, countryId: 'mx' },
+  { id: 'glenda-artist', name: 'Glenda Artist Management', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'mx' },
 ];
 export const AGENCY_SOURCE = 'https://oir.yale.edu/sites/default/files/alum_activities_drama_1.pdf; https://ocs.yale.edu/resources/entertainment-talent-agency-management-company-list/';
 
@@ -130,6 +140,9 @@ export const SAG_AFTRA = {
  * each week's check. Since 2023's Open Access anybody paid for theater work
  * can join; SLATE has an actor join on their first Equity contract.
  */
+/** ANDA's dues, 15% of each payment through the union: 10% ordinary, 3.5% for retirement, 1.5% for welfare (laanda.org.mx, April 2019, the latest found). */
+export const ANDA = { dues: 0.15, source: 'https://laanda.org.mx/la-voz-del-actor/beneficios-de-ser-parte-de-la-anda/' } as const;
+
 export const EQUITY = {
   initiation: 1_800_00,
   initiationNow: 600_00,
@@ -192,7 +205,7 @@ export interface Role {
   label: string;
   /** Screen and stage work, or a voice session in a booth. */
   medium: 'screen' | 'stage' | 'voice';
-  union: 'sag' | 'equity' | 'equity-uk' | 'irish-equity';
+  union: 'sag' | 'equity' | 'equity-uk' | 'irish-equity' | 'anda';
   /** Per day on screen, per week on stage, per episode for a series regular. */
   steps: RateSteps;
   /** The money its steps are written in; dollars where not said. */
@@ -235,6 +248,22 @@ const UK_CINEMA = 'Pact/Equity Cinema Films Agreement rates, 6 April 2025 to 5 J
 const UK_THEATRE = 'SOLT/Equity West End and UK Theatre/Equity agreements, 31 March 2025 to 5 April 2026';
 const UK_RADIO = 'Equity’s BBC audio rates summary, July 2023';
 const IE_FILM = 'Screen Producers Ireland and Irish Equity, Irish Film Agreement, from 1 February 2021';
+
+/**
+ * Mexico City's rates are SLATE's estimate, not ANDA's: ANDA keeps every
+ * tabulador confidential (laanda.org.mx, "Tabuladores ANDA", 2026-09-29), and
+ * no published figure prices a part there. Each is the American minimum for
+ * the like part in 2026, scaled by what a Mexican worker earns against an
+ * American: IMSS's average registered wage, MXN 662.80 a day at the end of
+ * January 2026 (imss.gob.mx/prensa/archivo/202602/075), a year of it against
+ * SSA's national average wage for 2024, $69,846.57, the latest published.
+ * The two years apart make it a little high. It comes to about a fifth.
+ */
+export const MEXICO_SCALE = (exchange(662_80 * 365, 'MXN', 'USD') ?? 662_80 * 365 / 18) / 69_846_57;
+const MX_EST = 'SLATE’s estimate: the American minimum for the like part, scaled by IMSS’s average wage against SSA’s (MEXICO_SCALE); ANDA’s tabuladores are confidential';
+/** An American minimum in dollar cents, as SLATE's Mexico City rate in peso cents. */
+const inMexico = (usd: Money): Money => Math.round((exchange(usd, 'USD', 'MXN') ?? usd * 18) * MEXICO_SCALE / 100) * 100;
+const MX: readonly CareerCity[] = ['mx-cmx-mexicocity'];
 const AMPTP = 'https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf';
 const SAGINDIE = 'https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/';
 const LORT = 'https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf';
@@ -512,6 +541,46 @@ export const ROLES: readonly Role[] = [
     id: 'ie-film-verylow', label: 'A Role, A Very Low Budget Irish Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
     steps: [['2021-02-01', 250_00]],
     units: [3, 10], bar: 58, weight: 5, tiers: [2, 3], selfSubmit: true, cities: ['ie-lei-dublin'], leadDays: 14, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
+  // Mexico City, from 2026-09-29, each rate SLATE's estimate (`MEXICO_SCALE`)
+  // from the American part named beside it. What a part asks is SLATE's
+  // estimate too. It's the dubbing capital of Spanish-speaking America, and
+  // the telenovela its daily work.
+  {
+    // By a television co-star's day, $1,283 from July 2026.
+    id: 'mx-telenovela', label: 'A Part, A Telenovela', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2026-07-01', inMexico(1_283_00)]],
+    units: [1, 3], bar: 58, weight: 10, tiers: [1, 2, 3], selfSubmit: true, cities: MX, leadDays: 5, reads: READS.screen, basis: 'day', source: MX_EST,
+  },
+  {
+    // By the same day.
+    id: 'mx-streaming', label: 'A Part, A Series For A Streaming Service', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2026-07-01', inMexico(1_283_00)]],
+    units: [2, 5], bar: 66, weight: 5, tiers: [1, 2], selfSubmit: false, cities: MX, leadDays: 7, reads: READS.screen, basis: 'day', source: MX_EST,
+  },
+  {
+    // By a low budget film's day, $834.
+    id: 'mx-film', label: 'A Role, A Mexican Feature Film', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2026-07-01', inMexico(834_00)]],
+    units: [3, 10], bar: 62, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 14, reads: READS.screen, basis: 'day', source: MX_EST,
+  },
+  {
+    // By an Off-Broadway week, $868.
+    id: 'mx-theater', label: 'A Play In Mexico City', medium: 'stage', union: 'anda', currency: 'MXN',
+    steps: [['2026-07-27', inMexico(868_00)]],
+    units: [4, 9], rehearsalWeeks: [3, 4], bar: 60, weight: 3, tiers: [2, 3], selfSubmit: true, cities: MX, leadDays: 28, reads: READS.stage, source: MX_EST,
+  },
+  {
+    // By an animated voice's session, $1,246.
+    id: 'mx-dubbing', label: 'Dubbing, A Session', medium: 'voice', union: 'anda', currency: 'MXN',
+    steps: [['2026-07-01', inMexico(1_246_00)]],
+    units: [1, 3], bar: 58, weight: 6, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 5, reads: READS.voice, sessionHours: 4, source: MX_EST,
+  },
+  {
+    // By a commercial's session, $855.20.
+    id: 'mx-commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2026-04-01', inMexico(855_20)]],
+    units: [1, 1], bar: 55, weight: 5, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 5, reads: READS.commercial, source: MX_EST,
   },
 ];
 

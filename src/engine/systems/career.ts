@@ -68,7 +68,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, AGENT_COMMISSION, AUDITION_READ, PART_DEMANDS, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  AFTERLIFE, AGENCIES, ANDA, AGENT_COMMISSION, AUDITION_READ, PART_DEMANDS, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
   partsForAge,
 } from '../content/career';
@@ -1084,7 +1084,7 @@ export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; reh
   const agent = !represented ? 0 : role.union === 'sag' ? Math.round(scale * AGENT_COMMISSION.rate) : Math.round(scale * agentRate);
   // A manager takes a share of all of it: less beside an agent.
   const manager = opts.managed ? Math.round(gross * (represented ? MANAGEMENT.withAgent : MANAGEMENT.alone)) : 0;
-  const dues = role.union === 'equity' ? Math.round(gross * EQUITY.workingDues) : 0;
+  const dues = role.union === 'equity' ? Math.round(gross * EQUITY.workingDues) : role.union === 'anda' ? Math.round(gross * ANDA.dues) : 0;
   // A city's resident tax is withheld only from its residents: New York City
   // withholds nothing from a New Haven or Los Angeles actor working there.
   // Until 2026-09-27 it withheld it from everybody, and the return refunded it.
@@ -2162,7 +2162,7 @@ export function registerCareer(sim: Simulation): void {
   sim.onCommand<{ cityId: string; kind: Housing }, { cityId: string }>('career.relocate', (p, { sim: s }) => {
     const person = s.player;
     const home = homeTownOf(person);
-    if (![...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].includes(p.cityId as CareerCity)) throw new CommandError(`New York, Los Angeles, London, Dublin or New Haven${home ? `, or home to ${CITIES.require(home).name}` : ''}.`);
+    if (![...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].includes(p.cityId as CareerCity)) throw new CommandError(`New York, Los Angeles, London, Dublin, Mexico City or New Haven${home ? `, or home to ${CITIES.require(home).name}` : ''}.`);
     if (person.currentLocationId === p.cityId && person.home?.cityId === p.cityId && person.home.kind === p.kind) throw new CommandError('You live there already.');
     // Until 2026-09-27 a student could move to Los Angeles mid-term, and miss every class after.
     const school = person.school;

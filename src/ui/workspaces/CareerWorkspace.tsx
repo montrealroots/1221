@@ -135,7 +135,7 @@ function CommercialPane() {
 }
 
 /** Who a part's contract is with. Until 2026-09-29 every part not SAG-AFTRA's read Equity, a British one too. */
-const UNION_NAMES = { sag: 'SAG-AFTRA', equity: 'Actors’ Equity', 'equity-uk': 'Equity (UK)', 'irish-equity': 'Irish Equity' } as const;
+const UNION_NAMES = { sag: 'SAG-AFTRA', equity: 'Actors’ Equity', 'equity-uk': 'Equity (UK)', 'irish-equity': 'Irish Equity', anda: 'ANDA' } as const;
 
 export function CareerWorkspace() {
   const person = useWorld((s) => s.player);
