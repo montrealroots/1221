@@ -26,6 +26,7 @@ import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal }
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
 import { BIENESTAR, IRISH_PENSION, bienestarRefusal, irishContributions, irishPensionRefusal, irishWeekly } from '@/engine/systems/homepensions';
 import { isoOfCountry } from '@/engine/systems/documents';
+import { livesInIreland } from '@/engine/systems/homebenefits';
 import { costsAt, HOUSING } from '@/engine/systems/household';
 import { bondWord, focusOf, summerOf } from '@/engine/systems/school';
 import { SAG_PENSION, earlyRefusal, pensionAge, pensionOf } from '@/engine/systems/pension';
@@ -523,7 +524,7 @@ function UnionsPane() {
           </div>
         </Panel>
       )}
-      {(irishContributions(person, cur) > 0 || person.irishPension) && (
+      {(irishContributions(person, cur) > 0 || person.irishPension || livesInIreland(person)) && (
         <Panel title="State Pension (Ireland)" subtitle="Ireland’s, on your PRSI contributions" actions={irishPensionRefusal(sim, person) ? undefined : <Gated feature="pension.ie_state" onClick={() => { const r = run<{ weekly: number }>('pension.ie_state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week.`, 'positive'); }}>Claim It</Gated>}>
           <div className="col gap-3">
             <div className="grid grid-3">
@@ -531,7 +532,7 @@ function UnionsPane() {
               <Stat label="A Week At 66" value={formatMoney(inSaveMoney(sim, person.irishPension?.weeklyEur ?? irishWeekly(irishContributions(person, cur), IRISH_PENSION.age), 'EUR'), cur)} note={person.irishPension ? `Claimed ${formatDate(person.irishPension.from, sim.zone)}` : 'More claimed at 67, and at 68'} />
               <Stat label="Claimed" value={person.irishPension ? 'Yes' : 'Not Yet'} note={irishPensionRefusal(sim, person) ?? 'You can claim it now'} />
             </div>
-            <Fine>A calendar year of Irish earnings at €5,000 or more counts as 52 contributions; the week is the full rate times your contributions over 2,080: €299.30 at 66, €313.40 claimed at 67, €328.90 at 68 (2026). SLATE holds the rates at 2026’s. Source: {IRISH_PENSION.source}.</Fine>
+            <Fine>A calendar year of Irish earnings at €5,000 or more counts as 52 contributions; the week is the full rate times your contributions over 2,080: €299.30 at 66, €313.40 claimed at 67, €328.90 at 68 (2026). A short record or none, living in Ireland: the means-tested pension instead, €288 a week (€298 from 80) less your means over €30, whichever is higher; €22 more living alone, and the Fuel Allowance, €38 a week through the winter, with the means-tested one. SLATE holds the rates at 2026’s. Source: {IRISH_PENSION.source}.</Fine>
           </div>
         </Panel>
       )}

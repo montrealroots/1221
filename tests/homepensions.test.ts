@@ -8,7 +8,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { recordWages } from '@/engine/systems/earnings';
-import { bienestarRefusal, irishContributions, irishPensionRefusal, irishWeekly } from '@/engine/systems/homepensions';
+import { IRISH_NCP, bienestarRefusal, inFuelSeason, irishContributions, irishMeans, irishPensionRefusal, irishWeekPaid, irishWeekly, nonContributoryWeekly } from '@/engine/systems/homepensions';
 
 const YEAR = 365.2425 * MS_DAY;
 
@@ -54,6 +54,50 @@ describe('Ireland’s State Pension', () => {
     expect(irishPensionRefusal(sim, sim.player)).toBe('You’re drawing it.');
     sim.advanceBy(15 * MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'The State Pension (Contributory), the week').length).toBe(2);
+  });
+});
+
+describe('Ireland’s means-tested pension', () => {
+  it('pays €288 less every euro of means over €30, by €2.50, and €298 from 80', () => {
+    expect(nonContributoryWeekly(70, 0)).toBe(288_00);
+    expect(nonContributoryWeekly(70, 30_00)).toBe(288_00);
+    expect(nonContributoryWeekly(70, 31_00)).toBe(285_50);
+    expect(nonContributoryWeekly(70, 130_00)).toBe(188_00);
+    expect(nonContributoryWeekly(82, 0)).toBe(298_00);
+    expect(nonContributoryWeekly(70, 400_00)).toBe(0);
+  });
+
+  it('gives a Dubliner with no Irish record and no savings the means-tested pension, the higher of the two, with €22 for living alone and the Fuel Allowance in winter', () => {
+    const { sim, inCur } = at('ie-lei-dublin', 'ncp-claim');
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings')) a.balance = 0;
+    sim.player.birthInstant = sim.now - 66.2 * YEAR;
+    expect(irishMeans(sim, sim.player)).toBe(0);
+    expect(irishPensionRefusal(sim, sim.player)).toBeUndefined();
+    sim.player.home = { ...sim.player.home!, kind: 'own' };
+    const january = Date.UTC(2027, 0, 10);
+    const july = Date.UTC(2027, 6, 10);
+    expect(inFuelSeason(january)).toBe(true);
+    expect(inFuelSeason(july)).toBe(false);
+    const winter = irishWeekPaid(sim, sim.player, 0, january);
+    expect(winter.means).toBe(true);
+    expect(winter.total).toBe(288_00 + IRISH_NCP.livingAlone + IRISH_NCP.fuelWeekly);
+    expect(irishWeekPaid(sim, sim.player, 0, july).total).toBe(288_00 + IRISH_NCP.livingAlone);
+    // A full contributory pension is the higher, and no Fuel Allowance comes with it.
+    expect(irishWeekPaid(sim, sim.player, 299_30, january)).toMatchObject({ means: false, total: 299_30 + IRISH_NCP.livingAlone });
+    // Savings over €20,000 are means: €50,000 is €10 + €20 + €40 a week.
+    const acct = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'checking')!;
+    acct.balance = inCur(50_000_00, 'EUR');
+    expect(Math.abs(irishMeans(sim, sim.player) - 70_00)).toBeLessThanOrEqual(1_00);
+  });
+
+  it('isn’t paid to someone living abroad without an Irish record', () => {
+    const { sim } = at('us-ny-newyork', 'ncp-abroad');
+    sim.player.citizenshipId = 'ie';
+    sim.player.birthInstant = sim.now - 70 * YEAR;
+    expect(irishPensionRefusal(sim, sim.player)).toMatch(/living in Ireland/);
+    // And a week of it, paid abroad on a contributory pension of nothing, is nothing.
+    for (const acct of Object.values(sim.universe.accounts)) if (acct.ownerId === sim.player.id && (acct.kind === 'checking' || acct.kind === 'savings')) acct.balance = 0;
+    expect(irishWeekPaid(sim, sim.player, 0, sim.now).total).toBe(0);
   });
 });
 

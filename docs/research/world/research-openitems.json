@@ -1,0 +1,396 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "method": "Web search and fetch of official and secondary pages on 2026-09-29. Many Irish government pages (gov.ie, citizensinformation.ie) and travel.state.gov returned HTTP 403 to automated fetches, so some figures for those come from search-result excerpts of those pages or from secondary sites that repeat them. Each such case says so in its note.",
+    "sourceTypes": "primary = government, regulator or peer-reviewed; secondary = press, law firm, advice site or aggregator",
+    "rule": "No figure here is an estimate presented as published. Where a figure could not be confirmed it is null, with an entry in 'uncertain'."
+  },
+
+  "ireland": {
+    "statePensionNonContributory": {
+      "weeklyMaxAge66to79": { "value": 288.00, "currency": "EUR", "period": "from 2 January 2026 (Budget 2026)", "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-non-contributory/", "sourceType": "primary", "note": "Citizens Information is the state information agency; page returned 403 to fetch, figure taken from its search excerpt and matched by https://pensionplanner.ie/state-pension.html." },
+      "weeklyMaxAge80Plus": { "value": 298.00, "currency": "EUR", "period": "from 2 January 2026", "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-non-contributory/", "sourceType": "primary", "note": "+€10 age-80 addition." },
+      "forComparison_contributoryMax": { "age66": 299.30, "age80Plus": 309.30, "currency": "EUR", "period": "from January 2026", "source": "https://pensionplanner.ie/state-pension.html", "sourceType": "secondary" },
+      "livingAloneIncrease": { "value": 22.00, "currency": "EUR/week", "period": "2026", "source": "https://pensionplanner.ie/state-pension.html", "sourceType": "secondary", "note": "Unchanged by Budget 2026 per One Family and INOU Budget 2026 factsheets (https://onefamily.ie/budget-2026-factsheet-key-updates/)." },
+      "meansTest": {
+        "disregard": "First €30 per week of means is disregarded.",
+        "taper": "Above €30, the pension is reduced by €2.50 for every €2.50 (or part) of weekly means — i.e. euro-for-euro in €2.50 steps. No pension is payable once means exceed the maximum rate plus €30 (about €318/week at the 66-79 rate).",
+        "earningsFromEmployment": "Up to €200/week of gross earnings from employment (including Community Employment, not self-employment) is disregarded, for the claimant and separately for a spouse/partner.",
+        "capital": {
+          "includes": "Savings, investments, shares, and property other than the home you live in.",
+          "home": "The home you live in is not counted; any income from it (e.g. renting a room) is assessed.",
+          "bands": [
+            { "from": 0, "to": 20000, "weeklyMeansPer1000": 0 },
+            { "from": 20000, "to": 30000, "weeklyMeansPer1000": 1 },
+            { "from": 30000, "to": 40000, "weeklyMeansPer1000": 2 },
+            { "from": 40000, "to": null, "weeklyMeansPer1000": 4 }
+          ],
+          "workedExample": "€50,000 capital → 0 + €10 + €20 + €40 = €70/week of assessed means (arithmetic from the bands, not a published example)."
+        },
+        "couples": "Means of a couple are assessed jointly and halved for each claimant.",
+        "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-non-contributory/",
+        "sourceType": "primary",
+        "note": "Page 403 to fetch; the disregard, taper, capital bands and home exclusion are from its search excerpts and repeated by https://www.kota.io/blog/non-contributory-state-pension-ireland (secondary). The couples-halving rule is from general knowledge of the DSP means test, not re-verified today — see 'uncertain'."
+      },
+      "combiningWithContributoryPension": {
+        "rule": "Not both. A person entitled only to a reduced-rate State Pension (Contributory) may instead claim the Non-Contributory pension if, after the means test, it would pay more — effectively the higher of the two, not a top-up. Irish social welfare's overlapping-payments rule allows only one primary weekly payment.",
+        "source": "https://www.kota.io/blog/non-contributory-state-pension-ireland",
+        "sourceType": "secondary",
+        "note": "Could not fetch the DSP Operational Guidelines (403) to confirm the exact wording or whether the reduced contributory pension itself is counted as means. Foreign/occupational pensions ARE counted as means for SPNC. See 'uncertain'."
+      }
+    },
+
+    "housingAssistancePaymentDublinCity": {
+      "eligibility": {
+        "rule": "Must be assessed as eligible for social housing support and be on the local authority's housing list (long-term housing need). Tenant finds a private rental; the council pays the landlord and the tenant pays the council a differential rent.",
+        "source": "https://www.dublincity.ie/housing/housing-supports/housing-assistance-payment-hap/apply-housing-assistance-payment-hap",
+        "sourceType": "primary"
+      },
+      "socialHousingNetIncomeLimit": {
+        "singlePersonDublinCity": 40000,
+        "threeAdultsFourChildren": 48000,
+        "currency": "EUR net per year",
+        "uplifts": "+5% per additional adult, +2.5% per child (to the family cap).",
+        "period": "table dated 1 January 2023 (Social Housing Assessment Regulations 2011, as amended)",
+        "source": "https://assets.gov.ie/static/documents/social-housing-support-table-of-income-limits-5c168436-840d-4d7f-81f8-6a80d556876b.pdf",
+        "sourceType": "primary",
+        "note": "A later gov.ie press release 'Government approves increase in social housing income eligibility thresholds' exists but could not be fetched (403); whether a higher 2025/2026 threshold is in force is unconfirmed."
+      },
+      "rentLimitsSingleAdultDublinCity": {
+        "sharedAccommodationBase": 500,
+        "standAloneUnitBase": 660,
+        "currency": "EUR/month",
+        "discretion": "Mainstream HAP: up to 35% above the base limit, case by case. Homeless HAP (Dublin): up to 50% above base.",
+        "withDiscretionAsPublished": { "shared": 675, "standAlone": 1215, "note": "DCC page states these maxima. €500×1.35=€675 matches; €1,215 does not match €660×1.35 (€891) or ×1.5 (€990) and is unexplained — see 'uncertain'." },
+        "rentAffordability": "Total rent may not exceed 30% of household income where the household is only on social welfare (slightly more flexibility for employed households).",
+        "period": "current page, read 2026-09-29",
+        "source": "https://www.dublincity.ie/housing/housing-supports/housing-assistance-payment-hap/apply-housing-assistance-payment-hap",
+        "sourceType": "primary"
+      },
+      "tenantDifferentialRent_DCC2026": {
+        "effectiveFrom": "2026-04-06",
+        "appliesTo": "DCC-owned and leased homes, Approved Housing Body homes, HAP and RAS tenancies",
+        "principalEarner": "18% of weekly net assessable income after the first €55 (previously 15% after €32)",
+        "secondaryEarners": "each contributes up to a maximum of €40/week",
+        "childDeduction": "€3/week per child under 18, or 18-22 in full-time education (previously €1)",
+        "minimumRent": { "weekly": 35.82, "monthly": 155.22 },
+        "selfEmployedAssumedIncome": "€700/week net if no documentation",
+        "formula": "weeklyRent = max(35.82, 0.18 × (principalNetWeekly − 55) + Σ min(40, secondaryCharge) − 3 × qualifyingChildren)",
+        "formulaNote": "The formula line is an assembly of the published parameters; the order in which the child deduction and minimum apply is not stated in what was read.",
+        "source": "https://www.dublincity.ie/housing/advice-dublin-city-council-tenants/differential-rent-scheme",
+        "sourceType": "primary",
+        "corroboration": "https://dublinpeople.com/news/dublin/articles/2025/11/25/dublin-city-council-introduces-new-differential-rent-scheme/ (secondary): average rent expected to rise from €83 to €108/week."
+      }
+    },
+
+    "fuelAllowance": {
+      "weeklyRate": 38.00,
+      "currency": "EUR",
+      "period": "from January 2026 (up from €33, Budget 2026)",
+      "seasonWeeks": 28,
+      "season": "late September to April",
+      "eligibility": "Must be getting a qualifying long-term means-tested or social insurance payment (including State Pension Non-Contributory/Contributory), and live alone or only with other qualifying people. Only one allowance per household. Budget 2026 extended it to Working Family Payment recipients (paid March 2026, backdated to January).",
+      "incomeTestAge66Plus": { "single": 524, "couple": 1048, "currency": "EUR/week assessable income", "note": "One secondary site gives €512/€1,024 for over-70s; figures inconsistent across secondary sources — see 'uncertain'." },
+      "incomeTestUnder66": "Income must not exceed the maximum State Pension (Contributory) rate + €200/week (per secondary source).",
+      "source": "https://www.citizensinformation.ie/en/social-welfare/extra-social-welfare-benefits/fuel-allowance/",
+      "sourceType": "primary",
+      "note": "Rate confirmed by MABS (https://www.mabs.ie/en/blog/budget-2026-what-measures-take-effect-from-january/, state-funded). Income limits from secondary pages (https://benefits.ie/fuel-allowance/)."
+    },
+
+    "livingAloneIncrease": {
+      "weeklyRate": 22.00,
+      "currency": "EUR",
+      "period": "2026",
+      "eligibility": "Paid with State Pension (Contributory or Non-Contributory), Widow's/Widower's pensions, Invalidity Pension, Disability Allowance, Blind Pension and some others, to people who live alone (short absences and some carers staying are allowed). Not paid with Jobseeker's payments.",
+      "source": "https://onefamily.ie/budget-2026-factsheet-key-updates/",
+      "sourceType": "secondary",
+      "note": "Eligibility list from general knowledge of the scheme, not re-read today."
+    }
+  },
+
+  "mexicoImss": {
+    "regime": "Ley del Seguro Social 1997 (Ley 97), individual AFORE account, as reformed by DOF 16 December 2020.",
+    "rcvContributions2026": {
+      "retiroEmployer": "2.000% of SBC",
+      "cesantiaVejezWorker": "1.125% of SBC",
+      "cesantiaVejezEmployerByBand2026": [
+        { "band": "up to 1 SM", "rate": 3.150 },
+        { "band": "1.01 SM to 1.50 UMA", "rate": 3.676 },
+        { "band": "1.51 to 2.00 UMA", "rate": 4.851 },
+        { "band": "2.01 to 2.50 UMA", "rate": 5.556 },
+        { "band": "2.51 to 3.00 UMA", "rate": 6.026 },
+        { "band": "3.01 to 3.50 UMA", "rate": 6.361 },
+        { "band": "3.51 to 4.00 UMA", "rate": 6.613 },
+        { "band": "4.01 UMA and above", "rate": 7.513 }
+      ],
+      "totalRcvByBand2026_primary": [
+        { "band": "up to 1 SM", "rate": 6.275 },
+        { "band": "1.01 SM to 1.5 UMA", "rate": 6.801 },
+        { "band": "1.51 to 2 UMA", "rate": 7.976 },
+        { "band": "2.01 to 2.5 UMA", "rate": 8.681 },
+        { "band": "2.51 to 3 UMA", "rate": 9.151 },
+        { "band": "3.01 to 3.5 UMA", "rate": 9.486 },
+        { "band": "3.51 to 4 UMA", "rate": 9.738 },
+        { "band": "4 UMA and above", "rate": 10.638 }
+      ],
+      "totalNote": "The CONSAR total = employer CyV + 2% retiro + 1.125% worker. The employer-by-band list above is derived by subtracting 3.125 from CONSAR's totals; it agrees with the secondary tables for bands 1-3 and 8 (3.150, 3.676, 4.851, 7.51). Secondary site values for bands 5-7 (6.03, 6.36, 6.94) differ from the derivation for band 7 (6.613) — CONSAR's primary totals should govern.",
+      "cuotaSocialDailyMXN_JanApr2026": [
+        { "band": "up to 1 SM", "daily": 12.15794 },
+        { "band": "1.01 SM to 1.5 UMA", "daily": 11.30970 },
+        { "band": "1.51 to 2 UMA", "daily": 10.46148 },
+        { "band": "2.01 to 2.5 UMA", "daily": 9.61325 },
+        { "band": "2.51 to 3 UMA", "daily": 8.76502 },
+        { "band": "3.01 to 3.5 UMA", "daily": 7.91682 },
+        { "band": "3.51 to 4 UMA", "daily": 7.06856 },
+        { "band": "4 UMA and above", "daily": 0 }
+      ],
+      "cuotaSocialNote": "Government contribution per day of contribution, LSS Art. 168 fr. IV, indexed quarterly by INPC; figures valid January-April 2026. Monthly = daily × 30.4. Paid only to workers earning up to 4 UMA.",
+      "gradualIncrease": "Employer CyV rates keep rising each January until 2030 (Second Transitory Article, DOF 16-Dec-2020).",
+      "contributionCeiling": "25 UMA daily SBC",
+      "uma2026Daily": { "value": 113.14, "source": "https://cotizadorhipotecario.mx/jubilacion/calculadora-pension-garantizada/", "sourceType": "secondary", "note": "Official INEGI publication not fetched." },
+      "source": "https://www.consar.gob.mx/gobmx/Aplicativo/calculadora/imss/PDF/Metodolog%C3%ADa_Calculadora_de_Retiro.pdf",
+      "sourceType": "primary",
+      "period": "CONSAR methodology dated 9 March 2026; rates for calendar 2026",
+      "secondarySource": "https://fortia.com.mx/tablas-de-cesantia-y-vejez/"
+    },
+    "consarProjectionMethodology": {
+      "document": "Metodología de la Calculadora de Ahorro y Retiro para trabajadores que cotizan al IMSS (Régimen Ley 97), 2026",
+      "realReturnOptions": "4% or 5% annual real, chosen by user; monthly = (1+r)^(1/12) − 1 (4% → 0.003273740)",
+      "fees": "AFORE annual commission on balance ÷ 12, applied multiplicatively: net monthly = (1+gross)(1−fee) − 1. Example used: 0.54%/yr.",
+      "densityOfContributions": "80%, constant to retirement",
+      "salaryGrowth": "Not stated as a separate assumption in the text read; contributions are computed on the SBC entered (real terms).",
+      "retirementAgeRange": "60 to 67",
+      "balanceExcludes": "Vivienda (INFONAVIT) and SAR-92 subaccounts",
+      "conversionToPension": "Monthly pension = final balance ÷ (contingent annuity factor for sex and age × 1.15 × (1 + 2% safety margin)); if that is below the Pensión Garantizada for the worker's salary, weeks and age, the PG is paid. The annuity factor is the basic premium for RCV pensions without beneficiaries (CNSF Circular Única de Seguros y Fianzas annex 14.2.1-y), EMSSA-RCS-15 mortality tables, discounted at the rate published with the Unidad de Renta Vitalicia values.",
+      "conversionNote": "The 1.15 multiplier and the (1+m) term are as printed in the PDF; the symbols did not extract cleanly, so the exact placement of 1.15 in the formula should be checked against the PDF before implementing.",
+      "numericAnnuityFactorAt65": null,
+      "source": "https://www.consar.gob.mx/gobmx/Aplicativo/calculadora/imss/PDF/Metodolog%C3%ADa_Calculadora_de_Retiro.pdf",
+      "sourceType": "primary",
+      "period": "dated 9 March 2026"
+    },
+    "weeksRequired": {
+      "2026": 875,
+      "schedule": "750 in 2021, +25 per year, 1,000 from 2031",
+      "source": "https://www.consar.gob.mx/gobmx/Aplicativo/calculadora/imss/PDF/Metodolog%C3%ADa_Calculadora_de_Retiro.pdf",
+      "sourceType": "primary"
+    },
+    "pensionGarantizada": {
+      "structure": "Table in LSS Art. 170 (reform DOF 16-Dec-2020) by average SBC band (1 SM up to 5+ UMA), age (60-65) and weeks (1,000 to 1,250+ in 25-week steps; the minimum-weeks column applies during the transition). Amounts expressed in 2020 pesos and updated each February by INPC.",
+      "range2020Pesos": { "min": 2622, "max": 8241, "minCell": "≤1 SM, age 60, minimum weeks", "maxCell": "5+ UMA, age 65, 1,250+ weeks", "sourceType": "primary", "source": "Ley del Seguro Social Art. 170, DOF 16-Dec-2020 (https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf)", "note": "Recalled from the DOF table; not re-fetched today — see 'uncertain'." },
+      "range2026Pesos": { "min": 3540.56, "max": 11128.01, "currency": "MXN/month", "source": "https://www.elcontribuyente.mx/pension-imss-ley-97/", "sourceType": "secondary", "note": "Both ends equal the 2020 figures × 1.3503, which is internally consistent. AMCPDF says the 2026 table applied a 3.69% INPC factor over 2025 (https://amcpdf.org.mx/montos-de-pension-minima-por-ley-de-1973-y-pension-grantizada-por-ley-de-1997-que-se-otorguen-a-partir-de-2026/). Full 2026 cell-by-cell table was only available as an image." },
+      "workedExample2026": { "case": "age 61, 980 weeks, $450/day SBC", "monthly": 6555.70, "source": "https://amcpdf.org.mx/montos-de-pension-minima-por-ley-de-1973-y-pension-grantizada-por-ley-de-1997-que-se-otorguen-a-partir-de-2026/", "sourceType": "secondary" },
+      "fullTable2026": null
+    },
+    "fondoPensionesBienestar": {
+      "created": "Decree DOF 1 May 2024; payments from July 2024",
+      "eligibility": "First IMSS registration on or after 1 July 1997 (Ley 97); age 65+; meets the weeks requirement (875 in 2026); pension resolved on or after 2 May 2024; pension below last-year average salary; annuity holders must not have withdrawn a surplus. Determined automatically at pension application.",
+      "cap2026": { "value": 17885.85, "currency": "MXN/month", "note": "CONSAR calls this an estimated 2026 value under Art. 2 of the decree; annually updated." },
+      "rule": "complement = min(last-year average monthly SBC, 17,885.85) − pension, if positive; no complement if the pension already exceeds either.",
+      "measuredEffect": "Beneficiaries moved from 52.5% to 96.1% of last salary on average, about +$4,820/month; over 7,200 beneficiaries (IMSS, June 2026).",
+      "source": "https://www.imss.gob.mx/www.imss.gob.mx/prensa/archivo/202606/332",
+      "sourceType": "primary",
+      "formulaSource": "https://www.consar.gob.mx/gobmx/Aplicativo/calculadora/imss/PDF/Metodolog%C3%ADa_Calculadora_de_Retiro.pdf"
+    }
+  },
+
+  "jetLag": {
+    "cdcYellowBook2026": {
+      "adaptationRate": { "eastwardHoursPerDay": 1.0, "westwardHoursPerDay": 1.5 },
+      "reason": "Intrinsic circadian period slightly longer than 24 h, so delaying (westward) is easier than advancing (eastward).",
+      "preTripAdvice": "Shift sleep 1 h earlier (east) or later (west) per day before travel.",
+      "threshold": null,
+      "thresholdNote": "The requested '2+ time zones' threshold could not be confirmed from the chapter text (NCBI served a CAPTCHA). The ICSD-3 diagnostic criterion for jet lag disorder is transmeridian travel across at least two time zones — that is the likely source, but it is unverified here.",
+      "source": "https://www.ncbi.nlm.nih.gov/books/NBK620865/",
+      "sourceType": "primary",
+      "period": "CDC Yellow Book 2026 edition, chapter 'Jet Lag Disorder'"
+    },
+    "studies": [
+      {
+        "citation": "Willoughby AR, Vallat R, Ong JL, Chee MWL et al. Insights about travel-related sleep disruption from 1.5 million nights of data. Sleep 2025;48(7):zsaf077",
+        "url": "https://academic.oup.com/sleep/article/48/7/zsaf077/8092480",
+        "sourceType": "primary",
+        "population": "Ordinary adults: 57,240 Oura ring users (32,166 F / 25,074 M, mean age ~45), 64,847 trips; 15 days before and after travel",
+        "design": "Retrospective wearable (ring actigraphy/PPG) cohort",
+        "findings": {
+          "nightBeforeTravel": "sleep 30-50 min shorter (early waking)",
+          "travelDay": "sleep reduced 13-62 min, largest for long eastward trips",
+          "durationRecovery": "within ~12 min of baseline after ~2 days",
+          "days2to4": "eastward <15 min shorter; westward ~12 min shorter",
+          "timingShift": "sleep 60-70 min earlier/later than usual on long trips; not back to baseline by day 15",
+          "architecture": "eastward: more wake after sleep onset and less REM for 5-6 days; westward adjustment largely complete by days 6-8, eastward continuing to days 10-12",
+          "direction": "eastward worse, especially for trips of up to 3 time zones; for longer trips disruption is similar either way",
+          "age": "a 20-year-old loses ~15 min more sleep than a 60-year-old in the first post-travel days (ScienceDaily summary)"
+        }
+      },
+      {
+        "citation": "Beaumont M et al. Caffeine or melatonin effects on sleep and sleepiness after rapid eastward transmeridian travel. J Appl Physiol 2004;96:50-58",
+        "url": "https://journals.physiology.org/doi/full/10.1152/japplphysiol.00940.2002",
+        "sourceType": "primary",
+        "population": "Healthy adult volunteers (French military), 3 groups × n=9",
+        "design": "Double-blind RCT after a 7-time-zone eastbound flight; polysomnography at night, sleep latencies (MSLT) and wrist actigraphy by day",
+        "findings": {
+          "placeboSleep": "slow-wave sleep rebound nights 1-2; REM reduced night 1; no significant change in total nocturnal sleep time or sleep efficiency across 9 nights vs baseline",
+          "placeboSleepiness": "objectively increased daytime sleepiness on days 1-6",
+          "note": "The 'no change in TST/efficiency' point comes from the AASM 2007 review's summary of this trial."
+        }
+      },
+      {
+        "citation": "Sack RL et al. Circadian rhythm sleep disorders: Part I, basic principles, shift work and jet lag disorders. Sleep 2007;30(11):1460-83 (AASM review)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2082105/",
+        "sourceType": "primary",
+        "findings": "Polysomnography in the first few nights after arrival shows diminished sleep efficiency and, depending on direction, prolonged sleep-onset latency (east) or early-morning awakening (west)."
+      },
+      {
+        "citation": "Polymeropoulos CM et al. Once-daily tasimelteon for jet lag following transmeridian travel. Front Neurol 2022",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9521676/",
+        "sourceType": "primary",
+        "design": "Multicentre RCT after a real eastward transmeridian flight (US to Europe)",
+        "findings": "Over the three travel nights, tasimelteon group slept 131 min more in total than placebo; +76 min on night 3 vs the observational trip. Placebo absolute TST not extracted."
+      },
+      {
+        "citation": "Doherty R et al. The impact of long haul travel on the sleep of elite athletes. Neurobiol Sleep Circadian Rhythms 2023",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10520441/",
+        "sourceType": "primary",
+        "population": "n=7 elite track cyclists (athletes, included for contrast)",
+        "findings": "Actigraphy: significant falls in time in bed, total sleep time and sleep efficiency after long-haul eastward travel, mainly in the first 48 h."
+      }
+    ],
+    "cognitivePerformance": [
+      {
+        "citation": "Cho K. Chronic 'jet lag' produces temporal lobe atrophy and spatial cognitive deficits. Nat Neurosci 2001;4:567-568",
+        "url": "https://www.nature.com/articles/nn0601_567",
+        "sourceType": "primary",
+        "population": "Female flight attendants with >5 years of transmeridian flying",
+        "design": "Cross-sectional: short recovery (<5 days between long flights) vs long recovery group; MRI, salivary cortisol, visuospatial tests",
+        "findings": "Short-recovery crew had smaller right temporal lobe volume, higher cortisol, and slower/poorer visuospatial performance, correlated with each other. This is chronic, repeated jet lag, not a single trip.",
+        "nNote": "Sample size (commonly cited as n=20) not verified today."
+      },
+      {
+        "citation": "Gander PH et al. In-flight sleep, pilot fatigue and PVT performance on ultra-long range versus long range flights. J Sleep Res 2013;22:697-706",
+        "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/jsr.12071",
+        "sourceType": "primary",
+        "population": "30 captains (mean 54.5 y) and 40 first officers (mean 48.0 y), Boeing 777",
+        "design": "Within-subjects; actigraphy, KSS, Samn-Perelli, 5-min PVT before/during/after flights; eastward outbound",
+        "findings": "+12.3 min in-flight sleep per extra flight hour; mean in-flight sleep 3 h 53 min (ULR) vs 3 h 15 min (LR); sleepiness lower and reaction speed faster at end of ULR flights. No quantified jet-lag PVT decrement at destination reported in the abstract."
+      }
+    ],
+    "quantifiedNonAthleteCognitiveDecrementSingleTrip": null
+  },
+
+  "visas": {
+    "US_B1B2": {
+      "applicants": ["Mexico", "Brazil"],
+      "form": "DS-160 online, then consular interview (or interview waiver where eligible)",
+      "mrvFee": { "value": 185, "currency": "USD", "period": "since June 2023, still in force 2026", "source": "https://www.bu.edu/isso/2026/05/19/visa-integrity-fee/", "sourceType": "secondary" },
+      "visaIntegrityFee": { "value": 250, "currency": "USD", "status": "Enacted by H.R.1 (One Big Beautiful Bill Act, July 2025), payable at visa issuance, CPI-indexed, nominally refundable after compliance. As of May 2026 some posts had begun collecting it; refund procedure not finalized. Whether Mexico City/Brazil posts collect it as of 2026-09-29 is unconfirmed.", "source": "https://www.bu.edu/isso/2026/05/19/visa-integrity-fee/", "sourceType": "secondary" },
+      "waitTimeMexicoCity": { "value": "5 months", "dataDate": "2026-09-29", "source": "https://waitvisa.com/us/consulate/mexico-city", "sourceType": "secondary", "note": "Aggregator citing State Department's monthly table; the official tool (travel.state.gov) blocked automated access. Other aggregators gave 4 months (28 Aug 2026) and 3.5 months (July 2026)." },
+      "validityGranted": { "Mexico": "up to 10 years, multiple entry (reciprocity)", "Brazil": "up to 10 years, multiple entry (reciprocity)", "sourceType": "secondary", "source": "https://www.mytravelready.ai/blog/brazil-usa-visa-guide-2026", "note": "July 2025 reciprocity cuts targeted other countries; Brazil's current reciprocity entry not verified on travel.state.gov." },
+      "stayPerEntry": "Normally up to 6 months as set by CBP at entry"
+    },
+    "UK_StandardVisitor": {
+      "fee": { "sixMonths": 135, "twoYear": 506, "fiveYear": 903, "tenYear": 1128, "currency": "GBP", "period": "from 8 April 2026 (was £127)" },
+      "processing": "usually a decision within 3 weeks after biometrics",
+      "stay": "up to 6 months per visit",
+      "source": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+      "sourceType": "primary",
+      "whoNeedsIt": "Mexican and Brazilian citizens are visa-free for the UK and need an ETA instead (£20 from 8 April 2026, per https://www.ukcisa.org.uk/news/uk-visa-fees-increasing-from-8-april-2026/, secondary)."
+    },
+    "Schengen_ShortStay": {
+      "fee": { "value": 90, "currency": "EUR", "period": "from 11 June 2024" },
+      "processing": "15 calendar days, extendable to 45 in individual cases",
+      "stay": "up to 90 days in any 180",
+      "source": "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy/applying-schengen-visa_en",
+      "sourceType": "primary",
+      "whoNeedsIt": "Mexican and Brazilian citizens are visa-exempt. ETIAS (the pending travel authorisation) had been signalled for Q4 2026 but that date was removed from the official page in July 2026; 2027 now likely (secondary: https://etiasanswers.com/etias-launch-date/). EES went live 10 April 2026."
+    },
+    "Canada_VisitorVisa": {
+      "fee": { "application": 100, "biometrics": 85, "currency": "CAD" },
+      "eTA": { "fee": 7, "currency": "CAD", "eligibility": "Mexican and Brazilian citizens flying in may use an eTA instead if they held a Canadian visa in the past 10 years or hold a valid US nonimmigrant visa (Mexico rule since 29 Feb 2024)." },
+      "processing": { "Mexico": "about 18 days after biometrics (secondary, 2026)", "Brazil": null },
+      "validity": "Up to 10 years or passport expiry; stays up to 6 months",
+      "source": "https://immigration.ca/canada-visitor-visa-guide/",
+      "sourceType": "secondary",
+      "note": "IRCC processing-time tool not fetched; fees match IRCC schedule unchanged since 2019 for TRV/biometrics."
+    },
+    "Australia_Visitor600": {
+      "fee": { "offshore": 250, "onshore": 630, "currency": "AUD", "period": "from 1 July 2026 (was 200 / 500)" },
+      "stay": "3, 6 or 12 months as granted",
+      "source": "https://www.austmss.com.au/australian-visa-fees-increased-2026/",
+      "sourceType": "secondary",
+      "note": "Home Affairs page returned 403; the July 2026 increase is corroborated by several migration-agent sites but not by the regulation itself."
+    },
+    "Japan_Korea": {
+      "Japan": "Mexican and Brazilian citizens are visa-exempt for short stays (Brazil since 30 Sep 2023, 90 days; Mexico up to 6 months with extension).",
+      "Korea": "Mexican and Brazilian citizens are visa-exempt; K-ETA requirement had a temporary exemption for many countries.",
+      "sourceType": "secondary",
+      "source": null,
+      "note": "From general knowledge, not verified today — see 'uncertain'."
+    }
+  },
+
+  "dublinActing": {
+    "irishEquityRates": {
+      "value": null,
+      "note": "Irish Equity's fee schedules (https://irishequity.ie/fees/) are members-only. No current public theatre, TV or radio minimum was found."
+    },
+    "irishEquityFilmTvDayRate": { "value": 850, "currency": "EUR/day", "basis": "minimum for buyout", "source": "https://focal.ch/prodvalue/working_conditions/ireland.html", "sourceType": "secondary", "period": "undated; page says the agreement was being renegotiated", "note": "Weekly engagement: 5 days' work for 4 days' pay. Year unknown." },
+    "spiIrishEquityTvDramaAgreement": { "summary": "Collective agreement for TV drama commissioned by Irish broadcasters, effective 1 May 2016 for three years, moving away from full buyout toward profit participation. Rates not public.", "source": "https://irishequity.ie/screen-producers-ireland-and-irish-equity-sign-collective-agreement/", "sourceType": "secondary" },
+    "abbeyTheatre": { "summary": "Actors engaged under the Abbey and Equity House Agreement; rate card available on request only.", "source": "https://www.abbeytheatre.ie/governance/employment-engagement-of-artists/", "sourceType": "primary", "value": null },
+    "historicalIrishTheatre": { "equityAdvisedMinimumWeekly": 381, "abbeyTopRateWeekly": 792, "currency": "EUR", "period": "c. 2009 (Arts Council report coverage)", "source": "https://www.irishtimes.com/culture/the-pay-s-the-thing-arts-council-report-findings-1.518210", "sourceType": "secondary", "note": "Old; useful only as history." },
+    "rteRadioDramaFees": null,
+    "ukComparator_UKTheatreEquitySubsidised": {
+      "performerMinimumWeekly": {
+        "2024-04-01_to_2025-03-30": { "grade1": 612.68, "grade2": 540.27, "grade3": 526.24 },
+        "2025-03-31_to_2026-04-05": { "grade1": 637.19, "grade2": 561.88, "grade3": 547.29 }
+      },
+      "currency": "GBP",
+      "note": "Year-3 increase was 4% (CPI Feb 2025 + 1%, capped at 4%). Rates from 6 April 2026 not found.",
+      "source": "https://uktheatre.org/wp-content/uploads/sites/2/2025/03/200325-UK-Theatre-Equity-Subsidised-Theatre-rates-2024-2026.pdf",
+      "sourceType": "secondary",
+      "sourceTypeNote": "Published by the employers' body jointly with the union; collective agreement, not government."
+    },
+    "averageWeeklyEarnings": {
+      "ireland": {
+        "q2_2026_preliminary": 1046.88,
+        "q1_2026_final": 1064.59,
+        "annualGrowthQ2": "3.9%",
+        "artsSportsRecreationOtherServicesQ2_2026": 679.73,
+        "hourlyQ2_2026": 31.96,
+        "currency": "EUR",
+        "released": "2026-08-25",
+        "source": "https://www.cso.ie/en/releasesandpublications/ep/p-elcq/earningsandlabourcostsq12026finalq22026preliminaryestimates/",
+        "sourceType": "primary"
+      },
+      "uk": {
+        "totalPayJuly2026": 756,
+        "regularPayJuly2026": 705,
+        "growth": "3.9% total, 3.5% regular (3 months May-July 2026 vs a year earlier)",
+        "coverage": "Great Britain, seasonally adjusted",
+        "currency": "GBP",
+        "released": "2026-09-15",
+        "source": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/averageweeklyearningsingreatbritain/september2026",
+        "sourceType": "primary"
+      },
+      "scalingNote": "Any UK-to-Ireland scaling (e.g. €1,046.88 ÷ £756, or sector to sector) would be a modelled estimate and must be labelled as such, not presented as an Irish rate."
+    }
+  },
+
+  "uncertain": [
+    "SPNC combined with a reduced contributory pension: 'higher of, not both' is from a secondary source; DSP Operational Guidelines could not be fetched to confirm, or to confirm whether the reduced SPC counts as means.",
+    "SPNC couples-halving of means is from general knowledge of the DSP means test, not re-verified.",
+    "HAP Dublin City stand-alone single-adult maximum with discretion is published by DCC as €1,215, which does not match 35% (€891) or 50% (€990) of the €660 base. Unexplained.",
+    "Social housing net income limit for Dublin City (€40,000 single) is from the 1 January 2023 table; a later increase announced by gov.ie could not be read.",
+    "Fuel Allowance means limits for 66+/70+ differ between secondary sites (€524/€1,048 vs €512/€1,024); not confirmed from Citizens Information (403).",
+    "Living Alone Increase eligibility list is from general knowledge.",
+    "Mexico: 2026 pensión garantizada cell-by-cell table not obtained (published as an image). 2020-peso range MXN 2,622-8,241 recalled from the DOF, not re-fetched; 2026 range $3,540.56-$11,128.01 is secondary but consistent with a single INPC factor.",
+    "Mexico: the exact placement of the 1.15 factor in CONSAR's pension formula did not extract cleanly from the PDF; no numeric annuity factor at 65 was published in the methodology.",
+    "Mexico: secondary-site employer CyV rates for 2026 bands 5-7 disagree with CONSAR totals minus 3.125 for band 7 (6.94 vs 6.613). CONSAR totals are primary.",
+    "Jet lag: CDC Yellow Book 2026 threshold of 2+ time zones not confirmed from the chapter (CAPTCHA). Cho 2001 sample size not verified. No peer-reviewed single-trip cognitive decrement figure for ordinary adults was found.",
+    "US Visa Integrity Fee: collection at Mexican and Brazilian posts as of 29 Sept 2026 unconfirmed; Mexico City wait (5 months) is from an aggregator, not the State Department tool directly.",
+    "Brazil B1/B2 reciprocity (10 years, multiple entry) not verified on the current State Department reciprocity table.",
+    "Australia subclass 600 AUD 250 from 1 July 2026 is corroborated only by migration-agent sites.",
+    "Canada visitor visa processing for Brazil not found; Mexico figure secondary.",
+    "Japan/Korea visa-exemption statements are from general knowledge.",
+    "Irish Equity theatre, TV and RTÉ radio drama minimums are members-only; the €850 film/TV day rate is undated and secondary."
+  ]
+}
