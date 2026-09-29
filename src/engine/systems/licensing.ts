@@ -53,9 +53,16 @@ export function licensingOfPerson(person: Person): LicensingRecord | undefined {
   return person.licensing;
 }
 
-/** The path where they are now, if SLATE has it. */
+/** Where they live: a license is a resident's, taken at home, not on a shoot away. */
+const livesIn = (person: Person) => person.home?.cityId ?? person.currentLocationId;
+
+/**
+ * The path where they live, if SLATE has it. Until 2026-09-29 it was where
+ * they were, and an American on a London shoot booked a British provisional
+ * license, which a visitor can't hold.
+ */
 export function pathHere(person: Person): { jurisdiction: string; path: LicensePath } | undefined {
-  const j = licensingOf(person.currentLocationId);
+  const j = licensingOf(livesIn(person));
   const path = j ? LICENSE_PATHS[j] : undefined;
   return j && path ? { jurisdiction: j, path } : undefined;
 }
@@ -132,6 +139,8 @@ export function stepRefusal(sim: Simulation, person: Person, stepId: string): st
   const rule = LICENSES[jurisdiction]!;
   if (ageAt(person, sim.now) < rule.minAge.learner) return `${rule.authority} starts a learner at ${rule.minAge.learner}.`;
   if (heldHere(person, jurisdiction, sim.now)) return `You hold ${rule.name} already.`;
+  const lapsed = renewable(person, sim.now);
+  if (lapsed && lapsed.issuer === jurisdiction) return `Your ${lapsed.name} renews without the tests: Renew It.`;
   const swap = exchangeable(person, sim.now);
   if (swap) return `Your license from ${LICENSES[swap.held.issuer]?.authority ?? 'elsewhere'} exchanges here without the tests: Exchange It.`;
   const r = recordFor(person, jurisdiction);
@@ -178,7 +187,7 @@ function slot(sim: Simulation, person: Person, cityId: string, from: Instant, ho
 
 /** Books a step: pays for it, and puts it, or a course's sessions, on the calendar. */
 function book(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, r: LicensingRecord): Instant[] {
-  const cityId = person.currentLocationId;
+  const cityId = livesIn(person);
   const lead = step.kind === 'office' ? LEAD_DAYS.office : step.kind === 'course' ? LEAD_DAYS.course : PASS_ROAD(step) ? LEAD_DAYS.road : LEAD_DAYS.test;
   const hour = step.kind === 'course' ? 18 : 10;
   const sessions = step.kind === 'course' ? step.sessions ?? 1 : 1;
@@ -256,11 +265,17 @@ export function exchangeRefusal(person: Person, at: Instant): string | undefined
 
 /** How far ahead of its end a license can be renewed: SLATE's estimate, six months, most authorities opening renewal about then. */
 export const RENEW_AHEAD_DAYS = 183;
+/**
+ * How long after it runs out a license still renews without the tests: two
+ * years, New York's rule (a license expired longer asks the written and road
+ * tests again), which SLATE reads for every jurisdiction.
+ */
+export const RENEW_AFTER_DAYS = 730;
 
-/** The license to renew: a full one that runs out within the window or has run out. */
+/** The license to renew: a full one that runs out within the window, or ran out not too long ago. */
 export function renewable(person: Person, at: Instant): PersonDocument | undefined {
   return documentsOf(person)
-    .filter((d) => d.kind === 'license' && d.status === 'valid' && (d.stage ?? 'full') === 'full' && d.expiresAt !== undefined && d.expiresAt - RENEW_AHEAD_DAYS * MS_DAY <= at)
+    .filter((d) => d.kind === 'license' && d.status === 'valid' && (d.stage ?? 'full') === 'full' && d.expiresAt !== undefined && d.expiresAt - RENEW_AHEAD_DAYS * MS_DAY <= at && at - d.expiresAt <= RENEW_AFTER_DAYS * MS_DAY)
     .sort((a, b) => (b.expiresAt ?? 0) - (a.expiresAt ?? 0))[0];
 }
 
@@ -270,7 +285,7 @@ export function renewRefusal(person: Person, at: Instant): string | undefined {
   const rule = LICENSES[held.issuer];
   if (!rule || rule.renewalFee === null) return `SLATE doesn’t have what ${rule?.authority ?? 'the authority'} charges to renew.`;
   const country = held.issuer.split('-')[0];
-  if (licensingOf(person.currentLocationId)?.split('-')[0] !== country) return `${rule.authority} renews a license for someone living in the country; you’re away.`;
+  if (licensingOf(livesIn(person))?.split('-')[0] !== country) return `${rule.authority} renews a license for someone living in the country, and you live elsewhere.`;
   return undefined;
 }
 

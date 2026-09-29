@@ -10,7 +10,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { addYears, documentsOf, licenseOf, mayDrive, type PersonDocument } from '@/engine/systems/documents';
-import { LICENSE_KIND, applies, attemptFee, idpYears, passesTest, stepRefusal } from '@/engine/systems/licensing';
+import { LICENSE_KIND, applies, attemptFee, idpYears, passesTest, pathHere, stepRefusal } from '@/engine/systems/licensing';
 import { LICENSE_PATHS, PASS_RATES, passRate, publishedMean } from '@/engine/content/licensepaths';
 import { CITIES } from '@/engine/content/geography';
 
@@ -371,5 +371,26 @@ describe('a license from elsewhere', () => {
     const on = life('exchange-on', 'ca-on-toronto');
     held(on, 'br');
     expect(on.execute({ kind: 'documents.exchange_license', payload: {} }).error).toMatch(/doesn’t exchange/);
+  });
+});
+
+describe('a license is a resident’s', () => {
+  it('follows where they live, not a shoot away: a New Yorker in London is offered New York’s path', () => {
+    const sim = life('resident');
+    there(sim, 'uk-eng-london');
+    expect(pathHere(sim.player)!.jurisdiction).toBe('us-ny');
+    expect(stepRefusal(sim, sim.player, 'provisional')).toMatch(/isn’t a step/);
+  });
+
+  it('renews within two years of running out, and after that goes back to the tests', () => {
+    const sim = life('lapsed');
+    const d: PersonDocument = { id: 'old', kind: 'license', issuer: 'us-ny', name: 'Class D Driver License', number: 'D1', status: 'valid', issuedAt: sim.now - 9 * YEAR, expiresAt: sim.now - YEAR };
+    documentsOf(sim.player).push(d);
+    expect(stepRefusal(sim, sim.player, 'permit')).toMatch(/renews without the tests/);
+    expect(sim.execute({ kind: 'documents.renew_license', payload: {} }).ok).toBe(true);
+    const later = life('lapsed-long');
+    documentsOf(later.player).push({ ...d, status: 'valid', expiresAt: later.now - 3 * YEAR });
+    expect(later.execute({ kind: 'documents.renew_license', payload: {} }).ok).toBe(false);
+    expect(stepRefusal(later, later.player, 'permit')).toBeUndefined();
   });
 });

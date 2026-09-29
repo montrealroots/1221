@@ -146,7 +146,7 @@ function LicensePath() {
     toast(a.value!.message ?? `${name} booked for ${formatDate(a.value!.at[0]!, sim.zone)}${a.value!.at.length > 1 ? `, ${a.value!.at.length} sessions` : ''}, ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.`, 'positive');
   };
   return (
-    <Panel title="Earning A License Here" subtitle={LICENSES[jurisdiction]!.authority}>
+    <Panel title="Earning A License Where You Live" subtitle={LICENSES[jurisdiction]!.authority}>
       <div className="col gap-3">
         <div className="table-scroll">
           <table>
