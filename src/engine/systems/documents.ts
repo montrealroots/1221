@@ -545,6 +545,8 @@ export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt 
   if (!here) return { ok: false, why: `SLATE doesn’t have the driving rules for ${place} yet.` };
   const license = licenseOf(person, at);
   if (!license) return { ok: false, why: `You don’t hold a driving license in force. ${LICENSES[here]!.authority} issues ${LICENSES[here]!.name}.` };
+  // Points that suspended it (`systems/driving.ts`, from 2026-09-29).
+  if ((person.driving?.suspendedUntil ?? 0) > at) return { ok: false, why: `Your license is suspended until ${new Date(person.driving!.suspendedUntil!).toISOString().slice(0, 10)}.` };
   if (license.alone === false) return { ok: false, why: `${license.name} lets you drive only with a licensed driver beside you.` };
   if (license.issuer === here) return { ok: true };
   const from = license.issuer.split('-')[0]!;

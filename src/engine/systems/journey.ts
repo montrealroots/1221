@@ -29,13 +29,15 @@ import { expenseFor } from './household';
 import { AIR, fareUsd, groundLeg } from '../content/air';
 import { payFromBank } from './household';
 import { present } from './career';
-import { crossingRefusal, isoOfCity } from './documents';
+import { crossingRefusal, isoOfCity , mayDrive } from './documents';
 import { itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { arrive } from './jetlag';
+import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
+import { modelById, runningCost, vehiclesOf } from './vehicles';
 import { fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
-export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'bus' | 'arrival';
+export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'bus' | 'drive' | 'arrival';
 export type Cabin = 'economy' | 'premium';
 
 export interface JourneyLeg {
@@ -244,9 +246,36 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
 /** A journey's legs by air, or by a train's route: `by` is the route's id, or nothing for air. */
 export function planBy(sim: Simulation, by: string | undefined, fromCity: string, toCity: string, day: Instant, slot: number, bags: number, cabin: Cabin = 'economy'): JourneyLeg[] | string {
   if (!by || by === 'air') return planJourney(sim, fromCity, toCity, day, slot, bags, cabin);
+  if (by.startsWith('car:')) return planDrive(sim, sim.player, by.slice(4), fromCity, toCity, day, slot);
   const route = railRouteById(by);
   if (!route || !railRoutes(fromCity, toCity).includes(route)) return 'That train doesn’t run between those towns.';
   return planTrain(sim, route, fromCity, day, slot);
+}
+
+/**
+ * A journey by one's own car (from 2026-09-29): the road between the towns
+ * (`systems/driving.ts`), leaving on the hour of the day's slot, SLATE's
+ * choice of seven in the morning onward; its fuel and upkeep and the road's
+ * tolls. It's the owner's car, where it is, and a license that lets them
+ * drive there.
+ */
+export function planDrive(sim: Simulation, person: Person, vehicleId: string, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
+  const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
+  if (!v) return 'That isn’t a car you own.';
+  if ((v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
+  if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
+  const may = mayDrive(person, fromCity, day);
+  if (!may.ok) return may.why ?? 'You may not drive there.';
+  const zone = CITIES.require(fromCity).timeZone;
+  const p = zonedParts(day, zone);
+  const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(14, slot)) }, zone);
+  const km = roadKm(fromCity, toCity);
+  const minutes = driveMinutes(km);
+  const cur = saveCurrency(sim.universe);
+  const tolls = tollsUsd(fromCity, toCity);
+  const fare = runningCost(sim, v, km) + (tolls > 0 ? (cur === 'USD' ? tolls : exchange(tolls, 'USD', cur) ?? tolls) : 0);
+  const m = modelById(v.modelId)!;
+  return [{ mode: 'drive', from: fromCity, to: toCity, departAt: depart, arriveAt: depart + minutes * 60_000, fare, routeId: `car:${v.id}`, basis: `${Math.round(km)} km by road in the ${m.make} ${m.model}: its fuel and upkeep${tolls > 0 ? ', and the corridor’s tolls' : ', no tolls kept for this road'}. ${ROAD.source}.` }];
 }
 
 /**
@@ -357,7 +386,9 @@ export function registerJourneys(sim: Simulation): void {
     for (const h of halves) {
       const hotelBack = h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0;
       const route = railRouteById(h.by);
-      if (route) refund += trainRefund(s, h, route) + hotelBack;
+      // A drive not yet driven has burned nothing: all of its costs come back.
+      if (h.by?.startsWith('car:')) refund += total(h.legs) + hotelBack;
+      else if (route) refund += trainRefund(s, h, route) + hotelBack;
       else refund += free ? h.total : hotelBack;
       h.status = 'canceled';
       for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === h.id) s.timeline.cancel(item.id, s.now);
@@ -404,6 +435,15 @@ export function registerJourneys(sim: Simulation): void {
     j.status = 'arrived';
     // The body keeps the clock it left with (`systems/jetlag.ts`).
     arrive(person, CITIES.require(j.fromCity).timeZone, CITIES.require(j.toCity).timeZone, s.now);
+    // Driven: the car is there now, and the road brought what it brought (`systems/driving.ts`).
+    const driven = j.legs.find((l) => l.mode === 'drive');
+    const car = driven ? vehiclesOf(person).find((x) => `car:${x.id}` === driven.routeId) : undefined;
+    if (driven && car) {
+      const km = roadKm(j.fromCity, j.toCity);
+      car.at = j.toCity;
+      car.km = (car.km ?? 0) + km;
+      drive(s, person, car.jurisdiction, km, s.now, j.id);
+    }
     person.currentLocationId = j.toCity;
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;

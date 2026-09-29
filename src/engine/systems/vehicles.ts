@@ -25,6 +25,8 @@ import { CAR_MODELS, type CarModel } from '../content/vehiclecatalog';
 import { BC, CA_STATE, CMX, CT, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
 import { owe, payFromBank } from './household';
+import { mayDrive } from './documents';
+import { drive } from './driving';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 const NYC = new Set(['us-ny-newyork', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-manhattan', 'us-ny-thebronx', 'us-ny-statenisland']);
@@ -50,6 +52,8 @@ export interface OwnedVehicle {
   soldAt?: Instant;
   /** Kilometers driven since it was bought: every day's, and the journeys'. */
   km?: number;
+  /** The town it's in, where not where it's registered: driven there. */
+  at?: string;
 }
 
 /** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep. */
@@ -120,23 +124,23 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
   switch (j) {
     case 'US-NY': {
       const rate = NYC.has(cityId) ? NY.nycRate : NY.stateRate;
-      lines.push({ label: `Sales tax, ${(rate * 100).toFixed(3).replace(/0+$/, '')}%${NYC.has(cityId) ? '' : ' (the state’s; the county’s not kept)'}`, amount: Math.round(price * rate) });
+      lines.push({ label: `Sales Tax, ${(rate * 100).toFixed(3).replace(/0+$/, '')}%${NYC.has(cityId) ? '' : ' (The State’s; The County’s Not Kept)'}`, amount: Math.round(price * rate) });
       lines.push({ label: 'Title', amount: c(NY.title) }, { label: 'Plates', amount: c(NY.plates) });
-      lines.push({ label: 'Registration, two years', amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(model)) + (NYC.has(cityId) ? NY.nycUseTax + NY.mctd : 0)) });
+      lines.push({ label: 'Registration, Two Years', amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(model)) + (NYC.has(cityId) ? NY.nycUseTax + NY.mctd : 0)) });
       break;
     }
     case 'US-CT': {
       lines.push({ label: units > CT.luxuryOver ? 'Sales tax, 7.75% (over $50,000)' : 'Sales tax, 6.35%', amount: Math.round(price * (units > CT.luxuryOver ? CT.luxuryRate : CT.rate)) });
-      lines.push({ label: 'Registration and its fees, three years', amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks) });
-      lines.push({ label: 'Title and plate', amount: c(CT.title + CT.plate) });
-      if (!used) lines.push({ label: 'Greenhouse gas fee and emissions exemption', amount: c(CT.greenhouseNew + CT.emissionsExemption) });
+      lines.push({ label: 'Registration And Its Fees, Three Years', amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks) });
+      lines.push({ label: 'Title And Plate', amount: c(CT.title + CT.plate) });
+      if (!used) lines.push({ label: 'Greenhouse Gas Fee And Emissions Exemption', amount: c(CT.greenhouseNew + CT.emissionsExemption) });
       if (opts.financed) lines.push({ label: 'Lien', amount: c(CT.lien) });
       break;
     }
     case 'US-CA': {
       const rate = cityId === 'us-ca-losangeles' ? stepOn(CA_STATE.losAngeles, at) : cityId === 'us-ca-sanfrancisco' ? CA_STATE.sanFrancisco : CA_STATE.baseRate;
-      lines.push({ label: `Sales tax, ${(rate * 100).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')}%`, amount: Math.round(price * rate) });
-      lines.push({ label: 'Registration, the year', amount: caYear(model, price) });
+      lines.push({ label: `Sales Tax, ${(rate * 100).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')}%`, amount: Math.round(price * rate) });
+      lines.push({ label: 'Registration, The Year', amount: caYear(model, price) });
       break;
     }
     case 'GB':
@@ -144,23 +148,23 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
       break;
     case 'IE':
       // The price includes VAT and VRT; the first year's motor tax is due.
-      lines.push({ label: 'Motor tax, the first year', amount: c(bracket(IE_MOTOR_TAX, model.co2 ?? 150)) });
+      lines.push({ label: 'Motor Tax, The First Year', amount: c(bracket(IE_MOTOR_TAX, model.co2 ?? 150)) });
       break;
     case 'CA-ON':
       lines.push({ label: 'HST, 13%', amount: Math.round(price * ON.hst) });
-      lines.push({ label: 'Permit and plates', amount: c(ON.permit + ON.plate) });
+      lines.push({ label: 'Permit And Plates', amount: c(ON.permit + ON.plate) });
       break;
     case 'CA-BC': {
       lines.push({ label: 'GST, 5%', amount: used ? 0 : Math.round(price * BC.gst) });
       const pst = bracket(BC.pst, units);
       lines.push({ label: `PST, ${Math.round(pst * 100)}%`, amount: Math.round(price * pst) });
-      lines.push({ label: 'Registration, plates and the year’s license', amount: c(BC.registration + BC.plate + bracket(BC.licence, model.kerbKg ?? BC.assumedKg)) });
+      lines.push({ label: 'Registration, Plates And The Year’s License', amount: c(BC.registration + BC.plate + bracket(BC.licence, model.kerbKg ?? BC.assumedKg)) });
       break;
     }
     case 'MX-CMX':
       // The price includes IVA and ISAN; the tenencia is waived under MXN 638,000.
-      lines.push({ label: 'Plates and circulation card', amount: c(CMX.plates) });
-      if (units > CMX.tenenciaWaivedTo) lines.push({ label: 'Tenencia (its tariff above the waiver isn’t kept)', amount: 0 });
+      lines.push({ label: 'Plates And Circulation Card', amount: c(CMX.plates) });
+      if (units > CMX.tenenciaWaivedTo) lines.push({ label: 'Tenencia (Its Tariff Above The Waiver Isn’t Kept)', amount: 0 });
       break;
   }
   const total = price + lines.reduce((a, l) => a + l.amount, 0);
@@ -179,20 +183,20 @@ export function valueOf(v: OwnedVehicle, at: Instant): Money {
 }
 
 /** A renewal's fee in the jurisdiction's money, cents, and when the next is due. */
-export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: Instant; label: string } {
+export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: Instant; memo: string } {
   const m = modelById(v.modelId)!;
   const age = v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS;
   const year = (n: number) => at + n * YEAR_MS;
   const c = (x: number) => Math.round(x * 100);
   switch (v.jurisdiction) {
-    case 'US-NY': return { amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(m)) + (NYC.has(v.cityId) ? NY.nycUseTax + NY.mctd : 0)), next: year(2), label: 'Registration renewed, two years' };
-    case 'US-CT': return { amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks), next: year(3), label: 'Registration renewed, three years' };
-    case 'US-CA': return { amount: caYear(m, valueOf(v, at)), next: year(1), label: 'Registration renewed, the year' };
-    case 'GB': return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), label: 'Vehicle tax, the year' };
-    case 'IE': return { amount: c(bracket(IE_MOTOR_TAX, m.co2 ?? 150)), next: year(1), label: 'Motor tax, the year' };
-    case 'CA-ON': return { amount: 0, next: year(1), label: 'Plate renewed, the year (free since 2022)' };
-    case 'CA-BC': return { amount: c(bracket(BC.licence, m.kerbKg ?? BC.assumedKg)), next: year(1), label: 'License renewed, the year' };
-    case 'MX-CMX': return { amount: c(CMX.refrendo), next: year(1), label: 'Refrendo, the year' };
+    case 'US-NY': return { amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(m)) + (NYC.has(v.cityId) ? NY.nycUseTax + NY.mctd : 0)), next: year(2), memo: 'Registration renewed, two years' };
+    case 'US-CT': return { amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks), next: year(3), memo: 'Registration renewed, three years' };
+    case 'US-CA': return { amount: caYear(m, valueOf(v, at)), next: year(1), memo: 'Registration renewed, the year' };
+    case 'GB': return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), memo: 'Vehicle tax, the year' };
+    case 'IE': return { amount: c(bracket(IE_MOTOR_TAX, m.co2 ?? 150)), next: year(1), memo: 'Motor tax, the year' };
+    case 'CA-ON': return { amount: 0, next: year(1), memo: 'Plate renewed, the year (free since 2022)' };
+    case 'CA-BC': return { amount: c(bracket(BC.licence, m.kerbKg ?? BC.assumedKg)), next: year(1), memo: 'License renewed, the year' };
+    case 'MX-CMX': return { amount: c(CMX.refrendo), next: year(1), memo: 'Refrendo, the year' };
   }
 }
 
@@ -293,11 +297,14 @@ export function registerVehicles(sim: Simulation): void {
       const due = inSave(s, ins, CURRENCY[v.jurisdiction]);
       if (!payFromBank(s, person, due, `Car insurance, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, due, 'Car insurance', 'vehicle');
     }
-    // A month's everyday driving: fuel and upkeep.
-    const km = monthKm(v);
-    const run = runningCost(s, v, km);
-    v.km = (v.km ?? 0) + km;
-    if (run > 0 && !payFromBank(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, run, 'Fuel and upkeep', 'vehicle');
+    // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
+    if (mayDrive(person, v.at ?? v.cityId, s.now).ok) {
+      const km = monthKm(v);
+      const run = runningCost(s, v, km);
+      v.km = (v.km ?? 0) + km;
+      if (run > 0 && !payFromBank(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, run, 'Fuel and upkeep', 'vehicle');
+      drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`);
+    }
     // The loan: interest on what's owed, and the rest off it.
     if (v.loan) {
       const interest = Math.round((v.loan.owed * v.loan.apr) / 12);
@@ -320,10 +327,10 @@ export function registerVehicles(sim: Simulation): void {
     const r = renewal(v, s.now);
     if (r.amount > 0) {
       const due = inSave(s, r.amount, CURRENCY[v.jurisdiction]);
-      if (!payFromBank(s, person, due, r.label, 'vehicle')) owe(s, person, due, r.label, 'vehicle');
+      if (!payFromBank(s, person, due, r.memo, 'vehicle')) owe(s, person, due, r.memo, 'vehicle');
     }
     v.registrationDue = r.next;
-    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Registration Renewed', body: `${r.label}, until ${formatDate(r.next, s.zone)}.`, importance: 30, route: '/workspace/vehicles' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Registration Renewed', body: `${r.memo}, until ${formatDate(r.next, s.zone)}.`, importance: 30, route: '/workspace/vehicles' });
     s.schedule({ at: r.next, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } });
   });
 }

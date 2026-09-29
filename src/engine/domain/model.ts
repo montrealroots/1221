@@ -246,6 +246,8 @@ export interface Person {
   bienestarFrom?: number;
   /** The cars they own and have owned (`systems/vehicles.ts`). */
   vehicles?: import('../systems/vehicles').OwnedVehicle[];
+  /** Their driving record: points and a suspension (`systems/driving.ts`). */
+  driving?: import('../systems/driving').DrivingRecord;
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */
   hap?: { since: number };
   /** Their IMSS record under the 1997 law: days contributed, the AFORE account, the pension claimed (`systems/imss.ts`). */

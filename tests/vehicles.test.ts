@@ -8,10 +8,11 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
+import { documentsOf } from '@/engine/systems/documents';
 import { amortized, kept, modelById, modelsFor, monthKm, quote, runningCost, valueOf, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
 
 const q = (id: string, city: string, opts = {}) => quote(modelById(id)!, city, Date.UTC(2026, 8, 29), opts) as Quote;
-const line = (x: Quote, re: RegExp) => x.lines.find((l) => re.test(l.label))!.amount;
+const line = (x: Quote, re: RegExp) => x.lines.find((l) => new RegExp(re.source, 'i').test(l.label))!.amount;
 
 describe('what a car costs to buy', () => {
   it('taxes a Honda CR-V in New York City at 8.875% on its price and destination, with title, plates and two years’ registration by weight', () => {
@@ -69,6 +70,8 @@ describe('what a car costs to buy', () => {
 describe('owning one', () => {
   it('costs a month of everyday driving at the place’s pump by the car’s official economy, and upkeep', () => {
     const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'wealthy' }, 'car-run');
+    // A license: a car whose owner may not drive sits idle (`systems/driving.ts`).
+    documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'ie', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
     expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'ie-skoda-octavia' } }).ok).toBe(true);
     const v = vehiclesOf(sim.player)[0]!;
     // Ireland's 15,196 km a year, a twelfth; 5.3 liters a hundred at €1.87.

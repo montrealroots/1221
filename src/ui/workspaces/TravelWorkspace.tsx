@@ -19,10 +19,12 @@ import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, planBy, whereBy, t
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
+import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
+import { byRoad } from '@/engine/systems/driving';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
-const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', train: 'Train', bus: 'Coach', arrival: 'Off The Aircraft' };
+const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', train: 'Train', bus: 'Coach', drive: 'Drive', arrival: 'Off The Aircraft' };
 /** A train journey's legs, named for a station. */
 const RAIL_WORD: Partial<Record<JourneyLeg['mode'], string>> = { ground: 'To Or From The Station', 'check-in': 'At The Station' };
 const clock = (h: number) => `${Math.floor(h) % 12 === 0 ? 12 : Math.floor(h) % 12}:${String(Math.round((h % 1) * 60)).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
@@ -51,8 +53,11 @@ export function TravelWorkspace() {
   // The trains between the two towns, where any run; a choice no longer offered falls back to air.
   const trains = toCity ? railRoutes(fromCity, toCity) : [];
   const route = trains.find((r) => r.id === by);
-  const mode = route ? route.id : undefined;
-  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
+  // Your own car, where it is: from 2026-09-29 (`systems/driving.ts`).
+  const cars = toCity ? vehiclesOf(person).filter((v) => v.soldAt === undefined && (v.at ?? v.cityId) === fromCity && byRoad(fromCity, toCity)) : [];
+  const car = cars.find((v) => `car:${v.id}` === by);
+  const mode = route ? route.id : car ? `car:${car.id}` : undefined;
+  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
   const pick = Math.min(slot, slots.length - 1);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
   const round = daysThere > 0;
@@ -108,6 +113,7 @@ export function TravelWorkspace() {
                 <select id="travel-by" value={mode ?? 'air'} onChange={(e) => { setBy(e.target.value); setSlot(0); }}>
                   <option value="air">Air</option>
                   {trains.map((r) => <option key={r.id} value={r.id}>{r.operator === r.service ? r.service : `${r.operator}, ${r.service}`}</option>)}
+                  {cars.map((v) => <option key={v.id} value={`car:${v.id}`}>Your {modelById(v.modelId)?.make} {modelById(v.modelId)?.model}</option>)}
                 </select>
               </div>
               <div className="field">
@@ -181,7 +187,7 @@ export function TravelWorkspace() {
               }}>Book It</Gated>
             </div>
             <Fine>
-              {plan ? plan.map((l) => l.basis).filter((b, i, all) => all.indexOf(b) === i).join(' ') : ''} {hotel?.basis ?? ''} {route ? `${route.refund.basis} Late at ${route.operator}’s rate, ${Math.round((1 - route.onTime.share) * 1000) / 10}% over ${route.onTime.withinMinutes} minutes (${route.onTime.basis}).` : 'Booked a week or more ahead, the whole booking is refunded if it’s canceled within a day, the DOT’s rule; after that the fares aren’t. Late and canceled flights come at BTS’s rates for 2025.'} The hotel is refunded until a day before you arrive.
+              {plan ? plan.map((l) => l.basis).filter((b, i, all) => all.indexOf(b) === i).join(' ') : ''} {hotel?.basis ?? ''} {car ? 'A drive’s fuel, upkeep and tolls are paid when it’s booked, and all of it comes back if it’s canceled.' : route ? `${route.refund.basis} Late at ${route.operator}’s rate, ${Math.round((1 - route.onTime.share) * 1000) / 10}% over ${route.onTime.withinMinutes} minutes (${route.onTime.basis}).` : 'Booked a week or more ahead, the whole booking is refunded if it’s canceled within a day, the DOT’s rule; after that the fares aren’t. Late and canceled flights come at BTS’s rates for 2025.'} The hotel is refunded until a day before you arrive.
             </Fine>
           </div>
         </Panel>

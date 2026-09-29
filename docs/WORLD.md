@@ -28,7 +28,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 |---|---|---|---|
 | 1 | Documents: identity, passport, driver's license, entry rules, as records with issuer, validity, fees, processing, and checks that name what's missing | citizenship, geography | Done 2026-09-29 (1a and 1b); open items below |
 | 2 | Journeys: a trip of legs (walk, taxi, rideshare, bus, train, flight), fares, durations on the calendar, time zones, the player's location moving only on arrival; airports; booked accommodation at the far end; the return | 1 | Not begun |
-| 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | 3a and 3b done 2026-09-29; driving under way |
+| 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3c); parking and a home's garage open |
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Not begun |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Not begun |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | Not begun |
@@ -64,7 +64,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 - **Done, 2026-09-29: visa applications.** Until then SLATE named the visa a citizenship needed and didn't take the application. Now the ten pairs that need one apply on Papers (`content/visas.ts`, `documents.apply_visa`): the US's B-1/B-2 for Mexicans and Brazilians ($185, the Mexico City interview's five-month wait), Canada's visitor visa (CAD 100 and 85 for biometrics), Australia's subclass 600 (AUD 250), Mexico's electronic visa for Brazilians (US$10, 180 days) and Brazil's e-Visa for Americans, Canadians and Australians (US$80.90); each paid, decided after its wait and good for its term and no longer than the passport. Not kept: Canada's eTA for a Mexican or Brazilian holding a US visa, the US's Visa Integrity Fee (its collection at these posts unconfirmed), and a refusal at interview. Tests: `tests/visas.test.ts`; 3 mutations, all killed.
 - Northern Ireland's license path was set down with no town in SLATE's list to reach it until 2026-09-29, when Belfast was added.
 - **Done, 2026-09-29: a license exchanged on moving.** New York (a US state's or Canadian province's), Connecticut (those, Germany's and France's, $124), Ontario, British Columbia and New South Wales (their published lists) exchange a full license from elsewhere without the tests, and the old one is surrendered (`LICENSE_EXCHANGES`, `documents.exchange_license`). California's exchange for another state's license wasn't confirmed, and it's refused with that reason. Found by a played life: a British graduate with Connecticut's license took New York's tests again after moving. The same life showed an O-1 read too narrowly: regional and Off-Broadway companies are distinguished organizations, and the experts' letters a petition carries are read from reputation.
-- Probation and points after a first license (Great Britain's New Drivers Act, France's six points, Ireland's novice limit, Brazil's year) aren't kept: SLATE has no driving offenses yet.
+- Probation and points after a first license weren't kept until 2026-09-29, SLATE having no driving offenses. Since stage 3c, Great Britain's New Drivers Act (six points in two years revokes) and Ireland's novice limit (seven points) are (`systems/driving.ts`); France's six points and Brazil's year wait for those countries' cars.
 
 ### Stage 2: Journeys
 
@@ -119,6 +119,13 @@ Open in Stage 2, and why: a car of one's own as a leg waits for Stage 3, as SLAT
 - Not kept, and said so on the screen: a dealer's lower trade-in price, repossession, a car counted in net worth, parking.
 
 Evidence: `tests/vehicles.test.ts` (9); 11 mutations, all killed (one found the Irish diesel mild hybrid filed as a petrol hybrid). Screen: Cars, from Home's Cars panel, opened by the guide's chapter A Car Of Your Own.
+
+#### Stage 3c: driving (done 2026-09-29)
+- **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
+- **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.
+- SLATE's estimates, and said so: the band of a speeding ticket, the injury mix of a crash, a ticket's frequency where a place publishes none.
+
+Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed. Open in stage 3: parking and a home's garage.
 
 ### Stages 4-8 (to be detailed in turn)
 

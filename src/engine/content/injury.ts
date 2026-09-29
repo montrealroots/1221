@@ -21,7 +21,8 @@
  * - Everyday life: medically consulted injuries at 18 to 44, a thousand a
  *   year, by cause (NHIS 2014, Table P-6a): falls 26.11, struck 10.20,
  *   overexertion 13.72, cuts 15.20, other 28.95; transport's 12.75 left out,
- *   since SLATE's lives don't drive.
+ *   since until 2026-09-29 SLATE's lives didn't drive. A driver's crash is
+ *   drawn by the mile since (`systems/driving.ts`).
  *
  * What each is, and how long it keeps them from what: a hamstring or other
  * strain by its grade's days absent (Ekstrand et al., BJSM 2012: 17, 22 and
@@ -45,7 +46,9 @@ export const INJURY_KIND: Readonly<Record<InjuryKind, { label: string; days: rea
 };
 
 /** What each source brings, by share: SLATE's estimate of the mix, from what each study says is most common. */
-export const INJURY_MIX: Readonly<Record<'run' | 'gym' | 'swim' | 'stage' | 'screen' | 'fall' | 'struck' | 'overexertion' | 'cutting' | 'other', readonly (readonly [InjuryKind, number])[]>> = {
+export const INJURY_MIX: Readonly<Record<'run' | 'gym' | 'swim' | 'stage' | 'screen' | 'fall' | 'struck' | 'overexertion' | 'cutting' | 'other' | 'crash', readonly (readonly [InjuryKind, number])[]>> = {
+  // A crash: whiplash is a neck strain, the knocks, the breaks and the concussions.
+  crash: [['bruise', 0.35], ['strain', 0.3], ['fracture', 0.15], ['concussion', 0.1], ['cut', 0.1]],
   run: [['strain', 0.5], ['sprain', 0.4], ['fracture', 0.1]],
   gym: [['strain', 0.5], ['back', 0.4], ['sprain', 0.1]],
   swim: [['strain', 0.9], ['back', 0.1]],

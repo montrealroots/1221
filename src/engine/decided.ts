@@ -17,6 +17,7 @@
  * because it cannot land anywhere else without saying what it reads.
  */
 
+import { drive } from './systems/driving';
 import { trainFate } from './systems/rail';
 import { RAIL_ROUTES } from './content/rail';
 import { defineDecider } from './core/deciders';
@@ -269,9 +270,21 @@ defineDecider<{ sim: Simulation; test: number; attempt: number }, string>({
   decide: ({ sim, test, attempt }) => { const [j, step] = TESTS[test]!; return passesTest(sim, sim.player, j, step, attempt) ? 'passed' : 'failed'; },
 });
 
+defineDecider<{ sim: Simulation; km: number }, string>({
+  id: 'driving.ticket',
+  decides: 'A speeding ticket from a stretch of driving, or none, at the place’s published tickets a driver a year spread over its miles (TICKETS).',
+  drawnIn: 'src/engine/systems/driving.ts',
+  reads: {
+    km: (o, t) => ({ ...o, km: Math.round(t * 400_000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), km: 200_000 + seed * 997 }),
+  decide: ({ sim, km }) => { const r = drive(sim, sim.player, 'US-NY', km, sim.now, `d-${km}`); return r.ticket ? 'a ticket' : 'none'; },
+});
+
 defineDecider<{ sim: Simulation; train: number }, string>({
   id: 'travel.train',
-  decides: 'Whether a train is on time or late and by how much, at its operator’s own rate on its own measure of late (RAIL_ROUTES).',
+  decides: 'A train on time, or late and by how much, at its operator’s own rate on its own measure of late (RAIL_ROUTES).',
   drawnIn: 'src/engine/systems/rail.ts',
   reads: {
     // Each train is drawn on its own.
