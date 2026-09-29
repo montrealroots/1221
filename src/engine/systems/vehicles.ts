@@ -316,7 +316,8 @@ export function registerVehicles(sim: Simulation): void {
       if (!payFromBank(s, person, due, `Car insurance, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, due, 'Car insurance', 'vehicle');
     }
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
-    if (mayDrive(person, v.at ?? v.cityId, s.now).ok) {
+    // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
+    if ((v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km);
       v.km = (v.km ?? 0) + km;

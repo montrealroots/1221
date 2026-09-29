@@ -11,6 +11,7 @@
  * evidence the career has built.
  */
 
+import { AGENCIES } from '../content/career';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -174,6 +175,8 @@ export function o1Evidence(sim: Simulation, person: Person): O1Evidence[] {
 export function o1Refusal(sim: Simulation, person: Person): string | undefined {
   if (isoOfCountry(person.citizenshipId) === 'US') return 'An O-1 is for a citizen of another country.';
   if (!careerOf(person).agencyId) return 'A US employer or agent petitions for an O-1, not the actor: sign with an agency first.';
+  // An American agency: until 2026-09-29 a Dublin agency petitioned the US for its client, every year, at the fees.
+  if ((AGENCIES.find((x) => x.id === careerOf(person).agencyId)?.countryId ?? 'us') !== 'us') return 'A US employer or agent petitions for an O-1: your agency isn’t American.';
   if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && d.name.startsWith('O-1') && d.status === 'pending')) return 'A petition is being decided.';
   const held = documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.name.startsWith('O-1') && inForce(d, sim.now));
   if (held && held.expiresAt! - sim.now > 183 * MS_DAY) return `Your O-1 runs to ${formatDate(held.expiresAt!, sim.zone)}; it’s extended in its last six months.`;

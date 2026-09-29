@@ -100,6 +100,11 @@ describe('owning one', () => {
     sim.advanceBy(31 * MS_DAY);
     expect(sim.universe.transactions.some((t) => t.memo === 'Fuel and upkeep, the Skoda Octavia')).toBe(true);
     expect(v.km).toBeCloseTo(15_196 / 12, 6);
+    // Left in another town, it sits: no fuel that month.
+    v.at = 'ie-m-cork';
+    const before = sim.universe.transactions.filter((t) => t.memo === 'Fuel and upkeep, the Skoda Octavia').length;
+    sim.advanceBy(31 * MS_DAY);
+    expect(sim.universe.transactions.filter((t) => t.memo === 'Fuel and upkeep, the Skoda Octavia').length).toBe(before);
   });
 
   it('buys a CR-V in New York on a loan at Experian’s rate for the record, pays insurance and the loan each month, and sells it', () => {

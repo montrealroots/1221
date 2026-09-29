@@ -139,6 +139,9 @@ describe('an O-1', () => {
     const sim = graduate('o1', -200);
     expect(sim.execute({ kind: 'documents.petition_o1', payload: {} }).error).toMatch(/sign with an agency/);
     const career = careerOf(sim.player);
+    // An Irish agency can't petition the US.
+    career.agencyId = 'the-agency';
+    expect(sim.execute({ kind: 'documents.petition_o1', payload: {} }).error).toMatch(/isn’t American/);
     career.agencyId = 'gersh';
     career.credits.push({ roleId: 'series-hour', year: 2027, cityId: 'us-ny-newyork' }, { roleId: 'guest-hour', year: 2027, cityId: 'us-ny-newyork' });
     earningsOf(sim.player).years['2027'] = { ...(earningsOf(sim.player).years['2027'] ?? {}), acting: UNION_HEALTH.sagThreshold[1]![1] } as never;
