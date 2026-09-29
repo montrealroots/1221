@@ -18,6 +18,7 @@ import { AIR } from '@/engine/content/air';
 import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
+import { hoursOut } from '@/engine/systems/jetlag';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
@@ -71,6 +72,7 @@ export function TravelWorkspace() {
   const journeys = journeysOf(person).slice().sort((a, b) => b.leaveAt - a.leaveAt);
   const here = CITIES.get(person.currentLocationId);
   const stay = person.stay?.cityId === person.currentLocationId ? person.stay : undefined;
+  const lag = hoursOut(person.bodyClock, sim.now);
   return (
     <>
       <div className="page-head">
@@ -80,10 +82,11 @@ export function TravelWorkspace() {
       </div>
       <div className="col gap-5">
         <Panel title="Where You Are">
-          <div className="grid grid-3">
+          <div className="grid grid-4">
             <Stat label="Town" value={here?.name ?? person.currentLocationId} note={sim.zone} />
             <Stat label="Sleeping" value={person.home?.cityId === person.currentLocationId ? 'At Home' : stay?.kind === 'hotel' ? 'A Hotel' : stay?.kind === 'own' ? 'Your Own Place' : stay?.kind === 'sofa' ? 'A Friend’s Sofa' : 'Away'} />
             <Stat label="Journeys Booked" value={String(journeys.filter((j) => j.status === 'booked').length)} />
+            <Stat label="Body Clock" value={Math.abs(lag) < 0.5 ? 'On Local Time' : `${Math.round(Math.abs(lag) * 10) / 10} Hours ${lag > 0 ? 'Behind' : 'Ahead'}`} note={Math.abs(lag) < 0.5 ? undefined : `Catching up ${lag > 0 ? 'an hour' : 'an hour and a half'} a day; nights sleep worse until then`} />
           </div>
         </Panel>
 

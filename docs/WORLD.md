@@ -90,6 +90,11 @@ Evidence: `tests/careertrips.test.ts` (3): the plan to London, none already gone
 
 Evidence: `content/rail.ts`, `systems/rail.ts`, `docs/research/world/research-rail.json`; `tests/rail.test.ts` (8): Amtrak's fares from its own figures, Metro-North's peak, every route both ways, Eurostar's legs and border before boarding, trains late at the operator's rate, a booked Acela to Washington, Amtrak's refund. 12 mutations, all killed.
 
+#### Stage 2f: jet lag (done 2026-09-29)
+- The body keeps the clock it left with and catches up at the CDC's rates, an hour a day east and an hour and a half west (`systems/jetlag.ts`). What it changes is sleep, as the studies of ordinary travelers found (Willoughby 2025's 64,847 trips; Beaumont 2004): a night restores less while the clock is out, SLATE's estimate of how much, 0.015 of a night's quality an hour east and half that west. Travel shows the body clock.
+
+Evidence: `tests/jetlag.test.ts` (4) and the New York to London journey. 5 mutations, all killed.
+
 #### Stage 2e: coaches, the ride to the station, cancellations, three more towns (done 2026-09-29)
 - Coaches on thirteen corridors, one operator each (FlixBus and Greyhound, National Express, Bus Éireann, Dublin Express, Caminante, Estrella Roja, Primera Plus), at the operators' fastest times and lowest fares, which most pay more than, said so. Where a coach operator publishes no punctuality, National Express's network-wide 86.9% is SLATE's estimate; Flix and Greyhound refund only in vouchers, which SLATE doesn't keep.
 - The rides to and from a station cost each town's single transit fare (`content/transit.ts`, seventeen towns); a town without one rides free, said so.
@@ -103,7 +108,7 @@ Evidence: `tests/rail.test.ts` (coaches, transit and cancellations). 5 mutations
 
 Evidence: `AIR.premiumMultiple` in `content/air.ts`, `planJourney`'s cabin; `tests/journey.test.ts` (a cabin other than economy). 3 mutations, all killed. The research is `docs/research/world/research-cabins-car.json`.
 
-Open in Stage 2, and why: a car of one's own as a leg waits for Stage 3, as SLATE has no vehicles to drive (AAA's 2026 costs, the IRS rate, fuel, parking and tolls are researched); jet lag's recovery is published (the CDC: 1.5 hours a day west, 1 east, from two time zones), but what it does to someone's work is measured only on athletes, so what it would change in SLATE isn't yet settled.
+Open in Stage 2, and why: a car of one's own as a leg waits for Stage 3, as SLATE has no vehicles to drive (AAA's 2026 costs, the IRS rate, fuel, parking and tolls are researched).
 ### Stages 3-8 (to be detailed in turn)
 
 ## Coverage record

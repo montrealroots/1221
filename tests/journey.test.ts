@@ -76,6 +76,8 @@ describe('a journey out and back', () => {
     liveTo(sim, j.arriveAt + (j.lateMinutes ?? 0) * 60_000 + 6 * MS_HOUR);
     expect(j.status).toBe('arrived');
     expect(sim.player.currentLocationId).toBe('uk-eng-london');
+    // Five hours out, the body still on New York's clock (`systems/jetlag.ts`).
+    expect(Math.round(Math.abs(sim.player.bodyClock?.hours ?? 0))).toBeGreaterThanOrEqual(4);
     expect(sim.universe.currentZone).toBe('Europe/London');
     expect(sim.player.stay?.kind).toBe('hotel');
     // Home before check-out.

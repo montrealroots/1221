@@ -13,6 +13,7 @@
  * something.
  */
 
+import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
@@ -637,7 +638,7 @@ export function sleepQuality(sim: Simulation, person: Person, at = sim.now): num
  * which piece is costing the hours.
  */
 function nightParts(sim: Simulation, person: Person, at = sim.now): {
-  stressLoss: number; depth: number; late: number; sofa: number; heat: number; quality: number;
+  stressLoss: number; depth: number; late: number; sofa: number; heat: number; jet: number; quality: number;
 } {
   const stressLoss = remap(person.wellbeing.stress, 0, 100, 0, 0.24);
   // A light sleeper and a night owl both lose here; somebody who can sleep
@@ -661,7 +662,9 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   const sofa = (person.home?.kind === 'sofa' && atHome(person)) || (!atHome(person) && person.stay?.kind === 'sofa' && person.stay.cityId === person.currentLocationId) ? 0.08 : 0;
   // And a hot night with no air conditioning, or only units (`systems/dwelling.ts`).
   const heat = heatLoss(sim, person, at);
-  return { stressLoss, depth, late, sofa, heat, quality: clamp((0.82 - stressLoss) * depth - late - sofa - heat, 0.28, 1) };
+  // And a body whose clock a journey left hours out (`systems/jetlag.ts`, from 2026-09-29).
+  const jet = jetLagLoss(person, at);
+  return { stressLoss, depth, late, sofa, heat, jet, quality: clamp((0.82 - stressLoss) * depth - late - sofa - heat - jet, 0.28, 1) };
 }
 
 export function applySleep(
@@ -1270,6 +1273,7 @@ function sleepReason(tonight: {
     [night.late > 0 ? 1 - night.late / (calm * night.depth) : 1, 'It’s late, and a night that starts now is a worse one, so it takes longer.'],
     [night.sofa > 0 ? 1 - night.sofa / (calm * night.depth) : 1, 'A night on a sofa is a worse one, so it takes longer.'],
     [night.heat > 0 ? 1 - night.heat / (calm * night.depth) : 1, 'It’s a hot night, and without air conditioning it sleeps worse, so it takes longer.'],
+    [night.jet > 0 ? 1 - night.jet / (calm * night.depth) : 1, 'Your body is still on another clock, so a night sleeps worse and takes longer.'],
     [restores, 'A night puts back less for you than for most, so it takes longer.'],
     [age, 'A night puts back less than it used to, so it takes longer.'],
   ];

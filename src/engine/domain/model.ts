@@ -244,6 +244,8 @@ export interface Person {
   /** Ireland's State Pension claimed, and its week in euro cents; Mexico's Pensión para el Bienestar claimed (`systems/homepensions.ts`). */
   irishPension?: { from: number; weeklyEur: number };
   bienestarFrom?: number;
+  /** The body's clock a journey left out, and since when (`systems/jetlag.ts`). */
+  bodyClock?: import('../systems/jetlag').BodyClock;
   /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`), and when they moved home from abroad. */
   jobseekers?: import('../systems/homebenefits').JobseekerClaim;
   desempleo?: import('../systems/homebenefits').DesempleoClaim;

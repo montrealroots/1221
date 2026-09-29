@@ -32,6 +32,7 @@ import { present } from './career';
 import { crossingRefusal, isoOfCity } from './documents';
 import { itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
+import { arrive } from './jetlag';
 import { fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'bus' | 'arrival';
@@ -401,6 +402,8 @@ export function registerJourneys(sim: Simulation): void {
     const j = person ? journeysOf(person).find((x) => x.id === item.payload.journeyId) : undefined;
     if (!person || !j || j.status !== 'underway') return;
     j.status = 'arrived';
+    // The body keeps the clock it left with (`systems/jetlag.ts`).
+    arrive(person, CITIES.require(j.fromCity).timeZone, CITIES.require(j.toCity).timeZone, s.now);
     person.currentLocationId = j.toCity;
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;
