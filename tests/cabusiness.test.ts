@@ -13,6 +13,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { ACTRA, AGENCIES, ROLES, WORK_COSTS, type CareerCity } from '@/engine/content/career';
 import { actraRoom, beginCareer, careerOf, foreignWithholding, homeAbroadOf, offersFor, paycheck, rateOf, roleById, weekOfAuditions, workCity, type Booking } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
+import { documentsOf } from '@/engine/systems/documents';
 
 const TO: CareerCity = 'ca-on-toronto';
 const VAN: CareerCity = 'ca-bc-vancouver';
@@ -80,12 +81,16 @@ describe('the business in Toronto and Vancouver', () => {
 
   it('makes a first ACTRA job an apprentice’s, for $75, and a third credit a full member’s, for the initiation fee less it', () => {
     const sim = canadian(TO, 'ca-join');
-    const fees = () => sim.universe.transactions.filter((t) => /ACTRA/.test(t.memo));
+    const fees = () => sim.universe.transactions.filter((t) => /ACTRA/.test(t.memo) && !/work permit/.test(t.memo));
+    const permits = () => sim.universe.transactions.filter((t) => t.memo === 'ACTRA work permit');
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: offer(sim, 'one', 'ca-actor', TO).id } }).ok).toBe(true);
     const actra = careerOf(sim.player).unions.actra!;
     expect(actra.credits).toBe(1);
     expect(fees()).toHaveLength(1);
     expect(fees()[0]!.memo).toBe('ACTRA apprentice fee');
+    // An apprentice pays the IPA's work permit a week of the job: $210 on an actor's part (from later on 2026-09-30).
+    expect(permits()).toHaveLength(1);
+    expect(permits()[0]!.postings.filter((p) => p.amount > 0).reduce((a, p) => a + p.amount, 0)).toBe(inSave(sim, 210_00, 'CAD'));
     sim.advanceBy(20 * MS_DAY);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: offer(sim, 'two', 'ca-actor', TO).id } }).ok).toBe(true);
     expect(actra.credits).toBe(2);
@@ -101,6 +106,11 @@ describe('the business in Toronto and Vancouver', () => {
     const stage = sim.execute({ kind: 'career.accept', payload: { bookingId: offer(sim, 'four', 'ca-theater', TO).id } });
     expect(stage.ok, stage.error).toBe(true);
     expect(careerOf(sim.player).unions.equity).toBeUndefined();
+    // A full member pays no permit.
+    const before = permits().length;
+    sim.advanceBy(20 * MS_DAY);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: offer(sim, 'five', 'ca-actor', TO).id } }).ok).toBe(true);
+    expect(permits()).toHaveLength(before);
   });
 
   it('withholds no visitor’s tax from a Canadian’s work in Canada, and 23% from an American’s', () => {
@@ -118,5 +128,31 @@ describe('the business in Toronto and Vancouver', () => {
     const sim = canadian(VAN, 'ca-home');
     expect(homeAbroadOf(sim.player)).toBe(VAN);
     expect(WORK_COSTS.sites['casting-workbook']).toMatchObject({ price: 155_88, currency: 'CAD', countryId: 'ca' });
+  });
+
+  it('pays an ACTRA animated part its fees with the producer’s 110% prepaid use, and asks a non-Canadian apprentice $260 and then $175 a week', () => {
+    const sim = canadian(TO, 'ca-prepaid');
+    const b = offer(sim, 'series', 'ca-animation', TO);
+    b.units = 2;
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    const until = b.starts + 20 * MS_DAY;
+    while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * 3_600_000));
+    const wages = sim.universe.transactions.flatMap((t) => t.postings).filter((p) => p.accountId === sim.nominalAccount('income', 'Acting').id || p.accountId === sim.nominalAccount('income', 'Wages').id);
+    const gross = -wages.reduce((a, p) => a + p.amount, 0);
+    const day = rateOf(roleById('ca-animation'), b.starts, TO, saveCurrency(sim.universe));
+    expect(b.worked).toBeGreaterThan(0);
+    expect(gross).toBeGreaterThanOrEqual(Math.round(day * b.worked * 2.1) - 2);
+    // A non-Canadian apprentice's permit: $260 the first week and $175 after.
+    const us = quickSave({ startLocationId: TO, homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, 'ca-permit-us');
+    us.player.craft = evenCraft(80);
+    beginCareer(us, us.player);
+    const feature = offer(us, 'feature', 'ca-feature', TO);
+    feature.units = 10;
+    // A Canadian work permit held, the job may be taken.
+    documentsOf(us.player).push({ id: 'wp', kind: 'permit', issuer: 'CA', name: 'Work Permit', number: 'W1', status: 'valid', issuedAt: us.now, expiresAt: us.now + 3 * 365 * MS_DAY, destination: 'CA' });
+    const r = us.execute({ kind: 'career.accept', payload: { bookingId: feature.id } });
+    expect(r.ok, r.error).toBe(true);
+    const permit = us.universe.transactions.find((t) => t.memo === 'ACTRA work permit')!;
+    expect(permit.postings.filter((p) => p.amount > 0).reduce((a, p) => a + p.amount, 0)).toBe(inSave(us, (260 + 175) * 100, 'CAD'));
   });
 });

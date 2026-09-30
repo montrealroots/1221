@@ -102,6 +102,7 @@ import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
 import { cppOnCheck } from './capensions';
 import { eiOnCheck } from './eiself';
+import { citizenOf } from './documents';
 import { sagHoliday } from '../content/usholidays';
 
 export const SHOWCASE_KIND = 'career.showcase';
@@ -1652,7 +1653,8 @@ export function registerCareer(sim: Simulation): void {
       // A series regular's episodes, spread over the season's workweeks.
       const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium !== 'stage' ? rate * line.days : Math.round((rate * line.days) / 6);
       // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
-      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission, actraRoom: actraRoom(person, year, cur) });
+      // Use paid with the fees: an ACTRA producer's prepaid use, a Canadian commercial's year on television (`Role.prepaid`).
+      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week) * (1 + (role.prepaid ?? 0))), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission, actraRoom: actraRoom(person, year, cur) });
       if (role.union === 'actra' && career.unions.actra) { const by = (career.unions.actra.duesBy ??= {}); by[year] = (by[year] ?? 0) + inMoney(check.dues, cur, ACTRA.currency); }
       overtime = 0;
       const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
@@ -1986,7 +1988,7 @@ export function registerCareer(sim: Simulation): void {
     // fails on the fee: the union takes it from the pay, as a payroll
     // deduction. Until 2026-09-27 the fee was asked after the clashing job
     // was released, and a pickup the bank couldn't join for lost both.
-    joinFor(s, person, role, bound);
+    joinFor(s, person, role, bound, Math.max(1, Math.ceil(days.length / 5)));
     for (const other of career.bookings) {
       if (other.status !== 'accepted' || other.id === booking.id) continue;
       if (!jobsClash(person, booking, other)) continue;
@@ -2289,7 +2291,7 @@ export function registerCareer(sim: Simulation): void {
   });
 
   /** A union's membership where a job needs it: SAG-AFTRA's after thirty days eligible, Equity's on the first contract. */
-  function joinFor(s: Simulation, person: Person, role: Role, bound = false): void {
+  function joinFor(s: Simulation, person: Person, role: Role, bound = false, weeks = 1): void {
     const career = careerOf(person);
     const cur = saveCurrency(s.universe);
     const pay = (fee: Money, memo: string, why: string) => {
@@ -2307,6 +2309,12 @@ export function registerCareer(sim: Simulation): void {
       armDues(s, person);
     } else if (role.union === 'actra') {
       const actra = career.unions.actra;
+      // Short of full membership, ACTRA's work permit, a week of the job (`ACTRA`); one who isn't Canadian pays less after the first.
+      if (role.permitWeekly && actra?.fullAt === undefined) {
+        const canadian = citizenOf(person, 'CA');
+        const dollars = canadian ? role.permitWeekly * weeks : role.permitWeekly + ACTRA.permitAfterFirstForeign * (weeks - 1);
+        pay(inMoney(dollars * 100, ACTRA.currency, cur), 'ACTRA work permit', `ACTRA’s work permit, ${formatMoney(inMoney(dollars * 100, ACTRA.currency, cur), cur)}, is more than the bank can cover.`);
+      }
       if (!actra) {
         const fee = inMoney(ACTRA.apprentice, ACTRA.currency, cur);
         pay(fee, 'ACTRA apprentice fee', `An ACTRA engagement makes you an apprentice, for ${formatMoney(fee, cur)}, which the bank can’t cover.`);

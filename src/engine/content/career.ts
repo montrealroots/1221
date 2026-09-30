@@ -183,7 +183,26 @@ export const ACTRA = {
   workingDues: 0.0225,
   duesCap: 4_000_00,
   currency: 'CAD',
-  source: 'https://www.actra.ca/join/; https://actratoronto.com/apprentice-program/',
+  /**
+   * Under the IPA a performer short of full membership pays ACTRA's work
+   * permit a week of the job: $260 on a principal part, $210 on an actor's,
+   * and one who isn't Canadian $260 the first week and $175 after
+   * (research-actra2.json, the IPA 2025–2027). The producer's 12.5% on a
+   * non-member's fees is the producer's, and isn't the actor's to pay.
+   */
+  permitAfterFirstForeign: 175,
+  /**
+   * The producer's prepaid use: the IPA's "all uses" option, New Media
+   * included, 110% of the fees on television and 135% on a feature, paid
+   * with them and covering four years (B501); the BCMPA's the same, five
+   * years on a series. Which option a producer takes isn't published: SLATE
+   * reads the all-uses one, streaming being where the work is seen. After
+   * it, performers share 3.6% of the distributor's gross through ACTRA PRS,
+   * which no figure lets SLATE price, and it isn't paid.
+   */
+  prepaidTv: 1.1,
+  prepaidFeature: 1.35,
+  source: 'https://www.actra.ca/join/; https://actratoronto.com/apprentice-program/; the IPA 2025–2027 and the BCMPA 2025–2028',
 } as const;
 
 /** ANDA's dues, 15% of each payment through the union: 10% ordinary, 3.5% for retirement, 1.5% for welfare (laanda.org.mx, April 2019, the latest found). */
@@ -284,6 +303,14 @@ export interface Role {
   after?: { kind: 'tv'; length: 'half' | 'hour' } | { kind: 'film'; budget: Money } | { kind: 'commercial'; voice: boolean };
   /** A booth session's hours, for a voice part. */
   sessionHours?: number;
+  /**
+   * Use paid with the fees, as a share of them (from later on 2026-09-30):
+   * an ACTRA producer's prepaid use, or a Canadian commercial's first year
+   * of television use, which a one-session job's share expresses exactly.
+   */
+  prepaid?: number;
+  /** A non-member's ACTRA work permit a week of the job, in dollars: an apprentice pays it too (`ACTRA`). */
+  permitWeekly?: number;
   /** Shot where the production goes, not always at home (`LOCATION`). */
   travels?: boolean;
   source: string;
@@ -327,6 +354,7 @@ const IE: readonly CareerCity[] = ['ie-lei-dublin'];
 const IPA = 'ACTRA/CMPA/AQPM Independent Production Agreement 2025–2027, the AQPM’s rate chart (aqpm.ca, January 2025)';
 const BCMPA = 'UBCP/ACTRA BC Master Production Agreement 2025–2028 rate sheet (ubcpactra.ca, March 2025)';
 const CTA = 'Canadian Theatre Agreement 2024–2027 minimum fee booklet, CAEA and PACT (caea.com)';
+const NCA = 'ACTRA National Commercial Agreement rate chart, 1 June 2025 to 31 May 2026 (actra.ca)';
 const TO: readonly CareerCity[] = ['ca-on-toronto'];
 const VAN: readonly CareerCity[] = ['ca-bc-vancouver'];
 const AMPTP = 'https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf';
@@ -676,39 +704,60 @@ export const ROLES: readonly Role[] = [
   {
     id: 'ca-principal', label: 'A Principal Part, A Canadian Series', medium: 'screen', union: 'actra', currency: 'CAD',
     steps: [['2025-01-26', 935_25], ['2026-01-01', 972_75], ['2027-01-01', 1_006_75]],
-    units: [1, 3], bar: 60, weight: 10, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 5, reads: READS.screen, basis: 'day', source: IPA,
+    units: [1, 3], bar: 60, weight: 10, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 5, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 260, source: IPA,
   },
   {
     id: 'ca-actor', label: 'A Small Part, A Canadian Series', medium: 'screen', union: 'actra', currency: 'CAD',
     steps: [['2025-01-26', 631_25], ['2026-01-01', 656_50], ['2027-01-01', 679_50]],
-    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: TO, leadDays: 4, reads: READS.screen, basis: 'day', source: IPA,
+    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: TO, leadDays: 4, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 210, source: IPA,
   },
   {
     id: 'ca-feature', label: 'A Role, A Canadian Feature Film', medium: 'screen', union: 'actra', currency: 'CAD',
     // A fifth of the principal's week, $3,974.50, $4,133.50 and $4,278.25.
     steps: [['2025-01-26', 794_90], ['2026-01-01', 826_70], ['2027-01-01', 855_65]],
-    units: [5, 15], bar: 64, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 14, reads: READS.screen, basis: 'week', source: IPA,
+    units: [5, 15], bar: 64, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 14, reads: READS.screen, basis: 'week', prepaid: ACTRA.prepaidFeature, permitWeekly: 260, source: IPA,
   },
   // Vancouver, at the BCMPA's own rates, each from its published day.
   {
     id: 'bc-principal', label: 'A Principal Part, A Series Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
     steps: [['2024-03-31', 869_85], ['2025-03-30', 917_69], ['2026-03-29', 954_40], ['2027-04-04', 987_80]],
-    units: [1, 3], bar: 60, weight: 12, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 5, reads: READS.screen, basis: 'day', source: BCMPA,
+    units: [1, 3], bar: 60, weight: 12, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 5, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 260, source: BCMPA,
   },
   {
     id: 'bc-actor', label: 'A Small Part, A Series Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
     steps: [['2024-03-31', 585_43], ['2025-03-30', 617_63], ['2026-03-29', 642_34], ['2027-04-04', 664_82]],
-    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: VAN, leadDays: 4, reads: READS.screen, basis: 'day', source: BCMPA,
+    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: VAN, leadDays: 4, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 210, source: BCMPA,
   },
   {
     id: 'bc-feature', label: 'A Role, A Feature Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
     steps: [['2024-03-31', 869_85], ['2025-03-30', 917_69], ['2026-03-29', 954_40], ['2027-04-04', 987_80]],
-    units: [3, 12], bar: 64, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 14, reads: READS.screen, basis: 'day', source: BCMPA,
+    units: [3, 12], bar: 64, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 14, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidFeature, permitWeekly: 260, source: BCMPA,
   },
   // The Canadian Theatre Agreement's weekly minimum for an actor at a
   // Category A theater, its seasons from late June. Which of Toronto's and
   // Vancouver's companies sit in Category A the booklet doesn't say: SLATE's
   // reading, for the houses a working actor auditions for.
+  // A commercial under the National Commercial Agreement, from later on
+  // 2026-09-30: its last published chart, 1 June 2025 to 31 May 2026, a
+  // principal's session on camera $939.50 and by voice $685, and a year of
+  // national television use at the chart's least, $743.30 and $363.75, SLATE
+  // reading one year's television run. A non-member's NCA permit isn't kept.
+  {
+    id: 'ca-commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2025-06-01', 939_50]],
+    units: [1, 1], bar: 55, weight: 5, tiers: [1, 2, 3], selfSubmit: false, cities: [...TO, ...VAN], leadDays: 5, reads: READS.commercial, prepaid: 743.3 / 939.5, source: NCA,
+  },
+  {
+    id: 'ca-commercial-voice', label: 'A Commercial, The Voice', medium: 'voice', union: 'actra', currency: 'CAD',
+    steps: [['2025-06-01', 685_00]],
+    units: [1, 1], bar: 55, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: [...TO, ...VAN], leadDays: 5, reads: READS.voice ?? READS.commercial, sessionHours: 2, prepaid: 363.75 / 685, source: NCA,
+  },
+  // Animation of more than ten minutes under the IPA, 2026: a principal's day, $681.75.
+  {
+    id: 'ca-animation', label: 'A Voice, An Animated Series', medium: 'voice', union: 'actra', currency: 'CAD',
+    steps: [['2026-01-01', 681_75]],
+    units: [1, 3], bar: 62, weight: 2, tiers: [1, 2], selfSubmit: false, cities: [...TO, ...VAN], leadDays: 7, reads: READS.animation, sessionHours: 4, prepaid: ACTRA.prepaidTv, permitWeekly: 260, source: IPA,
+  },
   {
     id: 'ca-theater', label: 'A Play, A Category A Theater', medium: 'stage', union: 'caea', currency: 'CAD',
     steps: [['2024-06-24', 1_255_25], ['2025-06-23', 1_293_00], ['2026-06-22', 1_332_00]],
