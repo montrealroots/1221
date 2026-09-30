@@ -184,6 +184,53 @@ Evidence: `tests/leasing.test.ts` (5), and `tests/vehicles.test.ts` updated for 
 - Two were redundant guards, now removed: a trade-in filter on a lease quote that never has a trade-in, and cancelling a return the lease's own guard already passes.
 - Two needed tests: the miles over, and Connecticut's used-car fee.
 
+#### Stage 3g: motorcycles and scooters (done 2026-09-30)
+Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehicle-insurance.json` and `research-kind-effects.json`.
+- **The catalog** (`content/bikecatalog.ts`): 36 models across the five markets, from a 50cc scooter to a touring motorcycle, at the makers' and dealers' published 2026 prices. Cars: Buy One's Kind is Scooter, Motorcycle or Car.
+- Electric kick scooters aren't sold. Britain bars a private one from the road, and elsewhere their rules differ from a motorcycle's in ways SLATE doesn't keep.
+- **What one costs where one lives** (`BIKE_FEES`, `bikeLines` in `systems/vehicles.ts`):
+  - New York: $17.50 a year (VTL 410(5)) and the $50 title.
+  - Connecticut: $63 a year, the plate, title, Clean Air Act and parks fees.
+  - California: the car's fees and value fee, and the $2 motorcycle safety fee.
+  - Britain: vehicle tax by engine size, £27 to £125.
+  - Ireland: motor tax by engine size, €49 to €88.
+  - Ontario: HST, the permit and the plate.
+  - British Columbia: GST and PST, and $33 a year.
+  - Mexico City: the alta (MXN 709), the refrendo (MXN 472) and the tenencia, 3% of the value before IVA. The 2026 decree subsidizes it whole to MXN 250,000, so only the Harley-Davidson pays it.
+  - America's sales tax and dealer fee apply as a car's; the discount below the sticker is a car's only (KBB's figure is for new cars).
+- **Insurance** (`BIKE_INSURANCE`), each figure saying what it is:
+  - ValuePenguin's 2026 quotes for one rider on a Honda Rebel 500 in each US state.
+  - Confused.com's median premiums in Britain: a motorcycle's, a scooter's, and a moped's to 50cc.
+  - ICBC's Basic tariff by engine class in British Columbia.
+  - One New York City scooter quote, liability or full.
+  - Ireland, Ontario and Mexico City publish only ranges, so their middles are taken, as SLATE's estimates.
+  - Liability-only cover is offered only where it's published.
+- **The motorcycle license** (`content/motorcyclepaths.ts`, a second track in `systems/licensing.ts`): each place's own path, run by the car's machinery with its own record. A car license doesn't ride a motorcycle, and the class is on the same card: renewing the car license carries it.
+  - New York: the permit test and the road test.
+  - Connecticut: the knowledge test, the permit, the novice course and the endorsement.
+  - California at 21 and over: the application, the knowledge test and the skills test.
+  - Britain, direct access to A at twenty-four: CBT, theory, and modules 1 and 2. A British car licence stands in for the provisional licence.
+  - Ireland: theory, the permit, IBT and the test.
+  - Ontario: M1, M2 and M, with their waits.
+  - British Columbia: Class 6 added to a Class 5 or 7.
+  - Mexico City: the CONOCER certificate and the A1 license.
+- **Riding** (`crashChance` in `systems/driving.ts`): a month's riding and a journey's are injury-drawn at NHTSA's 391 injured per 100 million miles against a car occupant's 86 (Traffic Safety Facts, 2024 data), 4.5 times. Fuel is the maker's economy where published (Honda's, Kawasaki's, Royal Enfield's, Vespa's), and the mean of those for a model whose maker publishes none. A motorcycle whose owner holds no motorcycle class isn't ridden. Britain's MOT is kept for a motorcycle at its £29.65; elsewhere a motorcycle's test isn't researched and none is kept.
+- Not kept:
+  - The progressive routes to category A in Britain and Ireland.
+  - New York's MSF course in place of the road test, and California's CHP course in place of the skills test.
+  - British Columbia's Class 8 program for a new rider.
+  - A moped ridden on a car license where a place allows it.
+  - A motorcycle's own depreciation, which no source publishes; the car curve is used.
+  - A rider's deaths above the life table's.
+
+Evidence: `tests/motorcycles.test.ts` (17). 23 mutations, all killed in the end. Six first survived, and each needed a test:
+- The mean an unrated bike burns, which the first test read back from the code.
+- A bike's trade-in lowering New York's tax.
+- The motorcycle record surviving its scheduled test.
+- A motorcycle permit leaving the car license standing.
+- Britain's MOT for a motorcycle.
+- No London permit for a motorcycle.
+
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.

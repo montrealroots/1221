@@ -15,6 +15,11 @@
  * Progress is kept for one jurisdiction. A path begun in one and taken up in
  * another begins again: some authorities credit a test passed elsewhere, and
  * SLATE doesn't have which.
+ *
+ * From 2026-09-30 there are two tracks, the car's and the motorcycle's
+ * (`MOTORCYCLE_PATHS`), each with its own record, run by the same steps.
+ * What the motorcycle track grants is a license record of the motorcycle
+ * class, the class on the same card; renewing the car license carries it.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -27,9 +32,10 @@ import { CITIES } from '../content/geography';
 import { businessDay } from '../content/bankdays';
 import { LICENSES } from '../content/licenses';
 import { LEAD_DAYS, LICENSE_EXCHANGES, LICENSE_PATHS, PASS_RATES, passRate, type LicenseExchange, type LicenseGrant, type LicensePath, type PathStep } from '../content/licensepaths';
+import { MOTORCYCLE_PATHS } from '../content/motorcyclepaths';
 import { payFromBank } from './household';
 import { present } from './career';
-import { addYears, documentsOf, inForce, licenseOf, licensingOf, numberFor, type PersonDocument } from './documents';
+import { addYears, documentsOf, inForce, licenseOf, licensingOf, numberFor, classOf, type PersonDocument, type VehicleClass } from './documents';
 
 export interface LicensingRecord {
   jurisdiction: string;
@@ -47,6 +53,11 @@ export interface LicensingRecord {
 }
 
 export const LICENSE_KIND = 'documents.license_step';
+
+/** The paths a track's steps are read from. */
+export const pathsFor = (track: VehicleClass): Readonly<Record<string, LicensePath>> => (track === 'motorcycle' ? MOTORCYCLE_PATHS : LICENSE_PATHS);
+const recordOf = (person: Person, track: VehicleClass) => (track === 'motorcycle' ? person.motoLicensing : person.licensing);
+const keep = (person: Person, track: VehicleClass, r: LicensingRecord) => { if (track === 'motorcycle') person.motoLicensing = r; else person.licensing = r; };
 const YEAR = 365.25 * MS_DAY;
 
 export function licensingOfPerson(person: Person): LicensingRecord | undefined {
@@ -61,9 +72,9 @@ const livesIn = (person: Person) => person.home?.cityId ?? person.currentLocatio
  * they were, and an American on a London shoot booked a British provisional
  * license, which a visitor can't hold.
  */
-export function pathHere(person: Person): { jurisdiction: string; path: LicensePath } | undefined {
+export function pathHere(person: Person, track: VehicleClass = 'car'): { jurisdiction: string; path: LicensePath } | undefined {
   const j = licensingOf(livesIn(person));
-  const path = j ? LICENSE_PATHS[j] : undefined;
+  const path = j ? pathsFor(track)[j] : undefined;
   return j && path ? { jurisdiction: j, path } : undefined;
 }
 
@@ -75,6 +86,8 @@ export function applies(step: PathStep, person: Person, at: Instant): boolean {
   const day = new Date(at).toISOString().slice(0, 10);
   if (step.from && day < step.from) return false;
   if (step.until && day >= step.until) return false;
+  // A step for someone without the car license it stands in for, as Britain's provisional license.
+  if (step.unlessCarLicense && documentsOf(person).some((d) => d.kind === 'license' && classOf(d) === 'car' && d.issuer === step.unlessCarLicense && inForce(d, at))) return false;
   const age = ageAt(person, at);
   if (step.under !== undefined && age >= step.under) return false;
   if (step.over !== undefined && age < step.over) return false;
@@ -82,8 +95,8 @@ export function applies(step: PathStep, person: Person, at: Instant): boolean {
 }
 
 /** The record for the jurisdiction, fresh where they had none or had one elsewhere. */
-function recordFor(person: Person, jurisdiction: string): LicensingRecord {
-  const r = person.licensing;
+function recordFor(person: Person, jurisdiction: string, track: VehicleClass = 'car'): LicensingRecord {
+  const r = recordOf(person, track);
   return r && r.jurisdiction === jurisdiction ? r : { jurisdiction, done: {}, attempts: {}, failedAt: {}, used: {} };
 }
 
@@ -125,25 +138,30 @@ function inSave(sim: Simulation, amount: number, currency: string): Money {
 }
 
 /** The license they hold from this jurisdiction that the path is past, if any: full ends it. */
-function heldHere(person: Person, jurisdiction: string, at: Instant): PersonDocument | undefined {
-  return documentsOf(person).find((d) => d.kind === 'license' && d.issuer === jurisdiction && inForce(d, at) && (d.stage ?? 'full') === 'full');
+function heldHere(person: Person, jurisdiction: string, at: Instant, track: VehicleClass = 'car'): PersonDocument | undefined {
+  return documentsOf(person).find((d) => d.kind === 'license' && classOf(d) === track && d.issuer === jurisdiction && inForce(d, at) && (d.stage ?? 'full') === 'full');
 }
 
 /** Why a step can't be booked now, or nothing. */
-export function stepRefusal(sim: Simulation, person: Person, stepId: string): string | undefined {
-  const here = pathHere(person);
-  if (!here) return `SLATE doesn’t have how a license is earned in ${CITIES.get(person.currentLocationId)?.name ?? 'this place'} yet.`;
+export function stepRefusal(sim: Simulation, person: Person, stepId: string, track: VehicleClass = 'car'): string | undefined {
+  const here = pathHere(person, track);
+  if (!here) return `SLATE doesn’t have how a ${track === 'motorcycle' ? 'motorcycle ' : ''}license is earned in ${CITIES.get(person.currentLocationId)?.name ?? 'this place'} yet.`;
   const { jurisdiction, path } = here;
   const step = path.steps.find((s) => s.id === stepId);
   if (!step || !applies(step, person, sim.now)) return 'That isn’t a step here now.';
   const rule = LICENSES[jurisdiction]!;
   if (ageAt(person, sim.now) < rule.minAge.learner) return `${rule.authority} starts a learner at ${rule.minAge.learner}.`;
-  if (heldHere(person, jurisdiction, sim.now)) return `You hold ${rule.name} already.`;
-  const lapsed = renewable(person, sim.now);
-  if (lapsed && lapsed.issuer === jurisdiction) return `Your ${lapsed.name} renews without the tests: Renew It.`;
-  const swap = exchangeable(person, sim.now);
-  if (swap) return `Your license from ${LICENSES[swap.held.issuer]?.authority ?? 'elsewhere'} exchanges here without the tests: Exchange It.`;
-  const r = recordFor(person, jurisdiction);
+  const held = heldHere(person, jurisdiction, sim.now, track);
+  if (held) return `You hold ${track === 'car' ? rule.name : held.name} already.`;
+  if (track === 'car') {
+    const lapsed = renewable(person, sim.now);
+    if (lapsed && lapsed.issuer === jurisdiction) return `Your ${lapsed.name} renews without the tests: Renew It.`;
+    const swap = exchangeable(person, sim.now);
+    if (swap) return `Your license from ${LICENSES[swap.held.issuer]?.authority ?? 'elsewhere'} exchanges here without the tests: Exchange It.`;
+  }
+  // A motorcycle class added to a car license, where only that way is kept.
+  if (path.needsCar && !documentsOf(person).some((d) => d.kind === 'license' && classOf(d) === 'car' && d.issuer === jurisdiction && inForce(d, sim.now) && d.alone !== false)) return path.needsCar;
+  const r = recordFor(person, jurisdiction, track);
   if (r.booked) return r.booked.step === stepId ? 'It’s booked.' : `${path.steps.find((s) => s.id === r.booked!.step)?.name ?? 'A step'} is booked first.`;
   if (r.unpaid === stepId) return undefined;
   if (r.unpaid) return `${path.steps.find((s) => s.id === r.unpaid)?.name ?? 'A step'} is passed; its license fee is owed first.`;
@@ -186,7 +204,7 @@ function slot(sim: Simulation, person: Person, cityId: string, from: Instant, ho
 }
 
 /** Books a step: pays for it, and puts it, or a course's sessions, on the calendar. */
-function book(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, r: LicensingRecord): Instant[] {
+function book(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, r: LicensingRecord, track: VehicleClass): Instant[] {
   const cityId = livesIn(person);
   const lead = step.kind === 'office' ? LEAD_DAYS.office : step.kind === 'course' ? LEAD_DAYS.course : PASS_ROAD(step) ? LEAD_DAYS.road : LEAD_DAYS.test;
   const hour = step.kind === 'course' ? 18 : 10;
@@ -195,7 +213,7 @@ function book(sim: Simulation, person: Person, jurisdiction: string, step: PathS
   let from = sim.now + lead * MS_DAY;
   for (let n = 0; n < sessions; n += 1) {
     const at = slot(sim, person, cityId, from, hour, step.minutes);
-    sim.schedule({ at, kind: LICENSE_KIND, label: sessions > 1 ? `${step.name}, ${n + 1} Of ${sessions}` : step.name, category: 'personal', priority: 32, requiresPlayer: true, durationMinutes: step.minutes, locationId: cityId, payload: { personId: person.id, jurisdiction, step: step.id } });
+    sim.schedule({ at, kind: LICENSE_KIND, label: sessions > 1 ? `${step.name}, ${n + 1} Of ${sessions}` : step.name, category: 'personal', priority: 32, requiresPlayer: true, durationMinutes: step.minutes, locationId: cityId, payload: { personId: person.id, jurisdiction, step: step.id, track } });
     out.push(at);
     from = at + (step.everyDays ?? 7) * MS_DAY - 12 * 3_600_000;
   }
@@ -206,23 +224,23 @@ function book(sim: Simulation, person: Person, jurisdiction: string, step: PathS
 const PASS_ROAD = (step: PathStep) => step.kind === 'test' && PASS_RATES[step.pass ?? '']?.kind === 'road';
 
 /** Whether an attempt at a test passes: its rate, drawn once for the attempt. */
-export function passesTest(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, attempt: number): boolean {
-  return sim.rng('documents.test', person.id, `${jurisdiction}/${step.id}/${attempt}`).next() < passRate(step.pass ?? '').rate;
+export function passesTest(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, attempt: number, track: VehicleClass = 'car'): boolean {
+  return sim.rng('documents.test', person.id, `${track === 'car' ? '' : `${track}/`}${jurisdiction}/${step.id}/${attempt}`).next() < passRate(step.pass ?? '').rate;
 }
 
 /** A license granted: the record, and the stage before it from the same authority ended. */
-function grant(sim: Simulation, person: Person, jurisdiction: string, g: LicenseGrant, issueDays = 0): PersonDocument {
+function grant(sim: Simulation, person: Person, jurisdiction: string, g: LicenseGrant, issueDays = 0, track: VehicleClass = 'car'): PersonDocument {
   const id = sim.nextId('document');
   const issuedAt = sim.now + issueDays * MS_DAY;
-  for (const d of documentsOf(person)) if (d.kind === 'license' && d.issuer === jurisdiction && d.status === 'valid') d.status = 'cancelled';
-  const doc: PersonDocument = { id, kind: 'license', issuer: jurisdiction, name: g.name, number: numberFor('D', id), status: 'valid', issuedAt, expiresAt: addYears(issuedAt, g.years), stage: g.stage, alone: g.alone };
+  for (const d of documentsOf(person)) if (d.kind === 'license' && classOf(d) === track && d.issuer === jurisdiction && d.status === 'valid') d.status = 'cancelled';
+  const doc: PersonDocument = { id, kind: 'license', issuer: jurisdiction, name: g.name, number: numberFor('D', id), status: 'valid', issuedAt, expiresAt: addYears(issuedAt, g.years), stage: g.stage, alone: g.alone, ...(track === 'car' ? {} : { vehicleClass: track }) };
   documentsOf(person).push(doc);
   return doc;
 }
 
 /** A step done: marked, and what it grants given, its license fee paid where one is due. */
-function complete(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, r: LicensingRecord): string {
-  const path = LICENSE_PATHS[jurisdiction]!;
+function complete(sim: Simulation, person: Person, jurisdiction: string, step: PathStep, r: LicensingRecord, track: VehicleClass): string {
+  const path = pathsFor(track)[jurisdiction]!;
   r.done[step.id] = sim.now;
   if (!step.grants) return `${step.name}: done.`;
   if (step.issueFee) {
@@ -232,7 +250,7 @@ function complete(sim: Simulation, person: Person, jurisdiction: string, step: P
       return `${step.name}: passed. The license fee, ${formatMoney(fee, saveCurrency(sim.universe))}, is more than the bank can cover; the license waits for it.`;
     }
   }
-  const doc = grant(sim, person, jurisdiction, step.grants, step.issueDays);
+  const doc = grant(sim, person, jurisdiction, step.grants, step.issueDays, track);
   return `${step.name}: ${step.kind === 'test' ? 'passed' : 'done'}. ${doc.name}${step.issueDays ? `, in the post, arriving ${formatDate(doc.issuedAt!, sim.zone)}` : ''}, good until ${formatDate(doc.expiresAt!, sim.zone)}.`;
 }
 
@@ -245,7 +263,7 @@ export function exchangeable(person: Person, at: Instant): { jurisdiction: strin
   const here = pathHere(person);
   const exchange = here ? LICENSE_EXCHANGES[here.jurisdiction] : undefined;
   if (!here || !exchange || heldHere(person, here.jurisdiction, at)) return undefined;
-  const held = documentsOf(person).find((d) => d.kind === 'license' && d.issuer !== here.jurisdiction && inForce(d, at) && (d.stage ?? 'full') === 'full'
+  const held = documentsOf(person).find((d) => d.kind === 'license' && classOf(d) === 'car' && d.issuer !== here.jurisdiction && inForce(d, at) && (d.stage ?? 'full') === 'full'
     && (exchange.from.includes(d.issuer) || exchange.from.includes(d.issuer.split('-')[0]!)));
   return held ? { jurisdiction: here.jurisdiction, held, exchange } : undefined;
 }
@@ -275,7 +293,7 @@ export const RENEW_AFTER_DAYS = 730;
 /** The license to renew: a full one that runs out within the window, or ran out not too long ago. */
 export function renewable(person: Person, at: Instant): PersonDocument | undefined {
   return documentsOf(person)
-    .filter((d) => d.kind === 'license' && d.status === 'valid' && (d.stage ?? 'full') === 'full' && d.expiresAt !== undefined && d.expiresAt - RENEW_AHEAD_DAYS * MS_DAY <= at && at - d.expiresAt <= RENEW_AFTER_DAYS * MS_DAY)
+    .filter((d) => d.kind === 'license' && classOf(d) === 'car' && d.status === 'valid' && (d.stage ?? 'full') === 'full' && d.expiresAt !== undefined && d.expiresAt - RENEW_AHEAD_DAYS * MS_DAY <= at && at - d.expiresAt <= RENEW_AFTER_DAYS * MS_DAY)
     .sort((a, b) => (b.expiresAt ?? 0) - (a.expiresAt ?? 0))[0];
 }
 
@@ -308,36 +326,38 @@ export function idpYears(validity: string | null): number {
 }
 
 export function registerLicensing(sim: Simulation): void {
-  sim.onCommand<{ step: string }, { at: Instant[]; fee: Money; message?: string }>('documents.license_step', (p, { sim: s }) => {
+  sim.onCommand<{ step: string; track?: VehicleClass }, { at: Instant[]; fee: Money; message?: string }>('documents.license_step', (p, { sim: s }) => {
     const person = s.player;
     const stepId = String(p?.step ?? '');
-    const no = stepRefusal(s, person, stepId);
+    const track: VehicleClass = p?.track === 'motorcycle' ? 'motorcycle' : 'car';
+    const no = stepRefusal(s, person, stepId, track);
     if (no) throw new CommandError(no);
-    const { jurisdiction, path } = pathHere(person)!;
+    const { jurisdiction, path } = pathHere(person, track)!;
     const step = path.steps.find((x) => x.id === stepId)!;
-    const r = recordFor(person, jurisdiction);
+    const r = recordFor(person, jurisdiction, track);
     const cur = saveCurrency(s.universe);
     if (r.unpaid === stepId) {
       const fee = inSave(s, step.issueFee ?? 0, path.currency);
       if (!payFromBank(s, person, fee, `${step.grants!.name}, the license fee`, 'documents')) throw new CommandError(`${formatMoney(fee, cur)} is more than the bank can cover.`);
       delete r.unpaid;
-      const doc = grant(s, person, jurisdiction, step.grants!, step.issueDays);
+      const doc = grant(s, person, jurisdiction, step.grants!, step.issueDays, track);
       return { at: [], fee, message: `${doc.name}, good until ${formatDate(doc.expiresAt!, s.zone)}.` };
     }
     const fee = inSave(s, attemptFee(step, r), path.currency);
     if (!payFromBank(s, person, fee, `${step.name}, ${LICENSES[jurisdiction]!.authority}`, 'documents')) throw new CommandError(`${formatMoney(fee, cur)} is more than the bank can cover.`);
     // Paying a covering fee again starts its attempts over.
     if (path.steps.some((x) => x.covered?.by === stepId)) r.used[stepId] = 0;
-    person.licensing = r;
-    const at = book(s, person, jurisdiction, step, r);
+    keep(person, track, r);
+    const at = book(s, person, jurisdiction, step, r, track);
     return { at, fee };
   });
 
   sim.onSchedule(LICENSE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
-    const r = person?.licensing;
+    const track: VehicleClass = item.payload.track === 'motorcycle' ? 'motorcycle' : 'car';
+    const r = person ? recordOf(person, track) : undefined;
     if (!person || !r || r.jurisdiction !== item.payload.jurisdiction || r.booked?.step !== item.payload.step) return;
-    const path = LICENSE_PATHS[r.jurisdiction]!;
+    const path = pathsFor(track)[r.jurisdiction]!;
     const step = path.steps.find((x) => x.id === item.payload.step)!;
     const mine = person.id === s.universe.playerId;
     const tell = (title: string, body: string) => { if (mine) s.notify({ category: 'personal', title, body, importance: 55, route: '/workspace/papers' }); };
@@ -359,13 +379,13 @@ export function registerLicensing(sim: Simulation): void {
     r.booked!.left -= 1;
     if (r.booked!.left > 0) return;
     delete r.booked;
-    if (step.kind !== 'test') { tell(`${step.name} Done`, complete(s, person, r.jurisdiction, step, r)); return; }
+    if (step.kind !== 'test') { tell(`${step.name} Done`, complete(s, person, r.jurisdiction, step, r, track)); return; }
     const attempt = (r.attempts[step.id] ?? 0) + 1;
     r.attempts[step.id] = attempt;
     if (step.covered) r.used[step.covered.by] = (r.used[step.covered.by] ?? 0) + 1;
-    if (passesTest(s, person, r.jurisdiction, step, attempt)) {
+    if (passesTest(s, person, r.jurisdiction, step, attempt, track)) {
       delete r.failedAt[step.id];
-      tell(`${step.name} Passed`, complete(s, person, r.jurisdiction, step, r));
+      tell(`${step.name} Passed`, complete(s, person, r.jurisdiction, step, r, track));
     } else {
       r.failedAt[step.id] = s.now;
       tell(`${step.name} Failed`, `Not this time${step.retakeDays ? `; it can be taken again from ${formatDate(s.now + step.retakeDays * MS_DAY, s.zone)}` : ''}.`);
@@ -400,6 +420,8 @@ export function registerLicensing(sim: Simulation): void {
     const id = s.nextId('document');
     const expiresAt = addYears(from, rule.validityYears ?? 5);
     documentsOf(person).push({ ...held, id, number: numberFor('D', id), status: 'valid', issuedAt: s.now, expiresAt });
+    // The motorcycle class is on the same card, and renews with it.
+    for (const d of documentsOf(person)) if (d.kind === 'license' && classOf(d) === 'motorcycle' && d.issuer === held.issuer && d.status === 'valid' && (d.stage ?? 'full') === 'full') d.expiresAt = expiresAt;
     return { expiresAt, fee };
   });
 

@@ -26,7 +26,7 @@ import { exchange } from '../content/currency';
 import { US_LEASE, US_NEW_BELOW_STICKER } from '../content/vehiclefees';
 import { homeOf } from './earnings';
 import { owe, payFromBank } from './household';
-import { VEHICLE_MONTH_KIND, VEHICLE_RENEWAL_KIND, jurisdictionOf, kept, modelById, monthlyInsurance, quote, renewal, usSalesTaxRate, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { VEHICLE_MONTH_KIND, VEHICLE_RENEWAL_KIND, jurisdictionOf, kept, kindOf, modelById, monthlyInsurance, quote, renewal, usSalesTaxRate, vehiclesOf, type OwnedVehicle } from './vehicles';
 
 export const LEASE_MONTH_KIND = 'vehicle.lease_month';
 export const LEASE_END_KIND = 'vehicle.lease_end';
@@ -64,6 +64,7 @@ const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = sa
 export function leaseQuote(modelId: string, cityId: string, at: Instant, months: number, person?: Person): LeaseQuote | string {
   const model = modelById(modelId);
   if (!model) return 'SLATE doesn’t sell that car.';
+  if (kindOf(model) !== 'car') return 'The lease SLATE keeps is Toyota’s, for a car.';
   const j = jurisdictionOf(cityId);
   if (!j?.startsWith('US-')) return 'SLATE keeps leases in America only: New York, Connecticut and California.';
   if (!(US_LEASE.terms as readonly number[]).includes(months)) return `A lease of ${US_LEASE.terms.join(', ')} months.`;
@@ -92,7 +93,7 @@ export function leaseRefusal(sim: Simulation, person: Person, modelId: string, m
   const q = leaseQuote(modelId, homeOf(person), sim.now, months, person);
   if (typeof q === 'string') return q;
   if (coverage === 'liability') return 'A lessor asks for full cover on its car.';
-  const ins = monthlyInsurance(jurisdictionOf(homeOf(person))!, coverage);
+  const ins = monthlyInsurance(jurisdictionOf(homeOf(person))!, coverage, modelById(modelId));
   if (typeof ins === 'string') return ins;
   return undefined;
 }

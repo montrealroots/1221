@@ -184,6 +184,8 @@ export interface Person {
   journeys?: import('../systems/journey').Journey[];
   /** Their progress toward a driving license where they live (`systems/licensing.ts`). */
   licensing?: import('../systems/licensing').LicensingRecord;
+  /** The motorcycle license's path, kept apart from the car's (`systems/licensing.ts`, from 2026-09-30). */
+  motoLicensing?: import('../systems/licensing').LicensingRecord;
   /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
   exclusionUsedAt?: number;
   /** How many homes they've bought: England's first-time buyer's relief is for the first. */

@@ -18,8 +18,9 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
-import { buyRefusal, jurisdictionOf, kept, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
-import { DEPRECIATION_SOURCE, INSURANCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
+import { buyRefusal, jurisdictionOf, kept, kindOf, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
+import { BIKE_INSURANCE, DEPRECIATION_SOURCE, INSURANCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
+import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { buyoutPrice, leaseQuote, leaseRefusal, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Petrol', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -32,26 +33,31 @@ export function VehiclesWorkspace() {
   const money = (c: number) => formatMoney(c, cur);
   const home = homeOf(person);
   const j = jurisdictionOf(home);
-  const models = modelsFor(home);
+  const [kind, setKind] = useState<VehicleKind>('car');
+  const models = modelsFor(home, kind);
   const [pick, setPick] = useState('');
   const [age, setAge] = useState(0);
   // Outright, a loan's months or a lease's: one choice, a lease's months negative.
   const [months, setMonths] = useState(0);
   const financed = months > 0;
-  const leaseMonths = months < 0 && Boolean(j?.startsWith('US-')) && age === 0 ? -months : 0;
+  const leaseMonths = months < 0 && Boolean(j?.startsWith('US-')) && age === 0 && kind === 'car' ? -months : 0;
   const [coverage, setCoverage] = useState<OwnedVehicle['coverage']>('full');
   const [tradeId, setTradeId] = useState('');
-  const model = modelById(pick) ?? models[0];
+  const model = models.find((m) => m.id === pick) ?? models[0];
   const tradeCar = vehiclesOf(person).find((x) => x.id === tradeId && x.soldAt === undefined && !x.repossessed);
   const trade = tradeCar ? tradeInFor(sim, home, tradeCar) : undefined;
   const q = model ? quote(model, home, sim.now, { age, financed, person, ...(trade ? { tradeIn: trade } : {}) }) : 'SLATE sells no cars where you live yet.';
   const inHome = (c: number, from: string) => formatMoney(inSaveMoney(sim, c, from), cur);
   const no = model ? buyRefusal(sim, person, model.id, { age, financed, coverage }) : typeof q === 'string' ? q : undefined;
-  const ins = j ? monthlyInsurance(j, coverage) : undefined;
+  const ins = j ? monthlyInsurance(j, coverage, model) : undefined;
+  const bike = model ? kindOf(model) !== 'car' : false;
+  const insCurrency = j ? (bike ? BIKE_INSURANCE[j].currency : INSURANCE[j]?.currency) : undefined;
+  const insBasis = j ? (bike ? BIKE_INSURANCE[j].basis : INSURANCE[j]?.basis) : undefined;
+  const liabilityOffered = Boolean(j && (bike ? kindOf(model!) === 'scooter' && BIKE_INSURANCE[j].scooterLiability : INSURANCE[j]?.liability !== undefined));
   const rate = j ? loanRate(j, person.credit?.score ?? 0, age > 0) : undefined;
   const owned = vehiclesOf(person).filter((v) => v.soldAt === undefined);
   // A lease: new cars in America only.
-  const leasable = Boolean(j?.startsWith('US-')) && age === 0;
+  const leasable = Boolean(j?.startsWith('US-')) && age === 0 && kind === 'car';
   const lq = model && leaseMonths ? leaseQuote(model.id, home, sim.now, leaseMonths, person) : undefined;
   const noLease = model && leaseMonths ? leaseRefusal(sim, person, model.id, leaseMonths, coverage) : undefined;
   return (
@@ -59,14 +65,14 @@ export function VehiclesWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Day</div>
         <h1>Cars</h1>
-        <p className="muted">A car of your own: what it costs to buy, to keep and to run where you live.</p>
+        <p className="muted">A car, motorcycle or scooter of your own: what it costs to buy, to keep and to run where you live.</p>
       </div>
       <div className="col gap-5">
-        <Panel title="Your Cars">
+        <Panel title="Your Vehicles">
           {!owned.length ? <p className="small muted" style={{ margin: 0 }}>None yet.</p> : (
             <div className="table-scroll">
               <table>
-                <thead><tr><th scope="col">Car</th><th scope="col">Bought</th><th scope="col" className="num">Worth</th><th scope="col" className="num">Loan Or Lease</th><th scope="col">Registration Due</th><th scope="col">Next Inspection</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
+                <thead><tr><th scope="col">Vehicle</th><th scope="col">Bought</th><th scope="col" className="num">Worth</th><th scope="col" className="num">Loan Or Lease</th><th scope="col">Registration Due</th><th scope="col">Next Inspection</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
                 <tbody>
                   {owned.map((v) => {
                     const m = modelById(v.modelId)!;
@@ -110,11 +116,19 @@ export function VehiclesWorkspace() {
           )}
         </Panel>
 
-        <Panel title="Buy A Car" subtitle={j ? `Where you live: ${PLACE_NAME[j]}` : 'Where you live, SLATE sells no cars yet'}>
+        <Panel title="Buy One" subtitle={j ? `Where you live: ${PLACE_NAME[j]}` : 'Where you live, SLATE sells no cars yet'}>
           <div className="col gap-3">
             <div className="field-row field-row-tight">
               <div className="field">
-                <label htmlFor="car-model">Car</label>
+                <label htmlFor="car-kind">Kind</label>
+                <select id="car-kind" value={kind} onChange={(e) => { setKind(e.target.value as VehicleKind); setPick(''); setMonths(0); }}>
+                  <option value="scooter">Scooter</option>
+                  <option value="motorcycle">Motorcycle</option>
+                  <option value="car">Car</option>
+                </select>
+              </div>
+              <div className="field">
+                <label htmlFor="car-model">Model</label>
                 <select id="car-model" value={model?.id ?? ''} onChange={(e) => setPick(e.target.value)}>
                   {models.map((m) => <option key={m.id} value={m.id}>{m.make} {m.model}</option>)}
                 </select>
@@ -137,7 +151,7 @@ export function VehiclesWorkspace() {
                 <label htmlFor="car-cover">Insurance</label>
                 <select id="car-cover" value={coverage} onChange={(e) => setCoverage(e.target.value === 'liability' ? 'liability' : 'full')}>
                   <option value="full">Full Cover</option>
-                  {j && INSURANCE[j]?.liability !== undefined && <option value="liability">Liability Only</option>}
+                  {liabilityOffered && <option value="liability">Liability Only</option>}
                 </select>
               </div>
               {owned.some((x) => !x.repossessed && !x.lease) && (
@@ -176,7 +190,7 @@ export function VehiclesWorkspace() {
               </div>
             )}
             <div className="grid grid-3">
-              <Stat label="Insurance" value={typeof ins === 'number' && j ? `${inHome(ins, INSURANCE[j]!.currency)} A Month` : '—'} note={j && INSURANCE[j] ? INSURANCE[j]!.basis : 'Not kept here yet'} />
+              <Stat label="Insurance" value={typeof ins === 'number' && insCurrency ? `${inHome(ins, insCurrency)} A Month` : '—'} note={insBasis ?? 'Not kept here yet'} />
               {leaseMonths ? <Stat label="Money Factor" value={String(US_LEASE.moneyFactor)} note={`About ${(US_LEASE.moneyFactor * 2400).toFixed(2)}% a year, worked back from Toyota’s offers`} /> : <Stat label="Loan Rate" value={rate !== undefined ? `${(rate * 100).toFixed(2)}%` : '—'} note={rate !== undefined ? 'For your record, where it’s published' : 'Not published here: buy it outright'} />}
               <Stat label="Economy" value={model?.per100km ? `${model.per100km} L/100 km` : 'Not Yet Rated'} note={model?.per100km ? model.economyBasis : 'Fuel at AAA’s cost a mile until it’s rated'} />
             </div>

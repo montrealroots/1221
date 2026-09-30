@@ -12,8 +12,15 @@
  * is before sales tax; a British, Irish or Mexican one includes it.
  */
 
+/** What a vehicle is, where it isn't a car (from 2026-09-30): what licenses, taxes and insures it. */
+export type VehicleKind = 'car' | 'motorcycle' | 'scooter';
+
 export interface CarModel {
   id: string;
+  /** A car where not given. */
+  kind?: VehicleKind;
+  /** A motorcycle's or scooter's engine, cc: what taxes and insures it by size. */
+  cc?: number;
   market: 'US' | 'CA' | 'MX' | 'GB' | 'IE';
   make: string;
   model: string;

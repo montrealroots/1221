@@ -39,7 +39,7 @@ import { itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
-import { modelById, runningCost, vehiclesOf } from './vehicles';
+import { classFor, kindOf, modelById, runningCost, vehiclesOf } from './vehicles';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
@@ -305,7 +305,7 @@ export function planDrive(sim: Simulation, person: Person, vehicleId: string, fr
   if (v.repossessed) return 'The lender has the car.';
   if ((willBeAt ?? v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
-  const may = mayDrive(person, fromCity, day);
+  const may = mayDrive(person, fromCity, day, day, classFor(modelById(v.modelId)!));
   if (!may.ok) return may.why ?? 'You may not drive there.';
   const zone = CITIES.require(fromCity).timeZone;
   const p = zonedParts(day, zone);
@@ -581,7 +581,7 @@ export function registerJourneys(sim: Simulation): void {
       const km = roadKm(j.fromCity, j.toCity);
       car.at = j.toCity;
       car.km = (car.km ?? 0) + km;
-      drive(s, person, car.jurisdiction, km, s.now, j.id);
+      drive(s, person, car.jurisdiction, km, s.now, j.id, kindOf(modelById(car.modelId)!));
     }
     if (driven?.routeId?.startsWith('rental:')) rentalDriven(s, person, driven.routeId, j.fromCity, j.toCity, j.id);
     // One's own plane: there now, its hours on the engine (`systems/aviation.ts`).

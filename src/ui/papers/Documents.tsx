@@ -20,7 +20,7 @@ import { passRate } from '@/engine/content/licensepaths';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
   authorizationFor, authorizationRefusal, visaRefusal, isoOfCountry, documentsOf, isoOfCity, licenseOf, licensingOf, mayDrive, mayEnter,
-  passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument,
+  passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, type VehicleClass,
 } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
 import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
@@ -139,29 +139,30 @@ export function PassportPane() {
 }
 
 /** The road to a license where they live: each step, where they stand on it, and booking the next. */
-function LicensePath() {
+function LicensePath({ track = 'car' }: { track?: VehicleClass }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
-  const here = pathHere(person);
+  const here = pathHere(person, track);
   if (!here) return null;
   const { jurisdiction, path } = here;
-  const r = person.licensing?.jurisdiction === jurisdiction ? person.licensing : undefined;
+  const held = track === 'car' ? person.licensing : person.motoLicensing;
+  const r = held?.jurisdiction === jurisdiction ? held : undefined;
   const steps = path.steps.filter((st) => applies(st, person, sim.now));
   const fresh = r ?? { jurisdiction, done: {}, attempts: {}, failedAt: {}, used: {} };
   const book = (id: string, name: string) => {
-    const a = run<{ at: number[]; fee: number; message?: string }>('documents.license_step', { step: id });
+    const a = run<{ at: number[]; fee: number; message?: string }>('documents.license_step', { step: id, track });
     if (!a.ok) return;
     toast(a.value!.message ?? `${name} booked for ${formatDate(a.value!.at[0]!, sim.zone)}${a.value!.at.length > 1 ? `, ${a.value!.at.length} sessions` : ''}, ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.`, 'positive');
   };
   return (
-    <Panel title="Earning A License Where You Live" subtitle={LICENSES[jurisdiction]!.authority}>
+    <Panel title={track === 'car' ? 'Earning A License Where You Live' : 'Earning A Motorcycle License'} subtitle={LICENSES[jurisdiction]!.authority}>
       <div className="col gap-3">
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Step</th><th scope="col">Fee</th><th scope="col">Pass Rate</th><th scope="col">Standing</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
             <tbody>
               {steps.map((st) => {
-                const no = stepRefusal(sim, person, st.id);
+                const no = stepRefusal(sim, person, st.id, track);
                 const done = r?.done[st.id];
                 const booked = r?.booked?.step === st.id;
                 const owed = r?.unpaid === st.id;
@@ -181,7 +182,7 @@ function LicensePath() {
             </tbody>
           </table>
         </div>
-        {exchangeable(person, sim.now) && (
+        {track === 'car' && exchangeable(person, sim.now) && (
           <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <span className="small">{exchangeable(person, sim.now)!.exchange.note}</span>
             <Gated feature="documents.exchange_license" className="btn btn-sm" disabled={Boolean(exchangeRefusal(person, sim.now))} title={exchangeRefusal(person, sim.now)} onClick={() => {
@@ -240,6 +241,7 @@ export function DrivingPane() {
         </div>
       </Panel>
       <LicensePath />
+      <LicensePath track="motorcycle" />
     </div>
   );
 }

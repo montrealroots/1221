@@ -56,6 +56,8 @@ export interface PersonDocument {
   /** A license's stage on a graduated path, and whether its holder may drive with nobody beside them; a license without them is full. */
   stage?: import('../content/licensepaths').LicenseStage;
   alone?: boolean;
+  /** A license's class, where it isn't a car's: the motorcycle class (from 2026-09-30). */
+  vehicleClass?: VehicleClass;
   /** A permission to work tied to one job, and days without work counted against it (`systems/permission.ts`). */
   bookingId?: string;
   idleDays?: number;
@@ -531,8 +533,11 @@ const NON_LATIN = new Set(['ja', 'ko']);
 const EU_EEA = new Set(['ie', 'is', 'de', 'fr', 'es', 'lv']);
 
 /** The license they'd drive on, in force: one that lets them drive alone before a learner's. */
-export function licenseOf(person: Person, at: Instant): PersonDocument | undefined {
-  return documentsOf(person).filter((d) => d.kind === 'license' && inForce(d, at)).sort((a, b) => Number(b.alone !== false) - Number(a.alone !== false))[0];
+export type VehicleClass = 'car' | 'motorcycle';
+export const classOf = (d: PersonDocument): VehicleClass => d.vehicleClass ?? 'car';
+
+export function licenseOf(person: Person, at: Instant, cls: VehicleClass = 'car'): PersonDocument | undefined {
+  return documentsOf(person).filter((d) => d.kind === 'license' && classOf(d) === cls && inForce(d, at)).sort((a, b) => Number(b.alone !== false) - Number(a.alone !== false))[0];
 }
 
 /**
@@ -544,12 +549,12 @@ export function licenseOf(person: Person, at: Instant): PersonDocument | undefin
  * an EU or EEA license within the EU and EEA, recognized as the law
  * recognises them.
  */
-export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt = at): { ok: boolean; why?: string } {
+export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt = at, cls: VehicleClass = 'car'): { ok: boolean; why?: string } {
   const here = licensingOf(cityId);
   const place = CITIES.get(cityId)?.name ?? 'here';
   if (!here) return { ok: false, why: `SLATE doesn’t have the driving rules for ${place} yet.` };
-  const license = licenseOf(person, at);
-  if (!license) return { ok: false, why: `You don’t hold a driving license in force. ${LICENSES[here]!.authority} issues ${LICENSES[here]!.name}.` };
+  const license = licenseOf(person, at, cls);
+  if (!license) return { ok: false, why: cls === 'motorcycle' ? `You don’t hold a motorcycle license in force: earn one on the Papers screen.` : `You don’t hold a driving license in force. ${LICENSES[here]!.authority} issues ${LICENSES[here]!.name}.` };
   // Points that suspended it (`systems/driving.ts`, from 2026-09-29).
   if ((person.driving?.suspendedUntil ?? 0) > at) return { ok: false, why: `Your license is suspended until ${new Date(person.driving!.suspendedUntil!).toISOString().slice(0, 10)}.` };
   if (license.alone === false) return { ok: false, why: `${license.name} lets you drive only with a licensed driver beside you.` };

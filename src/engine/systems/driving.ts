@@ -35,6 +35,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { KM_A_YEAR, type Jurisdiction } from '../content/vehiclefees';
+import type { VehicleKind } from '../content/vehiclecatalog';
 import { mayHurt } from './injury';
 import { documentsOf, licenseOf } from './documents';
 import { owe, payFromBank } from './household';
@@ -51,6 +52,8 @@ export const ROAD = {
   injuredPer100MMiles: 74,
   /** AAA: injury crash involvements per 100 million miles by the driver's age, 2014–2015; the 30 to 39s' taken as one. */
   byAge: [[18, 197], [20, 157], [25, 150], [30, 92], [40, 90], [50, 88], [60, 67], [70, 84], [80, 120], [200, 120]] as readonly (readonly [number, number])[],
+  /** A motorcyclist's injury per mile against a car occupant's: 391 against 86 injured per 100 million vehicle miles, NHTSA's Traffic Safety Facts for 2024 (DOT HS 813 824, from 2026-09-30); a scooter rider's taken the same. */
+  riderInjuryTimes: 391 / 86,
   source: 'Ballou et al. 2002; DfT 2025; the Highway Code, rule 91; NHTSA DOT HS 813 791; AAA Foundation 2017',
 } as const;
 
@@ -116,9 +119,14 @@ const ageAt = (person: Person, at: Instant) => (at - person.birthInstant) / YEAR
 const ageFactor = (age: number) => (ROAD.byAge.find(([upTo]) => age < upTo)?.[1] ?? 120) / 92;
 
 /** What driving a distance brought: drawn, a crash's injury and a ticket. */
-export function drive(sim: Simulation, person: Person, j: Jurisdiction, km: number, at: Instant, key: string): { hurt: boolean; ticket: boolean } {
-  const miles = km / MILE;
-  const injuryChance = 1 - Math.exp(-(miles * ROAD.injuredPer100MMiles * ageFactor(ageAt(person, at))) / 1e8);
+/** The chance a distance's driving or riding injures, by the driver's age and what's driven. */
+export function crashChance(person: Person, km: number, at: Instant, kind: VehicleKind = 'car'): number {
+  const rider = kind === 'car' ? 1 : ROAD.riderInjuryTimes;
+  return 1 - Math.exp(-((km / MILE) * ROAD.injuredPer100MMiles * rider * ageFactor(ageAt(person, at))) / 1e8);
+}
+
+export function drive(sim: Simulation, person: Person, j: Jurisdiction, km: number, at: Instant, key: string, kind: VehicleKind = 'car'): { hurt: boolean; ticket: boolean } {
+  const injuryChance = crashChance(person, km, at, kind);
   const hurt = mayHurt(sim, person, 'crash', injuryChance, at) !== undefined;
   const rule = TICKETS[j];
   const rng = sim.rng('driving.ticket', person.id, key);

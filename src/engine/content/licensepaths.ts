@@ -66,6 +66,8 @@ export interface PathStep {
   covered?: { by: string; attempts: number };
   /** Days a pass stands before it lapses unused. */
   validDays?: number;
+  /** Not asked of someone holding a car license from this issuer, which carries the entitlement. */
+  unlessCarLicense?: string;
   /** Paid on passing, for what it grants. */
   issueFee?: number;
   /** Days after passing before the license arrives. */
@@ -81,6 +83,8 @@ export interface LicensePath {
   steps: readonly PathStep[];
   /** What the path leaves out, said plainly. */
   note: string;
+  /** Where only adding a class to a car license is kept: why it can't be begun without one. */
+  needsCar?: string;
 }
 
 /**
@@ -429,6 +433,11 @@ export interface PassRate {
  */
 export const PASS_RATES: Readonly<Record<string, PassRate>> = {
   'us-ny-knowledge': { kind: 'theory', rate: null },
+  // A motorcycle's tests (`content/motorcyclepaths.ts`, from 2026-09-30).
+  'moto-theory': { kind: 'theory', rate: null },
+  'moto-road': { kind: 'road', rate: null },
+  'gb-moto-mod1': { kind: 'road', rate: 0.733, period: 'April 2025 to March 2026', source: 'DVSA, motorcycle module 1' },
+  'gb-moto-mod2': { kind: 'road', rate: 0.724, period: 'April 2025 to March 2026', source: 'DVSA, motorcycle module 2' },
   'us-ny-road': { kind: 'road', rate: 0.57, period: '2024, to 29 November', source: 'NY DMV figures reported by Gothamist, https://gothamist.com/news/nearly-half-of-nycs-aspiring-drivers-failed-their-dmv-road-tests-this-year' },
   'us-ct-knowledge': { kind: 'theory', rate: null },
   'us-ct-road': { kind: 'road', rate: null },

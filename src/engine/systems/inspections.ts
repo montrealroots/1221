@@ -52,6 +52,8 @@ import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency } from '../core/money';
 import { exchange } from '../content/currency';
 import type { Jurisdiction } from '../content/vehiclefees';
+import type { VehicleKind } from '../content/vehiclecatalog';
+import { BIKE_FEES } from '../content/vehiclefees';
 import { owe, payFromBank } from './household';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -95,13 +97,15 @@ export function nextInspection(v: { boughtAt: Instant; ageAtPurchase: number; ju
 }
 
 /** Any inspection come due since the last: paid, or owed; true if one was. */
-export function inspectIfDue(sim: Simulation, person: Person, v: { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string; inspected?: Instant; soldAt?: Instant }): boolean {
+export function inspectIfDue(sim: Simulation, person: Person, v: { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string; inspected?: Instant; soldAt?: Instant }, kind: VehicleKind = 'car'): boolean {
   if (v.soldAt !== undefined) return false;
+  // A motorcycle's test is kept only in Britain, the MOT at its £29.65 (from 2026-09-30); elsewhere a motorcycle's isn't researched.
+  if (kind !== 'car' && v.jurisdiction !== 'GB') return false;
   const rule = INSPECTION_RULES[v.jurisdiction];
   const due = nextInspection(v, v.inspected ?? v.boughtAt);
   if (!rule || due === undefined || due > sim.now) return false;
   const cur = saveCurrency(sim.universe);
-  const cents = Math.round(rule.fee(v.cityId) * 100);
+  const cents = Math.round((kind === 'car' ? rule.fee(v.cityId) : BIKE_FEES.GB.mot) * 100);
   const amount = cur === rule.currency ? cents : exchange(cents, rule.currency, cur) ?? cents;
   if (!payFromBank(sim, person, amount, `The car’s ${rule.label}`, 'vehicle')) owe(sim, person, amount, `The car’s ${rule.label}`, 'vehicle');
   const failed = inspectionFails(sim, v, due);

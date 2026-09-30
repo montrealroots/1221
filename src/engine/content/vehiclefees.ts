@@ -239,3 +239,58 @@ export const US_LEASE = {
   terms: [24, 36, 48] as const,
   source: 'Toyota Financial Services, offers expiring 2026-09-30 (toyota.com/greaterny, /socal); the money factor derived from them',
 };
+
+/**
+ * A motorcycle's or scooter's registration and taxes where one lives, from
+ * 2026-09-30 (`docs/research/world/research-vehicle-kinds.json`,
+ * `research-vehicle-insurance.json`), in the place's money, units:
+ * - New York's $17.50 a year (VTL 410(5)) and the $50 title; the plate's fee
+ *   and the MCTD's surcharge weren't confirmed and aren't added.
+ * - Connecticut's $63, read as a year's (its term wasn't confirmed), the $5
+ *   plate, $25 title, $15 Clean Air Act and $15 parks fees.
+ * - California's car fees and value fee, and the $2 motorcycle safety fee.
+ * - Britain's vehicle tax by engine size, a year.
+ * - Ireland's motor tax by engine size, a year; the price includes VRT.
+ * - Ontario's permit and plate, the plate renewing free since 2022.
+ * - British Columbia's registration and plate, and $33 a year for the license.
+ * - Mexico City's alta, MXN 709, and refrendo, MXN 472, a year (Código
+ *   Fiscal art. 224); the tenencia, 3% of the value before IVA, subsidized
+ *   whole to MXN 250,000 (the 2026 decree), which SLATE reads each year off
+ *   its value on the depreciation curve, not the Code's factor table.
+ */
+export const BIKE_FEES = {
+  NY: { registration: 17.5, title: 50 },
+  CT: { registration: 63, plate: 5, title: 25, cleanAir: 15, parks: 15 },
+  CA: { safety: 2 },
+  GB: { ved: [[150, 27], [400, 59], [600, 90], [Infinity, 125]] as readonly (readonly [number, number])[], mot: 29.65 },
+  IE: { motorTax: [[75, 49], [200, 67], [Infinity, 88]] as readonly (readonly [number, number])[] },
+  BC: { licence: 33 },
+  CMX: { alta: 709, refrendo: 472, tenencia: 0.03, subsidizedTo: 250_000 },
+} as const;
+
+/**
+ * A year's insurance for a motorcycle or scooter, in the place's money,
+ * units. What's published differs by place, and each says what it is:
+ * - The US states: ValuePenguin's quotes for one rider, a 45-year-old man on
+ *   a Honda Rebel 500 with full coverage (2026-09-25). A scooter in New York:
+ *   one quote for a Vespa GTS 300 in New York City, $312 for liability and
+ *   $1,975 full; Connecticut's and California's scooters take the motorcycle's.
+ * - Britain: Confused.com's median premiums paid, January to March 2026: a
+ *   motorcycle's £291, a scooter's £463.01, a moped's (to 50cc) £288.17.
+ * - British Columbia: ICBC's Basic tariff from 1 September 2026 by engine
+ *   class, Lower Mainland, $200,000 liability, before the rider's own factor.
+ * - Ireland, Ontario and Mexico City publish no average, only ranges: the
+ *   middle of odo.ie's €300 to €600 for an experienced rider, of Ratehub's
+ *   CAD 1,500 to 3,500, and of MXN 1,200 to 3,500 for liability. SLATE's
+ *   estimates, and said so.
+ */
+export const BIKE_INSURANCE: Readonly<Record<Jurisdiction, { motorcycle: number | readonly (readonly [number, number])[]; scooter?: number; moped?: number; scooterLiability?: number; currency: string; basis: string }>> = {
+  'US-NY': { motorcycle: 324, scooter: 1_975, scooterLiability: 312, currency: 'USD', basis: 'ValuePenguin’s quote for a Honda Rebel 500, full coverage, 2026; a scooter’s, one New York City quote' },
+  'US-CT': { motorcycle: 348, currency: 'USD', basis: 'ValuePenguin’s quote for a Honda Rebel 500, full coverage, 2026' },
+  'US-CA': { motorcycle: 552, currency: 'USD', basis: 'ValuePenguin’s quote for a Honda Rebel 500, full coverage, 2026' },
+  GB: { motorcycle: 291, scooter: 463.01, moped: 288.17, currency: 'GBP', basis: 'Confused.com’s median premiums, January to March 2026' },
+  IE: { motorcycle: 450, currency: 'EUR', basis: 'The middle of odo.ie’s €300 to €600 for an experienced rider, SLATE’s estimate' },
+  'CA-ON': { motorcycle: 2_500, currency: 'CAD', basis: 'The middle of Ratehub’s CAD 1,500 to 3,500, SLATE’s estimate' },
+  'CA-BC': { motorcycle: [[110, 479.79], [400, 670.43], [750, 1_299.3], [1_150, 1_408.63], [Infinity, 1_960.7]], currency: 'CAD', basis: 'ICBC’s Basic tariff by engine class, Lower Mainland, before the rider’s own factor' },
+  'MX-CMX': { motorcycle: 2_350, currency: 'MXN', basis: 'The middle of MXN 1,200 to 3,500 for the liability cover the city asks, SLATE’s estimate' },
+};

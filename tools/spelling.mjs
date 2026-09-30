@@ -125,7 +125,7 @@ const REAL_NAMES = [
   // NZTA (src/engine/content/licensepaths.ts). A translated name is American.
   'Provisional Driving Licence', 'Full Driving Licence', 'Full Licence', 'Provisional Licence', 'Learner Licence',
   'Restricted Licence', 'Unrestricted Licence', 'Novice Licence', 'Driver’s Licence', 'G1 Licence', 'G2 Licence',
-  'G Licence', 'P1 Licence', 'P2 Licence',
+  'G Licence', 'P1 Licence', 'P2 Licence', 'M1 Licence', 'M2 Licence', 'M Licence', 'Class 6 Licence',
   // The managers' body the UK Theatre/Equity agreements are named for.
   'UK Theatre',
   // Watch and jewelry names the maker itself spells this way, on its own American pages.
