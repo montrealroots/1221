@@ -19,7 +19,7 @@ import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { OWN_172, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, ownHourCost, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
@@ -68,7 +68,8 @@ export function TravelWorkspace() {
   const rented = toCity && byRoad(fromCity, toCity) ? rentalAt(person, fromCity, day) : undefined;
   // A pilot flies themselves; an owner who isn't one hires a pilot for their own plane.
   const ownsPlane = Boolean(person.aircraft && person.aircraft.soldAt === undefined);
-  const flies = (Boolean(person.pilot) || ownsPlane) && by === 'fly';
+  const licensedHere = licensedIn(person, CITIES.get(fromCity)?.countryId ?? '');
+  const flies = (licensedHere || ownsPlane) && by === 'fly';
   const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : by === 'jet' ? 'jet' : undefined;
   // A flight of one's own leaves on the hour from 7 AM to 5 PM, as its plan books it. Until 2026-09-30 it offered the
   // airline's 8 AM, 1 PM and 7 PM and booked 7, 8 and 9 AM.
@@ -130,7 +131,7 @@ export function TravelWorkspace() {
                   {trains.map((r) => <option key={r.id} value={r.id}>{r.operator === r.service ? r.service : `${r.operator}, ${r.service}`}</option>)}
                   {cars.map((v) => <option key={v.id} value={`car:${v.id}`}>Your {modelById(v.modelId)?.make} {modelById(v.modelId)?.model}</option>)}
                   {rented && <option value="rental">Your Rental Car</option>}
-                  {(person.pilot || ownsPlane) && <option value="fly">{person.pilot ? 'Fly Yourself' : 'Your Plane, A Hired Pilot'}</option>}
+                  {(licensedHere || ownsPlane) && <option value="fly">{licensedHere ? 'Fly Yourself' : 'Your Plane, A Hired Pilot'}</option>}
                   <option value="jet">A Chartered Light Jet</option>
                 </select>
               </div>
@@ -284,25 +285,28 @@ function LearnToFly() {
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const t = person.pilotTraining;
-  const costs = trainingCosts(sim);
+  const country = trainingCountry(person);
+  const school = PILOT_SCHOOLS[country];
+  const costs = trainingCosts(sim, country);
   const no = trainRefusal(sim, person);
-  const standing = person.pilot ? 'A Private Pilot' : t?.status === 'training' ? `Training, Month ${Math.min(t.monthsDone, PILOT_TRAINING.months)} Of ${PILOT_TRAINING.months}` : t?.status === 'stopped' ? 'Training Stopped' : 'Not Begun';
+  const licensed = licensedIn(person, country);
+  const standing = licensed ? 'A Private Pilot' : t?.status === 'training' ? `Training, Month ${Math.min(t.monthsDone, PILOT_TRAINING.months)} Of ${PILOT_TRAINING.months}` : t?.status === 'stopped' ? 'Training Stopped' : 'Not Begun';
   return (
     <Panel title="Learning To Fly" subtitle={standing}>
       <div className="col gap-3">
         <div className="grid grid-3">
-          <Stat label="A Month" value={formatMoney(costs.month, cur, { cents: false })} note={`${PILOT_TRAINING.hours / PILOT_TRAINING.months} hours in a Cessna 172, and an instructor`} />
-          <Stat label="The Tests" value={formatMoney(costs.tests, cur, { cents: false })} note="The knowledge test and the checkride" />
+          <Stat label="A Month" value={formatMoney(costs.month, cur, { cents: false })} note={school ? 'The school’s whole cost, by the month' : `${PILOT_TRAINING.hours / PILOT_TRAINING.months} hours in a Cessna 172, and an instructor`} />
+          <Stat label="The Tests" value={school ? 'In The Price' : formatMoney(costs.tests, cur, { cents: false })} note={school ? `For ${school.license.replace(/^An? /, '')}` : 'The knowledge test and the checkride'} />
           <Stat label="In All" value={formatMoney(costs.total, cur, { cents: false })} note={`Over ${PILOT_TRAINING.months} months`} />
         </div>
-        {!person.pilot && (
+        {!licensed && (
           <div className="row gap-2">
             <Gated feature="pilot.train" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { if (run('pilot.train', {}).ok) toast(t?.status === 'stopped' ? 'Training taken up again.' : 'Training begun.', 'positive'); }}>{t?.status === 'stopped' ? 'Take It Up Again' : 'Learn To Fly'}</Gated>
           </div>
         )}
-        {no && !person.pilot ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
+        {no && !licensed ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
         <OwnPlane />
-        <Fine>An FAA private pilot certificate: 60 hours in a rented Cessna 172 at the median school’s $176 an hour with fuel, AOPA’s middle of the 50 to 70 most students take; 20 with an instructor at $75; PSI’s $175 knowledge test and a typical $1,000 checkride; a third-class medical at the middle of two examiners’ $125 and $160, renewed every five years under 40 and two from 40. The six months are SLATE’s. Qualified, By offers Fly Yourself between towns in America, in a rented 172 at Textron’s 124 knots within its range less a day flight’s half-hour reserve, on a day with no fog or thunderstorm at either end.</Fine>
+        <Fine>An FAA private pilot certificate: 60 hours in a rented Cessna 172 at the median school’s $176 an hour with fuel, AOPA’s middle of the 50 to 70 most students take; 20 with an instructor at $75; PSI’s $175 knowledge test and a typical $1,000 checkride; a third-class medical at the middle of two examiners’ $125 and $160, renewed every five years under 40 and two from 40. The six months are SLATE’s. Qualified, By offers Fly Yourself between towns in America, in a rented 172 at Textron’s 124 knots within its range less a day flight’s half-hour reserve, on a day with no fog or thunderstorm at either end. In Britain, Ireland and Canada the license is the country’s own, at a school’s published cost over the same six months, and a four-seater is rented after at its hourly rate, within the country.</Fine>
       </div>
     </Panel>
   );

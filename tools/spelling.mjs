@@ -103,6 +103,8 @@ const REAL_NAMES = [
   'Centre National du Cinéma',
   // Toronto's waterfront center, whose Nautical Centre charters a boat and skipper (`content/boats.ts`).
   'Harbourfront Centre', 'Nautical Centre',
+  // The license Britain's CAA, Ireland's IAA and Transport Canada issue a private pilot (`systems/aviation.ts`).
+  'Private Pilot Licence',
   'Rockefeller Center', 'Lincoln Center', 'Kennedy Center',
   // Organisations, parties and titles.
   'Labour Party', 'Colour Supplies', 'Grey Goose', 'Earl Grey', 'Greyhound',

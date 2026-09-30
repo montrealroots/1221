@@ -45,7 +45,33 @@ export const PILOT_TRAINING = {
 export const SKYHAWK = { knots: 124, rangeNm: 640, reserveHours: 0.5, overheadHours: 0.2 } as const;
 export const PILOT_MONTH_KIND = 'pilot.month';
 
-export interface PilotTraining { startedAt: Instant; monthsDone: number; status: 'training' | 'stopped' | 'certified' }
+export interface PilotTraining { startedAt: Instant; monthsDone: number; status: 'training' | 'stopped' | 'certified'; /** Where, from 2026-09-30: absent, America. */ country?: string }
+
+/**
+ * A pilot's license and flying oneself outside America, from 2026-09-30
+ * (`docs/research/world/research-travel-aviation-boats.json`). Each is its
+ * country's own, over the same six months, SLATE's:
+ * - Britain, the CAA's PPL: the PPL Club's £14,000 to £16,500 for the whole
+ *   of it in 2026, the middle, as students take 55 to 60 hours for the law's
+ *   45 (secondary); a four-seater rented after at the middle of its £250 to
+ *   £280 an hour.
+ * - Ireland, the IAA's PPL: Hotel Bravo Flying Club at Weston, €175 an hour
+ *   with an instructor and €160 alone, confirmed, for 30 and 25 of 55 hours,
+ *   SLATE's split, and its €500 to join, two years' €1,560 and €1,000 of
+ *   ground school, read from an excerpt; its €160 an hour to rent after.
+ * - Canada, Transport Canada's PPL: the Calgary Flying Club's C$18,000 to
+ *   C$25,000 its students typically spend, the middle; its Cessna 172 at
+ *   C$220 an hour after.
+ * The medical each license asks isn't priced here, none being read.
+ */
+export const PILOT_SCHOOLS: Readonly<Record<string, { authority: string; license: string; currency: string; total: number; rentHour: number; airport: string }>> = {
+  uk: { authority: 'CAA', license: 'A UK Private Pilot Licence', currency: 'GBP', total: 15_250, rentHour: 265, airport: 'GB' },
+  ie: { authority: 'IAA', license: 'An Irish Private Pilot Licence', currency: 'EUR', total: 30 * 175 + 25 * 160 + 500 + 1_560 + 1_000, rentHour: 160, airport: 'IE' },
+  ca: { authority: 'TC', license: 'A Canadian Private Pilot Licence', currency: 'CAD', total: 21_500, rentHour: 220, airport: 'CA' },
+};
+
+/** Whether they may fly themselves in a country: America's on the FAA certificate, elsewhere on that country's license. */
+export const licensedIn = (person: Person, country: string): boolean => (country === 'us' ? person.pilot !== undefined : (person.pilotLicences ?? []).some((l) => l.country === country));
 export interface PilotCertificate { issuedAt: Instant; authority: 'FAA'; /** When the medical runs out (14 CFR 61.23), from 2026-09-30. */ medicalUntil?: Instant }
 
 /**
@@ -97,21 +123,33 @@ function withTheDrives(sim: Simulation, fromCity: string, toCity: string, a: { a
 
 const usd = (sim: Simulation, cents: Money) => { const cur = saveCurrency(sim.universe); return cur === 'USD' ? cents : exchange(cents, 'USD', cur) ?? cents; };
 
-/** A month's training, and what the tests cost at the end, in the save's money. */
-export function trainingCosts(sim: Simulation): { month: Money; tests: Money; total: Money } {
+/** A month's training, and what the tests cost at the end, in the save's money: America's, or another country's school's whole cost by the month. */
+export function trainingCosts(sim: Simulation, country = 'us'): { month: Money; tests: Money; total: Money } {
+  const school = PILOT_SCHOOLS[country];
+  if (school) {
+    const cur = saveCurrency(sim.universe);
+    const c = Math.round((school.total / PILOT_TRAINING.months) * 100);
+    const month = cur === school.currency ? c : exchange(c, school.currency, cur) ?? c;
+    return { month, tests: 0, total: month * PILOT_TRAINING.months };
+  }
   const t = PILOT_TRAINING;
   const month = usd(sim, Math.round(((t.hours * t.ratePerHour + t.dualHours * t.instructorPerHour) / t.months) * 100));
   const tests = usd(sim, (t.knowledgeTest + t.checkride) * 100);
   return { month, tests, total: month * t.months + tests };
 }
 
+/** Where they'd train: the country they live in. */
+export const trainingCountry = (person: Person): string => CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId ?? '';
+
 export function trainRefusal(sim: Simulation, person: Person): string | undefined {
-  const medical = person.pilotTraining === undefined ? usd(sim, Math.round(MEDICAL.usd * 100)) : 0;
-  if (person.pilot) return 'You hold a private pilot certificate.';
+  const country = trainingCountry(person);
+  const medical = person.pilotTraining === undefined && country === 'us' ? usd(sim, Math.round(MEDICAL.usd * 100)) : 0;
+  if (licensedIn(person, country)) return country === 'us' ? 'You hold a private pilot certificate.' : 'You hold this country’s license.';
   if (person.pilotTraining?.status === 'training') return 'You’re training already.';
-  if (CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId !== 'us') return 'SLATE prices a pilot’s training in America only yet.';
+  if (country !== 'us' && !PILOT_SCHOOLS[country]) return 'SLATE prices a pilot’s training in America, Britain, Ireland and Canada only yet.';
+  if (person.pilotTraining?.status === 'stopped' && (person.pilotTraining.country ?? 'us') !== country) return 'Training taken up again is where it was begun.';
   if (ageOn(sim, person, sim.now) < PILOT_TRAINING.minAge) return `A private pilot certificate is had from ${PILOT_TRAINING.minAge}.`;
-  if (inTheBank(sim, person) < trainingCosts(sim).month + medical) return 'There isn’t enough in the bank for the first month.';
+  if (inTheBank(sim, person) < trainingCosts(sim, country).month + medical) return 'There isn’t enough in the bank for the first month.';
   return undefined;
 }
 
@@ -133,6 +171,9 @@ export const hiredPilotUsd = (hours: number): number => (hours <= HIRED_PILOT_US
 
 export function planFlyYourself(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
   const ownsHere = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.at === fromCity;
+  const fromCountry = CITIES.get(fromCity)?.countryId ?? '';
+  const abroad = fromCountry !== 'us' ? PILOT_SCHOOLS[fromCountry] : undefined;
+  if (abroad) return planFlyAbroad(sim, person, fromCity, toCity, day, slot, abroad);
   if (!person.pilot && !ownsHere) return 'Flying yourself asks a pilot certificate.';
   // A pilot flying needs a medical in force.
   if (person.pilot?.medicalUntil !== undefined && person.pilot.medicalUntil < day) return 'Your medical has lapsed: it’s renewed when the bank can pay.';
@@ -169,19 +210,20 @@ export function registerAviation(sim: Simulation): void {
     const person = s.player;
     const no = trainRefusal(s, person);
     if (no) throw new CommandError(no);
-    const costs = trainingCosts(s);
+    const country = trainingCountry(person);
+    const costs = trainingCosts(s, country);
     // Stopped at the tests: taken up again, the tests are what's left.
     if (person.pilotTraining?.status === 'stopped' && person.pilotTraining.monthsDone >= PILOT_TRAINING.months) {
       person.pilotTraining.status = 'training';
       s.schedule({ at: s.now, kind: PILOT_MONTH_KIND, label: 'Flight Training', category: 'personal', priority: 30, payload: { personId: person.id } });
       return { month: 0, total: costs.tests };
     }
-    const first = person.pilotTraining === undefined;
-    // The medical is had before the first solo: paid with the first month.
-    const medical = first ? usd(s, Math.round(MEDICAL.usd * 100)) : 0;
+    const first = person.pilotTraining === undefined || (person.pilotTraining.status === 'certified' && (person.pilotTraining.country ?? 'us') !== country);
+    // The FAA's medical is had before the first solo: paid with the first month.
+    const medical = first && country === 'us' ? usd(s, Math.round(MEDICAL.usd * 100)) : 0;
     if (!payFromBank(s, person, costs.month + medical, first ? 'Flight training, a month, and the medical' : 'Flight training, a month', 'travel')) throw new CommandError('Your bank couldn’t pay.');
     const done = person.pilotTraining?.status === 'stopped' ? person.pilotTraining.monthsDone : 0;
-    person.pilotTraining = { startedAt: person.pilotTraining?.startedAt ?? s.now, monthsDone: done + 1, status: 'training' };
+    person.pilotTraining = { startedAt: done > 0 ? person.pilotTraining!.startedAt : s.now, monthsDone: done + 1, status: 'training', ...(country !== 'us' ? { country } : {}) };
     scheduleMonth(s, person);
     return { month: costs.month, total: costs.total };
   });
@@ -199,8 +241,16 @@ export function registerAviation(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const t = person?.pilotTraining;
     if (!person || !t || t.status !== 'training') return;
-    const costs = trainingCosts(s);
+    const costs = trainingCosts(s, t.country ?? 'us');
+    const school = t.country ? PILOT_SCHOOLS[t.country] : undefined;
     const mine = person.id === s.universe.playerId;
+    if (t.monthsDone >= PILOT_TRAINING.months && school) {
+      // Abroad the school's cost was the whole of it: the license, its tests in it.
+      t.status = 'certified';
+      person.pilotLicences = [...(person.pilotLicences ?? []), { authority: school.authority, country: t.country!, issuedAt: s.now }];
+      if (mine) s.notify({ category: 'personal', title: 'A Private Pilot', body: `${school.license} is yours.`, importance: 70, route: '/workspace/travel' });
+      return;
+    }
     if (t.monthsDone >= PILOT_TRAINING.months) {
       if (!payFromBank(s, person, costs.tests, 'The knowledge test and the checkride', 'travel')) {
         t.status = 'stopped';
@@ -409,4 +459,28 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const cur = saveCurrency(sim.universe);
   const abroadFare = abroad ? (() => { const c = Math.round(Math.max(LIGHT_JET.minHours, hours * 2) * abroad.rate * (1 + abroad.tax(fromCity)) * 100); return cur === abroad.currency ? c : exchange(c, abroad.currency, cur) ?? c; })() : 0;
   return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare: abroad ? abroadFare : usd(sim, Math.round(dollars * 100)), routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at ${abroad ? abroad.basis : '$3,975 an hour, with the 7.5% federal excise tax and its segment fee'}.` });
+}
+
+/** A leg flown oneself within Britain, Ireland or Canada, on that country's license, in a rented four-seater at its school's rate. */
+function planFlyAbroad(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number, school: (typeof PILOT_SCHOOLS)[string]): JourneyLeg[] | string {
+  const country = CITIES.get(fromCity)?.countryId ?? '';
+  if (!licensedIn(person, country)) return `Flying yourself here asks ${school.license.replace(/^An? /, 'a ')}.`;
+  const fromAp = airportsFor(fromCity)[0];
+  const toAp = airportsFor(toCity)[0];
+  const from = fromAp?.airport;
+  const to = toAp?.airport;
+  if (!from || !to || from.country !== school.airport || to.country !== school.airport) return 'A plane is rented on a license within its country only.';
+  if (from.iata === to.iata) return 'One airport serves both towns.';
+  const nm = distanceKm(from, to) / 1.852;
+  const usable = SKYHAWK.rangeNm - SKYHAWK.knots * SKYHAWK.reserveHours;
+  if (nm > usable) return `${Math.round(nm)} nautical miles is past a four-seater’s ${Math.round(usable)} with a day flight’s reserve.`;
+  const hours = nm / SKYHAWK.knots + SKYHAWK.overheadHours;
+  for (const city of [fromCity, toCity]) { const w = weatherOn(sim, CITIES.require(city), day).condition; if (NOT_VISUAL.has(w)) return `${w === 'Fog' ? 'Fog' : 'A thunderstorm'} in ${CITIES.require(city).name} that day: no visual flight.`; }
+  const zone = CITIES.require(fromCity).timeZone;
+  const p = zonedParts(day, zone);
+  const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
+  const cur = saveCurrency(sim.universe);
+  const c = Math.round(hours * school.rentHour * 100);
+  const fare = cur === school.currency ? c : exchange(c, school.currency, cur) ?? c;
+  return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round(hours * 60) * 60_000, fare, routeId: 'rent', basis: `${Math.round(nm)} nautical miles flown yourself in a rented four-seater at 124 knots, ${hours.toFixed(1)} hours at the school’s ${school.currency === 'GBP' ? '£' : school.currency === 'EUR' ? '€' : 'C$'}${school.rentHour} an hour.` });
 }

@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, licensedIn, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { weatherOn } from '@/engine/systems/weather';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf, slotOf } from '@/engine/systems/journey';
@@ -51,11 +51,33 @@ describe('learning to fly', () => {
     expect(c.total).toBe(inSave(sim, 2_010_00, 'USD') * 6 + inSave(sim, 1_175_00, 'USD'));
   });
 
-  it('refuses someone under 17, and outside America', () => {
+  it('refuses someone under 17, and where no school’s cost is kept', () => {
     const young = save('us-ny-newyork', 'fly-young2', 16);
     expect(trainRefusal(young, young.player)).toMatch(/from 17/);
-    const london = save('uk-eng-london', 'fly-gb');
-    expect(trainRefusal(london, london.player)).toMatch(/America only/);
+    const mexico = save('mx-cmx-mexicocity', 'fly-mx');
+    expect(trainRefusal(mexico, mexico.player)).toMatch(/America, Britain, Ireland and Canada only/);
+  });
+
+  it('trains a Londoner for the CAA’s license at the PPL Club’s middle over six months, and flies them within Britain on it, not in America', () => {
+    const sim = save('uk-eng-london', 'fly-gb');
+    fund(sim, 60_000);
+    const costs = trainingCosts(sim, 'uk');
+    expect(costs.total).toBe(6 * inSave(sim, Math.round((15_250 / 6) * 100), 'GBP'));
+    expect(sim.execute({ kind: 'pilot.train', payload: {} }).ok).toBe(true);
+    sim.advanceBy(6 * 30 * MS_DAY + 5 * MS_DAY);
+    expect(licensedIn(sim.player, 'uk')).toBe(true);
+    expect(licensedIn(sim.player, 'us')).toBe(false);
+    expect(sim.player.pilotLicences).toHaveLength(1);
+    let legs: ReturnType<typeof planFlyYourself> = 'none';
+    for (let d = 10; d < 60 && typeof legs === 'string'; d += 1) legs = planFlyYourself(sim, sim.player, 'uk-eng-london', 'uk-sct-edinburgh', sim.now + d * MS_DAY, 2);
+    if (typeof legs === 'string') throw new Error(legs);
+    const leg = legs.find((l) => l.mode === 'fly')!;
+    expect(Math.abs(leg.fare - inSave(sim, Math.round(((leg.arriveAt - leg.departAt) / 3_600_000) * 265 * 100), 'GBP'))).toBeLessThan(200);
+    expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', sim.now + 10 * MS_DAY, 2)).toMatch(/pilot certificate/);
+    // An American certificate doesn't rent a plane in Britain.
+    const us = save('uk-eng-london', 'fly-gb-faa');
+    us.player.pilot = { issuedAt: us.now, authority: 'FAA' };
+    expect(planFlyYourself(us, us.player, 'uk-eng-london', 'uk-sct-edinburgh', us.now + 10 * MS_DAY, 2)).toMatch(/UK Private Pilot Licence/);
   });
 
   it('certifies a pilot after six months paid and the tests; a month unpaid stops it, and it’s taken up again from there', () => {
