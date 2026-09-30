@@ -90,7 +90,7 @@ import {
   BEDROOM_RENT, COUNCIL_TAX, COUNCIL_TAX_NATIONS, drawFixtures, type CouncilTaxNation, isFlat, type Fixtures, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
   SQM_PER_SQFT, addressOf, homeValueAt, streetsOf, usesFeet, type Feature, type HomeType, type Part, type Project,
 } from '../content/homes';
-import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, refundRentAhead, rehome, rentOf, scheduleRentFor, spend, type Housing } from './household';
+import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, owe, payFromBank, refundRentAhead, rehome, rentOf, scheduleRentFor, spend, type Housing } from './household';
 import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
@@ -494,6 +494,8 @@ export interface OwnedHome {
   /** The months, `YYYY-MM`, a lender escrowed the tax and insurance: what a payoff mid-year leaves to pay. */
   escrowed?: string[];
   foreclosureAt?: Instant;
+  /** A levy the builder was spared on the promise of living in it, owed if it's sold or let before `until` (`systems/construction.ts`). */
+  clawback?: { until: Instant; amount: Money; memo: string };
   /** Listed for sale: the day it closes, and the rented home somebody living in it moves into. */
   selling?: { closesAt: Instant; then?: Housing };
 }
@@ -996,6 +998,8 @@ function tenantMovesIn(sim: Simulation, person: Person, owned: OwnedHome, t: Ten
   const deposit = sim.openAccount({ id: sim.nextId('account'), kind: 'loan', name: `Tenant’s Deposit, ${owned.facts.address}`, ownerId: person.id, institution: 'Your Tenant', openedAt: sim.now, category: 'tenant_deposit', apr: 0 });
   sim.post({ memo: 'A tenant’s deposit', category: 'home', postings: [{ accountId: checking.id, amount: t.rent }, { accountId: deposit.id, amount: -t.rent }] });
   t.status = 'let';
+  // Let, a levy spared on the promise of living in it is owed.
+  claimClawback(sim, person, owned);
   delete t.tenantAt;
   t.since = sim.now;
   t.leaseEnds = sim.now + HOME.leaseMonths * 30.4375 * MS_DAY;
@@ -1308,6 +1312,33 @@ function close(sim: Simulation, person: Person): void {
 
 /** A home's month, before it's on their list. */
 const ownedMonthFor = (sim: Simulation, owned: OwnedHome): OwnerMonth => monthOf(sim, owned.facts, owned.cityId, owned.price);
+
+/**
+ * A house they built, owned from its completion (`systems/construction.ts`):
+ * worth what the land and the building cost, moving with the town's market
+ * from then, its permits and levies its closing costs, and its first year's
+ * insurance bought then, as a cash buyer's is.
+ */
+export function ownBuilt(sim: Simulation, person: Person, spec: { cityId: string; facts: HomeFacts; price: Money; closing: Money; clawback?: OwnedHome['clawback'] }): OwnedHome {
+  const owned: OwnedHome = {
+    id: `home-${(person.homesOwned ?? 0) + 1}`, listingId: `built-${sim.now}`, cityId: spec.cityId, facts: spec.facts, boughtAt: sim.now, price: spec.price, closing: spec.closing,
+    investment: false, improvements: [], works: [], owed: [], billedThrough: monthKey(sim, spec.cityId), occupied: [], tenancies: [], claims: [], depreciated: 0,
+    ...(spec.clawback ? { clawback: spec.clawback } : {}),
+  };
+  owned.owed.push({ kind: 'insurance', dueAt: sim.now, amount: ownedMonthFor(sim, owned).insurance * 12 });
+  homesOf(person).push(owned);
+  person.homesOwned = (person.homesOwned ?? 0) + 1;
+  return owned;
+}
+
+/** A spared levy, owed now if the home is sold or let within its years. */
+function claimClawback(sim: Simulation, person: Person, owned: OwnedHome): void {
+  const c = owned.clawback;
+  if (!c) return;
+  delete owned.clawback;
+  if (sim.now >= c.until) return;
+  if (!payFromBank(sim, person, c.amount, c.memo, 'home')) owe(sim, person, c.amount, c.memo, 'home');
+}
 
 /** An empty home of theirs in a town, to move into before renting or a sofa: not let, not being sold, not the one they're in. */
 export function emptyHomeIn(person: Person, cityId: string): OwnedHome | undefined {
@@ -1830,6 +1861,7 @@ export function registerHomes(sim: Simulation): void {
     const refusal = sellRefusal(s, person, owned);
     if (refusal) throw new CommandError(refusal);
     const closesAt = s.now + HOME.saleDays * MS_DAY;
+    claimClawback(s, person, owned);
     owned.selling = { closesAt, ...(lives ? { then: p.then } : {}) };
     // A home offered to let is taken off; a tenant's lease goes with the home to its buyer.
     owned.tenancies = owned.tenancies.filter((t) => t.status === 'let');

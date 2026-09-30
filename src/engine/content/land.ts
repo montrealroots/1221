@@ -40,7 +40,7 @@ export interface LandMarket {
   kind: 'lot' | 'acreage';
   /** A lot's zoning, and the least a lot may be to build on, in acres. */
   zoning?: { name: string; minAcres: number; builds: string };
-  /** The value's yearly change, from the same source where it publishes one; held where it doesn't. */
+  /** Farmland's latest yearly change, from the same source, taken for the year until its next edition (`systems/land.ts`); none on a lot, which moves with the town's home market. */
   yearlyChange: number;
 }
 

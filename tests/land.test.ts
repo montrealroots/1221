@@ -13,6 +13,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS } from '@/engine/content/land';
 import { homeOf } from '@/engine/systems/earnings';
+import { marketAt } from '@/engine/systems/homes';
 import { landAnswer, landBuyingOf, landFloor, landQuote, landValue, listingsFor, marketsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, taxedValue, type Listing } from '@/engine/systems/land';
 
 const idx = (label: RegExp) => LAND_MARKETS.findIndex((m) => label.test(m.label));
@@ -82,12 +83,18 @@ describe('what land costs', () => {
     expect(line(landQuote(idx(/Leinster/), 10, y(2025), 100_000_00), /Stamp Duty/)).toBe(7_500_00);
   });
 
-  it('moves a value by its source’s yearly change, and holds one the source publishes none for', () => {
+  it('moves farmland by its source’s change for a year and with the town’s home market after, and a lot with the market from its year', () => {
     const upstate = LAND_MARKETS[idx(/Upstate/)]!;
+    const year = 365.2425 * MS_DAY;
+    const ny = (t: number) => marketAt('us-ny-newyork', 'USD', t);
     expect(landValue(upstate, 10, y(2026))).toBe(45_000_00);
-    expect(landValue(upstate, 10, y(2026) + 365.2425 * MS_DAY)).toBe(Math.round(45_000_00 * 1.047));
+    expect(landValue(upstate, 10, y(2026) + year)).toBe(Math.round(45_000_00 * 1.047));
+    expect(landValue(upstate, 10, y(2026) + 3 * year)).toBe(Math.round(45_000_00 * 1.047 * ny(y(2026) + 3 * year) / ny(y(2026) + year)));
     const brooklyn = LAND_MARKETS[idx(/Brooklyn/)]!;
-    expect(landValue(brooklyn, 0.1, y(2030))).toBe(landValue(brooklyn, 0.1, y(2022)));
+    expect(landValue(brooklyn, 0.1, y(2030))).toBe(Math.round(15_217_700 * 0.1 * ny(y(2030)) / ny(y(2022)) * 100));
+    // Until 2026-09-29 Knight Frank's one year's fall ran for ever: fifty years took nine-tenths of England's farmland away.
+    const england = LAND_MARKETS[idx(/Farmland In England/)]!;
+    expect(landValue(england, 10, y(2076))).toBeGreaterThan(landValue(england, 10, y(2026)));
   });
 });
 
@@ -177,16 +184,16 @@ describe('the deal', () => {
 
     sim.advanceBy(366 * MS_DAY);
     const tax = memoed(sim, 'Property tax, A Lot In Queens')[0]!;
-    expect(debit(tax)).toBe(inSave(sim, Math.round(landValue(LAND_MARKETS[l.market]!, l.acres, sim.now) * 0.19843 * 0.06), 'USD'));
+    expect(debit(tax)).toBe(inSave(sim, Math.round(landValue(LAND_MARKETS[l.market]!, l.acres, tax.at) * 0.19843 * 0.06), 'USD'));
 
     const s = sim.execute<{ closesAt: number }>({ kind: 'land.sell', payload: { parcelId: p.id } });
     expect(s.ok, s.error).toBe(true);
     expect(s.value!.closesAt).toBe(sim.now + DAYS_TO_SELL * MS_DAY);
     expect(sim.execute({ kind: 'land.sell', payload: { parcelId: p.id } }).ok).toBe(false);
-    const value = landValue(LAND_MARKETS[l.market]!, l.acres, sim.now);
     sim.advanceBy((DAYS_TO_SELL + 1) * MS_DAY);
     const sold = memoed(sim, /^Sold: A Lot In Queens/)[0]!;
-    expect(debit(sold)).toBe(inSave(sim, saleProceeds(LAND_MARKETS[l.market]!, value).net, 'USD'));
+    // What it's worth the day the sale closes.
+    expect(debit(sold)).toBe(inSave(sim, saleProceeds(LAND_MARKETS[l.market]!, landValue(LAND_MARKETS[l.market]!, l.acres, sold.at)).net, 'USD'));
     expect(p.soldAt).toBeDefined();
     // Sold, it's taxed no more.
     const taxes = memoed(sim, 'Property tax, A Lot In Queens').length;

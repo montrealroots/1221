@@ -250,6 +250,8 @@ export interface Person {
   land?: import('../systems/land').Parcel[];
   /** An offer on land accepted, a seller's counter, and the offers made (`systems/land.ts`). */
   landBuying?: import('../systems/land').LandBuying;
+  /** A house being built on land they own (`systems/construction.ts`). */
+  building?: import('../systems/construction').Build;
   /** Their driving record: points and a suspension (`systems/driving.ts`). */
   driving?: import('../systems/driving').DrivingRecord;
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */

@@ -13,6 +13,8 @@ import { formatDate } from '@/engine/core/time';
 import { homeOf } from '@/engine/systems/earnings';
 import { landBuyingOf, landQuote, landValue, listingsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, type LandAnswer } from '@/engine/systems/land';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_SOURCE, LAND_TAX, areaWords } from '@/engine/content/land';
+import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES } from '@/engine/content/construction';
+import { buildPlaceOf, buildQuote, buildRefusal } from '@/engine/systems/construction';
 
 /**
  * One precision down a column of money, so its right edge lines up: whole
@@ -36,6 +38,7 @@ export function LandWorkspace() {
       </div>
       <div className="col gap-5">
         <YourLand />
+        <Build />
         {deal ? <YourDeal /> : <ForSale />}
       </div>
     </>
@@ -67,7 +70,7 @@ function YourLand() {
                     <td>
                       <div className="row gap-2">
                         {!p.selling && <Gated feature="land.sell" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ closesAt: number }>('land.sell', { parcelId: p.id }); if (a.ok) toast(`For sale: it closes ${formatDate(a.value!.closesAt, sim.zone)}, for ${money(saleProceeds(m, worth).net)} after the seller’s taxes.`, 'positive'); }}>Put It Up For Sale</Gated>}
-                        {!p.selling && <Gated feature="land.split" className="btn btn-sm btn-ghost" disabled={Boolean(splitRefusal(p))} title={splitRefusal(p)} onClick={() => { if (run('land.split', { parcelId: p.id }).ok) toast('Split in two.', 'positive'); }}>Split It</Gated>}
+                        {!p.selling && <Gated feature="land.split" className="btn btn-sm btn-ghost" disabled={Boolean(splitRefusal(p, person))} title={splitRefusal(p, person)} onClick={() => { if (run('land.split', { parcelId: p.id }).ok) toast('Split in two.', 'positive'); }}>Split It</Gated>}
                         {!p.selling && twin && <Gated feature="land.combine" className="btn btn-sm btn-ghost" onClick={() => { if (run('land.combine', { a: p.id, b: twin.id }).ok) toast('Combined into one.', 'positive'); }}>Combine Them</Gated>}
                       </div>
                     </td>
@@ -193,6 +196,115 @@ function ForSale() {
           <Gated feature="land.offer" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={offer}>Make An Offer</Gated>
         </div>
         <Fine>{q.basis} None is a real listing: an asking price is within SLATE’s spread of the value, from 5% under it to 15% over it. A seller takes less the longer land has sat. It sells in about {DAYS_TO_SELL} days, a broker’s 2025 US figure taken everywhere. A survey, title insurance, a lawyer and a Phase I environmental assessment, which no authority prices, aren’t kept, nor is a land loan. Sources: {LAND_SOURCE}.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
+/** A house on a lot you own: the house being built, or choosing one to build. */
+function Build() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const lots = parcelsOf(person).filter((p) => p.soldAt === undefined && !p.selling && buildPlaceOf(p));
+  const [pick, setPick] = useState('');
+  const parcel = lots.find((p) => p.id === pick) ?? lots[0];
+  const place = parcel ? buildPlaceOf(parcel) : undefined;
+  const designs = place ? BUILD_RULES[place].designs : [];
+  const [designPick, setDesign] = useState('');
+  const design = designs.find((d) => d.id === designPick) ?? designs[0];
+  const [live, setLive] = useState(true);
+  const b = person.building;
+  if (b) {
+    const rules = BUILD_RULES[b.place];
+    const money = (c: number) => formatMoney(c, rules.currency, { cents: false });
+    return (
+      <Panel title="Your House, Being Built" subtitle={b.stage === -1 ? (b.place === 'london' ? 'Work starts soon' : 'Waiting for the permit') : `${STAGES[b.stage]!.name}${b.unpaid !== undefined ? ', stopped' : ''}`}>
+        <div className="col gap-3">
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Stage</th><th scope="col" className="num">Bill</th><th scope="col">Standing</th></tr></thead>
+              <tbody>
+                {STAGES.map((st, i) => (
+                  <tr key={st.name}>
+                    <td>{st.name}</td>
+                    <td className="num mono">{money(b.amounts[i]!)}</td>
+                    <td className="small">{i < b.stage ? 'Done And Paid' : i === b.stage ? (b.unpaid !== undefined ? 'Done, Unpaid' : 'Under Way') : 'To Come'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {b.unpaid !== undefined && <p className="small" style={{ margin: 0 }}>The contractor stopped on {formatDate(b.stoppedAt!, sim.zone)} until {money(b.unpaid)} is paid.</p>}
+          {b.unpaid !== undefined && (
+            <div className="row gap-2">
+              <Gated feature="build.pay" className="btn btn-sm" onClick={() => { if (run('build.pay', {}).ok) toast('Paid; work goes on.', 'positive'); }}>Pay The Contractor</Gated>
+            </div>
+          )}
+          <ul className="small muted" style={{ margin: 0, paddingLeft: '1.2em' }}>
+            {b.log.slice(-5).map((l) => <li key={`${l.at}-${l.line}`}>{formatDate(l.at, sim.zone)}: {l.line}</li>)}
+          </ul>
+        </div>
+      </Panel>
+    );
+  }
+  if (!parcel || !place || !design) return null;
+  const rules = BUILD_RULES[place];
+  const q = buildQuote(parcel, design.id, live);
+  const no = buildRefusal(sim, person, parcel.id, design.id, live);
+  const money = (c: number) => formatMoney(c, rules.currency, { cents: true });
+  const size = (sqft: number) => (rules.unit === 'm2' ? `${Math.round(sqft / SQFT_PER_M2)} m²` : `${sqft.toLocaleString('en-US')} sq ft`);
+  const m = LAND_MARKETS[parcel.market]!;
+  return (
+    <Panel title="Build A House" subtitle={`On ${m.label.replace(/^A /, 'the ').replace(/, With Planning Permission$/, '')}`}>
+      <div className="col gap-3">
+        <div className="field-row field-row-tight">
+          {lots.length > 1 && (
+            <div className="field">
+              <label htmlFor="build-lot">Lot</label>
+              <select id="build-lot" value={parcel.id} onChange={(e) => { setPick(e.target.value); setDesign(''); }}>
+                {lots.map((p) => <option key={p.id} value={p.id}>{LAND_MARKETS[p.market]!.label}, {areaWords(p.acres, LAND_MARKETS[p.market]!.place)}</option>)}
+              </select>
+            </div>
+          )}
+          <div className="field">
+            <label htmlFor="build-design">House</label>
+            <select id="build-design" value={design.id} onChange={(e) => setDesign(e.target.value)}>
+              {designs.map((d) => <option key={d.id} value={d.id}>{d.beds} Bedrooms, {size(d.sqft)}</option>)}
+            </select>
+          </div>
+        </div>
+        {place === 'london' && (
+          <label className="row gap-1 small" style={{ alignItems: 'center' }}>
+            <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} /> To Live In
+          </label>
+        )}
+        {typeof q !== 'string' && (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Line</th><th scope="col" className="num">Amount</th></tr></thead>
+              <tbody>
+                <tr><td>The Contract, Paid Stage By Stage</td><td className="num mono">{money(q.contract)}</td></tr>
+                {q.fees.map((l) => <tr key={l.label}><td>{l.label}</td><td className="num mono">{money(l.amount)}</td></tr>)}
+                <tr><th scope="row">In All</th><td className="num mono">{money(q.total)}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+        {typeof q !== 'string' && (
+          <div className="grid grid-3">
+            <Stat label="The House" value={`${design.beds} Bed, ${design.baths} Bath`} note={`${size(design.sqft)}: ${design.basis}`} />
+            <Stat label={place === 'london' ? 'Start' : 'The Permit'} value={place === 'london' ? 'Two Days' : `About ${Math.round(q.permitDays / 30.4)} Months`} note="Permits and fees paid when it’s started" />
+            <Stat label="Building" value={`About ${Math.round(rules.buildMonths)} Months`} note={`Then its ${rules.occupancy}`} />
+          </div>
+        )}
+        {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
+        <div className="row gap-2">
+          <Gated feature="build.start" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
+            const a = run<{ finishesBy: number }>('build.start', { parcelId: parcel.id, designId: design.id, live });
+            if (a.ok) toast(`Started: it should be finished about ${formatDate(a.value!.finishesBy, sim.zone)}.`, 'positive');
+          }}>Start Building</Gated>
+        </div>
+        <Fine>{rules.rateBasis}; {rules.timeBasis}.{rules.bulk ? ` It fits by ${rules.bulk.basis}.` : ''} The bank pays each stage as it’s done; a bill it can’t pay stops the work. Finished, it’s a home you own, worth what the land and the building cost. A construction loan, delays, overruns, change orders and a structural warranty, which no authority prices for a house, aren’t kept. Sources: {BUILD_SOURCE}.</Fine>
       </div>
     </Panel>
   );

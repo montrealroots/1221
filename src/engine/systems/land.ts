@@ -21,9 +21,14 @@
  * splits where each part keeps the zoning's minimum, and two parcels of one
  * place combine into one.
  *
- * A parcel's value follows its source's latest yearly change from its
- * figure's year, and is held where the source publishes none, as the FHFA's
- * and the government's residential figures don't. What a sale fetches is
+ * A town lot's value moves with the town's home market from its figure's
+ * year (`homes.ts`), the FHFA's land values being read from home prices.
+ * Farmland takes its source's latest yearly change for the year until the
+ * next edition, then moves with the town's home market: SLATE's estimate,
+ * no long-run farmland figure being published. Until 2026-09-29 each took
+ * one year's change for ever and a lot none, so a life's farmland in England
+ * fell near nine-tenths in fifty years and a Brooklyn lot stood at 2022's
+ * price while the houses around it rose. What a sale fetches is
  * that value, SLATE's estimate of the market; a buyer's survey, title
  * insurance and lawyer, whose prices no authority publishes, aren't kept, nor
  * is the fee for splitting a lot where it isn't published.
@@ -37,6 +42,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_REGISTRATION, LAND_SEARCHES, LAND_TAX, LAND_TRANSFER, areaWords, type LandMarket, type TransferTax } from '../content/land';
 import { homeOf } from './earnings';
+import { marketAt } from './homes';
 import { drawFromBank, inTheBank, owe, payFromBank } from './household';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -54,6 +60,8 @@ export interface Parcel {
   paid: Money;
   /** The listing it was bought from. */
   listingId?: string;
+  /** The home built on it, which it went into (`systems/construction.ts`). */
+  builtOn?: string;
   selling?: { closesAt: Instant };
   soldAt?: Instant;
 }
@@ -82,6 +90,8 @@ export interface LandBuying {
 }
 
 export const parcelsOf = (person: Person): Parcel[] => (person.land ??= []);
+/** Whether a house is being built on a parcel (`systems/construction.ts`). */
+export const buildingOn = (person: Person | undefined, p: Parcel): boolean => person?.building?.parcelId === p.id;
 export const landBuyingOf = (person: Person): LandBuying => (person.landBuying ??= { offers: {} });
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
 
@@ -91,10 +101,18 @@ export const marketsFor = (cityId: string) => LAND_MARKETS.map((m, i) => ({ m, i
 /** A figure's year as an instant: its first day. */
 const yearOf = (y: string) => Date.UTC(Number((y.match(/\d{4}/) ?? ['2026'])[0]), 0, 1);
 
-/** A parcel's value at a moment, in its market's money, cents: the value an acre grown by the source's yearly change since its year. */
+/**
+ * A parcel's value at a moment, in its market's money, cents: a lot's moved
+ * with the town's home market since its figure's year; farmland's by its
+ * source's yearly change for a year, and with the town's market after.
+ */
 export function landValue(m: LandMarket, acres: number, at: Instant): Money {
-  const years = Math.max(0, (at - yearOf(m.year)) / YEAR_MS);
-  return Math.round(m.perAcre * acres * (1 + m.yearlyChange) ** years * 100);
+  const from = yearOf(m.year);
+  const market = (t: Instant) => marketAt(m.cityId, m.currency, t);
+  if (m.kind === 'lot') return Math.round(m.perAcre * acres * market(at) / market(from) * 100);
+  const edition = from + YEAR_MS;
+  const first = (1 + m.yearlyChange) ** (Math.max(0, Math.min(at, edition) - from) / YEAR_MS);
+  return Math.round(m.perAcre * acres * first * (at > edition ? market(at) / market(edition) : 1) * 100);
 }
 
 /** A tax on a price in its money, cents: marginal bands, or the band's rate on the whole. */
@@ -209,9 +227,10 @@ export function offerRefusal(sim: Simulation, person: Person, listingId: string,
 }
 
 /** Why a parcel can't be split in two, or nothing: a lot keeps the zoning's minimum on each side; acreage keeps an acre. */
-export function splitRefusal(p: Parcel): string | undefined {
+export function splitRefusal(p: Parcel, person?: Person): string | undefined {
   const m = LAND_MARKETS[p.market]!;
   if (p.selling || p.soldAt !== undefined) return 'It’s being sold.';
+  if (buildingOn(person, p)) return 'A house is being built on it.';
   const least = m.kind === 'lot' ? m.zoning?.minAcres ?? 0 : 1;
   if (m.place === 'london') return 'A plot with planning permission is split by a new permission, which SLATE doesn’t take.';
   if (p.acres / 2 < least) return `Each half would be under the ${m.zoning ? `${m.zoning.name} minimum, ${areaWords(least, m.place)}` : 'acre SLATE keeps'}.`;
@@ -332,6 +351,7 @@ export function registerLand(sim: Simulation): void {
     const parcel = parcelsOf(person).find((x) => x.id === p?.parcelId && x.soldAt === undefined);
     if (!parcel) throw new CommandError('That isn’t land you own.');
     if (parcel.selling) throw new CommandError('It’s for sale already.');
+    if (buildingOn(person, parcel)) throw new CommandError('A house is being built on it.');
     const closesAt = s.now + DAYS_TO_SELL * MS_DAY;
     parcel.selling = { closesAt };
     s.schedule({ at: closesAt, kind: LAND_SALE_KIND, label: 'Land Sale Closes', category: 'home', priority: 30, payload: { personId: person.id, parcelId: parcel.id } });
@@ -342,7 +362,7 @@ export function registerLand(sim: Simulation): void {
     const person = s.player;
     const parcel = parcelsOf(person).find((x) => x.id === p?.parcelId && x.soldAt === undefined);
     if (!parcel) throw new CommandError('That isn’t land you own.');
-    const no = splitRefusal(parcel);
+    const no = splitRefusal(parcel, person);
     if (no) throw new CommandError(no);
     parcel.acres /= 2;
     parcel.paid = Math.round(parcel.paid / 2);
@@ -357,6 +377,7 @@ export function registerLand(sim: Simulation): void {
     const a = parcelsOf(person).find((x) => x.id === p?.a && x.soldAt === undefined && !x.selling);
     const b = parcelsOf(person).find((x) => x.id === p?.b && x.soldAt === undefined && !x.selling && x.id !== p?.a);
     if (!a || !b) throw new CommandError('Two parcels you own, neither for sale.');
+    if (buildingOn(person, a) || buildingOn(person, b)) throw new CommandError('A house is being built on it.');
     if (LAND_MARKETS[a.market]!.place !== LAND_MARKETS[b.market]!.place || LAND_MARKETS[a.market]!.label !== LAND_MARKETS[b.market]!.label) throw new CommandError('Parcels combine only where they’re the same place.');
     a.acres += b.acres;
     a.paid += b.paid;

@@ -249,6 +249,17 @@ export const CHAPTERS: readonly Chapter[] = [
     opens: ['ui.land', 'land.offer', 'land.withdraw', 'land.sell', 'land.split', 'land.combine'],
   },
   {
+    id: 'build',
+    title: 'Building A House',
+    lead: 'A house on a lot of your own.',
+    body: [
+      'On a town lot you own in New York, New Haven, Los Angeles or London, Build A House offers the sizes the authorities publish: the Census’s median and average new houses for the region, or London’s space standard. A house fits where the zoning’s bulk allows it: New York’s R2 takes 0.75 of the lot, Los Angeles’s R1 45%, New Haven’s RS-2 30% on two stories. The contract is the region’s published price a square foot, and the quote carries every permit and fee of the place.',
+      'Start Building pays the permits and fees. After the permit’s wait, the contractor builds in seven stages, billing each as it’s done: site work, foundations, framing, the outside, the systems, the inside, the final steps. A bill the bank can’t pay stops the work until you Pay The Contractor. Finished, the house is a home you own, worth what the land and the building cost, and Move In on the Homes screen takes you there. In London, building To Live In spares the Community Infrastructure Levy. It’s owed if the house is sold or let within three years.',
+    ],
+    names: ['Build A House', 'Start Building', 'Pay The Contractor', 'To Live In'],
+    opens: ['build.start', 'build.pay'],
+  },
+  {
     id: 'documents',
     title: 'Passports And Licenses',
     lead: 'Crossing a border, and driving.',
