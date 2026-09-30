@@ -1,0 +1,471 @@
+{
+  "_meta": {
+    "compiled": "2026-09-30",
+    "purpose": "Welfare and food-assistance rules for SLATE's life simulation: Ontario Works, BC Income Assistance, Canadian EI status of performers, US SNAP in NY/CA/CT.",
+    "method": "Primary sources only where reachable (ontario.ca policy directives, gov.bc.ca BCEA manual, justice.gc.ca statutes, fns.usda.gov, uscode.house.gov, ecfr.gov, cdss.ca.gov, portal.ct.gov, erie.gov). 'confirmed: true' means the figure was read on the page cited. 'confirmed: false' means it came from a search snippet or secondary source and could not be read on a primary page.",
+    "sourceTypes": "policy-directive | regulation | statute | government-page | government-rate-table | government-news-release | court-decision | parliamentary-report | county-government-page | secondary",
+    "unreachable": [
+      "otda.ny.gov (connection reset on every request; New York's state-level SNAP pages could not be read)",
+      "usda.gov guidance PDF for the FY2027 SNAP COLA memo (HTTP 403)",
+      "FNS OBBB ABAWD implementation memo PDFs (404 at the URLs search returned; the memo landing page loads but has no body text)",
+      "canlii.org (HTTP 403)",
+      "BCEA 'Two-Year Financial Independence' policy page (HTTP 404; the rule is gone, see bcIncomeAssistance.twoYearIndependenceRule)"
+    ],
+    "currency": "CAD for Ontario and BC; USD for SNAP. All amounts are monthly unless stated."
+  },
+
+  "ontarioWorks": {
+    "program": "Ontario Works (Ontario Works Act, 1997; O. Reg. 134/98), financial assistance, single adult with no spouse and no dependants",
+    "assetLimit": {
+      "value": 10000,
+      "currency": "CAD",
+      "note": "Single applicant or recipient (no spouse and no dependants). Assets are defined broadly: cash, bonds, stocks, cash surrender value of life insurance, interest in property, beneficial interest in trusts, and other property readily convertible to cash.",
+      "url": "https://www.ontario.ca/document/ontario-works-policy-directives/42-asset-limits",
+      "publisher": "Ontario Ministry of Children, Community and Social Services (Ontario Works Policy Directive 4.2)",
+      "date": "2026-04-14 (updated; published 2022-03-28)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "exemptAssets": {
+      "principalResidence": {
+        "value": "The principal residence of the benefit unit is not counted as an asset.",
+        "url": "https://www.ontario.ca/document/ontario-works-policy-directives/41-summary-assets",
+        "publisher": "Ontario MCCSS (Policy Directive 4.1)",
+        "date": "2026-05-20 (updated)",
+        "sourceType": "policy-directive",
+        "confirmed": true
+      },
+      "motorVehicle": {
+        "value": "One motor vehicle of any value is exempt. Additional vehicles are exempt up to CAD 15,000 each only if needed for other benefit-unit members to take part in employment assistance or keep a job.",
+        "firstVehicleCap": null,
+        "additionalVehicleCap": 15000,
+        "url": "https://www.ontario.ca/document/ontario-works-policy-directives/45-motor-vehicles",
+        "publisher": "Ontario MCCSS (Policy Directive 4.5)",
+        "date": "2013-09 (page date shown)",
+        "sourceType": "policy-directive",
+        "confirmed": true
+      },
+      "giftsAndVoluntaryPayments": {
+        "value": "Up to CAD 10,000 in a 12-month period per person in gifts and voluntary payments from relatives, friends or other sources.",
+        "url": "https://www.ontario.ca/document/ontario-works-policy-directives/51-income-and-exemptions",
+        "publisher": "Ontario MCCSS",
+        "date": null,
+        "sourceType": "policy-directive",
+        "confirmed": false,
+        "note": "Seen only in a search snippet of the directive, not read on the page."
+      }
+    },
+    "earningsExemption": {
+      "flatExemption": 200,
+      "percentageOfRemainderExempt": 0.5,
+      "value": "The first CAD 200 of net monthly earnings is exempt, then 50% of the earnings above CAD 200. (Not 25%: the 50% figure is on the page.)",
+      "waitingPeriod": "Does not apply when determining initial eligibility or during the first three months of receiving assistance. It becomes available after three continuous months on Ontario Works or ODSP. Re-applicants who left with employment, business or training income and come back within six months get it immediately.",
+      "waitingPeriodMonths": 3,
+      "url": "https://www.ontario.ca/document/ontario-works-policy-directives/53-earnings-exemptions",
+      "publisher": "Ontario MCCSS (Policy Directive 5.3)",
+      "date": "2026-04-14 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "selfEmploymentIncome": {
+      "value": "Net business income = gross self-employment income minus approved business expenses. Reported monthly. The CAD 200 flat and 50% partial earnings exemption apply to the net figure (subject to the same three-month wait). Business loan proceeds and personal money invested in the business are not revenue. Casual or occasional work is treated as earnings, reported gross, with no business-expense deduction. No minimum-income or viability test is stated.",
+      "url": "https://www.ontario.ca/document/ontario-works-policy-directives/513-self-employment-income",
+      "publisher": "Ontario MCCSS (Policy Directive 5.13)",
+      "date": "2026-05-20 (updated; published 2022-03-28)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "basicNeeds": {
+      "value": 343,
+      "currency": "CAD",
+      "url": "https://www.ontario.ca/document/ontario-works-policy-directives/62-basic-needs",
+      "publisher": "Ontario MCCSS (Policy Directive 6.2)",
+      "date": "2026-04-14 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "shelter": {
+      "maximumSingle": 390,
+      "currency": "CAD",
+      "computation": "Shelter paid = the sum of actual verified shelter costs paid, up to the maximum (CAD 390 for a benefit unit of one).",
+      "whatCounts": "Rent, mortgage payments, property taxes, home insurance premiums, approved home repairs, condo or co-op fees, utilities, heating, energy-reconnection deposits, and arrears of rent, utilities or heating.",
+      "url": "https://www.ontario.ca/document/ontario-works-policy-directives/63-shelter",
+      "publisher": "Ontario MCCSS (Policy Directive 6.3)",
+      "date": "2026-04-14 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "maximumMonthlyTotalSingle": {
+      "value": 733,
+      "currency": "CAD",
+      "note": "343 basic needs + 390 maximum shelter. The page says it 'may be adjusted based on your situation.'",
+      "url": "https://www.ontario.ca/page/financial-assistance-ontario-works",
+      "publisher": "Government of Ontario",
+      "date": "2026-04-14 (updated)",
+      "sourceType": "government-page",
+      "confirmed": true
+    },
+    "paymentTiming": {
+      "value": "Monthly, on the last business day of the previous month (the payment for a month arrives at the end of the month before).",
+      "examples": { "2025-12 benefit": "2025-11-28", "2026-01 benefit": "2025-12-31", "2026-02 benefit": "2026-01-30" },
+      "url": "https://www.ontario.ca/page/ontario-works",
+      "publisher": "Government of Ontario",
+      "date": "2026-09-23 (updated)",
+      "sourceType": "government-page",
+      "confirmed": true
+    },
+    "applicationProcessing": {
+      "value": "A written eligibility decision and first payment should be done within 4 working days of first contact when the applicant has supplied everything required. If information is missing, the applicant has up to 10 working days to supply it.",
+      "decisionWorkingDays": 4,
+      "missingInfoWorkingDays": 10,
+      "url": "https://www.ontario.ca/document/ontario-works-policy-directives/21-application-process",
+      "publisher": "Ontario MCCSS (Policy Directive 2.1)",
+      "date": "2026-05-20 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "newArrivalCanadianCitizen": {
+      "value": "Qualifies on residency grounds. The applicant must be an Ontario resident living in the delivery area where they apply, and the length of time they have lived there (or plan to) is not relevant to eligibility. There is no minimum-residence period and no specific rule for citizens returning from abroad. They must document their status in Canada (a citizen can). All the other tests (assets, income) still apply.",
+      "minimumResidencePeriod": null,
+      "url": "https://www.ontario.ca/document/ontario-works-policy-directives/31-residency-requirements",
+      "publisher": "Ontario MCCSS (Policy Directive 3.1)",
+      "date": "2026-04-14 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true,
+      "note": "The directive says nothing about returning citizens as such; 'qualifies' is the direct consequence of the stated rule that length of residence is irrelevant."
+    }
+  },
+
+  "bcIncomeAssistance": {
+    "program": "BC Income Assistance under the Employment and Assistance Act and Employment and Assistance Regulation (B.C. Reg. 263/2002), single employable adult",
+    "assetLimit": {
+      "value": 5000,
+      "currency": "CAD",
+      "note": "Sole applicant or recipient with no dependent children; covers cash, equity in property, investments, financial instruments and trusts the applicant controls. CAD 10,000 with one or more dependants.",
+      "effective": "2019-07-01",
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/bc-employment-and-assistance-rate-tables/asset-limits-table",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction (BCEA Policy and Procedure Manual)",
+      "date": "2025-08-07 (updated)",
+      "sourceType": "government-rate-table",
+      "confirmed": true
+    },
+    "exemptAssets": {
+      "value": "The family unit's place of residence is exempt (no value limit stated). One motor vehicle generally used for day-to-day transportation is exempt (no value limit; wholesale value checked against VMR Canada or NADA guides). Additional vehicles are not exempt and their equity counts toward the asset limit.",
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/eligibility/assets-and-exemptions",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction",
+      "date": "2026-07-22 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "earningsExemption": {
+      "value": 600,
+      "currency": "CAD",
+      "type": "Flat monthly exemption on earned income (not USD 500; it is CAD 600 for a single person or any unit not in a higher category). CAD 900 with a dependent child; CAD 1,080 for Persons with Persistent Multiple Barriers.",
+      "effective": "2026-01-01 (the page's 'Effective' line; a search snippet of an earlier version said 2024-01-01 for the same CAD 600, so the amount itself may predate 2026)",
+      "waitingPeriod": "Applicants serve a one-month waiting period before the exemption applies, unless someone in the family unit received assistance in the preceding six calendar months.",
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/eligibility/income-treatment-and-exemptions",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction",
+      "date": "2026-09-29 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "selfEmploymentIncome": {
+      "value": "Earned income. Permitted operating expenses, approved renovations, and income deposited in a cash asset account are exempt; the rest is subject to the earnings exemption.",
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/eligibility/income-treatment-and-exemptions",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction",
+      "date": "2026-09-29 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "supportAllowance": {
+      "value": 560,
+      "currency": "CAD",
+      "effective": "2023-08-01",
+      "note": "Single employable, Table 1, unit size 1. No later increase appears on the rate table, which is still dated 2023-08-01. The 2025-26 changes found were to disability assistance, not income assistance.",
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/bc-employment-and-assistance-rate-tables/income-assistance-rate-table",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction",
+      "date": "2023-08-01 (last updated as shown on page)",
+      "sourceType": "government-rate-table",
+      "confirmed": true
+    },
+    "shelterAllowance": {
+      "maximumSingle": 500,
+      "currency": "CAD",
+      "effective": "2023-08-01",
+      "computation": "Actual shelter costs up to the maximum for the unit size; if actual costs are below the minimum shelter allowance, the minimum is paid.",
+      "minimumShelterAllowance": null,
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/bc-employment-and-assistance-rate-tables/income-assistance-rate-table",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction",
+      "date": "2023-08-01",
+      "sourceType": "government-rate-table",
+      "confirmed": true
+    },
+    "maximumMonthlyTotalSingle": { "value": 1060, "currency": "CAD", "derivedFrom": "560 support + 500 maximum shelter", "confirmed": true },
+    "paymentTiming": {
+      "value": "Monthly, paid in advance on a Wednesday in the second half of the month before the benefit month (cheque issue day).",
+      "dates2026": ["2026-01-21", "2026-02-25", "2026-03-25", "2026-04-22", "2026-05-27", "2026-06-24", "2026-07-29", "2026-08-26", "2026-09-23", "2026-10-21", "2026-11-18", "2026-12-16"],
+      "url": "https://www2.gov.bc.ca/gov/content/family-social-supports/income-assistance/payment-dates",
+      "publisher": "Government of British Columbia",
+      "date": "2026-09-24 (updated)",
+      "sourceType": "government-page",
+      "confirmed": true,
+      "note": "That each date pays the following month is the long-standing BC practice and matches the page's framing, but the page text as read did not state the rule in words."
+    },
+    "workSearch": {
+      "value": "Unless exempt, applicants must complete an active three-week work search as directed by the ministry, between stage 1 and stage 2 of the application, or show a satisfactory three-week search in the 30 days before the stage 1 application. Those who have not done it can be assessed for hardship assistance and do the three weeks while on it.",
+      "weeks": 3,
+      "exemptions": ["fleeing abuse", "sole parent with a child under 3", "physical or mental condition that precludes a work search", "Persons with Disabilities designation", "cannot legally work in Canada", "age 65 or older", "immediate need for food, shelter or urgent medical care"],
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/application-and-intake/work-search",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction",
+      "date": "2026-07-22 (updated)",
+      "sourceType": "policy-directive",
+      "confirmed": true
+    },
+    "workSearchIntensity": {
+      "value": "At least 15 employer contacts a week and 25 hours a week of job search",
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/application-and-intake/work-search",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction",
+      "date": null,
+      "sourceType": "secondary",
+      "confirmed": false,
+      "note": "Appeared in a search snippet only. The policy page as read states no numeric minimum. Treat as unverified."
+    },
+    "twoYearIndependenceRule": {
+      "value": "Abolished. The requirement that an applicant show two consecutive years of financial independence was eliminated effective 2020-01-01 (B.C. Reg. 270/2019, OIC 705). It does not apply in 2026.",
+      "inForce": false,
+      "repealedEffective": "2020-01-01",
+      "url": "https://news.gov.bc.ca/releases/2020SDPR0002-000021",
+      "publisher": "BC Ministry of Social Development and Poverty Reduction (news release 'Better supports for people facing poverty')",
+      "date": "2020-01-09",
+      "sourceType": "government-news-release",
+      "confirmed": true
+    }
+  },
+
+  "eiPerformers": {
+    "question": "Are ACTRA / Canadian Actors' Equity performers engaged by producers insurable employees under Canada's Employment Insurance, or self-employed?",
+    "answer": "Generally self-employed (independent contractors), so their engagements are not insurable employment and do not qualify them for EI regular benefits. There is no regulation that deems them insurable. They can opt in to EI special benefits (maternity, parental, sickness, compassionate care, family caregiver) as self-employed people. Status is decided case by case on the total relationship, so a particular engagement can be employment.",
+    "findings": [
+      {
+        "value": "No provision of the Employment Insurance Regulations (s. 6 included employment) or the Insurable Earnings and Collection of Premiums Regulations brings performers, actors or artists into insurable employment. The only mention of entertainers is s. 8(1)(a), which excludes casual circus, fair, parade, carnival and exhibition employment 'other than as an entertainer'. Section 6 does include placement-agency workers, which can matter where a performer is supplied through an agency.",
+        "url": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-332/FullText.html",
+        "publisher": "Justice Canada (Employment Insurance Regulations, SOR/96-332); also SOR/97-33 current to 2026-09-21",
+        "date": "2026-09-21 (current-to date for SOR/97-33)",
+        "sourceType": "regulation",
+        "confirmed": true
+      },
+      {
+        "value": "The federal Status of the Artist Act, s. 6(2), applies to 'independent contractors' who 'perform, sing, recite, direct or act' in dramatic or other works, or contribute to film, radio, television and recording productions. It treats professional performers as independent contractors, but covers only federal producers (CRTC-regulated broadcasters and federal institutions).",
+        "url": "https://laws-lois.justice.gc.ca/eng/acts/S-19.6/page-1.html",
+        "publisher": "Justice Canada (Status of the Artist Act, S.C. 1992, c. 33)",
+        "date": "2026-09-21 (current-to date)",
+        "sourceType": "statute",
+        "confirmed": true
+      },
+      {
+        "value": "CRA: self-employed artists 'do not pay EI premiums unless they opt into the EI program for access to EI special benefits.' Status is decided on the total relationship (control, tools, subcontracting, financial risk, investment, chance of profit); no single test decides it, and one artist can be self-employed under one contract and an employee under another in the same year.",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-4-businesses/folio-14-income-artistic-endeavours/income-tax-folio-s4-f14-c1-artists-writers.html",
+        "publisher": "Canada Revenue Agency (Income Tax Folio S4-F14-C1, Artists and Writers, paras 1.11 and 1.16)",
+        "date": null,
+        "sourceType": "government-page",
+        "confirmed": true
+      },
+      {
+        "value": "Royal Winnipeg Ballet v. M.N.R., 2006 FCA 87: the Federal Court of Appeal held that the Ballet's dancers, engaged under a union collective agreement, were independent contractors, not employees, so no CPP contributions or EI premiums were owed. The parties' shared understanding of their relationship was given weight (para. 60). This is the leading appellate authority for performers.",
+        "url": "https://ca.vlex.com/vid/royal-winnipeg-ballet-v-681552221",
+        "publisher": "Federal Court of Appeal (text read on vLex; CanLII blocked)",
+        "date": "2006-03-02",
+        "sourceType": "court-decision",
+        "confirmed": true,
+        "note": "The holding and date were read. That the dancers' agreement was with Canadian Actors' Equity Association was not visible in the text read and is not relied on."
+      },
+      {
+        "value": "ACTRA told the House of Commons Heritage Committee that a self-employed artist who works another job between gigs pays into EI on those insurable hours but, laid off, is ineligible for EI regular benefits (Keith Martin Gordey, ACTRA).",
+        "url": "https://www.ourcommons.ca/documentviewer/en/44-1/CHPC/report-5/page-30",
+        "publisher": "House of Commons Standing Committee on Canadian Heritage, Report 5 (44th Parliament, 1st Session)",
+        "date": "2022",
+        "sourceType": "parliamentary-report",
+        "confirmed": true
+      }
+    ],
+    "insurableEmployee": false,
+    "selfEmployedByDefault": true,
+    "regularBenefitsFromPerformingWork": false,
+    "specialBenefitsOptIn": true,
+    "confirmed": true,
+    "caveat": "No statute or regulation fixes a performer's status; it is decided engagement by engagement. A performer on a producer's payroll who is treated as an employee (for example through a payroll or placement agency, or on a long, controlled engagement) could hold insurable employment. No Tax Court decision specific to an ACTRA film performer was found and read."
+  },
+
+  "snap": {
+    "program": "Supplemental Nutrition Assistance Program (Food and Nutrition Act of 2008, 7 U.S.C. 2011 et seq.; 7 CFR Part 273), single adult, 48 states and DC",
+    "fiscalYearNote": "FY2026 runs 2025-10-01 to 2026-09-30 (today is its last day). FY2027 figures take effect 2026-10-01.",
+    "maximumAllotmentOnePerson": {
+      "FY2026": {
+        "value": 298,
+        "url": "https://www.fns.usda.gov/snap/allotment/cola",
+        "publisher": "USDA Food and Nutrition Service",
+        "date": "2026-04-27 (page updated)",
+        "sourceType": "government-rate-table",
+        "confirmed": true
+      },
+      "FY2027": {
+        "value": 306,
+        "url": "https://www3.erie.gov/snap/eligibility",
+        "publisher": "Erie County (NY) Department of Social Services, restating the federal FY2027 COLA",
+        "date": "2026-09-22 (page changed)",
+        "sourceType": "county-government-page",
+        "confirmed": true,
+        "note": "The federal memo itself (USDA 'SNAP Fiscal Year 2027 Cost-of-Living Adjustments', dated 2026-08-21 per search, https://www.usda.gov/sites/default/files/guidance-documents/fna.snap-cola2027.pdf) returned HTTP 403 and could not be read. Search snippets also gave 298 -> 306."
+      }
+    },
+    "minimumAllotmentOneOrTwo": {
+      "FY2026": { "value": 24, "url": "https://www.fns.usda.gov/snap/allotment/cola", "publisher": "USDA FNS", "date": "2026-04-27", "sourceType": "government-rate-table", "confirmed": true }
+    },
+    "federalIncomeLimitsOnePerson": {
+      "FY2026": {
+        "gross130pctFPL": 1696,
+        "net100pctFPL": 1305,
+        "gross165pctElderlyDisabledSeparate": 2152,
+        "url": "https://www.fns.usda.gov/snap/allotment/cola",
+        "publisher": "USDA FNS",
+        "date": "2026-04-27",
+        "sourceType": "government-rate-table",
+        "confirmed": true
+      },
+      "FY2027": {
+        "net100pctFPL": 1330,
+        "gross130pctFPL": null,
+        "note": "Net 1,330 read on Erie County's page. The 130% gross figure was not read anywhere; 1.3 x 1,330 = 1,729 by arithmetic, but it is not published on a page read, so it is null here.",
+        "url": "https://www3.erie.gov/snap/eligibility",
+        "publisher": "Erie County (NY) DSS",
+        "date": "2026-09-22",
+        "sourceType": "county-government-page",
+        "confirmed": true
+      }
+    },
+    "deductionsOnePerson": {
+      "FY2026": { "standardDeduction": 209, "maxExcessShelterDeduction": 744, "homelessShelterDeduction": 198.99, "earnedIncomeDeductionPct": null, "url": "https://www.fns.usda.gov/snap/allotment/cola", "publisher": "USDA FNS", "date": "2026-04-27", "sourceType": "government-rate-table", "confirmed": true },
+      "FY2027": { "standardDeduction": 217, "maxExcessShelterDeduction": 769, "homelessShelterDeduction": 205.66, "url": "https://www3.erie.gov/snap/eligibility", "publisher": "Erie County (NY) DSS", "date": "2026-09-22", "sourceType": "county-government-page", "confirmed": true }
+    },
+    "federalAssetLimit": {
+      "FY2026": { "allOtherHouseholds": 3000, "withMember60PlusOrDisabled": 4500, "url": "https://www.fns.usda.gov/snap/allotment/cola", "publisher": "USDA FNS", "date": "2026-04-27", "sourceType": "government-rate-table", "confirmed": true },
+      "note": "NY, CA and CT all use broad-based categorical eligibility, under which most households face no asset test. Erie County: 'Most households applying for SNAP no longer have to pass a savings/resource test.'"
+    },
+    "stateGrossIncomeLimitsOnePerson": {
+      "newYork": {
+        "value": "FY2027 (from 2026-10-01): USD 1,995 (150% FPL) for households without an elderly or disabled member; USD 2,660 (200% FPL) with an elderly/disabled member or dependent-care costs. Net limit 1,330.",
+        "FY2027_150pct": 1995,
+        "FY2027_200pct": 2660,
+        "url": "https://www3.erie.gov/snap/eligibility",
+        "publisher": "Erie County (NY) Department of Social Services",
+        "date": "2026-09-22",
+        "sourceType": "county-government-page",
+        "confirmed": true,
+        "note": "otda.ny.gov could not be reached. Secondary sites describe NY's tiers as 130% standard / 150% with earned income / 200% with dependent care or elderly-disabled. Erie's table heads the 150% tier 'without elderly/disabled members' and gives no 130% tier. Whether a single adult with no earnings gets 130% or 150% is unresolved; see uncertain."
+      },
+      "california": {
+        "value": "FY2026: gross USD 2,610 (200% FPL), net 1,305, maximum allotment 298.",
+        "FY2026_gross": 2610,
+        "FY2026_net": 1305,
+        "FY2027_gross": null,
+        "url": "https://www.cdss.ca.gov/portals/9/calfreshoutreach/220000_English_Income_Inserts_FFY2026%20-%20ADA%20-%20FINAL.pdf",
+        "publisher": "California Department of Social Services (CalFresh, 2025-2026 Income & Eligibility Limits)",
+        "date": "effective 2025-10-01 to 2026-09-30",
+        "sourceType": "government-rate-table",
+        "confirmed": true
+      },
+      "connecticut": {
+        "value": "FY2026: gross USD 2,609 (200% FPL), net 1,305, maximum benefit 298; reporting threshold 1,696 (130% FPL).",
+        "FY2026_gross": 2609,
+        "FY2026_net": 1305,
+        "FY2027_gross": null,
+        "url": "https://portal.ct.gov/dss/-/media/departments-and-agencies/dss/fact-sheets-and-issue-briefs/fact-sheets/dss-program-standards-chart-effective-030126.pdf",
+        "publisher": "Connecticut Department of Social Services (Program Standards Chart)",
+        "date": "chart effective 2026-03-01; SNAP columns effective 2025-10-01",
+        "sourceType": "government-rate-table",
+        "confirmed": true
+      }
+    },
+    "abawdTimeLimit": {
+      "statute": {
+        "value": "No one may get SNAP for more than 3 months (consecutive or not) in a 36-month period during which they did not work 20 hours or more a week (averaged monthly), or take part in a qualifying work program for 20 hours a week, or do workfare. Exceptions include anyone 'under 18, or over 65, years of age', medically unfit, a parent or household member responsible for a dependent child under 14, exempt from general work rules, pregnant, or an Indian, Urban Indian or California Indian. Eligibility is regained after 80 hours of work or work program in a 30-day period. Waivers are limited to areas with unemployment over 10% (or 1.5 times the national rate in a noncontiguous state).",
+        "monthsAllowed": 3,
+        "periodMonths": 36,
+        "hoursPerWeek": 20,
+        "hoursPerMonth": 80,
+        "dependentChildExemptionUnderAge": 14,
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title7-section2015&num=0&edition=prelim",
+        "publisher": "Office of the Law Revision Counsel, U.S. House (7 U.S.C. 2015(o), as amended by Pub. L. 119-21)",
+        "date": "read 2026-09-30",
+        "sourceType": "statute",
+        "confirmed": true
+      },
+      "changes2025": {
+        "value": "The One Big Beautiful Bill Act of 2025 (Pub. L. 119-21, signed 2025-07-04, s. 10102) raised the covered age range from 18-54 to 18-64 (people are no longer ABAWDs from the month they turn 65), removed the exceptions for veterans, people experiencing homelessness, and former foster youth aged 24 or younger, narrowed the household-child exception from a child under 18 to a child under 14, added exceptions for Indians, Urban Indians and California Indians, and tightened waivers to areas over 10% unemployment. People aged 60-64 are covered by the ABAWD rule but exempt from the general work requirement and cannot be made to join E&T.",
+        "ageRangeSubject": [18, 64],
+        "previousAgeRange": [18, 54],
+        "exceptionsRemoved": ["veterans", "homeless", "former foster youth aged 24 or younger"],
+        "enacted": "2025-07-04",
+        "url": "https://portal.ct.gov/dss/knowledge-base/articles/snap/abawd-work-requirement-changes-hr1",
+        "publisher": "Connecticut DSS; statute text above; FNS memo 'SNAP Provisions of the OBBB Act of 2025: ABAWD Exceptions' (landing page https://www.fns.usda.gov/snap/obbb-ABAWD-exemptions-implementation-memo, body not readable)",
+        "date": "2025-09-18 (CT page)",
+        "sourceType": "government-page",
+        "confirmed": true,
+        "note": "Age range 18-64 and the child-under-14 rule were read on the CT and CDSS pages and in the statute. The removal of the veteran/homeless/foster-youth exceptions was read indirectly: those exceptions are absent from the amended statute. The 60-64 E&T bar and the 2025-11-01 implementation date came from search snippets of the FNS memo and CT pages (unconfirmed). The FNS 'Work Requirements' public page (updated 2026-07-16) and eCFR 7 CFR 273.24 still show the old 18-54 rule and old exceptions; the statute controls."
+      },
+      "newYork": {
+        "value": "H.R. 1 exemption criteria applied to applications and recertifications from 2025-11-01; the current 3-year ABAWD period ran 2023-10-01 to 2026-09-30; ABAWD rules in effect in all counties from 2026-03-01.",
+        "url": "https://otda.ny.gov/programs/snap/work-requirements.asp",
+        "publisher": "NY Office of Temporary and Disability Assistance",
+        "date": null,
+        "sourceType": "government-page",
+        "confirmed": false,
+        "note": "From search snippets only; otda.ny.gov refused every connection."
+      },
+      "california": {
+        "value": "H.R. 1 definition (ages 18-64) took effect in California 2026-06-01. A new statewide 36-month clock started 2026-01-01 (three countable months between 2026-01-01 and 2028-12-31). Waived counties 2025-11-01 to 2026-10-31: Alpine, Colusa, Imperial, Merced, Monterey, Plumas, Tulare (Los Angeles, San Francisco and other film centers are not waived). Meeting the rule: an average of 20 hours of work a week, or earning USD 217.50 a week before taxes (30 hours at the federal minimum wage), or qualifying school/training.",
+        "effectiveHR1": "2026-06-01",
+        "clockStart": "2026-01-01",
+        "url": "https://www.cdss.ca.gov/inforesources/calfresh/abawd",
+        "publisher": "California Department of Social Services",
+        "date": "2026 (reflects rules effective 2026-06-01)",
+        "sourceType": "government-page",
+        "confirmed": true,
+        "note": "The 2026-01-01 clock start came from a search snippet of the same page and CDSS letters; the waiver list, 18-64 range and 2026-06-01 date were read on the page."
+      },
+      "connecticut": {
+        "value": "From 2025-11-02 all Connecticut towns have ABAWD work rules (no waived areas). Applies to anyone 18-64 unless exempt; 80 hours a month of work, training, workfare or volunteering to keep SNAP beyond 3 months in 36. Earning at least USD 217.50 a week exempts.",
+        "effective": "2025-11-02",
+        "url": "https://portal.ct.gov/dss/knowledge-base/articles/snap/abawd-work-requirement-changes-hr1",
+        "publisher": "Connecticut Department of Social Services",
+        "date": "2025-09-18",
+        "sourceType": "government-page",
+        "confirmed": true
+      }
+    },
+    "performersQualify": {
+      "value": "Yes. SNAP has no occupational exclusion; a performer qualifies on the same income, resource and work tests as anyone. Wages from a producer count as earned income. Freelance or 1099 performing income is self-employment income: it is averaged over the period it is meant to cover (or over the life of a business under a year old, projected forward), and the costs of producing it are subtracted to give monthly net self-employment income, which is then added to other earnings. Residuals paid as wages count as earned income when received. Under the ABAWD rule, work of 20 hours a week (or 80 a month) including paid, unpaid or volunteer work, or weekly earnings of at least USD 217.50, keeps eligibility; a performer between bookings who does not meet that uses up the 3 countable months.",
+      "url": "https://www.ecfr.gov/current/title-7/subtitle-B/chapter-II/subchapter-C/part-273/section-273.11",
+      "publisher": "eCFR, 7 CFR 273.11(a) (self-employment income)",
+      "date": "read 2026-09-30",
+      "sourceType": "regulation",
+      "confirmed": true,
+      "note": "No page says 'performers qualify' in those words; the conclusion follows from the absence of any occupational bar and the self-employment rules read. Treatment of residuals specifically was not read on a primary page."
+    }
+  },
+
+  "uncertain": [
+    "BC Income Assistance earnings exemption effective date: the policy page shows 'Effective: January 1, 2026' for CAD 600, but a search snippet of an earlier version gave 'January 1, 2024' for the same amount. The amount (600) is confirmed; the date it began is not.",
+    "BC work-search intensity (15 employer contacts and 25 hours a week) appeared only in a search snippet; the policy page as read gives no numeric minimum.",
+    "BC minimum shelter allowance amount (paid when actual shelter costs are below it) was not read; null.",
+    "BC's rule that each cheque-issue date pays the following month's assistance is standard practice but was not stated in words on the page read.",
+    "Ontario Works 'gifts and voluntary payments up to CAD 10,000 in 12 months' is from a search snippet, not read on the directive.",
+    "SNAP FY2027 (from 2026-10-01) figures come from Erie County DSS, not from the federal FNS memo, which returned HTTP 403. The FY2027 130% gross limit for one person was not published on any page read (arithmetic gives 1,729).",
+    "New York's gross-income tier for a single adult with no earned income is unresolved: secondary sources say 130% (1,696 in FY2026) with 150% only for households with earned income; Erie County's table labels 150% as the limit for households without elderly or disabled members and shows no 130% tier.",
+    "California and Connecticut FY2027 gross limits (200% FPL) were not found; Erie's 200% figure for FY2027 is 2,660, which CA and CT would likely match, but that was not read on their pages.",
+    "All New York ABAWD details (2023-10-01 to 2026-09-30 period, statewide rules from 2026-03-01, H.R. 1 screening from 2025-11-01) are from search snippets; otda.ny.gov could not be reached.",
+    "The FNS OBBB ABAWD memo body (dates, 60-64 E&T bar, 2025-11-01 implementation deadline) could not be read. The FNS public work-requirements page and eCFR 273.24 still show pre-2025 rules; the amended statute was read and controls.",
+    "The statute says the exception covers anyone 'over 65'. CDSS and Connecticut both read this as ABAWD status ending the month a person turns 65 (age range 18-64). That is the agencies' reading, not the statute's literal words.",
+    "EI: no Tax Court or Federal Court decision specific to an ACTRA film or television performer was found and read; the rule rests on Royal Winnipeg Ballet (dancers), the Status of the Artist Act's treatment of performers as independent contractors, CRA guidance, and the absence of any deeming regulation. A given engagement can still be found to be employment."
+  ]
+}

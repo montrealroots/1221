@@ -24,6 +24,7 @@ import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/jo
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
 import { registerHomeBenefits } from './systems/homebenefits';
+import { registerAssistance } from './systems/assistance';
 import { registerSocialSecurity } from './systems/socialsecurity';
 import { registerStatePension } from './systems/statepension';
 import { registerUniversalCredit } from './systems/universalcredit';
@@ -122,6 +123,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerStatePension(sim);
   registerSocialSecurity(sim);
   registerHomeBenefits(sim);
+  registerAssistance(sim);
   registerHomePensions(sim);
   registerImss(sim);
   registerVehicles(sim);

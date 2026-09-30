@@ -512,8 +512,16 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
  */
 export function buyTheDaysFood(sim: Simulation, person: Person): boolean {
   if (!person.home) return true;
-  const cost = foodOf(sim, person);
-  const bought = spend(sim, person, cost, 'Groceries', 'food');
+  let cost = foodOf(sim, person);
+  // An EBT card's SNAP pays for groceries first, and for nothing else (from 2026-10-01).
+  const ebtId = person.assistance?.ebtAccountId;
+  const ebt = ebtId ? sim.universe.accounts[ebtId] : undefined;
+  const fromEbt = ebt ? Math.min(cost, Math.max(0, ebt.balance)) : 0;
+  if (ebt && fromEbt > 0) {
+    sim.post({ memo: 'Groceries, on the EBT card', category: 'food', postings: [{ accountId: sim.nominalAccount('expense', 'Food').id, amount: fromEbt }, { accountId: ebt.id, amount: -fromEbt }] });
+    cost -= fromEbt;
+  }
+  const bought = cost === 0 || spend(sim, person, cost, 'Groceries', 'food');
   if (bought) person.home.fedOn = sim.now;
   if (!bought && person.id === sim.universe.playerId) {
     sim.notify({

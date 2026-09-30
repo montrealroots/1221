@@ -28,6 +28,7 @@ import { DrivingPane, PassportPane, WorkPane } from '@/ui/papers/Documents';
 import { creditRefusal, livesInBritain } from '@/engine/systems/universalcredit';
 import { CDMX_DESEMPLEO, HAP, IRISH_JA, desempleoRefusal, hapRefusal, hapSplit, jobseekerRefusal, livesInDublinCity, livesInIreland, livesInMexicoCity, netWeeklyEur } from '@/engine/systems/homebenefits';
 import { rentOf } from '@/engine/systems/household';
+import { BC_ASSISTANCE, ONTARIO_WORKS, SNAP, assistanceRefusal, ebtBalance, schemeFor } from '@/engine/systems/assistance';
 import { exchange } from '@/engine/content/currency';
 
 type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
@@ -398,6 +399,32 @@ function HomeClaimsPanel() {
 }
 
 /** A claim: filing it, what it pays, and what it's paid. */
+/**
+ * Assistance where they live (`systems/assistance.ts`, from 2026-10-01):
+ * Ontario Works, BC Income Assistance, or SNAP onto an EBT card.
+ */
+function AssistancePanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const scheme = schemeFor(person);
+  if (!scheme) return null;
+  const claim = person.assistance && person.assistance.closedAt === undefined ? person.assistance : undefined;
+  const no = assistanceRefusal(sim, person);
+  const title = scheme === 'ontario-works' ? 'Ontario Works' : scheme === 'bc-assistance' ? 'Income Assistance' : 'SNAP';
+  const subtitle = scheme === 'snap' ? 'Food assistance, onto an EBT card for groceries' : scheme === 'ontario-works' ? 'Ontario’s, basic needs and shelter a month' : 'British Columbia’s, support and shelter a month';
+  const most = scheme === 'ontario-works' ? `CAD ${ONTARIO_WORKS.basic + ONTARIO_WORKS.shelterMax}` : scheme === 'bc-assistance' ? `CAD ${BC_ASSISTANCE.support + BC_ASSISTANCE.shelterMax}` : `$${SNAP.fy[SNAP.fy.length - 1]!.max}`;
+  return (
+    <Panel title={title} subtitle={subtitle} actions={no ? undefined : <Gated feature="benefits.assistance" onClick={() => { const a = run<{ firstPaymentAt: number }>('benefits.assistance'); if (a.ok) toast(`Applied. The first month comes ${formatDate(a.value!.firstPaymentAt, sim.zone)}.`, 'positive'); }}>Apply</Gated>}>
+      <div className="grid grid-3">
+        <Stat label="Claim" value={claim ? 'Open' : 'None Open'} note={claim ? `Since ${formatDate(claim.since, sim.zone)}, ${claim.months} ${claim.months === 1 ? 'month' : 'months'} paid` : no ?? 'You can apply now'} />
+        <Stat label="At Most" value={most} note={scheme === 'snap' ? 'A month, less 30% of net income' : 'A month, less earnings past what’s kept'} />
+        <Stat label={scheme === 'snap' ? 'On The EBT Card' : 'Assets Kept To'} value={scheme === 'snap' ? formatMoney(ebtBalance(sim, person), cur) : `CAD ${(scheme === 'ontario-works' ? ONTARIO_WORKS.assets : BC_ASSISTANCE.assets).toLocaleString('en-US')}`} note={scheme === 'snap' ? 'Spent on groceries first' : 'The home and a car aside'} />
+      </div>
+    </Panel>
+  );
+}
+
 function BenefitsPane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -413,6 +440,7 @@ function BenefitsPane() {
   return (
     <div className="col gap-5">
       <HomeClaimsPanel />
+      <AssistancePanel />
       <Panel
         title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}

@@ -287,6 +287,8 @@ export interface Person {
   jobseekers?: import('../systems/homebenefits').JobseekerClaim;
   desempleo?: import('../systems/homebenefits').DesempleoClaim;
   returnedHomeAt?: number;
+  /** A claim for assistance where they live: Ontario Works, BC Income Assistance or SNAP (`systems/assistance.ts`, from 2026-10-01). */
+  assistance?: import('../systems/assistance').AssistanceClaim;
   /** When their US status ended while they stayed on, from 2026-10-01 (`systems/permission.ts`). */
   usOutOfStatus?: number;
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
