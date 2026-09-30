@@ -98,7 +98,7 @@ import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
 import { alarmFactor } from './alarm';
-import { foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
+import { bcSvtRate, foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -434,7 +434,7 @@ export interface Works { projectId: string; startedAt: Instant; doneAt: Instant;
 
 /** A payment falling due on a home. */
 export interface Installment {
-  kind: 'mortgage' | 'equity' | 'tax' | 'insurance' | 'hoa' | 'repair' | 'council';
+  kind: 'mortgage' | 'equity' | 'tax' | 'insurance' | 'hoa' | 'repair' | 'council' | 'svt';
   dueAt: Instant;
   /** Principal and interest, for a loan's; the whole, for the rest. */
   amount: Money;
@@ -480,6 +480,8 @@ export interface OwnedHome {
   security?: import('./homesecurity').Device[];
   /** An electric car's charger fitted (`systems/charging.ts`, from 2026-09-30). */
   charger?: boolean;
+  /** Connecticut's income-qualified charger rebate taken, in place of Managed Charging's enrollment sum. */
+  chargerRebate?: boolean;
   listingId: string;
   cityId: string;
   facts: HomeFacts;
@@ -1464,6 +1466,15 @@ function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
     owned.owed.push({ kind: 'council', dueAt: due, amount: Math.round(councilTaxYear(sim, councilBand(sim, homeValue(sim, owned), owned.cityId), true, 1, owned.cityId) / COUNCIL_TAX.instalments) });
   }
   if (month.hoa > 0) owned.owed.push({ kind: 'hoa', dueAt: due, amount: month.hoa });
+  // British Columbia's speculation and vacancy tax, each July, on last year for a foreign owner's home left empty (`systems/foreignbuyers.ts`).
+  if (m === 7) {
+    const year = Number(key.slice(0, 4)) - 1;
+    const from = Date.UTC(year, 0, 1);
+    const to = Date.UTC(year + 1, 0, 1);
+    const lived = owned.occupied.reduce((d, o) => d + Math.max(0, Math.min(o.to ?? sim.now, to) - Math.max(o.from, from)) / MS_DAY, 0);
+    const rate = bcSvtRate(person, owned.cityId, year, lived, owned.tenancies.some((t) => t.unit === 'main' && t.status === 'let'));
+    if (rate > 0 && owned.boughtAt < to) owned.owed.push({ kind: 'svt', dueAt: due, amount: Math.round(assessedValue(sim, owned) * rate) });
+  }
   // A home let is depreciated a month at a time: its building, over 27.5 years; a cottage let, its own cost.
   const zone = CITIES.require(owned.cityId).timeZone;
   const cottage = owned.improvements.filter((i) => i.projectId === 'adu').reduce((s, i) => s + i.cost, 0);
@@ -1484,7 +1495,7 @@ function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
   }
 }
 
-const EXPENSE: Record<Installment['kind'], string> = { mortgage: 'Mortgage Interest', equity: 'Home Equity Interest', tax: 'Property Tax', insurance: 'Home Insurance', hoa: 'Shared Charges', repair: 'Home Repairs', council: 'Council Tax' };
+const EXPENSE: Record<Installment['kind'], string> = { mortgage: 'Mortgage Interest', equity: 'Home Equity Interest', tax: 'Property Tax', insurance: 'Home Insurance', hoa: 'Shared Charges', repair: 'Home Repairs', svt: 'Speculation And Vacancy Tax', council: 'Council Tax' };
 const LOANS: readonly Installment['kind'][] = ['mortgage', 'equity'];
 const escrowOf = (one: Installment): Money => (one.escrow ? one.escrow.tax + one.escrow.insurance + one.escrow.pmi : 0);
 

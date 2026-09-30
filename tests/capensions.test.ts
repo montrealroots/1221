@@ -13,7 +13,7 @@ import { exchange } from '@/engine/content/currency';
 import { yearOf } from '@/engine/systems/earnings';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
-import { CPP, GAINS, GIS, OAS, canadaPensionsOf, canadianYears, cppMonthly, cppOnCheck, oasMonthly, oasRefusal, supplements } from '@/engine/systems/capensions';
+import { CPP, GAINS, GIS, OAS, oasRecovery, canadaPensionsOf, canadianYears, cppMonthly, cppOnCheck, oasMonthly, oasRefusal, supplements } from '@/engine/systems/capensions';
 
 const YEAR = 365.2425 * MS_DAY;
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -122,10 +122,25 @@ describe('Old Age Security, the GIS and GAINS', () => {
     for (let y = 1950; y <= 2030; y += 1) canadaPensionsOf(sim.player).years[y] = 30_000;
     expect(sim.execute({ kind: 'pension.ca_oas', payload: {} }).ok).toBe(true);
     sim.advanceBy(31 * MS_DAY);
-    // With no income last year: all of OAS, the GIS and GAINS.
+    // With no income last year: all of OAS, a year deferred at 66 (7.2% more), the GIS and GAINS.
     const month = sim.universe.transactions.find((t) => t.memo === 'Canada’s pensions, the month')!;
     const paid = month.postings.filter((p) => p.amount > 0).reduce((a, p) => a + p.amount, 0);
-    expect(Math.abs(paid - inSave(sim, Math.round((OAS.monthly + GIS.monthly + GAINS.monthly) * 100), 'CAD'))).toBeLessThanOrEqual(1);
+    expect(Math.abs(paid - inSave(sim, Math.round((OAS.monthly * 1.072 + GIS.monthly + GAINS.monthly) * 100), 'CAD'))).toBeLessThanOrEqual(1);
     expect(sim.execute({ kind: 'pension.cpp', payload: {} }).ok).toBe(true);
+  });
+
+  it('pays 0.6% more a month for OAS deferred past 65, and takes back 15% of last year’s income over $95,323', () => {
+    const sim = life('ca-on-toronto', 'oas-defer');
+    (sim.player as { birthInstant: number }).birthInstant = sim.now - 67 * YEAR;
+    lived(sim, 45);
+    expect(sim.execute({ kind: 'pension.ca_oas', payload: {} }).ok).toBe(true);
+    expect(canadaPensionsOf(sim.player).oasFactor).toBeCloseTo(1 + 0.006 * 24, 6);
+    expect(oasRecovery(sim, sim.player, 0)).toBe(0);
+    yearOf(sim.player, new Date(sim.now).getUTCFullYear() - 1).acting = inSave(sim, 170_000_00, 'CAD');
+    const oasYear = OAS.monthly * 1.144 * 12;
+    expect(oasRecovery(sim, sim.player, 0)).toBeCloseTo((0.15 * (170_000 + oasYear - 95_323)) / 12, 0);
+    // High earners: the recovery takes it all, and the month pays nothing of OAS.
+    sim.advanceBy(31 * MS_DAY);
+    expect(sim.universe.transactions.some((t) => t.memo === 'Canada’s pensions, the month')).toBe(false);
   });
 });

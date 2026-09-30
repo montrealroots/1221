@@ -19,7 +19,7 @@ import { inspectIfDue } from './inspections';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, formatDate, type Instant } from '../core/time';
+import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
@@ -28,7 +28,7 @@ import { BIKE_MODELS } from '../content/bikecatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
 import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
-import { homeShareOf, kwhPrice } from './charging';
+import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
 import { modLoading, registerMods } from './mods';
 import { ATV_FEES, ATV_INSURANCE } from '../content/rides';
@@ -54,6 +54,8 @@ export interface OwnedVehicle {
   id: string;
   /** A shop's window tint (`systems/tint.ts`, from 2026-09-30). */
   tint?: TintKind;
+  /** Months an electric car has earned charging rewards at home (`systems/charging.ts`). */
+  monthsCharged?: number;
   /** A full respray, declared to the insurer (`systems/mods.ts`, from 2026-09-30); an older save's, before `mods`. */
   resprayed?: boolean;
   /** Modifications fitted and declared (`systems/mods.ts`). */
@@ -623,6 +625,9 @@ export function registerVehicles(sim: Simulation): void {
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
       // 2026-09-29 the fuel went into arrears as if it had been burned, and a New York life starved paying for it.
       if (spend(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) {
+        // The utility's rewards for charging at home off the peak (`systems/charging.ts`).
+        const reward = m.fuel === 'ev' && m.kwhPer100km ? chargingRewards(s, person, v.jurisdiction, (km * m.kwhPer100km * homeShareOf(person)) / 100, v.monthsCharged ?? 0, zonedParts(item.at, s.homeZone).month) : 0;
+        if (reward > 0) { s.post({ memo: 'Charging rewards, the month', category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: reward }, { accountId: s.nominalAccount('income', 'Charging Rewards').id, amount: -reward }] }); v.monthsCharged = (v.monthsCharged ?? 0) + 1; }
         v.km = (v.km ?? 0) + km;
         drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`, kindOf(m), tireFactor(v, item.at));
         driven = km;

@@ -31,6 +31,8 @@ import { exchange } from '../content/currency';
 import { citizenOf } from './documents';
 import { CITIES } from '../content/geography';
 
+const isCanadian = (person: Person) => citizenOf(person, 'CA');
+
 export const FOREIGN_BUYERS = {
   canadaBanUntil: Date.UTC(2027, 0, 1),
   agglomerationPopulation: 10_000,
@@ -38,9 +40,23 @@ export const FOREIGN_BUYERS = {
   torontoNrst: 0.1,
   bcAptt: 0.2,
   englandSurcharge: 0.02,
+  /**
+   * British Columbia's speculation and vacancy tax on a foreign owner's home
+   * left empty (not lived in half the year, and not let), on its assessed
+   * value, by the year it's for: 2% through 2025, 3% for 2026, 4% from 2027
+   * (gov.bc.ca, read from a search's extract, research-land-2.json), billed
+   * in July. From later on 2026-09-30; a Canadian's 0.5% isn't kept.
+   */
+  bcSvt: [[2025, 0.02], [2026, 0.03], [Infinity, 0.04]] as readonly (readonly [number, number])[],
   /** Mexico's convenio de renuncia with the SRE, pesos. */
   mexicoConvenio: 5_252.02,
 } as const;
+
+/** BC's speculation and vacancy tax for a year on a home, as a share of its assessed value: a foreign owner's, where it stood empty; else none. */
+export function bcSvtRate(person: Person, cityId: string, year: number, daysLivedIn: number, let_: boolean): number {
+  if (CITIES.get(cityId)?.parentId !== 'ca-02' || isCanadian(person) || let_ || daysLivedIn >= 183) return 0;
+  return FOREIGN_BUYERS.bcSvt.find(([upTo]) => year <= upTo)![1];
+}
 
 /** A foreigner's SRE permit to own in Mexico, outside the restricted zone, in the save's money, cents; nothing for anyone else. */
 export function foreignBuyerFee(sim: Simulation, person: Person, cityId: string): Money {
@@ -50,7 +66,6 @@ export function foreignBuyerFee(sim: Simulation, person: Person, cityId: string)
   return cur === 'MXN' ? c : exchange(c, 'MXN', cur) ?? c;
 }
 
-const isCanadian = (person: Person) => citizenOf(person, 'CA');
 
 /** Why a home here can't be bought by this person now, or nothing. */
 export function foreignBuyerRefusal(sim: Simulation, person: Person, cityId: string): string | undefined {

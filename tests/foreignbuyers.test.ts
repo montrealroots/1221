@@ -7,7 +7,9 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Person } from '@/engine/domain/model';
-import { foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from '@/engine/systems/foreignbuyers';
+import { bcSvtRate, foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from '@/engine/systems/foreignbuyers';
+import { MS_DAY } from '@/engine/core/time';
+import { assessedValue, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { askingPrice, listingsIn, offerFor, offerRefusal } from '@/engine/systems/homes';
@@ -58,5 +60,29 @@ describe('an offer', () => {
     expect(foreignBuyerFee(sim, mexican, 'mx-cmx-mexicocity')).toBe(0);
     expect(foreignBuyerFee(sim, sim.player, 'ie-lei-dublin')).toBe(0);
     expect(offerFor(sim, sim.player, home, 0.4, price, false).closing - offerFor(sim, mexican, home, 0.4, price, false).closing).toBe(fee);
+  });
+});
+
+describe('British Columbia’s speculation and vacancy tax', () => {
+  it('takes 3% for 2026 and 4% from 2027 of a foreign owner’s empty home, and nothing of one lived in half the year, let, or a Canadian’s', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'svt');
+    expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2026, 0, false)).toBe(0.03);
+    expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2027, 0, false)).toBe(0.04);
+    expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2025, 0, false)).toBe(0.02);
+    expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2026, 200, false)).toBe(0);
+    expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2026, 0, true)).toBe(0);
+    expect(bcSvtRate(sim.player, 'ca-on-toronto', 2026, 0, false)).toBe(0);
+    expect(bcSvtRate({ ...sim.player, citizenshipId: 'ca' } as Person, 'ca-bc-vancouver', 2026, 0, false)).toBe(0);
+  });
+
+  it('is billed in July on an American’s Vancouver house left empty', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'svt-bill');
+    const facts: HomeFacts = { type: 'house', address: 'Test House', beds: 3, baths: 2, size: 1_500, lot: 4_000, built: 2000, features: [], parts: {}, hoaUsd: 0 };
+    const owned = ownBuilt(sim, sim.player, { cityId: 'ca-bc-vancouver', facts, price: 1_500_000_00, closing: 0 });
+    owned.boughtAt -= 400 * MS_DAY;
+    sim.advanceBy(400 * MS_DAY);
+    const svt = sim.universe.transactions.filter((t) => t.memo.startsWith('Speculation And Vacancy Tax'));
+    expect(svt.length).toBeGreaterThan(0);
+    expect(svt[0]!.postings.filter((p) => p.amount > 0).reduce((a, p) => a + p.amount, 0)).toBeGreaterThan(Math.round(assessedValue(sim, owned) * 0.015));
   });
 });

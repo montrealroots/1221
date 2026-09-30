@@ -24,8 +24,10 @@
  * **Old Age Security**, from 65, claimed: $762.50 a month in the fourth
  * quarter of 2026, $838.75 from 75, for forty years in Canada after 18, in
  * fortieths, ten years at least; paid abroad only after twenty. SLATE counts
- * a year in Canada where they had income while living there, its reading;
- * deferral and the recovery tax (from $95,323) aren't kept.
+ * a year in Canada where they had income while living there, its reading.
+ * Claimed after 65 it's 0.6% more a month, to 36% at 70; and from later on
+ * 2026-09-30 the recovery tax takes 15% of the last year's net income over
+ * $95,323 back from it, a month's share at a time.
  *
  * **The Guaranteed Income Supplement**, with OAS while living in Canada:
  * $1,138.90 a month at most, less half of the last year's income other than
@@ -51,12 +53,12 @@ import { earningsOf, homeOf } from './earnings';
 import { payeeAccount } from './cash';
 
 export const CPP = { exemption: 3_500, ympe: 74_600, yampe: 85_000, rate: 0.119, rate2: 0.08, base: 0.25, enhanced: 1 / 3, second: 0.08, dropout: 0.17, dropoutMost: 8, early: 0.006, late: 0.007, most: 1_507.65 } as const;
-export const OAS = { monthly: 762.5, at75: 838.75, fullYears: 40, leastYears: 10, abroadYears: 20 } as const;
+export const OAS = { monthly: 762.5, at75: 838.75, fullYears: 40, leastYears: 10, abroadYears: 20, deferral: 0.006, recoveryFrom: 95_323, recovery: 0.15 } as const;
 export const GIS = { monthly: 1_138.9, reduction: 0.5, exempt: 5_000, halfBand: 10_000 } as const;
 export const GAINS = { monthly: 92, cutoff: 4_416 } as const;
 export const CA_PENSION_KIND = 'pension.ca_month';
 
-export interface CanadaPensions { years: Record<string, number>; cppFrom?: Instant; cppMonthly?: number; oasFrom?: Instant }
+export interface CanadaPensions { years: Record<string, number>; cppFrom?: Instant; cppMonthly?: number; oasFrom?: Instant; oasFactor?: number }
 
 const YEAR_MS = 365.2425 * MS_DAY;
 const cad = (cents: Money, from: string) => (from === 'CAD' ? cents : exchange(cents, from, 'CAD') ?? cents);
@@ -125,6 +127,15 @@ export function gisIncome(sim: Simulation, person: Person, cppYearly: number): n
   return counted + cppYearly;
 }
 
+/** The recovery tax a month, in dollars: 15% of the last year's net income over $95,323, OAS and the CPP counted in it. */
+export function oasRecovery(sim: Simulation, person: Person, cppMonth: number): number {
+  const cur = saveCurrency(sim.universe);
+  const year = zonedParts(sim.now, sim.homeZone).year - 1;
+  const earned = cad(earningsOf(person).years[year]?.acting ?? 0, cur) / 100;
+  const income = earned + (cppMonth + oasMonthly(person, ageAt(person, sim.now)) * (canadaPensionsOf(person).oasFactor ?? 1)) * 12;
+  return (OAS.recovery * Math.max(0, income - OAS.recoveryFrom)) / 12;
+}
+
 /** The GIS and GAINS a month, in dollars, for someone on OAS living in Canada. */
 export function supplements(sim: Simulation, person: Person, cppMonth: number): { gis: number; gains: number } {
   if (!livesInCanada(person)) return { gis: 0, gains: 0 };
@@ -162,7 +173,7 @@ export function canadaMonth(sim: Simulation, person: Person): Money {
   const cpp = rec.cppFrom !== undefined ? rec.cppMonthly ?? 0 : 0;
   let total = cpp;
   if (rec.oasFrom !== undefined) {
-    const oas = oasMonthly(person, ageAt(person, sim.now));
+    const oas = Math.max(0, oasMonthly(person, ageAt(person, sim.now)) * (rec.oasFactor ?? 1) - oasRecovery(sim, person, cpp));
     const s = oas > 0 ? supplements(sim, person, cpp) : { gis: 0, gains: 0 };
     total += oas + s.gis + s.gains;
   }
@@ -176,9 +187,12 @@ export function registerCanadaPensions(sim: Simulation): void {
     const person = s.player;
     const no = oasRefusal(s, person);
     if (no) throw new CommandError(no);
-    canadaPensionsOf(person).oasFrom = s.now;
+    const rec = canadaPensionsOf(person);
+    rec.oasFrom = s.now;
+    // Deferred past 65: 0.6% more a month, to 70.
+    rec.oasFactor = 1 + OAS.deferral * Math.min(60, Math.max(0, Math.round((ageAt(person, s.now) - 65) * 12)));
     arm(s, person);
-    return { monthly: fromCad(s, oasMonthly(person, ageAt(person, s.now))) };
+    return { monthly: fromCad(s, oasMonthly(person, ageAt(person, s.now)) * rec.oasFactor) };
   });
   sim.onCommand<Record<string, never>, { monthly: Money }>('pension.cpp', (_p, { sim: s }) => {
     const person = s.player;

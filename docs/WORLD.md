@@ -76,7 +76,8 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - **Old Age Security** from 65 (`pension.ca_oas`): $762.50 a month, or $838.75 from 75, in fortieths of forty years in Canada after 18. It asks ten years at least, and twenty to be paid abroad. SLATE counts a year where there was income while living in Canada, its reading.
   - **The GIS:** $1,138.90 a month, less half of last year's other income after the earnings exemption. It is paid only while living in Canada.
   - **Ontario's GAINS:** $92 a month, gone at $4,416 of income.
-  - **Not kept:** OAS deferral and its recovery tax; the GIS top-up's own 25% reduction, whose threshold is 2017's; BC's Senior's Supplement table; and taxing the pensions.
+  - **Since, later on 2026-09-30:** OAS deferred past 65 pays 0.6% more a month, to 36% at 70. The recovery tax takes 15% of last year's net income over $95,323 back from it, a month's share at a time.
+  - **Not kept:** the GIS top-up's own 25% reduction and BC's Senior's Supplement, researched since (`research-canada-benefits2.json`); taxing the pensions.
   - **Replayed with them,** the Toronto life dies at 87 worth +$54,242, not −$16,007. Its hungry days fell from 604 to 86, all at 61 to 64, before the life-player claims at 65.
   - **Tests:** `tests/capensions.test.ts` (6). 12 mutations, all killed once four tests were added.
   - **Tests:** `tests/homebenefits.test.ts`, the Canadian case. 5 mutations, all killed.
@@ -475,7 +476,10 @@ Researched in `docs/research/world/research-ev-tint-security.json` and `research
   - Ireland: a smart charger fitted, less SEAI's €300.
   - Mexico City: a Wall Connector and a basic installation package.
 - **Mexico City's green plates:** an electric car is exempt from the verificación, so none is charged.
-- **Not kept:** charging from an ordinary socket; Connecticut's income-qualified Rebate+; utilities' managed-charging credits; range on a long journey.
+- **The utilities' rewards** (`chargingRewards` in `systems/charging.ts`, later on 2026-09-30), paid in the car's month:
+  - Connecticut, Eversource's Managed Charging: $100 on enrolling and $10 a month of its $120 a year. A household at or under 300% of the poverty line takes the $1,500 charger rebate instead.
+  - New York, Con Edison's SmartCharge: 10 cents a kWh charged at home overnight, $35 a month from June to September, and $25 at three months.
+- **Not kept:** charging from an ordinary socket; Connecticut's Rebate+ on the car, whose income test was the charger's; range on a long journey.
 
 Evidence: `tests/evs.test.ts` (6). 15 mutations, 14 killed after three tests were added. The survivor is equivalent: BC's half-the-cost rule never binds under its $350 cap at these prices.
 
@@ -599,7 +603,8 @@ Researched in `docs/research/world/research-land-2.json` (`systems/foreignbuyers
   - British Columbia's 20% additional property transfer tax on a foreign national (not re-read on 2026-09-30).
 - **England:** a buyer not resident in the UK pays 2% more Stamp Duty Land Tax (HMRC, not re-read). SLATE takes a buyer whose home isn't in Britain as not resident; the test is 183 days in the year before.
 - **Mexico City** is outside the restricted zone, so a foreigner may own directly under a Calvo clause with the SRE. Its fee wasn't read, and none is charged. Ireland and America don't restrict a foreign buyer.
-- Not kept: British Columbia's speculation and vacancy tax on a foreign owner's empty home (3% for 2026, 4% from 2027, read from a search's extract); America's FIRPTA withholding on a foreign seller.
+- British Columbia's speculation and vacancy tax (`bcSvtRate`, later on 2026-09-30): each July, on the assessed value of a foreign owner's home that last year was lived in under half the year and not let. It is 2% through 2025, 3% for 2026 and 4% from 2027, read from a search's extract. A Canadian's 0.5% isn't kept.
+- Not kept: America's FIRPTA withholding on a foreign seller, which needs a nonresident's US return that SLATE doesn't file.
 
 Evidence: `tests/foreignbuyers.test.ts` (3). 7 mutations, all killed in the end. Two needed tests: the ban lapsing on its date, and a small town outside it.
 

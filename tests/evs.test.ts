@@ -15,7 +15,8 @@ import { UPKEEP_USD_PER_KM } from '@/engine/content/vehiclefees';
 import { CHARGING, EV_MODELS, HOME_CHARGING_SHARE } from '@/engine/content/evcatalog';
 import { documentsOf } from '@/engine/systems/documents';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
-import { chargerQuote, homeShareOf } from '@/engine/systems/charging';
+import { chargerQuote, chargingRewards, homeShareOf } from '@/engine/systems/charging';
+import { yearOf } from '@/engine/systems/earnings';
 import { modelById, monthKm, quote, runningCost, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -55,6 +56,36 @@ describe('buying an electric car', () => {
     expect(line(quote(model('us-chevrolet-equinox-ev'), 'us-ca-losangeles', AT, { person: sim.player }), 'MyFirstEV, A First Electric Car')).toBeUndefined();
     vehiclesOf(sim.player).push({ id: 'had', modelId: y.id, boughtAt: sim.now, ageAtPurchase: 0, listPrice: y.price, jurisdiction: 'US-CA', cityId: 'us-ca-losangeles', coverage: 'full', registrationDue: sim.now });
     expect(line(quote(y, 'us-ca-losangeles', AT, { person: sim.player }), 'MyFirstEV, A First Electric Car')).toBeUndefined();
+  });
+});
+
+describe('charging rewards', () => {
+  it('pays New York’s SmartCharge 10 cents a kWh charged at home, $35 a summer month and $25 at three months; Connecticut’s $100 and $10 a month', () => {
+    const at = (m: number) => m;
+    expect(chargingRewards(house('us-ny-newyork', 'rw-none'), house('us-ny-newyork', 'rw-none').player, 'US-NY', 100, 0, at(3))).toBe(0);
+    const ny = house('us-ny-newyork', 'rw-ny');
+    expect(ny.execute({ kind: 'home.charger', payload: {} }).ok).toBe(true);
+    expect(chargingRewards(ny, ny.player, 'US-NY', 100, 0, 3)).toBe(inSave(ny, 10_00, 'USD'));
+    expect(chargingRewards(ny, ny.player, 'US-NY', 100, 0, 7)).toBe(inSave(ny, 45_00, 'USD'));
+    expect(chargingRewards(ny, ny.player, 'US-NY', 100, 2, 3)).toBe(inSave(ny, 35_00, 'USD'));
+    const ct = house('us-ct-newhaven', 'rw-ct');
+    yearOf(ct.player, new Date(ct.now).getUTCFullYear() - 1).acting = inSave(ct, 60_000_00, 'USD');
+    expect(ct.execute({ kind: 'home.charger', payload: {} }).ok).toBe(true);
+    expect(chargingRewards(ct, ct.player, 'US-CT', 100, 0, 3)).toBe(inSave(ct, 110_00, 'USD'));
+    expect(chargingRewards(ct, ct.player, 'US-CT', 100, 1, 3)).toBe(inSave(ct, 10_00, 'USD'));
+    // An income-qualified household took the rebate instead of the $100.
+    const low = house('us-ct-newhaven', 'rw-ct-low');
+    expect(low.execute({ kind: 'home.charger', payload: {} }).ok).toBe(true);
+    expect(chargingRewards(low, low.player, 'US-CT', 100, 0, 3)).toBe(inSave(low, 10_00, 'USD'));
+  });
+
+  it('is paid in the car’s month', () => {
+    const sim = house('us-ny-newyork', 'rw-month');
+    documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'us', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
+    expect(sim.execute({ kind: 'home.charger', payload: {} }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-tesla-model-y' } }).ok).toBe(true);
+    sim.advanceBy(40 * MS_DAY);
+    expect(sim.universe.transactions.some((t) => t.memo === 'Charging rewards, the month')).toBe(true);
   });
 });
 
@@ -100,8 +131,10 @@ describe('charging it', () => {
     // BC's rebate is half, to $350.
     const bc = house('ca-bc-vancouver', 'ev-charger-bc');
     expect((chargerQuote(bc, bc.player) as { grant: number }).grant).toBe(inSave(bc, 350_00, 'CAD'));
-    // Connecticut's is for income-qualified households only.
+    // Connecticut's is for income-qualified households only, to 300% of the poverty line: $1,500, and nothing above it.
     const ct = house('us-ct-newhaven', 'ev-charger-ct');
+    expect((chargerQuote(ct, ct.player) as { grant: number }).grant).toBe(inSave(ct, 1_500_00, 'USD'));
+    yearOf(ct.player, new Date(ct.now).getUTCFullYear() - 1).acting = inSave(ct, 50_000_00, 'USD');
     expect((chargerQuote(ct, ct.player) as { grant: number }).grant).toBe(0);
     expect(chargerQuote(house('us-ny-newyork', 'ev-charger-flat', 0), house('us-ny-newyork', 'ev-charger-flat', 0).player)).toMatch(/not a flat/);
     expect(chargerQuote(life('us-ny-newyork', 'ev-charger-renter'), life('us-ny-newyork', 'ev-charger-renter').player)).toMatch(/home you own/);
