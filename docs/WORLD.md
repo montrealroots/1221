@@ -437,9 +437,23 @@ Researched in `docs/research/world/research-land-2.json` (`systems/landlease.ts`
   - Ontario's 2.35% of the land's value (Farm Credit Canada, 2025). British Columbia takes the national ratio as SLATE's estimate, as FCC published none there.
 - Taxed as rental income: on the American return, and as it's paid elsewhere, Britain's after HMRC's £1,000 property allowance.
 - Let, the land is the farmer's: it isn't ridden on an ATV, split or joined, and a sale ends the lease. Ended on notice, the lease runs to the year's end.
-- Not kept yet: a land loan, commercial land, waterfront premiums and islands, utility connection, easements, and foreign buyers' rules (Canada's ban on non-Canadians buying homes to 2027-01-01, Ontario's and British Columbia's foreign buyer taxes, England's 2% surcharge, Mexico's permit), all researched.
+- Not kept yet: a land loan, commercial land, waterfront premiums and islands, utility connection and easements, all researched. Foreign buyers' rules were built next (Stage 4d).
 
 Evidence: `tests/landlease.test.ts` (4). 13 mutations, all killed in the end. One first survived as a redundant guard: a town lot's place has no farm rent, so `yearRent`'s acreage check was removed. Three needed tests: combining let land, and letting land for sale or being built on.
+
+#### Stage 4d: a home bought in a country one isn't a citizen of (done 2026-09-30)
+Researched in `docs/research/world/research-land-2.json` (`systems/foreignbuyers.ts`).
+- **Canada:** the Prohibition on the Purchase of Residential Property by Non-Canadians Act bars a non-Canadian from a home in a metropolitan area or agglomeration until 1 January 2027 (CMHC).
+  - SLATE keeps no permanent residents, and takes a Canadian town of 10,000 or more, an agglomeration's threshold, as one.
+  - It bites on a home bought to let: one to live in already needs permission to live there.
+- **Its taxes,** added to closing:
+  - Ontario's Non-Resident Speculation Tax, 25%, and Toronto's 10% more from 2025, on a foreign national's purchase. They bite from 2027, once the ban has lapsed.
+  - British Columbia's 20% additional property transfer tax on a foreign national (not re-read on 2026-09-30).
+- **England:** a buyer not resident in the UK pays 2% more Stamp Duty Land Tax (HMRC, not re-read). SLATE takes a buyer whose home isn't in Britain as not resident; the test is 183 days in the year before.
+- **Mexico City** is outside the restricted zone, so a foreigner may own directly under a Calvo clause with the SRE. Its fee wasn't read, and none is charged. Ireland and America don't restrict a foreign buyer.
+- Not kept: British Columbia's speculation and vacancy tax on a foreign owner's empty home (3% for 2026, 4% from 2027, read from a search's extract); America's FIRPTA withholding on a foreign seller.
+
+Evidence: `tests/foreignbuyers.test.ts` (3). 7 mutations, all killed in the end. Two needed tests: the ban lapsing on its date, and a small town outside it.
 
 ### Stage 5: Construction
 

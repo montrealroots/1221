@@ -98,6 +98,7 @@ import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
 import { alarmFactor } from './alarm';
+import { foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -794,7 +795,8 @@ export function offerFor(sim: Simulation, person: Person, listing: Listing, down
   const months = termsIn(country).years * 12;
   const payment = loan > 0 ? paymentFor(loan, rate, months) : 0;
   const pmi = country === 'us' && live && loan > price * HOME.pmiOver;
-  const closing = closingCost(sim, listing.cityId, price, (person.homesOwned ?? 0) === 0 && live, (person.homes ?? []).length > 0);
+  // A foreign or non-resident buyer's taxes on top, where they're kept (`systems/foreignbuyers.ts`).
+  const closing = closingCost(sim, listing.cityId, price, (person.homesOwned ?? 0) === 0 && live, (person.homes ?? []).length > 0) + foreignBuyerTax(person, listing.cityId, price);
   const month = monthOf(sim, listing, listing.cityId, price, loan > 0 ? { mortgage: { payment, pmi, balance: loan } } : {});
   return { price, down: downCash, loan, closing, rate, payment, month, earnest: Math.round(price * HOME.earnest), cash: downCash + closing };
 }
@@ -848,6 +850,8 @@ export function offerRefusal(sim: Simulation, person: Person, listingId: string,
   if (live && listing.cityId !== (person.home?.cityId ?? person.currentLocationId)) return 'A home to live in is bought where you live; one elsewhere is bought to let.';
   const abroad = live ? residenceRefusal(person, listing.cityId, sim.now) : undefined;
   if (abroad) return abroad;
+  const barred = foreignBuyerRefusal(sim, person, listing.cityId);
+  if (barred) return barred;
   if (live && person.home?.noticeUntil !== undefined) return 'There’s a notice to pay or quit on your home: a lender won’t lend over it.';
   if (!(price >= askingPrice(sim, listing) * 0.5)) return 'The seller won’t read an offer under half the asking price.';
   const country = CITIES.require(listing.cityId).countryId;
