@@ -50,6 +50,12 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - **Tests:** `tests/staytypes.test.ts` (7).
   - **Not kept:** early check-in and late check-out fees, incidental holds, and resort and rural rates, which weren't published or read. Room types beyond one room or one bed, with occupancy limits being fire codes and not a published rule.
 
+- **A rental's class and its borders (done 2026-10-01, `RENTAL_CLASSES` and `RENTAL_CROSSINGS` in `content/rentals.ts`).**
+  - **Classes:** a midsize, a full-size, an SUV, a pickup, a van, a convertible and a luxury car beside the small one, at Kayak's average a day for each at the airport (read 2026-09-30, in the money Kayak shows; Toronto's, Vancouver's and Mexico City's show in dollars). A class with no average at an airport isn't offered there. The company's terms (age, deposit, taxes) apply to each, and mileage is unlimited, as Enterprise's US terms have it.
+  - **Borders:** a US rental may be driven into Canada, as Enterprise's and Budget's terms allow, but not into Mexico, which Enterprise forbids and Budget allows only on a corporate account.
+  - **Not kept:** one-way drop fees, since SLATE's rentals go back where they were picked up; an additional driver, since nobody else drives; and a fuel policy's refueling charge, since SLATE refuels as it drives.
+  - **Tests:** `tests/rentals.test.ts` (2 more).
+
 ## Acceptance criteria
 
 ### Stage 1: Documents

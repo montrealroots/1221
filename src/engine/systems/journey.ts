@@ -713,7 +713,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
   let rental = 0;
   if (car) {
-    const q = rentalQuote(sim, person, car.cityId, car.pickupAt, legs[0]!.departAt, true, car.waived === true);
+    const q = rentalQuote(sim, person, car.cityId, car.pickupAt, legs[0]!.departAt, true, car.waived === true, car.cls ?? 'small');
     if (typeof q === 'string') return q;
     rental = q.total - car.paid;
   }

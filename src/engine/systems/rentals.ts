@@ -27,7 +27,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts, type Instant } from '../
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { RENTALS, type RentalTerms } from '../content/rentals';
+import { RENTALS, RENTAL_CLASSES, RENTAL_CLASS_LABEL, RENTAL_CROSSINGS, type RentalClass, type RentalTerms } from '../content/rentals';
 import { UNRATED_FUEL_USD_PER_KM } from '../content/vehiclefees';
 import { ageOn } from './mortality';
 import { licenseOf, mayDrive } from './documents';
@@ -55,6 +55,8 @@ export interface Rental {
   at?: string;
   /** The damage waiver offered, taken. */
   waived?: boolean;
+  /** Its class, from 2026-10-01; a small car before. */
+  cls?: RentalClass;
   escrowAccountId?: string;
 }
 
@@ -68,9 +70,17 @@ export const rentalDays = (pickupAt: Instant, returnAt: Instant) => Math.max(1, 
 export interface RentalQuote { company: string; airport: string; days: number; lines: { label: string; amount: Money }[]; total: Money; deposit: Money; terms: RentalTerms }
 
 /** A rental's price and deposit in the save's money, or why it can't be had. */
-export function rentalQuote(sim: Simulation, person: Person, cityId: string, pickupAt: Instant, returnAt: Instant, withReturn: boolean, waived = false): RentalQuote | string {
+/** The classes a town's airport rents, the small car first. */
+export function rentalClassesIn(cityId: string): RentalClass[] {
+  return RENTALS[cityId] ? ['small', ...(Object.keys(RENTAL_CLASSES[cityId]?.daily ?? {}) as RentalClass[])] : [];
+}
+
+export function rentalQuote(sim: Simulation, person: Person, cityId: string, pickupAt: Instant, returnAt: Instant, withReturn: boolean, waived = false, cls: RentalClass = 'small'): RentalQuote | string {
   const t = RENTALS[cityId];
   if (!t) return 'SLATE keeps no rental cars there yet.';
+  const classed = cls === 'small' ? undefined : RENTAL_CLASSES[cityId];
+  const classDaily = cls === 'small' ? undefined : classed?.daily[cls];
+  if (cls !== 'small' && classDaily === undefined) return `${t.company} at ${t.airport} has no average kept for ${RENTAL_CLASS_LABEL[cls].toLowerCase()}.`;
   const age = ageOn(sim, person, pickupAt);
   if (age < t.minAge) return `${t.company} rents at ${t.airport} from ${t.minAge}.`;
   const license = licenseOf(person, pickupAt);
@@ -80,7 +90,7 @@ export function rentalQuote(sim: Simulation, person: Person, cityId: string, pic
   if (!may.ok) return may.why ?? 'You may not drive there.';
   const days = rentalDays(pickupAt, returnAt);
   const terms = t.termsCurrency ?? t.currency;
-  const lines: { label: string; amount: Money }[] = [{ label: `${t.company}, A Small Car, ${days} ${days === 1 ? 'Day' : 'Days'}`, amount: inSave(sim, c(t.daily * days), t.currency) }];
+  const lines: { label: string; amount: Money }[] = [{ label: `${t.company}, ${RENTAL_CLASS_LABEL[cls].replace(/^An? /, '')}, ${days} ${days === 1 ? 'Day' : 'Days'}`, amount: classDaily !== undefined ? inSave(sim, c(classDaily * days), classed!.currency) : inSave(sim, c(t.daily * days), t.currency) }];
   const band = t.young?.find((y) => age >= y.from && age <= y.to);
   if (band) lines.push({ label: 'Young Driver Surcharge', amount: inSave(sim, c(Math.min(band.perDay * days, t.youngCap ?? Infinity)), terms) });
   if (t.waiverPerDay) lines.push({ label: 'Damage Waiver', amount: inSave(sim, c(t.waiverPerDay * days), terms) });
@@ -105,6 +115,9 @@ export function planRentalDrive(sim: Simulation, person: Person, fromCity: strin
   const r = rentalAt(person, fromCity, depart);
   if (!r) return 'You have no rental car here then.';
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
+  // Across a border, as the company's terms allow (from 2026-10-01).
+  const crossing = RENTAL_CROSSINGS[`${CITIES.get(r.cityId)?.countryId}>${CITIES.get(toCity)?.countryId}`];
+  if (crossing && !crossing.allowed) return `${crossing.basis}.`;
   const may = mayDrive(person, fromCity, depart);
   if (!may.ok) return may.why ?? 'You may not drive there.';
   const km = roadKm(fromCity, toCity);
@@ -151,7 +164,7 @@ function release(sim: Simulation, person: Person, r: Rental): void {
 }
 
 export function registerRentals(sim: Simulation, journeys: { journeysOf: (p: Person) => import('./journey').Journey[]; partnerOf: (p: Person, j: import('./journey').Journey) => import('./journey').Journey | undefined }): void {
-  sim.onCommand<{ journeyId: string; waiver?: boolean }, { rentalId: string; paid: Money; deposit: Money }>('travel.rent_car', (p, { sim: s }) => {
+  sim.onCommand<{ journeyId: string; waiver?: boolean; cls?: RentalClass }, { rentalId: string; paid: Money; deposit: Money }>('travel.rent_car', (p, { sim: s }) => {
     const person = s.player;
     const j = journeys.journeysOf(person).find((x) => x.id === p?.journeyId);
     if (!j || j.status !== 'booked') throw new CommandError('That isn’t a journey you have booked.');
@@ -159,11 +172,12 @@ export function registerRentals(sim: Simulation, journeys: { journeysOf: (p: Per
     if (!back || back.leaveAt <= j.arriveAt) throw new CommandError('A rental is booked with the way home, which says when it goes back.');
     if (rentalsOf(person).some((r) => r.journeyId === j.id && r.status !== 'canceled')) throw new CommandError('A car is rented on it already.');
     const waived = p?.waiver === true;
-    const q = rentalQuote(s, person, j.toCity, j.arriveAt, back.leaveAt, true, waived);
+    const cls: RentalClass = p?.cls ?? 'small';
+    const q = rentalQuote(s, person, j.toCity, j.arriveAt, back.leaveAt, true, waived, cls);
     if (typeof q === 'string') throw new CommandError(q);
     if (!payFromBank(s, person, q.total, `A rental car at ${q.airport}, ${q.days} ${q.days === 1 ? 'day' : 'days'}, prepaid`, 'travel')) throw new CommandError(`${formatMoney(q.total, saveCurrency(s.universe))} is more than the bank can cover.`);
     const id = s.nextId('journey');
-    rentalsOf(person).push({ id, journeyId: j.id, returnJourneyId: back.id, cityId: j.toCity, pickupAt: j.arriveAt, returnAt: back.leaveAt, days: q.days, paid: q.total, status: 'booked', ...(waived ? { waived } : {}) });
+    rentalsOf(person).push({ id, journeyId: j.id, returnJourneyId: back.id, cityId: j.toCity, pickupAt: j.arriveAt, returnAt: back.leaveAt, days: q.days, paid: q.total, status: 'booked', ...(waived ? { waived } : {}), ...(cls !== 'small' ? { cls } : {}) });
     s.schedule({ at: j.arriveAt + MS_HOUR, kind: RENTAL_PICKUP_KIND, label: 'Rental Car Pickup', category: 'personal', priority: 27, payload: { personId: person.id, rentalId: id } });
     s.schedule({ at: back.leaveAt, kind: RENTAL_RETURN_KIND, label: 'Rental Car Return', category: 'personal', priority: 27, payload: { personId: person.id, rentalId: id } });
     return { rentalId: id, paid: q.total, deposit: q.deposit };

@@ -6,7 +6,7 @@
  * time where it happens, and every figure names whose it is.
  */
 
-import { RENTALS } from '@/engine/content/rentals';
+import { RENTALS, RENTAL_CLASS_LABEL, type RentalClass } from '@/engine/content/rentals';
 import { LETS } from '@/engine/content/lets';
 import { Fragment, useState } from 'react';
 import { PREPAID_OFF, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '@/engine/content/staytypes';
@@ -19,7 +19,7 @@ import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS } from '@/engine/systems/journey';
-import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
+import { rentalAt, rentalQuote, rentalsOf, rentalClassesIn } from '@/engine/systems/rentals';
 import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
@@ -275,17 +275,26 @@ function RentACar({ j }: { j: Journey }) {
   const back = partnerOf(person, j);
   const has = rentalsOf(person).find((r) => r.journeyId === j.id && r.status !== 'canceled');
   const [waiver, setWaiver] = useState(false);
+  const [carCls, setCarCls] = useState<RentalClass>('small');
   // Only where a rental is kept: elsewhere the button would say no to every journey.
   if (!RENTALS[j.toCity] || !back || back.leaveAt <= j.arriveAt) return null;
   if (has) return <span className="xs dim">A Car Rented</span>;
   // The damage waiver, where its price is known (from 2026-10-01): declined, a crash leaves the repair owed.
   const offered = RENTALS[j.toCity]!.waiverOffered !== undefined;
-  const q = rentalQuote(sim, person, j.toCity, j.arriveAt, back.leaveAt, true, offered && waiver);
+  // The class, from those the airport rents (from 2026-10-01).
+  const classesHere = rentalClassesIn(j.toCity);
+  const chosen: RentalClass = classesHere.includes(carCls) ? carCls : 'small';
+  const q = rentalQuote(sim, person, j.toCity, j.arriveAt, back.leaveAt, true, offered && waiver, chosen);
   const cur = saveCurrency(sim.universe);
   const no = typeof q === 'string' ? q : undefined;
   const title = typeof q === 'string' ? q : `${q.company} at ${q.airport}, ${q.days} ${q.days === 1 ? 'day' : 'days'}: ${q.lines.map((l) => `${l.label} ${formatMoney(l.amount, cur)}`).join(', ')}${q.deposit > 0 ? `; ${formatMoney(q.deposit, cur)} held on the card` : ''}`;
   return (
     <>
+    {classesHere.length > 1 && (
+      <select id={`rent-class-${j.id}`} className="select-sm" aria-label="Class" value={chosen} onChange={(e) => setCarCls(e.target.value as RentalClass)}>
+        {classesHere.map((c) => <option key={c} value={c}>{RENTAL_CLASS_LABEL[c]}</option>)}
+      </select>
+    )}
     {offered && (
       <select id={`rent-waiver-${j.id}`} className="select-sm" aria-label="Damage Waiver" value={waiver ? 'taken' : 'declined'} onChange={(e) => setWaiver(e.target.value === 'taken')}>
         <option value="declined">Without The Damage Waiver</option>
@@ -293,7 +302,7 @@ function RentACar({ j }: { j: Journey }) {
       </select>
     )}
     <Gated feature="travel.rent_car" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={title} onClick={() => {
-      const a = run<{ paid: number }>('travel.rent_car', { journeyId: j.id, waiver: offered && waiver });
+      const a = run<{ paid: number }>('travel.rent_car', { journeyId: j.id, waiver: offered && waiver, cls: chosen });
       if (a.ok) toast(`A car rented for ${formatMoney(a.value!.paid, cur)}, prepaid.`, 'positive');
     }}>{typeof q === 'string' ? 'Rent A Car There' : `Rent A Car There, ${formatMoney(q.total, cur, { cents: false })}`}</Gated>
     </>

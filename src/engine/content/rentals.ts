@@ -137,3 +137,43 @@ export const RENTALS: Readonly<Record<string, RentalTerms>> = {
 };
 
 export const RENTAL_SOURCE = 'docs/research/world/research-rentals.json: Kayak’s airport averages (a compiler’s); Avis, Enterprise and Hertz terms for each airport; New York Tax Law 1160 and 1166-a; Connecticut DRS; CDTFA; HMRC; Revenue; CRA and British Columbia PST 116; Ley del IVA';
+
+/**
+ * A rental's class, beyond the small car (from 2026-10-01,
+ * `docs/research/world/research-stays-rentals.json`): Kayak's rolling average
+ * a day for each of its classes at the town's airport, read 2026-09-30, in
+ * the money Kayak showed it in. Toronto's and Vancouver's show in dollars,
+ * probably US ones, and Mexico City's in dollars too, before the liability
+ * insurance Mexican law asks, which the terms above add. A class Kayak
+ * listed no average for at an airport isn't offered there. Its terms (the
+ * age, the deposit, the taxes) are the company's, as for a small car.
+ * Mileage is unlimited, as Enterprise's US terms have it for most classes.
+ */
+export type RentalClass = 'small' | 'medium' | 'large' | 'suv' | 'pickup' | 'van' | 'convertible' | 'luxury';
+export const RENTAL_CLASS_LABEL: Readonly<Record<RentalClass, string>> = {
+  small: 'A Small Car', medium: 'A Midsize Car', large: 'A Full-Size Car', suv: 'An SUV', pickup: 'A Pickup', van: 'A Passenger Van', convertible: 'A Convertible', luxury: 'A Luxury Car',
+};
+export const RENTAL_CLASSES: Readonly<Record<string, { currency: string; daily: Partial<Record<Exclude<RentalClass, 'small'>, number>> }>> = {
+  'us-ny-newyork': { currency: 'USD', daily: { medium: 72, large: 83, suv: 87, van: 115, pickup: 72, luxury: 125, convertible: 138 } },
+  'us-ct-newhaven': { currency: 'USD', daily: { medium: 88, large: 90, suv: 110, van: 126, luxury: 123 } },
+  'us-ca-losangeles': { currency: 'USD', daily: { medium: 61, large: 59, suv: 61, van: 94, pickup: 59, luxury: 85, convertible: 80 } },
+  'uk-eng-london': { currency: 'GBP', daily: { medium: 45, large: 62, suv: 42, van: 61, luxury: 61, convertible: 43 } },
+  'uk-sct-edinburgh': { currency: 'GBP', daily: { medium: 54, large: 73, suv: 49, van: 76, luxury: 70 } },
+  'ie-lei-dublin': { currency: 'EUR', daily: { medium: 50, large: 78, suv: 55, van: 81, luxury: 92 } },
+  'ca-on-toronto': { currency: 'USD', daily: { medium: 38, large: 44, suv: 50, van: 102, pickup: 62, luxury: 84, convertible: 65 } },
+  'ca-bc-vancouver': { currency: 'USD', daily: { medium: 46, large: 52, suv: 63, van: 134, pickup: 70, luxury: 104, convertible: 94 } },
+  'mx-cmx-mexicocity': { currency: 'USD', daily: { medium: 42, large: 60, suv: 48, van: 70, pickup: 41, luxury: 98 } },
+};
+
+/**
+ * A rental driven across a border, from 2026-10-01: out of the United States
+ * into Canada it may go, as Enterprise's and Budget's US terms say, with a
+ * Canadian non-resident insurance card from the counter; into Mexico it may
+ * not, as Enterprise's say outright and Budget's allow only on a corporate
+ * account. No other company's cross-border terms were read, and SLATE takes
+ * these for its rentals.
+ */
+export const RENTAL_CROSSINGS: Readonly<Record<string, { allowed: boolean; basis: string }>> = {
+  'us>ca': { allowed: true, basis: 'Enterprise’s and Budget’s US terms allow Canada, with a non-resident insurance card from the counter' },
+  'us>mx': { allowed: false, basis: 'A car rented in the United States can’t be driven into Mexico: Enterprise’s terms forbid it, and Budget’s allow it only on a corporate account' },
+};

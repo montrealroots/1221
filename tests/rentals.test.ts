@@ -12,7 +12,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
 import { journeysOf } from '@/engine/systems/journey';
-import { damageBill, damageOwed, planRentalDrive, rentalDays, rentalQuote, rentalsOf, type RentalQuote } from '@/engine/systems/rentals';
+import { damageBill, damageOwed, planRentalDrive, rentalClassesIn, rentalDays, rentalQuote, rentalsOf, type RentalQuote } from '@/engine/systems/rentals';
 import { RENTALS } from '@/engine/content/rentals';
 
 const YEAR = 365.2425 * MS_DAY;
@@ -189,5 +189,35 @@ describe('a rental damaged', () => {
     const out = journeysOf(sim.player).find((j) => j.id === booked.value!.journeyId)!;
     const back = journeysOf(sim.player).find((j) => j.id === booked.value!.returnId)!;
     expect(r.value!.paid).toBe((rentalQuote(sim, sim.player, 'us-ca-losangeles', out.arriveAt, back.leaveAt, true, true) as RentalQuote).total);
+  });
+});
+
+describe('a rental’s class and its borders', () => {
+  it('prices a class at Kayak’s average for it at the airport, refuses one not listed there, and keeps the class through the rental', () => {
+    const sim = driver('us-ny-newyork', 'rent-class', 30, 5, 'us-ny');
+    expect(rentalClassesIn('us-ny-newyork')).toEqual(['small', 'medium', 'large', 'suv', 'van', 'pickup', 'luxury', 'convertible']);
+    const at = sim.now + 10 * MS_DAY;
+    const suv = rentalQuote(sim, sim.player, 'us-ny-newyork', at, at + 3 * MS_DAY, true, false, 'suv') as RentalQuote;
+    expect(line(suv, /SUV, 3 Days/)).toBe(inSave(sim, 3 * 87_00, 'USD'));
+    expect(rentalQuote(sim, sim.player, 'us-ct-newhaven', at, at + 3 * MS_DAY, true, false, 'pickup')).toMatch(/no average kept for a pickup/);
+    const day = saturday(sim, 14);
+    const booked = sim.execute<{ journeyId: string; returnId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ca-losangeles', day, slot: 2, returnDay: day + 7 * MS_DAY, returnSlot: 2 } });
+    expect(booked.ok, booked.error).toBe(true);
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 5_000_00, 'USD');
+    const r = sim.execute<{ paid: number }>({ kind: 'travel.rent_car', payload: { journeyId: booked.value!.journeyId, cls: 'convertible' } });
+    expect(r.ok, r.error).toBe(true);
+    expect(rentalsOf(sim.player)[0]!.cls).toBe('convertible');
+    const out = journeysOf(sim.player).find((j) => j.id === booked.value!.journeyId)!;
+    const back = journeysOf(sim.player).find((j) => j.id === booked.value!.returnId)!;
+    expect(r.value!.paid).toBe((rentalQuote(sim, sim.player, 'us-ca-losangeles', out.arriveAt, back.leaveAt, true, false, 'convertible') as RentalQuote).total);
+  });
+
+  it('drives a US rental into Canada but not into Mexico', () => {
+    const sim = driver('us-ny-newyork', 'rent-border', 30, 5, 'us-ny');
+    rentalsOf(sim.player).push({ id: 'r1', journeyId: 'j', returnJourneyId: 'b', cityId: 'us-ca-losangeles', pickupAt: sim.now, returnAt: sim.now + 30 * MS_DAY, days: 30, paid: 0, status: 'out', at: 'us-ca-losangeles' });
+    expect(planRentalDrive(sim, sim.player, 'us-ca-losangeles', 'mx-14-guadalajara', sim.now + MS_DAY, 2)).toMatch(/can’t be driven into Mexico/);
+    const ny = driver('us-ny-newyork', 'rent-border-ca', 30, 5, 'us-ny');
+    rentalsOf(ny.player).push({ id: 'r2', journeyId: 'j', returnJourneyId: 'b', cityId: 'us-ny-newyork', pickupAt: ny.now, returnAt: ny.now + 30 * MS_DAY, days: 30, paid: 0, status: 'out', at: 'us-ny-newyork' });
+    expect(planRentalDrive(ny, ny.player, 'us-ny-newyork', 'ca-on-toronto', ny.now + MS_DAY, 2)).not.toBeTypeOf('string');
   });
 });
