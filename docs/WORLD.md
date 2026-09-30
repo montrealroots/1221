@@ -160,6 +160,20 @@ Evidence: `tests/rail.test.ts` (coaches, transit and cancellations). 5 mutations
 Evidence: `AIR.premiumMultiple` in `content/air.ts`, `planJourney`'s cabin; `tests/journey.test.ts` (a cabin other than economy). 3 mutations, all killed. The research is `docs/research/world/research-cabins-car.json`.
 
 Open in Stage 2 until 2026-09-29: a car of one's own as a leg, which waited for Stage 3; stage 3c made it one.
+#### Stage 2e: what an airline owes for a flight three hours late (done 2026-09-30)
+Researched in `docs/research/world/research-travel-2.json` and `research-travel-3.json` (`systems/compensation.ts`).
+- A flight three hours or more late at arrival, a cancellation's five-hour rebooking among them, is owed for under the flight's law:
+  - EU261 from Ireland: €250, €400 or €600 by distance, halved past 3,500 km under four hours (Your Europe).
+  - UK261 from Britain: £220, £350 or £520, and £260 past 3,500 km under four hours (the CAA).
+  - Canada's APPR to or from Canada, a large carrier: C$400, C$700 or C$1,000 by the hours (the CTA; the 2024 amendments haven't taken effect).
+  - Mexico's Ley de Aviación Civil past four hours: 25% of the fare (Profeco).
+  - America's DOT owes nothing for a delay; its refund is for a flight declined.
+- Owed only when the delay is the airline's: EUROCONTROL's airline causes, 41% of the delay not carried from an earlier flight (August 2026), in Europe; BTS's air carrier delay over the delay that isn't a late aircraft, 49.8% (August 2025 to July 2026), in North America, taken for Canada and Mexico, the CTA publishing none (decider `travel.compensation`).
+- Paid a month after the arrival, the thirty days the APPR gives an airline to answer, taken for every law.
+- Not kept: an EU carrier's flight into the EU from outside it, SLATE keeping no carriers; a small carrier's lower APPR amounts; meals and hotels while waiting, the right to care.
+
+Evidence: `tests/compensation.test.ts` (5). 7 mutations, all killed in the end. Two first survived and needed tests: the airline's fault, which the first test stopped before it could see, and the journey's claim, now tested end to end with every flight canceled.
+
 ### Stage 3: Vehicles
 
 #### Stage 3a and 3b: a car bought, kept and run (done 2026-09-29)

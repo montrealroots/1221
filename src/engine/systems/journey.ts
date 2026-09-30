@@ -41,6 +41,7 @@ import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { atTheCheckpoint } from './identity';
+import { claimDelay } from './compensation';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
@@ -272,6 +273,9 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
   j.status = 'underway';
   j.lateMinutes = late;
   j.rebooked = rebooked;
+  // Three hours or more late, the law the flight falls under may owe for it (`systems/compensation.ts`).
+  const flown = j.legs.filter((l) => l.mode === 'flight');
+  if (flown.length) claimDelay(sim, person, j, late, flown.reduce((a, l) => a + l.fare, 0));
   sim.schedule({ at: j.arriveAt + late * 60_000, kind: ARRIVE_KIND, label: `Arrive In ${CITIES.require(j.toCity).name}`, category: 'personal', priority: 28, payload: { personId: person.id, journeyId: j.id } });
 }
 

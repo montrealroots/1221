@@ -38,6 +38,7 @@ import { newLifeConfig } from './world/bootstrap';
 import { startingDocuments } from './systems/documents';
 import { passesTest } from './systems/licensing';
 import { flightFate } from './systems/journey';
+import { airlineAtFault } from './systems/compensation';
 import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
@@ -309,6 +310,19 @@ defineDecider<{ sim: Simulation; flight: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), flight: seed }),
   decide: ({ sim, flight }) => { const f = flightFate(sim, sim.player, `j-${flight}`); return f === null ? 'canceled' : f === 0 ? 'on time' : f > 60 ? 'late an hour' : 'late'; },
+});
+
+defineDecider<{ sim: Simulation; flight: number }, string>({
+  id: 'travel.compensation',
+  decides: 'A long delay within the airline’s control or not, at EUROCONTROL’s and BTS’s published shares (COMPENSATION).',
+  drawnIn: 'src/engine/systems/compensation.ts',
+  reads: {
+    // Each flight is weighed on its own.
+    flight: (o, t) => ({ ...o, flight: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), flight: seed }),
+  decide: ({ sim, flight }) => (airlineAtFault(sim, sim.player, 'eu261', `c-${flight}`) ? 'the airline’s' : 'not the airline’s'),
 });
 
 defineDecider<{ sim: Simulation }, string>({
