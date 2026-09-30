@@ -211,7 +211,7 @@ export const HIRED_PILOT_USD = { half: 450, full: 900, overtime: 1.5, halfHours:
 export const hiredPilotUsd = (hours: number): number => (hours <= HIRED_PILOT_USD.halfHours ? HIRED_PILOT_USD.half : hours <= HIRED_PILOT_USD.fullHours ? HIRED_PILOT_USD.full : HIRED_PILOT_USD.full * HIRED_PILOT_USD.overtime);
 
 export function planFlyYourself(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
-  const ownsHere = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.repossessed === undefined && person.aircraft.at === fromCity;
+  const ownsHere = planeOf(person, undefined, fromCity) !== undefined;
   const fromCountry = CITIES.get(fromCity)?.countryId ?? '';
   const abroad = fromCountry !== 'us' ? PILOT_SCHOOLS[fromCountry] : undefined;
   if (abroad) return planFlyAbroad(sim, person, fromCity, toCity, day, slot, abroad);
@@ -358,7 +358,7 @@ export const OWN_172 = {
 export const AIRCRAFT_MONTH_KIND = 'aircraft.month';
 const YEAR = 365.2425 * MS_DAY;
 
-export interface OwnedAircraft { boughtAt: Instant; price: Money; homeCity: string; at: string; hours: number; overhauledAt: Instant; annualDue: Instant; registeredUntil: Instant; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number; missed?: number }; repossessed?: { at: Instant; saleAt: Instant } }
+export interface OwnedAircraft { id: string; boughtAt: Instant; price: Money; homeCity: string; at: string; hours: number; overhauledAt: Instant; annualDue: Instant; registeredUntil: Instant; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number; missed?: number }; repossessed?: { at: Instant; saleAt: Instant } }
 
 /**
  * A plane loan in default, from 2026-10-01
@@ -385,8 +385,25 @@ export function ownHourCost(sim: Simulation, cityId: string): Money {
   return usd(sim, Math.round(OWN_172.gph * (OWN_172.avgas[regionOf(cityId)] ?? OWN_172.avgasNational) * 100));
 }
 
+/**
+ * The planes they own now, as many as the bank, the lender and a tiedown for
+ * each allow, from 2026-10-01; a save's single plane is moved into the list.
+ * Until then a second was refused with "You own a plane.", a limit no law or
+ * airport sets.
+ */
+export function planesOf(person: Person): OwnedAircraft[] {
+  if (person.aircraft) { (person.planes ??= []).push({ ...person.aircraft, id: person.aircraft.id ?? 'plane-first' }); delete person.aircraft; }
+  return (person.planes ?? []).filter((a) => a.soldAt === undefined);
+}
+/** One of their planes: the one named, or the first free to fly from a town. */
+export function planeOf(person: Person, planeId?: string, at?: string): OwnedAircraft | undefined {
+  const mine = planesOf(person);
+  if (planeId !== undefined) return mine.find((a) => a.id === planeId);
+  return at !== undefined ? mine.find((a) => a.at === at && !a.repossessed) : mine[0];
+}
+const planeFor = (person: Person | undefined, payload: Record<string, unknown>): OwnedAircraft | undefined => (person ? (payload.planeId !== undefined ? planesOf(person).find((a) => a.id === payload.planeId) : planesOf(person)[0]) : undefined);
+
 export function buyAircraftRefusal(sim: Simulation, person: Person, financed = false): string | undefined {
-  if (person.aircraft && person.aircraft.soldAt === undefined) return 'You own a plane.';
   if (CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId !== 'us') return 'SLATE prices a plane’s keeping in America only yet.';
   if (financed && (person.credit?.score ?? 0) < PLANE_LOAN.minScore) return 'An aircraft lender asks a record of 700.';
   if (inTheBank(sim, person) < usd(sim, Math.round(((financed ? OWN_172.priceUsd * PLANE_LOAN.downShare : OWN_172.priceUsd) + OWN_172.registration) * 100))) return `A 172 costs about ${formatMoney(usd(sim, OWN_172.priceUsd * 100), saveCurrency(sim.universe), { cents: false })}.`;
@@ -394,19 +411,19 @@ export function buyAircraftRefusal(sim: Simulation, person: Person, financed = f
 }
 
 /** A flight in one's own plane arrives: the plane is there, and its hours are on the engine. */
-export function ownFlown(person: Person, toCity: string, hours: number): void {
-  const a = person.aircraft;
-  if (!a || a.soldAt !== undefined) return;
+export function ownFlown(person: Person, fromCity: string, toCity: string, hours: number): void {
+  const a = planeOf(person, undefined, fromCity);
+  if (!a) return;
   a.at = toCity;
   a.hours += hours;
 }
 
-function scheduleAircraft(sim: Simulation, person: Person): void {
-  sim.schedule({ at: sim.now + 30 * MS_DAY, kind: AIRCRAFT_MONTH_KIND, label: 'The Plane’s Month', category: 'home', priority: 30, payload: { personId: person.id } });
+function scheduleAircraft(sim: Simulation, person: Person, a: OwnedAircraft): void {
+  sim.schedule({ at: sim.now + 30 * MS_DAY, kind: AIRCRAFT_MONTH_KIND, label: 'The Plane’s Month', category: 'home', priority: 30, payload: { personId: person.id, planeId: a.id } });
 }
 
 export function registerOwnedAircraft(sim: Simulation): void {
-  sim.onCommand<{ financed?: boolean }, { paid: Money }>('aircraft.buy', (p, { sim: s }) => {
+  sim.onCommand<{ financed?: boolean }, { paid: Money; planeId: string }>('aircraft.buy', (p, { sim: s }) => {
     const person = s.player;
     const financed = p?.financed === true;
     const no = buyAircraftRefusal(s, person, financed);
@@ -416,32 +433,34 @@ export function registerOwnedAircraft(sim: Simulation): void {
     const paid = price - lent + usd(s, OWN_172.registration * 100);
     if (!payFromBank(s, person, paid, 'A Cessna 172, and its FAA registration', 'travel')) throw new CommandError('Your bank couldn’t pay.');
     const home = person.home?.cityId ?? person.currentLocationId;
-    person.aircraft = { boughtAt: s.now, price, homeCity: home, at: home, hours: 0, overhauledAt: s.now, annualDue: s.now + YEAR, registeredUntil: s.now + OWN_172.registrationYears * YEAR };
+    const plane: OwnedAircraft = { id: s.nextId('vehicle'), boughtAt: s.now, price, homeCity: home, at: home, hours: 0, overhauledAt: s.now, annualDue: s.now + YEAR, registeredUntil: s.now + OWN_172.registrationYears * YEAR };
+    planesOf(person);
+    (person.planes ??= []).push(plane);
     if (lent > 0) {
-      person.aircraft.loan = { owed: lent, monthly: amortized(lent, PLANE_LOAN.apr, PLANE_LOAN.months), monthsLeft: PLANE_LOAN.months };
+      plane.loan = { owed: lent, monthly: amortized(lent, PLANE_LOAN.apr, PLANE_LOAN.months), monthsLeft: PLANE_LOAN.months };
       s.post({ memo: 'A loan on the Cessna 172', category: 'travel', postings: [{ accountId: s.nominalAccount('expense', expenseFor('travel')).id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: -lent }] });
     }
-    scheduleAircraft(s, person);
-    return { paid };
+    scheduleAircraft(s, person, plane);
+    return { paid, planeId: plane.id };
   });
 
-  sim.onCommand<Record<string, never>, { value: Money }>('aircraft.sell', (_p, { sim: s }) => {
+  sim.onCommand<{ planeId?: string }, { value: Money }>('aircraft.sell', (p, { sim: s }) => {
     const person = s.player;
-    const a = person.aircraft;
-    if (!a || a.soldAt !== undefined) throw new CommandError('You own no plane.');
+    const a = planeOf(person, p?.planeId);
+    if (!a) throw new CommandError(p?.planeId ? 'That isn’t a plane you own.' : 'You own no plane.');
     if (a.repossessed) throw new CommandError('The lender has the plane.');
     const payoff = a.loan?.owed ?? 0;
     s.post({ memo: 'Sold the Cessna 172', category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: a.price - payoff }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: payoff }] : []), { accountId: s.nominalAccount('income', 'Plane Sold').id, amount: -a.price }] });
     delete a.loan;
     a.soldAt = s.now;
-    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === AIRCRAFT_MONTH_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === AIRCRAFT_MONTH_KIND && item.payload.personId === person.id && planeFor(person, item.payload) === undefined) s.timeline.cancel(item.id, s.now);
     return { value: a.price };
   });
 
   sim.onSchedule(AIRCRAFT_MONTH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
-    const a = person?.aircraft;
-    if (!person || !a || a.soldAt !== undefined) return;
+    const a = planeFor(person, item.payload);
+    if (!person || !a) return;
     const pay = (usdUnits: number, memo: string) => { const due = usd(s, Math.round(usdUnits * 100)); if (!payFromBank(s, person, due, memo, 'travel')) owe(s, person, due, memo, 'travel'); };
     pay(OWN_172.tiedown[regionOf(a.homeCity)] ?? OWN_172.tiedownDefault, 'The plane’s tiedown, a month');
     pay(OWN_172.insuranceYear / 12, 'The plane’s insurance, a month');
@@ -460,7 +479,7 @@ export function registerOwnedAircraft(sim: Simulation): void {
         const saleAt = s.now + PLANE_REPO.noticeDays * MS_DAY;
         a.repossessed = { at: s.now, saleAt };
         markRecord(person, REPOSSESSED_ON_RECORD, s.now, a.homeCity);
-        s.schedule({ at: saleAt, kind: AIRCRAFT_REPO_SALE_KIND, label: 'Repossessed Plane Sold', category: 'personal', priority: 30, payload: { personId: person.id } });
+        s.schedule({ at: saleAt, kind: AIRCRAFT_REPO_SALE_KIND, label: 'Repossessed Plane Sold', category: 'personal', priority: 30, payload: { personId: person.id, planeId: a.id } });
         if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'Your Plane Was Repossessed', body: 'Three payments missed, the lender took the plane. It’s sold after ten days’ notice, what’s left owing is yours, and it’s on your record.', importance: 85, route: '/workspace/travel' });
       }
       s.post({ memo: 'Plane loan, principal repaid', category: 'travel', postings: [{ accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', expenseFor('travel')).id, amount: -principal }] });
@@ -470,12 +489,12 @@ export function registerOwnedAircraft(sim: Simulation): void {
     }
     if (a.hours >= OWN_172.tboHours || s.now - a.overhauledAt >= OWN_172.tboYears * YEAR) { pay(OWN_172.overhaul, 'The plane’s engine overhauled'); a.hours = 0; a.overhauledAt = s.now; }
     // Taken back, it's the lender's to keep until it's sold, and its months end.
-    if (!a.repossessed) scheduleAircraft(s, person);
+    if (!a.repossessed) scheduleAircraft(s, person, a);
   });
 
   sim.onSchedule(AIRCRAFT_REPO_SALE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
-    const a = person?.aircraft;
+    const a = planeFor(person, item.payload);
     if (!person || !a?.repossessed) return;
     // Sold at what it's held at, less the retaking; the loan paid from it, a surplus back, the shortfall owed.
     const owed = a.loan?.owed ?? 0;

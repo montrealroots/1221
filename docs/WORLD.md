@@ -35,6 +35,12 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29, 7d to 7f (boats, crew and charter) 2026-09-30; open items below |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b), 8c (extensions) 2026-09-30; open items below |
 
+## The owner's second instruction (2026-10-01)
+
+Asked what of the instruction hadn't been built, the owner said: "Add it all and don't stop until its done." What's missing was set down on 2026-10-01, section by section, and each is built below as its research comes in, with its evidence in the stage it belongs to.
+
+- **Ownership limits (done 2026-10-01).** A person owned one boat and one plane, a second refused with "You own a boat." and "You own a plane.", a limit no law, lender or marina sets. Now each is a list (`boatsOf`, `planesOf`): each boat and plane its own record, months, loan and repossession, sold on its own, carried along on a move, counted in net worth. A save's single one is moved into the list on opening, and its months, scheduled before they named one, still charge it. The limits left are the bank, the lender's record and, for a lodger, New York City's two boarders. Tests: `tests/boats.test.ts` (a third boat bought, one sold, the months of each; two carried; a save from before), `tests/aviation.test.ts` (a second plane).
+
 ## Acceptance criteria
 
 ### Stage 1: Documents

@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, licensedIn, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts, medicalMonthsAt } from '@/engine/systems/aviation';
+import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, licensedIn, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts, medicalMonthsAt, planesOf } from '@/engine/systems/aviation';
 import { weatherOn } from '@/engine/systems/weather';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf, slotOf } from '@/engine/systems/journey';
@@ -18,6 +18,8 @@ import { airportsFor, kmToCountry } from '@/engine/systems/airports';
 import { CITIES, distanceKm } from '@/engine/content/geography';
 
 const YEAR = 365.2425 * MS_DAY;
+/** Their first plane, sold or not (a plane became one of a list on 2026-10-01). */
+const thePlane = (sim: Simulation) => (sim.player.planes ?? [])[0];
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
 const save = (city: string, name: string, age = 25) => { const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, name); sim.player.birthInstant = sim.now - (age + 0.5) * YEAR; return sim; };
 const fund = (sim: Simulation, usd: number) => { sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, usd * 100, 'USD'); };
@@ -151,7 +153,13 @@ describe('a plane of one’s own', () => {
     const r = sim.execute<{ paid: number }>({ kind: 'aircraft.buy', payload: {} });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBe(inSave(sim, (121_847 + 5) * 100, 'USD'));
-    expect(sim.execute({ kind: 'aircraft.buy', payload: {} }).error).toMatch(/own a plane/);
+    // A second, as many as the bank allows (from 2026-10-01), each its own months.
+    const second = sim.execute<{ planeId: string }>({ kind: 'aircraft.buy', payload: {} });
+    expect(second.ok, second.error).toBe(true);
+    expect(planesOf(sim.player)).toHaveLength(2);
+    expect(sim.execute({ kind: 'aircraft.sell', payload: { planeId: second.value!.planeId } }).ok).toBe(true);
+    expect(planesOf(sim.player)).toHaveLength(1);
+    expect(sim.execute({ kind: 'aircraft.sell', payload: { planeId: second.value!.planeId } }).error).toMatch(/isn’t a plane you own/);
     expect(netWorth(sim, sim.player.id).vehicles).toBe(inSave(sim, 121_847_00, 'USD'));
     const day = sim.now + 10 * MS_DAY;
     // Not a pilot, its owner hires one: its fuel and the pilot's half day.
@@ -183,10 +191,10 @@ describe('a plane of one’s own', () => {
     // Met at the month after it falls due.
     sim.advanceBy(395 * MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'The plane’s annual inspection')).toHaveLength(1);
-    sim.player.aircraft!.hours = OWN_172.tboHours;
+    thePlane(sim)!.hours = OWN_172.tboHours;
     sim.advanceBy(31 * MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'The plane’s engine overhauled')).toHaveLength(1);
-    expect(sim.player.aircraft!.hours).toBe(0);
+    expect(thePlane(sim)!.hours).toBe(0);
     const sold = sim.execute<{ value: number }>({ kind: 'aircraft.sell', payload: {} });
     expect(sold.value!.value).toBe(inSave(sim, 121_847_00, 'USD'));
     expect(netWorth(sim, sim.player.id).vehicles).toBe(0);
@@ -333,12 +341,12 @@ describe('a pilot’s medical, the weather, and a loan on a plane', () => {
     expect(sim.execute({ kind: 'aircraft.buy', payload: { financed: true } }).ok).toBe(true);
     const price = inSave(sim, 121_847_00, 'USD');
     expect(before - sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(Math.round(price * 0.15) + inSave(sim, 5_00, 'USD'));
-    const loan = { ...sim.player.aircraft!.loan! };
+    const loan = { ...thePlane(sim)!.loan! };
     expect(loan.owed).toBe(price - Math.round(price * 0.15));
     sim.advanceBy(65 * MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'Loan payment on the plane')).toHaveLength(2);
-    expect(sim.player.aircraft!.loan!.owed).toBeLessThan(loan.owed);
-    const owed = sim.player.aircraft!.loan!.owed;
+    expect(thePlane(sim)!.loan!.owed).toBeLessThan(loan.owed);
+    const owed = thePlane(sim)!.loan!.owed;
     const mid = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
     expect(sim.execute({ kind: 'aircraft.sell', payload: {} }).ok).toBe(true);
     expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance - mid).toBe(price - owed);
@@ -351,9 +359,9 @@ describe('a pilot’s medical, the weather, and a loan on a plane', () => {
     expect(sim.execute({ kind: 'aircraft.buy', payload: { financed: true } }).ok).toBe(true);
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0) a.balance = 0;
     sim.advanceBy(65 * MS_DAY);
-    expect(sim.player.aircraft!.repossessed).toBeUndefined();
+    expect(thePlane(sim)!.repossessed).toBeUndefined();
     sim.advanceBy(30 * MS_DAY);
-    const a = sim.player.aircraft!;
+    const a = thePlane(sim)!;
     expect(a.repossessed).toBeDefined();
     expect(a.repossessed!.saleAt - a.repossessed!.at).toBe(10 * MS_DAY);
     expect((sim.player.credit!.marks ?? []).some((m) => m.points === 100 && m.at === a.repossessed!.at)).toBe(true);
@@ -381,8 +389,8 @@ describe('a pilot’s medical, the weather, and a loan on a plane', () => {
     again.advanceBy(30 * MS_DAY);
     drain();
     again.advanceBy(65 * MS_DAY);
-    expect(again.player.aircraft!.repossessed).toBeUndefined();
-    expect(again.player.aircraft!.soldAt).toBeUndefined();
+    expect(thePlane(again)!.repossessed).toBeUndefined();
+    expect(thePlane(again)!.soldAt).toBeUndefined();
     // Owing its whole price, the retaking is the shortfall.
     const deep = save('us-ny-newyork', 'plane-repo-short');
     fund(deep, 50_000);
@@ -390,7 +398,7 @@ describe('a pilot’s medical, the weather, and a loan on a plane', () => {
     expect(deep.execute({ kind: 'aircraft.buy', payload: { financed: true } }).ok).toBe(true);
     for (const x of Object.values(deep.universe.accounts)) if (x.ownerId === deep.player.id && !x.nominal && x.balance > 0) x.balance = 0;
     deep.advanceBy(95 * MS_DAY);
-    const b = deep.player.aircraft!;
+    const b = thePlane(deep)!;
     expect(b.repossessed).toBeDefined();
     b.loan!.owed = b.price;
     deep.advanceBy(11 * MS_DAY);

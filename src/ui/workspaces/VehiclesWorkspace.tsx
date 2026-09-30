@@ -6,7 +6,7 @@
 
 import { tradeInFor } from '@/engine/systems/vehicles';
 import { redemption } from '@/engine/systems/repossession';
-import { boatOf, boatQuote, buyBoatRefusal, certified, certifyRefusal, onItsTrailer } from '@/engine/systems/boats';
+import { boatsOf, boatQuote, buyBoatRefusal, certified, certifyRefusal, onItsTrailer } from '@/engine/systems/boats';
 import { BOAT_LOAN, BOAT_RULES, T18, isBoatState } from '@/engine/content/boats';
 import { CITIES } from '@/engine/content/geography';
 import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
@@ -170,14 +170,14 @@ export function VehiclesWorkspace() {
   );
 }
 
-/** A boat of one's own (`systems/boats.ts`): bought where one lives, kept, and taken out with the state's certificate. */
+/** Boats of one's own (`systems/boats.ts`): bought where one lives, as many as the bank allows, each kept and sold on its own, and taken out with the state's certificate. */
 function BoatPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur, { cents: false });
-  const boat = boatOf(person);
-  const where = boat?.cityId ?? homeOf(person);
+  const boats = boatsOf(person);
+  const where = homeOf(person);
   const state = jurisdictionOf(where);
   const rules = isBoatState(state) ? BOAT_RULES[state] : undefined;
   const q = boatQuote(sim, where);
@@ -188,15 +188,33 @@ function BoatPanel() {
   const usd = (units: number) => money(inSaveMoney(sim, Math.round(units * 100), 'USD'));
   const here = (units: number) => money(inSaveMoney(sim, Math.round(units * 100), rules?.currency ?? 'USD'));
   return (
-    <Panel title="A Boat" subtitle={rules?.model.label ?? T18.label}>
+    <Panel title={boats.length > 1 ? 'Your Boats' : 'A Boat'} subtitle={rules?.model.label ?? T18.label}>
       {!rules || !q ? <p className="small muted" style={{ margin: 0 }}>SLATE sells a boat in New York, Connecticut, California, London, Dublin and Toronto only yet.</p> : (
         <div className="col gap-3">
           <div className="grid grid-3">
-            <Stat label={boat ? 'Yours' : rules.taxAdded ? 'Taxed And Registered' : 'Its Price'} value={boat ? money(boat.price) : money(q.price + q.tax + q.registration)} note={boat ? (boat.loan ? `${money(boat.loan.owed)} owed, ${money(boat.loan.monthly)} a month` : `Kept in ${CITIES.get(boat.cityId)?.name ?? boat.cityId}`) : rules.taxAdded ? `${money(q.price)}${state?.startsWith('US') ? ' with its trailer' : ''}, ${money(q.tax)} tax` : 'A dealer’s price, its VAT in it'} />
-            <Stat label="Kept" value={`${here(rules.insuranceYear / 12)} A Month`} note={boat && onItsTrailer(person, boat) ? 'Insurance; it stands on its trailer at your house' : `Insurance, and ${rules.slip.per === 'year' ? 'its storage' : 'a slip'} at ${here(rules.slip.amount)} a ${rules.slip.per}`} />
+            <Stat label={rules.taxAdded ? 'Taxed And Registered' : 'Its Price'} value={money(q.price + q.tax + q.registration)} note={rules.taxAdded ? `${money(q.price)}${state?.startsWith('US') ? ' with its trailer' : ''}, ${money(q.tax)} tax` : 'A dealer’s price, its VAT in it'} />
+            <Stat label="Kept" value={`${here(rules.insuranceYear / 12)} A Month`} note={`Insurance, and ${rules.slip.per === 'year' ? 'its storage' : 'a slip'} at ${here(rules.slip.amount)} a ${rules.slip.per}, unless it stands on its trailer at your house`} />
             {rules.certificate ? <Stat label={rules.certificate.label} value={holds ? 'Held' : here(rules.certificate.amount)} note="Asked of whoever operates a boat here" /> : <Stat label="A License" value="None Asked" note="None is needed to take a pleasure boat to sea here" />}
           </div>
-          {!boat && state?.startsWith('US') && (
+          {boats.length > 0 && (
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Boat</th><th scope="col">Kept In</th><th scope="col" className="num">Worth</th><th scope="col">Standing</th><th scope="col">Sell</th></tr></thead>
+                <tbody>
+                  {boats.map((b) => (
+                    <tr key={b.id}>
+                      <td>{BOAT_RULES[b.state].model.label}</td>
+                      <td>{CITIES.get(b.cityId)?.name ?? b.cityId}{onItsTrailer(person, b) ? ', On Its Trailer' : ''}</td>
+                      <td className="num mono">{money(b.price)}</td>
+                      <td>{b.repossessed ? 'Taken By The Lender' : b.loan ? `${money(b.loan.owed)} Owed` : 'Owned Outright'}</td>
+                      <td><Gated feature="boat.sell" className="btn btn-sm btn-ghost" disabled={Boolean(b.repossessed)} title={b.repossessed ? 'The lender has it.' : undefined} onClick={() => { if (run('boat.sell', { boatId: b.id }).ok) toast('Sold.', 'positive'); }}>Sell</Gated></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {state?.startsWith('US') && (
             <div className="field-row field-row-tight">
             <div className="field">
               <label htmlFor="boat-paid">Paid</label>
@@ -208,9 +226,7 @@ function BoatPanel() {
             </div>
           )}
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-            {boat
-              ? <Gated feature="boat.sell" className="btn btn-sm btn-ghost" onClick={() => { if (run('boat.sell', {}).ok) toast('Sold.', 'positive'); }}>Sell The Boat</Gated>
-              : <Gated feature="boat.buy" className="btn btn-sm btn-ghost" disabled={Boolean(noBuy)} title={noBuy} onClick={() => { if (run('boat.buy', { financed: boatFinanced }).ok) toast('A boat of your own.', 'positive'); }}>Buy A Boat</Gated>}
+            <Gated feature="boat.buy" className="btn btn-sm btn-ghost" disabled={Boolean(noBuy)} title={noBuy} onClick={() => { if (run('boat.buy', { financed: boatFinanced }).ok) toast('A boat of your own.', 'positive'); }}>{boats.length ? 'Buy Another Boat' : 'Buy A Boat'}</Gated>
             {!holds && <Gated feature="boat.certify" className="btn btn-sm btn-ghost" disabled={Boolean(noCert)} title={noCert} onClick={() => { if (run('boat.certify', {}).ok) toast('Certified.', 'positive'); }}>Get A Boating Certificate</Gated>}
           </div>
           <Fine>{state?.startsWith('US') ? `Bayliner’s own loan is at ${(BOAT_LOAN.apr * 100).toFixed(1)}% for a well-qualified record, which SLATE takes as ${BOAT_LOAN.minScore}. ` : ''}Take The Boat Out is under Look After Yourself: three hours on the water in fine weather, at its engine’s published burn of {state?.startsWith('US') ? `${T18.gph} gallons` : `about ${Math.round(rules.model.litersPerHour)} liters`} an hour of marina fuel. {rules.slip.basis}.</Fine>

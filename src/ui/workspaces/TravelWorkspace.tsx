@@ -19,7 +19,7 @@ import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry } from '@/engine/systems/aviation';
+import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
@@ -67,7 +67,7 @@ export function TravelWorkspace() {
   // A car rented where they'll be (`systems/rentals.ts`, from 2026-09-29).
   const rented = toCity && byRoad(fromCity, toCity) ? rentalAt(person, fromCity, day) : undefined;
   // A pilot flies themselves; an owner who isn't one hires a pilot for their own plane.
-  const ownsPlane = Boolean(person.aircraft && person.aircraft.soldAt === undefined);
+  const ownsPlane = planesOf(person).length > 0;
   const licensedHere = licensedIn(person, CITIES.get(fromCity)?.countryId ?? '');
   const flies = (licensedHere || ownsPlane) && by === 'fly';
   const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : by === 'jet' ? 'jet' : by === 'chauffeur' && toCity && byRoad(fromCity, toCity) && CHAUFFEURS[fromCity] ? 'chauffeur' : undefined;
@@ -324,24 +324,43 @@ function LearnToFly() {
   );
 }
 
-/** A plane of one's own (`systems/aviation.ts`): bought without a certificate, flown only with one. */
+/** Planes of one's own (`systems/aviation.ts`): as many as the bank allows, each kept and sold on its own; bought without a certificate, flown only with one. */
 function OwnPlane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
-  const a = person.aircraft && person.aircraft.soldAt === undefined ? person.aircraft : undefined;
+  const planes = planesOf(person);
+  const a = planes[0];
   const [financed, setFinanced] = useState(false);
   const no = buyAircraftRefusal(sim, person, financed);
   const hour = ownHourCost(sim, a?.at ?? person.home?.cityId ?? person.currentLocationId);
   return (
     <div className="col gap-2">
-      <div className="strong small">A Plane Of Your Own</div>
+      <div className="strong small">{planes.length > 1 ? 'Your Planes' : 'A Plane Of Your Own'}</div>
       <div className="grid grid-3">
-        <Stat label="A Cessna 172" value={a ? `${Math.round(a.hours)} Hours Flown` : formatMoney(Math.round(OWN_172.priceUsd * 100), 'USD', { cents: false })} note={a ? `At ${CITIES.get(a.at)?.name ?? a.at}` : 'The median asked for a used one'} />
+        <Stat label="A Cessna 172" value={formatMoney(Math.round(OWN_172.priceUsd * 100), 'USD', { cents: false })} note="The median asked for a used one" />
         <Stat label="An Hour Flown" value={formatMoney(hour, cur, { cents: false })} note="Its fuel, against $176 to rent one" />
         <Stat label="Kept" value={`${formatMoney(Math.round((OWN_172.tiedownDefault + OWN_172.insuranceYear / 12) * 100), 'USD', { cents: false })} A Month`} note="A tiedown and insurance; the annual, and an overhaul in time" />
       </div>
-      {!a && (
+      {planes.length > 0 && (
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Plane</th><th scope="col">At</th><th scope="col" className="num">Hours</th><th scope="col">Standing</th><th scope="col">Sell</th></tr></thead>
+            <tbody>
+              {planes.map((p) => (
+                <tr key={p.id}>
+                  <td>Cessna 172</td>
+                  <td>{CITIES.get(p.at)?.name ?? p.at}</td>
+                  <td className="num mono">{Math.round(p.hours)}</td>
+                  <td>{p.repossessed ? 'Taken By The Lender' : p.loan ? `${formatMoney(p.loan.owed, cur, { cents: false })} Owed` : 'Owned Outright'}</td>
+                  <td><Gated feature="aircraft.sell" className="btn btn-sm btn-ghost" disabled={Boolean(p.repossessed)} title={p.repossessed ? 'The lender has it.' : undefined} onClick={() => { if (run('aircraft.sell', { planeId: p.id }).ok) toast('Sold.', 'positive'); }}>Sell</Gated></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {(
         <div className="field-row field-row-tight">
           <div className="field">
             <label htmlFor="plane-paid">Paid</label>
@@ -353,9 +372,7 @@ function OwnPlane() {
         </div>
       )}
       <div className="row gap-2">
-        {a
-          ? <Gated feature="aircraft.sell" className="btn btn-sm btn-ghost" onClick={() => { if (run('aircraft.sell', {}).ok) toast('Sold.', 'positive'); }}>Sell The Plane</Gated>
-          : <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', { financed }).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>Buy A Plane</Gated>}
+        <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', { financed }).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>{planes.length ? 'Buy Another Plane' : 'Buy A Plane'}</Gated>
       </div>
       {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it yourself does. Until you’re a pilot, By offers it flown by a hired commercial pilot, at $450 a half day and $900 a full one.</p> : null}
     </div>

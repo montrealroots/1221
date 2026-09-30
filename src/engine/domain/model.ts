@@ -268,8 +268,11 @@ export interface Person {
   /** Pilot's licenses outside America, from 2026-09-30 (`systems/aviation.ts`). */
   pilotLicences?: { authority: string; country: string; issuedAt: number; /** When its medical runs out, from 2026-10-01. */ medicalUntil?: number }[];
   /** A plane of their own (`systems/aviation.ts`). */
+  /** The planes they own (`systems/aviation.ts`). A save from before 2026-10-01 held one, as `aircraft`, moved into the list on opening. */
+  planes?: import('../systems/aviation').OwnedAircraft[];
   aircraft?: import('../systems/aviation').OwnedAircraft;
-  /** A boat of their own, and the states whose operator's certificate they hold (`systems/boats.ts`). */
+  /** The boats they own, and the states whose operator's certificate they hold (`systems/boats.ts`). A save from before 2026-10-01 held one, as `boat`, moved into the list on opening. */
+  boats?: import('../systems/boats').OwnedBoat[];
   boat?: import('../systems/boats').OwnedBoat;
   boatCertificates?: import('../content/boats').BoatState[];
   /** Their driving record: points and a suspension (`systems/driving.ts`). */

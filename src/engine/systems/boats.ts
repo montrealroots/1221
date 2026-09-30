@@ -16,6 +16,10 @@
  * at its price, as no depreciation series was researched, and sold for it.
  * Bought on Bayliner's own financing where the record allows, and brought
  * along on its trailer on moving home (below), from 2026-09-30.
+ *
+ * As many as the bank, the lender and the places to keep them allow, from
+ * 2026-10-01: each its own record, months, loan and repossession. Until then
+ * a second was refused with "You own a boat.", a limit no law or marina sets.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -41,14 +45,24 @@ const YEAR = 365.2425 * MS_DAY;
 const GAL = 3.785411784;
 const HOUSES = new Set(['house', 'townhouse', 'estate']);
 
-export interface OwnedBoat { boughtAt: Instant; price: Money; cityId: string; state: BoatState; registeredUntil: Instant; seasonPaid?: number; winterPaid?: number; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number; missed?: number }; repossessed?: { at: Instant; saleAt: Instant } }
+export interface OwnedBoat { id: string; boughtAt: Instant; price: Money; cityId: string; state: BoatState; registeredUntil: Instant; seasonPaid?: number; winterPaid?: number; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number; missed?: number }; repossessed?: { at: Instant; saleAt: Instant } }
 
 const local = (sim: Simulation, units: number, currency: string): Money => { const cur = saveCurrency(sim.universe); const c = Math.round(units * 100); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
 const usd = (sim: Simulation, units: number): Money => local(sim, units, 'USD');
 /** An amount in a boat's place's money, in the save's. */
 const inPlace = (sim: Simulation, state: BoatState, units: number): Money => local(sim, units, BOAT_RULES[state].currency);
 const homeCity = (person: Person) => person.home?.cityId ?? person.currentLocationId;
-export const boatOf = (person: Person): OwnedBoat | undefined => (person.boat && person.boat.soldAt === undefined ? person.boat : undefined);
+/** The boats they own now, a save's single one moved into the list. */
+export function boatsOf(person: Person): OwnedBoat[] {
+  if (person.boat) { (person.boats ??= []).push({ ...person.boat, id: person.boat.id ?? 'boat-first' }); delete person.boat; }
+  return (person.boats ?? []).filter((b) => b.soldAt === undefined);
+}
+/** One of their boats: the one named, or the one where they are, or the first. */
+export function boatOf(person: Person, boatId?: string): OwnedBoat | undefined {
+  const mine = boatsOf(person);
+  if (boatId !== undefined) return mine.find((b) => b.id === boatId);
+  return mine.find((b) => b.cityId === person.currentLocationId) ?? mine[0];
+}
 
 /** What buying one costs where one lives, in the save's money: the price, the sales tax, the first registration. */
 export function boatQuote(sim: Simulation, cityId: string): { price: Money; tax: Money; registration: Money } | undefined {
@@ -61,7 +75,6 @@ export function boatQuote(sim: Simulation, cityId: string): { price: Money; tax:
 }
 
 export function buyBoatRefusal(sim: Simulation, person: Person, financed = false): string | undefined {
-  if (boatOf(person)) return 'You own a boat.';
   const q = boatQuote(sim, homeCity(person));
   if (!q) return 'SLATE sells a boat in New York, Connecticut, California, London, Dublin and Toronto only yet.';
   if (financed && !jurisdictionOf(homeCity(person))?.startsWith('US')) return 'Bayliner’s loan is American; none is kept here.';
@@ -112,12 +125,14 @@ export const onItsTrailer = (person: Person, boat: OwnedBoat): boolean => {
   return Boolean(owned && owned.cityId === boat.cityId && HOUSES.has(owned.facts.type));
 };
 
-function scheduleBoat(sim: Simulation, person: Person): void {
-  sim.schedule({ at: sim.now + 30 * MS_DAY, kind: BOAT_MONTH_KIND, label: 'The Boat’s Month', category: 'home', priority: 30, payload: { personId: person.id } });
+function scheduleBoat(sim: Simulation, person: Person, boat: OwnedBoat): void {
+  sim.schedule({ at: sim.now + 30 * MS_DAY, kind: BOAT_MONTH_KIND, label: 'The Boat’s Month', category: 'home', priority: 30, payload: { personId: person.id, boatId: boat.id } });
 }
+/** A scheduled item's boat: the one it names, or a save's single boat from before each had its own months. */
+const boatFor = (person: Person | undefined, payload: Record<string, unknown>): OwnedBoat | undefined => (person ? (payload.boatId !== undefined ? boatsOf(person).find((b) => b.id === payload.boatId) : boatsOf(person)[0]) : undefined);
 
 export function registerBoats(sim: Simulation): void {
-  sim.onCommand<{ financed?: boolean }, { paid: Money }>('boat.buy', (p, { sim: s }) => {
+  sim.onCommand<{ financed?: boolean }, { paid: Money; boatId: string }>('boat.buy', (p, { sim: s }) => {
     const person = s.player;
     const financed = p?.financed === true;
     const no = buyBoatRefusal(s, person, financed);
@@ -129,25 +144,28 @@ export function registerBoats(sim: Simulation): void {
     const paid = q.price - lent + q.tax + q.registration;
     if (!payFromBank(s, person, paid, `A ${BOAT_RULES[jurisdictionOf(city) as BoatState].model.label}, taxed and registered${financed ? ', the down payment' : ''}`, 'vehicle')) throw new CommandError('The bank couldn’t pay.');
     const state = jurisdictionOf(city) as BoatState;
-    person.boat = { boughtAt: s.now, price: q.price, cityId: city, state, registeredUntil: s.now + (BOAT_RULES[state].registration?.years ?? 1_000) * YEAR };
+    const boat: OwnedBoat = { id: s.nextId('vehicle'), boughtAt: s.now, price: q.price, cityId: city, state, registeredUntil: s.now + (BOAT_RULES[state].registration?.years ?? 1_000) * YEAR };
+    boatsOf(person);
+    (person.boats ??= []).push(boat);
     if (lent > 0) {
-      person.boat.loan = { owed: lent, monthly: amortized(lent, BOAT_LOAN.apr, BOAT_LOAN.months), monthsLeft: BOAT_LOAN.months };
+      boat.loan = { owed: lent, monthly: amortized(lent, BOAT_LOAN.apr, BOAT_LOAN.months), monthsLeft: BOAT_LOAN.months };
       s.post({ memo: `A boat loan, the ${T18.label}`, category: 'vehicle', postings: [{ accountId: s.nominalAccount('expense', 'Vehicles').id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: -lent }] });
     }
-    scheduleBoat(s, person);
-    return { paid };
+    scheduleBoat(s, person, boat);
+    return { paid, boatId: boat.id };
   });
 
-  sim.onCommand<Record<string, never>, { value: Money }>('boat.sell', (_p, { sim: s }) => {
+  sim.onCommand<{ boatId?: string }, { value: Money }>('boat.sell', (p, { sim: s }) => {
     const person = s.player;
-    const boat = boatOf(person);
-    if (!boat) throw new CommandError('You own no boat.');
+    const boat = boatOf(person, p?.boatId);
+    if (!boat) throw new CommandError(p?.boatId ? 'That isn’t a boat you own.' : 'You own no boat.');
+    if (boat.repossessed) throw new CommandError('The lender has that boat.');
     // Its loan paid off from the sale first.
     const payoff = boat.loan?.owed ?? 0;
     s.post({ memo: `Sold the ${BOAT_RULES[boat.state].model.label}`, category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: boat.price - payoff }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: payoff }] : []), { accountId: s.nominalAccount('income', 'Boat Sold').id, amount: -boat.price }] });
     delete boat.loan;
     boat.soldAt = s.now;
-    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === BOAT_MONTH_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === BOAT_MONTH_KIND && item.payload.personId === person.id && boatFor(person, item.payload) === undefined) s.timeline.cancel(item.id, s.now);
     return { value: boat.price };
   });
 
@@ -166,7 +184,7 @@ export function registerBoats(sim: Simulation): void {
   sim.onSchedule(BOAT_MONTH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     // A boat sold has its months canceled, so the one here is theirs still.
-    const boat = person?.boat;
+    const boat = boatFor(person, item.payload);
     if (!person || !boat) return;
     const rules = BOAT_RULES[boat.state];
     const pay = (units: number, memo: string) => { const due = inPlace(s, boat.state, units); if (!payFromBank(s, person, due, memo, 'vehicle')) owe(s, person, due, memo, 'vehicle'); };
@@ -191,7 +209,7 @@ export function registerBoats(sim: Simulation): void {
         const saleAt = s.now + BOAT_REPO[boat.state]!.noticeDays * MS_DAY;
         boat.repossessed = { at: s.now, saleAt };
         markRecord(person, REPOSSESSED_ON_RECORD, s.now, boat.cityId);
-        s.schedule({ at: saleAt, kind: BOAT_REPO_SALE_KIND, label: 'Repossessed Boat Sold', category: 'home', priority: 30, payload: { personId: person.id } });
+        s.schedule({ at: saleAt, kind: BOAT_REPO_SALE_KIND, label: 'Repossessed Boat Sold', category: 'home', priority: 30, payload: { personId: person.id, boatId: boat.id } });
         if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Your Boat Was Repossessed', body: 'Three payments missed, the lender took the boat. It’s sold after its notice, and it’s on your record.', importance: 85, route: '/workspace/vehicles' });
       }
       s.post({ memo: 'Boat loan, principal repaid', category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', 'Vehicles').id, amount: -principal }] });
@@ -208,12 +226,12 @@ export function registerBoats(sim: Simulation): void {
       else pay(winter.storage(rules.model.lengthFt), 'Boat hauled and stored for the winter');
       boat.winterPaid = p.year;
     }
-    scheduleBoat(s, person);
+    scheduleBoat(s, person, boat);
   });
 
   sim.onSchedule(BOAT_REPO_SALE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
-    const boat = person?.boat;
+    const boat = boatFor(person, item.payload);
     if (!person || !boat?.repossessed) return;
     // Sold at what it's held at, less the tow; the loan paid from it, a surplus back, the shortfall owed as the law has it.
     const owed = boat.loan?.owed ?? 0;
@@ -227,7 +245,7 @@ export function registerBoats(sim: Simulation): void {
     boat.soldAt = s.now;
     delete boat.loan;
     delete boat.repossessed;
-    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === BOAT_MONTH_KIND && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === BOAT_MONTH_KIND && one.payload.personId === person.id && boatFor(person, one.payload) === undefined) s.timeline.cancel(one.id, s.now);
   });
 }
 
@@ -254,8 +272,11 @@ export function registerBoats(sim: Simulation): void {
  * behind: neither country's relief was read for one.
  */
 export function carryBoat(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
-  const boat = boatOf(person);
-  if (!boat || boat.cityId !== fromCity || fromCity === toCity || !byRoad(fromCity, toCity)) return;
+  for (const boat of boatsOf(person)) carryOne(sim, person, boat, fromCity, toCity);
+}
+
+function carryOne(sim: Simulation, person: Person, boat: OwnedBoat, fromCity: string, toCity: string): void {
+  if (boat.repossessed || boat.cityId !== fromCity || fromCity === toCity || !byRoad(fromCity, toCity)) return;
   const state = jurisdictionOf(toCity);
   const from = CITIES.get(fromCity)?.countryId;
   const to = CITIES.get(toCity)?.countryId;
