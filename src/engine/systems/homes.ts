@@ -898,7 +898,8 @@ export function projectRefusal(sim: Simulation, person: Person, owned: OwnedHome
   const f = owned.facts;
   if (owned.selling) return 'It’s listed for sale.';
   if (!project.on.includes(f.type)) return 'Not on a home of this kind.';
-  for (const need of project.needs ?? []) if (!f.features.includes(need)) return `It needs a ${FEATURE_LABEL[need].toLowerCase()}.`;
+  // "An" before a vowel: "It needs a unfinished basement" read until 2026-09-29.
+  for (const need of project.needs ?? []) if (!f.features.includes(need)) { const word = FEATURE_LABEL[need].toLowerCase(); return `It needs ${/^[aeiou]/.test(word) ? 'an' : 'a'} ${word}.`; }
   for (const lack of project.lacks ?? []) if (f.features.includes(lack)) return `It has a ${FEATURE_LABEL[lack].toLowerCase()} already.`;
   if (project.lot !== undefined && (f.lot ?? 0) < project.lot) return 'The lot isn’t big enough.';
   if (project.bathsUpTo === 'bedsPlusOne' && f.baths >= Math.max(1, f.beds) + 1) return 'It has baths enough for its bedrooms.';

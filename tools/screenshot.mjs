@@ -6,7 +6,7 @@
  */
 
 import { chromium } from 'playwright';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
@@ -41,6 +41,41 @@ const shoot = async (name) => {
 await page.goto(BASE, { waitUntil: 'networkidle' });
 await page.waitForTimeout(3800);
 await shoot('01-startup');
+
+// A save opened instead of a new life (SHOT_SAVE, a played life's snapshot):
+// put in slot 1's place in the browser's store, continued, and the screens
+// asked for (SHOT_ROUTES) shot. A screen only an older life reaches, a home
+// owned, a house built, is looked at this way.
+if (process.env.SHOT_SAVE) {
+  const raw = readFileSync(process.env.SHOT_SAVE, 'utf8');
+  await page.evaluate((text) => new Promise((resolve, reject) => {
+    const req = indexedDB.open('slate', 1);
+    req.onupgradeneeded = () => { req.result.createObjectStore('saves'); };
+    req.onerror = () => reject(req.error);
+    req.onsuccess = () => {
+      const tx = req.result.transaction('saves', 'readwrite');
+      tx.objectStore('saves').put(text, 'slate.save.1');
+      tx.oncomplete = () => resolve(undefined);
+      tx.onerror = () => reject(tx.error);
+    };
+  }), raw);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(3000);
+  await page.getByRole('button', { name: /^continue$/i }).first().click({ timeout: 5000 }).catch((e) => console.log('  continue failed:', String(e).slice(0, 120)));
+  await page.waitForTimeout(5000);
+  await shoot('save-home');
+  for (const route of (process.env.SHOT_ROUTES ?? '').split(',').map((r) => r.trim()).filter(Boolean)) {
+    const word = route.split('/').filter(Boolean).pop() ?? '';
+    const button = page.getByRole('button', { name: new RegExp('^' + word + '$', 'i') }).first();
+    if (await button.count()) await button.click({ timeout: 2000 }).catch(() => {});
+    else console.log('  (no button for', route, ')');
+    await page.waitForTimeout(1500);
+    await shoot('save-' + route.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, ''));
+  }
+  await browser.close();
+  console.log(`done — ${OUT}/`);
+  process.exit(0);
+}
 
 const start = page.getByRole('button', { name: /new (save|game)|start|empty slot|create/i }).first();
 if (await start.count()) { await start.click().catch(() => {}); await page.waitForTimeout(1000); }
