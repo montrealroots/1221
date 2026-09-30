@@ -21,7 +21,7 @@
 import { drawRental } from './dwelling';
 import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
 import { planRentalDrive, rentalDriven } from './rentals';
-import { ownFlown, planFlyYourself } from './aviation';
+import { ownFlown, planCharterJet, planFlyYourself } from './aviation';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -204,16 +204,17 @@ function clashWith(sim: Simulation, person: Person, from: Instant, to: Instant):
 }
 
 /** Why a journey can't be booked, or nothing. */
-export function bookRefusal(sim: Simulation, person: Person, toCity: string, legs: JourneyLeg[] | string, stayDays: number, nights = 0): string | undefined {
+export function bookRefusal(sim: Simulation, person: Person, fromCity: string, toCity: string, legs: JourneyLeg[] | string, stayDays: number, nights = 0): string | undefined {
   if (typeof legs === 'string') return legs;
   if (!CITIES.get(toCity)) return 'SLATE doesn’t have that town.';
   if (legs[0]!.departAt <= sim.now) return 'That departure has gone.';
-  const from = legs[0]!.from;
   if (!ownPlaceIn(person, toCity)) {
     if (nights <= 0) return `Somewhere to sleep in ${CITIES.require(toCity).name}: book the hotel’s nights with it.`;
     if (!nightRateFor(toCity)) return `SLATE doesn’t have ${CITIES.require(toCity).name}’s hotels yet, and you have no home there.`;
   }
-  const border = crossingRefusal(person, from, toCity, legs[legs.length - 1]!.arriveAt, stayDays);
+  // The towns, not the first leg's place: a flight of one's own starts at an airport, whose code isn't a town,
+  // and until 2026-09-30 a domestic one asked for a passport as if it crossed a border.
+  const border = crossingRefusal(person, fromCity, toCity, legs[legs.length - 1]!.arriveAt, stayDays);
   if (border) return border;
   const clash = clashWith(sim, person, legs[0]!.departAt, legs[legs.length - 1]!.arriveAt);
   if (clash) return `It runs into ${clash}.`;
@@ -257,6 +258,8 @@ export function planBy(sim: Simulation, by: string | undefined, fromCity: string
   if (by === 'rental') return planRentalDrive(sim, sim.player, fromCity, toCity, day, slot);
   // Flown oneself in a rented plane, on a pilot's certificate (`systems/aviation.ts`, from 2026-09-29).
   if (by === 'fly') return planFlyYourself(sim, sim.player, fromCity, toCity, day, slot);
+  // A light jet chartered (`systems/aviation.ts`, from 2026-09-30).
+  if (by === 'jet') return planCharterJet(sim, fromCity, toCity, day, slot);
   const route = railRouteById(by);
   if (!route || !railRoutes(fromCity, toCity).includes(route)) return 'That train doesn’t run between those towns.';
   return planTrain(sim, route, fromCity, day, slot);
@@ -400,10 +403,10 @@ export function registerJourneys(sim: Simulation): void {
     if (back && back[0]!.departAt <= arriveOut) throw new CommandError('The way home leaves before the way out arrives.');
     // A round trip's hotel runs from the night it lands to the morning it flies home.
     const nights = back ? nightsBetween(toCity, arriveOut, back[0]!.departAt) : Math.max(0, Math.min(90, Math.floor(Number(p?.nights ?? 0))));
-    const no = bookRefusal(s, person, toCity, out, Math.max(1, nights), nights);
+    const no = bookRefusal(s, person, fromCity, toCity, out, Math.max(1, nights), nights);
     if (no) throw new CommandError(no);
     if (back) {
-      const noBack = bookRefusal(s, person, fromCity, back, 1, 1);
+      const noBack = bookRefusal(s, person, toCity, fromCity, back, 1, 1);
       if (noBack && !/Somewhere to sleep|hotels yet/.test(noBack)) throw new CommandError(`The way home: ${noBack}`);
       // A round trip's discount is the airlines'; a train's return is two singles.
       if (!by) { out = asRoundTrip(out); back = asRoundTrip(back); }
@@ -442,7 +445,8 @@ export function registerJourneys(sim: Simulation): void {
       const hotelBack = (h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0) + (h.let ? letRefund(h.let, h.arriveAt, s.now) : 0);
       const route = railRouteById(h.by);
       // A drive not yet driven has burned nothing: all of its costs come back.
-      if (h.by?.startsWith('car:') || h.by === 'rental' || h.by === 'fly') refund += total(h.legs) + hotelBack;
+      // A charter canceled ahead: SLATE's, as no operator's terms were read.
+      if (h.by?.startsWith('car:') || h.by === 'rental' || h.by === 'fly' || h.by === 'jet') refund += total(h.legs) + hotelBack;
       else if (route) refund += trainRefund(s, h, route) + hotelBack;
       else refund += free ? h.total : hotelBack;
       h.status = 'canceled';

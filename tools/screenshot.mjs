@@ -42,6 +42,61 @@ await page.goto(BASE, { waitUntil: 'networkidle' });
 await page.waitForTimeout(3800);
 await shoot('01-startup');
 
+// The walk's steps (SHOT_STEPS, below), taken on a new life or a played one.
+async function runSteps() {
+  for (const step of (process.env.SHOT_STEPS ?? '').split(';').map((s) => s.trim()).filter(Boolean)) {
+    const [verb, ...rest] = step.split(':');
+    const arg = rest.join(':');
+    // Guided-mode cards only: a "Close" pressed here once shut the On The Way
+    // confirmation and quietly undid every advance after the first.
+    const dismiss = async () => {
+      const b = page.getByRole('button', { name: /^got it$/i }).first();
+      if (await b.count()) { await b.click({ timeout: 1500 }).catch(() => {}); await page.waitForTimeout(300); }
+    };
+    // Through what the clock meets on the way, as a player who turns up would:
+    // Advance past the commitments it names, and Go to each one that comes due.
+    const through = async () => {
+      for (let n = 0; n < 60; n += 1) {
+        const onward = page.getByRole('dialog').getByRole('button', { name: /^(advance|go)$/i }).first();
+        if (!(await onward.count())) return;
+        await onward.click({ timeout: 2000 }).catch(() => {});
+        await page.waitForTimeout(Number(process.env.SHOT_ADVANCE_MS ?? 4000));
+      }
+    };
+    if (verb === 'press') {
+      const b = page.getByRole('button', { name: new RegExp('^' + arg + '$', 'i') }).first();
+      if (await b.count()) await b.click({ timeout: 3000 }).catch((e) => console.log('  press failed:', arg, String(e).slice(0, 120)));
+      else console.log('  (no button', arg, ')');
+    } else if (verb === 'row') {
+      const [text, name] = arg.split('>');
+      const b = page.locator('tr', { hasText: text }).getByRole('button', { name: new RegExp('^' + name + '$', 'i') }).first();
+      if (await b.count()) await b.click({ timeout: 3000 }).catch(() => {});
+      else console.log('  (no row', text, 'with', name, ')');
+    } else if (verb === 'fill') {
+      const [selector, value] = arg.split('=');
+      await page.locator(selector).first().fill(value ?? '').catch((e) => console.log('  fill failed:', selector, String(e).slice(0, 120)));
+    } else if (verb === 'select') {
+      // `select:#id=value` chooses an option of a dropdown by its value.
+      const [selector, value] = arg.split('=');
+      await page.locator(selector).first().selectOption(value ?? '').catch((e) => console.log('  select failed:', selector, String(e).slice(0, 120)));
+    } else if (verb === 'advance') {
+      const [choice, times] = arg.split('*');
+      for (let i = 0; i < Number(times ?? 1); i += 1) {
+        await dismiss();
+        await page.getByRole('button', { name: /^advance/i }).first().click({ timeout: 3000 }).catch(() => {});
+        await page.waitForTimeout(300);
+        await page.getByRole('menuitem', { name: new RegExp('^' + choice, 'i') }).first().click({ timeout: 3000 }).catch(() => {});
+        // The clock runs to the moment rather than jumping; a press while it runs is lost.
+        await page.waitForTimeout(Number(process.env.SHOT_ADVANCE_MS ?? 4000));
+        await through();
+      }
+      await dismiss();
+    } else if (verb === 'shot') await shoot(arg);
+    else console.log('  (unknown step', step, ')');
+    await page.waitForTimeout(800);
+  }
+}
+
 // A save opened instead of a new life (SHOT_SAVE, a played life's snapshot):
 // put in slot 1's place in the browser's store, continued, and the screens
 // asked for (SHOT_ROUTES) shot. A screen only an older life reaches, a home
@@ -72,6 +127,7 @@ if (process.env.SHOT_SAVE) {
     await page.waitForTimeout(1500);
     await shoot('save-' + route.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, ''));
   }
+  await runSteps();
   await browser.close();
   console.log(`done — ${OUT}/`);
   process.exit(0);
@@ -192,57 +248,7 @@ if (await begin.count()) {
   // table row holding the text; `fill:#id=value` types into a field;
   // `advance:One Week*7` takes the Advance menu's choice that many times;
   // `shot:name` photographs the page.
-  for (const step of (process.env.SHOT_STEPS ?? '').split(';').map((s) => s.trim()).filter(Boolean)) {
-    const [verb, ...rest] = step.split(':');
-    const arg = rest.join(':');
-    // Guided-mode cards only: a "Close" pressed here once shut the On The Way
-    // confirmation and quietly undid every advance after the first.
-    const dismiss = async () => {
-      const b = page.getByRole('button', { name: /^got it$/i }).first();
-      if (await b.count()) { await b.click({ timeout: 1500 }).catch(() => {}); await page.waitForTimeout(300); }
-    };
-    // Through what the clock meets on the way, as a player who turns up would:
-    // Advance past the commitments it names, and Go to each one that comes due.
-    const through = async () => {
-      for (let n = 0; n < 60; n += 1) {
-        const onward = page.getByRole('dialog').getByRole('button', { name: /^(advance|go)$/i }).first();
-        if (!(await onward.count())) return;
-        await onward.click({ timeout: 2000 }).catch(() => {});
-        await page.waitForTimeout(Number(process.env.SHOT_ADVANCE_MS ?? 4000));
-      }
-    };
-    if (verb === 'press') {
-      const b = page.getByRole('button', { name: new RegExp('^' + arg + '$', 'i') }).first();
-      if (await b.count()) await b.click({ timeout: 3000 }).catch((e) => console.log('  press failed:', arg, String(e).slice(0, 120)));
-      else console.log('  (no button', arg, ')');
-    } else if (verb === 'row') {
-      const [text, name] = arg.split('>');
-      const b = page.locator('tr', { hasText: text }).getByRole('button', { name: new RegExp('^' + name + '$', 'i') }).first();
-      if (await b.count()) await b.click({ timeout: 3000 }).catch(() => {});
-      else console.log('  (no row', text, 'with', name, ')');
-    } else if (verb === 'fill') {
-      const [selector, value] = arg.split('=');
-      await page.locator(selector).first().fill(value ?? '').catch((e) => console.log('  fill failed:', selector, String(e).slice(0, 120)));
-    } else if (verb === 'select') {
-      // `select:#id=value` chooses an option of a dropdown by its value.
-      const [selector, value] = arg.split('=');
-      await page.locator(selector).first().selectOption(value ?? '').catch((e) => console.log('  select failed:', selector, String(e).slice(0, 120)));
-    } else if (verb === 'advance') {
-      const [choice, times] = arg.split('*');
-      for (let i = 0; i < Number(times ?? 1); i += 1) {
-        await dismiss();
-        await page.getByRole('button', { name: /^advance/i }).first().click({ timeout: 3000 }).catch(() => {});
-        await page.waitForTimeout(300);
-        await page.getByRole('menuitem', { name: new RegExp('^' + choice, 'i') }).first().click({ timeout: 3000 }).catch(() => {});
-        // The clock runs to the moment rather than jumping; a press while it runs is lost.
-        await page.waitForTimeout(Number(process.env.SHOT_ADVANCE_MS ?? 4000));
-        await through();
-      }
-      await dismiss();
-    } else if (verb === 'shot') await shoot(arg);
-    else console.log('  (unknown step', step, ')');
-    await page.waitForTimeout(800);
-  }
+  await runSteps();
 
   // There used to be a Go Anywhere palette on `/` and this walk shot it every
   // run. It was deleted with the rest of the unkept interface and nothing

@@ -28,6 +28,8 @@ import { byRoad } from '@/engine/systems/driving';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
+/** A flight not flown by an airline: a chartered jet, or one's own plane flown by its owner or a hired pilot. */
+const flownWord = (l: JourneyLeg, pilot: boolean): string | undefined => (l.mode !== 'fly' ? undefined : l.routeId === 'jet' ? 'Chartered Jet' : l.routeId === 'own' ? (pilot ? 'Your Plane' : 'Your Plane, A Hired Pilot') : undefined);
 const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', fly: 'Flown Yourself', train: 'Train', bus: 'Coach', drive: 'Drive', arrival: 'Off The Aircraft' };
 /** A train journey's legs, named for a station. */
 const RAIL_WORD: Partial<Record<JourneyLeg['mode'], string>> = { ground: 'To Or From The Station', 'check-in': 'At The Station' };
@@ -65,8 +67,10 @@ export function TravelWorkspace() {
   // A pilot flies themselves; an owner who isn't one hires a pilot for their own plane.
   const ownsPlane = Boolean(person.aircraft && person.aircraft.soldAt === undefined);
   const flies = (Boolean(person.pilot) || ownsPlane) && by === 'fly';
-  const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : undefined;
-  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car || mode === 'rental' ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
+  const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : by === 'jet' ? 'jet' : undefined;
+  // A flight of one's own leaves on the hour from 7 AM to 5 PM, as its plan books it. Until 2026-09-30 it offered the
+  // airline's 8 AM, 1 PM and 7 PM and booked 7, 8 and 9 AM.
+  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car || mode === 'rental' ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : mode === 'fly' || mode === 'jet' ? Array.from({ length: 11 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
   const pick = Math.min(slot, slots.length - 1);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
   const round = daysThere > 0;
@@ -78,7 +82,7 @@ export function TravelWorkspace() {
   const backPlan = backLegs && typeof backLegs !== 'string' ? (mode ? backLegs : asRoundTrip(backLegs)) : undefined;
   // A round trip's hotel runs from the night it lands to the morning it flies home.
   const stayNights = own ? 0 : round && outPlan && backPlan ? nightsBetween(toCity, outPlan[outPlan.length - 1]!.arriveAt, backPlan[0]!.departAt) : nights;
-  const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, toCity, outLegs, Math.max(1, stayNights), stayNights)
+  const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, fromCity, toCity, outLegs, Math.max(1, stayNights), stayNights)
     ?? (typeof backLegs === 'string' ? backLegs : backPlan && outPlan && backPlan[0]!.departAt <= outPlan[outPlan.length - 1]!.arriveAt ? 'The way home leaves before the way out arrives.' : undefined);
   const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights) : undefined;
   const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
@@ -125,6 +129,7 @@ export function TravelWorkspace() {
                   {cars.map((v) => <option key={v.id} value={`car:${v.id}`}>Your {modelById(v.modelId)?.make} {modelById(v.modelId)?.model}</option>)}
                   {rented && <option value="rental">Your Rental Car</option>}
                   {(person.pilot || ownsPlane) && <option value="fly">{person.pilot ? 'Fly Yourself' : 'Your Plane, A Hired Pilot'}</option>}
+                  <option value="jet">A Chartered Light Jet</option>
                 </select>
               </div>
               <div className="field">
@@ -171,7 +176,7 @@ export function TravelWorkspace() {
                         <Fragment key={i}>
                           {outPlan && i === outPlan.length && <tr><th scope="rowgroup" colSpan={6}>The Way Home</th></tr>}
                           <tr>
-                            <td>{(mode && RAIL_WORD[l.mode]) || MODE_WORD[l.mode]}</td>
+                            <td>{flownWord(l, person.pilot !== undefined) ?? ((mode && RAIL_WORD[l.mode]) || MODE_WORD[l.mode])}</td>
                             <td>{place(l.from)}</td>
                             <td>{place(l.to)}</td>
                             <td>{formatDateTime(l.departAt, departsFar ? end : start)}</td>

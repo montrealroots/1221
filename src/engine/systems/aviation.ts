@@ -250,3 +250,49 @@ export function registerOwnedAircraft(sim: Simulation): void {
     scheduleAircraft(s, person);
   });
 }
+
+// ---------------------------------------------------------------------------
+// A light jet chartered (stage 7f, from 2026-09-30), researched in
+// docs/research/world/research-charter.json.
+
+/**
+ * A light jet chartered between two American airports: Textron's Citation
+ * CJ3 Gen2 at its 416 knots and within its 2,040 nautical miles less the 45
+ * minutes an instrument flight holds in reserve (14 CFR 91.167; no
+ * alternate is kept), or twice that with one stop for fuel, as a light
+ * jet crossing the country makes; the half hour taxiing and climbing each
+ * time, and 45 minutes on the ground to refuel, unbilled, are SLATE's.
+ * Billed at the middle of Paramount Business Jets' $3,750 to $4,200 an hour
+ * for a light jet, for the flight there and the jet's flight back, as a
+ * one-way charter is: evoJets' $45,100 to $55,100 from Teterboro to Van
+ * Nuys is about twice the hours one way. Paramount bills at least two hours
+ * a day. On top, the federal excise tax on air transportation, 7.5%, and the
+ * 2026 segment fee of $5.30 (26 USC 4261, Rev. Proc. 2025-32).
+ */
+export const LIGHT_JET = { knots: 416, rangeNm: 2_040, reserveHours: 0.75, overheadHours: 0.5, rateUsd: 3_975, minHours: 2, excise: 0.075, segmentUsd: 5.3, fuelStopHours: 0.75 } as const;
+
+/** What a light jet charter bills for a flight of so many hours, in dollars. */
+export function jetCharterUsd(hours: number): number {
+  const billed = Math.max(LIGHT_JET.minHours, hours * 2);
+  return Math.round((billed * LIGHT_JET.rateUsd * (1 + LIGHT_JET.excise) + LIGHT_JET.segmentUsd) * 100) / 100;
+}
+
+/** A journey's leg in a chartered light jet, or why not. */
+export function planCharterJet(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
+  const from = airportsFor(fromCity)[0]?.airport;
+  const to = airportsFor(toCity)[0]?.airport;
+  if (!from || !to || from.country !== 'US' || to.country !== 'US') return 'SLATE charters a jet between American airports only yet.';
+  if (from.iata === to.iata) return 'The same airport serves both towns.';
+  const nm = distanceKm(from, to) / 1.852;
+  const usable = LIGHT_JET.rangeNm - LIGHT_JET.knots * LIGHT_JET.reserveHours;
+  // Past its range, it stops once for fuel, as a light jet crossing the country does.
+  if (nm > 2 * usable) return `${Math.round(nm)} nautical miles is past a light jet’s ${Math.round(2 * usable)} with one stop for fuel.`;
+  const stops = nm > usable ? 1 : 0;
+  const hours = nm / LIGHT_JET.knots + LIGHT_JET.overheadHours * (1 + stops);
+  const onTheGround = stops * LIGHT_JET.fuelStopHours;
+  const zone = CITIES.require(fromCity).timeZone;
+  const p = zonedParts(day, zone);
+  const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
+  const dollars = jetCharterUsd(hours);
+  return [{ mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare: usd(sim, Math.round(dollars * 100)), routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at $3,975 an hour, with the 7.5% federal excise tax and its segment fee.` }];
+}

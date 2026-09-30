@@ -32,7 +32,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
-| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29, 7d (boats) and 7e (crew and charter) 2026-09-30; open items below |
+| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29, 7d to 7f (boats, crew and charter) 2026-09-30; open items below |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b); open items below |
 
 ## Acceptance criteria
@@ -346,9 +346,17 @@ Evidence: `tests/boats.test.ts` (9); 13 mutations, all killed in the end. Three 
 - Researched in `docs/research/world/research-charter.json`.
 - A hired pilot: an owner who isn't a pilot has their own plane flown by a commercial pilot (Stage 7c, above), at the one published piston rate.
 - Charter A Boat (Look After Yourself): out on the water with a captain, no boat and no certificate of one's own; a vessel for hire is run by a captain with the Coast Guard's six-pack license (46 CFR 15.605). New York City: Go Sailing NYC's $1,050 for three hours and the 18% to 22% gratuity it suggests, the middle. Connecticut, on the Sound: Island Mike's $600 for four hours from Norwalk, which asks none. It does what an outing in one's own boat does.
-- Open, and why: a jet chartered, since the brokers print hourly rates by class and the excise tax is researched but no light jet's speed was, and a flight's hours are what a charter's price is; a boat chartered in Marina del Rey, where only marketplace summaries were read; a chauffeur, whose rates are researched but whom nothing in SLATE yet needs.
+- Open, and why: a jet chartered was open here until 7f (below); a boat chartered in Marina del Rey, where only marketplace summaries were read; a chauffeur, whose rates are researched but whom nothing in SLATE yet needs.
 
 Evidence: `tests/boats.test.ts` (16 in all) and `tests/aviation.test.ts` (7, the plane's own test now hiring a pilot); 10 mutations, all killed.
+
+#### Stage 7f: a light jet chartered (done 2026-09-30)
+- Travel's By offers A Chartered Light Jet between two American airports (`planCharterJet` in `systems/aviation.ts`, researched in `docs/research/world/research-charter.json`): Textron's Citation CJ3 Gen2 at its published 416 knots and 2,040 nautical miles, less the 45 minutes an instrument flight holds in reserve (14 CFR 91.167). Past that it stops once for fuel, as a light jet crossing the country does; farther, such as Honolulu, it's refused. The half hour taxiing and climbing each time, and 45 minutes on the ground refueling, are SLATE's.
+- Billed at the middle of Paramount Business Jets' $3,750 to $4,200 an hour for a light jet, for the flight there and the jet's flight back, as a one-way charter is billed: evoJets' $45,100 to $55,100 for Teterboro to Van Nuys is about twice one way's hours. At least Paramount's two hours. On top, the 7.5% federal excise tax and the 2026 segment fee of $5.30 (26 USC 4261, Rev. Proc. 2025-32). Canceled ahead, SLATE refunds it whole; no operator's terms were read.
+- Found on the way, and fixed: a flight of one's own offered the airline's 8 AM, 1 PM and 7 PM on Travel but booked 7, 8 and 9 AM. It now offers the hours its plan books, 7 AM to 5 PM. And a domestic flight of one's own asked for a passport: the border check read the first leg's airport code as a town in another country (`bookRefusal` in `systems/journey.ts`, since 7b). It now takes the journey's towns. Its legs read Chartered Jet, Your Plane, or Your Plane, A Hired Pilot, where they read Flown Yourself.
+- Open, and why: a charter abroad, where Britain's Air Passenger Duty on a private jet is researched but no operator's rates outside America were; an empty leg's cheaper seat.
+
+Evidence: `tests/aviation.test.ts` (10); 8 mutations, all killed in the end. One first survived, the range past which no stop suffices, which no test reached until a flight to Honolulu.
 
 ## Coverage record
 

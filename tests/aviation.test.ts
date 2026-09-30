@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { OWN_172, hiredPilotUsd, ownHourCost, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { OWN_172, hiredPilotUsd, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf } from '@/engine/systems/journey';
 import { airportsFor } from '@/engine/systems/airports';
@@ -154,5 +154,44 @@ describe('a plane of one’s own', () => {
     const sold = sim.execute<{ value: number }>({ kind: 'aircraft.sell', payload: {} });
     expect(sold.value!.value).toBe(inSave(sim, 121_847_00, 'USD'));
     expect(netWorth(sim, sim.player.id).vehicles).toBe(0);
+  });
+});
+
+describe('a light jet chartered', () => {
+  it('bills the flight there and back at $3,975 an hour, two hours at least, with the 7.5% excise tax and the $5.30 segment fee', () => {
+    expect(jetCharterUsd(0.5)).toBeCloseTo(2 * 3_975 * 1.075 + 5.3, 2);
+    expect(jetCharterUsd(3)).toBeCloseTo(6 * 3_975 * 1.075 + 5.3, 2);
+  });
+
+  it('flies New York to Los Angeles with a stop for fuel, in about as many hours as Textron’s 416 knots make, and refuses what’s abroad', () => {
+    const sim = save('us-ny-newyork', 'jet-plan');
+    const day = sim.now + 10 * MS_DAY;
+    const legs = planCharterJet(sim, 'us-ny-newyork', 'us-ca-losangeles', day, 3);
+    if (typeof legs === 'string') throw new Error(legs);
+    const a = airportsFor('us-ny-newyork')[0]!.airport;
+    const b = airportsFor('us-ca-losangeles')[0]!.airport;
+    // Past a CJ3's range with reserve: one stop for fuel, its taxi and climb twice, and 45 minutes on the ground unbilled.
+    const hours = distanceKm(a, b) / 1.852 / 416 + 2 * 0.5;
+    expect((legs[0]!.arriveAt - legs[0]!.departAt) / 3_600_000).toBeCloseTo(hours + 0.75, 1);
+    expect(legs[0]!.basis).toMatch(/a stop for fuel/);
+    const near = planCharterJet(sim, 'us-ny-newyork', 'us-ct-newhaven', day, 3);
+    if (typeof near === 'string') throw new Error(near);
+    expect(near[0]!.basis).not.toMatch(/stop for fuel/);
+    expect(legs[0]!.routeId).toBe('jet');
+    expect(legs[0]!.fare).toBe(inSave(sim, Math.round(jetCharterUsd(hours) * 100), 'USD'));
+    expect(zonedParts(legs[0]!.departAt, 'America/New_York').hour).toBe(10);
+    expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/American airports/);
+    // Honolulu is past two of a light jet's legs.
+    expect(planCharterJet(sim, 'us-ny-newyork', 'us-hi-honolulu', day, 3)).toMatch(/with one stop for fuel/);
+  });
+
+  it('is booked as a journey and paid, with no passport, as a flight within the country asks none', () => {
+    const sim = save('us-ny-newyork', 'jet-book');
+    fund(sim, 100_000);
+    // A flight of one's own starts at an airport; until 2026-09-30 its code was read as another country.
+    sim.player.documents = (sim.player.documents ?? []).filter((d) => d.kind !== 'passport');
+    const r = sim.execute({ kind: 'travel.book', payload: { toCity: 'us-ca-losangeles', day: saturday(sim, 7), slot: 2, by: 'jet', nights: 1 } });
+    expect(r.ok, r.error).toBe(true);
+    expect(journeysOf(sim.player).some((j) => j.legs.some((l) => l.routeId === 'jet'))).toBe(true);
   });
 });
