@@ -23,7 +23,7 @@ import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehi
 import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { tiresRefusal } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
-import { resprayRefusal } from '@/engine/systems/mods';
+import { MODS, MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { buyoutPrice, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -112,7 +112,7 @@ export function VehiclesWorkspace() {
                             <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: 240 }}>
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
-                            {!resprayRefusal(v, glazed(v)) && <Gated feature="vehicle.respray" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.respray', { vehicleId: v.id }); if (a.ok) toast(`Resprayed, for ${money(a.value!.paid)}, and declared to the insurer.`, 'positive'); }}>Respray</Gated>}
+                            <ModifyControl v={v} />
                             <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
                               const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id });
                               if (a.ok) toast(`Sold: ${money(a.value!.value)} to you after the loan.`, 'positive');
@@ -301,5 +301,22 @@ function BoatPanel() {
         </div>
       )}
     </Panel>
+  );
+}
+
+/** Britain's modifications, one at a time, the least of them first (`systems/mods.ts`). */
+function ModifyControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast, sim } = useGame();
+  const open = MODS.filter((m) => !modRefusal(v, m, glazed(v)));
+  const [mod, setMod] = useState<Mod | ''>('');
+  if (!open.length) return null;
+  const chosen = mod && open.includes(mod) ? mod : open[0]!;
+  return (
+    <>
+      <select aria-label="Modification" value={chosen} onChange={(e) => setMod(e.target.value as Mod)} style={{ width: 'auto' }}>
+        {open.map((m) => <option key={m} value={m}>{MOD_LABEL[m]}</option>)}
+      </select>
+      <Gated feature="vehicle.modify" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.modify', { vehicleId: v.id, mod: chosen }); if (a.ok) toast(`${MOD_LABEL[chosen]} fitted, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}, and declared to the insurer.`, 'positive'); }}>Fit It</Gated>
+    </>
   );
 }

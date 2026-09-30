@@ -18,7 +18,13 @@
  *   MX$765.45 from 1 February 2026, read secondhand and the arithmetic
  *   checked.
  * Ontario and British Columbia inspect a private car only on its sale, and
- * California's smog check is priced by each station, so none is kept there.
+ * California's smog check, from later on 2026-09-30
+ * (`docs/research/world/research-mods-smog.json`): every two years from a
+ * car's eighth model year, at the average an initial test cost in August 2026
+ * in BAR's own report, $69.16, and the $8.25 certificate; 7.60% of the OBD
+ * tests on cars from 2000 fail it that month, and the repair is CarMD's, as
+ * New York's; an electric car is exempt. Until then it was said to be priced
+ * by each station and wasn't kept.
  * A test failed is drawn, from 2026-09-30, at each place's published rate
  * (`docs/research/world/research-upkeep.json`), the repair paid and any
  * retest's fee with it:
@@ -82,6 +88,7 @@ export const INSPECTION_RULES: Readonly<Partial<Record<Jurisdiction, InspectionR
   'US-CT': { label: 'Emissions Test', currency: 'USD', fee: () => 20, from: 'registration', first: 4, every: () => 2, fails: { rate: () => 0.074, repair: CARMD, retest: 0 } },
   GB: { label: 'MOT', currency: 'GBP', fee: () => 54.85, from: 'registration', first: 3, every: () => 1, fails: { rate: (_, age) => motFails(age), repair: AFTER_MOT, retest: 0 } },
   IE: { label: 'NCT', currency: 'EUR', fee: () => 60, from: 'registration', first: 4, every: (age) => (age >= 10 ? 1 : 2), fails: { rate: () => 1 - 0.5057, repair: AFTER_MOT, retest: 40 } },
+  'US-CA': { label: 'Smog Check', currency: 'USD', fee: () => 69.16 + 8.25, from: 'registration', first: 8, every: () => 2, fails: { rate: () => 0.076, repair: CARMD, retest: 0 } },
   'MX-CMX': { label: 'Verificación', currency: 'MXN', fee: () => 765.45, from: 'sale', first: 0.5, every: () => 0.5 },
 };
 

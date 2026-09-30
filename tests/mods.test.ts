@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
-import { MOD_LOADING, modLoading, resprayRefusal } from '@/engine/systems/mods';
+import { MOD_LOADING, MOD_PRICE, modLoading, modRefusal } from '@/engine/systems/mods';
 import { vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -33,17 +33,27 @@ describe('modifications, declared', () => {
     expect(modLoading(v)).toBeCloseTo(1 + MOD_LOADING.tint, 12);
     sim.advanceBy(31 * MS_DAY);
     expect(Math.abs(premiums(sim).at(-1)! - Math.round(before * 1.121))).toBeLessThanOrEqual(1);
-    const r = sim.execute<{ paid: number }>({ kind: 'vehicle.respray', payload: { vehicleId: v.id } });
+    const r = sim.execute<{ paid: number }>({ kind: 'vehicle.modify', payload: { vehicleId: v.id, mod: 'respray' } });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBe(inSave(sim, 3_000_00, 'GBP'));
     expect(modLoading(v)).toBeCloseTo(1.121 * 1.0452, 12);
-    expect(resprayRefusal(v, true)).toMatch(/been resprayed/);
+    expect(modRefusal(v, 'respray', true)).toMatch(/has one/);
+    // A remap, 15.93%, at VUDU's £449; wheels, 0.79%, at LK Performance's £332.
+    expect(sim.execute<{ paid: number }>({ kind: 'vehicle.modify', payload: { vehicleId: v.id, mod: 'remap' } }).value!.paid).toBe(inSave(sim, 449_00, 'GBP'));
+    expect(sim.execute({ kind: 'vehicle.modify', payload: { vehicleId: v.id, mod: 'wheels' } }).ok).toBe(true);
+    expect(modLoading(v)).toBeCloseTo(1.121 * 1.0452 * 1.1593 * 1.0079, 12);
+    expect(MOD_PRICE.exhaust).toBeCloseTo((1_038.46 + 1_426.34) / 2, 6);
   });
 
   it('change nothing outside Britain, where no loading is published, and no respray is sold there', () => {
     const { sim, v } = withCar('us-ct-newhaven', 'mods-ct', 'us-honda-cr-v');
     expect(sim.execute({ kind: 'vehicle.tint', payload: { vehicleId: v.id, kind: 'full' } }).ok).toBe(true);
     expect(modLoading(v)).toBe(1);
-    expect(resprayRefusal(v, true)).toMatch(/in Britain/);
+    expect(modRefusal(v, 'remap', true)).toMatch(/in Britain/);
+    // A leased car is the lender's.
+    const gb = withCar('uk-eng-london', 'mods-lease', 'gb-ford-puma');
+    const l = gb.sim.execute<{ vehicleId: string }>({ kind: 'vehicle.lease', payload: { modelId: 'gb-nissan-qashqai', months: 37 } });
+    expect(l.ok, l.error).toBe(true);
+    expect(modRefusal(vehiclesOf(gb.sim.player).find((x) => x.id === l.value!.vehicleId), 'remap', true)).toMatch(/lender’s/);
   });
 });

@@ -478,10 +478,22 @@ Researched in `research-custom-effects.json` and `research-customization.json`.
 
 - **Britain's loadings** (`systems/mods.ts`): a declared modification raises the premium by what a July 2025 quote study across ten British cities measured, each alone. Tinted windows add 12.1% and a non-standard respray 4.52%. Two together multiply, which is SLATE's reading. Owners declare what they fit, as the Consumer Insurance Act asks.
 - **A respray** (`vehicle.respray`), in Britain: a full car in a solid color, £3,000, the middle of a body shop guide's £2,000 to £4,000.
-- **Not sold yet:**
-  - An engine remap, suspension, an exhaust, a body kit (each 15.93%) and alloy wheels (0.79%). Their loadings are measured in Britain, but no price was read there.
-  - California's ECU check at the smog test, which fails a tune the CARB hasn't approved. SLATE keeps no California smog check, since each station sets its price.
-  - New York's SLEEP Act fine for a loud exhaust, up to $1,000. No rate of enforcement was found.
+- **Sold since, later on 2026-09-30** (`vehicle.modify`, researched in `research-mods-smog.json`), each at a named British shop's price and its loading:
+  - an engine remap, VUDU Performance's £449, 15.93%;
+  - lowering springs fitted, QT Performance's £779.15, 15.93%;
+  - a Cobra Sport exhaust fitted, the middle of QT Performance's £1,038.46 to £1,426.34, 15.93%;
+  - four alloy wheels, LK Performance's £332 a set, fitted free, 0.79%.
+  The tuners' prices are for one model each, taken for any car. A leased car isn't modified.
+- **California's smog check** (`systems/inspections.ts`):
+  - Every two years from the eighth model year, at BAR's August 2026 average of $69.16 and the $8.25 certificate.
+  - 7.60% of cars fail it, and the repair is CarMD's, as in New York.
+  - An electric car is exempt.
+  - Below that age, the smog abatement fee comes with the registration: $20 a year to the sixth model year and $25 in the seventh and eighth.
+- **Not sold:**
+  - A body kit, since only its fitting and paint were priced.
+  - An American ECU tune. No tune price was read for a car SLATE sells, so the smog check's "Modified Software" failure has no tune to find.
+  - New York's SLEEP Act fine for a loud exhaust. No count of its tickets is published: the city's noise cameras (1,691 tickets in 2025) enforce the city's own code.
+- Evidence since: `tests/mods.test.ts` and `tests/inspections.test.ts`. 6 mutations, all killed once three tests were added.
 
 Evidence: `tests/mods.test.ts` (2). 4 mutations, all killed.
 

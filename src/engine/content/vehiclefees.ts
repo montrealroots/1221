@@ -52,6 +52,13 @@ export const CA_STATE = {
   registration: 76, chp: 34, vlf: 0.0065,
   tif: [[4_999, 33], [24_999, 66], [34_999, 132], [59_999, 198], [Infinity, 231]] as readonly (readonly [number, number])[],
   zev: 121,
+  /**
+   * The smog abatement fee a car pays in place of the smog check, from
+   * 2026-09-30: $20 a year to its sixth model year, $25 in its seventh and
+   * eighth (DMV bulletin VIN 2018-19 and its fees page); an electric car is
+   * exempt from the check, and the fee isn't charged on one here.
+   */
+  abatement: [[6, 20], [8, 25]] as readonly (readonly [number, number])[],
   source: 'https://www.cdtfa.ca.gov/formspubs/L1037.pdf; https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/',
 } as const;
 

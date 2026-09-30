@@ -54,8 +54,10 @@ export interface OwnedVehicle {
   id: string;
   /** A shop's window tint (`systems/tint.ts`, from 2026-09-30). */
   tint?: TintKind;
-  /** A full respray, declared to the insurer (`systems/mods.ts`, from 2026-09-30). */
+  /** A full respray, declared to the insurer (`systems/mods.ts`, from 2026-09-30); an older save's, before `mods`. */
   resprayed?: boolean;
+  /** Modifications fitted and declared (`systems/mods.ts`). */
+  mods?: import('./mods').Mod[];
   modelId: string;
   /** When it was bought, and how old it was then: a used one's years. */
   boughtAt: Instant;
@@ -223,7 +225,7 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
     case 'US-CA': {
       const rate = cityId === 'us-ca-losangeles' ? stepOn(CA_STATE.losAngeles, at) : cityId === 'us-ca-sanfrancisco' ? CA_STATE.sanFrancisco : CA_STATE.baseRate;
       lines.push({ label: `Sales Tax, ${(rate * 100).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')}%`, amount: Math.round(sold * rate) });
-      lines.push({ label: 'Registration, The Year', amount: caYear(model, sold) });
+      lines.push({ label: 'Registration, The Year', amount: caYear(model, sold, age) });
       break;
     }
     case 'GB':
@@ -327,9 +329,11 @@ function bikeTenencia(value: Money): Money {
 }
 
 /** California's year: registration, the CHP fee, the vehicle license fee on the value, the transportation improvement fee, and the ZEV fee. */
-function caYear(model: CarModel, value: Money): Money {
+export function caYear(model: CarModel, value: Money, age = 0): Money {
   const v = value / 100;
-  return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0)) * 100 + value * CA_STATE.vlf);
+  // The smog abatement fee, to a car's eighth year, in place of the smog check; none on an electric car.
+  const abatement = model.fuel === 'ev' ? 0 : CA_STATE.abatement.find(([upTo]) => age < upTo)?.[1] ?? 0;
+  return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0) + abatement) * 100 + value * CA_STATE.vlf);
 }
 
 /**
@@ -420,7 +424,7 @@ export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: In
   switch (v.jurisdiction) {
     case 'US-NY': return { amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(m)) + (NYC.has(v.cityId) ? NY.nycUseTax + NY.mctd : 0)), next: year(2), memo: 'Registration renewed, two years' };
     case 'US-CT': return { amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks), next: year(3), memo: 'Registration renewed, three years' };
-    case 'US-CA': return { amount: caYear(m, valueOf(v, at)), next: year(1), memo: 'Registration renewed, the year' };
+    case 'US-CA': return { amount: caYear(m, valueOf(v, at), age), next: year(1), memo: 'Registration renewed, the year' };
     case 'GB': return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), memo: 'Vehicle tax, the year' };
     case 'IE': return { amount: c(bracket(IE_MOTOR_TAX, m.co2 ?? 150)), next: year(1), memo: 'Motor tax, the year' };
     case 'CA-ON': return { amount: 0, next: year(1), memo: 'Plate renewed, the year (free since 2022)' };
@@ -629,8 +633,8 @@ export function registerVehicles(sim: Simulation): void {
     // Winter tires: the kilometers on them, Ontario's switchovers, a set worn out (`systems/tires.ts`).
     if (!missing) tiresMonth(s, person, v, driven, item.at);
     // An inspection come due, where the law asks one (`systems/inspections.ts`).
-    // An electric car in Mexico City is exempt from the verificación, its green plates say (from 2026-09-30).
-    if (!forOutings(m) && !missing && !(m.fuel === 'ev' && v.jurisdiction === 'MX-CMX') && inspectIfDue(s, person, v, kindOf(m))) tintAtInspection(s, person, v);
+    // An electric car in Mexico City is exempt from the verificación, its green plates say, and in California from the smog check (from 2026-09-30).
+    if (!forOutings(m) && !missing && !(m.fuel === 'ev' && (v.jurisdiction === 'MX-CMX' || v.jurisdiction === 'US-CA')) && inspectIfDue(s, person, v, kindOf(m))) tintAtInspection(s, person, v);
     // The loan: interest on what's owed, and the rest off it.
     if (v.loan) {
       const interest = Math.round((v.loan.owed * v.loan.apr) / 12);

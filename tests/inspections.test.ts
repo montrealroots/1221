@@ -10,6 +10,8 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { INSPECTION_RULES, inspectIfDue, inspectionFails, nextInspection } from '@/engine/systems/inspections';
+import { caYear, kept, modelById, quote, renewal, valueOf, type Quote } from '@/engine/systems/vehicles';
+import { US_NEW_BELOW_STICKER } from '@/engine/content/vehiclefees';
 
 const YEAR = 365.2425 * MS_DAY;
 const at = Date.UTC(2026, 8, 29);
@@ -30,13 +32,44 @@ describe('when a car is inspected', () => {
     expect(due.map((d) => Math.round((d - at) / YEAR))).toEqual([4, 6, 8, 10, 11, 12]);
   });
 
-  it('inspects New York’s cars yearly from the sale, Connecticut’s every two years from the fourth, Mexico City’s every six months, and none in Ontario or California', () => {
+  it('inspects New York’s cars yearly from the sale, Connecticut’s every two years from the fourth, Mexico City’s every six months, California’s every two from the eighth, and none in Ontario', () => {
     expect(nextInspection(car('US-NY'), at)).toBe(at + YEAR);
     expect(nextInspection(car('US-CT'), at)).toBe(at + 4 * YEAR);
     expect(nextInspection(car('US-CT'), at + 4 * YEAR)).toBe(at + 6 * YEAR);
     expect(nextInspection(car('MX-CMX'), at)).toBe(at + 0.5 * YEAR);
     expect(nextInspection(car('CA-ON'), at)).toBeUndefined();
-    expect(nextInspection(car('US-CA'), at)).toBeUndefined();
+    // California's smog check from later on 2026-09-30: every two years from the eighth model year, at BAR's $69.16 and the $8.25 certificate.
+    expect(nextInspection(car('US-CA'), at)).toBe(at + 8 * YEAR);
+    expect(nextInspection(car('US-CA'), at + 8 * YEAR)).toBe(at + 10 * YEAR);
+    expect(INSPECTION_RULES['US-CA']!.fee('us-ca-losangeles')).toBeCloseTo(77.41, 6);
+    expect(INSPECTION_RULES['US-CA']!.fails!.rate('us-ca-losangeles', 9)).toBe(0.076);
+  });
+
+  it('charges California’s smog abatement fee to a car’s eighth year, $20 and then $25, and not on an electric car', () => {
+    const gas = modelById('us-toyota-camry')!;
+    const ev = modelById('us-tesla-model-y')!;
+    expect(caYear(gas, 30_000_00, 3) - caYear(gas, 30_000_00, 9)).toBe(20_00);
+    expect(caYear(gas, 30_000_00, 7) - caYear(gas, 30_000_00, 9)).toBe(25_00);
+    expect(caYear(ev, 30_000_00, 3)).toBe(caYear(ev, 30_000_00, 9));
+    // The sale's registration line and a renewal each at the car's age.
+    const reg = (age: number) => (quote(gas, 'us-ca-losangeles', at, { age }) as Quote).lines.find((l) => l.label === 'Registration, The Year')!.amount;
+    const sold = (age: number) => Math.round((gas.price + (age ? 0 : gas.delivery)) * kept(age)) - (age ? 0 : Math.round((gas.price + gas.delivery) * US_NEW_BELOW_STICKER));
+    expect(reg(0)).toBe(caYear(gas, sold(0), 0));
+    expect(reg(9)).toBe(caYear(gas, sold(9), 9));
+    const v = { id: 'r', modelId: gas.id, boughtAt: at, ageAtPurchase: 7, listPrice: gas.price, jurisdiction: 'US-CA' as const, cityId: 'us-ca-losangeles', coverage: 'full' as const, registrationDue: at };
+    expect(renewal(v, at).amount).toBe(caYear(gas, valueOf(v, at), 7));
+  });
+
+  it('smog-checks a nine-year-old petrol car in Los Angeles within its two years, and never an electric one', () => {
+    const drive = (modelId: string, seed: string) => {
+      const sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+      const r = sim.execute({ kind: 'vehicle.buy', payload: { modelId, age: 10 } });
+      expect(r.ok, r.error).toBe(true);
+      sim.advanceBy(800 * MS_DAY);
+      return sim.universe.transactions.some((t) => /Smog Check/.test(t.memo));
+    };
+    expect(drive('us-toyota-camry', 'smog-gas')).toBe(true);
+    expect(drive('us-tesla-model-y', 'smog-ev')).toBe(false);
   });
 });
 
