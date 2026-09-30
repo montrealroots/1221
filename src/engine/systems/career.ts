@@ -360,6 +360,8 @@ export interface CareerRecord {
   /** What the work costs them: casting sites paid to a date and whether they renew; headshots' date; a tape kit; a class, and the month it's paid for. */
   sites?: Partial<Record<CastingSite, { until: Instant; renews: boolean }>>;
   headshotsAt?: Instant;
+  /** When they last submitted themselves to the agencies where they live (`career.query_agencies`, from 2026-10-01). */
+  queriedAt?: Instant;
   kit?: boolean;
   reelAt?: Instant;
   scene?: { paidFor: string };
@@ -863,6 +865,31 @@ function endRepresentation(sim: Simulation, person: Person, reason: string, left
  * two years, and not one that let them go within a year unless they've booked
  * since. SLATE's reading of how agencies treat a former client.
  */
+/**
+ * An actor's own submission to the agencies where they live, from 2026-10-01:
+ * the headshot, the résumé and the reel sent to each, as an unrepresented
+ * actor does in every market. Until then an agency came only from a
+ * showcase, a job it noticed or a manager's meetings, and a Mexican
+ * graduate come home to Mexico City went 27 months unrepresented in a
+ * played life, the country's television made in the city. Each agency reads
+ * it as it reads a showcase (`offersFor`), against its bar and its own
+ * interest, and answers about four weeks on; a submission is sent again six
+ * months on, the round most advice gives. The four weeks and six months are
+ * SLATE's estimates. It asks the headshots, which a submission is.
+ */
+export const QUERY = { answerDays: 28, againDays: 182 } as const;
+export const QUERY_KIND = 'career.query_answer';
+
+/** Why they can't submit to the agencies now, or nothing. */
+export function queryRefusal(sim: Simulation, person: Person): string | undefined {
+  const career = careerOf(person);
+  if (career.since === undefined) return 'Agencies are written to once the career has begun.';
+  if (career.agencyId) return 'You have an agency.';
+  if (career.headshotsAt === undefined) return 'A submission is a headshot and a résumé: have headshots taken first.';
+  if (career.queriedAt !== undefined && sim.now - career.queriedAt < QUERY.againDays * MS_DAY) return `You wrote to them on ${formatDate(career.queriedAt, sim.zone)}; a submission is sent again six months on.`;
+  return undefined;
+}
+
 export function takesBack(sim: Simulation, person: Person, agencyId: string): boolean {
   const ended = careerOf(person).ended;
   if (!ended || ended.agencyId !== agencyId) return true;
@@ -1639,6 +1666,29 @@ export function registerCareer(sim: Simulation): void {
       memo: `${role.label}: ${calls.length} ${calls.length === 1 ? 'day' : 'days'}${perDiem ? ', with the meal allowance' : ''}`, category: 'salary',
       postings: [{ accountId: account.id, amount: net + perDiem }, { accountId: s.nominalAccount('income', 'Acting').id, amount: -gross }, ...postings],
     });
+  });
+
+  sim.onCommand<Record<string, never>, { answersBy: Instant }>('career.query_agencies', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = queryRefusal(s, person);
+    if (no) throw new CommandError(no);
+    const career = careerOf(person);
+    career.queriedAt = s.now;
+    const answersBy = s.now + QUERY.answerDays * MS_DAY;
+    s.schedule({ at: answersBy, kind: QUERY_KIND, label: 'The Agencies Answer', category: 'career', priority: 20, payload: { personId: person.id, cityId: workCity(person) } });
+    return { answersBy };
+  });
+
+  sim.onSchedule(QUERY_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    if (!person) return;
+    const career = careerOf(person);
+    // Signed meanwhile, the answers don't matter.
+    if (career.agencyId) return;
+    const cityId = String(item.payload.cityId) as CareerCity;
+    const found = offersFor(s, person, showcaseScore(person.craft!, 1, attributesOf(s, person).presence), `query-${item.at}`, [], CITIES.get(cityId)?.countryId ?? 'us');
+    if (found.length) { offerRepresentation(s, person, found, cityId, 'Having read your submission,'); return; }
+    if (person.id === s.universe.playerId) s.notify({ category: 'career', title: 'No Agency Answered', body: 'None of the agencies you wrote to asked to meet. You can write again six months after you sent it.', importance: 45, route: '/workspace/career' });
   });
 
   sim.onCommand<{ agencyId: string; cityId: string }, { agencyId: string }>('career.sign', (p, { sim: s }) => {

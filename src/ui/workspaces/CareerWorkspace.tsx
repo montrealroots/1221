@@ -20,7 +20,7 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal } from '@/engine/systems/career';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -192,13 +192,14 @@ function AgencyPane() {
   const may = mayLeave(sim, person);
   const offers = career.offers.filter((o) => o.until > sim.now);
   const ended = career.ended ? agencyById(career.ended.agencyId) : undefined;
+  const queryNo = queryRefusal(sim, person);
 
   return (
     <div className="col gap-5">
       <Panel
         title={agency ? agency.name : 'No Agency'}
         subtitle={agency && career.agencyCity ? `${cityName(career.agencyCity)} office, signed ${formatDate(career.signedAt!, zoneOf(career.agencyCity))}${career.termEnds !== undefined ? `, the contract running to ${formatDate(career.termEnds, zoneOf(career.agencyCity))}` : ''}` : undefined}
-        actions={agency ? <Gated feature="career.leave" onClick={() => { const a = run<{ left: string }>('career.leave'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave The Agency</Gated> : undefined}
+        actions={agency ? <Gated feature="career.leave" onClick={() => { const a = run<{ left: string }>('career.leave'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave The Agency</Gated> : <Gated feature="career.query_agencies" disabled={Boolean(queryNo)} title={queryNo} onClick={() => { const a = run<{ answersBy: number }>('career.query_agencies'); if (a.ok) toast(`Sent. The agencies answer by ${formatDate(a.value!.answersBy, sim.zone)}.`, 'positive'); }}>Submit To Agencies</Gated>}
       >
         <div className="col gap-3">
           {agency ? (
@@ -232,7 +233,7 @@ function AgencyPane() {
           ) : (
             <p className="small" style={{ margin: 0 }}>
               {ended ? `${career.ended!.left ? `You left ${ended.name}` : `${ended.name} let you go`} on ${formatDate(career.ended!.at, sim.zone)}: ${career.ended!.reason} ` : ''}
-              Without an agency, work comes from submitting yourself, and a job worked can bring an agency’s call.
+              Without an agency, work comes from submitting yourself, and a job worked can bring an agency’s call. Submitting to the agencies where you live sends your headshot, résumé and reel; those interested answer in about four weeks, and you can write again six months on.
             </p>
           )}
           <Fine>Source: {AGENT_COMMISSION.source}; {LEAVING.source}; {AGENCY_TERM.source}. Renewing a client it booked work for is SLATE’s estimate.</Fine>

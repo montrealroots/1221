@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { exchange } from '@/engine/content/currency';
 import { saveCurrency } from '@/engine/core/money';
 import { AGENCIES, MEXICO_SCALE, ROLES } from '@/engine/content/career';
-import { beginCareer, careerOf, offersFor, paycheck, rateOf, roleById, weekOfAuditions, workCity, type Booking } from '@/engine/systems/career';
+import { QUERY, beginCareer, careerOf, offersFor, paycheck, queryRefusal, rateOf, roleById, weekOfAuditions, workCity, type Booking } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
 
 const MXC = 'mx-cmx-mexicocity';
@@ -67,5 +67,50 @@ describe('the business in Mexico City', () => {
     expect(b.worked).toBeGreaterThanOrEqual(1);
     expect(sim.player.imss!.days).toBeCloseTo((7 / 6) * b.worked, 6);
     expect(sim.player.imss!.balance).toBeGreaterThan(0);
+  });
+});
+
+describe('writing to the agencies', () => {
+  it('sends a Mexico City actor’s submission to its agencies, who answer in four weeks with offers from those whose bar they clear', () => {
+    const sim = capitalino('mx-query');
+    sim.player.craft = evenCraft(95);
+    expect(queryRefusal(sim, sim.player)).toMatch(/headshots/);
+    careerOf(sim.player).headshotsAt = sim.now;
+    expect(queryRefusal(sim, sim.player)).toBeUndefined();
+    const r = sim.execute<{ answersBy: number }>({ kind: 'career.query_agencies', payload: {} });
+    expect(r.ok, r.error).toBe(true);
+    expect(r.value!.answersBy - sim.now).toBe(28 * MS_DAY);
+    // Six months before it's sent again.
+    expect(queryRefusal(sim, sim.player)).toMatch(/six months on/);
+    sim.advanceBy(QUERY.answerDays * MS_DAY + MS_DAY);
+    const offers = careerOf(sim.player).offers;
+    expect(offers.length).toBeGreaterThan(0);
+    expect(offers.every((o) => AGENCIES.find((a) => a.id === o.agencyId)!.countryId === 'mx' && o.cityId === MXC)).toBe(true);
+    expect(Object.values(sim.universe.decisions).some((d) => /Having read your submission/.test(d.detail))).toBe(true);
+    sim.advanceBy((QUERY.againDays - QUERY.answerDays) * MS_DAY);
+    expect(queryRefusal(sim, sim.player)).toBeUndefined();
+  });
+
+  it('tells a submission no agency answered, below every bar; and isn’t sent with an agency, or before the career begins', () => {
+    const sim = capitalino('mx-query-low');
+    sim.player.craft = evenCraft(20);
+    careerOf(sim.player).headshotsAt = sim.now;
+    expect(sim.execute({ kind: 'career.query_agencies', payload: {} }).ok).toBe(true);
+    sim.advanceBy(QUERY.answerDays * MS_DAY + MS_DAY);
+    expect(careerOf(sim.player).offers).toHaveLength(0);
+    expect(sim.universe.notifications.some((n) => n.title === 'No Agency Answered')).toBe(true);
+    careerOf(sim.player).agencyId = 'shoot-management';
+    expect(queryRefusal(sim, sim.player)).toMatch(/have an agency/);
+    const student = quickSave({ startLocationId: MXC, homeRegionId: MXC, livesWhereBorn: true, wealth: 'wealthy' }, 'mx-query-student');
+    careerOf(student.player).headshotsAt = student.now;
+    expect(queryRefusal(student, student.player)).toMatch(/career has begun/);
+    // Signed by another way before the answers come, they bring nothing.
+    const signed = capitalino('mx-query-signed');
+    signed.player.craft = evenCraft(95);
+    careerOf(signed.player).headshotsAt = signed.now;
+    expect(signed.execute({ kind: 'career.query_agencies', payload: {} }).ok).toBe(true);
+    careerOf(signed.player).agencyId = 'look-management';
+    signed.advanceBy(QUERY.answerDays * MS_DAY + MS_DAY);
+    expect(careerOf(signed.player).offers).toHaveLength(0);
   });
 });
