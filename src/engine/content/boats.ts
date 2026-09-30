@@ -172,12 +172,15 @@ export const CHARTERS: Readonly<Record<string, Charter>> = {
  * Maine). California's season runs the year round, and so does Britain's,
  * none being set. Ontario's marinas run theirs May to October: laid up from
  * November through April, at Bluffer's Park's winter package; winterizing
- * one on its trailer at home isn't priced there.
+ * one on its trailer at home wasn't priced there until 2026-10-01, and is now
+ * Shrink Wrap Muskoka's C$185 to winterize an outboard where it's kept, a
+ * service that comes to the boat, with HST
+ * (`docs/research/world/research-aviation-boats-credit-mot.json`).
  */
 export const BOAT_WINTER: Readonly<Partial<Record<BoatState, { storage: (lengthFt: number) => number; lastMonth: number; winterize?: number }>>> = {
   'US-NY': { storage: (ft) => 75 * ft, lastMonth: 3, winterize: 599 },
   'US-CT': { storage: (ft) => 72 * ft, lastMonth: 3, winterize: 599 },
-  'CA-ON': { storage: () => 7 * 150 * 1.13, lastMonth: 4 },
+  'CA-ON': { storage: () => 7 * 150 * 1.13, lastMonth: 4, winterize: 185 * 1.13 },
 };
 /** The lay-up, by month: from November through its last month. */
 export const laidUp = (month: number, lastMonth = 3): boolean => month >= 11 || month <= lastMonth;

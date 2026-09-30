@@ -35,6 +35,8 @@ import { airportsFor } from './airports';
 import { groundLeg } from '../content/air';
 import { ageOn } from './mortality';
 import { expenseFor, inTheBank, owe, payFromBank } from './household';
+import { DEFAULT_AFTER_MISSED, REPOSSESSED_ON_RECORD } from '../content/repossession';
+import { markRecord } from './credit';
 import { amortized } from './vehicles';
 import { weatherOn } from './weather';
 import type { JourneyLeg } from './journey';
@@ -62,12 +64,19 @@ export interface PilotTraining { startedAt: Instant; monthsDone: number; status:
  * - Canada, Transport Canada's PPL: the Calgary Flying Club's C$18,000 to
  *   C$25,000 its students typically spend, the middle; its Cessna 172 at
  *   C$220 an hour after.
- * The medical each license asks isn't priced here, none being read.
+ * The medical each license asks wasn't priced until 2026-10-01 (`MEDICAL_ABROAD`).
+ * From then too (`docs/research/world/research-aviation-boats-credit-mot.json`):
+ * - Mexico, AFAC's private pilot license: Voláre's MX$212,350 in Guadalajara,
+ *   the one school that prints a whole course (no Mexico City school does),
+ *   for the 40 hours at least, 20 with an instructor, that article 50 of the
+ *   regulation asks; a Cessna 172 after at Aviafly's MX$4,500 an hour, a
+ *   school's rate, as no solo rental rate is published in Mexico.
  */
 export const PILOT_SCHOOLS: Readonly<Record<string, { authority: string; license: string; currency: string; total: number; rentHour: number; airport: string }>> = {
   uk: { authority: 'CAA', license: 'A UK Private Pilot Licence', currency: 'GBP', total: 15_250, rentHour: 265, airport: 'GB' },
   ie: { authority: 'IAA', license: 'An Irish Private Pilot Licence', currency: 'EUR', total: 30 * 175 + 25 * 160 + 500 + 1_560 + 1_000, rentHour: 160, airport: 'IE' },
   ca: { authority: 'TC', license: 'A Canadian Private Pilot Licence', currency: 'CAD', total: 21_500, rentHour: 220, airport: 'CA' },
+  mx: { authority: 'AFAC', license: 'A Mexican Private Pilot License', currency: 'MXN', total: 212_350, rentHour: 4_500, airport: 'MX' },
 };
 
 /** Whether they may fly themselves in a country: America's on the FAA certificate, elsewhere on that country's license. */
@@ -85,7 +94,39 @@ export interface PilotCertificate { issuedAt: Instant; authority: 'FAA'; /** Whe
  */
 export const MEDICAL = { usd: 142.5, youngMonths: 60, olderMonths: 24, olderFrom: 40 } as const;
 export const MEDICAL_KIND = 'pilot.medical';
-const medicalMonths = (sim: Simulation, person: Person) => (ageOn(sim, person, sim.now) < MEDICAL.olderFrom ? MEDICAL.youngMonths : MEDICAL.olderMonths);
+
+/**
+ * The medical a license abroad asks, from 2026-10-01
+ * (`docs/research/world/research-aviation-boats-credit-mot.json`), the
+ * examiner's fee and the authority's charge together: Britain's Class 2 at
+ * Aviation Medicals Wessex's £180 and the CAA's £11.67; Ireland's at Dr
+ * Kieran Whyte's €200 and the IAA's €22; Canada's Category 3 at YOW Aviation
+ * Medicals' C$240 and Transport Canada's C$67.75; Mexico's at AFAC's
+ * MX$4,267, its tariff read to 30 June 2026. It runs 60 months under 40 and
+ * 24 after in America and Canada (14 CFR 61.23, CAR 404.04); in Britain and
+ * Ireland 24 from 40 and 12 from 50 (MED.A.045), and Mexico's is taken to
+ * follow ICAO's Annex 1, whose Class 2 runs the same, as its own wasn't read.
+ */
+export const MEDICAL_ABROAD: Readonly<Record<string, { currency: string; fee: number }>> = {
+  uk: { currency: 'GBP', fee: 180 + 11.67 },
+  ie: { currency: 'EUR', fee: 200 + 22 },
+  ca: { currency: 'CAD', fee: 240 + 67.75 },
+  mx: { currency: 'MXN', fee: 4_267 },
+};
+export function medicalMonthsAt(country: string, age: number): number {
+  if (age < MEDICAL.olderFrom) return MEDICAL.youngMonths;
+  return country === 'us' || country === 'ca' || age < 50 ? MEDICAL.olderMonths : 12;
+}
+const medicalMonths = (sim: Simulation, person: Person, country = 'us') => medicalMonthsAt(country, ageOn(sim, person, sim.now));
+/** A medical's fee in a country, in the save's money. */
+export function medicalFee(sim: Simulation, country: string): Money {
+  if (country === 'us') return usd(sim, Math.round(MEDICAL.usd * 100));
+  const m = MEDICAL_ABROAD[country];
+  if (!m) return 0;
+  const cur = saveCurrency(sim.universe);
+  const c = Math.round(m.fee * 100);
+  return cur === m.currency ? c : exchange(c, m.currency, cur) ?? c;
+}
 
 /**
  * A plane bought on a loan, from 2026-09-30: AOPA Finance's single-engine
@@ -143,10 +184,10 @@ export const trainingCountry = (person: Person): string => CITIES.get(person.hom
 
 export function trainRefusal(sim: Simulation, person: Person): string | undefined {
   const country = trainingCountry(person);
-  const medical = person.pilotTraining === undefined && country === 'us' ? usd(sim, Math.round(MEDICAL.usd * 100)) : 0;
+  const medical = person.pilotTraining === undefined ? medicalFee(sim, country) : 0;
   if (licensedIn(person, country)) return country === 'us' ? 'You hold a private pilot certificate.' : 'You hold this country’s license.';
   if (person.pilotTraining?.status === 'training') return 'You’re training already.';
-  if (country !== 'us' && !PILOT_SCHOOLS[country]) return 'SLATE prices a pilot’s training in America, Britain, Ireland and Canada only yet.';
+  if (country !== 'us' && !PILOT_SCHOOLS[country]) return 'SLATE prices a pilot’s training in America, Britain, Ireland, Canada and Mexico only yet.';
   if (person.pilotTraining?.status === 'stopped' && (person.pilotTraining.country ?? 'us') !== country) return 'Training taken up again is where it was begun.';
   if (ageOn(sim, person, sim.now) < PILOT_TRAINING.minAge) return `A private pilot certificate is had from ${PILOT_TRAINING.minAge}.`;
   if (inTheBank(sim, person) < trainingCosts(sim, country).month + medical) return 'There isn’t enough in the bank for the first month.';
@@ -170,7 +211,7 @@ export const HIRED_PILOT_USD = { half: 450, full: 900, overtime: 1.5, halfHours:
 export const hiredPilotUsd = (hours: number): number => (hours <= HIRED_PILOT_USD.halfHours ? HIRED_PILOT_USD.half : hours <= HIRED_PILOT_USD.fullHours ? HIRED_PILOT_USD.full : HIRED_PILOT_USD.full * HIRED_PILOT_USD.overtime);
 
 export function planFlyYourself(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
-  const ownsHere = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.at === fromCity;
+  const ownsHere = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.repossessed === undefined && person.aircraft.at === fromCity;
   const fromCountry = CITIES.get(fromCity)?.countryId ?? '';
   const abroad = fromCountry !== 'us' ? PILOT_SCHOOLS[fromCountry] : undefined;
   if (abroad) return planFlyAbroad(sim, person, fromCity, toCity, day, slot, abroad);
@@ -219,8 +260,8 @@ export function registerAviation(sim: Simulation): void {
       return { month: 0, total: costs.tests };
     }
     const first = person.pilotTraining === undefined || (person.pilotTraining.status === 'certified' && (person.pilotTraining.country ?? 'us') !== country);
-    // The FAA's medical is had before the first solo: paid with the first month.
-    const medical = first && country === 'us' ? usd(s, Math.round(MEDICAL.usd * 100)) : 0;
+    // The medical is had before the first solo: paid with the first month, abroad too from 2026-10-01.
+    const medical = first ? medicalFee(s, country) : 0;
     if (!payFromBank(s, person, costs.month + medical, first ? 'Flight training, a month, and the medical' : 'Flight training, a month', 'travel')) throw new CommandError('Your bank couldn’t pay.');
     const done = person.pilotTraining?.status === 'stopped' ? person.pilotTraining.monthsDone : 0;
     person.pilotTraining = { startedAt: done > 0 ? person.pilotTraining!.startedAt : s.now, monthsDone: done + 1, status: 'training', ...(country !== 'us' ? { country } : {}) };
@@ -230,6 +271,14 @@ export function registerAviation(sim: Simulation): void {
 
   sim.onSchedule(MEDICAL_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
+    // A license abroad's own medical (from 2026-10-01), renewed the same way at its country's fee and months.
+    const country = item.payload.country === undefined ? undefined : String(item.payload.country);
+    const licence = country ? person?.pilotLicences?.find((l) => l.country === country) : undefined;
+    if (person && licence && country) {
+      if (payFromBank(s, person, medicalFee(s, country), 'A pilot’s medical, renewed', 'travel')) licence.medicalUntil = addMonths(s.now, medicalMonths(s, person, country), s.zone);
+      s.schedule({ at: licence.medicalUntil !== undefined && licence.medicalUntil > s.now ? licence.medicalUntil : s.now + 30 * MS_DAY, kind: MEDICAL_KIND, label: 'Pilot’s Medical', category: 'personal', priority: 30, payload: { personId: person.id, country } });
+      return;
+    }
     const pilot = person?.pilot;
     if (!person || !pilot) return;
     // Renewed and paid, for its months; or lapsed, and asked again a month on.
@@ -247,7 +296,10 @@ export function registerAviation(sim: Simulation): void {
     if (t.monthsDone >= PILOT_TRAINING.months && school) {
       // Abroad the school's cost was the whole of it: the license, its tests in it.
       t.status = 'certified';
-      person.pilotLicences = [...(person.pilotLicences ?? []), { authority: school.authority, country: t.country!, issuedAt: s.now }];
+      // Its medical, had with the first month, runs from then.
+      const medicalUntil = addMonths(t.startedAt, medicalMonths(s, person, t.country!), s.zone);
+      person.pilotLicences = [...(person.pilotLicences ?? []), { authority: school.authority, country: t.country!, issuedAt: s.now, medicalUntil }];
+      s.schedule({ at: Math.max(s.now, medicalUntil), kind: MEDICAL_KIND, label: 'Pilot’s Medical', category: 'personal', priority: 30, payload: { personId: person.id, country: t.country! } });
       if (mine) s.notify({ category: 'personal', title: 'A Private Pilot', body: `${school.license} is yours.`, importance: 70, route: '/workspace/travel' });
       return;
     }
@@ -306,7 +358,25 @@ export const OWN_172 = {
 export const AIRCRAFT_MONTH_KIND = 'aircraft.month';
 const YEAR = 365.2425 * MS_DAY;
 
-export interface OwnedAircraft { boughtAt: Instant; price: Money; homeCity: string; at: string; hours: number; overhauledAt: Instant; annualDue: Instant; registeredUntil: Instant; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number } }
+export interface OwnedAircraft { boughtAt: Instant; price: Money; homeCity: string; at: string; hours: number; overhauledAt: Instant; annualDue: Instant; registeredUntil: Instant; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number; missed?: number }; repossessed?: { at: Instant; saleAt: Instant } }
+
+/**
+ * A plane loan in default, from 2026-10-01
+ * (`docs/research/world/research-aviation-boats-credit-mot.json`). Three
+ * payments missed running, as SLATE takes a car's and a boat's, and the
+ * lender takes the plane back without a court where it breaches no peace
+ * (UCC 9-609), filing the FAA's Form 8050-4, and sells it after the ten
+ * days' notice UCC 9-612 makes safe. The shortfall is owed in each of
+ * SLATE's states: California's Unruh Act expressly leaves out an
+ * FAA-registered aircraft (Civ. Code 1801.4), and a 172's loan is past the
+ * $75,000 Connecticut's consumer act reaches. The retaking's cost, which
+ * UCC 9-615 lets the lender add, is the middle of the $1,500 to $15,000 a
+ * repossession specialist's job is put at (secondary); its ferry flight and
+ * storage are published nowhere and aren't kept. It goes on the record as
+ * a car's repossession does.
+ */
+export const PLANE_REPO = { noticeDays: 10, retakingUsd: (1_500 + 15_000) / 2 } as const;
+export const AIRCRAFT_REPO_SALE_KIND = 'aircraft.repo_sale';
 
 const regionOf = (cityId: string) => CITIES.get(cityId)?.parentId ?? '';
 
@@ -359,6 +429,7 @@ export function registerOwnedAircraft(sim: Simulation): void {
     const person = s.player;
     const a = person.aircraft;
     if (!a || a.soldAt !== undefined) throw new CommandError('You own no plane.');
+    if (a.repossessed) throw new CommandError('The lender has the plane.');
     const payoff = a.loan?.owed ?? 0;
     s.post({ memo: 'Sold the Cessna 172', category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: a.price - payoff }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: payoff }] : []), { accountId: s.nominalAccount('income', 'Plane Sold').id, amount: -a.price }] });
     delete a.loan;
@@ -381,14 +452,41 @@ export function registerOwnedAircraft(sim: Simulation): void {
       const interest = Math.round((a.loan.owed * PLANE_LOAN.apr) / 12);
       const payment = Math.min(a.loan.monthly, a.loan.owed + interest);
       const principal = payment - interest;
-      if (!payFromBank(s, person, payment, 'Loan payment on the plane', 'travel')) owe(s, person, payment, 'Loan payment on the plane', 'travel');
+      const paid = payFromBank(s, person, payment, 'Loan payment on the plane', 'travel');
+      if (!paid) owe(s, person, payment, 'Loan payment on the plane', 'travel');
+      // Three missed running, and the lender takes it back (from 2026-10-01).
+      a.loan.missed = paid ? 0 : (a.loan.missed ?? 0) + 1;
+      if (a.loan.missed >= DEFAULT_AFTER_MISSED) {
+        const saleAt = s.now + PLANE_REPO.noticeDays * MS_DAY;
+        a.repossessed = { at: s.now, saleAt };
+        markRecord(person, REPOSSESSED_ON_RECORD, s.now, a.homeCity);
+        s.schedule({ at: saleAt, kind: AIRCRAFT_REPO_SALE_KIND, label: 'Repossessed Plane Sold', category: 'personal', priority: 30, payload: { personId: person.id } });
+        if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'Your Plane Was Repossessed', body: 'Three payments missed, the lender took the plane. It’s sold after ten days’ notice, what’s left owing is yours, and it’s on your record.', importance: 85, route: '/workspace/travel' });
+      }
       s.post({ memo: 'Plane loan, principal repaid', category: 'travel', postings: [{ accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', expenseFor('travel')).id, amount: -principal }] });
       a.loan.owed -= principal;
       a.loan.monthsLeft -= 1;
       if (a.loan.owed <= 0 || a.loan.monthsLeft <= 0) delete a.loan;
     }
     if (a.hours >= OWN_172.tboHours || s.now - a.overhauledAt >= OWN_172.tboYears * YEAR) { pay(OWN_172.overhaul, 'The plane’s engine overhauled'); a.hours = 0; a.overhauledAt = s.now; }
-    scheduleAircraft(s, person);
+    // Taken back, it's the lender's to keep until it's sold, and its months end.
+    if (!a.repossessed) scheduleAircraft(s, person);
+  });
+
+  sim.onSchedule(AIRCRAFT_REPO_SALE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const a = person?.aircraft;
+    if (!person || !a?.repossessed) return;
+    // Sold at what it's held at, less the retaking; the loan paid from it, a surplus back, the shortfall owed.
+    const owed = a.loan?.owed ?? 0;
+    const proceeds = Math.max(0, a.price - usd(s, Math.round(PLANE_REPO.retakingUsd * 100)));
+    if (owed > 0) s.post({ memo: 'Plane repossessed and sold', category: 'travel', postings: [{ accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: owed }, { accountId: s.nominalAccount('income', 'Plane Repossessed').id, amount: -owed }] });
+    const surplus = proceeds - owed;
+    if (surplus > 0) s.post({ memo: 'What the plane’s sale left over', category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: surplus }, { accountId: s.nominalAccount('income', 'Plane Repossessed').id, amount: -surplus }] });
+    if (surplus < 0) owe(s, person, -surplus, 'Plane loan short after its sale', 'travel');
+    a.soldAt = s.now;
+    delete a.loan;
+    delete a.repossessed;
   });
 }
 
@@ -498,6 +596,8 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
 function planFlyAbroad(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number, school: (typeof PILOT_SCHOOLS)[string]): JourneyLeg[] | string {
   const country = CITIES.get(fromCity)?.countryId ?? '';
   if (!licensedIn(person, country)) return `Flying yourself here asks ${school.license.replace(/^An? /, 'a ')}.`;
+  const until = person.pilotLicences?.find((l) => l.country === country)?.medicalUntil;
+  if (until !== undefined && until < day) return 'Your medical has lapsed: it’s renewed when the bank can pay.';
   const fromAp = airportsFor(fromCity)[0];
   const toAp = airportsFor(toCity)[0];
   const from = fromAp?.airport;

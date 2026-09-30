@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, licensedIn, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, licensedIn, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts, medicalMonthsAt } from '@/engine/systems/aviation';
 import { weatherOn } from '@/engine/systems/weather';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf, slotOf } from '@/engine/systems/journey';
@@ -54,8 +54,12 @@ describe('learning to fly', () => {
   it('refuses someone under 17, and where no school’s cost is kept', () => {
     const young = save('us-ny-newyork', 'fly-young2', 16);
     expect(trainRefusal(young, young.player)).toMatch(/from 17/);
+    const tokyo = save('jp-13-tokyo', 'fly-jp');
+    expect(trainRefusal(tokyo, tokyo.player)).toMatch(/America, Britain, Ireland, Canada and Mexico only/);
+    // From 2026-10-01 Mexico: Voláre's MX$212,350 over the six months.
     const mexico = save('mx-cmx-mexicocity', 'fly-mx');
-    expect(trainRefusal(mexico, mexico.player)).toMatch(/America, Britain, Ireland and Canada only/);
+    expect(trainRefusal(mexico, mexico.player)).toBeUndefined();
+    expect(trainingCosts(mexico, 'mx').total).toBe(6 * inSave(mexico, Math.round((212_350 / 6) * 100), 'MXN'));
   });
 
   it('trains a Londoner for the CAA’s license at the PPL Club’s middle over six months, and flies them within Britain on it, not in America', () => {
@@ -68,6 +72,10 @@ describe('learning to fly', () => {
     expect(licensedIn(sim.player, 'uk')).toBe(true);
     expect(licensedIn(sim.player, 'us')).toBe(false);
     expect(sim.player.pilotLicences).toHaveLength(1);
+    // From 2026-10-01 the Class 2 medical with the first month, £180 and the CAA's £11.67, running 60 months from then under 40.
+    const med = sim.universe.transactions.find((t) => t.memo === 'Flight training, a month, and the medical')!;
+    expect(med.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(trainingCosts(sim, 'uk').month + inSave(sim, 191_67, 'GBP'));
+    expect(Math.round((sim.player.pilotLicences![0]!.medicalUntil! - sim.player.pilotTraining!.startedAt) / (30.44 * MS_DAY))).toBe(60);
     let legs: ReturnType<typeof planFlyYourself> = 'none';
     for (let d = 10; d < 60 && typeof legs === 'string'; d += 1) legs = planFlyYourself(sim, sim.player, 'uk-eng-london', 'uk-sct-edinburgh', sim.now + d * MS_DAY, 2);
     if (typeof legs === 'string') throw new Error(legs);
@@ -272,6 +280,24 @@ describe('a pilot’s medical, the weather, and a loan on a plane', () => {
     expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', sim.now + 5 * MS_DAY, 2)).toMatch(/medical has lapsed/);
   });
 
+  it('renews a license abroad’s medical at its country’s fee and months, and a lapsed one grounds its pilot there', () => {
+    const sim = save('ie-lei-dublin', 'medical-ie', 52);
+    fund(sim, 50_000);
+    sim.player.pilotLicences = [{ authority: 'IAA', country: 'ie', issuedAt: sim.now, medicalUntil: sim.now + 10 * MS_DAY }];
+    sim.schedule({ at: sim.now + 10 * MS_DAY, kind: MEDICAL_KIND, label: 'Pilot’s Medical', category: 'personal', priority: 30, payload: { personId: sim.player.id, country: 'ie' } });
+    sim.advanceBy(12 * MS_DAY);
+    const renewed = sim.universe.transactions.filter((t) => t.memo === 'A pilot’s medical, renewed');
+    expect(renewed).toHaveLength(1);
+    expect(renewed[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 222_00, 'EUR'));
+    // Past 50 in Ireland, a year; in Canada, two.
+    expect(Math.round((sim.player.pilotLicences![0]!.medicalUntil! - sim.now) / (30.44 * MS_DAY))).toBe(12);
+    expect(medicalMonthsAt('ca', 52)).toBe(24);
+    expect(medicalMonthsAt('uk', 45)).toBe(24);
+    expect(medicalMonthsAt('mx', 39)).toBe(60);
+    sim.player.pilotLicences![0]!.medicalUntil = sim.now - MS_DAY;
+    expect(planFlyYourself(sim, sim.player, 'ie-lei-dublin', 'ie-m-cork', sim.now + 5 * MS_DAY, 2)).toMatch(/medical has lapsed/);
+  });
+
   it('refuses a visual flight on a day of fog or a thunderstorm at either end', () => {
     const sim = save('us-ny-newyork', 'vfr');
     sim.player.pilot = { issuedAt: sim.now, authority: 'FAA' };
@@ -308,5 +334,59 @@ describe('a pilot’s medical, the weather, and a loan on a plane', () => {
     const mid = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
     expect(sim.execute({ kind: 'aircraft.sell', payload: {} }).ok).toBe(true);
     expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance - mid).toBe(price - owed);
+  });
+
+  it('takes a financed plane back after three payments missed, marks the record, sells it after ten days less the retaking, the surplus back or the shortfall owed', () => {
+    const sim = save('us-ny-newyork', 'plane-repo');
+    fund(sim, 50_000);
+    sim.player.credit = { ...sim.player.credit!, score: 780 };
+    expect(sim.execute({ kind: 'aircraft.buy', payload: { financed: true } }).ok).toBe(true);
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0) a.balance = 0;
+    sim.advanceBy(65 * MS_DAY);
+    expect(sim.player.aircraft!.repossessed).toBeUndefined();
+    sim.advanceBy(30 * MS_DAY);
+    const a = sim.player.aircraft!;
+    expect(a.repossessed).toBeDefined();
+    expect(a.repossessed!.saleAt - a.repossessed!.at).toBe(10 * MS_DAY);
+    expect((sim.player.credit!.marks ?? []).some((m) => m.points === 100 && m.at === a.repossessed!.at)).toBe(true);
+    expect(sim.execute({ kind: 'aircraft.sell', payload: {} }).error).toMatch(/lender has the plane/);
+    expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', sim.now + 2 * MS_DAY, 2)).toMatch(/pilot certificate/);
+    const owed = a.loan!.owed;
+    const tiedowns = sim.universe.transactions.filter((t) => t.memo.startsWith('The plane’s tiedown')).length;
+    sim.advanceBy(11 * MS_DAY);
+    expect(a.soldAt).toBeDefined();
+    expect(a.loan).toBeUndefined();
+    // The lender's to keep while it's held: no tiedown is billed to the owner.
+    expect(sim.universe.transactions.filter((t) => t.memo.startsWith('The plane’s tiedown')).length).toBe(tiedowns);
+    // With 15% down the sale covers the loan: what's over comes back.
+    const over = sim.universe.transactions.filter((t) => t.memo === 'What the plane’s sale left over');
+    expect(over[0]!.postings.find((p) => p.accountId === sim.player.primaryAccountId)!.amount).toBe(a.price - inSave(sim, 8_250_00, 'USD') - owed);
+    // Two missed and one paid starts the count again.
+    const again = save('us-ny-newyork', 'plane-repo-again');
+    fund(again, 50_000);
+    again.player.credit = { ...again.player.credit!, score: 780 };
+    expect(again.execute({ kind: 'aircraft.buy', payload: { financed: true } }).ok).toBe(true);
+    const drain = () => { for (const x of Object.values(again.universe.accounts)) if (x.ownerId === again.player.id && !x.nominal && x.balance > 0) x.balance = 0; };
+    drain();
+    again.advanceBy(65 * MS_DAY);
+    fund(again, 50_000);
+    again.advanceBy(30 * MS_DAY);
+    drain();
+    again.advanceBy(65 * MS_DAY);
+    expect(again.player.aircraft!.repossessed).toBeUndefined();
+    expect(again.player.aircraft!.soldAt).toBeUndefined();
+    // Owing its whole price, the retaking is the shortfall.
+    const deep = save('us-ny-newyork', 'plane-repo-short');
+    fund(deep, 50_000);
+    deep.player.credit = { ...deep.player.credit!, score: 780 };
+    expect(deep.execute({ kind: 'aircraft.buy', payload: { financed: true } }).ok).toBe(true);
+    for (const x of Object.values(deep.universe.accounts)) if (x.ownerId === deep.player.id && !x.nominal && x.balance > 0) x.balance = 0;
+    deep.advanceBy(95 * MS_DAY);
+    const b = deep.player.aircraft!;
+    expect(b.repossessed).toBeDefined();
+    b.loan!.owed = b.price;
+    deep.advanceBy(11 * MS_DAY);
+    const shortfall = deep.universe.transactions.filter((t) => t.memo.startsWith('Plane loan short after its sale'));
+    expect(shortfall[0]!.postings.filter((p) => p.amount > 0).reduce((x, p) => x + p.amount, 0)).toBe(inSave(deep, 8_250_00, 'USD'));
   });
 });

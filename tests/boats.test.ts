@@ -349,4 +349,15 @@ describe('a boat in London and in Toronto', () => {
     for (let g = 0; g < 400 && zonedParts(sim.now, 'America/Toronto').month !== 12; g += 1) sim.advanceBy(MS_DAY);
     expect(paidFor(sim, 'Boat hauled and stored for the winter')).toEqual([exchange(Math.round(7 * 150 * 1.13 * 100), 'CAD', saveCurrency(sim.universe))]);
   });
+
+  it('winterizes a Torontonian’s boat on its trailer at their house at Shrink Wrap Muskoka’s C$185 with HST', () => {
+    const sim = save('ca-on-toronto', 'boat-on-trailer');
+    const facts: HomeFacts = { type: 'house', address: 'Test House', beds: 3, baths: 2, size: 1_600, built: 2000, features: [], parts: {}, hoaUsd: 0 };
+    const owned = ownBuilt(sim, sim.player, { cityId: 'ca-on-toronto', facts, price: 900_000_00, closing: 0 });
+    sim.player.home = { kind: 'owned', cityId: 'ca-on-toronto', homeId: owned.id, since: sim.now };
+    expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    sim.advanceBy(365 * MS_DAY);
+    expect(paidFor(sim, 'Boat winterized on its trailer')).toEqual([exchange(Math.round(185 * 1.13 * 100), 'CAD', saveCurrency(sim.universe))]);
+    expect(paidFor(sim, 'Boat hauled and stored for the winter')).toEqual([]);
+  });
 });

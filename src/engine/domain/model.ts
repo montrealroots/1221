@@ -266,7 +266,7 @@ export interface Person {
   pilot?: import('../systems/aviation').PilotCertificate;
   pilotTraining?: import('../systems/aviation').PilotTraining;
   /** Pilot's licenses outside America, from 2026-09-30 (`systems/aviation.ts`). */
-  pilotLicences?: { authority: string; country: string; issuedAt: number }[];
+  pilotLicences?: { authority: string; country: string; issuedAt: number; /** When its medical runs out, from 2026-10-01. */ medicalUntil?: number }[];
   /** A plane of their own (`systems/aviation.ts`). */
   aircraft?: import('../systems/aviation').OwnedAircraft;
   /** A boat of their own, and the states whose operator's certificate they hold (`systems/boats.ts`). */
