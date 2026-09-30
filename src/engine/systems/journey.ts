@@ -21,6 +21,7 @@
 import { drawRental } from './dwelling';
 import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
 import { planRentalDrive, rentalDriven } from './rentals';
+import { planFlyYourself } from './aviation';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -40,7 +41,7 @@ import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { modelById, runningCost, vehiclesOf } from './vehicles';
 import { fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
-export type LegMode = 'ground' | 'check-in' | 'flight' | 'train' | 'bus' | 'drive' | 'arrival';
+export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
 export type Cabin = 'economy' | 'premium';
 
 export interface JourneyLeg {
@@ -254,6 +255,8 @@ export function planBy(sim: Simulation, by: string | undefined, fromCity: string
   if (by.startsWith('car:')) return planDrive(sim, sim.player, by.slice(4), fromCity, toCity, day, slot);
   // A car rented where they are (`systems/rentals.ts`, from 2026-09-29).
   if (by === 'rental') return planRentalDrive(sim, sim.player, fromCity, toCity, day, slot);
+  // Flown oneself in a rented plane, on a pilot's certificate (`systems/aviation.ts`, from 2026-09-29).
+  if (by === 'fly') return planFlyYourself(sim, sim.player, fromCity, toCity, day, slot);
   const route = railRouteById(by);
   if (!route || !railRoutes(fromCity, toCity).includes(route)) return 'That train doesn’t run between those towns.';
   return planTrain(sim, route, fromCity, day, slot);
@@ -436,7 +439,7 @@ export function registerJourneys(sim: Simulation): void {
       const hotelBack = (h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0) + (h.let ? letRefund(h.let, h.arriveAt, s.now) : 0);
       const route = railRouteById(h.by);
       // A drive not yet driven has burned nothing: all of its costs come back.
-      if (h.by?.startsWith('car:') || h.by === 'rental') refund += total(h.legs) + hotelBack;
+      if (h.by?.startsWith('car:') || h.by === 'rental' || h.by === 'fly') refund += total(h.legs) + hotelBack;
       else if (route) refund += trainRefund(s, h, route) + hotelBack;
       else refund += free ? h.total : hotelBack;
       h.status = 'canceled';

@@ -256,6 +256,9 @@ export interface Person {
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
   /** Cars rented on journeys (`systems/rentals.ts`). */
   rentals?: import('../systems/rentals').Rental[];
+  /** A private pilot's certificate, and the training toward it (`systems/aviation.ts`). */
+  pilot?: import('../systems/aviation').PilotCertificate;
+  pilotTraining?: import('../systems/aviation').PilotTraining;
   /** Their driving record: points and a suspension (`systems/driving.ts`). */
   driving?: import('../systems/driving').DrivingRecord;
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */

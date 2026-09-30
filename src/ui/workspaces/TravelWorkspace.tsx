@@ -17,6 +17,7 @@ import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { asRoundTrip, bookRefusal, journeysOf, letQuote, nightsBetween, partnerOf, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
+import { PILOT_TRAINING, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
@@ -25,7 +26,7 @@ import { byRoad } from '@/engine/systems/driving';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
-const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', train: 'Train', bus: 'Coach', drive: 'Drive', arrival: 'Off The Aircraft' };
+const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', fly: 'Flown Yourself', train: 'Train', bus: 'Coach', drive: 'Drive', arrival: 'Off The Aircraft' };
 /** A train journey's legs, named for a station. */
 const RAIL_WORD: Partial<Record<JourneyLeg['mode'], string>> = { ground: 'To Or From The Station', 'check-in': 'At The Station' };
 const clock = (h: number) => `${Math.floor(h) % 12 === 0 ? 12 : Math.floor(h) % 12}:${String(Math.round((h % 1) * 60)).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
@@ -59,7 +60,8 @@ export function TravelWorkspace() {
   const car = cars.find((v) => `car:${v.id}` === by);
   // A car rented where they'll be (`systems/rentals.ts`, from 2026-09-29).
   const rented = toCity && byRoad(fromCity, toCity) ? rentalAt(person, fromCity, day) : undefined;
-  const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : undefined;
+  const flies = Boolean(person.pilot) && by === 'fly';
+  const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : undefined;
   const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car || mode === 'rental' ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
   const pick = Math.min(slot, slots.length - 1);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
@@ -118,6 +120,7 @@ export function TravelWorkspace() {
                   {trains.map((r) => <option key={r.id} value={r.id}>{r.operator === r.service ? r.service : `${r.operator}, ${r.service}`}</option>)}
                   {cars.map((v) => <option key={v.id} value={`car:${v.id}`}>Your {modelById(v.modelId)?.make} {modelById(v.modelId)?.model}</option>)}
                   {rented && <option value="rental">Your Rental Car</option>}
+                  {person.pilot && <option value="fly">Fly Yourself</option>}
                 </select>
               </div>
               <div className="field">
@@ -196,6 +199,8 @@ export function TravelWorkspace() {
           </div>
         </Panel>
 
+        <LearnToFly />
+
         <Panel title="Your Journeys">
           {!journeys.length ? <p className="small muted" style={{ margin: 0 }}>None yet.</p> : (
             <div className="table-scroll">
@@ -258,5 +263,34 @@ function StayInALet({ j }: { j: Journey }) {
       const a = run<{ price: number }>('travel.stay_let', { journeyId: j.id });
       if (a.ok) toast(`A holiday let instead of the hotel, ${formatMoney(a.value!.price, cur)}.`, 'positive');
     }}>{typeof q === 'string' ? 'Stay In A Holiday Let' : `Stay In A Holiday Let, ${formatMoney(q.price, cur, { cents: false })}`}</Gated>
+  );
+}
+
+/** A private pilot's certificate (`systems/aviation.ts`): its training, and then By offers Fly Yourself. */
+function LearnToFly() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const t = person.pilotTraining;
+  const costs = trainingCosts(sim);
+  const no = trainRefusal(sim, person);
+  const standing = person.pilot ? 'A Private Pilot' : t?.status === 'training' ? `Training, Month ${Math.min(t.monthsDone, PILOT_TRAINING.months)} Of ${PILOT_TRAINING.months}` : t?.status === 'stopped' ? 'Training Stopped' : 'Not Begun';
+  return (
+    <Panel title="Learning To Fly" subtitle={standing}>
+      <div className="col gap-3">
+        <div className="grid grid-3">
+          <Stat label="A Month" value={formatMoney(costs.month, cur, { cents: false })} note={`${PILOT_TRAINING.hours / PILOT_TRAINING.months} hours in a Cessna 172, and an instructor`} />
+          <Stat label="The Tests" value={formatMoney(costs.tests, cur, { cents: false })} note="The knowledge test and the checkride" />
+          <Stat label="In All" value={formatMoney(costs.total, cur, { cents: false })} note={`Over ${PILOT_TRAINING.months} months`} />
+        </div>
+        {!person.pilot && (
+          <div className="row gap-2">
+            <Gated feature="pilot.train" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { if (run('pilot.train', {}).ok) toast(t?.status === 'stopped' ? 'Training taken up again.' : 'Training begun.', 'positive'); }}>{t?.status === 'stopped' ? 'Take It Up Again' : 'Learn To Fly'}</Gated>
+          </div>
+        )}
+        {no && !person.pilot ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
+        <Fine>An FAA private pilot certificate: 60 hours in a rented Cessna 172 at the median school’s $176 an hour with fuel, AOPA’s middle of the 50 to 70 most students take; 20 with an instructor at $75; PSI’s $175 knowledge test and a typical $1,000 checkride. The six months are SLATE’s. Qualified, By offers Fly Yourself between towns in America, in a rented 172 at Textron’s 124 knots within its range less a day flight’s half-hour reserve.</Fine>
+      </div>
+    </Panel>
   );
 }
