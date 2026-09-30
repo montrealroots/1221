@@ -12,8 +12,9 @@
  *
  * Movers take them from one home to the next, and a bed carries a state's
  * mattress recycling fee, from 2026-09-30 (below); until then neither was
- * kept. Not kept, and said so: a mattress wearing out, movers in Ireland or
- * abroad, and the rest of a home's furniture.
+ * kept. A mattress wearing out and movers in Ireland and abroad weren't kept
+ * either, and are now (below). Not kept, by design: the rest of a home's
+ * furniture, which changes nothing SLATE keeps.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -88,8 +89,8 @@ export function mattressFeeUsd(cityId: string, at: number): number {
 
 /**
  * What movers charge to take one's own bed and sofa from one home to the
- * next (\`MOVERS\`), in the save's money; nothing without pieces of one's own,
- * across a border, or where no figure is kept.
+ * next (\`MOVERS\`, and \`MOVERS_ABROAD\` across a border), in the save's
+ * money; nothing without pieces of one's own, or where no figure is kept.
  */
 export function moversCost(sim: Simulation, person: Person, fromCity: string, toCity: string): Money {
   if (!owns(person, 'bed') && !owns(person, 'sofa')) return 0;

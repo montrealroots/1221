@@ -1403,6 +1403,23 @@ function leaseEnds(sim: Simulation, person: Person): Money {
 const letOut = (owned: OwnedHome): boolean => owned.tenancies.some((t) => t.unit === 'main');
 
 /** Bills the month's payments on the first, and the year's where they fall; and a let home's depreciation. */
+/**
+ * Of an American home its owner lives in, the share let to lodgers, from
+ * 2026-10-01, as IRS Publication 527 (2025) divides one: by floor area, the
+ * rented room's against the home's, its own example a 180 sq ft room in an
+ * 1,800 sq ft house. SLATE keeps no room's size, so each lodger's room is
+ * taken at the example's 180 sq ft. That share of the home's interest,
+ * property tax, insurance and repairs is set against the rent on the return,
+ * and that share of the building depreciated, rather than taken as a
+ * homeowner's deduction. Until then the rent was taxed whole.
+ */
+export const LODGER_ROOM_SQFT = 180;
+export function lodgerShare(owned: OwnedHome): number {
+  const n = owned.lodgers?.length ?? 0;
+  if (n === 0 || CITIES.get(owned.cityId)?.countryId !== 'us' || !(owned.facts.size > 0)) return 0;
+  return Math.min(1, (n * LODGER_ROOM_SQFT) / owned.facts.size);
+}
+
 function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
   const key = monthKey(sim, owned.cityId);
   if (key <= owned.billedThrough) return;
@@ -1444,6 +1461,13 @@ function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
     if (month1 <= 0) continue;
     owned.depreciated += month1;
     recordHome(person, sim.now, zone, 'rentalCosts', month1);
+  }
+  // The lodgers' rooms' share of the building, depreciated as a let home's is (from 2026-10-01).
+  const lodged = letOut(owned) ? 0 : lodgerShare(owned);
+  const roomMonth = Math.round((basis * HOME_TAX.buildingShare * lodged) / HOME_TAX.depreciationYears / 12);
+  if (roomMonth > 0) {
+    owned.depreciated += roomMonth;
+    recordHome(person, sim.now, zone, 'rentalCosts', roomMonth);
   }
 }
 
@@ -1488,12 +1512,17 @@ function payOwed(sim: Simulation, person: Person, owned: OwnedHome): void {
     owned.owed = owned.owed.filter((x) => x !== one);
     // What the return reads: a let home's costs against its rent; a kept home's mortgage interest and American property tax.
     const tax = one.kind === 'tax' ? one.amount : one.escrow?.tax ?? 0;
+    const costs = interest + tax + (one.escrow?.insurance ?? 0) + (one.escrow?.pmi ?? 0) + (loan ? 0 : one.kind === 'tax' ? 0 : one.amount);
     if (rental) {
-      recordHome(person, sim.now, zone, 'rentalCosts', interest + tax + (one.escrow?.insurance ?? 0) + (one.escrow?.pmi ?? 0) + (loan ? 0 : one.kind === 'tax' ? 0 : one.amount));
+      recordHome(person, sim.now, zone, 'rentalCosts', costs);
     } else {
-      if (one.kind === 'mortgage') recordHome(person, sim.now, zone, 'homeInterest', deductible);
-      if (american && tax > 0) recordHome(person, sim.now, zone, 'homeTax', tax);
-      if (one.escrow?.pmi) recordHome(person, sim.now, zone, 'homePmi', one.escrow.pmi);
+      // A lodger's room takes its share against the rent, the rest a homeowner's (Publication 527, from 2026-10-01).
+      const share = lodgerShare(owned);
+      const kept = (x: number) => Math.round(x * (1 - share));
+      if (share > 0) recordHome(person, sim.now, zone, 'rentalCosts', Math.round(costs * share));
+      if (one.kind === 'mortgage') recordHome(person, sim.now, zone, 'homeInterest', kept(deductible));
+      if (american && tax > 0) recordHome(person, sim.now, zone, 'homeTax', kept(tax));
+      if (one.escrow?.pmi) recordHome(person, sim.now, zone, 'homePmi', kept(one.escrow.pmi));
     }
     dropPmi(sim, owned);
     paidOff(sim, owned);

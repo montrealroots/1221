@@ -115,7 +115,12 @@ describe('a mattress’s recycling fee, and movers', () => {
     expect(moversCost(sim, sim.player, 'us-ny-newyork', 'uk-eng-london')).toBe(inSave(sim, 2_516_50, 'USD'));
     expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'uk-eng-london')).toBe(inSave(sim, 1_200_00, 'GBP'));
     expect(moversCost(sim, sim.player, 'uk-eng-london', 'ie-lei-dublin')).toBe(inSave(sim, 1_200_00, 'GBP'));
-    expect(moversCost(sim, sim.player, 'mx-cmx-mexicocity', 'uk-eng-london')).toBe(0);
+    // From 2026-10-01 every pair: MoveHub's middle from Mexico to Britain, AMC's from Dublin to Toronto.
+    expect(moversCost(sim, sim.player, 'mx-cmx-mexicocity', 'uk-eng-london')).toBe(inSave(sim, 4_562_50, 'GBP'));
+    expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'ca-on-toronto')).toBe(inSave(sim, 3_250_00, 'EUR'));
+    expect(moversCost(sim, sim.player, 'ca-on-toronto', 'uk-eng-london')).toBe(inSave(sim, 4_149_50, 'GBP'));
+    expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'mx-cmx-mexicocity')).toBe(inSave(sim, 4_902_00, 'GBP'));
+    expect(moversCost(sim, sim.player, 'mx-cmx-mexicocity', 'ca-bc-vancouver')).toBe(inSave(sim, 3_356_50, 'GBP'));
     // Britain's distance, for a town near enough to be local.
     expect([5, 30, 80].map((mi) => MOVERS.uk!.local(mi))).toEqual([466, 578.5, 691]);
     expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'ie-lei-dublin')).toBe(inSave(sim, 450_00, 'EUR'));

@@ -13,7 +13,13 @@
  * What one adds: nothing to the home's value, as Fannie Mae's appraisers
  * take a freestanding appliance for personal property (`homeValue` counts
  * the price and the works), and its fixture's premium to a let's rent
- * (`marketRent`). Not kept, and said so: what a built-in adds to the value,
+ * (`marketRent`). Central air is the house's own, and from 2026-10-01 adds
+ * to an American house's value what Cost vs. Value 2025 found a new system
+ * recovers at sale, 72.1% of its cost (a heat pump conversion, the nearest
+ * of its projects; `docs/research/world/research-home-lodgers-movers-2.json`),
+ * until it gives out; NAR's 2019 figure, 85%, is its latest with an HVAC row
+ * and was superseded. Not kept, and said so: what a built-in dishwasher
+ * adds, which no one publishes; central air's worth abroad, none being read;
  * and a gas dryer's or a heat pump's hookups. Appliances in a rented home were among them until
  * 2026-09-29; a tenant's own air conditioning units are kept now (below), and
  * from 2026-09-30 a tenant's own countertop and portable machines.
@@ -29,6 +35,9 @@ import { CITIES } from '../content/geography';
 import { APPLIANCES, APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '../content/appliances';
 import type { Fixtures } from '../content/homes';
 import { homeById, type OwnedHome } from './homes';
+
+/** Of central air's cost, what an American house's value gains (Cost vs. Value 2025). */
+export const CENTRAL_AIR_RECOVERED = 0.721;
 import { fixturesOf, homePlace } from './dwelling';
 import { inTheBank, payFromBank } from './household';
 
@@ -96,6 +105,8 @@ export function registerAppliances(sim: Simulation): void {
     if (kind === 'washer') owned.laundryBefore = f.laundry === 'building' ? 'building' : 'none';
     owned.facts.fixtures = change(f, kind, true);
     (owned.appliances ??= {})[kind] = s.now;
+    // Central air is the house's, and an American buyer pays for some of it (from 2026-10-01).
+    if (kind === 'central-air' && CITIES.get(owned.cityId)?.countryId === 'us') owned.improvements.push({ projectId: 'central-air', at: s.now, value: Math.round(cost * CENTRAL_AIR_RECOVERED), cost });
     const lastsTo = s.now + APPLIANCE_LIFE[kind] * YEAR_MS;
     s.schedule({ at: lastsTo, kind: APPLIANCE_OUT_KIND, label: `${APPLIANCE_LABEL[kind]} Worn Out`, category: 'home', priority: 30, payload: { personId: person.id, homeId: owned.id, kind, fittedAt: s.now } });
     return { cost, lastsTo };
@@ -109,6 +120,8 @@ export function registerAppliances(sim: Simulation): void {
     if (!person || !owned) return;
     owned.facts.fixtures = change(fixturesOf(s, person, owned.cityId, owned.facts, owned.id), kind, false, owned.laundryBefore ?? 'none');
     if (owned.appliances) delete owned.appliances[kind];
+    // Given out, it's worth nothing to a buyer.
+    if (kind === 'central-air') owned.improvements = owned.improvements.filter((one) => one.projectId !== 'central-air');
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: `The ${APPLIANCE_LABEL[kind]} Gave Out`, body: `After ${APPLIANCE_LIFE[kind]} years, its published life, at ${owned.facts.address}. Another can be fitted on the Homes screen.`, importance: 50, route: '/workspace/homes' });
   });
 }
@@ -182,16 +195,31 @@ export function registerOwnUnits(sim: Simulation): void {
  * - Britain: Russell Hobbs' table-top dishwasher, £239.99 at B&Q.
  * - Canada: Danby's countertop dishwasher, C$369.99.
  * - Mexico: Avera's portable dishwasher, MX$6,939 at Coppel.
- * No portable washer or dryer is priced in Britain, Ireland, Canada or
- * Mexico, nor any machine in Ireland.
+ * Until 2026-10-01 no portable washer or dryer was priced in Britain,
+ * Ireland, Canada or Mexico, nor any machine in Ireland. From then
+ * (`docs/research/world/research-home-lodgers-movers-2.json`):
+ * - Britain: a twin tub at Argos, £140, and a 3 kg vented dryer at Currys,
+ *   £195, both read from a search engine's copy of the page (the stores
+ *   refuse to be read).
+ * - Ireland: Streetwize's twin tub at MicksGarage, €149.99; the cheapest
+ *   table-top dishwasher at BuyItDirect.ie, €209.97; Montpellier's 3 kg dryer
+ *   at Currys.ie, €239.99 (read from a search engine's copy). DID Electrical
+ *   sells none of the three.
+ * - Canada: Danby's 1.8 cu ft portable washer at its own list price,
+ *   C$649.99; BLACK+DECKER's portable dryer at The Home Depot, C$679 (read
+ *   from a search engine's copy), Danby's own being discontinued.
+ * - Mexico: a twin tub at Coppel, the least of its MX$4,199 to MX$6,499
+ *   (read from a search engine's copy). A "compact dryer" sold there is a
+ *   heatless spin extractor, which doesn't dry, so none is sold.
  */
 export type Portable = 'dishwasher' | 'washer' | 'dryer';
 export const PORTABLE_LABEL: Readonly<Record<Portable, string>> = { dishwasher: 'A Countertop Dishwasher', washer: 'A Portable Washer', dryer: 'A Compact Dryer' };
 export const PORTABLES: Readonly<Record<string, { currency: string; items: Partial<Record<Portable, number>> }>> = {
   us: { currency: 'USD', items: { dishwasher: 289.99, washer: 305.99, dryer: 369 } },
-  uk: { currency: 'GBP', items: { dishwasher: 239.99 } },
-  ca: { currency: 'CAD', items: { dishwasher: 369.99 } },
-  mx: { currency: 'MXN', items: { dishwasher: 6_939 } },
+  uk: { currency: 'GBP', items: { dishwasher: 239.99, washer: 140, dryer: 195 } },
+  ie: { currency: 'EUR', items: { dishwasher: 209.97, washer: 149.99, dryer: 239.99 } },
+  ca: { currency: 'CAD', items: { dishwasher: 369.99, washer: 649.99, dryer: 679 } },
+  mx: { currency: 'MXN', items: { dishwasher: 6_939, washer: 4_199 } },
 };
 export const PORTABLE_OUT_KIND = 'home.portable_out';
 

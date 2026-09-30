@@ -11,7 +11,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
+import { lodgerShare, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { yearOf } from '@/engine/systems/earnings';
 import { lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { zonedParts } from '@/engine/core/time';
@@ -27,6 +27,35 @@ function home(city: string, name: string, beds = 3) {
 }
 const paid = (sim: Simulation) => sim.universe.transactions.filter((t) => t.memo.startsWith('A lodger’s rent'));
 const tax = (sim: Simulation) => paid(sim).reduce((a, t) => a + (t.postings.find((x) => x.accountId === sim.nominalAccount('expense', 'Tax On A Lodger’s Rent').id)?.amount ?? 0), 0);
+
+describe('a lodger’s room on an American return', () => {
+  it('takes Publication 527’s share by floor area, 180 sq ft a room of the 1,600, against the rent, and depreciates it', () => {
+    const { sim, owned } = home('us-ny-newyork', 'lodger-527', 4);
+    expect(lodgerShare(owned)).toBe(0);
+    expect(sim.execute({ kind: 'home.take_lodger', payload: { homeId: owned.id } }).ok).toBe(true);
+    expect(lodgerShare(owned)).toBeCloseTo(180 / 1_600, 10);
+    expect(sim.execute({ kind: 'home.take_lodger', payload: { homeId: owned.id } }).ok).toBe(true);
+    expect(lodgerShare(owned)).toBeCloseTo(360 / 1_600, 10);
+    const before = owned.depreciated;
+    sim.advanceBy(200 * MS_DAY);
+    expect(owned.depreciated).toBeGreaterThan(before);
+    const year = zonedParts(sim.now, sim.zone).year;
+    const costs = (yearOf(sim.player, year).rentalCosts ?? 0) + (yearOf(sim.player, year - 1).rentalCosts ?? 0);
+    expect(costs).toBeGreaterThan(0);
+    // Each property tax paid: the lodgers' share against the rent, the rest the homeowner's deduction.
+    const taxAccount = sim.nominalAccount('expense', 'Property Tax').id;
+    const taxes = sim.universe.transactions.flatMap((t) => t.postings.filter((x) => x.accountId === taxAccount).map((x) => x.amount));
+    expect(taxes.length).toBeGreaterThan(0);
+    const share = 360 / 1_600;
+    const homeTax = (yearOf(sim.player, year).homeTax ?? 0) + (yearOf(sim.player, year - 1).homeTax ?? 0);
+    expect(homeTax).toBe(taxes.reduce((a, x) => a + Math.round(x * (1 - share)), 0));
+    expect(costs - (owned.depreciated - before)).toBeGreaterThanOrEqual(taxes.reduce((a, x) => a + Math.round(x * share), 0));
+    // Not in Britain, whose Rent a Room Scheme takes no costs.
+    const uk = home('uk-eng-london', 'lodger-527-uk');
+    expect(uk.sim.execute({ kind: 'home.take_lodger', payload: { homeId: uk.owned.id } }).ok).toBe(true);
+    expect(lodgerShare(uk.owned)).toBe(0);
+  });
+});
 
 describe('a lodger', () => {
   it('pays New York’s room rent of $1,515 on moving in and each month, recorded as rent on the return', () => {

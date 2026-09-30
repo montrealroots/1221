@@ -9,7 +9,8 @@
  * owner, taken everywhere; and no more than the spare bedrooms. Taxed as each
  * country taxes it:
  * - America: rental income, on the return (`rentalRent`); a room's share of
- *   the home's costs isn't kept.
+ *   the home's costs wasn't kept until 2026-10-01, and is now set against it
+ *   (`lodgerShare` in `homes.ts`).
  * - Britain: the Rent a Room Scheme's £7,500 a year free of tax, the rest
  *   taxed as income, the scheme's alternative way.
  * - Ireland: Rent-a-Room Relief's €14,000 a year free, and all of it taxed

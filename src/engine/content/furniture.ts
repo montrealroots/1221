@@ -105,7 +105,14 @@ export const MOVERS: Readonly<Record<string, { currency: string; local: (miles: 
  * London and Dublin, Sirelo's £1,000 to £1,400 (February 2026); America and
  * Britain, MoveHub's $1,258 to $3,775 for a 20-foot container port to port;
  * America and Ireland $2,700 to $4,500; America and Toronto $3,375 to $4,215;
- * America and Mexico by road $4,500 to $8,000. None published elsewhere.
+ * America and Mexico by road $4,500 to $8,000. None was published elsewhere
+ * until 2026-10-01, when the rest of the pairs were read
+ * (`docs/research/world/research-home-lodgers-movers-2.json`, estimates, not
+ * quotes): Britain and Canada, MoveHub's £3,942 to £4,357 by sea; Britain and
+ * Mexico, its £4,334 to £4,791; Ireland and Canada, AMC Removals' €2,500 to
+ * €4,000; Ireland and Mexico, MoveHub's £4,657 to £5,147; Canada and Mexico,
+ * MoveHub's £3,189 to £3,524, as Three Movers' 4,000 to 9,500 names no money.
+ * Every pair of SLATE's five countries is now kept.
  */
 export const MOVERS_ABROAD: Readonly<Record<string, { currency: string; amount: number }>> = {
   'ie|uk': { currency: 'GBP', amount: 1_200 },
@@ -113,6 +120,11 @@ export const MOVERS_ABROAD: Readonly<Record<string, { currency: string; amount: 
   'ie|us': { currency: 'USD', amount: 3_600 },
   'ca|us': { currency: 'USD', amount: 3_795 },
   'mx|us': { currency: 'USD', amount: 6_250 },
+  'ca|uk': { currency: 'GBP', amount: 4_149.5 },
+  'mx|uk': { currency: 'GBP', amount: 4_562.5 },
+  'ca|ie': { currency: 'EUR', amount: 3_250 },
+  'ie|mx': { currency: 'GBP', amount: 4_902 },
+  'ca|mx': { currency: 'GBP', amount: 3_356.5 },
 };
 
 

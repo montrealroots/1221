@@ -11,6 +11,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import type { Fixtures } from '@/engine/content/homes';
+import { homeValue } from '@/engine/systems/homes';
 import { applianceCost, fitRefusal, portableCost, portableRefusal, unitsRefusal } from '@/engine/systems/appliances';
 import { drawRental, homePlace } from '@/engine/systems/dwelling';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
@@ -95,6 +96,27 @@ describe('what one changes, and its end', () => {
     sim.advanceBy(9 * YEAR + MS_DAY);
     expect(home.facts.fixtures!.cooling).toBe('central');
   });
+
+  it('adds 72.1% of central air’s cost to an American house’s value until it gives out, and nothing for units', () => {
+    const sim = save('us-ca-losangeles', 'fit-value');
+    const home = own(sim, 'us-ca-losangeles', 'house');
+    fund(sim);
+    expect(sim.execute({ kind: 'home.fit', payload: { homeId: home.id, kind: 'ac-units' } }).ok).toBe(true);
+    expect(home.improvements).toHaveLength(0);
+    expect(sim.execute({ kind: 'home.fit', payload: { homeId: home.id, kind: 'central-air' } }).ok).toBe(true);
+    const cost = applianceCost(sim, 'us-ca-losangeles', 'central-air')!;
+    expect(home.improvements).toEqual([{ projectId: 'central-air', at: sim.now, value: Math.round(cost * 0.721), cost }]);
+    expect(homeValue(sim, home)).toBeGreaterThan(0);
+    // In Canada, where no figure for its worth was read, it adds nothing.
+    const ca = save('ca-on-toronto', 'fit-value-ca');
+    const caHome = own(ca, 'ca-on-toronto', 'house');
+    fund(ca);
+    expect(ca.execute({ kind: 'home.fit', payload: { homeId: caHome.id, kind: 'central-air' } }).ok).toBe(true);
+    expect(caHome.improvements).toHaveLength(0);
+    sim.advanceBy(18 * YEAR + MS_DAY);
+    expect(home.facts.fixtures!.cooling).not.toBe('central');
+    expect(home.improvements).toHaveLength(0);
+  });
 });
 
 describe('air conditioning units of one’s own', () => {
@@ -174,9 +196,16 @@ describe('a tenant’s own countertop and portable machines', () => {
     expect(portableRefusal(has, has.player, 'dishwasher')).toMatch(/Your home has one/);
     const uk = tenant('uk-eng-london', 'portable-uk');
     expect(portableCost(uk, 'uk-eng-london', 'dishwasher')).toBe(inSave(uk, 239_99, 'GBP'));
-    expect(portableRefusal(uk, uk.player, 'washer')).toMatch(/No shop’s price/);
-    const ie = tenant('ie-lei-dublin', 'portable-ie');
-    expect(portableRefusal(ie, ie.player, 'dishwasher')).toMatch(/No shop’s price/);
+    // From 2026-10-01 the washer and dryer abroad: Argos's £140 twin tub, MicksGarage's €149.99, Danby's C$649.99; no dryer in Mexico.
+    expect(portableCost(uk, 'uk-eng-london', 'washer')).toBe(inSave(uk, 140_00, 'GBP'));
+    expect(portableCost(uk, 'ie-lei-dublin', 'washer')).toBe(inSave(uk, 149_99, 'EUR'));
+    expect(portableCost(uk, 'ie-lei-dublin', 'dishwasher')).toBe(inSave(uk, 209_97, 'EUR'));
+    expect(portableCost(uk, 'ca-on-toronto', 'washer')).toBe(inSave(uk, 649_99, 'CAD'));
+    expect(portableCost(uk, 'ca-on-toronto', 'dryer')).toBe(inSave(uk, 679_00, 'CAD'));
+    expect(portableCost(uk, 'mx-cmx-mexicocity', 'washer')).toBe(inSave(uk, 4_199_00, 'MXN'));
+    const mx = tenant('mx-cmx-mexicocity', 'portable-mx');
+    expect(portableRefusal(mx, mx.player, 'dryer')).toMatch(/No shop’s price|beside a washer/);
+    expect(portableCost(mx, 'mx-cmx-mexicocity', 'dryer')).toBeUndefined();
     const broke = tenant('us-ny-newyork', 'portable-broke');
     for (const a of Object.values(broke.universe.accounts)) if (a.ownerId === broke.player.id && !a.nominal && a.balance > 0) a.balance = 0;
     expect(portableRefusal(broke, broke.player, 'dishwasher')).toMatch(/costs/);
