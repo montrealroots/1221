@@ -3,7 +3,8 @@
  * 2026-09-29, on the figures in `content/construction.ts`.
  *
  * A lot in New York, New Haven, Los Angeles or London takes a house of a
- * published size where it fits the zoning's bulk. The permit and every fee
+ * published size where it fits the zoning's bulk, and from stage 5b farmland
+ * where the place allows a house on it, England not. The permit and every fee
  * of the place are paid when the work is started. The permit comes after the
  * place's wait, and the contractor builds in NAHB's seven stages, each
  * billed at its share of the contract when it's finished, the inspections
@@ -24,7 +25,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { LAND_MARKETS } from '../content/land';
-import { BUILD_RULES, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NYC_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
+import { BC_PERMIT, BUILD_RULES, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
 import { parcelsOf, type Parcel } from './land';
 import { ownBuilt } from './homes';
 import { inTheBank, payFromBank } from './household';
@@ -60,11 +61,10 @@ export interface Build {
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
 const cents = (units: number) => Math.round(units * 100);
 
-/** Where a parcel is built on, or nothing where SLATE builds nothing yet. */
+/** Where a parcel is built on, or nothing where no house is built. */
 export function buildPlaceOf(p: Parcel): BuildPlace | undefined {
-  const m = LAND_MARKETS[p.market]!;
-  if (m.kind !== 'lot') return undefined;
-  return m.place === 'nyc' || m.place === 'new-haven' || m.place === 'los-angeles' || m.place === 'london' ? m.place : undefined;
+  const place = LAND_MARKETS[p.market]!.place;
+  return place in BUILD_RULES ? (place as BuildPlace) : undefined;
 }
 
 /** The most floor a lot takes, square feet, or none where its zoning's bulk isn't kept. */
@@ -72,6 +72,7 @@ export function mostFloor(place: BuildPlace, acres: number): number | undefined 
   const bulk = BUILD_RULES[place].bulk;
   const lot = acres * 43_560;
   if (!bulk) return undefined;
+  if ('most' in bulk) return bulk.most;
   return 'floorArea' in bulk ? lot * bulk.floorArea : lot * bulk.coverage * bulk.stories;
 }
 
@@ -114,6 +115,25 @@ export function buildFees(place: BuildPlace, sqft: number, contract: Money, boro
       { label: 'Certificate Of Occupancy', amount: cents(f.occupancy) },
     ], cil: 0 };
   }
+  if (place === 'ny-state') return { lines: [], cil: 0 };
+  if (place === 'ct-state') return { lines: [{ label: 'State Education Fee', amount: cents(NEW_HAVEN_FEES.education * value / 1_000) }], cil: 0 };
+  if (place === 'ca-state') return { lines: [
+    { label: 'Strong-Motion Instrumentation Fee', amount: cents(Math.max(0.5, value * LA_FEES.smip)) },
+    { label: 'Building Standards Fee', amount: cents(Math.max(1, value * LA_FEES.bsa)) },
+  ], cil: 0 };
+  if (place === 'leinster') return { lines: [
+    { label: 'Planning Application', amount: cents(LEINSTER_FEES.planning) },
+    { label: 'Development Contribution', amount: cents(LEINSTER_FEES.contributionPerM2 * sqft / SQFT_PER_M2) },
+    { label: 'Commencement Notice', amount: cents(LEINSTER_FEES.commencement) },
+  ], cil: 0 };
+  if (place === 'ontario') return { lines: [
+    { label: 'Building Permit', amount: cents(Math.max(ONTARIO_FEES.least, ONTARIO_FEES.perSqft * sqft)) },
+    { label: 'Development Charge', amount: cents(ONTARIO_FEES.charge) },
+  ], cil: 0 };
+  if (place === 'bc') {
+    const [, base, per, over] = BC_PERMIT.find(([upTo]) => value <= upTo)!;
+    return { lines: [{ label: 'Building Permit', amount: cents(base + per * (value - over) / 1_000) }], cil: 0 };
+  }
   const rates = LONDON_CIL[borough ?? 'Croydon'] ?? LONDON_CIL.Croydon!;
   const m2 = sqft / SQFT_PER_M2;
   return { lines: [{ label: 'Building Control Charge', amount: cents(LONDON_BUILDING_CONTROL.fee * (1 + LONDON_BUILDING_CONTROL.vat)) }], cil: cents((rates.borough + rates.mayor) * m2) };
@@ -122,12 +142,12 @@ export function buildFees(place: BuildPlace, sqft: number, contract: Money, boro
 /** A house on a lot: the contract, the fees, the stages and their days. */
 export function buildQuote(p: Parcel, designId: string, live: boolean): BuildQuote | string {
   const place = buildPlaceOf(p);
-  if (!place) return 'SLATE builds only on a town lot in New York, New Haven, Los Angeles or London yet; a house on farmland waits for a planning permission it doesn’t take.';
+  if (!place) return NO_HOUSE[LAND_MARKETS[p.market]!.place] ?? 'SLATE builds no house there yet.';
   const rules = BUILD_RULES[place];
   const design = rules.designs.find((d) => d.id === designId);
   if (!design) return 'That isn’t a house built there.';
   const most = mostFloor(place, p.acres);
-  if (most !== undefined && design.sqft > most) return `It doesn’t fit: the lot takes ${Math.floor(most).toLocaleString('en-US')} sq ft at most, by ${rules.bulk!.basis}.`;
+  if (most !== undefined && design.sqft > most) return `It doesn’t fit: the land takes ${Math.floor(most).toLocaleString('en-US')} sq ft at most, by ${rules.bulk!.basis}.`;
   const area = rules.unit === 'sqft' ? design.sqft : design.sqft / SQFT_PER_M2;
   const contract = cents(rules.rate * area);
   const borough = LAND_MARKETS[p.market]!.label.match(/In (Hackney|Croydon|Havering)/)?.[1];
@@ -142,7 +162,7 @@ export function buildQuote(p: Parcel, designId: string, live: boolean): BuildQuo
     paid += amount;
     return { name: s.name, amount, days: Math.max(1, Math.round(rules.buildMonths * MONTH_DAYS * s.usd / whole)) };
   });
-  return { currency: rules.currency, design, contract, fees: lines, feesTotal, spared: live ? f.cil : 0, total: contract + feesTotal, stages, permitDays: Math.round(rules.permitMonths * MONTH_DAYS) };
+  return { currency: rules.currency, design, contract, fees: lines, feesTotal, spared: live ? f.cil : 0, total: contract + feesTotal, stages, permitDays: rules.permitDays ?? Math.round(rules.permitMonths * MONTH_DAYS) };
 }
 
 /** Why a house can't be started, or nothing. */
@@ -180,7 +200,8 @@ function finish(sim: Simulation, person: Person, b: Build): void {
   const design = rules.designs.find((d) => d.id === b.designId)!;
   const year = new Date(sim.now).getUTCFullYear();
   const parts = Object.fromEntries((['kitchen', 'bath', 'floors', 'paint', 'roof', 'windows', 'siding', 'door', 'hvac'] as const).map((k) => [k, year]));
-  const address = `Your House ${m.label.replace(/^A (Lot|Plot) /, '').replace(/, With Planning Permission$/, '')}`;
+  // A lot's house is in its place (Your House In Queens); a farm's is on the farmland (Your House On Farmland Upstate).
+  const address = m.kind === 'lot' ? `Your House ${m.label.replace(/^A (Lot|Plot) /, '').replace(/, With Planning Permission$/, '')}` : `Your House On ${m.label}`;
   const owned = ownBuilt(sim, person, {
     cityId: b.cityId,
     facts: { type: 'house', address, beds: design.beds, baths: design.baths, size: design.sqft, lot: Math.round(p.acres * 43_560), built: year, features: [...YARD], parts, hoaUsd: 0 },
@@ -211,7 +232,7 @@ export function registerConstruction(sim: Simulation): void {
     const b: Build = {
       parcelId: parcel.id, place, cityId: LAND_MARKETS[parcel.market]!.cityId, designId: q.design.id, live, startedAt: s.now,
       contract: q.contract, fees: q.feesTotal, spared: q.spared, amounts: q.stages.map((x) => x.amount), days: q.stages.map((x) => x.days), stage: -1,
-      log: [{ at: s.now, line: place === 'london' ? 'Building notice given' : 'Permit applied for' }],
+      log: [{ at: s.now, line: place === 'london' ? 'Building notice given' : place === 'leinster' ? 'Planning permission applied for' : 'Permit applied for' }],
     };
     person.building = b;
     s.schedule({ at: s.now + q.permitDays * MS_DAY, kind: BUILD_STAGE_KIND, label: place === 'london' ? 'Work Starts' : 'The Permit Is Issued', category: 'home', priority: 30, payload: { personId: person.id } });
@@ -237,7 +258,7 @@ export function registerConstruction(sim: Simulation): void {
     const b = person?.building;
     if (!person || !b) return;
     if (b.stage === -1) {
-      b.log.push({ at: s.now, line: b.place === 'london' ? 'Work started' : 'Permit issued; work started' });
+      b.log.push({ at: s.now, line: b.place === 'london' ? 'Work started' : b.place === 'leinster' ? 'Permission granted, no appeal made, and the commencement notice run; work started' : 'Permit issued; work started' });
       b.stage = 0;
       next(s, person, b);
       return;

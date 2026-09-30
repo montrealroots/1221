@@ -206,7 +206,7 @@ function ForSale() {
 function Build() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
-  const lots = parcelsOf(person).filter((p) => p.soldAt === undefined && !p.selling && buildPlaceOf(p));
+  const lots = parcelsOf(person).filter((p) => p.soldAt === undefined && !p.selling);
   const [pick, setPick] = useState('');
   const parcel = lots.find((p) => p.id === pick) ?? lots[0];
   const place = parcel ? buildPlaceOf(parcel) : undefined;
@@ -248,25 +248,39 @@ function Build() {
       </Panel>
     );
   }
-  if (!parcel || !place || !design) return null;
+  if (!parcel) return null;
+  const m = LAND_MARKETS[parcel.market]!;
+  const lotPicker = lots.length > 1 && (
+    <div className="field">
+      <label htmlFor="build-lot">Land</label>
+      <select id="build-lot" value={parcel.id} onChange={(e) => { setPick(e.target.value); setDesign(''); }}>
+        {lots.map((p) => <option key={p.id} value={p.id}>{LAND_MARKETS[p.market]!.label}, {areaWords(p.acres, LAND_MARKETS[p.market]!.place)}</option>)}
+      </select>
+    </div>
+  );
+  // Land no house is built on says why, rather than hiding the panel.
+  if (!place || !design) {
+    const why = buildQuote(parcel, '', live);
+    return (
+      <Panel title="Build A House" subtitle={`On ${m.label}`}>
+        <div className="col gap-3">
+          {lotPicker && <div className="field-row field-row-tight">{lotPicker}</div>}
+          <p className="small" style={{ margin: 0 }}>{typeof why === 'string' ? why : ''}</p>
+        </div>
+      </Panel>
+    );
+  }
   const rules = BUILD_RULES[place];
   const q = buildQuote(parcel, design.id, live);
   const no = buildRefusal(sim, person, parcel.id, design.id, live);
   const money = (c: number) => formatMoney(c, rules.currency, { cents: true });
   const size = (sqft: number) => (rules.unit === 'm2' ? `${Math.round(sqft / SQFT_PER_M2)} m²` : `${sqft.toLocaleString('en-US')} sq ft`);
-  const m = LAND_MARKETS[parcel.market]!;
+  const waits = place === 'london' ? 'Two Days' : q && typeof q !== 'string' && q.permitDays < 45 ? `About ${q.permitDays} Days` : `About ${Math.round((typeof q === 'string' ? 0 : q.permitDays) / 30.4)} Months`;
   return (
-    <Panel title="Build A House" subtitle={`On ${m.label.replace(/^A /, 'the ').replace(/, With Planning Permission$/, '')}`}>
+    <Panel title="Build A House" subtitle={`On ${m.kind === 'lot' ? m.label.replace(/^A /, 'the ').replace(/, With Planning Permission$/, '') : m.label}`}>
       <div className="col gap-3">
         <div className="field-row field-row-tight">
-          {lots.length > 1 && (
-            <div className="field">
-              <label htmlFor="build-lot">Lot</label>
-              <select id="build-lot" value={parcel.id} onChange={(e) => { setPick(e.target.value); setDesign(''); }}>
-                {lots.map((p) => <option key={p.id} value={p.id}>{LAND_MARKETS[p.market]!.label}, {areaWords(p.acres, LAND_MARKETS[p.market]!.place)}</option>)}
-              </select>
-            </div>
-          )}
+          {lotPicker}
           <div className="field">
             <label htmlFor="build-design">House</label>
             <select id="build-design" value={design.id} onChange={(e) => setDesign(e.target.value)}>
@@ -294,7 +308,7 @@ function Build() {
         {typeof q !== 'string' && (
           <div className="grid grid-3">
             <Stat label="The House" value={`${design.beds} Bed, ${design.baths} Bath`} note={`${size(design.sqft)}: ${design.basis}`} />
-            <Stat label={place === 'london' ? 'Start' : 'The Permit'} value={place === 'london' ? 'Two Days' : `About ${Math.round(q.permitDays / 30.4)} Months`} note="Permits and fees paid when it’s started" />
+            <Stat label={place === 'london' ? 'Start' : place === 'leinster' ? 'Planning Permission' : 'The Permit'} value={waits} note="Permits and fees paid when it’s started" />
             <Stat label="Building" value={`About ${Math.round(rules.buildMonths)} Months`} note={`Then its ${rules.occupancy}`} />
           </div>
         )}

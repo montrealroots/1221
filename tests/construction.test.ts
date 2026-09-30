@@ -33,7 +33,7 @@ describe('what building costs', () => {
     const q = buildQuote(brooklyn, 'ne-owner', true) as BuildQuote;
     expect(q.contract).toBe(30_857_530);
     expect(q.fees).toEqual([{ label: 'New Building Permit', amount: 103_26 }]);
-    expect(buildQuote(brooklyn, 'ne-median', true)).toMatch(/doesn’t fit: the lot takes 2,137 sq ft/);
+    expect(buildQuote(brooklyn, 'ne-median', true)).toMatch(/doesn’t fit: the land takes 2,137 sq ft/);
     // Under 1,667 sq ft, the $100 least.
     expect(buildFees('nyc', 1_000, 0).lines[0]!.amount).toBe(100_00);
   });
@@ -84,8 +84,44 @@ describe('what building costs', () => {
     expect(q.stages.reduce((a, s) => a + s.days, 0)).toBeCloseTo(10.4 * 30.436875, -1);
   });
 
-  it('builds only on a town lot', () => {
-    expect(buildQuote(lot(/Upstate/, 10), 'ne-owner', true)).toMatch(/only on a town lot/);
+  // Until 2026-09-29 (stage 5b) no house was built on farmland.
+  it('builds on American farmland at the region’s price with the state’s fees, and a town’s permit not kept', () => {
+    const upstate = buildQuote(lot(/Upstate/, 10), 'ne-owner', true) as BuildQuote;
+    expect(upstate.contract).toBe(30_857_530);
+    expect(upstate.fees).toEqual([]);
+    const ct = buildQuote(lot(/Farmland In Connecticut/, 5), 'ne-owner', true) as BuildQuote;
+    expect(ct.fees).toEqual([{ label: 'State Education Fee', amount: 80_23 }]);
+    const ca = buildQuote(lot(/Farmland In California/, 10), 'w-owner', true) as BuildQuote;
+    // $298,202.82 of work: $13 and $4 a $100,000.
+    expect(fee(ca, /Strong-Motion/)).toBe(38_77);
+    expect(fee(ca, /Building Standards/)).toBe(11_93);
+  });
+
+  it('builds in Leinster at SCSI’s €1,998 a square meter, with planning, Kildare’s contribution and the commencement notice, after twelve weeks and fourteen days', () => {
+    const q = buildQuote(lot(/Leinster/, 10), 'ie-scsi', true) as BuildQuote;
+    const m2 = Math.round(114 * SQFT_PER_M2) / SQFT_PER_M2;
+    expect(q.contract).toBe(Math.round(1_998 * m2 * 100));
+    expect(fee(q, /Planning/)).toBe(65_00);
+    expect(fee(q, /Contribution/)).toBe(Math.round(62 * m2 * 100));
+    expect(fee(q, /Commencement/)).toBe(30_00);
+    expect(q.permitDays).toBe(98);
+  });
+
+  it('builds in Ontario on Cavan Monaghan’s permit and charge, the permit in ten business days, and in British Columbia on the Sunshine Coast’s permit, to the reserve’s 500 m²', () => {
+    const on = buildQuote(lot(/Central East Ontario/, 25), 'ne-owner', true) as BuildQuote;
+    expect(on.contract).toBe(520 * 1_721 * 100);
+    expect(fee(on, /Building Permit/)).toBe(2_151_25);
+    expect(fee(on, /Development Charge/)).toBe(8_105_00);
+    expect(on.permitDays).toBe(14);
+    const bc = buildQuote(lot(/South Coast/, 5), 'w-owner', true) as BuildQuote;
+    expect(bc.contract).toBe(495 * 1_686 * 100);
+    // $834,570: $699 and $9.96 a $1,000 over $50,000.
+    expect(fee(bc, /Building Permit/)).toBe(8_513_32);
+    expect(mostFloor('bc', 5)).toBe(5_382);
+  });
+
+  it('builds no isolated house in England’s countryside', () => {
+    expect(buildQuote(lot(/Farmland In England/, 10), 'nds-3b5p', true)).toMatch(/paragraph 84/);
   });
 });
 
@@ -168,6 +204,19 @@ describe('building it', () => {
     expect(levy).toHaveLength(1);
     expect(levy[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, q.spared, 'GBP'));
     expect(home.clawback).toBeUndefined();
+  });
+
+  it('finishes a house on farmland as a home on it, the whole parcel gone into it', () => {
+    const sim = save('us-ny-newyork', 'build-farm');
+    const p = own(sim, /Upstate/, 10, 45_000_00);
+    const q = buildQuote(p, 'ne-owner', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total, 'USD'));
+    const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } });
+    expect(r.ok, r.error).toBe(true);
+    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House On Farmland Upstate')!;
+    expect(home.facts.lot).toBe(435_600);
+    expect(home.price).toBe(inSave(sim, 45_000_00 + q.contract, 'USD'));
   });
 
   it('owes nothing when it’s sold three years after it was finished', () => {

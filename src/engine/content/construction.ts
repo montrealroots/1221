@@ -30,9 +30,29 @@
  * 2.2 months in the Northeast, 1.3 in the West) and the building the rest.
  * London: nine months on site, SLATE's middle of the six to twelve the
  * compilers quote, no statistic being published.
+ *
+ * ON FARMLAND (stage 5b, from 2026-09-29). Upstate New York, rural
+ * Connecticut and California take the region's figures as the towns do, the
+ * state's fees paid and a town's or county's permit, published town by town
+ * and none researched, not kept, said so. Leinster: SCSI's 114 m² house at
+ * its Greater Dublin hard cost, €1,998 a square meter (2023), the only
+ * published Irish figure, for a scheme house; planning permission at €65,
+ * granted after the council's eight weeks and the four in which an appeal
+ * may be made, Kildare's development contribution taken for the province,
+ * and the commencement notice's €30 and its fourteen days. Ontario and
+ * British Columbia publish no house size, so the Census's regions' sizes
+ * stand in, and Altus's 2025 custom house's lowest rate, Toronto's and
+ * Vancouver's, stands in for the country around them: Cavan Monaghan's
+ * permit and rural development charge, the permit issued in the Building
+ * Code's ten business days; the Sunshine Coast's permit by value, a lot on
+ * a private well paying no water charge, and the Agricultural Land Reserve's
+ * 500 m² at most. The time to build in Ireland and Canada is SLATE's twelve
+ * months, no statistic being published. England refuses an isolated house
+ * in the countryside unless a rural worker must live there (NPPF, December
+ * 2024, paragraph 84), which SLATE's actors aren't, so none is built there.
  */
 
-export type BuildPlace = 'nyc' | 'new-haven' | 'los-angeles' | 'london';
+export type BuildPlace = 'nyc' | 'new-haven' | 'los-angeles' | 'london' | 'ny-state' | 'ct-state' | 'ca-state' | 'leinster' | 'ontario' | 'bc';
 
 export const SQFT_PER_M2 = 10.7639104;
 
@@ -42,7 +62,7 @@ const ne = 'the Census’s Northeast';
 const west = 'the Census’s West';
 const nds = (m2: number, beds: number, people: number, baths: number): Design => ({ id: `nds-${beds}b${people}p`, sqft: Math.round(m2 * SQFT_PER_M2), beds, baths, basis: `the nationally described space standard’s ${beds}-bedroom, ${people}-person two-story house, ${m2} m²` });
 
-export const DESIGNS: Readonly<Record<'northeast' | 'west' | 'london', readonly Design[]>> = {
+export const DESIGNS: Readonly<Record<'northeast' | 'west' | 'london' | 'ireland', readonly Design[]>> = {
   northeast: [
     { id: 'ne-owner', sqft: 1_721, beds: 3, baths: 2, basis: `${ne} median owner-built house completed in 2025` },
     { id: 'ne-median', sqft: 2_495, beds: 4, baths: 2.5, basis: `${ne} median house a contractor built on the owner’s land, completed in 2025` },
@@ -54,6 +74,7 @@ export const DESIGNS: Readonly<Record<'northeast' | 'west' | 'london', readonly 
     { id: 'w-average', sqft: 2_751, beds: 4, baths: 3, basis: `${west} average house a contractor built on the owner’s land, completed in 2025` },
   ],
   london: [nds(79, 2, 4, 1), nds(93, 3, 5, 1), nds(106, 4, 6, 2)],
+  ireland: [{ id: 'ie-scsi', sqft: Math.round(114 * SQFT_PER_M2), beds: 3, baths: 2, basis: 'SCSI’s three-bedroom house of 114 m², the only size an Irish body publishes' }],
 };
 
 export interface BuildRules {
@@ -64,9 +85,10 @@ export interface BuildRules {
   unit: 'sqft' | 'm2';
   rateBasis: string;
   /** The most floor a lot takes: of its area, or its coverage and stories. */
-  bulk?: { floorArea: number; basis: string } | { coverage: number; stories: number; basis: string };
-  /** Months waiting for the permit, then building. */
+  bulk?: { floorArea: number; basis: string } | { coverage: number; stories: number; basis: string } | { most: number; basis: string };
+  /** Months waiting for the permit, then building; or the permit's days where a law sets them. */
   permitMonths: number;
+  permitDays?: number;
   buildMonths: number;
   timeBasis: string;
   /** The certificate a house is lived in on. */
@@ -97,7 +119,48 @@ export const BUILD_RULES: Readonly<Record<BuildPlace, BuildRules>> = {
     permitMonths: 0, buildMonths: 9, timeBasis: 'SLATE’s nine months on site, the middle of the six to twelve compilers quote; the plot comes with its permission, and the building notice is two days',
     occupancy: 'Completion Certificate',
   },
+  'ny-state': {
+    designs: DESIGNS.northeast, currency: 'USD', rate: 179.3, unit: 'sqft', rateBasis: `${ne} median contract price a square foot, 2025; the town's permit, set town by town, not kept`,
+    permitMonths: 2.2, buildMonths: 12.6 - 2.2, timeBasis: 'the Middle Atlantic’s 12.6 months from permit to completion (NAHB, 2025), 2.2 of them waiting to start (Census, Northeast, 2022)',
+    occupancy: 'Certificate Of Occupancy',
+  },
+  'ct-state': {
+    designs: DESIGNS.northeast, currency: 'USD', rate: 179.3, unit: 'sqft', rateBasis: `${ne} median contract price a square foot, 2025; the town's permit, set town by town, not kept`,
+    permitMonths: 2.2, buildMonths: 13.5 - 2.2, timeBasis: 'New England’s 13.5 months from permit to completion (NAHB, 2025), 2.2 of them waiting to start (Census, Northeast, 2022)',
+    occupancy: 'Certificate Of Occupancy',
+  },
+  'ca-state': {
+    designs: DESIGNS.west, currency: 'USD', rate: 176.87, unit: 'sqft', rateBasis: `${west} median contract price a square foot, 2025; the county's permit, set county by county, not kept`,
+    permitMonths: 1.3, buildMonths: 10.3 - 1.3, timeBasis: 'the Pacific’s 10.3 months from permit to completion (NAHB, 2025), 1.3 of them waiting to start (Census, West, 2022)',
+    occupancy: 'Certificate Of Occupancy',
+  },
+  leinster: {
+    designs: DESIGNS.ireland, currency: 'EUR', rate: 1_998, unit: 'm2', rateBasis: 'SCSI’s hard cost of a house in the Greater Dublin Area, 2023, for a house in a scheme, the only Irish figure published',
+    permitMonths: 0, permitDays: 8 * 7 + 4 * 7 + 14, buildMonths: 12, timeBasis: 'planning’s eight weeks and four for an appeal, the commencement notice’s fourteen days, then SLATE’s twelve months, no Irish statistic being published',
+    occupancy: 'Certificate Of Compliance On Completion',
+  },
+  ontario: {
+    designs: DESIGNS.northeast, currency: 'CAD', rate: 520, unit: 'sqft', rateBasis: 'Altus’s 2025 custom house around Toronto, its lowest rate, standing in for the country around it; the Census’s Northeast sizes, Canada publishing none',
+    permitMonths: 0, permitDays: 14, buildMonths: 12, timeBasis: 'the Building Code’s ten business days to issue a house’s permit, then SLATE’s twelve months, no Canadian statistic being published',
+    occupancy: 'Occupancy Permit',
+  },
+  bc: {
+    designs: DESIGNS.west, currency: 'CAD', rate: 495, unit: 'sqft', rateBasis: 'Altus’s 2025 custom house around Vancouver, its lowest rate, standing in for the coast; the Census’s West sizes, Canada publishing none',
+    bulk: { most: Math.round(500 * SQFT_PER_M2), basis: 'the Agricultural Land Reserve’s 500 m² for a house on its land' },
+    permitMonths: 2, buildMonths: 12, timeBasis: 'SLATE’s two months for the permit and twelve to build, no Canadian statistic being published',
+    occupancy: 'Occupancy Permit',
+  },
 };
+
+/** Why a place builds no house, where SLATE says so. */
+export const NO_HOUSE: Readonly<Partial<Record<string, string>>> = {
+  england: 'England’s planning policy avoids an isolated house in the countryside unless a rural worker must live there (NPPF, December 2024, paragraph 84), and you aren’t one.',
+};
+
+/** Rural fees by place: Leinster's, Ontario's (Cavan Monaghan's) and British Columbia's (the Sunshine Coast's). */
+export const LEINSTER_FEES = { planning: 65, contributionPerM2: 62, commencement: 30 } as const;
+export const ONTARIO_FEES = { perSqft: 1.25, least: 200, charge: 8_105 } as const;
+export const BC_PERMIT: readonly (readonly [number, number, number, number])[] = [[10_000, 150, 11, 1_000], [50_000, 249, 11.25, 10_000], [3_000_000, 699, 9.96, 50_000], [Infinity, 30_081, 7, 3_000_000]];
 
 /**
  * NAHB's 2024 stages of building a house, in dollars of its average, with
@@ -120,6 +183,12 @@ export const INSPECTIONS: Readonly<Record<BuildPlace, Readonly<Record<number, st
   'los-angeles': { 1: 'Foundation Inspection', 2: 'Framing Inspection', 4: 'Rough Electrical, Plumbing, Mechanical And Insulation Inspections', 6: 'Final Inspection' },
   'new-haven': { 6: 'The Building Official’s Final Inspection' },
   london: { 6: 'Completion Notice To Building Control' },
+  'ny-state': { 1: 'Footing And Foundation Inspection', 2: 'Framing Inspection', 6: 'Final Inspection' },
+  'ct-state': { 6: 'The Building Official’s Final Inspection' },
+  'ca-state': { 1: 'Foundation Inspection', 2: 'Framing Inspection', 6: 'Final Inspection' },
+  leinster: { 6: 'The Assigned Certifier’s Final Inspection' },
+  ontario: { 1: 'Footings And Foundation Inspections', 2: 'Framing Inspection', 4: 'Insulation And Vapor Barrier Inspection', 6: 'Occupancy Inspection' },
+  bc: { 1: 'Siting, Footing And Forms Inspection', 2: 'Framing Inspection', 4: 'Insulation And Vapor Barrier Inspection', 6: 'Final Inspection' },
 };
 
 /**
@@ -173,4 +242,4 @@ export const NEW_HAVEN_FEES = { first: 25, perThousand: 15, processing: 10, educ
 /** London's building control charge for a new house: Hackney's £1,018.50 and VAT, read secondhand and taken for all three boroughs. */
 export const LONDON_BUILDING_CONTROL = { fee: 1_018.5, vat: 0.2 } as const;
 
-export const BUILD_SOURCE = 'docs/research/world/research-construction.json: Census Survey of Construction 2025; NAHB Construction Cost Survey 2024 and its 2025 build times; NYC Admin Code 28-112.2; LAMC 91.107 and LADBS; California SMIP and Health and Safety Code 18931.6; New Haven and CGS 29-252a; the nationally described space standard; Planning Portal; Hackney, Croydon, Havering and the Mayor of London’s CIL schedules';
+export const BUILD_SOURCE = 'docs/research/world/research-construction.json: Census Survey of Construction 2025; SCSI 2023; Altus 2025; Irish Planning and Development Regulations and Kildare’s scheme; Cavan Monaghan by-laws; the Sunshine Coast Regional District’s bylaw 779; the Agricultural Land Commission; the NPPF, December 2024; NAHB Construction Cost Survey 2024 and its 2025 build times; NYC Admin Code 28-112.2; LAMC 91.107 and LADBS; California SMIP and Health and Safety Code 18931.6; New Haven and CGS 29-252a; the nationally described space standard; Planning Portal; Hackney, Croydon, Havering and the Mayor of London’s CIL schedules';

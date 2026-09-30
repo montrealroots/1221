@@ -30,7 +30,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 2 | Journeys: a trip of legs (walk, taxi, rideshare, bus, train, flight), fares, durations on the calendar, time zones, the player's location moving only on arrival; airports; booked accommodation at the far end; the return | 1 | Done 2026-09-29 (2a to 2f); this row said "Not begun" until 2026-09-29, after it was |
 | 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3d) |
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
-| 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | 5a done 2026-09-29; rural building, renovation and extension open, below |
+| 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | 5a and 5b done 2026-09-29; renovation and extension open, below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | Not begun |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Not begun |
@@ -164,9 +164,21 @@ Evidence: `tests/land.test.ts` (14); 20 mutations, all killed. Two first survive
   - London: the building control charge with VAT (Hackney's, secondhand, for all three boroughs), and the borough's and the Mayor's Community Infrastructure Levy. Building to live in claims the self-build exemption, and the levy is owed if the house is sold or let within three years.
 - **Stages and time**: NAHB's 2024 seven stages, with the permit, impact and water fees taken out of site work, each billed as it's done. A bill the bank can't pay stops the work until Pay The Contractor. The permit's wait is the Census's latest by region; the building time is the rest of NAHB's 2025 permit-to-completion months by division. London's nine months on site is SLATE's, the middle of the compilers' six to twelve. Each place names its inspections at a stage's end, and the house is finished with its Certificate Of Occupancy, or London's completion certificate.
 - **Finished**: the house is a home owned (`ownBuilt` in `homes.ts`), worth what the land and the building cost and moving with the town's market from then; its fees are its closing costs, and the Homes screen moves one in.
-- Open, and why: building on farmland (England's £610 planning fee, Ireland's €65 and Kildare's contributions, Ontario's and British Columbia's permits and charges are researched) and renovation and extension are the next module; no authority publishes a rate of delays, overruns or change orders for a house, or a failed inspection's, so none is drawn; a construction loan, a structural warranty and builder's risk insurance aren't kept.
+- Open, and why: building on farmland was the next module, and 5b built it; renovation and extension are open; no authority publishes a rate of delays, overruns or change orders for a house, or a failed inspection's, so none is drawn; a construction loan, a structural warranty and builder's risk insurance aren't kept.
 
 Evidence: `tests/construction.test.ts` (11); 18 mutations, all killed. Three first survived, each a rule no test reached: New York's $100 least, the refusal of a start the bank can't cover, and the levy's three years running out. A test now reaches each.
+
+#### Stage 5b: a house on farmland (done 2026-09-29)
+- **America**: upstate New York, rural Connecticut and California take the region's sizes, prices and times as the towns do. The state's fees are charged: Connecticut's education fee, and California's strong-motion and building standards fees on the work's value. A town's or county's permit is published town by town, none was researched, and it isn't kept, said so.
+- **Leinster**: SCSI's three-bedroom house of 114 m², the only size an Irish body publishes, at its Greater Dublin hard cost of €1,998 a square meter (2023), a scheme house's, standing in. Charges: planning at €65, Kildare's development contribution of €62 a square meter (read from its draft scheme and taken for the province), and the €30 commencement notice. Work starts after the council's eight weeks, the four in which an appeal may be made, and the notice's fourteen days.
+- **Ontario and British Columbia**: no Canadian house size is published, so the Census's regions' sizes stand in, at Altus's 2025 lowest custom-house rate around Toronto (C$520) and Vancouver (C$495).
+  - Ontario: Cavan Monaghan's permit at C$1.25 a square foot and its rural development charge of C$8,105. The Building Code gives ten business days to issue a house's permit.
+  - British Columbia: the Sunshine Coast's permit by value (bylaw 779, 2025). A lot on a private well pays no water charge. A house on the Agricultural Land Reserve is capped at 500 m² without applying to the Commission.
+- **England**: no isolated house in the countryside unless a rural worker must live there (NPPF, December 2024, paragraph 84). SLATE's actors aren't rural workers, and the Build panel says so.
+- SLATE's estimates, and said so: twelve months to build in Ireland and Canada; two months for a British Columbia permit.
+- Finished, the house is a home on the farmland, the whole parcel gone into it.
+
+Evidence: `tests/construction.test.ts` (15); 8 mutations, all killed.
 
 ### Stages 6-8 (to be detailed in turn)
 
