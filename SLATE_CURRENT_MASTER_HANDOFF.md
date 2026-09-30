@@ -28,10 +28,10 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 - The TV, console and speaker; the alarm; winter tires; foreign buyers' taxes; the land loan; construction's retention and certificate of occupancy (`27f8fd33` to `f58756ea`).
 - Canada as an acting market (`4bc6464e`).
 - Locks, lights and timers against burglary (`0a7c05a1`).
-- Electric cars with home charging, and window tint, in the commit after it.
+- Electric cars with home charging, and window tint (`254b249f`); Britain's insurance loadings for declared modifications, and a respray, after it.
 
 **Next, in order:**
-- **Customization still open:** modifications and insurers' loadings (cinch's secondary figures); California's smog check failing a tune.
+- **Customization still open:** a remap, suspension, an exhaust, a body kit and wheels, once priced in Britain where their loadings are; California's smog check (per-station prices) and its ECU check; New York's loud-exhaust fine.
 - **Land:** commercial land, waterfront, islands, utilities and easements; Mexico's permit for foreign buyers.
 - Residence documents and immigration: Ireland's IRP (€300), PR cards and Mexico's residence cards.
 - **Played lives**, one at a time.

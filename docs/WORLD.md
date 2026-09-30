@@ -427,6 +427,19 @@ Researched in `research-ev-tint-security.json`, `research-electricity-charging.j
 
 Evidence: `tests/tint.test.ts` (5) and `tests/tint-road.test.ts` (1). 9 mutations, all killed once three tests were added.
 
+#### Stage 3n: modifications and the insurer (done 2026-09-30)
+
+Researched in `research-custom-effects.json` and `research-customization.json`.
+
+- **Britain's loadings** (`systems/mods.ts`): a declared modification raises the premium by what a July 2025 quote study across ten British cities measured, each alone. Tinted windows add 12.1% and a non-standard respray 4.52%. Two together multiply, which is SLATE's reading. Owners declare what they fit, as the Consumer Insurance Act asks.
+- **A respray** (`vehicle.respray`), in Britain: a full car in a solid color, £3,000, the middle of a body shop guide's £2,000 to £4,000.
+- **Not sold yet:**
+  - An engine remap, suspension, an exhaust, a body kit (each 15.93%) and alloy wheels (0.79%). Their loadings are measured in Britain, but no price was read there.
+  - California's ECU check at the smog test, which fails a tune the CARB hasn't approved. SLATE keeps no California smog check, since each station sets its price.
+  - New York's SLEEP Act fine for a loud exhaust, up to $1,000. No rate of enforcement was found.
+
+Evidence: `tests/mods.test.ts` (2). 4 mutations, all killed.
+
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.

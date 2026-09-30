@@ -30,6 +30,7 @@ import { RIDE_MODELS } from '../content/ridecatalog';
 import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
 import { homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
+import { modLoading, registerMods } from './mods';
 import { ATV_FEES, ATV_INSURANCE } from '../content/rides';
 import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
@@ -53,6 +54,8 @@ export interface OwnedVehicle {
   id: string;
   /** A shop's window tint (`systems/tint.ts`, from 2026-09-30). */
   tint?: TintKind;
+  /** A full respray, declared to the insurer (`systems/mods.ts`, from 2026-09-30). */
+  resprayed?: boolean;
   modelId: string;
   /** When it was bought, and how old it was then: a used one's years. */
   boughtAt: Instant;
@@ -561,6 +564,7 @@ export function registerVehicles(sim: Simulation): void {
 
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
@@ -603,7 +607,7 @@ export function registerVehicles(sim: Simulation): void {
     // Insurance, the month's share of the year.
     const ins = monthlyInsurance(v.jurisdiction, v.coverage, m);
     if (typeof ins === 'number' && ins > 0 && !missing) {
-      const due = Math.round(inSave(s, ins, insuranceCurrency(v.jurisdiction, m)) * tireInsuranceFactor(v));
+      const due = Math.round(inSave(s, ins, insuranceCurrency(v.jurisdiction, m)) * tireInsuranceFactor(v) * modLoading(v));
       if (!payFromBank(s, person, due, `${kindOf(m) === 'car' ? 'Car insurance' : 'Insurance'}, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, due, kindOf(m) === 'car' ? 'Car insurance' : 'Vehicle insurance', 'vehicle');
     }
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
