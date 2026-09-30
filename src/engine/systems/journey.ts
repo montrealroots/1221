@@ -18,6 +18,8 @@
  * figures where \`content/air.ts\` has them, and say so where they're SLATE's.
  */
 
+import { drawRental } from './dwelling';
+import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
 import { planRentalDrive, rentalDriven } from './rentals';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -77,6 +79,8 @@ export interface Journey {
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
   hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant };
+  /** A holiday let there instead (`content/lets.ts`, from 2026-09-29): its nights, price and the service fee in it. */
+  let?: { nights: number; price: Money; fee: Money; basis: string; checkOutAt: Instant };
   /** Business or first, where not economy (from 2026-09-29). */
   cabin?: Cabin;
   /** By train, the route's id; by air where not said (from 2026-09-29). */
@@ -328,7 +332,49 @@ export function startCareerJourney(sim: Simulation, person: Person, toCity: stri
   return j;
 }
 
+/**
+ * A holiday let for a journey's nights (`content/lets.ts`): AirDNA's rate,
+ * Airbnb's service fee and the town's taxes, or why none is kept or lawful.
+ */
+export function letQuote(sim: Simulation, cityId: string, nights: number): { price: Money; fee: Money; basis: string } | string {
+  const t = LETS[cityId];
+  if (!t) return 'SLATE keeps no holiday lets there yet.';
+  if (nights <= 0) return 'A let is for nights there.';
+  if (t.minNights && nights < t.minNights) return `New York City’s Local Law 18 bars a whole home let for fewer than ${t.minNights} nights.`;
+  if (t.maxNights && nights > t.maxNights) return `A London home is let no more than ${t.maxNights} nights a year.`;
+  const cur = saveCurrency(sim.universe);
+  const usd = (cents: Money) => (cur === 'USD' ? cents : exchange(cents, 'USD', cur) ?? cents);
+  const rent = usd(Math.round(t.adrUsd * 100) * nights);
+  const fee = Math.round(rent * LET_FEE);
+  const price = rent + fee + Math.round(rent * t.taxRate) + usd(Math.round((t.perNightUsd ?? 0) * 100) * nights);
+  return { price, fee, basis: `AirDNA’s average night there, Airbnb’s ${Math.round(LET_FEE * 1000) / 10}% service fee, and ${t.basis}.` };
+}
+
+/** What a let canceled brings back: all of it five days or more before arrival, then half the nights after the first, the fee kept. */
+export function letRefund(l: NonNullable<Journey['let']>, arriveAt: Instant, at: Instant): Money {
+  if (arriveAt - at >= LET_FREE_DAYS * MS_DAY) return l.price;
+  const nightsCost = l.price - l.fee;
+  return l.nights > 1 ? Math.round(nightsCost * (l.nights - 1) / l.nights / 2) : 0;
+}
+
 export function registerJourneys(sim: Simulation): void {
+  sim.onCommand<{ journeyId: string }, { price: Money; hotelBack: Money }>('travel.stay_let', (p, { sim: s }) => {
+    const person = s.player;
+    const j = journeysOf(person).find((x) => x.id === p?.journeyId);
+    if (!j || j.status !== 'booked') throw new CommandError('That isn’t a journey you have booked.');
+    if (!j.hotel) throw new CommandError('A let takes the place of the journey’s hotel.');
+    if (j.arriveAt - s.now < HOTEL_FREE_UNTIL_HOURS * MS_HOUR) throw new CommandError('Too close to arrival to cancel the hotel free.');
+    const q = letQuote(s, j.toCity, j.hotel.nights);
+    if (typeof q === 'string') throw new CommandError(q);
+    const hotelBack = j.hotel.price;
+    if (q.price > hotelBack && !payFromBank(s, person, q.price - hotelBack, `A holiday let in ${CITIES.require(j.toCity).name}, the hotel canceled`, 'travel')) throw new CommandError('That’s more than the bank can cover.');
+    if (q.price < hotelBack) s.post({ memo: 'A hotel canceled for a holiday let, the difference back', category: 'travel', postings: refundPostings(s, person, hotelBack - q.price) });
+    j.let = { nights: j.hotel.nights, price: q.price, fee: q.fee, basis: q.basis, checkOutAt: j.hotel.checkOutAt };
+    j.total += q.price - hotelBack;
+    delete j.hotel;
+    return { price: q.price, hotelBack };
+  });
+
   sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
@@ -387,7 +433,7 @@ export function registerJourneys(sim: Simulation): void {
     const free = s.now - first.bookedAt <= 24 * MS_HOUR && first.leaveAt - first.bookedAt >= 7 * MS_DAY;
     let refund = 0;
     for (const h of halves) {
-      const hotelBack = h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0;
+      const hotelBack = (h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0) + (h.let ? letRefund(h.let, h.arriveAt, s.now) : 0);
       const route = railRouteById(h.by);
       // A drive not yet driven has burned nothing: all of its costs come back.
       if (h.by?.startsWith('car:') || h.by === 'rental') refund += total(h.legs) + hotelBack;
@@ -453,7 +499,10 @@ export function registerJourneys(sim: Simulation): void {
     if (person.home?.cityId === j.toCity) delete person.stay;
     else if (j.onArrival) person.stay = j.onArrival;
     else if (ownPlaceIn(person, j.toCity)) person.stay = { kind: 'own', cityId: j.toCity };
-    else if (j.hotel) {
+    else if (j.let) {
+      person.stay = { kind: 'let', cityId: j.toCity, unit: drawRental(s, person, j.toCity, false, s.now) };
+      s.schedule({ at: j.let.checkOutAt, kind: CHECKOUT_KIND, label: 'Holiday Let Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
+    } else if (j.hotel) {
       person.stay = { kind: 'hotel', cityId: j.toCity };
       s.schedule({ at: j.hotel.checkOutAt, kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
     }
@@ -483,7 +532,9 @@ export function trainRefund(sim: Simulation, j: Journey, route: import('../conte
 
 /** Check-out: gone from the town, nothing; still there and not home, another night at the rate, or a friend's sofa if the bank can't pay for it. */
 function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: string): void {
-  if (person.currentLocationId !== cityId || person.stay?.kind !== 'hotel' || person.home?.cityId === cityId) return;
+  if (person.currentLocationId !== cityId || (person.stay?.kind !== 'hotel' && person.stay?.kind !== 'let') || person.home?.cityId === cityId) return;
+  // A let's last morning with no way out yet: a hotel from here, as a hotel's guest stays on.
+  if (person.stay.kind === 'let') person.stay = { kind: 'hotel', cityId };
   // Another journey out before the next check-out takes them; the night before it is still the hotel's.
   const night = stayPrice(sim, cityId, 1);
   const mine = person.id === sim.universe.playerId;

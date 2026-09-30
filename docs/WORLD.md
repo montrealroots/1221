@@ -33,7 +33,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
-| 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | 8a done 2026-09-29; holiday lets open, below |
+| 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b); open items below |
 
 ## Acceptance criteria
 
@@ -240,9 +240,26 @@ Evidence: `tests/furniture.test.ts` (5); 8 mutations, all killed. A home bought 
   - VAT is in the British and Irish rates.
 - Refused to someone under the company's age, with a license held too short a time, or who may not drive there.
 - The car is driven by road from where it is (Travel's By), fuel at AAA's average a mile, with the crash and ticket risk of any drive. A crash that hurts charges the company's excess where one is published.
-- Open, and why: a one-way drop fee and an airport concession charge no company prints; damage in America and Canada, where a renter's own insurance or card usually covers it; holiday lets, the next module (researched: Airbnb's fees and cancellation tiers, New York's Local Law 18, London's 90 nights, and the other towns' rules and taxes).
+- Open, and why: a one-way drop fee and an airport concession charge no company prints; damage in America and Canada, where a renter's own insurance or card usually covers it; holiday lets were the next module, and 8b built them.
 
 Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a crash isn't mutation-tested: a crash is a draw, and the test can't make one without stubbing the injury system.
+
+#### Stage 8b: a holiday let instead of a hotel (done 2026-09-29)
+- Stay In A Holiday Let swaps a booked journey's hotel for a let, while the hotel can still be canceled free (`content/lets.ts`, `letQuote` in `systems/journey.ts`).
+- A night is AirDNA's average for the town, a compiler's figure read from a search, the only one published, in dollars. On it: Airbnb's guest service fee at the low end of its published 14.1% to 16.5%, and the town's taxes on a short stay.
+  - New York City's occupancy tax, sales tax and unit fee.
+  - Connecticut's 15%.
+  - Los Angeles's 14%, read secondhand.
+  - Toronto's 6%.
+  - British Columbia's PST and Vancouver's MRDT.
+  - Mexico City's 5% and IVA.
+  - None in London or Dublin.
+- The law binds the booking: New York City's Local Law 18 bars a whole home for fewer than 30 nights, and London a home for more than 90 a year.
+- Canceled, Airbnb's Moderate policy: all of it back until five days before, then half the nights after the first, the fee kept.
+- Lived in, a let is a home of the town's kind, its fixtures drawn as the town's rentals are, and its kitchen cooked in, where a hotel's guest eats out. On its last morning, still there, a hotel takes over.
+- Open, and why: Edinburgh's and Belfast's lets (no nightly rate researched); a damage claim against a guest (Airbnb's 14-day window is researched, but SLATE draws no damage a guest does).
+
+Evidence: `tests/lets.test.ts` (5); 8 mutations, all killed.
 
 ### Stage 7 (to be detailed in turn)
 

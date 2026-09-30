@@ -15,7 +15,7 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
-import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, partnerOf, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, journeysOf, letQuote, nightsBetween, partnerOf, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
@@ -204,12 +204,12 @@ export function TravelWorkspace() {
                 <tbody>
                   {journeys.map((j) => (
                     <tr key={j.id}>
-                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, By ${railRouteById(j.by)?.service ?? 'Train'}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}</td>
+                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, By ${railRouteById(j.by)?.service ?? 'Train'}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}{j.let ? `, ${j.let.nights} ${j.let.nights === 1 ? 'night' : 'nights'} In A Let` : ''}</td>
                       <td>{formatDateTime(j.leaveAt, CITIES.require(j.fromCity).timeZone)}</td>
                       <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
                       <td className="mono">{money(j.total)}</td>
                       <td className="small">{STATUS_WORD[j.status]}{j.why ? `: ${j.why}` : j.rebooked ? ', Rebooked' : j.lateMinutes ? `, ${j.lateMinutes} Minutes Late` : ''}</td>
-                      <td><div className="row gap-2">{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && (
+                      <td><div className="row gap-2">{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && (
                         <Gated feature="travel.cancel" className="btn btn-sm btn-ghost" onClick={() => {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
@@ -244,5 +244,19 @@ function RentACar({ j }: { j: Journey }) {
       const a = run<{ paid: number }>('travel.rent_car', { journeyId: j.id });
       if (a.ok) toast(`A car rented for ${formatMoney(a.value!.paid, cur)}, prepaid.`, 'positive');
     }}>{typeof q === 'string' ? 'Rent A Car There' : `Rent A Car There, ${formatMoney(q.total, cur, { cents: false })}`}</Gated>
+  );
+}
+
+/** A holiday let in place of a booked journey's hotel (`content/lets.ts`): its price, and why not where it can't be had. */
+function StayInALet({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  if (!j.hotel) return null;
+  const q = letQuote(sim, j.toCity, j.hotel.nights);
+  const cur = saveCurrency(sim.universe);
+  return (
+    <Gated feature="travel.stay_let" className="btn btn-sm btn-ghost" disabled={typeof q === 'string'} title={typeof q === 'string' ? q : q.basis} onClick={() => {
+      const a = run<{ price: number }>('travel.stay_let', { journeyId: j.id });
+      if (a.ok) toast(`A holiday let instead of the hotel, ${formatMoney(a.value!.price, cur)}.`, 'positive');
+    }}>{typeof q === 'string' ? 'Stay In A Holiday Let' : `Stay In A Holiday Let, ${formatMoney(q.price, cur, { cents: false })}`}</Gated>
   );
 }

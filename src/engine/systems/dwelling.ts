@@ -73,7 +73,7 @@ export interface Place {
 }
 
 /** Where somebody stays away from home on a job. */
-export interface Stay { kind: 'hotel' | 'sublet' | 'sofa' | 'own'; cityId: string; unit?: RentedUnit }
+export interface Stay { kind: 'hotel' | 'sublet' | 'sofa' | 'own' | 'let'; cityId: string; unit?: RentedUnit }
 
 /** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */
 const HOTEL_FIXTURES: Fixtures = { bathtub: true, dishwasher: false, laundry: 'none', cooling: 'central', outdoor: 'none', gym: 'building' };
@@ -117,6 +117,8 @@ export function stayPlace(sim: Simulation, person: Person): Place {
   const own = stay?.kind === 'own' ? (person.homes ?? []).find((h) => h.cityId === stay.cityId) : undefined;
   if (own) return { type: own.facts.type, size: own.facts.size, fixtures: fixturesOf(sim, person, own.cityId, own.facts, own.id), keeps: false, shared: false, owned: true, cooks: true };
   if (stay?.kind === 'sublet' && stay.unit) return { type: stay.unit.type, size: stay.unit.size, fixtures: stay.unit.fixtures, keeps: false, shared: true, owned: false, cooks: true };
+  // A holiday let: a home of the town's own, its kitchen cooked in (`content/lets.ts`, from 2026-09-29).
+  if (stay?.kind === 'let' && stay.unit) return { type: stay.unit.type, size: stay.unit.size, fixtures: stay.unit.fixtures, keeps: false, shared: false, owned: false, cooks: true };
   if (stay?.kind === 'sofa') return { type: 'condo', size: 700, fixtures: SOFA_FIXTURES, keeps: false, shared: true, owned: false, cooks: true };
   return { type: 'condo', size: 350, fixtures: HOTEL_FIXTURES, keeps: false, shared: false, owned: false, cooks: false };
 }
