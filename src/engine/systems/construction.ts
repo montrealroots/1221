@@ -30,6 +30,8 @@ import { ownBuilt } from './homes';
 import { inTheBank, payFromBank } from './household';
 
 export const BUILD_STAGE_KIND = 'build.stage';
+/** A built house's one feature kept: its yard, the lot around it (`homes.ts`'s ids, not words on a screen). */
+const YARD = ['yard'] as const;
 const MONTH_DAYS = 30.436875;
 const YEAR_MS = 365.2425 * MS_DAY;
 
@@ -181,7 +183,7 @@ function finish(sim: Simulation, person: Person, b: Build): void {
   const address = `Your House ${m.label.replace(/^A (Lot|Plot) /, '').replace(/, With Planning Permission$/, '')}`;
   const owned = ownBuilt(sim, person, {
     cityId: b.cityId,
-    facts: { type: 'house', address, beds: design.beds, baths: design.baths, size: design.sqft, lot: Math.round(p.acres * 43_560), built: year, features: ['yard'], parts, hoaUsd: 0 },
+    facts: { type: 'house', address, beds: design.beds, baths: design.baths, size: design.sqft, lot: Math.round(p.acres * 43_560), built: year, features: [...YARD], parts, hoaUsd: 0 },
     price: inSave(sim, p.paid + b.contract, m.currency),
     closing: inSave(sim, b.fees, m.currency),
     ...(b.spared > 0 ? { clawback: { until: sim.now + CIL_CLAWBACK_YEARS * YEAR_MS, amount: inSave(sim, b.spared, m.currency), memo: 'Community Infrastructure Levy, the self-build exemption lost' } } : {}),

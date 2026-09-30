@@ -11,7 +11,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { homeOf } from '@/engine/systems/earnings';
-import { landBuyingOf, landQuote, landValue, listingsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, type LandAnswer } from '@/engine/systems/land';
+import { buildingOn, landBuyingOf, landQuote, landValue, listingsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, type LandAnswer } from '@/engine/systems/land';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_SOURCE, LAND_TAX, areaWords } from '@/engine/content/land';
 import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES } from '@/engine/content/construction';
 import { buildPlaceOf, buildQuote, buildRefusal } from '@/engine/systems/construction';
@@ -60,18 +60,19 @@ function YourLand() {
                 const m = LAND_MARKETS[p.market]!;
                 const money = (c: number) => formatMoney(c, m.currency, { cents: false });
                 const worth = landValue(m, p.acres, sim.now);
+                const built = buildingOn(person, p);
                 const twin = owned.find((o) => o.id !== p.id && !o.selling && LAND_MARKETS[o.market]!.label === m.label);
                 return (
                   <tr key={p.id}>
                     <td>{m.label}</td>
                     <td>{areaWords(p.acres, m.place)}</td>
                     <td className="num mono">{money(worth)}</td>
-                    <td className="small">{p.selling ? `For Sale, Closing ${formatDate(p.selling.closesAt, sim.zone)}` : `Since ${formatDate(p.boughtAt, sim.zone)}`}</td>
+                    <td className="small">{built ? 'A House Going Up' : p.selling ? `For Sale, Closing ${formatDate(p.selling.closesAt, sim.zone)}` : `Since ${formatDate(p.boughtAt, sim.zone)}`}</td>
                     <td>
                       <div className="row gap-2">
-                        {!p.selling && <Gated feature="land.sell" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ closesAt: number }>('land.sell', { parcelId: p.id }); if (a.ok) toast(`For sale: it closes ${formatDate(a.value!.closesAt, sim.zone)}, for ${money(saleProceeds(m, worth).net)} after the seller’s taxes.`, 'positive'); }}>Put It Up For Sale</Gated>}
-                        {!p.selling && <Gated feature="land.split" className="btn btn-sm btn-ghost" disabled={Boolean(splitRefusal(p, person))} title={splitRefusal(p, person)} onClick={() => { if (run('land.split', { parcelId: p.id }).ok) toast('Split in two.', 'positive'); }}>Split It</Gated>}
-                        {!p.selling && twin && <Gated feature="land.combine" className="btn btn-sm btn-ghost" onClick={() => { if (run('land.combine', { a: p.id, b: twin.id }).ok) toast('Combined into one.', 'positive'); }}>Combine Them</Gated>}
+                        {!p.selling && !built && <Gated feature="land.sell" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ closesAt: number }>('land.sell', { parcelId: p.id }); if (a.ok) toast(`For sale: it closes ${formatDate(a.value!.closesAt, sim.zone)}, for ${money(saleProceeds(m, worth).net)} after the seller’s taxes.`, 'positive'); }}>Put It Up For Sale</Gated>}
+                        {!p.selling && !built && <Gated feature="land.split" className="btn btn-sm btn-ghost" disabled={Boolean(splitRefusal(p, person))} title={splitRefusal(p, person)} onClick={() => { if (run('land.split', { parcelId: p.id }).ok) toast('Split in two.', 'positive'); }}>Split It</Gated>}
+                        {!p.selling && !built && twin && !buildingOn(person, twin) && <Gated feature="land.combine" className="btn btn-sm btn-ghost" onClick={() => { if (run('land.combine', { a: p.id, b: twin.id }).ok) toast('Combined into one.', 'positive'); }}>Combine Them</Gated>}
                       </div>
                     </td>
                   </tr>
