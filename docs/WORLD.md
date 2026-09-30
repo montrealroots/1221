@@ -59,7 +59,7 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
 - **Assistance where a person lives (done 2026-10-01, `systems/assistance.ts`, researched in `docs/research/world/research-welfare.json` and `research-documents-safetynet.json`).** Found by a Toronto life that starved at 35, claiming nothing.
   - **Ontario Works:** CAD 343 and the actual rent to CAD 390 a month. Liquid assets to CAD 10,000. Earnings come off whole for three months, then CAD 200 and half the rest are kept. Decided in four working days.
   - **BC Income Assistance:** CAD 560 and the rent to CAD 500. Assets to CAD 5,000. CAD 600 of earnings kept after the first month. A three-week work search first.
-  - **SNAP in New York, California and Connecticut:** the USDA's maximum (98, then  from 2026-10-01) less 30% of net income. It goes onto an EBT card that pays for groceries first and nothing else. An adult of 18 to 64 without 80 hours of work a month is paid three months in three years. The gross and net limits never bind for a single adult without the shelter deduction, which isn't kept.
+  - **SNAP in New York, California and Connecticut:** the USDA's maximum ($298, then $306 from 2026-10-01) less 30% of net income. It goes onto an EBT card that pays for groceries first and nothing else. An adult of 18 to 64 without 80 hours of work a month is paid three months in three years. The gross and net limits never bind for a single adult without the shelter deduction, which isn't kept.
   - **Not kept:** Canada's Employment Insurance, because a performer is self-employed under the Status of the Artist Act; and a non-citizen's eligibility, which turns on status SLATE doesn't keep.
   - **Tests:** `tests/assistance.test.ts` (5).
 
