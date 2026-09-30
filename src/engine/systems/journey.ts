@@ -584,6 +584,12 @@ export function trainRefund(sim: Simulation, j: Journey, route: import('../conte
 /** Check-out: gone from the town, nothing; still there and not home, another night at the rate, or a friend's sofa if the bank can't pay for it. */
 function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: string): void {
   if (person.currentLocationId !== cityId || (person.stay?.kind !== 'hotel' && person.stay?.kind !== 'let') || person.home?.cityId === cityId) return;
+  // Leaving town that day, checked out and on their way: no night more. Until 2026-09-30 a way home leaving the
+  // morning of check-out, or in the afternoon after it, was charged another night, every trip.
+  const zone = CITIES.require(cityId).timeZone;
+  const today = zonedParts(sim.now, zone);
+  const leavesToday = journeysOf(person).some((j) => (j.status === 'booked' || j.status === 'underway') && j.fromCity === cityId && (() => { const p = zonedParts(j.leaveAt, zone); return p.year === today.year && p.month === today.month && p.day === today.day; })());
+  if (leavesToday) return;
   // A let's last morning with no way out yet: a hotel from here, as a hotel's guest stays on.
   if (person.stay.kind === 'let') person.stay = { kind: 'hotel', cityId };
   // Another journey out before the next check-out takes them; the night before it is still the hotel's.

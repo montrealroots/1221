@@ -246,6 +246,20 @@ describe('a round trip', () => {
     expect(out.hotel!.price).toBe(stayPrice(sim, 'us-ca-losangeles', 4)!.price);
   });
 
+  it('charges no night more on the day it goes home, whether it leaves before check-out or after', () => {
+    for (const slot of [1, 2]) {
+      const sim = life(`round-night-${slot}`);
+      const day = saturday(sim, 10);
+      const a = book(sim, { toCity: 'us-ca-losangeles', day, slot: 1, returnDay: day + 4 * MS_DAY, returnSlot: slot });
+      expect(a.ok, a.error).toBe(true);
+      const back = journey(sim, a.value!.returnId!);
+      liveTo(sim, back.arriveAt + 6 * MS_HOUR);
+      expect(back.status).toBe('arrived');
+      // Until 2026-09-30 every trip home was charged one.
+      expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Another night in a hotel'))).toHaveLength(0);
+    }
+  });
+
   it('is canceled whole, either half, and refunded whole within the DOT’s day', () => {
     const sim = life('round-cancel');
     const day = saturday(sim, 10);
