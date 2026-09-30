@@ -1,0 +1,666 @@
+{
+  "_meta": {
+    "topic": "Construction choices and costs for a life simulation: professionals, cost by specification, materials, site work, demolition, multi-unit and condo creation, delays and change orders, contracts and payment schedules, occupancy certificates",
+    "markets": ["US-NY", "US-CT", "US-CA", "CA-ON", "CA-BC", "MX-CDMX", "UK-England", "UK-London", "IE"],
+    "compiledOn": "2026-09-30",
+    "method": "Web search plus direct reads of primary documents. Where a PDF was read in full (pdftotext), confirmed=true. Where a figure came only from a search-engine summary or a secondary site, confirmed=false and the note says so.",
+    "sourceTypeKey": {
+      "government": "statute, regulation, official fee schedule or government statistics",
+      "professionalBody": "trade association, chamber or professional institute",
+      "costConsultant": "quantity surveyor / cost consultancy publication (RLB, Altus)",
+      "industrySurvey": "industry survey by a publisher (Zonda Cost vs Value, KPMG, McKinsey)",
+      "lawFirm": "law-firm client alert summarizing a statute",
+      "secondary": "aggregator or contractor website; used only when no primary figure was found"
+    },
+    "currency": "Figures in the currency of the jurisdiction: USD, CAD, MXN, GBP, EUR.",
+    "rule": "Nulls where nothing is published. Nothing invented. Ranges from secondary sites are marked confirmed=false."
+  },
+
+  "professionals": {
+    "architects": {
+      "US": {
+        "feeAsPercentOfConstruction": {
+          "value": null,
+          "note": "AIA publishes no fee schedule (antitrust). AIA B101-2017 leaves compensation blank for the parties to fill. Secondary sources commonly quote 8-15% of construction cost for full-service custom residential, 15-20% for renovations; that range is NOT an AIA figure.",
+          "secondaryRange": {"low": 0.08, "high": 0.15, "confirmed": false, "url": "https://www.archtoolbox.com/calculate-architectural-fee/", "publisher": "Archtoolbox (secondary)", "sourceType": "secondary"},
+          "confirmed": false
+        },
+        "billingMethodShare": {
+          "value": "Percentage-of-construction-cost method used for about 12% of billings in 2023; stipulated sum about 33% of billings on residential/institutional work",
+          "url": "https://archinect.com/news/article/150462162/how-do-most-architects-calculate-fees",
+          "publisher": "Archinect reporting AIA Firm Survey data",
+          "date": "2024",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "architectMedianPay": {
+          "value": {"annualUSD": 99280, "hourlyUSD": 47.73},
+          "url": "https://www.bls.gov/ooh/architecture-and-engineering/architects.htm",
+          "publisher": "US Bureau of Labor Statistics (OEWS)",
+          "date": "May 2025 data",
+          "sourceType": "government",
+          "confirmed": false,
+          "note": "From search summary of the BLS page; wage, not a client billing rate."
+        }
+      },
+      "UK": {
+        "feeScale": {
+          "value": null,
+          "note": "RIBA fee scales were mandatory for over a century, 'recommended' from 1982, 'indicative' from 1992 and abolished in 2009 after Office of Fair Trading pressure; the Competition Act 1998 bars published scales. RIBA now offers a resource-based Fee Calculator for Chartered Practices, RIBA Business Benchmarking (charge-out rates, salaries) and the 'Good Practice Guide: Fees' (2021).",
+          "url": "https://www.riba.org/work/insights-and-resources/professional-features/architects-and-setting-fees/",
+          "publisher": "Royal Institute of British Architects",
+          "date": "accessed 2026-09-30",
+          "sourceType": "professionalBody",
+          "confirmed": true
+        }
+      },
+      "IE": {
+        "feeScale": {
+          "value": null,
+          "note": "RIAI can no longer publish recommended fee scales (competition law). It publishes an annual scatter of fees charged vs projected building cost by building type; for one-off houses, renovations and extensions the spread is roughly 4-16% of construction cost depending on size. Extensions up to about EUR 500,000 are commonly 9-11% plus VAT (practitioner source).",
+          "url": "https://www.markstephensarchitects.com/how-much-does-an-architect-cost/",
+          "publisher": "Mark Stephens Architects (secondary, describing RIAI data)",
+          "date": "accessed 2026-09-30",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "typicalStageSplit": {
+          "value": {"initialDesign": 0.25, "developedDesign": 0.30, "detailDesign": 0.25, "construction": 0.20},
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Practitioner-reported drawdown pattern, not an RIAI rule."
+        }
+      },
+      "MX": {
+        "arancel": {
+          "value": {
+            "formula": "H = CBM x V x FI x FGE x FM x FA x FR x FACP x FEPE",
+            "CBM_baseCostPerM2_MXN": 9286.80,
+            "CBM_basis": "Parametric cost for Vivienda Social type T11 (CMIC), November 2022; the arancel says it must be updated to the date of calculation",
+            "FI_cityFactor_CDMX": 1.000,
+            "FGE_buildingType": {"viviendaProgresivaAutoconstruccion": 0.84, "viviendaTipoMedio": 1.15, "viviendaResidencial": 1.30, "condominioTipoMedio": 1.35, "condominioResidencial": 1.50},
+            "FM_modality": {"obraNueva": 1.00, "ampliacion": 1.05, "remodelacion": 1.10, "reacondicionamiento": 1.15, "rehabilitacion": 1.20},
+            "FA_affordabilityByMarginalization": {"muyBajo": 1.00, "bajo": 0.95, "medio": 0.90, "alto": 0.80, "muyAlto": 0.75},
+            "FR_repetition_singleFamily": {"first": 1.00, "second": 0.40, "third": 0.25, "fourth": 0.10, "fifthOnward": 0.05},
+            "FACP_feeRateByStagesContracted": {"allFourStages_incl_engineering": 0.040, "threeStages": 0.041, "twoStages": 0.042, "conceptOnly": 0.043},
+            "FEPE_shareOfExecutiveProject": {"projectBrief": 0.05, "conceptualDesign": 0.20, "anteproyecto": 0.33, "executiveDesign": 0.42},
+            "workedExample": "256 m2 two-level mid-range house remodel in Campeche, concept + anteproyecto only: H = MXN 28,334.16 (Nov 2022)",
+            "impliedFullFee": "About 4.0% of the parametric construction value (CBM x V x factors) for a complete executive project",
+            "uptake": "FCARM's own August 2022 survey found only 23% of members use the aranceles"
+          },
+          "url": "https://fcarm.org.mx/wp-content/uploads/2024/04/CAN-FCARM_Arancel-genero-habitacional_nov2022.pdf",
+          "publisher": "Federación de Colegios de Arquitectos de la República Mexicana (CAN-FCARM), Aranceles Tomo I, Género habitacional",
+          "date": "2022-11",
+          "sourceType": "professionalBody",
+          "confirmed": true,
+          "note": "The worked example multiplies out without its stated FM of 1.10; the factor tables themselves are as printed."
+        }
+      }
+    },
+    "structuralEngineers": {
+      "US": {
+        "feeAsPercent": {"value": null, "note": "No professional-body fee schedule published (NCSEA/ASCE do not publish). NAHB 2024 survey puts architecture+engineering combined at USD 6,480 per typical new house (1.5% of construction cost) - see costBySpec.US.nahb2024."},
+        "civilEngineerMedianPay": {
+          "value": {"annualUSD": 100840, "hourlyUSD": 48.48, "p10": 68240, "p90": 163220},
+          "url": "https://www.bls.gov/ooh/architecture-and-engineering/civil-engineers.htm",
+          "publisher": "US Bureau of Labor Statistics",
+          "date": "May 2025 data",
+          "sourceType": "government",
+          "confirmed": true
+        }
+      },
+      "UK": {"value": null, "note": "ACE/IStructE publish no fee scales."},
+      "IE": {"value": null, "note": "Engineers Ireland publishes no fee scale."},
+      "MX": {"value": null, "note": "FCARM arancel lists 'Ingenierías' as one of four executive-project stages (FACP 0.040 applies when engineering is included); no separate engineering percentage published."},
+      "CA": {"value": null}
+    },
+    "surveyors": {
+      "UK_IE": {"value": null, "note": "RICS and SCSI publish no survey fee scales. SCSI and RICS publish cost data used by quantity surveyors (see costBySpec)."},
+      "US": {"value": null}
+    },
+    "interiorDesigners": {
+      "US": {
+        "medianPay": {
+          "value": {"annualUSD": 67190, "hourlyUSD": 32.31, "p10": 41420, "p90": 114140, "byIndustry": {"architecturalEngineering": 78340, "specializedDesign": 67870, "construction": 63330, "retail": 50560}},
+          "url": "https://www.bls.gov/ooh/arts-and-design/interior-designers.htm",
+          "publisher": "US Bureau of Labor Statistics",
+          "date": "May 2025 data",
+          "sourceType": "government",
+          "confirmed": true,
+          "note": "Employee wages; client hourly billing rates are not published by ASID or any government body."
+        }
+      },
+      "other": {"value": null, "note": "No primary source for client billing rates in CA, MX, UK, IE."}
+    }
+  },
+
+  "costBySpec": {
+    "US": {
+      "nahb2024": {
+        "value": {
+          "averageFinishedAreaSqFt": 2647,
+          "averageLotSqFt": 20907,
+          "constructionCostUSD": 428215,
+          "constructionCostPerSqFtUSD": 162,
+          "salesPriceBreakdown": {
+            "finishedLot": {"usd": 91057, "share": 0.137},
+            "construction": {"usd": 428215, "share": 0.644},
+            "financing": {"usd": 10220, "share": 0.015},
+            "overheadGeneral": {"usd": 38248, "share": 0.057},
+            "marketing": {"usd": 5633, "share": 0.008},
+            "salesCommission": {"usd": 18955, "share": 0.028},
+            "profit": {"usd": 72971, "share": 0.110},
+            "totalSalesPrice": 665298
+          },
+          "constructionBreakdown": {
+            "siteWork": {"usd": 32719, "share": 0.076, "items": {"buildingPermitFees": 7640, "impactFee": 6367, "waterSewerFeesInspections": 6260, "architectureEngineering": 6480, "other": 5972}},
+            "foundations": {"usd": 44748, "share": 0.105, "items": {"excavationFoundationConcreteRetainingBackfill": 43002, "other": 1747}},
+            "framing": {"usd": 70982, "share": 0.166, "items": {"framingInclRoof": 49763, "trusses": 12903, "sheathing": 6513, "generalMetalSteel": 1718, "other": 85}},
+            "exteriorFinishes": {"usd": 57510, "share": 0.134, "items": {"exteriorWallFinish": 24450, "roofing": 16732, "windowsDoorsInclGarageDoor": 15990, "other": 338}},
+            "majorSystemsRoughIns": {"usd": 82319, "share": 0.192, "items": {"plumbing": 27180, "electrical": 27383, "hvac": 26938, "other": 817}},
+            "interiorFinishes": {"usd": 103391, "share": 0.241, "items": {"insulation": 6992, "drywall": 13962, "interiorTrimDoorsMirrors": 12920, "painting": 11150, "lighting": 5392, "cabinetsCountertops": 19056, "appliances": 7499, "flooring": 15388, "plumbingFixtures": 7922, "fireplace": 2378, "other": 732}},
+            "finalSteps": {"usd": 27710, "share": 0.065, "items": {"landscaping": 9269, "outdoorStructuresDeckPatioPorch": 4722, "driveway": 9635, "cleanUp": 3183, "other": 902}},
+            "other": {"usd": 8835, "share": 0.021}
+          },
+          "caveats": "National averages from 41 usable builder responses (fall 2024); no regional breakdown; not a spec-level survey."
+        },
+        "url": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "publisher": "National Association of Home Builders (Eric Lynch)",
+        "date": "2025-01-20",
+        "sourceType": "professionalBody",
+        "confirmed": true
+      },
+      "rlbQ2_2026_hardCostPerSqFtGFA": {
+        "value": {
+          "NewYork": {"multiFamily": [255, 500], "singleFamily": [365, 730]},
+          "LosAngeles": {"multiFamily": [270, 440], "singleFamily": [240, 420]},
+          "SanFrancisco": {"multiFamily": [420, 700], "singleFamily": [350, 650]},
+          "Boston_proxyForCT": {"multiFamily": [290, 390], "singleFamily": [300, 450]}
+        },
+        "url": "https://www.rlb.com/wp-content/uploads/sites/4/2026/06/Q2-2026-QCR_7.7.2026.pdf",
+        "publisher": "Rider Levett Bucknall, North America Quarterly Construction Cost Report Q2 2026",
+        "date": "2026-06-24",
+        "sourceType": "costConsultant",
+        "confirmed": true,
+        "note": "Low-high hard construction cost, USD per sq ft of gross floor area; low end approximates standard spec, high end high-end spec. Connecticut has no RLB city; Boston is the nearest listed. Column alignment was read from pdftotext layout output."
+      },
+      "specTiers_standardMidHigh": {"value": null, "note": "No US primary source publishes a standard/mid/high-end per-sq-ft split for new homes. Use RLB low-high ranges and NAHB line items. RSMeans (paid) is the usual source."},
+      "secondStoryVsSingle": {"value": null, "note": "No US primary figure. BCIS-derived UK figures (below) show per-m2 cost rising slightly with storeys for one-off detached homes because roof and foundation are spread over more floor area differently; unconfirmed."},
+      "basement": {
+        "value": null,
+        "foundationMix2024": {"slab": 0.73, "fullOrPartialBasement": 0.17, "crawlSpace": 0.092, "sourceType": "government", "publisher": "US Census Bureau Survey of Construction via NAHB", "confirmed": false},
+        "secondaryRangePerSqFtUnfinished": {"low": 20, "high": 60, "sourceType": "secondary", "confirmed": false}
+      },
+      "attachedGarage": {"value": null, "note": "No US primary per-garage cost."},
+      "bathrooms": {"value": null, "note": "No primary per-bathroom new-build cost. For additions see materials.US.costVsValue2025 (bathroom addition midrange USD 60,645; upscale USD 111,255)."},
+      "constructionCostTrend": {"value": null}
+    },
+    "CA": {
+      "altus2025_perSqFtCAD": {
+        "value": {
+          "Toronto_GTA": {"condoUpTo12Storeys": [290, 390], "condo13to39": [295, 385], "condo40to60": [330, 410], "condo60plus": [365, 480], "premiumForHighQualityCondo": "up to 245", "rowTownhouseUnfinishedBasement": [205, 265], "singleFamilyUnfinishedBasement": [200, 275], "stacked3StoreyTownhouse": [230, 270], "woodFrameCondoUpTo6": [245, 330], "customBuiltSingleFamily": [520, 1130]},
+          "Vancouver": {"condoUpTo12Storeys": [330, 405], "condo13to39": [360, 455], "condo40to60": [360, 480], "condo60plus": [370, 485], "premiumForHighQualityCondo": "up to 275", "rowTownhouseUnfinishedBasement": [205, 310], "singleFamilyUnfinishedBasement": [200, 320], "stacked3StoreyTownhouse": [225, 315], "woodFrameCondoUpTo6": [275, 365], "customBuiltSingleFamily": [495, 1250]}
+        },
+        "url": "https://spearrealty.ca/wp-content/uploads/2025/09/2025-Canadian-Cost-Guide-Altus-Group-1.pdf",
+        "publisher": "Altus Group, 2025 Canadian Cost Guide (primary PDF, rehosted by a third party)",
+        "date": "2025",
+        "sourceType": "costConsultant",
+        "confirmed": true,
+        "note": "Hard costs only. Standard vs high-end for a house maps to 'single family with unfinished basement' vs 'custom built single family'. Condo row alignment read from layout text."
+      },
+      "altus2026_perSqFtCAD": {
+        "value": {
+          "Toronto_GTA": {"condoUpTo12Storeys": [245, 390], "condo13to39": [280, 350], "singleFamilyUnfinishedBasement": [150, 275], "rowTownhouseUnfinishedBasement": [155, 265], "customBuiltSingleFamily": [500, 1130]},
+          "Vancouver": {"condoUpTo12Storeys": [330, 400], "condo13to39": [340, 435], "singleFamilyUnfinishedBasement": [200, 315], "rowTownhouseUnfinishedBasement": [195, 295], "customBuiltSingleFamily": [490, 1250]}
+        },
+        "url": "https://www.altusgroup.com/featured-insights/canadian-cost-guide/",
+        "publisher": "Altus Group, 2026 Canadian Cost Guide (released 2026-04-23; data gated)",
+        "date": "2026-04-23",
+        "sourceType": "costConsultant",
+        "confirmed": false,
+        "note": "Figures from search summaries of the gated guide and a secondary reproduction (precedentdevelopments.ca), not read directly."
+      },
+      "rlbQ2_2026_Toronto": {
+        "value": {"multiFamily": [270, 340], "singleFamily": [335, 665]},
+        "url": "https://www.rlb.com/wp-content/uploads/sites/4/2026/06/Q2-2026-QCR_7.7.2026.pdf",
+        "publisher": "Rider Levett Bucknall",
+        "date": "2026-06-24",
+        "sourceType": "costConsultant",
+        "confirmed": true,
+        "note": "CAD per sq ft GFA."
+      }
+    },
+    "MX": {
+      "cmicCeico": {
+        "value": {
+          "viviendaUnifamiliarInteresSocial_perM2_MXN": 10230,
+          "viviendaMultifamiliarInteresSocial_perM2_MXN": 11820,
+          "viviendaMediaSemilujo_perM2_MXN_oct2024": 21516,
+          "residentialCostChangeDec2024toDec2025": 0.0452,
+          "materialsChange": 0.0428,
+          "laborChange": 0.0598,
+          "equipmentRentalChange": 0.0134,
+          "socialHousing40m2Prototype_MXN_dec2024": 269727
+        },
+        "url": "https://obras.expansion.mx/inmobiliario/2026/02/17/construir-propia-casa-mexico-2026-es-mas-caro",
+        "publisher": "Expansión reporting CMIC CEICO (Centro Nacional de Ingeniería de Costos) data",
+        "date": "2026-02-17",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Percent changes are from the Expansión article (read). Per-m2 figures came from search summaries of CMIC/IMIC catalog copies on Scribd and are unconfirmed. CMIC's own city report: https://www.cmic.org.mx/comisiones/Tematicas/costosyp/Informes_CEICO/INEGI/2025/04_Abril/CEICO_Informe_Abril_2025_Construccion_Residencial_por_Ciudad.pdf (not read)."
+      },
+      "fcarmBaseCost": {"value": 9286.80, "unit": "MXN per m2, Vivienda Social T11-CMIC, Nov 2022", "confirmed": true, "note": "See professionals.architects.MX; FGE factors 1.15 (tipo medio) and 1.30 (residencial) imply the profession's own relative cost of mid and high-end homes."},
+      "specTiersCDMX": {"value": null, "note": "BIMSA catalog (paid) is the primary source for interés social / media / residencial / residencial plus per m2; not accessible."}
+    },
+    "UK": {
+      "bcisOneOffHousing": {
+        "value": {"oneOffHousingGBPperM2": [2390, 2650], "oneOffDetached": [2480, 2760], "detachedSingleStorey": [2260, 2500], "detached2Storey": [2380, 2640], "detached3Storey": [2440, 2700]},
+        "url": "https://calcstack.co.uk/construction-costs",
+        "publisher": "Secondary site quoting BCIS",
+        "date": "2025",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "BCIS (RICS) data are subscription-only. These show per-m2 cost rising modestly with storeys for one-off detached houses. Excludes land, VAT, fees and external works."
+      },
+      "London": {"value": null, "note": "BCIS location factors (paid) put London above UK mean; no free primary figure."}
+    },
+    "IE": {
+      "scsiRebuild2025": {
+        "value": {"dublin3BedSemi_98m2_EUR": 331340, "dublinPerM2_EUR": 3381, "singleAttachedGarage_EUR": 24480, "doubleAttachedGarage_EUR": 43790, "nationalRebuildIncreaseYoY": 0.07, "dublinIncreaseYoY": 0.05, "corkIncreaseYoY": 0.03, "northWestIncreaseYoY": 0.09},
+        "url": "https://scsi.ie/press-release-house-rebuilding-costs-have-increased-by-an-average-of-7-nationally-over-the-last-12-months-up-1-on-last-year/",
+        "publisher": "Society of Chartered Surveyors Ireland, House Rebuilding Guide",
+        "date": "2025-11-04",
+        "sourceType": "professionalBody",
+        "confirmed": false,
+        "note": "Rebuild (insurance) cost for estate-type homes including demolition and site clearance; excludes kitchen, wardrobes, floor finishes. Values from search summary of the SCSI release."
+      },
+      "scsiRealCostNewHousing2023": {
+        "value": {"national3BedSemiDeliveryEUR": 397000, "greaterDublinEUR": 461000, "northWestEUR": 354000, "hardCostShare": 0.53, "softCostShare": 0.47},
+        "url": "https://scsi.ie/realcost2023/",
+        "publisher": "Society of Chartered Surveyors Ireland",
+        "date": "2023-12",
+        "sourceType": "professionalBody",
+        "confirmed": false,
+        "note": "Most recent edition found; no 2025 edition located."
+      }
+    }
+  },
+
+  "materials": {
+    "US": {
+      "costVsValue2025_nationalJobCostUSD": {
+        "value": {
+          "roofingReplacement": {"asphaltShingles": 31871, "metal": 51865},
+          "windowReplacement": {"vinyl": 22073, "wood": 26781},
+          "sidingReplacement": {"vinyl": 17950, "fiberCement": 21485},
+          "manufacturedStoneVeneer": 11702,
+          "kitchen": {"minorMidrange": 28458, "majorMidrange": 82793, "majorUpscale": 164104},
+          "bath": {"midrangeRemodel": 26138, "universalDesign": 42183, "upscaleRemodel": 81612, "additionMidrange": 60645, "additionUpscale": 111255},
+          "hvacConversionElectrification": 19484,
+          "solarPowerInstallation": 55937,
+          "backupPowerGenerator": 13534,
+          "garageDoorReplacement": 4672,
+          "entryDoorSteel": 2435,
+          "grandEntranceFiberglass": 11754,
+          "deckAddition": {"wood": 18263, "composite": 25096},
+          "backyardPatio": 51454,
+          "basementRemodel": 52012,
+          "accessoryDwellingUnit": 166406,
+          "primarySuiteAddition": {"midrange": 170517, "upscale": 351613}
+        },
+        "costRecoupedAtResale": {"asphaltRoof": 0.675, "metalRoof": 0.501, "vinylWindows": 0.755, "woodWindows": 0.701, "vinylSiding": 0.965, "fiberCementSiding": 1.137, "minorKitchen": 1.129, "majorKitchenMidrange": 0.509, "majorKitchenUpscale": 0.357, "solar": 0.297},
+        "url": "https://www.jlconline.com/cost-vs-value/2025/",
+        "publisher": "Zonda / Journal of Light Construction, 38th annual Cost vs. Value Report",
+        "date": "2025-09-18",
+        "sourceType": "industrySurvey",
+        "confirmed": true,
+        "note": "Remodel/replacement job costs, not new-build increments. Read from a regional reprint PDF's National Averages column. A 2026 edition was not found as of 2026-09-30."
+      },
+      "solarInstalledPrice": {
+        "value": {"median2024_USDperW": 4.0, "cashPurchase": 3.5, "loanFinanced": 4.7},
+        "url": "https://emp.lbl.gov/sites/default/files/2025-10/Distributed%20Solar%20&%20Storage-2025%20Data%20Update.pdf",
+        "publisher": "Lawrence Berkeley National Laboratory, Tracking the Sun / Distributed Solar and Storage 2025 Data Update",
+        "date": "2025-10",
+        "sourceType": "government",
+        "confirmed": false,
+        "note": "From search summary of LBNL release."
+      },
+      "hvac": {"furnaceVsHeatPump": null, "note": "No primary installed-cost survey found; secondary ranges (furnace USD 4,000-10,000; heat pump USD 5,500-12,000) are unconfirmed. NAHB 2024 HVAC line item: USD 26,938 per new home (6.3%)."},
+      "insulation": {"value": 6992, "unit": "USD per new home, NAHB 2024 (1.6% of construction)", "confirmed": true},
+      "flooring": {"value": 15388, "unit": "USD per new home, NAHB 2024 (3.6%)", "confirmed": true, "note": "No primary per-material split (hardwood vs LVP vs carpet vs tile)."}
+    },
+    "CA": {"value": null, "note": "No primary material-by-material price survey found for ON or BC."},
+    "MX": {"value": null, "note": "BIMSA and CMIC catalogs (paid) hold material unit prices."},
+    "UK": {"value": null, "note": "BCIS / Spon's (paid)."},
+    "IE": {"value": null, "note": "SCSI rebuild guide excludes finishes; no public material split."}
+  },
+
+  "siteWork": {
+    "US": {
+      "nahbSiteAndFinalLineItems2024": {
+        "value": {"buildingPermitFees": 7640, "impactFee": 6367, "waterSewerFeesInspections": 6260, "excavationFoundation": 43002, "landscaping": 9269, "driveway": 9635, "outdoorStructures": 4722, "cleanUp": 3183},
+        "url": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "publisher": "NAHB",
+        "date": "2025-01-20",
+        "sourceType": "professionalBody",
+        "confirmed": true
+      },
+      "septic": {"value": {"low": 3000, "high": 10000}, "publisher": "US EPA SepticSmart (as quoted)", "sourceType": "government", "confirmed": false, "note": "Quoted via search summary; EPA page not read."},
+      "wellDrilling": {"value": null, "note": "NGWA publishes no public per-foot price; secondary sites cite USD 25-65 per foot and attribute it to NGWA surveys, unverified."},
+      "siteClearingGrading": {"value": null},
+      "drivewayPerSqFt": {"value": null, "note": "Only the NAHB whole-driveway average (USD 9,635)."},
+      "fencing": {"value": null},
+      "electricService": {"value": null}
+    },
+    "CA_ON": {
+      "torontoDevelopmentCharges": {
+        "value": {"singlesAndSemis": 137846, "multiples2PlusBed": 113938, "multiples1BedAndBachelor": 57153, "apartments2PlusBed": 80690, "apartments1BedAndBachelor": 52676, "dwellingRoom": 37356},
+        "unit": "CAD per unit, non-rental",
+        "url": "https://www.toronto.ca/wp-content/uploads/2025/08/9709-DC-Rates-June-26-2025.pdf",
+        "publisher": "City of Toronto",
+        "date": "effective 2025-06-26",
+        "sourceType": "government",
+        "confirmed": true,
+        "note": "Council removed indexing for 2025 and 2026. Secondary reports say a 60% cut for singles/semis and 2+ bedroom units applies to permits issued from June 2026 through 2029 under a provincial funding deal; not confirmed on toronto.ca."
+      }
+    },
+    "CA_BC": {
+      "vancouverDCL": {"value": {"cityWideLowDensityPerM2_CAD": 49.88}, "note": "Residential at or below 1.2 FSR after 20% temporary reduction effective 2025-12-10; secondary source, unconfirmed.", "confirmed": false}
+    },
+    "UK_London": {
+      "thamesWaterInfrastructure2025_26": {
+        "value": {"waterInfrastructurePerProperty": 1475, "wasteInfrastructurePerProperty": 485, "combined": 1960, "waterEnvironmentalComponent": 255, "wasteEnvironmentalComponent": 40},
+        "unit": "GBP per new property",
+        "url": "https://www.thameswater.co.uk/media-library/00pol2pe/statement-of-significant-change-202526.pdf",
+        "publisher": "Thames Water, Statement of Significant Change 2025-26",
+        "date": "2025",
+        "sourceType": "government",
+        "confirmed": false,
+        "note": "Regulated utility charge (Ofwat rules); from search summary of the Thames Water document."
+      }
+    },
+    "IE": {
+      "uisceEireannStandardConnection": {
+        "value": {"water": 2272, "wastewater": 3929, "total": 6201},
+        "unit": "EUR per single domestic unit, up to 10 m of connection infrastructure",
+        "url": "https://www.water.ie/connections/information/charges",
+        "publisher": "Uisce Éireann (CRU-approved Connection Charging Policy)",
+        "date": "effective 2023-11-17",
+        "sourceType": "government",
+        "confirmed": true
+      },
+      "dublinCityDevelopmentContribution": {
+        "value": 117.15,
+        "unit": "EUR per m2 residential, Section 48 scheme 2023-2026, indexed from 2025-04-01 (was 113.82)",
+        "url": "https://dublin.moderngov.co.uk/documents/s47682/78.%20Section%2048%20Dev%20Contributions%20Indexation%202025.pdf",
+        "publisher": "Dublin City Council",
+        "date": "2025-04-01",
+        "sourceType": "government",
+        "confirmed": false
+      }
+    },
+    "MX": {"value": null, "note": "SACMEX water/drainage connection fees are set in the Código Fiscal de la CDMX; not extracted."}
+  },
+
+  "demolition": {
+    "US_NYC": {
+      "permitFee": {
+        "value": "USD 2.60 x building frontage in feet x number of stories, minimum USD 260 (as quoted)",
+        "url": "https://www.nyc.gov/site/buildings/industry/dob-now-build-resources-full-demolition.page",
+        "publisher": "NYC Department of Buildings",
+        "sourceType": "government",
+        "confirmed": false,
+        "note": "Formula from search summary of nyc.gov material. Local Law 128 of 2024 reportedly raised the general minimum fee to USD 130 effective 2025-12-21 (secondary)."
+      },
+      "newBuildingFee_1to3Family": {
+        "value": "USD 0.06 per sq ft of floor area, minimum USD 100 (LL 56 of 2016); minimum reportedly USD 130 after LL 128 of 2024",
+        "url": "https://legistar.council.nyc.gov/ViewReport.ashx?M=R&N=Text&GID=61&ID=2444080&GUID=299E0EC9-526C-419E-854A-780888C70D17&Title=Legislation+Text",
+        "publisher": "New York City Council, Int. 831-A (2015), amending Admin Code Table 28-112.2",
+        "sourceType": "government",
+        "confirmed": true,
+        "note": "Other new buildings: USD 0.26 per sq ft (fewer than 7 stories), USD 0.45 per sq ft (7+ stories or 100,000+ sq ft) per the same table."
+      },
+      "costPerSqFt": {"value": null}
+    },
+    "US_LA": {
+      "process": {
+        "value": "Demolition pre-inspection by an LADBS inspector required before a demolition permit. For buildings over 45 years old, 30 days' notice: LADBS mails abutting owners/occupants, council district and neighborhood council; applicant posts an 11x17-inch placard within 5 ft of the front property line.",
+        "url": "https://dbs.lacity.gov/sites/default/files/efs/forms/pc17/demolition-of-buildings-ib-p-bc2014-039.pdf",
+        "publisher": "LA Department of Building and Safety (LAMC 91.106.4.5)",
+        "sourceType": "government",
+        "confirmed": false
+      },
+      "fee": {"value": null, "note": "Valuation-based; no flat residential demolition fee located. Demolition monitoring admin fee USD 45 (search summary)."}
+    },
+    "US_CT": {"value": null, "note": "Municipal; CT adds a state education fee of USD 0.26 per USD 1,000 of construction value to every building permit (portal.ct.gov/das)."},
+    "UK_England_London": {
+      "priorApprovalFee": {
+        "value": {"from2025_04_01": 240, "from2026_04_01": 249, "before2025_04_01": 120},
+        "unit": "GBP, Part 11 Class B prior approval for demolition of buildings",
+        "url": "https://new.fylde.gov.uk/wp-content/uploads/2026/03/PLANNING-APPLICATION-FEES-SCHEDULE-1-APRIL-2026.pdf",
+        "publisher": "Town and Country Planning (Fees) (England) Regulations 2012 as amended 2025, indexed annually by CPI (cap 10%); schedule as published by a local planning authority",
+        "date": "2026-04-01",
+        "sourceType": "government",
+        "confirmed": false,
+        "note": "From search summaries of council and Planning Portal fee schedules. Householder application fee from 2026-04-01: GBP 548."
+      }
+    },
+    "IE": {
+      "planningRequirement": {
+        "value": "Demolition of a habitable house is not exempted development and needs planning permission (Planning and Development Regulations 2001 as amended). Partial demolition for an exempt extension is exempt; demolition of a terraced building or one abutting another owner's building is not exempt.",
+        "url": "https://www.clarecoco.ie/planning-and-building/planning-application-rules-and-exemptions/exempted-development-frequently-asked-questions",
+        "publisher": "Clare County Council",
+        "sourceType": "government",
+        "confirmed": false
+      },
+      "planningFeeHouse": {"value": {"permissionEUR": 65, "retentionEUR": "195 or 2.50 per m2, whichever greater"}, "publisher": "Planning and Development Regulations 2001, Schedule 9", "sourceType": "government", "confirmed": false},
+      "levies": "Landfill Levy change from 2024-09-01 and new Recovery Levy from 2025-01-01 raise demolition costs (SCSI 2025 release)."
+    },
+    "CA_ON": {"value": null, "note": "Toronto requires a demolition permit; fee not extracted."},
+    "CA_BC": {"value": null},
+    "MX_CDMX": {"value": null, "note": "Demolition requires a 'licencia de construcción especial' (demolición) from the Alcaldía; fees set in Código Fiscal CDMX (art. 185 covers manifestación fees). Amounts not extracted."}
+  },
+
+  "multiUnit": {
+    "costPerUnitSmallMultiplex": {
+      "value": null,
+      "note": "No primary per-unit cost for duplex/triplex/fourplex in any market. Proxies: RLB multi-family per-sq-ft ranges (costBySpec.US.rlbQ2_2026_hardCostPerSqFtGFA) and Altus row/stacked townhouse ranges. Secondary sites quote USD 95,000-250,000 per fourplex unit, unconfirmed."
+    },
+    "condoCreation": {
+      "US_NY": {
+        "value": {"offeringPlanFilingFee": "0.4% of total offering, min USD 750 if offering <= USD 250,000, max USD 60,000 (was USD 30,000 before 2025-11-05)", "amendmentFee": 750},
+        "url": "https://www.nixonpeabody.com/insights/alerts/2025/10/09/filing-fee-increase-for-submissions-to-the-new-york-state-attorney-general",
+        "publisher": "Nixon Peabody summarizing NY GBL 352-e amendments in the 2025-26 state budget",
+        "date": "2025-10-09",
+        "sourceType": "lawFirm",
+        "confirmed": true,
+        "note": "Offering plan filed with the NY Attorney General Real Estate Finance Bureau under GBL 352-e and 13 NYCRR Part 20 (new construction) / Part 23 (conversion)."
+      },
+      "US_CA": {
+        "value": {"commonInterestBasicFee": 3000, "perInterest": 15, "preliminaryPublicReport": 500, "example60Units": 4400},
+        "url": "https://www.dre.ca.gov/files/pdf/forms/re605.pdf",
+        "publisher": "California Department of Real Estate, RE 605 (Rev. 7/26)",
+        "date": "2026-07",
+        "sourceType": "government",
+        "confirmed": true,
+        "note": "Subdivision public report fees. Tentative/final map and conversion rules are local."
+      },
+      "CA_ON": {
+        "value": {"declarationRegistration": 0, "perUnitCreated": 5.00, "cao_assessment": "CAD 1 per voting unit per month"},
+        "url": "https://www.ontario.ca/land-registration/2025-07-land-services-fee-changes-effective-november-3-2025",
+        "publisher": "Government of Ontario, Land Registration bulletin",
+        "date": "effective 2025-11-03",
+        "sourceType": "government",
+        "confirmed": true,
+        "note": "CAO fee from condoauthorityontario.ca via search summary (unconfirmed). Tarion new-home warranty enrolment also applies (fee not extracted)."
+      },
+      "CA_BC": {"value": null, "note": "Strata plan under the Strata Property Act; fees not extracted."},
+      "UK": {
+        "value": "Leasehold is the default for flats. Commonhold White Paper published 2025-03-03; draft Commonhold and Leasehold Reform Bill published 2026-01-27 proposing to end new leasehold flats in England and Wales; consultation closed 2026-04-24. Not yet law as of 2026-09-30.",
+        "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-10653/",
+        "publisher": "House of Commons Library",
+        "sourceType": "government",
+        "confirmed": false
+      },
+      "MX_CDMX": {
+        "value": "Régimen de propiedad en condominio is constituted by public deed before a notary, registered with the Registro Público and with PROSOC; requires an internal regulation. Governed by the Ley de Propiedad en Condominio de Inmuebles para la CDMX; fiscal basis Código Fiscal CDMX art. 430 (as cited).",
+        "url": "https://prosoc.cdmx.gob.mx/storage/app/media/uploaded-files/LEY%20CONDOMINAL%205.3%20paginas.pdf",
+        "publisher": "Procuraduría Social de la Ciudad de México",
+        "sourceType": "government",
+        "confirmed": false,
+        "costs": null
+      },
+      "IE": {"value": null, "note": "Multi-Unit Developments Act 2011 governs owners' management companies; no filing fee located."}
+    }
+  },
+
+  "delaysChanges": {
+    "US_buildTimes2025": {
+      "value": {"authorizationToStartMonths": 1.4, "startToCompletionMonths": 7.4, "authorizationToCompletionMonths": 8.8, "byType": {"builtForSale": 7.4, "contractorBuilt": 11.7, "ownerBuilt": 14.3, "builtForRent": 12.4}, "homesOver6000SqFt": 16.3, "slowestDivision_NewEngland": 13.5, "fastestDivision_SouthAtlantic": 7.6},
+      "url": "https://eyeonhousing.org/2026/09/single-family-home-construction-time-declines-in-2025/",
+      "publisher": "NAHB Eye on Housing, analysis of US Census Bureau Survey of Construction",
+      "date": "2026-09-08",
+      "sourceType": "professionalBody",
+      "confirmed": true,
+      "note": "Contractor-built (11.7) is the relevant path for a character hiring a builder; owner-built (14.3) for self-managed. New England covers CT."
+    },
+    "US_delayShare2024": {"value": {"shareTakingOver13Months2024": 0.13, "share2019": 0.09}, "publisher": "NAHB Eye on Housing (Census SOC)", "url": "https://eyeonhousing.org/2025/09/single-family-homes-are-built-faster-in-2024/", "sourceType": "professionalBody", "confirmed": false},
+    "largeProjects": {
+      "mckinsey": {"value": "Large projects typically take 20% longer than scheduled and run up to 80% over budget", "url": "https://www.mckinsey.com/capabilities/operations/our-insights/imagining-constructions-digital-future", "publisher": "McKinsey & Company", "date": "2016", "sourceType": "industrySurvey", "confirmed": false},
+      "kpmg": {"value": "Only 25% of large projects finished within 10% of original deadlines over the prior three years (2015 survey)", "url": "https://assets.kpmg.com/content/dam/kpmg/pdf/2015/04/global-construction-survey-2015.pdf", "publisher": "KPMG Global Construction Survey", "date": "2015", "sourceType": "industrySurvey", "confirmed": false},
+      "dodgeMaterialDelays": {"value": "57% of contractors had at least one project delayed by material lead times in the prior year (2024 survey, as quoted)", "sourceType": "industrySurvey", "confirmed": false}
+    },
+    "changeOrders": {"value": null, "note": "No primary residential change-order statistic found. Commonly repeated '10-15% of contract value on major projects' and 'CII: 5-10% contract growth' trace to academic/CII work on large industrial projects, not homes; unconfirmed."},
+    "defectsAtHandover": {
+      "UK_HBF_2024": {
+        "value": {"reportedAnyProblemToBuilder": 0.95, "wouldRecommendBuilder": 0.90, "satisfiedWithQuality": 0.875, "satisfiedCompletedOnTime": 0.794, "problemCountDistributionValues": [0.33, 0.27, 0.14, 0.26], "problemCountBands": ["1-5", "6-10", "11-15", "16+"]},
+        "url": "https://www.hbf.co.uk/documents/13411/19th_CSS_Survey_2024_Completions_Oct_2022_to_Sept_2023.pdf",
+        "publisher": "Home Builders Federation, National New Home Customer Satisfaction Survey (completions Oct 2022-Sep 2023)",
+        "date": "2024-03",
+        "sourceType": "professionalBody",
+        "confirmed": true,
+        "note": "The four band shares were extracted from a pie chart whose label-to-slice mapping could not be read reliably; the values are confirmed, their band assignment is not. 2026 release (2026-03-24): 93% would recommend, 90% satisfied with quality, 88% with after-sales, 20% reported fewer snags than expected."
+      },
+      "CA_ON_Tarion": {"value": {"conciliationRequests2023": 10004, "conciliationInspections2023": 3797, "claimsPaid2024": "over CAD 100 million", "depositClaimsVerified2024": "over 900"}, "url": "https://www.tarion.com/sites/default/files/Tarion%202024%20Annual%20Report.pdf", "publisher": "Tarion Warranty Corporation", "sourceType": "government", "confirmed": false}
+    }
+  },
+
+  "contracts": {
+    "US_general": {"value": "AIA A101 (owner-contractor, stipulated sum) with A201 General Conditions: monthly applications for payment certified by the architect; retainage percentage left blank for the parties. Market practice 5-10%.", "confirmed": false, "sourceType": "professionalBody"},
+    "US_NY": {
+      "value": {"retainageCap": 0.05, "appliesTo": "private construction contracts of USD 150,000 or more entered on/after 2023-11-17", "releaseDeadline": "within 30 days after final approval of the work", "contractAround": "not permitted"},
+      "url": "https://www.hklaw.com/en/insights/publications/2024/01/new-yorks-5-percent-retainage-law-underscores-construction",
+      "publisher": "Holland & Knight on NY GBL 756-a/756-c (S3539, signed 2023-11-17)",
+      "date": "2024-01",
+      "sourceType": "lawFirm",
+      "confirmed": false
+    },
+    "US_CA": {
+      "value": {"retentionCap": 0.05, "appliesTo": "private works contracts entered on/after 2026-01-01 (Civil Code 8811, SB 61)", "exception": "up to 10% from a subcontractor who fails to furnish required bonds"},
+      "url": "https://www.buchalter.com/insights/effective-january-1-2026-california-sb-61-caps-retention-at-5-on-private-construction-projects/",
+      "publisher": "Buchalter on California SB 61",
+      "date": "2025",
+      "sourceType": "lawFirm",
+      "confirmed": false
+    },
+    "US_CT": {"value": null, "note": "CT Prompt Payment Act (CGS 42-158i et seq.) caps private retainage at 7.5% (commonly cited); not verified in this pass.", "confirmed": false},
+    "CA_ON": {
+      "value": {"holdback": 0.10, "paymentAfterProperInvoiceDays": 28, "annualHoldbackRelease": "mandatory from 2026 amendments; accrued holdback paid 60-74 days after notice of annual release", "subcontractorFlowDownDays": 14},
+      "url": "https://www.dlapiper.com/en-ca/insights/publications/2026/01/critical-amendments-to-ontario-construction-act-have-arrived",
+      "publisher": "DLA Piper on Ontario Construction Act",
+      "date": "2026-01",
+      "sourceType": "lawFirm",
+      "confirmed": false
+    },
+    "CA_BC": {
+      "value": {"holdback": 0.10, "holdbackTrustAccountRequiredAbove": 100000, "holdbackPeriodDays": 55, "pendingChange": "Construction Prompt Payment Act will cut holdback period to 46 days on coming into force"},
+      "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/97045_01",
+      "publisher": "BC Builders Lien Act",
+      "sourceType": "government",
+      "confirmed": false,
+      "note": "10% holdback cannot be reduced by contract."
+    },
+    "UK": {
+      "value": {"typicalRetention": "3-5%", "jctMinorWorks": "5% retention on interim certificates, halved to 2.5% at practical completion, balance released after the rectification period (default 3 months in MW 2011; commonly 6-12 months)", "interimPayments": "monthly", "policy": "Government announced 2026-03-24 its intention to ban cash retentions (consultation closed 2025-10-23; 12-24 month transition expected); not yet law", "newBuildPurchaseDeposit": "10% at exchange; NHBC Buildmark protects deposit up to GBP 100,000 or 10% of price"},
+      "url": "https://www.osborneclarke.com/insights/uk-government-ban-construction-retentions-and-tighten-late-payment-rules",
+      "publisher": "Osborne Clarke; JCT MW guidance (https://www.jctltd.co.uk/docs/jctondemand/MWGuidanceNotes.pdf)",
+      "sourceType": "lawFirm",
+      "confirmed": false
+    },
+    "IE": {
+      "value": {"cca2013": "Payment claim dates every 30 days from commencement; response within 21 days", "exemptions": "contracts <= EUR 10,000, or a dwelling <= 200 m2 where a party occupies or intends to occupy it", "retentionPractice": "RIAI forms provide for retention; Liaison Committee Code of Practice: 7.5% under EUR 500,000, 5% for EUR 500,000-1,000,000; half released at practical completion, half after defects liability period"},
+      "url": "https://enterprise.gov.ie/en/publications/publication-files/information-booklet-construction-contracts-act-2013.pdf",
+      "publisher": "Department of Enterprise, Trade and Employment; Liaison Committee (https://liaisoncommittee.ie/wp-content/uploads/2020/05/Code-Of-Practice-2018.pdf)",
+      "sourceType": "government",
+      "confirmed": false,
+      "note": "The owner-occupier house exemption means most one-off home builds fall outside the CCA 2013."
+    },
+    "MX": {
+      "value": "Private contracts are free-form. Public works (LOPSRM) require guarantees for advances and performance within 15 days of award (art. 48) and a hidden-defects guarantee released 12 months after physical handover (art. 66). The specific percentages (advance commonly up to 30%, performance 10%) are set by each agency and were not verified.",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LOPSRM.pdf",
+      "publisher": "Cámara de Diputados",
+      "sourceType": "government",
+      "confirmed": false
+    }
+  },
+
+  "occupancy": {
+    "US_NYC": {
+      "value": {"initialCO_or_renewalWithoutChange_1and2Family": 130, "interimCO": 130, "renewalWithChange": 200, "finalCO": 0},
+      "url": "https://www.nyc.gov/site/buildings/industry/dob-now-build-faqs.page",
+      "publisher": "NYC Department of Buildings (as quoted)",
+      "sourceType": "government",
+      "confirmed": false,
+      "steps": "All sign-offs, fees paid, violations resolved, other-agency approvals; CO worksheet for final CO or TCO. Records management fee on new-building applications: USD 45 for 1-3 family, USD 165 other (1 RCNY 101-03, confirmed)."
+    },
+    "US_LA": {"value": {"fee": null, "reinspectionFee": 65, "typicalWaitAfterFinal": "2-4 weeks (secondary)"}, "note": "C of O issued by LADBS after final inspection passes on new construction.", "url": "https://dbs.lacity.gov/services/inspection", "sourceType": "government", "confirmed": false},
+    "US_CT": {"value": "No building may be occupied until the local building official issues a certificate of occupancy certifying substantial compliance with the State Building Code; fee set by each town.", "url": "https://www.cga.ct.gov/2014/rpt/2014-R-0096.htm", "publisher": "Connecticut Office of Legislative Research", "sourceType": "government", "confirmed": false},
+    "CA_ON": {
+      "value": "Occupancy permit under OBC Division C 1.3.3; for unfinished buildings Toronto issues an 'Authority to Occupy' permit, applied for at least 10 business days before occupancy, once structure, walls, fire separations, exits, water/drainage, lighting, heating and fire alarm are complete.",
+      "url": "https://www.toronto.ca/services-payments/building-construction/building-permit/before-you-apply-for-a-building-permit/building-permit-application-guides/guides-for-other-buildings/partial-occupancy-of-an-unfinished-building-authority-to-occupy/",
+      "publisher": "City of Toronto",
+      "sourceType": "government",
+      "confirmed": false,
+      "fee": null
+    },
+    "CA_BC": {"value": null, "note": "Vancouver issues occupancy permits after final inspection; fee not extracted."},
+    "UK_England": {
+      "value": "Completion certificate issued by local authority building control or a registered building control approver; the charge is included in plan + inspection fees set by each authority (example: GBP 200 plan + GBP 1,300 inspection incl. VAT for one new dwelling at one authority, 2025).",
+      "url": "https://www.wolverhampton.gov.uk/sites/default/files/2025-11/fee-charges-from-1st-December-2025.pdf",
+      "publisher": "Local authority charging schedules (Building (Local Authority Charges) Regulations 2010)",
+      "sourceType": "government",
+      "confirmed": false,
+      "note": "London boroughs set their own (e.g. Lambeth schedule https://www.lambeth.gov.uk/sites/default/files/2024-04/Building_Control_Guide_to_Fees_2024_2025_0.pdf); not extracted."
+    },
+    "IE": {
+      "value": {"commencementNoticeFeeEUR": 30, "per": "building/unit", "noticeWindow": "not more than 28 and not less than 14 days before works start", "completion": "Certificate of Compliance on Completion (BCAR) must be lodged and entered on the statutory register before the building is occupied"},
+      "url": "https://www.pointofsinglecontact.ie/Browse-by-Sector/Construction/Commencement-Notice-for-Building-Works/",
+      "publisher": "Irish Point of Single Contact / Building Control Management System",
+      "sourceType": "government",
+      "confirmed": false
+    },
+    "MX_CDMX": {
+      "value": "Owner files the Aviso de Terminación de Obra with the Alcaldía (or SEDUVI) within 15 business days of completion; the authority checks the work against the Reglamento de Construcciones and issues the Autorización de Uso y Ocupación. Partial notices allowed for independently operating parts. Manifestación tipo B covers non-residential/mixed up to 5,000 m2 or up to 10,000 m2 residential; fees under Código Fiscal CDMX art. 185.",
+      "url": "https://www.cdmx.gob.mx/public/InformacionTramite.xhtml?idTramite=644",
+      "publisher": "Gobierno de la Ciudad de México",
+      "sourceType": "government",
+      "confirmed": false,
+      "fee": null
+    }
+  },
+
+  "uncertain": [
+    "No free primary source splits new-home cost by specification tier (standard/mid/high) in the US, UK or Mexico; RSMeans, BCIS and BIMSA are paywalled. RLB low/high and Altus standard vs custom are the best primary proxies.",
+    "Second-story vs single-story, basement per sq ft, attached garage (except SCSI Ireland) and per-bathroom new-build increments have no primary figures in any market.",
+    "Altus 2026 figures are from summaries of a gated guide; the 2025 guide was read directly.",
+    "HBF 2024 problem-count bands: values read, band mapping not.",
+    "NYC demolition fee formula and LL 128 of 2024 minimum-fee change not read from the statute text.",
+    "UK retention ban announced 2026-03-24 but not enacted; UK commonhold reform is a draft bill.",
+    "Toronto 2026 development-charge 60% reduction reported by secondary sources only.",
+    "Mexico CMIC per-m2 figures by housing class came from catalog copies and summaries, not CMIC directly.",
+    "Change-order percentages for residential work have no primary statistic; large-project figures (McKinsey, KPMG) should not be applied to single homes without that caveat.",
+    "Connecticut retainage cap (7.5%) not verified.",
+    "Zonda Cost vs Value 2026 edition not found as of 2026-09-30; 2025 (released 2025-09-18) is the latest used.",
+    "Several search-engine summaries contained anachronistic or unverifiable political details (e.g. a named UK prime minister); these were excluded."
+  ]
+}
