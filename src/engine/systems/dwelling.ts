@@ -123,6 +123,9 @@ export function stayPlace(sim: Simulation, person: Person): Place {
   return { type: 'condo', size: 350, fixtures: HOTEL_FIXTURES, keeps: false, shared: false, owned: false, cooks: false };
 }
 
+/** A home without air conditioning, cooled by units of their own (`systems/appliances.ts`). */
+const ownUnits = (person: Person, f: Fixtures): Fixtures => (person.acUnits !== undefined && f.cooling === 'none' ? { ...f, cooling: 'units' } : f);
+
 /** The place somebody lives, or nothing without a home. */
 export function homePlace(sim: Simulation, person: Person): Place | undefined {
   const home = person.home;
@@ -130,10 +133,10 @@ export function homePlace(sim: Simulation, person: Person): Place | undefined {
   if (home.kind === 'sofa') return { type: 'condo', size: 700, fixtures: SOFA_FIXTURES, keeps: false, shared: true, owned: false, cooks: true };
   const owned = livingIn(person);
   if (owned) {
-    return { type: owned.facts.type, size: owned.facts.size, fixtures: fixturesOf(sim, person, owned.cityId, owned.facts, owned.id), keeps: true, shared: false, owned: true, cooks: true };
+    return { type: owned.facts.type, size: owned.facts.size, fixtures: ownUnits(person, fixturesOf(sim, person, owned.cityId, owned.facts, owned.id)), keeps: true, shared: false, owned: true, cooks: true };
   }
   const unit = home.unit ?? drawRental(sim, person, home.cityId, home.kind === 'shared', home.since);
-  return { type: unit.type, size: unit.size, fixtures: unit.fixtures, keeps: true, shared: unit.shared, owned: false, cooks: true };
+  return { type: unit.type, size: unit.size, fixtures: ownUnits(person, unit.fixtures), keeps: true, shared: unit.shared, owned: false, cooks: true };
 }
 
 /** Whether they're at home now: in its town. */

@@ -10,8 +10,10 @@
  * price is kept, paid from the bank. Each lasts its published life and then
  * gives out, the home back as it was without it, until another is fitted.
  *
- * Not kept, and said so: appliances in a rented home, what one adds to a
- * home's value, and a gas dryer's or a heat pump's hookups.
+ * Not kept, and said so: what one adds to a home's value, and a gas dryer's
+ * or a heat pump's hookups. Appliances in a rented home were among them until
+ * 2026-09-29; a tenant's own air conditioning units are kept now (below), and
+ * the rest stays the landlord's.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -24,7 +26,7 @@ import { CITIES } from '../content/geography';
 import { APPLIANCES, APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '../content/appliances';
 import type { Fixtures } from '../content/homes';
 import { homeById, type OwnedHome } from './homes';
-import { fixturesOf } from './dwelling';
+import { fixturesOf, homePlace } from './dwelling';
 import { inTheBank, payFromBank } from './household';
 
 export const APPLIANCE_OUT_KIND = 'home.appliance_out';
@@ -105,5 +107,56 @@ export function registerAppliances(sim: Simulation): void {
     owned.facts.fixtures = change(fixturesOf(s, person, owned.cityId, owned.facts, owned.id), kind, false, owned.laundryBefore ?? 'none');
     if (owned.appliances) delete owned.appliances[kind];
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: `The ${APPLIANCE_LABEL[kind]} Gave Out`, body: `After ${APPLIANCE_LIFE[kind]} years, its published life, at ${owned.facts.address}. Another can be fitted on the Homes screen.`, importance: 50, route: '/workspace/homes' });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Air conditioning of one's own, from 2026-09-29.
+
+/**
+ * A tenant can't fit a dishwasher or central air to a landlord's home, but
+ * can buy a window unit, or a portable one, and take it with them. Where
+ * the price kept is one (America's and Canada's window units, Britain's
+ * portable ones, above), it's sold to anybody with a home: theirs, it cools
+ * any home they live in that has no air conditioning of its own, until its
+ * nine years are up. Ireland's and Mexico's kept price is a split system
+ * fitted to the walls, which a tenant fits only with the landlord's consent,
+ * so none is sold there. Until 2026-09-29 a tenant had no way to cool a hot
+ * flat.
+ */
+export const OWN_UNITS_IN: ReadonlySet<string> = new Set(['us', 'uk', 'ca']);
+export const UNITS_OUT_KIND = 'home.units_out';
+
+/** Why they can't buy units of their own, or nothing. */
+export function unitsRefusal(sim: Simulation, person: Person): string | undefined {
+  if (person.acUnits !== undefined) return 'You have units of your own.';
+  const home = person.home;
+  if (!home || home.kind === 'sofa') return 'They’re bought for a home of your own.';
+  if (!OWN_UNITS_IN.has(CITIES.get(home.cityId)?.countryId ?? '')) return 'Air conditioning here is a split system fitted to the walls, which a tenant fits only with the landlord’s consent.';
+  if (homePlace(sim, person)?.fixtures.cooling !== 'none') return 'Your home is cooled already.';
+  const cost = applianceCost(sim, home.cityId, 'ac-units')!;
+  if (inTheBank(sim, person) < cost) return `They cost ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}, fitted.`;
+  return undefined;
+}
+
+export function registerOwnUnits(sim: Simulation): void {
+  sim.onCommand<Record<string, never>, { cost: Money; lastsTo: Instant }>('home.buy_units', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = unitsRefusal(s, person);
+    if (no) throw new CommandError(no);
+    const cost = applianceCost(s, person.home!.cityId, 'ac-units')!;
+    if (!payFromBank(s, person, cost, 'Air conditioning units of your own, bought and fitted', 'home')) throw new CommandError('The bank couldn’t pay for them.');
+    person.acUnits = s.now;
+    const lastsTo = s.now + APPLIANCE_LIFE['ac-units'] * YEAR_MS;
+    s.schedule({ at: lastsTo, kind: UNITS_OUT_KIND, label: 'Air Conditioning Units Worn Out', category: 'home', priority: 30, payload: { personId: person.id } });
+    return { cost, lastsTo };
+  });
+
+  sim.onSchedule(UNITS_OUT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    // Units can't be bought while one's own run, so the ones bought are these.
+    if (!person) return;
+    delete person.acUnits;
+    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Your Air Conditioning Units Gave Out', body: `After ${APPLIANCE_LIFE['ac-units']} years, their published life. More can be bought on the Home screen.`, importance: 50, route: '/home' });
   });
 }

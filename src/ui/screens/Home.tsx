@@ -25,6 +25,7 @@ import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calenda
 import { netWorth } from '@/engine/systems/finance';
 import { readiness, wellbeingSummary, EMPTY, OVERWROUGHT } from '@/engine/systems/life';
 import { CITIES } from '@/engine/content/geography';
+import { OWN_UNITS_IN, applianceCost, unitsRefusal } from '@/engine/systems/appliances';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
@@ -766,6 +767,8 @@ function YourPlace({ cur }: { cur: string }) {
   const cleaner = useWorld((s) => cleanerCost(s, s.player));
   const premium = useWorld((s) => rentersPremium(s, s.player));
   const home = useWorld((s) => s.player.home);
+  const noUnits = useWorld((s) => unitsRefusal(s, s.player));
+  const unitsCost = useWorld((s) => (s.player.home && OWN_UNITS_IN.has(CITIES.get(s.player.home.cityId)?.countryId ?? '') ? applianceCost(s, s.player.home.cityId, 'ac-units') : undefined));
   if (!place || !home) return null;
   const country = CITIES.get(home.cityId)?.countryId ?? 'us';
   const f = place.fixtures;
@@ -785,6 +788,11 @@ function YourPlace({ cur }: { cur: string }) {
           {living.rentersInsurance
             ? <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => run('home.renters_insurance', { on: false })}>Cancel Renters Insurance</Gated>
             : <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.renters_insurance', { on: true }).ok) toast('Your things are insured.', 'positive'); }}>Get Renters Insurance ({formatMoney(premium, cur, { cents: false })} A Month)</Gated>}
+        </div>
+      )}
+      {place.keeps && home.kind !== 'sofa' && place.fixtures.cooling === 'none' && unitsCost !== undefined && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <Gated feature="home.buy_units" className="btn btn-sm btn-ghost" disabled={Boolean(noUnits)} title={noUnits} onClick={() => { if (run('home.buy_units', {}).ok) toast('Yours, and they move with you.', 'positive'); }}>Buy Air Conditioning Units ({formatMoney(unitsCost, cur, { cents: false })})</Gated>
         </div>
       )}
       {place.keeps && (

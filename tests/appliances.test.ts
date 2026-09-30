@@ -11,7 +11,8 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import type { Fixtures } from '@/engine/content/homes';
-import { applianceCost, fitRefusal } from '@/engine/systems/appliances';
+import { applianceCost, fitRefusal, unitsRefusal } from '@/engine/systems/appliances';
+import { drawRental, homePlace } from '@/engine/systems/dwelling';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 
 const YEAR = 365.2425 * MS_DAY;
@@ -93,5 +94,53 @@ describe('what one changes, and its end', () => {
     expect(home.facts.fixtures!.cooling).toBe('central');
     sim.advanceBy(9 * YEAR + MS_DAY);
     expect(home.facts.fixtures!.cooling).toBe('central');
+  });
+});
+
+describe('air conditioning units of one’s own', () => {
+  /** A renter whose flat has no air conditioning. */
+  const renter = (city: string, name: string) => {
+    const sim = save(city, name);
+    const home = sim.player.home!;
+    expect(home.kind === 'own' || home.kind === 'shared').toBe(true);
+    home.unit = { ...(home.unit ?? drawRental(sim, sim.player, home.cityId, home.kind === 'shared', home.since)), fixtures: { ...bare } };
+    fund(sim);
+    return sim;
+  };
+
+  it('sells a New York tenant window units at $580 fitted, cooling their flat, and theirs for nine years', () => {
+    const sim = renter('us-ny-newyork', 'units-ny');
+    expect(homePlace(sim, sim.player)!.fixtures.cooling).toBe('none');
+    const before = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    const r = sim.execute({ kind: 'home.buy_units', payload: {} });
+    expect(r.ok, r.error).toBe(true);
+    expect(before - sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(inSave(sim, 580_00, 'USD'));
+    expect(homePlace(sim, sim.player)!.fixtures.cooling).toBe('units');
+    expect(unitsRefusal(sim, sim.player)).toMatch(/of your own/);
+    sim.advanceBy(9 * YEAR - 30 * MS_DAY);
+    expect(sim.player.acUnits).toBeDefined();
+    sim.advanceBy(60 * MS_DAY);
+    expect(sim.player.acUnits).toBeUndefined();
+  });
+
+  it('cools any home they move to without its own, and leaves one with its own as it is', () => {
+    const sim = renter('us-ny-newyork', 'units-move');
+    expect(sim.execute({ kind: 'home.buy_units', payload: {} }).ok).toBe(true);
+    const home = sim.player.home!;
+    home.unit = { ...home.unit!, fixtures: { ...bare, cooling: 'central' } };
+    expect(homePlace(sim, sim.player)!.fixtures.cooling).toBe('central');
+    home.unit = { ...home.unit!, fixtures: { ...bare } };
+    expect(homePlace(sim, sim.player)!.fixtures.cooling).toBe('units');
+  });
+
+  it('refuses a Dublin tenant, whose kept price is a split system on the walls, and a home cooled already', () => {
+    const ie = renter('ie-lei-dublin', 'units-ie3');
+    expect(unitsRefusal(ie, ie.player)).toMatch(/landlord’s consent/);
+    const cooled = renter('us-ny-newyork', 'units-cooled');
+    cooled.player.home!.unit = { ...cooled.player.home!.unit!, fixtures: { ...bare, cooling: 'units' } };
+    expect(unitsRefusal(cooled, cooled.player)).toMatch(/cooled already/);
+    const broke = renter('uk-eng-london', 'units-broke');
+    for (const a of Object.values(broke.universe.accounts)) if (a.ownerId === broke.player.id && !a.nominal && a.balance > 0) a.balance = 0;
+    expect(unitsRefusal(broke, broke.player)).toMatch(/cost/);
   });
 });
