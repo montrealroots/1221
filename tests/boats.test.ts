@@ -192,15 +192,21 @@ describe('Bayliner’s loan, and a boat moved', () => {
 });
 
 describe('a boat chartered with its captain', () => {
-  it('costs Go Sailing NYC’s $1,050 for three hours and its suggested 20%, Island Mike’s $600 for four on the Sound, and none elsewhere', () => {
+  it('costs Go Sailing NYC’s $1,050 for three hours and its suggested 20%, Island Mike’s $600 for four on the Sound, Marina del Rey’s, the Thames’ and Toronto’s, and none in Vancouver', () => {
     const sim = save('us-ny-newyork', 'charter-cost');
     expect(charterCost(sim, 'us-ny-newyork')).toBe(usd(sim, 1_260_00));
     expect(charterCost(sim, 'us-ct-newhaven')).toBe(usd(sim, 600_00));
-    expect(charterCost(sim, 'us-ca-losangeles')).toBeUndefined();
+    // OnBoat's $875 and the middle of its 10% to 15%; the Thames' £799 with no tip; Toronto's boat and skipper with 17.5%.
+    expect(charterCost(sim, 'us-ca-losangeles')).toBe(usd(sim, Math.round(875 * 1.125 * 100)));
+    expect(charterCost(sim, 'uk-eng-london')).toBe(exchange(79_900, 'GBP', saveCurrency(sim.universe)));
+    expect(charterCost(sim, 'ca-on-toronto')).toBe(exchange(Math.round(515 * 1.175 * 100), 'CAD', saveCurrency(sim.universe)));
+    expect(charterCost(sim, 'ca-bc-vancouver')).toBeUndefined();
     expect(minutesFor(sim, 'charter')).toBe(180);
     sim.player.currentLocationId = 'us-ct-newhaven';
     expect(minutesFor(sim, 'charter')).toBe(240);
-    sim.player.currentLocationId = 'us-ca-losangeles';
+    sim.player.currentLocationId = 'uk-eng-london';
+    expect(minutesFor(sim, 'charter')).toBe(70);
+    sim.player.currentLocationId = 'ca-bc-vancouver';
     expect(charterRefusal(sim, sim.player)).toMatch(/No captain’s charter/);
   });
 

@@ -101,6 +101,8 @@ const REAL_NAMES = [
   // Venues that spell themselves that way, and the square one of them is on.
   'Bell Centre', 'National Centre For The Performing Arts', 'Bolshoi Theatre', 'Theatre Square',
   'Centre National du Cinéma',
+  // Toronto's waterfront center, whose Nautical Centre charters a boat and skipper (`content/boats.ts`).
+  'Harbourfront Centre', 'Nautical Centre',
   'Rockefeller Center', 'Lincoln Center', 'Kennedy Center',
   // Organisations, parties and titles.
   'Labour Party', 'Colour Supplies', 'Grey Goose', 'Earl Grey', 'Greyhound',

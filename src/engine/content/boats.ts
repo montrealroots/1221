@@ -89,11 +89,22 @@ export const isBoatState = (j: Jurisdiction | undefined): j is BoatState => j ==
  *   middle.
  * - Connecticut, on Long Island Sound: Island Mike's sailboat from Norwalk,
  *   $600 for four hours for up to four; it asks no gratuity.
- * Marina del Rey's were read only from marketplace summaries, and none is
- * kept there.
+ * From later on 2026-09-30 (`docs/research/world/research-charter-abroad.json`):
+ * - Los Angeles: OnBoat's Classic Sailing Experience, a 58-foot sailboat from
+ *   Marina del Rey, $875 for three hours, and the 10% to 15% it suggests.
+ * - London: Thames RIB Experience's private boat, £799 for seventy minutes;
+ *   a tip isn't customary in Britain.
+ * - Toronto: Harbourfront's Niagara 35 for two hours, the middle of C$355 to
+ *   C$395, and its skipper at the middle of C$60 to C$80 an hour, the sum
+ *   SLATE's; Canada's customary 15% to 20%.
+ * Vancouver's and Dublin Bay's were read only from marketplaces or an old
+ * page, and none is kept there. Until then Marina del Rey's weren't either.
  */
-export interface Charter { operator: string; usd: number; hours: number; tip: number }
+export interface Charter { operator: string; amount: number; currency: string; hours: number; tip: number }
 export const CHARTERS: Readonly<Record<string, Charter>> = {
-  'us-ny-newyork': { operator: 'Go Sailing NYC', usd: 1_050, hours: 3, tip: 0.2 },
-  'us-ct': { operator: 'Island Mike, Norwalk', usd: 600, hours: 4, tip: 0 },
+  'us-ny-newyork': { operator: 'Go Sailing NYC', amount: 1_050, currency: 'USD', hours: 3, tip: 0.2 },
+  'us-ct': { operator: 'Island Mike, Norwalk', amount: 600, currency: 'USD', hours: 4, tip: 0 },
+  'us-ca-losangeles': { operator: 'OnBoat, Marina del Rey', amount: 875, currency: 'USD', hours: 3, tip: 0.125 },
+  'uk-eng-london': { operator: 'Thames RIB Experience', amount: 799, currency: 'GBP', hours: 70 / 60, tip: 0 },
+  'ca-on-toronto': { operator: 'Harbourfront Centre’s Nautical Centre', amount: 375 + 2 * 70, currency: 'CAD', hours: 2, tip: 0.175 },
 };

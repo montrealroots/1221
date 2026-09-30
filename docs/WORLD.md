@@ -369,7 +369,8 @@ Evidence: `tests/boats.test.ts` (9); 13 mutations, all killed in the end. Three 
 - Researched in `docs/research/world/research-charter.json`.
 - A hired pilot: an owner who isn't a pilot has their own plane flown by a commercial pilot (Stage 7c, above), at the one published piston rate.
 - Charter A Boat (Look After Yourself): out on the water with a captain, no boat and no certificate of one's own; a vessel for hire is run by a captain with the Coast Guard's six-pack license (46 CFR 15.605). New York City: Go Sailing NYC's $1,050 for three hours and the 18% to 22% gratuity it suggests, the middle. Connecticut, on the Sound: Island Mike's $600 for four hours from Norwalk, which asks none. It does what an outing in one's own boat does.
-- Open, and why: a jet chartered was open here until 7f (below); a boat chartered in Marina del Rey, where only marketplace summaries were read; a chauffeur, whose rates are researched but whom nothing in SLATE yet needs.
+- From later on 2026-09-30 (`docs/research/world/research-charter-abroad.json`): Charter A Boat from Marina del Rey (OnBoat's $875 for three hours, and the middle of the 10% to 15% it suggests), on the Thames (Thames RIB Experience's £799 for seventy minutes, no tip, as none is customary in Britain) and from Toronto's harbourfront (the Nautical Centre's Niagara 35 for two hours and its skipper, the sum SLATE's, and Canada's customary 15% to 20%).
+- Open, and why: a jet chartered was open here until 7f (below); a boat chartered in Vancouver or on Dublin Bay, where only marketplaces or a 2012 page were read; a chauffeur, whose rates are researched but whom nothing in SLATE yet needs.
 
 Evidence: `tests/boats.test.ts` (16 in all) and `tests/aviation.test.ts` (7, the plane's own test now hiring a pilot); 10 mutations, all killed.
 

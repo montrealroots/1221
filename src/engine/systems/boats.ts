@@ -204,7 +204,10 @@ export function charterAt(cityId: string): Charter | undefined {
 /** What a charter costs where they are, its gratuity with it, in the save's money. */
 export function charterCost(sim: Simulation, cityId: string): Money | undefined {
   const c = charterAt(cityId);
-  return c ? usd(sim, c.usd * (1 + c.tip)) : undefined;
+  if (!c) return undefined;
+  const cur = saveCurrency(sim.universe);
+  const cents = Math.round(c.amount * (1 + c.tip) * 100);
+  return cur === c.currency ? cents : exchange(cents, c.currency, cur) ?? cents;
 }
 
 /** Why a boat can't be chartered now, or nothing where it can (the weather is `life.ts`'s). */

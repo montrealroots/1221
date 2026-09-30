@@ -510,7 +510,7 @@ export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefi
  */
 export function minutesFor(sim: Simulation, action: LookAfter): number {
   if (action === 'laundry') return LAUNDRY.minutes[laundryWay(sim, sim.player)];
-  if (action === 'charter') return (charterAt(sim.player.currentLocationId)?.hours ?? 3) * 60;
+  if (action === 'charter') return Math.round((charterAt(sim.player.currentLocationId)?.hours ?? 3) * 60);
   if (action === 'tidy') { const place = placeOf(sim, sim.player); return place ? cleaningMinutes(place) : LOOKING_AFTER.tidy.minutes; }
   return LOOKING_AFTER[action].minutes;
 }
