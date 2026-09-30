@@ -53,6 +53,9 @@ export const CAMPGROUNDS: Readonly<Record<string, { perNight: number; visitorExt
 };
 
 export const STAY_OPTIONS: Readonly<Record<string, readonly StayOption[]>> = {
+  'ca-02-victoria': [
+    { cls: 'hostel', perNight: 36.42, currency: 'USD', per: 'bed', basis: 'Ocean Island Inn’s dormitory bed on Hostelworld, 2026-09-30', confirmed: true },
+  ],
   'us-ny-newyork': [
     { cls: 'hostel', perNight: 53.1, currency: 'USD', per: 'bed', basis: 'HI New York City Hostel’s dormitory bed on Hostelworld, 2026-09-30', confirmed: true },
     { cls: 'extended', perNight: 521, currency: 'USD', per: 'room', basis: 'Residence Inn Times Square’s “from” rate, read from an excerpt of Marriott’s page', confirmed: false },

@@ -31,7 +31,7 @@ import { airportByCode } from '@/engine/systems/airports';
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
 /** A flight not flown by an airline: a chartered jet, or one's own plane flown by its owner or a hired pilot. */
 const flownWord = (l: JourneyLeg, pilot: boolean): string | undefined => (l.mode === 'drive' && l.routeId === 'chauffeur' ? 'Car And Driver' : l.mode !== 'fly' ? undefined : l.routeId === 'jet' ? 'Chartered Jet' : l.routeId === 'own' ? (pilot ? 'Your Plane' : 'Your Plane, A Hired Pilot') : undefined);
-const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', fly: 'Flown Yourself', train: 'Train', bus: 'Coach', drive: 'Drive', arrival: 'Off The Aircraft' };
+const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', fly: 'Flown Yourself', train: 'Train', bus: 'Coach', ferry: 'Ferry', drive: 'Drive', arrival: 'Off The Aircraft' };
 /** A train journey's legs, named for a station. */
 const RAIL_WORD: Partial<Record<JourneyLeg['mode'], string>> = { ground: 'To Or From The Station', 'check-in': 'At The Station' };
 const clock = (h: number) => `${Math.floor(h) % 12 === 0 ? 12 : Math.floor(h) % 12}:${String(Math.round((h % 1) * 60)).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;

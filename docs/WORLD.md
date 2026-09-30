@@ -174,6 +174,22 @@ Researched in `docs/research/world/research-travel-2.json` and `research-travel-
 
 Evidence: `tests/compensation.test.ts` (5). 7 mutations, all killed in the end. Two first survived and needed tests: the airline's fault, which the first test stopped before it could see, and the journey's claim, now tested end to end with every flight canceled.
 
+#### Stage 2f: a ferry between towns (done 2026-09-30)
+Researched in `docs/research/world/research-travel-2.json`, `research-travel-3.json` and `research-victoria.json`.
+- BC Ferries, Tsawwassen to Swartz Bay, joins Vancouver and Victoria both ways, booked and taken as a train is (`vehicle: 'ferry'` in `content/rail.ts`):
+  - 13 sailings each way a weekday, 1h35 across.
+  - The adult fare, C$21 with its 5% fuel surcharge (fare index 26-05).
+  - 83% of sailings leave within ten minutes, and 1.5% are canceled (fiscal 2026).
+  - Its terminals are far out, so the route runs town to town: TransLink's three zones (C$6.70) and bus 620 to Tsawwassen, and BC Transit's 70 (C$3.00) from Swartz Bay. The Canada Line's own minutes weren't read and aren't counted.
+- Victoria joined SLATE's towns for it, with its hotels: the Greater Victoria Hotel Development Working Group's 2025 average, C$224, on CoStar's data, taxed at GST, PST and the 3% MRDT, and Ocean Island Inn's dormitory bed.
+- Not kept yet:
+  - A car on the ferry, as a journey by one's own car across water.
+  - Horseshoe Bay to Nanaimo, for want of Nanaimo as a town.
+  - Dublin to Holyhead and on to London: Stena's €44 foot fare and Avanti's £39.50 were read, but the connection between them wasn't.
+  - The city ferries (Staten Island, NYC Ferry, Toronto Island), since SLATE's journeys run between towns.
+
+Evidence: `tests/ferries.test.ts` (2). 2 mutations, both killed.
+
 ### Stage 3: Vehicles
 
 #### Stage 3a and 3b: a car bought, kept and run (done 2026-09-29)
@@ -330,6 +346,22 @@ Evidence: `tests/outings.test.ts` (8). 22 mutations, all killed in the end. Thre
 - The ride's crash draw, one chance in about 23,000 an hour, too rare for a test to see. It's now `rideOut`, taking its chance, and is tested at certainty.
 - The effort of a ride and of the trail, now measured against the body's sedentary 1.4.
 - The trail's mood, now tested against an hour outside and an hour unwinding.
+
+#### Stage 3j: a vehicle stolen (done 2026-09-30)
+Researched in `docs/research/world/research-custom-effects.json` (`systems/theft.ts`, decider `vehicle.theft`).
+- Each month a road vehicle may be stolen at the place's published thefts over its vehicles:
+  - New York City's 620 in 100,000 (NYPD 2025 over the DMV's count).
+  - The rest of New York State's 116.
+  - Los Angeles's 502 and the rest of California's 379 (NICB and the DMV).
+  - Ontario's 220 (Équité over Statistics Canada's count).
+  - Connecticut's, British Columbia's, London's, Ireland's and Mexico City's counts come without a count of vehicles, so none is drawn there.
+- Recovered at Ontario's 51%, or Canada's 59% for an American car, the US publishing no share (SLATE's estimate). It comes back a month on, as no time to recovery is published.
+- Not recovered: full cover pays its value, the loan first, as an insurer pays the lender. Liability cover pays nothing. A loan the payout doesn't clear runs on month by month, and the car stays in net worth at nothing and its loan among the debts.
+- While it's gone, it isn't insured, driven, inspected, renewed, sold or driven on a journey.
+- This is the first thing that makes full cover and liability cover differ in what they pay, rather than only in what they cost.
+- Not kept: bicycles, e-bikes and ATVs stolen, which aren't in these counts; a tracker's or an immobilizer's effect, whose only published measure (the EU immobilizer's 40%) is already in today's rates.
+
+Evidence: `tests/theft.test.ts` (5). 11 mutations, all killed in the end. Three first survived and needed tests: a loan bigger than the car running on under full cover, a stolen car leaving the books once its loan is paid, and a stolen car not being driven.
 
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.

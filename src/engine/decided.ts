@@ -39,6 +39,9 @@ import { startingDocuments } from './systems/documents';
 import { passesTest } from './systems/licensing';
 import { flightFate } from './systems/journey';
 import { airlineAtFault } from './systems/compensation';
+import { mayBeStolen } from './systems/theft';
+import type { OwnedVehicle } from './systems/vehicles';
+import { modelById } from './systems/vehicles';
 import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
@@ -323,6 +326,23 @@ defineDecider<{ sim: Simulation; flight: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), flight: seed }),
   decide: ({ sim, flight }) => (airlineAtFault(sim, sim.player, 'eu261', `c-${flight}`) ? 'the airline’s' : 'not the airline’s'),
+});
+
+defineDecider<{ sim: Simulation; car: number }, string>({
+  id: 'vehicle.theft',
+  decides: 'A vehicle stolen in a month or not, and if so found again, at each place’s published thefts and recoveries (THEFT); swept at even odds, the real ones being too small to see.',
+  drawnIn: 'src/engine/systems/theft.ts',
+  reads: {
+    // Each car is drawn on its own.
+    car: (o, t) => ({ ...o, car: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), car: seed }),
+  decide: ({ sim, car }) => {
+    const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
+    const stolen = mayBeStolen(sim, sim.player, v, modelById(v.modelId)!, 0, 'USD', { stolen: 0.5 });
+    return !stolen ? 'kept' : v.stolen?.recoverAt !== undefined ? 'stolen, found' : 'stolen';
+  },
 });
 
 defineDecider<{ sim: Simulation }, string>({

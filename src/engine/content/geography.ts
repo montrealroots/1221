@@ -364,6 +364,7 @@ const NEEDED_AT_BOOT: readonly RawCity[] = [
     population: 130_322,
     kind: '',
   },
+  { id: 'ca-02-victoria', name: 'Victoria', regionId: 'ca-02', countryId: 'ca', lat: 48.4359, lon: -123.3516, timeZone: 'America/Vancouver', population: 289_625, kind: 'a' },
   { id: 'uk-nir-belfast', name: 'Belfast', regionId: 'uk-nir', countryId: 'uk', lat: 54.5968, lon: -5.9254, timeZone: 'Europe/London', population: 348_005, kind: 'a' },
   { id: 'uk-sct-edinburgh', name: 'Edinburgh', regionId: 'uk-sct', countryId: 'uk', lat: 55.9521, lon: -3.1965, timeZone: 'Europe/London', population: 514_990, kind: 'a' },
   { id: 'us-ny-hudson', name: 'Hudson', regionId: 'us-ny', countryId: 'us', lat: 42.2529, lon: -73.7910, timeZone: 'America/New_York', population: 6_436, kind: '' },

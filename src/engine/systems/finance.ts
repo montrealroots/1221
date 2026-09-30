@@ -19,6 +19,7 @@ import { LAND_MARKETS } from '../content/land';
 import { landValue, parcelsOf } from './land';
 import { valueOf, vehiclesOf, modelById } from './vehicles';
 import { boatsOf } from './boats';
+import { stolenNow } from './theft';
 import { planesOf } from './aviation';
 
 export interface Worth {
@@ -76,7 +77,9 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
   let land = 0;
   for (const v of person ? vehiclesOf(person) : []) {
     // A leased car is the lessor's, not held (`systems/leasing.ts`).
+    // A car stolen and not back is worth nothing to its owner; its loan is still owed.
     if (v.soldAt !== undefined || v.lease) continue;
+    if (stolenNow(v, sim.now)) { liabilities += v.loan?.owed ?? 0; continue; }
     const m = modelById(v.modelId);
     vehicles += m ? inSave(valueOf(v, sim.now), m.currency) : 0;
     liabilities += v.loan?.owed ?? 0;

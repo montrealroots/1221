@@ -32,6 +32,7 @@ import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT
 import { homeOf } from './earnings';
 import { owe, payFromBank, spend } from './household';
 import { mayDrive, type VehicleClass } from './documents';
+import { gone, mayBeStolen, stolenNow } from './theft';
 import { byRoad as roadBetween, drive } from './driving';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -67,6 +68,8 @@ export interface OwnedVehicle {
   at?: string;
   /** The last periodic inspection's due date met (`systems/inspections.ts`, from 2026-09-29). */
   inspected?: Instant;
+  /** Stolen, and when it comes back where it was found (`systems/theft.ts`, from 2026-09-30). */
+  stolen?: { at: Instant; recoverAt?: Instant };
   /** Leased, not owned (`systems/leasing.ts`, from 2026-09-30): the lessor's until bought out. */
   lease?: import('./leasing').Lease;
 }
@@ -356,7 +359,7 @@ export function tradeInValue(sim: Simulation, v: OwnedVehicle): Money {
 /** A car traded in where a town is, for its quote: its value and its loan in that place's money. */
 export function tradeInFor(sim: Simulation, cityId: string, v: OwnedVehicle): { value: Money; payoff: Money; label: string } | undefined {
   const j = jurisdictionOf(cityId);
-  if (!j || v.soldAt !== undefined || v.repossessed || v.lease) return undefined;
+  if (!j || v.soldAt !== undefined || v.repossessed || v.lease || stolenNow(v, sim.now)) return undefined;
   const cur = saveCurrency(sim.universe);
   const toJ = (c: Money) => (cur === CURRENCY[j] ? c : exchange(c, cur, CURRENCY[j]) ?? c);
   const m = modelById(v.modelId)!;
@@ -550,6 +553,7 @@ export function registerVehicles(sim: Simulation): void {
     const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
     if (!v) throw new CommandError('That isn’t a car you own.');
     if (v.repossessed) throw new CommandError('The lender has it: redeem it, or it’s sold for the loan.');
+    if (stolenNow(v, s.now)) throw new CommandError('It’s been stolen.');
     if (v.lease) throw new CommandError('A leased car is the lessor’s to sell: at the lease’s end it’s returned or bought out.');
     const value = inSave(s, valueOf(v, s.now), modelById(v.modelId)!.currency);
     const payoff = v.loan?.owed ?? 0;
@@ -569,15 +573,20 @@ export function registerVehicles(sim: Simulation): void {
     const m = modelById(v.modelId)!;
     // With the lender, it's neither insured, driven nor paid for: the notice runs to its sale.
     if (v.repossessed) { s.schedule({ at: item.at + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } }); return; }
+    // Stolen this month, at the place's rate, or back where it was found (`systems/theft.ts`).
+    if (v.stolen?.recoverAt !== undefined && v.stolen.recoverAt <= s.now) delete v.stolen;
+    mayBeStolen(s, person, v, m, valueOf(v, s.now), m.currency);
+    if (v.soldAt !== undefined) return;
+    const missing = stolenNow(v, s.now);
     // Insurance, the month's share of the year.
     const ins = monthlyInsurance(v.jurisdiction, v.coverage, m);
-    if (typeof ins === 'number' && ins > 0) {
+    if (typeof ins === 'number' && ins > 0 && !missing) {
       const due = inSave(s, ins, insuranceCurrency(v.jurisdiction, m));
       if (!payFromBank(s, person, due, `${kindOf(m) === 'car' ? 'Car insurance' : 'Insurance'}, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, due, kindOf(m) === 'car' ? 'Car insurance' : 'Vehicle insurance', 'vehicle');
     }
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
-    if (!v.repossessed && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m)).ok) {
+    if (!v.repossessed && !missing && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m)).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km);
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
@@ -588,7 +597,7 @@ export function registerVehicles(sim: Simulation): void {
       }
     }
     // An inspection come due, where the law asks one (`systems/inspections.ts`).
-    if (!forOutings(m)) inspectIfDue(s, person, v, kindOf(m));
+    if (!forOutings(m) && !missing) inspectIfDue(s, person, v, kindOf(m));
     // The loan: interest on what's owed, and the rest off it.
     if (v.loan) {
       const interest = Math.round((v.loan.owed * v.loan.apr) / 12);
@@ -604,13 +613,15 @@ export function registerVehicles(sim: Simulation): void {
       v.loan.monthsLeft -= 1;
       if (v.loan.owed <= 0 || v.loan.monthsLeft <= 0) delete v.loan;
     }
+    // Stolen for good, its loan paid: off the books.
+    if (v.stolen && v.stolen.recoverAt === undefined && !v.loan) { gone(s, v); return; }
     s.schedule({ at: item.at + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } });
   });
 
   sim.onSchedule(VEHICLE_RENEWAL_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
-    if (!person || !v || v.soldAt !== undefined) return;
+    if (!person || !v || v.soldAt !== undefined || (v.stolen && v.stolen.recoverAt === undefined)) return;
     const r = renewal(v, s.now);
     // The year's parking permit comes due with it (`parkingYear`).
     const permit = parkingYear(person, modelById(v.modelId)!, v.cityId);

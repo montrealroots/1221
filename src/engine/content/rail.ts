@@ -38,8 +38,8 @@ export interface RailFare {
 
 export interface RailRoute {
   id: string;
-  /** A coach, where not a train. */
-  vehicle?: 'bus';
+  /** A coach or a ferry, where not a train (a ferry from 2026-09-30). */
+  vehicle?: 'bus' | 'ferry';
   /** The share of its trains or coaches canceled, where the operator publishes one. */
   cancelShare?: number;
   cancelBasis?: string;
@@ -140,7 +140,32 @@ function coach(id: string, operator: string, from: string, to: string, fromStati
   }];
 }
 
+/**
+ * BC Ferries between Vancouver and Victoria, Tsawwassen to Swartz Bay, from
+ * 2026-09-30 (`docs/research/world/research-travel-2.json` and
+ * `research-travel-3.json`): the adult fare, C$21 (fare index 26-05, June
+ * 2026), with the 5% fuel surcharge on it; 13 sailings each way on a weekday
+ * (the live departures board, 30 September 2026); 1h35 across. Its
+ * terminals are far from both towns, so the route runs town to town: the
+ * Canada Line and bus 620 to Tsawwassen, about 38 minutes on the bus and
+ * C$6.70 for three zones by contactless (TransLink, July 2026), and BC
+ * Transit's 70 from Swartz Bay, about 50 minutes and C$3.00. The Canada
+ * Line's own minutes weren't read and aren't counted.
+ */
+const BC_FERRIES_ROUTE: RailRoute = {
+  id: 'bcf-tsawwassen-swartz-bay', vehicle: 'ferry', operator: 'BC Ferries', service: 'Tsawwassen To Swartz Bay',
+  from: 'ca-bc-vancouver', to: 'ca-02-victoria', fromStation: 'Tsawwassen Terminal', toStation: 'Swartz Bay Terminal',
+  minutes: 38 + 95 + 50, perDay: 13,
+  fare: { amount: Math.round(21 * 1.05 * 100) + 6_70 + 3_00, currency: 'CAD', basis: 'BC Ferries’ adult fare, C$21 with its 5% fuel surcharge, and transit to and from the terminals: TransLink’s three zones, C$6.70, and BC Transit’s C$3.00.' },
+  arriveBeforeMinutes: 30, arriveBasis: 'BC Ferries asks a foot passenger to arrive 30 minutes before.',
+  onTime: { share: 0.83, withinMinutes: 10, basis: 'BC Ferries, fiscal 2026, Tsawwassen to Swartz Bay: 83.0% leaving within ten minutes' },
+  cancelShare: 0.015, cancelBasis: 'BC Ferries, fiscal 2026: 1.5% of the route’s sailings canceled, half for mechanical faults',
+  refund: { keepShare: 0, untilHoursBefore: 1, fee: 15_00, feeCurrency: 'CAD', basis: 'A prepaid fare: C$5 to cancel through the day before, C$15 on the day to an hour before; SLATE charges the C$15.' },
+  source: 'bcferries.com fare index 26-05 and departures board, 2026-09-30; BC Ferries sailing statistics, fiscal 2026; TransLink and BC Transit fares',
+};
+
 export const RAIL_ROUTES: readonly RailRoute[] = [
+  BC_FERRIES_ROUTE,
   { id: 'nec-nyp-was-acela', operator: 'Amtrak', service: 'Acela', from: 'us-ny-newyork', to: 'us-dc-washington', fromStation: 'New York Penn Station', toStation: 'Washington Union Station', minutes: 180, perDay: 19, miles: NEC_MILES.newYorkWashington, fare: amtrakFare(AMTRAK_PER_MILE.acela, NEC_MILES.newYorkWashington, 'Acela'), ...AMTRAK_ARRIVE, onTime: ACELA_ON_TIME, refund: AMTRAK_REFUND, source: AMTRAK_SRC },
   { id: 'nec-nyp-was-ner', operator: 'Amtrak', service: 'Northeast Regional', from: 'us-ny-newyork', to: 'us-dc-washington', fromStation: 'New York Penn Station', toStation: 'Washington Union Station', minutes: 215, perDay: 37, miles: NEC_MILES.newYorkWashington, fare: amtrakFare(AMTRAK_PER_MILE.regional, NEC_MILES.newYorkWashington, 'Northeast Regional'), ...AMTRAK_ARRIVE, onTime: NER_ON_TIME, refund: AMTRAK_REFUND, source: AMTRAK_SRC },
   { id: 'nec-nyp-bos-acela', operator: 'Amtrak', service: 'Acela', from: 'us-ny-newyork', to: 'us-ma-boston', fromStation: 'New York Penn Station', toStation: 'Boston South Station', minutes: 238, perDay: 10, miles: NEC_MILES.newYorkBoston, fare: amtrakFare(AMTRAK_PER_MILE.acela, NEC_MILES.newYorkBoston, 'Acela'), ...AMTRAK_ARRIVE, onTime: ACELA_ON_TIME, refund: AMTRAK_REFUND, source: AMTRAK_SRC },

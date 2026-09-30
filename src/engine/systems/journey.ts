@@ -42,9 +42,10 @@ import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { atTheCheckpoint } from './identity';
 import { claimDelay } from './compensation';
+import { stolenNow } from './theft';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
-export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
+export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'ferry' | 'drive' | 'arrival';
 export type Cabin = 'economy' | 'premium';
 
 export interface JourneyLeg {
@@ -264,7 +265,7 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
   let late = 0;
   let rebooked = false;
   for (const [n, leg] of j.legs.entries()) {
-    const route = leg.mode === 'train' || leg.mode === 'bus' ? railRouteById(leg.routeId) : undefined;
+    const route = leg.mode === 'train' || leg.mode === 'bus' || leg.mode === 'ferry' ? railRouteById(leg.routeId) : undefined;
     if (route) { const fate = trainFateOf(sim, person, route, `${j.id}-${n}`); late += fate.late; if (fate.canceled) rebooked = true; continue; }
     if (leg.mode !== 'flight') continue;
     const fate = flightFate(sim, person, `${j.id}-${n}`);
@@ -317,6 +318,7 @@ export function planDrive(sim: Simulation, person: Person, vehicleId: string, fr
   const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
   if (!v) return 'That isn’t a car you own.';
   if (v.repossessed) return 'The lender has the car.';
+  if (stolenNow(v, day)) return 'It’s been stolen.';
   if (forOutings(modelById(v.modelId)!)) return 'A bicycle or an ATV isn’t taken on a journey between towns.';
   if ((willBeAt ?? v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
@@ -743,7 +745,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
 export function slotOf(j: Journey): number {
   const zone = CITIES.require(j.fromCity).timeZone;
   const route = railRouteById(j.by);
-  const first = j.legs.find((l) => l.mode === 'flight' || l.mode === 'train' || l.mode === 'bus' || l.mode === 'fly') ?? j.legs[0]!;
+  const first = j.legs.find((l) => l.mode === 'flight' || l.mode === 'train' || l.mode === 'bus' || l.mode === 'ferry' || l.mode === 'fly') ?? j.legs[0]!;
   const at = zonedParts(first.departAt, zone);
   const hour = at.hour + at.minute / 60;
   const hours: readonly number[] | undefined = route ? departureHours(route) : !j.by ? AIR.departureHours : undefined;

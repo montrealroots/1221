@@ -100,7 +100,7 @@ export function planTrain(sim: Simulation, route: RailRoute, fromCity: string, d
   return [
     { mode: 'ground', from: fromCity, to: fromStation, departAt: board - STATION_RIDE_MINUTES * 60_000, arriveAt: board, fare: there.fare, basis: there.basis },
     { mode: 'check-in', from: fromStation, to: fromStation, departAt: board, arriveAt: depart, fare: 0, basis: `${route.arriveBasis}${route.borderBeforeBoarding ? ' The border is here, before boarding.' : ''}` },
-    { mode: route.vehicle === 'bus' ? 'bus' : 'train', from: fromStation, to: toStation, departAt: depart, arriveAt: arrive, fare: inSave, routeId: route.id, basis: `${route.operator}, ${route.service}: ${fare.basis} The time is the timetable’s weekday median; when it leaves is SLATE’s model.` },
+    { mode: route.vehicle ?? 'train', from: fromStation, to: toStation, departAt: depart, arriveAt: arrive, fare: inSave, routeId: route.id, basis: `${route.operator}, ${route.service}: ${fare.basis} The time is the timetable’s weekday median; when it leaves is SLATE’s model.` },
     { mode: 'ground', from: toStation, to: toCity, departAt: arrive, arriveAt: arrive + STATION_RIDE_MINUTES * 60_000, fare: away.fare, basis: away.basis },
   ];
 }
