@@ -19,24 +19,24 @@ describe('what a car costs to buy', () => {
   it('taxes a Honda CR-V in New York City at 8.875% on its price and destination, with title, plates and two years’ registration by weight', () => {
     const x = q('us-honda-cr-v', 'us-ny-newyork');
     expect(x.price).toBe(3_152_000 + 155_000);
-    expect(line(x, /Sales tax/)).toBe(Math.round(x.price * 0.08875));
+    expect(line(x, /Sales Tax/)).toBe(Math.round(x.price * 0.08875));
     // 3,472 lb: the 3,451–3,550 band's $56.50, the city's use tax $30 and the MCTD's $50.
     expect(line(x, /Registration/)).toBe(56_50 + 30_00 + 50_00);
     expect(line(x, /Title/)).toBe(50_00);
   });
 
   it('taxes the whole price at 7.75% in Connecticut over $50,000, and 6.35% under it', () => {
-    expect(line(q('us-toyota-camry', 'us-ct-newhaven'), /Sales tax/)).toBe(Math.round(2_960_000 * 0.0635));
+    expect(line(q('us-toyota-camry', 'us-ct-newhaven'), /Sales Tax/)).toBe(Math.round(2_960_000 * 0.0635));
     const sierra = q('us-gmc-sierra', 'us-ct-newhaven');
     expect(sierra.price).toBe(4_850_000 + 279_500);
-    expect(line(sierra, /Sales tax/)).toBe(Math.round(sierra.price * 0.0775));
+    expect(line(sierra, /Sales Tax/)).toBe(Math.round(sierra.price * 0.0775));
   });
 
   it('charges Los Angeles 9.75%, and 10.25% from 1 October 2026', () => {
     const before = quote(modelById('us-toyota-rav4')!, 'us-ca-losangeles', Date.UTC(2026, 8, 29)) as Quote;
     const after = quote(modelById('us-toyota-rav4')!, 'us-ca-losangeles', Date.UTC(2026, 9, 2)) as Quote;
-    expect(line(before, /Sales tax/)).toBe(Math.round(3_190_000 * 0.0975));
-    expect(line(after, /Sales tax/)).toBe(Math.round(3_190_000 * 0.1025));
+    expect(line(before, /Sales Tax/)).toBe(Math.round(3_190_000 * 0.0975));
+    expect(line(after, /Sales Tax/)).toBe(Math.round(3_190_000 * 0.1025));
   });
 
   it('keeps Ireland’s VAT and VRT in the price and adds the motor tax by CO2; Ontario’s 13% HST; British Columbia’s GST and PST; Mexico City’s plates', () => {

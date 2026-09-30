@@ -153,7 +153,7 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
       break;
     }
     case 'US-CT': {
-      lines.push({ label: units > CT.luxuryOver ? 'Sales tax, 7.75% (over $50,000)' : 'Sales tax, 6.35%', amount: Math.round(taxedPrice * (units > CT.luxuryOver ? CT.luxuryRate : CT.rate)) });
+      lines.push({ label: units > CT.luxuryOver ? 'Sales Tax, 7.75% (Over $50,000)' : 'Sales Tax, 6.35%', amount: Math.round(taxedPrice * (units > CT.luxuryOver ? CT.luxuryRate : CT.rate)) });
       lines.push({ label: 'Registration And Its Fees, Three Years', amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks) });
       lines.push({ label: 'Title And Plate', amount: c(CT.title + CT.plate) });
       if (!used) lines.push({ label: 'Greenhouse Gas Fee And Emissions Exemption', amount: c(CT.greenhouseNew + CT.emissionsExemption) });

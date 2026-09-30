@@ -23,7 +23,7 @@ describe('a trade-in’s credit', () => {
     const nyTrade = quote(cr, 'us-ny-newyork', at, { tradeIn: trade }) as Quote;
     expect(line(ny, /Sales Tax/) - line(nyTrade, /Sales Tax/)).toBe(Math.round(10_000_00 * 0.08875));
     const camry = modelById('us-toyota-camry')!;
-    expect(line(quote(camry, 'us-ct-newhaven', at) as Quote, /Sales tax/) - line(quote(camry, 'us-ct-newhaven', at, { tradeIn: trade }) as Quote, /Sales tax/)).toBe(Math.round(10_000_00 * 0.0635));
+    expect(line(quote(camry, 'us-ct-newhaven', at) as Quote, /Sales Tax/) - line(quote(camry, 'us-ct-newhaven', at, { tradeIn: trade }) as Quote, /Sales Tax/)).toBe(Math.round(10_000_00 * 0.0635));
     const rav = modelById('us-toyota-rav4')!;
     expect(line(quote(rav, 'us-ca-losangeles', at, { tradeIn: trade }) as Quote, /Sales Tax/)).toBe(line(quote(rav, 'us-ca-losangeles', at) as Quote, /Sales Tax/));
     // The credit off what's due: the value less the old loan.
