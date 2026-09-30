@@ -10,7 +10,10 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { documentsOf, type PersonDocument } from '@/engine/systems/documents';
-import { flightFate, journeysOf, planJourney, type Journey } from '@/engine/systems/journey';
+import { saveCurrency } from '@/engine/core/money';
+import { exchange } from '@/engine/content/currency';
+import { CHAUFFEURS, chauffeurUnits, flightFate, journeysOf, planChauffeur, planJourney, type Journey } from '@/engine/systems/journey';
+import { driveMinutes, roadKm } from '@/engine/systems/driving';
 import { stayPrice } from '@/engine/systems/stays';
 import { AIR } from '@/engine/content/air';
 import { DOT_PAIRS } from '@/engine/content/airfares';
@@ -49,6 +52,7 @@ function liveTo(sim: Simulation, target: number): void {
 }
 const book = (sim: Simulation, payload: Record<string, unknown>) => sim.execute<{ journeyId: string; returnId?: string; leaveAt: number; arriveAt: number; total: number }>({ kind: 'travel.book', payload });
 const journey = (sim: Simulation, id: string): Journey => journeysOf(sim.player).find((j) => j.id === id)!;
+const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
 
 describe('a journey out and back', () => {
   it('flies a New Yorker to London on the ETA, into a hotel for five nights, and home again, the town and the clock changing on arrival', () => {
@@ -308,5 +312,31 @@ describe('a cabin other than economy', () => {
     const t = book(other, { toCity: 'us-dc-washington', day, slot: 4, nights: 1, by: 'nec-nyp-was-acela', cabin: 'premium' });
     expect(t.ok, t.error).toBe(true);
     expect(journey(other, t.value!.journeyId).cabin).toBeUndefined();
+  });
+});
+
+describe('a car and driver', () => {
+  it('bills Gotham Ride’s $117 an hour on the road to New Haven, two at least; iChauffeur’s £60 with VAT to Edinburgh; Safe&Confidence’s ten-hour day to Toluca; none from Los Angeles', () => {
+    const sim = life('chauffeur');
+    const day = saturday(sim, 10);
+    const hours = (from: string, to: string) => driveMinutes(roadKm(from, to)) / 60;
+    const fly = (legs: ReturnType<typeof planChauffeur>) => { if (typeof legs === 'string') throw new Error(legs); return legs[0]!; };
+    const ny = fly(planChauffeur(sim, 'us-ny-newyork', 'us-ct-newhaven', day, 2));
+    expect(ny.routeId).toBe('chauffeur');
+    expect(ny.fare).toBe(inSave(sim, Math.round(Math.max(2, hours('us-ny-newyork', 'us-ct-newhaven')) * 117 * 100), 'USD'));
+    const gb = fly(planChauffeur(sim, 'uk-eng-london', 'uk-sct-edinburgh', day, 2));
+    expect(gb.fare).toBe(inSave(sim, Math.round(Math.max(3, hours('uk-eng-london', 'uk-sct-edinburgh')) * 60 * 1.2 * 100), 'GBP'));
+    const mx = fly(planChauffeur(sim, 'mx-cmx-mexicocity', 'mx-15-toluca', day, 2));
+    expect(mx.fare).toBe(inSave(sim, Math.round(5_400 * 1.16 * 100), 'MXN'));
+    expect(chauffeurUnits(CHAUFFEURS['mx-cmx-mexicocity']!, 11.5)).toBe(5_400 + 2 * 450);
+    expect(planChauffeur(sim, 'us-ca-losangeles', 'us-ca-sandiego', day, 2)).toMatch(/no company’s car and driver/);
+    expect(planChauffeur(sim, 'us-ny-newyork', 'uk-eng-london', day, 2)).toMatch(/No road/);
+  });
+
+  it('is booked as a journey, the car’s driver not the player’s', () => {
+    const sim = life('chauffeur-book');
+    const r = book(sim, { toCity: 'us-ct-newhaven', day: saturday(sim, 10), slot: 2, by: 'chauffeur', nights: 1 });
+    expect(r.ok, r.error).toBe(true);
+    expect(journey(sim, r.value!.journeyId).legs[0]!.routeId).toBe('chauffeur');
   });
 });

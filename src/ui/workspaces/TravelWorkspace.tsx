@@ -17,7 +17,7 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
-import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
@@ -29,7 +29,7 @@ import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
 /** A flight not flown by an airline: a chartered jet, or one's own plane flown by its owner or a hired pilot. */
-const flownWord = (l: JourneyLeg, pilot: boolean): string | undefined => (l.mode !== 'fly' ? undefined : l.routeId === 'jet' ? 'Chartered Jet' : l.routeId === 'own' ? (pilot ? 'Your Plane' : 'Your Plane, A Hired Pilot') : undefined);
+const flownWord = (l: JourneyLeg, pilot: boolean): string | undefined => (l.mode === 'drive' && l.routeId === 'chauffeur' ? 'Car And Driver' : l.mode !== 'fly' ? undefined : l.routeId === 'jet' ? 'Chartered Jet' : l.routeId === 'own' ? (pilot ? 'Your Plane' : 'Your Plane, A Hired Pilot') : undefined);
 const MODE_WORD: Record<JourneyLeg['mode'], string> = { ground: 'To Or From The Airport', 'check-in': 'Check-In', flight: 'Flight', fly: 'Flown Yourself', train: 'Train', bus: 'Coach', drive: 'Drive', arrival: 'Off The Aircraft' };
 /** A train journey's legs, named for a station. */
 const RAIL_WORD: Partial<Record<JourneyLeg['mode'], string>> = { ground: 'To Or From The Station', 'check-in': 'At The Station' };
@@ -70,10 +70,10 @@ export function TravelWorkspace() {
   const ownsPlane = Boolean(person.aircraft && person.aircraft.soldAt === undefined);
   const licensedHere = licensedIn(person, CITIES.get(fromCity)?.countryId ?? '');
   const flies = (licensedHere || ownsPlane) && by === 'fly';
-  const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : by === 'jet' ? 'jet' : undefined;
+  const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : by === 'jet' ? 'jet' : by === 'chauffeur' && toCity && byRoad(fromCity, toCity) && CHAUFFEURS[fromCity] ? 'chauffeur' : undefined;
   // A flight of one's own leaves on the hour from 7 AM to 5 PM, as its plan books it. Until 2026-09-30 it offered the
   // airline's 8 AM, 1 PM and 7 PM and booked 7, 8 and 9 AM.
-  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car || mode === 'rental' ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : mode === 'fly' || mode === 'jet' ? Array.from({ length: 11 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
+  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car || mode === 'rental' || mode === 'chauffeur' ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : mode === 'fly' || mode === 'jet' ? Array.from({ length: 11 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
   const pick = Math.min(slot, slots.length - 1);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
   const round = daysThere > 0;
@@ -133,6 +133,7 @@ export function TravelWorkspace() {
                   {rented && <option value="rental">Your Rental Car</option>}
                   {(licensedHere || ownsPlane) && <option value="fly">{licensedHere ? 'Fly Yourself' : 'Your Plane, A Hired Pilot'}</option>}
                   <option value="jet">A Chartered Light Jet</option>
+                  {toCity && byRoad(fromCity, toCity) && CHAUFFEURS[fromCity] && <option value="chauffeur">A Car And Driver</option>}
                 </select>
               </div>
               <div className="field">
@@ -355,6 +356,7 @@ function byWord(j: Journey): string {
   if (j.by?.startsWith('car:')) return 'By Car';
   if (j.by === 'rental') return 'By Rental Car';
   if (j.by === 'jet') return 'By Chartered Jet';
+  if (j.by === 'chauffeur') return 'By Car And Driver';
   if (j.by === 'fly') return 'By Plane Of Your Own';
   return `By ${railRouteById(j.by)?.service ?? 'Train'}`;
 }

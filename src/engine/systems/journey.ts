@@ -260,6 +260,8 @@ export function planBy(sim: Simulation, by: string | undefined, fromCity: string
   if (by === 'fly') return planFlyYourself(sim, sim.player, fromCity, toCity, day, slot);
   // A light jet chartered (`systems/aviation.ts`, from 2026-09-30).
   if (by === 'jet') return planCharterJet(sim, fromCity, toCity, day, slot);
+  // A car and driver (from 2026-10-01).
+  if (by === 'chauffeur') return planChauffeur(sim, fromCity, toCity, day, slot);
   const route = railRouteById(by);
   if (!route || !railRoutes(fromCity, toCity).includes(route)) return 'That train doesn’t run between those towns.';
   return planTrain(sim, route, fromCity, day, slot);
@@ -484,7 +486,7 @@ export function registerJourneys(sim: Simulation): void {
       const route = railRouteById(h.by);
       // A drive not yet driven has burned nothing: all of its costs come back.
       // A charter canceled ahead: SLATE's, as no operator's terms were read.
-      if (h.by?.startsWith('car:') || h.by === 'rental' || h.by === 'fly' || h.by === 'jet') refund += total(h.legs) + hotelBack;
+      if (h.by?.startsWith('car:') || h.by === 'rental' || h.by === 'fly' || h.by === 'jet' || h.by === 'chauffeur') refund += total(h.legs) + hotelBack;
       else if (route) refund += trainRefund(s, h, route) + hotelBack;
       else refund += free ? h.total : hotelBack;
       h.status = 'canceled';
@@ -734,4 +736,49 @@ export function changeFee(sim: Simulation, fromCity: string, toCity: string): Mo
   }
   if (a === 'CA' && b === 'CA') return money(110, 'CAD');
   return undefined;
+}
+
+/**
+ * A car and driver between towns by road, from 2026-10-01
+ * (`docs/research/world/research-charter.json`): each city's company that
+ * prints an hourly rate for a sedan, billed for the hours on the road, at
+ * least its minimum, with its taxes. New York: Gotham Ride's $117 an hour,
+ * two at least, its gratuity and tolls in. London: iChauffeur's £60, three
+ * at least, with VAT. Dublin: All City Chauffeurs' €70, four at least (its
+ * page last dated 2022). Toronto: Rosedale Limousine's C$78, two at least,
+ * with Ontario's HST. Vancouver: the middle of the C$75 to C$150 the
+ * Passenger Transportation Board allows a sedan limousine, with GST. Mexico
+ * City: Safe&Confidence's MX$5,400 for ten hours and MX$450 each after, with
+ * IVA. The car's way back, which a company prices by quote, isn't kept, nor
+ * any company in Los Angeles or New Haven, whose rates were read only
+ * secondhand or not at all.
+ */
+export interface Chauffeur { company: string; currency: string; perHour: number; minHours: number; tax: number; packageHours?: number; packagePrice?: number }
+export const CHAUFFEURS: Readonly<Record<string, Chauffeur>> = {
+  'us-ny-newyork': { company: 'Gotham Ride', currency: 'USD', perHour: 117, minHours: 2, tax: 0 },
+  'uk-eng-london': { company: 'iChauffeur', currency: 'GBP', perHour: 60, minHours: 3, tax: 0.2 },
+  'ie-lei-dublin': { company: 'All City Chauffeurs', currency: 'EUR', perHour: 70, minHours: 4, tax: 0 },
+  'ca-on-toronto': { company: 'Rosedale Limousine', currency: 'CAD', perHour: 78, minHours: 2, tax: 0.13 },
+  'ca-bc-vancouver': { company: 'a Vancouver sedan limousine', currency: 'CAD', perHour: 112.5, minHours: 1, tax: 0.05 },
+  'mx-cmx-mexicocity': { company: 'Safe&Confidence', currency: 'MXN', perHour: 450, minHours: 10, tax: 0.16, packageHours: 10, packagePrice: 5_400 },
+};
+
+/** What a car and driver bills for so many hours, before its taxes, in its money. */
+export function chauffeurUnits(c: Chauffeur, hours: number): number {
+  if (c.packageHours !== undefined && c.packagePrice !== undefined) return c.packagePrice + Math.max(0, Math.ceil(hours - c.packageHours)) * c.perHour;
+  return Math.max(c.minHours, hours) * c.perHour;
+}
+
+/** A journey's leg in a hired car with its driver, or why not. */
+export function planChauffeur(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
+  const c = CHAUFFEURS[fromCity];
+  if (!c) return 'SLATE keeps no company’s car and driver where you’re leaving from.';
+  if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
+  const zone = CITIES.require(fromCity).timeZone;
+  const p = zonedParts(day, zone);
+  const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(14, slot)) }, zone);
+  const km = roadKm(fromCity, toCity);
+  const minutes = driveMinutes(km);
+  const units = chauffeurUnits(c, minutes / 60) * (1 + c.tax);
+  return [{ mode: 'drive', from: fromCity, to: toCity, departAt: depart, arriveAt: depart + minutes * 60_000, fare: inSave(sim, units, c.currency), routeId: 'chauffeur', basis: `${Math.round(km)} km by road with ${c.company}’s car and driver, ${(minutes / 60).toFixed(1)} hours billed at its ${c.minHours > 1 && !c.packageHours ? `least of ${c.minHours}, ` : ''}hourly rate${c.tax ? ', with its tax' : ''}.` }];
 }
