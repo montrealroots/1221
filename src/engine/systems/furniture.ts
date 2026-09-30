@@ -23,7 +23,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
-import { FURNITURE, MATTRESS_FEE_USD, MOVERS, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
+import { FURNITURE, MATTRESS_FEE_USD, MOVERS, MOVERS_ABROAD, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
 import { inTheBank, owe, payFromBank } from './household';
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -92,7 +92,12 @@ export function moversCost(sim: Simulation, person: Person, fromCity: string, to
   if (!owns(person, 'bed') && !owns(person, 'sofa')) return 0;
   const from = CITIES.get(fromCity);
   const to = CITIES.get(toCity);
-  if (!from || !to || from.countryId !== to.countryId) return 0;
+  if (!from || !to) return 0;
+  // Abroad: the pair's own estimate, either way.
+  if (from.countryId !== to.countryId) {
+    const abroad = MOVERS_ABROAD[[from.countryId, to.countryId].sort().join('|')];
+    return abroad ? inSave(sim, Math.round(abroad.amount * 100), abroad.currency) : 0;
+  }
   const rates = MOVERS[from.countryId];
   if (!rates) return 0;
   const miles = distanceKm(from, to) / 1.609344;

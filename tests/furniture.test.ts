@@ -103,7 +103,7 @@ describe('a mattress’s recycling fee, and movers', () => {
     expect(sofa).toBe(inSave(sim, 828_00 + Math.round(799_00 * rate), 'USD'));
   });
 
-  it('charges movers only for pieces of one’s own: a one-bedroom’s local or long-distance move, and nothing abroad or in Ireland', () => {
+  it('charges movers only for pieces of one’s own: a one-bedroom’s local or long-distance move, Ireland’s, and abroad where the pair is priced', () => {
     const sim = save('us-ny-newyork', 'furn-movers');
     expect(moversCost(sim, sim.player, 'us-ny-newyork', 'us-ny-newyork')).toBe(0);
     sim.player.furniture = { bed: sim.now };
@@ -111,10 +111,14 @@ describe('a mattress’s recycling fee, and movers', () => {
     expect(moversCost(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles')).toBe(inSave(sim, 1_850_00, 'USD'));
     expect(moversCost(sim, sim.player, 'uk-eng-london', 'uk-eng-london')).toBe(inSave(sim, 466_00, 'GBP'));
     expect(moversCost(sim, sim.player, 'uk-eng-london', 'uk-sct-edinburgh')).toBe(inSave(sim, 691_00, 'GBP'));
-    expect(moversCost(sim, sim.player, 'us-ny-newyork', 'uk-eng-london')).toBe(0);
+    // Abroad, the pair's estimate either way; none where nobody publishes one.
+    expect(moversCost(sim, sim.player, 'us-ny-newyork', 'uk-eng-london')).toBe(inSave(sim, 2_516_50, 'USD'));
+    expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'uk-eng-london')).toBe(inSave(sim, 1_200_00, 'GBP'));
+    expect(moversCost(sim, sim.player, 'uk-eng-london', 'ie-lei-dublin')).toBe(inSave(sim, 1_200_00, 'GBP'));
+    expect(moversCost(sim, sim.player, 'mx-cmx-mexicocity', 'uk-eng-london')).toBe(0);
     // Britain's distance, for a town near enough to be local.
     expect([5, 30, 80].map((mi) => MOVERS.uk!.local(mi))).toEqual([466, 578.5, 691]);
-    expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'ie-lei-dublin')).toBe(0);
+    expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'ie-lei-dublin')).toBe(inSave(sim, 450_00, 'EUR'));
   });
 
   it('pays the movers on moving home with a bed of one’s own', () => {

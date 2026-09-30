@@ -83,12 +83,35 @@ export const MATTRESS_FEE_USD: Readonly<Record<string, readonly { from: number; 
  * - Canada: HomeStars' C$300 to C$900 local for a one-bedroom flat and
  *   C$2,800 to C$6,000 across Canada (secondary, read from search extracts).
  * - Mexico City: a marketplace's MX$3,515 local, every size together.
- * Ireland publishes only a three-bedroom's €1,700, and a move abroad
- * wasn't researched: neither is charged.
+ * - Ireland: a Dublin removal firm's €300 to €600 for a one-bedroom
+ *   (secondary). Until 2026-09-30 only a three-bedroom's €1,700 had been
+ *   read, and none was charged.
+ * Abroad, from 2026-09-30, the movers' and brokers' own estimates for a
+ * one-bedroom's goods (`MOVERS_ABROAD`); the goods of someone changing
+ * residence come in free of duty in each of these countries, under its
+ * transfer-of-residence relief, so none is charged.
  */
 export const MOVERS: Readonly<Record<string, { currency: string; local: (miles: number) => number; far?: number }>> = {
   us: { currency: 'USD', local: () => 475, far: 1_850 },
   uk: { currency: 'GBP', local: (mi) => 466 + (mi <= 10 ? 0 : mi <= 50 ? 112.5 : 225), far: 466 + 225 },
   ca: { currency: 'CAD', local: () => 600, far: 4_400 },
   mx: { currency: 'MXN', local: () => 3_515 },
+  ie: { currency: 'EUR', local: () => 450 },
 };
+
+/**
+ * Movers between countries for a one-bedroom's goods, by the pair (either
+ * way), the middle of each estimate (`docs/research/world/research-credit-damage-movers.json`):
+ * London and Dublin, Sirelo's £1,000 to £1,400 (February 2026); America and
+ * Britain, MoveHub's $1,258 to $3,775 for a 20-foot container port to port;
+ * America and Ireland $2,700 to $4,500; America and Toronto $3,375 to $4,215;
+ * America and Mexico by road $4,500 to $8,000. None published elsewhere.
+ */
+export const MOVERS_ABROAD: Readonly<Record<string, { currency: string; amount: number }>> = {
+  'ie|uk': { currency: 'GBP', amount: 1_200 },
+  'uk|us': { currency: 'USD', amount: 2_516.5 },
+  'ie|us': { currency: 'USD', amount: 3_600 },
+  'ca|us': { currency: 'USD', amount: 3_795 },
+  'mx|us': { currency: 'USD', amount: 6_250 },
+};
+
