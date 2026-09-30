@@ -13,7 +13,7 @@
  * Not kept, and said so: what one adds to a home's value, and a gas dryer's
  * or a heat pump's hookups. Appliances in a rented home were among them until
  * 2026-09-29; a tenant's own air conditioning units are kept now (below), and
- * the rest stays the landlord's.
+ * from 2026-09-30 a tenant's own countertop and portable machines.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -158,5 +158,81 @@ export function registerOwnUnits(sim: Simulation): void {
     if (!person) return;
     delete person.acUnits;
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Your Air Conditioning Units Gave Out', body: `After ${APPLIANCE_LIFE['ac-units']} years, their published life. More can be bought on the Home screen.`, importance: 50, route: '/home' });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// A tenant's own countertop and portable machines, from 2026-09-30.
+
+/**
+ * A lease bars plumbing a machine in without the landlord's consent, but a
+ * countertop dishwasher and a portable washer that fill from the kitchen
+ * faucet and drain to the sink change nothing in the building, and a compact
+ * dryer plugs into an ordinary outlet (researched in
+ * `docs/research/world/research-lodgers.json`). They're the tenant's, move with
+ * them, and do in any home without its own what the fixture does, lasting
+ * the fixture's published life, no lifespan for the smaller machines being
+ * published. Priced where a retailer prints one:
+ * - America: Comfee's six-setting countertop dishwasher, $289.99 in its own
+ *   store; BLACK+DECKER's faucet washer, $305.99 at The Home Depot; Magic
+ *   Chef's 120-volt compact dryer, $369 there (secondary).
+ * - Britain: Russell Hobbs' table-top dishwasher, £239.99 at B&Q.
+ * - Canada: Danby's countertop dishwasher, C$369.99.
+ * - Mexico: Avera's portable dishwasher, MX$6,939 at Coppel.
+ * No portable washer or dryer is priced in Britain, Ireland, Canada or
+ * Mexico, nor any machine in Ireland.
+ */
+export type Portable = 'dishwasher' | 'washer' | 'dryer';
+export const PORTABLE_LABEL: Readonly<Record<Portable, string>> = { dishwasher: 'A Countertop Dishwasher', washer: 'A Portable Washer', dryer: 'A Compact Dryer' };
+export const PORTABLES: Readonly<Record<string, { currency: string; items: Partial<Record<Portable, number>> }>> = {
+  us: { currency: 'USD', items: { dishwasher: 289.99, washer: 305.99, dryer: 369 } },
+  uk: { currency: 'GBP', items: { dishwasher: 239.99 } },
+  ca: { currency: 'CAD', items: { dishwasher: 369.99 } },
+  mx: { currency: 'MXN', items: { dishwasher: 6_939 } },
+};
+export const PORTABLE_OUT_KIND = 'home.portable_out';
+
+/** What one costs where they live, in the save's money, or nothing where none is priced. */
+export function portableCost(sim: Simulation, cityId: string, kind: Portable): Money | undefined {
+  const table = PORTABLES[CITIES.get(cityId)?.countryId ?? ''];
+  const price = table?.items[kind];
+  return table && price !== undefined ? inSave(sim, Math.round(price * 100), table.currency) : undefined;
+}
+
+/** Why they can't buy one, or nothing. */
+export function portableRefusal(sim: Simulation, person: Person, kind: Portable): string | undefined {
+  if (person.portables?.[kind] !== undefined) return 'You have one.';
+  const home = person.home;
+  if (!home || home.kind === 'sofa') return 'It’s bought for a home of your own.';
+  const cost = portableCost(sim, home.cityId, kind);
+  if (cost === undefined) return 'No shop’s price is kept for one here.';
+  const f = homePlace(sim, person)?.fixtures;
+  if (f && hasAppliance(f, kind)) return 'Your home has one.';
+  if (kind === 'dryer' && !(f && hasAppliance(f, 'washer'))) return 'A dryer goes beside a washer.';
+  if (inTheBank(sim, person) < cost) return `It costs ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}.`;
+  return undefined;
+}
+
+export function registerPortables(sim: Simulation): void {
+  sim.onCommand<{ kind: Portable }, { cost: Money }>('home.buy_portable', (p, { sim: s }) => {
+    const person = s.player;
+    const kind = p?.kind;
+    if (!kind || !(kind in PORTABLE_LABEL)) throw new CommandError('No such machine.');
+    const no = portableRefusal(s, person, kind);
+    if (no) throw new CommandError(no);
+    const cost = portableCost(s, person.home!.cityId, kind)!;
+    if (!payFromBank(s, person, cost, `${PORTABLE_LABEL[kind]} of your own`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
+    (person.portables ??= {})[kind] = s.now;
+    s.schedule({ at: s.now + APPLIANCE_LIFE[kind] * YEAR_MS, kind: PORTABLE_OUT_KIND, label: `${PORTABLE_LABEL[kind]} Worn Out`, category: 'home', priority: 30, payload: { personId: person.id, kind } });
+    return { cost };
+  });
+
+  sim.onSchedule(PORTABLE_OUT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const kind = item.payload.kind as Portable;
+    // One can't be bought again while one's own runs, so the one here is the one bought.
+    if (!person?.portables) return;
+    delete person.portables[kind];
+    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: `${PORTABLE_LABEL[kind]} Gave Out`, body: `After ${APPLIANCE_LIFE[kind]} years. Another can be bought on the Home screen.`, importance: 45, route: '/home' });
   });
 }

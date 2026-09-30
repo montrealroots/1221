@@ -11,7 +11,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import type { Fixtures } from '@/engine/content/homes';
-import { applianceCost, fitRefusal, unitsRefusal } from '@/engine/systems/appliances';
+import { applianceCost, fitRefusal, portableCost, portableRefusal, unitsRefusal } from '@/engine/systems/appliances';
 import { drawRental, homePlace } from '@/engine/systems/dwelling';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 
@@ -142,5 +142,50 @@ describe('air conditioning units of one’s own', () => {
     const broke = renter('uk-eng-london', 'units-broke');
     for (const a of Object.values(broke.universe.accounts)) if (a.ownerId === broke.player.id && !a.nominal && a.balance > 0) a.balance = 0;
     expect(unitsRefusal(broke, broke.player)).toMatch(/cost/);
+  });
+});
+
+describe('a tenant’s own countertop and portable machines', () => {
+  const tenant = (city: string, name: string, f: Partial<Fixtures> = {}) => {
+    const sim = save(city, name);
+    const home = sim.player.home!;
+    home.unit = { ...(home.unit ?? drawRental(sim, sim.player, home.cityId, home.kind === 'shared', home.since)), fixtures: { ...bare, ...f } };
+    fund(sim);
+    return sim;
+  };
+
+  it('sells a New York tenant Comfee’s $289.99 dishwasher, a $305.99 faucet washer and then a $369 dryer, each doing the fixture’s job', () => {
+    const sim = tenant('us-ny-newyork', 'portable-ny');
+    expect(portableCost(sim, 'us-ny-newyork', 'dishwasher')).toBe(inSave(sim, 289_99, 'USD'));
+    expect(portableRefusal(sim, sim.player, 'dryer')).toMatch(/beside a washer/);
+    for (const kind of ['dishwasher', 'washer', 'dryer'] as const) expect(sim.execute({ kind: 'home.buy_portable', payload: { kind } }).ok).toBe(true);
+    const f = homePlace(sim, sim.player)!.fixtures;
+    expect(f.dishwasher).toBe(true);
+    expect(f.laundry).toBe('in-unit');
+    expect(portableRefusal(sim, sim.player, 'washer')).toMatch(/have one/);
+    // A washer alone, where the building's machines were: at home now.
+    const b = tenant('us-ny-newyork', 'portable-building', { laundry: 'building' });
+    expect(b.execute({ kind: 'home.buy_portable', payload: { kind: 'washer' } }).ok).toBe(true);
+    expect(homePlace(b, b.player)!.fixtures.laundry).toBe('washer-only');
+  });
+
+  it('refuses what the home has, what no shop prices here, and what the bank can’t pay; and gives out after the fixture’s life', () => {
+    const has = tenant('us-ny-newyork', 'portable-has2', { dishwasher: true });
+    expect(portableRefusal(has, has.player, 'dishwasher')).toMatch(/Your home has one/);
+    const uk = tenant('uk-eng-london', 'portable-uk');
+    expect(portableCost(uk, 'uk-eng-london', 'dishwasher')).toBe(inSave(uk, 239_99, 'GBP'));
+    expect(portableRefusal(uk, uk.player, 'washer')).toMatch(/No shop’s price/);
+    const ie = tenant('ie-lei-dublin', 'portable-ie');
+    expect(portableRefusal(ie, ie.player, 'dishwasher')).toMatch(/No shop’s price/);
+    const broke = tenant('us-ny-newyork', 'portable-broke');
+    for (const a of Object.values(broke.universe.accounts)) if (a.ownerId === broke.player.id && !a.nominal && a.balance > 0) a.balance = 0;
+    expect(portableRefusal(broke, broke.player, 'dishwasher')).toMatch(/costs/);
+    const old = tenant('us-ny-newyork', 'portable-old');
+    expect(old.execute({ kind: 'home.buy_portable', payload: { kind: 'dishwasher' } }).ok).toBe(true);
+    // Theirs whatever home nine years bring, until its life is up.
+    old.advanceBy(9 * YEAR - 30 * MS_DAY);
+    expect(old.player.portables?.dishwasher).toBeDefined();
+    old.advanceBy(60 * MS_DAY);
+    expect(old.player.portables?.dishwasher).toBeUndefined();
   });
 });

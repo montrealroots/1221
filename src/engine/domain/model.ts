@@ -256,6 +256,8 @@ export interface Person {
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
   /** Air conditioning units of their own, and when they were bought (`systems/appliances.ts`). */
   acUnits?: number;
+  /** Countertop and portable machines of their own, and when each was bought (`systems/appliances.ts`). */
+  portables?: Partial<Record<import('../systems/appliances').Portable, number>>;
   /** Cars rented on journeys (`systems/rentals.ts`). */
   rentals?: import('../systems/rentals').Rental[];
   /** A private pilot's certificate, and the training toward it (`systems/aviation.ts`). */

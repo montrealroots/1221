@@ -123,8 +123,20 @@ export function stayPlace(sim: Simulation, person: Person): Place {
   return { type: 'condo', size: 350, fixtures: HOTEL_FIXTURES, keeps: false, shared: false, owned: false, cooks: false };
 }
 
-/** A home without air conditioning, cooled by units of their own (`systems/appliances.ts`). */
-const ownUnits = (person: Person, f: Fixtures): Fixtures => (person.acUnits !== undefined && f.cooling === 'none' ? { ...f, cooling: 'units' } : f);
+/**
+ * A home as their own machines leave it (`systems/appliances.ts`): cooled by
+ * units of their own where it has no air conditioning, and from 2026-09-30
+ * with a countertop dishwasher, a portable washer and a compact dryer beside
+ * it where it has none.
+ */
+const ownUnits = (person: Person, f: Fixtures): Fixtures => {
+  let out = person.acUnits !== undefined && f.cooling === 'none' ? { ...f, cooling: 'units' as const } : f;
+  const own = person.portables ?? {};
+  if (own.dishwasher !== undefined && !out.dishwasher) out = { ...out, dishwasher: true };
+  if (own.washer !== undefined && (out.laundry === 'none' || out.laundry === 'building')) out = { ...out, laundry: 'washer-only' };
+  if (own.dryer !== undefined && out.laundry === 'washer-only') out = { ...out, laundry: 'in-unit' };
+  return out;
+};
 
 /** The place somebody lives, or nothing without a home. */
 export function homePlace(sim: Simulation, person: Person): Place | undefined {
