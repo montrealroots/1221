@@ -2,8 +2,10 @@
  * SLATE — a boat of one's own (docs/WORLD.md, stage 7d), from 2026-09-30,
  * on the rules in `content/boats.ts`.
  *
- * Bought where one lives, in New York, Connecticut or California, with the
- * sales tax and the first registration; kept there. Each month: a twelfth of
+ * Bought where one lives, in New York, Connecticut or California, and from
+ * later on 2026-09-30 in London or Toronto, with the sales tax and the first
+ * registration where there is one; kept there, each place's boat priced in
+ * its own money (`BOAT_RULES`). Each month: a twelfth of
  * its insurance; its slip, by the season each April in New York and
  * Connecticut and by the month in California, unless it stands on its
  * trailer at a house of one's own in its town, which costs nothing; its
@@ -25,7 +27,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
 import { FUEL } from '../content/vehiclefees';
-import { BOAT_INSURANCE_USD, BOAT_LOAN, BOAT_REPO, BOAT_RULES, BOAT_WINTER, CHARTERS, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, WINTERIZE_USD, isBoatState, laidUp, type BoatState, type Charter } from '../content/boats';
+import { BOAT_LOAN, BOAT_REPO, BOAT_RULES, BOAT_WINTER, CHARTERS, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, laidUp, type BoatState, type Charter } from '../content/boats';
 import { REPOSSESSED_ON_RECORD, REPO_FEES_USD } from '../content/repossession';
 import { markRecord } from './credit';
 import { inTheBank, owe, payFromBank } from './household';
@@ -41,7 +43,10 @@ const HOUSES = new Set(['house', 'townhouse', 'estate']);
 
 export interface OwnedBoat { boughtAt: Instant; price: Money; cityId: string; state: BoatState; registeredUntil: Instant; seasonPaid?: number; winterPaid?: number; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number; missed?: number }; repossessed?: { at: Instant; saleAt: Instant } }
 
-const usd = (sim: Simulation, units: number): Money => { const cur = saveCurrency(sim.universe); const c = Math.round(units * 100); return cur === 'USD' ? c : exchange(c, 'USD', cur) ?? c; };
+const local = (sim: Simulation, units: number, currency: string): Money => { const cur = saveCurrency(sim.universe); const c = Math.round(units * 100); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
+const usd = (sim: Simulation, units: number): Money => local(sim, units, 'USD');
+/** An amount in a boat's place's money, in the save's. */
+const inPlace = (sim: Simulation, state: BoatState, units: number): Money => local(sim, units, BOAT_RULES[state].currency);
 const homeCity = (person: Person) => person.home?.cityId ?? person.currentLocationId;
 export const boatOf = (person: Person): OwnedBoat | undefined => (person.boat && person.boat.soldAt === undefined ? person.boat : undefined);
 
@@ -49,15 +54,17 @@ export const boatOf = (person: Person): OwnedBoat | undefined => (person.boat &&
 export function boatQuote(sim: Simulation, cityId: string): { price: Money; tax: Money; registration: Money } | undefined {
   const state = jurisdictionOf(cityId);
   if (!isBoatState(state)) return undefined;
-  const rate = state === 'US-CT' ? VESSEL_TAX_CT : salesTaxRate(cityId, sim.now, 'goods');
+  const rules = BOAT_RULES[state];
+  const rate = !rules.taxAdded ? 0 : state === 'US-CT' ? VESSEL_TAX_CT : salesTaxRate(cityId, sim.now, 'goods');
   const year = zonedParts(sim.now, CITIES.require(cityId).timeZone).year;
-  return { price: usd(sim, T18.priceUsd), tax: usd(sim, Math.round(T18.priceUsd * rate * 100) / 100), registration: usd(sim, BOAT_RULES[state].registration.first(year)) };
+  return { price: inPlace(sim, state, rules.model.price), tax: inPlace(sim, state, Math.round(rules.model.price * rate * 100) / 100), registration: inPlace(sim, state, rules.registration?.first(year) ?? 0) };
 }
 
 export function buyBoatRefusal(sim: Simulation, person: Person, financed = false): string | undefined {
   if (boatOf(person)) return 'You own a boat.';
   const q = boatQuote(sim, homeCity(person));
-  if (!q) return 'SLATE sells a boat in New York, Connecticut and California only yet.';
+  if (!q) return 'SLATE sells a boat in New York, Connecticut, California, London and Toronto only yet.';
+  if (financed && !jurisdictionOf(homeCity(person))?.startsWith('US')) return 'Bayliner’s loan is American; none is kept here.';
   if (financed && (person.credit?.score ?? 0) < BOAT_LOAN.minScore) return 'Bayliner lends to a well-qualified record, which yours isn’t yet.';
   const total = (financed ? usd(sim, BOAT_LOAN.downUsd) : q.price) + q.tax + q.registration;
   if (inTheBank(sim, person) < total) return `It costs ${formatMoney(total, saveCurrency(sim.universe), { cents: false })}, taxed and registered.`;
@@ -65,20 +72,25 @@ export function buyBoatRefusal(sim: Simulation, person: Person, financed = false
 }
 
 /** Whether they hold the certificate the state asks of whoever operates a boat there. */
-export const certified = (person: Person, state: BoatState): boolean => (person.boatCertificates ?? []).includes(state);
+export const certified = (person: Person, state: BoatState): boolean => !BOAT_RULES[state].certificate || (person.boatCertificates ?? []).includes(state);
 
 export function certifyRefusal(sim: Simulation, person: Person): string | undefined {
   const state = jurisdictionOf(homeCity(person));
-  if (!isBoatState(state)) return 'SLATE keeps a boating certificate in New York, Connecticut and California only yet.';
+  if (!isBoatState(state)) return 'SLATE keeps a boating certificate in New York, Connecticut, California and Toronto only yet.';
+  const cert = BOAT_RULES[state].certificate;
+  if (!cert) return 'None is asked here.';
   if (certified(person, state)) return 'You hold it.';
-  if (inTheBank(sim, person) < usd(sim, BOAT_RULES[state].certificate.usd)) return `It costs ${formatMoney(usd(sim, BOAT_RULES[state].certificate.usd), saveCurrency(sim.universe))}.`;
+  if (inTheBank(sim, person) < inPlace(sim, state, cert.amount)) return `It costs ${formatMoney(inPlace(sim, state, cert.amount), saveCurrency(sim.universe))}.`;
   return undefined;
 }
 
-/** An outing's gas: three hours at 3.7 gallons an hour, the road's price where the boat is and the marina's markup. */
+/** An outing's fuel: three hours at its engine's burn, a marina's published price, or in America the road's with the marina's markup. */
 export function outingCost(sim: Simulation, boat: OwnedBoat): Money {
+  const rules = BOAT_RULES[boat.state];
+  const liters = T18.outingHours * rules.model.litersPerHour;
+  if (rules.model.fuelPerLiter !== undefined) return inPlace(sim, boat.state, liters * rules.model.fuelPerLiter);
   const litre = FUEL[boat.state].petrol / 100;
-  return usd(sim, T18.outingHours * T18.gph * (litre * GAL + MARINA_MARKUP_USD));
+  return usd(sim, (liters / GAL) * (litre * GAL + MARINA_MARKUP_USD));
 }
 
 /** Why the boat can't go out now, or nothing where it can (the weather is `life.ts`'s, as sitting out's). */
@@ -87,8 +99,9 @@ export function outingRefusal(sim: Simulation, person: Person): string | undefin
   if (!boat) return 'You own no boat.';
   if (person.currentLocationId !== boat.cityId) return `Your boat is in ${CITIES.get(boat.cityId)?.name ?? 'its town'}.`;
   if (boat.repossessed) return 'The lender has your boat.';
-  if (BOAT_WINTER[boat.state] && laidUp(zonedParts(sim.now, CITIES.require(boat.cityId).timeZone).month)) return 'It’s laid up for the winter until April, as its insurance asks.';
-  if (!certified(person, boat.state)) return `Operating it asks the state’s ${BOAT_RULES[boat.state].certificate.label}.`;
+  const winter = BOAT_WINTER[boat.state];
+  if (winter && laidUp(zonedParts(sim.now, CITIES.require(boat.cityId).timeZone).month, winter.lastMonth)) return winter.lastMonth === 3 ? 'It’s laid up for the winter until April, as its insurance asks.' : 'It’s laid up for the winter until May, as its marina’s season runs.';
+  if (!certified(person, boat.state)) return `Operating it asks the ${BOAT_RULES[boat.state].certificate!.label}.`;
   if (inTheBank(sim, person) < outingCost(sim, boat)) return 'You can’t afford the gas.';
   return undefined;
 }
@@ -114,9 +127,9 @@ export function registerBoats(sim: Simulation): void {
     // Financed, the price less the down payment is lent, and the taxes and registration paid at the sale.
     const lent = financed ? q.price - usd(s, BOAT_LOAN.downUsd) : 0;
     const paid = q.price - lent + q.tax + q.registration;
-    if (!payFromBank(s, person, paid, `A ${T18.label}, taxed and registered${financed ? ', the down payment' : ''}`, 'vehicle')) throw new CommandError('The bank couldn’t pay.');
+    if (!payFromBank(s, person, paid, `A ${BOAT_RULES[jurisdictionOf(city) as BoatState].model.label}, taxed and registered${financed ? ', the down payment' : ''}`, 'vehicle')) throw new CommandError('The bank couldn’t pay.');
     const state = jurisdictionOf(city) as BoatState;
-    person.boat = { boughtAt: s.now, price: q.price, cityId: city, state, registeredUntil: s.now + BOAT_RULES[state].registration.years * YEAR };
+    person.boat = { boughtAt: s.now, price: q.price, cityId: city, state, registeredUntil: s.now + (BOAT_RULES[state].registration?.years ?? 1_000) * YEAR };
     if (lent > 0) {
       person.boat.loan = { owed: lent, monthly: amortized(lent, BOAT_LOAN.apr, BOAT_LOAN.months), monthsLeft: BOAT_LOAN.months };
       s.post({ memo: `A boat loan, the ${T18.label}`, category: 'vehicle', postings: [{ accountId: s.nominalAccount('expense', 'Vehicles').id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: -lent }] });
@@ -131,7 +144,7 @@ export function registerBoats(sim: Simulation): void {
     if (!boat) throw new CommandError('You own no boat.');
     // Its loan paid off from the sale first.
     const payoff = boat.loan?.owed ?? 0;
-    s.post({ memo: `Sold the ${T18.label}`, category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: boat.price - payoff }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: payoff }] : []), { accountId: s.nominalAccount('income', 'Boat Sold').id, amount: -boat.price }] });
+    s.post({ memo: `Sold the ${BOAT_RULES[boat.state].model.label}`, category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: boat.price - payoff }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: payoff }] : []), { accountId: s.nominalAccount('income', 'Boat Sold').id, amount: -boat.price }] });
     delete boat.loan;
     boat.soldAt = s.now;
     for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === BOAT_MONTH_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
@@ -143,8 +156,9 @@ export function registerBoats(sim: Simulation): void {
     const no = certifyRefusal(s, person);
     if (no) throw new CommandError(no);
     const state = jurisdictionOf(homeCity(person)) as BoatState;
-    const paid = usd(s, BOAT_RULES[state].certificate.usd);
-    if (paid > 0 && !payFromBank(s, person, paid, `The ${BOAT_RULES[state].certificate.label}`, 'vehicle')) throw new CommandError('The bank couldn’t pay.');
+    const cert = BOAT_RULES[state].certificate!;
+    const paid = inPlace(s, state, cert.amount);
+    if (paid > 0 && !payFromBank(s, person, paid, `The ${cert.label}`, 'vehicle')) throw new CommandError('The bank couldn’t pay.');
     person.boatCertificates = [...(person.boatCertificates ?? []), state];
     return { paid };
   });
@@ -155,13 +169,13 @@ export function registerBoats(sim: Simulation): void {
     const boat = person?.boat;
     if (!person || !boat) return;
     const rules = BOAT_RULES[boat.state];
-    const pay = (units: number, memo: string) => { const due = usd(s, units); if (!payFromBank(s, person, due, memo, 'vehicle')) owe(s, person, due, memo, 'vehicle'); };
-    pay(BOAT_INSURANCE_USD / 12, 'The boat’s insurance, a month');
+    const pay = (units: number, memo: string) => { const due = inPlace(s, boat.state, units); if (!payFromBank(s, person, due, memo, 'vehicle')) owe(s, person, due, memo, 'vehicle'); };
+    pay(rules.insuranceYear / 12, 'The boat’s insurance, a month');
     if (!onItsTrailer(person, boat)) {
-      if (rules.slip.per === 'month') pay(rules.slip.usd, 'The boat’s slip, a month');
+      if (rules.slip.per === 'month') pay(rules.slip.amount, 'The boat’s slip, a month');
       else {
         const p = zonedParts(s.now, CITIES.require(boat.cityId).timeZone);
-        if (p.month >= 4 && boat.seasonPaid !== p.year) { pay(rules.slip.usd, 'The boat’s slip, the season'); boat.seasonPaid = p.year; }
+        if (p.month >= (rules.slip.from ?? 1) && boat.seasonPaid !== p.year) { pay(rules.slip.amount, rules.slip.per === 'year' ? 'The boat’s storage, the year' : 'The boat’s slip, the season'); boat.seasonPaid = p.year; }
       }
     }
     // The loan: interest on what's owed, the rest off it, what the bank can't pay owed.
@@ -174,7 +188,7 @@ export function registerBoats(sim: Simulation): void {
       // Three missed running, and the lender takes it back.
       boat.loan.missed = paid ? 0 : (boat.loan.missed ?? 0) + 1;
       if (!paid && boat.loan.missed >= 3 && !boat.repossessed) {
-        const saleAt = s.now + BOAT_REPO[boat.state].noticeDays * MS_DAY;
+        const saleAt = s.now + BOAT_REPO[boat.state]!.noticeDays * MS_DAY;
         boat.repossessed = { at: s.now, saleAt };
         markRecord(person, REPOSSESSED_ON_RECORD, s.now, boat.cityId);
         s.schedule({ at: saleAt, kind: BOAT_REPO_SALE_KIND, label: 'Repossessed Boat Sold', category: 'home', priority: 30, payload: { personId: person.id } });
@@ -185,13 +199,13 @@ export function registerBoats(sim: Simulation): void {
       boat.loan.monthsLeft -= 1;
       if (boat.loan.owed <= 0 || boat.loan.monthsLeft <= 0) delete boat.loan;
     }
-    if (s.now >= boat.registeredUntil) { pay(rules.registration.renewal, 'Boat registration renewed'); boat.registeredUntil += rules.registration.years * YEAR; }
+    if (rules.registration && s.now >= boat.registeredUntil) { pay(rules.registration.renewal, 'Boat registration renewed'); boat.registeredUntil += rules.registration.years * YEAR; }
     // The Northeast's winter: stored at the marina each November, or winterized on its trailer at home.
     const winter = BOAT_WINTER[boat.state];
     const p = zonedParts(s.now, CITIES.require(boat.cityId).timeZone);
     if (winter && p.month === 11 && boat.winterPaid !== p.year && !boat.repossessed) {
-      if (onItsTrailer(person, boat)) pay(WINTERIZE_USD, 'Boat winterized on its trailer');
-      else pay(winter.storagePerFt * T18.lengthFt, 'Boat hauled and stored for the winter');
+      if (onItsTrailer(person, boat)) { if (winter.winterize !== undefined) pay(winter.winterize, 'Boat winterized on its trailer'); }
+      else pay(winter.storage(rules.model.lengthFt), 'Boat hauled and stored for the winter');
       boat.winterPaid = p.year;
     }
     scheduleBoat(s, person);
@@ -204,7 +218,7 @@ export function registerBoats(sim: Simulation): void {
     // Sold at what it's held at, less the tow; the loan paid from it, a surplus back, the shortfall owed as the law has it.
     const owed = boat.loan?.owed ?? 0;
     const proceeds = Math.max(0, boat.price - usd(s, REPO_FEES_USD.tow));
-    const credited = BOAT_REPO[boat.state].shortfall === 'past-value' ? Math.max(proceeds, boat.price) : proceeds;
+    const credited = BOAT_REPO[boat.state]!.shortfall === 'past-value' ? Math.max(proceeds, boat.price) : proceeds;
     if (owed > 0) s.post({ memo: 'Boat repossessed and sold', category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: owed }, { accountId: s.nominalAccount('income', 'Boat Repossessed').id, amount: -owed }] });
     const surplus = proceeds - owed;
     if (surplus > 0) s.post({ memo: 'What the boat’s sale left over', category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: surplus }, { accountId: s.nominalAccount('income', 'Boat Repossessed').id, amount: -surplus }] });
@@ -219,7 +233,7 @@ export function registerBoats(sim: Simulation): void {
 
 /**
  * Moving home, the boat comes on its trailer where a road reaches and the
- * new home is in one of the three states, registered there when the state
+ * new home is in one of the boat's places, registered there when the state
  * changes; otherwise it stays where it was kept. From 2026-09-30; until then
  * a boat stayed where it was bought.
  */
@@ -227,14 +241,15 @@ export function carryBoat(sim: Simulation, person: Person, fromCity: string, toC
   const boat = boatOf(person);
   if (!boat || boat.cityId !== fromCity || fromCity === toCity || !byRoad(fromCity, toCity)) return;
   const state = jurisdictionOf(toCity);
-  if (!isBoatState(state)) return;
+  // Within a country only: importing a boat across a border isn't kept.
+  if (!isBoatState(state) || CITIES.get(fromCity)?.countryId !== CITIES.get(toCity)?.countryId) return;
   boat.cityId = toCity;
   if (state === boat.state) return;
   const year = zonedParts(sim.now, CITIES.require(toCity).timeZone).year;
-  const due = usd(sim, BOAT_RULES[state].registration.first(year));
+  const due = inPlace(sim, state, BOAT_RULES[state].registration?.first(year) ?? 0);
   if (!payFromBank(sim, person, due, 'Registering the boat in its new home', 'vehicle')) owe(sim, person, due, 'Registering the boat', 'vehicle');
   boat.state = state;
-  boat.registeredUntil = sim.now + BOAT_RULES[state].registration.years * YEAR;
+  boat.registeredUntil = sim.now + (BOAT_RULES[state].registration?.years ?? 1_000) * YEAR;
   delete boat.seasonPaid;
 }
 

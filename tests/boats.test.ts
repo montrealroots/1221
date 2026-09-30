@@ -13,8 +13,8 @@ import { exchange } from '@/engine/content/currency';
 import { CITIES } from '@/engine/content/geography';
 import { salesTaxRate } from '@/engine/content/tax';
 import { FUEL } from '@/engine/content/vehiclefees';
-import { BOAT_INSURANCE_USD, BOAT_RULES, laidUp } from '@/engine/content/boats';
-import { boatQuote, buyBoatRefusal, carryBoat, charterCost, charterRefusal, outingCost, outingRefusal } from '@/engine/systems/boats';
+import { BOAT_RULES, laidUp } from '@/engine/content/boats';
+import { boatQuote, buyBoatRefusal, carryBoat, certifyRefusal, charterCost, charterRefusal, outingCost, outingRefusal } from '@/engine/systems/boats';
 import { applyLookingAfter, costFor, lookAfterRefusal, minutesFor } from '@/engine/systems/life';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { move } from '@/engine/systems/household';
@@ -40,12 +40,18 @@ describe('buying one', () => {
     expect(boatQuote(ny, 'us-ct-newhaven')!.tax).toBe(usd(ny, Math.round(33_543 * 0.0299 * 100)));
     const year = zonedParts(ny.now, CITIES.require('us-ca-losangeles').timeZone).year;
     expect(boatQuote(ny, 'us-ca-losangeles')!.registration).toBe(usd(ny, (year % 2 === 0 ? 37 : 65) * 100));
-    expect(boatQuote(ny, 'uk-eng-london')).toBeUndefined();
-    expect([2026, 2027].map((y) => BOAT_RULES['US-CA'].registration.first(y))).toEqual([37, 65]);
+    // London's Cap Camarat at £39,995 with its VAT in; Toronto's Princecraft at C$68,235 and 13% HST, and Transport Canada's C$24.41 license; none in Dublin.
+    const gb = boatQuote(ny, 'uk-eng-london')!;
+    expect([gb.price, gb.tax, gb.registration]).toEqual([exchange(39_995_00, 'GBP', saveCurrency(ny.universe)), 0, 0]);
+    const on = boatQuote(ny, 'ca-on-toronto')!;
+    expect(on.tax).toBe(exchange(Math.round(68_235 * 0.13 * 100), 'CAD', saveCurrency(ny.universe)));
+    expect(on.registration).toBe(exchange(24_41, 'CAD', saveCurrency(ny.universe)));
+    expect(boatQuote(ny, 'ie-lei-dublin')).toBeUndefined();
+    expect([2026, 2027].map((y) => BOAT_RULES['US-CA'].registration!.first(y))).toEqual([37, 65]);
   });
 
   it('refuses one outside the three states, a second, and what the bank can’t pay', () => {
-    expect(buyBoatRefusal(save('uk-eng-london', 'boat-uk'), save('uk-eng-london', 'boat-uk2').player)).toMatch(/only yet/);
+    expect(buyBoatRefusal(save('ie-lei-dublin', 'boat-ie'), save('ie-lei-dublin', 'boat-ie2').player)).toMatch(/only yet/);
     const sim = save('us-ny-newyork', 'boat-refuse');
     expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
     expect(buyBoatRefusal(sim, sim.player)).toMatch(/own a boat/);
@@ -62,7 +68,7 @@ describe('keeping it', () => {
     sim.advanceBy(6 * YEAR + 45 * MS_DAY);
     const months = paidFor(sim, 'The boat’s insurance, a month');
     expect(months.length).toBeGreaterThanOrEqual(72);
-    expect(months[0]).toBe(usd(sim, Math.round(BOAT_INSURANCE_USD / 12 * 100)));
+    expect(months[0]).toBe(usd(sim, Math.round(662.51 / 12 * 100)));
     const seasons = paidFor(sim, 'The boat’s slip, the season');
     expect(seasons.length).toBe(6);
     expect(seasons[0]).toBe(usd(sim, 1_325_00));
@@ -101,7 +107,7 @@ describe('taking it out', () => {
     toSummer(sim);
     expect(outingRefusal(sim, sim.player)).toMatch(/Boating Safety Certificate/);
     expect(sim.execute({ kind: 'boat.certify', payload: {} }).ok).toBe(true);
-    expect(paidFor(sim, 'The Boating Safety Certificate')).toEqual([usd(sim, BOAT_RULES['US-NY'].certificate.usd * 100)]);
+    expect(paidFor(sim, 'The Boating Safety Certificate')).toEqual([usd(sim, BOAT_RULES['US-NY'].certificate!.amount * 100)]);
     expect(outingRefusal(sim, sim.player)).toBeUndefined();
     const gallon = (FUEL['US-NY'].petrol / 100) * 3.785411784 + 1.175;
     expect(outingCost(sim, sim.player.boat!)).toBe(usd(sim, Math.round(3 * 3.7 * gallon * 100)));
@@ -243,7 +249,9 @@ describe('the Northeast’s winter, and a boat loan in default', () => {
     sim.advanceBy(365 * MS_DAY);
     const stored = paidFor(sim, 'Boat hauled and stored for the winter');
     expect(stored).toEqual([usd(sim, 72 * 18 * 100)]);
-    expect([10, 11, 3, 4].map(laidUp)).toEqual([false, true, true, false]);
+    expect([10, 11, 3, 4].map((m) => laidUp(m))).toEqual([false, true, true, false]);
+    // Ontario's marinas lay up through April.
+    expect([4, 5].map((m) => laidUp(m, 4))).toEqual([true, false]);
     // A second month's tick in the same November stores it once.
     const nov = zonedParts(sim.now, 'America/New_York');
     sim.player.boat!.winterPaid = nov.month >= 11 ? nov.year : nov.year - 1;
@@ -306,5 +314,36 @@ describe('the Northeast’s winter, and a boat loan in default', () => {
     sim.advanceBy(16 * MS_DAY);
     const short = sim.universe.transactions.filter((t) => t.memo.startsWith('Boat loan short after its sale'));
     expect(short.map((t) => t.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0))).toEqual([usd(sim, 10_000_00)]);
+  });
+});
+
+describe('a boat in London and in Toronto', () => {
+  it('takes a Londoner’s Cap Camarat out with no license, its storage at Hamble Point by the year, 1.25% insurance, and Port Hamble’s £2.30 fuel', () => {
+    const sim = save('uk-eng-london', 'boat-gb');
+    expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    expect(certifyRefusal(sim, sim.player)).toMatch(/None is asked/);
+    expect(outingRefusal(sim, sim.player)).toBeUndefined();
+    expect(outingCost(sim, sim.player.boat!)).toBe(exchange(Math.round(3 * 14.1 * 2.3 * 100), 'GBP', saveCurrency(sim.universe)));
+    sim.advanceBy(65 * MS_DAY);
+    expect(paidFor(sim, 'The boat’s storage, the year')).toEqual([exchange(Math.round(386.55 * 5.5 * 100), 'GBP', saveCurrency(sim.universe))]);
+    expect(paidFor(sim, 'The boat’s insurance, a month')[0]).toBe(exchange(Math.round(39_995 * 0.0125 / 12 * 100), 'GBP', saveCurrency(sim.universe)));
+    expect(sim.execute({ kind: 'boat.buy', payload: { financed: true } }).error).toBeDefined();
+  });
+
+  it('asks a Torontonian for the operator card, lays the boat up November to April, and stores it at Bluffer’s Park’s winter package', () => {
+    const sim = save('ca-on-toronto', 'boat-on');
+    expect(buyBoatRefusal(sim, sim.player, true)).toMatch(/Bayliner’s loan is American/);
+    expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    expect(outingRefusal(sim, sim.player)).toMatch(/laid up for the winter until May|Pleasure Craft Operator Card/);
+    expect(sim.execute({ kind: 'boat.certify', payload: {} }).ok).toBe(true);
+    expect(paidFor(sim, 'The Pleasure Craft Operator Card')).toEqual([exchange(49_95, 'CAD', saveCurrency(sim.universe))]);
+    // April is still laid up in Ontario, where an American boat is out.
+    for (let g = 0; g < 400 && zonedParts(sim.now, 'America/Toronto').month !== 4; g += 1) sim.advanceBy(MS_DAY);
+    expect(outingRefusal(sim, sim.player)).toMatch(/until May/);
+    for (let g = 0; g < 400 && zonedParts(sim.now, 'America/Toronto').month !== 6; g += 1) sim.advanceBy(MS_DAY);
+    expect(outingRefusal(sim, sim.player) ?? '').not.toMatch(/laid up/);
+    expect(paidFor(sim, 'The boat’s slip, the season')).toEqual([exchange(Math.round(50 * 20 * 1.13 * 100), 'CAD', saveCurrency(sim.universe))]);
+    for (let g = 0; g < 400 && zonedParts(sim.now, 'America/Toronto').month !== 12; g += 1) sim.advanceBy(MS_DAY);
+    expect(paidFor(sim, 'Boat hauled and stored for the winter')).toEqual([exchange(Math.round(7 * 150 * 1.13 * 100), 'CAD', saveCurrency(sim.universe))]);
   });
 });
