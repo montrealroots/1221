@@ -31,7 +31,7 @@ It shows on the Land screen's Build A House panel, with the guide chapter Buildi
 **Played lives with land, on `691415d`:**
 - New York: died at 83, bought 10 acres upstate at 55 and held them to death, 0 errors and 0 anomalies.
 - London: died at 97, 0 errors and 0 anomalies, three farmland purchases, two sales when broke. This life found the land-value defect.
-- Dublin: stopped at 57 (2060) by Claude Code for low system memory and resumed from its checkpoint; results below when it finishes.
+- Dublin: stopped at 57 (2060) by Claude Code for low system memory and resumed from its checkpoint. Died at 75 in New York on an O-1, worth $27,769, 0 errors and 0 anomalies. At 44 it bought ten acres upstate after a counter-offer, and held them.
 
 **Next:** Stage 5b (building on farmland, which needs planning permission; renovation and extension), the probe taught to build, and lives on `1ceb17f`.
 >
