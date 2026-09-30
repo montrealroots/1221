@@ -12,7 +12,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { OWN_172, hiredPilotUsd, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { netWorth } from '@/engine/systems/finance';
-import { journeysOf } from '@/engine/systems/journey';
+import { journeysOf, slotOf } from '@/engine/systems/journey';
 import { airportsFor } from '@/engine/systems/airports';
 import { distanceKm } from '@/engine/content/geography';
 
@@ -88,9 +88,9 @@ describe('flying oneself', () => {
     if (typeof legs === 'string') throw new Error(legs);
     const nm = distanceKm(airportsFor('us-ny-newyork')[0]!.airport, airportsFor('us-ct-newhaven')[0]!.airport) / 1.852;
     const hours = nm / 124 + 0.2;
-    expect(legs[0]!.fare).toBe(inSave(sim, Math.round(hours * 176 * 100), 'USD'));
-    expect((legs[0]!.arriveAt - legs[0]!.departAt) / 60_000).toBe(Math.round(hours * 60));
-    expect(legs[0]!.mode).toBe('fly');
+    expect(legs.find((l) => l.mode === 'fly')!.fare).toBe(inSave(sim, Math.round(hours * 176 * 100), 'USD'));
+    expect((legs.find((l) => l.mode === 'fly')!.arriveAt - legs.find((l) => l.mode === 'fly')!.departAt) / 60_000).toBe(Math.round(hours * 60));
+    expect(legs.find((l) => l.mode === 'fly')!.mode).toBe('fly');
     expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles', day, 2)).toMatch(/past a Skyhawk’s 578/);
     expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'uk-eng-london', day, 2)).toMatch(/America only/);
   });
@@ -121,8 +121,8 @@ describe('a plane of one’s own', () => {
     // Not a pilot, its owner hires one: its fuel and the pilot's half day.
     const hired = planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', day, 2);
     if (typeof hired === 'string') throw new Error(hired);
-    const flown = (hired[0]!.arriveAt - hired[0]!.departAt) / 3_600_000;
-    expect(Math.abs(hired[0]!.fare - Math.round(ownHourCost(sim, 'us-ny-newyork') * flown) - inSave(sim, 450_00, 'USD'))).toBeLessThan(100);
+    const flown = (hired.find((l) => l.mode === 'fly')!.arriveAt - hired.find((l) => l.mode === 'fly')!.departAt) / 3_600_000;
+    expect(Math.abs(hired.find((l) => l.mode === 'fly')!.fare - Math.round(ownHourCost(sim, 'us-ny-newyork') * flown) - inSave(sim, 450_00, 'USD'))).toBeLessThan(100);
     expect(hiredPilotUsd(4)).toBe(450);
     expect(hiredPilotUsd(4.1)).toBe(900);
     expect(hiredPilotUsd(8.1)).toBe(1_350);
@@ -135,9 +135,9 @@ describe('a plane of one’s own', () => {
     sim.player.pilot = { issuedAt: sim.now, authority: 'FAA' };
     const legs = planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', sim.now + MS_DAY, 2);
     if (typeof legs === 'string') throw new Error(legs);
-    const hours = (legs[0]!.arriveAt - legs[0]!.departAt) / 3_600_000;
-    expect(legs[0]!.routeId).toBe('own');
-    expect(legs[0]!.fare).toBeCloseTo(inSave(sim, Math.round(10.2 * 7.6 * 100), 'USD') * hours, -2);
+    const hours = (legs.find((l) => l.mode === 'fly')!.arriveAt - legs.find((l) => l.mode === 'fly')!.departAt) / 3_600_000;
+    expect(legs.find((l) => l.mode === 'fly')!.routeId).toBe('own');
+    expect(legs.find((l) => l.mode === 'fly')!.fare).toBeCloseTo(inSave(sim, Math.round(10.2 * 7.6 * 100), 'USD') * hours, -2);
   });
 
   it('pays the annual inspection each year, and overhauls the engine at 2,000 hours', () => {
@@ -172,14 +172,20 @@ describe('a light jet chartered', () => {
     const b = airportsFor('us-ca-losangeles')[0]!.airport;
     // Past a CJ3's range with reserve: one stop for fuel, its taxi and climb twice, and 45 minutes on the ground unbilled.
     const hours = distanceKm(a, b) / 1.852 / 416 + 2 * 0.5;
-    expect((legs[0]!.arriveAt - legs[0]!.departAt) / 3_600_000).toBeCloseTo(hours + 0.75, 1);
-    expect(legs[0]!.basis).toMatch(/a stop for fuel/);
+    expect((legs.find((l) => l.mode === 'fly')!.arriveAt - legs.find((l) => l.mode === 'fly')!.departAt) / 3_600_000).toBeCloseTo(hours + 0.75, 1);
+    expect(legs.find((l) => l.mode === 'fly')!.basis).toMatch(/a stop for fuel/);
     const near = planCharterJet(sim, 'us-ny-newyork', 'us-ct-newhaven', day, 3);
     if (typeof near === 'string') throw new Error(near);
-    expect(near[0]!.basis).not.toMatch(/stop for fuel/);
-    expect(legs[0]!.routeId).toBe('jet');
-    expect(legs[0]!.fare).toBe(inSave(sim, Math.round(jetCharterUsd(hours) * 100), 'USD'));
-    expect(zonedParts(legs[0]!.departAt, 'America/New_York').hour).toBe(10);
+    expect(near.find((l) => l.mode === 'fly')!.basis).not.toMatch(/stop for fuel/);
+    expect(legs.find((l) => l.mode === 'fly')!.routeId).toBe('jet');
+    // The taxi to Tweed and from Hawthorne or LAX, as an airline journey's.
+    expect(legs[0]!.mode).toBe('ground');
+    expect(legs[0]!.arriveAt).toBe(legs[1]!.departAt);
+    expect(legs[2]!.mode).toBe('ground');
+    expect(legs[2]!.departAt).toBe(legs[1]!.arriveAt);
+    expect(legs[0]!.fare).toBeGreaterThan(0);
+    expect(legs.find((l) => l.mode === 'fly')!.fare).toBe(inSave(sim, Math.round(jetCharterUsd(hours) * 100), 'USD'));
+    expect(zonedParts(legs.find((l) => l.mode === 'fly')!.departAt, 'America/New_York').hour).toBe(10);
     expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/American airports/);
     // Honolulu is past two of a light jet's legs.
     expect(planCharterJet(sim, 'us-ny-newyork', 'us-hi-honolulu', day, 3)).toMatch(/with one stop for fuel/);
@@ -193,5 +199,7 @@ describe('a light jet chartered', () => {
     const r = sim.execute({ kind: 'travel.book', payload: { toCity: 'us-ca-losangeles', day: saturday(sim, 7), slot: 2, by: 'jet', nights: 1 } });
     expect(r.ok, r.error).toBe(true);
     expect(journeysOf(sim.player).some((j) => j.legs.some((l) => l.routeId === 'jet'))).toBe(true);
+    // Its departure is the flight's, not the taxi's before it.
+    expect(slotOf(journeysOf(sim.player).find((j) => j.legs.some((l) => l.routeId === 'jet'))!)).toBe(2);
   });
 });

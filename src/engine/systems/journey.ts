@@ -673,7 +673,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
 export function slotOf(j: Journey): number {
   const zone = CITIES.require(j.fromCity).timeZone;
   const route = railRouteById(j.by);
-  const first = j.legs.find((l) => l.mode === 'flight' || l.mode === 'train' || l.mode === 'bus') ?? j.legs[0]!;
+  const first = j.legs.find((l) => l.mode === 'flight' || l.mode === 'train' || l.mode === 'bus' || l.mode === 'fly') ?? j.legs[0]!;
   const at = zonedParts(first.departAt, zone);
   const hour = at.hour + at.minute / 60;
   const hours: readonly number[] | undefined = route ? departureHours(route) : !j.by ? AIR.departureHours : undefined;

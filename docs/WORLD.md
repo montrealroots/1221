@@ -322,7 +322,7 @@ Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first su
   - Then PSI's $175 knowledge test and a typical $1,000 checkride.
 - A month the bank can't pay stops it, and Take It Up Again goes on from there, straight to the tests if that's where it stopped.
 - Qualified, By offers Fly Yourself between American towns: from the airport nearest each, at Textron's published 124 knots, a fifth of an hour for the ground and the climb (SLATE's), within the Skyhawk's 640 nautical miles less the half hour a day flight must keep in its tanks (14 CFR 91.151), paid by the hour. It's its own kind of leg, so no airline's delays or round-trip fares touch it.
-- Open, and why: training abroad (only the hours are researched: Britain's 40, Canada's and the EASA's 45), owning an aircraft (built in 7c, below), a medical's renewal (an examiner's fee isn't regulated), the weather a visual flight needs, the drive to and from the airports; boats were open here, and 7d built them.
+- Open, and why: training abroad (only the hours are researched: Britain's 40, Canada's and the EASA's 45), owning an aircraft (built in 7c, below), a medical's renewal (an examiner's fee isn't regulated), the weather a visual flight needs; the drive to and from the airports was open until 2026-09-30, and a flight of one's own or a charter now has the taxi to its airport and from the far one, at the town's rate card or SLATE's estimate, as an airline journey does; boats were open here, and 7d built them.
 
 Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survived: a check that kept airline delays off a self-flown leg, which luck let pass, since most flights are on time. The leg became its own kind, which the delays never read, and the check went.
 

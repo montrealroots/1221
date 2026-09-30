@@ -17,9 +17,9 @@
  * 172, from the airport nearest each: at Textron's 124 knots, a fifth of an
  * hour more for the ground and the climb (SLATE's), within its 640 nautical
  * miles less the half hour's fuel a day flight must keep (14 CFR 91.151),
- * paid by the hour. Owning an aircraft, a medical's renewal, the weather a
- * visual flight needs, and the drive to and from the airports aren't kept,
- * said so. Only an FAA certificate is kept, and a plane may not be rented
+ * paid by the hour, with the taxi to the airport and from the far one
+ * (from 2026-09-30; owning an aircraft came in 7c). A medical's renewal and
+ * the weather a visual flight needs aren't kept, said so. Only an FAA certificate is kept, and a plane may not be rented
  * abroad on it.
  */
 
@@ -31,6 +31,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { airportsFor } from './airports';
+import { groundLeg } from '../content/air';
 import { ageOn } from './mortality';
 import { inTheBank, owe, payFromBank } from './household';
 import type { JourneyLeg } from './journey';
@@ -43,6 +44,24 @@ export const PILOT_MONTH_KIND = 'pilot.month';
 
 export interface PilotTraining { startedAt: Instant; monthsDone: number; status: 'training' | 'stopped' | 'certified' }
 export interface PilotCertificate { issuedAt: Instant; authority: 'FAA' }
+
+/**
+ * A flight not by airline, with the taxi to its airport and from the far
+ * one, at the town's rate card or SLATE's estimate, as an airline journey's
+ * (`groundLeg` in `content/air.ts`). Until 2026-09-30 a flight of one's own
+ * and a charter began and ended on the runway, the drive left out.
+ */
+function withTheDrives(sim: Simulation, fromCity: string, toCity: string, a: { airport: { iata: string }; km: number }, b: { airport: { iata: string }; km: number }, leg: JourneyLeg): JourneyLeg[] {
+  const cur = saveCurrency(sim.universe);
+  const money = (amount: number, currency: string) => { const c = Math.round(amount * 100); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
+  const out = groundLeg(fromCity, a.airport.iata, a.km);
+  const back = groundLeg(toCity, b.airport.iata, b.km);
+  return [
+    { mode: 'ground', from: fromCity, to: a.airport.iata, departAt: leg.departAt - out.minutes * 60_000, arriveAt: leg.departAt, fare: money(out.amount, out.currency), basis: out.basis },
+    leg,
+    { mode: 'ground', from: b.airport.iata, to: toCity, departAt: leg.arriveAt, arriveAt: leg.arriveAt + back.minutes * 60_000, fare: money(back.amount, back.currency), basis: back.basis },
+  ];
+}
 
 const usd = (sim: Simulation, cents: Money) => { const cur = saveCurrency(sim.universe); return cur === 'USD' ? cents : exchange(cents, 'USD', cur) ?? cents; };
 
@@ -82,8 +101,10 @@ export const hiredPilotUsd = (hours: number): number => (hours <= HIRED_PILOT_US
 export function planFlyYourself(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
   const ownsHere = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.at === fromCity;
   if (!person.pilot && !ownsHere) return 'Flying yourself asks a pilot certificate.';
-  const from = airportsFor(fromCity)[0]?.airport;
-  const to = airportsFor(toCity)[0]?.airport;
+  const fromAp = airportsFor(fromCity)[0];
+  const toAp = airportsFor(toCity)[0];
+  const from = fromAp?.airport;
+  const to = toAp?.airport;
   if (!from || !to || from.country !== 'US' || to.country !== 'US') return 'A plane is rented on an FAA certificate in America only.';
   if (from.iata === to.iata) return 'The same airport serves both towns.';
   const nm = distanceKm(from, to) / 1.852;
@@ -99,7 +120,7 @@ export function planFlyYourself(sim: Simulation, person: Person, fromCity: strin
   const hired = own && !person.pilot;
   const fare = own ? Math.round(ownHourCost(sim, fromCity) * hours) + (hired ? usd(sim, hiredPilotUsd(hours) * 100) : 0) : usd(sim, Math.round(hours * PILOT_TRAINING.ratePerHour * 100));
   // Its own kind of leg, flown oneself: no airline's delays or round-trip fares touch it.
-  return [{ mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round(hours * 60) * 60_000, fare, routeId: own ? 'own' : 'rent', basis: own ? `${Math.round(nm)} nautical miles in your own Cessna 172 at 124 knots, ${hours.toFixed(1)} hours at 10.2 gallons an hour of 100LL at the region’s price${hired ? `, and a hired commercial pilot’s $${hiredPilotUsd(hours).toLocaleString('en-US')} for the day` : ''}; the drive to and from the airports isn’t kept.` : `${Math.round(nm)} nautical miles flown yourself in a rented Cessna 172 at Textron’s 124 knots, ${hours.toFixed(1)} hours at the median school’s $176 an hour with fuel; the drive to and from the airports isn’t kept.` }];
+  return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round(hours * 60) * 60_000, fare, routeId: own ? 'own' : 'rent', basis: own ? `${Math.round(nm)} nautical miles in your own Cessna 172 at 124 knots, ${hours.toFixed(1)} hours at 10.2 gallons an hour of 100LL at the region’s price${hired ? `, and a hired commercial pilot’s $${hiredPilotUsd(hours).toLocaleString('en-US')} for the day` : ''}.` : `${Math.round(nm)} nautical miles flown yourself in a rented Cessna 172 at Textron’s 124 knots, ${hours.toFixed(1)} hours at the median school’s $176 an hour with fuel.` });
 }
 
 function scheduleMonth(sim: Simulation, person: Person): void {
@@ -279,8 +300,10 @@ export function jetCharterUsd(hours: number): number {
 
 /** A journey's leg in a chartered light jet, or why not. */
 export function planCharterJet(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
-  const from = airportsFor(fromCity)[0]?.airport;
-  const to = airportsFor(toCity)[0]?.airport;
+  const fromAp = airportsFor(fromCity)[0];
+  const toAp = airportsFor(toCity)[0];
+  const from = fromAp?.airport;
+  const to = toAp?.airport;
   if (!from || !to || from.country !== 'US' || to.country !== 'US') return 'SLATE charters a jet between American airports only yet.';
   if (from.iata === to.iata) return 'The same airport serves both towns.';
   const nm = distanceKm(from, to) / 1.852;
@@ -294,5 +317,5 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const p = zonedParts(day, zone);
   const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
   const dollars = jetCharterUsd(hours);
-  return [{ mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare: usd(sim, Math.round(dollars * 100)), routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at $3,975 an hour, with the 7.5% federal excise tax and its segment fee.` }];
+  return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare: usd(sim, Math.round(dollars * 100)), routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at $3,975 an hour, with the 7.5% federal excise tax and its segment fee.` });
 }
