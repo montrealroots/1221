@@ -11,7 +11,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS } from '@/engine/content/land';
+import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, closingLines } from '@/engine/content/land';
 import { homeOf } from '@/engine/systems/earnings';
 import { marketAt } from '@/engine/systems/homes';
 import { landAnswer, landBuyingOf, landFloor, landQuote, landValue, listingsFor, marketsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, taxedValue, type Listing } from '@/engine/systems/land';
@@ -45,9 +45,17 @@ describe('what land costs', () => {
     const q = landQuote(i, 2_850 / 43_560, y(2022));
     expect(q.price).toBe(Math.round(15_217_700 * (2_850 / 43_560) * 100));
     expect(q.price).toBe(99_564_842);
-    // The buyer pays nothing on top in New York.
-    expect(q.lines).toEqual([]);
-    expect(q.total).toBe(q.price);
+    // No transfer tax on the buyer in New York; from 2026-09-30 TIRSA's zone 2 owner's policy and the attorney's fee.
+    // $995,648.42: $382, then 15 thousands at $6.34, 50 at $5.16, 400 at $4.14 and 496 at $3.78 = $4,265.98.
+    expect(q.lines).toEqual([{ label: 'Owner’s Title Insurance', amount: 4_265_98 }, { label: 'The Attorney’s Fee', amount: 3_750_00 }]);
+    expect(q.total).toBe(q.price + 4_265_98 + 3_750_00);
+    // TIRSA's own worked figures, zone 2: $1,356.10 at $250,000 and $2,391.10 at $500,000; CATIC's $957 and $1,770.
+    expect(closingLines('nyc', 250_000_00)[0]!.amount).toBe(1_356_10);
+    expect(closingLines('nyc', 500_000_00)[0]!.amount).toBe(2_391_10);
+    expect(closingLines('new-haven', 250_000_00)[0]!.amount).toBe(957_00);
+    expect(closingLines('new-haven', 500_000_00)[0]!.amount).toBe(1_770_00);
+    expect(closingLines('los-angeles', 250_000_00)[0]!.amount).toBe(1_100_00);
+    expect(closingLines('ontario', 250_000_00)).toEqual([]);
     const sale = saleProceeds(LAND_MARKETS[i]!, q.price);
     expect(sale.taxes.map((t) => t.amount)).toEqual([Math.round(q.price * 0.004), Math.round(q.price * 0.02625)]);
     // Under $500,000 the city's is 1.425% on the whole; from $2 million the state's is 0.65% on the whole.
@@ -66,7 +74,8 @@ describe('what land costs', () => {
     expect(line(england, /Official Search/)).toBe(3_00);
     // Scale 1, £200,001 to £500,000: £150.
     expect(line(england, /Land Registry/)).toBe(150_00);
-    expect(england.total).toBe(424_850_00 + 10_742_50 + 13_00 + 150_00);
+    expect(line(england, /Conveyancing/)).toBe(1_509_00);
+    expect(england.total).toBe(424_850_00 + 10_742_50 + 13_00 + 150_00 + 1_509_00);
     expect(line(landQuote(idx(/Farmland In England/), 10, y(2026)), /Stamp Duty Land Tax/)).toBe(0);
     expect(line(landQuote(idx(/Farmland In England/), 10, y(2026)), /Land Registry/)).toBe(40_00);
     const leinster = landQuote(idx(/Leinster/), 10, y(2025));
@@ -180,8 +189,8 @@ describe('the deal', () => {
     expect(p).toBeDefined();
     expect(p.paid).toBe(l.asking);
     const bought = memoed(sim, /^A Lot In Queens, .* bought/)[0]!;
-    // The whole price is the expense: the earnest money from escrow and the rest from the bank.
-    expect(debit(bought)).toBe(inSave(sim, l.asking, 'USD'));
+    // The whole price is the expense, with the title policy and the attorney: the earnest money from escrow and the rest from the bank.
+    expect(debit(bought)).toBe(inSave(sim, l.asking + closingLines('nyc', l.asking).reduce((a, x) => a + x.amount, 0), 'USD'));
 
     sim.advanceBy(366 * MS_DAY);
     const tax = memoed(sim, 'Property tax, A Lot In Queens')[0]!;

@@ -192,3 +192,59 @@ export const LAND_SEARCHES: Readonly<Partial<Record<LandPlace, readonly { label:
  * third party's compilation of the fee order.
  */
 export const LAND_REGISTRATION: readonly (readonly [number, number])[] = [[80_000, 20], [100_000, 40], [200_000, 100], [500_000, 150], [1_000_000, 295], [Infinity, 500]];
+
+/**
+ * What a buyer's closing costs past the taxes, from 2026-09-30
+ * (`docs/research/world/research-land-construction.json`): an owner's title
+ * policy and a lawyer's fee, where each is published.
+ * - New York: TIRSA's promulgated owner's rates, zone 2, which takes in
+ *   Brooklyn, Queens, Staten Island and Columbia County; and a real estate
+ *   attorney's flat fee, the middle of $2,500 to $5,000 in the city and of
+ *   $2,000 to $3,000 elsewhere in the state (firms' pages, secondary).
+ * - Connecticut: CATIC's owner's policy formula, its 2016 schedule, the
+ *   latest it publishes.
+ * - California: Old Republic's Los Angeles owner's premiums at $100,000,
+ *   $250,000 and $500,000, between and past them at their own rate; an
+ *   underwriter files its own, and escrow is separate and not kept.
+ * - England: the conveyancing index's £1,509 for a purchase, with its
+ *   disbursements and VAT (Q2 2026).
+ * - Ireland: a solicitor's flat fee, the middle of €1,500 to €2,500, with 23%
+ *   VAT.
+ * No title rate or lawyer's fee was read for Ontario or British Columbia.
+ */
+const TIRSA_ZONE2: readonly [number, number][] = [[50_000, 6.34], [100_000, 5.16], [500_000, 4.14], [1_000_000, 3.78], [5_000_000, 3.48], [10_000_000, 3.09], [15_000_000, 2.92], [Number.POSITIVE_INFINITY, 2.62]];
+function tirsaZone2(dollars: number): number {
+  let premium = 382;
+  let from = 35_000;
+  for (const [upTo, per] of TIRSA_ZONE2) {
+    if (dollars <= from) break;
+    premium += Math.ceil((Math.min(dollars, upTo) - from) / 1_000) * per;
+    from = upTo;
+  }
+  return Math.round(premium * 100) / 100;
+}
+/** CATIC's schedule, in whole dollars as it prints them: $957.50 at $250,000 is its $957. */
+const catic = (dollars: number): number => Math.floor(caticExact(dollars));
+function caticExact(dollars: number): number {
+  if (dollars <= 20_000) return 100;
+  if (dollars <= 100_000) return 100 + Math.ceil((dollars - 20_000) / 1_000) * 4;
+  if (dollars <= 200_000) return 420 + Math.ceil((dollars - 100_000) / 1_000) * 3.75;
+  if (dollars <= 500_000) return 795 + Math.ceil((dollars - 200_000) / 1_000) * 3.25;
+  return 1_770 + Math.ceil((dollars - 500_000) / 1_000) * 2.75;
+}
+function oldRepublicLa(dollars: number): number {
+  if (dollars <= 100_000) return 725;
+  if (dollars <= 250_000) return 725 + ((dollars - 100_000) / 150_000) * 375;
+  return 1_100 + ((dollars - 250_000) / 250_000) * 500;
+}
+export function closingLines(place: string, cents: number): { label: string; amount: number }[] {
+  const dollars = cents / 100;
+  const out: { label: string; amount: number }[] = [];
+  const add = (label: string, units: number) => out.push({ label, amount: Math.round(units * 100) });
+  if (place === 'nyc' || place === 'ny-state') { add('Owner’s Title Insurance', tirsaZone2(dollars)); add('The Attorney’s Fee', place === 'nyc' ? 3_750 : 2_500); }
+  if (place === 'new-haven' || place === 'ct-state') add('Owner’s Title Insurance', catic(dollars));
+  if (place === 'los-angeles' || place === 'ca-state') add('Owner’s Title Insurance', oldRepublicLa(dollars));
+  if (place === 'london' || place === 'england') add('Conveyancing', 1_509);
+  if (place === 'leinster') add('The Solicitor’s Fee, With VAT', 2_000 * 1.23);
+  return out;
+}

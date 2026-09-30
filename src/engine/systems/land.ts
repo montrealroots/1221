@@ -40,7 +40,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_REGISTRATION, LAND_SEARCHES, LAND_TAX, LAND_TRANSFER, areaWords, type LandMarket, type TransferTax } from '../content/land';
+import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_REGISTRATION, LAND_SEARCHES, LAND_TAX, LAND_TRANSFER, areaWords, type LandMarket, type TransferTax, closingLines } from '../content/land';
 import { homeOf } from './earnings';
 import { marketAt } from './homes';
 import { drawFromBank, inTheBank, owe, payFromBank } from './household';
@@ -157,6 +157,8 @@ export function landQuote(marketIndex: number, acres: number, at: Instant, price
   const lines = LAND_TRANSFER[m.place].filter((t) => t.payer === 'buyer').map((t) => ({ label: t.label, amount: transferTax(t, paid) }));
   for (const s of LAND_SEARCHES[m.place] ?? []) lines.push({ label: s.label, amount: s.amount * 100 });
   if (m.place === 'london' || m.place === 'england') lines.push({ label: 'Land Registry Fee', amount: LAND_REGISTRATION.find(([upTo]) => paid / 100 <= upTo)![1] * 100 });
+  // Title insurance and the lawyer, where published (from 2026-09-30).
+  lines.push(...closingLines(m.place, paid));
   return { currency: m.currency, price: paid, lines, total: paid + lines.reduce((a, l) => a + l.amount, 0), basis: `${areaWords(acres, m.place)} at ${m.basis}.` };
 }
 
