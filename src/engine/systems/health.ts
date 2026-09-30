@@ -55,6 +55,9 @@ import { fluByWeek, weekOfYear } from './seasons';
 import { isoOfCountry } from './documents';
 import { nhsByRoute, residenceIn } from './residence';
 import { citizenOf, citizenshipsOf } from './documents';
+import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
+import { eiWeek } from './eiself';
+import { laidUp } from './injury';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -118,6 +121,8 @@ export interface HealthRecord {
   drawn?: boolean;
   /** What's been paid toward a plan's brand-drug deductible this year, and its admission copays. */
   rxDeductible?: Record<string, Money>;
+  /** A Canadian's drug plan paid toward, by program year or quarter (`canadianDrugShare`). */
+  caDrug?: Record<string, Money>;
   stayCopays?: Record<string, Money>;
 }
 
@@ -624,10 +629,62 @@ function canadianShareOf(person: Person, care: Care, at: Instant): Money | undef
   return 0;
 }
 
+/**
+ * A Canadian's share of a prescription under the province's plan, in `into`,
+ * or nothing where no plan takes them (`content/cabenefits.ts`):
+ * - Ontario from 65, the Drug Benefit: $100 a program year (August to July),
+ *   then up to $6.11 each; or up to $2 each, no deductible, on $25,480 or less.
+ * - Ontario under 65, Trillium: a quarter of 4% of last year's net income each
+ *   quarter of the program year, then up to $2 each. Under 25, OHIP+ pays all.
+ * - British Columbia, Fair PharmaCare: the deductible by income, then 30% of
+ *   each, to the family maximum, then nothing.
+ * Last year's acting is the income, SLATE keeping no other.
+ */
+function canadianDrugShare(person: Person, at: Instant, price: Money, into: string): Money | undefined {
+  if (!citizenOf(person, 'CA')) return undefined;
+  const city = CITIES.get(homeOf(person));
+  if (city?.countryId !== 'ca') return undefined;
+  const cad = (dollars: number) => { const c = Math.round(dollars * 100); return into === 'CAD' ? c : exchange(c, 'CAD', into) ?? c; };
+  const p = zonedParts(at, city.timeZone);
+  const earned = earningsOf(person).years[p.year - 1]?.acting ?? 0;
+  const income = (into === 'CAD' ? earned : exchange(earned, into, 'CAD') ?? earned) / 100;
+  const age = (at - person.birthInstant) / (365.2425 * MS_DAY);
+  const h = healthOf(person);
+  h.caDrug ??= {};
+  const spend = (key: string, deductible: Money, after: (rest: Money) => Money): Money => {
+    const spent = h.caDrug![key] ?? 0;
+    const toDeductible = Math.min(price, Math.max(0, deductible - spent));
+    const pay = toDeductible + after(price - toDeductible);
+    h.caDrug![key] = spent + pay;
+    return pay;
+  };
+  const programYear = p.month >= 8 ? p.year : p.year - 1;
+  if (city.parentId === 'ca-08') {
+    // Under 25, OHIP+ has paid it before the plan is asked (`canadianShareOf`).
+    if (age >= 65) {
+      if (income <= ONTARIO_DRUGS.lowIncome) return Math.min(price, cad(ONTARIO_DRUGS.lowCopay));
+      return spend(`odb-${programYear}`, cad(ONTARIO_DRUGS.deductible), (rest) => Math.min(rest, cad(ONTARIO_DRUGS.copay)));
+    }
+    const quarter = Math.floor(((p.month + 4) % 12) / 3);
+    return spend(`trillium-${programYear}-${quarter}`, cad((income * ONTARIO_DRUGS.trilliumShare) / 4), (rest) => Math.min(rest, cad(ONTARIO_DRUGS.trilliumCopay)));
+  }
+  if (city.parentId === 'ca-02') {
+    const row = FAIR_PHARMACARE.table.find(([from, to]) => income >= from && income <= to) ?? FAIR_PHARMACARE.table[FAIR_PHARMACARE.table.length - 1]!;
+    const most = cad(row[3]);
+    const key = `fpc-${p.year}`;
+    const spent = h.caDrug[key] ?? 0;
+    return spend(key, cad(row[2]), (rest) => Math.min(Math.round(rest * (1 - FAIR_PHARMACARE.share)), Math.max(0, most - spent - Math.min(price, Math.max(0, cad(row[2]) - spent)))));
+  }
+  return undefined;
+}
+
 export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD', cash?: Money): Money {
   const nhs = cash === undefined ? publicCareShareOf(person, brand ? 'rx-brand' : 'rx-generic', at, into) : undefined;
   if (nhs !== undefined) return nhs;
   const price = cash ?? usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
+  // A Canadian's provincial drug plan, where one takes them (from later on 2026-09-30).
+  const provincial = cash === undefined ? canadianDrugShare(person, at, price, into) : undefined;
+  if (provincial !== undefined) return provincial;
   const key = planKey(person, at);
   const plan = key ? PHARMACY.plans[key] : undefined;
   if (!plan) return price;
@@ -847,6 +904,8 @@ export function registerHealth(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
     for (const event of illnessWeek(s, person, item.at)) careFor(s, person, event, item.at);
+    // A self-employed Canadian's EI sickness benefit, for a week too sick to work (`systems/eiself.ts`).
+    eiWeek(s, person, item.at, laidUp(person, item.at + 3 * MS_DAY) || (person.health?.inHospitalUntil ?? 0) > item.at - 4 * MS_DAY);
     // Depression left alone weighs on morale.
     const depression = healthOf(person).chronic?.depression;
     if (depression && (!depression.treated || depression.lapsed)) person.wellbeing.morale = Math.max(0, person.wellbeing.morale - CHRONIC.untreated.moraleAWeek);

@@ -60,12 +60,20 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - **Ontario Works:** CAD 343 and the actual rent to CAD 390 a month. Liquid assets to CAD 10,000. Earnings come off whole for three months, then CAD 200 and half the rest are kept. Decided in four working days.
   - **BC Income Assistance:** CAD 560 and the rent to CAD 500. Assets to CAD 5,000. CAD 600 of earnings kept after the first month. A three-week work search first.
   - **SNAP in New York, California and Connecticut:** the USDA's maximum ($298, then $306 from 2026-10-01) less 30% of net income. It goes onto an EBT card that pays for groceries first and nothing else. An adult of 18 to 64 without 80 hours of work a month is paid three months in three years. The gross and net limits never bind for a single adult without the shelter deduction, which isn't kept.
-  - **Not kept:** Canada's Employment Insurance, because a performer is self-employed under the Status of the Artist Act; and a non-citizen's eligibility, which turns on status SLATE doesn't keep.
+  - **Not kept:** Canada's regular Employment Insurance, because a performer is self-employed under the Status of the Artist Act; and a non-citizen's eligibility, which turns on status SLATE doesn't keep.
+  - **EI's special benefits for the self-employed** (`systems/eiself.ts`, `benefits.ei_register`, later on 2026-09-30, researched in `research-canada-benefits2.json`):
+    - Registering, a Canadian pays 1.63% of each check, to $1,123.07 a year.
+    - After twelve months registered, with $9,254 earned the year before, a week too sick to work (in hospital, or laid up by an injury) pays 55% of last year's weekly earnings, to $729. The first week is unpaid, and a claim runs 26 weeks at most.
+    - Maternity, parental and caregiving benefits aren't kept: SLATE's lives have no children or partners.
   - **Tests:** `tests/assistance.test.ts` (5).
 - **Canada's public health insurance (done 2026-09-30, `canadianShareOf` in `systems/health.ts`).** Found by the same Toronto life, replayed once Canada was an acting market. It lived to 87 with 578 credits, and died owing $1,083,058 for medical care, billed at American prices, uninsured.
   - A Canadian citizen living in Ontario or British Columbia pays nothing for a doctor, the emergency department, urgent care or a stay in hospital. OHIP has had no waiting period since 2020.
   - Prescriptions are private for an adult, but free under 25 in Ontario (OHIP+). A dentist and an optician are private.
-  - **Not kept:** Ontario's Drug Benefit past 65, Trillium's cap on high drug costs and BC's Fair PharmaCare, none of them researched. A permanent resident's or work-permit holder's cover isn't kept either, since SLATE keeps only citizenship.
+  - **The provincial drug plans** (`canadianDrugShare`, later on 2026-09-30):
+    - Ontario's Drug Benefit from 65: $100 a program year, then up to $6.11 a prescription, or up to $2 with no deductible on $25,480 or less.
+    - Trillium under 65: a quarter of 4% of last year's income each quarter, then up to $2.
+    - BC's Fair PharmaCare: the deductible by income from its 40-band table, then 30% of each prescription, to the family maximum.
+  - **Not kept:** a permanent resident's or work-permit holder's cover, since SLATE keeps only citizenship.
   - Replayed on the fix, the same life dies at 87 worth −$16,007, with a place of its own from 42. It still went hungry at times after 60 (604 days), because Canada's public pensions weren't built.
 - **Canada's public pensions (done 2026-09-30, `systems/capensions.ts`, researched in `research-canada-pensions.json` from canada.ca, the CRA and ESDC).**
   - **The CPP, paid in:** a self-employed Canadian pays both halves from each check while living in Canada. That is 11.9% between the $3,500 exemption and the YMPE ($74,600), and 8% on to the YAMPE ($85,000).
@@ -77,7 +85,8 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - **The GIS:** $1,138.90 a month, less half of last year's other income after the earnings exemption. It is paid only while living in Canada.
   - **Ontario's GAINS:** $92 a month, gone at $4,416 of income.
   - **Since, later on 2026-09-30:** OAS deferred past 65 pays 0.6% more a month, to 36% at 70. The recovery tax takes 15% of last year's net income over $95,323 back from it, a month's share at a time.
-  - **Not kept:** the GIS top-up's own 25% reduction and BC's Senior's Supplement, researched since (`research-canada-benefits2.json`); taxing the pensions.
+  - **The GIS top-up's** own 25 cents a dollar over $2,048, to $10,352 (its threshold from a 2022 report, its end confirmed for 2026). **BC's Senior's Supplement** comes from its 100-row table, $99.30 a month at most, with the GIS in British Columbia.
+  - **Not kept:** taxing the pensions.
   - **Replayed with them,** the Toronto life dies at 87 worth +$54,242, not −$16,007. Its hungry days fell from 604 to 86, all at 61 to 64, before the life-player claims at 65.
   - **Tests:** `tests/capensions.test.ts` (6). 12 mutations, all killed once four tests were added.
   - **Tests:** `tests/homebenefits.test.ts`, the Canadian case. 5 mutations, all killed.

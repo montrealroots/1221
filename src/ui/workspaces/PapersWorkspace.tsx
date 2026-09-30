@@ -29,6 +29,7 @@ import { creditRefusal, livesInBritain } from '@/engine/systems/universalcredit'
 import { CDMX_DESEMPLEO, HAP, IRISH_JA, desempleoRefusal, hapRefusal, hapSplit, jobseekerRefusal, livesInDublinCity, livesInIreland, livesInMexicoCity, netWeeklyEur } from '@/engine/systems/homebenefits';
 import { rentOf } from '@/engine/systems/household';
 import { BC_ASSISTANCE, ONTARIO_WORKS, SNAP, assistanceRefusal, ebtBalance, schemeFor } from '@/engine/systems/assistance';
+import { eiRefusal, eiWeekly } from '@/engine/systems/eiself';
 import { exchange } from '@/engine/content/currency';
 
 type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
@@ -425,6 +426,28 @@ function AssistancePanel() {
   );
 }
 
+/** EI's special benefits for a self-employed Canadian, by registering (`systems/eiself.ts`). */
+function EiPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const no = eiRefusal(person);
+  if (no && !person.ei) return null;
+  const cur = saveCurrency(sim.universe);
+  const weekly = eiWeekly(sim, person, sim.now);
+  return (
+    <Panel title="EI Special Benefits" subtitle="Canada’s, for the self-employed who register">
+      <div className="col gap-3">
+        <div className="grid grid-2">
+          <Stat label="Registered" value={person.ei ? formatDate(person.ei.registeredAt, sim.zone) : 'Not Yet'} note={person.ei ? 'Premiums come from each check, 1.63% to $1,123.07 a year' : 'Then 1.63% of your earnings, to $1,123.07 a year'} />
+          <Stat label="A Sick Week" value={weekly > 0 ? formatMoney(inSaveMoney(sim, Math.round(weekly * 100), 'CAD'), cur) : '—'} note={person.ei ? 'After twelve months registered, with $9,254 earned last year' : 'Once registered for a year'} />
+        </div>
+        {!person.ei && <div className="row gap-2"><Gated feature="benefits.ei_register" className="btn btn-sm" onClick={() => { if (run('benefits.ei_register', {}).ok) toast('Registered for EI’s special benefits.', 'positive'); }}>Register</Gated></div>}
+        <Fine>A week too sick to work, in hospital or laid up, pays 55% of last year’s weekly earnings to $729, after one unpaid week, for 26 weeks a claim. Once paid, the premiums run for as long as you’re self-employed. Source: canada.ca, 2026.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
 function BenefitsPane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -441,6 +464,7 @@ function BenefitsPane() {
     <div className="col gap-5">
       <HomeClaimsPanel />
       <AssistancePanel />
+      <EiPanel />
       <Panel
         title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}

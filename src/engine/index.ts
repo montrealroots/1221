@@ -21,6 +21,7 @@ import { registerCharging } from './systems/charging';
 import { registerResidence } from './systems/residence';
 import { registerCanadaPensions } from './systems/capensions';
 import { registerCitizenship } from './systems/citizenship';
+import { registerEiSelfEmployed } from './systems/eiself';
 import { registerTires } from './systems/tires';
 import { registerLand } from './systems/land';
 import { registerConstruction } from './systems/construction';
@@ -148,6 +149,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerResidence(sim);
   registerCanadaPensions(sim);
   registerCitizenship(sim);
+  registerEiSelfEmployed(sim);
   registerTires(sim);
   registerLand(sim);
   registerConstruction(sim);

@@ -32,12 +32,14 @@
  * **The Guaranteed Income Supplement**, with OAS while living in Canada:
  * $1,138.90 a month at most, less half of the last year's income other than
  * OAS and the GIS, after the first $5,000 of earnings and half the next
- * $10,000. The top-up's 25% on income over its threshold is left out, its
- * threshold being 2017's.
+ * $10,000; and from later on 2026-09-30 the top-up's own 25 cents a dollar
+ * over $2,048, to where it ends at $10,352 (`GIS_TOP_UP`).
  *
  * **Ontario's GAINS**, with the GIS in Ontario: $92 a month at most, gone at
  * $4,416 of private income, taken as a quarter off for each dollar (derived
- * from the two). BC's Senior's Supplement's table wasn't read.
+ * from the two). **BC's Senior's Supplement**, with the GIS in British
+ * Columbia, from later on 2026-09-30: its table from 1 July 2026, $99.30 a
+ * month at most.
  *
  * The rates are held at the last published. None of it is taxed yet in SLATE.
  */
@@ -50,6 +52,7 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { earningsOf, homeOf } from './earnings';
+import { BC_SENIORS_SUPPLEMENT, GIS_TOP_UP } from '../content/cabenefits';
 import { payeeAccount } from './cash';
 
 export const CPP = { exemption: 3_500, ympe: 74_600, yampe: 85_000, rate: 0.119, rate2: 0.08, base: 0.25, enhanced: 1 / 3, second: 0.08, dropout: 0.17, dropoutMost: 8, early: 0.006, late: 0.007, most: 1_507.65 } as const;
@@ -140,10 +143,13 @@ export function oasRecovery(sim: Simulation, person: Person, cppMonth: number): 
 export function supplements(sim: Simulation, person: Person, cppMonth: number): { gis: number; gains: number } {
   if (!livesInCanada(person)) return { gis: 0, gains: 0 };
   const income = gisIncome(sim, person, cppMonth * 12);
-  const gis = Math.max(0, GIS.monthly - (GIS.reduction * income) / 12);
+  const topUp = GIS_TOP_UP.rate * Math.min(Math.max(0, income - GIS_TOP_UP.threshold), GIS_TOP_UP.endsAt - GIS_TOP_UP.threshold);
+  const gis = Math.max(0, GIS.monthly - (GIS.reduction * income + topUp) / 12);
   const ontario = CITIES.get(homeOf(person))?.parentId === 'ca-08';
   const gains = ontario && gis > 0 ? Math.max(0, GAINS.monthly - (GAINS.monthly * 12 / GAINS.cutoff) * income / 12) : 0;
-  return { gis, gains };
+  // BC's Senior's Supplement, with the GIS in British Columbia, by the same income (`BC_SENIORS_SUPPLEMENT`).
+  const bc = CITIES.get(homeOf(person))?.parentId === 'ca-02' && gis > 0 ? BC_SENIORS_SUPPLEMENT.find(([from, to]) => income >= from && income <= to + 0.01)?.[2] ?? 0 : 0;
+  return { gis, gains: gains + bc };
 }
 
 export function oasRefusal(sim: Simulation, person: Person): string | undefined {

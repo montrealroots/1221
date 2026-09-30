@@ -208,7 +208,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Each February a year’s return is ready: File It by mid-April. A UK tax year’s is settled on its own, by the next 31 January. A balance comes from your bank, savings included, a refund comes 21 days on, and filing late with a balance costs penalties. What the bank couldn’t pay grows by the IRS’s 7% a year and half a percent a month to a quarter of it, until Pay What’s Owed settles it; left alone, the IRS writes about every five weeks, sends a final notice, and 30 days on takes it from your bank accounts. A return never filed that owes, the IRS files for you a year after it was due, from what your employers and banks reported; file your own within 120 days or it stands, with its penalties. A pension has federal tax withheld from each month.',
     ],
     names: ['Papers', 'Enroll', 'Drop The Plan', 'Elect COBRA', 'Pay It Off', 'Apply For Assistance', 'Keep It Up', 'Let It Go', 'Buy Dental', 'Drop Dental', 'File A Claim', 'Apply For HAP', 'File It', 'Pay What’s Owed'],
-    opens: ['ui.papers', 'health.enroll', 'health.drop', 'health.elect_cobra', 'health.pay_bill', 'health.apply_aid', 'health.treat', 'health.dental', 'benefits.claim', 'benefits.hap', 'benefits.assistance', 'tax.file', 'tax.pay'],
+    opens: ['ui.papers', 'health.enroll', 'health.drop', 'health.elect_cobra', 'health.pay_bill', 'health.apply_aid', 'health.treat', 'health.dental', 'benefits.claim', 'benefits.ei_register', 'benefits.hap', 'benefits.assistance', 'tax.file', 'tax.pay'],
   },
   {
     id: 'travel',

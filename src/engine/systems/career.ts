@@ -101,6 +101,7 @@ import { permitAtTheBorder, workRefusal } from './permission';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
 import { cppOnCheck } from './capensions';
+import { eiOnCheck } from './eiself';
 import { sagHoliday } from '../content/usholidays';
 
 export const SHOWCASE_KIND = 'career.showcase';
@@ -1663,6 +1664,10 @@ export function registerCareer(sim: Simulation): void {
       const cpp = cppOnCheck(person, year, check.gross, cur);
       check.net -= cpp;
       if (cpp) postings.push({ accountId: s.nominalAccount('expense', 'CPP Contributions').id, amount: cpp });
+      // And EI's premium, once registered (`systems/eiself.ts`).
+      const ei = eiOnCheck(person, year, check.gross, cur);
+      check.net -= ei;
+      if (ei) postings.push({ accountId: s.nominalAccount('expense', 'EI Premiums').id, amount: ei });
       gross += check.gross;
       net += check.net;
       if (check.agent) postings.push({ accountId: s.nominalAccount('expense', 'Agent Commission').id, amount: check.agent });

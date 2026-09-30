@@ -11,6 +11,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { yearOf } from '@/engine/systems/earnings';
+import { BC_SENIORS_SUPPLEMENT } from '@/engine/content/cabenefits';
 import { beginCareer, careerOf, type Booking } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
 import { CPP, GAINS, GIS, OAS, oasRecovery, canadaPensionsOf, canadianYears, cppMonthly, cppOnCheck, oasMonthly, oasRefusal, supplements } from '@/engine/systems/capensions';
@@ -107,12 +108,18 @@ describe('Old Age Security, the GIS and GAINS', () => {
     // $15,000 earned last year: $5,000 exempt, half the next $10,000, so $5,000 counts.
     yearOf(sim.player, new Date(sim.now).getUTCFullYear() - 1).acting = inSave(sim, 15_000_00, 'CAD');
     const earned = supplements(sim, sim.player, 0);
-    expect(earned.gis).toBeCloseTo(GIS.monthly - (0.5 * 5_000) / 12, 1);
+    // And from later on 2026-09-30 the top-up's 25 cents a dollar over $2,048.
+    expect(earned.gis).toBeCloseTo(GIS.monthly - (0.5 * 5_000 + 0.25 * (5_000 - 2_048)) / 12, 1);
     expect(earned.gains).toBe(0);
     // A CPP pension counts whole.
-    expect(supplements(sim, sim.player, 100).gis).toBeCloseTo(GIS.monthly - (0.5 * (5_000 + 1_200)) / 12, 1);
+    expect(supplements(sim, sim.player, 100).gis).toBeCloseTo(GIS.monthly - (0.5 * (5_000 + 1_200) + 0.25 * (6_200 - 2_048)) / 12, 1);
     const van = life('ca-bc-vancouver', 'gis-bc');
-    expect(supplements(van, van.player, 0).gains).toBe(0);
+    // No GAINS in British Columbia, but its Senior's Supplement, $99.30 at the top of its table, less further down it.
+    expect(supplements(van, van.player, 0).gains).toBe(99.3);
+    yearOf(van.player, new Date(van.now).getUTCFullYear() - 1).acting = inSave(van, 7_000_00, 'CAD');
+    const row = BC_SENIORS_SUPPLEMENT.find(([from, to]) => 1_000 >= from && 1_000 <= to)![2];
+    expect(supplements(van, van.player, 0).gains).toBe(row);
+    expect(row).toBeLessThan(99.3);
   });
 
   it('is claimed at 65 and paid monthly', () => {
