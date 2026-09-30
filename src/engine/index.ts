@@ -17,6 +17,7 @@ import { registerAppliances, registerOwnUnits } from './systems/appliances';
 import { registerFurniture } from './systems/furniture';
 import { registerRentals } from './systems/rentals';
 import { registerAviation, registerOwnedAircraft } from './systems/aviation';
+import { registerBoats } from './systems/boats';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
@@ -130,6 +131,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerRentals(sim, { journeysOf: journeysFor, partnerOf: partnerFor });
   registerAviation(sim);
   registerOwnedAircraft(sim);
+  registerBoats(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);

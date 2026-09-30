@@ -37,6 +37,7 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   exercise: ['fitness', 'sport'],
   swim: ['fitness', 'sport'],
   outside: ['nature'],
+  boat: ['nature', 'sport'],
   laundry: ['fashion'],
   tidy: ['design'],
   // An hour to yourself goes on what you'd spend an evening on.

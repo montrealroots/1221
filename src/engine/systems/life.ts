@@ -14,6 +14,7 @@
  */
 
 import { onTheFloor, unwindComfort } from './furniture';
+import { boatOf, outingCost, outingRefusal } from './boats';
 import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -31,7 +32,7 @@ import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import {
-  DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, placeOf,
+  DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit,
 } from './dwelling';
 
@@ -403,6 +404,7 @@ export function registerLife(sim: Simulation): void {
       if (action === 'eat' && !spend(s, person, cost, cooks(s, person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'laundry' && !doLaundry(s, person, s.now)) throw new CommandError('The payment didn’t go through.');
+      if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
       if (action === 'exercise' || action === 'swim') wearOutfit(person);
       const before = { ...person.wellbeing };
@@ -444,7 +446,7 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'outside' | 'unwind' | 'laundry' | 'tidy';
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'outside' | 'boat' | 'unwind' | 'laundry' | 'tidy';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -454,6 +456,7 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are, and eases stress; costs energy, food, a shower and an outfit' },
   swim: { label: 'Swim In The Pool', minutes: 45, does: 'Builds fitness as a gym does, and lifts the mood more' },
   outside: { label: 'Sit Outside', minutes: 45, does: 'Out on your balcony, terrace or yard in the fine weather: calmer, and in better spirits' },
+  boat: { label: 'Take The Boat Out', minutes: 180, does: 'Three hours on the water in the fine weather, its gas at the marina: calmer, and in better spirits' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
   tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
@@ -520,6 +523,7 @@ export function costFor(sim: Simulation, action: LookAfter): number {
   if (action === 'eat') return cooks(sim, sim.player) ? mealOf(sim, sim.player) : Math.round(mealOf(sim, sim.player) * EAT_OUT.times);
   if (action === 'order') return Math.round(mealOf(sim, sim.player) * DELIVERY.times);
   if (action === 'laundry') return laundryCost(sim, sim.player).cost;
+  if (action === 'boat') { const boat = boatOf(sim.player); return boat ? outingCost(sim, boat) : 0; }
   return 0;
 }
 
@@ -537,6 +541,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'exercise' || action === 'swim') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
   if (action === 'outside') { const no = outsideRefusal(sim, person); if (no) return no; }
+  if (action === 'boat') { const no = outingRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water'); if (no) return no; }
   if (action === 'laundry' && livingOf(person).dirty === 0) return 'Your clothes are all clean.';
   if (action === 'laundry' && !person.home) return 'You have nowhere to keep clothes.';
   if (action === 'tidy' && !(atHome(person) && place?.keeps)) return 'It isn’t your place to clean.';
@@ -593,8 +598,8 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
   } else if (action === 'tidy') {
     livingOf(person).tidy = 100;
     w.morale = clamp(w.morale + 2 * swing, 0, 100);
-  } else if (action === 'outside') {
-    // Time outside in fine weather does more for the mood than an hour indoors, in less of it.
+  } else if (action === 'outside' || action === 'boat') {
+    // Time outside in fine weather does more for the mood than an hour indoors, in less of it; an afternoon on the water is taken as the same, SLATE's estimate.
     w.stress = clamp(w.stress - 12 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
     w.morale = clamp(w.morale + 5 * swing, 0, 100);
   } else if (action === 'exercise' || action === 'swim') {

@@ -32,7 +32,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
-| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29; boats open, below |
+| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29, 7d (boats) 2026-09-30; open items below |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b); open items below |
 
 ## Acceptance criteria
@@ -299,7 +299,7 @@ Researched (`docs/research/world/research-vehiclework.json`): each place's windo
   - Great Britain: 27.51% first time (DVSA, 2025 to 2026, cars and vans together as published); BookMyGarage's £332 at three to five years and £425 from six, less the fee they include (secondary); the partial retest free.
   - Ireland: 49.43%, NCTS's 2024 pass rate of 50.57% (read from a search's extract, the report refusing automated reads); the €40 retest; Britain's repair in euros, SLATE's estimate, Ireland publishing none.
   - Mexico City publishes no rejection rate, and none is drawn.
-- Open, and why: a failure's rate by the car's age (DVSA publishes none); tint, exhaust and lift work, which changes nothing SLATE keeps yet; being qualified to fly was the next module, and 7b built it; boats and owning an aircraft remain.
+- Open, and why: a failure's rate by the car's age (DVSA publishes none); tint, exhaust and lift work, which changes nothing SLATE keeps yet; being qualified to fly was the next module, and 7b built it; boats and owning an aircraft were open, and 7c and 7d built them.
 
 Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first survived, the car's month calling the inspection, which no test reached until a used car's MOT was paid end to end. The failed test: 7 more, all killed; one first survived, New York's upstate rate against the city's, too near to tell apart by sampling, and the rates are now checked themselves.
 
@@ -311,7 +311,7 @@ Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first su
   - Then PSI's $175 knowledge test and a typical $1,000 checkride.
 - A month the bank can't pay stops it, and Take It Up Again goes on from there, straight to the tests if that's where it stopped.
 - Qualified, By offers Fly Yourself between American towns: from the airport nearest each, at Textron's published 124 knots, a fifth of an hour for the ground and the climb (SLATE's), within the Skyhawk's 640 nautical miles less the half hour a day flight must keep in its tanks (14 CFR 91.151), paid by the hour. It's its own kind of leg, so no airline's delays or round-trip fares touch it.
-- Open, and why: training abroad (only the hours are researched: Britain's 40, Canada's and the EASA's 45), owning an aircraft (built in 7c, below), a medical's renewal (an examiner's fee isn't regulated), the weather a visual flight needs, the drive to and from the airports, and boats.
+- Open, and why: training abroad (only the hours are researched: Britain's 40, Canada's and the EASA's 45), owning an aircraft (built in 7c, below), a medical's renewal (an examiner's fee isn't regulated), the weather a visual flight needs, the drive to and from the airports; boats were open here, and 7d built them.
 
 Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survived: a check that kept airline delays off a self-flown leg, which luck let pass, since most flights are on time. The leg became its own kind, which the delays never read, and the check went.
 
@@ -327,6 +327,17 @@ Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survi
 - Open, and why: hiring a pilot (a private pilot may not be paid, 14 CFR 61.113, and no commercial pilot's rate was researched), and a loan on a plane.
 
 Evidence: `tests/aviation.test.ts` (7); 5 mutations, all killed.
+
+#### Stage 7d: a boat of one's own (done 2026-09-30)
+- Researched in `docs/research/world/research-boats.json`, with the certificates and registrations in `research-vehiclework.json`; `content/boats.ts`, `systems/boats.ts`, the Cars screen's A Boat.
+- The boat: Bayliner's Trophy T18 Bay, 18 feet with a 115 hp Mercury, at $33,543 with its trailer, the maker's nationally advertised price, the one boat whose maker prints both its price and its engine maker's test. Sold where one lives in New York, Connecticut or California. Connecticut's sales tax on a vessel is 2.99% (DRS IP 2021(10)); New York's and California's are the ordinary rate. Held at its price, no depreciation series being researched.
+- Registration: New York's $45 for three years; Connecticut's $45 at 18 to 19 feet, taken as yearly; California's $37 in an even year or $65 in an odd one, then $36 every two years.
+- Kept, each month: a twelfth of Progressive's $662.51 average policy in its high-cost states. A slip unless the boat stands on its trailer at a house of one's own in its town: New York City Parks' $1,325 a season (read from a search's extract), Greenwich's slip and permit with tax in Connecticut, each season paid in April, and Marina del Rey's 25-foot slip at $17.69 a foot a month (a 2021 survey, secondary).
+- Operating it asks the state's certificate, all ages since 2025 in New York (Brianna's Law) and California: New York's by BoatUS's free course and $15 card, Connecticut's $50, California's $10 Boater Card. Owning asks none.
+- Take The Boat Out (Look After Yourself): three hours in its town in fine weather, at Mercury's 3.7 gallons an hour, the road's gas and the $1.05 to $1.30 over it New England's fuel docks asked (secondary). It does for the mood what sitting out does, SLATE's estimate, and an interest in nature or sport lifts it more.
+- Open, and why: a boat in Britain, Canada or Ireland, where Bayliner prints no price (a British dealer's, a different Canadian boat and Ireland's registration are researched); a boat's loan; a boat moved with its owner; the season's end, as a slip is paid for the season but the boat goes out year round in fine weather.
+
+Evidence: `tests/boats.test.ts` (9); 13 mutations, all killed in the end. Three first survived for want of a test (a second renewal, California's odd year, the outing's mood against sitting out's); one was a redundant guard, since a boat's months are canceled on its sale, and it was removed.
 
 ## Coverage record
 

@@ -263,6 +263,9 @@ export interface Person {
   pilotTraining?: import('../systems/aviation').PilotTraining;
   /** A plane of their own (`systems/aviation.ts`). */
   aircraft?: import('../systems/aviation').OwnedAircraft;
+  /** A boat of their own, and the states whose operator's certificate they hold (`systems/boats.ts`). */
+  boat?: import('../systems/boats').OwnedBoat;
+  boatCertificates?: import('../content/boats').BoatState[];
   /** Their driving record: points and a suspension (`systems/driving.ts`). */
   driving?: import('../systems/driving').DrivingRecord;
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */

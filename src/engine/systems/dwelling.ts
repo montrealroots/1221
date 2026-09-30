@@ -387,11 +387,16 @@ const wet = (condition: string) => condition in FALLING;
 export function outsideRefusal(sim: Simulation, person: Person): string | undefined {
   const place = placeOf(sim, person);
   if (!atHome(person) || !place || place.fixtures.outdoor === 'none') return 'Your place has nowhere outside.';
+  return fineWeatherRefusal(sim, person, 'sit out');
+}
+
+/** Why it's no weather to be out in, or nothing when it's fine: sitting out's rule, and a boat's. */
+export function fineWeatherRefusal(sim: Simulation, person: Person, doing: string): string | undefined {
   const w = weatherNow(sim, person);
   if (!w) return undefined;
   if (wet(w.condition)) return `It’s ${FALLING[w.condition] ?? 'wet'} out.`;
-  if (w.highC < FINE.lowC) return 'It’s too cold to sit out.';
-  if (w.highC > FINE.highC) return 'It’s too hot to sit out.';
+  if (w.highC < FINE.lowC) return `It’s too cold to ${doing}.`;
+  if (w.highC > FINE.highC) return `It’s too hot to ${doing}.`;
   return undefined;
 }
 
