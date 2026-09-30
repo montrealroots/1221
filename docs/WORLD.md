@@ -270,7 +270,8 @@ Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a
 - The law binds the booking: New York City's Local Law 18 bars a whole home for fewer than 30 nights, and London a home for more than 90 a year.
 - Canceled, Airbnb's Moderate policy: all of it back until five days before, then half the nights after the first, the fee kept.
 - Lived in, a let is a home of the town's kind, its fixtures drawn as the town's rentals are, and its kitchen cooked in, where a hotel's guest eats out. On its last morning, still there, a hotel takes over.
-- Open, and why: Edinburgh's and Belfast's lets (no nightly rate researched); a damage claim against a guest (Airbnb's 14-day window is researched, but SLATE draws no damage a guest does).
+- Edinburgh's and Belfast's lets were open for want of a nightly rate until 2026-09-29: now AirDNA's $269 and $160, Edinburgh's 5% visitor levy on the first five nights.
+- Open, and why: a damage claim against a guest (Airbnb's 14-day window is researched, but SLATE draws no damage a guest does).
 
 Evidence: `tests/lets.test.ts` (5); 8 mutations, all killed.
 

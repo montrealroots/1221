@@ -56,6 +56,14 @@ describe('what a let costs, and where the law bars it', () => {
     expect(letQuote(sim, 'fr-idf-paris', 3)).toMatch(/no holiday lets/);
   });
 
+  it('levies Edinburgh’s 5% on a stay’s first five nights only', () => {
+    const sim = save('let-edi');
+    const q = letQuote(sim, 'uk-sct-edinburgh', 8);
+    if (typeof q === 'string') throw new Error(q);
+    const rent = inSave(sim, 269_00 * 8, 'USD');
+    expect(q.price).toBe(rent + Math.round(rent * 0.141) + Math.round(Math.round(rent * 5 / 8) * 0.05));
+  });
+
   it('refunds all of it five days out, and half the nights after the first inside that, the fee kept', () => {
     const l = { nights: 4, price: 1_000_00, fee: 100_00, basis: '', checkOutAt: 0 };
     const arrive = 100 * MS_DAY;

@@ -350,7 +350,9 @@ export function letQuote(sim: Simulation, cityId: string, nights: number): { pri
   const usd = (cents: Money) => (cur === 'USD' ? cents : exchange(cents, 'USD', cur) ?? cents);
   const rent = usd(Math.round(t.adrUsd * 100) * nights);
   const fee = Math.round(rent * LET_FEE);
-  const price = rent + fee + Math.round(rent * t.taxRate) + usd(Math.round((t.perNightUsd ?? 0) * 100) * nights);
+  // A levy on so many nights only (Edinburgh's first five) falls on their share of the rent.
+  const taxed = t.levyNights ? Math.round(rent * Math.min(nights, t.levyNights) / nights) : rent;
+  const price = rent + fee + Math.round(taxed * t.taxRate) + usd(Math.round((t.perNightUsd ?? 0) * 100) * nights);
   return { price, fee, basis: `AirDNA’s average night there, Airbnb’s ${Math.round(LET_FEE * 1000) / 10}% service fee, and ${t.basis}.` };
 }
 
