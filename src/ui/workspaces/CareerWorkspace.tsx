@@ -290,7 +290,7 @@ function AgencyPane() {
             <table>
               <thead><tr><th scope="col">Agency</th><th scope="col">Reach</th><th scope="col" className="num">Showing It Needs</th></tr></thead>
               <tbody>
-                {AGENCIES.filter((a) => (a.countryId ?? 'us') === 'us').map((a) => (
+                {AGENCIES.filter((a) => (a.countryId ?? 'us') === (CITIES.get(workCity(person))?.countryId ?? 'us')).map((a) => (
                   <tr key={a.id}><td>{a.name}</td><td>{a.tier === 1 ? 'Widest' : a.tier === 2 ? 'Wide' : 'Growing'}</td><td className="num mono">{a.bar}</td></tr>
                 ))}
               </tbody>
