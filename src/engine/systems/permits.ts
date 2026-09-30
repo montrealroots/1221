@@ -22,8 +22,9 @@
  * is exempt in both, within England's Class E outbuilding limits and
  * Ireland's Class 3 25 m² (from 2026-09-29). Where a
  * suite falls in London's permitted depths turns on the house's plan, which
- * SLATE doesn't draw: SLATE's reading. Elsewhere the permit isn't kept, said
- * so, and neither is building control's charge on an extension.
+ * SLATE doesn't draw: SLATE's reading. From 2026-09-30 London's building
+ * control charge on an extension and Ireland's commencement notice are kept
+ * (below). Elsewhere the permit isn't kept, said so.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -38,13 +39,25 @@ export const STRUCTURAL = new Set(['garage-build', 'basement', 'attic', 'garage-
 export const WORKS_PERMITS = {
   nyc: { least: 130, first: 5_000, perThousand: 2.6 },
   london: { priorApproval: 249, priorApprovalDays: 42, householder: 548, householderDays: 8 * 7 },
-  dublin: { fee: 34, exemptM2: 40, days: 8 * 7 + 4 * 7 },
+  dublin: { fee: 34, exemptM2: 40, days: 8 * 7 + 4 * 7, commencement: 30 },
 } as const;
 
 export interface WorksPermit { lines: { label: string; amount: Money }[]; waitDays: number; basis: string }
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
 const c = (units: number) => Math.round(units * 100);
+
+/**
+ * Building control's charge on an extension in London, from 2026-09-30
+ * (`docs/research/world/research-land-construction.json`): Camden's 2026
+ * schedule for a single-story extension on full plans, its plan charge and
+ * its inspection charge with VAT for one of 10 to 60 m², £1,875.55, read from
+ * an excerpt, where both of SLATE's suites fall (35.7 m² and 59.5 m²); each
+ * borough sets its own, and Camden's is taken for London's. A loft, a
+ * basement or a garage converted has its own schedule, not read, and isn't
+ * charged here.
+ */
+const BUILDING_CONTROL_10_TO_60 = 750.22 + 1_125.33;
 
 /** Los Angeles's Table 1-A fee on a value, dollars. */
 function la1A(value: number): number {
@@ -87,14 +100,17 @@ export function worksPermit(sim: Simulation, cityId: string, project: Project, c
   }
   if (cityId === 'uk-eng-london') {
     const f = WORKS_PERMITS.london;
-    if (project.id === 'suite') return { lines: [{ label: 'Prior Approval, A Larger Home Extension', amount: inSave(sim, c(f.priorApproval), 'GBP') }], waitDays: f.priorApprovalDays, basis: 'permitted development, the neighbors asked first' };
-    if (project.id === 'suite-upscale' || project.id === 'adu') return { lines: [{ label: 'Householder Planning Application', amount: inSave(sim, c(f.householder), 'GBP') }], waitDays: f.householderDays, basis: 'a householder application, decided in eight weeks' };
+    // Building control on what's added, at Camden's schedule (from 2026-09-30).
+    const control = project.id === 'suite' || project.id === 'suite-upscale' ? BUILDING_CONTROL_10_TO_60 : undefined;
+    const bc = control !== undefined ? [{ label: 'Building Control', amount: inSave(sim, c(control), 'GBP') }] : [];
+    if (project.id === 'suite') return { lines: [{ label: 'Prior Approval, A Larger Home Extension', amount: inSave(sim, c(f.priorApproval), 'GBP') }, ...bc], waitDays: f.priorApprovalDays, basis: 'permitted development, the neighbors asked first' };
+    if (project.id === 'suite-upscale' || project.id === 'adu') return { lines: [{ label: 'Householder Planning Application', amount: inSave(sim, c(f.householder), 'GBP') }, ...bc], waitDays: f.householderDays, basis: 'a householder application, decided in eight weeks' };
     return undefined;
   }
   if (cityId === 'ie-lei-dublin') {
     const f = WORKS_PERMITS.dublin;
     if (project.id !== 'adu' && addedM2 <= f.exemptM2) return undefined;
-    return { lines: [{ label: 'Planning Application', amount: inSave(sim, c(f.fee), 'EUR') }], waitDays: f.days, basis: 'planning, eight weeks and four for an appeal' };
+    return { lines: [{ label: 'Planning Application', amount: inSave(sim, c(f.fee), 'EUR') }, { label: 'Commencement Notice', amount: inSave(sim, c(WORKS_PERMITS.dublin.commencement), 'EUR') }], waitDays: f.days, basis: 'planning, eight weeks and four for an appeal, and the commencement notice' };
   }
   return undefined;
 }

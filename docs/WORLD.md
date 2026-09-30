@@ -205,7 +205,8 @@ Renovation and extension stood before this work (`homes.ts`: thirty-nine jobs, f
 - **New Haven**: the city's permit and the state's education fee, read secondhand.
 - **London**: a loft or a room inside is permitted development. A primary suite takes the larger home extension's prior approval (£249, 42 days for the neighbors). A bigger suite or a cottage takes a householder application (£548, eight weeks). Where a suite falls in the permitted depths turns on the house's plan, so this is SLATE's reading.
 - **Dublin**: a rear extension to 40 m² is exempt. A bigger one or a cottage takes the €34 application, eight weeks and four for an appeal.
-- Open, and why: elsewhere the permit isn't kept, nor is building control's charge on an extension; no figure was researched.
+- From 2026-09-30 (`docs/research/world/research-land-construction.json`): a London suite pays building control's charge, Camden's 2026 schedule for a single-story extension of 10 to 60 m² with VAT, £1,875.55, taken for London's as each borough sets its own (read from an excerpt); a Dublin extension that needs planning pays the commencement notice's €30.
+- Open, and why: a loft, basement or garage converted in London, whose building control schedule wasn't read; elsewhere the permit isn't kept.
 
 Evidence: `tests/permits.test.ts` (6); 7 mutations, all killed.
 

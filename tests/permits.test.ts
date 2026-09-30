@@ -41,7 +41,8 @@ describe('what a permit costs', () => {
 
   it('asks London’s prior approval for a suite, a householder application for more, and nothing for a loft', () => {
     const sim = save('uk-eng-london', 'permit-gb');
-    expect(worksPermit(sim, 'uk-eng-london', project('suite'), 100_000_00)).toEqual({ lines: [{ label: 'Prior Approval, A Larger Home Extension', amount: inSave(sim, 249_00, 'GBP') }], waitDays: 42, basis: expect.any(String) });
+    // And from 2026-09-30 building control on its 35.7 m², Camden's 10 to 60 m² band with VAT.
+    expect(worksPermit(sim, 'uk-eng-london', project('suite'), 100_000_00)).toEqual({ lines: [{ label: 'Prior Approval, A Larger Home Extension', amount: inSave(sim, 249_00, 'GBP') }, { label: 'Building Control', amount: inSave(sim, 1_875_55, 'GBP') }], waitDays: 42, basis: expect.any(String) });
     const bigger = worksPermit(sim, 'uk-eng-london', project('suite-upscale'), 100_000_00)!;
     expect(bigger.lines[0]!.amount).toBe(inSave(sim, 548_00, 'GBP'));
     expect(bigger.waitDays).toBe(56);
@@ -54,6 +55,8 @@ describe('what a permit costs', () => {
     expect(worksPermit(sim, 'ie-lei-dublin', project('suite'), 100_000_00)).toBeUndefined();
     const bigger = worksPermit(sim, 'ie-lei-dublin', project('suite-upscale'), 100_000_00)!;
     expect(bigger.lines[0]!.amount).toBe(inSave(sim, 34_00, 'EUR'));
+    // And from 2026-09-30 the commencement notice's €30.
+    expect(bigger.lines[1]).toEqual({ label: 'Commencement Notice', amount: inSave(sim, 30_00, 'EUR') });
     expect(bigger.waitDays).toBe(84);
     expect(worksPermit(sim, 'ie-lei-dublin', project('adu'), 100_000_00)).toBeDefined();
   });
@@ -74,7 +77,7 @@ describe('the work waiting for it', () => {
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.doneAt).toBe(sim.now + (56 + project('suite-upscale').days) * MS_DAY);
     const fee = sim.universe.transactions.find((t) => t.memo.startsWith('Householder Planning Application'))!;
-    expect(fee.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 548_00, 'GBP'));
+    expect(fee.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 548_00, 'GBP') + inSave(sim, 1_875_55, 'GBP'));
     expect(projectCost(sim, owned, project('suite-upscale'))).toBeGreaterThan(0);
   });
   it('builds a garage, exempt in London, and a car kept in it pays no resident permit after', () => {
