@@ -437,7 +437,7 @@ Researched in `docs/research/world/research-land-2.json` (`systems/landlease.ts`
   - Ontario's 2.35% of the land's value (Farm Credit Canada, 2025). British Columbia takes the national ratio as SLATE's estimate, as FCC published none there.
 - Taxed as rental income: on the American return, and as it's paid elsewhere, Britain's after HMRC's £1,000 property allowance.
 - Let, the land is the farmer's: it isn't ridden on an ATV, split or joined, and a sale ends the lease. Ended on notice, the lease runs to the year's end.
-- Not kept yet: a land loan, commercial land, waterfront premiums and islands, utility connection and easements, all researched. Foreign buyers' rules were built next (Stage 4d).
+- Not kept yet: commercial land, waterfront premiums and islands, utility connection and easements, all researched. Foreign buyers' rules and a land loan were built next (Stages 4d and 4e).
 
 Evidence: `tests/landlease.test.ts` (4). 13 mutations, all killed in the end. One first survived as a redundant guard: a town lot's place has no farm rent, so `yearRent`'s acreage check was removed. Three needed tests: combining let land, and letting land for sale or being built on.
 
@@ -454,6 +454,15 @@ Researched in `docs/research/world/research-land-2.json` (`systems/foreignbuyers
 - Not kept: British Columbia's speculation and vacancy tax on a foreign owner's empty home (3% for 2026, 4% from 2027, read from a search's extract); America's FIRPTA withholding on a foreign seller.
 
 Evidence: `tests/foreignbuyers.test.ts` (3). 7 mutations, all killed in the end. Two needed tests: the ban lapsing on its date, and a small town outside it.
+
+#### Stage 4e: a loan on land (done 2026-09-30)
+Researched in `docs/research/world/research-land-2.json` (`systems/landloan.ts`).
+- **The terms:** America's farmland, bought on the Farm Credit System's terms: about 6.3%, 35% down (common on bare land) and up to 30 years (Farm Credit East, from loan guides, secondary). The Land screen's Paid offers it; the lender puts up 65% at the closing.
+- **Showing funds:** a financed offer asks the buyer to show only what the loan doesn't lend and the closing's costs. The first draft asked for the whole price, which a test caught.
+- **Keeping it:** paid monthly, a payment missed owed; counted among the debts in net worth; paid off from a sale first.
+- **Not kept:** Britain's AMC, Ireland's banks and Farm Credit Canada publish how much they lend on land (60%, 70%, about 75%) but not at what rate. Mexico's Infonavit lends only to someone formally employed, which an actor isn't. A town lot isn't farmland. A lender taking land back for missed payments isn't kept either; they go into arrears.
+
+Evidence: `tests/landloan.test.ts` (2). 6 mutations, all killed in the end. Two needed tests: a sale's payoff, and the payment repeating each month.
 
 ### Stage 5: Construction
 

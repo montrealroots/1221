@@ -92,6 +92,7 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
     if (p.soldAt !== undefined) continue;
     const m = LAND_MARKETS[p.market]!;
     land += inSave(landValue(m, p.acres, sim.now), m.currency);
+    liabilities += p.loan?.owed ?? 0;
     // A house going up on it, at what its finished stages have been paid.
     const b = person?.building;
     if (b && b.parcelId === p.id) land += inSave(b.amounts.slice(0, Math.max(0, b.stage)).reduce((a, x) => a + x, 0), m.currency);

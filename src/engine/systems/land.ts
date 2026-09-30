@@ -43,6 +43,7 @@ import { exchange } from '../content/currency';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_REGISTRATION, LAND_SEARCHES, LAND_TAX, LAND_TRANSFER, areaWords, type LandMarket, type TransferTax, closingLines, SPLIT_FEES } from '../content/land';
 import { homeOf } from './earnings';
 import { marketAt } from './homes';
+import { LAND_LOAN_KIND, financeable, landLoanMonth, openLandLoan } from './landloan';
 import { drawFromBank, inTheBank, owe, payFromBank } from './household';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -64,6 +65,8 @@ export interface Parcel {
   builtOn?: string;
   selling?: { closesAt: Instant };
   soldAt?: Instant;
+  /** A land loan on it (`systems/landloan.ts`, from 2026-09-30). */
+  loan?: import('./landloan').LandLoan;
   /** Let to a farmer (`systems/landlease.ts`, from 2026-09-30). */
   lease?: import('./landlease').LandLease;
 }
@@ -82,6 +85,8 @@ export interface LandDeal {
   /** The deposit, in the market's money, cents, and the account holding it once paid. */
   deposit: Money;
   escrowAccountId?: string;
+  /** Financed at the closing by a land loan (`systems/landloan.ts`, from 2026-09-30). */
+  financed?: boolean;
 }
 
 /** Where a buyer stands with the land market: a deal, a counter standing, and the offers made on each listing. */
@@ -220,14 +225,16 @@ export function landAnswer(sim: Simulation, person: Person, listing: Listing, pr
 }
 
 /** Why an offer can't be made, or nothing. */
-export function offerRefusal(sim: Simulation, person: Person, listingId: string, price: Money): string | undefined {
+export function offerRefusal(sim: Simulation, person: Person, listingId: string, price: Money, financed = false): string | undefined {
   if (landBuyingOf(person).deal) return 'You have an offer accepted already.';
   const listing = listingsFor(sim, person, homeOf(person)).find((l) => l.id === listingId);
   if (!listing) return 'That land isn’t listed where you live.';
   if (!(price > 0)) return 'An offer names a price.';
+  if (financed && !financeable(listing.market)) return 'A land loan is kept for America’s farmland, where Farm Credit’s terms were read.';
   const q = landQuote(listing.market, listing.acres, sim.now, price);
-  const cash = inSave(sim, q.total, q.currency);
-  if (inTheBank(sim, person) < cash) return `The seller asks to see ${formatMoney(cash, saveCurrency(sim.universe), { cents: false })} in the bank, the price and what buying it costs.`;
+  // Financed, the lender's share is the lender's to show.
+  const cash = inSave(sim, q.total, q.currency) - (financed ? openLandLoan(inSave(sim, price, q.currency)).owed : 0);
+  if (inTheBank(sim, person) < cash) return `The seller asks to see ${formatMoney(cash, saveCurrency(sim.universe), { cents: false })} in the bank, ${financed ? 'what the loan doesn’t lend' : 'the price'} and what buying it costs.`;
   return undefined;
 }
 
@@ -271,10 +278,16 @@ function endDeal(sim: Simulation, person: Person): void {
 const tell = (sim: Simulation, person: Person, title: string, body: string) => { if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title, body, importance: 75, route: '/workspace/land' }); };
 
 export function registerLand(sim: Simulation): void {
-  sim.onCommand<{ listingId: string; price: number }, { answer: LandAnswer['answer']; price?: Money }>('land.offer', (p, { sim: s }) => {
+  sim.onSchedule(LAND_LOAN_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const parcel = person ? parcelsOf(person).find((x) => x.id === item.payload.parcelId && x.soldAt === undefined) : undefined;
+    if (person && parcel) landLoanMonth(s, person, parcel);
+  });
+
+  sim.onCommand<{ listingId: string; price: number; financed?: boolean }, { answer: LandAnswer['answer']; price?: Money }>('land.offer', (p, { sim: s }) => {
     const person = s.player;
     const price = Math.round(Number(p?.price));
-    const no = offerRefusal(s, person, String(p?.listingId), price);
+    const no = offerRefusal(s, person, String(p?.listingId), price, p?.financed === true);
     if (no) throw new CommandError(no);
     const listing = listingsFor(s, person, homeOf(person)).find((l) => l.id === p.listingId)!;
     const buying = landBuyingOf(person);
@@ -287,7 +300,7 @@ export function registerLand(sim: Simulation): void {
     delete buying.counter;
     const m = LAND_MARKETS[listing.market]!;
     const rule = LAND_DEAL.deposit[m.place];
-    const deal: LandDeal = { listing, price, acceptedAt: s.now, diligenceUntil: s.now + LAND_DEAL.diligenceDays * MS_DAY, closesAt: s.now + LAND_DEAL.closingDays * MS_DAY, deposit: Math.round(price * rule.share) };
+    const deal: LandDeal = { listing, price, acceptedAt: s.now, diligenceUntil: s.now + LAND_DEAL.diligenceDays * MS_DAY, closesAt: s.now + LAND_DEAL.closingDays * MS_DAY, deposit: Math.round(price * rule.share), ...(p?.financed ? { financed: true } : {}) };
     if (rule.at === 'accept' && !payDeposit(s, person, deal)) throw new CommandError('The bank can’t pay the deposit.');
     buying.deal = deal;
     // The searches with a published fee, ordered now.
@@ -334,18 +347,21 @@ export function registerLand(sim: Simulation): void {
     const escrow = deal.escrowAccountId ? s.universe.accounts[deal.escrowAccountId] : undefined;
     const held = Math.max(0, escrow?.balance ?? 0);
     const total = inSave(s, q.total - searches, m.currency);
-    const draw = drawFromBank(s, person, total - held, false, true);
+    // Financed, the lender puts up its share of the price at the closing (`systems/landloan.ts`).
+    const loan = deal.financed ? openLandLoan(inSave(s, deal.price, m.currency)) : undefined;
+    const draw = drawFromBank(s, person, total - held - (loan?.owed ?? 0), false, true);
     if (draw.short > 0) {
       releaseDeposit(s, person, deal, false);
       endDeal(s, person);
       tell(s, person, 'The Purchase Fell Through', `${m.label}: the bank couldn’t pay the rest at the closing, and the seller kept the deposit.`);
       return;
     }
-    const postings = [...draw.postings, { accountId: s.nominalAccount('expense', 'Land').id, amount: total }];
+    const postings = [...draw.postings, { accountId: s.nominalAccount('expense', 'Land').id, amount: total }, ...(loan ? [{ accountId: s.nominalAccount('liability_other', 'Land Loans').id, amount: -loan.owed }] : [])];
     if (escrow && held > 0) { postings.push({ accountId: escrow.id, amount: -held }); escrow.closedAt = s.now; }
     s.post({ memo: `${m.label}, ${areaWords(deal.listing.acres, m.place)}, bought, and its taxes`, category: 'land', postings });
     const id = s.nextId('parcel');
-    parcelsOf(person).push({ id, market: deal.listing.market, acres: deal.listing.acres, boughtAt: s.now, paid: deal.price, listingId: deal.listing.id });
+    parcelsOf(person).push({ id, market: deal.listing.market, acres: deal.listing.acres, boughtAt: s.now, paid: deal.price, listingId: deal.listing.id, ...(loan ? { loan } : {}) });
+    if (loan) s.schedule({ at: s.now + 30 * MS_DAY, kind: LAND_LOAN_KIND, label: 'Land Loan Payment', category: 'home', priority: 30, payload: { personId: person.id, parcelId: id } });
     if (LAND_TAX[m.place]) s.schedule({ at: s.now + YEAR_MS, kind: LAND_TAX_KIND, label: 'Land Tax', category: 'home', priority: 30, payload: { personId: person.id, parcelId: id } });
     endDeal(s, person);
     tell(s, person, 'Land Bought', `${m.label}, ${areaWords(deal.listing.acres, m.place)}, is yours.`);
@@ -417,7 +433,10 @@ export function registerLand(sim: Simulation): void {
     const m = LAND_MARKETS[parcel.market]!;
     const sale = saleProceeds(m, landValue(m, parcel.acres, s.now));
     const net = inSave(s, sale.net, m.currency);
-    s.post({ memo: `Sold: ${m.label}, ${areaWords(parcel.acres, m.place)}, its taxes paid`, category: 'land', postings: [{ accountId: person.primaryAccountId!, amount: net }, { accountId: s.nominalAccount('income', 'Land Sold').id, amount: -net }] });
+    // A land loan is paid off from the sale first.
+    const payoff = parcel.loan?.owed ?? 0;
+    s.post({ memo: `Sold: ${m.label}, ${areaWords(parcel.acres, m.place)}, its taxes paid`, category: 'land', postings: [{ accountId: person.primaryAccountId!, amount: net - payoff }, { accountId: s.nominalAccount('income', 'Land Sold').id, amount: -net }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Land Loans').id, amount: payoff }] : [])] });
+    delete parcel.loan;
     parcel.soldAt = s.now;
     delete parcel.selling;
     for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.parcelId === parcel.id) s.timeline.cancel(one.id, s.now);

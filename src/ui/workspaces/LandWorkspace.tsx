@@ -15,6 +15,7 @@ import { buildingOn, landBuyingOf, landQuote, landValue, listingsFor, offerRefus
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_SOURCE, LAND_TAX, areaWords } from '@/engine/content/land';
 import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES, BUILD_LOANS } from '@/engine/content/construction';
 import { leaseRefusal, yearRent } from '@/engine/systems/landlease';
+import { LAND_LOAN, financeable } from '@/engine/systems/landloan';
 import { buildPlaceOf, buildQuote, buildRefusal } from '@/engine/systems/construction';
 
 /**
@@ -136,6 +137,7 @@ function ForSale() {
   const [pick, setPick] = useState('');
   const listing = listings.find((l) => l.id === pick) ?? listings[0];
   const [typed, setTyped] = useState('');
+  const [financed, setFinanced] = useState(false);
   const counter = landBuyingOf(person).counter;
   const standing = counter && listing && counter.listingId === listing.id && counter.until >= sim.now ? counter : undefined;
   if (!listing) return <Panel title="For Sale"><p className="small" style={{ margin: 0 }}>SLATE lists no land where you live yet: Mexico City’s land values are published only as scanned images.</p></Panel>;
@@ -143,10 +145,10 @@ function ForSale() {
   const money = (c: number) => formatMoney(c, m.currency);
   const price = typed ? centsFromTyped(typed) : standing?.price ?? listing.asking;
   const q = landQuote(listing.market, listing.acres, sim.now, price);
-  const no = offerRefusal(sim, person, listing.id, price);
+  const no = offerRefusal(sim, person, listing.id, price, financed && financeable(listing.market));
   const line = columnOf([q.price, ...q.lines.map((l) => l.amount), q.total], m.currency);
   const offer = () => {
-    const a = run<{ answer: LandAnswer['answer']; price?: number }>('land.offer', { listingId: listing.id, price });
+    const a = run<{ answer: LandAnswer['answer']; price?: number }>('land.offer', { listingId: listing.id, price, financed: financed && financeable(listing.market) });
     if (!a.ok) return;
     if (a.value!.answer === 'accepted') toast(`Accepted at ${money(price)}. It closes in ${LAND_DEAL.closingDays} days.`, 'positive');
     else if (a.value!.answer === 'countered') { toast(`The seller countered at ${money(a.value!.price!)}; it stands two days.`, 'neutral'); setTyped(''); }
@@ -197,10 +199,19 @@ function ForSale() {
           <Stat label="Deposit" value={`${Math.round(LAND_DEAL.deposit[m.place].share * 100)}%`} note={LAND_DEAL.deposit[m.place].at === 'accept' ? 'Paid when the offer is accepted' : 'Paid when contracts are exchanged'} />
         </div>
         {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
+        {financeable(listing.market) && (
+          <div className="field" style={{ maxWidth: 320 }}>
+            <label htmlFor="land-pay">Paid</label>
+            <select id="land-pay" value={financed ? 'loan' : 'cash'} onChange={(e) => setFinanced(e.target.value === 'loan')}>
+              <option value="loan">A Farm Credit Loan, {Math.round(LAND_LOAN.down * 100)}% Down</option>
+              <option value="cash">Outright</option>
+            </select>
+          </div>
+        )}
         <div className="row gap-2">
           <Gated feature="land.offer" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={offer}>Make An Offer</Gated>
         </div>
-        <Fine>{q.basis} None is a real listing: an asking price is within SLATE’s spread of the value, from 5% under it to 15% over it. A seller takes less the longer land has sat. It sells in about {DAYS_TO_SELL} days, a broker’s 2025 US figure taken everywhere. A survey, title insurance, a lawyer and a Phase I environmental assessment, which no authority prices, aren’t kept, nor is a land loan. Sources: {LAND_SOURCE}.</Fine>
+        <Fine>{q.basis} None is a real listing: an asking price is within SLATE’s spread of the value, from 5% under it to 15% over it. A seller takes less the longer land has sat. It sells in about {DAYS_TO_SELL} days, a broker’s 2025 US figure taken everywhere. A survey, title insurance, a lawyer and a Phase I environmental assessment, which no authority prices, aren’t kept. A land loan is Farm Credit’s, about 6.3% over 30 years with 35% down (secondary), and only on America’s farmland, where its terms were read. Sources: {LAND_SOURCE}.</Fine>
       </div>
     </Panel>
   );
