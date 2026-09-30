@@ -368,13 +368,32 @@ export function jetCharterUsd(hours: number): number {
   return Math.round((billed * LIGHT_JET.rateUsd * (1 + LIGHT_JET.excise) + LIGHT_JET.segmentUsd) * 100) / 100;
 }
 
+/**
+ * A light jet chartered within Britain or Canada, from 2026-09-30
+ * (`docs/research/world/research-charter-abroad.json`), the same CJ3 and the
+ * same billing of the flight there and back:
+ * - Britain: ACC Aviation's £2,600 an hour for a light jet (April 2025); no
+ *   Air Passenger Duty, which falls on aircraft of 5.7 tonnes or more; VAT at
+ *   20%, as only an aircraft built for ten passengers or more is zero-rated.
+ * - Canada: Novajet's C$3,000 to C$5,000 an hour, the middle; GST, or HST in
+ *   a participating province, where it leaves from (CRA's GI-170): Ontario's
+ *   13%, British Columbia's 5%.
+ * Ireland's and Mexico's rates were read only from brokers, and a flight
+ * across a border isn't chartered here.
+ */
+export const JET_ABROAD: Readonly<Record<string, { rate: number; currency: string; tax: (fromCity: string) => number; basis: string }>> = {
+  GB: { rate: 2_600, currency: 'GBP', tax: () => 0.2, basis: 'ACC Aviation’s £2,600 an hour, with VAT at 20%' },
+  CA: { rate: 4_000, currency: 'CAD', tax: (from) => (CITIES.get(from)?.parentId === 'ca-08' ? 0.13 : 0.05), basis: 'Novajet’s C$4,000 an hour, with GST or HST where it leaves from' },
+};
+
 /** A journey's leg in a chartered light jet, or why not. */
 export function planCharterJet(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
   const fromAp = airportsFor(fromCity)[0];
   const toAp = airportsFor(toCity)[0];
   const from = fromAp?.airport;
   const to = toAp?.airport;
-  if (!from || !to || from.country !== 'US' || to.country !== 'US') return 'SLATE charters a jet between American airports only yet.';
+  const abroad = from && to && from.country === to.country && from.country !== 'US' ? JET_ABROAD[from.country] : undefined;
+  if (!from || !to || (!abroad && (from.country !== 'US' || to.country !== 'US'))) return 'SLATE charters a jet within America, Britain or Canada only yet.';
   if (from.iata === to.iata) return 'One airport serves both towns.';
   const nm = distanceKm(from, to) / 1.852;
   const usable = LIGHT_JET.rangeNm - LIGHT_JET.knots * LIGHT_JET.reserveHours;
@@ -387,5 +406,7 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const p = zonedParts(day, zone);
   const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
   const dollars = jetCharterUsd(hours);
-  return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare: usd(sim, Math.round(dollars * 100)), routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at $3,975 an hour, with the 7.5% federal excise tax and its segment fee.` });
+  const cur = saveCurrency(sim.universe);
+  const abroadFare = abroad ? (() => { const c = Math.round(Math.max(LIGHT_JET.minHours, hours * 2) * abroad.rate * (1 + abroad.tax(fromCity)) * 100); return cur === abroad.currency ? c : exchange(c, abroad.currency, cur) ?? c; })() : 0;
+  return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare: abroad ? abroadFare : usd(sim, Math.round(dollars * 100)), routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at ${abroad ? abroad.basis : '$3,975 an hour, with the 7.5% federal excise tax and its segment fee'}.` });
 }

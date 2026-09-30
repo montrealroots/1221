@@ -192,7 +192,22 @@ describe('a light jet chartered', () => {
     expect(legs[0]!.fare).toBeGreaterThan(0);
     expect(legs.find((l) => l.mode === 'fly')!.fare).toBe(inSave(sim, Math.round(jetCharterUsd(hours) * 100), 'USD'));
     expect(zonedParts(legs.find((l) => l.mode === 'fly')!.departAt, 'America/New_York').hour).toBe(10);
-    expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/American airports/);
+    expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/within America, Britain or Canada/);
+    // Across a border, even a short one, it isn't chartered here.
+    expect(planCharterJet(sim, 'ca-on-toronto', 'us-ny-newyork', day, 3)).toMatch(/within America, Britain or Canada/);
+    // Within Britain: ACC Aviation's £2,600 an hour there and back, with VAT; within Canada, Novajet's middle with Ontario's HST.
+    const gb = planCharterJet(sim, 'uk-eng-london', 'uk-sct-edinburgh', day, 3);
+    if (typeof gb === 'string') throw new Error(gb);
+    const gbLeg = gb.find((l) => l.mode === 'fly')!;
+    const gbHours = distanceKm(airportsFor('uk-eng-london')[0]!.airport, airportsFor('uk-sct-edinburgh')[0]!.airport) / 1.852 / 416 + 0.5;
+    expect(gbLeg.fare).toBe(inSave(sim, Math.round(Math.max(2, gbHours * 2) * 2_600 * 1.2 * 100), 'GBP'));
+    const ca = planCharterJet(sim, 'ca-on-toronto', 'ca-bc-vancouver', day, 3);
+    if (typeof ca === 'string') throw new Error(ca);
+    expect(ca.find((l) => l.mode === 'fly')!.basis).toMatch(/Novajet/);
+    const back = planCharterJet(sim, 'ca-bc-vancouver', 'ca-on-toronto', day, 3);
+    if (typeof back === 'string') throw new Error(back);
+    // Leaving Ontario its 13% HST, leaving British Columbia the 5% GST.
+    expect(ca.find((l) => l.mode === 'fly')!.fare / back.find((l) => l.mode === 'fly')!.fare).toBeCloseTo(1.13 / 1.05, 2);
     // Honolulu is past two of a light jet's legs.
     expect(planCharterJet(sim, 'us-ny-newyork', 'us-hi-honolulu', day, 3)).toMatch(/with one stop for fuel/);
   });
