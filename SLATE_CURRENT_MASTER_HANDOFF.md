@@ -14,7 +14,66 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
-> **Newest of all, 2026-09-30: the open items, closed where published (`eb1e7f4` to `f132d67`).** The owner: "Finish all those in open." Five research files were committed first (`research-lodgers.json`, `research-charter-abroad.json`, `research-credit-damage-movers.json`, `research-land-construction.json`, `research-travel-aviation-boats.json`).
+> **Newest of all, 2026-10-01: the rest of the open items (`d8227e3` to `41a344e`).** The owner: "Finish any and everything in open, and don’t stop until you’re done." Four research files were committed with the work: `research-land-construction-2.json`, `research-aviation-boats-credit-mot.json`, `research-rentals-lets-charters-2.json` and `research-home-lodgers-movers-2.json`.
+
+**Built:**
+- A car and driver between towns, at each city's company's hourly rate and minimum (`d8227e3`, `CHAUFFEURS` in `journey.ts`).
+- Land (`f31caffd`):
+  - A split's fee, from each authority's own schedule, and Ireland's map for the new site.
+  - At closing: a boundary survey (New York, Connecticut), a topographical survey (England), California's escrow, Ontario's lawyer and British Columbia's notary.
+- Conversions and construction (`6967aaf`):
+  - London's building control on a loft, a garage made a room and a basement.
+  - Builder's risk on an American build, and a structural warranty on a London one.
+  - The MOT failing by the car's age, 10.7% to 30.5%.
+  - A Canadian credit mark leaving the record after six years.
+- Travel (`44ad54a`):
+  - A damage waiver, taken or declined, in New York and Los Angeles. Declined, a crash owes the repair.
+  - JFK's concession fee and facility charge.
+  - Charters in Vancouver and from Howth.
+  - A jet within Ireland and Mexico, and across the Britain–Ireland and America–Mexico borders.
+  - British Airways' and Aeroméxico's change fees.
+  - A compact select, `.select-sm`, sized like `.btn-sm` for a choice inside a table row.
+- Home (`4fa37f9`):
+  - Portable washers and dryers priced in Britain, Ireland, Canada and Mexico.
+  - Central air adding 72.1% of its cost to an American house's value until it gives out.
+  - Movers between every pair of the five countries.
+  - A lodger's room taking its share of the home's costs on the American return (Publication 527).
+- Aviation (`41a344e`):
+  - Each license abroad's own medical, renewed on its country's terms; a lapsed one grounds its pilot.
+  - Training in Mexico.
+  - A plane taken back after three missed payments, sold after ten days, with the shortfall owed.
+  - Ontario's trailer winterizing.
+
+**Not kept, by design, each with its reason in `docs/WORLD.md`:**
+- A Phase I assessment.
+- Tint, exhaust and lift work.
+- The rest of a home's furniture.
+- A basic economy ticket.
+- A one-way drop fee.
+- An empty leg.
+- England's Right to Rent check.
+- A mark's fading by kind: FICO's recovery times would count again the months paid on time that SLATE's score already climbs back with.
+
+**Gate at `41a344e`:** 120 files, 1,916 tests. Every mutation was killed, or its survivor made into a test or a removed guard.
+
+**Played lives:**
+- New York on `d8227e3` died at 83, with 0 errors and 0 anomalies.
+- London on `41a344e` was still running when this was written (`$TEMP/livesC2`).
+
+**In flight when this was written:**
+- Two research agents. One is on a boat carried across the US–Canada border and on Ireland's marine fuel and summer storage; those decide the Irish boat, which is half-designed (`BoatState` 'IE', Malahide's €199 a meter winter package, €650 insurance, the Rightboat €56,100 Cap Camarat).
+- The other is on Mexico's credit period, the 225-mile zone for a US–Canada jet, renovation permits in Toronto, Vancouver and Mexico City, surveys and title insurance in Canada, Canada's damage waivers, and the remaining change fees.
+
+**Still open, and why** (`docs/WORLD.md` has each line):
+- A lodger's use of the bills: DESNZ's figure is confounded by home size.
+- How long a room sits empty, and a holiday let's claim sizes: nobody publishes them.
+- No authority publishes an overrun, delay or first-inspection rate for building.
+- HomeBond's price in Ireland is unpublished.
+- What a built-in dishwasher adds to a home's value: nobody publishes it.
+- A repossession's ferry flight and storage: nobody publishes them.
+- A mattress's wear on SLATE's own terms.
+>
+> **Earlier, 2026-09-30: the open items, closed where published (`eb1e7f4` to `f132d67`).** The owner: "Finish all those in open." Five research files were committed first (`research-lodgers.json`, `research-charter-abroad.json`, `research-credit-damage-movers.json`, `research-land-construction.json`, `research-travel-aviation-boats.json`).
 
 **Built:**
 - The drives to and from the airports for a flight of one's own or a charter (`eb1e7f4`).
