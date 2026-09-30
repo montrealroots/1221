@@ -254,6 +254,8 @@ export interface Person {
   building?: import('../systems/construction').Build;
   /** The bed and sofa that are theirs, and when each was bought (`systems/furniture.ts`). */
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
+  /** When the mattress in their bed was replaced, if it has been (`systems/furniture.ts`). */
+  mattressAt?: number;
   /** Air conditioning units of their own, and when they were bought (`systems/appliances.ts`). */
   acUnits?: number;
   /** Countertop and portable machines of their own, and when each was bought (`systems/appliances.ts`). */

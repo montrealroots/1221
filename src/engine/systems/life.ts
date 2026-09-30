@@ -13,7 +13,8 @@
  * something.
  */
 
-import { onTheFloor, unwindComfort } from './furniture';
+import { mattressWorn, onTheFloor, owns, unwindComfort } from './furniture';
+import { WORN_NIGHT } from '../content/furniture';
 import { boatOf, charterAt, charterCost, charterRefusal, outingCost, outingRefusal } from './boats';
 import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
@@ -650,7 +651,7 @@ export function sleepQuality(sim: Simulation, person: Person, at = sim.now): num
  * which piece is costing the hours.
  */
 function nightParts(sim: Simulation, person: Person, at = sim.now): {
-  stressLoss: number; depth: number; late: number; sofa: number; heat: number; jet: number; quality: number;
+  stressLoss: number; depth: number; late: number; sofa: number; worn: number; heat: number; jet: number; quality: number;
 } {
   const stressLoss = remap(person.wellbeing.stress, 0, 100, 0, 0.24);
   // A light sleeper and a night owl both lose here; somebody who can sleep
@@ -673,11 +674,13 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   // A friend's sofa, at home after an eviction or away when a sublet couldn't be paid.
   // And the floor of an empty home of their own with no bed (`systems/furniture.ts`, from 2026-09-29), the same.
   const sofa = (person.home?.kind === 'sofa' && atHome(person)) || (!atHome(person) && person.stay?.kind === 'sofa' && person.stay.cityId === person.currentLocationId) || (atHome(person) && onTheFloor(person)) ? 0.08 : 0;
+  // And their own mattress past its years, at home (`systems/furniture.ts`, from 2026-09-30).
+  const worn = atHome(person) && owns(person, 'bed') && mattressWorn(person, at) ? WORN_NIGHT : 0;
   // And a hot night with no air conditioning, or only units (`systems/dwelling.ts`).
   const heat = heatLoss(sim, person, at);
   // And a body whose clock a journey left hours out (`systems/jetlag.ts`, from 2026-09-29).
   const jet = jetLagLoss(person, at);
-  return { stressLoss, depth, late, sofa, heat, jet, quality: clamp((0.82 - stressLoss) * depth - late - sofa - heat - jet, 0.28, 1) };
+  return { stressLoss, depth, late, sofa, worn, heat, jet, quality: clamp((0.82 - stressLoss) * depth - late - sofa - worn - heat - jet, 0.28, 1) };
 }
 
 export function applySleep(
@@ -1285,6 +1288,7 @@ function sleepReason(tonight: {
     [night.depth, 'You don’t sleep deeply, so a normal night takes longer.'],
     [night.late > 0 ? 1 - night.late / (calm * night.depth) : 1, 'It’s late, and a night that starts now is a worse one, so it takes longer.'],
     [night.sofa > 0 ? 1 - night.sofa / (calm * night.depth) : 1, 'A night on a sofa is a worse one, so it takes longer.'],
+    [night.worn > 0 ? 1 - night.worn / (calm * night.depth) : 1, 'Your mattress is worn out, so a night sleeps worse and takes longer.'],
     [night.heat > 0 ? 1 - night.heat / (calm * night.depth) : 1, 'It’s a hot night, and without air conditioning it sleeps worse, so it takes longer.'],
     [night.jet > 0 ? 1 - night.jet / (calm * night.depth) : 1, 'Your body is still on another clock, so a night sleeps worse and takes longer.'],
     [restores, 'A night puts back less for you than for most, so it takes longer.'],

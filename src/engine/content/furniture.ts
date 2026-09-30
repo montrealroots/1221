@@ -115,3 +115,29 @@ export const MOVERS_ABROAD: Readonly<Record<string, { currency: string; amount: 
   'mx|us': { currency: 'USD', amount: 6_250 },
 };
 
+
+/**
+ * A mattress's life and its replacement, from 2026-09-30
+ * (`docs/research/world/research-credit-damage-movers.json`). VALEVÅG is a
+ * pocket-spring mattress, and the Sleep Foundation gives an innerspring 5.5
+ * to 6.5 years, the middle taken; Consumer Reports gives 7 to 10 for
+ * mattresses in general. Worn, a night on it sleeps half as badly again as a
+ * night on the floor would, SLATE's estimate: the one study measuring old
+ * beds against new (Jacobson, 2009, 59 people off beds averaging 9.5 years)
+ * found sleep 52% better on the new, but has no control group, was paid for
+ * by the mattress industry's council, and measures on no scale SLATE's sleep
+ * has. Replaced at IKEA's own price for the mattress alone, delivered and
+ * taxed where the tax is added, with a state's recycling fee and the
+ * removal a retailer prints for the old one: IKEA's from $30 in America,
+ * Dreams' £60 for a double in Britain (IKEA's is suspended there), Dreams'
+ * €69 in Ireland. None is printed in Canada or Mexico.
+ */
+export const MATTRESS_YEARS = 6;
+export const WORN_NIGHT = WITHOUT.floorNight / 2;
+export const MATTRESS: Readonly<Record<string, { price: number; removal?: number }>> = {
+  us: { price: 399, removal: 30 },
+  uk: { price: 299, removal: 60 },
+  ie: { price: 379, removal: 69 },
+  ca: { price: 499 },
+  mx: { price: 7_999 },
+};

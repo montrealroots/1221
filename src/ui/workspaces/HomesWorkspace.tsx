@@ -17,7 +17,7 @@ import { APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '@/engine/co
 import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
-import { furnishRefusal, owns, pieceCost } from '@/engine/systems/furniture';
+import { furnishRefusal, mattressCost, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -541,6 +541,7 @@ function Furniture() {
   const where = person.home?.cityId ?? person.currentLocationId;
   const pieces: Piece[] = ['bed', 'sofa'];
   const does: Record<Piece, string> = { bed: 'Without one, an empty home’s nights are slept on the floor', sofa: 'Without one, unwinding in an empty home takes half the stress off' };
+  const mattress = mattressCost(sim, person.home?.cityId ?? person.currentLocationId);
   return (
     <div className="col gap-2">
       <div className="strong small">Your Furniture</div>
@@ -557,7 +558,7 @@ function Furniture() {
                   <td>{PIECE_LABEL[piece]}<div className="xs dim">{does[piece]}</div></td>
                   <td className="small">{has ? 'Yes' : 'No'}</td>
                   <td className="num mono">{cost ? formatMoney(cost.amount, cur, { cents: false }) : '—'}</td>
-                  <td>{!has && cost && <Gated feature="home.furnish" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece }).ok) toast(`${PIECE_LABEL[piece]}, delivered.`, 'positive'); }}>Buy And Deliver</Gated>}</td>
+                  <td>{!has && cost && <Gated feature="home.furnish" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece }).ok) toast(`${PIECE_LABEL[piece]}, delivered.`, 'positive'); }}>Buy And Deliver</Gated>}{has && piece === 'bed' && mattressWorn(person, sim.now) && mattress !== undefined && <Gated feature="home.replace_mattress" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.replace_mattress', {}).ok) toast('A new mattress.', 'positive'); }}>{`Replace The Mattress (${formatMoney(mattress, cur, { cents: false })})`}</Gated>}</td>
                 </tr>
               );
             })}

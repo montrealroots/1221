@@ -13,7 +13,7 @@ import { salesTaxRate } from '@/engine/content/tax';
 import { MOVERS } from '@/engine/content/furniture';
 import { applyLookingAfter, sleepQuality } from '@/engine/systems/life';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
-import { mattressFeeUsd, moversCost, onTheFloor, pieceCost, unwindComfort } from '@/engine/systems/furniture';
+import { mattressCost, mattressFeeUsd, mattressWorn, moversCost, onTheFloor, pieceCost, unwindComfort } from '@/engine/systems/furniture';
 
 const save = (city: string, name: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, name);
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -131,5 +131,36 @@ describe('a mattress’s recycling fee, and movers', () => {
     const paid = sim.universe.transactions.filter((t) => t.memo === 'Movers, your bed and sofa');
     expect(paid).toHaveLength(1);
     expect(paid[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 475_00, 'USD'));
+  });
+});
+
+describe('a mattress wearing out', () => {
+  it('wears after six years, sleeps half the floor’s cost worse at home, and a new one ends it', () => {
+    const sim = save('us-ny-newyork', 'mattress-wear');
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 10_000_00, 'USD');
+    sim.player.furniture = { bed: sim.now - 6 * 365.2425 * 86_400_000 - 86_400_000 };
+    expect(mattressWorn(sim.player, sim.now)).toBe(true);
+    sim.player.wellbeing.stress = 0;
+    const worn = sleepQuality(sim, sim.player);
+    expect(sim.execute({ kind: 'home.replace_mattress', payload: {} }).ok).toBe(true);
+    expect(mattressWorn(sim.player, sim.now)).toBe(false);
+    expect(sleepQuality(sim, sim.player) - worn).toBeCloseTo(0.04, 10);
+    sim.player.furniture = { bed: sim.now - 5 * 365.2425 * 86_400_000 };
+    delete sim.player.mattressAt;
+    expect(mattressWorn(sim.player, sim.now)).toBe(false);
+  });
+
+  it('prices IKEA’s mattress, delivered and taxed, with a state’s fee and a retailer’s removal: $399 and $30 in America, £299 and £60 in Britain, none in Canada', () => {
+    const ny = save('us-ny-newyork', 'mattress-ny');
+    const rate = salesTaxRate('us-ny-newyork', ny.now, 'furniture');
+    expect(mattressCost(ny, 'us-ny-newyork')).toBe(inSave(ny, 399_00 + 29_00 + 30_00 + Math.round(399_00 * rate), 'USD'));
+    expect(mattressCost(ny, 'uk-eng-london')).toBe(inSave(ny, 299_00 + 25_00 + 60_00, 'GBP'));
+    expect(mattressCost(ny, 'ca-on-toronto')).toBe(inSave(ny, 499_00 + 59_00 + Math.round(499_00 * salesTaxRate('ca-on-toronto', ny.now, 'furniture')), 'CAD'));
+    // A new bed brings its own mattress.
+    ny.universe.accounts[ny.player.primaryAccountId!]!.balance += inSave(ny, 10_000_00, 'USD');
+    ny.player.mattressAt = ny.now - 7 * 365.2425 * 86_400_000;
+    ny.player.furniture = {};
+    expect(ny.execute({ kind: 'home.furnish', payload: { piece: 'bed' } }).ok).toBe(true);
+    expect(mattressWorn(ny.player, ny.now)).toBe(false);
   });
 });

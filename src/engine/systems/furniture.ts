@@ -23,7 +23,8 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
-import { FURNITURE, MATTRESS_FEE_USD, MOVERS, MOVERS_ABROAD, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
+import { FURNITURE, MATTRESS, MATTRESS_FEE_USD, MATTRESS_YEARS, MOVERS, MOVERS_ABROAD, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
+import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -73,6 +74,8 @@ export function registerFurniture(sim: Simulation): void {
     const cost = pieceCost(s, person.home?.cityId ?? person.currentLocationId, piece)!;
     if (!payFromBank(s, person, cost.amount, `${PIECE_LABEL[piece]}, bought and delivered`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
     (person.furniture ??= {})[piece] = s.now;
+    // A new bed brings its own mattress.
+    if (piece === 'bed') delete person.mattressAt;
     return { paid: cost.amount };
   });
 }
@@ -109,4 +112,38 @@ export function moversCost(sim: Simulation, person: Person, fromCity: string, to
 export function carryFurniture(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
   const cost = moversCost(sim, person, fromCity, toCity);
   if (cost > 0 && !payFromBank(sim, person, cost, 'Movers, your bed and sofa', 'home')) owe(sim, person, cost, 'Movers', 'home');
+}
+
+/** When the mattress they sleep on was new: the bed's, or the one put in it since. */
+const mattressSince = (person: Person): number | undefined => person.mattressAt ?? person.furniture?.bed;
+
+/** Whether their own mattress has outlived its years. */
+export function mattressWorn(person: Person, at: number): boolean {
+  const since = mattressSince(person);
+  return since !== undefined && at - since >= MATTRESS_YEARS * 365.2425 * MS_DAY;
+}
+
+/** What a new mattress costs where they live, the old one taken away, in the save's money; or nothing where none is priced. */
+export function mattressCost(sim: Simulation, cityId: string): Money | undefined {
+  const countryId = CITIES.get(cityId)?.countryId ?? '';
+  const country = FURNITURE[countryId];
+  const m = MATTRESS[countryId];
+  if (!country || !m) return undefined;
+  const taxRate = country.taxAdded ? salesTaxRate(cityId, sim.now, 'furniture') : 0;
+  const units = m.price + country.items.bed.delivery + (m.removal ?? 0);
+  const tax = Math.round(m.price * 100 * taxRate);
+  const fee = inSave(sim, Math.round(mattressFeeUsd(cityId, sim.now) * 100), 'USD');
+  return inSave(sim, Math.round(units * 100) + tax, country.currency) + fee;
+}
+
+export function registerMattress(sim: Simulation): void {
+  sim.onCommand<Record<string, never>, { paid: Money }>('home.replace_mattress', (_p, { sim: s }) => {
+    const person = s.player;
+    if (!owns(person, 'bed')) throw new CommandError('You have no bed of your own.');
+    const cost = mattressCost(s, person.home?.cityId ?? person.currentLocationId);
+    if (cost === undefined) throw new CommandError('SLATE keeps no mattress price where you live yet.');
+    if (!payFromBank(s, person, cost, 'A new mattress, delivered and the old one taken away', 'home')) throw new CommandError('The bank couldn’t pay for it.');
+    person.mattressAt = s.now;
+    return { paid: cost };
+  });
 }
