@@ -33,6 +33,7 @@ import { homeOf } from './earnings';
 import { owe, payFromBank, spend } from './household';
 import { mayDrive, type VehicleClass } from './documents';
 import { gone, mayBeStolen, stolenNow } from './theft';
+import { tireFactor, tireInsuranceFactor, tiresMonth } from './tires';
 import { byRoad as roadBetween, drive } from './driving';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -68,6 +69,8 @@ export interface OwnedVehicle {
   at?: string;
   /** The last periodic inspection's due date met (`systems/inspections.ts`, from 2026-09-29). */
   inspected?: Instant;
+  /** A set of winter tires on it (`systems/tires.ts`, from 2026-09-30). */
+  winterTires?: import('./tires').WinterTires;
   /** Stolen, and when it comes back where it was found (`systems/theft.ts`, from 2026-09-30). */
   stolen?: { at: Instant; recoverAt?: Instant };
   /** Leased, not owned (`systems/leasing.ts`, from 2026-09-30): the lessor's until bought out. */
@@ -581,11 +584,12 @@ export function registerVehicles(sim: Simulation): void {
     // Insurance, the month's share of the year.
     const ins = monthlyInsurance(v.jurisdiction, v.coverage, m);
     if (typeof ins === 'number' && ins > 0 && !missing) {
-      const due = inSave(s, ins, insuranceCurrency(v.jurisdiction, m));
+      const due = Math.round(inSave(s, ins, insuranceCurrency(v.jurisdiction, m)) * tireInsuranceFactor(v));
       if (!payFromBank(s, person, due, `${kindOf(m) === 'car' ? 'Car insurance' : 'Insurance'}, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, due, kindOf(m) === 'car' ? 'Car insurance' : 'Vehicle insurance', 'vehicle');
     }
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
+    let driven = 0;
     if (!v.repossessed && !missing && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m)).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km);
@@ -593,9 +597,12 @@ export function registerVehicles(sim: Simulation): void {
       // 2026-09-29 the fuel went into arrears as if it had been burned, and a New York life starved paying for it.
       if (spend(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) {
         v.km = (v.km ?? 0) + km;
-        drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`, kindOf(m));
+        drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`, kindOf(m), tireFactor(v, item.at));
+        driven = km;
       }
     }
+    // Winter tires: the kilometers on them, Ontario's switchovers, a set worn out (`systems/tires.ts`).
+    if (!missing) tiresMonth(s, person, v, driven, item.at);
     // An inspection come due, where the law asks one (`systems/inspections.ts`).
     if (!forOutings(m) && !missing) inspectIfDue(s, person, v, kindOf(m));
     // The loan: interest on what's owed, and the rest off it.

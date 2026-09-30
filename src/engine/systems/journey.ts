@@ -43,6 +43,7 @@ import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, s
 import { atTheCheckpoint } from './identity';
 import { claimDelay } from './compensation';
 import { stolenNow } from './theft';
+import { inWinterSeason, tireFactor } from './tires';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'ferry' | 'drive' | 'arrival';
@@ -602,7 +603,8 @@ export function registerJourneys(sim: Simulation): void {
       const km = roadKm(j.fromCity, j.toCity);
       car.at = j.toCity;
       car.km = (car.km ?? 0) + km;
-      drive(s, person, car.jurisdiction, km, s.now, j.id, kindOf(modelById(car.modelId)!));
+      drive(s, person, car.jurisdiction, km, s.now, j.id, kindOf(modelById(car.modelId)!), tireFactor(car, s.now));
+      if (car.winterTires && inWinterSeason(s.now, j.fromCity)) car.winterTires.km += km;
     }
     if (driven?.routeId?.startsWith('rental:')) rentalDriven(s, person, driven.routeId, j.fromCity, j.toCity, j.id);
     // One's own plane: there now, its hours on the engine (`systems/aviation.ts`).

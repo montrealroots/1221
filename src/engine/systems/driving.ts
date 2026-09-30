@@ -120,13 +120,14 @@ const ageFactor = (age: number) => (ROAD.byAge.find(([upTo]) => age < upTo)?.[1]
 
 /** What driving a distance brought: drawn, a crash's injury and a ticket. */
 /** The chance a distance's driving or riding injures, by the driver's age and what's driven. */
-export function crashChance(person: Person, km: number, at: Instant, kind: VehicleKind = 'car'): number {
+export function crashChance(person: Person, km: number, at: Instant, kind: VehicleKind = 'car', factor = 1): number {
   const rider = kind === 'motorcycle' || kind === 'scooter' ? ROAD.riderInjuryTimes : 1;
-  return 1 - Math.exp(-((km / MILE) * ROAD.injuredPer100MMiles * rider * ageFactor(ageAt(person, at))) / 1e8);
+  return 1 - Math.exp(-((km / MILE) * ROAD.injuredPer100MMiles * rider * factor * ageFactor(ageAt(person, at))) / 1e8);
 }
 
-export function drive(sim: Simulation, person: Person, j: Jurisdiction, km: number, at: Instant, key: string, kind: VehicleKind = 'car'): { hurt: boolean; ticket: boolean } {
-  const injuryChance = crashChance(person, km, at, kind);
+export function drive(sim: Simulation, person: Person, j: Jurisdiction, km: number, at: Instant, key: string, kind: VehicleKind = 'car', factor = 1): { hurt: boolean; ticket: boolean } {
+  // A factor for what the car is on: winter tires in their season (`systems/tires.ts`).
+  const injuryChance = crashChance(person, km, at, kind, factor);
   const hurt = mayHurt(sim, person, 'crash', injuryChance, at) !== undefined;
   const rule = TICKETS[j];
   const rng = sim.rng('driving.ticket', person.id, key);

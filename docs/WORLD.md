@@ -363,6 +363,16 @@ Researched in `docs/research/world/research-custom-effects.json` (`systems/theft
 
 Evidence: `tests/theft.test.ts` (5). 11 mutations, all killed in the end. Three first survived and needed tests: a loan bigger than the car running on under full cover, a stolen car leaving the books once its loan is paid, and a stolen car not being driven.
 
+#### Stage 3k: winter tires (done 2026-09-30)
+Researched in `docs/research/world/research-customization.json` and `research-custom-effects.json` (`systems/tires.ts`, `vehicle.winter_tires`).
+- A set of four for a car, van or campervan kept in America or Canada: the middle of Discount Tire's $200 to $400 a medium winter tire, $1,200. Canada's own price wasn't read, so it's that in dollars converted, SLATE's estimate.
+- From 15 December to 15 March, Quebec's mandated season, a car on them is injured in a crash 5% less often: Quebec's transport ministry measured 5% fewer victims once winter tires were required. Most of Quebec's cars had them already, so 5% is the published floor for one car.
+- In Ontario, the insurer's discount the province requires be offered, 3.5% (the middle of brokers' 2% to 5%; no regulator sets it), and Formula Tire's C$50 to swap them in November and April.
+- Worn out after 40,000 miles of winter driving, Michelin's X-Ice Snow warranty.
+- British Columbia's signed-route rule accepts an M+S all-season, which SLATE's cars have, so it asks nothing more.
+
+Evidence: `tests/tires.test.ts` (4) and `tests/tires-drive.test.ts` (1). 9 mutations, all killed in the end. Three first survived and needed tests: the season's kilometers, the factor in the crash chance, and the car's month handing the factor to the road's draw, watched through a mocked `drive` because the draw is too rare to see.
+
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.

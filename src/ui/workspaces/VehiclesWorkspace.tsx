@@ -21,6 +21,7 @@ import { homeOf } from '@/engine/systems/earnings';
 import { buyRefusal, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
 import type { VehicleKind } from '@/engine/content/vehiclecatalog';
+import { tiresRefusal } from '@/engine/systems/tires';
 import { buyoutPrice, leaseQuote, leaseRefusal, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -100,10 +101,13 @@ export function VehiclesWorkspace() {
                               }}>Redeem It, {money(redemption(sim, v) ?? 0)}</Gated>
                             </div>
                           ) : (
+                            <div className="row gap-1">
+                            {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
                               const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id });
                               if (a.ok) toast(`Sold: ${money(a.value!.value)} to you after the loan.`, 'positive');
                             }}>Sell It</Gated>
+                            </div>
                           )}
                         </td>
                       </tr>
