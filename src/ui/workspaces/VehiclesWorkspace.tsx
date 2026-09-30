@@ -4,6 +4,7 @@
  * (`systems/vehicles.ts`, from 2026-09-29).
  */
 
+import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -51,7 +52,7 @@ export function VehiclesWorkspace() {
           {!owned.length ? <p className="small muted" style={{ margin: 0 }}>None yet.</p> : (
             <div className="table-scroll">
               <table>
-                <thead><tr><th scope="col">Car</th><th scope="col">Bought</th><th scope="col" className="num">Worth</th><th scope="col" className="num">Loan Owed</th><th scope="col">Registration Due</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
+                <thead><tr><th scope="col">Car</th><th scope="col">Bought</th><th scope="col" className="num">Worth</th><th scope="col" className="num">Loan Owed</th><th scope="col">Registration Due</th><th scope="col">Next Inspection</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
                 <tbody>
                   {owned.map((v) => {
                     const m = modelById(v.modelId)!;
@@ -62,6 +63,7 @@ export function VehiclesWorkspace() {
                         <td className="num mono">{inHome(valueOf(v, sim.now), m.currency)}</td>
                         <td className="num mono">{v.loan ? money(v.loan.owed) : 'None'}</td>
                         <td>{formatDate(v.registrationDue, sim.zone)}</td>
+                        <td className="small">{(() => { const due = nextInspection(v, v.inspected ?? v.boughtAt); const rule = INSPECTION_RULES[v.jurisdiction]; return due && rule ? `${rule.label}, ${formatDate(due, sim.zone)}` : '—'; })()}</td>
                         <td>
                           <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
                             const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id });

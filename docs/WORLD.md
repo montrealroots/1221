@@ -32,7 +32,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
-| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
+| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a done 2026-09-29; the rest open, below |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b); open items below |
 
 ## Acceptance criteria
@@ -261,7 +261,21 @@ Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a
 
 Evidence: `tests/lets.test.ts` (5); 8 mutations, all killed.
 
-### Stage 7 (to be detailed in turn)
+### Stage 7: Vehicle work, boats and aircraft
+
+Researched (`docs/research/world/research-vehiclework.json`): each place's window tint and exhaust rules and their fines, California's lift limits, the periodic inspections, boater education and boat registration, marina berths, the private pilot certificate's hours and fees, aircraft rental, ownership and hangar rates, and charter and crew.
+
+#### Stage 7a: a car's periodic inspection (done 2026-09-29)
+- Where the law asks one, on its own cycle, at its published fee, paid as the car's month comes round, or owed where the bank can't (`systems/inspections.ts`).
+  - New York: every 12 months from the sale, $37 in the metropolitan area and $21 outside it.
+  - Connecticut: an emissions test every two years from the fourth, $20.
+  - England, Scotland and Wales: the MOT from the third anniversary, then yearly, £54.85.
+  - Ireland: the NCT at four years, every two to ten, then yearly, €60, the 2025 fee.
+  - Mexico City: the verificación every six months, MX$765.45, read secondhand and the arithmetic checked.
+- Ontario and British Columbia inspect a car only on its sale; California's smog check is priced by each station. None is kept there, said so. The Cars screen shows the next one due.
+- Open, and why: a failed test (no pass rate is published for these); tint, exhaust and lift work, which changes nothing SLATE keeps yet; boats and aircraft, and the difference between owning one and being qualified to operate it, the next modules.
+
+Evidence: `tests/inspections.test.ts` (5); 7 mutations, all killed. One first survived, the car's month calling the inspection, which no test reached until a used car's MOT was paid end to end.
 
 ## Coverage record
 

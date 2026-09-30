@@ -14,6 +14,7 @@
  * as something held against a net worth, as a home is; SLATE's simplification.
  */
 
+import { inspectIfDue } from './inspections';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -54,6 +55,8 @@ export interface OwnedVehicle {
   km?: number;
   /** The town it's in, where not where it's registered: driven there. */
   at?: string;
+  /** The last periodic inspection's due date met (`systems/inspections.ts`, from 2026-09-29). */
+  inspected?: Instant;
 }
 
 /** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep. */
@@ -358,6 +361,8 @@ export function registerVehicles(sim: Simulation): void {
         drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`);
       }
     }
+    // An inspection come due, where the law asks one (`systems/inspections.ts`).
+    inspectIfDue(s, person, v);
     // The loan: interest on what's owed, and the rest off it.
     if (v.loan) {
       const interest = Math.round((v.loan.owed * v.loan.apr) / 12);
