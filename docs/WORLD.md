@@ -156,6 +156,34 @@ Open in Stage 2 until 2026-09-29: a car of one's own as a leg, which waited for 
 
 Evidence: `tests/vehicles.test.ts` (9); 11 mutations, all killed (one found the Irish diesel mild hybrid filed as a petrol hybrid). Screen: Cars, from Home's Cars panel, opened by the guide's chapter A Car Of Your Own.
 
+#### Stage 3f: at the dealer, and leasing (done 2026-09-30)
+Researched in `docs/research/world/research-car-buying.json`.
+- **Below the sticker:** until 2026-09-30 a new American car sold at its sticker. It now sells 3.4% below, what Kelley Blue Book found buyers paid in August 2026 ($50,089 against an average MSRP of $51,852), and is taxed on that (`US_NEW_BELOW_STICKER`). No average is published for Canada, Mexico, Britain or Ireland, where discounts come as finance rates and vouchers, so the sticker is paid there. The discount is not a choice to haggle. A haggle anyone would always take changes nothing a player decides, so every buyer pays the average.
+  - One consequence: a GMC Sierra's $51,295 sticker is over Connecticut's $50,000 line, but the $49,551 paid isn't, so it's taxed at 6.35%.
+- **The dealer's documentation fee** (`DEALER_DOC_FEE`):
+  - New York's $175, the cap in 15 NYCRR 78.19.
+  - California's $85 for a DMV private industry partner (Vehicle Code 4456.5; SB 791's rise was vetoed, and the veto was sustained on 2026-03-02).
+  - Connecticut's, which has no cap: $405 new and $131 used, the averages its legislature's research office found in 2016.
+  - Ontario's and British Columbia's advertised prices must already include every dealer fee (OMVIC, VSA), and Britain's on-the-road prices include theirs. None is published for Ireland's dealers or Mexico's.
+- **A lease, in America** (`systems/leasing.ts`, Cars' Paid: A Lease, 24, 36 or 48 Months): Toyota Financial Services' published September 2026 terms.
+  - The fees: a $750 acquisition fee, 10,000 miles a year, $0.15 a mile over, and $350 disposition at the return.
+  - The payment: the depreciation over the term plus the rent charge, (capitalized cost + residual) × the money factor.
+  - The capitalized cost is the price paid below the sticker. The residual is SLATE's depreciation curve at the term: 75% at three years, where Toyota's offers set 76% to 77%. The money factor, 0.00299, isn't published. It's worked back from the offers' own figures, and all three regions' give it.
+  - New York taxes every payment at signing (Tax Law 1111(i)). Connecticut and California tax each payment as it's made.
+  - A leased car is the lessor's: it isn't in a net worth, and it can't be sold or traded in.
+  - At the end of the term there's a month to buy it out, at the residual plus the state's sales tax. If it isn't bought out, it goes back for the disposition fee and the miles over.
+  - A longer lease isn't cheaper a month: the fourth year loses more value than a longer term spreads, so 48 months cost more a month than 36.
+- Not kept:
+  - Ending a lease early. Toyota publishes no formula for its charge, only that it "may be substantial".
+  - Buying a lease out before its end, whose price is the lessor's payoff.
+  - The lessor taking back a car whose payments are missed. They go into arrears.
+  - Leases outside America. Canada's, Britain's (PCP and PCH) and Ireland's are researched but not built.
+  - A pre-purchase inspection and a history report (Lemon Squad's $219.99, the AA's £99 to £110, CARFAX Canada's CAD 58.95). They're researched, but SLATE's used cars have no hidden condition for them to find, so buying one would change nothing.
+
+Evidence: `tests/leasing.test.ts` (5), and `tests/vehicles.test.ts` updated for the discount and the fees. 23 mutations, all killed in the end. Four first survived:
+- Two were redundant guards, now removed: a trade-in filter on a lease quote that never has a trade-in, and cancelling a return the lease's own guard already passes.
+- Two needed tests: the miles over, and Connecticut's used-car fee.
+
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.

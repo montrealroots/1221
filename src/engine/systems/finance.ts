@@ -75,7 +75,8 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
   let vehicles = 0;
   let land = 0;
   for (const v of person ? vehiclesOf(person) : []) {
-    if (v.soldAt !== undefined) continue;
+    // A leased car is the lessor's, not held (`systems/leasing.ts`).
+    if (v.soldAt !== undefined || v.lease) continue;
     const m = modelById(v.modelId);
     vehicles += m ? inSave(valueOf(v, sim.now), m.currency) : 0;
     liabilities += v.loan?.owed ?? 0;

@@ -10,33 +10,46 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
 import { move } from '@/engine/systems/household';
-import { amortized, kept, modelById, modelsFor, monthKm, parkingYear, quote, runningCost, valueOf, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
+import { amortized, kept, modelById, modelsFor, monthKm, parkingYear, quote, runningCost, valueOf, vehiclesOf, type Quote, usSalesTaxRate } from '@/engine/systems/vehicles';
 
 const q = (id: string, city: string, opts = {}) => quote(modelById(id)!, city, Date.UTC(2026, 8, 29), opts) as Quote;
 const line = (x: Quote, re: RegExp) => x.lines.find((l) => new RegExp(re.source, 'i').test(l.label))!.amount;
+const below = (p: number) => p - Math.round(p * 0.034);
 
 describe('what a car costs to buy', () => {
   it('taxes a Honda CR-V in New York City at 8.875% on its price and destination, with title, plates and two years’ registration by weight', () => {
     const x = q('us-honda-cr-v', 'us-ny-newyork');
     expect(x.price).toBe(3_152_000 + 155_000);
-    expect(line(x, /Sales Tax/)).toBe(Math.round(x.price * 0.08875));
+    // Taxed at what buyers paid, 3.4% below the sticker (KBB, August 2026), from 2026-09-30.
+    expect(line(x, /Below The Sticker/)).toBe(-Math.round(x.price * 0.034));
+    expect(line(x, /Sales Tax/)).toBe(Math.round(below(x.price) * 0.08875));
+    expect(line(x, /Documentation/)).toBe(175_00);
     // 3,472 lb: the 3,451–3,550 band's $56.50, the city's use tax $30 and the MCTD's $50.
     expect(line(x, /Registration/)).toBe(56_50 + 30_00 + 50_00);
     expect(line(x, /Title/)).toBe(50_00);
   });
 
-  it('taxes the whole price at 7.75% in Connecticut over $50,000, and 6.35% under it', () => {
-    expect(line(q('us-toyota-camry', 'us-ct-newhaven'), /Sales Tax/)).toBe(Math.round(2_960_000 * 0.0635));
+  it('taxes the whole price at 7.75% in Connecticut over $50,000, and 6.35% under it: what was paid, not the sticker', () => {
+    expect(line(q('us-toyota-camry', 'us-ct-newhaven'), /Sales Tax/)).toBe(Math.round(below(2_960_000) * 0.0635));
     const sierra = q('us-gmc-sierra', 'us-ct-newhaven');
     expect(sierra.price).toBe(4_850_000 + 279_500);
-    expect(line(sierra, /Sales Tax/)).toBe(Math.round(sierra.price * 0.0775));
+    // Its $51,295 sticker is over; the $49,551 paid, 3.4% below, isn't (from 2026-09-30).
+    expect(line(sierra, /Sales Tax/)).toBe(Math.round(below(sierra.price) * 0.0635));
+    expect(usSalesTaxRate('US-CT', 'us-ct-newhaven', Date.UTC(2026, 9, 1), 50_000.01)).toBe(0.0775);
+    expect(usSalesTaxRate('US-CT', 'us-ct-newhaven', Date.UTC(2026, 9, 1), 50_000)).toBe(0.0635);
+    expect(line(sierra, /Conveyance/)).toBe(405_00);
+    // A used-car dealer's average, $131, and nothing below the sticker on a used car.
+    const used = quote(modelById('us-gmc-sierra')!, 'us-ct-newhaven', Date.UTC(2026, 9, 1), { age: 3 }) as Quote;
+    expect(line(used, /Conveyance/)).toBe(131_00);
+    expect(used.lines.some((l) => /Below The Sticker/.test(l.label))).toBe(false);
   });
 
   it('charges Los Angeles 9.75%, and 10.25% from 1 October 2026', () => {
     const before = quote(modelById('us-toyota-rav4')!, 'us-ca-losangeles', Date.UTC(2026, 8, 29)) as Quote;
     const after = quote(modelById('us-toyota-rav4')!, 'us-ca-losangeles', Date.UTC(2026, 9, 2)) as Quote;
-    expect(line(before, /Sales Tax/)).toBe(Math.round(3_190_000 * 0.0975));
-    expect(line(after, /Sales Tax/)).toBe(Math.round(3_190_000 * 0.1025));
+    expect(line(before, /Sales Tax/)).toBe(Math.round(below(3_190_000) * 0.0975));
+    expect(line(after, /Sales Tax/)).toBe(Math.round(below(3_190_000) * 0.1025));
+    expect(line(after, /Processing/)).toBe(85_00);
   });
 
   it('keeps Ireland’s VAT and VRT in the price and adds the motor tax by CO2; Ontario’s 13% HST; British Columbia’s GST and PST; Mexico City’s plates', () => {

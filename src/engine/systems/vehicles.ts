@@ -24,7 +24,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { CAR_MODELS, type CarModel } from '../content/vehiclecatalog';
-import { BC, CA_STATE, CMX, CT, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, type Jurisdiction } from '../content/vehiclefees';
+import { BC, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
 import { owe, payFromBank, spend } from './household';
 import { mayDrive } from './documents';
@@ -60,6 +60,8 @@ export interface OwnedVehicle {
   at?: string;
   /** The last periodic inspection's due date met (`systems/inspections.ts`, from 2026-09-29). */
   inspected?: Instant;
+  /** Leased, not owned (`systems/leasing.ts`, from 2026-09-30): the lessor's until bought out. */
+  lease?: import('./leasing').Lease;
 }
 
 /** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep. */
@@ -141,9 +143,15 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
   const price = Math.round((model.price + (used ? 0 : model.delivery)) * kept(age));
   const lines: { label: string; amount: Money }[] = [];
   const c = (x: number) => Math.round(x * 100);
-  const units = price / 100;
+  // A new car in America sells below its sticker by what buyers paid on average (KBB, from 2026-09-30).
+  const below = !used && j.startsWith('US-') ? Math.round(price * US_NEW_BELOW_STICKER) : 0;
+  if (below) lines.push({ label: 'Below The Sticker, What Buyers Paid On Average', amount: -below });
+  const sold = price - below;
+  const units = sold / 100;
   // A trade-in's value comes off the price New York and Connecticut tax, a dealer's sale; California taxes the whole (CDTFA).
-  const taxedPrice = Math.max(0, price - (opts.tradeIn?.value ?? 0));
+  const taxedPrice = Math.max(0, sold - (opts.tradeIn?.value ?? 0));
+  const doc = DEALER_DOC_FEE[j];
+  if (doc) lines.push({ label: doc.label, amount: c(used ? doc.used : doc.new) });
   switch (j) {
     case 'US-NY': {
       const rate = NYC.has(cityId) ? NY.nycRate : NY.stateRate;
@@ -162,8 +170,8 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
     }
     case 'US-CA': {
       const rate = cityId === 'us-ca-losangeles' ? stepOn(CA_STATE.losAngeles, at) : cityId === 'us-ca-sanfrancisco' ? CA_STATE.sanFrancisco : CA_STATE.baseRate;
-      lines.push({ label: `Sales Tax, ${(rate * 100).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')}%`, amount: Math.round(price * rate) });
-      lines.push({ label: 'Registration, The Year', amount: caYear(model, price) });
+      lines.push({ label: `Sales Tax, ${(rate * 100).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')}%`, amount: Math.round(sold * rate) });
+      lines.push({ label: 'Registration, The Year', amount: caYear(model, sold) });
       break;
     }
     case 'GB':
@@ -196,7 +204,15 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
   // A car traded in: its value less any loan on it, off what's due.
   if (opts.tradeIn) lines.push({ label: `Trade-In, ${opts.tradeIn.label}`, amount: -(opts.tradeIn.value - opts.tradeIn.payoff) });
   const total = price + lines.reduce((a, l) => a + l.amount, 0);
-  return { currency: CURRENCY[j], price, lines, total, basis: `${model.make} ${model.model} ${model.trim}: the maker’s price (${model.sourceType}), ${model.deliveryBasis}${used ? `, less ${Math.round((1 - kept(age)) * 100)}% for ${age} ${age === 1 ? 'year' : 'years'} (${'iSeeCars, SLATE’s lines between'})` : ''}.` };
+  return { currency: CURRENCY[j], price, lines, total, basis: `${model.make} ${model.model} ${model.trim}: the maker’s price (${model.sourceType}), ${model.deliveryBasis}${used ? `, less ${Math.round((1 - kept(age)) * 100)}% for ${age} ${age === 1 ? 'year' : 'years'} (${'iSeeCars, SLATE’s lines between'})` : ''}${below ? `, and ${(US_NEW_BELOW_STICKER * 100).toFixed(1)}% below the sticker, what Kelley Blue Book found American buyers paid in August 2026` : ''}${doc ? '. The dealer’s documentation fee is the state’s cap, or in Connecticut, where none is set, the average its legislature found in 2016' : ''}.` };
+}
+
+/** The American state's sales tax rate on a car at a price, in dollars, where a town is: what a lease's payments are taxed at (`systems/leasing.ts`). */
+export function usSalesTaxRate(j: Jurisdiction, cityId: string, at: Instant, units: number): number {
+  if (j === 'US-NY') return NYC.has(cityId) ? NY.nycRate : NY.stateRate;
+  if (j === 'US-CT') return units > CT.luxuryOver ? CT.luxuryRate : CT.rate;
+  if (j === 'US-CA') return cityId === 'us-ca-losangeles' ? stepOn(CA_STATE.losAngeles, at) : cityId === 'us-ca-sanfrancisco' ? CA_STATE.sanFrancisco : CA_STATE.baseRate;
+  return 0;
 }
 
 /** California's year: registration, the CHP fee, the vehicle license fee on the value, the transportation improvement fee, and the ZEV fee. */
@@ -250,7 +266,7 @@ export function tradeInValue(sim: Simulation, v: OwnedVehicle): Money {
 /** A car traded in where a town is, for its quote: its value and its loan in that place's money. */
 export function tradeInFor(sim: Simulation, cityId: string, v: OwnedVehicle): { value: Money; payoff: Money; label: string } | undefined {
   const j = jurisdictionOf(cityId);
-  if (!j || v.soldAt !== undefined || v.repossessed) return undefined;
+  if (!j || v.soldAt !== undefined || v.repossessed || v.lease) return undefined;
   const cur = saveCurrency(sim.universe);
   const toJ = (c: Money) => (cur === CURRENCY[j] ? c : exchange(c, cur, CURRENCY[j]) ?? c);
   const m = modelById(v.modelId)!;
@@ -334,6 +350,7 @@ export function registerVehicles(sim: Simulation): void {
     const old = p?.tradeIn ? vehiclesOf(person).find((x) => x.id === p.tradeIn && x.soldAt === undefined) : undefined;
     if (p?.tradeIn && !old) throw new CommandError('That isn’t a car you own.');
     if (old?.repossessed) throw new CommandError('The lender has that car.');
+    if (old?.lease) throw new CommandError('A leased car is the lessor’s: it’s returned or bought out at the lease’s end, not traded.');
     const trade = old ? tradeInFor(s, cityId, old) : undefined;
     const q = quote(model, cityId, s.now, { age, financed, person, ...(trade ? { tradeIn: trade } : {}) }) as Quote;
     const total = inSave(s, q.total, q.currency);
@@ -381,6 +398,7 @@ export function registerVehicles(sim: Simulation): void {
     const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
     if (!v) throw new CommandError('That isn’t a car you own.');
     if (v.repossessed) throw new CommandError('The lender has it: redeem it, or it’s sold for the loan.');
+    if (v.lease) throw new CommandError('A leased car is the lessor’s to sell: at the lease’s end it’s returned or bought out.');
     const value = inSave(s, valueOf(v, s.now), modelById(v.modelId)!.currency);
     const payoff = v.loan?.owed ?? 0;
     const into = person.primaryAccountId!;

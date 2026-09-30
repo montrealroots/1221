@@ -19,7 +19,8 @@ import { formatDate } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
 import { buyRefusal, jurisdictionOf, kept, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
-import { DEPRECIATION_SOURCE, INSURANCE, LOAN_RATES } from '@/engine/content/vehiclefees';
+import { DEPRECIATION_SOURCE, INSURANCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
+import { buyoutPrice, leaseQuote, leaseRefusal, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Petrol', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
 const PLACE_NAME = { 'US-NY': 'New York', 'US-CT': 'Connecticut', 'US-CA': 'California', GB: 'Great Britain', IE: 'Ireland', 'CA-ON': 'Ontario', 'CA-BC': 'British Columbia', 'MX-CMX': 'Mexico City' } as const;
@@ -34,9 +35,10 @@ export function VehiclesWorkspace() {
   const models = modelsFor(home);
   const [pick, setPick] = useState('');
   const [age, setAge] = useState(0);
-  // Outright, or a loan's months: one choice.
+  // Outright, a loan's months or a lease's: one choice, a lease's months negative.
   const [months, setMonths] = useState(0);
   const financed = months > 0;
+  const leaseMonths = months < 0 && Boolean(j?.startsWith('US-')) && age === 0 ? -months : 0;
   const [coverage, setCoverage] = useState<OwnedVehicle['coverage']>('full');
   const [tradeId, setTradeId] = useState('');
   const model = modelById(pick) ?? models[0];
@@ -48,6 +50,10 @@ export function VehiclesWorkspace() {
   const ins = j ? monthlyInsurance(j, coverage) : undefined;
   const rate = j ? loanRate(j, person.credit?.score ?? 0, age > 0) : undefined;
   const owned = vehiclesOf(person).filter((v) => v.soldAt === undefined);
+  // A lease: new cars in America only.
+  const leasable = Boolean(j?.startsWith('US-')) && age === 0;
+  const lq = model && leaseMonths ? leaseQuote(model.id, home, sim.now, leaseMonths, person) : undefined;
+  const noLease = model && leaseMonths ? leaseRefusal(sim, person, model.id, leaseMonths, coverage) : undefined;
   return (
     <>
       <div className="page-head">
@@ -60,7 +66,7 @@ export function VehiclesWorkspace() {
           {!owned.length ? <p className="small muted" style={{ margin: 0 }}>None yet.</p> : (
             <div className="table-scroll">
               <table>
-                <thead><tr><th scope="col">Car</th><th scope="col">Bought</th><th scope="col" className="num">Worth</th><th scope="col" className="num">Loan Owed</th><th scope="col">Registration Due</th><th scope="col">Next Inspection</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
+                <thead><tr><th scope="col">Car</th><th scope="col">Bought</th><th scope="col" className="num">Worth</th><th scope="col" className="num">Loan Or Lease</th><th scope="col">Registration Due</th><th scope="col">Next Inspection</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
                 <tbody>
                   {owned.map((v) => {
                     const m = modelById(v.modelId)!;
@@ -68,12 +74,19 @@ export function VehiclesWorkspace() {
                       <tr key={v.id}>
                         <td>{m.make} {m.model}</td>
                         <td>{formatDate(v.boughtAt, sim.zone)}{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
-                        <td className="num mono">{inHome(valueOf(v, sim.now), m.currency)}</td>
-                        <td className="num mono">{v.loan ? money(v.loan.owed) : 'None'}</td>
+                        <td className="num mono">{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</td>
+                        <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? money(v.loan.owed) : 'None'}</td>
                         <td>{formatDate(v.registrationDue, sim.zone)}</td>
                         <td className="small">{(() => { const due = nextInspection(v, v.inspected ?? v.boughtAt); const rule = INSPECTION_RULES[v.jurisdiction]; return due && rule ? `${rule.label}, ${formatDate(due, sim.zone)}` : '—'; })()}</td>
                         <td>
-                          {v.repossessed ? (
+                          {v.lease ? (
+                            v.lease.maturedAt === undefined ? <span className="xs dim">Ends {formatDate(v.boughtAt + v.lease.months * 30 * 86_400_000, sim.zone)}{milesOver(v).miles ? `, ${milesOver(v).miles.toLocaleString('en-US')} miles over` : ''}</span> : (
+                              <div className="row gap-1">
+                                <Gated feature="vehicle.lease_buyout" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_buyout', { vehicleId: v.id }); if (a.ok) toast(`Bought out for ${money(a.value!.paid)}.`, 'positive'); }}>Buy It Out, {inHome(buyoutPrice(v, sim.now) ?? 0, 'USD')}</Gated>
+                                <Gated feature="vehicle.lease_return" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_return', { vehicleId: v.id }); if (a.ok) toast(`Returned, for ${money(a.value!.paid)}.`, 'positive'); }}>Return It</Gated>
+                              </div>
+                            )
+                          ) : v.repossessed ? (
                             <div className="col gap-1" style={{ alignItems: 'flex-start' }}>
                               <span className="xs dim">Repossessed: sold {formatDate(v.repossessed.saleAt, sim.zone)}</span>
                               <Gated feature="vehicle.redeem" className="btn btn-sm btn-ghost" onClick={() => {
@@ -114,9 +127,10 @@ export function VehiclesWorkspace() {
               </div>
               <div className="field">
                 <label htmlFor="car-pay">Paid</label>
-                <select id="car-pay" value={months} onChange={(e) => setMonths(Number(e.target.value))}>
+                <select id="car-pay" value={leaseMonths ? months : Math.max(0, months)} onChange={(e) => setMonths(Number(e.target.value))}>
                   <option value={0}>Outright</option>
                   {[36, 48, 60, 72].map((n) => <option key={n} value={n}>A Loan, {n} Months</option>)}
+                  {leasable && US_LEASE.terms.map((n) => <option key={-n} value={-n}>A Lease, {n} Months</option>)}
                 </select>
               </div>
               <div className="field">
@@ -126,17 +140,30 @@ export function VehiclesWorkspace() {
                   {j && INSURANCE[j]?.liability !== undefined && <option value="liability">Liability Only</option>}
                 </select>
               </div>
-              {owned.some((x) => !x.repossessed) && (
+              {owned.some((x) => !x.repossessed && !x.lease) && (
                 <div className="field">
                   <label htmlFor="car-trade">Trade In</label>
                   <select id="car-trade" value={tradeCar?.id ?? ''} onChange={(e) => setTradeId(e.target.value)}>
                     <option value="">None</option>
-                    {owned.filter((x) => !x.repossessed).map((x) => <option key={x.id} value={x.id}>Your {modelById(x.modelId)!.make} {modelById(x.modelId)!.model}</option>)}
+                    {owned.filter((x) => !x.repossessed && !x.lease).map((x) => <option key={x.id} value={x.id}>Your {modelById(x.modelId)!.make} {modelById(x.modelId)!.model}</option>)}
                   </select>
                 </div>
               )}
             </div>
-            {typeof q !== 'string' && model && (
+            {lq && typeof lq !== 'string' && (
+              <div className="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Due At Signing</th><th scope="col" className="num">Amount</th></tr></thead>
+                  <tbody>
+                    {lq.atSigning.map((l) => <tr key={l.label}><td>{l.label}</td><td className="num mono">{inHome(l.amount, 'USD')}</td></tr>)}
+                    <tr><th scope="row">In All</th><td className="num mono">{inHome(lq.dueAtSigning, 'USD')}</td></tr>
+                    <tr><td>Then, A Month</td><td className="num mono">{inHome(lq.monthly, 'USD')}</td></tr>
+                    <tr><td>To Buy It Out At The End</td><td className="num mono">{inHome(lq.residual, 'USD')}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {!leaseMonths && typeof q !== 'string' && model && (
               <div className="table-scroll">
                 <table>
                   <thead><tr><th scope="col">Line</th><th scope="col" className="num">Amount</th></tr></thead>
@@ -150,18 +177,26 @@ export function VehiclesWorkspace() {
             )}
             <div className="grid grid-3">
               <Stat label="Insurance" value={typeof ins === 'number' && j ? `${inHome(ins, INSURANCE[j]!.currency)} A Month` : '—'} note={j && INSURANCE[j] ? INSURANCE[j]!.basis : 'Not kept here yet'} />
-              <Stat label="Loan Rate" value={rate !== undefined ? `${(rate * 100).toFixed(2)}%` : '—'} note={rate !== undefined ? 'For your record, where it’s published' : 'Not published here: buy it outright'} />
+              {leaseMonths ? <Stat label="Money Factor" value={String(US_LEASE.moneyFactor)} note={`About ${(US_LEASE.moneyFactor * 2400).toFixed(2)}% a year, worked back from Toyota’s offers`} /> : <Stat label="Loan Rate" value={rate !== undefined ? `${(rate * 100).toFixed(2)}%` : '—'} note={rate !== undefined ? 'For your record, where it’s published' : 'Not published here: buy it outright'} />}
               <Stat label="Economy" value={model?.per100km ? `${model.per100km} L/100 km` : 'Not Yet Rated'} note={model?.per100km ? model.economyBasis : 'Fuel at AAA’s cost a mile until it’s rated'} />
             </div>
-            {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
+            {(leaseMonths ? noLease : no) ? <p className="small" style={{ margin: 0 }}>{leaseMonths ? noLease : no}</p> : null}
             <div className="row gap-2">
+              {leaseMonths ? (
+                <Gated feature="vehicle.lease" className="btn btn-sm" disabled={Boolean(noLease)} title={noLease} onClick={() => {
+                  if (!model) return;
+                  const a = run<{ paid: number; monthly: number }>('vehicle.lease', { modelId: model.id, months: leaseMonths, coverage });
+                  if (a.ok) toast(`Leased, for ${money(a.value!.paid)} now and ${money(a.value!.monthly)} a month.`, 'positive');
+                }}>Lease It</Gated>
+              ) : (
               <Gated feature="vehicle.buy" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
                 if (!model) return;
                 const a = run<{ vehicleId: string; paid: number; monthly?: number }>('vehicle.buy', { modelId: model.id, age, financed, months, coverage, ...(tradeCar ? { tradeIn: tradeCar.id } : {}) });
                 if (a.ok) toast(`Bought, for ${money(a.value!.paid)} now${a.value!.monthly ? ` and ${money(a.value!.monthly)} a month` : ''}.`, 'positive');
               }}>Buy It</Gated>
+              )}
             </div>
-            <Fine>{typeof q !== 'string' ? q.basis : q} Depreciation: {DEPRECIATION_SOURCE}. Loans: {LOAN_RATES.source}. Parking on the street at home is the resident’s permit where one’s kept, London’s by Westminster’s bands and Dublin’s, and nothing with a garage at a home you own.</Fine>
+            <Fine>{lq && typeof lq !== 'string' ? `${lq.basis} ` : ''}{typeof q !== 'string' ? q.basis : q} Depreciation: {DEPRECIATION_SOURCE}. Loans: {LOAN_RATES.source}. Parking on the street at home is the resident’s permit where one’s kept, London’s by Westminster’s bands and Dublin’s, and nothing with a garage at a home you own.</Fine>
           </div>
         </Panel>
         <BoatPanel />

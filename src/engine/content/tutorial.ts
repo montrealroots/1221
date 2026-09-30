@@ -235,7 +235,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Buy A Boat, where you live in New York, Connecticut or California, buys Bayliner’s 18-foot Trophy at its maker’s price, taxed and registered (in London a Jeanneau and in Toronto a Princecraft of its size, at a dealer’s price), outright or on Bayliner’s own loan for a good enough record. It comes along on its trailer when you move within the three states. Keeping it costs its insurance, its registration on the state’s term, and a slip, by the season or the month, unless it stands on its trailer at a house of yours. Operating it asks the state’s certificate: Get A Boating Certificate. Then Take The Boat Out, under Look After Yourself, is three hours on the water in fine weather, its gas bought at the marina. Without a boat, Charter A Boat, there too, takes you out with a captain in New York City, on Connecticut’s shore, from Marina del Rey, on the Thames or from Toronto’s harbourfront, at the operator’s price.',
     ],
     names: ['Cars', 'Buy It', 'Sell It', 'Redeem It', 'Trade In', 'Buy A Boat', 'Sell The Boat', 'Get A Boating Certificate', 'Take The Boat Out', 'Charter A Boat'],
-    opens: ['ui.vehicles', 'vehicle.buy', 'vehicle.sell', 'vehicle.redeem', 'boat.buy', 'boat.sell', 'boat.certify'],
+    opens: ['ui.vehicles', 'vehicle.buy', 'vehicle.sell', 'vehicle.redeem', 'vehicle.lease', 'vehicle.lease_return', 'vehicle.lease_buyout', 'boat.buy', 'boat.sell', 'boat.certify'],
   },
   {
     id: 'land',

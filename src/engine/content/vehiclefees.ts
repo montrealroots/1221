@@ -192,3 +192,50 @@ export const PERMITS = {
   dublin: { cityId: 'ie-lei-dublin', currency: 'EUR', flat: 50 },
   source: 'https://www.westminster.gov.uk/media/document/new-charges-from-mon-2-march-2026; https://www.dublincity.ie/travel-and-transport/apply-or-renew-residential-parking-permit/apply-residential-parking-permit',
 } as const;
+
+/**
+ * A dealer's documentation fee, in dollars, from 2026-09-30: New York's cap
+ * (15 NYCRR 78.19), charged at it; California's cap for a dealer that is a
+ * DMV private industry partner (Vehicle Code 4456.5; SB 791's rise was
+ * vetoed); Connecticut's uncapped conveyance fee at the averages its
+ * legislature's research office found in 2016 (report 2023-R-0092), new and
+ * used. Ontario's and British Columbia's advertised prices must include
+ * every dealer fee (OMVIC, VSA), so none is added there; Britain's
+ * on-the-road prices include theirs; no figure is published for Ireland's
+ * dealers or Mexico's.
+ */
+export const DEALER_DOC_FEE: Readonly<Partial<Record<Jurisdiction, { new: number; used: number; label: string }>>> = {
+  'US-NY': { new: 175, used: 175, label: 'Dealer Documentation Fee, New York’s Cap' },
+  'US-CA': { new: 85, used: 85, label: 'Dealer Document Processing Charge, California’s Cap' },
+  'US-CT': { new: 405, used: 131, label: 'Dealer Conveyance Fee, Connecticut’s Average (Negotiable)' },
+};
+
+/**
+ * What American buyers paid below the sticker for a new car: Kelley Blue
+ * Book's August 2026 average transaction price, $50,089, against an average
+ * MSRP of $51,852, 3.4% (published 2026-09-10). No average is published for
+ * Canada, Mexico, Britain or Ireland, where discounts come as finance rates
+ * and vouchers, so the sticker is paid there.
+ */
+export const US_NEW_BELOW_STICKER = 0.034;
+
+/**
+ * An American closed-end lease, from Toyota Financial Services' published
+ * offers for September 2026 (the RAV4 Hybrid in New York, Connecticut and
+ * California): $750 acquisition fee, 10,000 miles a year, $0.15 a mile over,
+ * $350 disposition fee at the end, terms of 24 to 60 months. The money
+ * factor, 0.00299, isn't published: it's worked back from each offer's own
+ * figures, and all three give it (research-car-buying.json). The residual is
+ * SLATE's depreciation curve at the term: 75% at three years, where Toyota's
+ * offers set 76% to 77%. New York taxes a lease's payments at signing (Tax
+ * Law 1111(i)); Connecticut and California tax each payment.
+ */
+export const US_LEASE = {
+  moneyFactor: 0.00299,
+  acquisition: 750,
+  disposition: 350,
+  milesAYear: 10_000,
+  perMileOver: 0.15,
+  terms: [24, 36, 48] as const,
+  source: 'Toyota Financial Services, offers expiring 2026-09-30 (toyota.com/greaterny, /socal); the money factor derived from them',
+};
