@@ -70,7 +70,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 **Played lives:**
 - New York on `d8227e3` died at 83, with 0 errors and 0 anomalies.
 - London on `41a344e` died at 97, with 0 errors and 0 anomalies.
-- Toronto on `3773ab3` was still running when this was written (`$TEMP/livesD1`).
+- Toronto on `3773ab3` (seed w4) died at 35, with 0 errors and 1 anomaly: starvation from 2032. The same seed on `d8227e3`, where this session began, dies the same way with the same figures, so none of this session's work caused it. It is a gap nobody had recorded: an actor out of work in Toronto claims nothing, because SLATE pays unemployment only in New York, California and Connecticut. They lose the shared flat for a sofa in 2033, and their weight falls from 64 kg to 36. **Next module:** Canada's safety net, Employment Insurance (its hours test and weekly rate) and Ontario Works. It needs its own research first.
 
 **A trap worth knowing:** `npx tsc -p . --noEmit` checks nothing here. The typecheck is `tsc -b` (`npm run typecheck`), which also covers the tests.
 
