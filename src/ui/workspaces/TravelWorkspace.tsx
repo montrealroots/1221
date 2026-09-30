@@ -52,7 +52,9 @@ export function TravelWorkspace() {
   const [bags, setBags] = useState(0);
   const [nights, setNights] = useState(3);
   const [daysThere, setDaysThere] = useState(4);
-  const toCity = to || destinations[0] || '';
+  // A town chosen before arriving in it isn't a destination from it: until 2026-09-30 it stayed chosen, the list showing
+  // another town while the plan said both fly from the same airport.
+  const toCity = (destinations.includes(to) ? to : '') || destinations[0] || '';
   const p = zonedParts(sim.now + days * MS_DAY, sim.zone);
   const day = instantFromZoned({ ...normalDate(p.year, p.month, p.day), hour: 12 }, sim.zone);
   const fromCity = whereBy(person, day);
