@@ -177,8 +177,9 @@ export const LAND_DEAL = {
  * plan (£3), and an official search with priority (£3), read from a third
  * party's compilation of the fee order; upstate, a percolation test for a
  * septic system, Schenectady County's $100 application, one county's fee,
- * taken for the state. A Phase I environmental assessment, a survey, title
- * insurance and a lawyer have no authority's price and aren't kept.
+ * taken for the state. A Phase I environmental assessment has no authority's
+ * price and isn't kept; a survey, title insurance and a lawyer are firms'
+ * prices, in `closingLines`.
  */
 export const LAND_SEARCHES: Readonly<Partial<Record<LandPlace, readonly { label: string; amount: number }[]>>> = {
   london: [{ label: 'Official Copy Of The Register', amount: 7 }, { label: 'Official Copy Of The Title Plan', amount: 3 }, { label: 'Official Search With Priority', amount: 3 }],
@@ -210,7 +211,24 @@ export const LAND_REGISTRATION: readonly (readonly [number, number])[] = [[80_00
  *   disbursements and VAT (Q2 2026).
  * - Ireland: a solicitor's flat fee, the middle of €1,500 to €2,500, with 23%
  *   VAT.
- * No title rate or lawyer's fee was read for Ontario or British Columbia.
+ * From 2026-10-01 (`docs/research/world/research-land-construction-2.json`):
+ * - California: escrow, the buyer's half of Neighborhood Escrow's $250 and $2
+ *   a thousand of the price, $795 at least (its own 2025 page; Los Angeles
+ *   County splits the fee between buyer and seller).
+ * - Ontario: Law Booth's $895 for a cash purchase, with 13% HST; its
+ *   registration and title search are billed past it and aren't kept.
+ * - British Columbia: Coquitlam Notary's $1,550 for a purchase without a
+ *   mortgage, its typical disbursements in; the GST and PST on its fee, whose
+ *   share of the $1,550 it doesn't print, aren't kept.
+ * - A boundary survey, the middle of a surveyor's own published range: New
+ *   York's from Island-Wide Land Surveyors ($1,200 to $3,500), Connecticut's
+ *   stakeout from Juliano Associates ($2,800 to $3,200, two acres or less),
+ *   and England's topographical survey of a residential site from THS
+ *   Concepts (£800 to £1,200, with VAT). Aggregators' averages (Angi's $2,590
+ *   for New York) disagreed with the firms' own and weren't used. No
+ *   California, Irish or Canadian surveyor prints a price, and none is kept.
+ * Title insurance in Ontario and British Columbia is sold from calculators
+ * with no published table, and isn't kept.
  */
 const TIRSA_ZONE2: readonly [number, number][] = [[50_000, 6.34], [100_000, 5.16], [500_000, 4.14], [1_000_000, 3.78], [5_000_000, 3.48], [10_000_000, 3.09], [15_000_000, 2.92], [Number.POSITIVE_INFINITY, 2.62]];
 function tirsaZone2(dollars: number): number {
@@ -241,10 +259,43 @@ export function closingLines(place: string, cents: number): { label: string; amo
   const dollars = cents / 100;
   const out: { label: string; amount: number }[] = [];
   const add = (label: string, units: number) => out.push({ label, amount: Math.round(units * 100) });
-  if (place === 'nyc' || place === 'ny-state') { add('Owner’s Title Insurance', tirsaZone2(dollars)); add('The Attorney’s Fee', place === 'nyc' ? 3_750 : 2_500); }
-  if (place === 'new-haven' || place === 'ct-state') add('Owner’s Title Insurance', catic(dollars));
-  if (place === 'los-angeles' || place === 'ca-state') add('Owner’s Title Insurance', oldRepublicLa(dollars));
-  if (place === 'london' || place === 'england') add('Conveyancing', 1_509);
+  if (place === 'nyc' || place === 'ny-state') { add('Owner’s Title Insurance', tirsaZone2(dollars)); add('The Attorney’s Fee', place === 'nyc' ? 3_750 : 2_500); add('A Boundary Survey', (1_200 + 3_500) / 2); }
+  if (place === 'new-haven' || place === 'ct-state') { add('Owner’s Title Insurance', catic(dollars)); add('A Boundary Survey', (2_800 + 3_200) / 2); }
+  if (place === 'los-angeles' || place === 'ca-state') { add('Owner’s Title Insurance', oldRepublicLa(dollars)); add('Escrow, The Buyer’s Half', Math.max(795, 250 + (dollars / 1_000) * 2)); }
+  if (place === 'london' || place === 'england') { add('Conveyancing', 1_509); add('A Topographical Survey, With VAT', ((800 + 1_200) / 2) * 1.2); }
   if (place === 'leinster') add('The Solicitor’s Fee, With VAT', 2_000 * 1.23);
+  if (place === 'ontario') add('The Lawyer’s Fee, With HST', 895 * 1.13);
+  if (place === 'bc') add('The Notary’s Fee And Disbursements', 1_550);
   return out;
 }
+
+/**
+ * What splitting a parcel in two costs, in its place's money, from 2026-10-01
+ * (`docs/research/world/research-land-construction-2.json`), each the
+ * authority's own schedule for the town SLATE's land lies in:
+ * - New York City: the Department of Finance's $73 for the new tax lot.
+ * - Upstate (Hudson): the Town of Greenport's $250 a lot, two lots.
+ * - Connecticut (Litchfield): $250 a lot and the state's $60 (its 2011 form).
+ * - Los Angeles: the parcel map, $13,666 preliminary (LAMC 19.02, July 2024's
+ *   adjustment) and $8,240 final.
+ * - California farmland (Kern County): the tentative parcel map's $4,908 and
+ *   $75 a lot (from 1 July 2026).
+ * - Ontario (Cavan Monaghan): Peterborough County's $1,150 consent, its $450
+ *   deed stamping and the township's $500 review.
+ * - British Columbia (the Sunshine Coast): $500 to apply first and $5,000 for
+ *   up to two lots added.
+ * Ireland charges no authority's fee to split: a house on the new site asks
+ * planning when it's built. What it does need is a map Tailte Éireann will
+ * register, Property Maps Ireland's €190. No New Haven or English fee was
+ * read, and none is kept.
+ */
+export const SPLIT_FEES: Readonly<Record<string, number>> = {
+  nyc: 73,
+  'ny-state': 250 * 2,
+  'ct-state': 250 * 2 + 60,
+  'los-angeles': 13_666 + 8_240,
+  'ca-state': 4_908 + 75 * 2,
+  ontario: 1_150 + 450 + 500,
+  bc: 500 + 5_000,
+  leinster: 190,
+};

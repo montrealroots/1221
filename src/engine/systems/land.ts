@@ -40,7 +40,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_REGISTRATION, LAND_SEARCHES, LAND_TAX, LAND_TRANSFER, areaWords, type LandMarket, type TransferTax, closingLines } from '../content/land';
+import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_REGISTRATION, LAND_SEARCHES, LAND_TAX, LAND_TRANSFER, areaWords, type LandMarket, type TransferTax, closingLines, SPLIT_FEES } from '../content/land';
 import { homeOf } from './earnings';
 import { marketAt } from './homes';
 import { drawFromBank, inTheBank, owe, payFromBank } from './household';
@@ -367,6 +367,10 @@ export function registerLand(sim: Simulation): void {
     if (!parcel) throw new CommandError('That isn’t land you own.');
     const no = splitRefusal(parcel, person);
     if (no) throw new CommandError(no);
+    // The authority's fee, where one's published (from 2026-10-01).
+    const m = LAND_MARKETS[parcel.market]!;
+    const fee = SPLIT_FEES[m.place];
+    if (fee !== undefined && !payFromBank(s, person, inSave(s, Math.round(fee * 100), m.currency), `Splitting ${m.label}, the authority’s fee`, 'land')) throw new CommandError('The bank couldn’t pay the fee to split it.');
     parcel.acres /= 2;
     parcel.paid = Math.round(parcel.paid / 2);
     const id = s.nextId('parcel');

@@ -11,7 +11,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, closingLines } from '@/engine/content/land';
+import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, SPLIT_FEES, closingLines } from '@/engine/content/land';
 import { homeOf } from '@/engine/systems/earnings';
 import { marketAt } from '@/engine/systems/homes';
 import { landAnswer, landBuyingOf, landFloor, landQuote, landValue, listingsFor, marketsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, taxedValue, type Listing } from '@/engine/systems/land';
@@ -47,15 +47,21 @@ describe('what land costs', () => {
     expect(q.price).toBe(99_564_842);
     // No transfer tax on the buyer in New York; from 2026-09-30 TIRSA's zone 2 owner's policy and the attorney's fee.
     // $995,648.42: $382, then 15 thousands at $6.34, 50 at $5.16, 400 at $4.14 and 496 at $3.78 = $4,265.98.
-    expect(q.lines).toEqual([{ label: 'Owner’s Title Insurance', amount: 4_265_98 }, { label: 'The Attorney’s Fee', amount: 3_750_00 }]);
-    expect(q.total).toBe(q.price + 4_265_98 + 3_750_00);
+    // From 2026-10-01 a boundary survey too, the middle of Island-Wide's $1,200 to $3,500.
+    expect(q.lines).toEqual([{ label: 'Owner’s Title Insurance', amount: 4_265_98 }, { label: 'The Attorney’s Fee', amount: 3_750_00 }, { label: 'A Boundary Survey', amount: 2_350_00 }]);
+    expect(q.total).toBe(q.price + 4_265_98 + 3_750_00 + 2_350_00);
     // TIRSA's own worked figures, zone 2: $1,356.10 at $250,000 and $2,391.10 at $500,000; CATIC's $957 and $1,770.
     expect(closingLines('nyc', 250_000_00)[0]!.amount).toBe(1_356_10);
     expect(closingLines('nyc', 500_000_00)[0]!.amount).toBe(2_391_10);
     expect(closingLines('new-haven', 250_000_00)[0]!.amount).toBe(957_00);
     expect(closingLines('new-haven', 500_000_00)[0]!.amount).toBe(1_770_00);
     expect(closingLines('los-angeles', 250_000_00)[0]!.amount).toBe(1_100_00);
-    expect(closingLines('ontario', 250_000_00)).toEqual([]);
+    // California's escrow, the buyer's half: $250 and $2 a thousand, $795 at least.
+    expect(closingLines('los-angeles', 250_000_00)[1]).toEqual({ label: 'Escrow, The Buyer’s Half', amount: 795_00 });
+    expect(closingLines('ca-state', 1_000_000_00)[1]!.amount).toBe(2_250_00);
+    expect(closingLines('new-haven', 250_000_00)[1]!.amount).toBe(3_000_00);
+    expect(closingLines('ontario', 250_000_00)).toEqual([{ label: 'The Lawyer’s Fee, With HST', amount: 1_011_35 }]);
+    expect(closingLines('bc', 250_000_00)).toEqual([{ label: 'The Notary’s Fee And Disbursements', amount: 1_550_00 }]);
     const sale = saleProceeds(LAND_MARKETS[i]!, q.price);
     expect(sale.taxes.map((t) => t.amount)).toEqual([Math.round(q.price * 0.004), Math.round(q.price * 0.02625)]);
     // Under $500,000 the city's is 1.425% on the whole; from $2 million the state's is 0.65% on the whole.
@@ -75,7 +81,8 @@ describe('what land costs', () => {
     // Scale 1, £200,001 to £500,000: £150.
     expect(line(england, /Land Registry/)).toBe(150_00);
     expect(line(england, /Conveyancing/)).toBe(1_509_00);
-    expect(england.total).toBe(424_850_00 + 10_742_50 + 13_00 + 150_00 + 1_509_00);
+    expect(line(england, /Topographical Survey/)).toBe(1_200_00);
+    expect(england.total).toBe(424_850_00 + 10_742_50 + 13_00 + 150_00 + 1_509_00 + 1_200_00);
     expect(line(landQuote(idx(/Farmland In England/), 10, y(2026)), /Stamp Duty Land Tax/)).toBe(0);
     expect(line(landQuote(idx(/Farmland In England/), 10, y(2026)), /Land Registry/)).toBe(40_00);
     const leinster = landQuote(idx(/Leinster/), 10, y(2025));
@@ -85,7 +92,7 @@ describe('what land costs', () => {
     expect(line(ontario, /Ontario Land Transfer/)).toBe(275_00 + 1_950_00 + 2_250_00 + 18_200_00);
     const bc = landQuote(idx(/South Coast/), 5, y(2025));
     expect(line(bc, /Property Transfer/)).toBe(2_000_00 + 6_460_00);
-    expect(bc.total).toBe(523_000_00 + 8_460_00);
+    expect(bc.total).toBe(523_000_00 + 8_460_00 + 1_550_00);
     // Upstate, the percolation test's application.
     expect(line(landQuote(idx(/Upstate/), 10, y(2026)), /Percolation/)).toBe(100_00);
     // A price named is what's taxed.
@@ -273,6 +280,19 @@ describe('owning it', () => {
     // Elsewhere the tax is on the value.
     const q = { ...p, market: idx(/Queens/), acres: 2_850 / 43_560 };
     expect(taxedValue(q, at)).toBe(landValue(LAND_MARKETS[q.market]!, q.acres, at));
+  });
+
+  it('pays the authority’s fee to split where one’s published: Greenport’s $250 a lot upstate, the Department of Finance’s $73 in the city, and none in New Haven', () => {
+    const sim = save('us-ny-newyork', 'land-split-fee');
+    fund(sim, 5_000_000_00);
+    const whole = { id: 'parcel_split', market: idx(/Farmland Upstate/), acres: 40, boughtAt: sim.now, paid: 180_000_00 };
+    parcelsOf(sim.player).push(whole);
+    expect(sim.execute({ kind: 'land.split', payload: { parcelId: whole.id } }).ok).toBe(true);
+    expect(memoed(sim, 'Splitting Farmland Upstate, the authority’s fee').map(debit)).toEqual([inSave(sim, 500_00, 'USD')]);
+    expect(SPLIT_FEES.nyc).toBe(73);
+    expect(SPLIT_FEES['new-haven']).toBeUndefined();
+    // Ireland's is no authority's fee but the map Tailte Éireann registers.
+    expect(SPLIT_FEES.leinster).toBe(190);
   });
 
   it('splits a New Haven quarter acre while each half keeps RS-2’s 4,000 sq ft, and combines the halves again', () => {
