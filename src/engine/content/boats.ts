@@ -65,6 +65,15 @@ export const BOAT_RULES: Readonly<Record<BoatState, BoatRules>> = {
   },
 };
 
+/**
+ * Bayliner's own financing, through Brunswick's dealers: $1,500 down and
+ * 6.5% over 144 months, "for well-qualified buyers", which Bayliner doesn't
+ * define. SLATE takes it as a record of 740, the start of FICO's "very
+ * good", its estimate. The taxes and the registration are paid at the sale,
+ * as the example leaves them out. From 2026-09-30.
+ */
+export const BOAT_LOAN = { downUsd: 1_500, apr: 0.065, months: 144, minScore: 740 } as const;
+
 /** Progressive’s average boat policy a year in its high-cost states, California, Connecticut and New York among them. */
 export const BOAT_INSURANCE_USD = 662.51;
 

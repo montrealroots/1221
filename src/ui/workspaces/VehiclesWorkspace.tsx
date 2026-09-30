@@ -7,7 +7,7 @@
 import { tradeInFor } from '@/engine/systems/vehicles';
 import { redemption } from '@/engine/systems/repossession';
 import { boatOf, boatQuote, buyBoatRefusal, certified, certifyRefusal, onItsTrailer } from '@/engine/systems/boats';
-import { BOAT_INSURANCE_USD, BOAT_RULES, T18, isBoatState } from '@/engine/content/boats';
+import { BOAT_INSURANCE_USD, BOAT_LOAN, BOAT_RULES, T18, isBoatState } from '@/engine/content/boats';
 import { CITIES } from '@/engine/content/geography';
 import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
 import { useState } from 'react';
@@ -181,7 +181,8 @@ function BoatPanel() {
   const state = jurisdictionOf(where);
   const rules = isBoatState(state) ? BOAT_RULES[state] : undefined;
   const q = boatQuote(sim, where);
-  const noBuy = buyBoatRefusal(sim, person);
+  const [boatFinanced, setBoatFinanced] = useState(false);
+  const noBuy = buyBoatRefusal(sim, person, boatFinanced);
   const noCert = certifyRefusal(sim, person);
   const holds = rules && isBoatState(state) ? certified(person, state) : false;
   const usd = (units: number) => money(inSaveMoney(sim, Math.round(units * 100), 'USD'));
@@ -190,17 +191,28 @@ function BoatPanel() {
       {!rules || !q ? <p className="small muted" style={{ margin: 0 }}>SLATE sells a boat in New York, Connecticut and California only yet.</p> : (
         <div className="col gap-3">
           <div className="grid grid-3">
-            <Stat label={boat ? 'Yours' : 'Taxed And Registered'} value={boat ? money(boat.price) : money(q.price + q.tax + q.registration)} note={boat ? `Kept in ${CITIES.get(boat.cityId)?.name ?? boat.cityId}` : `${money(q.price)} with its trailer, ${money(q.tax)} tax`} />
+            <Stat label={boat ? 'Yours' : 'Taxed And Registered'} value={boat ? money(boat.price) : money(q.price + q.tax + q.registration)} note={boat ? (boat.loan ? `${money(boat.loan.owed)} owed, ${money(boat.loan.monthly)} a month` : `Kept in ${CITIES.get(boat.cityId)?.name ?? boat.cityId}`) : `${money(q.price)} with its trailer, ${money(q.tax)} tax`} />
             <Stat label="Kept" value={`${usd(BOAT_INSURANCE_USD / 12)} A Month`} note={boat && onItsTrailer(person, boat) ? 'Insurance; it stands on its trailer at your house' : `Insurance, and a slip at ${usd(rules.slip.usd)} a ${rules.slip.per}`} />
             <Stat label={rules.certificate.label} value={holds ? 'Held' : usd(rules.certificate.usd)} note="Asked of whoever operates a boat here" />
           </div>
+          {!boat && (
+            <div className="field-row field-row-tight">
+            <div className="field">
+              <label htmlFor="boat-paid">Paid</label>
+              <select id="boat-paid" value={boatFinanced ? 'loan' : 'outright'} onChange={(e) => setBoatFinanced(e.target.value === 'loan')}>
+                <option value="outright">Outright</option>
+                <option value="loan">{`A Loan, ${BOAT_LOAN.months} Months, ${usd(BOAT_LOAN.downUsd)} Down`}</option>
+              </select>
+            </div>
+            </div>
+          )}
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
             {boat
               ? <Gated feature="boat.sell" className="btn btn-sm btn-ghost" onClick={() => { if (run('boat.sell', {}).ok) toast('Sold.', 'positive'); }}>Sell The Boat</Gated>
-              : <Gated feature="boat.buy" className="btn btn-sm btn-ghost" disabled={Boolean(noBuy)} title={noBuy} onClick={() => { if (run('boat.buy', {}).ok) toast('A boat of your own.', 'positive'); }}>Buy A Boat</Gated>}
+              : <Gated feature="boat.buy" className="btn btn-sm btn-ghost" disabled={Boolean(noBuy)} title={noBuy} onClick={() => { if (run('boat.buy', { financed: boatFinanced }).ok) toast('A boat of your own.', 'positive'); }}>Buy A Boat</Gated>}
             {!holds && <Gated feature="boat.certify" className="btn btn-sm btn-ghost" disabled={Boolean(noCert)} title={noCert} onClick={() => { if (run('boat.certify', {}).ok) toast('Certified.', 'positive'); }}>Get A Boating Certificate</Gated>}
           </div>
-          <Fine>Take The Boat Out is under Look After Yourself: three hours on the water in fine weather, at Mercury’s 3.7 gallons an hour of marina gas. {rules.slip.basis}.</Fine>
+          <Fine>Bayliner’s own loan is at {(BOAT_LOAN.apr * 100).toFixed(1)}% for a well-qualified record, which SLATE takes as {BOAT_LOAN.minScore}. Take The Boat Out is under Look After Yourself: three hours on the water in fine weather, at Mercury’s 3.7 gallons an hour of marina gas. {rules.slip.basis}.</Fine>
         </div>
       )}
     </Panel>

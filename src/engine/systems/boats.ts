@@ -12,6 +12,8 @@
  * it goes out from its town for three hours at Mercury's 3.7 gallons an hour
  * of marina gas: time outside, as sitting out is (`systems/life.ts`). Held
  * at its price, as no depreciation series was researched, and sold for it.
+ * Bought on Bayliner's own financing where the record allows, and brought
+ * along on its trailer on moving home (below), from 2026-09-30.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -23,17 +25,18 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
 import { FUEL } from '../content/vehiclefees';
-import { BOAT_INSURANCE_USD, BOAT_RULES, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, type BoatState } from '../content/boats';
+import { BOAT_INSURANCE_USD, BOAT_LOAN, BOAT_RULES, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, type BoatState } from '../content/boats';
 import { inTheBank, owe, payFromBank } from './household';
 import { livingIn } from './homes';
-import { jurisdictionOf } from './vehicles';
+import { amortized, jurisdictionOf } from './vehicles';
+import { byRoad } from './driving';
 
 export const BOAT_MONTH_KIND = 'boat.month';
 const YEAR = 365.2425 * MS_DAY;
 const GAL = 3.785411784;
 const HOUSES = new Set(['house', 'townhouse', 'estate']);
 
-export interface OwnedBoat { boughtAt: Instant; price: Money; cityId: string; state: BoatState; registeredUntil: Instant; seasonPaid?: number; soldAt?: Instant }
+export interface OwnedBoat { boughtAt: Instant; price: Money; cityId: string; state: BoatState; registeredUntil: Instant; seasonPaid?: number; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number } }
 
 const usd = (sim: Simulation, units: number): Money => { const cur = saveCurrency(sim.universe); const c = Math.round(units * 100); return cur === 'USD' ? c : exchange(c, 'USD', cur) ?? c; };
 const homeCity = (person: Person) => person.home?.cityId ?? person.currentLocationId;
@@ -48,11 +51,12 @@ export function boatQuote(sim: Simulation, cityId: string): { price: Money; tax:
   return { price: usd(sim, T18.priceUsd), tax: usd(sim, Math.round(T18.priceUsd * rate * 100) / 100), registration: usd(sim, BOAT_RULES[state].registration.first(year)) };
 }
 
-export function buyBoatRefusal(sim: Simulation, person: Person): string | undefined {
+export function buyBoatRefusal(sim: Simulation, person: Person, financed = false): string | undefined {
   if (boatOf(person)) return 'You own a boat.';
   const q = boatQuote(sim, homeCity(person));
   if (!q) return 'SLATE sells a boat in New York, Connecticut and California only yet.';
-  const total = q.price + q.tax + q.registration;
+  if (financed && (person.credit?.score ?? 0) < BOAT_LOAN.minScore) return 'Bayliner lends to a well-qualified record, which yours isn’t yet.';
+  const total = (financed ? usd(sim, BOAT_LOAN.downUsd) : q.price) + q.tax + q.registration;
   if (inTheBank(sim, person) < total) return `It costs ${formatMoney(total, saveCurrency(sim.universe), { cents: false })}, taxed and registered.`;
   return undefined;
 }
@@ -95,16 +99,23 @@ function scheduleBoat(sim: Simulation, person: Person): void {
 }
 
 export function registerBoats(sim: Simulation): void {
-  sim.onCommand<Record<string, never>, { paid: Money }>('boat.buy', (_p, { sim: s }) => {
+  sim.onCommand<{ financed?: boolean }, { paid: Money }>('boat.buy', (p, { sim: s }) => {
     const person = s.player;
-    const no = buyBoatRefusal(s, person);
+    const financed = p?.financed === true;
+    const no = buyBoatRefusal(s, person, financed);
     if (no) throw new CommandError(no);
     const city = homeCity(person);
     const q = boatQuote(s, city)!;
-    const paid = q.price + q.tax + q.registration;
-    if (!payFromBank(s, person, paid, `A ${T18.label}, taxed and registered`, 'vehicle')) throw new CommandError('The bank couldn’t pay.');
+    // Financed, the price less the down payment is lent, and the taxes and registration paid at the sale.
+    const lent = financed ? q.price - usd(s, BOAT_LOAN.downUsd) : 0;
+    const paid = q.price - lent + q.tax + q.registration;
+    if (!payFromBank(s, person, paid, `A ${T18.label}, taxed and registered${financed ? ', the down payment' : ''}`, 'vehicle')) throw new CommandError('The bank couldn’t pay.');
     const state = jurisdictionOf(city) as BoatState;
     person.boat = { boughtAt: s.now, price: q.price, cityId: city, state, registeredUntil: s.now + BOAT_RULES[state].registration.years * YEAR };
+    if (lent > 0) {
+      person.boat.loan = { owed: lent, monthly: amortized(lent, BOAT_LOAN.apr, BOAT_LOAN.months), monthsLeft: BOAT_LOAN.months };
+      s.post({ memo: `A boat loan, the ${T18.label}`, category: 'vehicle', postings: [{ accountId: s.nominalAccount('expense', 'Vehicles').id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: -lent }] });
+    }
     scheduleBoat(s, person);
     return { paid };
   });
@@ -113,7 +124,10 @@ export function registerBoats(sim: Simulation): void {
     const person = s.player;
     const boat = boatOf(person);
     if (!boat) throw new CommandError('You own no boat.');
-    s.post({ memo: `Sold the ${T18.label}`, category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: boat.price }, { accountId: s.nominalAccount('income', 'Boat Sold').id, amount: -boat.price }] });
+    // Its loan paid off from the sale first.
+    const payoff = boat.loan?.owed ?? 0;
+    s.post({ memo: `Sold the ${T18.label}`, category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: boat.price - payoff }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: payoff }] : []), { accountId: s.nominalAccount('income', 'Boat Sold').id, amount: -boat.price }] });
+    delete boat.loan;
     boat.soldAt = s.now;
     for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === BOAT_MONTH_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
     return { value: boat.price };
@@ -145,7 +159,39 @@ export function registerBoats(sim: Simulation): void {
         if (p.month >= 4 && boat.seasonPaid !== p.year) { pay(rules.slip.usd, 'The boat’s slip, the season'); boat.seasonPaid = p.year; }
       }
     }
+    // The loan: interest on what's owed, the rest off it, what the bank can't pay owed.
+    if (boat.loan) {
+      const interest = Math.round((boat.loan.owed * BOAT_LOAN.apr) / 12);
+      const payment = Math.min(boat.loan.monthly, boat.loan.owed + interest);
+      const principal = payment - interest;
+      if (!payFromBank(s, person, payment, 'Boat loan payment', 'vehicle')) owe(s, person, payment, 'Boat loan payment', 'vehicle');
+      s.post({ memo: 'Boat loan, principal repaid', category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', 'Vehicles').id, amount: -principal }] });
+      boat.loan.owed -= principal;
+      boat.loan.monthsLeft -= 1;
+      if (boat.loan.owed <= 0 || boat.loan.monthsLeft <= 0) delete boat.loan;
+    }
     if (s.now >= boat.registeredUntil) { pay(rules.registration.renewal, 'The boat’s registration renewed'); boat.registeredUntil += rules.registration.years * YEAR; }
     scheduleBoat(s, person);
   });
+}
+
+/**
+ * Moving home, the boat comes on its trailer where a road reaches and the
+ * new home is in one of the three states, registered there when the state
+ * changes; otherwise it stays where it was kept. From 2026-09-30; until then
+ * a boat stayed where it was bought.
+ */
+export function carryBoat(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
+  const boat = boatOf(person);
+  if (!boat || boat.cityId !== fromCity || fromCity === toCity || !byRoad(fromCity, toCity)) return;
+  const state = jurisdictionOf(toCity);
+  if (!isBoatState(state)) return;
+  boat.cityId = toCity;
+  if (state === boat.state) return;
+  const year = zonedParts(sim.now, CITIES.require(toCity).timeZone).year;
+  const due = usd(sim, BOAT_RULES[state].registration.first(year));
+  if (!payFromBank(sim, person, due, 'Registering the boat in its new home', 'vehicle')) owe(sim, person, due, 'Registering the boat', 'vehicle');
+  boat.state = state;
+  boat.registeredUntil = sim.now + BOAT_RULES[state].registration.years * YEAR;
+  delete boat.seasonPaid;
 }

@@ -75,6 +75,7 @@
 
 import { carryCars } from './vehicles';
 import { carryFurniture } from './furniture';
+import { carryBoat } from './boats';
 import { residenceRefusal } from './documents';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -1376,7 +1377,7 @@ function moveInto(sim: Simulation, person: Person, owned: OwnedHome): Money {
   const left = person.home?.cityId;
   person.home = { kind: 'owned', cityId: owned.cityId, homeId: owned.id, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
   // The car comes along where a road reaches (`systems/vehicles.ts`), and movers bring one's own bed and sofa (`systems/furniture.ts`).
-  if (left) { carryCars(sim, person, left, owned.cityId); carryFurniture(sim, person, left, owned.cityId); }
+  if (left) { carryCars(sim, person, left, owned.cityId); carryFurniture(sim, person, left, owned.cityId); carryBoat(sim, person, left, owned.cityId); }
   scheduleRentFor(sim, person);
   return back;
 }

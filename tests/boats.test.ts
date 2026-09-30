@@ -14,9 +14,10 @@ import { CITIES } from '@/engine/content/geography';
 import { salesTaxRate } from '@/engine/content/tax';
 import { FUEL } from '@/engine/content/vehiclefees';
 import { BOAT_INSURANCE_USD, BOAT_RULES } from '@/engine/content/boats';
-import { boatQuote, buyBoatRefusal, outingCost, outingRefusal } from '@/engine/systems/boats';
+import { boatQuote, buyBoatRefusal, carryBoat, outingCost, outingRefusal } from '@/engine/systems/boats';
 import { applyLookingAfter, costFor, lookAfterRefusal } from '@/engine/systems/life';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
+import { move } from '@/engine/systems/household';
 
 const YEAR = 365.2425 * MS_DAY;
 const save = (city: string, name: string) => {
@@ -131,5 +132,61 @@ describe('taking it out', () => {
     expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
     sim.player.currentLocationId = 'us-ca-losangeles';
     expect(outingRefusal(sim, sim.player)).toMatch(/Your boat is in New York/);
+  });
+});
+
+describe('Bayliner’s loan, and a boat moved', () => {
+  it('lends the price less $1,500 at 6.5% over 144 months to a record of 740, the taxes paid at the sale, $321.05-ish a month', () => {
+    const sim = save('us-ny-newyork', 'boat-loan');
+    sim.player.credit = { ...sim.player.credit!, score: 739 };
+    expect(buyBoatRefusal(sim, sim.player, true)).toMatch(/well-qualified/);
+    sim.player.credit.score = 760;
+    const q = boatQuote(sim, 'us-ny-newyork')!;
+    const before = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    expect(sim.execute({ kind: 'boat.buy', payload: { financed: true } }).ok).toBe(true);
+    expect(before - sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(usd(sim, 1_500_00) + q.tax + q.registration);
+    const loan = { ...sim.player.boat!.loan! };
+    expect(loan.owed).toBe(q.price - usd(sim, 1_500_00));
+    expect(Math.abs(loan.monthly - usd(sim, 321_05))).toBeLessThan(usd(sim, 1_00));
+    sim.advanceBy(95 * MS_DAY);
+    expect(paidFor(sim, 'Boat loan payment')).toHaveLength(3);
+    expect(sim.player.boat!.loan!.monthsLeft).toBe(141);
+    expect(sim.player.boat!.loan!.owed).toBeLessThan(loan.owed);
+  });
+
+  it('pays the loan off from a sale', () => {
+    const sim = save('us-ny-newyork', 'boat-loan-sell');
+    sim.player.credit = { ...sim.player.credit!, score: 800 };
+    expect(sim.execute({ kind: 'boat.buy', payload: { financed: true } }).ok).toBe(true);
+    const owed = sim.player.boat!.loan!.owed;
+    const before = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    expect(sim.execute({ kind: 'boat.sell', payload: {} }).ok).toBe(true);
+    expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance - before).toBe(sim.player.boat!.price - owed);
+  });
+
+  it('comes along by road into another of the three states, registered there, and stays behind anywhere else', () => {
+    const sim = save('us-ny-newyork', 'boat-carry');
+    expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    carryBoat(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven');
+    expect(sim.player.boat).toMatchObject({ cityId: 'us-ct-newhaven', state: 'US-CT' });
+    expect(paidFor(sim, 'Registering the boat in its new home')).toEqual([usd(sim, 45_00)]);
+    carryBoat(sim, sim.player, 'us-ct-newhaven', 'uk-eng-london');
+    expect(sim.player.boat!.cityId).toBe('us-ct-newhaven');
+    // By road, but into a province SLATE keeps no boat's rules for.
+    carryBoat(sim, sim.player, 'us-ct-newhaven', 'ca-on-toronto');
+    expect(sim.player.boat!.cityId).toBe('us-ct-newhaven');
+  });
+
+  it('moves within its state without registering it again, and comes along when its owner moves home', () => {
+    const sim = save('us-ny-newyork', 'boat-move');
+    expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    carryBoat(sim, sim.player, 'us-ny-newyork', 'us-ny-hudson');
+    expect(sim.player.boat!.cityId).toBe('us-ny-hudson');
+    expect(paidFor(sim, 'Registering the boat in its new home')).toEqual([]);
+    const other = save('us-ny-newyork', 'boat-move-home');
+    expect(other.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    other.player.currentLocationId = 'us-ct-newhaven';
+    move(other, other.player, 'own', 'us-ct-newhaven');
+    expect(other.player.boat).toMatchObject({ cityId: 'us-ct-newhaven', state: 'US-CT' });
   });
 });

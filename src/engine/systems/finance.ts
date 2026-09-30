@@ -81,7 +81,7 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
   // A plane of their own, at its price, held (`systems/aviation.ts`).
   if (person?.aircraft && person.aircraft.soldAt === undefined) vehicles += person.aircraft.price;
   // And a boat, the same way (`systems/boats.ts`).
-  if (person?.boat && person.boat.soldAt === undefined) vehicles += person.boat.price;
+  if (person?.boat && person.boat.soldAt === undefined) { vehicles += person.boat.price; liabilities += person.boat.loan?.owed ?? 0; }
   for (const p of person ? parcelsOf(person) : []) {
     if (p.soldAt !== undefined) continue;
     const m = LAND_MARKETS[p.market]!;

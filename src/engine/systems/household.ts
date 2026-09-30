@@ -66,6 +66,7 @@ import { deadline, latePenalty } from './taxreturn';
 import { drawRental, homePlace, machineUsd, type RentedUnit } from './dwelling';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { carryFurniture } from './furniture';
+import { carryBoat } from './boats';
 
 export const RENT_KIND = 'home.rent';
 
@@ -673,7 +674,7 @@ export function move(sim: Simulation, person: Person, kind: Housing, where = per
   const left = person.home?.cityId;
   person.home = { kind, cityId: where, since: sim.now, unit: drawRental(sim, person, where, kind === 'shared', sim.now), ...(carried > 0 ? { arrearsAtStart: carried } : {}), ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
   // The car comes along where a road reaches (`systems/vehicles.ts`), and movers bring one's own bed and sofa (`systems/furniture.ts`).
-  if (left) { carryCars(sim, person, left, where); carryFurniture(sim, person, left, where); }
+  if (left) { carryCars(sim, person, left, where); carryFurniture(sim, person, left, where); carryBoat(sim, person, left, where); }
   // The first rent after the move is next month's: the rest of this one was paid moving in.
   if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(person.home.cityId).timeZone);
