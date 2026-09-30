@@ -57,7 +57,7 @@ import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
 import { cardCeilingRoom, monthOrder, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
-import { cardRoom, cardsOf, cardOf as everydayCard, stateOf } from './credit';
+import { cardRoom, cardsOf, cardOf as everydayCard, stateOf, markRecord } from './credit';
 import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
 import { CommandError } from '../core/simulation';
@@ -726,7 +726,7 @@ function evict(sim: Simulation, person: Person): void {
     sim.post({ memo: 'Deposit kept against rent owed', category: 'rent', postings });
   }
   refundRentAhead(sim, person);
-  if (person.credit) { person.credit.score = Math.max(300, person.credit.score - EVICTION_ON_RECORD); person.credit.late.push(sim.now); }
+  if (person.credit) { markRecord(person, EVICTION_ON_RECORD, sim.now, person.home?.cityId ?? person.currentLocationId); person.credit.late.push(sim.now); }
   // A friend's sofa, until the day's rollover finds them a home of their own in town or a room they can pay for.
   person.home = { kind: 'sofa', cityId: person.home?.cityId ?? person.currentLocationId, since: sim.now };
   if (person.id === sim.universe.playerId) {

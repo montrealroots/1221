@@ -146,6 +146,8 @@ export interface CreditState extends CardState {
   score: number;
   /** Late payments, by when. */
   late: Instant[];
+  /** What's on the record against them, from 2026-09-30: when, what it took, and the country whose rule says how long it stays (`markRecord`). */
+  marks?: { at: Instant; points: number; country: string }[];
   /** A card applied for and on its way (C1, C5): from which bank, and, moving a balance onto it, from which card. */
   applied?: { bankId: string; arrivesAt: Instant; limit: Money; transfer?: boolean; fromId?: string };
   /** The everyday card, whose state is the record's own fields. */
@@ -274,6 +276,41 @@ const CHARGE_OFF_AFTER = 6;
 /** How often the limit is reviewed, and the record that earns a raise. */
 const REVIEW_EVERY = 182 * 86_400_000;
 const RAISE_FROM = 700;
+
+/**
+ * How long a mark stays on the record, by the country it was reported in
+ * (`docs/research/world/research-credit-damage-movers.json`): seven years in
+ * America under the FCRA, six in Britain, as Experian UK keeps a default or
+ * a judgment, and five in Ireland, as the Central Credit Register keeps a
+ * loan after it's settled (taken here from the mark). Elsewhere no period was
+ * researched and a mark stays. Its weight fades before it goes, as myFICO
+ * says, which the months paid on time already carry; when it goes, the one
+ * measured figure is the CFPB's, 25 points on average when the last medical
+ * collection came off (2023), taken for every kind. From 2026-09-30; until
+ * then a mark never left the record.
+ */
+export const MARK_YEARS: Readonly<Record<string, number>> = { us: 7, uk: 6, ie: 5 };
+export const MARK_GONE_GIVES = 25;
+
+/** A mark on the record: the score falls by it, and it's kept until its country's years are up. */
+export function markRecord(person: Person, points: number, at: Instant, where: string): void {
+  const record = person.credit;
+  if (!record) return;
+  record.score = Math.max(SCORE_MIN, record.score - points);
+  (record.marks ??= []).push({ at, points, country: CITIES.get(where)?.countryId ?? '' });
+}
+
+/** Marks past their country's years leave the record, and give back what the CFPB measured. */
+export function marksFallOff(person: Person, at: Instant): number {
+  const record = person.credit;
+  if (!record?.marks?.length) return 0;
+  const year = 365.2425 * 86_400_000;
+  const gone = record.marks.filter((m) => MARK_YEARS[m.country] !== undefined && at - m.at >= MARK_YEARS[m.country]! * year);
+  if (!gone.length) return 0;
+  record.marks = record.marks.filter((m) => !gone.includes(m));
+  record.score = Math.min(SCORE_MAX, record.score + gone.length * MARK_GONE_GIVES);
+  return gone.length;
+}
 
 export function aprFor(score: number): number {
   return RATE_BANDS.find((band) => score >= band.from)!.apr;
@@ -762,6 +799,7 @@ export function registerCredit(sim: Simulation): void {
       if (reported) {
         record.late = [...record.late.filter((when) => s.now - when < 365 * 86_400_000), s.now];
         move -= 50;
+        (record.marks ??= []).push({ at: s.now, points: 50, country: CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId ?? '' });
         const cut = Math.max(Math.max(0, -card.balance), Math.round((card.creditLimit ?? 0) * 0.7 / 100) * 100);
         if (cut < (card.creditLimit ?? 0)) card.creditLimit = cut;
       }
@@ -987,7 +1025,7 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: CardS
   credit.cashAccrued = 0;
   credit.transfers = [];
   credit.plans = [];
-  person.credit!.score = Math.max(SCORE_MIN, person.credit!.score - CHARGED_OFF);
+  markRecord(person, CHARGED_OFF, sim.now, person.home?.cityId ?? person.currentLocationId);
   delete credit.suspended;
   delete credit.hardship;
   credit.missed = 0;

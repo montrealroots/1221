@@ -42,6 +42,7 @@ import { savingsLeftThisMonth } from './cash';
 import type { ScheduledItem } from '../core/scheduler';
 import { savingsDebit } from './accountlife';
 import { recordInterest } from './earnings';
+import { marksFallOff } from './credit';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -501,6 +502,8 @@ export function registerBanking(sim: Simulation): void {
   });
 
   sim.onSchedule(MONTH_END_KIND, (item, s) => {
+    // Marks past their years leave the record, whoever's it is (`systems/credit.ts`), card or none.
+    for (const person of Object.values(s.universe.people)) marksFallOff(person, s.now);
     const monthStart = monthStartOf(s, item.at);
     const month = zonedParts(item.at, s.homeZone).month;
     for (const account of Object.values(s.universe.accounts)) {

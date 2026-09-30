@@ -97,6 +97,7 @@ import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, mov
 import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
+import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
 // Terms by country: SLATE's estimates, but where the header says otherwise.
@@ -1535,7 +1536,7 @@ function chase(sim: Simulation, person: Person, owned: OwnedHome): void {
     }
     if ((one.kind === 'mortgage' || one.kind === 'equity') && late >= HOME.reportLateDays && !one.reported) {
       one.reported = true;
-      if (person.credit) { person.credit.score = Math.max(300, person.credit.score - HOME.reportedFall); person.credit.late.push(sim.now); }
+      if (person.credit) { markRecord(person, HOME.reportedFall, sim.now, owned.cityId); person.credit.late.push(sim.now); }
       if (player) sim.notify({ category: 'home', title: 'A Late Payment Is On Your Record', body: `Thirty days late on ${owned.facts.address}, the lender reported it.`, importance: 85, route: '/workspace/homes' });
     }
   }
@@ -1628,7 +1629,7 @@ function foreclose(sim: Simulation, person: Person, owned: OwnedHome): void {
   recordGain(sim, person, owned, sale, 0);
   if (owned.depreciated > 0) recordHome(person, sim.now, CITIES.require(owned.cityId).timeZone, 'rentalDisposed', 1);
   const left = settleSale(sim, person, owned, sale, 0, `Foreclosure sale, ${owned.facts.address}`);
-  if (person.credit) person.credit.score = Math.max(300, person.credit.score - HOME.foreclosureFall);
+  markRecord(person, HOME.foreclosureFall, sim.now, owned.cityId);
   const lived = livingIn(person)?.id === owned.id;
   person.homes = homesOf(person).filter((h) => h !== owned);
   cancelScheduled(sim, person, [WORKS_KIND, SALE_KIND], owned.id);

@@ -19,6 +19,7 @@ import { exchange } from '../content/currency';
 import { DEFAULT_AFTER_MISSED, LOAN_LATE_ON_RECORD, REPOSSESSED_ON_RECORD, REPOSSESSION, REPO_FEES_USD } from '../content/repossession';
 import { arrearsAccount, arrearsOf, drawFromBank, owe } from './household';
 import type { OwnedVehicle } from './vehicles';
+import { markRecord } from './credit';
 
 export const REPO_SALE_KIND = 'vehicle.repo_sale';
 
@@ -41,7 +42,7 @@ export function redemption(sim: Simulation, v: OwnedVehicle): Money | undefined 
 /** The record takes a mark, and remembers when. */
 function mark(person: Person, points: number, at: number): void {
   if (!person.credit) return;
-  person.credit.score = Math.max(300, person.credit.score - points);
+  markRecord(person, points, at, person.home?.cityId ?? person.currentLocationId);
   person.credit.late.push(at);
 }
 

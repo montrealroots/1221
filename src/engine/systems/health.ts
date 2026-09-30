@@ -53,6 +53,7 @@ import { bmiOf } from './body';
 import { ONSET, onsetYearly } from '../content/body';
 import { fluByWeek, weekOfYear } from './seasons';
 import { isoOfCountry } from './documents';
+import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
 export const HEALTH_WEEK_KIND = 'health.week';
@@ -402,7 +403,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   if (debt && -debt.balance >= usd(MEDICAL_DEBT.reportAt, cur) && h.debtSince !== undefined && at - h.debtSince >= MEDICAL_DEBT.reportAfterDays * MS_DAY
     && !MEDICAL_DEBT.barredIn.includes(CITIES.get(home)?.parentId ?? '') && !h.reported && person.credit) {
     h.reported = true;
-    person.credit.score = Math.max(300, person.credit.score - MEDICAL_DEBT.recordHit);
+    markRecord(person, MEDICAL_DEBT.recordHit, at, home);
     if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Medical Debt Is On Your Record', body: 'Unpaid a year and over $500, it’s reported now.', importance: 80, route: '/workspace/papers' });
   }
 }

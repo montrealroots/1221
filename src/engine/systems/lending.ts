@@ -86,6 +86,7 @@ import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, sav
 import { savingsLeftThisMonth } from './cash';
 import { homeOf } from './earnings';
 import { businessDay, businessDaysBetween as bankDaysBetween, daysOfAccount } from '../content/bankdays';
+import { markRecord } from './credit';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -741,7 +742,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   post(sim, `Charged off by ${bank.name}`, 'transfer', [{ accountId: current.id, amount: owed }, { accountId: debt.id, amount: -owed }]);
   for (const account of mine) { account.negativeSince = undefined; account.pendingItems = undefined; }
   if (person.credit) {
-    person.credit.score = Math.max(300, person.credit.score - ESTIMATE.chargeOffHit);
+    markRecord(person, ESTIMATE.chargeOffHit, sim.now, person.home?.cityId ?? person.currentLocationId);
     person.credit.late = [...person.credit.late, sim.now];
   }
   const owedTo = collectionsOf(sim, person)?.institution;
@@ -914,7 +915,7 @@ export function registerLending(sim: Simulation): void {
     if (bank.short > 0 && person.credit) {
       // A missed payment goes on the record, as a late card payment does.
       person.credit.late = [...person.credit.late.filter((when) => s.now - when < 365 * MS_DAY), s.now];
-      person.credit.score = Math.max(300, person.credit.score - 50);
+      markRecord(person, 50, s.now, person.home?.cityId ?? person.currentLocationId);
       if (person.id === s.universe.playerId) {
         s.notify({
           category: 'bank', title: 'A Missed Loan Payment',
