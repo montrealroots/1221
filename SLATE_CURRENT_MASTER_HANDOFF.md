@@ -48,8 +48,9 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
   - Ferries, local transit's fares and caps, walking, taxis against rideshare.
   - The airport's steps, missed connections, compensation (UK261, EU261, APPR) and bag fees.
 - **Documents:** national and state ID cards, the REAL ID rule, residence documents, title records.
+- **Canada as an acting market:** Toronto and Vancouver aren't career cities, and SLATE has no Canadian agencies, so a Canadian actor works through one of the five that are. It needs Canada's agencies, ACTRA's rates and Casting Workbook, researched first.
 - **Leftovers:**
-  - The Career screen shows a Mexico City actor American agencies (`AGENCIES.filter(... === 'us')` in `CareerWorkspace.tsx`).
+  - Fixed (`2e4babc`): the Career screen showed every actor America's agencies. It now lists the agencies of the country the actor works in.
   - Rerun the played lives one at a time. Toronto w4 hasn't been rerun since assistance was built.
 
 **The owner's call, still open:** whether a life abroad gets some income outside acting. Mexico City's w5 life still starves at 32, because Mexico City acting pays less than a shared room and there has been no day job since the owner removed it on 2026-09-26. Nothing has been built for it.
