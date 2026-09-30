@@ -30,7 +30,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 2 | Journeys: a trip of legs (walk, taxi, rideshare, bus, train, flight), fares, durations on the calendar, time zones, the player's location moving only on arrival; airports; booked accommodation at the far end; the return | 1 | Done 2026-09-29 (2a to 2f); this row said "Not begun" until 2026-09-29, after it was |
 | 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3d) |
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
-| 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | 5a and 5b done 2026-09-29; renovation and extension open, below |
+| 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | Not begun |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Not begun |
@@ -164,7 +164,7 @@ Evidence: `tests/land.test.ts` (14); 20 mutations, all killed. Two first survive
   - London: the building control charge with VAT (Hackney's, secondhand, for all three boroughs), and the borough's and the Mayor's Community Infrastructure Levy. Building to live in claims the self-build exemption, and the levy is owed if the house is sold or let within three years.
 - **Stages and time**: NAHB's 2024 seven stages, with the permit, impact and water fees taken out of site work, each billed as it's done. A bill the bank can't pay stops the work until Pay The Contractor. The permit's wait is the Census's latest by region; the building time is the rest of NAHB's 2025 permit-to-completion months by division. London's nine months on site is SLATE's, the middle of the compilers' six to twelve. Each place names its inspections at a stage's end, and the house is finished with its Certificate Of Occupancy, or London's completion certificate.
 - **Finished**: the house is a home owned (`ownBuilt` in `homes.ts`), worth what the land and the building cost and moving with the town's market from then; its fees are its closing costs, and the Homes screen moves one in.
-- Open, and why: building on farmland was the next module, and 5b built it; renovation and extension are open; no authority publishes a rate of delays, overruns or change orders for a house, or a failed inspection's, so none is drawn; a construction loan, a structural warranty and builder's risk insurance aren't kept.
+- Open, and why: building on farmland was the next module, and 5b built it; renovation and extension's permits were the one after, and 5c built them; no authority publishes a rate of delays, overruns or change orders for a house, or a failed inspection's, so none is drawn; a construction loan, a structural warranty and builder's risk insurance aren't kept.
 
 Evidence: `tests/construction.test.ts` (11); 18 mutations, all killed. Three first survived, each a rule no test reached: New York's $100 least, the refusal of a start the bank can't cover, and the levy's three years running out. A test now reaches each.
 
@@ -179,6 +179,17 @@ Evidence: `tests/construction.test.ts` (11); 18 mutations, all killed. Three fir
 - Finished, the house is a home on the farmland, the whole parcel gone into it.
 
 Evidence: `tests/construction.test.ts` (15); 8 mutations, all killed.
+
+#### Stage 5c: the permit an extension asks (done 2026-09-29)
+Renovation and extension stood before this work (`homes.ts`: thirty-nine jobs, from paint to a primary suite and a backyard cottage). What they lacked was the permit. The eight jobs that change the building now ask for it (`systems/permits.ts`): finishing a basement, converting an attic or a garage, adding a bathroom or a suite, building a cottage. The fees are paid when the work starts, and the work waits for a decision a law gives time to.
+- **New York**: the Department of Buildings' alteration permit, $130 for the first $5,000 and $2.60 a $1,000 more.
+- **Los Angeles**: Table 1-A on the work's value, plan check at 90%, and the state's fees.
+- **New Haven**: the city's permit and the state's education fee, read secondhand.
+- **London**: a loft or a room inside is permitted development. A primary suite takes the larger home extension's prior approval (£249, 42 days for the neighbors). A bigger suite or a cottage takes a householder application (£548, eight weeks). Where a suite falls in the permitted depths turns on the house's plan, so this is SLATE's reading.
+- **Dublin**: a rear extension to 40 m² is exempt. A bigger one or a cottage takes the €34 application, eight weeks and four for an appeal.
+- Open, and why: elsewhere the permit isn't kept, nor is building control's charge on an extension; no figure was researched.
+
+Evidence: `tests/permits.test.ts` (6); 7 mutations, all killed.
 
 ### Stages 6-8 (to be detailed in turn)
 

@@ -393,13 +393,14 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           )}
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Work</th><th scope="col" className="num">Cost</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
+              <thead><tr><th scope="col">Work</th><th scope="col" className="num">Cost</th><th scope="col" className="num">Permit</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
               <tbody>
-                {projects.map(({ project, cost, adds, refusal }) => (
+                {projects.map(({ project, cost, adds, permit, refusal }) => (
                   <tr key={project.id}>
-                    <td>{project.label}{refusal && <div className="xs dim">{refusal}</div>}</td>
+                    <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}</td>
                     <td className="num mono">{money(cost)}</td>
-                    <td className="num mono">{project.days} {project.days === 1 ? 'day' : 'days'}</td>
+                    <td className="num mono">{permit ? money(permit.lines.reduce((a, l) => a + l.amount, 0)) : '—'}</td>
+                    <td className="num mono">{project.days + (permit?.waitDays ?? 0)} {project.days + (permit?.waitDays ?? 0) === 1 ? 'day' : 'days'}</td>
                     <td className="num mono">{money(adds)}</td>
                     <td><Gated feature="home.renovate" className="btn btn-sm btn-ghost" disabled={Boolean(refusal)} onClick={() => run('home.renovate', { homeId: owned.id, projectId: project.id })}>Start The Work</Gated></td>
                   </tr>

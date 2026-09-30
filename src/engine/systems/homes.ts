@@ -90,6 +90,7 @@ import {
   BEDROOM_RENT, COUNCIL_TAX, COUNCIL_TAX_NATIONS, drawFixtures, type CouncilTaxNation, isFlat, type Fixtures, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
   SQM_PER_SQFT, addressOf, homeValueAt, streetsOf, usesFeet, type Feature, type HomeType, type Part, type Project,
 } from '../content/homes';
+import { worksPermit, type WorksPermit } from './permits';
 import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, owe, payFromBank, refundRentAhead, rehome, rentOf, scheduleRentFor, spend, type Housing } from './household';
 import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
@@ -905,7 +906,9 @@ export function projectRefusal(sim: Simulation, person: Person, owned: OwnedHome
   });
   if (busy) return 'That work is under way.';
   const cost = projectCost(sim, owned, project);
-  if (inTheBank(sim, person) < cost) return `It costs ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}, paid when the work starts.`;
+  // With the permit or planning it asks (`systems/permits.ts`), paid when it starts.
+  const permit = (worksPermit(sim, owned.cityId, project, cost)?.lines ?? []).reduce((a, l) => a + l.amount, 0);
+  if (inTheBank(sim, person) < cost + permit) return `It costs ${formatMoney(cost + permit, saveCurrency(sim.universe), { cents: false })}${permit > 0 ? ' with its permit' : ''}, paid when the work starts.`;
   return undefined;
 }
 
@@ -925,12 +928,14 @@ export function projectAdds(sim: Simulation, owned: OwnedHome, project: Project)
 }
 
 /** The projects a home can take now, and the ones it can't, with why. */
-export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; adds: Money; refusal?: string }[] {
+export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; adds: Money; permit?: WorksPermit; refusal?: string }[] {
   return PROJECTS
     .filter((p) => p.on.includes(owned.facts.type))
     .map((project) => {
       const refusal = projectRefusal(sim, person, owned, project);
-      return { project, cost: projectCost(sim, owned, project), adds: projectAdds(sim, owned, project), ...(refusal ? { refusal } : {}) };
+      const cost = projectCost(sim, owned, project);
+      const permit = worksPermit(sim, owned.cityId, project, cost);
+      return { project, cost, adds: projectAdds(sim, owned, project), ...(permit ? { permit } : {}), ...(refusal ? { refusal } : {}) };
     });
 }
 
@@ -1831,7 +1836,11 @@ export function registerHomes(sim: Simulation): void {
     const cost = projectCost(s, owned, project);
     const draw = drawFromBank(s, person, cost, false, true);
     s.post({ memo: `${project.label}, ${owned.facts.address}`, category: 'home', postings: [...draw.postings, { accountId: s.nominalAccount('asset_value', 'Home Improvements').id, amount: cost }] });
-    const doneAt = s.now + project.days * MS_DAY;
+    // Its permit or planning, paid now; the work waits for a decision a law gives time to.
+    const permit = worksPermit(s, owned.cityId, project, cost);
+    const fees = (permit?.lines ?? []).reduce((a, l) => a + l.amount, 0);
+    if (fees > 0) s.post({ memo: `${permit!.lines.map((l) => l.label).join(', ')}, ${project.label}`, category: 'home', postings: [...drawFromBank(s, person, fees, false, true).postings, { accountId: s.nominalAccount('expense', 'Permits').id, amount: fees }] });
+    const doneAt = s.now + ((permit?.waitDays ?? 0) + project.days) * MS_DAY;
     owned.works.push({ projectId: project.id, startedAt: s.now, doneAt, cost });
     s.schedule({ at: doneAt, kind: WORKS_KIND, label: project.label, category: 'home', priority: 40, payload: { personId: person.id, homeId: owned.id, projectId: project.id } });
     return { doneAt };
