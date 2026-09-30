@@ -17,9 +17,12 @@ import { exchange } from './currency';
  * graduate without permission to work in the US had nowhere to work. Dublin
  * from the same day, for an Irish actor at home, its films at the published
  * agreement and the rest at SLATE's estimate (`IRELAND_SCALE`); and
- * Mexico City, at SLATE's estimate of its rates (`MEXICO_SCALE`).
+ * Mexico City, at SLATE's estimate of its rates (`MEXICO_SCALE`). Toronto and
+ * Vancouver from 2026-09-30, at the published agreements' own rates: ACTRA's
+ * Independent Production Agreement in Toronto, the BC Master Production
+ * Agreement in Vancouver, and the Canadian Theatre Agreement on stage in both.
  */
-export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin', 'mx-cmx-mexicocity'] as const;
+export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin', 'mx-cmx-mexicocity', 'ca-on-toronto', 'ca-bc-vancouver'] as const;
 export type CareerCity = (typeof CAREER_CITIES)[number];
 
 /**
@@ -103,6 +106,24 @@ export const AGENCIES: readonly Agency[] = [
   { id: 'shoot-management', name: 'Shoot Management MX', tier: 2, bar: 64, auditionsPerWeek: 2, countryId: 'mx' },
   { id: 'look-management', name: 'LOOK Management', tier: 2, bar: 62, auditionsPerWeek: 2, countryId: 'mx' },
   { id: 'glenda-artist', name: 'Glenda Artist Management', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'mx' },
+  // Toronto and Vancouver, from 2026-09-30 (docs/research/world/research-canada-acting.json):
+  // names from StageMilk's Toronto list (2019), the Vancouver Actors Guide's
+  // directory and Lucas Talent's own site. Canadian agencies sign clients
+  // across the country and put them on tape, so SLATE doesn't tie one to its
+  // city. 15% is the commission ACTRA calls the industry's standard, on work
+  // the agent procures; the GST on it isn't charged here. Tiers, bars and
+  // auditions a week are SLATE's estimates, by London's, a little under for
+  // a market that sells much of its work to American productions.
+  { id: 'characters', name: 'The Characters Talent Agency', tier: 1, bar: 72, auditionsPerWeek: 3, countryId: 'ca', commission: 0.15 },
+  { id: 'gga', name: 'GGA', tier: 1, bar: 72, auditionsPerWeek: 3, countryId: 'ca', commission: 0.15 },
+  { id: 'lucas-talent', name: 'Lucas Talent', tier: 1, bar: 71, auditionsPerWeek: 3, countryId: 'ca', commission: 0.15 },
+  { id: 'meridian-artists', name: 'Meridian Artists', tier: 2, bar: 66, auditionsPerWeek: 2.5, countryId: 'ca', commission: 0.15 },
+  { id: 'ami-artist', name: 'AMI Artist Management', tier: 2, bar: 65, auditionsPerWeek: 2.5, countryId: 'ca', commission: 0.15 },
+  { id: 'hero-artists', name: 'Hero Artists', tier: 2, bar: 65, auditionsPerWeek: 2.5, countryId: 'ca', commission: 0.15 },
+  { id: 'connekt', name: 'Connekt Creative Agency', tier: 2, bar: 64, auditionsPerWeek: 2, countryId: 'ca', commission: 0.15 },
+  { id: 'edna', name: 'Edna Talent Management', tier: 3, bar: 60, auditionsPerWeek: 2, countryId: 'ca', commission: 0.15 },
+  { id: 'oldfield', name: 'Oldfield Talent Management', tier: 3, bar: 59, auditionsPerWeek: 2, countryId: 'ca', commission: 0.15 },
+  { id: 'alpha-artist', name: 'Alpha Artist Management', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'ca', commission: 0.15 },
 ];
 export const AGENCY_SOURCE = 'https://oir.yale.edu/sites/default/files/alum_activities_drama_1.pdf; https://ocs.yale.edu/resources/entertainment-talent-agency-management-company-list/';
 
@@ -141,6 +162,30 @@ export const SAG_AFTRA = {
  * each week's check. Since 2023's Open Access anybody paid for theater work
  * can join; SLATE has an actor join on their first Equity contract.
  */
+/**
+ * ACTRA's membership (actra.ca/join and ACTRA Toronto's apprentice program,
+ * read 2026-09-30). An actor's first ACTRA engagement makes them an
+ * apprentice, $75 and $75 a year after; three qualifying credits make them a
+ * full member, for the $1,600 initiation fee less the apprentice fee paid.
+ * A full member's basic dues are $195 a year, and working dues 2.25% of
+ * gross earnings, taken from each check, the two together capped at $4,000
+ * a year. In British Columbia the branch is UBCP/ACTRA, whose own fees
+ * weren't read: SLATE charges ACTRA National's there too, its estimate. The
+ * work permits a non-member pays per engagement weren't found, and aren't
+ * charged; SLATE bills the basic dues half each May and November, as the
+ * American unions', and the apprentice's renewal each May.
+ */
+export const ACTRA = {
+  apprentice: 75_00,
+  credits: 3,
+  initiation: 1_600_00,
+  basicDues: 195_00,
+  workingDues: 0.0225,
+  duesCap: 4_000_00,
+  currency: 'CAD',
+  source: 'https://www.actra.ca/join/; https://actratoronto.com/apprentice-program/',
+} as const;
+
 /** ANDA's dues, 15% of each payment through the union: 10% ordinary, 3.5% for retirement, 1.5% for welfare (laanda.org.mx, April 2019, the latest found). */
 export const ANDA = { dues: 0.15, source: 'https://laanda.org.mx/la-voz-del-actor/beneficios-de-ser-parte-de-la-anda/' } as const;
 
@@ -206,7 +251,7 @@ export interface Role {
   label: string;
   /** Screen and stage work, or a voice session in a booth. */
   medium: 'screen' | 'stage' | 'voice';
-  union: 'sag' | 'equity' | 'equity-uk' | 'irish-equity' | 'anda';
+  union: 'sag' | 'equity' | 'equity-uk' | 'irish-equity' | 'anda' | 'actra' | 'caea';
   /** Per day on screen, per week on stage, per episode for a series regular. */
   steps: RateSteps;
   /** The money its steps are written in; dollars where not said. */
@@ -279,6 +324,11 @@ const IE_EST = 'SLATE’s estimate: British Equity’s minimum for the like part
 /** A British minimum in pence, as SLATE's Dublin rate in euro cents. */
 const inIreland = (gbp: Money): Money => Math.round((exchange(gbp, 'GBP', 'EUR') ?? gbp * 1.17) * IRELAND_SCALE);
 const IE: readonly CareerCity[] = ['ie-lei-dublin'];
+const IPA = 'ACTRA/CMPA/AQPM Independent Production Agreement 2025–2027, the AQPM’s rate chart (aqpm.ca, January 2025)';
+const BCMPA = 'UBCP/ACTRA BC Master Production Agreement 2025–2028 rate sheet (ubcpactra.ca, March 2025)';
+const CTA = 'Canadian Theatre Agreement 2024–2027 minimum fee booklet, CAEA and PACT (caea.com)';
+const TO: readonly CareerCity[] = ['ca-on-toronto'];
+const VAN: readonly CareerCity[] = ['ca-bc-vancouver'];
 const AMPTP = 'https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf';
 const SAGINDIE = 'https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/';
 const LORT = 'https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf';
@@ -616,6 +666,54 @@ export const ROLES: readonly Role[] = [
     steps: [['2026-04-01', inMexico(855_20)]],
     units: [1, 1], bar: 55, weight: 5, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 5, reads: READS.commercial, source: MX_EST,
   },
+  // Toronto, from 2026-09-30, at the IPA's own rates. The agreement took
+  // effect on 26 January 2025 and rose 4% in 2026 and 3.5% in 2027; the page
+  // read didn't say on which day, and SLATE starts each on 1 January. A
+  // principal performer's day, an actor's (the IPA's lesser category, for a
+  // part of few lines), and a principal's week on a feature. ACTRA's use fees
+  // and residuals, its commercial agreement and voice work weren't read, and
+  // SLATE pays none of them yet.
+  {
+    id: 'ca-principal', label: 'A Principal Part, A Canadian Series', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2025-01-26', 935_25], ['2026-01-01', 972_75], ['2027-01-01', 1_006_75]],
+    units: [1, 3], bar: 60, weight: 10, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 5, reads: READS.screen, basis: 'day', source: IPA,
+  },
+  {
+    id: 'ca-actor', label: 'A Small Part, A Canadian Series', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2025-01-26', 631_25], ['2026-01-01', 656_50], ['2027-01-01', 679_50]],
+    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: TO, leadDays: 4, reads: READS.screen, basis: 'day', source: IPA,
+  },
+  {
+    id: 'ca-feature', label: 'A Role, A Canadian Feature Film', medium: 'screen', union: 'actra', currency: 'CAD',
+    // A fifth of the principal's week, $3,974.50, $4,133.50 and $4,278.25.
+    steps: [['2025-01-26', 794_90], ['2026-01-01', 826_70], ['2027-01-01', 855_65]],
+    units: [5, 15], bar: 64, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 14, reads: READS.screen, basis: 'week', source: IPA,
+  },
+  // Vancouver, at the BCMPA's own rates, each from its published day.
+  {
+    id: 'bc-principal', label: 'A Principal Part, A Series Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2024-03-31', 869_85], ['2025-03-30', 917_69], ['2026-03-29', 954_40], ['2027-04-04', 987_80]],
+    units: [1, 3], bar: 60, weight: 12, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 5, reads: READS.screen, basis: 'day', source: BCMPA,
+  },
+  {
+    id: 'bc-actor', label: 'A Small Part, A Series Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2024-03-31', 585_43], ['2025-03-30', 617_63], ['2026-03-29', 642_34], ['2027-04-04', 664_82]],
+    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: VAN, leadDays: 4, reads: READS.screen, basis: 'day', source: BCMPA,
+  },
+  {
+    id: 'bc-feature', label: 'A Role, A Feature Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2024-03-31', 869_85], ['2025-03-30', 917_69], ['2026-03-29', 954_40], ['2027-04-04', 987_80]],
+    units: [3, 12], bar: 64, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 14, reads: READS.screen, basis: 'day', source: BCMPA,
+  },
+  // The Canadian Theatre Agreement's weekly minimum for an actor at a
+  // Category A theater, its seasons from late June. Which of Toronto's and
+  // Vancouver's companies sit in Category A the booklet doesn't say: SLATE's
+  // reading, for the houses a working actor auditions for.
+  {
+    id: 'ca-theater', label: 'A Play, A Category A Theater', medium: 'stage', union: 'caea', currency: 'CAD',
+    steps: [['2024-06-24', 1_255_25], ['2025-06-23', 1_293_00], ['2026-06-22', 1_332_00]],
+    units: [3, 6], rehearsalWeeks: [3, 4], bar: 62, weight: 3, tiers: [1, 2, 3], selfSubmit: true, cities: [...TO, ...VAN], leadDays: 28, reads: READS.stage, source: CTA,
+  },
 ];
 
 /**
@@ -693,6 +791,8 @@ export const WORK_COSTS = {
     spotlight: { label: 'Spotlight', price: 210_00, currency: 'GBP', countryId: 'uk' },
     // Ireland's: €196.50 a year and 23% VAT (spotlight.com/join-us/ireland, 2026-09-29).
     'spotlight-ie': { label: 'Spotlight Ireland', price: 241_70, currency: 'EUR', countryId: 'ie' },
+    // Canada's: PRO at $12.99 a month, a year of it here, in Canadian dollars, which the page doesn't say (home.castingworkbook.com, 2026-09-30).
+    'casting-workbook': { label: 'Casting Workbook PRO', price: 155_88, currency: 'CAD', countryId: 'ca' },
   },
   reel: 250_00,
   wantReel: 0.4,

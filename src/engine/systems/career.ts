@@ -68,7 +68,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, ANDA, AGENT_COMMISSION, AUDITION_READ, PART_DEMANDS, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  ACTRA, AFTERLIFE, AGENCIES, ANDA, AGENT_COMMISSION, AUDITION_READ, PART_DEMANDS, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
   partsForAge,
 } from '../content/career';
@@ -335,6 +335,8 @@ export interface CareerRecord {
   unions: {
     sag?: { eligibleAt: Instant; joinedAt?: Instant };
     equity?: { joinedAt: Instant; initiationPaid: Money };
+    /** ACTRA's: an apprentice from the first engagement, a full member at three credits; the year's dues, CAD cents, toward its cap (`ACTRA`, from 2026-09-30). */
+    actra?: { joinedAt: Instant; credits: number; fullAt?: Instant; duesBy?: Record<string, Money> };
     /** A joining fee the bank couldn't cover on a job they were bound to, taken from the job's pay. */
     owed?: Money;
   };
@@ -465,6 +467,9 @@ export function arcUplift(booking: Booking, episode: number): number {
 export function foreignWithholding(person: Person, workCity: string, gross: Money, when: Instant, into: string, payer?: { id: string; expected: Money }): Money {
   const country = CITIES.get(workCity)?.countryId;
   if (!country || country === 'us') return 0;
+  // Work in the country they live in is taxed as a resident's, at home. Until
+  // 2026-09-30 a Londoner's British work was withheld as a visitor's too.
+  if (CITIES.get(homeOf(person))?.countryId === country) return 0;
   if (country === 'ca') {
     // Less where a T1287 was filed for the job (`t1287Quote`).
     const booking = payer ? careerOf(person).bookings.find((b) => b.id === payer.id) : undefined;
@@ -531,6 +536,13 @@ export function unitRate(booking: Booking, when: Instant, into: string): Money {
   const role = roleById(booking.roleId);
   const minimum = rateOf(role, when, workCityOf(booking), into);
   return booking.rate !== undefined ? Math.max(minimum, inMoney(booking.rate, roleMoney(role), into)) : minimum;
+}
+
+/** What's left of ACTRA's $4,000 cap on a year's basic and working dues, in the save's money: none short of full membership, as an apprentice pays no working dues. */
+export function actraRoom(person: Person, year: number, into: string): Money {
+  const actra = careerOf(person).unions.actra;
+  if (actra?.fullAt === undefined) return 0;
+  return inMoney(Math.max(0, ACTRA.duesCap - (actra?.duesBy?.[year] ?? 0)), ACTRA.currency, into);
 }
 
 /** What a part pays a unit (a day on screen, a week on stage) on a day, in the save's money. */
@@ -636,6 +648,8 @@ function offerManagement(sim: Simulation, person: Person, managers: string[], wh
 export function homeAbroadOf(person: Person): string | undefined {
   const own = isoOfCountry(person.citizenshipId);
   if (!own || own === 'US') return undefined;
+  // The business's city they were born in, where it's one (Vancouver), before the country's first (Toronto).
+  if ((CAREER_CITIES as readonly string[]).includes(person.homeRegionId ?? '') && isoOfCity(person.homeRegionId!) === own) return person.homeRegionId;
   return (CAREER_CITIES as readonly string[]).find((id) => isoOfCity(id) === own) ?? homeTownOf(person);
 }
 
@@ -1118,7 +1132,7 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
  * check makes to the year's tax on the year's wages at the job's town, so a
  * year's withholding comes to the year's tax on what was earned.
  */
-export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant; resident?: boolean; currency?: string; commission?: number }) {
+export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant; resident?: boolean; currency?: string; commission?: number; actraRoom?: Money }) {
   const { scale, role, rehearsal, represented, before, cityId } = opts;
   const agentRate = role.union === 'equity' && rehearsal ? AGENT_COMMISSION.equityRehearsalRate : opts.commission ?? AGENT_COMMISSION.rate;
   // A commercial is commissioned at scale; other SAG-AFTRA work is paid scale plus 10% for the agent's share.
@@ -1127,7 +1141,8 @@ export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; reh
   const agent = !represented ? 0 : role.union === 'sag' ? Math.round(scale * AGENT_COMMISSION.rate) : Math.round(scale * agentRate);
   // A manager takes a share of all of it: less beside an agent.
   const manager = opts.managed ? Math.round(gross * (represented ? MANAGEMENT.withAgent : MANAGEMENT.alone)) : 0;
-  const dues = role.union === 'equity' ? Math.round(gross * EQUITY.workingDues) : role.union === 'anda' ? Math.round(gross * ANDA.dues) : 0;
+  // ACTRA's working dues, up to what's left of the year's cap (`actraRoom`, in the check's money).
+  const dues = role.union === 'equity' ? Math.round(gross * EQUITY.workingDues) : role.union === 'anda' ? Math.round(gross * ANDA.dues) : role.union === 'actra' ? Math.min(Math.round(gross * ACTRA.workingDues), Math.max(0, opts.actraRoom ?? Number.POSITIVE_INFINITY)) : 0;
   // A city's resident tax is withheld only from its residents: New York City
   // withholds nothing from a New Haven or Los Angeles actor working there.
   // Until 2026-09-27 it withheld it from everybody, and the return refunded it.
@@ -1635,7 +1650,8 @@ export function registerCareer(sim: Simulation): void {
       // A series regular's episodes, spread over the season's workweeks.
       const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium !== 'stage' ? rate * line.days : Math.round((rate * line.days) / 6);
       // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
-      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission });
+      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission, actraRoom: actraRoom(person, year, cur) });
+      if (role.union === 'actra' && career.unions.actra) { const by = (career.unions.actra.duesBy ??= {}); by[year] = (by[year] ?? 0) + inMoney(check.dues, cur, ACTRA.currency); }
       overtime = 0;
       const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
       recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id, where: workCity, foreignWithheld: foreign });
@@ -2279,7 +2295,24 @@ export function registerCareer(sim: Simulation): void {
       pay(fee, 'SAG-AFTRA initiation fee and dues', `Working under SAG-AFTRA again means joining, for ${formatMoney(fee, cur)}, which the bank can’t cover.`);
       sag.joinedAt = s.now;
       armDues(s, person);
-    } else if (!career.unions.equity) {
+    } else if (role.union === 'actra') {
+      const actra = career.unions.actra;
+      if (!actra) {
+        const fee = inMoney(ACTRA.apprentice, ACTRA.currency, cur);
+        pay(fee, 'ACTRA apprentice fee', `An ACTRA engagement makes you an apprentice, for ${formatMoney(fee, cur)}, which the bank can’t cover.`);
+        career.unions.actra = { joinedAt: s.now, credits: 1 };
+        armDues(s, person);
+        return;
+      }
+      if (actra.fullAt !== undefined) return;
+      actra.credits += 1;
+      if (actra.credits < ACTRA.credits) return;
+      // The apprentice fee paid comes off the initiation fee.
+      const fee = inMoney(ACTRA.initiation - ACTRA.apprentice + Math.round(ACTRA.basicDues / 2), ACTRA.currency, cur);
+      pay(fee, 'ACTRA initiation fee and dues', `A third ACTRA credit makes you a full member, for ${formatMoney(fee, cur)}, which the bank can’t cover.`);
+      actra.fullAt = s.now;
+      armDues(s, person);
+    } else if (role.union === 'equity' && !career.unions.equity) {
       const fee = usd(EQUITY.initiationNow + Math.round(EQUITY.basicDues / 2), cur);
       pay(fee, 'Actors’ Equity initiation fee and dues', `An Equity contract makes you a member, for ${formatMoney(fee, cur)} now, which the bank can’t cover.`);
       career.unions.equity = { joinedAt: s.now, initiationPaid: EQUITY.initiationNow };
@@ -2483,6 +2516,15 @@ export function billDues(sim: Simulation, person: Person, year: number, month: n
       equity.initiationPaid += EQUITY.initiationNow;
     }
   }
+  // ACTRA's: a full member's basic dues, half each May and November; an
+  // apprentice's $75 renewal each May, from a year after joining.
+  const actra = career.unions.actra;
+  if (actra?.fullAt !== undefined) {
+    const half = Math.round(ACTRA.basicDues / 2);
+    total += inMoney(half, ACTRA.currency, cur);
+    const by = (actra.duesBy ??= {});
+    by[year] = (by[year] ?? 0) + half;
+  } else if (actra && month === 5 && sim.now - actra.joinedAt >= 335 * MS_DAY) total += inMoney(ACTRA.apprentice, ACTRA.currency, cur);
   // Paid, they're on the year's return; bounced, they're owed, and the next
   // check pays them. Until 2026-09-27 dues the bank couldn't cover were taken
   // as paid, and deducted on the return.

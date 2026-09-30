@@ -31,7 +31,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 - **Customization with effects:** winter tires (Quebec's 5% fewer crash victims, BC's signed routes, Ontario's discount); modifications and insurers' loadings (cinch's secondary figures); New York's tint fine and inspection; California's smog check failing a tune.
 - **Land:** a land loan (Farm Credit's terms); foreign buyers (Canada's ban to 2027-01-01, Ontario's and BC's taxes, England's 2% surcharge, Mexico's permit); commercial land, waterfront, islands and utilities.
 - **Construction choices** (`research-construction-choices.json`).
-- **Canada as an acting market,** residence documents and immigration.
+- Residence documents and immigration. (Canada as an acting market was done on 2026-09-30.)
 - **Played lives**, one at a time.
 
 **The owner's call, still open:** income outside acting for a life abroad.
@@ -70,7 +70,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
   - Ferries, local transit's fares and caps, walking, taxis against rideshare.
   - The airport's steps, missed connections, compensation (UK261, EU261, APPR) and bag fees.
 - **Documents:** national and state ID cards, the REAL ID rule, residence documents, title records.
-- **Canada as an acting market:** Toronto and Vancouver aren't career cities, and SLATE has no Canadian agencies, so a Canadian actor works through one of the five that are. It needs Canada's agencies, ACTRA's rates and Casting Workbook, researched first.
+- **Canada as an acting market (done 2026-09-30):** Toronto and Vancouver are career cities, with ten Canadian agencies at 15%, the IPA's and the BCMPA's own rates, the Canadian Theatre Agreement's, ACTRA's apprentice and membership and its dues, and Casting Workbook. Two fixes came with it: a Londoner's own British work was withheld as a visitor's, and any non-SAG-AFTRA job, London's and Dublin's included, joined American Actors' Equity. Still not built: ACTRA's use fees and residuals, commercials and voice, UBCP's own fees, and a non-member's permit fee.
 - **Leftovers:**
   - Fixed (`2e4babc`): the Career screen showed every actor America's agencies. It now lists the agencies of the country the actor works in.
   - Rerun the played lives one at a time. Toronto w4 hasn't been rerun since assistance was built.
