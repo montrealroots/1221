@@ -10,8 +10,11 @@
  * price is kept, paid from the bank. Each lasts its published life and then
  * gives out, the home back as it was without it, until another is fitted.
  *
- * Not kept, and said so: what one adds to a home's value, and a gas dryer's
- * or a heat pump's hookups. Appliances in a rented home were among them until
+ * What one adds: nothing to the home's value, as Fannie Mae's appraisers
+ * take a freestanding appliance for personal property (`homeValue` counts
+ * the price and the works), and its fixture's premium to a let's rent
+ * (`marketRent`). Not kept, and said so: what a built-in adds to the value,
+ * and a gas dryer's or a heat pump's hookups. Appliances in a rented home were among them until
  * 2026-09-29; a tenant's own air conditioning units are kept now (below), and
  * from 2026-09-30 a tenant's own countertop and portable machines.
  */
