@@ -31,7 +31,7 @@ import { MS_DAY, addMonths, instantFromZoned, zonedParts, type Instant } from '.
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
-import { airportsFor } from './airports';
+import { airportsFor, kmToCountry } from './airports';
 import { groundLeg } from '../content/air';
 import { ageOn } from './mortality';
 import { expenseFor, inTheBank, owe, payFromBank } from './household';
@@ -542,9 +542,18 @@ export function jetCharterUsd(hours: number): number {
  *   until April 2027; Mexico taxes a quarter of an international fare at 16%,
  *   4% of it (LIVA art. 16, read secondhand); a flight beginning or ending in
  *   America pays its $23.40 international facilities tax (IRS, 2026) in place
- *   of the 7.5% excise. America and Canada stay apart: a Canadian town within
- *   225 miles of the border is taxed as a domestic flight, which wasn't
- *   researched, and CRA's zero-rating of a flight across it wasn't read.
+ *   of the 7.5% excise. America and Canada stayed apart until later on
+ *   2026-10-01 (`docs/research/world/research-open-final.json`): now a flight
+ *   between them is chartered at the rate of the country it leaves. One to or
+ *   from a Canadian airport within 225 miles of the United States is taxable
+ *   transportation as a domestic one is (IRC 4262), the 7.5% and its segment
+ *   fee, and no facilities tax (4261(c)(2)); past 225 miles, the facilities
+ *   tax. SLATE measures to the nearest American airport, never nearer than
+ *   the border, so a town just inside the zone can count as outside it. A
+ *   Canadian operator's fare, paid outside America, drops the 7.5% for the
+ *   facilities tax (4261(e)(2)), and CRA taxes a flight from Canada to the
+ *   continental United States at the 5% GST, not HST, as the taxation area
+ *   takes it in (GI-170).
  * An empty leg, a jet flying back empty, isn't kept: EBAA's 2017 study found
  * 41% of Europe's business flights empty, which says how many fly, not
  * whether one is offered on a route on a day, and no operator publishes that.
@@ -556,7 +565,9 @@ export const JET_ABROAD: Readonly<Record<string, { rate: number; currency: strin
   MX: { rate: 3_000, currency: 'USD', tax: () => 0.16, abroadTax: 0.25 * 0.16, basis: 'Aerolíneas Ejecutivas’ US$3,000 an hour (El Financiero, 2013), with IVA' },
 };
 /** The borders a jet is chartered across, and America's international facilities tax a flight to or from it pays. */
-const JET_CROSSINGS = new Set(['GB-IE', 'IE-GB', 'US-MX', 'MX-US']);
+const JET_CROSSINGS = new Set(['GB-IE', 'IE-GB', 'US-MX', 'MX-US', 'US-CA', 'CA-US']);
+/** IRC 4262's zone: a Canadian or Mexican airport within 225 miles of America is taxed as a domestic flight is. */
+export const DOMESTIC_ZONE_MILES = 225;
 export const INTERNATIONAL_FACILITIES_USD = 23.4;
 
 /** A journey's leg in a chartered light jet, or why not. */
@@ -567,7 +578,7 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const to = toAp?.airport;
   if (!from || !to) return 'SLATE charters a jet between airports only.';
   const across = from.country !== to.country;
-  if (across ? !JET_CROSSINGS.has(`${from.country}-${to.country}`) : from.country !== 'US' && !JET_ABROAD[from.country]) return 'SLATE charters a jet within America, Britain, Ireland, Canada or Mexico, or between Britain and Ireland or America and Mexico, only yet.';
+  if (across ? !JET_CROSSINGS.has(`${from.country}-${to.country}`) : from.country !== 'US' && !JET_ABROAD[from.country]) return 'SLATE charters a jet within America, Britain, Ireland, Canada or Mexico, or between Britain and Ireland or America and its neighbors, only yet.';
   const abroad = from.country !== 'US' ? JET_ABROAD[from.country] : undefined;
   if (from.iata === to.iata) return 'One airport serves both towns.';
   const nm = distanceKm(from, to) / 1.852;
@@ -584,11 +595,16 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const billed = Math.max(LIGHT_JET.minHours, hours * 2);
   const inCur = (units: number, currency: string) => { const c = Math.round(units * 100); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
   // America's facilities tax where a flight across a border begins or ends there (from 2026-10-01).
+  // A flight from America to a Canadian or Mexican airport within IRC 4262's 225 miles is taxed as a domestic one.
+  const neighbor = across && from.country === 'US' ? to : undefined;
+  const zoned = neighbor !== undefined && kmToCountry(neighbor, 'US') / 1.609344 <= DOMESTIC_ZONE_MILES;
   const facilities = across && (from.country === 'US' || to.country === 'US') ? usd(sim, Math.round(INTERNATIONAL_FACILITIES_USD * 100)) : 0;
+  // Leaving Canada for the United States, CRA's 5% GST (from later on 2026-10-01).
+  const leavingTax = abroad && across ? (from.country === 'CA' && to.country === 'US' ? 0.05 : abroad.abroadTax) : 0;
   const fare = abroad
-    ? inCur(billed * abroad.rate * (1 + (across ? abroad.abroadTax : abroad.tax(fromCity))), abroad.currency) + facilities
-    : across ? usd(sim, Math.round(billed * LIGHT_JET.rateUsd * 100)) + facilities : usd(sim, Math.round(jetCharterUsd(hours) * 100));
-  const how = abroad ? abroad.basis : across ? '$3,975 an hour, with the $23.40 international facilities tax' : '$3,975 an hour, with the 7.5% federal excise tax and its segment fee';
+    ? inCur(billed * abroad.rate * (1 + (across ? leavingTax : abroad.tax(fromCity))), abroad.currency) + facilities
+    : across && !zoned ? usd(sim, Math.round(billed * LIGHT_JET.rateUsd * 100)) + facilities : usd(sim, Math.round(jetCharterUsd(hours) * 100));
+  const how = abroad ? abroad.basis : across && !zoned ? '$3,975 an hour, with the $23.40 international facilities tax' : '$3,975 an hour, with the 7.5% federal excise tax and its segment fee';
   return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare, routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at ${how}${across && facilities ? ' and America’s $23.40 international facilities tax' : ''}.` });
 }
 

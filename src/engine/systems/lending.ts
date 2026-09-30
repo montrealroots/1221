@@ -74,6 +74,7 @@ import { drawFromBank } from './household';
 import { CommandError } from '../core/simulation';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
+import { exchange } from '../content/currency';
 import type { Person } from '../domain/model';
 import { addDays, addMonths, dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
@@ -742,7 +743,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   post(sim, `Charged off by ${bank.name}`, 'transfer', [{ accountId: current.id, amount: owed }, { accountId: debt.id, amount: -owed }]);
   for (const account of mine) { account.negativeSince = undefined; account.pendingItems = undefined; }
   if (person.credit) {
-    markRecord(person, ESTIMATE.chargeOffHit, sim.now, person.home?.cityId ?? person.currentLocationId);
+    markRecord(person, ESTIMATE.chargeOffHit, sim.now, person.home?.cityId ?? person.currentLocationId, (saveCurrency(sim.universe) === 'MXN' ? owed : exchange(owed, saveCurrency(sim.universe), 'MXN') ?? owed) / 100);
     person.credit.late = [...person.credit.late, sim.now];
   }
   const owedTo = collectionsOf(sim, person)?.institution;

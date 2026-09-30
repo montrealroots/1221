@@ -147,7 +147,7 @@ export interface CreditState extends CardState {
   /** Late payments, by when. */
   late: Instant[];
   /** What's on the record against them, from 2026-09-30: when, what it took, and the country whose rule says how long it stays (`markRecord`). */
-  marks?: { at: Instant; points: number; country: string }[];
+  marks?: { at: Instant; points: number; country: string; /** In Mexico, the debt's size in UDIs, which decides how long it stays (from 2026-10-01). */ udis?: number }[];
   /** A card applied for and on its way (C1, C5): from which bank, and, moving a balance onto it, from which card. */
   applied?: { bankId: string; arrivesAt: Instant; limit: Money; transfer?: boolean; fromId?: string };
   /** The everyday card, whose state is the record's own fields. */
@@ -285,21 +285,35 @@ const RAISE_FROM = 700;
  * loan after it's settled (taken here from the mark). Canada's six, from
  * 2026-10-01, is how long Equifax Canada and TransUnion keep a late payment
  * or a collection (`docs/research/world/research-aviation-boats-credit-mot.json`). In Mexico no period was
- * researched and a mark stays. Its weight fades before it goes, as myFICO
+ * researched and a mark stayed until later on 2026-10-01; now it goes by the
+ * debt's size in UDIs (`docs/research/world/research-open-final.json`):
+ * seventy-two months under article 23 of the law on credit bureaus, which
+ * leaves the smaller debts to Banxico, whose Circular 27/2008 deletes one of
+ * 25 UDIs or less after a year, to 500 after two and to 1,000 after four.
+ * A UDI is the 8.834094 pesos the DOF published for 30 September 2026. A
+ * mark whose debt SLATE doesn't know, a late payment's, stays the law's six
+ * years. Its weight fades before it goes, as myFICO
  * says, which the months paid on time already carry; when it goes, the one
  * measured figure is the CFPB's, 25 points on average when the last medical
  * collection came off (2023), taken for every kind. From 2026-09-30; until
  * then a mark never left the record.
  */
-export const MARK_YEARS: Readonly<Record<string, number>> = { us: 7, uk: 6, ie: 5, ca: 6 };
+export const MARK_YEARS: Readonly<Record<string, number>> = { us: 7, uk: 6, ie: 5, ca: 6, mx: 6 };
+/** Mexico's tiers: a debt to so many UDIs leaves the record after so many years. */
+export const MX_TIERS: readonly (readonly [number, number])[] = [[25, 1], [500, 2], [1_000, 4]];
+export const UDI_MXN = 8.834094;
+/** An amount in the save's money, in pesos: a Mexican debt's size. */
+const pesos = (sim: Simulation, cents: Money): number => { const cur = saveCurrency(sim.universe); return (cur === 'MXN' ? cents : exchange(cents, cur, 'MXN') ?? cents) / 100; };
+const markYears = (m: { country: string; udis?: number }): number | undefined => (m.country === 'mx' && m.udis !== undefined ? MX_TIERS.find(([upTo]) => m.udis! <= upTo)?.[1] ?? MARK_YEARS.mx : MARK_YEARS[m.country]);
 export const MARK_GONE_GIVES = 25;
 
-/** A mark on the record: the score falls by it, and it's kept until its country's years are up. */
-export function markRecord(person: Person, points: number, at: Instant, where: string): void {
+/** A mark on the record: the score falls by it, and it's kept until its country's years are up; in Mexico, by the debt charged off, in pesos. */
+export function markRecord(person: Person, points: number, at: Instant, where: string, owedMxn?: number): void {
   const record = person.credit;
   if (!record) return;
   record.score = Math.max(SCORE_MIN, record.score - points);
-  (record.marks ??= []).push({ at, points, country: CITIES.get(where)?.countryId ?? '' });
+  const country = CITIES.get(where)?.countryId ?? '';
+  (record.marks ??= []).push({ at, points, country, ...(country === 'mx' && owedMxn !== undefined ? { udis: owedMxn / UDI_MXN } : {}) });
 }
 
 /** Marks past their country's years leave the record, and give back what the CFPB measured. */
@@ -307,7 +321,7 @@ export function marksFallOff(person: Person, at: Instant): number {
   const record = person.credit;
   if (!record?.marks?.length) return 0;
   const year = 365.2425 * 86_400_000;
-  const gone = record.marks.filter((m) => MARK_YEARS[m.country] !== undefined && at - m.at >= MARK_YEARS[m.country]! * year);
+  const gone = record.marks.filter((m) => { const years = markYears(m); return years !== undefined && at - m.at >= years * year; });
   if (!gone.length) return 0;
   record.marks = record.marks.filter((m) => !gone.includes(m));
   record.score = Math.min(SCORE_MAX, record.score + gone.length * MARK_GONE_GIVES);
@@ -1027,7 +1041,7 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: CardS
   credit.cashAccrued = 0;
   credit.transfers = [];
   credit.plans = [];
-  markRecord(person, CHARGED_OFF, sim.now, person.home?.cityId ?? person.currentLocationId);
+  markRecord(person, CHARGED_OFF, sim.now, person.home?.cityId ?? person.currentLocationId, pesos(sim, owed));
   delete credit.suspended;
   delete credit.hardship;
   credit.missed = 0;

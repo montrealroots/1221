@@ -32,12 +32,32 @@ describe('a mark on the record', () => {
     record.score = 700;
     markRecord(sim.player, 50, sim.now, 'uk-eng-london');
     markRecord(sim.player, 50, sim.now, 'ie-lei-dublin');
-    markRecord(sim.player, 50, sim.now, 'mx-cmx-mexicocity');
     markRecord(sim.player, 50, sim.now, 'ca-on-toronto');
+    markRecord(sim.player, 50, sim.now, 'jp-13-tokyo');
     expect(marksFallOff(sim.player, sim.now + 5 * YEAR)).toBe(1);
     expect(marksFallOff(sim.player, sim.now + 6 * YEAR)).toBe(2);
     expect(marksFallOff(sim.player, sim.now + 30 * YEAR)).toBe(0);
     expect(record.marks).toHaveLength(1);
+  });
+
+  it('keeps a Mexican mark by its debt in UDIs: a year to 25, two to 500, four to 1,000, six past it or unknown', () => {
+    const sim = save('us-ny-newyork', 'marks-mx');
+    const record = sim.player.credit!;
+    record.score = 700;
+    const udi = 8.834094;
+    markRecord(sim.player, 10, sim.now, 'mx-cmx-mexicocity', 20 * udi);
+    markRecord(sim.player, 10, sim.now, 'mx-cmx-mexicocity', 400 * udi);
+    markRecord(sim.player, 10, sim.now, 'mx-cmx-mexicocity', 900 * udi);
+    markRecord(sim.player, 10, sim.now, 'mx-cmx-mexicocity', 5_000 * udi);
+    markRecord(sim.player, 10, sim.now, 'mx-cmx-mexicocity');
+    expect(marksFallOff(sim.player, sim.now + YEAR - MS_DAY)).toBe(0);
+    expect(marksFallOff(sim.player, sim.now + YEAR)).toBe(1);
+    expect(marksFallOff(sim.player, sim.now + 2 * YEAR)).toBe(1);
+    expect(marksFallOff(sim.player, sim.now + 4 * YEAR)).toBe(1);
+    expect(marksFallOff(sim.player, sim.now + 6 * YEAR)).toBe(2);
+    // Outside Mexico the debt doesn't matter.
+    markRecord(sim.player, 10, sim.now, 'us-ny-newyork', 20 * udi);
+    expect(record.marks!.at(-1)!.udis).toBeUndefined();
   });
 
   it('never gives back past 850', () => {

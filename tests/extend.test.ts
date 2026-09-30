@@ -119,18 +119,20 @@ describe('staying longer', () => {
     const ie = extendQuote(uk, uk.player, b.value!.returnId, d + 7 * MS_DAY, 1);
     if (typeof ie === 'string') throw new Error(ie);
     const ieBack = journeysOf(uk.player).find((j) => j.id === b.value!.returnId)!;
-    expect(ie.travel).toBe(changeFee(uk, 'ie-lei-dublin', 'uk-eng-london')! + Math.max(0, ie.legs.reduce((q, l) => q + l.fare, 0) - ieBack.legs.reduce((q, l) => q + l.fare, 0)));
-    expect(changeFee(uk, 'ie-lei-dublin', 'uk-eng-london')).toBe(exchange(40_00, 'EUR', saveCurrency(uk.universe)));
-    expect(changeFee(uk, 'ie-lei-dublin', 'us-ny-newyork')).toBe(exchange(100_00, 'EUR', saveCurrency(uk.universe)));
-    expect(changeFee(uk, 'ca-on-toronto', 'ca-bc-vancouver')).toBe(exchange(110_00, 'CAD', saveCurrency(uk.universe)));
-    expect(changeFee(uk, 'us-ny-newyork', 'us-ca-losangeles')).toBe(0);
+    expect(ie.travel).toBe(changeFee(uk, 'ie-lei-dublin', 'uk-eng-london', uk.now + 30 * MS_DAY)! + Math.max(0, ie.legs.reduce((q, l) => q + l.fare, 0) - ieBack.legs.reduce((q, l) => q + l.fare, 0)));
+    expect(changeFee(uk, 'ie-lei-dublin', 'uk-eng-london', uk.now + 30 * MS_DAY)).toBe(exchange(40_00, 'EUR', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'ie-lei-dublin', 'us-ny-newyork', uk.now + 30 * MS_DAY)).toBe(exchange(100_00, 'EUR', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'ca-on-toronto', 'ca-bc-vancouver', uk.now + 30 * MS_DAY)).toBe(exchange(110_00, 'CAD', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'us-ny-newyork', 'us-ca-losangeles', uk.now + 30 * MS_DAY)).toBe(0);
     // From 2026-10-01 British Airways' £60 within Britain, and Aeroméxico's first change free to Mexico.
-    expect(changeFee(uk, 'uk-eng-london', 'uk-sct-edinburgh')).toBe(exchange(60_00, 'GBP', saveCurrency(uk.universe)));
-    expect(changeFee(uk, 'us-ny-newyork', 'mx-cmx-mexicocity')).toBe(0);
-    expect(changeFee(uk, 'mx-cmx-mexicocity', 'us-ca-losangeles')).toBe(0);
-    // Across the Atlantic from Britain and within Mexico, none found: not moved.
-    expect(changeFee(uk, 'uk-eng-london', 'us-ny-newyork')).toBeUndefined();
-    expect(changeFee(uk, 'mx-cmx-mexicocity', 'mx-14-guadalajara')).toBeUndefined();
+    expect(changeFee(uk, 'uk-eng-london', 'uk-sct-edinburgh', uk.now + 30 * MS_DAY)).toBe(exchange(60_00, 'GBP', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'us-ny-newyork', 'mx-cmx-mexicocity', uk.now + 30 * MS_DAY)).toBe(0);
+    expect(changeFee(uk, 'mx-cmx-mexicocity', 'us-ca-losangeles', uk.now + 30 * MS_DAY)).toBe(0);
+    // Across the Atlantic from Britain, none found: not moved.
+    expect(changeFee(uk, 'uk-eng-london', 'us-ny-newyork', uk.now + 30 * MS_DAY)).toBeUndefined();
+    // Within Mexico from later on 2026-10-01, Volaris's MX$850, or MX$1,100 within 15 days of the flight.
+    expect(changeFee(uk, 'mx-cmx-mexicocity', 'mx-14-guadalajara', uk.now + 20 * MS_DAY)).toBe(exchange(850_00, 'MXN', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'mx-cmx-mexicocity', 'mx-14-guadalajara', uk.now + 10 * MS_DAY)).toBe(exchange(1_100_00, 'MXN', saveCurrency(uk.universe)));
   });
 
   it('moves a train home and a holiday let in Edinburgh: the old ticket refunded on its terms, the let’s price for the longer stay', () => {

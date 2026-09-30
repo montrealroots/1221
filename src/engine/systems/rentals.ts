@@ -124,12 +124,17 @@ export function rentalDriven(sim: Simulation, person: Person, routeId: string, f
   if (!j) return;
   const { hurt } = drive(sim, person, j, roadKm(fromCity, toCity), sim.now, key);
   const t = RENTALS[r.cityId]!;
-  const owed = damageOwed(t, r.waived === true);
-  if (hurt && owed > 0) {
-    const due = inSave(sim, c(owed), t.termsCurrency ?? t.currency);
+  const bill = damageBill(t, r.waived === true);
+  if (hurt && bill.amount > 0) {
+    const due = inSave(sim, c(bill.amount), bill.currency);
     const what = t.excess ? 'excess' : 'repair bill';
     if (!payFromBank(sim, person, due, `${t.company}’s ${what}, the rental damaged`, 'travel')) owe(sim, person, due, `A rental car’s ${what}`, 'travel');
   }
+}
+
+/** What a crash costs the renter and in what money: the excess in the terms', or the repair in its own. */
+export function damageBill(t: RentalTerms, waived: boolean): { amount: number; currency: string } {
+  return { amount: damageOwed(t, waived), currency: (t.excess ? undefined : t.unwaived?.currency) ?? t.termsCurrency ?? t.currency };
 }
 
 /** What a crash in a rented car costs the renter, in the terms' money: the excess where one's published, or the repair with the offered waiver declined. */

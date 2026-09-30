@@ -42,6 +42,11 @@ export function airportsFor(cityId: string): { airport: Airport; km: number }[] 
   return within.length ? within : near.slice(0, 1);
 }
 
+/** How far an airport is from the nearest airport in a country, km: never nearer than that country's border is. */
+export function kmToCountry(from: { latitude: number; longitude: number }, country: string): number {
+  return Math.min(...airports().filter((a) => a.country === country).map((a) => distanceKm(from, a)));
+}
+
 /** The large airport a town flies from, if one serves it: where a long flight starts. */
 export function largeAirportFor(cityId: string): { airport: Airport; km: number } | undefined {
   const city = CITIES.get(cityId);

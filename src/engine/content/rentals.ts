@@ -37,6 +37,10 @@
  *   administrative fee for a repair of $500 to $1,499, which §1939.03 allows,
  *   and in New York with none, as §396-z bars it. Enterprise's loss of use
  *   and diminished value aren't recoverable under either statute.
+ * - From later on 2026-10-01 (`docs/research/world/research-open-final.json`),
+ *   Toronto Pearson's too: Enterprise's own C$31.99 to C$36.99 a day, the
+ *   middle, with HST; declined, the same $882 repair, in dollars, as no
+ *   Canadian figure is published, and no administrative fee, none being read.
  */
 
 export interface RentalTerms {
@@ -65,8 +69,8 @@ export interface RentalTerms {
   excess?: number;
   /** A damage waiver offered a day, taken or declined, where its price is known. */
   waiverOffered?: number;
-  /** What's owed for a damaged car with the offered waiver declined: the repair and any fee the law allows. */
-  unwaived?: { repair: number; admin: number };
+  /** What's owed for a damaged car with the offered waiver declined: the repair and any fee the law allows, in its own money where it isn't the terms'. */
+  unwaived?: { repair: number; admin: number; currency?: string };
   /** The money the surcharge, deposit, waiver and excess are quoted in, where not the rent's. */
   termsCurrency?: string;
   basis: string;
@@ -116,6 +120,7 @@ export const RENTALS: Readonly<Record<string, RentalTerms>> = {
   'ca-on-toronto': {
     airport: 'YYZ', company: 'Enterprise', currency: 'CAD', daily: 35, taxRate: 0.13, minAge: 21,
     young: [{ from: 21, to: 24, perDay: 20 }], licenseYears: 1, deposit: 400, depositWaivedWithReturn: true,
+    waiverOffered: (31.99 + 36.99) / 2, unwaived: { repair: 882, admin: 0, currency: 'USD' },
     basis: 'Enterprise’s Pearson terms: its C$400 deposit for a renter without a ticket home; Ontario’s 13% HST',
   },
   'ca-bc-vancouver': {

@@ -654,7 +654,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   const out = partnerOf(person, back);
   if (!out || person.currentLocationId !== back.fromCity) return 'A stay is made longer once you’re there.';
   const air = !back.by;
-  const fee = air ? changeFee(sim, back.fromCity, back.toCity) : 0;
+  const fee = air ? changeFee(sim, back.fromCity, back.toCity, back.leaveAt) : 0;
   if (fee === undefined) return 'SLATE keeps no airline’s change fee for this flight, so it isn’t moved.';
   const planned = planBy(sim, back.by, back.fromCity, back.toCity, day, slot, back.bags, back.cabin ?? 'economy');
   if (typeof planned === 'string') return planned;
@@ -729,9 +729,12 @@ export const letDamaged = (sim: Simulation, person: Person, journeyId: string): 
  * showing only its queue; and between the United States and Mexico
  * Aeroméxico's Classic fare, whose first change is free, read the same way
  * while its site was down. British Airways' long-haul fee and a change within
- * Mexico weren't found, and nothing moves those.
+ * Mexico weren't found, and nothing moved those. From later on 2026-10-01
+ * (`docs/research/world/research-open-final.json`) a change within Mexico is
+ * Volaris's, from its own fee table of 22 September 2026: MX$850 more than 15
+ * days before the flight, MX$1,100 within them.
  */
-export function changeFee(sim: Simulation, fromCity: string, toCity: string): Money | undefined {
+export function changeFee(sim: Simulation, fromCity: string, toCity: string, flightAt: Instant): Money | undefined {
   const a = isoOfCity(fromCity);
   const b = isoOfCity(toCity);
   const cur = saveCurrency(sim.universe);
@@ -744,6 +747,7 @@ export function changeFee(sim: Simulation, fromCity: string, toCity: string): Mo
   if (a === 'CA' && b === 'CA') return money(110, 'CAD');
   if (a === 'GB' && b === 'GB') return money(60, 'GBP');
   if ((a === 'US' && b === 'MX') || (a === 'MX' && b === 'US')) return 0;
+  if (a === 'MX' && b === 'MX') return money(flightAt - sim.now > 15 * MS_DAY ? 850 : 1_100, 'MXN');
   return undefined;
 }
 

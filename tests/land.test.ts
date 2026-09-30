@@ -60,7 +60,9 @@ describe('what land costs', () => {
     expect(closingLines('los-angeles', 250_000_00)[1]).toEqual({ label: 'Escrow, The Buyer’s Half', amount: 795_00 });
     expect(closingLines('ca-state', 1_000_000_00)[1]!.amount).toBe(2_250_00);
     expect(closingLines('new-haven', 250_000_00)[1]!.amount).toBe(3_000_00);
-    expect(closingLines('ontario', 250_000_00)).toEqual([{ label: 'The Lawyer’s Fee, With HST', amount: 1_011_35 }]);
+    // TitlePLUS's C$385.74 to $500,000 and C$0.90 a thousand past, with 8% (from later on 2026-10-01).
+    expect(closingLines('ontario', 250_000_00)).toEqual([{ label: 'The Lawyer’s Fee, With HST', amount: 1_011_35 }, { label: 'Title Insurance, With Sales Tax', amount: 416_60 }]);
+    expect(closingLines('ontario', 900_000_00)[1]!.amount).toBe(805_40);
     expect(closingLines('bc', 250_000_00)).toEqual([{ label: 'The Notary’s Fee And Disbursements', amount: 1_550_00 }]);
     const sale = saleProceeds(LAND_MARKETS[i]!, q.price);
     expect(sale.taxes.map((t) => t.amount)).toEqual([Math.round(q.price * 0.004), Math.round(q.price * 0.02625)]);

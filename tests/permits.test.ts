@@ -67,6 +67,26 @@ describe('what a permit costs', () => {
     expect(worksPermit(sim, 'ie-lei-dublin', project('adu'), 100_000_00)).toBeDefined();
   });
 
+  it('charges Toronto’s service index on the floor area, Vancouver’s permit on the value and Mexico City’s manifestación on what’s added', () => {
+    const sim = save('ca-on-toronto', 'permit-ca');
+    const m2 = (id: string) => (project(id).adds?.size ?? 0) / 10.7639104167097;
+    const one = (city: string, id: string, cost = 100_000_00) => worksPermit(sim, city, project(id), cost)!;
+    expect(one('ca-on-toronto', 'suite').lines[0]!.amount).toBe(inSave(sim, Math.round(18.56 * m2('suite') * 100), 'CAD'));
+    expect(one('ca-on-toronto', 'suite').waitDays).toBe(14);
+    expect(one('ca-on-toronto', 'basement').lines[0]!.amount).toBe(inSave(sim, Math.round(6.2 * m2('basement') * 100), 'CAD'));
+    // A small bathroom's 48 sq ft is under the least.
+    expect(one('ca-on-toronto', 'bath-add').lines[0]!.amount).toBe(inSave(sim, 214_79, 'CAD'));
+    expect(one('ca-on-toronto', 'garage-build').lines[0]!.amount).toBe(inSave(sim, 214_79, 'CAD'));
+    expect(worksPermit(sim, 'ca-on-toronto', project('attic'), 100_000_00)).toBeUndefined();
+    // C$100,000 of work: $217, 45 thousands at $13.90 and 50 at $7.04.
+    const cad = inSave(sim, 100_000_00, 'CAD');
+    expect(one('ca-bc-vancouver', 'attic', cad).lines[0]!.amount).toBe(inSave(sim, 1_194_50, 'CAD'));
+    expect(one('ca-bc-vancouver', 'attic', inSave(sim, 4_000_00, 'CAD')).lines[0]!.amount).toBe(inSave(sim, 217_00, 'CAD'));
+    expect(one('mx-cmx-mexicocity', 'suite').lines[0]!.amount).toBe(inSave(sim, Math.round((447 + 23 * m2('suite')) * 100), 'MXN'));
+    expect(one('mx-cmx-mexicocity', 'garage-build').lines[0]!.amount).toBe(inSave(sim, (447 + 23 * 18) * 100, 'MXN'));
+    expect(worksPermit(sim, 'mx-cmx-mexicocity', project('basement'), 100_000_00)).toBeUndefined();
+  });
+
   it('asks nothing for work that doesn’t change the building, or where SLATE keeps no permit', () => {
     const sim = save('us-ny-newyork', 'permit-none');
     expect(worksPermit(sim, 'us-ny-newyork', project('paint'), 5_000_00)).toBeUndefined();

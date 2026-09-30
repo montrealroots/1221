@@ -228,8 +228,13 @@ export const LAND_REGISTRATION: readonly (readonly [number, number])[] = [[80_00
  *   for New York) disagreed with the firms' own and weren't used. No
  *   California, Irish or Canadian surveyor prints a price, and none is kept.
  * Title insurance in Ontario and British Columbia is sold from calculators
- * with no published table, and isn't kept.
+ * with no published table, and wasn't kept until later on 2026-10-01, when
+ * TitlePLUS's Ontario rate card (March 2025) was read
+ * (`docs/research/world/research-open-final.json`): C$385.74 to $500,000 and
+ * C$0.90 a thousand past it, with Ontario's 8% sales tax on insurance.
+ * British Columbia's is still unpublished.
  */
+const titlePlus = (dollars: number): number => (385.74 + (Math.ceil(Math.max(0, dollars - 500_000) / 1_000) * 0.9)) * 1.08;
 const TIRSA_ZONE2: readonly [number, number][] = [[50_000, 6.34], [100_000, 5.16], [500_000, 4.14], [1_000_000, 3.78], [5_000_000, 3.48], [10_000_000, 3.09], [15_000_000, 2.92], [Number.POSITIVE_INFINITY, 2.62]];
 function tirsaZone2(dollars: number): number {
   let premium = 382;
@@ -264,7 +269,7 @@ export function closingLines(place: string, cents: number): { label: string; amo
   if (place === 'los-angeles' || place === 'ca-state') { add('Owner’s Title Insurance', oldRepublicLa(dollars)); add('Escrow, The Buyer’s Half', Math.max(795, 250 + (dollars / 1_000) * 2)); }
   if (place === 'london' || place === 'england') { add('Conveyancing', 1_509); add('A Topographical Survey, With VAT', ((800 + 1_200) / 2) * 1.2); }
   if (place === 'leinster') add('The Solicitor’s Fee, With VAT', 2_000 * 1.23);
-  if (place === 'ontario') add('The Lawyer’s Fee, With HST', 895 * 1.13);
+  if (place === 'ontario') { add('The Lawyer’s Fee, With HST', 895 * 1.13); add('Title Insurance, With Sales Tax', titlePlus(dollars)); }
   if (place === 'bc') add('The Notary’s Fee And Disbursements', 1_550);
   return out;
 }

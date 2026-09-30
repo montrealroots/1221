@@ -24,7 +24,22 @@
  * suite falls in London's permitted depths turns on the house's plan, which
  * SLATE doesn't draw: SLATE's reading. From 2026-09-30 London's building
  * control charge on an extension and Ireland's commencement notice are kept
- * (below). Elsewhere the permit isn't kept, said so.
+ * (below). Elsewhere the permit wasn't kept until 2026-10-01, when three
+ * more cities' own 2026 schedules were read
+ * (`docs/research/world/research-open-final.json`):
+ * - Toronto: the floor area times the service index, C$18.56 a m² for a
+ *   house's addition and C$6.20 for a basement finished, C$214.79 at least;
+ *   a detached garage C$214.79 flat. A loft or a garage made a room is an
+ *   interior alteration, whose index wasn't read, and a backyard cottage's
+ *   size isn't kept, so none is charged for them. It waits the Building
+ *   Code's ten business days to issue a house's permit.
+ * - Vancouver: the work's value, C$217 for the first C$5,000, C$13.90 a
+ *   C$1,000 to C$50,000 and C$7.04 past it (read from the city's own PDF
+ *   through an archive, the site refusing to be read).
+ * - Mexico City: a manifestación de construcción tipo A, MX$447 to register
+ *   and MX$23 a m² of what's added (Código Fiscal, article 185); a room made
+ *   within the house adds nothing built and asks none.
+ * Elsewhere the permit isn't kept, said so.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -58,6 +73,14 @@ const c = (units: number) => Math.round(units * 100);
  * charged until 2026-10-01.
  */
 const BUILDING_CONTROL_10_TO_60 = 750.22 + 1_125.33;
+
+const TORONTO = { additionPerM2: 18.56, basementPerM2: 6.2, least: 214.79, days: 14 } as const;
+const VANCOUVER = { first: 217, firstUpTo: 5_000, perThousand: 13.9, midUpTo: 50_000, perThousandPast: 7.04 } as const;
+const MEXICO_CITY = { register: 447, perM2: 23 } as const;
+/** A garage built new, Manual for Streets' 6 m by 3 m, as SLATE's is. */
+const GARAGE_M2 = 18;
+/** The works that add to a house from outside it: an addition, not a room made within. */
+const ADDITIONS = new Set(['bath-add', 'bath-add-upscale', 'suite', 'suite-upscale']);
 
 /**
  * Building control on a conversion in London, from 2026-10-01
@@ -129,6 +152,23 @@ export function worksPermit(sim: Simulation, cityId: string, project: Project, c
     // A conversion inside the house is permitted development and asks building control alone.
     if (bc.length) return { lines: bc, waitDays: 0, basis: 'building control on the conversion, permitted development asking no planning' };
     return undefined;
+  }
+  if (cityId === 'ca-on-toronto') {
+    const f = TORONTO;
+    const fee = project.id === 'garage-build' ? f.least : project.id === 'basement' ? Math.max(f.least, f.basementPerM2 * addedM2) : ADDITIONS.has(project.id) ? Math.max(f.least, f.additionPerM2 * addedM2) : undefined;
+    return fee === undefined ? undefined : { lines: [{ label: 'Building Permit', amount: inSave(sim, c(fee), 'CAD') }], waitDays: f.days, basis: 'Toronto Building’s service index on the floor area, the Building Code’s ten business days to issue it' };
+  }
+  if (cityId === 'ca-bc-vancouver') {
+    const f = VANCOUVER;
+    const v = (cur === 'CAD' ? cost : exchange(cost, cur, 'CAD') ?? cost) / 100;
+    const thousands = (from: number, to: number) => Math.ceil(Math.max(0, Math.min(v, to) - from) / 1_000);
+    const fee = f.first + thousands(f.firstUpTo, f.midUpTo) * f.perThousand + thousands(f.midUpTo, Infinity) * f.perThousandPast;
+    return { lines: [{ label: 'Building Permit', amount: inSave(sim, c(fee), 'CAD') }], waitDays: 0, basis: 'Vancouver’s building permit on the work’s value' };
+  }
+  if (cityId === 'mx-cmx-mexicocity') {
+    const m2 = project.id === 'garage-build' ? GARAGE_M2 : ADDITIONS.has(project.id) ? addedM2 : 0;
+    if (m2 === 0) return undefined;
+    return { lines: [{ label: 'Manifestación De Construcción', amount: inSave(sim, c(MEXICO_CITY.register + MEXICO_CITY.perM2 * m2), 'MXN') }], waitDays: 0, basis: 'a tipo A manifestación, registered and its area studied' };
   }
   if (cityId === 'ie-lei-dublin') {
     const f = WORKS_PERMITS.dublin;

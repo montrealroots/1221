@@ -14,7 +14,7 @@ import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, l
 import { weatherOn } from '@/engine/systems/weather';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf, slotOf } from '@/engine/systems/journey';
-import { airportsFor } from '@/engine/systems/airports';
+import { airportsFor, kmToCountry } from '@/engine/systems/airports';
 import { CITIES, distanceKm } from '@/engine/content/geography';
 
 const YEAR = 365.2425 * MS_DAY;
@@ -222,9 +222,17 @@ describe('a light jet chartered', () => {
     expect(legs[0]!.fare).toBeGreaterThan(0);
     expect(legs.find((l) => l.mode === 'fly')!.fare).toBe(inSave(sim, Math.round(jetCharterUsd(hours) * 100), 'USD'));
     expect(zonedParts(legs.find((l) => l.mode === 'fly')!.departAt, 'America/New_York').hour).toBe(10);
-    expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/between Britain and Ireland or America and Mexico/);
-    // Across the Canadian border, whose 225-mile zone wasn't researched, it isn't chartered here.
-    expect(planCharterJet(sim, 'ca-on-toronto', 'us-ny-newyork', day, 3)).toMatch(/between Britain and Ireland or America and Mexico/);
+    expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/between Britain and Ireland or America and its neighbors/);
+    // From later on 2026-10-01 across the Canadian border: to Toronto, inside the 225 miles, taxed as a domestic flight;
+    // back, Novajet's rate with the 5% GST and the facilities tax.
+    const toToronto = planCharterJet(sim, 'us-ny-newyork', 'ca-on-toronto', day, 3);
+    if (typeof toToronto === 'string') throw new Error(toToronto);
+    const tHours = (distanceKm(airportsFor('us-ny-newyork')[0]!.airport, airportsFor('ca-on-toronto')[0]!.airport) / 1.852) / 416 + 0.5;
+    expect(toToronto.find((l) => l.mode === 'fly')!.fare).toBe(inSave(sim, Math.round(jetCharterUsd(tHours) * 100), 'USD'));
+    const fromToronto = planCharterJet(sim, 'ca-on-toronto', 'us-ny-newyork', day, 3);
+    if (typeof fromToronto === 'string') throw new Error(fromToronto);
+    expect(fromToronto.find((l) => l.mode === 'fly')!.fare).toBe(inSave(sim, Math.round(Math.max(2, tHours * 2) * 4_000 * 1.05 * 100), 'CAD') + inSave(sim, 23_40, 'USD'));
+    expect(kmToCountry(airportsFor('ca-on-toronto')[0]!.airport, 'US') / 1.609344).toBeLessThan(225);
     // Within Britain: ACC Aviation's £2,600 an hour there and back, with VAT; within Canada, Novajet's middle with Ontario's HST.
     const gb = planCharterJet(sim, 'uk-eng-london', 'uk-sct-edinburgh', day, 3);
     if (typeof gb === 'string') throw new Error(gb);

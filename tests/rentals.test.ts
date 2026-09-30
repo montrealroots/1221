@@ -12,7 +12,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
 import { journeysOf } from '@/engine/systems/journey';
-import { damageOwed, planRentalDrive, rentalDays, rentalQuote, rentalsOf, type RentalQuote } from '@/engine/systems/rentals';
+import { damageBill, damageOwed, planRentalDrive, rentalDays, rentalQuote, rentalsOf, type RentalQuote } from '@/engine/systems/rentals';
 import { RENTALS } from '@/engine/content/rentals';
 
 const YEAR = 365.2425 * MS_DAY;
@@ -168,6 +168,12 @@ describe('a rental damaged', () => {
     expect(damageOwed(RENTALS['us-ca-losangeles']!, true)).toBe(0);
     expect(damageOwed(RENTALS['uk-eng-london']!, true)).toBe(1_700);
     expect(damageOwed(RENTALS['us-ct-newhaven']!, false)).toBe(0);
+    // Pearson from later on 2026-10-01: Enterprise's middle, C$34.49 a day, and the repair in dollars declined.
+    expect(RENTALS['ca-on-toronto']!.waiverOffered).toBeCloseTo(34.49, 10);
+    expect(damageOwed(RENTALS['ca-on-toronto']!, false)).toBe(882);
+    expect(damageBill(RENTALS['ca-on-toronto']!, false)).toEqual({ amount: 882, currency: 'USD' });
+    expect(damageBill(RENTALS['uk-eng-london']!, false)).toEqual({ amount: 1_700, currency: 'GBP' });
+    expect(damageBill(RENTALS['mx-cmx-mexicocity']!, false)).toEqual({ amount: 800, currency: 'USD' });
   });
 
   it('keeps the waiver taken on the rental, and charges it', () => {
