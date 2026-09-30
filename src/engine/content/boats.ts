@@ -108,3 +108,38 @@ export const CHARTERS: Readonly<Record<string, Charter>> = {
   'uk-eng-london': { operator: 'Thames RIB Experience', amount: 799, currency: 'GBP', hours: 70 / 60, tip: 0 },
   'ca-on-toronto': { operator: 'Harbourfront Centre’s Nautical Centre', amount: 375 + 2 * 70, currency: 'CAD', hours: 2, tip: 0.175 },
 };
+
+/**
+ * The Northeast's winter, from 2026-09-30
+ * (`docs/research/world/research-travel-aviation-boats.json`). Boat
+ * insurers there lay a boat up from 1 November to 1 April, and it isn't
+ * taken out then. Each November it's hauled and stored, the haul, the
+ * blocking and the spring relaunch in the price: Burr's Marina in New London
+ * at $72 a foot, Moriches Boat & Motor on Long Island at $75 a foot for its
+ * racks. One on its trailer at home is winterized instead, Long Lake
+ * Marine's $599 for a 61 to 200 hp outboard, the one dealer's price read (in
+ * Maine). California's season runs the year round.
+ */
+export const BOAT_WINTER: Readonly<Partial<Record<BoatState, { storagePerFt: number }>>> = {
+  'US-NY': { storagePerFt: 75 },
+  'US-CT': { storagePerFt: 72 },
+};
+export const WINTERIZE_USD = 599;
+/** The lay-up, by month: from November through March. */
+export const laidUp = (month: number): boolean => month >= 11 || month <= 3;
+
+/**
+ * A boat loan in default, from 2026-09-30. Three payments missed running, as
+ * SLATE takes a car's, and the lender takes it back: New York's and
+ * California's under the UCC's Article 9 (California's Unruh Act reaches a
+ * boat only to a $25,000 cash price, and the Rees-Levering Act none), sold
+ * after SLATE's ten days' notice and the shortfall owed; Connecticut's under
+ * 36a-785, which covers a boat bought on credit to $75,000, resold from 15
+ * days on and a shortfall owed only past its fair market value, which SLATE
+ * holds a boat at. The tow is a car's, none being published for a boat.
+ */
+export const BOAT_REPO: Readonly<Record<BoatState, { noticeDays: number; shortfall: 'owed' | 'past-value' }>> = {
+  'US-NY': { noticeDays: 10, shortfall: 'owed' },
+  'US-CT': { noticeDays: 15, shortfall: 'past-value' },
+  'US-CA': { noticeDays: 10, shortfall: 'owed' },
+};

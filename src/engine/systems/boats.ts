@@ -25,18 +25,21 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
 import { FUEL } from '../content/vehiclefees';
-import { BOAT_INSURANCE_USD, BOAT_LOAN, BOAT_RULES, CHARTERS, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, type BoatState, type Charter } from '../content/boats';
+import { BOAT_INSURANCE_USD, BOAT_LOAN, BOAT_REPO, BOAT_RULES, BOAT_WINTER, CHARTERS, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, WINTERIZE_USD, isBoatState, laidUp, type BoatState, type Charter } from '../content/boats';
+import { REPOSSESSED_ON_RECORD, REPO_FEES_USD } from '../content/repossession';
+import { markRecord } from './credit';
 import { inTheBank, owe, payFromBank } from './household';
 import { livingIn } from './homes';
 import { amortized, jurisdictionOf } from './vehicles';
 import { byRoad } from './driving';
 
 export const BOAT_MONTH_KIND = 'boat.month';
+export const BOAT_REPO_SALE_KIND = 'boat.repo_sale';
 const YEAR = 365.2425 * MS_DAY;
 const GAL = 3.785411784;
 const HOUSES = new Set(['house', 'townhouse', 'estate']);
 
-export interface OwnedBoat { boughtAt: Instant; price: Money; cityId: string; state: BoatState; registeredUntil: Instant; seasonPaid?: number; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number } }
+export interface OwnedBoat { boughtAt: Instant; price: Money; cityId: string; state: BoatState; registeredUntil: Instant; seasonPaid?: number; winterPaid?: number; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number; missed?: number }; repossessed?: { at: Instant; saleAt: Instant } }
 
 const usd = (sim: Simulation, units: number): Money => { const cur = saveCurrency(sim.universe); const c = Math.round(units * 100); return cur === 'USD' ? c : exchange(c, 'USD', cur) ?? c; };
 const homeCity = (person: Person) => person.home?.cityId ?? person.currentLocationId;
@@ -83,6 +86,8 @@ export function outingRefusal(sim: Simulation, person: Person): string | undefin
   const boat = boatOf(person);
   if (!boat) return 'You own no boat.';
   if (person.currentLocationId !== boat.cityId) return `Your boat is in ${CITIES.get(boat.cityId)?.name ?? 'its town'}.`;
+  if (boat.repossessed) return 'The lender has your boat.';
+  if (BOAT_WINTER[boat.state] && laidUp(zonedParts(sim.now, CITIES.require(boat.cityId).timeZone).month)) return 'It’s laid up for the winter until April, as its insurance asks.';
   if (!certified(person, boat.state)) return `Operating it asks the state’s ${BOAT_RULES[boat.state].certificate.label}.`;
   if (inTheBank(sim, person) < outingCost(sim, boat)) return 'You can’t afford the gas.';
   return undefined;
@@ -164,14 +169,51 @@ export function registerBoats(sim: Simulation): void {
       const interest = Math.round((boat.loan.owed * BOAT_LOAN.apr) / 12);
       const payment = Math.min(boat.loan.monthly, boat.loan.owed + interest);
       const principal = payment - interest;
-      if (!payFromBank(s, person, payment, 'Boat loan payment', 'vehicle')) owe(s, person, payment, 'Boat loan payment', 'vehicle');
+      const paid = payFromBank(s, person, payment, 'Boat loan payment', 'vehicle');
+      if (!paid) owe(s, person, payment, 'Boat loan payment', 'vehicle');
+      // Three missed running, and the lender takes it back.
+      boat.loan.missed = paid ? 0 : (boat.loan.missed ?? 0) + 1;
+      if (!paid && boat.loan.missed >= 3 && !boat.repossessed) {
+        const saleAt = s.now + BOAT_REPO[boat.state].noticeDays * MS_DAY;
+        boat.repossessed = { at: s.now, saleAt };
+        markRecord(person, REPOSSESSED_ON_RECORD, s.now, boat.cityId);
+        s.schedule({ at: saleAt, kind: BOAT_REPO_SALE_KIND, label: 'Repossessed Boat Sold', category: 'home', priority: 30, payload: { personId: person.id } });
+        if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Your Boat Was Repossessed', body: 'Three payments missed, the lender took the boat. It’s sold after its notice, and it’s on your record.', importance: 85, route: '/workspace/vehicles' });
+      }
       s.post({ memo: 'Boat loan, principal repaid', category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', 'Vehicles').id, amount: -principal }] });
       boat.loan.owed -= principal;
       boat.loan.monthsLeft -= 1;
       if (boat.loan.owed <= 0 || boat.loan.monthsLeft <= 0) delete boat.loan;
     }
-    if (s.now >= boat.registeredUntil) { pay(rules.registration.renewal, 'The boat’s registration renewed'); boat.registeredUntil += rules.registration.years * YEAR; }
+    if (s.now >= boat.registeredUntil) { pay(rules.registration.renewal, 'Boat registration renewed'); boat.registeredUntil += rules.registration.years * YEAR; }
+    // The Northeast's winter: stored at the marina each November, or winterized on its trailer at home.
+    const winter = BOAT_WINTER[boat.state];
+    const p = zonedParts(s.now, CITIES.require(boat.cityId).timeZone);
+    if (winter && p.month === 11 && boat.winterPaid !== p.year && !boat.repossessed) {
+      if (onItsTrailer(person, boat)) pay(WINTERIZE_USD, 'Boat winterized on its trailer');
+      else pay(winter.storagePerFt * T18.lengthFt, 'Boat hauled and stored for the winter');
+      boat.winterPaid = p.year;
+    }
     scheduleBoat(s, person);
+  });
+
+  sim.onSchedule(BOAT_REPO_SALE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const boat = person?.boat;
+    if (!person || !boat?.repossessed) return;
+    // Sold at what it's held at, less the tow; the loan paid from it, a surplus back, the shortfall owed as the law has it.
+    const owed = boat.loan?.owed ?? 0;
+    const proceeds = Math.max(0, boat.price - usd(s, REPO_FEES_USD.tow));
+    const credited = BOAT_REPO[boat.state].shortfall === 'past-value' ? Math.max(proceeds, boat.price) : proceeds;
+    if (owed > 0) s.post({ memo: 'Boat repossessed and sold', category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Boat Loans').id, amount: owed }, { accountId: s.nominalAccount('income', 'Boat Repossessed').id, amount: -owed }] });
+    const surplus = proceeds - owed;
+    if (surplus > 0) s.post({ memo: 'What the boat’s sale left over', category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: surplus }, { accountId: s.nominalAccount('income', 'Boat Repossessed').id, amount: -surplus }] });
+    const shortfall = Math.max(0, owed - credited);
+    if (shortfall > 0) owe(s, person, shortfall, 'Boat loan short after its sale', 'vehicle');
+    boat.soldAt = s.now;
+    delete boat.loan;
+    delete boat.repossessed;
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === BOAT_MONTH_KIND && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
   });
 }
 
