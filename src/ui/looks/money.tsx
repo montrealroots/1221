@@ -359,19 +359,22 @@ defineLook<Holdings>('networth', {
 
 /** Both sides of it, spoken. */
 function worthSentence(w: Worth, cur: string): string {
+  // One precision through the sentence: whole units where any figure is past where formatMoney drops cents.
+  const whole = [w.cash, w.held, w.pension, w.home, w.vehicles, w.land, w.liabilities, w.total].some((x) => Math.abs(x) >= 100_000_00);
+  const say = (c: number) => formatMoney(c, cur, { cents: !whole });
   const parts: string[] = [];
-  if (w.cash > 0) parts.push(`${formatMoney(w.cash, cur)} in the bank`);
-  if (w.cash < 0) parts.push(`${formatMoney(-w.cash, cur)} overdrawn`);
-  if (w.held > 0) parts.push(`${formatMoney(w.held, cur)} held as a deposit`);
-  if (w.pension > 0) parts.push(`${formatMoney(w.pension, cur)} in a pension, locked until you retire`);
-  if (w.home > 0) parts.push(`a home worth ${formatMoney(w.home, cur)}`);
-  if (w.vehicles > 0) parts.push(`cars worth ${formatMoney(w.vehicles, cur)}`);
-  if (w.land > 0) parts.push(`land worth ${formatMoney(w.land, cur)}`);
-  if (w.liabilities > 0) parts.push(`${formatMoney(w.liabilities, cur)} owed against it`);
+  if (w.cash > 0) parts.push(`${say(w.cash)} in the bank`);
+  if (w.cash < 0) parts.push(`${say(-w.cash)} overdrawn`);
+  if (w.held > 0) parts.push(`${say(w.held)} held as a deposit`);
+  if (w.pension > 0) parts.push(`${say(w.pension)} in a pension, locked until you retire`);
+  if (w.home > 0) parts.push(`a home worth ${say(w.home)}`);
+  if (w.vehicles > 0) parts.push(`cars worth ${say(w.vehicles)}`);
+  if (w.land > 0) parts.push(`land worth ${say(w.land)}`);
+  if (w.liabilities > 0) parts.push(`${say(w.liabilities)} owed against it`);
   if (parts.length === 0) {
     return 'You’re worth nothing at all today — no money anywhere and nothing owed.';
   }
-  return `You’re worth ${formatMoney(w.total, cur)}: ${spokenList(parts)}.`;
+  return `You’re worth ${say(w.total)}: ${spokenList(parts)}.`;
 }
 
 function worthBody(held: Holdings, cur: string) {
