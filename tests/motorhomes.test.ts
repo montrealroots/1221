@@ -1,0 +1,146 @@
+/**
+ * Motorhomes, campervans and cargo vans (`content/rvcatalog.ts`, the kinds in
+ * `systems/vehicles.ts`, from 2026-09-30): what each costs and insures at
+ * where it's kept, a night at a campground on a journey made in one's own
+ * motorhome (`campgroundPrice` in `systems/stays.ts`), and a move made in
+ * one's own van instead of the movers' (`ownVanFor` in `systems/furniture.ts`).
+ */
+import { describe, expect, it } from 'vitest';
+import { quickSave } from '@/engine';
+import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
+import type { Simulation } from '@/engine/core/simulation';
+import { saveCurrency } from '@/engine/core/money';
+import { exchange } from '@/engine/content/currency';
+import { buyRefusal, classFor, modelById, modelsFor, monthlyInsurance, quote, renewal, runningCost, vehiclesOf, type OwnedVehicle, type Quote } from '@/engine/systems/vehicles';
+import { documentsOf } from '@/engine/systems/documents';
+import { crashChance, roadKm } from '@/engine/systems/driving';
+import { stayClassesIn, stayPrice } from '@/engine/systems/stays';
+import { journeysOf } from '@/engine/systems/journey';
+import { carryFurniture, moversCost } from '@/engine/systems/furniture';
+
+const YEAR = 365.25 * MS_DAY;
+const at = Date.UTC(2026, 9, 1);
+const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
+const held = (id: string, j: string) => ({ id: 'owned', modelId: id, jurisdiction: j, cityId: '', boughtAt: at, ageAtPurchase: 0, listPrice: modelById(id)!.price, coverage: 'full', registrationDue: 0 }) as OwnedVehicle;
+function life(town: string, seed: string, licensed = true): Simulation {
+  const sim = quickSave({ startLocationId: town, homeRegionId: town, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  sim.player.documents = [];
+  if (licensed) documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: town.startsWith('us-ca') ? 'us-ca' : town.startsWith('us-ny') ? 'us-ny' : 'us-ct', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 10 * YEAR, expiresAt: sim.now + 5 * YEAR });
+  return sim;
+}
+function saturday(sim: Simulation, after: number): number {
+  const p = zonedParts(sim.now + after * MS_DAY, sim.zone);
+  for (let d = 0; d < 7; d += 1) {
+    const t = instantFromZoned({ ...normalDate(p.year, p.month, p.day + d), hour: 12 }, sim.zone);
+    if (zonedParts(t, sim.zone).weekday === 6) return t;
+  }
+  throw new Error('no saturday');
+}
+
+describe('what one costs', () => {
+  it('sells motorhomes, campervans and vans where they were read, and no motorhome in Mexico City', () => {
+    expect(modelsFor('us-ca-losangeles', 'motorhome').length).toBeGreaterThan(0);
+    expect(modelsFor('us-ca-losangeles', 'campervan').length).toBeGreaterThan(0);
+    expect(modelsFor('uk-eng-london', 'van').length).toBeGreaterThan(0);
+    expect(modelsFor('mx-cmx-mexicocity', 'van').length).toBeGreaterThan(0);
+    expect(modelsFor('mx-cmx-mexicocity', 'motorhome')).toHaveLength(0);
+  });
+
+  it('sells an American van below its sticker, as KBB’s light vehicles are, and a motorhome at it', () => {
+    const van = quote(modelById('us-ram-promaster')!, 'us-ca-losangeles', at) as Quote;
+    expect(van.lines.find((l) => /Below The Sticker/.test(l.label))!.amount).toBe(-Math.round(van.price * 0.034));
+    const rv = quote(modelById('us-thor-four-winds')!, 'us-ca-losangeles', at) as Quote;
+    expect(rv.lines.some((l) => /Below The Sticker/.test(l.label))).toBe(false);
+  });
+
+  it('taxes an Irish van as a goods vehicle and a motorhome as a motor caravan', () => {
+    expect(renewal(held('ie-ford-transit', 'IE'), at).amount).toBe(333_00);
+    expect(renewal(held('ie-swift-escape-640', 'IE'), at).amount).toBe(102_00);
+  });
+
+  it('insures a motorhome at Progressive’s and Quotezone’s averages, full cover only, and a van as a car', () => {
+    expect(monthlyInsurance('US-CA', 'full', modelById('us-thor-four-winds'))).toBe(Math.round(1_052_00 / 12));
+    expect(monthlyInsurance('GB', 'full', modelById('gb-swift-escape'))).toBe(Math.round(598_00 / 12));
+    expect(monthlyInsurance('US-CA', 'liability', modelById('us-ram-promaster'))).toBe(monthlyInsurance('US-CA', 'liability'));
+    const sim = life('us-ca-losangeles', 'rv-cover');
+    expect(buyRefusal(sim, sim.player, 'us-thor-four-winds', { coverage: 'liability' })).toMatch(/full cover/);
+    expect(buyRefusal(sim, sim.player, 'us-ram-promaster', { coverage: 'liability' })).toBeUndefined();
+  });
+
+  it('is driven on a car license, at a car’s risk, burning the nearest published figure', () => {
+    const rv = modelById('us-thor-four-winds')!;
+    expect(classFor(rv)).toBe('car');
+    const sim = life('us-ca-losangeles', 'rv-drive');
+    expect(crashChance(sim.player, 100, at, 'motorhome')).toBe(crashChance(sim.player, 100, at));
+    expect(rv.per100km).toBe(23.5);
+    expect(modelById('us-winnebago-solis')!.per100km).toBe(9);
+  });
+});
+
+describe('a campground', () => {
+  it('is offered only on a journey in one’s own motorhome, at the region’s park, a visitor paying New York’s surcharge', () => {
+    expect(stayClassesIn('us-ca-losangeles')).not.toContain('campground');
+    expect(stayClassesIn('us-ca-losangeles', true)).toContain('campground');
+    expect(stayClassesIn('uk-eng-london', true)).not.toContain('campground');
+    const sim = life('us-ca-losangeles', 'rv-camp-price');
+    expect(stayPrice(sim, 'us-ca-losangeles', 3, 1, 'campground')!.price).toBe(inSave(sim, 3 * 45_00, 'USD'));
+    expect(stayPrice(sim, 'us-ny-newyork', 2, 1, 'campground', 'flexible', true)!.price).toBe(inSave(sim, 2 * 24_00, 'USD'));
+    expect(stayPrice(sim, 'us-ny-newyork', 2, 1, 'campground', 'flexible', false)!.price).toBe(inSave(sim, 2 * 29_00, 'USD'));
+  });
+
+  it('is booked with a trip in the motorhome, and refused with one in a car', () => {
+    const sim = life('us-ca-losangeles', 'rv-camp-book');
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-thor-four-winds' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }).ok).toBe(true);
+    const [rv, car] = vehiclesOf(sim.player);
+    const day = saturday(sim, 14);
+    const trip = (v: OwnedVehicle) => sim.execute<{ journeyId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ca-sanfrancisco', day, slot: 2, by: `car:${v.id}`, returnDay: day + 2 * MS_DAY, returnSlot: 2, stay: 'campground' } });
+    expect(trip(car!).error).toMatch(/motorhome or campervan/);
+    const r = trip(rv!);
+    expect(r.ok, r.error).toBe(true);
+    const out = journeysOf(sim.player).find((j) => j.id === r.value!.journeyId)!;
+    expect(out.hotel!.cls).toBe('campground');
+    expect(out.hotel!.price).toBe(inSave(sim, out.hotel!.nights * 45_00, 'USD'));
+  });
+
+  it('parks a motorhome at its own site, not at New York City’s hotel rate, and charges a Connecticut visitor New York’s surcharge', () => {
+    const sim = life('us-ct-newhaven', 'rv-camp-nyc');
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-thor-four-winds' } }).ok).toBe(true);
+    const rv = vehiclesOf(sim.player)[0]!;
+    const day = saturday(sim, 14);
+    const r = sim.execute<{ journeyId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day, slot: 2, by: `car:${rv.id}`, returnDay: day + 2 * MS_DAY, returnSlot: 2, stay: 'campground' } });
+    expect(r.ok, r.error).toBe(true);
+    const out = journeysOf(sim.player).find((j) => j.id === r.value!.journeyId)!;
+    expect(out.hotel!.parking).toBeUndefined();
+    expect(out.hotel!.price).toBe(inSave(sim, out.hotel!.nights * 29_00, 'USD'));
+  });
+});
+
+describe('a move in one’s own van', () => {
+  it('carries the bed and sofa for its fuel instead of the movers’ fee', () => {
+    const sim = life('us-ca-losangeles', 'rv-van-move');
+    // A car doesn’t carry a bed and sofa: the movers do.
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }).ok).toBe(true);
+    sim.player.furniture = { bed: sim.now, sofa: sim.now };
+    const movers = moversCost(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
+    expect(movers).toBeGreaterThan(0);
+    carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
+    expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Movers'))).toHaveLength(1);
+    // With nothing to move, the van isn't driven for it.
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-ram-promaster' } }).ok).toBe(true);
+    const van = vehiclesOf(sim.player).find((v) => v.modelId === 'us-ram-promaster')!;
+    delete sim.player.furniture;
+    const before = sim.universe.transactions.length;
+    carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
+    expect(sim.universe.transactions.length).toBe(before);
+    sim.player.furniture = { bed: sim.now, sofa: sim.now };
+    carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
+    const moved = sim.universe.transactions.find((t) => t.memo === 'Your bed and sofa moved in the Ram ProMaster Cargo Van')!;
+    expect(moved.postings.find((p) => p.accountId === sim.player.primaryAccountId)!.amount).toBe(-runningCost(sim, van, roadKm('us-ca-losangeles', 'us-ca-sanfrancisco')));
+    expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Movers'))).toHaveLength(1);
+    // Without a license to drive it, the movers come.
+    sim.player.documents = [];
+    carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
+    expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Movers'))).toHaveLength(2);
+  });
+});

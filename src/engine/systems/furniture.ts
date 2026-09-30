@@ -27,6 +27,9 @@ import { salesTaxRate } from '../content/tax';
 import { FURNITURE, MATTRESS, MATTRESS_FEE_USD, MATTRESS_YEARS, MOVERS, MOVERS_ABROAD, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
 import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
+import { kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { mayDrive } from './documents';
+import { byRoad, roadKm } from './driving';
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
 
@@ -109,8 +112,26 @@ export function moversCost(sim: Simulation, person: Person, fromCity: string, to
   return units === undefined ? 0 : inSave(sim, Math.round(units * 100), rates.currency);
 }
 
-/** Movers paid on moving home, where one's own pieces go too. */
+/**
+ * A cargo van of one's own where the move starts, a road to the new home and
+ * a license to drive it there (from 2026-09-30): it carries the bed and sofa,
+ * and the move costs its fuel and upkeep for the road, not the movers.
+ */
+export function ownVanFor(sim: Simulation, person: Person, fromCity: string, toCity: string): OwnedVehicle | undefined {
+  if (!byRoad(fromCity, toCity) || !mayDrive(person, fromCity, sim.now).ok) return undefined;
+  return vehiclesOf(person).find((v) => v.soldAt === undefined && !v.repossessed && (v.at ?? v.cityId) === fromCity && kindOf(modelById(v.modelId)!) === 'van');
+}
+
+/** Movers paid on moving home, where one's own pieces go too; one's own van instead, where there is one. */
 export function carryFurniture(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
+  if (moversCost(sim, person, fromCity, toCity) === 0) return;
+  const van = ownVanFor(sim, person, fromCity, toCity);
+  if (van) {
+    const m = modelById(van.modelId)!;
+    const fuel = runningCost(sim, van, roadKm(fromCity, toCity));
+    if (!payFromBank(sim, person, fuel, `Your bed and sofa moved in the ${m.make} ${m.model}`, 'home')) owe(sim, person, fuel, 'The move, in your van', 'home');
+    return;
+  }
   const cost = moversCost(sim, person, fromCity, toCity);
   if (cost > 0 && !payFromBank(sim, person, cost, 'Movers, your bed and sofa', 'home')) owe(sim, person, cost, 'Movers', 'home');
 }

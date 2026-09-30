@@ -39,7 +39,7 @@ import { itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
-import { classFor, kindOf, modelById, runningCost, vehiclesOf } from './vehicles';
+import { classFor, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
@@ -299,6 +299,15 @@ export function planBy(sim: Simulation, by: string | undefined, fromCity: string
  * tolls. It's the owner's car, where it is, and a license that lets them
  * drive there.
  */
+/** Whether a journey's way is one's own motorhome or campervan (`sleepsIn` in `systems/vehicles.ts`). */
+export function inMotorhome(person: Person, by: string | undefined): boolean {
+  const v = by?.startsWith('car:') ? vehiclesOf(person).find((x) => `car:${x.id}` === by) : undefined;
+  return Boolean(v && sleepsIn(modelById(v.modelId)!));
+}
+
+/** Whether someone lives in the state or province a town is in, for a park's visitor's surcharge. */
+export const residentOf = (person: Person, cityId: string): boolean => jurisdictionOf(person.home?.cityId ?? person.homeRegionId) === jurisdictionOf(cityId);
+
 export function planDrive(sim: Simulation, person: Person, vehicleId: string, fromCity: string, toCity: string, day: Instant, slot: number, willBeAt?: string): JourneyLeg[] | string {
   const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
   if (!v) return 'That isn’t a car you own.';
@@ -442,13 +451,15 @@ export function registerJourneys(sim: Simulation): void {
     // The kind of stay and its rate plan, and a car brought parked where a hotel charges for it (from 2026-10-01).
     const cls: StayClass = p?.stay ?? 'hotel';
     const plan: RatePlan = p?.plan === 'prepaid' ? 'prepaid' : 'flexible';
-    const room = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights, 1, cls, plan) : undefined;
+    // A campground is for a journey made in one's own motorhome or campervan (from 2026-09-30).
+    if (cls === 'campground' && !inMotorhome(person, by)) throw new CommandError('A campground’s site is for a motorhome or campervan of your own, driven there.');
+    const room = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity)) : undefined;
     if (!ownPlaceIn(person, toCity) && nights > 0 && !room) throw new CommandError(`SLATE doesn’t have ${STAY_CLASS_LABEL[cls].toLowerCase()} in ${CITIES.require(toCity).name}.`);
-    const park = room && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
+    const park = room && cls !== 'campground' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
     const hotel = room ? { price: room.price + park, basis: `${room.basis}${park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
     const outCost = total(out) + (hotel?.price ?? 0);
     const cost = outCost + (back ? total(back) : 0);
-    if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} in a hotel` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} ${cls === 'campground' ? 'at a campground' : 'in a hotel'}` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
     const tripId = back ? s.nextId('journey') : undefined;
     const add = (legs: JourneyLeg[], from: string, to: string, price: Money, stay?: Journey['hotel']): Journey => {
       const id = s.nextId('journey');
@@ -708,7 +719,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   } else if (out.hotel) {
     // The longer stay at the same kind and plan; the parking with it for the nights added.
     const per = out.hotel.parking ? Math.round(out.hotel.parking / out.hotel.nights) : 0;
-    stay = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible')!.price + per * nights - out.hotel.price;
+    stay = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible', residentOf(person, back.fromCity))!.price + per * nights - out.hotel.price;
   }
   const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
   let rental = 0;

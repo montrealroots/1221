@@ -18,7 +18,7 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
-import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf, rentalClassesIn } from '@/engine/systems/rentals';
 import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
@@ -91,9 +91,9 @@ export function TravelWorkspace() {
   const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, fromCity, toCity, outLegs, Math.max(1, stayNights), stayNights)
     ?? (typeof backLegs === 'string' ? backLegs : backPlan && outPlan && backPlan[0]!.departAt <= outPlan[outPlan.length - 1]!.arriveAt ? 'The way home leaves before the way out arrives.' : undefined);
   // The kinds of stay the town has; one chosen for another town falls back to its hotel.
-  const classes = toCity ? stayClassesIn(toCity) : [];
+  const classes = toCity ? stayClassesIn(toCity, inMotorhome(person, mode)) : [];
   const cls: StayClass = classes.includes(stayCls) ? stayCls : 'hotel';
-  const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan) : undefined;
+  const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan, residentOf(person, toCity)) : undefined;
   const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
   const fares = plan ? plan.reduce((a, l) => a + l.fare, 0) : 0;
   const journeys = journeysOf(person).slice().sort((a, b) => b.leaveAt - a.leaveAt);

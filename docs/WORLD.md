@@ -231,6 +231,44 @@ Evidence: `tests/motorcycles.test.ts` (17). 23 mutations, all killed in the end.
 - Britain's MOT for a motorcycle.
 - No London permit for a motorcycle.
 
+#### Stage 3h: motorhomes, campervans and cargo vans (done 2026-09-30)
+Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehicle-insurance.json` and `research-kind-effects.json`.
+- **The catalog** (`content/rvcatalog.ts`): 21 models at the makers' and dealers' published prices, on Cars' Kind.
+  - Class C motorhomes: Thor, Winnebago, Elddis, Swift.
+  - Class B campervans: Winnebago and Auto-Trail.
+  - Cargo vans: Ram, Ford, Mercedes-Benz, Nissan, Toyota.
+  - Britain's vans are at the makers' own price with VAT, and Ireland's with VAT and VRT.
+  - Not sold: Mexico's RVs weren't found, and a Canadian Greyhawk read only from a search summary, with no source, was left out.
+- **What each costs and insures:**
+  - A van sells below the American sticker, as KBB's light vehicles do; an RV doesn't.
+  - Ireland taxes a van as a goods vehicle (€333) and a motorhome as a motor caravan (€102, read from the table, not confirmed).
+  - Britain's private light goods and light goods rates weren't researched, so a car's standard rate is charged there.
+  - Insurance: Progressive's countrywide motorhome average ($1,052) in the American states and Quotezone's index average (£598) in Britain, full cover only. Elsewhere, and for a van, a car's, and the screen says so.
+  - Everything SLATE sells is driven on a car license: New York's class D to 26,000 lb, Britain's B to 3,500 kg, Ontario's G to 11,000 kg. Everything is driven at a car's risk.
+- **Economy**, gasoline or diesel as the base engine burns. No Class C motorhome or cargo van publishes a figure where one was read, so the nearest published is used, and said so:
+  - A motorhome: U-Haul's 10 mpg for its 26-foot truck.
+  - A campervan: Volkswagen's 9.0 L/100 km for its California.
+  - A van: AAA's cost a mile, as an unrated car.
+- **A campground** (`CAMPGROUNDS`, `campgroundPrice` in `systems/stays.ts`): a journey made in one's own motorhome or campervan can stay at the region's park instead of a hotel, with no hotel parking. It's refused for a trip in a car.
+  - New York State Parks' $17 site and $7 electric, and $5 more for someone from out of state.
+  - California's Lake Perris, $45.
+  - The middle of Ontario Parks' four fee levels.
+  - British Columbia's Rathtrevor Beach, $51 at peak and $20 more for a non-resident.
+  - Ireland's Carrowkeel, €31 with one adult and electricity.
+  - About MXN 300 near Mexico City, from travelers' reports, not confirmed.
+  - None in Britain, whose clubs publish no site's price, or in Connecticut, which wasn't read.
+- **A move in one's own van** (`ownVanFor` in `systems/furniture.ts`): a van where the move starts, a road to the new home and a license to drive it carry the bed and sofa for its fuel and upkeep. Until then the movers were paid whatever one owned.
+- Not kept:
+  - Towing, and with it travel trailers and caravans.
+  - Renting a truck for a move (U-Haul's $29.95 a day and $1.19 a mile were read).
+  - A park's shoulder and winter rates.
+  - Sleeping in a motorhome anywhere but a campground.
+
+Evidence: `tests/motorhomes.test.ts` (9). 16 mutations, all killed in the end. Three first survived, and each needed a test:
+- That a car doesn't carry the furniture.
+- That a van with nothing to carry isn't driven for it.
+- That a campground in New York City charges no hotel parking.
+
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.

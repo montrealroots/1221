@@ -121,7 +121,7 @@ const ageFactor = (age: number) => (ROAD.byAge.find(([upTo]) => age < upTo)?.[1]
 /** What driving a distance brought: drawn, a crash's injury and a ticket. */
 /** The chance a distance's driving or riding injures, by the driver's age and what's driven. */
 export function crashChance(person: Person, km: number, at: Instant, kind: VehicleKind = 'car'): number {
-  const rider = kind === 'car' ? 1 : ROAD.riderInjuryTimes;
+  const rider = kind === 'motorcycle' || kind === 'scooter' ? ROAD.riderInjuryTimes : 1;
   return 1 - Math.exp(-((km / MILE) * ROAD.injuredPer100MMiles * rider * ageFactor(ageAt(person, at))) / 1e8);
 }
 

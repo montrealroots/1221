@@ -258,6 +258,29 @@ export const US_LEASE = {
  *   whole to MXN 250,000 (the 2026 decree), which SLATE reads each year off
  *   its value on the depreciation curve, not the Code's factor table.
  */
+/**
+ * A motorhome's and a van's taxes where they differ from a car's (from
+ * 2026-09-30): Ireland's motor tax on a goods vehicle up to 3,000 kg
+ * unladen, €333 a year, and on a motor caravan, €102, the Department of
+ * Transport's rates (the caravan's read from its table, not confirmed).
+ * Britain's private light goods and light goods vehicle rates weren't
+ * researched: a motorhome and a van there pay a car's standard rate, said so.
+ */
+export const RV_FEES = { IE: { goods: 333, motorCaravan: 102 } } as const;
+
+/**
+ * A year's insurance for a motorhome or campervan where an average is
+ * published: Progressive's countrywide average for a motorhome (2024) in the
+ * American states, and Quotezone's index average for comprehensive cover in
+ * Britain (August 2025 on). Elsewhere, and for a van, a car's.
+ */
+export const RV_INSURANCE: Readonly<Partial<Record<Jurisdiction, { year: number; currency: string; basis: string }>>> = {
+  'US-NY': { year: 1_052, currency: 'USD', basis: 'Progressive’s countrywide average for a motorhome, 2024' },
+  'US-CT': { year: 1_052, currency: 'USD', basis: 'Progressive’s countrywide average for a motorhome, 2024' },
+  'US-CA': { year: 1_052, currency: 'USD', basis: 'Progressive’s countrywide average for a motorhome, 2024' },
+  GB: { year: 598, currency: 'GBP', basis: 'Quotezone’s index average for a motorhome, comprehensive' },
+};
+
 export const BIKE_FEES = {
   NY: { registration: 17.5, title: 50 },
   CT: { registration: 63, plate: 5, title: 25, cleanAir: 15, parks: 15 },

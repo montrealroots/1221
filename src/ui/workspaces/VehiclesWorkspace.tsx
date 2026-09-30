@@ -18,12 +18,12 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
-import { buyRefusal, jurisdictionOf, kept, kindOf, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
-import { BIKE_INSURANCE, DEPRECIATION_SOURCE, INSURANCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
+import { buyRefusal, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
+import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
 import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { buyoutPrice, leaseQuote, leaseRefusal, milesOver } from '@/engine/systems/leasing';
 
-const FUEL_WORD = { petrol: 'Petrol', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
+const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
 const PLACE_NAME = { 'US-NY': 'New York', 'US-CT': 'Connecticut', 'US-CA': 'California', GB: 'Great Britain', IE: 'Ireland', 'CA-ON': 'Ontario', 'CA-BC': 'British Columbia', 'MX-CMX': 'Mexico City' } as const;
 
 export function VehiclesWorkspace() {
@@ -46,14 +46,13 @@ export function VehiclesWorkspace() {
   const model = models.find((m) => m.id === pick) ?? models[0];
   const tradeCar = vehiclesOf(person).find((x) => x.id === tradeId && x.soldAt === undefined && !x.repossessed);
   const trade = tradeCar ? tradeInFor(sim, home, tradeCar) : undefined;
-  const q = model ? quote(model, home, sim.now, { age, financed, person, ...(trade ? { tradeIn: trade } : {}) }) : 'SLATE sells no cars where you live yet.';
+  const q = model ? quote(model, home, sim.now, { age, financed, person, ...(trade ? { tradeIn: trade } : {}) }) : 'SLATE sells none of these where you live yet.';
   const inHome = (c: number, from: string) => formatMoney(inSaveMoney(sim, c, from), cur);
   const no = model ? buyRefusal(sim, person, model.id, { age, financed, coverage }) : typeof q === 'string' ? q : undefined;
   const ins = j ? monthlyInsurance(j, coverage, model) : undefined;
-  const bike = model ? kindOf(model) !== 'car' : false;
-  const insCurrency = j ? (bike ? BIKE_INSURANCE[j].currency : INSURANCE[j]?.currency) : undefined;
-  const insBasis = j ? (bike ? BIKE_INSURANCE[j].basis : INSURANCE[j]?.basis) : undefined;
-  const liabilityOffered = Boolean(j && (bike ? kindOf(model!) === 'scooter' && BIKE_INSURANCE[j].scooterLiability : INSURANCE[j]?.liability !== undefined));
+  const insCurrency = j && model ? insuranceCurrency(j, model) : undefined;
+  const insBasis = j && model ? insuranceBasis(j, model) : undefined;
+  const liability = Boolean(j && model && liabilityOffered(j, model));
   const rate = j ? loanRate(j, person.credit?.score ?? 0, age > 0) : undefined;
   const owned = vehiclesOf(person).filter((v) => v.soldAt === undefined);
   // A lease: new cars in America only.
@@ -65,7 +64,7 @@ export function VehiclesWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Day</div>
         <h1>Cars</h1>
-        <p className="muted">A car, motorcycle or scooter of your own: what it costs to buy, to keep and to run where you live.</p>
+        <p className="muted">A car, motorcycle, scooter, van or motorhome of your own: what it costs to buy, to keep and to run where you live.</p>
       </div>
       <div className="col gap-5">
         <Panel title="Your Vehicles">
@@ -122,6 +121,9 @@ export function VehiclesWorkspace() {
               <div className="field">
                 <label htmlFor="car-kind">Kind</label>
                 <select id="car-kind" value={kind} onChange={(e) => { setKind(e.target.value as VehicleKind); setPick(''); setMonths(0); }}>
+                  <option value="campervan">Campervan</option>
+                  <option value="motorhome">Motorhome</option>
+                  <option value="van">Cargo Van</option>
                   <option value="scooter">Scooter</option>
                   <option value="motorcycle">Motorcycle</option>
                   <option value="car">Car</option>
@@ -151,7 +153,7 @@ export function VehiclesWorkspace() {
                 <label htmlFor="car-cover">Insurance</label>
                 <select id="car-cover" value={coverage} onChange={(e) => setCoverage(e.target.value === 'liability' ? 'liability' : 'full')}>
                   <option value="full">Full Cover</option>
-                  {liabilityOffered && <option value="liability">Liability Only</option>}
+                  {liability && <option value="liability">Liability Only</option>}
                 </select>
               </div>
               {owned.some((x) => !x.repossessed && !x.lease) && (

@@ -13,7 +13,7 @@
  */
 
 /** What a vehicle is, where it isn't a car (from 2026-09-30): what licenses, taxes and insures it. */
-export type VehicleKind = 'car' | 'motorcycle' | 'scooter';
+export type VehicleKind = 'car' | 'motorcycle' | 'scooter' | 'van' | 'campervan' | 'motorhome';
 
 export interface CarModel {
   id: string;

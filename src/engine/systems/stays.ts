@@ -17,7 +17,8 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { PER_DIEM, STAYS, type StayRate } from '../content/stays';
-import { PREPAID_OFF, STAY_CLASS_LABEL, STAY_OPTIONS, type RatePlan, type StayClass } from '../content/staytypes';
+import { CAMPGROUNDS, PREPAID_OFF, STAY_CLASS_LABEL, STAY_OPTIONS, type RatePlan, type StayClass } from '../content/staytypes';
+import { jurisdictionOf } from './vehicles';
 
 /** How far a town may borrow a nearby town's hotel rate: SLATE's estimate, a metropolitan area's reach. */
 export const BORROW_WITHIN_KM = 60;
@@ -43,9 +44,20 @@ export function nightRateFor(cityId: string): NightRate | undefined {
   return borrowed ? { ...borrowed, basis: `${borrowed.basis}, ${CITIES.require(near!.id).name}’s, ${Math.round(near!.km)} km away` } : undefined;
 }
 
-/** The kinds of stay a town offers, its hotel first where it has one (`content/staytypes.ts`, from 2026-10-01). */
-export function stayClassesIn(cityId: string): StayClass[] {
-  return [...(nightRateFor(cityId) ? ['hotel' as const] : []), ...(STAY_OPTIONS[cityId] ?? []).map((o) => o.cls)];
+/** The kinds of stay a town offers, its hotel first where it has one (`content/staytypes.ts`, from 2026-10-01); and a campground, come in one's own motorhome (from 2026-09-30). */
+export function stayClassesIn(cityId: string, inMotorhome = false): StayClass[] {
+  const j = jurisdictionOf(cityId);
+  return [...(nightRateFor(cityId) ? ['hotel' as const] : []), ...(STAY_OPTIONS[cityId] ?? []).map((o) => o.cls), ...(inMotorhome && j && CAMPGROUNDS[j] ? ['campground' as const] : [])];
+}
+
+/** A campground's nights where a town is, in the save's money: its fee, taxes in it, and a visitor's surcharge for someone who lives elsewhere. */
+export function campgroundPrice(sim: Simulation, cityId: string, nights: number, resident: boolean): { price: Money; basis: string } | undefined {
+  const j = jurisdictionOf(cityId);
+  const c = j ? CAMPGROUNDS[j] : undefined;
+  if (!c || nights <= 0) return undefined;
+  const cents = Math.round(nights * (c.perNight + (resident ? 0 : c.visitorExtra ?? 0)) * 100);
+  const into = saveCurrency(sim.universe);
+  return { price: c.currency === into ? cents : exchange(cents, c.currency, into) ?? cents, basis: `${STAY_CLASS_LABEL.campground}: ${c.basis}${c.confirmed ? '' : ', not confirmed'}.` };
 }
 
 /**
@@ -53,8 +65,9 @@ export function stayClassesIn(cityId: string): StayClass[] {
  * of stay, a hostel's by the bed, and the town's taxes on top; paid ahead, the
  * prepaid rate's discount off the room.
  */
-export function stayPrice(sim: Simulation, cityId: string, nights: number, guests = 1, cls: StayClass = 'hotel', plan: RatePlan = 'flexible'): { price: Money; basis: string } | undefined {
+export function stayPrice(sim: Simulation, cityId: string, nights: number, guests = 1, cls: StayClass = 'hotel', plan: RatePlan = 'flexible', resident = true): { price: Money; basis: string } | undefined {
   if (nights <= 0) return undefined;
+  if (cls === 'campground') return campgroundPrice(sim, cityId, nights, resident);
   const hotel = nightRateFor(cityId);
   const option = cls === 'hotel' ? undefined : STAY_OPTIONS[cityId]?.find((o) => o.cls === cls);
   if (cls === 'hotel' ? !hotel : !option) return undefined;

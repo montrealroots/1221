@@ -12,10 +12,10 @@
  * rural ones had too few published figures to keep (the research's own list).
  */
 
-export type StayClass = 'hotel' | 'budget' | 'motel' | 'extended' | 'hostel';
+export type StayClass = 'hotel' | 'budget' | 'motel' | 'extended' | 'hostel' | 'campground';
 
 export interface StayOption {
-  cls: Exclude<StayClass, 'hotel'>;
+  cls: Exclude<StayClass, 'hotel' | 'campground'>;
   perNight: number;
   currency: string;
   /** By the room, or a bed by the person. */
@@ -30,6 +30,26 @@ export const STAY_CLASS_LABEL: Readonly<Record<StayClass, string>> = {
   budget: 'A Budget Hotel',
   hotel: 'A Hotel',
   extended: 'An Extended-Stay Suite',
+  campground: 'A Campground, In Your Motorhome',
+};
+
+/**
+ * A night at a campground's hookup site, for a journey made in one's own
+ * motorhome or campervan (from 2026-09-30), from
+ * `docs/research/world/research-kind-effects.json`, by where the town is. Each
+ * is a named park's published fee, taxes in it, and says which; a
+ * non-resident's surcharge where the park publishes one. The campground is
+ * the region's, not the town's own: New York City has no state park to camp
+ * in, and SLATE takes the state's fee. Britain's clubs publish no site's
+ * price, and Connecticut's wasn't read: none is kept there.
+ */
+export const CAMPGROUNDS: Readonly<Record<string, { perNight: number; visitorExtra?: number; currency: string; basis: string; confirmed: boolean }>> = {
+  'US-NY': { perNight: 17 + 7, visitorExtra: 5, currency: 'USD', basis: 'New York State Parks’ $17 campsite and $7 for electric, $5 more for someone from out of state', confirmed: true },
+  'US-CA': { perNight: 45, currency: 'USD', basis: 'Lake Perris State Recreation Area’s RV hookup site', confirmed: true },
+  'CA-ON': { perNight: (59.33 + 53.68 + 49.44 + 43.79) / 4, currency: 'CAD', basis: 'The middle of Ontario Parks’ four fee levels for an electrical site, HST in it', confirmed: true },
+  'CA-BC': { perNight: 51, visitorExtra: 20, currency: 'CAD', basis: 'Rathtrevor Beach Provincial Park’s peak rate, $20 more for a non-resident; its shoulder and winter rates aren’t kept', confirmed: true },
+  IE: { perNight: 20 + 6 + 5, currency: 'EUR', basis: 'Carrowkeel’s pitch in July and August, €20, with one adult’s €6 and €5 for electricity', confirmed: true },
+  'MX-CMX': { perNight: 300, currency: 'MXN', basis: 'About MXN 300 at an RV park near Mexico City, from travelers’ reports', confirmed: false },
 };
 
 export const STAY_OPTIONS: Readonly<Record<string, readonly StayOption[]>> = {
