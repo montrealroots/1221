@@ -45,8 +45,10 @@ describe('the payment', () => {
     expect(longer.base).toBeGreaterThan(q.base);
   });
 
-  it('leases in America only, at 24, 36 or 48 months, and with full cover', () => {
-    expect(leaseQuote('us-toyota-rav4', 'uk-eng-london', at, 36)).toMatch(/America only/);
+  it('leases in America at 24, 36 or 48 months, and with full cover; not in Mexico City, and an American car not abroad', () => {
+    // Until later on 2026-09-30, America only; a PCP is Britain's now (tests/leasesabroad.test.ts).
+    expect(leaseQuote('us-toyota-rav4', 'uk-eng-london', at, 37)).toMatch(/another market/);
+    expect(leaseQuote('mx-tesla-model-y', 'mx-cmx-mexicocity', at, 36)).toMatch(/America and Canada/);
     expect(leaseQuote('us-toyota-rav4', 'us-ca-losangeles', at, 30)).toMatch(/24, 36, 48/);
     const sim = life('us-ny-newyork', 'lease-refuse');
     expect(leaseRefusal(sim, sim.player, 'us-honda-cr-v', 36, 'liability')).toMatch(/full cover/);
@@ -75,7 +77,7 @@ describe('a lease', () => {
     // Driven 21,000 miles against the two years' 20,000: a thousand over, at $0.15.
     v.km = 21_000 * 1.609344;
     const over = milesOver(v);
-    expect(over).toEqual({ miles: 1_000, charge: 150_00 });
+    expect(over).toEqual({ miles: 1_000, unit: 'mile', charge: 150_00 });
     sim.advanceBy(31 * MS_DAY);
     expect(v.soldAt).toBeDefined();
     const back = sim.universe.transactions.find((t) => t.memo.startsWith('The Honda CR-V returned'))!;

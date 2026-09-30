@@ -241,6 +241,38 @@ export const US_LEASE = {
 };
 
 /**
+ * Canada's lease, from 2026-09-30 (`docs/research/world/research-car-buying.json`):
+ * Honda Canada's representative lease, 2.99% APR over 24 months, 20,000 km a
+ * year (read as a year's, Honda's standard) and 15 cents a kilometer over.
+ * Its residual isn't published; its payment, $797.47 on $51,993, gives 68.2%
+ * at 24 months, which SLATE scales along its depreciation curve for 36 and 48.
+ * The payment is taxed as it's paid, HST in Ontario, GST and PST in British
+ * Columbia, and a buyout is taxed the same. No disposition fee is published.
+ */
+export const CA_LEASE = { apr: 0.0299, residual24: 0.682, kmAYear: 20_000, perKmOver: 0.15, terms: [24, 36, 48] as const, source: 'Honda Canada’s representative lease example, CR-V Touring Hybrid, read 2026-09-30' } as const;
+
+/**
+ * A PCP, Britain's and Ireland's hire purchase with a balloon, from
+ * 2026-09-30: a deposit, monthly payments and an optional final payment, the
+ * guaranteed minimum future value, to own the car; or it's handed back.
+ * Britain: Nissan's published Qashqai offer, 30% down, 0% APR, a final
+ * payment of 44.23% of the price after 37 months, 6,000 miles a year and 8p a
+ * mile over; any other car at the FCA's 5% average APR on a new PCP. The
+ * Consumer Credit Act's half rule lets the car go back at any time once half
+ * the total's paid, the rest to half paid first. Ireland: Toyota's €63.49
+ * documentation fee and €63.49 purchase fee, 49 months at most, and the
+ * Central Bank's car loan rate; its future value and kilometers aren't
+ * published, so Britain's shape stands in, SLATE's estimate. The half rule
+ * holds in Ireland too. Terms of 25, 37 and 49 months, the last a balloon.
+ */
+export const PCP = {
+  deposit: 0.3, gmfv37: 13_550 / 30_635, terms: [25, 37, 49] as const,
+  GB: { apr: 0.05, freeOn: ['gb-nissan-qashqai'] as readonly string[], milesAYear: 6_000, perMileOver: 0.08, docFee: 0, purchaseFee: 0 },
+  IE: { milesAYear: 6_000, perMileOver: 0.08, docFee: 63.49, purchaseFee: 63.49 },
+  source: 'Nissan UK’s Qashqai PCP offer to 2026-09-30; FCA CP25/27 Technical Annex 2; Toyota Ireland Easy Finance, read 2026-09-30',
+} as const;
+
+/**
  * A motorcycle's or scooter's registration and taxes where one lives, from
  * 2026-09-30 (`docs/research/world/research-vehicle-kinds.json`,
  * `research-vehicle-insurance.json`), in the place's money, units:

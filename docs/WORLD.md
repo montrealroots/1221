@@ -272,7 +272,11 @@ Researched in `docs/research/world/research-car-buying.json`.
   - Ending a lease early. Toyota publishes no formula for its charge, only that it "may be substantial".
   - Buying a lease out before its end, whose price is the lessor's payoff.
   - The lessor taking back a car whose payments are missed. They go into arrears.
-  - Leases outside America. Canada's, Britain's (PCP and PCH) and Ireland's are researched but not built.
+  - Leases outside America, until later on 2026-09-30. Now (`CA_LEASE` and `PCP` in `content/vehiclefees.ts`, `tests/leasesabroad.test.ts`, 14 mutations, all killed in the end):
+    - **Canada:** Honda Canada's lease at 2.99% APR. Its residual is worked back from the published $797.47 on $51,993 over 24 months, 68.2%, and scaled along SLATE's curve for 36 and 48 months. It allows 20,000 km a year at 15 cents a kilometer over, and each payment and a buyout are taxed as the province taxes a sale. It doesn't end early, as Honda publishes no charge for that.
+    - **Britain, a PCP:** Nissan's Qashqai offer reproduced exactly: 30% down, 36 payments of £219 at 0%, and £13,550 to own it. Any other car pays the FCA's 5% average APR. It allows 6,000 miles a year at 8p a mile over, and can go back early under the Consumer Credit Act's half rule once half the total is paid.
+    - **Ireland, a PCP:** Toyota's €63.49 documentation and purchase fees, at the Central Bank's car loan rate, with Britain's deposit, future value and mileage standing in for Ireland's, which aren't published. The half rule holds.
+    - **Not sold:** Britain's PCH, whose only published offer is on a Corolla, which SLATE doesn't sell there; and Mexico's arrendamiento puro, which publishes no residual or allowance.
   - A pre-purchase inspection and a history report (Lemon Squad's $219.99, the AA's £99 to £110, CARFAX Canada's CAD 58.95). They're researched, but SLATE's used cars have no hidden condition for them to find, so buying one would change nothing.
 
 Evidence: `tests/leasing.test.ts` (5), and `tests/vehicles.test.ts` updated for the discount and the fees. 23 mutations, all killed in the end. Four first survived:

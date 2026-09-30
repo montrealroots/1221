@@ -24,7 +24,7 @@ import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { tiresRefusal } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
 import { resprayRefusal } from '@/engine/systems/mods';
-import { buyoutPrice, leaseQuote, leaseRefusal, milesOver } from '@/engine/systems/leasing';
+import { buyoutPrice, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
 const PLACE_NAME = { 'US-NY': 'New York', 'US-CT': 'Connecticut', 'US-CA': 'California', GB: 'Great Britain', IE: 'Ireland', 'CA-ON': 'Ontario', 'CA-BC': 'British Columbia', 'MX-CMX': 'Mexico City' } as const;
@@ -43,7 +43,7 @@ export function VehiclesWorkspace() {
   // Outright, a loan's months or a lease's: one choice, a lease's months negative.
   const [months, setMonths] = useState(0);
   const financed = months > 0;
-  const leaseMonths = months < 0 && Boolean(j?.startsWith('US-')) && age === 0 && kind === 'car' ? -months : 0;
+  const leaseMonths = months < 0 && leaseTerms(j).length > 0 && age === 0 && kind === 'car' ? -months : 0;
   const [coverage, setCoverage] = useState<OwnedVehicle['coverage']>('full');
   const [tradeId, setTradeId] = useState('');
   const model = models.find((m) => m.id === pick) ?? models[0];
@@ -58,8 +58,9 @@ export function VehiclesWorkspace() {
   const liability = Boolean(j && model && liabilityOffered(j, model));
   const rate = j ? loanRate(j, person.credit?.score ?? 0, age > 0) : undefined;
   const owned = vehiclesOf(person).filter((v) => v.soldAt === undefined);
-  // A lease: new cars in America only.
-  const leasable = Boolean(j?.startsWith('US-')) && age === 0 && kind === 'car';
+  // A lease in America and Canada, a PCP in Britain and Ireland: new cars only.
+  const leasable = leaseTerms(j).length > 0 && age === 0 && kind === 'car';
+  const pcp = leaseKindOf(j) === 'pcp';
   const lq = model && leaseMonths ? leaseQuote(model.id, home, sim.now, leaseMonths, person) : undefined;
   const noLease = model && leaseMonths ? leaseRefusal(sim, person, model.id, leaseMonths, coverage) : undefined;
   return (
@@ -88,9 +89,14 @@ export function VehiclesWorkspace() {
                         <td className="small">{(() => { const due = nextInspection(v, v.inspected ?? v.boughtAt); const rule = INSPECTION_RULES[v.jurisdiction]; return due && rule ? `${rule.label}, ${formatDate(due, sim.zone)}` : '—'; })()}</td>
                         <td>
                           {v.lease ? (
-                            v.lease.maturedAt === undefined ? <span className="xs dim">Ends {formatDate(v.boughtAt + v.lease.months * 30 * 86_400_000, sim.zone)}{milesOver(v).miles ? `, ${milesOver(v).miles.toLocaleString('en-US')} miles over` : ''}</span> : (
+                            v.lease.maturedAt === undefined ? (
+                              <div className="col gap-1" style={{ alignItems: 'flex-end' }}>
+                                <span className="xs dim">Ends {formatDate(v.boughtAt + v.lease.months * 30 * 86_400_000, sim.zone)}{milesOver(v).miles ? `, ${milesOver(v).miles.toLocaleString('en-US')} ${milesOver(v).unit === 'km' ? 'km' : 'miles'} over` : ''}</span>
+                                {typeof halfRule(v) !== 'string' && <Gated feature="vehicle.lease_return" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_return', { vehicleId: v.id }); if (a.ok) toast(`Handed back, for ${money(a.value!.paid)}.`, 'positive'); }}>Hand It Back Early</Gated>}
+                              </div>
+                            ) : (
                               <div className="row gap-1">
-                                <Gated feature="vehicle.lease_buyout" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_buyout', { vehicleId: v.id }); if (a.ok) toast(`Bought out for ${money(a.value!.paid)}.`, 'positive'); }}>Buy It Out, {inHome(buyoutPrice(v, sim.now) ?? 0, 'USD')}</Gated>
+                                <Gated feature="vehicle.lease_buyout" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_buyout', { vehicleId: v.id }); if (a.ok) toast(`Bought out for ${money(a.value!.paid)}.`, 'positive'); }}>Buy It Out, {inHome(buyoutPrice(v, sim.now) ?? 0, leaseCurrency(v))}</Gated>
                                 <Gated feature="vehicle.lease_return" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_return', { vehicleId: v.id }); if (a.ok) toast(`Returned, for ${money(a.value!.paid)}.`, 'positive'); }}>Return It</Gated>
                               </div>
                             )
@@ -157,7 +163,7 @@ export function VehiclesWorkspace() {
                 <select id="car-pay" value={leaseMonths ? months : Math.max(0, months)} onChange={(e) => setMonths(Number(e.target.value))}>
                   <option value={0}>Outright</option>
                   {[36, 48, 60, 72].map((n) => <option key={n} value={n}>A Loan, {n} Months</option>)}
-                  {leasable && US_LEASE.terms.map((n) => <option key={-n} value={-n}>A Lease, {n} Months</option>)}
+                  {leasable && leaseTerms(j).map((n) => <option key={-n} value={-n}>{pcp ? 'A PCP' : 'A Lease'}, {n} Months</option>)}
                 </select>
               </div>
               {!(kind === 'bicycle' || kind === 'ebike') && <div className="field">
@@ -182,10 +188,10 @@ export function VehiclesWorkspace() {
                 <table>
                   <thead><tr><th scope="col">Due At Signing</th><th scope="col" className="num">Amount</th></tr></thead>
                   <tbody>
-                    {lq.atSigning.map((l) => <tr key={l.label}><td>{l.label}</td><td className="num mono">{inHome(l.amount, 'USD')}</td></tr>)}
-                    <tr><th scope="row">In All</th><td className="num mono">{inHome(lq.dueAtSigning, 'USD')}</td></tr>
-                    <tr><td>Then, A Month</td><td className="num mono">{inHome(lq.monthly, 'USD')}</td></tr>
-                    <tr><td>To Buy It Out At The End</td><td className="num mono">{inHome(lq.residual, 'USD')}</td></tr>
+                    {lq.atSigning.map((l) => <tr key={l.label}><td>{l.label}</td><td className="num mono">{inHome(l.amount, lq.currency)}</td></tr>)}
+                    <tr><th scope="row">In All</th><td className="num mono">{inHome(lq.dueAtSigning, lq.currency)}</td></tr>
+                    <tr><td>Then, A Month</td><td className="num mono">{inHome(lq.monthly, lq.currency)}</td></tr>
+                    <tr><td>{lq.kind === 'pcp' ? 'The Final Payment, To Own It' : 'To Buy It Out At The End'}</td><td className="num mono">{inHome(lq.residual + lq.buyoutFee, lq.currency)}</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -204,7 +210,7 @@ export function VehiclesWorkspace() {
             )}
             <div className="grid grid-3">
               <Stat label="Insurance" value={typeof ins === 'number' && insCurrency ? `${inHome(ins, insCurrency)} A Month` : '—'} note={insBasis ?? 'Not kept here yet'} />
-              {leaseMonths ? <Stat label="Money Factor" value={String(US_LEASE.moneyFactor)} note={`About ${(US_LEASE.moneyFactor * 2400).toFixed(2)}% a year, worked back from Toyota’s offers`} /> : <Stat label="Loan Rate" value={rate !== undefined ? `${(rate * 100).toFixed(2)}%` : '—'} note={rate !== undefined ? 'For your record, where it’s published' : 'Not published here: buy it outright'} />}
+              {leaseMonths ? <Stat label={j?.startsWith('US-') ? 'Money Factor' : 'APR'} value={j?.startsWith('US-') ? String(US_LEASE.moneyFactor) : lq && typeof lq !== 'string' ? `${lq.apr.toFixed(2)}%` : '—'} note={j?.startsWith('US-') ? `About ${(US_LEASE.moneyFactor * 2400).toFixed(2)}% a year, worked back from Toyota’s offers` : pcp ? 'The lender’s rate on a PCP' : 'Honda Canada’s lease rate'} /> : <Stat label="Loan Rate" value={rate !== undefined ? `${(rate * 100).toFixed(2)}%` : '—'} note={rate !== undefined ? 'For your record, where it’s published' : 'Not published here: buy it outright'} />}
               <Stat label="Economy" value={model?.kwhPer100km ? `${model.kwhPer100km} kWh/100 km` : model?.per100km ? `${model.per100km} L/100 km` : kind === 'bicycle' ? 'Pedaled' : kind === 'ebike' ? 'Charged At Home' : 'Not Yet Rated'} note={model?.per100km || model?.kwhPer100km || kind === 'bicycle' || kind === 'ebike' || kind === 'atv' ? model?.economyBasis : 'Fuel at AAA’s cost a mile until it’s rated'} />
             </div>
             {(leaseMonths ? noLease : no) ? <p className="small" style={{ margin: 0 }}>{leaseMonths ? noLease : no}</p> : null}
@@ -214,7 +220,7 @@ export function VehiclesWorkspace() {
                   if (!model) return;
                   const a = run<{ paid: number; monthly: number }>('vehicle.lease', { modelId: model.id, months: leaseMonths, coverage });
                   if (a.ok) toast(`Leased, for ${money(a.value!.paid)} now and ${money(a.value!.monthly)} a month.`, 'positive');
-                }}>Lease It</Gated>
+                }}>{pcp ? 'Take The PCP' : 'Lease It'}</Gated>
               ) : (
               <Gated feature="vehicle.buy" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
                 if (!model) return;
