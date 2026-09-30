@@ -33,7 +33,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
-| 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Not begun |
+| 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | 8a done 2026-09-29; holiday lets open, below |
 
 ## Acceptance criteria
 
@@ -221,7 +221,30 @@ Evidence: `tests/permits.test.ts` (the garage, end to end: built in London and t
 
 Evidence: `tests/furniture.test.ts` (5); 8 mutations, all killed. A home bought through Homes is marked empty by the same flag as a built one, which is tested. The purchase path itself isn't mutation-tested, as it takes a whole offer to closing.
 
-### Stages 7-8 (to be detailed in turn)
+### Stage 8: Rentals on a journey
+
+#### Stage 8a: a car rented at the far end (done 2026-09-29)
+- On a journey booked with its way home, Rent A Car There rents a small car at the airport for the days between, counted in 24 hours with the 29 minutes' grace the companies publish (`systems/rentals.ts`, `content/rentals.ts`, researched in `docs/research/world/research-rentals.json`). It's prepaid, and refunded in full if the journey never arrives, no company publishing a no-show's charge.
+- A day's rent is Kayak's small-car average at the airport, a compiler's figure, the only kind any company allows. Everything else is one company's own terms for the town: Avis at JFK; Enterprise at New Haven, LAX, Toronto and Vancouver; Hertz at Heathrow, Edinburgh, Belfast, Dublin and Mexico City.
+  - The minimum age, and the young driver's surcharge with its cap.
+  - How long a license must have been held.
+  - The deposit held on the card at pickup and released at return, waived by Enterprise in Canada for a renter with a ticket home.
+  - A damage waiver where the deposit assumes one, and the excess on damage where one is published.
+- Taxes by statute:
+  - New York's sales tax with its 6% and 6% special taxes on car rentals.
+  - Connecticut's 9.35% and $1 a day.
+  - Los Angeles's rate rising on 1 October 2026, and LAX's charges, read secondhand.
+  - Ontario's HST.
+  - British Columbia's GST, 7% PST and $1.50 a day.
+  - Mexico's IVA.
+  - VAT is in the British and Irish rates.
+- Refused to someone under the company's age, with a license held too short a time, or who may not drive there.
+- The car is driven by road from where it is (Travel's By), fuel at AAA's average a mile, with the crash and ticket risk of any drive. A crash that hurts charges the company's excess where one is published.
+- Open, and why: a one-way drop fee and an airport concession charge no company prints; damage in America and Canada, where a renter's own insurance or card usually covers it; holiday lets, the next module (researched: Airbnb's fees and cancellation tiers, New York's Local Law 18, London's 90 nights, and the other towns' rules and taxes).
+
+Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a crash isn't mutation-tested: a crash is a draw, and the test can't make one without stubbing the injury system.
+
+### Stage 7 (to be detailed in turn)
 
 ## Coverage record
 

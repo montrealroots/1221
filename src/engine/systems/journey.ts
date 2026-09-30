@@ -18,6 +18,7 @@
  * figures where \`content/air.ts\` has them, and say so where they're SLATE's.
  */
 
+import { planRentalDrive, rentalDriven } from './rentals';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -247,6 +248,8 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
 export function planBy(sim: Simulation, by: string | undefined, fromCity: string, toCity: string, day: Instant, slot: number, bags: number, cabin: Cabin = 'economy'): JourneyLeg[] | string {
   if (!by || by === 'air') return planJourney(sim, fromCity, toCity, day, slot, bags, cabin);
   if (by.startsWith('car:')) return planDrive(sim, sim.player, by.slice(4), fromCity, toCity, day, slot);
+  // A car rented where they are (`systems/rentals.ts`, from 2026-09-29).
+  if (by === 'rental') return planRentalDrive(sim, sim.player, fromCity, toCity, day, slot);
   const route = railRouteById(by);
   if (!route || !railRoutes(fromCity, toCity).includes(route)) return 'That train doesn’t run between those towns.';
   return planTrain(sim, route, fromCity, day, slot);
@@ -387,7 +390,7 @@ export function registerJourneys(sim: Simulation): void {
       const hotelBack = h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0;
       const route = railRouteById(h.by);
       // A drive not yet driven has burned nothing: all of its costs come back.
-      if (h.by?.startsWith('car:')) refund += total(h.legs) + hotelBack;
+      if (h.by?.startsWith('car:') || h.by === 'rental') refund += total(h.legs) + hotelBack;
       else if (route) refund += trainRefund(s, h, route) + hotelBack;
       else refund += free ? h.total : hotelBack;
       h.status = 'canceled';
@@ -444,6 +447,7 @@ export function registerJourneys(sim: Simulation): void {
       car.km = (car.km ?? 0) + km;
       drive(s, person, car.jurisdiction, km, s.now, j.id);
     }
+    if (driven?.routeId?.startsWith('rental:')) rentalDriven(s, person, driven.routeId, j.fromCity, j.toCity, j.id);
     person.currentLocationId = j.toCity;
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;

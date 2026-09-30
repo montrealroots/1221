@@ -15,7 +15,8 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
-import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, journeysOf, nightsBetween, partnerOf, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
@@ -56,8 +57,10 @@ export function TravelWorkspace() {
   // Your own car, where it is: from 2026-09-29 (`systems/driving.ts`).
   const cars = toCity ? vehiclesOf(person).filter((v) => v.soldAt === undefined && (v.at ?? v.cityId) === fromCity && byRoad(fromCity, toCity)) : [];
   const car = cars.find((v) => `car:${v.id}` === by);
-  const mode = route ? route.id : car ? `car:${car.id}` : undefined;
-  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
+  // A car rented where they'll be (`systems/rentals.ts`, from 2026-09-29).
+  const rented = toCity && byRoad(fromCity, toCity) ? rentalAt(person, fromCity, day) : undefined;
+  const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : undefined;
+  const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car || mode === 'rental' ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
   const pick = Math.min(slot, slots.length - 1);
   const own = toCity ? ownPlaceIn(person, toCity) : false;
   const round = daysThere > 0;
@@ -114,6 +117,7 @@ export function TravelWorkspace() {
                   <option value="air">Air</option>
                   {trains.map((r) => <option key={r.id} value={r.id}>{r.operator === r.service ? r.service : `${r.operator}, ${r.service}`}</option>)}
                   {cars.map((v) => <option key={v.id} value={`car:${v.id}`}>Your {modelById(v.modelId)?.make} {modelById(v.modelId)?.model}</option>)}
+                  {rented && <option value="rental">Your Rental Car</option>}
                 </select>
               </div>
               <div className="field">
@@ -205,12 +209,12 @@ export function TravelWorkspace() {
                       <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
                       <td className="mono">{money(j.total)}</td>
                       <td className="small">{STATUS_WORD[j.status]}{j.why ? `: ${j.why}` : j.rebooked ? ', Rebooked' : j.lateMinutes ? `, ${j.lateMinutes} Minutes Late` : ''}</td>
-                      <td>{j.status === 'booked' && (
+                      <td><div className="row gap-2">{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && (
                         <Gated feature="travel.cancel" className="btn btn-sm btn-ghost" onClick={() => {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}</td>
+                      )}</div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -220,5 +224,25 @@ export function TravelWorkspace() {
         </Panel>
       </div>
     </>
+  );
+}
+
+/** A car rented at the far end of a booked journey with its way home (`systems/rentals.ts`): its price, and why not where it can't be had. */
+function RentACar({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const back = partnerOf(person, j);
+  const has = rentalsOf(person).find((r) => r.journeyId === j.id && r.status !== 'canceled');
+  if (!back || back.leaveAt <= j.arriveAt) return null;
+  if (has) return <span className="xs dim">A Car Rented</span>;
+  const q = rentalQuote(sim, person, j.toCity, j.arriveAt, back.leaveAt, true);
+  const cur = saveCurrency(sim.universe);
+  const no = typeof q === 'string' ? q : undefined;
+  const title = typeof q === 'string' ? q : `${q.company} at ${q.airport}, ${q.days} ${q.days === 1 ? 'day' : 'days'}: ${q.lines.map((l) => `${l.label} ${formatMoney(l.amount, cur)}`).join(', ')}${q.deposit > 0 ? `; ${formatMoney(q.deposit, cur)} held on the card` : ''}`;
+  return (
+    <Gated feature="travel.rent_car" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={title} onClick={() => {
+      const a = run<{ paid: number }>('travel.rent_car', { journeyId: j.id });
+      if (a.ok) toast(`A car rented for ${formatMoney(a.value!.paid, cur)}, prepaid.`, 'positive');
+    }}>{typeof q === 'string' ? 'Rent A Car There' : `Rent A Car There, ${formatMoney(q.total, cur, { cents: false })}`}</Gated>
   );
 }

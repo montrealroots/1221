@@ -1,0 +1,2552 @@
+{
+  "_meta": {
+    "title": "Rentals on a journey: rental cars and holiday lets",
+    "retrieved": "2026-09-29",
+    "cities": [
+      "New York City",
+      "New Haven",
+      "Los Angeles",
+      "London",
+      "Dublin",
+      "Toronto",
+      "Vancouver",
+      "Mexico City",
+      "Belfast",
+      "Edinburgh"
+    ],
+    "figureShape": "{value, unit, currency?, basis, source, date, sourceType, confirmed, note?}",
+    "conventions": "value null means no published figure was found. confirmed=true means the figure was read on the cited page (or its PDF) this session; false means it came from a snippet, a paraphrase, an older document, or conflicts with another source. Ranges are strings. 'date' is the page or data date where shown, else the retrieval date.",
+    "hotelsExcluded": true
+  },
+  "rentalCars": {
+    "rates": {
+      "_note": "No rental company publishes a rate card; every airport figure here is a compiler average (secondary). 'avgAllCars' and 'smallCar' are Kayak's own published averages.",
+      "newYorkJFK": {
+        "avgAllCars": {
+          "value": 81,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Kayak average daily price, all car classes, JFK",
+          "source": "https://www.kayak.com/New-York-John-F-Kennedy-Intl-Airport-Car-Rentals.JFK.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 57,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Kayak average daily price, small car, JFK",
+          "source": "https://www.kayak.com/New-York-John-F-Kennedy-Intl-Airport-Car-Rentals.JFK.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "newHavenHVN": {
+        "avgAllCars": {
+          "value": 71,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Kayak average daily price, all classes, Tweed-New Haven",
+          "source": "https://www.kayak.com/New-Haven-Tweed-Airport-Car-Rentals.HVN.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 54,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Kayak average daily price, small car, HVN",
+          "source": "https://www.kayak.com/New-Haven-Tweed-Airport-Car-Rentals.HVN.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "losAngelesLAX": {
+        "avgAllCars": {
+          "value": 47,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Kayak average daily price, all classes, LAX",
+          "source": "https://www.kayak.com/Los-Angeles-Intl-Airport-Car-Rentals.LAX.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 40,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Kayak average daily price, small car, LAX",
+          "source": "https://www.kayak.com/Los-Angeles-Intl-Airport-Car-Rentals.LAX.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "londonLHR": {
+        "avgAllCars": {
+          "value": 35,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Kayak UK average daily price, all classes, Heathrow",
+          "source": "https://www.kayak.co.uk/London-Heathrow-Airport-Car-Hire.LHR.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 22,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Kayak UK average daily price, small car, Heathrow",
+          "source": "https://www.kayak.co.uk/London-Heathrow-Airport-Car-Hire.LHR.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "dublinDUB": {
+        "avgAllCars": {
+          "value": 37,
+          "unit": "per day",
+          "currency": "EUR",
+          "basis": "Kayak Ireland average daily price, all classes, Dublin Airport",
+          "source": "https://www.kayak.ie/Dublin-Airport-Car-Hire.DUB.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 27,
+          "unit": "per day",
+          "currency": "EUR",
+          "basis": "Kayak Ireland average daily price, small car",
+          "source": "https://www.kayak.ie/Dublin-Airport-Car-Hire.DUB.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact. Irish rentals usually add compulsory CDW at the counter, which Kayak's base price may exclude."
+        }
+      },
+      "torontoYYZ": {
+        "avgAllCars": {
+          "value": 65,
+          "unit": "per day",
+          "currency": "CAD",
+          "basis": "Kayak Canada average daily price, all classes, Pearson",
+          "source": "https://www.ca.kayak.com/Toronto-Pearson-Intl-Airport-Car-Rentals.YYZ.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 35,
+          "unit": "per day",
+          "currency": "CAD",
+          "basis": "Kayak Canada average daily price, small car",
+          "source": "https://www.ca.kayak.com/Toronto-Pearson-Intl-Airport-Car-Rentals.YYZ.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "vancouverYVR": {
+        "avgAllCars": {
+          "value": 66,
+          "unit": "per day",
+          "currency": "CAD",
+          "basis": "Kayak Canada average daily price, all classes, YVR",
+          "source": "https://www.ca.kayak.com/Vancouver-Intl-Airport-Car-Rentals.YVR.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 49,
+          "unit": "per day",
+          "currency": "CAD",
+          "basis": "Kayak Canada average daily price, small car",
+          "source": "https://www.ca.kayak.com/Vancouver-Intl-Airport-Car-Rentals.YVR.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "mexicoCityMEX": {
+        "avgAllCars": {
+          "value": 643,
+          "unit": "per day",
+          "currency": "MXN",
+          "basis": "Kayak Mexico 'cuesta $643 por dia', all classes, AICM",
+          "source": "https://www.kayak.com.mx/Aeropuerto-Internacional-de-la-Ciudad-de-Mexico-Renta-de-Autos.MEX.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact. Page shows only '$'; MXN is inferred from the .com.mx domain, not stated."
+        },
+        "smallCar": {
+          "value": 167,
+          "unit": "per day",
+          "currency": "MXN",
+          "basis": "Kayak Mexico small-car average, AICM",
+          "source": "https://www.kayak.com.mx/Aeropuerto-Internacional-de-la-Ciudad-de-Mexico-Renta-de-Autos.MEX.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Currency inferred (see avgAllCars). Mexican base rates commonly exclude the mandatory third-party liability cover sold at the counter."
+        }
+      },
+      "belfastBFS": {
+        "avgAllCars": {
+          "value": 33,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Kayak UK average daily price, all classes, Belfast International",
+          "source": "https://www.kayak.co.uk/Belfast-International-Airport-Car-Hire.BFS.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 22,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Kayak UK small-car average, BFS",
+          "source": "https://www.kayak.co.uk/Belfast-International-Airport-Car-Hire.BFS.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "edinburghEDI": {
+        "avgAllCars": {
+          "value": 38,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Kayak UK average daily price, all classes, Edinburgh Airport",
+          "source": "https://www.kayak.co.uk/Edinburgh-Airport-Car-Hire.EDI.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        },
+        "smallCar": {
+          "value": 25,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Kayak UK small-car average, EDI",
+          "source": "https://www.kayak.co.uk/Edinburgh-Airport-Car-Hire.EDI.cap.ksp",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Kayak pages carry no date; figure is as displayed on the retrieval date. Kayak's 'small car' class = economy/compact."
+        }
+      },
+      "usCpiCarAndTruckRental": {
+        "value": 3.5,
+        "unit": "percent change over 12 months (not seasonally adjusted)",
+        "basis": "BLS CPI Table 2, 'Car and truck rental', August 2026",
+        "source": "https://www.bls.gov/news.release/cpi.htm",
+        "date": "2026-08",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Column assignment inferred from the table's usual layout; the fetch tool did not return headers. Relative importance 0.162."
+      },
+      "ukCpiCarHire": {
+        "value": null,
+        "unit": null,
+        "basis": "ONS publishes no standalone car-hire index; nearest is CPIH 07.2.4.1 which bundles garages and parking",
+        "source": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/j2tn/mm23",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    },
+    "ageAndSurcharges": {
+      "us": {
+        "hertzMinimumAge": {
+          "value": 20,
+          "unit": "years",
+          "basis": "Hertz US national terms: minimum 20 at most US locations with an Age Differential Charge; 18 in Michigan and New York",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=JFK",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzYoungRenterFee": {
+          "value": 19,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Hertz US young renter fee, ages 20-24 (NY 21-24 also $19; NY 18-20 $52)",
+          "source": "https://upgradedpoints.com/travel/car-rentals/car-rental-age-requirements/",
+          "date": "2026-08-17",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Hertz's own terms page names the charge but does not state the amount."
+        },
+        "enterpriseMinimumAge": {
+          "value": 21,
+          "unit": "years",
+          "basis": "Enterprise US minimum age 21, except 18 in Michigan and New York",
+          "source": "https://www.enterprise.com/en/car-rental-faqs/us-renter-requirements/car-rental-under-25.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseYoungRenterFeeTypical": {
+          "value": 25,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Enterprise: 'approximately $25.00 per day' for under-25s outside MI/NY",
+          "source": "https://www.enterprise.com/en/car-rental-faqs/us-renter-requirements/car-rental-under-25.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseNY18to20": {
+          "value": null,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Enterprise New York 18-20 surcharge: two Enterprise pages disagree",
+          "source": "https://www.enterprise.com/en/car-rental-faqs/us-renter-requirements/car-rental-under-25.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "enterprise.com shows $68.75; enterprise.co.uk's copy of the same FAQ shows $64.75 (https://www.enterprise.co.uk/en/car-hire-faqs/us-renter-requirements/car-hire-under-25.html)."
+        },
+        "enterpriseNY21to24": {
+          "value": null,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Enterprise New York 21-24 surcharge: two Enterprise pages disagree",
+          "source": "https://www.enterprise.com/en/car-rental-faqs/us-renter-requirements/car-rental-under-25.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "enterprise.com shows $33.25; enterprise.co.uk shows $30.75."
+        },
+        "enterpriseLAX21to24": {
+          "value": 25,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Enterprise LAX location page, underage 21-24",
+          "source": "https://www.enterprise.com/en/car-rental-locations/us/ca/los-angeles-international-airport-320l.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisMinimumAge": {
+          "value": 21,
+          "unit": "years",
+          "basis": "Avis rents at 21+ in most states; 18 in NY and MI",
+          "source": "https://www.avis.com/en/help/usa-faqs/age-requirements",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisNY18to20": {
+          "value": 84,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Avis New York surcharge, ages 18-20",
+          "source": "https://www.avis.com/en/help/usa-faqs/age-requirements",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisNY21to24": {
+          "value": 35,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Avis New York underage surcharge, ages 21-24 (also on the JFK location terms)",
+          "source": "https://www.avis.com/en/help/usa-faqs/age-requirements",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisOtherStates21to24": {
+          "value": 27,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Avis young renter fee, most states",
+          "source": "https://upgradedpoints.com/travel/car-rentals/car-rental-age-requirements/",
+          "date": "2026-08-17",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Avis's own FAQ says only that the amount 'varies by location'."
+        }
+      },
+      "uk": {
+        "hertzLHRandEDI": {
+          "value": 61.43,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Hertz UK (LHR, EDI): minimum 25; 21-24 may rent groups A-E/S on a young driver surcharge; also GBP 430.00/week, max GBP 1,719.98/rental, incl. VAT",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzBelfast": {
+          "value": 30.84,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Hertz Northern Ireland: minimum 25; 24-year-olds may rent groups A-R on a surcharge, max GBP 308.40/rental incl. VAT; maximum age 75",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=BFS",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseMinimumAge": {
+          "value": 25,
+          "unit": "years",
+          "basis": "Enterprise UK: 'All drivers must be 25 or older'; no young-driver option",
+          "source": "https://www.enterprise.co.uk/en/help/faqs/how-old-do-you-have-to-be-to-rent-a-car.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisMinimumAge": {
+          "value": 23,
+          "unit": "years",
+          "basis": "Avis UK Country Conditions (updated 29/09/2026): at least 23 for most vehicles",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisYoungDriver": {
+          "value": 40,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Avis UK: under-25 young driver surcharge 'likely to be GBP 40.00 per day'; no cap stated",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarMinimumAge": {
+          "value": 22,
+          "unit": "years",
+          "basis": "Europcar UK T&Cs updated 5 Jan 2026: drivers aged 22 or over; surcharge for 22-25",
+          "source": "https://assets.ctfassets.net/wmdwnw6l5vg5/26z4Ocvms7JVQfOcOHgCmn/d34f93cecc2641318ef4a33f6cd5347f/Europcar_Terms_Combined_01-26.pdf",
+          "date": "2026-01-05",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarYoungDriver": {
+          "value": 46.41,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Europcar UK Tariff Guide, under-26 surcharge incl. VAT",
+          "source": "https://www.europcar.co.uk/files/live/sites/Europcar.co.uk/files/TandCs%20and%20legal%20docs/Tariff_Guide14112022.pdf",
+          "date": "2022-12-01",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Only published figure is from a 2022 tariff guide; current amount not found."
+        },
+        "sixtMinimumAge": {
+          "value": 21,
+          "unit": "years",
+          "basis": "Sixt GB: 21 years / licence 1 year for groups M, E, H, C; young driver surcharge under 28",
+          "source": "https://www.sixt.com/php/terms/view?liso=GB&rtar=000&view=EPP&tlang=en_GB&style=t",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtYoungDriver": {
+          "value": null,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Sixt GB young driver surcharge amount not published",
+          "source": "https://www.sixt.com/php/terms/view?liso=GB&rtar=000&view=EPP&tlang=en_GB&style=t",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        }
+      },
+      "ireland": {
+        "hertzDUB": {
+          "value": null,
+          "unit": "years",
+          "basis": "Hertz Ireland states no minimum age; instead groups A/B/C require '6 years including a minimum of 2 years at full licence status'; over-75s need insurer and doctor letters",
+          "source": "https://www.hertz.ie/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=DUB",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Licence-eligibility rule rather than an age. No young-driver surcharge is published."
+        },
+        "avisIE": {
+          "value": null,
+          "unit": "years",
+          "basis": "Avis Ireland: 'no minimum age restrictions' but licence eligibility of 8-12 years, 2 at full licence (effectively about 25)",
+          "source": "https://www.avis.ie/media/filer_public/65/e6/65e61362-2930-43db-833c-25db6783a57f/country_specific_avis_ie_13nov25.pdf",
+          "date": "2025-11-13",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseIE": {
+          "value": 25,
+          "unit": "years",
+          "basis": "Enterprise Dublin: minimum age 25",
+          "source": "https://www.enterprise.ie/en/car-hire-locations/ie/dublin-city-centre-i110.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarIEMinimumAge": {
+          "value": 22,
+          "unit": "years",
+          "basis": "Europcar Ireland tariff guide Aug 2025: minimum 22; drivers 22-25 pay a daily young driver surcharge",
+          "source": "https://assets.ctfassets.net/wmdwnw6l5vg5/5ZIeENZei6HIlEddZEyBV2/a98c08a2e3b7691d40c16793e3a08715/CGL_EN_IE_AUG_2025_TARIFF_GUIDE_FOR_IRELAND.pdf",
+          "date": "2025-08",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarIEYoungDriver": {
+          "value": 30,
+          "unit": "per day",
+          "currency": "EUR",
+          "basis": "Europcar Ireland young driver surcharge",
+          "source": "https://assets.ctfassets.net/wmdwnw6l5vg5/5ZIeENZei6HIlEddZEyBV2/a98c08a2e3b7691d40c16793e3a08715/CGL_EN_IE_AUG_2025_TARIFF_GUIDE_FOR_IRELAND.pdf",
+          "date": "2025-08",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Table text extracted imperfectly from the PDF."
+        },
+        "sixtIE": {
+          "value": 21,
+          "unit": "years",
+          "basis": "Sixt Ireland: minimum 21 with licence held 4 years; surcharge under 25 (amount not published)",
+          "source": "https://www.sixt.com/php/terms/view?liso=IE&rtar=000&view=IP&tlang=en_US&language=en_US&style=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "canada": {
+        "hertzMinimumAge": {
+          "value": 20,
+          "unit": "years",
+          "basis": "Hertz Canada: minimum 20 at most locations with an Age Differential Charge (amount not stated); 18 in Quebec",
+          "source": "https://www.hertz.ca/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=YYZ",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseYYZ": {
+          "value": 20,
+          "unit": "per day",
+          "currency": "CAD",
+          "basis": "Enterprise Toronto Pearson: underage surcharge ages 21-24; minimum 21 in Ontario and BC",
+          "source": "https://www.enterprise.com/en/car-rental-locations/ca/on/toronto-pearson-international-airport-c2pa.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseYVR": {
+          "value": 20,
+          "unit": "per day",
+          "currency": "CAD",
+          "basis": "Enterprise Vancouver International: underage surcharge ages 21-24",
+          "source": "https://www.enterprise.ca/en/car-rental-locations/ca/bc/vancouver-international-airport-in-terminal-c470.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisOntarioBC": {
+          "value": null,
+          "unit": "per day",
+          "currency": "CAD",
+          "basis": "Avis rents at 21-24 in Canada; the Ontario/BC surcharge is not published (only Quebec CAD 25/day)",
+          "source": "https://www.avis.ca/en/locations/ca/on/mississauga/yyz",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        }
+      },
+      "mexico": {
+        "hertzMEX": {
+          "value": 7.5,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Hertz Mexico: minimum 25, but all groups from 18 on a young driver surcharge; no cap stated",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=MEX",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisMX": {
+          "value": 130,
+          "unit": "per day",
+          "currency": "MXN",
+          "basis": "Avis Mexico terms (updated 25 Nov 2025): minimum 25; 21-24 pay a young driver fee",
+          "source": "https://docs.abgcarrental.com/location/avis/MX/MX/en?OpenDocument=",
+          "date": "2025-11-25",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarMX": {
+          "value": 10,
+          "unit": "per day plus taxes",
+          "currency": "USD",
+          "basis": "Europcar Mexico: minimum 21; under-25 surcharge",
+          "source": "https://www.europcar.com.mx/en/politicas.php",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "mexRentACar": {
+          "value": 343.58,
+          "unit": "per day incl. taxes",
+          "currency": "MXN",
+          "basis": "Mex Rent a Car: minimum 18; drivers 18-24 surcharge",
+          "source": "https://mexrentacar.com/es/terminos-y-condiciones/2-terminos-y-condiciones-mexico",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "americaCarRental": {
+          "value": 21,
+          "unit": "years",
+          "basis": "America Car Rental FAQ: minimum age 21",
+          "source": "https://americacarrental.com.mx/en/faqs",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      }
+    },
+    "deposits": {
+      "us": {
+        "hertz": {
+          "value": 200,
+          "unit": "authorization in addition to estimated charges",
+          "currency": "USD",
+          "basis": "Hertz US credit-card hold: up to USD 200 (USD 300 small SUV ... USD 900 prestige SUV); USD 500 on debit",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=PAYMENT&EOAG=JFK",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisJFK": {
+          "value": 200,
+          "unit": "hold in addition to estimated charges",
+          "currency": "USD",
+          "basis": "Avis JFK location terms: estimated rental charges plus USD 200",
+          "source": "https://www.avis.com/en/locations/us/ny/jamaica/jfk/_jcr_content/par/location_terms_and_c.default",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseLAX": {
+          "value": 400,
+          "unit": "deposit",
+          "currency": "USD",
+          "basis": "Enterprise LAX: deposit of $400 ($850 luxury classes)",
+          "source": "https://www.enterprise.com/en/car-rental-locations/us/ca/los-angeles-international-airport-320l.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "uk": {
+        "hertz": {
+          "value": 200,
+          "unit": "minimum authorization",
+          "currency": "GBP",
+          "basis": "Hertz UK: greater of full rental cost plus a tank of fuel, or GBP 200; UK SuperCover add-on shown as GBP 0; release up to 30 days",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=DEPOSIT&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterprise": {
+          "value": 200,
+          "unit": "deposit",
+          "currency": "GBP",
+          "basis": "Enterprise UK: fixed at GBP 200 for most vehicles, GBP 500 premium/4x4",
+          "source": "https://www.enterprise.co.uk/en/car-hire-faqs/uk-renter-requirements/can-i-hire-a-car-without-an-excess-deposit.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avis": {
+          "value": 300,
+          "unit": "hold in addition to rental price",
+          "currency": "GBP",
+          "basis": "Avis UK mainland: rental price plus GBP 300",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixt": {
+          "value": 300,
+          "unit": "card approval",
+          "currency": "GBP",
+          "basis": "Sixt GB T&Cs 09/2026: GBP 300 for groups M/E/H/C/D/I/J/S/F/P; 500/750/2,000 for higher groups",
+          "source": "https://www.sixt.co.uk/shared/t-c/sixt_GB_en.pdf",
+          "date": "2026-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcar": {
+          "value": 250,
+          "unit": "deposit (prepaid rental)",
+          "currency": "GBP",
+          "basis": "Europcar UK deposit policy: EUR 300 or GBP 250 if prepaid; GBP 100 with zero-excess cover",
+          "source": "https://www.europcar.co.uk/terms-and-conditions/deposit-policy",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "ireland": {
+        "hertzDeclineCDW": {
+          "value": 5000,
+          "unit": "pre-authorization",
+          "currency": "EUR",
+          "basis": "Hertz Ireland: customers declining CDW and TP must leave EUR 5,000 pre-authorization",
+          "source": "https://www.hertz.ie/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=CDW&EOAG=DUB",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisDeclineCDW": {
+          "value": 5000,
+          "unit": "hold",
+          "currency": "EUR",
+          "basis": "Avis Ireland: EUR 5,000 hold plus EUR 30 admin fee and third-party proof if CDW declined",
+          "source": "https://www.avis.ie/media/filer_public/65/e6/65e61362-2930-43db-833c-25db6783a57f/country_specific_avis_ie_13nov25.pdf",
+          "date": "2025-11-13",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterprise": {
+          "value": 250,
+          "unit": "deposit",
+          "currency": "EUR",
+          "basis": "Enterprise Dublin: all vehicles EUR 250 plus estimated rental",
+          "source": "https://www.enterprise.ie/en/car-hire-locations/ie/dublin-city-centre-i110.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtEconomyBasicCDW": {
+          "value": 1500,
+          "unit": "advance charge approval",
+          "currency": "EUR",
+          "basis": "Sixt Ireland economy: No Cover 5,000 / Basic CDW 1,500 / Top Cover 300 / Super Top Cover 100 EUR",
+          "source": "https://www.sixt.com/php/terms/view?liso=IE&rtar=000&view=IP&tlang=en_US&language=en_US&style=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "canada": {
+        "hertz": {
+          "value": 350,
+          "unit": "in addition to estimated charges",
+          "currency": "CAD",
+          "basis": "Hertz Canada: estimated charges plus up to $350; debit cards not accepted to qualify",
+          "source": "https://www.hertz.ca/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=PAYMENT&EOAG=YYZ",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avis": {
+          "value": 750,
+          "unit": "hold",
+          "currency": "CAD",
+          "basis": "Avis YYZ/YVR: CAD 750 or estimated charges plus 20%, whichever greater",
+          "source": "https://www.avis.ca/en/locations/ca/on/mississauga/yyz",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterprise": {
+          "value": 400,
+          "unit": "deposit",
+          "currency": "CAD",
+          "basis": "Enterprise YYZ/YVR: $400 ($850 luxury) for renters without a ticketed return itinerary",
+          "source": "https://www.enterprise.com/en/car-rental-locations/ca/on/toronto-pearson-international-airport-c2pa.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "mexico": {
+        "hertzEconomyWithCDW": {
+          "value": 160,
+          "unit": "deposit, economy (A6) with CDW accepted",
+          "currency": "USD",
+          "basis": "Hertz Mexico: A6 USD 160 with CDW, USD 1,200 without, USD 120 with SCDW; converted to pesos at the counter",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=PAYMENT&EOAG=MEX",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisNoWaiver": {
+          "value": 1000,
+          "unit": "hold in addition to rental, no waiver",
+          "currency": "USD",
+          "basis": "Avis Mexico: rental plus USD 1,000 up to USD 4,000 if no waiver selected",
+          "source": "https://docs.abgcarrental.com/location/avis/MX/MX/en?OpenDocument=",
+          "date": "2025-11-25",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "mexRentACarLiabilityOnly": {
+          "value": 50000,
+          "unit": "deposit with liability cover only",
+          "currency": "MXN",
+          "basis": "Mex Rent a Car: MXN 50,000 with RLP only; MXN 1,500 with full 0%-deductible cover",
+          "source": "https://mexrentacar.com/es/terminos-y-condiciones/2-terminos-y-condiciones-mexico",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "americaCarRental": {
+          "value": 500,
+          "unit": "deposit, starting at",
+          "currency": "USD",
+          "basis": "America Car Rental FAQ: deposit starting at 500 USD",
+          "source": "https://americacarrental.com.mx/en/faqs",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      }
+    },
+    "waivers": {
+      "uk": {
+        "hertzExcessEconomy": {
+          "value": 1700,
+          "unit": "non-waivable excess with CDW, groups A and B (group C GBP 1,900)",
+          "currency": "GBP",
+          "basis": "Hertz UK LHR/EDI/BFS CDW table; GBP 45 damage admin fee; no daily CDW price published",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=CDW&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseExcess": {
+          "value": "1750-2250",
+          "unit": "excess range",
+          "currency": "GBP",
+          "basis": "Enterprise UK: excess GBP 1,750-2,250 (correct 09/07/2025), reducible to GBP 100-250 with Excess Protection (daily price not published)",
+          "source": "https://www.enterprise.co.uk/en/car-hire/car-and-van-hire-costs-explained.html",
+          "date": "2025-07-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisDamageWaiverDaily": {
+          "value": 7.76,
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Avis UK: Damage Waiver if not included 'Normally GBP 7.76 per day' (NI GBP 10.12)",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisSuperDamageWaiverDaily": {
+          "value": "6.21-30.28",
+          "unit": "per day",
+          "currency": "GBP",
+          "basis": "Avis UK Super Damage Waiver (excess reduction); NI GBP 23.00-27.00",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisNIExcess": {
+          "value": "1700-2500",
+          "unit": "excess range",
+          "currency": "GBP",
+          "basis": "Avis Northern Ireland excess by car",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtExcess": {
+          "value": "1600-3000",
+          "unit": "deductible with LDW",
+          "currency": "GBP",
+          "basis": "Sixt GB rental information",
+          "source": "https://www.sixt.com/php/terms/view?liso=GB&rtar=000&view=EPP&tlang=en_GB&style=t",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "ireland": {
+        "hertzExcessEconomy": {
+          "value": 2000,
+          "unit": "non-waivable excess, groups A and B (group C EUR 2,500)",
+          "currency": "EUR",
+          "basis": "Hertz Ireland CDW table; no daily CDW price published",
+          "source": "https://www.hertz.ie/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=CDW&EOAG=DUB",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzSLWWhenRelyingOnCard": {
+          "value": 10.22,
+          "unit": "per day incl. tax",
+          "currency": "EUR",
+          "basis": "Hertz Ireland Supplementary Liability Waiver charged when relying on a credit card or external policy",
+          "source": "https://www.hertz.ie/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=CDW&EOAG=DUB",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisExcess": {
+          "value": "2000-4000",
+          "unit": "excess by car group",
+          "currency": "EUR",
+          "basis": "Avis Ireland Country Specific Conditions",
+          "source": "https://www.avis.ie/media/filer_public/65/e6/65e61362-2930-43db-833c-25db6783a57f/country_specific_avis_ie_13nov25.pdf",
+          "date": "2025-11-13",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisSuperCDWDaily": {
+          "value": "24.00-32.00",
+          "unit": "per day",
+          "currency": "EUR",
+          "basis": "Avis Ireland Super Damage Waiver (zero excess)",
+          "source": "https://www.avis.ie/media/filer_public/65/e6/65e61362-2930-43db-833c-25db6783a57f/country_specific_avis_ie_13nov25.pdf",
+          "date": "2025-11-13",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtEconomyExcess": {
+          "value": 2000,
+          "unit": "CDW excess, economy",
+          "currency": "EUR",
+          "basis": "Sixt Ireland; declining CDW requires a card-issuer letter stating cover in Ireland plus EUR 39.73 admin fee, else deposit to full vehicle value",
+          "source": "https://www.sixt.com/php/terms/view?liso=IE&rtar=000&view=IP&tlang=en_US&language=en_US&style=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarDeclineRule": {
+          "value": 5000,
+          "unit": "pre-authorization to decline CDW",
+          "currency": "EUR",
+          "basis": "Europcar Ireland: only US/Canadian-issued cards, with an issuer letter dated within 21 days confirming Republic of Ireland cover, plus EUR 5,000 pre-authorization",
+          "source": "https://assets.ctfassets.net/wmdwnw6l5vg5/5ZIeENZei6HIlEddZEyBV2/a98c08a2e3b7691d40c16793e3a08715/CGL_EN_IE_AUG_2025_TARIFF_GUIDE_FOR_IRELAND.pdf",
+          "date": "2025-08",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "us": {
+        "avisLDWFrom": {
+          "value": 9,
+          "unit": "per day, 'as low as'",
+          "currency": "USD",
+          "basis": "Avis Loss Damage Waiver marketing page",
+          "source": "https://www.avis.com/en/products-and-services/protections/loss-damage-waiver",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzLDW": {
+          "value": null,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Hertz US: LDW for an additional daily charge, amount not published; New York limits renter liability and LDW may be cancelled free within 24 hours (NY)",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=COVERAGES&EOAG=JFK",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        },
+        "personalAutoInsurance": {
+          "value": "likely covers",
+          "unit": "rule",
+          "basis": "NAIC: 'If you have comprehensive and collision coverage on your own car, you will likely not need this additional protection'",
+          "source": "https://content.naic.org/consumer/auto-insurance.htm",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "chaseSapphirePreferred": {
+          "value": 60000,
+          "unit": "coverage limit, primary",
+          "currency": "USD",
+          "basis": "Chase Sapphire Preferred auto rental CDW: primary, worldwide, up to $60,000, rentals up to 31 days (excess for NY residents with personal auto insurance)",
+          "source": "https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11387_v2.pdf",
+          "date": "2024-03-11",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "visaSignatureExclusions": {
+          "value": "Israel, Jamaica, Republic of Ireland, Northern Ireland",
+          "unit": "excluded countries",
+          "basis": "Visa Auto Rental CDW (US Bank Visa Signature guide): secondary at home, primary abroad; 31 days",
+          "source": "https://www.usbank.com/dam/documents/pdf/credit-cards/guide-to-benefits/Business_Visa_Sig_GTB.pdf",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "amexCRLDI": {
+          "value": 75000,
+          "unit": "coverage limit, secondary",
+          "currency": "USD",
+          "basis": "Amex Car Rental Loss and Damage Insurance: secondary; excludes Australia, Italy, New Zealand and OFAC countries; 30 days; Ireland not excluded",
+          "source": "https://www.americanexpress.com/content/dam/amex/us/credit-cards/features-benefits/CRLDI_Benefit_Guide_371-397_EDT_2.20_REV_4.24_a11y3_04022026.pdf",
+          "date": "2026-04-02",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "mastercardWorldElite": {
+          "value": "worldwide",
+          "unit": "territory",
+          "basis": "Barclaycard World Elite Mastercard guide: 'Coverage is available worldwide'",
+          "source": "https://www.barclaycardus.com/servicing/img/base/guideBenefits/BAR-5821-3.pdf",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "canada": {
+        "avisNonWaivable": {
+          "value": 5000,
+          "unit": "maximum non-waivable amount",
+          "currency": "CAD",
+          "basis": "Avis LDW page: in Canada a non-waivable amount up to CA$5,000 may apply",
+          "source": "https://www.avis.com/en/products-and-services/protections/loss-damage-waiver",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzLiabilityIncluded": {
+          "value": 1000000,
+          "unit": "third-party liability included",
+          "currency": "CAD",
+          "basis": "Hertz Canada: liability up to CAD 1 million per accident included; LDW price varies, not published",
+          "source": "https://www.hertz.ca/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=COVERAGES&EOAG=YYZ",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "mexico": {
+        "legalRequirement": {
+          "value": "mandatory",
+          "unit": "third-party liability on federal roads",
+          "basis": "Ley de Caminos, Puentes y Autotransporte Federal art. 63 Bis: all vehicles on federal roads must carry third-party insurance; owner's duty",
+          "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LCPAF.pdf",
+          "date": "2025-11-14",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzThirdPartyBasic": {
+          "value": 46000,
+          "unit": "per accident basic cover (LIS raises to USD 450,000)",
+          "currency": "USD",
+          "basis": "Hertz Mexico third-party cover",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=THIRDPARTY&EOAG=MEX",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzLDW": {
+          "value": 45,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Hertz Mexico LDW, all groups",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=LDW&EOAG=MEX",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzSuperCDW": {
+          "value": 35,
+          "unit": "per day (USD 245/week)",
+          "currency": "USD",
+          "basis": "Hertz Mexico SuperCDW",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=SUPERCDW&EOAG=MEX",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzCDWDeductibleEconomy": {
+          "value": 800,
+          "unit": "deductible, group A6 (B USD 900, C USD 1,400)",
+          "currency": "USD",
+          "basis": "Hertz Mexico CDW table",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=CDW&EOAG=MEX",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisSLI": {
+          "value": 0,
+          "unit": "per day (included)",
+          "currency": "MXN",
+          "basis": "Avis Mexico: limited third-party liability (SLI) included at no cost at each state's legal minimum; ALI raises to MXN 1-15 million",
+          "source": "https://docs.abgcarrental.com/location/avis/MX/MX/en?OpenDocument=",
+          "date": "2025-11-25",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarTPL": {
+          "value": 250000,
+          "unit": "TPL cover (MXN)",
+          "currency": "MXN",
+          "basis": "Europcar Mexico: TPL mandatory, covers up to MXN 250,000, paid in addition unless rate says included; third-party-website liability products not accepted; daily TPL price not published",
+          "source": "https://www.europcar.com.mx/en/Insurance-and-Optional-Coverage-Options",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarSLI": {
+          "value": 26.91,
+          "unit": "per day",
+          "currency": "USD",
+          "basis": "Europcar Mexico optional SLI",
+          "source": "https://www.europcar.com.mx/en/Insurance-and-Optional-Coverage-Options",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "mexRentACarRLP": {
+          "value": 750000,
+          "unit": "liability cover included in web rates",
+          "currency": "MXN",
+          "basis": "Mex Rent a Car RLP",
+          "source": "https://mexrentacar.com/es/terminos-y-condiciones/2-terminos-y-condiciones-mexico",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      }
+    },
+    "policies": {
+      "fuel": {
+        "hertzUK": {
+          "value": 25,
+          "unit": "refueling charge plus fuel",
+          "currency": "GBP",
+          "basis": "Hertz UK (LHR, EDI): full-to-full; local refueling charge GBP 25.00 incl. tax plus fuel",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=FUEL&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseUK": {
+          "value": 15,
+          "unit": "refueling fee, up to",
+          "currency": "GBP",
+          "basis": "Enterprise UK: extra fee up to GBP 15 on top of a higher per-litre price",
+          "source": "https://www.enterprise.co.uk/en/car-hire/car-and-van-hire-costs-explained.html",
+          "date": "2025-07-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseIE": {
+          "value": 15,
+          "unit": "refueling charge",
+          "currency": "EUR",
+          "basis": "Enterprise Dublin: refuelling charge EUR 15 plus fuel",
+          "source": "https://www.enterprise.ie/en/car-hire-locations/ie/dublin-city-centre-i110.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisUKEZFuel": {
+          "value": "14.40-16.70",
+          "unit": "fixed fee, under 75 miles without receipt",
+          "currency": "GBP",
+          "basis": "Avis UK EZ Fuel; Pay on Return charges 1.5-3x average fuel price",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtUK": {
+          "value": 160,
+          "unit": "percent of non-prepaid fuel rate",
+          "basis": "Sixt GB: return full or surcharge at 160% of non-prepaid fuel rate",
+          "source": "https://www.sixt.co.uk/shared/t-c/sixt_GB_en.pdf",
+          "date": "2026-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarUK": {
+          "value": 18,
+          "unit": "one-off refueling surcharge plus GBP 0.60/litre",
+          "currency": "GBP",
+          "basis": "Europcar UK Tariff Guide (2022)",
+          "source": "https://www.europcar.co.uk/files/live/sites/Europcar.co.uk/files/TandCs%20and%20legal%20docs/Tariff_Guide14112022.pdf",
+          "date": "2022-12-01",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Old tariff; current figure not found."
+        },
+        "avisUSEZFuel": {
+          "value": 17.99,
+          "unit": "flat fee, under 75 miles (USD 18.99 in California)",
+          "currency": "USD",
+          "basis": "Avis EZFuel, waived with fuel receipt",
+          "source": "https://www.avis.com/en/offers/us-offers/fuel-plans",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarMX": {
+          "value": 360,
+          "unit": "refueling penalty plus taxes and per-litre fuel",
+          "currency": "MXN",
+          "basis": "Europcar Mexico",
+          "source": "https://www.europcar.com.mx/en/politicas.php",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "mileage": {
+        "hertzUK": {
+          "value": 70,
+          "unit": "miles per day included on rentals of 28+ days; GBP 0.18/mile beyond",
+          "basis": "Hertz UK (LHR, EDI, BFS)",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=MILEAGE&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseUK": {
+          "value": "unlimited",
+          "unit": "mileage",
+          "basis": "Enterprise UK cars come with unlimited mileage",
+          "source": "https://www.enterprise.co.uk/en/car-hire/car-and-van-hire-costs-explained.html",
+          "date": "2025-07-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisUK": {
+          "value": "unlimited on many vehicles",
+          "unit": "mileage",
+          "basis": "Avis UK; excess mileage 12-21p per mile where limited",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "mexRentACar": {
+          "value": "unlimited",
+          "unit": "mileage on web bookings",
+          "basis": "Mex Rent a Car",
+          "source": "https://mexrentacar.com/es/terminos-y-condiciones/2-terminos-y-condiciones-mexico",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "gracePeriodAndLateReturn": {
+        "hertzUKandIE": {
+          "value": 29,
+          "unit": "minutes",
+          "basis": "Hertz UK/IE: 'Extra day is charged after 29 minutes over 24 hour rental period'",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=GRACE&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzUS": {
+          "value": 29,
+          "unit": "minutes",
+          "basis": "Hertz US: 29-minute grace; extra hour charges from 30 minutes; more than 12 hours late adds $12/day up to 5 days ($60)",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=GRACE&EOAG=JFK",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzCanadaLateFee": {
+          "value": 15.5,
+          "unit": "per day, max CAD 77.50 (5 days), if more than 12 hours late",
+          "currency": "CAD",
+          "basis": "Hertz Canada late return fee",
+          "source": "https://www.hertz.ca/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=LATERETURN&EOAG=YYZ",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisUSandCanada": {
+          "value": 29,
+          "unit": "minutes",
+          "basis": "Avis JFK/YYZ/YVR: 29-minute grace; after 30 minutes 3/4-day charge; after 90 minutes full-day charges",
+          "source": "https://www.avis.com/en/locations/us/ny/jamaica/jfk/_jcr_content/par/location_terms_and_c.default",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseUS": {
+          "value": 29,
+          "unit": "minutes",
+          "basis": "Enterprise US: 29-minute grace; hourly charges up to 2.5 hours, then an extra day",
+          "source": "https://www.enterprise.com/en/car-rental-faqs/us-reservations/late-returns-policy.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseUK": {
+          "value": 29,
+          "unit": "minutes",
+          "basis": "Enterprise UK grace period up to 29 minutes",
+          "source": "https://www.enterprise.co.uk/en/car-hire/car-and-van-hire-costs-explained.html",
+          "date": "2025-07-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarUK": {
+          "value": 29,
+          "unit": "minutes",
+          "basis": "Europcar UK T&Cs 2026",
+          "source": "https://assets.ctfassets.net/wmdwnw6l5vg5/26z4Ocvms7JVQfOcOHgCmn/d34f93cecc2641318ef4a33f6cd5347f/Europcar_Terms_Combined_01-26.pdf",
+          "date": "2026-01-05",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarIE": {
+          "value": 59,
+          "unit": "minutes",
+          "basis": "Europcar Ireland tariff guide",
+          "source": "https://assets.ctfassets.net/wmdwnw6l5vg5/5ZIeENZei6HIlEddZEyBV2/a98c08a2e3b7691d40c16793e3a08715/CGL_EN_IE_AUG_2025_TARIFF_GUIDE_FOR_IRELAND.pdf",
+          "date": "2025-08",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtUK": {
+          "value": 30,
+          "unit": "minutes",
+          "basis": "Sixt GB: more than 30 minutes late incurs damages plus GBP 10 (ex VAT) late processing fee",
+          "source": "https://www.sixt.co.uk/shared/t-c/sixt_GB_en.pdf",
+          "date": "2026-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisUKLateFee": {
+          "value": 15,
+          "unit": "per day late return processing fee",
+          "currency": "GBP",
+          "basis": "Avis UK mainland",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "oneWay": {
+        "hertz": {
+          "value": null,
+          "unit": "fee",
+          "basis": "Hertz UK/IE/US/CA/MX: one-way fee 'will be advised at time of reservation'; no amount published. UK: no one-way to Scottish islands, Isle of Wight or Channel Islands. Canada: no drop in Mexico",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=ONEWAY&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        }
+      }
+    },
+    "taxes": {
+      "newYork": {
+        "specialTaxPassengerCarRental": {
+          "value": 6,
+          "unit": "percent",
+          "basis": "NY Tax Law s.1160: 6% special tax on receipts from every rental of a passenger car",
+          "source": "https://www.nysenate.gov/legislation/laws/TAX/1160",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "specialSupplementalTaxMCTD": {
+          "value": 6,
+          "unit": "percent",
+          "basis": "NY Tax Law s.1166-a: 6% special supplemental tax on passenger car rentals within the MCTD (NYC is in the MCTD)",
+          "source": "https://www.nysenate.gov/legislation/laws/TAX/1166-A",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "The brief's '5% MCTD supplement' is out of date; the statute reads 6%. Total special taxes in NYC = 12% on top of sales tax."
+        },
+        "nycSalesTax": {
+          "value": 8.875,
+          "unit": "percent",
+          "basis": "Combined NY State and NYC sales tax, applied to rental charges",
+          "source": "https://www.tax.ny.gov/bus/st/subject.htm",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Rate widely published; not re-read on a primary page this session."
+        },
+        "airportFees": {
+          "value": null,
+          "unit": "fees",
+          "basis": "JFK concession recovery and customer facility charges are shown only in booking quotes",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=FEES&EOAG=JFK",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        }
+      },
+      "connecticut": {
+        "salesTaxShortTermCarRental": {
+          "value": 9.35,
+          "unit": "percent",
+          "basis": "CT sales tax on rentals of passenger motor vehicles of 30 days or less (OLR Backgrounder 2025-R-0177, 2 Dec 2025)",
+          "source": "https://www.cga.ct.gov/2025/rpt/pdf/2025-R-0177.pdf",
+          "date": "2025-12-02",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "tourismSurcharge": {
+          "value": 1,
+          "unit": "per day or portion",
+          "currency": "USD",
+          "basis": "CT DRS: USD 1/day tourism account surcharge on passenger vehicle rentals of 30 days or less",
+          "source": "https://portal.ct.gov/drs/taxes/tourism-surcharge/tax-information",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "The former 3% motor vehicle rental surcharge was repealed (Law360 report; secondary)."
+        }
+      },
+      "losAngeles": {
+        "salesTax": {
+          "value": 9.75,
+          "unit": "percent",
+          "basis": "CDTFA L-1037: County of Los Angeles rate 9.750% rising to 10.250% on 1 Oct 2026 (Measure ER); City of LA uses the county rate",
+          "source": "https://cdtfa.ca.gov/formspubs/L1037.pdf",
+          "date": "2026-08",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "10.25% from 2026-10-01."
+        },
+        "customerFacilityChargeLAX": {
+          "value": 12,
+          "unit": "per day, max 5 days (USD 60)",
+          "currency": "USD",
+          "basis": "LAX CFC raised to $12 from 1 Jan 2026 under AB 1150 (previously $9)",
+          "source": "https://dwuconsulting.com/dwu-ai/customer-facility-charge",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "LAWA primary report returned 403."
+        },
+        "airportConcessionRecoveryLAX": {
+          "value": 11.11,
+          "unit": "percent",
+          "basis": "LAX airport concession recovery fee",
+          "source": "https://blog.autoslash.com/the-fee-detective-revisits-los-angeles-where-lax-cranks-up-their-customer-facility-charge/",
+          "date": "2023-02-28",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "californiaTourismAssessment": {
+          "value": 3.5,
+          "unit": "percent",
+          "basis": "California Travel and Tourism Commission assessment on airport rentals",
+          "source": "https://blog.autoslash.com/the-fee-detective-revisits-los-angeles-where-lax-cranks-up-their-customer-facility-charge/",
+          "date": "2023-02-28",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      },
+      "uk": {
+        "vat": {
+          "value": 20,
+          "unit": "percent",
+          "basis": "Hertz UK: 'All rates subject to VAT at 20%'",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=TAX&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "locationServiceCharge": {
+          "value": null,
+          "unit": "fee",
+          "basis": "Hertz UK airport/rail Location Service Charge and Vehicle Licensing Fee: named but not quantified",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=TAX&EOAG=EDI",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        }
+      },
+      "ireland": {
+        "vatCarHire": {
+          "value": 13.5,
+          "unit": "percent",
+          "basis": "Revenue: short-term car hire (under 5 weeks in 12 months) at the reduced rate; Hertz DUB: 'All car rental rates are subject to a Government tax (VAT) of 13.5%' (vans 23%)",
+          "source": "https://www.revenue.ie/en/vat/vat-rates/search-vat-rates/C/car-hire-short-term.aspx",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "locationServiceCharge": {
+          "value": null,
+          "unit": "fee",
+          "basis": "Hertz Dublin LSC applies to all rentals; rate not published",
+          "source": "https://www.hertz.ie/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=LSC&EOAG=DUB",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        }
+      },
+      "ontario": {
+        "hst": {
+          "value": 13,
+          "unit": "percent",
+          "basis": "CRA GST/HST calculator: Ontario HST 13%; no Ontario rental-specific tax found",
+          "source": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "britishColumbia": {
+        "gst": {
+          "value": 5,
+          "unit": "percent",
+          "basis": "CRA: GST 5% in BC",
+          "source": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "pstOnRental": {
+          "value": 7,
+          "unit": "percent",
+          "basis": "BC PST 116 (rev. April 2026): PST on passenger vehicle rentals 7% for vehicles valued under $55,000, rising to 10/15/20% for dearer vehicles",
+          "source": "https://www2.gov.bc.ca/assets/gov/taxes/sales-taxes/publications/pst-116-motor-vehicle-dealers-leasing-companies.pdf",
+          "date": "2026-04",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Economy cars fall in the 7% band, not 8%."
+        },
+        "passengerVehicleRentalTax": {
+          "value": 1.5,
+          "unit": "per day or portion",
+          "currency": "CAD",
+          "basis": "BC PVRT on rentals over 8 hours and up to 28 days; GST applies to it, PST does not",
+          "source": "https://www2.gov.bc.ca/assets/gov/taxes/sales-taxes/publications/pst-116-motor-vehicle-dealers-leasing-companies.pdf",
+          "date": "2026-04",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "mexico": {
+        "iva": {
+          "value": 16,
+          "unit": "percent",
+          "basis": "Ley del IVA art. 1 (tasa del 16%); Hertz MEX: 'Tax of 16 percent will be applied to all rentals'",
+          "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "airportConcessionFee": {
+          "value": null,
+          "unit": "fee",
+          "basis": "Hertz MEX Airport Concession Fee Recovery: named, rate not published",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=FEES&EOAG=MEX",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false
+        }
+      }
+    },
+    "documents": {
+      "licenceHeld": {
+        "hertzUK": {
+          "value": 1,
+          "unit": "years",
+          "basis": "Hertz UK: licence held at least 1 year; digital UK licences not accepted",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=LICENSE&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzIE": {
+          "value": 2,
+          "unit": "years",
+          "basis": "Hertz Ireland: full licence held at least 2 years",
+          "source": "https://www.hertz.ie/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=LICENSE&EOAG=DUB",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzUSandCanada": {
+          "value": 1,
+          "unit": "years",
+          "basis": "Hertz US/Canada: licence in good standing for over a year",
+          "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=JFK",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisUK": {
+          "value": 1,
+          "unit": "years",
+          "basis": "Avis UK: 1 year (Northern Ireland 2 years)",
+          "source": "https://docs.abgcarrental.com/location/avis/UK/GB/en?OpenDocument=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtUK": {
+          "value": 1,
+          "unit": "years",
+          "basis": "Sixt GB",
+          "source": "https://www.sixt.co.uk/shared/t-c/sixt_GB_en.pdf",
+          "date": "2026-09",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "europcarUK": {
+          "value": 12,
+          "unit": "months",
+          "basis": "Europcar UK",
+          "source": "https://assets.ctfassets.net/wmdwnw6l5vg5/26z4Ocvms7JVQfOcOHgCmn/d34f93cecc2641318ef4a33f6cd5347f/Europcar_Terms_Combined_01-26.pdf",
+          "date": "2026-01-05",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "sixtIE": {
+          "value": 4,
+          "unit": "years",
+          "basis": "Sixt Ireland",
+          "source": "https://www.sixt.com/php/terms/view?liso=IE&rtar=000&view=IP&tlang=en_US&language=en_US&style=",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "idp": {
+        "ukGovVisitor": {
+          "value": "not required",
+          "unit": "rule",
+          "basis": "gov.uk: a visitor may drive small vehicles on a full valid foreign licence for 12 months from last entry",
+          "source": "https://www.gov.uk/driving-nongb-licence/y/a-visitor-to-great-britain/any-other-country",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hertzUK": {
+          "value": "highly recommended",
+          "unit": "rule",
+          "basis": "Hertz UK: IDP highly recommended for non-EU renters; not acceptable on its own",
+          "source": "https://www.hertz.co.uk/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=LICENSE&EOAG=LHR",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "irelandCitizensInformation": {
+          "value": "required for non-recognised states",
+          "unit": "rule",
+          "basis": "Citizens Information (edited 28 Apr 2026): visitors from outside EU/EEA/recognised states may drive 12 months with licence plus IDP; the US is not a recognised state",
+          "source": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/exchanging-foreign-driving-permit/",
+          "date": "2026-04-28",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "US Embassy Ireland says US citizens may drive up to 12 months as tourists and frames the IDP as optional: https://ie.usembassy.gov/driving-in-ireland/ . The two sources conflict."
+        },
+        "ontario": {
+          "value": 3,
+          "unit": "months on a foreign licence",
+          "basis": "Ontario: visitors may use their own licence for 3 months; longer requires an IDP obtained before arrival",
+          "source": "https://www.ontario.ca/page/drive-ontario-visitors",
+          "date": "2021-05-14",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "britishColumbia": {
+          "value": 6,
+          "unit": "months on a foreign licence",
+          "basis": "ICBC: tourists may drive on a foreign licence up to six months",
+          "source": "https://icbc.com/driver-licensing/moving-bc/moving-from-another-country",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "mexico": {
+          "value": "only for non-Roman-alphabet licences",
+          "unit": "rule",
+          "basis": "Avis Mexico and Mex Rent a Car terms; Hertz MEX: IDP 'suggested, but not required'. No Mexican government source found",
+          "source": "https://docs.abgcarrental.com/location/avis/MX/MX/en?OpenDocument=",
+          "date": "2025-11-25",
+          "sourceType": "primary",
+          "confirmed": false
+        },
+        "newYork": {
+          "value": "not required for English-language licences",
+          "unit": "rule",
+          "basis": "NY DMV: a valid foreign licence allows driving; IDP or translation needed for non-English licences",
+          "source": "https://dmv.ny.gov/driver-license/drivers-from-other-countries",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "california": {
+          "value": "not required",
+          "unit": "rule",
+          "basis": "CA DMV FFDL 5: visitors over 18 with a valid home licence may drive without a CA licence",
+          "source": "https://www.dmv.ca.gov/portal/file/fast-facts-5-requirements-for-a-california-drivers-license/",
+          "date": "2020-06",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "usIssuers": {
+          "value": "AAA and AATA",
+          "unit": "authorized IDP issuers",
+          "basis": "USA.gov (14 Apr 2026): two State Department-authorized issuers",
+          "source": "https://www.usa.gov/international-drivers-license",
+          "date": "2026-04-14",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "paymentCard": {
+        "hertzCanada": {
+          "value": "credit card required; debit not accepted to qualify",
+          "unit": "rule",
+          "basis": "Hertz Canada",
+          "source": "https://www.hertz.ca/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=PAYMENT&EOAG=YYZ",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "enterpriseCanada": {
+          "value": "Canadian debit cards not accepted",
+          "unit": "rule",
+          "basis": "Enterprise Toronto Pearson",
+          "source": "https://www.enterprise.com/en/car-rental-locations/ca/on/toronto-pearson-international-airport-c2pa.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "avisIEDebit": {
+          "value": "debit-card renters must buy Super CDW",
+          "unit": "rule",
+          "basis": "Avis Ireland",
+          "source": "https://www.avis.ie/media/filer_public/65/e6/65e61362-2930-43db-833c-25db6783a57f/country_specific_avis_ie_13nov25.pdf",
+          "date": "2025-11-13",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      }
+    }
+  },
+  "holidayLets": {
+    "rates": {
+      "newYorkCity": {
+        "adr": {
+          "value": 182,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, New York, trailing 12 months, updated 2026-09-01",
+          "source": "https://www.airdna.co/vacation-rental-data/app/us/new-york/new-york/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 77%, 14,337 listings."
+        },
+        "adrAlternative": {
+          "value": 231,
+          "unit": "per night",
+          "currency": "USD",
+          "basis": "AirROI New York report, Aug 2025-Jul 2026; occupancy 42.4%",
+          "source": "https://www.airroi.com/report/world/united-states/new-york/new-york",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "note": "Differs sharply from AirDNA. Note that entire-home stays under 30 nights are illegal in NYC, so these listings are mostly legal hosted rooms or 30+ night stays."
+        }
+      },
+      "newHaven": {
+        "adr": {
+          "value": 145,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, New Haven, undated",
+          "source": "https://www.airdna.co/vacation-rental-data/app/us/connecticut/new-haven/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 57%, 936 listings."
+        }
+      },
+      "losAngeles": {
+        "adr": {
+          "value": 218,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, Los Angeles, Aug 2025-Aug 2026",
+          "source": "https://www.airdna.co/vacation-rental-data/app/us/california/los-angeles/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 68%, 30,757 listings."
+        }
+      },
+      "london": {
+        "adr": {
+          "value": 234,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, London, trailing 12 months to Jun 2026",
+          "source": "https://www.airdna.co/vacation-rental-data/app/gb/london/london/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 58%, 113,132 listings."
+        },
+        "officialGuestNights": {
+          "value": 21557480,
+          "unit": "guest nights, 2025",
+          "basis": "ONS short-term lets through online collaborative economy platforms (Airbnb, Booking.com, Expedia), London, calendar 2025, +6.3%",
+          "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/housing/bulletins/shorttermletsthroughonlinecollaborativeeconomyplatformsuk/latest",
+          "date": "2026-06-24",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "ONS publishes volume, not price."
+        }
+      },
+      "dublin": {
+        "adr": {
+          "value": 209,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, Dublin, Jul 2025-Jul 2026",
+          "source": "https://www.airdna.co/vacation-rental-data/app/ie/default/dublin/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 58%, about 7,532 listings. Another snippet shows $226 ADR, 59%."
+        },
+        "officialGuestNightsRegion": {
+          "value": 2120000,
+          "unit": "guest nights, 2025",
+          "basis": "Eurostat platform data via press: Eastern and Midland region (includes Dublin), up 16%",
+          "source": "https://www.breakingnews.ie/ireland/8-4-million-guest-nights-booked-in-short-term-rental-accommodation-through-online-platforms-1882003.html",
+          "date": "2026-04-02",
+          "sourceType": "secondary",
+          "confirmed": true
+        }
+      },
+      "toronto": {
+        "adr": {
+          "value": 141,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, Toronto, Jun 2025-Jun 2026",
+          "source": "https://www.airdna.co/vacation-rental-data/app/ca/ontario/toronto/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 68%, 25,336 listings."
+        }
+      },
+      "vancouver": {
+        "adr": {
+          "value": 200,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, Vancouver, Aug 2025-Aug 2026",
+          "source": "https://www.airdna.co/vacation-rental-data/app/ca/british-columbia/vancouver/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 69%, 5,762 listings."
+        }
+      },
+      "mexicoCity": {
+        "adr": {
+          "value": 88,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, Mexico City, undated",
+          "source": "https://www.airdna.co/vacation-rental-data/app/mx/distrito-federal/mexico-city/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 59%, 35,401 listings."
+        }
+      },
+      "belfast": {
+        "adr": {
+          "value": 169,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, Belfast, undated",
+          "source": "https://www.airdna.co/vacation-rental-data/app/gb/default/belfast/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 52%, 2,954 listings."
+        },
+        "officialGuestNightsNI": {
+          "value": 2403350,
+          "unit": "guest nights, 2025",
+          "basis": "ONS platform statistics, Northern Ireland, 2025",
+          "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/housing/bulletins/shorttermletsthroughonlinecollaborativeeconomyplatformsuk/latest",
+          "date": "2026-06-24",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "edinburgh": {
+        "adr": {
+          "value": 269,
+          "unit": "per night (ADR)",
+          "currency": "USD",
+          "basis": "AirDNA market overview, Edinburgh, Aug 2025-Aug 2026",
+          "source": "https://www.airdna.co/vacation-rental-data/app/gb/scotland/edinburgh/overview",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "AirDNA blocked direct fetch (403); figure is from the search engine's snippet of the page. Covers all listing types, not entire homes only. Currency assumed USD (AirDNA's free pages publish in USD), not stated in snippet. Occupancy 68%, 7,489 listings."
+        },
+        "licencesInOperation": {
+          "value": 4336,
+          "unit": "licences",
+          "basis": "Scottish Government short-term let licensing statistics, Edinburgh, to 30 Jun 2025",
+          "source": "https://www.gov.scot/publications/short-term-lets-licensing-statistics-scotland-to-30-june-2025/pages/licences-in-operation-local-areas/",
+          "date": "2025-06-30",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      }
+    },
+    "platformFees": {
+      "airbnbGuestServiceFee": {
+        "value": "14.1-16.5",
+        "unit": "percent of booking subtotal",
+        "basis": "Airbnb Help: split-fee guests pay 14.1% to 16.5% (up to 16.5% on cross-currency bookings)",
+        "source": "https://www.airbnb.com/help/article/1857",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "airbnbSplitFeeHost": {
+        "value": 3,
+        "unit": "percent",
+        "basis": "Airbnb split-fee host fee (4% Brazil/Mexico); being phased out",
+        "source": "https://www.airbnb.com/help/article/1857",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "airbnbSingleFeeHost": {
+        "value": 15.5,
+        "unit": "percent",
+        "basis": "Airbnb single (host-only) fee, most hosts 15.5% (some 14-16%; Brazil/Mexico 16%); guest pays no separate service fee",
+        "source": "https://www.airbnb.com/help/article/1857",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "airbnbSingleFeeRollout": {
+        "value": "2025-10-27",
+        "unit": "date",
+        "basis": "PMS-connected hosts moved to the 15.5% single fee on 27 Oct 2025",
+        "source": "https://www.guesty.com/blog/airbnbs-new-15-5-host-only-fee-what-you-need-to-know/",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      "vrboTravelerServiceFee": {
+        "value": null,
+        "unit": "percent",
+        "basis": "Vrbo Help: service fee is a percentage of the reservation total before taxes and refundable fees, varying with booking size (higher total, lower %); no range published; refunded if cancelled within the 100%-refund window; VAT added where required",
+        "source": "https://help.vrbo.com/articles/What-is-the-service-fee",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "vrboHostPayPerBooking": {
+        "value": 8,
+        "unit": "percent (5% commission + 3% payment processing)",
+        "basis": "Vrbo pay-per-booking host fee",
+        "source": "https://www.hostfully.com/blog/vrbo-host-fees/",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": false
+      }
+    },
+    "cancellation": {
+      "airbnb": {
+        "flexible": {
+          "value": "full refund until 24 hours before check-in",
+          "unit": "rule",
+          "basis": "After that the host is paid nights stayed plus one night; guest gets pro-rated taxes",
+          "source": "https://www.airbnb.com/help/article/475",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "moderate": {
+          "value": "full refund until 5 days before check-in",
+          "unit": "rule",
+          "basis": "After that host paid nights stayed + 1 night + 50% of unspent nights",
+          "source": "https://www.airbnb.com/help/article/475",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "limited": {
+          "value": "full refund until 14 days; 50% at 7-14 days; none under 7 days",
+          "unit": "rule",
+          "basis": "Bookings on/after 1 Oct 2025",
+          "source": "https://www.airbnb.com/help/article/475",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "firm": {
+          "value": "full refund until 30 days; 50% at 7-30 days; none under 7 days",
+          "unit": "rule",
+          "basis": "Airbnb standard policy",
+          "source": "https://www.airbnb.com/help/article/475",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "strict": {
+          "value": "50% refund 7+ days before; none under 7 days",
+          "unit": "rule",
+          "basis": "Invitation-only",
+          "source": "https://www.airbnb.com/help/article/475",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "nonRefundable": {
+          "value": "no refund",
+          "unit": "rule",
+          "basis": "Discounted rate; guest keeps the standard 24-hour cancellation window",
+          "source": "https://www.airbnb.com/help/article/475",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "vrbo": {
+        "_note": "Vrbo's own help article returned an error page; rules below are as reported by multiple host-software compilers.",
+        "relaxed": {
+          "value": "100% 14+ days; 50% 7-13 days; none under 7",
+          "unit": "rule",
+          "basis": "Vrbo Relaxed",
+          "source": "https://www.lodgify.com/guides/vrbo/cancellation-policy/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "moderate": {
+          "value": "100% 30+ days; 50% 14-29 days; none under 14",
+          "unit": "rule",
+          "basis": "Vrbo Moderate",
+          "source": "https://www.lodgify.com/guides/vrbo/cancellation-policy/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "firm": {
+          "value": "100% 60+ days; 50% 30-59 days; none under 30",
+          "unit": "rule",
+          "basis": "Vrbo Firm",
+          "source": "https://www.lodgify.com/guides/vrbo/cancellation-policy/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "strict": {
+          "value": "100% 60+ days; none under 60",
+          "unit": "rule",
+          "basis": "Vrbo Strict",
+          "source": "https://www.lodgify.com/guides/vrbo/cancellation-policy/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "noRefund": {
+          "value": "no refund",
+          "unit": "rule",
+          "basis": "Vrbo No Refund",
+          "source": "https://www.lodgify.com/guides/vrbo/cancellation-policy/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      }
+    },
+    "damage": {
+      "airbnbHostDamageProtection": {
+        "value": 3000000,
+        "unit": "maximum",
+        "currency": "USD",
+        "basis": "AirCover for Hosts: $3M host damage protection",
+        "source": "https://www.airbnb.com/help/article/3142",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "airbnbHostLiability": {
+        "value": 1000000,
+        "unit": "maximum",
+        "currency": "USD",
+        "basis": "AirCover for Hosts: $1M host liability insurance",
+        "source": "https://www.airbnb.com/help/article/3142",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "airbnbClaimDeadline": {
+        "value": 14,
+        "unit": "days after the responsible guest's checkout",
+        "basis": "Host must file in the Resolution Center within 14 days; guest has 24 hours to respond before escalation to Airbnb",
+        "source": "https://www.airbnb.com/help/article/264",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "airbnbGuestResponseWindow": {
+        "value": 24,
+        "unit": "hours",
+        "basis": "Guest response window to a host reimbursement request",
+        "source": "https://www.airbnb.com/help/article/264",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "law": {
+      "newYorkCity": {
+        "rule": {
+          "value": "whole-unit stays under 30 days illegal; host must live in the unit and be present; max 2 guests (children under 4 not counted); host must register with OSE",
+          "unit": "rule",
+          "basis": "NYC Office of Special Enforcement, Local Law 18 (adopted 9 Jan 2022; platforms barred from unregistered bookings from 5 Sep 2023)",
+          "source": "https://www.nyc.gov/site/specialenforcement/hosting-STRs/what-is-local-law-18.page",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "registrationFee": {
+          "value": 145,
+          "unit": "application fee",
+          "currency": "USD",
+          "basis": "OSE registration fee",
+          "source": "https://www.bnbcalc.com/blog/short-term-rental-regulation/new-york-city-guide",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "hostFines": {
+          "value": "1000-5000",
+          "unit": "per violation",
+          "currency": "USD",
+          "basis": "Host fines range $1,000 to the lesser of $5,000 or 3x illegal revenue; platforms the higher of $1,500 or fees collected",
+          "source": "https://www.brickunderground.com/rent/local-law-18-registration-requirements-for-short-term-rental-host-banned-building-list-nyc",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      },
+      "newHaven": {
+        "rule": {
+          "value": null,
+          "unit": null,
+          "basis": "Not researched in primary; no New Haven short-term rental ordinance located this session",
+          "source": null,
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      },
+      "losAngeles": {
+        "rule": {
+          "value": 120,
+          "unit": "days per calendar year",
+          "basis": "LA Home-Sharing Ordinance (No. 185,931, effective 1 Jul 2019): primary residence only (lived in 6+ months/yr), not RSO units; 120-day cap unless Extended Home-Sharing is granted",
+          "source": "https://planning.lacity.gov/odocument/61cbb192-89df-4d34-ab2b-28f89aea8c5c/HSO_Admin_Guidelines.pdf",
+          "date": "2019-07-01",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "registrationFee": {
+          "value": 89,
+          "unit": "plus processing fee",
+          "currency": "USD",
+          "basis": "LA Home-Sharing Administrative Guidelines",
+          "source": "https://planning.lacity.gov/odocument/61cbb192-89df-4d34-ab2b-28f89aea8c5c/HSO_Admin_Guidelines.pdf",
+          "date": "2019-07-01",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Current fee may differ; guidelines are from 2019."
+        },
+        "extendedHomeSharingFee": {
+          "value": 850,
+          "unit": "application",
+          "currency": "USD",
+          "basis": "Extended home-sharing review fee ($5,660 if discretionary review)",
+          "source": "https://planning.lacity.gov/ordinances/docs/HomeSharing/adopted/faq.pdf",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "From search snippet of planning.lacity.gov; not read on the page."
+        }
+      },
+      "london": {
+        "rule": {
+          "value": 90,
+          "unit": "nights per calendar year",
+          "basis": "Deregulation Act 2015 s.44 (in force 26 May 2015): residential premises in Greater London may be used as temporary sleeping accommodation without planning permission up to 90 nights/yr, provided a provider is liable for council tax on the premises",
+          "source": "https://www.legislation.gov.uk/ukpga/2015/20/section/44",
+          "date": "2015-05-26",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "dublin": {
+        "rpzRule": {
+          "value": 90,
+          "unit": "days per year (entire principal private residence)",
+          "basis": "Residential Tenancies (Amendment) Act 2019 s.38 / Planning and Development Act 2000 s.3A, from 1 Jul 2019: in rent pressure zones short-term letting needs change-of-use planning permission, except home-sharers letting their whole principal private residence up to 90 days",
+          "source": "https://assets.gov.ie/111126/2758966b-092a-4f21-83c2-dce04c9f6748.pdf",
+          "date": "2019-07-01",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Quoted from search snippets of the Department's guidance note and council pages; not read in full."
+        },
+        "nationalRegister": {
+          "value": "2026-12-31",
+          "unit": "commencement",
+          "basis": "Short-term letting register (Failte Ireland) opens 1 Dec 2026; hosts must register by 31 Dec 2026; applies to lets of up to 21 nights; new STL planning permissions restricted in places over 20,000 population",
+          "source": "https://enterprise.gov.ie/en/what-we-do/the-business-environment/tourism/short-term-letting/",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Delayed from 20 May 2026 (Irish Times, 13 May 2026)."
+        }
+      },
+      "toronto": {
+        "rule": {
+          "value": 180,
+          "unit": "nights per calendar year (entire unit)",
+          "basis": "City of Toronto: principal residence only; under 28 consecutive days; registration required",
+          "source": "https://www.toronto.ca/community-people/housing-shelter/rental-housing-rights-information/short-term-rentals/short-term-rental-operators-hosts/",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "registrationFee": {
+          "value": 390,
+          "unit": "initial and 2026 renewal",
+          "currency": "CAD",
+          "basis": "City of Toronto",
+          "source": "https://www.toronto.ca/community-people/housing-shelter/rental-housing-rights-information/short-term-rentals/short-term-rental-operators-hosts/",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "vancouver": {
+        "rule": {
+          "value": "principal residence plus one secondary suite/laneway home",
+          "unit": "rule",
+          "basis": "BC Short-Term Rental Accommodations Act, principal residence requirement in force 1 May 2024 (communities over 10,000)",
+          "source": "https://news.gov.bc.ca/releases/2024HOUS0020-000590",
+          "date": "2024-05-01",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Quoted from search snippet of the BC release; vancouver.ca blocked fetch."
+        },
+        "cityLicenceFee": {
+          "value": 1108,
+          "unit": "per year (+$77 application)",
+          "currency": "CAD",
+          "basis": "Vancouver short-term rental business licence 2026",
+          "source": "https://liv.rent/blog/landlords/vancouver-short-term-rental-rules/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      },
+      "mexicoCity": {
+        "rule": {
+          "value": 50,
+          "unit": "percent of the year's nights (cap on renewal)",
+          "basis": "Ley de Turismo CDMX arts. 61 Bis-61 Octies (Gaceta Oficial 4 Apr 2024): host and platform registries, 1-year registration; 3 Oct 2024 amendment: registration not renewed if occupied over 50% of the year",
+          "source": "https://www.garrigues.com/en_GB/new/mexico-current-overview-short-term-rental-regulation",
+          "date": "2025-12-05",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Press reports many hosts hold court orders suspending the 50% cap."
+        }
+      },
+      "edinburgh": {
+        "controlArea": {
+          "value": "2022-09-05",
+          "unit": "effective date",
+          "basis": "Whole City of Edinburgh a short-term let control area: non-principal-home STLs need planning permission; home sharing/letting exempt",
+          "source": "https://www.edinburgh.gov.uk/planning-13/short-term-lets-planning",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "licensing": {
+          "value": "licence required",
+          "unit": "rule",
+          "basis": "Scottish STL licensing: scheme operational 1 Oct 2022; existing hosts had until 1 Oct 2023",
+          "source": "https://www.gov.scot/publications/short-term-lets/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "secondaryLetLicenceFee": {
+          "value": 653,
+          "unit": "for 1-3 guests (up to GBP 5,869 for 21+)",
+          "currency": "GBP",
+          "basis": "Edinburgh STL licence fee, secondary letting",
+          "source": "https://www.houst.com/blog/edinburgh-short-lets-licence-planning-5-levy",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      },
+      "belfast": {
+        "certification": {
+          "value": "Tourism NI certificate required",
+          "unit": "rule",
+          "basis": "Tourism NI: all tourist accommodation must hold a current certificate; inspection every 4 years; fee GBP 40 per unit (min 40, max 350)",
+          "source": "https://www.tourismni.com/business-guidance/sector/accommodation/accommodation-getting-started/self-catering/overview/",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "penalty": {
+          "value": 2500,
+          "unit": "maximum fine (or up to 6 months' imprisonment)",
+          "currency": "GBP",
+          "basis": "Tourism (Northern Ireland) Order 1992 penalty for operating uncertified",
+          "source": "https://keynest.com/blog/airbnb-host-guide-regulations-in-belfast",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      }
+    },
+    "taxes": {
+      "newYorkCity": {
+        "hotelRoomOccupancyTax": {
+          "value": 5.875,
+          "unit": "percent plus USD 2.00 per room per night (rent $40+)",
+          "basis": "NYC hotel room occupancy tax; permanent residents (180+ days) exempt",
+          "source": "https://www.nyc.gov/site/finance/business/business-hotel-room-occupancy-tax.page",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "The flat per-night tiers are on the primary page; the 5.875% rate is from secondary sources. Plus 8.875% sales tax and a $1.50/unit state hotel fee (secondary)."
+        }
+      },
+      "newHaven": {
+        "roomOccupancyTax": {
+          "value": 15,
+          "unit": "percent",
+          "basis": "Connecticut room occupancy tax on hotels and lodging houses, stays of 30 days or less (B&Bs 11%)",
+          "source": "https://www.cga.ct.gov/2025/rpt/pdf/2025-R-0177.pdf",
+          "date": "2025-12-02",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "losAngeles": {
+        "transientOccupancyTax": {
+          "value": 14,
+          "unit": "percent",
+          "basis": "LA TOT (LAMC s.21.7) on hotels and short-term rentals of 30 days or fewer",
+          "source": "https://finance.lacity.gov/transient-occupancy-tax-requirements",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Rate from search snippets of finance.lacity.gov; not read on the page."
+        }
+      },
+      "london": {
+        "accommodationTax": {
+          "value": 0,
+          "unit": "percent",
+          "basis": "No tourist or occupancy tax in London; VAT 20% applies only if the host is VAT-registered (threshold GBP 90,000)",
+          "source": "https://www.gov.uk/vat-registration/when-to-register",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "dublin": {
+        "vatAccommodation": {
+          "value": 13.5,
+          "unit": "percent",
+          "basis": "Irish VAT on guest and holiday accommodation stays at 13.5%; the 1 Jul 2026 cut to 9% covers food/catering only; applies only if host is VAT-registered",
+          "source": "https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part03-taxable-transactions-goods-ica-services/Services/services-guest-and-holiday-accommodation.pdf",
+          "date": "2026-07-01",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Confirmed via multiple advisers' summaries of Revenue guidance; Revenue manual not read directly."
+        }
+      },
+      "toronto": {
+        "municipalAccommodationTax": {
+          "value": 6,
+          "unit": "percent",
+          "basis": "Toronto MAT on rentals under 28 consecutive days",
+          "source": "https://www.toronto.ca/community-people/housing-shelter/rental-housing-rights-information/short-term-rentals/short-term-rental-operators-hosts/",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "hst": {
+          "value": 13,
+          "unit": "percent",
+          "basis": "Ontario HST, where the host is registered",
+          "source": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "vancouver": {
+        "pst": {
+          "value": 8,
+          "unit": "percent",
+          "basis": "BC PST on short-term accommodation; exempt for continuous stays of 27+ days",
+          "source": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst/publications/accommodation",
+          "date": "2026-05-21",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "mrdt": {
+          "value": 3,
+          "unit": "percent",
+          "basis": "Vancouver MRDT",
+          "source": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst/publications/accommodation",
+          "date": "2026-05-21",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "majorEventsMrdt": {
+          "value": 2.5,
+          "unit": "percent",
+          "basis": "Vancouver Major Events MRDT, 1 Feb 2023 to 31 Jan 2030",
+          "source": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst/publications/accommodation",
+          "date": "2026-05-21",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "gst": {
+          "value": 5,
+          "unit": "percent",
+          "basis": "Federal GST where the host is registered (applies on provincial taxes too)",
+          "source": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "mexicoCity": {
+        "impuestoSobreHospedaje": {
+          "value": 5,
+          "unit": "percent (digital platforms); 3.5% general",
+          "basis": "CDMX Codigo Fiscal: ISH 3.5% general and 5% for lodging via digital platforms in 2026",
+          "source": "https://www.jadelrio.com/mx/es/blogs/tasas-actuales-del-impuesto-sobre-hospedaje-2026",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "iva": {
+          "value": 16,
+          "unit": "percent",
+          "basis": "Ley del IVA art. 1; platforms withhold 50% of IVA from registered individual hosts (art. 18-J, 100% if no RFC)",
+          "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "diputados.gob.mx PDF shows last reform DOF 12-11-2021."
+        },
+        "isrWithholdingLodging": {
+          "value": 4,
+          "unit": "percent",
+          "basis": "LISR art. 113-A ISR withholding on lodging income via platforms, 2026",
+          "source": "https://siemprealdia.co/mexico/fiscal/regimen-fiscal-de-plataformas-digitales/",
+          "date": "2026-09-29",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      },
+      "edinburgh": {
+        "visitorLevy": {
+          "value": 5,
+          "unit": "percent, first 5 consecutive nights",
+          "basis": "Edinburgh Visitor Levy from 24 Jul 2026 on all paid overnight accommodation incl. short-term lets; bookings made from 1 Oct 2025; charged on pre-VAT price",
+          "source": "https://www.edinburgh.gov.uk/news/article/14452/edinburgh-visitor-levy-comes-into-effect",
+          "date": "2026-07-24",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "belfast": {
+        "accommodationTax": {
+          "value": 0,
+          "unit": "percent",
+          "basis": "No tourist tax in Northern Ireland; VAT 20% only if host is VAT-registered",
+          "source": "https://www.gov.uk/vat-registration/when-to-register",
+          "date": "2026-09-29",
+          "sourceType": "primary",
+          "confirmed": false,
+          "note": "Absence of a levy inferred; no NI levy found."
+        }
+      }
+    }
+  },
+  "uncertain": [
+    "No rental company publishes an airport rate card; every daily base rate is a Kayak average with no date on the page, and the Mexico City figures show only '$' (MXN is inferred).",
+    "AirDNA figures come from search-engine snippets because the site blocks fetching; they cover all listing types, not entire homes only, and the currency (USD) is assumed.",
+    "New York City's AirDNA ADR describes a market where entire-home stays under 30 nights are illegal, so it reflects hosted rooms and 30-plus-night stays rather than holiday lets.",
+    "Enterprise's New York young-renter fees differ between enterprise.com ($68.75 and $33.25) and enterprise.co.uk ($64.75 and $30.75); both are Enterprise's own pages.",
+    "Hertz US and Canada young-driver fee amounts, CDW/LDW daily prices at every non-Mexican location, one-way fees and airport concession rates are not published; Hertz shows them only in a booking quote.",
+    "The LAX customer facility charge of $12/day from 1 Jan 2026, the 11.11% concession recovery and the 3.5% California tourism assessment are from secondary sources.",
+    "The New York MCTD special supplemental tax on car rentals is 6% in the statute, not the 5% named in the brief.",
+    "BC PST on an economy rental car is 7% under PST 116, not 8%; 8% is the accommodation rate.",
+    "Los Angeles sales tax rises from 9.75% to 10.25% on 1 Oct 2026, two days after retrieval.",
+    "Mexico City's 5% platform lodging tax and the enforceability of the 50% occupancy cap (suspended by court orders for many hosts) are from secondary sources.",
+    "Ireland's rules for US visitors conflict: Citizens Information says an IDP is needed, while the US Embassy says US citizens may drive up to 12 months as tourists.",
+    "No Mexican government source was found on whether tourists' foreign licences are valid; only rental companies' terms.",
+    "Vrbo's cancellation tiers and host fees are from compilers because Vrbo's help article returned an error page, and Vrbo publishes no percentage for its traveler service fee.",
+    "New Haven has no short-term rental ordinance recorded here; it was not researched in a primary source.",
+    "Current Europcar UK young-driver surcharge and refueling charges are known only from a 2022 tariff guide."
+  ]
+}
