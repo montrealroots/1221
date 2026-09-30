@@ -1,0 +1,722 @@
+{
+  "_meta": {
+    "topic": "Chartering and crew: private jet charter, hiring a pilot for an owned aircraft, crewed boat charter, and car hire with a driver",
+    "retrieved": "2026-09-30",
+    "places": ["New York", "Connecticut", "California", "London", "Dublin", "Toronto/Ontario", "Vancouver/BC", "Mexico City"],
+    "conventions": {
+      "sourceType": "'primary' = the operator, authority, or statute itself publishes the figure; 'secondary' = a broker, guide, aggregator, or press item reporting it",
+      "confirmed": "true = the figure was read on the cited page during this session; false = seen only in a search-engine summary or not verifiable on the page",
+      "currency": "Each figure carries its own currency code. Operator price pages are advertising, not regulated tariffs, and change without notice."
+    },
+    "notes": [
+      "Jet-charter 'hourly rates' from brokers are ranges for the aircraft only. Brokers state they exclude some or all of: federal excise tax, segment fees, landing/handling/FBO fees, overnight crew costs, daily minimums, repositioning, de-icing and catering.",
+      "Almost no operator publishes a fixed price for a specific route; route prices below are brokers' published estimates.",
+      "BLS figures come from the BLS public API v2 (OEWS, May 2025 estimates, reported as year 2025). The bls.gov HTML pages refused automated access, so the page URL is the canonical citation and the API is the retrieval route."
+    ]
+  },
+
+  "jetCharter": {
+    "hourlyRatesByClass": [
+      {
+        "publisher": "Paramount Business Jets (broker)",
+        "url": "https://www.paramountbusinessjets.com/private-jet-rental-cost",
+        "date": "Page says rates verified August 2026",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "unit": "per flight hour, aircraft only",
+        "rates": {
+          "turboprop": { "low": 2300, "high": 3500 },
+          "veryLightJet": { "low": 2900, "high": 3400 },
+          "lightJet": { "low": 3750, "high": 4200 },
+          "superLightJet": { "low": 4200, "high": 4600 },
+          "midsizeJet": { "low": 4700, "high": 5500 },
+          "superMidsizeJet": { "low": 6200, "high": 7500 },
+          "heavyJet": { "low": 8500, "high": 10000, "label": "Large Jets" },
+          "ultraLongRangeJet": { "low": 12000, "high": 17000 },
+          "vipAirliner": { "low": 18000, "high": 23000 }
+        },
+        "dailyMinimum": "Typically 2.0 to 3.0 billable hours per day for most categories",
+        "note": "A search-engine summary of an older Paramount page gave lower ranges (for example, light jet $2,900-$3,500); the rate page read directly on 2026-09-30 gave the figures above."
+      },
+      {
+        "publisher": "Air Charter Advisors (broker)",
+        "url": "https://www.aircharteradvisors.com/private-jet-charter-rates/",
+        "date": "Page headed '2025' pricing; copyright 2026",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "unit": "per hour",
+        "rates": {
+          "turboprop": { "low": 1500, "high": 3200 },
+          "veryLightJet": { "low": 3000, "high": 5000 },
+          "lightJet": { "low": 4250, "high": 6500 },
+          "midsizeJet": { "low": 6000, "high": 9000 },
+          "superMidsizeJet": { "low": 7500, "high": 10500 },
+          "heavyJet": { "low": 9000, "high": 14000 },
+          "longRangeJet": { "low": 12500, "high": 18000 }
+        },
+        "exclusions": "The page says the rates do not include ramp, hangar, FBO, overnights, daily minimums, taxes, international fees, catering, ground transportation or de-icing.",
+        "repositioning": "The page says an aircraft is sometimes repositioned from another airport to pick up the client when that is cheaper than a local one."
+      },
+      {
+        "publisher": "PrivateFly (Directional Aviation / Flexjet group broker, UK-based)",
+        "url": "https://www.privatefly.com/aircraft-charter/hourly-rates-for-private-jets.html",
+        "date": "No date on page; copyright 2026",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "GBP (EUR and USD also printed)",
+        "unit": "per hour, aircraft only",
+        "rates": [
+          { "aircraft": "Cessna Citation Mustang", "class": "veryLightJet", "seats": 4, "GBP": 1300, "EUR": 1535, "USD": 2037 },
+          { "aircraft": "Beechcraft King Air B200", "class": "turboprop", "seats": 8, "GBP": 1350, "EUR": 1592, "USD": 2116 },
+          { "aircraft": "Cessna Citation XLS", "class": "lightJet (midsize in some US taxonomies)", "seats": 7, "GBP": 2684, "EUR": 3166, "USD": 4207 },
+          { "aircraft": "Bombardier Learjet 45", "class": "midsizeJet", "seats": 8, "GBP": 2989, "EUR": 3526, "USD": 4685 },
+          { "aircraft": "Embraer Legacy 600", "class": "heavyJet", "seats": 13, "GBP": 4504, "EUR": 5313, "USD": 7060 },
+          { "aircraft": "Bombardier Global Express", "class": "ultraLongRangeJet", "seats": 14, "GBP": 5641, "EUR": 6654, "USD": 8841 }
+        ],
+        "note": "The page says a PrivateFly quote is fully inclusive of fees and positioning, but the hourly table itself is the aircraft rate only. These are noticeably lower than the US brokers' ranges; treat them as indicative."
+      },
+      {
+        "publisher": "Wheels Up (membership operator), as reported by Private Jet Card Comparisons",
+        "url": "https://privatejetcardcomparisons.com/providers/wheels-up-aviation/",
+        "date": "2026",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "rates": { "lightJet": { "from": 7395, "basis": "guaranteed capped hourly rate, plus fuel and federal excise tax" } },
+        "membershipCost": { "annualFee": 8500, "fundDeposit": 100000 },
+        "note": "A search summary citing other sites gave light jet $6,995/hr and midsize $8,295/hr; not confirmed on a page, so not used. Wheels Up's own site does not print a public rate card that was reachable."
+      },
+      {
+        "publisher": "NetJets",
+        "url": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "value": null,
+        "note": "NetJets does not publish charter or fractional rates on its own site. Third-party comparison sites (e.g., https://privatejetcardcomparisons.com/providers/netjets-marquis-jet/) report estimates such as an entry 1/16 share near $850,000, monthly management fees of $12,000-$28,000 and occupied-hour rates of $8,500-$18,500; these are unverified estimates, not published prices."
+      },
+      {
+        "publisher": "Jettly, Blade",
+        "url": "https://jettly.com/post/how-much-does-private-flight-cost",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "value": null,
+        "note": "Both sites returned HTTP 403 to automated fetches. Search summaries attributed to them: turboprop about $2,000-$3,000/hr, light jet $2,600-$3,500/hr, midsize $3,500-$5,500/hr, heavy $8,000-$13,000/hr. Not confirmed on the page."
+      }
+    ],
+
+    "federalExciseTax": {
+      "statute": "26 U.S.C. 4261",
+      "url": "https://www.law.cornell.edu/uscode/text/26/4261",
+      "publisher": "Legal Information Institute (Cornell) reproducing the U.S. Code",
+      "sourceType": "primary",
+      "confirmed": true,
+      "percentageTax": { "rate": 0.075, "basis": "7.5 percent of the amount paid for taxable transportation of a person (4261(a)); not indexed" },
+      "domesticSegmentFee": {
+        "statutoryBase": 3.00,
+        "indexed": "Yes, by 4261(e)(4); 2002 was the last non-indexed year",
+        "amount2026": 5.30,
+        "unit": "USD per passenger per domestic flight segment (one takeoff and one landing)",
+        "source2026": {
+          "url": "https://www.irs.gov/instructions/i720",
+          "publisher": "Internal Revenue Service, Instructions for Form 720 (Rev. June 2026), IRS No. 26",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      "internationalFacilitiesTax": {
+        "statutoryBase": 12.00,
+        "amount2026": 23.40,
+        "alaskaHawaii2026": 11.70,
+        "unit": "USD per passenger per arrival or departure of an international flight",
+        "source2026": {
+          "url": "https://www.irs.gov/instructions/i720",
+          "publisher": "Internal Revenue Service, Instructions for Form 720 (Rev. June 2026), IRS No. 27",
+          "sourceType": "primary",
+          "confirmed": true
+        },
+        "conflict": "NATA (https://nata.aero/icymi-irs-announces-2026-fet-rates/, Dec 16, 2025, citing Rev. Proc. 2025-32) printed the Alaska/Hawaii figure as $11.30; the IRS Form 720 instructions read on 2026-09-30 say $11.70. Prefer the IRS figure."
+      },
+      "revProc": "Rev. Proc. 2025-32 (the 2026 inflation adjustments)",
+      "applicability": "Applies to charter flights on aircraft operated for hire (Part 135 charter). A charter customer is billed the 7.5% on the charter price plus the segment fee per passenger per segment. Whether a given arrangement is 'commercial' for FET is a fact question; the IRS and NBAA discuss it at https://nbaa.org/flight-department-administration/tax-issues/federal-taxes/fet/."
+    },
+
+    "ukAirPassengerDuty": {
+      "publisher": "HM Revenue & Customs (GOV.UK)",
+      "url": "https://www.gov.uk/guidance/rates-and-allowances-for-air-passenger-duty",
+      "effective": "Flights departing the UK from 2026-04-01",
+      "sourceType": "primary",
+      "confirmed": true,
+      "currency": "GBP",
+      "unit": "per passenger",
+      "rates": {
+        "bandA": { "reduced": 15, "standard": 32, "higher": 142 },
+        "bandB": { "reduced": 102, "standard": 244, "higher": 1097 },
+        "bandC": { "reduced": 106, "standard": 253, "higher": 1141 }
+      },
+      "higherRateApplies": "Aircraft of 20 tonnes or more equipped to carry fewer than 19 passengers (i.e., larger private jets)",
+      "bands": "Band A up to 2,000 miles from London to the destination country's capital; Band B 2,001-5,500; Band C over 5,500",
+      "futureChange": {
+        "value": "From 2027-04-01 the higher rate is to extend to private jets over 5.7 tonnes; Band A higher £146.63 and Band B higher £1,132.76 were reported",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Reported by charter brokers in search results; the GOV.UK 2027-28 table was not read."
+      }
+    },
+
+    "dailyMinimumAndRepositioning": {
+      "value": "Charter operators commonly bill a daily minimum of 2.0 to 3.0 flight hours per aircraft per day, and bill repositioning (ferry) legs when the aircraft must fly empty to the pickup or back to base.",
+      "sources": [
+        { "url": "https://www.paramountbusinessjets.com/private-jet-rental-cost", "publisher": "Paramount Business Jets", "sourceType": "secondary", "confirmed": true, "note": "Printed 2.0-3.0 billable hours per day" },
+        { "url": "https://www.aircharteradvisors.com/private-jet-charter-rates/", "publisher": "Air Charter Advisors", "sourceType": "secondary", "confirmed": true, "note": "Lists daily minimums as excluded from the hourly rate; describes repositioning" }
+      ],
+      "regulatoryRule": null,
+      "note": "The daily minimum is a commercial practice, not a regulation. No statute or FAA rule sets it."
+    },
+
+    "samplePublishedRoutePrices": [
+      {
+        "route": "Teterboro (TEB) to Van Nuys (VNY), one way",
+        "publisher": "evoJets (broker)",
+        "url": "https://www.evojets.com/private-jet-charter-routes/teb-vny/",
+        "date": "Page updated 2026-09-10",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "distanceMiles": 2440,
+        "prices": {
+          "lightJet": { "low": 45100, "high": 55100 },
+          "midsizeJet": { "low": 51600, "high": 63000 },
+          "superMidsizeJet": { "low": 56200, "high": 68700 }
+        },
+        "note": "Estimates; the page does not say whether FET and fees are included. A light jet usually needs a fuel stop on this route."
+      },
+      {
+        "route": "New York to Los Angeles, one way",
+        "publisher": "Paramount Business Jets",
+        "url": "https://www.paramountbusinessjets.com/private-jet-rental-cost",
+        "date": "August 2026",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "price": { "low": 40000, "high": 62000 }
+      },
+      {
+        "route": "New York to London, one way",
+        "publisher": "Paramount Business Jets",
+        "url": "https://www.paramountbusinessjets.com/private-jet-rental-cost",
+        "date": "August 2026",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "price": { "low": 75000, "high": 100000 }
+      },
+      {
+        "route": "New York to Miami, one way",
+        "publisher": "Paramount Business Jets",
+        "url": "https://www.paramountbusinessjets.com/private-jet-rental-cost",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "price": { "low": 17000, "high": 23000 }
+      },
+      {
+        "route": "Los Angeles to Cabo San Lucas, one way",
+        "publisher": "Paramount Business Jets",
+        "url": "https://www.paramountbusinessjets.com/private-jet-rental-cost",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "price": { "low": 22000, "high": 32000 }
+      }
+    ]
+  },
+
+  "hiredPilot": {
+    "regulation": {
+      "privatePilot": {
+        "citation": "14 CFR 61.113(a)",
+        "url": "https://www.law.cornell.edu/cfr/text/14/61.113",
+        "publisher": "Legal Information Institute (Cornell) reproducing the eCFR",
+        "sourceType": "primary",
+        "confirmed": true,
+        "rule": "Except as provided in paragraphs (b) through (h), a holder of a private pilot certificate may not act as pilot in command of an aircraft carrying passengers or property for compensation or hire, nor act as pilot in command for compensation or hire.",
+        "costSharing": "61.113(c): a private pilot may not pay less than the pro rata share of a flight's operating expenses with passengers, limited to fuel, oil, airport expenditures or rental fees.",
+        "exceptions": "(b) flying incidental to a business or employment with no passengers or property carried for hire; (d) charitable, nonprofit or community-event flights under 91.146; (e) search-and-location reimbursement; (f) aircraft salesman demonstrations with at least 200 hours; (g) glider or unpowered ultralight towing; (h) light-sport production flight tests; (i) BasicMed conditions.",
+        "gameMeaning": "An owner cannot pay a private pilot to fly the owner's plane. A paid pilot needs at least a commercial certificate."
+      },
+      "commercialPilot": {
+        "citation": "14 CFR 61.133(a)(1)",
+        "url": "https://www.law.cornell.edu/cfr/text/14/61.133",
+        "publisher": "Legal Information Institute (Cornell) reproducing the eCFR",
+        "sourceType": "primary",
+        "confirmed": true,
+        "rule": "A commercial pilot may act as pilot in command of an aircraft carrying persons or property for compensation or hire, and may act as pilot in command for compensation or hire, when qualified under Part 61 and the applicable operating rules.",
+        "note": "Flying the owner's own aircraft for pay (the owner supplies the aircraft, the pilot is paid only to fly) is a Part 91 operation a commercial pilot may do. Supplying both aircraft and pilot to someone for pay is a Part 135 charter needing an air carrier certificate; that line is FAA policy (the 'holding out' and 'dry vs. wet lease' doctrine) not pinned to a number here."
+      }
+    },
+    "contractPilotDayRates": [
+      {
+        "publisher": "The Professional Pilot Network (contract-pilot marketplace)",
+        "url": "https://www.theprofessionalpilotnetwork.com/contract-pilot-aircraft-day-rates",
+        "date": "2026 (page titled '2026 Contract Pilot Aircraft DAY RATES')",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "unit": "per day",
+        "rates": [
+          { "aircraft": "Pilatus PC-12 (single-engine turboprop)", "PIC": { "low": 1200, "high": 1500 }, "SIC": { "low": 800, "high": 1200 } },
+          { "aircraft": "Beechcraft King Air 250", "PIC": { "low": 1200, "high": 1600 }, "SIC": { "low": 900, "high": 1200 } },
+          { "aircraft": "Beechcraft King Air 350", "PIC": { "low": 1500, "high": 2000 }, "SIC": { "low": 1100, "high": 1500 }, "confirmed": false, "note": "In a search summary of this page; not in the rows returned when the page was read" },
+          { "aircraft": "Cessna Citation M2 (light jet)", "PIC": { "low": 1200, "high": 1500 }, "SIC": { "low": 800, "high": 1200 } },
+          { "aircraft": "Cessna Citation CJ3+ (light jet)", "PIC": { "low": 1500, "high": 2000 }, "SIC": { "low": 1000, "high": 1500 } },
+          { "aircraft": "Embraer Phenom 100EX (very light jet)", "PIC": { "low": 1500, "high": 2000 }, "SIC": { "low": 1200, "high": 1500 } },
+          { "aircraft": "Gulfstream G800 (ultra-long-range)", "PIC": { "low": 4500, "high": 6000, "plus": true }, "SIC": { "low": 4000, "high": 4500, "plus": true } }
+        ],
+        "exclusions": "The page does not itemize; industry practice is that hotel, per diem and travel to the aircraft are billed on top."
+      },
+      {
+        "publisher": "CrewBlast (contract-pilot marketplace)",
+        "url": "https://www.crewblast.co/daily-rate",
+        "date": "2026, 'updated monthly' (month not shown)",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "USD",
+        "unit": "per day",
+        "rangeAllTypes": { "low": 1500, "high": 6000 },
+        "examples": [
+          { "aircraft": "Beechcraft King Air 200 (BE200)", "domesticPIC": 1200 },
+          { "aircraft": "Cessna Citation CE-525S through CE-750", "range": { "low": 1500, "high": 2000 } },
+          { "aircraft": "Gulfstream G7500 (as printed; likely Bombardier Global 7500)", "domestic": 3500 },
+          { "aircraft": "Gulfstream G700/G800 family", "range": { "low": 4000, "high": 4500 } }
+        ],
+        "internationalPremium": "International rates generally 15-25% above domestic",
+        "perDiem": {
+          "value": { "low": 75, "high": 150, "unit": "USD per day" },
+          "url": "https://www.crewblast.co/blog/contract-pilot-daily-rates-in-2026-what-operators-should-budget-crewblast",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "From a search summary of CrewBlast's blog; not read on the page"
+        }
+      },
+      {
+        "publisher": "Mike Goulian Aviation (Cirrus training and pilot services, Bedford and Plymouth, Massachusetts)",
+        "url": "https://mikegoulianaviation.com/rates/",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "aircraftClass": "single-engine piston (Cirrus SR20/SR22/SR22T)",
+        "rates": {
+          "cirrusCFIIFullDay": 900,
+          "cirrusCFIIHalfDay": 450,
+          "namedSeniorPilotFullDay": 1100
+        },
+        "overtime": "Flights over 8 hours and up to 12 hours in one day are billed at 1.5 times the daily rate.",
+        "expenses": "Reasonable travel, meals and lodging for the pilot are the customer's responsibility.",
+        "note": "This is an instructor/mentor pilot flying with the owner, the closest published analogue to hiring a pilot for a piston single. Its $585/hr (SR22 G7) and $710/hr (SR22T G7) figures are aircraft rental, not pilot pay."
+      }
+    ],
+    "blsOEWS_53_2012_CommercialPilots": {
+      "occupation": "53-2012 Commercial Pilots (charter, air taxi, corporate, crop dusting, tours, etc.; excludes airline pilots, 53-2011)",
+      "referencePeriod": "May 2025",
+      "publisher": "U.S. Bureau of Labor Statistics, Occupational Employment and Wage Statistics",
+      "url": "https://www.bls.gov/oes/current/oes532012.htm",
+      "retrievalRoute": "BLS Public Data API v2, series OEU{N|S}{area}000000532012{datatype}",
+      "sourceType": "primary",
+      "confirmed": true,
+      "currency": "USD",
+      "hourlyMeanNote": "BLS publishes no hourly wage for this occupation (footnote 4: occupations that do not generally work year-round full time are reported as either hourly or annual depending on how they are typically paid)",
+      "figures": {
+        "national": { "employment": 47630, "annualMean": 146080, "annualMedian": 123220 },
+        "newYork": { "employment": 1070, "annualMean": 184580, "annualMedian": 177430 },
+        "connecticut": { "employment": 460, "annualMean": 231650, "annualMedian": 232160 },
+        "california": { "employment": 4900, "annualMean": 202040, "annualMedian": 165590 }
+      }
+    },
+    "canadaUkIrelandMexico": {
+      "value": null,
+      "note": "Not researched to the same standard. Equivalent rules exist (Transport Canada CARs 401; UK CAA and Ireland IAA under EASA Part-FCL, where a PPL holder may not be paid; Mexico AFAC) but no figures were retrieved."
+    }
+  },
+
+  "boatCharter": {
+    "rulesUS": {
+      "passengerForHire": {
+        "citation": "46 U.S.C. 2101 (definition of 'passenger for hire')",
+        "url": "https://www.law.cornell.edu/uscode/text/46/2101",
+        "sourceType": "primary",
+        "confirmed": true,
+        "rule": "A passenger for hire is one for whom consideration is contributed as a condition of carriage on the vessel, directly or indirectly, to anyone with an interest in the vessel."
+      },
+      "uninspectedPassengerVessel": {
+        "citation": "46 U.S.C. 2101 (definition of 'uninspected passenger vessel')",
+        "url": "https://www.law.cornell.edu/uscode/text/46/2101",
+        "sourceType": "primary",
+        "confirmed": true,
+        "rule": "A vessel under 100 gross tons carrying not more than 6 passengers, at least one for hire, or chartered with the crew provided or specified by the owner and carrying not more than 6 passengers. This is the 'six-pack' category."
+      },
+      "smallPassengerVessel": {
+        "citation": "46 U.S.C. 2101 (definition of 'small passenger vessel')",
+        "url": "https://www.law.cornell.edu/uscode/text/46/2101",
+        "sourceType": "primary",
+        "confirmed": true,
+        "rule": "A vessel under 100 gross tons carrying more than 6 passengers with at least one for hire, or chartered with crew provided and carrying more than 6 passengers, or chartered with no crew provided and carrying more than 12 passengers. Such a vessel must be Coast Guard inspected and certificated."
+      },
+      "captainLicense": {
+        "citation": "46 CFR 15.605",
+        "url": "https://www.law.cornell.edu/cfr/text/46/15.605",
+        "sourceType": "primary",
+        "confirmed": true,
+        "rule": "Each self-propelled uninspected passenger vessel must be under the direction and control of an individual holding a merchant mariner credential endorsed as Operator of Uninspected Passenger Vessels (OUPV, the 'six-pack' license) or higher."
+      },
+      "bareboat": {
+        "value": "A true bareboat (demise) charter hands the charterer the vessel without crew; the charterer operates it or hires any captain they choose, and no Coast Guard license is needed to run it recreationally. If the owner supplies or dictates the captain, it is legally a crewed charter and the six-pack/inspected-vessel rules apply. A bareboat charter carrying more than 12 passengers is a small passenger vessel.",
+        "sources": [
+          { "url": "https://www.law.cornell.edu/uscode/text/46/2101", "sourceType": "primary", "confirmed": true },
+          { "url": "https://wow.uscgaux.info/Uploads_wowII/P-DEPT/PaxForHire_trifold.pdf", "publisher": "U.S. Coast Guard Auxiliary, Passengers for Hire trifold", "sourceType": "primary", "confirmed": false, "note": "Found in search; not read" }
+        ],
+        "stateRules": "State boater-education cards still apply to a bareboat charterer at the helm (New York 'Brianna's Law' and California's Boater Card phase-in); not researched here."
+      }
+    },
+    "crewedDayCharters": [
+      {
+        "place": "New York City",
+        "operator": "Go Sailing NYC",
+        "url": "https://www.gosailingnyc.com/pricing/",
+        "date": "2026 rates",
+        "sourceType": "primary",
+        "confirmed": true,
+        "vessel": "40-ft Beneteau sailboat, max 6 passengers, from Chelsea Piers, Manhattan",
+        "currency": "USD",
+        "prices": {
+          "twoHoursWeekdayCouple": 600,
+          "twoHoursWeekdayGroup3to6": 700,
+          "twoHoursWeekendOrHoliday": 750,
+          "threeHours": 1050,
+          "fourHours": 1400,
+          "july4thFireworks4Hours": 6000
+        },
+        "included": "USCG-licensed captain, fuel, Chelsea Piers docking fees, safety equipment",
+        "gratuity": { "suggestedPercentLow": 18, "suggestedPercentHigh": 22, "basis": "Listed as an optional add-on" }
+      },
+      {
+        "place": "New York City",
+        "operator": "NY Boat Charters (Sail Away NYC)",
+        "url": "https://www.newyorkboatcharters.com/",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "vessels": [
+          { "name": "Julia", "length": "40 ft", "maxPassengers": 6, "perHour": 325 },
+          { "name": "Purse Princess", "maxPassengers": 12, "perHour": { "low": 425, "high": 900 } },
+          { "name": "Trident", "maxPassengers": 35, "perHour": { "low": 900, "high": 1500 } }
+        ],
+        "included": "Captain and crew",
+        "gratuity": null
+      },
+      {
+        "place": "Long Island Sound, Connecticut (Westbrook)",
+        "operator": "Joyride Charters (Captain Joy Sherman, USCG Master)",
+        "url": "https://www.joyridecharters.com/sail-li-sound",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "vessel": "Sailboat 'Pure Joy', up to 6 guests",
+        "prices": { "baseFirstFourGuests": 575, "perAdditionalGuest": 125, "perExtraHour": 150, "typicalDurationHours": 2.5 },
+        "included": "Captain, bottled water",
+        "gratuity": null
+      },
+      {
+        "place": "Long Island Sound, Connecticut (Norwalk)",
+        "operator": "Island Mike (Norwalk Sailing Excursions)",
+        "url": "https://island-mike.com/charters-ahoy/",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "vessel": "Sailboat 'The Eagle', up to 6 guests",
+        "prices": { "fourHoursUpTo4": 600, "fourHoursUpTo6": 800, "allDay": 1600, "privateLessonPerHour": 100, "deliveryPerDay": 700 },
+        "included": "Captain",
+        "gratuity": null
+      },
+      {
+        "place": "Marina del Rey, Los Angeles",
+        "operator": "Various owner-listed boats on Boatsetter/GetMyBoat (peer-to-peer marketplaces)",
+        "url": "https://www.boatsetter.com/sailboat-rentals/marina-del-rey--ca--united-states",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "currency": "USD",
+        "value": "Search summaries showed 36-42 ft sailboats with captain for up to 6 at about $262-$269 per hour, and a 38-ft Catalina with captain at $600 for 2 hours; marketplace pages list 'from $95/hr' for sailboats, with or without captain.",
+        "note": "Marketplace listings change daily and were not read directly. A captain added through Boatsetter was summarized as about $60/hr; not confirmed."
+      },
+      {
+        "place": "Marina del Rey, Los Angeles",
+        "operator": "Paradise Bound Yacht Charters (4375 Admiralty Way, since 1990)",
+        "url": "https://paradiseboundyacht.com/Home",
+        "sourceType": "primary",
+        "confirmed": false,
+        "currency": "USD",
+        "value": "Search summary: a six-person sail on the 42-ft SV Silver Eagle at $55 per person (6 required; pay the difference if fewer), i.e., $330 per boat.",
+        "note": "The operator's charter page did not resolve (DNS failure) on 2026-09-30; duration not confirmed."
+      }
+    ],
+    "gratuity": {
+      "value": "15-20% is the customary US crew gratuity on a crewed charter; one NYC operator suggests 18-22%.",
+      "sources": [
+        { "url": "https://www.gosailingnyc.com/pricing/", "publisher": "Go Sailing NYC", "sourceType": "primary", "confirmed": true, "note": "18-22% suggested" },
+        { "url": "https://www.getmyboat.com/boat-rental/Marina-Del-Rey--CA--United-States/", "publisher": "GetMyBoat", "sourceType": "secondary", "confirmed": false, "note": "Search summary: 15-20% industry standard, or no less than $200 total" }
+      ]
+    },
+    "outsideUS": {
+      "value": null,
+      "note": "London (Thames), Dublin, Toronto, Vancouver and Mexico City crewed day-charter rates were not retrieved. Rules differ: in the UK a commercially operated small vessel falls under the MCA Small Vessel Code; in Canada under the Canada Shipping Act 2001 (a pleasure craft 'chartered' with a captain becomes a commercial vessel)."
+    }
+  },
+
+  "chauffeur": {
+    "newYorkCity": {
+      "regulator": {
+        "publisher": "NYC Taxi and Limousine Commission",
+        "url": "https://www.nyc.gov/site/tlc/about/driver-pay-bases.page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "value": "TLC does not set passenger fares for black cars or limousines; the base sets them. TLC licenses the drivers and vehicles. Its minimum-pay rules cover drivers of High-Volume For-Hire Services (Uber, Lyft) and 'do not ... set the exact driver payment or passenger fare.'"
+      },
+      "hvfhsDriverMinimumPay": {
+        "publisher": "NYC Taxi and Limousine Commission",
+        "url": "https://www.nyc.gov/site/tlc/about/driver-pay-rates.page",
+        "effective": "2026-03-01",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "rates": { "nonWAV": { "perMile": 1.283, "perMinute": 0.681 }, "WAV": { "perMile": 1.601, "perMinute": 0.681 } },
+        "note": "A 3.36% CPI-W increase applied 2026-03-01 (TLC Industry Notice 26-03). This is driver pay, not a passenger fare."
+      },
+      "hourlyChauffeur": {
+        "operator": "Gotham Ride",
+        "url": "https://gothamride.com/services/by-the-hour/",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "minimumHours": 2,
+        "rates": [
+          { "vehicle": "Business Class Sedan (Mercedes E-Class), 3 pax", "perHour": 117 },
+          { "vehicle": "Comfort Van (Toyota Sienna), 5 pax", "perHour": 124 },
+          { "vehicle": "Business SUV (Chevrolet Suburban), 5 pax", "perHour": 173 },
+          { "vehicle": "First Class SUV (Cadillac Escalade ESV), 5 pax", "perHour": 198 },
+          { "vehicle": "First Class Sedan (Mercedes S-Class), 3 pax", "perHour": 211 },
+          { "vehicle": "Business Sprinter Van, 12 pax", "perHour": 371 }
+        ],
+        "included": "Vehicle, TLC-licensed chauffeur, fuel, standard tolls; online bookings include a 15% gratuity; taxes extra"
+      },
+      "blsChauffeurWage": {
+        "occupation": "53-3053 Shuttle Drivers and Chauffeurs",
+        "referencePeriod": "May 2025",
+        "url": "https://www.bls.gov/oes/current/oes533053.htm",
+        "retrievalRoute": "BLS Public Data API v2",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "figures": {
+          "national": { "hourlyMean": 19.17, "annualMean": 39880 },
+          "newYork": { "hourlyMean": 22.38, "annualMean": 46560 },
+          "connecticut": { "hourlyMean": 19.96, "annualMean": 41510 },
+          "california": { "hourlyMean": 22.36, "annualMean": 46500 }
+        },
+        "note": "What a chauffeur earns, as opposed to what a customer pays per hour."
+      }
+    },
+    "losAngeles": {
+      "regulator": {
+        "value": "In California, charter-party carriers (limousines and hourly chauffeur service) are licensed by the California Public Utilities Commission (TCP permit); the CPUC does not set their hourly prices.",
+        "url": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Background knowledge; the CPUC page was not read."
+      },
+      "hourlyChauffeur": {
+        "value": null,
+        "note": "No single LA operator's rate page was read. Search summaries of LA operators showed executive sedans at about $70-$119/hr and SUVs at $95-$149/hr with 2-3 hour minimums and 15-20% gratuity suggested; not confirmed on a page.",
+        "sources": [
+          { "url": "https://laxcar.com/blog/hourly-car-service-los-angeles", "sourceType": "secondary", "confirmed": false },
+          { "url": "https://nickslimo.com/blog/car-service-cost-los-angeles/", "sourceType": "secondary", "confirmed": false }
+        ]
+      },
+      "driverForYourOwnCar": {
+        "operator": "Jeevz (personal driver who drives the customer's own car)",
+        "url": "https://jeevz.com/cities/los-angeles",
+        "date": "2026",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "USD",
+        "rates": { "basicPerHour": 55, "plusMemberPerHour": 39 },
+        "minimumHours": 2,
+        "excluded": "Fuel, tolls, parking; gratuity optional; no surge or per-mile charge"
+      }
+    },
+    "london": {
+      "addisonLee": {
+        "url": "https://www.addisonlee.com/addlib/hourly-hire-service/",
+        "date": "2026-01-23",
+        "sourceType": "primary",
+        "confirmed": true,
+        "value": null,
+        "note": "Addison Lee's 'As Directed' hourly hire page publishes no price; it quotes at booking. A search summary of its FAQ gave a one-hour minimum, extra time pro rata, and a limit of under 10 miles driven per hour of hire, with executive saloons (Mercedes E-Class, Audi A6 or similar) for up to 3 passengers; the FAQ was not read directly (confirmed: false for those terms)."
+      },
+      "hourlyChauffeur": {
+        "operator": "iChauffeur",
+        "url": "https://www.ichauffeur.co.uk/prices/",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "GBP",
+        "vatNote": "Rates exclude VAT; add 20%",
+        "rates": [
+          { "vehicle": "Mercedes E-Class", "perHour": 60, "minimumHours": 3 },
+          { "vehicle": "Mercedes V-Class", "perHour": 70, "minimumHours": 3 },
+          { "vehicle": "Mercedes S-Class", "perHour": 75, "minimumHours": 3 },
+          { "vehicle": "Range Rover", "perHour": 90, "minimumHours": 5 }
+        ],
+        "extras": "Congestion Charge, ULEZ and parking billed in addition"
+      },
+      "regulator": {
+        "value": "Chauffeur and minicab services in London are private hire vehicles licensed by Transport for London; TfL does not set private hire prices.",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "url": null
+      }
+    },
+    "dublin": {
+      "hourlyChauffeur": {
+        "operator": "All City Chauffeurs",
+        "url": "https://allcitychauffeurs.ie/our-pricing/",
+        "date": "No date on page; footer copyright 2022, so possibly stale",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "EUR",
+        "rates": [
+          { "vehicle": "Mercedes E-Class", "perHour": 70, "minimumHours": 4, "includedKm": 40 },
+          { "vehicle": "Mercedes S-Class", "perHour": 80, "minimumHours": 4, "includedKm": 45 },
+          { "vehicle": "Mercedes V-Class", "perHour": 90, "minimumHours": 4, "includedKm": 50 }
+        ],
+        "excluded": "Road tolls; VAT treatment not stated",
+        "note": "A search summary quoted this operator at €65/hr for the E-Class; the page read on 2026-09-30 said €70."
+      },
+      "otherOperators": {
+        "value": "Elite Chauffeurs: E-Class from €70/hr, 2-hour minimum; Ireland Executive Transfers: S-Class from €175/hr, 2-hour minimum.",
+        "sources": [
+          { "url": "https://elitechauffeurs.ie/", "sourceType": "primary", "confirmed": false },
+          { "url": "https://irelandexecutivetransfers.ie/prices-per-hour-hire/", "sourceType": "primary", "confirmed": false }
+        ],
+        "note": "From search summaries; pages not read."
+      },
+      "regulator": {
+        "value": "Chauffeur ('limousine' and hackney) vehicles in Ireland are licensed by the National Transport Authority; only taxi fares are regulated by the NTA.",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "url": null
+      }
+    },
+    "toronto": {
+      "hourlyChauffeur": {
+        "operator": "Rosedale Limo",
+        "url": "https://rosedalelimo.ca/rates/",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "CAD",
+        "rates": [
+          { "vehicle": "Sedan (livery)", "perHour": 78, "minimumHours": 2 },
+          { "vehicle": "SUV (livery)", "perHour": 110, "minimumHours": 2 },
+          { "vehicle": "Ford Transit", "perHour": 150, "minimumHours": 3 },
+          { "vehicle": "Mercedes Sprinter", "perHour": 175, "minimumHours": 3 },
+          { "vehicle": "Limo Van", "perHour": 200, "minimumHours": 3 },
+          { "vehicle": "Stretch Limo (weddings)", "perHour": 150, "minimumHours": "3 weekdays, 5 weekends" }
+        ],
+        "excluded": "HST (13% in Ontario), gratuity, waiting time, Highway 407 tolls; 6% fuel surcharge when fuel exceeds $1.10/L for 30 days"
+      },
+      "regulator": {
+        "value": "Toronto licenses limousines and private transportation companies under Municipal Code Chapter 546; limousine fares are not a City-set tariff.",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "url": null
+      }
+    },
+    "vancouver": {
+      "regulatedRates": {
+        "publisher": "BC Passenger Transportation Board, Rates Rules Rule 19 (Limousine rates, hourly)",
+        "url": "https://www.ptboard.bc.ca/rule-19-limousine-rates-hourly",
+        "effective": "2025-01-01 (page updated 2026-08-30)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "CAD",
+        "gst": "Rates exclude GST (5%) and any allowable discounts",
+        "rates": [
+          { "vehicle": "Sedan limousine (3-5 seats)", "minPerHour": 75, "maxPerHour": 150 },
+          { "vehicle": "Mid-size limousine (SUVs 6-7, vans 6-11, antique sedans 3-5)", "minPerHour": 90, "maxPerHour": 160 },
+          { "vehicle": "Stretch car (8-11 seats)", "minPerHour": 110, "maxPerHour": 175 },
+          { "vehicle": "Stretch SUV (8-16 seats)", "minPerHour": 150, "maxPerHour": 240 },
+          { "vehicle": "Limo bus (17+ seats)", "minPerHour": 175, "maxPerHour": null }
+        ],
+        "minimumTime": {
+          "value": "One hour minimum time charge; a licensee may set a longer minimum if the customer is told when booking",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "From a search summary of the PTB rules; not on the Rule 19 page as read"
+        },
+        "note": "Unlike NYC, London, Dublin and Toronto, British Columbia sets a legal floor and ceiling on hourly limousine rates."
+      }
+    },
+    "mexicoCity": {
+      "hourlyChauffeur": {
+        "operator": "Safe&Confidence",
+        "url": "https://safeconfidence.com.mx/servicios/renta-de-auto-con-chofer",
+        "date": "No date on page",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "MXN",
+        "basis": "Per day of 10 continuous driver hours; prices plus IVA (16%)",
+        "rates": [
+          { "vehicle": "Premium sedan, 3 pax", "cityDay": 5400, "highwayDay": 6300, "extraHour": 450 },
+          { "vehicle": "Minivan, 6 pax", "cityDay": 7800, "highwayDay": 9400, "extraHour": 550 },
+          { "vehicle": "SUV Premium, 7 pax", "cityDay": 9600, "highwayDay": 11600, "extraHour": 550 },
+          { "vehicle": "Maxivan, 9-14 pax", "cityDay": 8000, "highwayDay": 9700, "extraHour": 550 },
+          { "vehicle": "Sprinter, 17 pax", "cityDay": 10500, "highwayDay": 13200, "extraHour": 900 }
+        ],
+        "included": "Fuel, airport terminal parking (AICM/AIFA), insurance",
+        "surcharges": { "after10pm": 550, "bilingualDriver": 550, "driverMealsHighwayPerDay": 2400 }
+      },
+      "avis": {
+        "url": "https://avis.mx/renta-de-auto-con-chofer-avis",
+        "sourceType": "primary",
+        "confirmed": true,
+        "value": null,
+        "note": "Avis Mexico offers car-with-driver at a 'fixed price' but publishes no figure; quotes on request."
+      }
+    }
+  },
+
+  "uncertain": [
+    "Wheels Up light jet $6,995/hr and midsize $8,295/hr came from a search summary of third-party sites; the page read gave light jet from $7,395/hr. Neither is on a Wheels Up page.",
+    "NetJets publishes no prices; all NetJets figures in circulation are third-party estimates.",
+    "Alaska/Hawaii international facilities tax for 2026: IRS Form 720 instructions say $11.70, NATA's post says $11.30. Only the IRS figure should be used.",
+    "UK APD from 2027-04-01 (higher rate extended to jets over 5.7 tonnes; £146.63 / £1,132.76) was seen only in broker summaries.",
+    "King Air 350 contract day rate (PIC $1,500-$2,000) and CrewBlast per diem ($75-$150) are from search summaries, not read on the page.",
+    "Paramount Business Jets' own rates changed between an older indexed page (light jet $2,900-$3,500) and the page read (light jet $3,750-$4,200); brokers reprice often.",
+    "PrivateFly's hourly table (e.g., Citation XLS £2,684/hr) is well below US broker ranges for the same class; it may predate recent increases.",
+    "No operator publishes a fixed Teterboro-Van Nuys or New York-London price; all route figures are broker estimates.",
+    "Marina del Rey crewed-charter rates are from marketplace search summaries and one operator whose site failed to resolve; no Marina del Rey figure is confirmed on a page.",
+    "Los Angeles hourly chauffeur rates for a sedan/SUV service were not confirmed on an operator page; only a drive-your-own-car service (Jeevz) was.",
+    "Addison Lee does not publish hourly-hire prices; its one-hour minimum and 10-miles-per-hour cap were seen only in a search summary.",
+    "All City Chauffeurs (Dublin) page shows a 2022 copyright; prices may be stale.",
+    "BC limousine one-hour minimum time charge is from a search summary of the PTB rules, not the Rule 19 page.",
+    "Regulator statements for London (TfL), Dublin (NTA), Toronto (Chapter 546) and California (CPUC) are background knowledge not verified on 2026-09-30.",
+    "Crewed boat charter figures for London, Dublin, Toronto, Vancouver and Mexico City, and pilot-hire figures outside the US, were not retrieved.",
+    "No published day rate for a contract pilot on a single-engine piston other than Cirrus instructor/mentor rates was found."
+  ]
+}

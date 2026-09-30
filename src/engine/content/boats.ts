@@ -78,3 +78,22 @@ export const BOAT_LOAN = { downUsd: 1_500, apr: 0.065, months: 144, minScore: 74
 export const BOAT_INSURANCE_USD = 662.51;
 
 export const isBoatState = (j: Jurisdiction | undefined): j is BoatState => j === 'US-NY' || j === 'US-CT' || j === 'US-CA';
+
+/**
+ * A boat chartered with its captain, from 2026-09-30 (researched in
+ * `docs/research/world/research-charter.json`): no boat of one's own and no
+ * certificate, the captain holding the Coast Guard's six-pack license a
+ * vessel for hire asks (46 CFR 15.605). Where an operator prints its price:
+ * - New York City: Go Sailing NYC's 40-foot Beneteau from Chelsea Piers,
+ *   $1,050 for three hours, and the 18% to 22% gratuity it suggests, the
+ *   middle.
+ * - Connecticut, on Long Island Sound: Island Mike's sailboat from Norwalk,
+ *   $600 for four hours for up to four; it asks no gratuity.
+ * Marina del Rey's were read only from marketplace summaries, and none is
+ * kept there.
+ */
+export interface Charter { operator: string; usd: number; hours: number; tip: number }
+export const CHARTERS: Readonly<Record<string, Charter>> = {
+  'us-ny-newyork': { operator: 'Go Sailing NYC', usd: 1_050, hours: 3, tip: 0.2 },
+  'us-ct': { operator: 'Island Mike, Norwalk', usd: 600, hours: 4, tip: 0 },
+};

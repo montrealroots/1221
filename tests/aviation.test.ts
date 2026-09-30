@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { OWN_172, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { OWN_172, hiredPilotUsd, ownHourCost, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf } from '@/engine/systems/journey';
 import { airportsFor } from '@/engine/systems/airports';
@@ -109,7 +109,7 @@ describe('flying oneself', () => {
 });
 
 describe('a plane of one’s own', () => {
-  it('is bought without a certificate, sits and costs its keeping, and flies only once its owner is a pilot, for its fuel', () => {
+  it('is bought without a certificate and costs its keeping; its owner flies it for its fuel, or hires a pilot', () => {
     const sim = save('us-ny-newyork', 'own-plane');
     fund(sim, 200_000);
     const r = sim.execute<{ paid: number }>({ kind: 'aircraft.buy', payload: {} });
@@ -118,7 +118,16 @@ describe('a plane of one’s own', () => {
     expect(sim.execute({ kind: 'aircraft.buy', payload: {} }).error).toMatch(/own a plane/);
     expect(netWorth(sim, sim.player.id).vehicles).toBe(inSave(sim, 121_847_00, 'USD'));
     const day = sim.now + 10 * MS_DAY;
-    expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', day, 2)).toMatch(/pilot certificate/);
+    // Not a pilot, its owner hires one: its fuel and the pilot's half day.
+    const hired = planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', day, 2);
+    if (typeof hired === 'string') throw new Error(hired);
+    const flown = (hired[0]!.arriveAt - hired[0]!.departAt) / 3_600_000;
+    expect(Math.abs(hired[0]!.fare - Math.round(ownHourCost(sim, 'us-ny-newyork') * flown) - inSave(sim, 450_00, 'USD'))).toBeLessThan(100);
+    expect(hiredPilotUsd(4)).toBe(450);
+    expect(hiredPilotUsd(4.1)).toBe(900);
+    expect(hiredPilotUsd(8.1)).toBe(1_350);
+    // Nor a plane of their own here: nothing to hire a pilot for.
+    expect(planFlyYourself(sim, sim.player, 'us-ct-newhaven', 'us-ny-newyork', day, 2)).toMatch(/pilot certificate/);
     sim.advanceBy(31 * MS_DAY);
     const paid = (memo: string) => sim.universe.transactions.filter((t) => t.memo === memo).map((t) => t.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0));
     expect(paid('The plane’s tiedown, a month')).toEqual([inSave(sim, 100_00, 'USD')]);

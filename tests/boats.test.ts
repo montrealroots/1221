@@ -14,8 +14,8 @@ import { CITIES } from '@/engine/content/geography';
 import { salesTaxRate } from '@/engine/content/tax';
 import { FUEL } from '@/engine/content/vehiclefees';
 import { BOAT_INSURANCE_USD, BOAT_RULES } from '@/engine/content/boats';
-import { boatQuote, buyBoatRefusal, carryBoat, outingCost, outingRefusal } from '@/engine/systems/boats';
-import { applyLookingAfter, costFor, lookAfterRefusal } from '@/engine/systems/life';
+import { boatQuote, buyBoatRefusal, carryBoat, charterCost, charterRefusal, outingCost, outingRefusal } from '@/engine/systems/boats';
+import { applyLookingAfter, costFor, lookAfterRefusal, minutesFor } from '@/engine/systems/life';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { move } from '@/engine/systems/household';
 
@@ -188,5 +188,37 @@ describe('Bayliner’s loan, and a boat moved', () => {
     other.player.currentLocationId = 'us-ct-newhaven';
     move(other, other.player, 'own', 'us-ct-newhaven');
     expect(other.player.boat).toMatchObject({ cityId: 'us-ct-newhaven', state: 'US-CT' });
+  });
+});
+
+describe('a boat chartered with its captain', () => {
+  it('costs Go Sailing NYC’s $1,050 for three hours and its suggested 20%, Island Mike’s $600 for four on the Sound, and none elsewhere', () => {
+    const sim = save('us-ny-newyork', 'charter-cost');
+    expect(charterCost(sim, 'us-ny-newyork')).toBe(usd(sim, 1_260_00));
+    expect(charterCost(sim, 'us-ct-newhaven')).toBe(usd(sim, 600_00));
+    expect(charterCost(sim, 'us-ca-losangeles')).toBeUndefined();
+    expect(minutesFor(sim, 'charter')).toBe(180);
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    expect(minutesFor(sim, 'charter')).toBe(240);
+    sim.player.currentLocationId = 'us-ca-losangeles';
+    expect(charterRefusal(sim, sim.player)).toMatch(/No captain’s charter/);
+  });
+
+  it('goes out without a boat or a certificate on a fine day, paid, and does what sitting out does', () => {
+    const sim = save('us-ny-newyork', 'charter-day');
+    let tries = 0;
+    while (lookAfterRefusal(sim, 'charter') && tries < 200) { sim.advanceBy(6 * 3_600_000); tries += 1; }
+    expect(lookAfterRefusal(sim, 'charter')).toBeUndefined();
+    const r = sim.execute({ kind: 'life.look_after', payload: { action: 'charter' } });
+    expect(r.ok, r.error).toBe(true);
+    expect(paidFor(sim, 'A boat chartered with its captain, Go Sailing NYC')).toEqual([usd(sim, 1_260_00)]);
+    const dials = (action: 'charter' | 'outside') => { const p = structuredClone(sim.player); p.wellbeing.stress = 60; p.wellbeing.morale = 40; applyLookingAfter(p, action, sim.now); return [p.wellbeing.stress, p.wellbeing.morale]; };
+    expect(dials('charter')).toEqual(dials('outside'));
+  });
+
+  it('refuses what the bank can’t pay', () => {
+    const sim = save('us-ny-newyork', 'charter-broke');
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0) a.balance = 0;
+    expect(charterRefusal(sim, sim.player)).toMatch(/afford/);
   });
 });

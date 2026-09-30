@@ -32,7 +32,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
-| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29, 7d (boats) 2026-09-30; open items below |
+| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29, 7d (boats) and 7e (crew and charter) 2026-09-30; open items below |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b); open items below |
 
 ## Acceptance criteria
@@ -299,7 +299,7 @@ Researched (`docs/research/world/research-vehiclework.json`): each place's windo
   - Great Britain: 27.51% first time (DVSA, 2025 to 2026, cars and vans together as published); BookMyGarage's £332 at three to five years and £425 from six, less the fee they include (secondary); the partial retest free.
   - Ireland: 49.43%, NCTS's 2024 pass rate of 50.57% (read from a search's extract, the report refusing automated reads); the €40 retest; Britain's repair in euros, SLATE's estimate, Ireland publishing none.
   - Mexico City publishes no rejection rate, and none is drawn.
-- Open, and why: a failure's rate by the car's age (DVSA publishes none); tint, exhaust and lift work, which changes nothing SLATE keeps yet; being qualified to fly was the next module, and 7b built it; boats and owning an aircraft were open, and 7c and 7d built them.
+- Open, and why: a failure's rate by the car's age (DVSA publishes none); tint, exhaust and lift work: their fit rules were researched on 2026-09-30 (`docs/research/world/research-mods.json`: each place's tint limits, New York's tint meter at inspection since 2017, the SLEEP Act's $1,000 on selling or fitting a loud exhaust, California's 95 dB(A) and frame heights, Britain's duty to tell the insurer), but a legal tint, exhaust or lift changes nothing SLATE keeps, and an illegal one would only fine and fail a car for nothing it gives, so none is sold; being qualified to fly was the next module, and 7b built it; boats and owning an aircraft were open, and 7c and 7d built them.
 
 Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first survived, the car's month calling the inspection, which no test reached until a used car's MOT was paid end to end. The failed test: 7 more, all killed; one first survived, New York's upstate rate against the city's, too near to tell apart by sampling, and the rates are now checked themselves.
 
@@ -316,7 +316,7 @@ Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first su
 Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survived: a check that kept airline delays off a self-flown leg, which luck let pass, since most flights are on time. The leg became its own kind, which the delays never read, and the check went.
 
 #### Stage 7c: a plane of one's own (done 2026-09-29)
-- Buy A Plane buys a used Cessna 172 at the median asked for one listed, a secondary figure; Vref's and the Bluebook's values are sold, not published, and none depreciates it, so SLATE holds it at its price (`OWN_172` in `systems/aviation.ts`, researched in `docs/research/world/research-aircraft-owning.json`). Owning asks no certificate; flying it does. An owner who isn't a pilot keeps it on the ground and pays its keeping, which is what owning without being qualified comes to.
+- Buy A Plane buys a used Cessna 172 at the median asked for one listed, a secondary figure; Vref's and the Bluebook's values are sold, not published, and none depreciates it, so SLATE holds it at its price (`OWN_172` in `systems/aviation.ts`, researched in `docs/research/world/research-aircraft-owning.json`). Owning asks no certificate; flying it oneself does. Until 2026-09-30 an owner who wasn't a pilot kept it on the ground and paid its keeping. Now they hire a pilot: a private pilot may not be paid (14 CFR 61.113(a)) and a commercial one may (61.133(a)(1)), at the one piston rate published, an instructor's at Mike Goulian Aviation, $450 a half day (SLATE's four hours), $900 a full one and half as much again past eight (`HIRED_PILOT_USD`, researched in `docs/research/world/research-charter.json`). The pilot's travel and lodging, the customer's, aren't kept.
 - Kept, as its month comes round:
   - A paved tiedown: the Connecticut Airport Authority's $100 for New York and Connecticut, Hayward's city-run $65 for California.
   - Insurance: the middle of a broker's $1,200 to $2,500 (secondary).
@@ -324,7 +324,7 @@ Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survi
   - The FAA's $5 registration every seven years.
   - The engine overhauled at Lycoming's 2,000 hours or twelve years (SI 1009, revision BF): the middle of a field overhaul's range and its removal (secondary).
 - A pilot flies it for its fuel, 10.2 gallons an hour at 75% power (Cessna's 172S information manual), at the region's 100LL from AirNav's 3,480 FBOs, where it was left. The hours go on its engine.
-- Open, and why: hiring a pilot (a private pilot may not be paid, 14 CFR 61.113, and no commercial pilot's rate was researched), and a loan on a plane.
+- Open, and why: a loan on a plane; hiring a pilot was open until 2026-09-30, and is built (above).
 
 Evidence: `tests/aviation.test.ts` (7); 5 mutations, all killed.
 
@@ -341,6 +341,14 @@ Evidence: `tests/aviation.test.ts` (7); 5 mutations, all killed.
 - Open, and why: a boat in Britain, Canada or Ireland, where Bayliner prints no price (a British dealer's, a different Canadian boat and Ireland's registration are researched); a boat loan's missed payments beyond arrears, since no lender's repossession of a boat was researched; the season's end, as a slip is paid for the season but the boat goes out year round in fine weather.
 
 Evidence: `tests/boats.test.ts` (9); 13 mutations, all killed in the end. Three first survived for want of a test (a second renewal, California's odd year, the outing's mood against sitting out's); one was a redundant guard, since a boat's months are canceled on its sale, and it was removed. The loan and the move: 4 more tests (13 in all), 12 mutations, all killed in the end; three first survived for want of a test (a move within the state, a road into Ontario, a real move home).
+
+#### Stage 7e: crew and charter (done 2026-09-30)
+- Researched in `docs/research/world/research-charter.json`.
+- A hired pilot: an owner who isn't a pilot has their own plane flown by a commercial pilot (Stage 7c, above), at the one published piston rate.
+- Charter A Boat (Look After Yourself): out on the water with a captain, no boat and no certificate of one's own; a vessel for hire is run by a captain with the Coast Guard's six-pack license (46 CFR 15.605). New York City: Go Sailing NYC's $1,050 for three hours and the 18% to 22% gratuity it suggests, the middle. Connecticut, on the Sound: Island Mike's $600 for four hours from Norwalk, which asks none. It does what an outing in one's own boat does.
+- Open, and why: a jet chartered, since the brokers print hourly rates by class and the excise tax is researched but no light jet's speed was, and a flight's hours are what a charter's price is; a boat chartered in Marina del Rey, where only marketplace summaries were read; a chauffeur, whose rates are researched but whom nothing in SLATE yet needs.
+
+Evidence: `tests/boats.test.ts` (16 in all) and `tests/aviation.test.ts` (7, the plane's own test now hiring a pilot); 10 mutations, all killed.
 
 ## Coverage record
 

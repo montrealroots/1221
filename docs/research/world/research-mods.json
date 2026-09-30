@@ -1,0 +1,322 @@
+{
+  "_meta": {
+    "topic": "Modifying a car (window tint, exhaust, suspension lift) and declaring modifications to insurers, in New York State, Connecticut, California, England/Great Britain, Ireland, Ontario, British Columbia and Mexico City",
+    "retrieved": "2026-09-30",
+    "conventions": {
+      "VLT": "Visible light transmission: the share of light the glass plus any film lets through. A higher number means lighter glass. A legal minimum of 70% means the window must pass at least 70% of light.",
+      "sourceType": "'primary' = the statute, regulation, authority or the shop/insurer's own page; 'secondary' = a law firm, news outlet, cost guide or other third party describing it.",
+      "confirmed": "true = the figure was read on the cited page (or in the statute text) during this session; false = seen only in a search-result summary or in a secondary source that could not be cross-checked, or the page blocked retrieval.",
+      "nulls": "A null value means no published figure was found; the note says why. No figure here was invented."
+    },
+    "currencyUnits": {
+      "US": "USD",
+      "GB": "GBP",
+      "IE": "EUR",
+      "ON/BC": "CAD",
+      "CDMX": "MXN; Mexico City fines are set in multiples of the UMA (Unidad de Medida y Actualización). UMA daily value 2026 = 117.31 MXN, in force 2026-02-01 to 2027-01-31 (INEGI, https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/uma/uma2026.pdf, sourceType primary, confirmed false: figure from search summary of INEGI release and several secondary outlets; 2025 value was 113.14)."
+    },
+    "headlineFindings": [
+      "NY's SLEEP Act $1,000 maximum applies to SELLING, OFFERING or INSTALLING a noise-amplifying exhaust device (VTL 375(31)(b), 31-a, 31-b); a DRIVER's own modified muffler under 375(31)(a) stays under the general 375(32)(a) cap of $150 and/or 30 days. Commonly misreported as a $1,000 fine on drivers.",
+      "NY's SLEEP Act inspection-station penalty (license suspension/revocation on a third willful violation within 18 months) is written for failing to inspect MOTORCYCLE mufflers/exhausts (15 NYCRR 79.28(c)), not cars.",
+      "Connecticut's muffler/noise fine was $150 per offense under CGS 14-80 and rises to $300 on 2026-10-01 under Public Act 26-63 (the $1,000 proposal was not enacted).",
+      "UK MOT does not meter tint; it fails tint only when the driver's view is significantly affected. Roadside police/DVSA use light meters.",
+      "Mexico City's tint rule is phrased as darkening: film may not darken side or rear glass by more than 20% (Reglamento de Tránsito art. 43 fr. VII)."
+    ]
+  },
+
+  "tint": {
+    "jurisdictions": [
+      {
+        "jurisdiction": "New York State",
+        "law": "NY Vehicle and Traffic Law 375(12-a); inspection standard in 15 NYCRR Part 79 (DMV publication CR-79)",
+        "windshield": { "minVLT": 70, "note": "Tint allowed only in the uppermost 6 inches; below that must pass at least 70%." },
+        "frontSide": { "minVLT": 70, "note": "All side windows adjacent to or forward of the driver's seat." },
+        "rearSide": { "minVLT": 70, "note": "Applies only to vehicles classed 'Passenger Car' on the FMVSS certification label (sedan, coupe, hatchback, station wagon, convertible, hardtop). SUVs, vans and pickups classed as multipurpose vehicles/trucks have no rear-side limit." },
+        "rearWindow": { "minVLT": 70, "note": "70% applies only if the vehicle lacks dual outside mirrors; with dual outside mirrors, any darkness." },
+        "olderVehicles": "Model year 1991 or older: 35% minimum for windshield (below top 6 inches), front sides and rear window without dual mirrors.",
+        "sources": [
+          { "url": "https://www.nysenate.gov/legislation/laws/VAT/375", "publisher": "New York State Senate (Laws of New York)", "date": null, "sourceType": "primary", "confirmed": true },
+          { "url": "https://dmv.ny.gov/forms/cr79.pdf", "publisher": "NY Department of Motor Vehicles, Motor Vehicle Inspection Regulations (CR-79, revision 5/26), 'Effective January 1, 2017'", "date": "2026-05", "sourceType": "primary", "confirmed": true }
+        ]
+      },
+      {
+        "jurisdiction": "Connecticut",
+        "law": "Connecticut General Statutes 14-99g",
+        "windshield": { "minVLT": null, "note": "Statute text as retrieved did not give a whole-windshield percentage; secondary sources say non-reflective tint is allowed only above the manufacturer's AS-1 line. Treat as: no film below AS-1 line." },
+        "frontSide": { "minVLT": 35, "tolerance": "plus or minus 3 percentage points", "note": "Also a luminous reflectance cap of 21% (plus or minus 3)." },
+        "rearSide": { "minVLT": 35, "tolerance": "plus or minus 3 percentage points" },
+        "rearWindow": { "minVLT": null, "note": "Any darkness if the vehicle has outside mirrors on both sides." },
+        "sources": [
+          { "url": "https://codes.findlaw.com/ct/title-14-motor-vehicles-use-of-the-highway-by-vehicles-gasoline/ct-gen-st-sect-14-99g/", "publisher": "FindLaw (text of CGS 14-99g)", "date": null, "sourceType": "secondary", "confirmed": true },
+          { "url": "https://law.justia.com/codes/connecticut/title-14/chapter-246/section-14-99g/", "publisher": "Justia (text of CGS 14-99g, 2024)", "date": "2024", "sourceType": "secondary", "confirmed": false, "note": "Blocked retrieval (403)." }
+        ]
+      },
+      {
+        "jurisdiction": "California",
+        "law": "California Vehicle Code 26708 (and 26708.5)",
+        "windshield": { "minVLT": null, "note": "Only a clear/non-reflective strip in the top 4 inches (or above the AS-1 line); no film below it." },
+        "frontSide": { "minVLT": 70, "note": "Front side windows must pass at least 70% (factory glass plus film combined)." },
+        "rearSide": { "minVLT": null, "note": "Any darkness." },
+        "rearWindow": { "minVLT": null, "note": "Any darkness, provided the vehicle has outside mirrors on both sides." },
+        "sources": [
+          { "url": "https://www.shouselaw.com/ca/defense/vehicle-code/26708/", "publisher": "Shouse California Law Group", "date": null, "sourceType": "secondary", "confirmed": false, "note": "Figures from search summary; consistent across several secondary sources; statute text itself not fetched." }
+        ]
+      },
+      {
+        "jurisdiction": "Great Britain (England, Scotland, Wales)",
+        "law": "Road Vehicles (Construction and Use) Regulations 1986 (SI 1986/1078), regulation 32 and Table II",
+        "windshield": { "minVLT": 75, "note": "Vehicles first used on or after 1 April 1985. Before that date, 70%." },
+        "frontSide": { "minVLT": 70, "note": "Front side windows (windows the driver needs to see the road through)." },
+        "rearSide": { "minVLT": null, "note": "No rules for rear passenger windows." },
+        "rearWindow": { "minVLT": null, "note": "No rules for the rear windscreen." },
+        "sellingRule": "It is illegal to fit or sell glass, or a vehicle already fitted with glass, that breaks the rules.",
+        "sources": [
+          { "url": "https://www.legislation.gov.uk/uksi/1986/1078/regulation/32", "publisher": "legislation.gov.uk (The National Archives)", "date": null, "sourceType": "primary", "confirmed": true },
+          { "url": "https://www.gov.uk/tinted-vehicle-window-rules", "publisher": "GOV.UK (Department for Transport / DVSA)", "date": null, "sourceType": "primary", "confirmed": true }
+        ]
+      },
+      {
+        "jurisdiction": "Ireland",
+        "law": "Roadworthiness testing standard (NCT for cars); Road Safety Authority guidance",
+        "windshield": { "minVLT": 65, "note": "65% is the NCT/roadworthiness pass mark for windscreen and front side windows. EU type approval requires 70% (windscreen actually 75% under UN R43) on new vehicles." },
+        "frontSide": { "minVLT": 65 },
+        "rearSide": { "minVLT": null, "note": "No restriction." },
+        "rearWindow": { "minVLT": null, "note": "No restriction." },
+        "sources": [
+          { "url": "https://www.rsa.ie/road-safety/road-users/vehicle-components/vehicle-glass/window-tinting", "publisher": "Road Safety Authority (RSA)", "date": null, "sourceType": "primary", "confirmed": false, "note": "Page blocked automated retrieval (403/Cloudflare); the 65% figure comes from the search-result text of this RSA page and matches Irish regional press explainers." }
+        ]
+      },
+      {
+        "jurisdiction": "Ontario",
+        "law": "Highway Traffic Act (R.S.O. 1990, c. H.8) s. 73(3); MTO Passenger and Light-Duty Vehicle Inspection Standard",
+        "windshield": { "minVLT": null, "note": "Aftermarket windshield tint banned from 1 January 2017 (vehicles manufactured on/after that date); a visor strip up to 75 mm from the top is widely reported as allowed. Statute text could not be retrieved." },
+        "frontSide": { "minVLT": 70, "note": "The HTA itself sets no percentage: it bans coloured coating that 'substantially obscures the interior' when viewed from outside, enforced at officer discretion. The 70% figure is reported as coming from the MTO safety inspection standard; not verified at the primary source." },
+        "rearSide": { "minVLT": null, "note": "Any darkness." },
+        "rearWindow": { "minVLT": null, "note": "Any darkness with outside mirrors on both sides." },
+        "sources": [
+          { "url": "https://www.ontario.ca/laws/statute/90h08", "publisher": "Government of Ontario e-Laws", "date": null, "sourceType": "primary", "confirmed": false, "note": "Page rendered no text for automated retrieval." },
+          { "url": "https://www.mcleishorlando.com/personal-injury-lawyer/window-tinting-is-it-legal-in-ontario/", "publisher": "McLeish Orlando LLP", "date": null, "sourceType": "secondary", "confirmed": true },
+          { "url": "https://www.mychoice.ca/blog/tinted-windows-laws-and-restrictions-in-ontario/", "publisher": "MyChoice", "date": null, "sourceType": "secondary", "confirmed": false }
+        ]
+      },
+      {
+        "jurisdiction": "British Columbia",
+        "law": "Motor Vehicle Act Regulations (B.C. Reg. 26/58) s. 7.05",
+        "windshield": { "minVLT": null, "note": "No light-reducing material except within 75 mm of the top of the windshield." },
+        "frontSide": { "minVLT": null, "note": "No light-reducing material of any kind on side windows beside or ahead of the driver (factory glass must meet Canadian Motor Vehicle Safety Standards). Effectively 'no aftermarket film'." },
+        "rearSide": { "minVLT": null, "note": "Any film allowed on side windows behind the driver." },
+        "rearWindow": { "minVLT": null, "note": "Any film allowed if outside mirrors are on both left and right sides." },
+        "sources": [
+          { "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/26_58_04", "publisher": "BC Laws (King's Printer)", "date": null, "sourceType": "primary", "confirmed": true }
+        ]
+      },
+      {
+        "jurisdiction": "Mexico City (CDMX)",
+        "law": "Reglamento de Tránsito de la Ciudad de México, artículo 43, fracción VII",
+        "windshield": { "minVLT": null, "note": "Article 43 fr. VII covers side and rear glass only. Secondary sources (BBVA México, El Universal) say only clear UV-rejecting film passing at least 70% is acceptable on the windshield; not found in the regulation text." },
+        "frontSide": { "maxDarkeningPct": 20, "impliedMinVLT": null, "note": "The rule bans solar-control (polarizado) film or darkening of side or rear glass 'en un porcentaje mayor al 20%'. The regulation does not define whether 20% is darkening relative to the bare glass or a VLT figure; tint shops read it as roughly 80% VLT or lighter. Kept null because the conversion is not published." },
+        "rearSide": { "maxDarkeningPct": 20 },
+        "rearWindow": { "maxDarkeningPct": 20 },
+        "sources": [
+          { "url": "https://mcontreras.gob.mx/wp-content/uploads/2026/01/reglamento-de-transito-cdmx.pdf", "publisher": "Alcaldía La Magdalena Contreras (copy of the Reglamento as published in the Gaceta Oficial, with amendments)", "date": "2026-01", "sourceType": "primary", "confirmed": true }
+        ]
+      }
+    ],
+    "inspection": [
+      { "jurisdiction": "New York State", "failsInspection": true, "value": "Since 1 January 2017 inspection stations must have a tint meter; the vehicle is rejected if any part of the windshield below the top 6 inches, any front side window, a passenger-car rear side window, or (without dual outside mirrors) the rear window passes less than 70% (35% for model year 1991 or older). Vehicles with a valid MV-80W.2 'Exempt Tinted Windows' sticker are not tint-checked.", "source": { "url": "https://dmv.ny.gov/forms/cr79.pdf", "publisher": "NY DMV (CR-79)", "date": "2026-05", "sourceType": "primary", "confirmed": true } },
+      { "jurisdiction": "Connecticut", "failsInspection": null, "note": "Connecticut runs emissions testing, not a periodic safety inspection for most passenger cars, so there is no periodic tint check. Enforcement is roadside: the violator must remove the material and report to police within 60 days for inspection; repeat violations can lead to impoundment after notice and hearing.", "source": { "url": "https://codes.findlaw.com/ct/title-14-motor-vehicles-use-of-the-highway-by-vehicles-gasoline/ct-gen-st-sect-14-99g/", "publisher": "FindLaw (CGS 14-99g)", "date": null, "sourceType": "secondary", "confirmed": true } },
+      { "jurisdiction": "California", "failsInspection": false, "note": "California has no periodic safety inspection (Smog Check covers emissions only), so tint is enforced only by citation.", "source": null },
+      { "jurisdiction": "Great Britain", "failsInspection": "only if the driver's view is significantly affected", "note": "The MOT examiner checks the driver's view through the windscreen and front side windows from the driver's seat; failure for tinting is justified only when that view is significantly affected. The MOT does not use a light meter.", "source": { "url": "https://www.gov.uk/guidance/mot-inspection-manual-for-private-passenger-and-light-commercial-vehicles/3-visibility", "publisher": "GOV.UK / DVSA MOT inspection manual, section 3", "date": null, "sourceType": "primary", "confirmed": false, "note": "Content from search-result text of the DVSA page, not fetched in full." } },
+      { "jurisdiction": "Ireland", "failsInspection": true, "note": "A windscreen or front side window below 65% fails the NCT. RSA advises owners whose factory glass fails to present a manufacturer's letter quoting the VIN and original tint level.", "source": { "url": "https://www.rsa.ie/road-safety/road-users/vehicle-components/vehicle-glass/window-tinting", "publisher": "Road Safety Authority", "date": null, "sourceType": "primary", "confirmed": false } },
+      { "jurisdiction": "Ontario", "failsInspection": null, "note": "Ontario has no annual inspection for private cars; a Safety Standards Certificate is needed on transfer of a used vehicle. Whether the SSC standard fails front tint below 70% is reported by secondary sources only.", "source": null },
+      { "jurisdiction": "British Columbia", "failsInspection": null, "note": "No periodic inspection for private cars. Police can issue a 'Box 2' Notice and Order requiring removal and an inspection at a designated inspection facility.", "source": { "url": "https://rcmp.ca/en/bc/mission/services-and-information/traffic-services/faqs", "publisher": "RCMP Mission Detachment (BC)", "date": null, "sourceType": "primary", "confirmed": true } },
+      { "jurisdiction": "Mexico City", "failsInspection": null, "note": "The CDMX Verificación Vehicular is an emissions test; no tint check found.", "source": null }
+    ],
+    "fines": [
+      { "jurisdiction": "New York State", "currency": "USD", "max": 150, "value": "Up to $150 (the general VTL 375(32)(a) cap for equipment violations of s. 375, which includes 12-a), per window cited in practice, plus a state surcharge of $58 (city courts) or $63 (town/village courts). Zero DMV points.", "sources": [ { "url": "https://www.ejustice.ny.gov/LawEnforcement/docs/dmv/P3Chapter 527 of the Laws of 2021 Exhaust Equipment Violations and Fines.pdf", "publisher": "NY DMV memo to enforcement agencies, 2022-03-22 (quotes VTL 375(32)(a) text)", "date": "2022-03-22", "sourceType": "primary", "confirmed": true }, { "url": "https://www.benjamingoldmanlawoffice.com/ny-vehicle-traffic-laws/vtl-375-12-a-tint-tickets.html", "publisher": "Benjamin Goldman Law Office", "date": null, "sourceType": "secondary", "confirmed": true, "note": "Source of per-window practice, surcharge and 0 points." } ] },
+      { "jurisdiction": "Connecticut", "currency": "USD", "max": null, "value": "An infraction. Secondary sources give $100-$150 for a first offense; the statute text retrieved did not state the amount.", "source": { "url": "https://truelineautomotive.com/resources/tint-laws/connecticut-window-tint-laws", "publisher": "Trueline Automotive", "date": null, "sourceType": "secondary", "confirmed": false } },
+      { "jurisdiction": "California", "currency": "USD", "max": null, "value": null, "note": "A correctable ('fix-it') equipment violation; the total payable with penalty assessments was not found at a primary source." },
+      { "jurisdiction": "Great Britain", "currency": "GBP", "max": null, "value": "Prohibition notice (vehicle may not be used until the tint is removed), and/or a penalty notice or court summons. Secondary sources give a fixed penalty of £50-£100 and up to £1,000 on prosecution; GOV.UK does not publish the amount.", "sources": [ { "url": "https://www.gov.uk/tinted-vehicle-window-rules", "publisher": "GOV.UK", "date": null, "sourceType": "primary", "confirmed": true } ] },
+      { "jurisdiction": "Ireland", "currency": "EUR", "max": null, "value": null, "note": "Gardaí test tint at the roadside and both owner and driver can be charged. A fixed charge with penalty points has been reported (Agriland, tractor case) but the amount and number of points were not found at a primary source; secondary claims of €80-€120 and 2-3 points are unverified." },
+      { "jurisdiction": "Ontario", "currency": "CAD", "max": 110, "value": "Set fine total payable $110 for 'colour coating obscuring interior' (HTA 73(3)).", "source": { "url": "https://www.ontariohighwaytrafficact.com/general-talk/section-colour-coating-obscuring-interior-t9080.html", "publisher": "OntarioHighwayTrafficAct.com (forum/reference site)", "date": null, "sourceType": "secondary", "confirmed": false } },
+      { "jurisdiction": "British Columbia", "currency": "CAD", "max": 109, "value": "Violation ticket about $109 for an improperly equipped vehicle; plus a 'Box 2' Notice and Order to remove the tint and pass a designated-facility inspection (fees generally $150-$250). Failing to get the inspection within 30 days: $598 fine.", "source": { "url": "https://rcmp.ca/en/bc/mission/services-and-information/traffic-services/faqs", "publisher": "RCMP Mission Detachment (BC)", "date": null, "sourceType": "primary", "confirmed": true } },
+      { "jurisdiction": "Mexico City", "currency": "MXN", "uma": [20, 25, 30], "value": "20, 25 or 30 times the UMA. At the 2026 UMA of 117.31 MXN: 2,346.20 / 2,932.75 / 3,519.30 MXN (computed). No license points found for this article.", "source": { "url": "https://mcontreras.gob.mx/wp-content/uploads/2026/01/reglamento-de-transito-cdmx.pdf", "publisher": "Reglamento de Tránsito CDMX art. 43 fr. VII", "date": "2026-01", "sourceType": "primary", "confirmed": true } }
+    ],
+    "medicalExemptions": [
+      { "jurisdiction": "New York State", "value": "Yes. Apply to the DMV Commissioner on form MV-80W with a physician's or nurse practitioner's statement of a condition on the Department of Health's approved list; the car then carries an MV-80W.2 'Exempt Tinted Windows' inspection sticker.", "sources": [ { "url": "https://www.nysenate.gov/legislation/laws/VAT/375", "publisher": "NY Senate", "date": null, "sourceType": "primary", "confirmed": true }, { "url": "https://dmv.ny.gov/forms/mv80w.pdf", "publisher": "NY DMV", "date": null, "sourceType": "primary", "confirmed": false } ] },
+      { "jurisdiction": "Connecticut", "value": "Yes. Written application to the Commissioner of Motor Vehicles with documentation from a physician or optometrist licensed in Connecticut.", "source": { "url": "https://codes.findlaw.com/ct/title-14-motor-vehicles-use-of-the-highway-by-vehicles-gasoline/ct-gen-st-sect-14-99g/", "publisher": "FindLaw (CGS 14-99g)", "date": null, "sourceType": "secondary", "confirmed": true } },
+      { "jurisdiction": "California", "value": null, "note": "A medical provision exists in VC 26708 but its exact terms (reported as clear UV-blocking film or removable screens with a physician's letter) were not verified." },
+      { "jurisdiction": "Great Britain", "value": null, "note": "GOV.UK lists no medical exemption for front-window tint; none found." },
+      { "jurisdiction": "Ireland", "value": null, "note": "None found." },
+      { "jurisdiction": "Ontario", "value": null, "note": "Secondary sources mention medical exemptions for windshield tint; not verified." },
+      { "jurisdiction": "British Columbia", "value": null, "note": "s. 7.05 contains no medical exemption." },
+      { "jurisdiction": "Mexico City", "value": "Yes. Medical need accredited before the Secretaría de Movilidad (SEMOVI) and recorded on the tarjeta de circulación.", "source": { "url": "https://mcontreras.gob.mx/wp-content/uploads/2026/01/reglamento-de-transito-cdmx.pdf", "publisher": "Reglamento de Tránsito CDMX art. 43 fr. VII", "date": "2026-01", "sourceType": "primary", "confirmed": true } }
+    ],
+    "prices": [
+      { "region": "United States (national)", "currency": "USD", "value": "Full car: dyed film $80-$250, carbon $150-$400, ceramic $300-$800; national average about $350. SUVs/trucks 20-40% more.", "source": { "url": "https://www.glassandauto.com/cost-guides/car-window-tinting-cost", "publisher": "Glass and Auto (cost guide), plus Jet Black Tint 2026 guide", "date": "2026", "sourceType": "secondary", "confirmed": false } },
+      { "region": "United Kingdom", "currency": "GBP", "value": "All windows £200-£500, average £350 (Checkatrade). Rear windows only: 5-door hatchback about £100, 3-door hatchback £140, saloon £200 (window-tint.co.uk price list). Ceramic on a saloon £380-£620.", "sources": [ { "url": "https://www.checkatrade.com/blog/cost-guides/car-window-tinting-prices/", "publisher": "Checkatrade", "date": "2026", "sourceType": "secondary", "confirmed": false }, { "url": "https://window-tint.co.uk/content/car-window-tinting-prices.html", "publisher": "window-tint.co.uk (shop price list)", "date": null, "sourceType": "primary", "confirmed": false } ] },
+      { "region": "Ireland", "currency": "EUR", "value": "Fitted: from €90 (two front windows, hatchback) to €240 (full SUV). Rear sets: hatchback €140, saloon €160, SUV €190 (South East Window Tinting). Dublin shops: rear protection package €140 (CarTint), back windscreen from €80 (QZ Tints).", "sources": [ { "url": "https://southeastwindowtinting.ie/blog/how-much-does-it-cost-to-tint-car-windows-ireland", "publisher": "South East Window Tinting (shop)", "date": "2026", "sourceType": "primary", "confirmed": false }, { "url": "https://www.cartint.ie/", "publisher": "CarTint.ie (shop)", "date": null, "sourceType": "primary", "confirmed": false } ] },
+      { "region": "Ontario (GTA)", "currency": "CAD", "value": "Standard sedan $250-$400 installed. By film: dyed $100-$250, carbon $200-$400, ceramic $400-$800+.", "source": { "url": "https://westsidepro.ca/window-tinting-cost-ontario/", "publisher": "Westside Pro (shop blog)", "date": "2026", "sourceType": "secondary", "confirmed": false } },
+      { "region": "British Columbia (Vancouver)", "currency": "CAD", "value": "Most sedans $250-$400 for ceramic; rear windows plus back glass $299 dyed / $449 ceramic (shop price).", "source": { "url": "https://www.inspireautostudio.com/blog/window-tint-cost-vancouver", "publisher": "Inspire Auto Studio (shop)", "date": "2026", "sourceType": "primary", "confirmed": false } },
+      { "region": "Mexico City", "currency": "MXN", "value": "Compact car: conventional dyed film 600-1,200; metallic 1,000-2,000; nano-carbon 1,500-2,800; nano-ceramic 2,500-4,500 (over 5,000 on SUVs). Typical average 1,500-4,000.", "source": { "url": "https://solex.mx/cual-es-el-precio-de-polarizados-para-autos-guia-completa-2026/", "publisher": "Solex (film retailer guide) and polarizadoautoscdmx.com", "date": "2026", "sourceType": "secondary", "confirmed": false } }
+    ]
+  },
+
+  "exhaust": {
+    "jurisdictions": [
+      {
+        "jurisdiction": "New York State",
+        "law": "VTL 375(31), 31-a, 31-b, 32; VTL 381(11)-(13); VTL 303(e)(3). Amended by Chapter 527 of the Laws of 2021 (the SLEEP Act, 'Stop Loud and Excessive Exhaust Pollution'), signed 2021-10-29, effective 2022-04-01.",
+        "rule": "No cut-out, bypass or similar device; no person may modify a muffler or exhaust so it is louder than the system originally installed. New 31(b): no person may sell, offer for sale or install a cut-out, bypass or similar noise-amplifying device.",
+        "fineDriver": { "currency": "USD", "max": 150, "note": "A driver's own modified exhaust under 31(a) falls under the general 375(32)(a) cap: fine up to $150 and/or up to 30 days." },
+        "fineSellerInstaller": { "currency": "USD", "max": 1000, "note": "375(32)(b): up to $1,000 and/or up to 30 days for violating 31(b), 31-a or 31-b (selling/offering/installing noise-amplifying devices; motorcycle straight pipes)." },
+        "motorcycleOperation": { "currency": "USD", "max": 500, "note": "VTL 381(13): up to $500 for operating an excessively loud motorcycle (381(11), (12))." },
+        "shopPenalty": "Inspection station license or inspector certificate suspended or revoked, or renewal refused, on a third or subsequent willful violation within 18 months of the rule requiring motorcycle muffler/exhaust inspection (15 NYCRR 79.28(c)). Civil penalties may be added on top.",
+        "inspection": "Rejected at safety inspection if the vehicle has no muffler, exhaust pipe or tailpipe, a gutted, altered or patched muffler, or exhaust noise 'appreciably greater than mechanical noise of fan and valves'.",
+        "sources": [
+          { "url": "https://www.ejustice.ny.gov/LawEnforcement/docs/dmv/P3Chapter 527 of the Laws of 2021 Exhaust Equipment Violations and Fines.pdf", "publisher": "NY DMV memo 'P' 3 (2022) with the chapter text attached", "date": "2022-03-22", "sourceType": "primary", "confirmed": true },
+          { "url": "https://dmv.ny.gov/forms/cr79.pdf", "publisher": "NY DMV (CR-79) inspection reject criteria, exhaust system (amended 9/1/04)", "date": "2026-05", "sourceType": "primary", "confirmed": true }
+        ]
+      },
+      {
+        "jurisdiction": "California",
+        "law": "Vehicle Code 27150, 27151, 40610 (as amended by AB 1824, 2018)",
+        "rule": "27151(a): no modification that makes the exhaust louder so the vehicle breaks 27150 or the Article 2.5 limits; no operating such a vehicle. 27151(b): for vehicles under 6,000 lb GVWR (not motorcycles), 95 dB(A) or less when tested to the current SAE standard complies.",
+        "noiseLimit": { "dBA": 95, "testStandard": "SAE J1492 (used at BAR referee centers; the statute says 'the most current SAE International standard')" },
+        "fixItTicket": "Since 2019-01-01 (AB 1824), officers may cite 27150(a)/27151(a) violations with a fine rather than only a correctable 'fix-it' notice to correct. The fine amount was not found at a primary source.",
+        "referee": "The Bureau of Automotive Repair's Smog Check Referee Program tests cited vehicles for exhaust noise to SAE J1492 and issues certificates of compliance only to vehicles cited under 27150 or 27151.",
+        "sources": [
+          { "url": "https://california.public.law/codes/vehicle_code_section_27151", "publisher": "California.Public.Law (text of VC 27151)", "date": "2025", "sourceType": "secondary", "confirmed": true },
+          { "url": "https://bar.ca.gov/pdf/legislation-and-regulations-update-1.17.19.pdf", "publisher": "California Bureau of Automotive Repair", "date": "2019-01-17", "sourceType": "primary", "confirmed": true }
+        ]
+      },
+      {
+        "jurisdiction": "Connecticut",
+        "law": "Connecticut General Statutes 14-80; Public Act 26-63",
+        "rule": "Mufflers must prevent excessive, unusual or unnecessary noise; no modification that makes the exhaust louder than the original muffler; no one (including dealers and repairers) may install, and no one may use, a gutted or baffle-less muffler, cutout or straight exhaust, except in a race or exhibition.",
+        "fine": { "currency": "USD", "amountUntil20260930": 150, "amountFrom20261001": 300, "note": "$150 per offense doubles to $300 on 2026-10-01 under Public Act 26-63. A 2024 proposal for $1,000 was not enacted." },
+        "sources": [
+          { "url": "https://codes.findlaw.com/ct/title-14-motor-vehicles-use-of-the-highway-by-vehicles-gasoline/ct-gen-st-sect-14-80/", "publisher": "FindLaw (text of CGS 14-80)", "date": null, "sourceType": "secondary", "confirmed": true },
+          { "url": "https://ctnewsjunkie.com/2026/09/23/several-new-laws-take-effect-oct-1-in-connecticut/", "publisher": "CT News Junkie", "date": "2026-09-23", "sourceType": "secondary", "confirmed": true }
+        ]
+      },
+      {
+        "jurisdiction": "Great Britain",
+        "law": "Road Vehicles (Construction and Use) Regulations 1986 reg. 54; DVSA MOT inspection manual sections 8.1.1 and 8.2.1.1",
+        "rule": "Reg. 54: a silencer 'shall not after the date of manufacture be altered so as to increase the noise made by the escape of exhaust gases'.",
+        "motFailure": "Major defect: exhaust noise in excess of that expected from a comparable vehicle with standard equipment (assessed around 2,500 rpm); any part of the noise suppression system insecure (dangerous if likely to detach). Major defect: manufacturer-fitted emission control equipment (e.g., catalytic converter) missing, obviously modified or obviously defective, checked on vehicles from September 2002 onward.",
+        "fine": null,
+        "sources": [
+          { "url": "https://www.legislation.gov.uk/uksi/1986/1078/regulation/54", "publisher": "legislation.gov.uk", "date": null, "sourceType": "primary", "confirmed": true },
+          { "url": "https://www.gov.uk/guidance/mot-inspection-manual-for-private-passenger-and-light-commercial-vehicles/8-nuisance", "publisher": "GOV.UK / DVSA", "date": null, "sourceType": "primary", "confirmed": true }
+        ]
+      },
+      {
+        "jurisdiction": "Ireland",
+        "rule": null,
+        "note": "Not researched to a primary source in this pass. The NCT checks exhaust condition and emissions; a specific noise rule and fine were not found."
+      },
+      {
+        "jurisdiction": "Ontario",
+        "rule": null,
+        "note": "HTA s. 75 requires a muffler; the statute page could not be retrieved and the set fine was not found."
+      },
+      {
+        "jurisdiction": "British Columbia",
+        "law": "Motor Vehicle Act Regulations s. 7.03",
+        "rule": "Every combustion-engine vehicle needs a muffler that cools and expels exhaust without excessive noise; no disconnected muffler, removed baffle plates, widened outlet, or device that increases noise or lets flame out of the exhaust.",
+        "fine": null,
+        "sources": [ { "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/26_58_04", "publisher": "BC Laws", "date": null, "sourceType": "primary", "confirmed": true } ]
+      },
+      {
+        "jurisdiction": "Mexico City",
+        "law": "Reglamento de Tránsito CDMX art. 43 fr. V (and art. 46 on silencers)",
+        "rule": "Prohibits modifying the exhaust gas system to cause excessive noise; a muffler (silenciador) must be fitted and working.",
+        "fine": { "currency": "MXN", "uma": [20, 25, 30], "value2026": [2346.20, 2932.75, 3519.30], "note": "Computed at UMA 117.31." },
+        "sources": [ { "url": "https://mcontreras.gob.mx/wp-content/uploads/2026/01/reglamento-de-transito-cdmx.pdf", "publisher": "Reglamento de Tránsito CDMX", "date": "2026-01", "sourceType": "primary", "confirmed": true } ]
+      }
+    ],
+    "prices": [
+      { "region": "United States", "currency": "USD", "value": "Cat-back system parts: aftermarket about $220-$840 (OEM-branded $620-$1,190); premium stainless/mandrel-bent $800-$3,000. Installation labor: about $100-$300 at a muffler shop (bolt-on 1.5-2 hours; more if welding/fabrication). Typical installed total $650-$1,500.", "sources": [ { "url": "https://automotoflux.com/engine-parts/how-much-does-it-cost-to-get-an-exhaust-installed", "publisher": "AutoMotoFlux", "date": "2026", "sourceType": "secondary", "confirmed": false }, { "url": "https://www.thepricer.org/car-exhaust-install-cost/", "publisher": "The Pricer", "date": null, "sourceType": "secondary", "confirmed": false } ] },
+      { "region": "UK, Ireland, Canada, Mexico", "value": null, "note": "Not researched in this pass." }
+    ]
+  },
+
+  "lift": {
+    "jurisdictions": [
+      {
+        "jurisdiction": "California",
+        "law": "Vehicle Code 24008.5",
+        "rule": "Maximum frame height (ground to lowest point of the frame, unladen, on level ground, midway between the front and second axles): passenger vehicles (not housecars) 23 inches; other vehicles by GVWR: up to 4,500 lb 27 in, 4,501-7,500 lb 30 in, 7,501-10,000 lb 31 in. The lowest part of the body floor may be no more than 5 inches above the top of the frame (limits body lifts).",
+        "sources": [ { "url": "https://codes.findlaw.com/ca/vehicle-code/veh-sect-24008-5/", "publisher": "FindLaw (text of VC 24008.5)", "date": null, "sourceType": "secondary", "confirmed": true } ]
+      },
+      {
+        "jurisdiction": "New York State",
+        "rule": null,
+        "note": "No lift, frame-height or bumper-height rule found in VTL 375 or in the DMV inspection regulations (CR-79 searched for 'height', 'bumper', 'raised', 'lowered'; no hit). Lift-law websites claim bumper and frame limits for NY but cite no statute, so they are not used. Overall vehicle height limit 13 ft 6 in (general dimension law)."
+      },
+      {
+        "jurisdiction": "Connecticut",
+        "law": "Regulations of Connecticut State Agencies 14-137-25",
+        "rule": "No device or equipment substitution may raise the sprung portion more than 4 inches above the manufacturer's unladen height, or lower it so ground clearance to the sprung portion is under 4 inches. Suspension components must match manufacturer performance standards and spring rates; same-size tires on an axle; no reduction in wheel track.",
+        "sources": [ { "url": "https://www.law.cornell.edu/regulations/connecticut/Regs-Conn-State-Agencies-SS-14-137-25", "publisher": "Cornell LII (text of Conn. Agencies Regs. 14-137-25)", "date": null, "sourceType": "secondary", "confirmed": true } ],
+        "note": "A 30-inch bumper-height figure appears on lift-law sites but is not in this regulation; not used."
+      },
+      {
+        "jurisdiction": "Great Britain",
+        "rule": "No statutory ride-height or lift limit found. The car must stay roadworthy; the MOT tests suspension condition and security and headlamp aim. The insurer must be told (see insurance).",
+        "sources": [ { "url": "https://stanceauto.co.uk/uk-car-modification-legal-guide-2026", "publisher": "Stance Auto (secondary)", "date": "2026", "sourceType": "secondary", "confirmed": false } ]
+      },
+      {
+        "jurisdiction": "Ireland",
+        "rule": null,
+        "note": "No specific lift rule found; must pass NCT and be declared to the insurer."
+      },
+      {
+        "jurisdiction": "Ontario",
+        "rule": null,
+        "note": "No Ontario lift or bumper-height rule found. A 400-500 mm passenger-car bumper-height rule often attributed to Ontario is actually Alberta Reg. 122/2009. Overall height limit 4.15 m (HTA 109(14))."
+      },
+      {
+        "jurisdiction": "British Columbia",
+        "law": "Motor Vehicle Act Regulations Division 25 (ss. 25.20-25.21)",
+        "rule": "A vehicle whose suspension height is changed by more than 10 cm (about 4 inches) up or down from the manufacturer's specification may not be driven, operated or parked on a highway until it passes a designated inspection facility and gets an approved certificate of mechanical condition.",
+        "sources": [ { "url": "https://rcmp.ca/en/bc/mission/services-and-information/traffic-services/faqs", "publisher": "RCMP Mission Detachment (BC)", "date": null, "sourceType": "primary", "confirmed": true }, { "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/26_58_07", "publisher": "BC Laws", "date": null, "sourceType": "primary", "confirmed": false } ]
+      },
+      {
+        "jurisdiction": "Mexico City",
+        "rule": null,
+        "note": "No lift or height rule found in the Reglamento de Tránsito."
+      }
+    ],
+    "prices": [
+      { "region": "United States", "currency": "USD", "value": "Leveling kit (about 2 in): parts $50-$500, labor $150-$400, typical total $400-$900. 3-4 in suspension lift: $1,500-$4,000 installed (some guides $2,500-$5,500), labor $500-$1,500. Off-road shop labor $100-$200 per hour.", "sources": [ { "url": "https://www.jdpower.com/cars/shopping-guides/how-much-does-it-cost-to-lift-a-truck", "publisher": "J.D. Power", "date": null, "sourceType": "secondary", "confirmed": false }, { "url": "https://americanfusionwheels.com/blogs/news/lift-kit-cost-pricing-guide", "publisher": "American Fusion Wheels", "date": null, "sourceType": "secondary", "confirmed": false } ] },
+      { "region": "UK, Ireland, Canada, Mexico", "value": null, "note": "Not researched in this pass." }
+    ]
+  },
+
+  "insurance": {
+    "mustDeclare": [
+      { "jurisdiction": "Great Britain", "value": "Yes in practice. Aviva: always tell your insurer about changes you plan to make or that were made before purchase; not telling can lead to a cancelled policy or a denied claim. Performance, suspension, drive train, brake, steering, induction and exhaust changes must be disclosed. Cosmetic changes such as window tint 'generally won't affect' Aviva's price.", "legalFramework": "Consumer Insurance (Disclosure and Representations) Act 2012: the consumer must take reasonable care to answer the insurer's questions. Deliberate or reckless misrepresentation lets the insurer treat the policy as if it never existed; a careless one gets a proportionate remedy (e.g., claim reduced or premium adjusted).", "sources": [ { "url": "https://www.aviva.co.uk/insurance/motor/car-insurance/knowledge-centre/car-modifications-and-insurance/", "publisher": "Aviva (published 2024-07-09, updated 2026-05-14)", "date": "2026-05-14", "sourceType": "primary", "confirmed": true }, { "url": "https://www.legislation.gov.uk/ukpga/2012/6", "publisher": "legislation.gov.uk", "date": null, "sourceType": "primary", "confirmed": false } ] },
+      { "jurisdiction": "Ireland", "value": "Yes. Citizens Information: you must disclose all relevant information when buying or renewing, otherwise the policy may later be deemed null and void; if unsure, disclose and let the insurer decide.", "note": "Ireland's Consumer Insurance Contracts Act 2019 reframed disclosure around answering the insurer's specific questions with proportionate remedies; not verified in this pass.", "sources": [ { "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/motor-tax-and-insurance/motor-insurance/", "publisher": "Citizens Information Board", "date": null, "sourceType": "primary", "confirmed": true } ] },
+      { "jurisdiction": "United States (NY, CT, CA)", "value": "No statute requiring disclosure found. Insurer practice: Progressive covers the first $1,000 of aftermarket parts under comprehensive/collision; more needs Custom Parts and Equipment coverage (up to $5,000) and receipts or an appraisal.", "sources": [ { "url": "https://www.progressive.com/answers/insurance-for-modified-cars/", "publisher": "Progressive", "date": null, "sourceType": "primary", "confirmed": false } ] },
+      { "jurisdiction": "Ontario, British Columbia, Mexico City", "value": null, "note": "Not researched in this pass." }
+    ],
+    "premiumEffect": [
+      { "region": "United Kingdom", "value": "cinch study (identical quotes in 10 cities, one modification changed at a time): suspension changes, body kit, exhaust changes and engine remaps +15.93% on average each; tinted windows and rear spoiler +12.10%; respray, air filter, uprated brakes, side skirts +4.52%; alloy wheels, wheel trims, driving lights +0.79%. London average +8.88%, Belfast and Bristol about +7%.", "source": { "url": "https://insurance-edge.net/2025/07/28/which-car-mods-bump-up-your-insurance-costs/", "publisher": "Insurance Edge reporting cinch research", "date": "2025-07-28", "sourceType": "secondary", "confirmed": true }, "note": "Conflicts with Aviva's statement that tint generally won't raise its prices; insurers differ." },
+      { "region": "Other jurisdictions", "value": null, "note": "No published premium figures found." }
+    ]
+  },
+
+  "uncertain": [
+    "Ireland: RSA tint page blocked retrieval; 65% figure rests on RSA search-result text plus regional press. Garda fixed-charge amount and penalty points for tint not confirmed.",
+    "Ontario: the 70% front-side figure is attributed by secondary sources to the MTO inspection standard; the HTA itself uses 'substantially obscures'. The 2017 windshield ban and 75 mm visor strip not verified at e-Laws. $110 set fine is from a non-official site.",
+    "Mexico City: '20%' is phrased as darkening; conversion to a VLT number is not published. The windshield 70% figure is from secondary sources, not the Reglamento. UMA 2026 = 117.31 MXN taken from search summaries of INEGI's release.",
+    "California: statute text of 26708 not fetched (figures consistent across secondary sources); tint fine total and exhaust fine amount after AB 1824 not found; medical exemption terms not verified.",
+    "Connecticut: tint fine amount not in retrieved statute text ($100-$150 is secondary); windshield rule (AS-1 line) is secondary. The $300 muffler fine from 2026-10-01 is from a news report of PA 26-63, not the act text.",
+    "UK: tint fixed-penalty amount (£50 vs £100, endorsable or not) not published by GOV.UK; secondary sources disagree.",
+    "NY: 'per window' fine practice and surcharges are from a law firm; the statute caps at $150 per violation.",
+    "Prices are all secondary or shop-published and vary by vehicle, film and region; exhaust and lift prices were researched for the US only.",
+    "Ireland, Ontario exhaust rules/fines and all Canadian/Mexican insurance-disclosure rules were not researched."
+  ]
+}

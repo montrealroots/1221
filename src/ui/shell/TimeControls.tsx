@@ -12,7 +12,7 @@ import { Modal } from '@/ui/components/primitives';
 import {
   suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, LOOKING_AFTER, lookAfterRefusal, minutesFor, costFor, labelFor, type LookAfter,
 } from '@/engine/systems/life';
-import { boatOf } from '@/engine/systems/boats';
+import { boatOf, charterAt } from '@/engine/systems/boats';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import {
@@ -505,7 +505,7 @@ function LookAfterMenu() {
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">
-          {(Object.keys(LOOKING_AFTER) as LookAfter[]).filter((action) => action !== 'boat' || boatOf(sim.player)).map((action) => {
+          {(Object.keys(LOOKING_AFTER) as LookAfter[]).filter((action) => (action !== 'boat' || boatOf(sim.player)) && (action !== 'charter' || charterAt(sim.player.currentLocationId))).map((action) => {
             const { does } = LOOKING_AFTER[action];
             const label = labelFor(sim, action);
             const minutes = minutesFor(sim, action);

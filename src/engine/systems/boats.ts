@@ -25,7 +25,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
 import { FUEL } from '../content/vehiclefees';
-import { BOAT_INSURANCE_USD, BOAT_LOAN, BOAT_RULES, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, type BoatState } from '../content/boats';
+import { BOAT_INSURANCE_USD, BOAT_LOAN, BOAT_RULES, CHARTERS, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, type BoatState, type Charter } from '../content/boats';
 import { inTheBank, owe, payFromBank } from './household';
 import { livingIn } from './homes';
 import { amortized, jurisdictionOf } from './vehicles';
@@ -194,4 +194,23 @@ export function carryBoat(sim: Simulation, person: Person, fromCity: string, toC
   boat.state = state;
   boat.registeredUntil = sim.now + BOAT_RULES[state].registration.years * YEAR;
   delete boat.seasonPaid;
+}
+
+/** A crewed charter where one is (`CHARTERS`): by the town, or by its state. */
+export function charterAt(cityId: string): Charter | undefined {
+  return CHARTERS[cityId] ?? CHARTERS[CITIES.get(cityId)?.parentId ?? ''];
+}
+
+/** What a charter costs where they are, its gratuity with it, in the save's money. */
+export function charterCost(sim: Simulation, cityId: string): Money | undefined {
+  const c = charterAt(cityId);
+  return c ? usd(sim, c.usd * (1 + c.tip)) : undefined;
+}
+
+/** Why a boat can't be chartered now, or nothing where it can (the weather is `life.ts`'s). */
+export function charterRefusal(sim: Simulation, person: Person): string | undefined {
+  const cost = charterCost(sim, person.currentLocationId);
+  if (cost === undefined) return 'No captain’s charter is kept where you are.';
+  if (inTheBank(sim, person) < cost) return 'You can’t afford it.';
+  return undefined;
 }

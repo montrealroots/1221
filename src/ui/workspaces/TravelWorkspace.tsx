@@ -62,7 +62,9 @@ export function TravelWorkspace() {
   const car = cars.find((v) => `car:${v.id}` === by);
   // A car rented where they'll be (`systems/rentals.ts`, from 2026-09-29).
   const rented = toCity && byRoad(fromCity, toCity) ? rentalAt(person, fromCity, day) : undefined;
-  const flies = Boolean(person.pilot) && by === 'fly';
+  // A pilot flies themselves; an owner who isn't one hires a pilot for their own plane.
+  const ownsPlane = Boolean(person.aircraft && person.aircraft.soldAt === undefined);
+  const flies = (Boolean(person.pilot) || ownsPlane) && by === 'fly';
   const mode = route ? route.id : car ? `car:${car.id}` : rented && by === 'rental' ? 'rental' : flies ? 'fly' : undefined;
   const slots = route ? departureHours(route).map((h, i) => ({ i, word: clock(h) })) : car || mode === 'rental' ? Array.from({ length: 15 }, (_, i) => ({ i, word: clock(7 + i) })) : AIR.departureHours.map((h, i) => ({ i, word: `${SLOT_WORD[i]}, ${clock(h)}` }));
   const pick = Math.min(slot, slots.length - 1);
@@ -122,7 +124,7 @@ export function TravelWorkspace() {
                   {trains.map((r) => <option key={r.id} value={r.id}>{r.operator === r.service ? r.service : `${r.operator}, ${r.service}`}</option>)}
                   {cars.map((v) => <option key={v.id} value={`car:${v.id}`}>Your {modelById(v.modelId)?.make} {modelById(v.modelId)?.model}</option>)}
                   {rented && <option value="rental">Your Rental Car</option>}
-                  {person.pilot && <option value="fly">Fly Yourself</option>}
+                  {(person.pilot || ownsPlane) && <option value="fly">{person.pilot ? 'Fly Yourself' : 'Your Plane, A Hired Pilot'}</option>}
                 </select>
               </div>
               <div className="field">
@@ -320,7 +322,7 @@ function OwnPlane() {
           ? <Gated feature="aircraft.sell" className="btn btn-sm btn-ghost" onClick={() => { if (run('aircraft.sell', {}).ok) toast('Sold.', 'positive'); }}>Sell The Plane</Gated>
           : <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', {}).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>Buy A Plane</Gated>}
       </div>
-      {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it does. Until you’re a pilot it sits, and its keeping is paid.</p> : null}
+      {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it yourself does. Until you’re a pilot, By offers it flown by a hired commercial pilot, at $450 a half day and $900 a full one.</p> : null}
     </div>
   );
 }

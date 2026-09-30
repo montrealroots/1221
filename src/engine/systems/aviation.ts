@@ -64,8 +64,24 @@ export function trainRefusal(sim: Simulation, person: Person): string | undefine
 }
 
 /** A leg flown oneself, the town's nearest airport to the other's, or why not. */
+/**
+ * A pilot hired to fly one's own plane, from 2026-09-30 (researched in
+ * `docs/research/world/research-charter.json`). A private pilot may not be
+ * paid (14 CFR 61.113(a)); a commercial pilot may (61.133(a)(1)). The one
+ * published rate for a single-engine piston is an instructor's at Mike
+ * Goulian Aviation in Massachusetts, flying with the owner: $450 a half day,
+ * $900 a full one, one and a half times past eight hours. SLATE takes a half
+ * day to four hours. The pilot's own travel, meals and lodging are the
+ * customer's and aren't kept.
+ */
+export const HIRED_PILOT_USD = { half: 450, full: 900, overtime: 1.5, halfHours: 4, fullHours: 8 } as const;
+
+/** The pilot's fee for a flight of so many hours, in dollars. */
+export const hiredPilotUsd = (hours: number): number => (hours <= HIRED_PILOT_USD.halfHours ? HIRED_PILOT_USD.half : hours <= HIRED_PILOT_USD.fullHours ? HIRED_PILOT_USD.full : HIRED_PILOT_USD.full * HIRED_PILOT_USD.overtime);
+
 export function planFlyYourself(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
-  if (!person.pilot) return 'Flying yourself asks a pilot certificate.';
+  const ownsHere = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.at === fromCity;
+  if (!person.pilot && !ownsHere) return 'Flying yourself asks a pilot certificate.';
   const from = airportsFor(fromCity)[0]?.airport;
   const to = airportsFor(toCity)[0]?.airport;
   if (!from || !to || from.country !== 'US' || to.country !== 'US') return 'A plane is rented on an FAA certificate in America only.';
@@ -78,10 +94,12 @@ export function planFlyYourself(sim: Simulation, person: Person, fromCity: strin
   const p = zonedParts(day, zone);
   const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
   // One's own plane, where it is, flies for its fuel; otherwise a school's, by the hour.
-  const own = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.at === fromCity;
-  const fare = own ? Math.round(ownHourCost(sim, fromCity) * hours) : usd(sim, Math.round(hours * PILOT_TRAINING.ratePerHour * 100));
+  const own = ownsHere;
+  // Not a pilot, the owner hires one to fly it.
+  const hired = own && !person.pilot;
+  const fare = own ? Math.round(ownHourCost(sim, fromCity) * hours) + (hired ? usd(sim, hiredPilotUsd(hours) * 100) : 0) : usd(sim, Math.round(hours * PILOT_TRAINING.ratePerHour * 100));
   // Its own kind of leg, flown oneself: no airline's delays or round-trip fares touch it.
-  return [{ mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round(hours * 60) * 60_000, fare, routeId: own ? 'own' : 'rent', basis: own ? `${Math.round(nm)} nautical miles in your own Cessna 172 at 124 knots, ${hours.toFixed(1)} hours at 10.2 gallons an hour of 100LL at the region’s price; the drive to and from the airports isn’t kept.` : `${Math.round(nm)} nautical miles flown yourself in a rented Cessna 172 at Textron’s 124 knots, ${hours.toFixed(1)} hours at the median school’s $176 an hour with fuel; the drive to and from the airports isn’t kept.` }];
+  return [{ mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round(hours * 60) * 60_000, fare, routeId: own ? 'own' : 'rent', basis: own ? `${Math.round(nm)} nautical miles in your own Cessna 172 at 124 knots, ${hours.toFixed(1)} hours at 10.2 gallons an hour of 100LL at the region’s price${hired ? `, and a hired commercial pilot’s $${hiredPilotUsd(hours).toLocaleString('en-US')} for the day` : ''}; the drive to and from the airports isn’t kept.` : `${Math.round(nm)} nautical miles flown yourself in a rented Cessna 172 at Textron’s 124 knots, ${hours.toFixed(1)} hours at the median school’s $176 an hour with fuel; the drive to and from the airports isn’t kept.` }];
 }
 
 function scheduleMonth(sim: Simulation, person: Person): void {
@@ -153,7 +171,9 @@ export function registerAviation(sim: Simulation): void {
  * 2,000 hours or twelve years (SI 1009), the middle of a field overhaul's
  * $32,000 to $53,000 and the $7,500 to take it out and put it back
  * (secondary). A plane's engine is taken as just overhauled when it's
- * bought. Owning asks no certificate; flying it does.
+ * bought. Owning asks no certificate; flying it oneself does. Until
+ * 2026-09-30 an owner who wasn't a pilot kept it on the ground; now they hire
+ * a commercial pilot to fly it (`HIRED_PILOT_USD`).
  */
 export const OWN_172 = {
   priceUsd: 121_847, gph: 10.2,
