@@ -624,6 +624,19 @@ function offerManagement(sim: Simulation, person: Person, managers: string[], wh
  * 2026-09-29: until then a British graduate out of permission to work in the
  * United States had nowhere to go.
  */
+/**
+ * Where a person out of permission to work where they live goes home to, from
+ * 2026-10-01: their own country's acting city where SLATE's business has one
+ * (London, Dublin, Mexico City), or the town they were born in. Until then a
+ * Mexican born in Mexico City had no home town, as the business's own cities
+ * are left out of it, and a played life stayed in New York out of status.
+ */
+export function homeAbroadOf(person: Person): string | undefined {
+  const own = isoOfCountry(person.citizenshipId);
+  if (!own || own === 'US') return undefined;
+  return (CAREER_CITIES as readonly string[]).find((id) => isoOfCity(id) === own) ?? homeTownOf(person);
+}
+
 export function homeTownOf(person: Person): string | undefined {
   const born = person.homeRegionId;
   if (!born || !CITIES.get(born)) return undefined;

@@ -24,7 +24,7 @@ import {
 } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
 import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
-import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal } from '@/engine/systems/permission';
+import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal, usStatusEnds } from '@/engine/systems/permission';
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
 import { WORK_RULES } from '@/engine/content/workrules';
 
@@ -253,6 +253,7 @@ export function WorkPane() {
   const usd = (n: number) => money(inSaveMoney(sim, Math.round(n * 100), 'USD'));
   const here = workRefusal(person, person.currentLocationId, sim.now, sim.now);
   const end = programEnd(person);
+  const status = usStatusEnds(person);
   const optNo = optRefusal(sim, person);
   const o1No = o1Refusal(sim, person);
   const evidence = o1Evidence(sim, person);
@@ -267,9 +268,10 @@ export function WorkPane() {
     <div className="col gap-5">
       <Panel title="Permission To Work" subtitle="Apart from permission to enter">
         <div className="col gap-3">
-          <div className="grid grid-3">
+          <div className="grid grid-4">
             <Stat label="Here" value={here ? 'Not Permitted' : 'You May Work'} note={here ?? 'As a citizen, or on what you hold'} />
             <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? 'OPT is filed from 90 days before to 60 after' : 'For a student on an F-1'} />
+            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? 'Since ' + formatDate(person.usOutOfStatus, sim.zone) + '; the Visa Waiver Program is closed to you' : status !== undefined ? 'With its grace after permission ends; stay past it and you’re out of status' : end ? 'While you study, or while an application is decided' : 'For a student on an F-1'} />
             <Stat label="O-1 Evidence" value={`${evidence.filter((e) => e.met).length} Of ${evidence.length}`} note={`USCIS asks ${o1.criteriaNeeded} kinds`} />
           </div>
           <DocumentList kinds={['permit', 'visa']} />

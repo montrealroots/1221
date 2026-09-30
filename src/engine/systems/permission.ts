@@ -18,19 +18,21 @@ import type { Person } from '../domain/model';
 import { MS_DAY, MS_HOUR, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { COUNTRIES } from '../content/geography';
+import { CITIES, COUNTRIES } from '../content/geography';
 import { ENTRY } from '../content/entry';
 import { WORK_RULES } from '../content/workrules';
 import { UNION_HEALTH, type RateSteps } from '../content/career';
 import { ATTRIBUTES, attributesOf } from './attributes';
 import { payFromBank } from './household';
-import { careerOf, workDays, type Booking } from './career';
+import { careerOf, homeAbroadOf, workDays, type Booking } from './career';
 import { earningsOf } from './earnings';
 import { STARTING, addYears, documentsOf, inForce, isoOfCity, isoOfCountry, numberFor, theCountry, type PersonDocument } from './documents';
 
 export const PERMISSION_KIND = 'documents.permission';
 export const OPT_WEEK_KIND = 'documents.opt_week';
+export const US_STATUS_KIND = 'documents.us_status';
 
+const cityLabel = (id: string): string => CITIES.get(id)?.name ?? id;
 const SAG_THRESHOLD = UNION_HEALTH.sagThreshold as RateSteps;
 
 function inSave(sim: Simulation, amount: number, currency: string): Money {
@@ -88,6 +90,7 @@ export function workRefusal(person: Person, cityId: string, from: Instant, to: I
   if (iso === 'US') {
     if (f1Of(person) && studying(person)) return 'On an F-1 visa a student works off campus only on training the school authorizes, and Yale’s program has none: not while you study.';
     const end = programEnd(person);
+    if (person.usOutOfStatus !== undefined && isoOfCity(person.home?.cityId ?? person.currentLocationId) === 'US') return 'You’re out of status in the United States: no permission to work can be had while you stay.';
     if (end !== undefined && documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && d.status === 'pending')) return 'Your application is being decided: no work until it’s approved.';
     if (end !== undefined && from < end + WORK_RULES.opt.windowAfterDays * MS_DAY && !documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US')) return `Work in ${there} needs permission: apply for OPT, which runs twelve months from your degree.`;
     return `Work in ${there} needs permission you don’t hold for those days: an O-1, which a US agency petitions for.`;
@@ -178,9 +181,71 @@ export function o1Refusal(sim: Simulation, person: Person): string | undefined {
   // An American agency: until 2026-09-29 a Dublin agency petitioned the US for its client, every year, at the fees.
   if ((AGENCIES.find((x) => x.id === careerOf(person).agencyId)?.countryId ?? 'us') !== 'us') return 'A US employer or agent petitions for an O-1: your agency isn’t American.';
   if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && d.name.startsWith('O-1') && d.status === 'pending')) return 'A petition is being decided.';
+  // Out of status, an O-1 is issued at a consulate at home (INA 222(g)): SLATE has the petition wait for the move.
+  if (person.usOutOfStatus !== undefined && isoOfCity(person.home?.cityId ?? person.currentLocationId) === 'US') return 'You’re out of status: an O-1 would be issued at a consulate at home, so go home first.';
   const held = documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.name.startsWith('O-1') && inForce(d, sim.now));
   if (held && held.expiresAt! - sim.now > 183 * MS_DAY) return `Your O-1 runs to ${formatDate(held.expiresAt!, sim.zone)}; it’s extended in its last six months.`;
   return undefined;
+}
+
+// ---------------------------------------------------------------------------
+// Status, and its end
+// ---------------------------------------------------------------------------
+
+/**
+ * A foreign graduate's status in the United States, from 2026-10-01
+ * (`docs/research/world/research-workpermission.json`). A student's F-1
+ * status holds while they study and for 60 days after the program ends
+ * (8 CFR 214.2(f)(5)(iv)), time to apply for OPT, move on or leave; OPT's for
+ * 60 days after it runs out, but not after it's ended for too long without
+ * work, a violation that leaves no grace; an O-1's for 10 days past its term
+ * (8 CFR 214.1(l)(1)). An application pending holds it. When permission ends
+ * the person is told the day their status does, and offered the move home;
+ * staying past it, they're out of status. That closes the Visa Waiver Program
+ * to them for good (INA 217(a)(7)), so a British or Irish citizen's ESTA is
+ * refused, and voids the visa they hold (INA 222(g)); work, and an O-1, wait
+ * for a consulate at home. Unlawful presence, and the three- and ten-year
+ * bars it brings, isn't counted: a student admitted for the duration of
+ * status accrues none until the government finds the violation (Guilford
+ * College v. Wolf, 2020), which SLATE doesn't draw. Until 2026-10-01 a
+ * graduate out of permission stayed on in New York, refused every job,
+ * with nothing said, and a played life starved there.
+ */
+export const STATUS_GRACE_DAYS = { f1: 60, opt: 60, o1: 10 } as const;
+
+const usPermits = (person: Person) => documentsOf(person).filter((d) => d.kind === 'permit' && d.destination === 'US');
+
+/** When their US status ends, grace and all; or nothing for a citizen, someone never a student here, a student still, or one whose application is pending. */
+export function usStatusEnds(person: Person): Instant | undefined {
+  // A citizen never holds an F-1, so has no status to lose.
+  if (!f1Of(person) || studying(person)) return undefined;
+  const permits = usPermits(person);
+  if (permits.some((d) => d.status === 'pending')) return undefined;
+  let ends = (programEnd(person) ?? 0) + STATUS_GRACE_DAYS.f1 * MS_DAY;
+  for (const d of permits) {
+    if (d.status === 'valid' && d.expiresAt !== undefined) ends = Math.max(ends, d.expiresAt + (d.name.includes('OPT') ? STATUS_GRACE_DAYS.opt : STATUS_GRACE_DAYS.o1) * MS_DAY);
+    if (d.endedAt !== undefined) ends = Math.max(ends, d.endedAt);
+  }
+  return ends;
+}
+
+/** The next day their status is looked at: when the permission they hold runs out, or when the grace after it does. */
+function statusCheckAt(sim: Simulation, person: Person): Instant | undefined {
+  if (person.usOutOfStatus !== undefined) return undefined;
+  if (!f1Of(person)) return undefined;
+  const end = programEnd(person) ?? sim.now;
+  const held = usPermits(person).filter((d) => d.status === 'valid' && inForce(d, sim.now)).map((d) => d.expiresAt ?? sim.now);
+  const permission = Math.max(end, ...held);
+  if (permission > sim.now) return permission;
+  const ends = usStatusEnds(person);
+  return ends === undefined ? undefined : Math.max(sim.now, ends);
+}
+
+/** Looks at their status again when it next can change, in place of any look already on the calendar. */
+export function scheduleUsStatus(sim: Simulation, person: Person): void {
+  for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === person.id) sim.timeline.cancel(one.id, sim.now);
+  const at = statusCheckAt(sim, person);
+  if (at !== undefined) sim.schedule({ at, kind: US_STATUS_KIND, label: 'US Status', category: 'system', priority: 5, payload: { personId: person.id } });
 }
 
 // ---------------------------------------------------------------------------
@@ -290,6 +355,7 @@ export function registerPermission(sim: Simulation): void {
       doc.expiresAt = addYears(start, WORK_RULES.opt.months / 12);
       doc.idleDays = 0;
       s.schedule({ at: start + 7 * MS_DAY, kind: OPT_WEEK_KIND, label: 'OPT: A Week', category: 'system', priority: 5, payload: { personId: person.id, documentId: doc.id } });
+      scheduleUsStatus(s, person);
       tell('OPT Approved', `You may work in the United States from ${formatDate(start, s.zone)} to ${formatDate(doc.expiresAt, s.zone)}, with no more than ${WORK_RULES.opt.unemploymentDays} days between jobs in all.`);
       return;
     }
@@ -298,6 +364,7 @@ export function registerPermission(sim: Simulation): void {
       if (shown.length < WORK_RULES.o1.criteriaNeeded) {
         doc.status = 'cancelled';
         tell('O-1 Petition Denied', `USCIS asks at least ${WORK_RULES.o1.criteriaNeeded} kinds of evidence of extraordinary achievement; the petition showed ${shown.length}${shown.length ? `: ${shown.map((e) => e.label).join(', ')}` : ''}. The fees aren’t returned.`);
+        scheduleUsStatus(s, person);
         return;
       }
       const held = documentsOf(person).find((d) => d !== doc && d.kind === 'permit' && d.destination === 'US' && d.name.startsWith('O-1') && inForce(d, s.now));
@@ -306,6 +373,7 @@ export function registerPermission(sim: Simulation): void {
       doc.expiresAt = held ? addYears(held.expiresAt!, WORK_RULES.o1.extensionYears) : addYears(s.now, WORK_RULES.o1.years);
       if (held) held.status = 'cancelled';
       tell('O-1 Approved', `You may work in the United States to ${formatDate(doc.expiresAt, s.zone)}.`);
+      scheduleUsStatus(s, person);
       return;
     }
     const booking = careerOf(person).bookings.find((b) => b.id === doc.bookingId);
@@ -313,6 +381,40 @@ export function registerPermission(sim: Simulation): void {
     doc.issuedAt = s.now;
     doc.expiresAt = booking ? jobSpan(booking).to + 2 * MS_DAY : s.now + 30 * MS_DAY;
     tell('Work Permit Approved', `${doc.name}, for the production, to ${formatDate(doc.expiresAt, s.zone)}.`);
+  });
+
+  sim.onSchedule(US_STATUS_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    if (!person || person.usOutOfStatus !== undefined) return;
+    // Gone home, or never here: nothing to lose.
+    if (isoOfCity(person.home?.cityId ?? person.currentLocationId) !== 'US') return;
+    const ends = usStatusEnds(person);
+    if (ends === undefined) return;
+    const next = statusCheckAt(s, person);
+    const mine = person.id === s.universe.playerId;
+    if (next !== undefined && next > s.now) {
+      // Permission's run out and the grace has begun: say so, once, with the way home.
+      if (ends > s.now && !usPermits(person).some((d) => d.status === 'valid' && inForce(d, s.now)) && mine) {
+        const home = homeAbroadOf(person);
+        const opt = !optRefusal(s, person);
+        s.requireDecision({
+          urgency: 90, category: 'personal', title: 'Your US Status Is Ending',
+          detail: `Your permission to work in the United States has ended, and your status ends ${formatDate(ends, s.zone)}.${opt ? ' OPT can still be applied for before then.' : ''} After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.`,
+          route: '/workspace/papers', dueAt: ends, refType: 'us-status', refId: String(ends),
+          actions: [
+            ...(opt ? [{ label: 'Apply For OPT', commandKind: 'documents.apply_opt', payload: { premium: true } }] : []),
+            ...(home ? [{ label: `Move Home To ${cityLabel(home)}`, commandKind: 'career.relocate', payload: { cityId: home, kind: 'shared' } }] : []),
+          ],
+        });
+      }
+      scheduleUsStatus(s, person);
+      return;
+    }
+    // Stayed past it: out of status.
+    person.usOutOfStatus = ends;
+    const f1 = f1Of(person);
+    if (f1 && f1.status === 'valid') f1.status = 'cancelled';
+    if (mine) s.notify({ category: 'personal', title: 'Out Of Status', body: 'You stayed in the United States past your status. No work can be had here, your US visa is void, and the Visa Waiver Program is closed to you for good. Going home is on the Career screen.', importance: 90, route: '/workspace/career' });
   });
 
   sim.onSchedule(OPT_WEEK_KIND, (item, s) => {
@@ -325,6 +427,9 @@ export function registerPermission(sim: Simulation): void {
     doc.idleDays = (doc.idleDays ?? 0) + idle;
     if (doc.idleDays > WORK_RULES.opt.unemploymentDays) {
       doc.status = 'cancelled';
+      // A violation: the status ends with it, no grace after.
+      doc.endedAt = s.now;
+      scheduleUsStatus(s, person);
       if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'OPT Ended', body: `More than ${WORK_RULES.opt.unemploymentDays} days without work: your OPT has ended, and with it permission to work in the United States.`, importance: 85, route: '/workspace/papers' });
       return;
     }

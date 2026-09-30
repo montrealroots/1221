@@ -91,6 +91,11 @@ async function runSteps() {
         await through();
       }
       await dismiss();
+    } else if (verb === 'tab') {
+      // A workspace's tab, which is a tab and not a button (from 2026-10-01).
+      const t = page.getByRole('tab', { name: new RegExp('^' + arg + '$', 'i') }).first();
+      if (await t.count()) await t.click({ timeout: 3000 }).catch(() => {});
+      else console.log('  (no tab', arg, ')');
     } else if (verb === 'shot') await shoot(arg);
     else console.log('  (unknown step', step, ')');
     await page.waitForTimeout(800);

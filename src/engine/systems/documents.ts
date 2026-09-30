@@ -59,6 +59,8 @@ export interface PersonDocument {
   /** A permission to work tied to one job, and days without work counted against it (`systems/permission.ts`). */
   bookingId?: string;
   idleDays?: number;
+  /** When a permission was ended early for a violation, which leaves no grace after it (from 2026-10-01). */
+  endedAt?: number;
 }
 
 /** A person's papers, kept on them. */
@@ -219,6 +221,8 @@ export function residenceRefusal(person: Person, cityId: string, at: Instant): s
 /** An authorization in force for a destination, on the passport they'd travel on, through a day. */
 export function authorizationFor(person: Person, destination: string, at: Instant, through = at): PersonDocument | undefined {
   const passport = passportOf(person, at);
+  // Out of US status once, the Visa Waiver Program is closed for good (INA 217(a)(7)), an ESTA held with it (from 2026-10-01).
+  if (destination === 'US' && person.usOutOfStatus !== undefined) return undefined;
   return documentsOf(person).find((d) => d.kind === 'authorization' && d.destination === destination && inForce(d, at)
     && (d.expiresAt ?? Infinity) >= through && d.passportId === passport?.id);
 }
@@ -266,6 +270,7 @@ export function authorizationRefusal(person: Person, destination: string, at: In
   const auth = dest.authorizations[rule.authorization]!;
   if (!auth.live) return `${auth.name} isn’t in operation yet.`;
   if (!passportOf(person, at)) return 'An authorization is issued on a passport, and you have none in force.';
+  if (destination === 'US' && person.usOutOfStatus !== undefined) return 'You stayed past your US status once: the Visa Waiver Program is closed to you for good (INA 217(a)(7)), and a visa is applied for at a consulate.';
   if (authorizationFor(person, destination, at)) return 'You hold one in force already.';
   if (documentsOf(person).some((d) => d.kind === 'authorization' && d.destination === destination && d.status === 'pending')) return 'One is being decided.';
   return undefined;

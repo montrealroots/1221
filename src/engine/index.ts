@@ -75,7 +75,7 @@ import { registerUnemployment } from './systems/unemployment';
 import { armCollection, registerTaxReturn } from './systems/taxreturn';
 import { registerDocuments, startingDocuments } from './systems/documents';
 import { registerLicensing } from './systems/licensing';
-import { registerPermission } from './systems/permission';
+import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/permission';
 import { registerJourneys } from './systems/journey';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
@@ -258,6 +258,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   attributesOf(sim, sim.player);
   // The papers the life begins with (`systems/documents.ts`).
   startingDocuments(sim, sim.player);
+  // A foreign student's status looked at when it can next change (`systems/permission.ts`, from 2026-10-01).
+  scheduleUsStatus(sim, sim.player);
   return sim;
 }
 
@@ -269,6 +271,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
   // A save from before papers: the ones the life would have begun with (`startingDocuments`).
   if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
+  // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
+  if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.
   for (const person of Object.values(universe.people)) {
     if (person.craft) upgradeCraft(person.craft);

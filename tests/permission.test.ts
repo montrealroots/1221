@@ -10,10 +10,10 @@ import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { WORK_RULES } from '@/engine/content/workrules';
-import { acceptRefusal, beginCareer, careerOf, type Booking } from '@/engine/systems/career';
-import { addYears, documentsOf, residenceRefusal, type PersonDocument } from '@/engine/systems/documents';
+import { acceptRefusal, beginCareer, careerOf, homeAbroadOf, type Booking } from '@/engine/systems/career';
+import { addYears, authorizationFor, authorizationRefusal, documentsOf, residenceRefusal, type PersonDocument } from '@/engine/systems/documents';
 import { earningsOf } from '@/engine/systems/earnings';
-import { businessDaysOn, o1Evidence, optRefusal, programEnd, workRefusal } from '@/engine/systems/permission';
+import { businessDaysOn, o1Evidence, o1Refusal, optRefusal, programEnd, scheduleUsStatus, usStatusEnds, workRefusal } from '@/engine/systems/permission';
 import { attributesOf } from '@/engine/systems/attributes';
 
 const NY = 'America/New_York';
@@ -101,6 +101,9 @@ describe('OPT', () => {
     sim.advanceBy(14 * MS_DAY);
     expect(opt.status).toBe('cancelled');
     expect(sim.universe.notifications.some((n) => n.title === 'OPT Ended')).toBe(true);
+    // A violation leaves no grace: out of status the day it ended (from 2026-10-01).
+    expect(opt.endedAt).toBeDefined();
+    expect(sim.player.usOutOfStatus).toBe(opt.endedAt);
   }, 60_000);
 
   it('counts days an agency represents them as work, a performer in business', () => {
@@ -184,7 +187,8 @@ describe('an O-1', () => {
     sim.advanceBy(a.value!.readyAt - sim.now + MS_HOUR);
     expect(permit(sim, /O-1/)!.status).toBe('cancelled');
     expect(sim.universe.notifications.some((n) => n.title === 'O-1 Petition Denied' && /showed 0/.test(n.body))).toBe(true);
-    expect(workRefusal(sim.player, 'us-ny-newyork', sim.now, sim.now + MS_DAY)).toMatch(/O-1/);
+    // Two hundred days past the program with no OPT, and denied: out of status (from 2026-10-01).
+    expect(workRefusal(sim.player, 'us-ny-newyork', sim.now, sim.now + MS_DAY)).toMatch(/out of status/);
   });
 });
 
@@ -223,4 +227,65 @@ describe('a production in Canada', () => {
     expect(issued.bookingId).toBe('tor');
     expect(sim.universe.transactions.some((t) => t.category === 'documents' && /at the border/.test(t.memo))).toBe(true);
   }, 60_000);
+});
+
+describe('a graduate’s US status, and its end', () => {
+  it('holds for 60 days after the program, says so with the way home, and past it leaves them out of status: no work, the F-1 void, the ESTA closed', () => {
+    const sim = graduate('status-f1', 5);
+    scheduleUsStatus(sim, sim.player);
+    const end = programEnd(sim.player)!;
+    expect(usStatusEnds(sim.player)).toBe(end + 60 * MS_DAY);
+    sim.advanceBy(10 * MS_DAY);
+    const decision = Object.values(sim.universe.decisions).find((d) => d.title === 'Your US Status Is Ending');
+    expect(decision).toBeDefined();
+    expect(decision!.actions.map((a) => a.label)).toEqual(['Apply For OPT', 'Move Home To London']);
+    expect(sim.player.usOutOfStatus).toBeUndefined();
+    sim.advanceBy(60 * MS_DAY);
+    expect(sim.player.usOutOfStatus).toBe(end + 60 * MS_DAY);
+    expect(documentsOf(sim.player).find((d) => d.id === 'f1')!.status).toBe('cancelled');
+    expect(workRefusal(sim.player, 'us-ny-newyork', sim.now, sim.now + MS_DAY)).toMatch(/out of status/);
+    expect(authorizationRefusal(sim.player, 'US', sim.now)).toMatch(/Visa Waiver Program is closed/);
+    // An ESTA held from before is closed with it.
+    documentsOf(sim.player).push({ id: 'esta', kind: 'authorization', issuer: 'US', name: 'ESTA', number: 'E1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + YEAR, destination: 'US', passportId: 'pp' });
+    expect(authorizationFor(sim.player, 'US', sim.now)).toBeUndefined();
+    sim.player.usOutOfStatus = undefined;
+    expect(authorizationFor(sim.player, 'US', sim.now)).toBeDefined();
+    expect(o1Refusal(sim, sim.player)).toMatch(/A US employer|out of status/);
+  });
+
+  it('holds while OPT runs and 60 days after it, and not at all after OPT ended for time without work', () => {
+    const sim = graduate('status-opt', 5);
+    documentsOf(sim.player).push({ id: 'opt', kind: 'permit', issuer: 'US', name: 'Employment Authorization, OPT', number: 'O1', status: 'valid', issuedAt: sim.now, expiresAt: sim.now + 200 * MS_DAY, destination: 'US' });
+    expect(usStatusEnds(sim.player)).toBe(sim.now + 260 * MS_DAY);
+    const opt = documentsOf(sim.player).find((d) => d.id === 'opt')!;
+    opt.status = 'cancelled';
+    opt.endedAt = sim.now + 30 * MS_DAY;
+    expect(usStatusEnds(sim.player)).toBe(Math.max(programEnd(sim.player)! + 60 * MS_DAY, sim.now + 30 * MS_DAY));
+    // Pending, it holds open.
+    opt.status = 'pending';
+    expect(usStatusEnds(sim.player)).toBeUndefined();
+  });
+
+  it('isn’t lost by someone who went home in the grace, nor by a citizen', () => {
+    const sim = graduate('status-home', 5);
+    scheduleUsStatus(sim, sim.player);
+    sim.advanceBy(10 * MS_DAY);
+    sim.player.home = { ...sim.player.home!, cityId: 'uk-eng-london' };
+    sim.player.currentLocationId = 'uk-eng-london';
+    sim.advanceBy(70 * MS_DAY);
+    expect(sim.player.usOutOfStatus).toBeUndefined();
+    const american = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'status-us');
+    expect(usStatusEnds(american.player)).toBeUndefined();
+  });
+
+  it('sends each home to their own country’s acting city, or where they were born', () => {
+    const sim = graduate('status-where', 5);
+    expect(homeAbroadOf(sim.player)).toBe('uk-eng-london');
+    sim.player.citizenshipId = 'mx';
+    expect(homeAbroadOf(sim.player)).toBe('mx-cmx-mexicocity');
+    sim.player.citizenshipId = 'ie';
+    expect(homeAbroadOf(sim.player)).toBe('ie-lei-dublin');
+    sim.player.citizenshipId = 'us';
+    expect(homeAbroadOf(sim.player)).toBeUndefined();
+  });
 });

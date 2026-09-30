@@ -284,6 +284,8 @@ export interface Person {
   jobseekers?: import('../systems/homebenefits').JobseekerClaim;
   desempleo?: import('../systems/homebenefits').DesempleoClaim;
   returnedHomeAt?: number;
+  /** When their US status ended while they stayed on, from 2026-10-01 (`systems/permission.ts`). */
+  usOutOfStatus?: number;
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
   returns?: Record<string, TaxReturn>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
