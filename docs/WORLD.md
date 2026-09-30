@@ -41,6 +41,15 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
 
 - **Ownership limits (done 2026-10-01).** A person owned one boat and one plane, a second refused with "You own a boat." and "You own a plane.", a limit no law, lender or marina sets. Now each is a list (`boatsOf`, `planesOf`): each boat and plane its own record, months, loan and repossession, sold on its own, carried along on a move, counted in net worth. A save's single one is moved into the list on opening, and its months, scheduled before they named one, still charge it. The limits left are the bank, the lender's record and, for a lodger, New York City's two boarders. Tests: `tests/boats.test.ts` (a third boat bought, one sold, the months of each; two carried; a save from before), `tests/aviation.test.ts` (a second plane).
 
+- **Kinds of stay and their terms (done 2026-10-01, `content/staytypes.ts`, `systems/stays.ts`, researched in `docs/research/world/research-stays-rentals.json`).**
+  - **Kinds:** besides a town's average hotel, what was read there. A hostel's bed is sold by the person: New York, Los Angeles, London, Toronto, Vancouver and Mexico City, on Hostelworld. A motel in New Haven and Los Angeles. A budget chain's cheapest night in London and Dublin, said to be its "from" price. An extended-stay suite or serviced apartment in New York, Edinburgh and Dublin. The town's taxes apply to each. A kind a town hasn't is refused with the reason, not swapped for another. Mexico City's hotels have an average, Monex's MXN 1,600, and Vancouver's 2.5% major-events tax to 2030 is charged, GST on it all.
+  - **Rates:** a stay is booked on a flexible rate or prepaid at 11.5% off, the middle of the 8% to 15% hotels commonly give, not refunded.
+  - **Refunds:** a flexible rate is refunded whole until a day before arrival. After that, a late cancellation or a no-show keeps the first night and the rest is released, as hotels do. Until then a late cancellation or a missed journey forfeited every night.
+  - **Parking:** a car driven to a New York hotel pays its valet parking at $85 a night, the middle of what its hotels list. No other town's was read.
+  - **Round trips by car:** the way home of a round trip by one's own car is planned from where the car will be, the town it was driven to. Until then a round trip by car was refused with "The car is in" the town it left from.
+  - **Tests:** `tests/staytypes.test.ts` (7).
+  - **Not kept:** early check-in and late check-out fees, incidental holds, and resort and rural rates, which weren't published or read. Room types beyond one room or one bed, with occupancy limits being fire codes and not a published rule.
+
 ## Acceptance criteria
 
 ### Stage 1: Documents

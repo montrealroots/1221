@@ -17,6 +17,7 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { PER_DIEM, STAYS, type StayRate } from '../content/stays';
+import { PREPAID_OFF, STAY_CLASS_LABEL, STAY_OPTIONS, type RatePlan, type StayClass } from '../content/staytypes';
 
 /** How far a town may borrow a nearby town's hotel rate: SLATE's estimate, a metropolitan area's reach. */
 export const BORROW_WITHIN_KM = 60;
@@ -42,15 +43,30 @@ export function nightRateFor(cityId: string): NightRate | undefined {
   return borrowed ? { ...borrowed, basis: `${borrowed.basis}, ${CITIES.require(near!.id).name}’s, ${Math.round(near!.km)} km away` } : undefined;
 }
 
-/** A stay's price in the save's currency: the nights at the rate, and the taxes on top. */
-export function stayPrice(sim: Simulation, cityId: string, nights: number, guests = 1): { price: Money; basis: string } | undefined {
-  const r = nightRateFor(cityId);
-  if (!r || nights <= 0) return undefined;
-  const local = nights * (r.perNight * (1 + r.rate.onTop) + r.rate.perRoomNight + r.rate.perPersonNight * guests);
+/** The kinds of stay a town offers, its hotel first where it has one (`content/staytypes.ts`, from 2026-10-01). */
+export function stayClassesIn(cityId: string): StayClass[] {
+  return [...(nightRateFor(cityId) ? ['hotel' as const] : []), ...(STAY_OPTIONS[cityId] ?? []).map((o) => o.cls)];
+}
+
+/**
+ * A stay's price in the save's currency: the nights at the rate of the kind
+ * of stay, a hostel's by the bed, and the town's taxes on top; paid ahead, the
+ * prepaid rate's discount off the room.
+ */
+export function stayPrice(sim: Simulation, cityId: string, nights: number, guests = 1, cls: StayClass = 'hotel', plan: RatePlan = 'flexible'): { price: Money; basis: string } | undefined {
+  if (nights <= 0) return undefined;
+  const hotel = nightRateFor(cityId);
+  const option = cls === 'hotel' ? undefined : STAY_OPTIONS[cityId]?.find((o) => o.cls === cls);
+  if (cls === 'hotel' ? !hotel : !option) return undefined;
+  const taxes = option ? STAYS[cityId]! : hotel!.rate;
+  const room = (option ? option.perNight * (option.per === 'bed' ? guests : 1) : hotel!.perNight) * (plan === 'prepaid' ? 1 - PREPAID_OFF : 1);
+  const local = nights * (room * (1 + taxes.onTop) + taxes.perRoomNight + taxes.perPersonNight * guests);
   const cents = Math.round(local * 100);
+  const currency = option?.currency ?? hotel!.currency;
   const into = saveCurrency(sim.universe);
-  const price = r.currency === into ? cents : exchange(cents, r.currency, into) ?? cents;
-  return { price, basis: `${r.basis}. ${r.rate.taxNote}` };
+  const price = currency === into ? cents : exchange(cents, currency, into) ?? cents;
+  const basis = option ? `${STAY_CLASS_LABEL[cls]}: ${option.basis}` : hotel!.basis;
+  return { price, basis: `${basis}${plan === 'prepaid' ? `, prepaid at ${Math.round(PREPAID_OFF * 1000) / 10}% off and not refunded` : ''}. ${taxes.taxNote}` };
 }
 
 /** Whether a person has a place of their own in a town: they need no hotel there. */

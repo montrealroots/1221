@@ -9,6 +9,7 @@
 import { RENTALS } from '@/engine/content/rentals';
 import { LETS } from '@/engine/content/lets';
 import { Fragment, useState } from 'react';
+import { PREPAID_OFF, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '@/engine/content/staytypes';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -21,7 +22,7 @@ import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetw
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
-import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
+import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
@@ -51,6 +52,8 @@ export function TravelWorkspace() {
   const [cabin, setCabin] = useState<'economy' | 'premium'>('economy');
   const [bags, setBags] = useState(0);
   const [nights, setNights] = useState(3);
+  const [stayCls, setStayCls] = useState<StayClass>('hotel');
+  const [ratePlan, setRatePlan] = useState<RatePlan>('flexible');
   const [daysThere, setDaysThere] = useState(4);
   // A town chosen before arriving in it isn't a destination from it: until 2026-09-30 it stayed chosen, the list showing
   // another town while the plan said both fly from the same airport.
@@ -79,7 +82,7 @@ export function TravelWorkspace() {
   const round = daysThere > 0;
   const seat = mode ? 'economy' : cabin;
   const outLegs = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
-  const backLegs = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat) : undefined;
+  const backLegs = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
   // A round trip's discount is the airlines'; a train's return is two singles.
   const outPlan = typeof outLegs === 'string' ? undefined : round && !mode ? asRoundTrip(outLegs) : outLegs;
   const backPlan = backLegs && typeof backLegs !== 'string' ? (mode ? backLegs : asRoundTrip(backLegs)) : undefined;
@@ -87,7 +90,10 @@ export function TravelWorkspace() {
   const stayNights = own ? 0 : round && outPlan && backPlan ? nightsBetween(toCity, outPlan[outPlan.length - 1]!.arriveAt, backPlan[0]!.departAt) : nights;
   const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, fromCity, toCity, outLegs, Math.max(1, stayNights), stayNights)
     ?? (typeof backLegs === 'string' ? backLegs : backPlan && outPlan && backPlan[0]!.departAt <= outPlan[outPlan.length - 1]!.arriveAt ? 'The way home leaves before the way out arrives.' : undefined);
-  const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights) : undefined;
+  // The kinds of stay the town has; one chosen for another town falls back to its hotel.
+  const classes = toCity ? stayClassesIn(toCity) : [];
+  const cls: StayClass = classes.includes(stayCls) ? stayCls : 'hotel';
+  const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan) : undefined;
   const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
   const fares = plan ? plan.reduce((a, l) => a + l.fare, 0) : 0;
   const journeys = journeysOf(person).slice().sort((a, b) => b.leaveAt - a.leaveAt);
@@ -160,10 +166,27 @@ export function TravelWorkspace() {
                 <input id="travel-there" type="number" min={0} max={90} value={daysThere} onChange={(e) => setDaysThere(Math.max(0, Math.min(90, Number(e.target.value) || 0)))} />
               </div>
               <div className="field">
-                <label htmlFor="travel-nights">Hotel Nights</label>
+                <label htmlFor="travel-nights">Nights</label>
                 <input id="travel-nights" type="number" min={0} max={90} value={stayNights} disabled={own || round} onChange={(e) => setNights(Math.max(0, Math.min(90, Number(e.target.value) || 0)))} />
               </div>
             </div>
+            {!own && classes.length > 0 && (
+              <div className="field-row">
+                <div className="field">
+                  <label htmlFor="travel-stay">Stay</label>
+                  <select id="travel-stay" value={cls} onChange={(e) => setStayCls(e.target.value as StayClass)}>
+                    {(Object.keys(STAY_CLASS_LABEL) as StayClass[]).filter((c) => classes.includes(c)).map((c) => <option key={c} value={c}>{STAY_CLASS_LABEL[c]}</option>)}
+                  </select>
+                </div>
+                <div className="field">
+                  <label htmlFor="travel-rate">Rate</label>
+                  <select id="travel-rate" value={ratePlan} onChange={(e) => setRatePlan(e.target.value === 'prepaid' ? 'prepaid' : 'flexible')}>
+                    <option value="prepaid">{`Prepaid, ${Math.round(PREPAID_OFF * 1000) / 10}% Off, Not Refunded`}</option>
+                    <option value="flexible">Flexible, Free To A Day Before</option>
+                  </select>
+                </div>
+              </div>
+            )}
             {plan && (
               <div className="table-scroll">
                 <table>
@@ -196,13 +219,13 @@ export function TravelWorkspace() {
             )}
             <div className="grid grid-3">
               <Stat label="Fares" value={plan ? money(fares) : '—'} />
-              <Stat label="Hotel" value={own ? 'Your Own Place' : hotel ? money(hotel.price) : '—'} note={own ? 'No hotel needed' : `${stayNights} ${stayNights === 1 ? 'night' : 'nights'}, taxes in`} />
+              <Stat label="Stay" value={own ? 'Your Own Place' : hotel ? money(hotel.price) : '—'} note={own ? 'No hotel needed' : `${STAY_CLASS_LABEL[cls]}, ${stayNights} ${stayNights === 1 ? 'night' : 'nights'}, taxes in`} />
               <Stat label="In All" value={plan ? money(fares + (hotel?.price ?? 0)) : '—'} />
             </div>
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }) });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>

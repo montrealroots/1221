@@ -44,7 +44,8 @@ export const STAYS: Readonly<Record<string, StayRate>> = {
   'us-ct-newhaven': s(null, 'USD', '', '', '', 0.15, 0, 0, 'Connecticut’s 15% room occupancy tax.'),
   'uk-eng-london': s(228, 'GBP', '2024', 'Knight Frank’s London panel, leaning upscale; 2025 was reported broadly in line', 'research-hotels.json', 0, 0, 0, 'VAT of 20% is in the price, and London has no visitor levy yet.'),
   'ca-on-toronto': s(260.77, 'CAD', '2025', 'All hotels, Toronto, CoStar', 'research-hotels.json', 1.06 * 1.13 - 1, 0, 0, 'The 6% Municipal Accommodation Tax since 1 August 2026, and 13% HST on the room and the tax.'),
-  'ca-bc-vancouver': s(284.44, 'CAD', '2025', 'All hotels, Vancouver, CoStar', 'research-hotels.json', 0.16, 0, 0, 'GST 5%, PST 8% and the 3% Municipal and Regional District Tax; a temporary 2.5% for the World Cup isn’t kept.'),
+  // Vancouver's 2.5% major-events tax, in force to 31 January 2030, from 2026-10-01; GST falls on the other taxes too, as the Ministry of Finance says (research-stays-rentals.json).
+  'ca-bc-vancouver': s(284.44, 'CAD', '2025', 'All hotels, Vancouver, CoStar', 'research-hotels.json', (1 + 0.08 + 0.03 + 0.025) * 1.05 - 1, 0, 0, 'GST 5% on the room and the other taxes, PST 8%, the 3% Municipal and Regional District Tax and the 2.5% major-events tax to 31 January 2030.'),
   // Belfast and Edinburgh from 2026-09-29 (docs/research/world/research-buses-transit.json): both averages read secondhand.
   'uk-nir-belfast': s(116.18, 'GBP', '2025', 'All of Northern Ireland, the NI Hotels Federation as the Irish News reported it; NISRA publishes no rate', 'research-buses-transit.json', 0, 0, 0, 'VAT of 20% is in the price, and Belfast has no visitor levy.'),
   // Edinburgh's visitor levy is 5% of the price before VAT, so about 4.17% of a price with it; its cap at five nights isn't kept.
@@ -56,7 +57,8 @@ export const STAYS: Readonly<Record<string, StayRate>> = {
   'es-md-madrid': s(169.13, 'EUR', '2025', 'Madrid, the INE’s twelve months averaged', 'research-hotels.json', 0, 0, 0, 'VAT of 10% is in the price, and Madrid has no tourist tax.'),
   'jp-13-tokyo': s(34_800, 'JPY', '2025', 'Tokyo, STR as quoted', 'research-hotels.json', 0, 0, 200, 'Tokyo’s accommodation tax, ¥200 a guest a night on a room of ¥15,000 or more; consumption tax is in the price.'),
   'kr-11-seoul': s(null, 'KRW', '', '', '', 1.1 * 1.1 - 1, 0, 0, 'VAT of 10% and the 10% service charge a hotel adds, each on top: SLATE’s reading of how Seoul’s hotels quote.'),
-  'mx-cmx-mexicocity': s(null, 'MXN', '', '', '', 0.16 + 0.035, 0, 0, 'VAT of 16% and the capital’s 3.5% lodging tax, on top.'),
+  // An average from 2026-10-01 (research-stays-rentals.json): Monex's November 2024 figure, the latest published, secondhand.
+  'mx-cmx-mexicocity': s(1_600, 'MXN', 'November 2024', 'Mexico City hotels, Monex’s research note; DataTur publishes occupancy, not rates', 'research-stays-rentals.json', 0.16 + 0.035, 0, 0, 'VAT of 16% and the capital’s 3.5% lodging tax, on top.'),
   'au-nsw-sydney': s(334, 'AUD', '2025', 'Sydney, CBRE', 'research-hotels.json', 0, 0, 0, 'GST of 10% is in the price.'),
   'br-27-saopaulo': s(602, 'BRL', '2025', 'Chain hotels, HotelInvest and FOHB', 'research-hotels.json', 0.05 + 0.1, 0, 0, 'The city’s 5% service tax, and the 10% service charge hotels add.'),
   'nz-akl-auckland': s(null, 'NZD', '', '', '', 0, 0, 0, 'GST of 15% is in the price.'),

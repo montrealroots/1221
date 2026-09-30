@@ -1,0 +1,284 @@
+{
+  "_meta": {
+    "title": "Stays and rental cars: real costs by place",
+    "compiled": "2026-09-30",
+    "places": ["New York City", "New Haven", "Los Angeles", "London", "Edinburgh", "Dublin", "Toronto", "Vancouver", "Mexico City", "Palm Springs (US resort)", "Lake District (UK rural)", "Killarney (Ireland rural)", "Whistler (Canada resort)", "Cancun (Mexico resort)"],
+    "fieldKey": {
+      "value": "the figure, in the currency named",
+      "url": "where it was read",
+      "publisher": "who published it",
+      "date": "date of the figure or of publication",
+      "sourceType": "primary-government | primary-company | primary-industry-data (STR/CoStar/tourism board) | industry-data-via-press | aggregator (Kayak, Hostelworld, AirDNA snippet) | secondary-press | secondary-blog",
+      "confirmed": "true = read on the publisher's own page in this session; false = seen only in a search snippet, a secondary report, or a page that blocked direct fetch"
+    },
+    "method": "Web search plus direct fetch of publisher pages where they allowed it. CoStar, AirDNA and several hertz.com pages returned 403 or rendered no content, so their figures come from search snippets or press restatements and are marked confirmed=false. Kayak 'average per day by car type' figures are live rolling aggregates of searches in the prior ~72 hours / recent period and move daily; they are aggregator data, not a company's published rate card. No rental company publishes a static per-class daily rate card; rates are dynamic and quote-only.",
+    "currencyNotes": "Kayak .com pages report in USD even for YVR and MEX; the YYZ page summary claimed CAD but was fetched from kayak.com and is probably USD (flagged in uncertain). AirDNA public overview figures are shown in USD for every market, including London, Edinburgh, Dublin, Toronto, Vancouver and Mexico City.",
+    "spelling": "American spelling in our own words; quoted names keep their original spelling."
+  },
+
+  "stayTypes": {
+    "New York City": {
+      "upscaleMidscaleHotelADR": {"value": 333.71, "currency": "USD", "note": "Full-year 2025 ADR, highest of CoStar's top 25 US markets; occupancy 84.1%, RevPAR $280.71; ADR +4.7% YoY", "url": "https://www.hoteldive.com/news/hotel-occupancy-revpar-decline-2025/810212/", "publisher": "CoStar (reported by Hotel Dive / Hotel Management)", "date": "2025 full year (published Jan 2026)", "sourceType": "industry-data-via-press", "confirmed": false},
+      "usNationalADRForComparison": {"value": 160.54, "currency": "USD", "note": "US full-year 2025; occupancy 62.3%, RevPAR $100.02", "url": "https://www.hoteldive.com/news/hotel-occupancy-revpar-decline-2025/810212/", "publisher": "CoStar via Hotel Dive", "date": "2025 full year", "sourceType": "industry-data-via-press", "confirmed": false},
+      "manhattanADRFirstHalf": {"value": 310.51, "currency": "USD", "note": "H1 2025, +5.7% YoY", "url": "https://www.hotel-online.com/news/pwcs-manhattan-lodging-index-first-half-2025", "publisher": "PwC Manhattan Lodging Index", "date": "H1 2025", "sourceType": "industry-data-via-press", "confirmed": false},
+      "motel": {"value": null, "note": "No Motel 6 or Super 8 operates in Manhattan; budget tier in NYC is limited-service hotels. Nulled rather than substituting an outer-borough property.", "confirmed": false},
+      "extendedStay": {"value": 521, "currency": "USD", "note": "Residence Inn NYC Manhattan/Times Square, 'from' rate seen in search snippet; aggregator ranges $101-$624", "url": "https://www.marriott.com/nycri", "publisher": "Marriott (snippet)", "date": "2026-09", "sourceType": "primary-company", "confirmed": false},
+      "hostelDorm": {"value": 53.10, "currency": "USD", "note": "HI New York City Hostel dorm example on Hostelworld NA page; private US$76.28. A snippet elsewhere gave NYC average dorm US$44.85.", "url": "https://www.hostelworld.com/hostels/north-america/", "publisher": "Hostelworld", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "vacationRentalADR": {"value": 182, "currency": "USD", "note": "AirDNA New York, NY: 14,337 active listings, 77% occupancy, RevPAR $140; ADR -33.4% and listings -51.0% Aug 2025-Aug 2026 (Local Law 18 registration effect). Stays under 30 days in whole units are largely illegal in NYC unless host present.", "url": "https://www.airdna.co/vacation-rental-data/app/us/new-york/new-york/overview", "publisher": "AirDNA", "date": "Aug 2026 (trailing 12 months)", "sourceType": "aggregator", "confirmed": false},
+      "resortFee": {"value": null, "note": "NYC hotels charge 'destination' or 'facility' fees ($25-$40 typical by reputation) but no primary average was found. Since 2026-02-21 NYC DCWP rule requires the total price including all mandatory fees to be shown up front, and mandatory card holds/deposits to be disclosed.", "url": "https://www.nyc.gov/mayors-office/news/2026/01/mamdani-administration-bans-hotel-hidden-fees-and-unexpected-cre", "publisher": "NYC Mayor's Office / DCWP", "date": "2026-01 (effective 2026-02-21)", "sourceType": "primary-government", "confirmed": true}
+    },
+    "New Haven": {
+      "hotelADR": {"value": null, "note": "No STR/CoStar New Haven market ADR published openly (New Haven sits inside CoStar's 'Connecticut' or 'New Haven/Milford' tract, paywalled).", "confirmed": false},
+      "motel": {"value": 87, "currency": "USD", "note": "Super 8 by Wyndham Milford/New Haven average nightly price seen on aggregators; range $52-$214; free parking", "url": "https://www.hotels.com/ho203533/super-8-by-wyndham-milford-new-haven-milford-united-states-of-america/", "publisher": "Hotels.com / Momondo aggregates", "date": "2026-09", "sourceType": "aggregator", "confirmed": false},
+      "vacationRentalADR": {"value": 145, "currency": "USD", "url": "https://www.airdna.co/vacation-rental-data/app/us/connecticut/new-haven/overview", "publisher": "AirDNA", "date": "2026", "sourceType": "aggregator", "confirmed": false},
+      "hostelDorm": {"value": null, "note": "No hostel listed on Hostelworld for New Haven."}
+    },
+    "Los Angeles": {
+      "hotelADR": {"value": 220.04, "currency": "USD", "note": "LA Tourism Marketing District hotels, H1 2026 YTD; occupancy 73.1%, RevPAR $160.82; H1 2025 ADR $207.29", "url": "https://www.discoverlosangeles.com/tmd-lodging-metrics", "publisher": "Discover Los Angeles (data: STR)", "date": "H1 2026", "sourceType": "primary-industry-data", "confirmed": true},
+      "motel": {"value": 84, "currency": "USD", "note": "Motel 6 Los Angeles LAX Area, My6 member rate plus $13 taxes and fees; Motel 6 Downtown $112 + $16; Motel 6 Hollywood $202 + $36 (snippet from motel6.com property pages)", "url": "https://www.motel6.com/property/motel-inglewood-california-us-294400/", "publisher": "Motel 6 (G6 Hospitality)", "date": "2026-09", "sourceType": "primary-company", "confirmed": false},
+      "hostelDorm": {"value": 29.00, "currency": "USD", "note": "Banana Bungalow Hollywood example; private US$40. Snippet average for LA dorm US$33.40.", "url": "https://www.hostelworld.com/hostels/north-america/", "publisher": "Hostelworld", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "vacationRentalADR": {"value": 218, "currency": "USD", "note": "30,757 active listings, 68% occupancy, RevPAR $147", "url": "https://www.airdna.co/vacation-rental-data/app/us/california/los-angeles/overview", "publisher": "AirDNA", "date": "Aug 2026", "sourceType": "aggregator", "confirmed": false},
+      "resortFeeRule": {"value": "California SB 478 (Honest Pricing Law), effective 2024-07-01: advertised hotel/short-term rental price must include all mandatory fees except government taxes; $1,000 per violation private remedy.", "url": "https://oag.ca.gov/hiddenfees", "publisher": "California Attorney General", "date": "2024-07-01", "sourceType": "primary-government", "confirmed": false}
+    },
+    "London": {
+      "hotelADRPeakMonth": {"value": 234.58, "currency": "GBP", "note": "July 2025 record ADR; occupancy 88.6%, RevPAR £207.93", "url": "https://www.costar.com/products/str-benchmark/resources/press-releases/london-room-rates-reached-record-highs-july", "publisher": "CoStar", "date": "July 2025", "sourceType": "primary-industry-data", "confirmed": false},
+      "ukNationalADRH1": {"value": 114.53, "currency": "GBP", "note": "UK H1 2025, occupancy 74.6%", "url": "https://skift.com/2025/08/29/uk-hotels-struggled-through-first-half-of-2025/", "publisher": "CoStar via Skift", "date": "H1 2025", "sourceType": "industry-data-via-press", "confirmed": false},
+      "budgetHotelPremierInn": {"value": 45, "currency": "GBP", "note": "Premier Inn 'Rooms from £45' promotion page (UK-wide); aggregator seasonal London averages ~£72 (Jan) to ~£165 (Aug); ZIP by Premier Inn from £25", "url": "https://www.premierinn.com/gb/en/rooms-from-45-pounds.html", "publisher": "Premier Inn (Whitbread)", "date": "2026-09", "sourceType": "primary-company", "confirmed": false},
+      "budgetHotelTravelodge": {"value": 49, "currency": "GBP", "note": "Travelodge 'London rooms from £49'; Saver rates from £35; City Road from £34-£45 (Kayak)", "url": "https://www.travelodge.co.uk/about/how-to-find-a-room-for-less/", "publisher": "Travelodge UK", "date": "2026-09", "sourceType": "primary-company", "confirmed": false},
+      "hostelDorm": {"value": 18.93, "currency": "USD", "note": "Hostelworld Europe page 'dorms from' (minimum, not average); privates from US$34.71. Snippet average ~$28.", "url": "https://www.hostelworld.com/hostels/europe/", "publisher": "Hostelworld", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "vacationRentalADR": {"value": 234, "currency": "USD", "note": "113,132 active listings, 58% occupancy; London has a 90-night/year cap on whole-home short lets without planning permission", "url": "https://www.airdna.co/vacation-rental-data/app/gb/london/london/overview", "publisher": "AirDNA", "date": "Jun 2026 trailing 12 months", "sourceType": "aggregator", "confirmed": false},
+      "servicedApartment": {"value": null, "note": "Staycity London rate not found; Marriott Executive Apartments London rate not found."}
+    },
+    "Edinburgh": {
+      "hotelADR": {"value": 220, "currency": "GBP", "note": "12 months to May 2025, +3.2%; occupancy 84.1%. Publisher attribution in snippet unclear (likely Cushman & Wakefield Edinburgh spotlight on CoStar data). CoStar forecast 2025 ADR +2.9%, occupancy 83.8%.", "url": "https://www.cushmanwakefield.com/en/united-kingdom/insights/edinburgh-hotel-market-spotlight", "publisher": "Cushman & Wakefield (probable)", "date": "12 months to May 2025", "sourceType": "industry-data-via-press", "confirmed": false},
+      "offPeakADR": {"value": 108.33, "currency": "GBP", "note": "February 2025, down 13.3% from £124.91", "url": "https://www.thecaterer.com/news/average-daily-rate-dip-hotels-london-and-edinburgh-hotstats-february-2025", "publisher": "HotStats via The Caterer", "date": "Feb 2025", "sourceType": "industry-data-via-press", "confirmed": false},
+      "servicedApartment": {"value": 248, "currency": "USD", "note": "Staycity Aparthotels Edinburgh West End, aggregator nightly", "url": "https://www.hotels.com/ho380254/staycity-aparthotels-west-end-edinburgh-united-kingdom/", "publisher": "Hotels.com", "date": "2026-09", "sourceType": "aggregator", "confirmed": false},
+      "vacationRentalADR": {"value": 269, "currency": "USD", "note": "7,489 active listings; Edinburgh is a short-term-let control area (licensing plus planning)", "url": "https://www.airdna.co/vacation-rental-data/app/gb/scotland/edinburgh/overview", "publisher": "AirDNA", "date": "2026", "sourceType": "aggregator", "confirmed": false},
+      "hostelDorm": {"value": null, "note": "Hostelworld Europe page listed Castle Rock Hostel without a price."}
+    },
+    "Dublin": {
+      "hotelADRIrelandNational": {"value": 174, "currency": "EUR", "note": "Ireland 2025 national ADR +3%; occupancy 78.4%; RevPAR €136; August peak €202", "url": "https://www.irishtimes.com/business/2026/03/31/hotel-room-rates-jumped-3-in-2025-despite-fall-in-overseas-and-domestic-visitors/", "publisher": "Failte Ireland quarterly economic report (via Irish Times)", "date": "2025 full year (published 2026-03-31)", "sourceType": "industry-data-via-press", "confirmed": true},
+      "hotelADRDublinMonth": {"value": 175, "currency": "EUR", "note": "Dublin September 2025, -1%; occupancy 83.5%", "url": "https://www.costar.com/products/benchmark/resources/press-releases/weekend-events-drove-dublin-hotel-rates-past-eu300", "publisher": "CoStar", "date": "Sep 2025", "sourceType": "primary-industry-data", "confirmed": false},
+      "budgetHotelMaldron": {"value": 68, "currency": "EUR", "note": "Maldron Hotel Newlands Cross 'from' on Kayak.ie; Parnell Square from US$87, Kevin Street from US$92, Dublin Airport from US$144", "url": "https://www.kayak.ie/Dublin-Hotels-Maldron-Hotel-Newlands-Cross.286853.ksp", "publisher": "Kayak", "date": "2026-09", "sourceType": "aggregator", "confirmed": false},
+      "servicedApartment": {"value": 160, "currency": "EUR", "note": "Staycity Aparthotels Dublin City Centre, aggregator; range ~€95-€365", "url": "https://www.staycity.com/dublin/mark-street", "publisher": "Google Hotels / aggregators", "date": "2026-09", "sourceType": "aggregator", "confirmed": false},
+      "vacationRentalADR": {"value": 209, "currency": "USD", "note": "7,532 listings, 58% occupancy", "url": "https://www.airdna.co/vacation-rental-data/app/ie/default/dublin/overview", "publisher": "AirDNA", "date": "2026", "sourceType": "aggregator", "confirmed": false}
+    },
+    "Toronto": {
+      "hotelADRMonth": {"value": 294.90, "currency": "CAD", "note": "October 2025 (World Series), +14.8%; RevPAR CAD 239.81. November 2025 ADR CAD 274.79 (-10.0%). Full-year 2025 Toronto ADR not found.", "url": "https://www.costar.com/products/benchmark/resources/press-releases/canada-hotels-report-highest-adr-revpar-growth-2025", "publisher": "CoStar", "date": "Oct-Nov 2025", "sourceType": "primary-industry-data", "confirmed": false},
+      "canadaNationalADRMonth": {"value": 214.09, "currency": "CAD", "note": "Canada October 2025; occupancy 69.8%", "url": "https://www.costar.com/products/benchmark/resources/press-releases/canada-hotels-report-highest-adr-revpar-growth-2025", "publisher": "CoStar", "date": "Oct 2025", "sourceType": "primary-industry-data", "confirmed": false},
+      "hostelAverage": {"value": 42.22, "currency": "USD", "url": "https://www.hostelworld.com/hostels/north-america/", "publisher": "Hostelworld", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "vacationRentalADR": {"value": 141, "currency": "USD", "note": "25,336 active listings, 68% occupancy. Toronto limits short-term rentals to the host's principal residence.", "url": "https://www.airdna.co/vacation-rental-data/app/ca/ontario/toronto/overview", "publisher": "AirDNA", "date": "Jun 2026", "sourceType": "aggregator", "confirmed": false}
+    },
+    "Vancouver": {
+      "hotelADR": {"value": 284.44, "currency": "CAD", "note": "Full-year 2025, -0.1% YoY; highest of major Canadian markets. June 2026 (World Cup) ADR +54.0% YoY.", "url": "https://www.costar.com/products/str-benchmark/resources/press-releases/canada-hotels-post-record-setting-performance-2025", "publisher": "CoStar", "date": "2025 full year", "sourceType": "primary-industry-data", "confirmed": false},
+      "hostelAverage": {"value": 30.07, "currency": "USD", "url": "https://www.hostelworld.com/hostels/north-america/", "publisher": "Hostelworld", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "vacationRentalADR": {"value": 200, "currency": "USD", "note": "5,762 active listings (-33.6% YoY after BC principal-residence rule), 69% occupancy", "url": "https://www.airdna.co/vacation-rental-data/app/ca/british-columbia/vancouver/overview", "publisher": "AirDNA", "date": "Aug 2026", "sourceType": "aggregator", "confirmed": false}
+    },
+    "Mexico City": {
+      "hotelADR": {"value": 1600, "currency": "MXN", "note": "November 2024 average rate; forecast 2,200 MXN for 2025-2026 (pre-pandemic level). No 2025 official CDMX ADR found; DataTur publishes occupancy, not rate.", "url": "https://www.monex.com.mx/portal/download/reportes/Nota%20Investigacion%20-%20Sector%20Hotelero%20-%20VD.pdf", "publisher": "Monex (research note)", "date": "Nov 2024", "sourceType": "secondary-press", "confirmed": false},
+      "hostelDorm": {"value": 15.76, "currency": "USD", "note": "Mexico City Hostel dorm example; snippet average dorm US$28.12", "url": "https://www.hostelworld.com/hostels/north-america/", "publisher": "Hostelworld", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "vacationRentalADR": {"value": 88, "currency": "USD", "note": "35,401 listings, 59% occupancy. Since 2026 hosts must register in the CDMX Padron de Anfitriones and show a folio on each listing.", "url": "https://www.airdna.co/vacation-rental-data/app/mx/distrito-federal/mexico-city/overview", "publisher": "AirDNA", "date": "Aug 2026", "sourceType": "aggregator", "confirmed": false}
+    },
+    "Palm Springs (US resort)": {
+      "vacationRentalADR": {"value": 476, "currency": "USD", "note": "5,949 active listings, 50% occupancy (AirROI/AirDNA-type data). Visit Greater Palm Springs vacation-rental ADR April 2025 $720, May 2025 $385.", "url": "https://www.visitgreaterpalmsprings.com/partnerportal/research-reports/vacation-rental-data/", "publisher": "Visit Greater Palm Springs", "date": "2025-2026", "sourceType": "primary-industry-data", "confirmed": false},
+      "resortFee": {"value": null, "note": "Resort fees are common but no average published; must be included in advertised price under CA SB 478 and FTC rule, and are subject to TOT."}
+    },
+    "Lake District (UK rural)": {"hotelADR": {"value": null, "note": "No open CoStar/VisitEngland ADR for Cumbria found."}, "levy": {"value": null, "note": "No visitor levy in England."}},
+    "Killarney (Ireland rural)": {"hotelADR": {"value": null, "note": "Failte Ireland Nov 2024 county ADRs ranged €111.37-€208.37 but Kerry figure not extracted."}},
+    "Whistler (Canada resort)": {"hotelADR": {"value": null, "note": "Tourism Whistler does not publish ADR openly."}},
+    "Cancun (Mexico resort)": {
+      "hotelADR": {"value": 116, "currency": "USD", "note": "Cancun 2025 ADR (down from $118 in 2024); Quintana Roo state ADR $153. Figure looks low for an all-inclusive-heavy market; may be room-only or a subset.", "url": "https://laregiontam.com.mx/2026/09/15/cancun-travel-mart-2026-hoteleros-preven-millonarias-negociaciones-y-alza-en-tarifas/", "publisher": "Regional press citing hotel association", "date": "2025", "sourceType": "secondary-press", "confirmed": false}
+    }
+  },
+
+  "roomsAndPolicies": {
+    "roomTypesAndOccupancy": {
+      "value": "Industry convention, not law: standard king = 2 guests; standard double/queen-queen = up to 4; junior suite = 3-4 with sofa bed; one-bedroom suite = 4-6. Premier Inn and Travelodge family rooms take 2 adults + 2 children. Legal maximums come from fire codes per room, not a single published rule.",
+      "url": null, "publisher": null, "date": null, "sourceType": "none", "confirmed": false
+    },
+    "accessibilityUS": {
+      "value": {
+        "rule": "2010 ADA Standards Table 224.2 (mobility-feature rooms) and 224.4 (communication-feature rooms)",
+        "mobilityRooms": [
+          {"totalRooms": "1-25", "withoutRollIn": 1, "withRollIn": 0, "total": 1},
+          {"totalRooms": "26-50", "withoutRollIn": 2, "withRollIn": 0, "total": 2},
+          {"totalRooms": "51-75", "withoutRollIn": 3, "withRollIn": 1, "total": 4},
+          {"totalRooms": "76-100", "withoutRollIn": 4, "withRollIn": 1, "total": 5},
+          {"totalRooms": "101-150", "withoutRollIn": 5, "withRollIn": 2, "total": 7},
+          {"totalRooms": "151-200", "withoutRollIn": 6, "withRollIn": 2, "total": 8},
+          {"totalRooms": "201-300", "withoutRollIn": 7, "withRollIn": 3, "total": 10},
+          {"totalRooms": "301-400", "withoutRollIn": 8, "withRollIn": 4, "total": 12},
+          {"totalRooms": "401-500", "withoutRollIn": 9, "withRollIn": 4, "total": 13},
+          {"totalRooms": "501-1000", "withoutRollIn": "2%", "withRollIn": "1%", "total": "3%"},
+          {"totalRooms": "1001+", "withoutRollIn": "20 + 1 per 100 over 1000", "withRollIn": "10 + 1 per 100 over 1000", "total": "30 + 2 per 100 over 1000"}
+        ],
+        "communicationRooms": [
+          {"totalRooms": "2-25", "min": 2}, {"totalRooms": "26-50", "min": 4}, {"totalRooms": "51-75", "min": 7}, {"totalRooms": "76-100", "min": 9}, {"totalRooms": "101-150", "min": 12}, {"totalRooms": "151-200", "min": 14}, {"totalRooms": "201-300", "min": 17}, {"totalRooms": "301-400", "min": 20}, {"totalRooms": "401-500", "min": 22}, {"totalRooms": "501-1000", "min": "5%"}, {"totalRooms": "1001+", "min": "50 + 3 per 100 over 1000"}
+        ],
+        "note": "Roll-in showers need a folding seat. 28 CFR 36.302(e) additionally requires accessible rooms be reservable the same way as other rooms and held until last (not fetched this session)."
+      },
+      "url": "https://up.codes/s/transient-lodging-guest-rooms",
+      "publisher": "UpCodes reproduction of US DOJ 2010 ADA Standards (original: https://www.ada.gov/law-and-regs/design-standards/2010-stds/)",
+      "date": "2010 (in force)", "sourceType": "primary-government", "confirmed": true
+    },
+    "parking": {
+      "New York City": {"value": {"low": 75, "high": 95, "premium": 150}, "currency": "USD", "unit": "per night, valet", "note": "Hampton Inn Grand Central $75; others $80-$82; Empire Hotel $95; Knickerbocker package valued $150+", "url": "https://www.tripadvisor.com/HotelsList-New_York_City-Hotels-With-Valet-Parking-zfp18404609.html", "publisher": "Tripadvisor listings / hotel sites", "date": "2026", "sourceType": "aggregator", "confirmed": false},
+      "New Haven": {"value": 0, "note": "Super 8 Milford/New Haven: free parking. Downtown New Haven hotel parking not found.", "confirmed": false},
+      "Los Angeles": {"value": null, "note": "Not found from primary sources."},
+      "London": {"value": null, "note": "Not found; many central hotels have no parking; drivers also face the Congestion Charge and ULEZ (current amounts not verified this session)."},
+      "others": {"value": null, "note": "Not researched to primary level this session."}
+    },
+    "incidentalHolds": {
+      "value": {"marriottTypicalPerNight": 50, "marriottRangePerNight": [50, 100], "industryRangePerNight": [25, 200]},
+      "currency": "USD",
+      "note": "Marriott: hold for room, tax, resort fees plus a per-day incidental amount that 'may vary by location'; banks may keep the hold up to 5 business days after departure. $50/night is a widely reported figure, not stated as a number on Marriott's own page.",
+      "url": "https://support.marriott.com/s/article/what-is-incidental-hold",
+      "publisher": "Marriott (policy) / FlyerTalk and Engine (amounts)", "date": "2026", "sourceType": "primary-company", "confirmed": false
+    },
+    "cancellation": {
+      "hiltonAdvancePurchase": {"value": "up to 15% off Best Available Rate, book 7+ days ahead, full non-refundable prepayment", "url": "https://www.hilton.com/en/offers/advance-purchase-discount-2000001074/", "publisher": "Hilton", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "hiltonHonorsAdvancePurchase": {"value": "7%-22% off BAR (varies by hotel); non-refundable rates commonly 8%-15% off", "url": "https://www.hilton.com/en/offers/advance-purchase-discount-2000001074/", "publisher": "Hilton", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "premierInn": {"value": "Flex: free cancel until 1pm on arrival day; Semi-Flex: prepay, refundable until 3 full days before arrival; Advance: cheapest, least flexible (snippet says free cancel up to 28 days before, not verified)", "url": "https://www.premierinn.com/gb/en/faq/room-rates.html", "publisher": "Premier Inn", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "travelodge": {"value": "Saver: non-refundable, amendable for £12.50; Flexible: cancel free until 12 noon on arrival day", "url": "https://www.travelodge.co.uk/about/terms-conditions/", "publisher": "Travelodge UK", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "usTypicalFlexible": {"value": "free cancellation until 24-72 hours before arrival (brand and hotel set it); late cancel = 1 night room + tax", "url": "https://engine.com/business-travel-guide/hotel-cancellation-policies", "publisher": "Engine (industry guide)", "date": "2026", "sourceType": "secondary-blog", "confirmed": false}
+    },
+    "checkInOut": {
+      "hilton": {"value": "Hampton/Tru/Homewood: 3pm check-in; Hilton/DoubleTree/Curio often 4pm; check-out 11am-12pm", "url": "https://www.hilton.com/en/help-center/check-in-and-check-out/", "publisher": "Hilton / PointsCrowd", "date": "2026", "sourceType": "secondary-blog", "confirmed": false},
+      "marriott": {"value": "Check-in 3pm-4pm, check-out 11am-12pm; Gold late check-out to 2pm on availability; Platinum+ guaranteed 4pm at most properties", "url": "https://help.marriott.com/s/article/late-check-out-benefit", "publisher": "Marriott", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "travelodge": {"value": "Check-in 3pm, check-out 12 noon; early check-in and late check-out sold as paid 'Extras' (price not published)", "url": "https://www.travelodge.co.uk/about/terms-conditions/", "publisher": "Travelodge UK", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "earlyLateFees": {"value": null, "note": "No chain publishes a fixed fee schedule; common practice is paid late checkout by the hour or a half-day rate. Nulled rather than guessed."}
+    },
+    "noShow": {
+      "value": "Guaranteed reservation not cancelled by deadline: first night's room and tax charged (flexible rates); prepaid/non-refundable rates forfeit the whole stay. Remaining nights are released.",
+      "url": "https://engine.com/business-travel-guide/hotel-cancellation-policies",
+      "publisher": "Engine / hotel terms (e.g. Kimberly Hotel NYC terms)", "date": "2026", "sourceType": "secondary-blog", "confirmed": false
+    },
+    "feeDisclosureRules": {
+      "US federal": {"value": "FTC Rule on Unfair or Deceptive Fees (16 CFR Part 464), effective 2025-05-12: short-term lodging and live-event tickets must show total price including mandatory fees (e.g. resort fees) more prominently than other pricing; government taxes may be excluded but disclosed.", "url": "https://www.ftc.gov/news-events/news/press-releases/2025/05/ftc-rule-unfair-or-deceptive-fees-take-effect-may-12-2025", "publisher": "US FTC", "date": "2025-05-12", "sourceType": "primary-government", "confirmed": false},
+      "New York City": {"value": "DCWP rule effective 2026-02-21: total price incl. all mandatory fees up front; mandatory card holds/deposits must be disclosed. Penalties $525 / $1,050 / $3,500 (per Herrick law firm summary).", "url": "https://www.nyc.gov/mayors-office/news/2026/01/mamdani-administration-bans-hotel-hidden-fees-and-unexpected-cre", "publisher": "NYC Mayor's Office / DCWP", "date": "2026-02-21", "sourceType": "primary-government", "confirmed": true},
+      "California": {"value": "SB 478 effective 2024-07-01 (see Los Angeles)", "url": "https://oag.ca.gov/hiddenfees", "publisher": "California AG", "date": "2024-07-01", "sourceType": "primary-government", "confirmed": false},
+      "United Kingdom": {"value": "DMCC Act 2024 consumer provisions effective 2025-04-06: mandatory charges (incl. resort fees and local taxes payable on arrival) must be in headline price.", "url": "https://cms.law/en/gbr/legal-updates/no-hidden-charges-clamping-down-on-drip-pricing", "publisher": "CMS (law firm) on CMA guidance", "date": "2025-04-06", "sourceType": "secondary-press", "confirmed": false},
+      "Canada": {"value": "Competition Act drip-pricing amendment in force 2022-06-23: advertised price must include all mandatory non-government fees (incl. resort/facility fees); GST/PST/MRDT may be excluded.", "url": "https://competition-bureau.canada.ca/en/deceptive-marketing-practices/drip-pricing", "publisher": "Competition Bureau Canada", "date": "2022-06-23", "sourceType": "primary-government", "confirmed": false}
+    }
+  },
+
+  "stayTaxes": {
+    "New York City": {"value": {"stateAndCitySalesTax": "8.875%", "cityHotelOccupancyTax": "5.875%", "perRoomPerNightCity": 2.00, "javitsUnitFeePerNight": 1.50, "combined": "14.75% + $3.50 per room night (rooms $40+/night)"}, "url": "https://hanyc.org/faq/", "publisher": "Hotel Association of NYC", "date": "2026", "sourceType": "primary-industry-data", "confirmed": false},
+    "New Haven": {"value": {"connecticutRoomOccupancyTax": "15%", "bedAndBreakfast": "11%", "note": "Applies to first 30 consecutive days; stops from day 31"}, "url": "https://portal.ct.gov/drs/taxes/room-occupancy/tax-information", "publisher": "Connecticut DRS", "date": "2026", "sourceType": "primary-government", "confirmed": false},
+    "Los Angeles": {"value": {"cityTOT": "14%", "tourismMarketingDistrict": "2.0% at hotels with 50+ rooms (raised from 1.5% on 2022-05-01)", "note": "Measure TT (raise TOT to 16%) was REJECTED on 2026-06-02 (47.12% yes / 52.88% no). Measure TC (OTAs must collect/remit TOT on their markup) PASSED with 57.67%."}, "url": "https://www.discoverlosangeles.com/tmd/latmd-overview", "publisher": "Discover Los Angeles (TMD); LA City Clerk / NBC LA (measures)", "date": "2026", "sourceType": "primary-industry-data", "confirmed": false},
+    "London": {"value": {"VAT": "20%", "touristLevy": "none"}, "url": null, "publisher": "HMRC (standard rate)", "date": "2026", "sourceType": "primary-government", "confirmed": false},
+    "Edinburgh": {"value": {"VAT": "20%", "visitorLevy": "5% of accommodation cost before VAT, first 5 consecutive nights only; stays starting on/after 2026-07-24 booked from 2025-10-01; excludes meals, parking, extras; provider keeps 2% of collections"}, "url": "https://www.edinburgh.gov.uk/news/article/14452/edinburgh-visitor-levy-comes-into-effect", "publisher": "City of Edinburgh Council", "date": "2026-07-23", "sourceType": "primary-government", "confirmed": true},
+    "Dublin": {"value": {"VAT": "13.5% on hotel and short-term accommodation (unchanged); food/catering moved to 9% on 2026-07-01; alcohol and soft drinks 23%"}, "url": "https://www.rsm.global/ireland/insights/budget/budget-2026-vat", "publisher": "Irish Budget 2026 (via RSM, vatcalc, Irish Times)", "date": "2026-07-01", "sourceType": "secondary-press", "confirmed": false},
+    "Toronto": {"value": {"HST": "13% (applies to MAT too)", "MAT": "6% effective 2026-08-01 (temporary 8.5% ran 2025-06-01 to 2026-07-31)", "note": "MAT applies to room charge only, stays of 4+ hours; separately itemized meals, meeting rooms, internet exempt. Many Toronto hotels also add a voluntary 'Destination Marketing Fee' (~3%) that is not a tax."}, "url": "https://www.toronto.ca/services-payments/property-taxes-utilities/municipal-accommodation-tax/rates-and-exemptions/", "publisher": "City of Toronto", "date": "2026-08-01", "sourceType": "primary-government", "confirmed": true},
+    "Vancouver": {"value": {"GST": "5%", "PST": "8%", "MRDT": "3%", "majorEventsMRDT": "2.5% (2023-02-01 to 2030-01-31)", "note": "Because PST+MRDT+MEMRDT exceed 12%, GST is charged on those taxes too (cascading), effective total about 19.2% on room"}, "url": "https://www2.gov.bc.ca/assets/gov/taxes/sales-taxes/publications/notice-2023-001-notice-to-vancouver-accommodation-providers.pdf", "publisher": "BC Ministry of Finance", "date": "2023 (in force to 2030)", "sourceType": "primary-government", "confirmed": false},
+    "Mexico City": {"value": {"IVA": "16%", "ISH_hotels": "3.5% (hotels, hostels, motels, campgrounds)", "ISH_platforms": "5% (houses/apartments via Airbnb, Booking, Vrbo; intermediary remits)", "note": "The task brief's 'ISH 5%' is only the platform rate; conventional hotels pay 3.5% (Codigo Fiscal CDMX art. 162-164). Filed within first 15 days of following month."}, "url": "https://leyes-mx.com/codigo_fiscal_ciudad_de_mexico/164.htm", "publisher": "Codigo Fiscal de la Ciudad de Mexico (via leyes-mx)", "date": "2026", "sourceType": "primary-government", "confirmed": false},
+    "Palm Springs": {"value": {"TOT": "11.5%", "TBID": "1% (stays under 28 days)"}, "url": "https://www.palmspringsca.gov/government/departments/finance-treasury/transient-occupancy-tax-tot", "publisher": "City of Palm Springs", "date": "2026", "sourceType": "primary-government", "confirmed": false},
+    "Scottish Highlands": {"value": "No levy in force. Proposed tiered fixed £5 per room per night; consultation opened 2026-09-07, decision 2026-12-10, 18-month lead so not before 2028.", "url": "https://www.highland.gov.uk/news/article/17462/highland-council-opens-statutory-public-consultation-on-a-tiered-fixed-amount-visitor-levy-proposal", "publisher": "Highland Council", "date": "2026-09", "sourceType": "primary-government", "confirmed": false},
+    "Whistler": {"value": {"GST": "5%", "PST": "8%", "MRDT": "3%"}, "url": "https://www.whistler.ca/municipal-services/grants-and-funding/municipal-and-regional-district-tax/", "publisher": "Resort Municipality of Whistler", "date": "2026", "sourceType": "primary-government", "confirmed": false},
+    "Cancun": {"value": {"IVA": "16%", "ISH_QuintanaRoo": "5% traditional lodging, 6% digital platforms", "environmentalFeePerRoomNight": "76 MXN (Cancun/Benito Juarez, collected by hotel)", "VISITAX": "about 285 MXN per foreign visitor, paid online separately, not on hotel bill; no increase in 2026"}, "url": "https://www.elcontribuyente.mx/2026/02/airbnb-hoteles-y-rentas-asi-cambia-el-impuesto-sobre-hospedaje-en-2026/", "publisher": "El Contribuyente; Quadratin (Visitax)", "date": "2026", "sourceType": "secondary-press", "confirmed": true}
+  },
+
+  "rentalClasses": {
+    "acriss": {
+      "value": {
+        "position1_category": {"M": "Mini", "N": "Mini Elite", "E": "Economy", "H": "Economy Elite", "C": "Compact", "D": "Compact Elite", "I": "Intermediate", "J": "Intermediate Elite", "S": "Standard", "R": "Standard Elite", "F": "Fullsize", "G": "Fullsize Elite", "P": "Premium", "U": "Premium Elite", "L": "Luxury", "W": "Luxury Elite", "O": "Oversize", "X": "Special"},
+        "position2_type": {"B": "2-3 Door", "C": "2/4 Door", "D": "4-5 Door", "W": "Wagon/Estate", "V": "Passenger Van", "L": "Limousine/Sedan", "S": "Sport", "T": "Convertible", "F": "SUV", "J": "Open Air All Terrain", "X": "Special", "P": "Pick up (single/extended cab) 2 door", "Q": "Pick up (double cab) 4 door", "Z": "Special Offer Car", "E": "Coupe", "M": "Monospace", "R": "Recreational Vehicle", "H": "Motor Home", "Y": "2 Wheel Vehicle", "N": "Roadster", "G": "Crossover", "K": "Commercial Van/Truck"},
+        "position3_transmissionDrive": {"M": "Manual (unspecified drive)", "N": "Manual 4WD", "C": "Manual AWD", "A": "Auto (unspecified drive)", "B": "Auto 4WD", "D": "Auto AWD"},
+        "position4_fuelAir": {"R": "Unspecified fuel, A/C", "N": "Unspecified fuel, no A/C", "D": "Diesel A/C", "Q": "Diesel no A/C", "H": "Hybrid A/C", "I": "Hybrid no A/C", "E": "Electric A/C", "C": "Electric no A/C", "L": "LPG/CNG A/C", "S": "LPG/CNG no A/C", "A": "Hydrogen A/C", "B": "Hydrogen no A/C", "M": "Multi fuel/power A/C", "F": "Multi fuel/power no A/C", "V": "Petrol A/C", "Z": "Petrol no A/C", "U": "Ethanol A/C", "X": "Ethanol no A/C"},
+        "examples": {"ECAR": "Economy 2/4-door auto A/C", "CDAR": "Compact 4-5 door auto A/C", "IFAR": "Intermediate SUV auto A/C", "FVAR": "Fullsize passenger van auto A/C", "EDMR": "Economy 4-5 door manual (common UK/Ireland default)"}
+      },
+      "url": "https://www.acriss.org/car-codes/expanded-matrix/",
+      "publisher": "ACRISS", "date": "2026", "sourceType": "primary-industry-data",
+      "confirmed": true,
+      "note": "Letter positions and letters were confirmed from the ACRISS page; the long names for some less-common letters (N, H, J, R, G, U, W, O and some type/fuel names) are the long-standing ACRISS meanings, filled from knowledge and not all quoted on the fetched page."
+    },
+    "averageDailyByAirport": {
+      "_note": "Kayak rolling averages by Kayak's own coarse classes (small ~ ACRISS M/E/C, medium ~ I/S, large ~ F, SUV ~ xFxx). Aggregator, not rate card. Retrieved 2026-09-30.",
+      "JFK (New York)": {"value": {"small": 57, "medium": 72, "large": 83, "SUV": 87, "van": 115, "pickup": 72, "luxury": 125, "convertible": 138, "overall": 81}, "currency": "USD", "byCompanyFrom": {"Hertz": 58, "Enterprise": 91, "Avis": 69, "National": 79, "Alamo": 83, "Budget": 59, "Sixt": 43}, "url": "https://www.kayak.com/New-York-John-F-Kennedy-Intl-Airport-Car-Rentals.JFK.cap.ksp", "publisher": "Kayak", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "HVN (New Haven)": {"value": {"small": 54, "medium": 88, "large": 90, "SUV": 110, "van": 126, "luxury": 123, "overall": 71}, "currency": "USD", "url": "https://www.kayak.com/New-Haven-Tweed-Airport-Car-Rentals.HVN.cap.ksp", "publisher": "Kayak", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "LAX (Los Angeles)": {"value": {"small": 40, "medium": 61, "large": 59, "SUV": 61, "van": 94, "pickup": 59, "luxury": 85, "convertible": 80}, "currency": "USD", "byCompanyFrom": {"Hertz": 53, "Enterprise": 70, "Avis": 57, "Alamo": 61, "Budget": 60, "Sixt": 46}, "url": "https://www.kayak.com/Los-Angeles-Airport-Car-Rentals.LAX.cap.ksp", "publisher": "Kayak", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "LHR (London Heathrow)": {"value": {"small": 22, "medium": 45, "large": 62, "SUV": 42, "van": 61, "luxury": 61, "convertible": 43}, "currency": "GBP", "byCompanyFrom": {"Hertz": 33, "Enterprise": 39, "Avis": 28, "Sixt": 36}, "url": "https://www.kayak.co.uk/London-Heathrow-Airport-Car-Hire.LHR.cap.ksp", "publisher": "Kayak UK", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "EDI (Edinburgh)": {"value": {"small": 25, "medium": 54, "large": 73, "SUV": 49, "van": 76, "luxury": 70, "overall": 38}, "currency": "GBP", "byCompanyFrom": {"Hertz": 35, "Enterprise": 46, "Avis": 36, "Arnold Clark": 36}, "url": "https://www.kayak.co.uk/Edinburgh-Airport-Car-Hire.EDI.cap.ksp", "publisher": "Kayak UK", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "DUB (Dublin)": {"value": {"small": 27, "medium": 50, "large": 78, "SUV": 55, "van": 81, "luxury": 92}, "currency": "EUR", "byCompanyFrom": {"Hertz": 27, "Enterprise": 45, "Avis": 32, "Europcar": 35}, "url": "https://www.kayak.ie/Dublin-Airport-Car-Hire.DUB.cap.ksp", "publisher": "Kayak Ireland", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "YYZ (Toronto)": {"value": {"small": 25, "medium": 38, "large": 44, "SUV": 50, "van": 102, "pickup": 62, "luxury": 84, "convertible": 65, "overall": 42}, "currency": "USD (probable; see uncertain)", "url": "https://www.kayak.com/Toronto-Pearson-Intl-Airport-Car-Rentals.YYZ.cap.ksp", "publisher": "Kayak", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "YVR (Vancouver)": {"value": {"small": 35, "medium": 46, "large": 52, "SUV": 63, "van": 134, "pickup": 70, "luxury": 104, "convertible": 94, "overall": 57}, "currency": "USD", "url": "https://www.kayak.com/Vancouver-Intl-Airport-Car-Rentals.YVR.cap.ksp", "publisher": "Kayak", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true},
+      "MEX (Mexico City)": {"value": {"small": 9, "medium": 42, "large": 60, "SUV": 48, "van": 70, "pickup": 41, "luxury": 98, "overall": 21}, "currency": "USD", "note": "Mexican online base rates exclude the legally mandatory third-party liability cover sold at the counter, which commonly multiplies the real daily cost several times. Treat as bait price, not real cost.", "url": "https://www.kayak.com/Mexico-City-Juarez-Intl-Airport-Car-Rentals.MEX.cap.ksp", "publisher": "Kayak", "date": "2026-09-30", "sourceType": "aggregator", "confirmed": true}
+    }
+  },
+
+  "oneWay": {
+    "enterprisePolicy": {"value": "Some one-way rentals carry a one-time drop charge or a per-mile/km charge on top of the rate; varies by pickup, return and other factors; even same-city returns can incur it; disclosed at booking and payable at pickup. Unlimited mileage on one-ways for most classes except large passenger vans, cargo vans, large SUVs, exotics.", "url": "https://www.enterprise.com/en/car-rental-faqs/us-general/one-way-car-rental-policy.html", "publisher": "Enterprise", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true},
+    "exampleJFKtoDC": {"value": 94, "currency": "USD", "note": "One-day Enterprise one-way JFK to Washington DC: $94 drop fee on a ~$60 base rate", "url": "https://blog.autoslash.com/cheap-one-way-car-rental-no-drop-off-fee/", "publisher": "AutoSlash", "date": "Feb (year unstated, recent)", "sourceType": "secondary-blog", "confirmed": false},
+    "hertzOneWay": {"value": "Commonly priced into the rate or as per-mile charges on some rates ($0.25-$0.29/mile reported on corporate/one-way rates over 200 miles); Hertz return-location change fee $12.99 applies to modifications", "url": "https://www.flyertalk.com/forum/hertz-gold-plus-rewards/1629882-hertz-one-way-point-rentals-now-charge-per-mile.html", "publisher": "FlyerTalk / AutoSlash", "date": "various", "sourceType": "secondary-blog", "confirmed": false},
+    "avisOneWay": {"value": "Often $0 separate drop fee in the US with cost folded into the daily rate; drop charge may apply on some rates", "url": "https://blog.autoslash.com/cheap-one-way-car-rental-no-drop-off-fee/", "publisher": "AutoSlash", "date": "2026", "sourceType": "secondary-blog", "confirmed": false},
+    "crossBorderOneWay": {"value": "Budget: no one-way rentals into Mexico; car must return to US. Enterprise UK/IE: separate fees for one-way and cross-border hires (amounts not published).", "confirmed": true, "url": "https://www.budget.com/en/help/usa-faqs/cross-into-mexico", "publisher": "Budget", "date": "2026", "sourceType": "primary-company"},
+    "ukIrelandOneWay": {"value": null, "note": "No published per-route fee found."}
+  },
+
+  "mileage": {
+    "enterpriseUS": {"value": "Unlimited on most US classes; limited on large passenger vans, cargo vans, large SUVs, exotics; overage $0.10-$0.25 per mile/km; no restriction for out-of-state or driving to Canada", "url": "https://www.enterprise.com/en/car-rental-faqs/us-general/unlimited-mileage.html", "publisher": "Enterprise", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true},
+    "enterpriseEU": {"value": "Unless 'Unlimited mileage' appears on the Summary, a charge per extra mile/km above the allowance shown", "url": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf", "publisher": "Enterprise (EU/UK/IE fee schedule)", "date": "2026-04-23", "sourceType": "primary-company", "confirmed": true},
+    "hertzCanada": {"value": "Unlimited mileage stated as standard for Hertz Canada rentals via tour-operator terms; limited plans exist on some rates. Separate reports of '200 km/day' caps not confirmed.", "url": "https://www.canadianaffair.com/travel-centre/terms-and-conditions/hertz-car-rental", "publisher": "Canadian Affair (Hertz reseller)", "date": "2024-2026", "sourceType": "secondary-press", "confirmed": false}
+  },
+
+  "lateReturn": {
+    "hertzUS": {"value": "29-minute grace; from the 30th minute, extra hours charged (reported at 1/5 of the daily rate per hour, capped so that after ~5 hours a full extra day applies); optional coverages charged a full day with no grace", "url": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=GRACE&EOAG=PBIT11", "publisher": "Hertz (terms page returned HTTP 500; wording via AutoSlash/UponArriving)", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+    "enterpriseUS": {"value": "29-minute grace for daily rentals; returned within 2.5 hours of pickup time on a later day = hourly charges (rate on contract); 2.5 hours or more = an extra day; after-hours returns stay renter's responsibility until next-business-day check-in", "url": "https://www.enterprise.com/en/car-rental-faqs/us-reservations/late-returns-policy.html", "publisher": "Enterprise", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+    "enterpriseUK": {"value": "29-minute grace for daily hires; outside it, daily hire charges payable", "url": "https://www.enterprise.co.uk/en/car-hire-faqs/uk-reservations/late-returns-policy.html", "publisher": "Enterprise UK", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true},
+    "enterpriseEUSchedule": {"value": "Excess time charged per full or partial hour/day beyond 1; hourly charges never exceed the cost of 1 extra day; returning out of hours or to another location keeps time & distance running until check-in", "url": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf", "publisher": "Enterprise", "date": "2026-04-23", "sourceType": "primary-company", "confirmed": true}
+  },
+
+  "fuel": {
+    "hertzUS": {"value": {"fuelPurchaseOption": "full tank prepaid at about local pump price minus $0.15/gal (Canada: minus 5 cents/L); no refund for unused fuel", "refuelingServiceCharge": "about $9.49 per gallon reported for 2026 (older program: pump price plus $6.99 flat)"}, "currency": "USD", "url": "https://myrentright.com/tips/hertz-fuel-policy", "publisher": "MyRentRight (Hertz primary page not readable)", "date": "2026", "sourceType": "secondary-blog", "confirmed": false},
+    "enterpriseUS": {"value": "Full-to-full; else refueled at a local Enterprise per-gallon rate 'typically above the local pump price'; Pre-pay fuel sold only as full tanks at local price minus a per-gallon discount, non-refundable", "url": "https://www.enterprise.com/en/car-rental-faqs/us-general/fueling-rental-car.html", "publisher": "Enterprise", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+    "enterpriseUKIE": {"value": "If Fuel Service Option not bought and car returned short: fuel charge at the Summary rate x missing eighths (gauge rounded to nearest 1/8 or telematics) + a location-set refueling fee (UK reported 'up to £15'); no credit for extra fuel. EVs: kWh shortfall x market price + admin fee.", "url": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf", "publisher": "Enterprise", "date": "2026-04-23", "sourceType": "primary-company", "confirmed": true}
+  },
+
+  "extras": {
+    "additionalDriver": {
+      "hertzUS": {"value": {"perDay": 15.00, "maxPerRental": 210.00, "altRate": "$30.00/day at some locations"}, "currency": "USD", "note": "Spouse/civil-union partner 25+ added free in California and Iowa (state law) or for Gold Plus Rewards members; AAA and USAA members get free additional drivers", "url": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=OPERATORS&EOAG=MSPT11", "publisher": "Hertz (MSP location terms)", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true},
+      "enterpriseUK": {"value": {"airportOrPremium": 19.11, "otherLocations": 15.60}, "currency": "GBP", "unit": "per day", "url": "https://www.enterprise.co.uk/en/car-hire-faqs/us-general/additional-driver.html", "publisher": "Enterprise UK", "date": "2026", "sourceType": "primary-company", "confirmed": false}
+    },
+    "youngDriver": {
+      "hertzUS": {"value": {"typicalPerDay": "19-25", "NewYork": "25-35 (ages 21-24; 18+ allowed by state law)", "Michigan": "25-29"}, "currency": "USD", "note": "Minimum age 20 in most states; 18 in NY and MI; 19 in AL and NE. Fee waived for AAA members 20-24.", "url": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?KEYWORD=AGE&EOAG=LGAT01", "publisher": "Hertz (age rules, confirmed) / UpgradedPoints (amounts)", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "enterpriseUS": {"value": {"typicalPerDay": 25.00, "NewYork_21to24": 33.25, "Michigan_21to24": 15.50}, "currency": "USD", "url": "https://www.enterprise.com/en/car-rental-faqs/us-renter-requirements/car-rental-under-25.html", "publisher": "Enterprise", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+      "enterpriseUK": {"value": null, "note": "Enterprise UK rents to 25+ on standard classes; under-25s steered to Enterprise Car Club (19+). Surcharge amount not published."}
+    },
+    "damageExcessUKIE": {"value": "Enterprise UK Damage Waiver excess roughly £1,750-£2,700 per incident by class, reduced to £100-£250 with Excess Protection; Ireland roughly €2,000-€3,000 reduced to €0-€500 (table layout garbled in extraction; class-to-amount mapping uncertain)", "url": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf", "publisher": "Enterprise", "date": "2026-04-23", "sourceType": "primary-company", "confirmed": false},
+    "adminFeesUKIE": {"value": {"UK_finesProcessing": "up to £45 per fine", "UK_damageProcessing": "£78 or £100", "IE_finesProcessing": "up to €35 per fine", "IE_damageProcessing": "€78 or €100"}, "url": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf", "publisher": "Enterprise", "date": "2026-04-23", "sourceType": "primary-company", "confirmed": true},
+    "extensions": {"value": "Extensions priced at the current rate for added days, not the booked rate; Enterprise EU schedule reserves the right to recalculate the whole rental at actual duration, which can raise charges; prepaid rates usually cannot be extended at the prepaid price", "url": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf", "publisher": "Enterprise", "date": "2026-04-23", "sourceType": "primary-company", "confirmed": true}
+  },
+
+  "crossBorder": {
+    "USToCanada": {"value": "Enterprise: most US rentals may be driven to Canada with no special permit or fee and no mileage restriction; tell the counter and get a Canadian Non-Resident Insurance Card. Budget has a similar published US-Canada FAQ.", "url": "https://www.enterprise.com/en/car-rental-faqs/us-general/unlimited-mileage.html", "publisher": "Enterprise", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true},
+    "USToMexico": {
+      "enterprise": {"value": "Vehicles rented from Enterprise in the United States cannot be driven into Mexico.", "url": "https://www.enterprise.com/en/car-rental-faqs/us-general/driving-rental-car-to-mexico.html", "publisher": "Enterprise", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true},
+      "budget": {"value": "Allowed only on corporate accounts, US-resident renters, car must return to the US (no one-way into Mexico); Mexican Automobile Liability Insurance required, sold only at counters in Texas, Arizona and California", "url": "https://www.budget.com/en/help/usa-faqs/cross-into-mexico", "publisher": "Budget", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true},
+      "mexicoLaw": {"value": "Third-party liability insurance is mandatory for all vehicles in Mexico; US policies and credit-card coverage generally not accepted. Enterprise Mexico requires Third Party Liability Protection unless proof of Mexico-valid liability cover.", "url": "https://www.enterprise.com/en/car-rental-locations/mx.html", "publisher": "Enterprise Mexico", "date": "2026", "sourceType": "primary-company", "confirmed": false}
+    },
+    "MexicoToUS": {"value": "Enterprise Mexico permits US crossing only from Tijuana, Mexicali, Hermosillo, Monterrey and Saltillo; Mexico City rentals may not cross", "url": "https://www.enterprise.com/en/car-rental-locations/mx.html", "publisher": "Enterprise", "date": "2026", "sourceType": "primary-company", "confirmed": false},
+    "UKIreland": {"value": "Enterprise charges separate cross-border fees (UK to Ireland / Northern Ireland to Republic); amounts not published", "url": "https://www.enterprise.com/en/car-rental-faqs/uk-renter-requirements/are-there-any-add-on-charges.html", "publisher": "Enterprise", "date": "2026-09-30", "sourceType": "primary-company", "confirmed": true}
+  },
+
+  "uncertain": [
+    "Mexico City ISH: the brief said 5%; the Codigo Fiscal sets 3.5% for hotels, hostels and motels and 5% only for homes/apartments booked through platforms. Model both.",
+    "Toronto MAT: the brief's 6% is right as of 2026-08-01; it was 8.5% from 2025-06-01 to 2026-07-31. Stays in that window used 8.5%.",
+    "Los Angeles TMD is 2.0% for hotels with 50+ rooms (not 1.5%); smaller hotels likely 1.5% or exempt, not confirmed. Measure TT failed, so TOT stays 14%.",
+    "Vancouver effective tax: whether GST cascades on PST+MRDT+MEMRDT in practice for every provider was read from a BC notice summary, not the notice itself.",
+    "CoStar, AirDNA and most hertz.com pages blocked direct fetch (403/500/empty JS); their numbers are from search snippets or press restatements.",
+    "AirDNA ADRs are shown in USD for non-US markets; convert at the date's rate. AirDNA's Mexico City 'monthly revenue $11,939' looks like MXN or an error and was not used.",
+    "Kayak YYZ averages: summary said CAD but the page was kayak.com (normally USD). Treat currency as unknown until re-read on kayak.ca.",
+    "Kayak averages are rolling and date-dependent; MEX base rates exclude mandatory liability insurance and badly understate real cost.",
+    "Hertz young renter fee amounts ($19-$25 typical, NY $25-$35) come from secondary sites; Hertz's own pages confirm only that the fee exists and the minimum ages.",
+    "Hertz late-return hourly = 1/5 of daily rate is a secondary report; Hertz confirms the 29-minute grace in forum-quoted terms only.",
+    "Hertz US refueling charge ~$9.49/gal for 2026 is from a third-party tips site.",
+    "Enterprise UK/IE damage excess class mapping was garbled by PDF extraction.",
+    "Edinburgh £220 ADR (12 months to May 2025) has unclear attribution.",
+    "Cancun ADR $116 (2025) seems low for the market and may be a room-only subset.",
+    "Mexico City hotel ADR only available as a November 2024 figure (1,600 MXN) from a brokerage note; no official 2025 ADR found.",
+    "Toronto full-year 2025 ADR not found; only October (CAD 294.90) and November (CAD 274.79) 2025.",
+    "Hotel parking outside NYC, early check-in/late check-out fees, and room occupancy limits have no published primary figures; left null or described as convention.",
+    "London Congestion Charge 2026 figure mentioned in a parking note was not verified this session.",
+    "Palm Springs vacation-rental ADR $476 is from an AirROI-type aggregator; Visit Greater Palm Springs monthly figures ($720 April 2025, $385 May 2025) vary sharply by season."
+  ]
+}

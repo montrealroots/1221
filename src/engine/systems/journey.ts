@@ -23,6 +23,7 @@ import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
 import { RENTAL_RETURN_KIND, planRentalDrive, rentalDays, rentalDriven, rentalQuote, rentalsOf } from './rentals';
 import { ownFlown, planCharterJet, planFlyYourself } from './aviation';
 import type { Simulation } from '../core/simulation';
+import { HOTEL_PARKING, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '../content/staytypes';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, MS_HOUR, formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
@@ -79,7 +80,7 @@ export interface Journey {
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
-  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant };
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money };
   /** A holiday let there instead (`content/lets.ts`, from 2026-09-29): its nights, price and the service fee in it. */
   let?: { nights: number; price: Money; fee: Money; basis: string; checkOutAt: Instant };
   /** Business or first, where not economy (from 2026-09-29). */
@@ -100,6 +101,29 @@ export const CHECKOUT_KIND = 'travel.checkout';
 export const CHECKOUT_HOUR = 11;
 /** A hotel booked on a flexible rate is refunded until a day before arrival: SLATE's reading of the usual terms. */
 export const HOTEL_FREE_UNTIL_HOURS = 24;
+
+/**
+ * What comes back of a hotel called off, from 2026-10-01
+ * (`docs/research/world/research-stays-rentals.json`): on a flexible rate,
+ * all of it until a day before arrival, and after that all but its first
+ * night, which a late cancellation or a no-show costs, the rest released as
+ * hotels do; paid ahead on the prepaid rate, nothing. Its parking comes back
+ * whole, as nothing was parked. Until then a late cancellation or a missed
+ * arrival forfeited every night.
+ */
+/** A journey missed: its hotel's nights released as a no-show's are, the first kept on a flexible rate (from 2026-10-01). */
+function missedHotel(sim: Simulation, person: Person, j: Journey): void {
+  const back = j.hotel ? hotelRefund(j.hotel, j.arriveAt, j.arriveAt) : 0;
+  if (back > 0) sim.post({ memo: 'A hotel’s nights released, the first kept for the no-show', category: 'travel', postings: refundPostings(sim, person, back) });
+}
+
+export function hotelRefund(hotel: NonNullable<Journey['hotel']>, arriveAt: Instant, now: Instant): Money {
+  const parking = hotel.parking ?? 0;
+  if (hotel.plan === 'prepaid') return parking;
+  const rooms = hotel.price - parking;
+  if (arriveAt - now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR) return hotel.price;
+  return parking + rooms - Math.round(rooms / Math.max(1, hotel.nights));
+}
 
 /** Check-out after some nights from an arrival, at eleven in the town's time. */
 export function checkOutAfter(cityId: string, arriveAt: Instant, nights: number): Instant {
@@ -251,9 +275,10 @@ function fly(sim: Simulation, person: Person, j: Journey): void {
 }
 
 /** A journey's legs by air, or by a train's route: `by` is the route's id, or nothing for air. */
-export function planBy(sim: Simulation, by: string | undefined, fromCity: string, toCity: string, day: Instant, slot: number, bags: number, cabin: Cabin = 'economy'): JourneyLeg[] | string {
+/** A journey's legs by a way of going. The way home of a round trip by one's own car is planned from where the car will be then, the town it was driven to (from 2026-10-01). */
+export function planBy(sim: Simulation, by: string | undefined, fromCity: string, toCity: string, day: Instant, slot: number, bags: number, cabin: Cabin = 'economy', carWillBeAt?: string): JourneyLeg[] | string {
   if (!by || by === 'air') return planJourney(sim, fromCity, toCity, day, slot, bags, cabin);
-  if (by.startsWith('car:')) return planDrive(sim, sim.player, by.slice(4), fromCity, toCity, day, slot);
+  if (by.startsWith('car:')) return planDrive(sim, sim.player, by.slice(4), fromCity, toCity, day, slot, carWillBeAt);
   // A car rented where they are (`systems/rentals.ts`, from 2026-09-29).
   if (by === 'rental') return planRentalDrive(sim, sim.player, fromCity, toCity, day, slot);
   // Flown oneself in a rented plane, on a pilot's certificate (`systems/aviation.ts`, from 2026-09-29).
@@ -274,11 +299,11 @@ export function planBy(sim: Simulation, by: string | undefined, fromCity: string
  * tolls. It's the owner's car, where it is, and a license that lets them
  * drive there.
  */
-export function planDrive(sim: Simulation, person: Person, vehicleId: string, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
+export function planDrive(sim: Simulation, person: Person, vehicleId: string, fromCity: string, toCity: string, day: Instant, slot: number, willBeAt?: string): JourneyLeg[] | string {
   const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
   if (!v) return 'That isn’t a car you own.';
   if (v.repossessed) return 'The lender has the car.';
-  if ((v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
+  if ((willBeAt ?? v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
   const may = mayDrive(person, fromCity, day);
   if (!may.ok) return may.why ?? 'You may not drive there.';
@@ -375,6 +400,7 @@ export function registerJourneys(sim: Simulation): void {
     if (!j || j.status !== 'booked') throw new CommandError('That isn’t a journey you have booked.');
     if (!j.hotel) throw new CommandError('A let takes the place of the journey’s hotel.');
     if (j.arriveAt - s.now < HOTEL_FREE_UNTIL_HOURS * MS_HOUR) throw new CommandError('Too close to arrival to cancel the hotel free.');
+    if (j.hotel.plan === 'prepaid') throw new CommandError('The hotel was paid ahead on a rate that isn’t refunded.');
     const q = letQuote(s, j.toCity, j.hotel.nights);
     if (typeof q === 'string') throw new CommandError(q);
     const hotelBack = j.hotel.price;
@@ -386,7 +412,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -398,7 +424,7 @@ export function registerJourneys(sim: Simulation): void {
     // A cabin is the airlines': a train is booked as it comes.
     const cabin: Cabin = !by && p?.cabin === 'premium' ? 'premium' : 'economy';
     let out = planBy(s, by, fromCity, toCity, day, Number(p?.slot ?? 0), bags, cabin);
-    let back = round ? planBy(s, by, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags, cabin) : undefined;
+    let back = round ? planBy(s, by, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags, cabin, toCity) : undefined;
     if (typeof out === 'string') throw new CommandError(out);
     if (typeof back === 'string') throw new CommandError(back);
     const arriveOut = out[out.length - 1]!.arriveAt;
@@ -413,7 +439,13 @@ export function registerJourneys(sim: Simulation): void {
       // A round trip's discount is the airlines'; a train's return is two singles.
       if (!by) { out = asRoundTrip(out); back = asRoundTrip(back); }
     }
-    const hotel = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights)! : undefined;
+    // The kind of stay and its rate plan, and a car brought parked where a hotel charges for it (from 2026-10-01).
+    const cls: StayClass = p?.stay ?? 'hotel';
+    const plan: RatePlan = p?.plan === 'prepaid' ? 'prepaid' : 'flexible';
+    const room = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights, 1, cls, plan) : undefined;
+    if (!ownPlaceIn(person, toCity) && nights > 0 && !room) throw new CommandError(`SLATE doesn’t have ${STAY_CLASS_LABEL[cls].toLowerCase()} in ${CITIES.require(toCity).name}.`);
+    const park = room && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
+    const hotel = room ? { price: room.price + park, basis: `${room.basis}${park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
     const outCost = total(out) + (hotel?.price ?? 0);
     const cost = outCost + (back ? total(back) : 0);
     if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} in a hotel` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
@@ -427,7 +459,7 @@ export function registerJourneys(sim: Simulation): void {
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;
     };
-    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights) } : undefined);
+    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}) } : undefined);
     const second = back ? add(back, toCity, fromCity, total(back)) : undefined;
     return { journeyId: first.id, ...(second ? { returnId: second.id } : {}), leaveAt: first.leaveAt, arriveAt: first.arriveAt, total: cost };
   });
@@ -482,7 +514,7 @@ export function registerJourneys(sim: Simulation): void {
     const free = s.now - first.bookedAt <= 24 * MS_HOUR && first.leaveAt - first.bookedAt >= 7 * MS_DAY;
     let refund = 0;
     for (const h of halves) {
-      const hotelBack = (h.hotel && h.arriveAt - s.now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR ? h.hotel.price : 0) + (h.let ? letRefund(h.let, h.arriveAt, s.now) : 0);
+      const hotelBack = (h.hotel ? hotelRefund(h.hotel, h.arriveAt, s.now) : 0) + (h.let ? letRefund(h.let, h.arriveAt, s.now) : 0);
       const route = railRouteById(h.by);
       // A drive not yet driven has burned nothing: all of its costs come back.
       // A charter canceled ahead: SLATE's, as no operator's terms were read.
@@ -505,6 +537,7 @@ export function registerJourneys(sim: Simulation): void {
     if (!present(person, item.at, j.fromCity)) {
       j.status = 'missed';
       j.why = 'You weren’t there to leave.';
+      missedHotel(s, person, j);
       tell('Journey Missed', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the airline canceled the way home with it, as it does a round trip whose first flight goes unflown' : ''}.`);
       return;
     }
@@ -513,6 +546,7 @@ export function registerJourneys(sim: Simulation): void {
     if (no) {
       j.status = 'missed';
       j.why = `The airline wouldn’t board you: ${no}`;
+      missedHotel(s, person, j);
       tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
       return;
     }
@@ -672,7 +706,9 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
     if (typeof q === 'string') return q;
     stay = q.price - out.let.price;
   } else if (out.hotel) {
-    stay = stayPrice(sim, back.fromCity, nights)!.price - out.hotel.price;
+    // The longer stay at the same kind and plan; the parking with it for the nights added.
+    const per = out.hotel.parking ? Math.round(out.hotel.parking / out.hotel.nights) : 0;
+    stay = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible')!.price + per * nights - out.hotel.price;
   }
   const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
   let rental = 0;
