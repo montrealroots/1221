@@ -140,9 +140,10 @@ Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed.
   - Ontario (PPSA): 15 days, redeemed by the balance, the shortfall owed.
   - British Columbia (PPSA): not seized once two-thirds is paid; 20 days; reinstated by what's missed; seizing ends the debt, "seize or sue."
 - Britain's and Ireland's car loans are priced at personal-loan rates, which are unsecured, so no car is taken there and the arrears run. Mexico's are enforced before a notary or a court, with no day counts found: none kept. The tow's $300 and $47.50 a day in storage are the middles of consumer sites' ranges, secondary.
-- Open, and why: the credit record's mark (seven years under the FCRA, six in Britain, is researched, but no score effect is published); a trade-in was open, and is built (above).
+- The record (from 2026-09-29): a second payment missed running means the first is thirty days late, and it's reported, each one after it too, at the 70 points SLATE's mortgage takes. The car taken is reported, and myFICO publishes no figure for it, so SLATE takes the consumer sites' "about 100 points" (secondary), the same as its charge-off (`LOAN_LATE_ON_RECORD` and `REPOSSESSED_ON_RECORD` in `content/repossession.ts`). Until then neither touched the record, which was open here.
+- Open, and why: the mark falling off after the FCRA's seven years or Britain's six (both researched), since SLATE's score recovers only by months paid on time and holds no item for its years; a trade-in was open, and is built (above).
 
-Evidence: `tests/repossession.test.ts` (5); 8 mutations, all killed. One first survived, the count of payments missed running, which no test reached until one paid between two misses reset it.
+Evidence: `tests/repossession.test.ts` (7); 8 mutations, all killed. One first survived, the count of payments missed running, which no test reached until one paid between two misses reset it. The record's mark: 5 more, all killed.
 
 ### Stage 4: Land
 

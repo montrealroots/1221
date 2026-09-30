@@ -16,7 +16,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { DEFAULT_AFTER_MISSED, REPOSSESSION, REPO_FEES_USD } from '../content/repossession';
+import { DEFAULT_AFTER_MISSED, LOAN_LATE_ON_RECORD, REPOSSESSED_ON_RECORD, REPOSSESSION, REPO_FEES_USD } from '../content/repossession';
 import { arrearsAccount, arrearsOf, drawFromBank, owe } from './household';
 import type { OwnedVehicle } from './vehicles';
 
@@ -38,20 +38,33 @@ export function redemption(sim: Simulation, v: OwnedVehicle): Money | undefined 
   return (rule.redeemBy === 'missed' ? v.loan.missedAmount ?? 0 : (v.loan.owed + (v.loan.missedAmount ?? 0))) + repoFees(sim, v);
 }
 
-/** A payment made or missed: counted, and the car taken where the law allows once three are missed running. */
+/** The record takes a mark, and remembers when. */
+function mark(person: Person, points: number, at: number): void {
+  if (!person.credit) return;
+  person.credit.score = Math.max(300, person.credit.score - points);
+  person.credit.late.push(at);
+}
+
+/**
+ * A payment made or missed: counted, and the car taken where the law allows
+ * once three are missed running. A second missed running means the first is
+ * thirty days late, and the lender reports it, as it does each one after.
+ */
 export function loanMonth(sim: Simulation, person: Person, v: OwnedVehicle, paid: boolean, payment: Money, label: string): void {
   if (!v.loan) return;
   if (paid) { v.loan.missed = 0; return; }
   v.loan.missed = (v.loan.missed ?? 0) + 1;
   v.loan.missedAmount = (v.loan.missedAmount ?? 0) + payment;
+  if (v.loan.missed >= 2) mark(person, LOAN_LATE_ON_RECORD, sim.now);
   const rule = REPOSSESSION[v.jurisdiction];
   if (!rule || v.repossessed || v.loan.missed < DEFAULT_AFTER_MISSED) return;
   const original = v.loan.original ?? v.loan.owed;
   if (rule.protectedAt !== undefined && 1 - v.loan.owed / original >= rule.protectedAt) return;
   const saleAt = sim.now + rule.noticeDays * MS_DAY;
   v.repossessed = { at: sim.now, saleAt };
+  mark(person, REPOSSESSED_ON_RECORD, sim.now);
   sim.schedule({ at: saleAt, kind: REPO_SALE_KIND, label: 'Repossessed Car Sold', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Your Car Was Repossessed', body: `${DEFAULT_AFTER_MISSED} payments on the ${label} missed, the lender took it. It’s sold on ${formatDate(saleAt, sim.zone)} unless you redeem it on the Cars screen.`, importance: 85, route: '/workspace/vehicles' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Your Car Was Repossessed', body: `${DEFAULT_AFTER_MISSED} payments on the ${label} missed, the lender took it. It’s sold on ${formatDate(saleAt, sim.zone)} unless you redeem it on the Cars screen, and it’s on your record.`, importance: 85, route: '/workspace/vehicles' });
 }
 
 /** The car sold after its notice: the loan paid from it, a surplus back, the shortfall owed or ended by the law. */

@@ -13,7 +13,8 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { valueOf, vehiclesOf, modelById } from '@/engine/systems/vehicles';
-import { redemption, repoFees } from '@/engine/systems/repossession';
+import { loanMonth, redemption, repoFees } from '@/engine/systems/repossession';
+import { LOAN_LATE_ON_RECORD, REPOSSESSED_ON_RECORD } from '@/engine/content/repossession';
 import { arrearsOf } from '@/engine/systems/household';
 
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -107,5 +108,31 @@ describe('three payments missed', () => {
     sim.advanceBy(60 * MS_DAY);
     expect(v.loan!.missed).toBe(2);
     expect(v.repossessed).toBeUndefined();
+  });
+});
+
+describe('the record', () => {
+  it('takes nothing for one missed payment, 70 when the next is missed too, and 100 more for the car taken', () => {
+    const { sim, v } = financed('us-ny-newyork', 'us-honda-cr-v', 'repo-record');
+    const record = sim.player.credit!;
+    const at = () => [record.score, record.late.length] as const;
+    const [start, lates] = at();
+    loanMonth(sim, sim.player, v, false, v.loan!.monthly, 'CR-V');
+    expect(at()).toEqual([start, lates]);
+    loanMonth(sim, sim.player, v, false, v.loan!.monthly, 'CR-V');
+    expect(at()).toEqual([start - LOAN_LATE_ON_RECORD, lates + 1]);
+    loanMonth(sim, sim.player, v, false, v.loan!.monthly, 'CR-V');
+    expect(v.repossessed).toBeDefined();
+    expect(at()).toEqual([start - 2 * LOAN_LATE_ON_RECORD - REPOSSESSED_ON_RECORD, lates + 3]);
+  });
+
+  it('starts again after a payment made: one missed after it takes nothing', () => {
+    const { sim, v } = financed('us-ny-newyork', 'us-honda-cr-v', 'repo-record-run');
+    const record = sim.player.credit!;
+    loanMonth(sim, sim.player, v, false, v.loan!.monthly, 'CR-V');
+    loanMonth(sim, sim.player, v, true, v.loan!.monthly, 'CR-V');
+    const start = record.score;
+    loanMonth(sim, sim.player, v, false, v.loan!.monthly, 'CR-V');
+    expect(record.score).toBe(start);
   });
 });

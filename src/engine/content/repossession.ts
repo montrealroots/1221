@@ -52,3 +52,14 @@ export const REPOSSESSION: Readonly<Partial<Record<Jurisdiction, RepoRule>>> = {
 
 export const DEFAULT_AFTER_MISSED = 3;
 export const REPO_FEES_USD = { tow: 300, storagePerDay: 47.5 } as const;
+
+/**
+ * What the record takes. A car payment thirty days late is reported as a
+ * mortgage's is, SLATE's same 70 points (`HOME.reportedFall`). A repossession
+ * is reported for seven years (FCRA, 15 U.S.C. 1681c); myFICO publishes no
+ * figure for what it costs a score, and the consumer sites' "about 100
+ * points" is secondary, so SLATE takes it, the same as its charge-off.
+ * Until 2026-09-29 neither touched the record.
+ */
+export const LOAN_LATE_ON_RECORD = 70;
+export const REPOSSESSED_ON_RECORD = 100;
