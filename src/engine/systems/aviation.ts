@@ -32,7 +32,7 @@ import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { airportsFor } from './airports';
 import { ageOn } from './mortality';
-import { inTheBank, payFromBank } from './household';
+import { inTheBank, owe, payFromBank } from './household';
 import type { JourneyLeg } from './journey';
 
 export const PILOT_TRAINING = {
@@ -77,9 +77,11 @@ export function planFlyYourself(sim: Simulation, person: Person, fromCity: strin
   const zone = CITIES.require(fromCity).timeZone;
   const p = zonedParts(day, zone);
   const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
-  const fare = usd(sim, Math.round(hours * PILOT_TRAINING.ratePerHour * 100));
+  // One's own plane, where it is, flies for its fuel; otherwise a school's, by the hour.
+  const own = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.at === fromCity;
+  const fare = own ? Math.round(ownHourCost(sim, fromCity) * hours) : usd(sim, Math.round(hours * PILOT_TRAINING.ratePerHour * 100));
   // Its own kind of leg, flown oneself: no airline's delays or round-trip fares touch it.
-  return [{ mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round(hours * 60) * 60_000, fare, basis: `${Math.round(nm)} nautical miles flown yourself in a rented Cessna 172 at Textron’s 124 knots, ${hours.toFixed(1)} hours at the median school’s $176 an hour with fuel; the drive to and from the airports isn’t kept.` }];
+  return [{ mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round(hours * 60) * 60_000, fare, routeId: own ? 'own' : 'rent', basis: own ? `${Math.round(nm)} nautical miles in your own Cessna 172 at 124 knots, ${hours.toFixed(1)} hours at 10.2 gallons an hour of 100LL at the region’s price; the drive to and from the airports isn’t kept.` : `${Math.round(nm)} nautical miles flown yourself in a rented Cessna 172 at Textron’s 124 knots, ${hours.toFixed(1)} hours at the median school’s $176 an hour with fuel; the drive to and from the airports isn’t kept.` }];
 }
 
 function scheduleMonth(sim: Simulation, person: Person): void {
@@ -129,5 +131,102 @@ export function registerAviation(sim: Simulation): void {
     }
     t.monthsDone += 1;
     scheduleMonth(s, person);
+  });
+}
+
+// ---------------------------------------------------------------------------
+// A plane of one's own (stage 7c, from 2026-09-29), researched in
+// docs/research/world/research-aircraft-owning.json.
+
+/**
+ * Owning a Cessna 172, in dollars. The price is the median asking price of
+ * the used 172s listed for sale, a secondary figure (Vref's and the Bluebook's
+ * values are sold, not published), and SLATE holds it there, no depreciation
+ * series being published. Flown, it burns 10.2 gallons an hour at 75% power
+ * (Cessna's 172S information manual, 124 knots at 12.2 nautical miles a
+ * gallon), at the week's 100LL by FAA region from AirNav's 3,480 FBOs. Kept:
+ * a paved tiedown a month, the Connecticut Airport Authority's $100 for New
+ * York and Connecticut and Hayward's city-run $65 for California; insurance,
+ * the middle of a broker's $1,200 to $2,500 a year (secondary); the annual
+ * inspection 14 CFR 91.409 asks, one shop's $1,800 (secondary); the FAA's $5
+ * registration every seven years; and the engine overhauled at Lycoming's
+ * 2,000 hours or twelve years (SI 1009), the middle of a field overhaul's
+ * $32,000 to $53,000 and the $7,500 to take it out and put it back
+ * (secondary). A plane's engine is taken as just overhauled when it's
+ * bought. Owning asks no certificate; flying it does.
+ */
+export const OWN_172 = {
+  priceUsd: 121_847, gph: 10.2,
+  avgas: { 'us-ny': 7.6, 'us-ct': 7.88, 'us-ca': 7.74 } as Readonly<Record<string, number>>, avgasNational: 7.25,
+  tiedown: { 'us-ny': 100, 'us-ct': 100, 'us-ca': 65 } as Readonly<Record<string, number>>, tiedownDefault: 100,
+  insuranceYear: 1_850, annual: 1_800, registration: 5, registrationYears: 7,
+  overhaul: 42_500 + 7_500, tboHours: 2_000, tboYears: 12,
+} as const;
+export const AIRCRAFT_MONTH_KIND = 'aircraft.month';
+const YEAR = 365.2425 * MS_DAY;
+
+export interface OwnedAircraft { boughtAt: Instant; price: Money; homeCity: string; at: string; hours: number; overhauledAt: Instant; annualDue: Instant; registeredUntil: Instant; soldAt?: Instant }
+
+const regionOf = (cityId: string) => CITIES.get(cityId)?.parentId ?? '';
+
+/** An hour flown in one's own plane: its fuel at the region's price, in the save's money. */
+export function ownHourCost(sim: Simulation, cityId: string): Money {
+  return usd(sim, Math.round(OWN_172.gph * (OWN_172.avgas[regionOf(cityId)] ?? OWN_172.avgasNational) * 100));
+}
+
+export function buyAircraftRefusal(sim: Simulation, person: Person): string | undefined {
+  if (person.aircraft && person.aircraft.soldAt === undefined) return 'You own a plane.';
+  if (CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId !== 'us') return 'SLATE prices a plane’s keeping in America only yet.';
+  if (inTheBank(sim, person) < usd(sim, (OWN_172.priceUsd + OWN_172.registration) * 100)) return `A 172 costs about ${formatMoney(usd(sim, OWN_172.priceUsd * 100), saveCurrency(sim.universe), { cents: false })}.`;
+  return undefined;
+}
+
+/** A flight in one's own plane arrives: the plane is there, and its hours are on the engine. */
+export function ownFlown(person: Person, toCity: string, hours: number): void {
+  const a = person.aircraft;
+  if (!a || a.soldAt !== undefined) return;
+  a.at = toCity;
+  a.hours += hours;
+}
+
+function scheduleAircraft(sim: Simulation, person: Person): void {
+  sim.schedule({ at: sim.now + 30 * MS_DAY, kind: AIRCRAFT_MONTH_KIND, label: 'The Plane’s Month', category: 'home', priority: 30, payload: { personId: person.id } });
+}
+
+export function registerOwnedAircraft(sim: Simulation): void {
+  sim.onCommand<Record<string, never>, { paid: Money }>('aircraft.buy', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = buyAircraftRefusal(s, person);
+    if (no) throw new CommandError(no);
+    const price = usd(s, OWN_172.priceUsd * 100);
+    const paid = price + usd(s, OWN_172.registration * 100);
+    if (!payFromBank(s, person, paid, 'A Cessna 172, and its FAA registration', 'travel')) throw new CommandError('The bank couldn’t pay.');
+    const home = person.home?.cityId ?? person.currentLocationId;
+    person.aircraft = { boughtAt: s.now, price, homeCity: home, at: home, hours: 0, overhauledAt: s.now, annualDue: s.now + YEAR, registeredUntil: s.now + OWN_172.registrationYears * YEAR };
+    scheduleAircraft(s, person);
+    return { paid };
+  });
+
+  sim.onCommand<Record<string, never>, { value: Money }>('aircraft.sell', (_p, { sim: s }) => {
+    const person = s.player;
+    const a = person.aircraft;
+    if (!a || a.soldAt !== undefined) throw new CommandError('You own no plane.');
+    s.post({ memo: 'Sold the Cessna 172', category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: a.price }, { accountId: s.nominalAccount('income', 'Plane Sold').id, amount: -a.price }] });
+    a.soldAt = s.now;
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === AIRCRAFT_MONTH_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
+    return { value: a.price };
+  });
+
+  sim.onSchedule(AIRCRAFT_MONTH_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const a = person?.aircraft;
+    if (!person || !a || a.soldAt !== undefined) return;
+    const pay = (usdUnits: number, memo: string) => { const due = usd(s, Math.round(usdUnits * 100)); if (!payFromBank(s, person, due, memo, 'travel')) owe(s, person, due, memo, 'travel'); };
+    pay(OWN_172.tiedown[regionOf(a.homeCity)] ?? OWN_172.tiedownDefault, 'The plane’s tiedown, a month');
+    pay(OWN_172.insuranceYear / 12, 'The plane’s insurance, a month');
+    if (s.now >= a.annualDue) { pay(OWN_172.annual, 'The plane’s annual inspection'); a.annualDue += YEAR; }
+    if (s.now >= a.registeredUntil) { pay(OWN_172.registration, 'The plane’s FAA registration'); a.registeredUntil += OWN_172.registrationYears * YEAR; }
+    if (a.hours >= OWN_172.tboHours || s.now - a.overhauledAt >= OWN_172.tboYears * YEAR) { pay(OWN_172.overhaul, 'The plane’s engine overhauled'); a.hours = 0; a.overhauledAt = s.now; }
+    scheduleAircraft(s, person);
   });
 }

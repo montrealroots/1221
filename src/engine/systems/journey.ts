@@ -21,7 +21,7 @@
 import { drawRental } from './dwelling';
 import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
 import { planRentalDrive, rentalDriven } from './rentals';
-import { planFlyYourself } from './aviation';
+import { ownFlown, planFlyYourself } from './aviation';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -500,6 +500,9 @@ export function registerJourneys(sim: Simulation): void {
       drive(s, person, car.jurisdiction, km, s.now, j.id);
     }
     if (driven?.routeId?.startsWith('rental:')) rentalDriven(s, person, driven.routeId, j.fromCity, j.toCity, j.id);
+    // One's own plane: there now, its hours on the engine (`systems/aviation.ts`).
+    const flown = j.legs.find((l) => l.mode === 'fly' && l.routeId === 'own');
+    if (flown) ownFlown(person, j.toCity, (flown.arriveAt - flown.departAt) / 3_600_000);
     person.currentLocationId = j.toCity;
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;

@@ -19,7 +19,7 @@ import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { asRoundTrip, bookRefusal, journeysOf, letQuote, nightsBetween, partnerOf, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { PILOT_TRAINING, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { OWN_172, PILOT_TRAINING, buyAircraftRefusal, ownHourCost, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
@@ -292,8 +292,35 @@ function LearnToFly() {
           </div>
         )}
         {no && !person.pilot ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
+        <OwnPlane />
         <Fine>An FAA private pilot certificate: 60 hours in a rented Cessna 172 at the median school’s $176 an hour with fuel, AOPA’s middle of the 50 to 70 most students take; 20 with an instructor at $75; PSI’s $175 knowledge test and a typical $1,000 checkride. The six months are SLATE’s. Qualified, By offers Fly Yourself between towns in America, in a rented 172 at Textron’s 124 knots within its range less a day flight’s half-hour reserve.</Fine>
       </div>
     </Panel>
+  );
+}
+
+/** A plane of one's own (`systems/aviation.ts`): bought without a certificate, flown only with one. */
+function OwnPlane() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const a = person.aircraft && person.aircraft.soldAt === undefined ? person.aircraft : undefined;
+  const no = buyAircraftRefusal(sim, person);
+  const hour = ownHourCost(sim, a?.at ?? person.home?.cityId ?? person.currentLocationId);
+  return (
+    <div className="col gap-2">
+      <div className="strong small">A Plane Of Your Own</div>
+      <div className="grid grid-3">
+        <Stat label="A Cessna 172" value={a ? `${Math.round(a.hours)} Hours Flown` : formatMoney(Math.round(OWN_172.priceUsd * 100), 'USD', { cents: false })} note={a ? `At ${CITIES.get(a.at)?.name ?? a.at}` : 'The median asked for a used one'} />
+        <Stat label="An Hour Flown" value={formatMoney(hour, cur, { cents: false })} note="Its fuel, against $176 to rent one" />
+        <Stat label="Kept" value={`${formatMoney(Math.round((OWN_172.tiedownDefault + OWN_172.insuranceYear / 12) * 100), 'USD', { cents: false })} A Month`} note="A tiedown and insurance; the annual, and an overhaul in time" />
+      </div>
+      <div className="row gap-2">
+        {a
+          ? <Gated feature="aircraft.sell" className="btn btn-sm btn-ghost" onClick={() => { if (run('aircraft.sell', {}).ok) toast('Sold.', 'positive'); }}>Sell The Plane</Gated>
+          : <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', {}).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>Buy A Plane</Gated>}
+      </div>
+      {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it does. Until you’re a pilot it sits, and its keeping is paid.</p> : null}
+    </div>
   );
 }

@@ -10,7 +10,8 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { OWN_172, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { netWorth } from '@/engine/systems/finance';
 import { journeysOf } from '@/engine/systems/journey';
 import { airportsFor } from '@/engine/systems/airports';
 import { distanceKm } from '@/engine/content/geography';
@@ -104,5 +105,45 @@ describe('flying oneself', () => {
     liveTo(sim, j.leaveAt + 10 * 60_000);
     expect(['underway', 'arrived']).toContain(j.status);
     expect(j.lateMinutes).toBe(0);
+  });
+});
+
+describe('a plane of one’s own', () => {
+  it('is bought without a certificate, sits and costs its keeping, and flies only once its owner is a pilot, for its fuel', () => {
+    const sim = save('us-ny-newyork', 'own-plane');
+    fund(sim, 200_000);
+    const r = sim.execute<{ paid: number }>({ kind: 'aircraft.buy', payload: {} });
+    expect(r.ok, r.error).toBe(true);
+    expect(r.value!.paid).toBe(inSave(sim, (121_847 + 5) * 100, 'USD'));
+    expect(sim.execute({ kind: 'aircraft.buy', payload: {} }).error).toMatch(/own a plane/);
+    expect(netWorth(sim, sim.player.id).vehicles).toBe(inSave(sim, 121_847_00, 'USD'));
+    const day = sim.now + 10 * MS_DAY;
+    expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', day, 2)).toMatch(/pilot certificate/);
+    sim.advanceBy(31 * MS_DAY);
+    const paid = (memo: string) => sim.universe.transactions.filter((t) => t.memo === memo).map((t) => t.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0));
+    expect(paid('The plane’s tiedown, a month')).toEqual([inSave(sim, 100_00, 'USD')]);
+    expect(paid('The plane’s insurance, a month')).toEqual([inSave(sim, Math.round(1_850_00 / 12), 'USD')]);
+    sim.player.pilot = { issuedAt: sim.now, authority: 'FAA' };
+    const legs = planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', sim.now + MS_DAY, 2);
+    if (typeof legs === 'string') throw new Error(legs);
+    const hours = (legs[0]!.arriveAt - legs[0]!.departAt) / 3_600_000;
+    expect(legs[0]!.routeId).toBe('own');
+    expect(legs[0]!.fare).toBeCloseTo(inSave(sim, Math.round(10.2 * 7.6 * 100), 'USD') * hours, -2);
+  });
+
+  it('pays the annual inspection each year, and overhauls the engine at 2,000 hours', () => {
+    const sim = save('us-ny-newyork', 'own-plane-years');
+    fund(sim, 300_000);
+    expect(sim.execute({ kind: 'aircraft.buy', payload: {} }).ok).toBe(true);
+    // Met at the month after it falls due.
+    sim.advanceBy(395 * MS_DAY);
+    expect(sim.universe.transactions.filter((t) => t.memo === 'The plane’s annual inspection')).toHaveLength(1);
+    sim.player.aircraft!.hours = OWN_172.tboHours;
+    sim.advanceBy(31 * MS_DAY);
+    expect(sim.universe.transactions.filter((t) => t.memo === 'The plane’s engine overhauled')).toHaveLength(1);
+    expect(sim.player.aircraft!.hours).toBe(0);
+    const sold = sim.execute<{ value: number }>({ kind: 'aircraft.sell', payload: {} });
+    expect(sold.value!.value).toBe(inSave(sim, 121_847_00, 'USD'));
+    expect(netWorth(sim, sim.player.id).vehicles).toBe(0);
   });
 });

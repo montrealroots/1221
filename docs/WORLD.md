@@ -32,7 +32,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
-| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a and 7b done 2026-09-29; boats and owning an aircraft open, below |
+| 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29; boats open, below |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b); open items below |
 
 ## Acceptance criteria
@@ -300,9 +300,22 @@ Evidence: `tests/inspections.test.ts` (5); 7 mutations, all killed. One first su
   - Then PSI's $175 knowledge test and a typical $1,000 checkride.
 - A month the bank can't pay stops it, and Take It Up Again goes on from there, straight to the tests if that's where it stopped.
 - Qualified, By offers Fly Yourself between American towns: from the airport nearest each, at Textron's published 124 knots, a fifth of an hour for the ground and the climb (SLATE's), within the Skyhawk's 640 nautical miles less the half hour a day flight must keep in its tanks (14 CFR 91.151), paid by the hour. It's its own kind of leg, so no airline's delays or round-trip fares touch it.
-- Open, and why: training abroad (only the hours are researched: Britain's 40, Canada's and the EASA's 45), owning an aircraft (a used 172, hangars and insurance are researched, but nothing yet needs one owned), a medical's renewal (an examiner's fee isn't regulated), the weather a visual flight needs, the drive to and from the airports, and boats.
+- Open, and why: training abroad (only the hours are researched: Britain's 40, Canada's and the EASA's 45), owning an aircraft (built in 7c, below), a medical's renewal (an examiner's fee isn't regulated), the weather a visual flight needs, the drive to and from the airports, and boats.
 
 Evidence: `tests/aviation.test.ts` (5); 8 mutations, all killed. One first survived: a check that kept airline delays off a self-flown leg, which luck let pass, since most flights are on time. The leg became its own kind, which the delays never read, and the check went.
+
+#### Stage 7c: a plane of one's own (done 2026-09-29)
+- Buy A Plane buys a used Cessna 172 at the median asked for one listed, a secondary figure; Vref's and the Bluebook's values are sold, not published, and none depreciates it, so SLATE holds it at its price (`OWN_172` in `systems/aviation.ts`, researched in `docs/research/world/research-aircraft-owning.json`). Owning asks no certificate; flying it does. An owner who isn't a pilot keeps it on the ground and pays its keeping, which is what owning without being qualified comes to.
+- Kept, as its month comes round:
+  - A paved tiedown: the Connecticut Airport Authority's $100 for New York and Connecticut, Hayward's city-run $65 for California.
+  - Insurance: the middle of a broker's $1,200 to $2,500 (secondary).
+  - The annual inspection 14 CFR 91.409 asks: one shop's $1,800 (secondary).
+  - The FAA's $5 registration every seven years.
+  - The engine overhauled at Lycoming's 2,000 hours or twelve years (SI 1009, revision BF): the middle of a field overhaul's range and its removal (secondary).
+- A pilot flies it for its fuel, 10.2 gallons an hour at 75% power (Cessna's 172S information manual), at the region's 100LL from AirNav's 3,480 FBOs, where it was left. The hours go on its engine.
+- Open, and why: hiring a pilot (a private pilot may not be paid, 14 CFR 61.113, and no commercial pilot's rate was researched), and a loan on a plane.
+
+Evidence: `tests/aviation.test.ts` (7); 5 mutations, all killed.
 
 ## Coverage record
 

@@ -259,6 +259,8 @@ export interface Person {
   /** A private pilot's certificate, and the training toward it (`systems/aviation.ts`). */
   pilot?: import('../systems/aviation').PilotCertificate;
   pilotTraining?: import('../systems/aviation').PilotTraining;
+  /** A plane of their own (`systems/aviation.ts`). */
+  aircraft?: import('../systems/aviation').OwnedAircraft;
   /** Their driving record: points and a suspension (`systems/driving.ts`). */
   driving?: import('../systems/driving').DrivingRecord;
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */
