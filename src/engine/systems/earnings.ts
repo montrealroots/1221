@@ -42,6 +42,9 @@ export interface YearEarnings {
   /** Of a long-term gain, the depreciation taken while it was let, taxed as income to 25%; and whether a let home was sold, which frees its held-back losses. */
   homeGain1250?: Money;
   rentalDisposed?: number;
+  /** A lodger's rent in the year, and of it what was taxed outside America (`systems/lodgers.ts`), from 2026-09-30. */
+  lodgerRent?: Money;
+  lodgerTaxed?: Money;
   /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
   sagByProject?: Record<string, Money>;
   withheld: Money;

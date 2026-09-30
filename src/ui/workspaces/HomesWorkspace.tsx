@@ -18,6 +18,7 @@ import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
 import { furnishRefusal, owns, pieceCost } from '@/engine/systems/furniture';
+import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COOLING_LABEL, COUNCIL_TAX, FEATURE_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
@@ -417,6 +418,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
 
         <Furniture />
         <FitOut owned={owned} />
+        <Lodgers owned={owned} />
 
         <div className="col gap-2">
           <div className="strong small">Selling It</div>
@@ -561,6 +563,30 @@ function Furniture() {
             })}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+/** Lodgers in its spare bedrooms (`systems/lodgers.ts`): taken at the town's room rent, paid monthly. */
+function Lodgers({ owned }: { owned: OwnedHome }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const rent = roomRent(sim, owned.cityId);
+  const no = lodgerRefusal(sim, person, owned);
+  const here = lodgersIn(owned).length;
+  if (rent === undefined) return null;
+  return (
+    <div className="col gap-2">
+      <div className="strong small">Lodgers</div>
+      <div className="grid grid-3">
+        <Stat label="Lodgers" value={`${here}`} note={`Of ${Math.min(2, Math.max(0, owned.facts.beds - 1))} spare ${owned.facts.beds - 1 === 1 ? 'bedroom' : 'bedrooms'} to let`} />
+        <Stat label="A Room’s Rent" value={`${formatMoney(rent, cur, { cents: false })} A Month`} note={ROOM_RENT[owned.cityId]!.basis} />
+      </div>
+      <div className="row gap-2">
+        <Gated feature="home.take_lodger" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.take_lodger', { homeId: owned.id }).ok) toast('A lodger moves in.', 'positive'); }}>Take A Lodger</Gated>
+        {here > 0 && <Gated feature="home.end_lodger" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.end_lodger', { homeId: owned.id }).ok) toast('The lodger moves out.', 'positive'); }}>Let The Lodger Go</Gated>}
       </div>
     </div>
   );

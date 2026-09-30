@@ -488,6 +488,8 @@ export interface OwnedHome {
   /** When they've lived in it. */
   occupied: { from: Instant; to?: Instant }[];
   tenancies: Tenancy[];
+  /** Lodgers in its spare bedrooms (`systems/lodgers.ts`), from 2026-09-30. */
+  lodgers?: import('./lodgers').Lodger[];
   /** Former tenants' deposits not yet all paid back, by account. */
   depositsOwed?: string[];
   /** Insurance claims paid, when. */
