@@ -429,12 +429,37 @@ export function jetCharterUsd(hours: number): number {
  *   a participating province, where it leaves from (CRA's GI-170): Ontario's
  *   13%, British Columbia's 5%.
  * Ireland's and Mexico's rates were read only from brokers, and a flight
- * across a border isn't chartered here.
+ * across a border wasn't chartered here until 2026-10-01.
+ * From 2026-10-01 (`docs/research/world/research-rentals-lets-charters-2.json`):
+ * - Ireland: no Irish operator prints a rate, so LunaJets' €4,600 to €7,300
+ *   an hour for a light jet, the middle, a Geneva broker's own indicative
+ *   table; passenger transport is exempt from Irish VAT, and Ireland has no
+ *   ticket tax.
+ * - Mexico: Aerolíneas Ejecutivas' US$3,000 an hour, as El Financiero
+ *   printed it in 2013, the latest any operator's rate was found, with IVA at
+ *   16% within the country.
+ * - Across a border, between Britain and Ireland and between America and
+ *   Mexico, at the rate of the country it leaves: Britain zero-rates and
+ *   Ireland exempts a flight abroad, and Air Passenger Duty spares a light jet
+ *   until April 2027; Mexico taxes a quarter of an international fare at 16%,
+ *   4% of it (LIVA art. 16, read secondhand); a flight beginning or ending in
+ *   America pays its $23.40 international facilities tax (IRS, 2026) in place
+ *   of the 7.5% excise. America and Canada stay apart: a Canadian town within
+ *   225 miles of the border is taxed as a domestic flight, which wasn't
+ *   researched, and CRA's zero-rating of a flight across it wasn't read.
+ * An empty leg, a jet flying back empty, isn't kept: EBAA's 2017 study found
+ * 41% of Europe's business flights empty, which says how many fly, not
+ * whether one is offered on a route on a day, and no operator publishes that.
  */
-export const JET_ABROAD: Readonly<Record<string, { rate: number; currency: string; tax: (fromCity: string) => number; basis: string }>> = {
-  GB: { rate: 2_600, currency: 'GBP', tax: () => 0.2, basis: 'ACC Aviation’s £2,600 an hour, with VAT at 20%' },
-  CA: { rate: 4_000, currency: 'CAD', tax: (from) => (CITIES.get(from)?.parentId === 'ca-08' ? 0.13 : 0.05), basis: 'Novajet’s C$4,000 an hour, with GST or HST where it leaves from' },
+export const JET_ABROAD: Readonly<Record<string, { rate: number; currency: string; tax: (fromCity: string) => number; abroadTax: number; basis: string }>> = {
+  GB: { rate: 2_600, currency: 'GBP', tax: () => 0.2, abroadTax: 0, basis: 'ACC Aviation’s £2,600 an hour, with VAT at 20% within Britain' },
+  CA: { rate: 4_000, currency: 'CAD', tax: (from) => (CITIES.get(from)?.parentId === 'ca-08' ? 0.13 : 0.05), abroadTax: 0, basis: 'Novajet’s C$4,000 an hour, with GST or HST where it leaves from' },
+  IE: { rate: 5_950, currency: 'EUR', tax: () => 0, abroadTax: 0, basis: 'LunaJets’ €5,950 an hour, the middle of its light jets’, with no VAT on passenger transport' },
+  MX: { rate: 3_000, currency: 'USD', tax: () => 0.16, abroadTax: 0.25 * 0.16, basis: 'Aerolíneas Ejecutivas’ US$3,000 an hour (El Financiero, 2013), with IVA' },
 };
+/** The borders a jet is chartered across, and America's international facilities tax a flight to or from it pays. */
+const JET_CROSSINGS = new Set(['GB-IE', 'IE-GB', 'US-MX', 'MX-US']);
+export const INTERNATIONAL_FACILITIES_USD = 23.4;
 
 /** A journey's leg in a chartered light jet, or why not. */
 export function planCharterJet(sim: Simulation, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
@@ -442,8 +467,10 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const toAp = airportsFor(toCity)[0];
   const from = fromAp?.airport;
   const to = toAp?.airport;
-  const abroad = from && to && from.country === to.country && from.country !== 'US' ? JET_ABROAD[from.country] : undefined;
-  if (!from || !to || (!abroad && (from.country !== 'US' || to.country !== 'US'))) return 'SLATE charters a jet within America, Britain or Canada only yet.';
+  if (!from || !to) return 'SLATE charters a jet between airports only.';
+  const across = from.country !== to.country;
+  if (across ? !JET_CROSSINGS.has(`${from.country}-${to.country}`) : from.country !== 'US' && !JET_ABROAD[from.country]) return 'SLATE charters a jet within America, Britain, Ireland, Canada or Mexico, or between Britain and Ireland or America and Mexico, only yet.';
+  const abroad = from.country !== 'US' ? JET_ABROAD[from.country] : undefined;
   if (from.iata === to.iata) return 'One airport serves both towns.';
   const nm = distanceKm(from, to) / 1.852;
   const usable = LIGHT_JET.rangeNm - LIGHT_JET.knots * LIGHT_JET.reserveHours;
@@ -455,10 +482,16 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const zone = CITIES.require(fromCity).timeZone;
   const p = zonedParts(day, zone);
   const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
-  const dollars = jetCharterUsd(hours);
   const cur = saveCurrency(sim.universe);
-  const abroadFare = abroad ? (() => { const c = Math.round(Math.max(LIGHT_JET.minHours, hours * 2) * abroad.rate * (1 + abroad.tax(fromCity)) * 100); return cur === abroad.currency ? c : exchange(c, abroad.currency, cur) ?? c; })() : 0;
-  return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare: abroad ? abroadFare : usd(sim, Math.round(dollars * 100)), routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at ${abroad ? abroad.basis : '$3,975 an hour, with the 7.5% federal excise tax and its segment fee'}.` });
+  const billed = Math.max(LIGHT_JET.minHours, hours * 2);
+  const inCur = (units: number, currency: string) => { const c = Math.round(units * 100); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
+  // America's facilities tax where a flight across a border begins or ends there (from 2026-10-01).
+  const facilities = across && (from.country === 'US' || to.country === 'US') ? usd(sim, Math.round(INTERNATIONAL_FACILITIES_USD * 100)) : 0;
+  const fare = abroad
+    ? inCur(billed * abroad.rate * (1 + (across ? abroad.abroadTax : abroad.tax(fromCity))), abroad.currency) + facilities
+    : across ? usd(sim, Math.round(billed * LIGHT_JET.rateUsd * 100)) + facilities : usd(sim, Math.round(jetCharterUsd(hours) * 100));
+  const how = abroad ? abroad.basis : across ? '$3,975 an hour, with the $23.40 international facilities tax' : '$3,975 an hour, with the 7.5% federal excise tax and its segment fee';
+  return withTheDrives(sim, fromCity, toCity, fromAp!, toAp!, { mode: 'fly', from: from.iata, to: to.iata, departAt: depart, arriveAt: depart + Math.round((hours + onTheGround) * 60) * 60_000, fare, routeId: 'jet', basis: `${Math.round(nm)} nautical miles in a chartered Citation CJ3 at Textron’s 416 knots, ${hours.toFixed(1)} hours${stops ? ' and a stop for fuel' : ''}; billed for the flight there and back at ${how}${across && facilities ? ' and America’s $23.40 international facilities tax' : ''}.` });
 }
 
 /** A leg flown oneself within Britain, Ireland or Canada, on that country's license, in a rented four-seater at its school's rate. */

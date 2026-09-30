@@ -105,6 +105,7 @@ const REAL_NAMES = [
   'Harbourfront Centre', 'Nautical Centre',
   // The license Britain's CAA, Ireland's IAA and Transport Canada issue a private pilot (`systems/aviation.ts`).
   'Private Pilot Licence',
+  'Euro Traveller',
   'Rockefeller Center', 'Lincoln Center', 'Kennedy Center',
   // Organisations, parties and titles.
   'Labour Party', 'Colour Supplies', 'Grey Goose', 'Earl Grey', 'Greyhound',

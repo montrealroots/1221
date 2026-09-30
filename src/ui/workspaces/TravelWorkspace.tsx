@@ -251,18 +251,29 @@ function RentACar({ j }: { j: Journey }) {
   const person = useWorld((s) => s.player);
   const back = partnerOf(person, j);
   const has = rentalsOf(person).find((r) => r.journeyId === j.id && r.status !== 'canceled');
+  const [waiver, setWaiver] = useState(false);
   // Only where a rental is kept: elsewhere the button would say no to every journey.
   if (!RENTALS[j.toCity] || !back || back.leaveAt <= j.arriveAt) return null;
   if (has) return <span className="xs dim">A Car Rented</span>;
-  const q = rentalQuote(sim, person, j.toCity, j.arriveAt, back.leaveAt, true);
+  // The damage waiver, where its price is known (from 2026-10-01): declined, a crash leaves the repair owed.
+  const offered = RENTALS[j.toCity]!.waiverOffered !== undefined;
+  const q = rentalQuote(sim, person, j.toCity, j.arriveAt, back.leaveAt, true, offered && waiver);
   const cur = saveCurrency(sim.universe);
   const no = typeof q === 'string' ? q : undefined;
   const title = typeof q === 'string' ? q : `${q.company} at ${q.airport}, ${q.days} ${q.days === 1 ? 'day' : 'days'}: ${q.lines.map((l) => `${l.label} ${formatMoney(l.amount, cur)}`).join(', ')}${q.deposit > 0 ? `; ${formatMoney(q.deposit, cur)} held on the card` : ''}`;
   return (
+    <>
+    {offered && (
+      <select id={`rent-waiver-${j.id}`} className="select-sm" aria-label="Damage Waiver" value={waiver ? 'taken' : 'declined'} onChange={(e) => setWaiver(e.target.value === 'taken')}>
+        <option value="declined">Without The Damage Waiver</option>
+        <option value="taken">With The Damage Waiver</option>
+      </select>
+    )}
     <Gated feature="travel.rent_car" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={title} onClick={() => {
-      const a = run<{ paid: number }>('travel.rent_car', { journeyId: j.id });
+      const a = run<{ paid: number }>('travel.rent_car', { journeyId: j.id, waiver: offered && waiver });
       if (a.ok) toast(`A car rented for ${formatMoney(a.value!.paid, cur)}, prepaid.`, 'positive');
     }}>{typeof q === 'string' ? 'Rent A Car There' : `Rent A Car There, ${formatMoney(q.total, cur, { cents: false })}`}</Gated>
+    </>
   );
 }
 

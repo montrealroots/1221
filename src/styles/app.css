@@ -431,6 +431,8 @@ input:not([type]), input[type="text"], input[type="number"], input[type="date"],
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
 }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+/* A choice beside small buttons in a table row, sized as a .btn-sm is so the row stays even. */
+select.select-sm { width: auto; padding: var(--s1) var(--s3); font-size: var(--size-xs); }
 /* A field that reports rather than asks. Kept the same shape so the form still
    lines up, and visibly not one you can type in — styled the same as the rest,
    it read as a box somebody had simply not filled in yet. */

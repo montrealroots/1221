@@ -15,7 +15,8 @@
  * The car is driven by road from where it is (Travel's By), its fuel at
  * AAA's average a mile, and the road brings what it brings a car of one's
  * own (`driving.ts`); a crash that hurts charges the company's excess where
- * one is published. A journey that doesn't arrive, canceled or missed, gives
+ * one is published, or, from 2026-10-01, the repair where the waiver offered
+ * was declined. A journey that doesn't arrive, canceled or missed, gives
  * the rental back in full: no company publishes a no-show's charge.
  */
 
@@ -52,6 +53,8 @@ export interface Rental {
   status: 'booked' | 'out' | 'returned' | 'canceled';
   /** Where the car is while it's out. */
   at?: string;
+  /** The damage waiver offered, taken. */
+  waived?: boolean;
   escrowAccountId?: string;
 }
 
@@ -65,7 +68,7 @@ export const rentalDays = (pickupAt: Instant, returnAt: Instant) => Math.max(1, 
 export interface RentalQuote { company: string; airport: string; days: number; lines: { label: string; amount: Money }[]; total: Money; deposit: Money; terms: RentalTerms }
 
 /** A rental's price and deposit in the save's money, or why it can't be had. */
-export function rentalQuote(sim: Simulation, person: Person, cityId: string, pickupAt: Instant, returnAt: Instant, withReturn: boolean): RentalQuote | string {
+export function rentalQuote(sim: Simulation, person: Person, cityId: string, pickupAt: Instant, returnAt: Instant, withReturn: boolean, waived = false): RentalQuote | string {
   const t = RENTALS[cityId];
   if (!t) return 'SLATE keeps no rental cars there yet.';
   const age = ageOn(sim, person, pickupAt);
@@ -81,6 +84,7 @@ export function rentalQuote(sim: Simulation, person: Person, cityId: string, pic
   const band = t.young?.find((y) => age >= y.from && age <= y.to);
   if (band) lines.push({ label: 'Young Driver Surcharge', amount: inSave(sim, c(Math.min(band.perDay * days, t.youngCap ?? Infinity)), terms) });
   if (t.waiverPerDay) lines.push({ label: 'Damage Waiver', amount: inSave(sim, c(t.waiverPerDay * days), terms) });
+  if (waived && t.waiverOffered) lines.push({ label: 'Damage Waiver', amount: inSave(sim, c(t.waiverOffered * days), terms) });
   const rate = t.taxFrom && pickupAt >= Date.parse(t.taxFrom.at) ? t.taxFrom.rate : t.taxRate;
   if (rate > 0) lines.push({ label: 'Rental Taxes', amount: Math.round(lines.reduce((a, l) => a + l.amount, 0) * rate) });
   if (t.perDay) lines.push({ label: t.perDay.label, amount: inSave(sim, c(t.perDay.amount * Math.min(days, t.perDay.capDays ?? days)), t.currency) });
@@ -120,10 +124,18 @@ export function rentalDriven(sim: Simulation, person: Person, routeId: string, f
   if (!j) return;
   const { hurt } = drive(sim, person, j, roadKm(fromCity, toCity), sim.now, key);
   const t = RENTALS[r.cityId]!;
-  if (hurt && t.excess) {
-    const due = inSave(sim, c(t.excess), t.termsCurrency ?? t.currency);
-    if (!payFromBank(sim, person, due, `${t.company}’s excess, the rental damaged`, 'travel')) owe(sim, person, due, 'A rental car’s excess', 'travel');
+  const owed = damageOwed(t, r.waived === true);
+  if (hurt && owed > 0) {
+    const due = inSave(sim, c(owed), t.termsCurrency ?? t.currency);
+    const what = t.excess ? 'excess' : 'repair bill';
+    if (!payFromBank(sim, person, due, `${t.company}’s ${what}, the rental damaged`, 'travel')) owe(sim, person, due, `A rental car’s ${what}`, 'travel');
   }
+}
+
+/** What a crash in a rented car costs the renter, in the terms' money: the excess where one's published, or the repair with the offered waiver declined. */
+export function damageOwed(t: RentalTerms, waived: boolean): number {
+  if (t.excess) return t.excess;
+  return t.unwaived && !waived ? t.unwaived.repair + t.unwaived.admin : 0;
 }
 
 function release(sim: Simulation, person: Person, r: Rental): void {
@@ -134,18 +146,19 @@ function release(sim: Simulation, person: Person, r: Rental): void {
 }
 
 export function registerRentals(sim: Simulation, journeys: { journeysOf: (p: Person) => import('./journey').Journey[]; partnerOf: (p: Person, j: import('./journey').Journey) => import('./journey').Journey | undefined }): void {
-  sim.onCommand<{ journeyId: string }, { rentalId: string; paid: Money; deposit: Money }>('travel.rent_car', (p, { sim: s }) => {
+  sim.onCommand<{ journeyId: string; waiver?: boolean }, { rentalId: string; paid: Money; deposit: Money }>('travel.rent_car', (p, { sim: s }) => {
     const person = s.player;
     const j = journeys.journeysOf(person).find((x) => x.id === p?.journeyId);
     if (!j || j.status !== 'booked') throw new CommandError('That isn’t a journey you have booked.');
     const back = journeys.partnerOf(person, j);
     if (!back || back.leaveAt <= j.arriveAt) throw new CommandError('A rental is booked with the way home, which says when it goes back.');
     if (rentalsOf(person).some((r) => r.journeyId === j.id && r.status !== 'canceled')) throw new CommandError('A car is rented on it already.');
-    const q = rentalQuote(s, person, j.toCity, j.arriveAt, back.leaveAt, true);
+    const waived = p?.waiver === true;
+    const q = rentalQuote(s, person, j.toCity, j.arriveAt, back.leaveAt, true, waived);
     if (typeof q === 'string') throw new CommandError(q);
     if (!payFromBank(s, person, q.total, `A rental car at ${q.airport}, ${q.days} ${q.days === 1 ? 'day' : 'days'}, prepaid`, 'travel')) throw new CommandError(`${formatMoney(q.total, saveCurrency(s.universe))} is more than the bank can cover.`);
     const id = s.nextId('journey');
-    rentalsOf(person).push({ id, journeyId: j.id, returnJourneyId: back.id, cityId: j.toCity, pickupAt: j.arriveAt, returnAt: back.leaveAt, days: q.days, paid: q.total, status: 'booked' });
+    rentalsOf(person).push({ id, journeyId: j.id, returnJourneyId: back.id, cityId: j.toCity, pickupAt: j.arriveAt, returnAt: back.leaveAt, days: q.days, paid: q.total, status: 'booked', ...(waived ? { waived } : {}) });
     s.schedule({ at: j.arriveAt + MS_HOUR, kind: RENTAL_PICKUP_KIND, label: 'Rental Car Pickup', category: 'personal', priority: 27, payload: { personId: person.id, rentalId: id } });
     s.schedule({ at: back.leaveAt, kind: RENTAL_RETURN_KIND, label: 'Rental Car Return', category: 'personal', priority: 27, payload: { personId: person.id, rentalId: id } });
     return { rentalId: id, paid: q.total, deposit: q.deposit };
@@ -168,7 +181,7 @@ export function registerRentals(sim: Simulation, journeys: { journeysOf: (p: Per
     r.status = 'out';
     r.at = r.cityId;
     const t = RENTALS[r.cityId]!;
-    const q = rentalQuote(s, person, r.cityId, r.pickupAt, r.returnAt, true);
+    const q = rentalQuote(s, person, r.cityId, r.pickupAt, r.returnAt, true, r.waived === true);
     const deposit = typeof q === 'string' ? 0 : q.deposit;
     if (deposit > 0) {
       const draw = drawFromBank(s, person, deposit, false, true);

@@ -214,9 +214,9 @@ describe('a light jet chartered', () => {
     expect(legs[0]!.fare).toBeGreaterThan(0);
     expect(legs.find((l) => l.mode === 'fly')!.fare).toBe(inSave(sim, Math.round(jetCharterUsd(hours) * 100), 'USD'));
     expect(zonedParts(legs.find((l) => l.mode === 'fly')!.departAt, 'America/New_York').hour).toBe(10);
-    expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/within America, Britain or Canada/);
-    // Across a border, even a short one, it isn't chartered here.
-    expect(planCharterJet(sim, 'ca-on-toronto', 'us-ny-newyork', day, 3)).toMatch(/within America, Britain or Canada/);
+    expect(planCharterJet(sim, 'us-ny-newyork', 'uk-eng-london', day, 3)).toMatch(/between Britain and Ireland or America and Mexico/);
+    // Across the Canadian border, whose 225-mile zone wasn't researched, it isn't chartered here.
+    expect(planCharterJet(sim, 'ca-on-toronto', 'us-ny-newyork', day, 3)).toMatch(/between Britain and Ireland or America and Mexico/);
     // Within Britain: ACC Aviation's £2,600 an hour there and back, with VAT; within Canada, Novajet's middle with Ontario's HST.
     const gb = planCharterJet(sim, 'uk-eng-london', 'uk-sct-edinburgh', day, 3);
     if (typeof gb === 'string') throw new Error(gb);
@@ -230,6 +230,15 @@ describe('a light jet chartered', () => {
     if (typeof back === 'string') throw new Error(back);
     // Leaving Ontario its 13% HST, leaving British Columbia the 5% GST.
     expect(ca.find((l) => l.mode === 'fly')!.fare / back.find((l) => l.mode === 'fly')!.fare).toBeCloseTo(1.13 / 1.05, 2);
+    // From 2026-10-01 across two borders at the rate of the country it leaves: London to Dublin with no VAT;
+    // New York to Mexico City at $3,975 with the facilities tax and no excise; back at the 2013 US$3,000 with Mexico's 4%.
+    const leg = (x: ReturnType<typeof planCharterJet>) => { if (typeof x === 'string') throw new Error(x); return x.find((l) => l.mode === 'fly')!; };
+    const hoursOf = (a: string, b: string) => { const nm = distanceKm(airportsFor(a)[0]!.airport, airportsFor(b)[0]!.airport) / 1.852; return nm / 416 + 0.5 * (nm > 2_040 - 416 * 0.75 ? 2 : 1); };
+    expect(leg(planCharterJet(sim, 'uk-eng-london', 'ie-lei-dublin', day, 3)).fare).toBe(inSave(sim, Math.round(Math.max(2, hoursOf('uk-eng-london', 'ie-lei-dublin') * 2) * 2_600 * 100), 'GBP'));
+    expect(leg(planCharterJet(sim, 'ie-lei-dublin', 'uk-eng-london', day, 3)).fare).toBe(inSave(sim, Math.round(Math.max(2, hoursOf('uk-eng-london', 'ie-lei-dublin') * 2) * 5_950 * 100), 'EUR'));
+    const mxHours = hoursOf('us-ny-newyork', 'mx-cmx-mexicocity');
+    expect(leg(planCharterJet(sim, 'us-ny-newyork', 'mx-cmx-mexicocity', day, 3)).fare).toBe(inSave(sim, Math.round(mxHours * 2 * 3_975 * 100), 'USD') + inSave(sim, 23_40, 'USD'));
+    expect(leg(planCharterJet(sim, 'mx-cmx-mexicocity', 'us-ny-newyork', day, 3)).fare).toBe(inSave(sim, Math.round(mxHours * 2 * 3_000 * 1.04 * 100), 'USD') + inSave(sim, 23_40, 'USD'));
     // Honolulu is past two of a light jet's legs.
     expect(planCharterJet(sim, 'us-ny-newyork', 'us-hi-honolulu', day, 3)).toMatch(/with one stop for fuel/);
   });

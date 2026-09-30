@@ -140,15 +140,24 @@ export const isBoatState = (j: Jurisdiction | undefined): j is BoatState => j ==
  *   C$395, and its skipper at the middle of C$60 to C$80 an hour, the sum
  *   SLATE's; Canada's customary 15% to 20%.
  * Vancouver's and Dublin Bay's were read only from marketplaces or an old
- * page, and none is kept there. Until then Marina del Rey's weren't either.
+ * page, and none was kept there until 2026-10-01. Until then Marina del Rey's
+ * weren't either.
+ * From 2026-10-01 (`docs/research/world/research-rentals-lets-charters-2.json`):
+ * - Vancouver: SeaSky Cruises' captained pontoon from False Creek, C$249 an
+ *   hour on a weekday, two at least, captain and fuel in, with 5% GST;
+ *   Canada's customary 15% to 20%.
+ * - Dublin: Ireland's Eye Ferries' private boat from Howth, €500 for three
+ *   hours with its harbor walk, for up to eleven; no tip is customary.
  */
-export interface Charter { operator: string; amount: number; currency: string; hours: number; tip: number }
+export interface Charter { operator: string; amount: number; currency: string; hours: number; tip: number; tax?: number }
 export const CHARTERS: Readonly<Record<string, Charter>> = {
   'us-ny-newyork': { operator: 'Go Sailing NYC', amount: 1_050, currency: 'USD', hours: 3, tip: 0.2 },
   'us-ct': { operator: 'Island Mike, Norwalk', amount: 600, currency: 'USD', hours: 4, tip: 0 },
   'us-ca-losangeles': { operator: 'OnBoat, Marina del Rey', amount: 875, currency: 'USD', hours: 3, tip: 0.125 },
   'uk-eng-london': { operator: 'Thames RIB Experience', amount: 799, currency: 'GBP', hours: 70 / 60, tip: 0 },
   'ca-on-toronto': { operator: 'Harbourfront Centre’s Nautical Centre', amount: 375 + 2 * 70, currency: 'CAD', hours: 2, tip: 0.175 },
+  'ca-bc-vancouver': { operator: 'SeaSky Cruises, False Creek', amount: 249 * 2, currency: 'CAD', hours: 2, tip: 0.175, tax: 0.05 },
+  'ie-lei-dublin': { operator: 'Ireland’s Eye Ferries, Howth', amount: 500, currency: 'EUR', hours: 3, tip: 0 },
 };
 
 /**

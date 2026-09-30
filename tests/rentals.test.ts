@@ -12,7 +12,8 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
 import { journeysOf } from '@/engine/systems/journey';
-import { planRentalDrive, rentalDays, rentalQuote, rentalsOf, type RentalQuote } from '@/engine/systems/rentals';
+import { damageOwed, planRentalDrive, rentalDays, rentalQuote, rentalsOf, type RentalQuote } from '@/engine/systems/rentals';
+import { RENTALS } from '@/engine/content/rentals';
 
 const YEAR = 365.2425 * MS_DAY;
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -49,7 +50,7 @@ function liveTo(sim: Simulation, target: number): void {
 }
 
 describe('what a rental costs', () => {
-  it('prices three days at JFK at Kayak’s $57, Avis’s $35 a day at 22, New York’s 20.875% of taxes, and $200 held', () => {
+  it('prices three days at JFK at Kayak’s $57, Avis’s $35 a day at 22, New York’s 20.875% of taxes with JFK’s 11.11% concession and $4.50 a day, and $200 held', () => {
     const sim = driver('us-ny-newyork', 'rent-ny', 22);
     const at = sim.now + 10 * MS_DAY;
     const q = rentalQuote(sim, sim.player, 'us-ny-newyork', at, at + 3 * MS_DAY + 20 * 60_000, true) as RentalQuote;
@@ -57,7 +58,13 @@ describe('what a rental costs', () => {
     expect(q.days).toBe(3);
     expect(line(q, /Small Car/)).toBe(inSave(sim, 171_00, 'USD'));
     expect(line(q, /Young Driver/)).toBe(inSave(sim, 105_00, 'USD'));
-    expect(line(q, /Taxes/)).toBe(Math.round((inSave(sim, 171_00, 'USD') + inSave(sim, 105_00, 'USD')) * 0.20875));
+    expect(line(q, /Taxes/)).toBe(Math.round((inSave(sim, 171_00, 'USD') + inSave(sim, 105_00, 'USD')) * (0.20875 + 0.1111)));
+    expect(line(q, /Facility/)).toBe(inSave(sim, 3 * 4_50, 'USD'));
+    // The damage waiver taken: New York's $9 cap a day for a small car, taxed with the rest.
+    const w = rentalQuote(sim, sim.player, 'us-ny-newyork', at, at + 3 * MS_DAY + 20 * 60_000, true, true) as RentalQuote;
+    expect(line(w, /Damage Waiver/)).toBe(inSave(sim, 27_00, 'USD'));
+    expect(line(w, /Taxes/)).toBe(Math.round((inSave(sim, 171_00, 'USD') + inSave(sim, 105_00, 'USD') + inSave(sim, 27_00, 'USD')) * (0.20875 + 0.1111)));
+    expect(q.lines.some((l) => /Damage Waiver/.test(l.label))).toBe(false);
     expect(q.deposit).toBe(inSave(sim, 200_00, 'USD'));
     // Past the 29 minutes' grace, a fourth day.
     expect(rentalDays(at, at + 3 * MS_DAY + 30 * 60_000)).toBe(4);
@@ -150,5 +157,31 @@ describe('the rental on a journey', () => {
     expect(rentalsOf(sim.player)[0]!.status).toBe('canceled');
     const refund = sim.universe.transactions.find((t) => t.memo === 'A rental car not picked up, refunded')!;
     expect(refund.postings.find((x) => x.amount > 0)!.amount).toBe(r.value!.paid);
+  });
+});
+
+describe('a rental damaged', () => {
+  it('owes the repair with the waiver declined: $882 at JFK, and $982 at LAX with Enterprise’s fee; nothing with it taken; the excess where one’s published, either way', () => {
+    expect(damageOwed(RENTALS['us-ny-newyork']!, false)).toBe(882);
+    expect(damageOwed(RENTALS['us-ny-newyork']!, true)).toBe(0);
+    expect(damageOwed(RENTALS['us-ca-losangeles']!, false)).toBe(982);
+    expect(damageOwed(RENTALS['us-ca-losangeles']!, true)).toBe(0);
+    expect(damageOwed(RENTALS['uk-eng-london']!, true)).toBe(1_700);
+    expect(damageOwed(RENTALS['us-ct-newhaven']!, false)).toBe(0);
+  });
+
+  it('keeps the waiver taken on the rental, and charges it', () => {
+    const sim = driver('us-ny-newyork', 'rent-waiver', 30, 5, 'us-ny');
+    const day = saturday(sim, 14);
+    const booked = sim.execute<{ journeyId: string; returnId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ca-losangeles', day, slot: 2, returnDay: day + 7 * MS_DAY, returnSlot: 2 } });
+    expect(booked.ok, booked.error).toBe(true);
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 5_000_00, 'USD');
+    const r = sim.execute<{ paid: number }>({ kind: 'travel.rent_car', payload: { journeyId: booked.value!.journeyId, waiver: true } });
+    expect(r.ok, r.error).toBe(true);
+    const rental = rentalsOf(sim.player)[0]!;
+    expect(rental.waived).toBe(true);
+    const out = journeysOf(sim.player).find((j) => j.id === booked.value!.journeyId)!;
+    const back = journeysOf(sim.player).find((j) => j.id === booked.value!.returnId)!;
+    expect(r.value!.paid).toBe((rentalQuote(sim, sim.player, 'us-ca-losangeles', out.arriveAt, back.leaveAt, true, true) as RentalQuote).total);
   });
 });

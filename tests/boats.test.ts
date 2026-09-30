@@ -202,7 +202,7 @@ describe('Bayliner’s loan, and a boat moved', () => {
 });
 
 describe('a boat chartered with its captain', () => {
-  it('costs Go Sailing NYC’s $1,050 for three hours and its suggested 20%, Island Mike’s $600 for four on the Sound, Marina del Rey’s, the Thames’ and Toronto’s, and none in Vancouver', () => {
+  it('costs Go Sailing NYC’s $1,050 for three hours and its suggested 20%, Island Mike’s $600 for four on the Sound, Marina del Rey’s, the Thames’, Toronto’s, Vancouver’s and Howth’s, and none in Mexico City', () => {
     const sim = save('us-ny-newyork', 'charter-cost');
     expect(charterCost(sim, 'us-ny-newyork')).toBe(usd(sim, 1_260_00));
     expect(charterCost(sim, 'us-ct-newhaven')).toBe(usd(sim, 600_00));
@@ -210,13 +210,16 @@ describe('a boat chartered with its captain', () => {
     expect(charterCost(sim, 'us-ca-losangeles')).toBe(usd(sim, Math.round(875 * 1.125 * 100)));
     expect(charterCost(sim, 'uk-eng-london')).toBe(exchange(79_900, 'GBP', saveCurrency(sim.universe)));
     expect(charterCost(sim, 'ca-on-toronto')).toBe(exchange(Math.round(515 * 1.175 * 100), 'CAD', saveCurrency(sim.universe)));
-    expect(charterCost(sim, 'ca-bc-vancouver')).toBeUndefined();
+    // From 2026-10-01: SeaSky's two hours at C$249 with 5% GST and 17.5%; Ireland's Eye Ferries' €500, no tip.
+    expect(charterCost(sim, 'ca-bc-vancouver')).toBe(exchange(Math.round(498 * (1 + 0.05 + 0.175) * 100), 'CAD', saveCurrency(sim.universe)));
+    expect(charterCost(sim, 'ie-lei-dublin')).toBe(exchange(500_00, 'EUR', saveCurrency(sim.universe)));
+    expect(charterCost(sim, 'mx-cmx-mexicocity')).toBeUndefined();
     expect(minutesFor(sim, 'charter')).toBe(180);
     sim.player.currentLocationId = 'us-ct-newhaven';
     expect(minutesFor(sim, 'charter')).toBe(240);
     sim.player.currentLocationId = 'uk-eng-london';
     expect(minutesFor(sim, 'charter')).toBe(70);
-    sim.player.currentLocationId = 'ca-bc-vancouver';
+    sim.player.currentLocationId = 'mx-cmx-mexicocity';
     expect(charterRefusal(sim, sim.player)).toMatch(/No captain’s charter/);
   });
 

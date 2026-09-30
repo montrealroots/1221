@@ -677,7 +677,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
   let rental = 0;
   if (car) {
-    const q = rentalQuote(sim, person, car.cityId, car.pickupAt, legs[0]!.departAt, true);
+    const q = rentalQuote(sim, person, car.cityId, car.pickupAt, legs[0]!.departAt, true, car.waived === true);
     if (typeof q === 'string') return q;
     rental = q.total - car.paid;
   }
@@ -723,6 +723,13 @@ export const letDamaged = (sim: Simulation, person: Person, journeyId: string): 
  * Ireland Aer Lingus's online fee, €40 short-haul and €100 across the
  * Atlantic; within Canada Air Canada's Standard fare, the middle of its
  * C$100 to C$120. The fare's difference is paid on top wherever it's dearer.
+ * From 2026-10-01 (`docs/research/world/research-rentals-lets-charters-2.json`):
+ * within Britain British Airways' £60 on a Euro Traveller fare, read from its
+ * own text as a search engine holds it and from Head for Points, ba.com
+ * showing only its queue; and between the United States and Mexico
+ * Aeroméxico's Classic fare, whose first change is free, read the same way
+ * while its site was down. British Airways' long-haul fee and a change within
+ * Mexico weren't found, and nothing moves those.
  */
 export function changeFee(sim: Simulation, fromCity: string, toCity: string): Money | undefined {
   const a = isoOfCity(fromCity);
@@ -735,6 +742,8 @@ export function changeFee(sim: Simulation, fromCity: string, toCity: string): Mo
     return other === 'US' || other === 'CA' ? money(100, 'EUR') : money(40, 'EUR');
   }
   if (a === 'CA' && b === 'CA') return money(110, 'CAD');
+  if (a === 'GB' && b === 'GB') return money(60, 'GBP');
+  if ((a === 'US' && b === 'MX') || (a === 'MX' && b === 'US')) return 0;
   return undefined;
 }
 

@@ -263,7 +263,7 @@ export function charterCost(sim: Simulation, cityId: string): Money | undefined 
   const c = charterAt(cityId);
   if (!c) return undefined;
   const cur = saveCurrency(sim.universe);
-  const cents = Math.round(c.amount * (1 + c.tip) * 100);
+  const cents = Math.round(c.amount * (1 + (c.tax ?? 0) + c.tip) * 100);
   return cur === c.currency ? cents : exchange(cents, c.currency, cur) ?? cents;
 }
 

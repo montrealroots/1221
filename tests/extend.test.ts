@@ -124,8 +124,13 @@ describe('staying longer', () => {
     expect(changeFee(uk, 'ie-lei-dublin', 'us-ny-newyork')).toBe(exchange(100_00, 'EUR', saveCurrency(uk.universe)));
     expect(changeFee(uk, 'ca-on-toronto', 'ca-bc-vancouver')).toBe(exchange(110_00, 'CAD', saveCurrency(uk.universe)));
     expect(changeFee(uk, 'us-ny-newyork', 'us-ca-losangeles')).toBe(0);
-    // Within Britain, British Airways' fee couldn't be read: not moved.
-    expect(changeFee(uk, 'uk-eng-london', 'uk-sct-edinburgh')).toBeUndefined();
+    // From 2026-10-01 British Airways' £60 within Britain, and Aeroméxico's first change free to Mexico.
+    expect(changeFee(uk, 'uk-eng-london', 'uk-sct-edinburgh')).toBe(exchange(60_00, 'GBP', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'us-ny-newyork', 'mx-cmx-mexicocity')).toBe(0);
+    expect(changeFee(uk, 'mx-cmx-mexicocity', 'us-ca-losangeles')).toBe(0);
+    // Across the Atlantic from Britain and within Mexico, none found: not moved.
+    expect(changeFee(uk, 'uk-eng-london', 'us-ny-newyork')).toBeUndefined();
+    expect(changeFee(uk, 'mx-cmx-mexicocity', 'mx-14-guadalajara')).toBeUndefined();
   });
 
   it('moves a train home and a holiday let in Edinburgh: the old ticket refunded on its terms, the let’s price for the longer stay', () => {

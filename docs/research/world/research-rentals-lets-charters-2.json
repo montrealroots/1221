@@ -1,0 +1,459 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-30",
+    "method": "Web search plus direct fetches of publisher pages; PDFs were read with pdftotext. Where a publisher page would not render (ba.com sat behind a queue page; aeromexico.com and vuela.aeromexico.com showed a maintenance error; Ryanair's help pages are a single-page app), the figure comes from secondary reporting or the search index and is marked confirmed:false.",
+    "conventions": "sourceType 'primary' = statute, regulator, or the company's own page or terms; 'secondary' = press, a broker aggregating others, a blog, or a marketplace listing written by the owner. confirmed:true = the figure was read on the cited page during this session. null = not published or not found; the note says which.",
+    "spelling": "American spelling in our own words; quoted text keeps the source's spelling."
+  },
+
+  "rentalDamage": {
+    "waiverPricesAtCounters": [
+      {
+        "location": "JFK (Avis)",
+        "dailyPrice": null,
+        "nationalFloor": { "amount": 9, "currency": "USD", "unit": "per day", "text": "Loss Damage Waiver (LDW) as low as $9/day" },
+        "note": "Avis publishes only a national 'as low as $9/day' figure, with no price per location. In New York the statute caps it by vehicle value anyway (see nyCap below). Secondary sources give a $9 to $35.99 range, which is not confirmed.",
+        "source": { "url": "https://www.avis.com/en/products-and-services/protections/loss-damage-waiver", "publisher": "Avis Budget Group", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      {
+        "location": "LAX (Enterprise)",
+        "dailyPrice": null,
+        "note": "Enterprise shows no price for any US location outside the booking flow. For compact through full-size cars, California caps it at $25/day adjusted by CPI from 2023 (see caCap).",
+        "source": null
+      },
+      {
+        "location": "New Haven (Enterprise)",
+        "dailyPrice": null,
+        "note": "Not published. Connecticut has no statutory cap that we found.",
+        "source": null
+      },
+      {
+        "location": "Toronto Pearson (Enterprise)",
+        "dailyPrice": null,
+        "note": "The Enterprise Canada FAQ says the cost 'can vary based on the type of vehicle'. It gives no amount. A search snippet cited 'between $9.99 and $39.99 CAD per day' as coming from Enterprise's Canadian site, but that text was not on the page when fetched.",
+        "unconfirmedRange": { "min": 9.99, "max": 39.99, "currency": "CAD", "unit": "per day" },
+        "source": { "url": "https://www.enterprise.ca/en/help/faqs/car-rental-insurance-canada.html", "publisher": "Enterprise Rent-A-Car Canada", "date": null, "sourceType": "primary", "confirmed": false }
+      },
+      {
+        "location": "Vancouver (Enterprise)",
+        "dailyPrice": null,
+        "note": "Not published. The same Canada-wide FAQ applies.",
+        "source": null
+      }
+    ],
+    "nyCap": {
+      "law": "New York General Business Law §396-z (rental vehicle protections)",
+      "lastAmended": "2023-07-07",
+      "dailyCapByMsrp": [
+        { "msrpMax": 20000, "capPerDay": 9, "currency": "USD" },
+        { "msrpMin": 20001, "msrpMax": 35000, "capPerDay": 12, "currency": "USD" },
+        { "msrpMin": 35001, "msrpMax": 50000, "capPerDay": 15, "currency": "USD" },
+        { "msrpMin": 50001, "capPerDay": null, "note": "no statutory cap above $50,000 MSRP" }
+      ],
+      "renterLiability": {
+        "damage": "The renter's liability is capped at the lesser of the actual repair cost (after the company's discounts) or the car's fair market value just before the damage.",
+        "theft": "The renter is liable only if the driver failed to take reasonable care or helped with the theft. Liability is then capped at the company's reasonable costs, up to fair market value.",
+        "lossOfUseAndAdminFees": "Not recoverable from an authorized driver or the driver's insurer.",
+        "doubleRecovery": "The company can't bill the renter for amounts it recovers from another party."
+      },
+      "pending": "Bill S3246B (2025–26) would index the $9/$12/$15 caps to CPI-U from January 1, 2027 and remove the 2028 sunset. It was amended and recommitted to the Consumer Protection committee on 2026-01-14 and has not passed. Some secondary sites print $12/$15 with a $30,000 threshold, but that is not current law.",
+      "sources": [
+        { "url": "https://www.nysenate.gov/legislation/laws/GBS/396-Z", "publisher": "New York State Senate", "date": "2023-07-07", "sourceType": "primary", "confirmed": true },
+        { "url": "https://www.nysenate.gov/legislation/bills/2025/S3246/amendment/B", "publisher": "New York State Senate", "date": "2026-01-14", "sourceType": "primary", "confirmed": true }
+      ]
+    },
+    "caCap": {
+      "law": "California Civil Code §1939.09(d), as amended by AB 901 (Stats. 2021, ch. 415), effective 2022-01-01",
+      "dailyCap": { "amount": 25, "currency": "USD", "unit": "per 24-hour rental day", "appliesTo": "the five smallest ACRISS body-size categories: economy, compact, intermediate, standard and full-size" },
+      "indexation": "Adjusted upward each year from January 1, 2023 by the CPI-U. We did not find a published indexed figure for 2026.",
+      "otherCategories": "The fetched text sets no cap for larger categories.",
+      "wasNine": "No. $9/day was an older California cap and also New York's lowest tier. The current California figure is $25 plus CPI.",
+      "waiverScope": "A damage waiver relieves the renter of liability for damage, loss, loss of use and related costs. The statute declares any limitation, exception or exclusion to the waiver void.",
+      "renterLiabilityWithoutWaiver_1939_03": {
+        "amendedBy": "AB 1197 (Stats. 2025, ch. 449), effective 2026-01-01",
+        "maxRecoverable": [
+          "Collision damage, up to the car's fair market value, regardless of cause",
+          "Theft, up to fair market value, only if the company proves by clear and convincing evidence that the driver failed to take ordinary care. The renter is presumed not liable if the driver returns the key and files a police report within 24 hours.",
+          "Vandalism connected with a theft, up to fair market value",
+          "Vandalism unrelated to a theft: capped at $500",
+          "Actual towing, storage and impound fees",
+          "An administrative charge that covers appraisal and other incidental costs. The fetched text gave no amount cap."
+        ],
+        "lossOfUse": "Not in the list of recoverable items in the fetched text."
+      },
+      "sources": [
+        { "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1939.09", "publisher": "California Legislative Information", "date": "2022-01-01", "sourceType": "primary", "confirmed": true },
+        { "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1939.03", "publisher": "California Legislative Information", "date": "2026-01-01", "sourceType": "primary", "confirmed": true }
+      ]
+    },
+    "whatRenterOwesWithoutWaiver": {
+      "avis": {
+        "text": "If you decline both LDW and PDW, \"you owe for all loss or damage to the car.\"",
+        "source": { "url": "https://www.avis.com/en/products-and-services/protections/loss-damage-waiver", "publisher": "Avis Budget Group", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      "enterpriseContractTerms": {
+        "repair": "The repair estimate, or fair market value if the car is a total loss",
+        "lossOfUse": "Charged regardless of fleet utilization: the repair estimate's labor hours ÷ 4 × the daily rate on the agreement. A secondary summary adds that a stolen or salvage car is charged 15 days at the daily rate; the extracted excerpt did not show that.",
+        "adminFee": [
+          { "repairEstimateBelow": 500, "fee": 50 },
+          { "repairEstimateFrom": 500, "repairEstimateTo": 1499, "fee": 100 },
+          { "repairEstimateAbove": 1500, "fee": 150 }
+        ],
+        "diminishedValue": "10% of the repair estimate when the damage is over $499",
+        "other": "Towing, storage and impound fees, plus the owner's costs to recover the car and establish the damage",
+        "stateOverride": "In states such as New York, the same jacket says the owner will not hold the renter liable for loss of use and related administrative fees.",
+        "currency": "USD",
+        "source": { "url": "https://legislature.vermont.gov/Documents/2018/WorkGroups/House%20Judiciary/Bills/S.105/S.105~Enterprise%20Car%20Rental~Enterprise%20Car%20Rental%20Terms%20and%20Conditions~4-10-2018.pdf", "publisher": "Enterprise Rent-A-Car rental agreement jacket, as submitted to the Vermont Legislature (House Judiciary)", "date": "2018-04-10", "sourceType": "primary", "confirmed": true, "caveat": "2018 terms; the current jacket may differ. Claims Journal (2023-04-12) describes the same loss-of-use formula as Enterprise's method." }
+      },
+      "corroboration": { "url": "https://www.claimsjournal.com/columns/road-to-recovery/2023/04/12/316387.htm", "publisher": "Claims Journal", "date": "2023-04-12", "sourceType": "secondary", "confirmed": true, "note": "Enterprise: labor hours ÷ 4 × daily rate. PurCo (fleet risk firm): repair days × daily rate. The column says rental cars have a higher collision rate per registered vehicle but gives no percentage." }
+    },
+    "damageFrequency": {
+      "shareOfRentalsWithClaim": null,
+      "note": "Neither the rental companies nor ACRISS publishes a rate of damage claims per rental. The figure 'about 10% of rentals return with damage' comes only from an unattributed search summary and is unconfirmed.",
+      "claimComposition": {
+        "publisher": "CarInsuRent (seller of rental excess insurance; its own customers' claims)",
+        "date": "2026-02-02",
+        "sampleSize": 1710,
+        "notRenterCaused": 0.58,
+        "priorYearNotRenterCaused": 0.60,
+        "byType": { "paintAndScratches": 0.56, "rimAndTire": 0.14, "majorCollision": 0.23, "windshield": 0.06 },
+        "averageClaimReported": { "majorCollision": 882, "rimAndTire": 1315, "currency": "USD", "caveat": "As printed. The collision average looks low and may be the insurer's payout rather than the rental company's bill." },
+        "source": { "url": "https://natlawreview.com/press-releases/2025-rental-car-claims-data-reveals-structural-risk-58-damage-claims-not", "publisher": "National Law Review (press release by CarInsuRent)", "date": "2026-02-02", "sourceType": "secondary", "confirmed": true }
+      }
+    }
+  },
+
+  "concession": {
+    "JFK": {
+      "concessionRecoveryPercent": 11.11,
+      "customerFacilityChargePerDay": 4.50,
+      "currency": "USD",
+      "note": "11.11% is the arithmetic of a 10% gross-receipts concession passed through (0.10 / 0.90). Secondary sites give both 11.11% and 11.25% for JFK. No company receipt, Hertz terms page (it returned HTTP 500) or Port Authority filing could be read. The Port Authority's JFK Schedule of Charges (Jan 2026) has no rental-car line.",
+      "sources": [
+        { "url": "https://www.portauthoritybuilds.com/content/dam/airports/pdfs/Schedule%20of%20Charges-JFK-Jan_26.pdf", "publisher": "Port Authority of New York and New Jersey", "date": "2026-01", "sourceType": "primary", "confirmed": true, "finding": "no rental-car concession or CFC in the document" },
+        { "url": "https://www.flyertalk.com/forum/national-emerald-club/1784650-exhaustive-national-airport-fees-list.html", "publisher": "FlyerTalk (user-compiled receipts)", "date": null, "sourceType": "secondary", "confirmed": false }
+      ],
+      "confirmed": false
+    },
+    "HVN": {
+      "concessionRecoveryPercent": null,
+      "note": "Neither the Avis nor the Budget HVN location page lists fees; they show only at booking. A Korean aggregator post (sdfi.co.kr) says 'approximately 11%', which is unconfirmed and unreliable. Tweed-New Haven's rental-car concession agreement was not found online.",
+      "source": { "url": "https://www.avis.com/en/locations/nam/us/ct/new-haven/hvn", "publisher": "Avis Budget Group", "date": null, "sourceType": "primary", "confirmed": true, "finding": "no fee schedule printed" }
+    },
+    "definitionCap": "Enterprise-family terms define the Concession Recovery Fee as recovering airport concession fees and say it 'cannot exceed 11.11% of gross revenues'. That wording is quoted secondhand from National's fee FAQ via search and was not fetched.",
+    "definitionSource": { "url": "https://www.nationalcar.com/en/support/car-rental-faqs/taxes-surcharges-fees.html", "publisher": "National Car Rental", "date": null, "sourceType": "primary", "confirmed": false }
+  },
+
+  "letClaims": {
+    "airbnbAirCover": {
+      "coverageLimit": { "amount": 3000000, "currency": "USD" },
+      "averagePayout": null,
+      "medianPayout": null,
+      "note": "Airbnb publishes no average or median payout. The widely repeated 'approved claims land between $200 and $400' is a blog's estimate with no data source, so it is unconfirmed.",
+      "claimFrequency": 0.0071,
+      "shareOfClaimedAmountApproved": 0.5675,
+      "frequencySource": "Avada Properties, analysis of 20,000+ of its own bookings, via RapidEye Inspections. Other sites attribute the same figures to 'Safely and Guesty, 2025'. It is one property manager's data, not Airbnb's.",
+      "claimWindow": "Reimbursement requests must be filed within 14 days of checkout. AirCover pays actual cash value, not replacement cost.",
+      "sources": [
+        { "url": "https://www.airbnb.com/help/article/279", "publisher": "Airbnb", "date": null, "sourceType": "primary", "confirmed": false, "note": "Coverage limit per search summary; page not fetched." },
+        { "url": "https://rapideyeinspections.com/blog/average-guest-damage-cost-vacation-rental/", "publisher": "RapidEye Inspections", "date": null, "sourceType": "secondary", "confirmed": true }
+      ]
+    },
+    "vrbo": {
+      "averagePayout": null,
+      "claimFrequency": 0.0043,
+      "shareOfClaimedAmountApproved": 0.6829,
+      "note": "Same Avada Properties sample. Vrbo publishes no payout averages.",
+      "source": { "url": "https://rapideyeinspections.com/blog/average-guest-damage-cost-vacation-rental/", "publisher": "RapidEye Inspections (citing Avada Properties)", "date": null, "sourceType": "secondary", "confirmed": true }
+    },
+    "properInsurance": {
+      "averageGuestDamageClaim": null,
+      "averageSewerBackupClaim2024": { "amount": 18000, "currency": "USD" },
+      "sewerAndNonWeatherWaterShareOfClaims": ">20%",
+      "exampleClaims": [
+        { "what": "Guest-caused water damage, Newburyport, Massachusetts", "paid": 130000 },
+        { "what": "Burst pipe, vacant never-listed property, upstate New York", "paid": 50000, "note": "'over $50,000'" }
+      ],
+      "note": "Proper publishes no average guest-damage claim. Its most common claim type is sewer backup, not guest damage.",
+      "source": { "url": "https://www.proper.insure/blog/most-common-str-insurance-claims/", "publisher": "Proper Insurance", "date": "2026-09-29", "sourceType": "primary", "confirmed": true }
+    },
+    "steadily": { "averageGuestDamageClaim": null, "note": "Not found; Steadily publishes no claim averages that we could find." },
+    "partyDamage": { "averagePerIncident": 1560, "currency": "USD", "confirmed": false, "note": "Blog figure for unauthorized parties with no traceable original study. Do not treat it as real data." }
+  },
+
+  "airlineChanges": {
+    "britishAirways": {
+      "euroTraveller": {
+        "changeFee": { "amount": 60, "currency": "GBP", "unit": "per person per flight, plus any fare difference", "appliesTo": "Euro Traveller fares that allow changes (Standard; Basic hand-baggage fares have tighter rules)" },
+        "sameDayChange": "Free on Economy Plus and Business for eligible same-day switches. BA's website sometimes shows £60 online (Head for Points, 2025-10-01).",
+        "confirmed": false,
+        "note": "The £60 figure comes from secondary reporting and search-indexed BA text. Every ba.com page, including the travel-partner fare pages, returned only a 'high demand' holding page."
+      },
+      "longHaulEconomyStandard": {
+        "changeFee": null,
+        "note": "Unconfirmed secondary claims: long-haul changes '£200+', and one source says '£100 >14 days / £500 <14 days' (that source seems to describe a different fare family or group bookings). Upgraded Points (2026-06-16) gives only a range, 'ticket change fee from $0 to $275 depending on fare type'. BA's own figure could not be read, so this is left null.",
+        "reportedRangeUSD": { "min": 0, "max": 275, "source": "Upgraded Points 2026-06-16", "confirmed": false }
+      },
+      "economyFlex": "Fee-free changes; fare difference only (secondary).",
+      "sources": [
+        { "url": "https://www.britishairways.com/travel-partner-connect/en/ba/policies/procedures/change-fees", "publisher": "British Airways", "date": null, "sourceType": "primary", "confirmed": false, "note": "unreadable: queue page" },
+        { "url": "https://www.headforpoints.com/2025/10/01/british-airways-same-day-change/", "publisher": "Head for Points", "date": "2025-10-01", "sourceType": "secondary", "confirmed": true },
+        { "url": "https://upgradedpoints.com/travel/airlines/british-airways-review/", "publisher": "Upgraded Points", "date": "2026-06-16", "sourceType": "secondary", "confirmed": true }
+      ]
+    },
+    "aeromexico": {
+      "basic": "No changes allowed. Same-day advance under 'AM Vuela Flex' waives the fee and fare difference (secondary).",
+      "classic": {
+        "usToMexico": "First change free; fare difference applies",
+        "europeExclFranceNetherlands": { "low8plusDays": 320, "high8plusDays": 330, "low0to7Days": 330, "high0to7Days": 340, "currency": "USD" },
+        "franceNetherlands": { "low8plusDays": 215, "high8plusDays": 225, "currency": "USD" },
+        "japan": { "low8plusDays": 300, "high8plusDays": 310, "low0to7Days": 310, "high0to7Days": 320, "currency": "USD" },
+        "mexicoDomestic": null,
+        "confirmed": false,
+        "note": "The figures come from the search index of aeromexico.com's Classic fare page. At fetch time the page showed 'Oops! Something went wrong', and curl was blocked too. We found no domestic MXN fee."
+      },
+      "source": { "url": "https://aeromexico.com/en-us/flight-information/fare-classes/classic", "publisher": "Aeroméxico", "date": null, "sourceType": "primary", "confirmed": false }
+    },
+    "ryanair": {
+      "changeFeeOnline": { "amount": 45, "currency": "EUR or GBP", "unit": "per passenger per one-way flight, plus fare difference" },
+      "changeFeeCallCentreOrAirport": { "amount": 60, "currency": "EUR or GBP", "unit": "per passenger per one-way flight" },
+      "fareDifferenceRule": "The passenger pays any fare increase, and no refund is given if the new fare is lower",
+      "confirmed": false,
+      "note": "The wording comes from the search index of ryanair.com's fees page, which renders client-side and returned only its heading. Treat it as Ryanair's own text, not yet read on the page. The fee can vary by season or route.",
+      "source": { "url": "https://www.ryanair.com/us/en/useful-info/help-centre/fees", "publisher": "Ryanair DAC", "date": null, "sourceType": "primary", "confirmed": false }
+    }
+  },
+
+  "emptyLegs": {
+    "shareOfFlightsEmpty": [
+      {
+        "value": 0.41,
+        "what": "share of European private (business aviation) flights that are empty legs",
+        "origin": "Hamilton-DLR, B. A. (2017), Economic Impact of Business Aviation in Europe (the EBAA-commissioned study), as cited by Transport & Environment",
+        "companion": "The non-empty flights carry 4.7 passengers on average",
+        "source": { "url": "https://uploads.transportenvironment.org/production/files/202209_private_jets_FINAL_with_addendum_2024-05-07-140647_xczq.pdf", "publisher": "Transport & Environment", "date": "2021-04", "sourceType": "secondary", "confirmed": true }
+      },
+      {
+        "value": "0.30–0.50",
+        "what": "share of the private-jet charter fleet that 'often flies empty'",
+        "origin": "XO estimate",
+        "source": { "url": "https://www.businesstravelexecutive.com/special-report/empty-legs-empty-promises/", "publisher": "Business Travel Executive", "date": "2023-02-02", "sourceType": "secondary", "confirmed": true }
+      }
+    ],
+    "wingX": { "value": null, "note": "WingX publishes no share of empty legs. Its glossary treats empty legs as a sector category. We found no public figure." },
+    "argusTraqpak": { "value": null, "note": "TRAQPak counts include repositioning flights, but it does not publish their share." },
+    "aviationWeek": { "value": null, "note": "We found no Aviation Week figure." },
+    "listingPractice": {
+      "note": "Empty legs are posted by operators and brokers (XO's 'Jet Deals', Victor, PrivateFly, Jettly, VistaJet, GlobeAir) as one-way repositioning seats or whole-aircraft sales at 25–75% off. They can be cancelled or retimed when the paying trip changes.",
+      "countListedPerDay": null,
+      "countNote": "No marketplace publishes a daily count of listings. A Private Jet Card Comparisons piece (2024-09-29) quotes FlyEasy's founder saying empty legs work mostly as marketing and don't sell in volume.",
+      "source": { "url": "https://privatejetcardcomparisons.com/2024/09/29/are-empty-leg-private-jet-flights-bait-and-switch/", "publisher": "Private Jet Card Comparisons", "date": "2024-09-29", "sourceType": "secondary", "confirmed": true }
+    }
+  },
+
+  "jetCharter": {
+    "ireland": {
+      "irishOperatorRate": null,
+      "note": "We found no Irish operator or broker that publishes an hourly euro rate. Dublin Weston cannot take jets (turboprops and pistons only), so light jets fly from Dublin (EIDW). The nearest published European broker rates are below.",
+      "europeanBrokerRates": [
+        { "broker": "LunaJets (Geneva)", "veryLightJet": { "min": 4000, "max": 6300, "example": "Citation Mustang" }, "lightJet": { "min": 4600, "max": 7300, "example": "Citation CJ2" }, "currency": "EUR", "unit": "per flight hour, indicative", "source": { "url": "https://www.lunajets.com/en/prices", "publisher": "LunaJets", "date": null, "sourceType": "primary", "confirmed": true } },
+        { "broker": "PrivateFly (UK)", "rates": [ { "aircraft": "Citation Mustang (VLJ)", "GBP": 1300, "EUR": 1535, "USD": 2037 }, { "aircraft": "Citation XLS", "GBP": 2684, "EUR": 3166, "USD": 4207 }, { "aircraft": "Learjet 45", "GBP": 2989, "EUR": 3526, "USD": 4685 } ], "unit": "per hour, excluding landing, handling and crew costs", "source": { "url": "https://www.privatefly.com/aircraft-charter/hourly-rates-for-private-jets.html", "publisher": "PrivateFly (Directional Aviation / OneSky)", "date": null, "sourceType": "primary", "confirmed": true } }
+      ],
+      "caveat": "The two brokers differ by 2.5×. LunaJets' figures look like all-in; PrivateFly's exclude fees."
+    },
+    "mexico": {
+      "operatorRates": [
+        { "operator": "Aerolíneas Ejecutivas (ALE)", "rate": 3000, "currency": "USD", "unit": "per flight hour, domestic", "year": 2013 },
+        { "operator": "Fly Jets", "rate": 2900, "currency": "USD", "unit": "per flight hour, taxes included, domestic", "year": 2013 },
+        { "operator": "Privé Jets", "rate": 3016, "currency": "USD", "unit": "per flight hour, domestic", "year": 2013 },
+        { "operator": "Aeronet", "rate": 2400, "currency": "USD", "unit": "per flight hour plus taxes and hangar fees", "year": 2013 }
+      ],
+      "source": { "url": "https://www.elfinanciero.com.mx/archivo/cuanto-cuesta-volar-en-aviones-privados-1/", "publisher": "El Financiero", "date": "2013-09-12", "sourceType": "secondary", "confirmed": true },
+      "note": "These are old (2013) and quoted by a newspaper, not the operators. A search summary says 'Phenom 100 from $6,200 USD/hour' but gives no traceable source, so it is unconfirmed. We found no current price list from Mexjet or Jet Pro."
+    },
+    "taxes": {
+      "us": {
+        "internationalFacilitiesTax2026": { "amount": 23.40, "currency": "USD", "unit": "per person per arrival or departure, for flights beginning or ending in the US (IRC §4261(c); Form 720 IRS No. 27)", "prior2025": 22.90, "alaskaHawaii2026": 11.70 },
+        "appliesToCharter": "Yes. Part 135 charter is taxable air transportation.",
+        "source": { "url": "https://www.irs.gov/instructions/i720", "publisher": "Internal Revenue Service", "date": "2026-06", "sourceType": "primary", "confirmed": true }
+      },
+      "canada": {
+        "gstHst": "Zero-rated when a continuous journey's origin, destination or a stopover is outside the 'taxation area' (Canada, the continental US and St. Pierre and Miquelon). A Canada–continental US flight is not automatically zero-rated; CRA rules on transborder air apply. Charter flights sold to third-party charterers are covered in CRA GI-170.",
+        "confirmed": false,
+        "sources": [
+          { "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-specific-situations/gst-hst-information-travel-convention-industry.html", "publisher": "Canada Revenue Agency", "date": null, "sourceType": "primary", "confirmed": false },
+          { "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/gi-170/charter-flights-supplied-third-party-charterers.html", "publisher": "Canada Revenue Agency", "date": null, "sourceType": "primary", "confirmed": false }
+        ]
+      },
+      "uk": {
+        "apdUnder5_7t": "None. Aircraft under 5.7 tonnes MTOW are outside APD.",
+        "currentHigherRate": "Applies to aircraft of 20 tonnes or more with fewer than 19 seats",
+        "fromApril2027": "The higher rate extends to every aircraft of 5.7 tonnes or more used as a private or business jet",
+        "source": { "url": "https://www.gov.uk/government/publications/air-passenger-duty-and-private-jets", "publisher": "HM Revenue & Customs / HM Treasury (GOV.UK)", "date": "2026-07-13", "sourceType": "primary", "confirmed": true },
+        "note": "Most light jets (e.g., CJ3 about 6.3 t; Phenom 300 about 8.2 t) are over 5.7 t. Only very light jets such as the Mustang (about 3.9 t) fall below. Those weights are ours and not from the source."
+      },
+      "ireland": {
+        "vat": "Passenger transport outside the State is exempt with input credit, which works like zero-rating. Revenue's rate database lists passenger transport services as exempt. Ireland has no aviation ticket tax.",
+        "confirmed": false,
+        "note": "The Revenue page was found by search, but its wording for air transport was not read directly.",
+        "source": { "url": "https://www.revenue.ie/en/vat/vat-rates/search-vat-rates/T/transport-of-passengers-exemptions-by-derogation-in-accordance-with-articl-.aspx", "publisher": "Revenue Commissioners", "date": null, "sourceType": "primary", "confirmed": false }
+      },
+      "mexico": {
+        "ivaRule": "Ley del IVA art. 16: for international air transport, only 25% of the service is deemed supplied in Mexico. That 25% is taxed at 16% and the remaining 75% at 0%, so the effective rate is 4% of the fare. It applies to trips that begin in Mexico; service that begins abroad is not taxed. Flights to the 20 km border strip get the same treatment.",
+        "effectiveRate": 0.04,
+        "confirmed": false,
+        "source": { "url": "https://elconta.mx/25-porciento-iva-transporte-aereo/", "publisher": "El Conta (secondary commentary on LIVA art. 16)", "date": null, "sourceType": "secondary", "confirmed": false }
+      }
+    },
+    "customs": {
+      "us": {
+        "eAPIS": "An APIS manifest is required for every private aircraft arriving in or departing from the US, filed through CBP's eAPIS web portal (60 minutes before departure, per CBP's private-aircraft guide).",
+        "userFeeDecal": { "amount": 36.94, "currency": "USD", "period": "calendar year 2026 (effective 2025-10-01)", "note": "Required for private aircraft; bought through DTOPS. The fee rises again on 2026-10-01; the new amount was not found. Commercial charter pays per-passenger user fees through the ticket instead." },
+        "sources": [
+          { "url": "https://www.cbp.gov/travel/general-aviation-processing", "publisher": "US Customs and Border Protection", "date": null, "sourceType": "primary", "confirmed": false },
+          { "url": "https://cstflightservices.com/news/dtops-decal-compliance-2026-cbp-requirements-for-private-aircraft", "publisher": "CST Flight Services", "date": null, "sourceType": "secondary", "confirmed": false }
+        ]
+      },
+      "canada": {
+        "canpass": "CANPASS Private Aircraft is a trusted-traveler program with a C$40 non-refundable fee per applicant 18 or over. Every person aboard must be a member, the aircraft may carry at most 15 people, and the pilot may not charge passengers, so it does not apply to a paid charter. Non-members report to CBSA's Telephone Reporting Centre before arrival and land at an airport of entry during CBSA hours.",
+        "fee": { "amount": 40, "currency": "CAD", "unit": "per adult applicant" },
+        "source": { "url": "https://www.cbsa-asfc.gc.ca/prog/canpass/menu-eng.html", "publisher": "Canada Border Services Agency", "date": null, "sourceType": "primary", "confirmed": false }
+      }
+    }
+  },
+
+  "boatCharters": {
+    "vancouver": [
+      {
+        "operator": "SeaSky Cruises (captained pontoon, up to 10 guests)",
+        "departure": "Dock A, 750 Pacific Blvd, False Creek",
+        "rate": { "weekday": 249, "peak": 269, "currency": "CAD", "unit": "per hour, captain and fuel included, plus 5% GST" },
+        "minimumHours": 2,
+        "examples": { "twoHoursWeekday": 498, "threeHoursWeekday": 747, "threeHoursPeak": 807 },
+        "deposit": 300,
+        "source": { "url": "https://www.seaskyboatrental.com/pontoon-boat-rental-vancouver/", "publisher": "SeaSky Cruises", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      {
+        "operator": "Northern Seas Yacht Charters (motor yacht, from Granville Island)",
+        "rate": { "from": 400, "currency": "CAD", "unit": "per hour, licensed captain included, 1–10 hours" },
+        "packages": { "corporateUpTo3h": 1600 },
+        "source": { "url": "https://www.northernseasyachts.ca/booking", "publisher": "Northern Seas Yacht Charters", "date": null, "sourceType": "primary", "confirmed": true }
+      }
+    ],
+    "dublinBay": [
+      {
+        "operator": "Owner-skippered Bénéteau Antares 750 HB (listed on SamBoat)",
+        "departure": "Dún Laoghaire",
+        "price": { "amount": 450, "currency": "EUR", "unit": "from, half day (3 hours, 14:00–17:00), skipper included", "shownAs": "$511 USD in the US view" },
+        "capacity": 7,
+        "fuel": "Not included (about 35 L/hour)",
+        "source": { "url": "https://www.samboat.com/boat-rental/dun-laoghaire-rathdown/motor-boat/217867", "publisher": "SamBoat (listing written by the owner)", "date": null, "sourceType": "secondary", "confirmed": true }
+      },
+      {
+        "operator": "Goat Boat Tours (RIB, Dún Laoghaire, up to 11)",
+        "privateHirePrice": null,
+        "sharedTourPrice": { "adult": 38.5, "child": 18.5, "currency": "EUR" },
+        "note": "Private hire is priced on request.",
+        "source": { "url": "https://goatboat.ie/private-hire/", "publisher": "Goat Boat Tours", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      {
+        "operator": "Go Sailing (Dún Laoghaire Marina, licensed for 12)",
+        "privateHirePrice": null,
+        "note": "Exclusive charters are quoted by email. Shared 2–3 hour sails were reported at €35–€50 a head (secondary).",
+        "source": { "url": "https://www.gosailing.ie/faqs/", "publisher": "Go Sailing", "date": null, "sourceType": "primary", "confirmed": false }
+      },
+      {
+        "operator": "Ireland's Eye Ferries (Howth)",
+        "price": { "amount": 500, "currency": "EUR", "unit": "Harbour Walk & Coastal Boat Tour combo, private group of up to 11, 3 hours" },
+        "note": "Other private charter prices are not published.",
+        "source": { "url": "https://www.irelandseyeferries.com/", "publisher": "Ireland's Eye Ferries", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      {
+        "operator": "M.V. Little Flower / Island Ferries (Howth, up to 30)",
+        "price": { "hourly": 75, "halfDay": 300, "fullDay": 500, "minimumHours": 4, "currency": "EUR" },
+        "confirmed": false,
+        "note": "The figures come from a search summary attributing them to Island Ferries and GetMyBoat. Not read on the operator page.",
+        "source": { "url": "https://www.islandferries.net/index.html", "publisher": "Island Ferries", "date": null, "sourceType": "primary", "confirmed": false }
+      }
+    ]
+  },
+
+  "chauffeurTransfers": {
+    "nycToNewHaven": {
+      "flatRate": null,
+      "nearest": { "operator": "Rideline", "route": "JFK → New Haven", "price": { "from": 159, "currency": "USD", "note": "distance-based; tax, tolls and gratuity extra" }, "alsoPublished": { "JFK→Manhattan": { "economySedan": 119, "luxurySedan": 129, "premiumSUV": 219 } } },
+      "note": "Blacklane, Lexon, CT Limo and Teddy's all quote NYC ↔ New Haven only on request.",
+      "source": { "url": "https://ridelinelimo.com/jfk-car-service/", "publisher": "Rideline", "date": null, "sourceType": "primary", "confirmed": true }
+    },
+    "nycToHamptons": [
+      {
+        "operator": "Golden Class Limo",
+        "route": "NYC ↔ Hamptons",
+        "price": { "cadillacSedan": 350, "escaladeSUV": 500, "mercedesS550": 750, "currency": "USD" },
+        "inclusions": "Tolls and gratuity not stated",
+        "source": { "url": "https://www.goldenclasslimo.com/service/hamptons-car-service/", "publisher": "Golden Class Limo", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      {
+        "operator": "Rideline",
+        "route": "JFK/LGA ↔ Hamptons",
+        "price": {
+          "hamptonBaysWesthampton": { "economySedan": 289, "luxurySedan": 299, "premiumSUV": 359 },
+          "southampton": { "economySedan": 349, "luxurySedan": 359, "premiumSUV": 429 },
+          "eastHamptonSagHarbor": { "economySedan": 389, "luxurySedan": 399, "premiumSUV": 469 },
+          "montauk": { "economySedan": 429, "luxurySedan": 439, "premiumSUV": 539 },
+          "currency": "USD"
+        },
+        "inclusions": "Tax, tolls and gratuity not included",
+        "source": { "url": "https://ridelinelimo.com/hamptons-car-service/", "publisher": "Rideline", "date": null, "sourceType": "primary", "confirmed": true }
+      }
+    ],
+    "londonToOxford": {
+      "operator": "Blackberry Cars",
+      "route": "Oxford ↔ central London",
+      "price": { "saloon": 120, "executiveSaloon": 170, "estate": 135, "mpv5": 155, "mpv6": 195, "executiveMpv6": 245, "currency": "GBP" },
+      "inclusions": "Fully inclusive fixed fare",
+      "journeyTime": "about 1 h 10 min off-peak to about 2 h at rush hour",
+      "source": { "url": "https://www.blackberrycars.com/distance-transfers/london-distance-transfers/taxi-oxford-central-london/", "publisher": "Blackberry Cars", "date": null, "sourceType": "primary", "confirmed": true }
+    },
+    "londonToCambridge": [
+      {
+        "operator": "Blackberry Cars",
+        "price": { "saloon": 145, "estate": 160, "mpv5": 170, "mpv6": 210, "currency": "GBP" },
+        "inclusions": "Fully inclusive fixed fare",
+        "source": { "url": "https://www.blackberrycars.com/distance-transfers/london-distance-transfers/taxi-cambridge-central-london/", "publisher": "Blackberry Cars", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      {
+        "operator": "Blacklane (Business Class, Mercedes E-Class)",
+        "price": { "amount": 50, "currency": "GBP", "note": "Launch flat rate reported in September 2020, not confirmed as current; the press release gave no prices" },
+        "confirmed": false,
+        "source": { "url": "https://www.blacklane.com/en/press/releases/2u9XpOvuiKCsAGbPWNIz4/", "publisher": "Blacklane", "date": "2020-09-21", "sourceType": "primary", "confirmed": false }
+      }
+    ],
+    "torontoToNiagara": [
+      {
+        "operator": "Toronto Limos Services",
+        "price": { "luxurySedan": [250, 350], "executiveSUV": [300, 450], "stretchLimo": [400, 600], "currency": "CAD", "unit": "one-way typical range" },
+        "inclusions": "Chauffeur, fuel, door-to-door; HST and gratuity not stated",
+        "source": { "url": "https://www.torontolimosservices.ca/limo-service-toronto-to-niagara-falls/", "publisher": "Toronto Limos Services", "date": null, "sourceType": "primary", "confirmed": true }
+      },
+      {
+        "operator": "Niagara AirBus / Chauffeuropolis",
+        "price": { "amount": 200, "currency": "CAD", "unit": "fixed rate, Toronto ↔ Niagara Falls" },
+        "source": { "url": "https://niagaraairporttaxi.ca/niagara-falls-car-service/", "publisher": "Niagara Airport Taxi (Chauffeuropolis)", "date": null, "sourceType": "primary", "confirmed": true }
+      }
+    ]
+  },
+
+  "uncertain": [
+    "No counter prices for the damage waiver at JFK, LAX, New Haven, Toronto Pearson or Vancouver are published; they appear only in the booking flow. Avis's national floor is $9/day.",
+    "California's $25/day cap has been CPI-indexed since 2023; we found no published 2026 figure.",
+    "The Enterprise damage terms (loss of use = labor hours ÷ 4 × daily rate; admin fee $50/$100/$150; diminished value 10%) come from a 2018 rental jacket. The current version was not retrieved.",
+    "JFK's 11.11% concession recovery and $4.50/day CFC are secondary. HVN's percentage was not found.",
+    "British Airways' £60 Euro Traveller change fee and every long-haul Economy Standard fee could not be read on ba.com because of a queue page. Aeroméxico's figures come from search-indexed text of its own site, which was down. Ryanair's €/£45 online and €/£60 by phone come from search-indexed ryanair.com text.",
+    "No published WingX, Argus or Aviation Week share of empty legs exists. The 41% figure traces to the 2017 Hamilton-DLR/EBAA study via T&E.",
+    "We found no current operator price for Irish or Mexican jet charter. The Mexican rates are from 2013 (El Financiero).",
+    "The Irish VAT and Canadian GST treatment of charter came from Revenue and CRA pages found by search but not read line by line.",
+    "The US decal fee changes on 2026-10-01; the new amount was not found.",
+    "Airbnb and Vrbo publish no average or median damage payout, and Proper and Steadily publish no average guest-damage claim."
+  ]
+}
