@@ -53,6 +53,7 @@ import { bmiOf } from './body';
 import { ONSET, onsetYearly } from '../content/body';
 import { fluByWeek, weekOfYear } from './seasons';
 import { isoOfCountry } from './documents';
+import { nhsByRoute } from './residence';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -536,7 +537,8 @@ export function publicCareShareOf(person: Person, care: Care, at: Instant, into 
   if (city?.countryId === 'ca') return canadianShareOf(person, care, at);
   if (city?.countryId !== 'uk') return undefined;
   const iso = isoOfCountry(person.citizenshipId);
-  if (iso !== 'GB' && iso !== 'IE') return undefined;
+  // A visa's holder who paid the Immigration Health Surcharge is treated as ordinarily resident (`systems/residence.ts`, from 2026-09-30).
+  if (iso !== 'GB' && iso !== 'IE' && !nhsByRoute(person, at)) return undefined;
   const pounds = (x: number) => { const c = Math.round(x * 100); return into === 'GBP' ? c : exchange(c, 'GBP', into) ?? c; };
   const england = city.parentId === 'uk-eng';
   const age = (at - person.birthInstant) / (365.25 * MS_DAY);

@@ -34,7 +34,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 - **Canada's public pensions (in progress):** OAS, the GIS and the CPP, researched into `research-canada-pensions.json`. The Toronto w4 life, replayed on 2026-09-30, lives to 87, but goes hungry at times after 60 without them.
 - **Customization still open:** a remap, suspension, an exhaust, a body kit and wheels, once priced in Britain where their loadings are; California's smog check (per-station prices) and its ECU check; New York's loud-exhaust fine.
 - **Land:** easements and a lot's legal access; Mexico's permit for foreign buyers. Services for a house on bare land were done on 2026-09-30 (stage 4f). Waterfront, islands and commercial land are researched, but lack figures that would give them an effect.
-- Residence documents and immigration: Ireland's IRP (€300), PR cards and Mexico's residence cards.
+- Residence and immigration were done on 2026-09-30 (stage 1d): Britain's Global Talent visa and settlement, and Mexico's temporary and permanent residence. Still open: naturalization, which needs a person to hold two citizenships, and a US green card, which needs the Visa Bulletin's waits.
 - **Played lives**, one at a time.
 
 **The owner's call, still open:** income outside acting for a life abroad.

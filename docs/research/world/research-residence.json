@@ -1,0 +1,969 @@
+{
+  "meta": {
+    "title": "Residence documents and routes to residence for a foreign actor: US, Canada, UK, Ireland, Mexico",
+    "researchedOn": "2026-09-30",
+    "spelling": "American",
+    "figureShape": "Each sourced figure carries value, url, publisher, date (the page's own last-updated or edition date where shown, else the date read) and confirmed (true = read on the page or in the official document myself; false = taken from a search summary or secondary source and not read on an official page).",
+    "method": "Official pages were fetched directly. Where a page was a PDF, ODS or DOCX, the file was downloaded and its text extracted (USCIS G-1055, UK Home Office fees table, Mexico's Ley Federal de Derechos, Ley de Migracion and its Reglamento, Ley de Nacionalidad, Codigo Fiscal de la Federacion, the 2025 visa Lineamientos in the DOF, Ireland's Ineligible Occupations List). Several official pages load their numbers by script and could not be read (USCIS processing times, IRCC processing times, INEGI's UMA page); those figures are marked confirmed false or left as not found.",
+    "currencyNotes": "US figures in USD, Canada in CAD, UK in GBP, Ireland in EUR, Mexico in MXN unless marked USD (Mexican consulates quote solvency and visa fees in USD converted at their own rate)."
+  },
+  "us": {
+    "residenceDocument": {
+      "name": "Permanent Resident Card (Form I-551, the green card)",
+      "initialCardFee": {
+        "value": "No separate card fee; the card follows approval of Form I-485 (adjustment of status). I-485 fee: $1,440 paper / $1,390 online (age 14 and over).",
+        "url": "https://www.uscis.gov/g-1055",
+        "publisher": "USCIS, Form G-1055 Fee Schedule",
+        "date": "Edition 09/09/26",
+        "confirmed": true
+      },
+      "validity": {
+        "value": "Standard card: 10 years (not stated on the official pages read). Conditional residents through marriage or entrepreneurship get a 2-year card.",
+        "url": "https://www.uscis.gov/sites/default/files/document/forms/i-90instr.pdf",
+        "publisher": "USCIS, Form I-90 Instructions",
+        "date": "Edition 01/20/25",
+        "confirmed": "2-year conditional card: true; 10-year standard validity: false (general knowledge, not found on the pages read)"
+      },
+      "renewal": {
+        "form": "Form I-90, Application to Replace Permanent Resident Card",
+        "fee": {
+          "value": "$465 paper / $415 online",
+          "url": "https://www.uscis.gov/g-1055",
+          "publisher": "USCIS, Form G-1055 Fee Schedule",
+          "date": "Edition 09/09/26",
+          "confirmed": true
+        },
+        "when": {
+          "value": "File when the card has expired or will expire within six months; filing earlier may be denied.",
+          "url": "https://www.uscis.gov/sites/default/files/document/forms/i-90instr.pdf",
+          "publisher": "USCIS, Form I-90 Instructions (Item 2.f)",
+          "date": "Edition 01/20/25",
+          "confirmed": true
+        },
+        "statusWhilePending": {
+          "value": "The I-90 receipt notice plus the expired card proves status for 36 months past the card's expiration date.",
+          "url": "https://www.uscis.gov/green-card/after-we-grant-your-green-card/replace-your-green-card",
+          "publisher": "USCIS",
+          "date": "Last updated 09/12/2025",
+          "confirmed": true
+        },
+        "biometricsFee": {
+          "value": "Not listed separately in the 09/09/26 schedule for I-90; not found.",
+          "confirmed": false
+        },
+        "processingTime": {
+          "value": "About 10.5 months for 80% of 10-year renewals (as of July 2026); median 8.5 months in FY2026 through May 31, 2026.",
+          "url": "https://manifestlaw.com/blog/green-card-renewal-processing-time",
+          "publisher": "Manifest Law (secondary, citing USCIS data)",
+          "date": "September 2026",
+          "confirmed": false,
+          "note": "USCIS's own processing-time pages (egov.uscis.gov) returned 403 or load by script; not read."
+        }
+      },
+      "conditionalRemoval": {
+        "value": "Form I-751 to remove conditions: $750 paper / $700 online",
+        "url": "https://www.uscis.gov/g-1055",
+        "publisher": "USCIS, Form G-1055",
+        "date": "Edition 09/09/26",
+        "confirmed": true
+      }
+    },
+    "routes": {
+      "O1B": {
+        "what": "O-1B nonimmigrant visa for extraordinary ability in the arts or extraordinary achievement in motion picture or television. Arts standard is 'distinction': recognition substantially above that ordinarily encountered, leading to prominent, renowned, leading or well-known.",
+        "evidence": "At least three types of the regulatory documentation; a consultation from an appropriate labor organization (or a person with expertise) is required.",
+        "stay": "Initial validity up to 3 years; extensions in increments of up to 1 year.",
+        "source": {
+          "url": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement",
+          "publisher": "USCIS",
+          "date": "Last updated 03/03/2023",
+          "confirmed": true
+        },
+        "fees": {
+          "value": "Form I-129 (O petition, one beneficiary for O-1): $1,055; small employer or nonprofit $530. Plus Asylum Program Fee: $600 regular petitioner, $300 small employer, $0 nonprofit. Optional premium processing (I-907): $2,965.",
+          "url": "https://www.uscis.gov/g-1055",
+          "publisher": "USCIS, Form G-1055",
+          "date": "Edition 09/09/26",
+          "confirmed": true
+        },
+        "leadsToResidence": false,
+        "note": "O-1 is not permanent residence; it is a common bridge to EB-1A or EB-2 NIW."
+      },
+      "EB1A": {
+        "what": "Employment-based first preference, extraordinary ability, including the arts: sustained national or international acclaim, shown by a one-time major achievement (the page gives Oscar, Pulitzer, Olympic medal as examples) or 3 of 10 criteria, which include commercial success in the performing arts and leading roles for distinguished organizations.",
+        "selfPetition": "Yes; no job offer and no labor certification required.",
+        "source": {
+          "url": "https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-first-preference-eb-1",
+          "publisher": "USCIS",
+          "date": "Read 2026-09-30",
+          "confirmed": true
+        },
+        "fees": {
+          "value": "Form I-140: $715 paper / $665 online, plus Asylum Program Fee $600 (regular), $300 (small employer or self-petitioner), $0 (nonprofit). Premium processing for EB-1: $2,965. Then I-485: $1,440 paper / $1,390 online.",
+          "url": "https://www.uscis.gov/g-1055",
+          "publisher": "USCIS, Form G-1055",
+          "date": "Edition 09/09/26",
+          "confirmed": true
+        }
+      },
+      "EB2NIW": {
+        "what": "Employment-based second preference with a National Interest Waiver. Needs an advanced degree or 'exceptional ability' in the sciences, arts or business (3 of 6 criteria), plus the three-prong test: substantial merit and national importance; well positioned to advance the endeavor; on balance beneficial to waive the job offer and labor certification.",
+        "selfPetition": "Yes, for NIW.",
+        "source": {
+          "url": "https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-second-preference-eb-2",
+          "publisher": "USCIS",
+          "date": "Last updated 01/15/2025",
+          "confirmed": true
+        },
+        "fees": "Same I-140, Asylum Program Fee, premium processing ($2,965 for E21 NIW) and I-485 fees as EB-1A (G-1055, edition 09/09/26, confirmed true).",
+        "waitNote": "Priority-date waits under the Visa Bulletin were not researched; not found."
+      }
+    },
+    "whatItChanges": {
+      "rightToWork": {
+        "value": "A green card holder can work for any employer without a separate permit; the I-90 receipt keeps work and travel authorization while a renewal is pending.",
+        "url": "https://www.uscis.gov/newsroom/alerts/uscis-extends-green-card-validity-extension-to-36-months-for-green-card-renewals",
+        "publisher": "USCIS (via search summary)",
+        "date": "Effective September 10, 2024",
+        "confirmed": false
+      },
+      "taxes": {
+        "value": "Green card test: anyone who is a lawful permanent resident at any time in the calendar year is a U.S. resident for federal tax purposes. Residents are taxed on worldwide income (the page does not say so explicitly).",
+        "url": "https://www.irs.gov/individuals/international-taxpayers/alien-residency-green-card-test",
+        "publisher": "IRS",
+        "date": "Last reviewed or updated 07-Feb-2026",
+        "confirmed": "green card test: true; worldwide-income statement: false"
+      },
+      "publicHealthcare": {
+        "medicaid5YearBar": {
+          "value": "Qualified noncitizens, including green card holders, generally wait 5 years after getting qualified status before Medicaid or CHIP; refugees and asylees don't wait.",
+          "url": "https://www.healthcare.gov/immigrants/lawfully-present-immigrants/",
+          "publisher": "HealthCare.gov (CMS)",
+          "date": "Read 2026-09-30 (no date on page)",
+          "confirmed": true
+        },
+        "publicLaw119_21": {
+          "value": "From October 1, 2026, section 71109 limits federal Medicaid and CHIP matching to U.S. citizens and nationals, lawful permanent residents, Cuban and Haitian entrants and COFA migrants. PRWORA is not amended, so the 5-year bar for LPRs stays. An O-1 holder (lawfully present, not an LPR) falls outside federal Medicaid from that date, apart from emergency Medicaid.",
+          "url": "https://www.medicaid.gov/medicaid/downloads/wftc-legsltn-overview-slide.pdf",
+          "publisher": "CMS, Medicaid.gov",
+          "date": "Read 2026-09-30",
+          "confirmed": true
+        },
+        "marketplace": {
+          "value": "Lawfully present immigrants, including valid nonimmigrant visa holders, can buy Marketplace coverage, with premium tax credits at 100-400% of the federal poverty level.",
+          "url": "https://www.healthcare.gov/immigrants/lawfully-present-immigrants/",
+          "publisher": "HealthCare.gov",
+          "date": "Read 2026-09-30",
+          "confirmed": true,
+          "note": "Whether Public Law 119-21 also narrows Marketplace credits for non-LPRs from 2027 was not verified."
+        }
+      }
+    },
+    "citizenship": {
+      "residenceRequirement": {
+        "value": "5 years of continuous residence as an LPR (3 if married to a U.S. citizen), 30 months physically present within that period, and 3 months in the state or USCIS district before filing; English and civics test; good moral character.",
+        "url": "https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-1",
+        "publisher": "USCIS Policy Manual, Vol. 12, Part D, Ch. 1",
+        "date": "Last updated February 26, 2025",
+        "confirmed": true
+      },
+      "fee": {
+        "value": "Form N-400: $760 paper / $710 online; reduced fee $380 (paper only) for household income at or below 400% of the federal poverty guidelines.",
+        "url": "https://www.uscis.gov/g-1055",
+        "publisher": "USCIS, Form G-1055",
+        "date": "Edition 09/09/26",
+        "confirmed": true
+      },
+      "timeFromArrival": "An O-1 bridge to EB-1A or NIW, then 5 years as an LPR. The priority-date wait is not researched, so total time isn't given."
+    }
+  },
+  "ca": {
+    "residenceDocument": {
+      "name": "Permanent Resident Card (PR card)",
+      "fee": {
+        "value": "$50.00 (first card free if photo and address sent within 180 days of becoming a PR)",
+        "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "publisher": "IRCC, Fee list",
+        "date": "Date modified 2026-09-21",
+        "confirmed": "$50: true; first-card-free rule read on https://www.canada.ca/en/immigration-refugees-citizenship/services/new-immigrants/pr-card/apply-renew-replace.html: true"
+      },
+      "validity": {
+        "value": "5 years. An expired card does not end PR status.",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/new-immigrants/pr-card/understand-pr-status.html",
+        "publisher": "IRCC",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "renewal": {
+        "when": {
+          "value": "Apply when the card is expired or will expire in less than 9 months; don't apply if more than 9 months (270 days) remain.",
+          "url": "https://ircc.canada.ca/english/helpcentre/answer.asp?qnum=057",
+          "publisher": "IRCC Help Centre",
+          "date": "Read via search summary 2026-09-30",
+          "confirmed": false
+        },
+        "fee": "$50.00 (same fee list, confirmed true)",
+        "processingTime": {
+          "value": "Not found: IRCC's pages showed 'Error loading the number of days', and the processing-time data file refused the connection.",
+          "confirmed": false
+        }
+      },
+      "residencyObligation": {
+        "value": "Must have been physically in Canada at least 730 days in the last 5 years; the days need not be consecutive.",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/new-immigrants/pr-card/understand-pr-status.html",
+        "publisher": "IRCC",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "prApplicationFees": {
+        "value": "Economic class (Express Entry, provincial nominee) principal applicant: $1,590 including the right of permanent residence fee ($990 without it); RPRF $600; spouse $1,590; biometrics $85 per person ($170 family maximum).",
+        "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "publisher": "IRCC, Fee list",
+        "date": "Date modified 2026-09-21",
+        "confirmed": true
+      }
+    },
+    "routes": {
+      "selfEmployedPersonsProgram": {
+        "status": "Paused. It stopped taking applications on April 30, 2024, and on December 19, 2025 IRCC extended the pause 'until further notice'. It isn't open in 2026.",
+        "targets": "People with relevant experience in cultural activities or athletics.",
+        "fee": "$2,495 principal applicant (includes RPRF); it's still on the fee list for pending files.",
+        "sources": [
+          {
+            "url": "https://www.canada.ca/en/immigration-refugees-citizenship/news/notices/immigration-measures-entrepreneurs.html",
+            "publisher": "IRCC notice",
+            "date": "December 19, 2025",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/self-employed.html",
+            "publisher": "IRCC",
+            "date": "Date modified March 11, 2026",
+            "confirmed": true
+          },
+          {
+            "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+            "publisher": "IRCC, Fee list",
+            "date": "Date modified 2026-09-21",
+            "confirmed": true
+          }
+        ],
+        "pauseStartDate": {
+          "value": "April 30, 2024",
+          "confirmed": false,
+          "note": "From search summaries of IRCC's announcement; the notice read confirmed only the December 19, 2025 extension."
+        }
+      },
+      "expressEntry": {
+        "value": "Actors are NOC 2021 53121 'Actors, comedians and circus performers', TEER 3, so work in that occupation can count for Express Entry's skilled-worker programs, which take TEER 0-3 work (TEER eligibility rule not re-read). None of the 10 category-based selection categories on the page covers arts or culture, so an actor competes only in general draws.",
+        "sources": [
+          {
+            "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/rounds-invitations/category-based-selection.html",
+            "publisher": "IRCC",
+            "date": "Date modified June 22, 2026",
+            "confirmed": true
+          },
+          {
+            "url": "https://www23.statcan.gc.ca/imdb/p3VD.pl?Function=getVD&TVD=1380438&CVD=1380749&CPV=53121&CST=01052021&CLV=5&MLV=5",
+            "publisher": "Statistics Canada, NOC 2021 v1.0",
+            "date": "Read via search summary",
+            "confirmed": false
+          }
+        ]
+      },
+      "provincialNominee": {
+        "value": "No provincial stream for artists or actors found. Ontario closed its 8 OINP streams on June 26, 2026 and replaced them with the Ontario Workforce Priority stream (EOI portal opened August 4, 2026), which has no arts or talent pathway. Secondary sites wrote about a proposed Ontario 'Exceptional Talent' stream for artists, but it doesn't appear on Ontario's 2026 updates page.",
+        "sources": [
+          {
+            "url": "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates",
+            "publisher": "Government of Ontario",
+            "date": "Read 2026-09-30",
+            "confirmed": true
+          },
+          {
+            "url": "https://moving2canada.com/news/ontario-new-talent-stream/",
+            "publisher": "Moving2Canada (secondary)",
+            "date": "2026",
+            "confirmed": false
+          }
+        ],
+        "otherProvinces": "Not researched province by province; none found."
+      }
+    },
+    "whatItChanges": {
+      "rightToWork": {
+        "value": "PRs may live, work or study anywhere in Canada and get most social benefits, including health care coverage; they can't vote or run for office.",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/new-immigrants/pr-card/understand-pr-status.html",
+        "publisher": "IRCC",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "taxes": {
+        "value": "Tax residence depends on residential ties, not on PR status. For most newcomers it starts the first day they live in Canada. Residents are taxed on worldwide income; income earned abroad before becoming resident isn't taxed.",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/newcomers-canada-immigrants.html",
+        "publisher": "Canada Revenue Agency",
+        "date": "Last updated August 3, 2026",
+        "confirmed": true
+      },
+      "publicHealthcare": {
+        "ohip": {
+          "value": "Ontario has no waiting period for OHIP: 'There is no longer a waiting period for OHIP coverage.' A PR living in Ontario as their primary residence qualifies. The page mentions a 153-day physical-presence requirement, but you can apply on arrival.",
+          "url": "https://www.ontario.ca/page/apply-ohip-and-get-health-card",
+          "publisher": "Government of Ontario",
+          "date": "Last updated July 21, 2025",
+          "confirmed": true
+        },
+        "ohipHistory": {
+          "value": "The three-month wait was removed from Regulation 552 on March 19, 2020 as a COVID-19 measure and was never reinstated.",
+          "url": "https://www.health.gov.on.ca/en/pro/programs/ohip/bulletins/4000/bul4749.aspx",
+          "publisher": "Ontario Ministry of Health, INFOBulletin 4749",
+          "date": "March 2020",
+          "confirmed": false
+        }
+      }
+    },
+    "citizenship": {
+      "residenceRequirement": {
+        "value": "At least 1,095 days (3 years) physically present in Canada in the 5-year eligibility period; income tax filed for 3 of those 5 years if required; language proof and citizenship test for ages 18-54.",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/eligibility.html",
+        "publisher": "IRCC",
+        "date": "Read 2026-09-30",
+        "confirmed": true,
+        "note": "The half-day credit for time spent as a temporary resident before PR wasn't on the summary returned; not confirmed."
+      },
+      "fee": {
+        "value": "$653.00 per adult, covering both the processing fee and the right of citizenship fee (no split shown).",
+        "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "publisher": "IRCC, Fee list",
+        "date": "Date modified 2026-09-21",
+        "confirmed": true
+      }
+    }
+  },
+  "uk": {
+    "residenceDocument": {
+      "name": "eVisa (digital record in a UKVI account). Biometric Residence Permits are no longer issued.",
+      "fee": {
+        "value": "Free: no charge to set up a UKVI account or access an eVisa.",
+        "url": "https://www.gov.uk/evisa",
+        "publisher": "GOV.UK / Home Office",
+        "date": "Read 2026-09-30 (no date shown)",
+        "confirmed": true
+      },
+      "brpStatus": {
+        "value": "'All BRPs have now expired and have been replaced by eVisas.' BRPs were issued to people granted permission on or before October 31, 2024. An expired BRP can still be used for limited purposes (reaching the eVisa, creating a UKVI account, applying for an extension) for up to 24 months after its printed expiry or until December 31, 2026, whichever is first.",
+        "url": "https://www.gov.uk/biometric-residence-permits",
+        "publisher": "GOV.UK / Home Office",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "replacementBrpFee": {
+        "value": "£19 for a lost, stolen, damaged or destroyed BRP (fee table line)",
+        "url": "https://assets.publishing.service.gov.uk/media/6a9ff9014e17456e2cdf5167/Fees_Table_08_October_26.ods",
+        "publisher": "Home Office, Immigration and nationality fees (from 8 October 2026)",
+        "date": "Published September 10, 2026",
+        "confirmed": true
+      },
+      "validityAndRenewal": "An eVisa reflects your permission: it lasts as long as the leave granted (Global Talent: up to 5 years per grant). ILR has no expiry. How often an eVisa must be renewed wasn't stated on the page; not found.",
+      "indefiniteLeaveToRemain": {
+        "fee": {
+          "value": "£3,226 per applicant, main applicant and dependants alike; unchanged in the table effective October 8, 2026.",
+          "url": "https://assets.publishing.service.gov.uk/media/6a9ff9014e17456e2cdf5167/Fees_Table_08_October_26.ods",
+          "publisher": "Home Office fees table",
+          "date": "Table for fees from 08 October 2026, updated September 10, 2026",
+          "confirmed": true
+        },
+        "lifeInTheUkTest": {
+          "value": "£50",
+          "url": "https://assets.publishing.service.gov.uk/media/6a9ff9014e17456e2cdf5167/Fees_Table_08_October_26.ods",
+          "publisher": "Home Office fees table",
+          "date": "From 08 October 2026",
+          "confirmed": true
+        },
+        "standardQualifyingPeriod": {
+          "value": "Usually 5 years for work visas; can be 3 years on Global Talent or Innovator Founder.",
+          "url": "https://www.gov.uk/settle-in-the-uk/y/you-have-a-work-visa/global-talent-visa",
+          "publisher": "GOV.UK",
+          "date": "Read 2026-09-30",
+          "confirmed": true
+        },
+        "pendingReform": {
+          "value": "The 'earned settlement' proposals would raise the default qualifying period to 10 years, with reductions for contribution (Global Talent reported to keep 3 years). The consultation closed February 12, 2026. The Home Secretary said on March 1, 2026 that the law would change in autumn 2026; as of this research no rule change was found in force.",
+          "sources": [
+            {
+              "url": "https://www.gov.uk/government/consultations/earned-settlement/a-fairer-pathway-to-settlement-statement-and-accompanying-consultation-on-earned-settlement-accessible",
+              "publisher": "Home Office",
+              "date": "Consultation (via search result)",
+              "confirmed": false
+            },
+            {
+              "url": "https://www.turpinmiller.co.uk/site/news-updates/earned-settlement-changes-expected-in-autumn-2026",
+              "publisher": "Turpin & Miller LLP (secondary)",
+              "date": "March 2026",
+              "confirmed": true
+            }
+          ]
+        }
+      },
+      "processingTime": {
+        "value": "Global Talent visa decision usually within 3 weeks from outside the UK, 8 weeks inside. ILR processing time not found.",
+        "url": "https://www.gov.uk/global-talent",
+        "publisher": "GOV.UK",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      }
+    },
+    "routes": {
+      "globalTalentArtsAndCulture": {
+        "what": "Global Talent visa for leaders (exceptional talent) or potential leaders (exceptional promise) in arts and culture, endorsed by Arts Council England; or with no endorsement, for a winner of an eligible prestigious prize.",
+        "fees": {
+          "value": "£766 total: £561 for the endorsement (approval letter) plus £205 for the visa; £766 when no endorsement is needed; £766 per dependant. Unchanged in the table effective October 8, 2026.",
+          "sources": [
+            {
+              "url": "https://www.gov.uk/global-talent",
+              "publisher": "GOV.UK",
+              "date": "Read 2026-09-30",
+              "confirmed": true
+            },
+            {
+              "url": "https://assets.publishing.service.gov.uk/media/6a9ff9014e17456e2cdf5167/Fees_Table_08_October_26.ods",
+              "publisher": "Home Office fees table",
+              "date": "From 08 October 2026",
+              "confirmed": true
+            }
+          ]
+        },
+        "immigrationHealthSurcharge": {
+          "value": "£1,035 per person per year (£776 for students, Youth Mobility and under-18s); charged pro rata for the length of leave, e.g. 1.5x for 18 months.",
+          "url": "https://www.gov.uk/healthcare-immigration-application/how-much-pay",
+          "publisher": "GOV.UK",
+          "date": "Read 2026-09-30",
+          "confirmed": true
+        },
+        "grantLength": {
+          "value": "Up to 5 years per application; extensions of 1-5 years with no overall limit.",
+          "url": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-global-talent",
+          "publisher": "Home Office, Immigration Rules Appendix Global Talent (GT 7.1)",
+          "date": "Read 2026-09-30",
+          "confirmed": true
+        },
+        "settlement": {
+          "value": "ILR after 3 continuous years if endorsed under exceptional talent by Arts Council England (GT 11.1(b)), or 5 years under exceptional promise (GT 11.2). The applicant must have earned money in the UK in the endorsed field during the last permission (GT 10.2(b)) and meet Appendix Continuous Residence.",
+          "url": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-global-talent",
+          "publisher": "Home Office, Immigration Rules Appendix Global Talent",
+          "date": "Read 2026-09-30",
+          "confirmed": true
+        },
+        "artsCouncilDetail": {
+          "value": "Arts Council England's own criteria page (film and television coverage, partner bodies, endorsement timing) returned 403; not read.",
+          "url": "https://www.artscouncil.org.uk/global-talent-visa",
+          "confirmed": false
+        },
+        "worked5YearCost": "Worked example, not a quoted figure: one adult, 5-year grant: £766 + 5 x £1,035 IHS = £5,941 before ILR (£3,226) and the Life in the UK test (£50)."
+      }
+    },
+    "whatItChanges": {
+      "rightToWork": {
+        "value": "Global Talent allows work, including self-employment, within its conditions (not re-read in detail). ILR removes immigration conditions.",
+        "confirmed": false
+      },
+      "taxes": {
+        "value": "UK tax residence is set by the Statutory Residence Test, not immigration status: automatically UK resident with 183+ days in a tax year (April 6 to April 5), among other tests; residents generally pay UK tax on worldwide income.",
+        "url": "https://www.gov.uk/tax-foreign-income/residence",
+        "publisher": "GOV.UK / HMRC",
+        "date": "Read 2026-09-30",
+        "confirmed": true,
+        "note": "The 4-year foreign income and gains regime that replaced non-dom status from April 6, 2025 wasn't on this page; not confirmed here."
+      },
+      "publicHealthcare": {
+        "value": "NHS hospital care is free for people ordinarily resident with ILR, and for visa holders who paid (or are exempt from) the Immigration Health Surcharge while their visa is valid. Anyone in England can register with a GP free of charge.",
+        "url": "https://www.gov.uk/guidance/nhs-entitlements-migrant-health-guide",
+        "publisher": "UK Health Security Agency / DHSC, GOV.UK",
+        "date": "Last updated October 2, 2023",
+        "confirmed": true
+      }
+    },
+    "citizenship": {
+      "residenceRequirement": {
+        "value": "5 years living in the UK and 12 months holding ILR (the 12 months doesn't apply to spouses of British citizens, who need 3 years); no more than 450 days outside the UK in the 5 years and no more than 90 in the last 12 months; English and Life in the UK test; good character.",
+        "url": "https://www.gov.uk/apply-citizenship-indefinite-leave-to-remain",
+        "publisher": "GOV.UK",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "fee": {
+        "value": "£1,709 naturalisation + £130 ceremony = £1,839; decision usually within 6 months.",
+        "sources": [
+          {
+            "url": "https://www.gov.uk/apply-citizenship-indefinite-leave-to-remain",
+            "publisher": "GOV.UK",
+            "date": "Read 2026-09-30",
+            "confirmed": true
+          },
+          {
+            "url": "https://assets.publishing.service.gov.uk/media/6a9ff9014e17456e2cdf5167/Fees_Table_08_October_26.ods",
+            "publisher": "Home Office fees table",
+            "date": "From 08 October 2026 (unchanged)",
+            "confirmed": true
+          }
+        ]
+      },
+      "fastestPathForActor": "Global Talent, exceptional talent: ILR at 3 years, citizenship 12 months later, so about 4 years at the earliest under the rules read."
+    }
+  },
+  "ie": {
+    "residenceDocument": {
+      "name": "Irish Residence Permit (IRP) card, recording an immigration permission 'stamp'",
+      "registrationDeadline": {
+        "value": "A permission must be registered with Immigration Service Delivery within 90 days. If no appointment is available the permission isn't cancelled, but you must show you sought one within the 90 days.",
+        "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/",
+        "publisher": "Immigration Service Delivery, Department of Justice, Home Affairs and Migration",
+        "date": "Last updated June 5, 2026",
+        "confirmed": true
+      },
+      "fee": {
+        "value": "€300 per person where applicable, for first registration and for most renewals. Exempt: 16-18 year olds, refugees, subsidiary protection and permission-to-remain holders, reunified family of refugees, spouses of Irish citizens, family of EU citizens, and Ukrainian temporary-protection beneficiaries.",
+        "sources": [
+          {
+            "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/information-on-registering-your-immigration-permission-for-the-first-time/",
+            "publisher": "ISD",
+            "date": "Last updated January 10, 2025",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/",
+            "publisher": "ISD",
+            "date": "Last updated September 28, 2026",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/frequently-asked-questions-for-registration/",
+            "publisher": "ISD (exemption list via search summary)",
+            "date": "Read 2026-09-30",
+            "confirmed": false
+          }
+        ]
+      },
+      "validity": {
+        "value": "The card shows the expiry date of the permission, and its length depends on the stamp. Example: after 2 years on a Critical Skills permit, Stamp 4 is granted for 2 years, renewable. Stamp 5 (without condition as to time) is valid to the passport's expiry.",
+        "sources": [
+          {
+            "url": "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/permit-types/critical-skills-employment-permit/",
+            "publisher": "Department of Enterprise, Tourism and Employment",
+            "date": "Read 2026-09-30",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/",
+            "publisher": "ISD",
+            "date": "Last updated June 5, 2026",
+            "confirmed": true
+          }
+        ]
+      },
+      "renewal": {
+        "value": "Apply online up to 12 weeks before expiry. The fee is €300 for most permissions. The new card arrives by post within 15 business days after approval. As of the page's update, ISD was processing renewals submitted by 07/08/26 (Stamps 1, 1H), 31/07/26 (1G; 2, 2A, 1A), 23/08/26 (Stamp 4), 04/09/26 (all others).",
+        "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/",
+        "publisher": "ISD",
+        "date": "Last updated September 28, 2026",
+        "confirmed": true
+      },
+      "firstRegistrationCardDelivery": {
+        "value": "The IRP card should arrive within 10 working days of first registration (Burgh Quay, Dublin).",
+        "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/information-on-registering-your-immigration-permission-for-the-first-time/",
+        "publisher": "ISD",
+        "date": "Last updated January 10, 2025",
+        "confirmed": true
+      },
+      "stamps": {
+        "source": {
+          "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/",
+          "publisher": "ISD",
+          "date": "Last updated June 5, 2026",
+          "confirmed": true
+        },
+        "stamp0": "Temporary; must be self-sufficient; no public services or public hospital; private health insurance; no work unless a letter allows it (retirees, visiting academics, dependent elderly relatives). Not reckonable (not stated as reckonable).",
+        "stamp1": "Work on an employment permit, or run a business where ISD's letter allows. Reckonable for naturalisation.",
+        "stamp1H": "Doctors on a 2-year multi-site General Employment Permit. Reckonable.",
+        "stamp1A": "Trainee accountants. Must finish within 4 years.",
+        "stamp1G": "Graduates under the Third Level Graduate Programme (12 months, or 24 for master's), or spouses and partners of Critical Skills permit holders and hosted researchers (may work without a permit, not self-employed; Stamp 4 after 5 years). Reckonable.",
+        "stamp2": "Full-time study on the ILEP; 20 hours a week of work in term, 40 in holidays; maximum 7 years. Not reckonable.",
+        "stamp2A": "Study not on the ILEP; no work; private insurance. Not reckonable.",
+        "stamp3": "No work (volunteers, ministers of religion, family of permit holders). Reckonable.",
+        "stamp4": "Work without an employment permit, run a business, access state services. Granted after 2 years on a Critical Skills permit, 5 years on other employment permits, 2 years as a hosted researcher; also spouses of Irish citizens, refugees, Investor and Entrepreneur Programme, long-term residence. Reckonable.",
+        "stamp4D": "Non-EEA family of UK citizens, from January 1, 2021.",
+        "stamp5": "Without condition as to time; valid to passport expiry. Reckonable.",
+        "stamp6": "Irish citizen with dual citizenship; doesn't register."
+      }
+    },
+    "routes": {
+      "artistSpecificRoute": {
+        "value": "No immigration route for artists or actors was found on ISD or DETE. What exists: (a) actors aren't on the Ineligible Occupations List, so an Irish employer can seek a General Employment Permit for an actor; (b) a Critical Skills permit is possible for any occupation not on that list at €68,911 or more a year; (c) the Artists' Exemption is a tax relief, not a residence route, and covers original creative works (books, plays, music, paintings, sculptures), not performances.",
+        "sources": [
+          {
+            "url": "https://enterprise.gov.ie/en/publications/publication-files/ineligible-occupations-list.docx",
+            "publisher": "DETE, Ineligible Occupations List",
+            "date": "Read 2026-09-30 (checked for actors, entertainers, arts: none listed)",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/income-and-employment/artists-exemption/index.aspx",
+            "publisher": "Revenue",
+            "date": "Read 2026-09-30",
+            "confirmed": true
+          }
+        ]
+      },
+      "generalEmploymentPermit": {
+        "value": "Minimum pay generally €36,605 (€34,009 with an Irish degree from the previous 12 months). Issued for 2 years, renewable for 3 more. After 5 years: long-term residence, or a Stamp 4 without a permit. Fee: €1,000 for 6-24 months (€500 for 6 months or less), and €750 (6 months or less) or €1,500 (up to 36 months) for renewals.",
+        "url": "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/permit-types/general-employment-permit/",
+        "publisher": "Department of Enterprise, Tourism and Employment",
+        "date": "Read 2026-09-30",
+        "confirmed": true,
+        "note": "The fee table on that page was parsed from lines 133-137; its assignment of €750/€1,500 to renewals is my reading of the layout."
+      },
+      "criticalSkillsEmploymentPermit": {
+        "value": "€40,904 minimum for jobs on the Critical Skills Occupations List (with a relevant degree), or €36,848 with a degree from the previous 12 months; €68,911 minimum for any other eligible occupation. The job offer must run at least 2 years. Fee €1,000 (90% refunded if refused). After 2 years, apply straight to ISD for Stamp 4 (2 years, renewable). Long-term residence after 60 months.",
+        "url": "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/permit-types/critical-skills-employment-permit/",
+        "publisher": "Department of Enterprise, Tourism and Employment",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "stamp4Routes": "Stamp 4 comes after 2 years of Critical Skills, 5 years of other permits, marriage or partnership with an Irish citizen, the Investor and Entrepreneur Programme (closed to new applicants since 2023, general knowledge, not verified), or long-term residence (ISD stamps page, confirmed true).",
+      "longTermResidence": {
+        "value": "ISD's long-term residence page (URL guessed) returned 404; its fee and rules weren't read.",
+        "confirmed": false
+      }
+    },
+    "whatItChanges": {
+      "rightToWork": "Stamp 1 allows only the permitted employment. Stamp 4 allows any work or business with no permit. Stamp 0, 2A and 3 bar work (ISD stamps page, confirmed true).",
+      "taxes": {
+        "value": "A person resident and domiciled in Ireland is taxed on worldwide income; a non-resident is taxed on Irish-source income and on foreign employment income for work done in Ireland. The 183-day and 280-day tests weren't in the text returned.",
+        "url": "https://www.revenue.ie/en/jobs-and-pensions/tax-residence/index.aspx",
+        "publisher": "Revenue",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "publicHealthcare": {
+        "value": "Anyone the HSE accepts as ordinarily resident, whatever their nationality, gets full eligibility (medical card) or limited eligibility (public hospital services free or at reduced cost, with hospital charges; GP visits paid). Ordinarily resident means living in Ireland at least a year, or intending to. Stamps 0 and 2A exclude publicly funded services; Stamp 4 gives access to state services.",
+        "sources": [
+          {
+            "url": "https://www.citizensinformation.ie/en/health/health-system/entitlement-to-public-health-services/",
+            "publisher": "Citizens Information Board",
+            "date": "Page edited October 17, 2022",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/",
+            "publisher": "ISD",
+            "date": "Last updated June 5, 2026",
+            "confirmed": true
+          }
+        ]
+      }
+    },
+    "citizenship": {
+      "residenceRequirement": {
+        "value": "1 year of continuous residence right before applying (up to 70 days away, plus 30 in exceptional cases), plus 4 years' total residence in the 8 years before that. Non-EU nationals need 1,825 or 1,826 days of reckonable residence from registered permission stamps. Stamp 2 and 2A time doesn't count; gaps in registration can make you ineligible.",
+        "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/",
+        "publisher": "ISD",
+        "date": "Last updated April 15, 2026",
+        "confirmed": true
+      },
+      "fees": {
+        "value": "€175 application fee, plus a €950 certification fee for adults paid before the certificate issues (€200 for minors and for widows, widowers or surviving civil partners of Irish citizens, €0 for refugees or stateless people). Most applications are processed within 12 months.",
+        "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/",
+        "publisher": "ISD",
+        "date": "Last updated April 15, 2026",
+        "confirmed": true
+      },
+      "spouseOfIrishCitizen": "3 of the last 5 years (1,095 or 1,096 reckonable days), including 1 year continuous immediately before applying (same page, confirmed true)."
+    }
+  },
+  "mx": {
+    "residenceDocument": {
+      "residenteTemporal": {
+        "name": "Tarjeta de residente temporal",
+        "validity": {
+          "value": "1, 2, 3 or 4 years from when the status was granted. It can be renewed within the 30 calendar days before expiry, up to a 4-year total. With a work permit, the card runs as long as the job offer. Multiple entries.",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LMigra.pdf",
+          "publisher": "Reglamento de la Ley de Migración, Art. 156 (Cámara de Diputados compilation)",
+          "date": "Última reforma DOF 23-05-2014",
+          "confirmed": true
+        },
+        "fees": {
+          "value": "Card by length: up to 1 year MXN 11,140.74; 2 years 16,693.36; 3 years 21,142.58; 4 years 25,057.82. Renewals pay the same fee for the length requested. Replacement MXN 1,779.93. 50% off where the stay is for family unity, a job offer from a registered employer, or an unpaid invitation (paragraph added DOF 07-11-2025). Change of status (cambio de condición) MXN 1,847.13 plus the new card fee.",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+          "publisher": "Ley Federal de Derechos, Arts. 8 and 9 (Cámara de Diputados)",
+          "date": "Última reforma DOF 07-11-2025; amounts updated by Resolución Miscelánea Fiscal para 2026, DOF 28-12-2025",
+          "confirmed": true
+        },
+        "leadsToPermanent": {
+          "value": "After 4 years as a temporary resident you may apply for permanent residence (Ley de Migración Art. 54, fracción V).",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LMigra.pdf",
+          "publisher": "Ley de Migración (Cámara de Diputados)",
+          "date": "Última reforma DOF 15-01-2026",
+          "confirmed": true
+        }
+      },
+      "residentePermanente": {
+        "name": "Tarjeta de residente permanente",
+        "validity": {
+          "value": "Indefinite for adults. Minors renew every year until age 3, then every 4 years until 18. Includes permission to work for adults.",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LMigra.pdf",
+          "publisher": "Reglamento de la Ley de Migración, Art. 157",
+          "date": "Última reforma DOF 23-05-2014",
+          "confirmed": true
+        },
+        "fee": {
+          "value": "MXN 13,578.96; replacement MXN 1,779.93",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+          "publisher": "Ley Federal de Derechos, Art. 8, fracción VII",
+          "date": "DOF 07-11-2025; 2026 amounts per RMF DOF 28-12-2025",
+          "confirmed": true
+        }
+      },
+      "consularVisaFee": {
+        "value": "The Ley Federal de Derechos, Art. 22 III(d), sets MXN 990.79 for ordinary visas in foreign passports. Consulates charge in local currency: the San Diego and Las Vegas consulates charge USD 56.",
+        "sources": [
+          {
+            "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+            "publisher": "Ley Federal de Derechos",
+            "date": "2026 amounts",
+            "confirmed": true
+          },
+          {
+            "url": "https://consulmex.sre.gob.mx/sandiego/images/visasingles2026/5a_Temporary_Resident_Visa_-_Economic_Solvency.pdf",
+            "publisher": "Consulado General de México en San Diego (SRE)",
+            "date": "2026",
+            "confirmed": true
+          }
+        ]
+      },
+      "processingTime": {
+        "value": "The consular visa decision takes up to 10 business days (legal maximum in the 2025 Lineamientos; San Diego and Las Vegas say 1-10 business days). The visa is valid 180 days for one entry. The Reglamento sets a 30-calendar-day deadline after entry to get the residence card; it was read verbatim for the student visa and for card replacement, not for the general case. INM card processing time not found.",
+        "sources": [
+          {
+            "url": "https://dof.gob.mx/nota_detalle.php?codigo=5763837",
+            "publisher": "DOF, Lineamientos Generales para la expedición de visas",
+            "date": "DOF 25/07/2025",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LMigra.pdf",
+            "publisher": "Reglamento de la Ley de Migración",
+            "date": "Última reforma DOF 23-05-2014",
+            "confirmed": true
+          }
+        ]
+      }
+    },
+    "routes": {
+      "residenciaTemporalPorSolvencia": {
+        "rule": {
+          "value": "Economic solvency (either one): (1) investments or bank accounts with an average monthly balance of 11,460 days of UMA over the last 12 months; or (2) employment or pension income, net of tax, above 680 days of UMA a month over the last 6 months. These replaced the 2014 minimum-wage basis (5,000 and 300 days of minimum wage). In force 15 days after publication, so from August 9, 2025. The May 15, 2026 amendment (DOF 5787660) changed the job-offer and invitation categories, not these amounts (searched its text for UMA and minimum-wage references: none).",
+          "url": "https://dof.gob.mx/nota_detalle.php?codigo=5763837",
+          "publisher": "Secretaría de Gobernación and SRE, Lineamientos Generales para la expedición de visas, Trámite 5 (Diario Oficial de la Federación)",
+          "date": "DOF 25/07/2025",
+          "confirmed": true
+        },
+        "uma2026": {
+          "value": "MXN 117.31 a day (3,566.22 a month; 42,794.64 a year), effective February 1, 2026 to January 31, 2027",
+          "url": "https://www.inegi.org.mx/temas/uma/",
+          "publisher": "INEGI (values via search summary and press; the INEGI page loads them by script)",
+          "date": "Published DOF January 9, 2026",
+          "confirmed": false
+        },
+        "computedThresholds2026": {
+          "value": "Savings: 11,460 x 117.31 = MXN 1,344,372.60 average monthly balance. Income: 680 x 117.31 = MXN 79,770.80 a month. Computed by me from the two figures above, not quoted by an official source.",
+          "confirmed": "computed"
+        },
+        "consulateQuotes2026": [
+          {
+            "value": "San Diego: USD 75,950 minimum monthly balance over 12 months, or USD 4,510 a month in income over 6 months; visa fee USD 56",
+            "url": "https://consulmex.sre.gob.mx/sandiego/images/visasingles2026/5a_Temporary_Resident_Visa_-_Economic_Solvency.pdf",
+            "publisher": "Consulado General de México en San Diego",
+            "date": "2026",
+            "confirmed": true
+          },
+          {
+            "value": "Las Vegas: USD 78,025 a person over 12 months, or USD 4,630 a month over 6 months; visa fee USD 56",
+            "url": "https://consulmex.sre.gob.mx/lasvegas/images/2026/VISAS2026/TemporaryResidenceVisa2026",
+            "publisher": "Consulado de México en Las Vegas",
+            "date": "2026",
+            "confirmed": true
+          }
+        ],
+        "consistencyCheck": "Both consulates' USD figures match the UMA formula at about 17.7 MXN/USD (San Diego) and 17.2 (Las Vegas), which is consistent with UMA 117.31. They don't match the old minimum-wage basis (315.04 x 5,000 = MXN 1,575,200).",
+        "workRights": "A temporary resident may obtain a permit to work for pay (Ley de Migración Art. 52, fracción VII). Solvency status alone doesn't include one. An actor working in Mexico needs the work permit or the job-offer route."
+      },
+      "residenteTemporalPorOfertaDeEmpleo": {
+        "value": "A Mexican employer registered with the INM can make a job offer; the resulting temporary-resident card includes permission to work in that activity and runs as long as the offer. The card fee is cut 50% for job-offer residents (LFD Art. 8, final paragraph).",
+        "sources": [
+          {
+            "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LMigra.pdf",
+            "publisher": "Ley de Migración Art. 52 VII",
+            "date": "Última reforma DOF 15-01-2026",
+            "confirmed": true
+          },
+          {
+            "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+            "publisher": "Ley Federal de Derechos Art. 8",
+            "date": "2026 amounts",
+            "confirmed": true
+          }
+        ]
+      },
+      "residentePermanentePensionado": {
+        "value": "Retirees or pensioners: average monthly balance of 45,850 days of UMA over 12 months, or a pension, net of tax, above 1,140 days of UMA a month over the last 6 months. Computed with UMA 117.31: MXN 5,378,663.50, or MXN 133,733.40 a month.",
+        "url": "https://dof.gob.mx/nota_detalle.php?codigo=5763837",
+        "publisher": "DOF, Lineamientos Generales para la expedición de visas (Visa de Residencia Permanente)",
+        "date": "DOF 25/07/2025",
+        "confirmed": "rule: true; peso amounts: computed"
+      },
+      "prominentPerson": {
+        "value": "The long-duration visitor visa (no paid work) includes a 'persona prominente' case for artists and others of national or international renown. It's a visitor category, not residence.",
+        "url": "https://dof.gob.mx/nota_detalle.php?codigo=5763837",
+        "publisher": "DOF, Lineamientos (Trámite 2)",
+        "date": "DOF 25/07/2025",
+        "confirmed": true
+      },
+      "visitorWithPaidActivities": {
+        "value": "Visitante con permiso para realizar actividades remuneradas (short paid engagements such as a shoot, up to 180 days): MXN 4,340.77",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+        "publisher": "Ley Federal de Derechos Art. 8 II",
+        "date": "2026 amounts",
+        "confirmed": "fee: true; the 180-day limit is general knowledge: false"
+      }
+    },
+    "whatItChanges": {
+      "rightToWork": "Temporary resident: only with a work permit, or through the job-offer route (Art. 52 VII). Permanent resident: allowed to work for pay (Art. 52 IX; Reglamento Art. 157). Confirmed true from the Ley de Migración (DOF 15-01-2026) and Reglamento texts.",
+      "taxes": {
+        "value": "Tax residence under Código Fiscal de la Federación Art. 9 doesn't depend on immigration status: an individual who has set up a home (casa habitación) in Mexico is resident. With homes in two countries, they're resident if their center of vital interests is in Mexico, e.g. more than 50% of the year's income is Mexican-source, or their main professional activity is there.",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+        "publisher": "Código Fiscal de la Federación (Cámara de Diputados)",
+        "date": "Última reforma DOF 09-04-2026",
+        "confirmed": true
+      },
+      "publicHealthcare": {
+        "value": "IMSS Seguro de Salud para la Familia (voluntary enrollment, modalidad 33), annual fees from March 1, 2026 by age: 0-19 MXN 9,300; 20-29 11,550; 30-39 12,350; 40-49 14,350; 50-59 14,850; 60-69 20,600; 70-79 21,500; 80+ 22,150. Open to families in Mexico without other social security. A formally employed resident is enrolled in IMSS through the employer.",
+        "url": "http://www.imss.gob.mx/faq/seguro-familia",
+        "publisher": "IMSS",
+        "date": "Fees effective March 1, 2026",
+        "confirmed": true,
+        "notFound": "The IMSS page as read doesn't state explicitly that foreign residents can enroll (secondary sources say they can), or the waiting periods and preexisting-condition exclusions. IMSS-Bienestar eligibility for foreign residents wasn't researched."
+      }
+    },
+    "citizenship": {
+      "residenceRequirement": {
+        "value": "5 years' residence immediately before applying. 2 years for: direct descendants of a Mexican by birth; parents of Mexican-born children; nationals of Latin American countries or the Iberian Peninsula; or, at SRE's discretion, anyone who has rendered outstanding services or works in cultural, social, scientific, technical, artistic, sporting or business fields that benefit the Nation (so a distinguished foreign actor can qualify after 2). 2 years of married cohabitation in Mexico for a spouse of a Mexican. Absences don't break residence unless, in the 2 years before applying, they exceed 6 months in total (Art. 21).",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/53.pdf",
+        "publisher": "Ley de Nacionalidad, Arts. 20-21 (Cámara de Diputados)",
+        "date": "Última reforma DOF 23-04-2012",
+        "confirmed": true
+      },
+      "fee": {
+        "value": "Carta de naturalización: MXN 9,502.01",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+        "publisher": "Ley Federal de Derechos, Art. 26, fracción II",
+        "date": "2026 amounts (RMF DOF 28-12-2025)",
+        "confirmed": true
+      },
+      "processingTime": "Not found."
+    }
+  },
+  "uncertain": [
+    {
+      "country": "us",
+      "item": "10-year validity of the standard green card is general knowledge; not found on the USCIS pages read."
+    },
+    {
+      "country": "us",
+      "item": "I-90 processing time comes from a law-firm summary of USCIS data (about 10.5 months for 80% of cases); USCIS's processing-time tool couldn't be read."
+    },
+    {
+      "country": "us",
+      "item": "Visa Bulletin priority-date waits for EB-1 and EB-2 (rest of world) weren't researched, so the total time from O-1 to citizenship isn't given."
+    },
+    {
+      "country": "us",
+      "item": "Whether Public Law 119-21 restricts Marketplace premium tax credits for non-LPR lawfully present immigrants from 2027 wasn't verified."
+    },
+    {
+      "country": "us",
+      "item": "Worldwide taxation of residents isn't stated on the IRS green-card-test page (standard rule, not quoted)."
+    },
+    {
+      "country": "ca",
+      "item": "PR card processing time: IRCC pages show 'Error loading the number of days'; the data file refused the connection. Not found."
+    },
+    {
+      "country": "ca",
+      "item": "The 9-month renewal window comes from IRCC Help Centre text via a search summary, not read directly."
+    },
+    {
+      "country": "ca",
+      "item": "Self-Employed Persons Program pause start date (April 30, 2024) is from search summaries; IRCC's page and notice confirm only 'paused' and the December 19, 2025 'until further notice' extension."
+    },
+    {
+      "country": "ca",
+      "item": "No provincial nominee stream for artists or actors found; the reported Ontario 'Exceptional Talent' stream appears only on secondary sites and isn't on Ontario's 2026 updates page. Other provinces not checked one by one."
+    },
+    {
+      "country": "ca",
+      "item": "The half-day citizenship credit for pre-PR temporary-resident time wasn't confirmed."
+    },
+    {
+      "country": "uk",
+      "item": "Arts Council England's endorsement criteria page returned 403, so how film and television applications are assessed wasn't read."
+    },
+    {
+      "country": "uk",
+      "item": "Earned settlement (10-year baseline) is expected in autumn 2026 per the Home Secretary (secondary report); no rule change was found in force. The Global Talent 3- and 5-year periods are as read in Appendix Global Talent."
+    },
+    {
+      "country": "uk",
+      "item": "Global Talent work conditions and the foreign income and gains regime weren't read in detail."
+    },
+    {
+      "country": "ie",
+      "item": "No artist or actor immigration route exists as far as ISD and DETE pages show; the answer is 'none found', not a confirmed negative from an official statement."
+    },
+    {
+      "country": "ie",
+      "item": "Long-term residence application fee and page weren't found (404)."
+    },
+    {
+      "country": "ie",
+      "item": "IRP fee exemption list comes from a search summary of the ISD registration FAQ."
+    },
+    {
+      "country": "ie",
+      "item": "Irish tax residence day-count tests (183 and 280 days) weren't in the Revenue text returned."
+    },
+    {
+      "country": "mx",
+      "item": "UMA 2026 (MXN 117.31) wasn't read on INEGI's page itself (loaded by script); taken from press and search summaries. The consulate USD figures are consistent with it."
+    },
+    {
+      "country": "mx",
+      "item": "Solvency peso thresholds for 2026 are my computation (UMA days x UMA); no official page quotes the pesos. Consulates quote USD amounts that differ by consulate with the exchange rate used."
+    },
+    {
+      "country": "mx",
+      "item": "Some secondary sites still quote the pre-August 2025 minimum-wage basis (e.g. MXN 1,394,000 / 83,640 on 2025 consular sheets); these are superseded."
+    },
+    {
+      "country": "mx",
+      "item": "The general 30-day deadline to swap the visa for a card after entry was read in the Reglamento for the student visa and for replacements; the general provision wasn't read verbatim."
+    },
+    {
+      "country": "mx",
+      "item": "INM card-processing time and SRE naturalization processing time weren't found."
+    },
+    {
+      "country": "mx",
+      "item": "Whether foreign residents can enroll in IMSS voluntary health insurance isn't stated on IMSS's own page as read (secondary sources say yes)."
+    }
+  ]
+}

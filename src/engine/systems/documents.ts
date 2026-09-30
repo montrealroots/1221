@@ -66,6 +66,8 @@ export interface PersonDocument {
   idleDays?: number;
   /** When a permission was ended early for a violation, which leaves no grace after it (from 2026-10-01). */
   endedAt?: number;
+  /** A route to residence it was granted on (`systems/residence.ts`, from 2026-09-30). */
+  route?: import('./residence').Route;
 }
 
 /** A person's papers, kept on them. */
@@ -220,7 +222,7 @@ export function residenceRefusal(person: Person, cityId: string, at: Instant): s
   // Permission to work there is permission to live there while it lasts, and an OPT filed in time keeps a student while it's decided.
   if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === to && d.bookingId === undefined && (inForce(d, at) || d.status === 'pending'))) return undefined;
   const there = theCountry(COUNTRIES.get(to.toLowerCase())?.name ?? to);
-  return `Living in ${there} needs permission to live there, which you don’t hold, and SLATE doesn’t grant it yet.`;
+  return `Living in ${there} needs permission to live there, which you don’t hold: see Papers for a route to residence, where there is one.`;
 }
 
 /** An authorization in force for a destination, on the passport they'd travel on, through a day. */

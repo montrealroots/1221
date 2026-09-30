@@ -131,6 +131,29 @@ Researched in `docs/research/world/research-documents-safetynet.json` and `resea
 
 Evidence: `tests/identity.test.ts` (6). 12 mutations, all killed in the end. Two first survived and needed tests: Connecticut's upgrade refused a second time, and a license granted by exchange being REAL ID. The airline leg's mode was first misread as `fly`, which is one's own plane; a test booking a real flight caught it.
 
+#### Stage 1d: the right to live in another country (done 2026-09-30)
+
+Researched in `docs/research/world/research-residence.json` from the governments' own pages. Until then `residenceRefusal` ended "SLATE doesn't grant it yet".
+
+- **Britain's Global Talent visa** (`systems/residence.ts`, `documents.residence`):
+  - It costs £561 for Arts Council England's endorsement, £205 for the visa, and the Immigration Health Surcharge of £1,035 a year for its five years.
+  - It lets its holder live and work in Britain, and the surcharge makes the NHS theirs.
+  - Arts Council England's criteria weren't read. SLATE endorses on the record the O-1 is approved on, three of its kinds of evidence.
+  - Settlement, indefinite leave to remain (`documents.settle`), costs £3,226 after five years with pay earned in Britain. "Exceptional talent" settles in three, which SLATE doesn't tell apart from "exceptional promise".
+- **Mexico's temporary residence**, by economic solvency:
+  - Savings of 11,460 UMA or an income of 680 UMA a month over six months: MXN 1,344,373 or MXN 79,771 at 2026's UMA.
+  - It costs MXN 11,140.74 a year, and the consulate's visa US$56. It lets its holder live there, not work.
+  - It is renewed a year at a time in its last 30 days (`documents.renew_residence`).
+  - Permanent residence costs MXN 13,578.96 after four years.
+- **No route**, with the reason given:
+  - Canada: the Self-Employed Persons Program is paused until further notice, and Express Entry has no arts category.
+  - Ireland: an employment permit needs an employer's offer.
+  - A US green card: the Visa Bulletin's wait wasn't researched. The O-1 stays how an actor works there.
+- **Not kept:** citizenship by naturalization, since SLATE holds one citizenship; Ireland's IRP, which no route reaches; and a residence card's processing time.
+- Screen: Papers, Permission To Work, Residence Abroad.
+
+Evidence: `tests/residence.test.ts` (3). 9 mutations, all killed.
+
 ### Stage 2: Journeys
 
 #### Stage 2a: a journey by air, and somewhere to stay (done 2026-09-29)

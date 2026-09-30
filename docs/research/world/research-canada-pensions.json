@@ -1,0 +1,179 @@
+{
+  "oas": {
+    "maxMonthlyByQuarter2026": [
+      {"quarter": "2026-Q1 (January-March)", "age65to74": 742.31, "age75plus": 816.54, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-january-march.html", "publisher": "Employment and Social Development Canada", "date": "2025-12-30", "confirmed": true},
+      {"quarter": "2026-Q2 (April-June)", "age65to74": 743.05, "age75plus": 817.36, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-april-june.html", "publisher": "Employment and Social Development Canada", "date": "2026-06-29", "confirmed": true},
+      {"quarter": "2026-Q3 (July-September)", "age65to74": 751.97, "age75plus": 827.17, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-july-september.html", "publisher": "Employment and Social Development Canada", "date": "2026-09-29", "confirmed": true},
+      {"quarter": "2026-Q4 (October-December)", "age65to74": 762.50, "age75plus": 838.75, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-october-december.html", "publisher": "Employment and Social Development Canada", "date": "2026-09-29", "confirmed": true, "alsoOn": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/payments.html (modified 2026-09-29, same figures)"}
+    ],
+    "age75Increase": {"rule": "Automatic 10% increase the month after the 75th birthday.", "value": 0.10, "url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/benefit-amount.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true},
+    "residence": {
+      "rule": "At least 10 years of residence in Canada since age 18 to qualify while living in Canada. Fewer than 40 years gives a partial pension of (years in Canada / 40) of the full amount.",
+      "minYearsAfter18": 10,
+      "fullPensionYears": 40,
+      "proration": "years/40",
+      "sources": [
+        {"url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/eligibility.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true, "covers": "10 years since 18 (living in Canada); 20 years since 18 (living outside Canada)"},
+        {"url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/benefit-amount.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true, "covers": "partial pension = years lived in Canada / 40"}
+      ]
+    },
+    "deferral": {"rule": "Deferring after 65: +0.6% per month (7.2% a year), up to 36% at age 70.", "perMonth": 0.006, "maxAt70": 0.36, "url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/when-start.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true},
+    "recoveryTax": {
+      "rule": "Repay 15% of net world income above the minimum threshold, until the whole pension is recovered.",
+      "rate": 0.15,
+      "thresholdFor2026Income": 95323,
+      "appliesToPaymentPeriod": "July 2027 - June 2028 (based on 2026 income)",
+      "fullRecoveryFor2026Income": {"age65to74": 155320, "age75plus": 161320},
+      "url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/recovery-tax.html",
+      "publisher": "Government of Canada (Service Canada)",
+      "date": "2026-09-29",
+      "confirmed": true,
+      "note": "The ESDC quarterly tables list the $95,323 threshold with an upper bound that moves each quarter with the pension (Q1 $154,708/$160,647; Q2 $154,753/$160,696; Q3 $155,109/$161,088; Q4 $155,320/$161,320). The upper bound follows from the threshold plus the annual pension divided by 0.15, not a separately legislated figure."
+    },
+    "paidAbroad": {"rule": "OAS can be received while living outside Canada only with at least 20 years of residence in Canada after 18.", "yearsRequiredAbroad": 20, "url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/eligibility.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true, "caveat": "The 20-year rule was read on the page. The commonly stated consequence for fewer than 20 years (paid for 6 months of absence, then suspended) was not read on a fetched page; see uncertain."}
+  },
+  "gis": {
+    "maxMonthlySingleByQuarter2026": [
+      {"quarter": "2026-Q1 (January-March)", "max": 1108.74, "incomeCutoff": 22488, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-january-march.html", "publisher": "Employment and Social Development Canada", "date": "2025-12-30", "confirmed": true},
+      {"quarter": "2026-Q2 (April-June)", "max": 1109.85, "incomeCutoff": 22512, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-april-june.html", "publisher": "Employment and Social Development Canada", "date": "2026-06-29", "confirmed": true},
+      {"quarter": "2026-Q3 (July-September)", "max": 1123.17, "incomeCutoff": 22800, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-july-september.html", "publisher": "Employment and Social Development Canada", "date": "2026-09-29", "confirmed": true},
+      {"quarter": "2026-Q4 (October-December)", "max": 1138.90, "incomeCutoff": 23112, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-october-december.html", "publisher": "Employment and Social Development Canada", "date": "2026-09-29", "confirmed": true, "alsoOn": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/guaranteed-income-supplement/benefit-amount.html (modified 2026-09-29, same figures)"}
+    ],
+    "incomeCutoffNote": "Annual income cutoff for a single person; OAS and GIS themselves are not counted as income.",
+    "reduction": {
+      "baseRate": {
+        "rule": "GIS is reduced by $1 for every $2 of income other than OAS and GIS (50 cents on the dollar).",
+        "rate": 0.5,
+        "sources": [
+          {"url": "https://search.open.canada.ca/qpnotes/record/esdc-edsc,PA-SEN_009_20260106", "publisher": "Employment and Social Development Canada (Question Period Note)", "date": "2026-01-06 (from the record id)", "confirmed": true},
+          {"url": "https://www.canada.ca/en/employment-social-development/services/pension/reports/labour-market-low-income-seniors.html", "publisher": "Employment and Social Development Canada (Evaluation Directorate)", "date": "2017-03", "confirmed": true}
+        ]
+      },
+      "earningsExemption": {
+        "rule": "The first $5,000 of employment and self-employment income is fully exempt; on earnings from $5,000 to $15,000, 50% is exempt, so only half counts. In force since July 2020.",
+        "fullExempt": 5000,
+        "partialBandWidth": 10000,
+        "partialBandExemptShare": 0.5,
+        "url": "https://www.canada.ca/en/services/life-events/retirement/sources-income.html",
+        "publisher": "Government of Canada",
+        "date": "2025-12-15",
+        "confirmed": true,
+        "correctionToBrief": "The band on the next $10,000 is a 50% exemption, not 25%. The 25% figure belongs to the GIS top-up's reduction rate (below)."
+      },
+      "topUp": {
+        "rule": "The GIS top-up (added 2011) is reduced by $0.25 per dollar of other income above a threshold ($2,048 single, $4,096 couple, as of the 2017 report), so the combined reduction in that band is 75 cents on the dollar.",
+        "rate": 0.25,
+        "thresholdSingle2017": 2048,
+        "url": "https://www.canada.ca/en/employment-social-development/services/pension/reports/labour-market-low-income-seniors.html",
+        "publisher": "Employment and Social Development Canada (Evaluation Directorate)",
+        "date": "2017-03",
+        "confirmed": true,
+        "caveat": "The thresholds are from 2017. No official page read gave the 2026 top-up threshold or amount."
+      }
+    },
+    "livingInCanadaOnly": {
+      "rule": "You must live in Canada. GIS stops after more than 6 months outside Canada, regardless of years of residence.",
+      "sources": [
+        {"url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/guaranteed-income-supplement/eligibility.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true, "covers": "must live in Canada"},
+        {"url": "https://www.canada.ca/en/employment-social-development/corporate/reports/evaluations/guaranteed-income-supplement.html", "publisher": "Employment and Social Development Canada", "date": "2019-01", "confirmed": true, "covers": "out of the country more than 6 months become ineligible"}
+      ]
+    }
+  },
+  "cpp": {
+    "contributions2026": {
+      "ympe": 74600,
+      "basicExemption": 3500,
+      "maxContributoryEarnings": 71100,
+      "employeeRate": 0.0595,
+      "selfEmployedRate": 0.119,
+      "maxEmployee": 4230.45,
+      "maxSelfEmployed": 8460.90,
+      "note": "The 5.95% employee rate is the base 4.95% plus the first additional 1.0% (self-employed 9.9% + 2.0% = 11.9%).",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/canada-pension-plan-cpp/cpp-contribution-rates-maximums-exemptions.html",
+      "publisher": "Canada Revenue Agency",
+      "date": "2025-10-31",
+      "confirmed": true
+    },
+    "firstAdditional": {
+      "employeeRate": 0.01,
+      "selfEmployedRate": 0.02,
+      "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-enhancement.html",
+      "publisher": "Government of Canada",
+      "date": "2025-11-17",
+      "confirmed": true,
+      "caveat": "The page confirms 1.0% for a total of 5.95%. The 2% self-employed figure follows from the self-employed paying both shares (11.9% total on the CRA page) and was not read as its own line."
+    },
+    "secondAdditionalCPP2": {
+      "yampe": 85000,
+      "band": "YMPE $74,600 to YAMPE $85,000 ($10,400)",
+      "employeeRate": 0.04,
+      "selfEmployedRate": 0.08,
+      "maxEmployee": 416,
+      "maxSelfEmployed": 832,
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/calculating-deductions/making-deductions/second-additional-cpp-contribution-rates-maximums.html",
+      "publisher": "Canada Revenue Agency",
+      "date": "2025-10-31",
+      "confirmed": true,
+      "caveat": "The page states the 4% employee and employer rate and the $832 self-employed maximum; 8% is derived from those (2 x 4% x $10,400 = $832)."
+    },
+    "retirementPension": {
+      "baseReplacement": {"rule": "Base CPP replaces one quarter (25%) of average adjusted pensionable earnings; the enhancement grows this to one third (33.33%) for earnings after 2019.", "base": 0.25, "fullyEnhanced": 0.3333, "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-enhancement.html", "publisher": "Government of Canada", "date": "2025-11-17", "confirmed": true},
+      "generalDropout": {"rule": "Up to 17% of the contributory period with the lowest earnings, a maximum of 8 years, is excluded from the base component calculation.", "share": 0.17, "maxYears": 8, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/reports/annual-2024.html", "publisher": "Employment and Social Development Canada (CPP Annual Report, fiscal year ending March 31, 2024)", "date": "2026-02-24", "confirmed": true, "alsoOn": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/amount.html (up to 8 years, modified 2026-09-29)"},
+      "maxMonthlyAt65_2026": {"value": 1507.65, "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-benefit/amount.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true, "alsoOn": "ESDC 2026 quarterly tables"},
+      "averageMonthlyAt65": {"value": 858.34, "asOf": "July 2026", "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-benefit/amount.html", "publisher": "Government of Canada (Service Canada)", "date": "2026-09-29", "confirmed": true},
+      "indexation2026": {"value": 0.02, "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-january-march.html", "publisher": "Employment and Social Development Canada", "date": "2025-12-30", "confirmed": true}
+    },
+    "startAge": {
+      "early": {"rule": "-0.6% per month before 65 (7.2% a year), maximum -36% at 60.", "perMonth": -0.006, "maxAt60": -0.36},
+      "late": {"rule": "+0.7% per month after 65 (8.4% a year), maximum +42% at 70.", "perMonth": 0.007, "maxAt70": 0.42},
+      "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-benefit/when-start.html",
+      "publisher": "Government of Canada (Service Canada)",
+      "date": "2026-06-18",
+      "confirmed": true
+    },
+    "paidAbroad": {
+      "rule": "CPP benefits are paid no matter where the recipient lives in the world.",
+      "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/reports/annual-2024.html",
+      "publisher": "Employment and Social Development Canada",
+      "date": "2026-02-24",
+      "confirmed": true,
+      "nonResidentTax": {"rule": "Non-resident tax withheld at 25% standard, reducible by tax treaty.", "rate": 0.25, "url": "https://www.canada.ca/en/services/benefits/publicpensions/cpp/cpp-international/while-receiving.html", "publisher": "Government of Canada", "date": "2026-06-30", "confirmed": false}
+    }
+  },
+  "provincial": {
+    "ontarioGAINS": {
+      "maxMonthlySingle": 92,
+      "benefitYear": "July 1, 2026 - June 30, 2027",
+      "rule": "Paid to low-income Ontario seniors who receive OAS and GIS; reduced as private income rises; a single senior with annual private income up to $4,416 remains eligible. Residence: Canada 10 years and Ontario for the past 12 months or 20 years in total since 18.",
+      "incomeLimitSingle": 4416,
+      "url": "https://www.ontario.ca/page/guaranteed-annual-income-system-payments-seniors",
+      "publisher": "Government of Ontario",
+      "date": "2026-07-02",
+      "confirmed": true
+    },
+    "bcSeniorsSupplement": {
+      "maxMonthlySingle": 99.30,
+      "rule": "$1.00 to $99.30 a month for a single senior who receives OAS and GIS and is a permanent resident of B.C.",
+      "url": "https://www2.gov.bc.ca/gov/content/family-social-supports/seniors/financial-legal-matters/income-security-programs/seniors-supplement",
+      "publisher": "Government of British Columbia",
+      "date": "2026-09-18",
+      "confirmed": true,
+      "rateTable": {"url": "https://www2.gov.bc.ca/assets/gov/british-columbians-our-governments/policies-for-government/bc-employment-assistance-policy-procedure-manual/additional-resources/sensuppratesincomemaritalstatus.pdf", "date": "2026-07-01", "confirmed": false}
+    }
+  },
+  "meta": {
+    "researchedOn": "2026-09-30",
+    "currency": "CAD",
+    "method": "Each figure was fetched from the cited page on 2026-09-30. 'date' is the page's own 'Date modified' or the report date. confirmed=true means the figure was read on that page, not taken from a search summary.",
+    "spelling": "American"
+  },
+  "uncertain": [
+    "OAS abroad with fewer than 20 years of residence: the 6-months-then-suspended rule was not read on a fetched page (the OAS 'living outside Canada' URL returned 404). Only the 20-year requirement for living outside Canada is confirmed.",
+    "The GIS top-up's 2026 threshold and amount were not found. The $0.25-per-dollar rate and the $2,048 single threshold come from a 2017 ESDC report.",
+    "The brief's '25% band on the next $10,000' does not match the sources: earnings from $5,000 to $15,000 are 50% exempt. The 25% rate is the top-up's reduction rate.",
+    "The self-employed rates for the first additional contribution (2%) and CPP2 (8%) are derived from the self-employed paying both shares and from the CRA maximums ($8,460.90, $832), not read as stand-alone lines.",
+    "CPP's 25% non-resident withholding came from a search summary of canada.ca pages, not a direct page read (confirmed=false).",
+    "The OAS full-recovery upper bound differs by quarter in the ESDC tables; the recovery-tax page gives $155,320 / $161,320 for July 2027 - June 2028 (2026 income).",
+    "Base contribution rate split (4.95% base + 1.0% first additional) is standard but was not read as a separate line on the CRA page; the page gives 5.95% total."
+  ]
+}
