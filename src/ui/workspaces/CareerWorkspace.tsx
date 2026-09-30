@@ -25,6 +25,7 @@ import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
 import { BIENESTAR, IRISH_PENSION, bienestarRefusal, irishContributions, irishPensionRefusal, irishWeekly } from '@/engine/systems/homepensions';
+import { canadaPensionsOf, canadianYears, cppRefusal, oasRefusal } from '@/engine/systems/capensions';
 import { isoOfCountry } from '@/engine/systems/documents';
 import { IMSS, grownTo, imssRefusal, weeksNeeded } from '@/engine/systems/imss';
 import { livesInIreland } from '@/engine/systems/homebenefits';
@@ -555,6 +556,21 @@ function UnionsPane() {
           <div className="col gap-3">
             <Stat label="Claimed" value={person.bienestarFrom !== undefined ? 'Yes' : 'Not Yet'} note={bienestarRefusal(sim, person) ?? 'You can claim it now'} />
             <Fine>MXN 6,400 every two months, not contributory, paid while you live in Mexico (2026 rules). Source: {BIENESTAR.source}.</Fine>
+          </div>
+        </Panel>
+      )}
+      {(isoOfCountry(person.citizenshipId) === 'CA' || Object.keys(canadaPensionsOf(person).years).length > 0) && (
+        <Panel title="Canada’s Pensions" subtitle="The CPP you paid into, and Old Age Security by your years in Canada">
+          <div className="col gap-3">
+            <div className="grid grid-2">
+              <Stat label="CPP" value={canadaPensionsOf(person).cppFrom !== undefined ? 'Claimed' : 'Not Yet'} note={cppRefusal(sim, person) ?? 'You can claim it now: less before 65, more after'} />
+              <Stat label="Old Age Security" value={canadaPensionsOf(person).oasFrom !== undefined ? 'Claimed' : 'Not Yet'} note={oasRefusal(sim, person) ?? `You can claim it now, on ${canadianYears(person)} years in Canada`} />
+            </div>
+            <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+              {!cppRefusal(sim, person) && <Gated feature="pension.cpp" className="btn btn-sm" onClick={() => { const r = run<{ monthly: number }>('pension.cpp'); if (r.ok) toast(`Claimed: ${money(r.value!.monthly)} a month.`, 'positive'); }}>Claim The CPP</Gated>}
+              {!oasRefusal(sim, person) && <Gated feature="pension.ca_oas" className="btn btn-sm" onClick={() => { const r = run<{ monthly: number }>('pension.ca_oas'); if (r.ok) toast(`Claimed: ${money(r.value!.monthly)} a month, and the GIS where your income is low.`, 'positive'); }}>Claim Old Age Security</Gated>}
+            </div>
+            <Fine>The CPP is taken from each check while you live in Canada, both halves, as you're self-employed. Old Age Security is paid in fortieths of forty years in Canada after 18, the Guaranteed Income Supplement beside it on a low income, and Ontario's GAINS on top. 2026 rates, from canada.ca, held at the last published.</Fine>
           </div>
         </Panel>
       )}

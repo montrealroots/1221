@@ -31,7 +31,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 - Electric cars with home charging, and window tint (`254b249f`); Britain's insurance loadings for declared modifications, and a respray, after it.
 
 **Next, in order:**
-- **Canada's public pensions (in progress):** OAS, the GIS and the CPP, researched into `research-canada-pensions.json`. The Toronto w4 life, replayed on 2026-09-30, lives to 87, but goes hungry at times after 60 without them.
+- **Canada's public pensions were done on 2026-09-30** (OAS, the GIS, GAINS, and the CPP paid in and out). The Toronto w4 life, replayed on them, dies at 87 worth +$54,242, with 86 hungry days at 61 to 64. `probe/play-to-death.ts` (local) now claims the CPP and OAS at 65.
 - **Customization still open:** a remap, suspension, an exhaust, a body kit and wheels, once priced in Britain where their loadings are; California's smog check (per-station prices) and its ECU check; New York's loud-exhaust fine.
 - **Land:** easements and a lot's legal access; Mexico's permit for foreign buyers. Services for a house on bare land were done on 2026-09-30 (stage 4f). Waterfront, islands and commercial land are researched, but lack figures that would give them an effect.
 - Residence and immigration were done on 2026-09-30 (stage 1d): Britain's Global Talent visa and settlement, and Mexico's temporary and permanent residence. Still open: naturalization, which needs a person to hold two citizenships, and a US green card, which needs the Visa Bulletin's waits.

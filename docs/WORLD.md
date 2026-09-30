@@ -66,7 +66,19 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - A Canadian citizen living in Ontario or British Columbia pays nothing for a doctor, the emergency department, urgent care or a stay in hospital. OHIP has had no waiting period since 2020.
   - Prescriptions are private for an adult, but free under 25 in Ontario (OHIP+). A dentist and an optician are private.
   - **Not kept:** Ontario's Drug Benefit past 65, Trillium's cap on high drug costs and BC's Fair PharmaCare, none of them researched. A permanent resident's or work-permit holder's cover isn't kept either, since SLATE keeps only citizenship.
-  - Replayed on the fix, the same life dies at 87 worth −$16,007, with a place of its own from 42. It still goes hungry at times after 60: Canada's public pensions (OAS, GIS and the CPP) aren't built yet, and they're next.
+  - Replayed on the fix, the same life dies at 87 worth −$16,007, with a place of its own from 42. It still went hungry at times after 60 (604 days), because Canada's public pensions weren't built.
+- **Canada's public pensions (done 2026-09-30, `systems/capensions.ts`, researched in `research-canada-pensions.json` from canada.ca, the CRA and ESDC).**
+  - **The CPP, paid in:** a self-employed Canadian pays both halves from each check while living in Canada. That is 11.9% between the $3,500 exemption and the YMPE ($74,600), and 8% on to the YAMPE ($85,000).
+  - **The CPP, paid out,** claimed from 60 to 70 (`pension.cpp`):
+    - Base CPP replaces 25% of average earnings. The enhancement takes that to a third, phased in over 2019 to 2025 as its contribution was, and the second additional replaces 8% of earnings above the YMPE from 2024.
+    - The general dropout leaves out the lowest 17% of years, eight at most.
+    - It is 0.6% less a month early and 0.7% more late, to 2026's $1,507.65.
+  - **Old Age Security** from 65 (`pension.ca_oas`): $762.50 a month, or $838.75 from 75, in fortieths of forty years in Canada after 18. It asks ten years at least, and twenty to be paid abroad. SLATE counts a year where there was income while living in Canada, its reading.
+  - **The GIS:** $1,138.90 a month, less half of last year's other income after the earnings exemption. It is paid only while living in Canada.
+  - **Ontario's GAINS:** $92 a month, gone at $4,416 of income.
+  - **Not kept:** OAS deferral and its recovery tax; the GIS top-up's own 25% reduction, whose threshold is 2017's; BC's Senior's Supplement table; and taxing the pensions.
+  - **Replayed with them,** the Toronto life dies at 87 worth +$54,242, not −$16,007. Its hungry days fell from 604 to 86, all at 61 to 64, before the life-player claims at 65.
+  - **Tests:** `tests/capensions.test.ts` (6). 12 mutations, all killed once four tests were added.
   - **Tests:** `tests/homebenefits.test.ts`, the Canadian case. 5 mutations, all killed.
 
 ## Acceptance criteria

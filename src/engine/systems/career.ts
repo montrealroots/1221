@@ -100,6 +100,7 @@ import { contribute as contributeImss } from './imss';
 import { permitAtTheBorder, workRefusal } from './permission';
 import { drawRental } from './dwelling';
 import { payeeAccount } from './cash';
+import { cppOnCheck } from './capensions';
 import { sagHoliday } from '../content/usholidays';
 
 export const SHOWCASE_KIND = 'career.showcase';
@@ -1658,6 +1659,10 @@ export function registerCareer(sim: Simulation): void {
       if (role.after?.kind === 'commercial') recordCommercialPay(person, item.at, check.gross);
       check.net -= foreign;
       if (foreign) postings.push({ accountId: s.nominalAccount('expense', 'Foreign Tax Withheld').id, amount: foreign });
+      // A self-employed Canadian's CPP, both halves, as the year goes (`systems/capensions.ts`, from 2026-09-30).
+      const cpp = cppOnCheck(person, year, check.gross, cur);
+      check.net -= cpp;
+      if (cpp) postings.push({ accountId: s.nominalAccount('expense', 'CPP Contributions').id, amount: cpp });
       gross += check.gross;
       net += check.net;
       if (check.agent) postings.push({ accountId: s.nominalAccount('expense', 'Agent Commission').id, amount: check.agent });
