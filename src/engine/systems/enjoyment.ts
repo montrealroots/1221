@@ -26,6 +26,7 @@ import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
 import { personalityOf } from './personality';
+import type { Piece } from '../content/furniture';
 import { PRODUCT_INTEREST } from '../content/career';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
@@ -52,10 +53,18 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
 export const LOVED_MOOD = 1.5;
 export const LOVED_RELIEF = 1.25;
 
-/** The interests of theirs this is, by id, in the order the list above gives them. */
-export function lovedIn(person: Pick<Person, 'interests'>, action: LookAfter): string[] {
+/**
+ * What an interest needs at home to be enjoyed there (from 2026-09-30): a
+ * screen for film and television, a console for games, a speaker for music
+ * (`content/furniture.ts`). Away from home, a hotel's or a sublet's TV does.
+ */
+export const GEAR_FOR: Readonly<Record<string, Piece>> = { film: 'tv', film_history: 'tv', film_preservation: 'tv', television: 'tv', games: 'console', music: 'speaker' };
+
+/** The interests of theirs this is, by id, in the order the list above gives them; at home, those whose gear they own. */
+export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person, 'furniture' | 'home' | 'currentLocationId'>>, action: LookAfter): string[] {
   const theirs = person.interests ?? [];
-  return LOVED_IN[action].filter((id) => theirs.includes(id));
+  const atHome = person.home !== undefined && person.home.kind !== 'sofa' && person.currentLocationId === person.home.cityId;
+  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || !GEAR_FOR[id] || person.furniture?.[GEAR_FOR[id]!] !== undefined));
 }
 
 /** A day's work as enjoyment sees it: what it is, what it's filed under, and whether it's away from home. */

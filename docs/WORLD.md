@@ -528,6 +528,20 @@ Evidence: `tests/furniture.test.ts` (8); 8 mutations, all killed, and 7 for the 
 
 Evidence: `tests/lodgers.test.ts` (5); 10 mutations, all killed in the end. One first survived for want of a year past Britain's £7,500; one was a redundant check that the home wasn't let, which living in it already settles, and was removed.
 
+#### Stage 6f: an alarm, Britain's burglaries, and a home's screen, console and speaker (done 2026-09-30)
+Researched in `docs/research/world/research-home-contents.json` and `research-home-effects.json`.
+- **A burglar alarm** (`systems/alarm.ts`, `home.alarm`): Ring's kit and its Pro monitoring, $199.99 and $19.99 a month in America, £139.99 and £15.99 in Britain, the two places both were read.
+  - It takes the insurers' discount off the premium, a renter's or an owner's: the Triple-I's 5% in America, and Aviva's 12.5% in Britain, read from a search's summary.
+  - It doesn't lower the risk. Tseloni et al. found, in the Crime Survey for England and Wales, that an alarm alone protects no better than no security. So an alarm is realistically poor value.
+  - An owner's is fitted in the home and stays with it; a renter's goes where they go. Monitoring unpaid switches it off.
+- **Britain's burglaries:** 1.1% of households a year (CSEW, to March 2026), in place of America's NCVS 8.2 in 1,000, which elsewhere is still SLATE's estimate.
+- **A TV, a console and a soundbar** (`GEAR_FOR` in `systems/enjoyment.ts`, furniture pieces):
+  - An hour unwinding at home is loved by a film or television lover only with a TV there, a gamer with a console, and a music lover with a speaker. Away from home, a hotel's or a sublet's TV does.
+  - The gear: Samsung's 55-inch QN70H, a PlayStation 5 with a disc drive, and Sonos's Beam, at the regular price. Canada's console and the soundbars outside America are read from searches' summaries. No console is sold in Mexico, where no price was read.
+  - They're carried in a move with the bed and sofa.
+- Not kept yet: the security that measurably cuts burglaries (window and door locks 12.5 times, the WIDE combination 49.1 times, per Tseloni). Tseloni's factors are against no security at all, and the devices' prices weren't read.
+
+Evidence: `tests/alarm.test.ts` (5) and `tests/gear.test.ts` (4). 13 mutations, all killed in the end. Two first survived and needed tests: the day's burglary draw at Britain's rate, now checked at a scale a test can see, and an unknown piece refused.
 ### Stage 8: Rentals on a journey
 
 #### Stage 8a: a car rented at the far end (done 2026-09-29)

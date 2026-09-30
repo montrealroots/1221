@@ -43,6 +43,7 @@ import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
 import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
+import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
@@ -766,6 +767,8 @@ function YourPlace({ cur }: { cur: string }) {
   const living = useWorld((s) => ({ ...livingOf(s.player) }));
   const cleaner = useWorld((s) => cleanerCost(s, s.player));
   const premium = useWorld((s) => rentersPremium(s, s.player));
+  const hasAlarm = useWorld((s) => alarmed(s.player));
+  const noAlarm = useWorld((s) => alarmRefusal(s.player));
   const home = useWorld((s) => s.player.home);
   const noUnits = useWorld((s) => unitsRefusal(s, s.player));
   // A machine offered where it's priced and the home lacks it: a dryer once there's a washer.
@@ -794,6 +797,9 @@ function YourPlace({ cur }: { cur: string }) {
           {living.rentersInsurance
             ? <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => run('home.renters_insurance', { on: false })}>Cancel Renters Insurance</Gated>
             : <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.renters_insurance', { on: true }).ok) toast('Your things are insured.', 'positive'); }}>Get Renters Insurance ({formatMoney(premium, cur, { cents: false })} A Month)</Gated>}
+          {hasAlarm
+            ? <Gated feature="home.alarm" className="btn btn-sm btn-ghost" onClick={() => run('home.alarm', { on: false })}>Switch Off The Alarm</Gated>
+            : !noAlarm && <Gated feature="home.alarm" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.alarm', { on: true }).ok) toast('The alarm is fitted and monitored; your insurer takes its discount off.', 'positive'); }}>Fit A Burglar Alarm</Gated>}
         </div>
       )}
       {place.keeps && home.kind !== 'sofa' && portables.length > 0 && (

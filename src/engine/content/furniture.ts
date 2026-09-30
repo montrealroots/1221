@@ -15,18 +15,50 @@
  * per piece.
  *
  * Only what furniture changes is sold: a bed decides where a night is slept,
- * a sofa how much an hour unwinding at home takes off. The rest of a home's
- * furniture, which changes nothing SLATE keeps, isn't.
+ * a sofa how much an hour unwinding at home takes off. Until 2026-09-30 that
+ * was all of it; since, a TV, a console and a speaker decide whether an hour
+ * unwinding at home is loved (the gear, below), at the owner's word that
+ * what changes nothing should be given something to change.
  */
 
-export type Piece = 'bed' | 'sofa';
+export type Piece = 'bed' | 'sofa' | 'tv' | 'console' | 'speaker';
 
-export const PIECE_LABEL: Readonly<Record<Piece, string>> = { bed: 'A Bed', sofa: 'A Sofa' };
+export const PIECE_LABEL: Readonly<Record<Piece, string>> = { bed: 'A Bed', sofa: 'A Sofa', tv: 'A TV', console: 'A Games Console', speaker: 'A Soundbar' };
 
 export interface PiecePrice { price: number; delivery: number; basis: string }
 
 /** By country, whole units of its money. */
-export const FURNITURE: Readonly<Record<string, { currency: string; taxAdded: boolean; items: Record<Piece, PiecePrice> }>> = {
+/**
+ * A home's screen, console and speaker (from 2026-09-30,
+ * `docs/research/world/research-home-contents.json` and `research-home-effects.json`),
+ * at the regular price where the maker shows one beside an offer:
+ * - Samsung's 55-inch QN70H: $849.99 on samsung.com; C$1,099.99, MX$22,899,
+ *   £849 and €999.99 regularly.
+ * - PlayStation 5 with a disc drive: $649.99, £569.99 and €649.99, Sony's
+ *   prices from 2 April 2026; C$819.99 at Best Buy Canada (read from a
+ *   search's summary); none read in Mexico, where it isn't sold.
+ * - Sonos Beam (Gen 2): $499 at an authorized dealer; C$649, MX$10,999, £429
+ *   and €499 read from searches' summaries.
+ * No delivery charge is kept: they're carried home. What each does: an hour
+ * unwinding at home is loved by someone who loves film, or television, only
+ * with a TV there; games, with a console; music, with a speaker
+ * (`systems/enjoyment.ts`). Away from home a hotel's or a sublet's TV does.
+ */
+type Gear = { tv: PiecePrice; console?: PiecePrice; speaker: PiecePrice };
+const gear = (tv: number, console: number | undefined, speaker: number, sym: string): Gear => ({
+  tv: { price: tv, delivery: 0, basis: `Samsung’s 55-inch QN70H, ${sym}${tv.toLocaleString('en-US')} regularly` },
+  ...(console !== undefined ? { console: { price: console, delivery: 0, basis: `PlayStation 5 with a disc drive, ${sym}${console.toLocaleString('en-US')}` } } : {}),
+  speaker: { price: speaker, delivery: 0, basis: `Sonos Beam (Gen 2), ${sym}${speaker.toLocaleString('en-US')}` },
+});
+const GEAR: Readonly<Record<string, Gear>> = {
+  us: gear(849.99, 649.99, 499, '$'),
+  ca: gear(1_099.99, 819.99, 649, 'C$'),
+  mx: gear(22_899, undefined, 10_999, 'MX$'),
+  uk: gear(849, 569.99, 429, '£'),
+  ie: gear(999.99, 649.99, 499, '€'),
+};
+
+const FURNISHINGS: Readonly<Record<string, { currency: string; taxAdded: boolean; items: Record<'bed' | 'sofa', PiecePrice> }>> = {
   us: { currency: 'USD', taxAdded: true, items: {
     bed: { price: 249 + 399, delivery: 29, basis: 'IKEA’s MALM Queen frame, $249, and VALEVÅG mattress, $399, delivered from $29' },
     sofa: { price: 799, delivery: 29, basis: 'IKEA’s KIVIK three-seat, $799, delivered from $29' },
@@ -48,6 +80,11 @@ export const FURNITURE: Readonly<Record<string, { currency: string; taxAdded: bo
     sofa: { price: 9_999, delivery: 700, basis: 'IKEA’s KIVIK three-seat, MX$9,999, delivered in its first zone for MX$700' },
   } },
 };
+
+/** By country, whole units of its money: the bed and sofa, and the gear where it's priced. */
+export const FURNITURE: Readonly<Record<string, { currency: string; taxAdded: boolean; items: Partial<Record<Piece, PiecePrice>> }>> = Object.fromEntries(
+  Object.entries(FURNISHINGS).map(([id, c]) => [id, { ...c, items: { ...c.items, ...GEAR[id] } }]),
+);
 
 /**
  * What going without costs. A night on the floor of a home with no bed

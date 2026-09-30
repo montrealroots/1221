@@ -97,6 +97,7 @@ import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, mov
 import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
+import { alarmFactor } from './alarm';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -470,6 +471,8 @@ export interface Tenancy {
 
 export interface OwnedHome {
   id: string;
+  /** A burglar alarm fitted, monitored, its discount on the premium (`systems/alarm.ts`, from 2026-09-30). */
+  alarm?: boolean;
   listingId: string;
   cityId: string;
   facts: HomeFacts;
@@ -646,7 +649,7 @@ export function ownedMonth(sim: Simulation, owned: OwnedHome): OwnerMonth {
   return monthOf(sim, owned.facts, owned.cityId, value, {
     ...(owned.mortgage && loanBalance(sim, owned) > 0 ? { mortgage: { payment: owned.mortgage.payment, pmi: owned.mortgage.pmi, balance: loanBalance(sim, owned) } } : {}),
     ...(owned.equity && owedOn(sim, owned.equity) > 0 ? { equity: owned.equity.payment } : {}),
-  }, assessedValue(sim, owned), claimLoading(sim, owned), Boolean(main));
+  }, assessedValue(sim, owned), claimLoading(sim, owned) * alarmFactor(owned), Boolean(main));
 }
 
 /** A loan's payment a month, principal and interest. */

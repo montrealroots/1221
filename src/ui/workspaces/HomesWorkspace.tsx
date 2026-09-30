@@ -539,8 +539,8 @@ function Furniture() {
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const where = person.home?.cityId ?? person.currentLocationId;
-  const pieces: Piece[] = ['bed', 'sofa'];
-  const does: Record<Piece, string> = { bed: 'Without one, an empty home’s nights are slept on the floor', sofa: 'Without one, unwinding in an empty home takes half the stress off' };
+  const pieces: Piece[] = ['speaker', 'console', 'tv', 'sofa', 'bed'];
+  const does: Record<Piece, string> = { bed: 'Without one, an empty home’s nights are slept on the floor', sofa: 'Without one, unwinding in an empty home takes half the stress off', tv: 'A film or television lover enjoys unwinding at home only with one', console: 'A gamer enjoys unwinding at home only with one', speaker: 'A music lover enjoys unwinding at home only with one' };
   const mattress = mattressCost(sim, person.home?.cityId ?? person.currentLocationId);
   return (
     <div className="col gap-2">

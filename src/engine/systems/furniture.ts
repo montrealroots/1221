@@ -52,6 +52,7 @@ export function pieceCost(sim: Simulation, cityId: string, piece: Piece): { amou
   const country = FURNITURE[CITIES.get(cityId)?.countryId ?? ''];
   if (!country) return undefined;
   const item = country.items[piece];
+  if (!item) return undefined;
   const taxRate = country.taxAdded ? salesTaxRate(cityId, sim.now, 'furniture') : 0;
   const tax = Math.round(item.price * 100 * taxRate);
   // A bed's mattress carries its state's recycling fee, where one is charged.
@@ -63,7 +64,7 @@ export function furnishRefusal(sim: Simulation, person: Person, piece: Piece): s
   if (owns(person, piece)) return 'You have one.';
   const where = person.home?.cityId ?? person.currentLocationId;
   const cost = pieceCost(sim, where, piece);
-  if (!cost) return 'SLATE keeps no furniture prices where you live yet.';
+  if (!cost) return 'SLATE keeps no price for it where you live yet.';
   if (inTheBank(sim, person) < cost.amount) return `It costs ${formatMoney(cost.amount, saveCurrency(sim.universe), { cents: false })}, delivered.`;
   return undefined;
 }
@@ -72,7 +73,7 @@ export function registerFurniture(sim: Simulation): void {
   sim.onCommand<{ piece: Piece }, { paid: Money }>('home.furnish', (p, { sim: s }) => {
     const person = s.player;
     const piece = p?.piece;
-    if (piece !== 'bed' && piece !== 'sofa') throw new CommandError('No such piece.');
+    if (!piece || !(piece in PIECE_LABEL)) throw new CommandError('No such piece.');
     const no = furnishRefusal(s, person, piece);
     if (no) throw new CommandError(no);
     const cost = pieceCost(s, person.home?.cityId ?? person.currentLocationId, piece)!;
@@ -152,7 +153,7 @@ export function mattressCost(sim: Simulation, cityId: string): Money | undefined
   const m = MATTRESS[countryId];
   if (!country || !m) return undefined;
   const taxRate = country.taxAdded ? salesTaxRate(cityId, sim.now, 'furniture') : 0;
-  const units = m.price + country.items.bed.delivery + (m.removal ?? 0);
+  const units = m.price + country.items.bed!.delivery + (m.removal ?? 0);
   const tax = Math.round(m.price * 100 * taxRate);
   const fee = inSave(sim, Math.round(mattressFeeUsd(cityId, sim.now) * 100), 'USD');
   return inSave(sim, Math.round(units * 100) + tax, country.currency) + fee;

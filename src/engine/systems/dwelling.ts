@@ -44,6 +44,7 @@ import { atTown, HOME, insured as insuredHome, livingIn, type HomeFacts } from '
 import { exchange } from '../content/currency';
 import { drawFromBank, spend } from './household';
 import { weatherAt, weatherOn } from './weather';
+import { alarmMonth, renterAlarmFactor } from './alarm';
 import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
@@ -210,6 +211,8 @@ export interface Living {
   tidy: number;
   /** Renters insurance on what's inside, paid monthly. */
   rentersInsurance?: boolean;
+  /** A renter's burglar alarm, monitored, which goes where they go (`systems/alarm.ts`, from 2026-09-30). */
+  alarm?: boolean;
   /** The month's loads in the home's own machines, for the bills. */
   loads?: { washer: number; dryer: number };
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
@@ -508,6 +511,8 @@ export function registerDwelling(sim: Simulation): void {
  */
 export const BELONGINGS = {
   burglaryYear: 8.2 / 1000,
+  /** Britain's own: 1.1% of households burgled in the year to March 2026 (the Crime Survey for England and Wales, from 2026-09-30). */
+  burglaryYearUk: 0.011,
   theftUsd: [1_500, 9_500] as const,
   fireYear: 1 / 425,
   fireUsd: [3_000, 11_000] as const,
@@ -519,6 +524,9 @@ export const BELONGINGS = {
   without: 2,
 };
 
+/** A year's chance a household is burgled where a town is: Britain's own survey figure, and elsewhere America's NCVS, SLATE's estimate there. */
+export const burglaryYear = (cityId: string): number => (CITIES.get(cityId)?.countryId === 'uk' ? BELONGINGS.burglaryYearUk : BELONGINGS.burglaryYear);
+
 /** A renters insurance premium a month where they live, in the save's money. */
 export function rentersPremium(sim: Simulation, person: Person): Money {
   const city = CITIES.get(person.home?.cityId ?? person.currentLocationId);
@@ -527,7 +535,8 @@ export function rentersPremium(sim: Simulation, person: Person): Money {
   const cur = saveCurrency(sim.universe);
   // The states' own averages are what they are; elsewhere the national average at the town's cost of living.
   const cents = BELONGINGS.premiumYearUsd[city.parentId] ? usd * 100 : Math.round(usd * 100 * city.costOfLivingIndex / 100);
-  return Math.round((exchange(cents, 'USD', cur) ?? cents) / 12);
+  // An alarm's discount, where it's kept (`systems/alarm.ts`).
+  return Math.round((exchange(cents, 'USD', cur) ?? cents) / 12 * renterAlarmFactor(person));
 }
 
 /** Whether what's inside their home is insured, and over what deductible. */
@@ -538,10 +547,12 @@ export function coveredInside(sim: Simulation, person: Person): Money | undefine
 }
 
 /** A day's risk to what's inside: a burglary, or for a renter a fire in the building; and the renters premium on the first. */
-export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boolean): void {
+export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boolean, scale = 1): void {
   const home = person.home;
   if (!home || home.kind === 'sofa') return;
   const cur = saveCurrency(sim.universe);
+  // An alarm's monitoring, the month's (`systems/alarm.ts`).
+  if (firstOfMonth) alarmMonth(sim, person);
   if (firstOfMonth && person.living?.rentersInsurance && home.kind !== 'owned') {
     if (!spend(sim, person, rentersPremium(sim, person), 'Renters insurance', 'insurance')) {
       delete person.living.rentersInsurance;
@@ -549,7 +560,8 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
     }
   }
   const r = sim.rng('homes.upkeep', person.id, 'belongings', homeDay(sim, person));
-  const burgled = r.next() < BELONGINGS.burglaryYear / 365;
+  // The place's rate a year, over its days; a test's scale where it gives one.
+  const burgled = r.next() < (burglaryYear(home.cityId) / 365) * scale;
   const burned = home.kind !== 'owned' && r.next() < BELONGINGS.fireYear / 365;
   if (!burgled && !burned) return;
   const [least, most] = burgled ? BELONGINGS.theftUsd : BELONGINGS.fireUsd;
