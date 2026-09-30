@@ -290,9 +290,15 @@ Researched (`docs/research/world/research-vehiclework.json`): each place's windo
   - Ireland: the NCT at four years, every two to ten, then yearly, €60, the 2025 fee.
   - Mexico City: the verificación every six months, MX$765.45, read secondhand and the arithmetic checked.
 - Ontario and British Columbia inspect a car only on its sale; California's smog check is priced by each station. None is kept there, said so. The Cars screen shows the next one due.
-- Open, and why: a failed test (no pass rate is published for these); tint, exhaust and lift work, which changes nothing SLATE keeps yet; being qualified to fly was the next module, and 7b built it; boats and owning an aircraft remain.
+- A test failed (from 2026-09-30; decider `vehicle.inspection`, researched in `docs/research/world/research-upkeep.json`). Until then none was, this page saying no pass rate was published, which was wrong: each authority publishes one.
+  - New York: 6.0% in the New York metropolitan area and 6.41% upstate, the emissions and safety failures of DEC's 2024 I/M report together; the repair at CarMD's $554.01 for a check-engine light, the nearest figure (secondary); the retest at the same station, not charged.
+  - Connecticut: 7.4% of cars (the 2024 I/M report); CarMD's repair; the one free retest.
+  - Great Britain: 27.51% first time (DVSA, 2025 to 2026, cars and vans together as published); BookMyGarage's £332 at three to five years and £425 from six, less the fee they include (secondary); the partial retest free.
+  - Ireland: 49.43%, NCTS's 2024 pass rate of 50.57% (read from a search's extract, the report refusing automated reads); the €40 retest; Britain's repair in euros, SLATE's estimate, Ireland publishing none.
+  - Mexico City publishes no rejection rate, and none is drawn.
+- Open, and why: a failure's rate by the car's age (DVSA publishes none); tint, exhaust and lift work, which changes nothing SLATE keeps yet; being qualified to fly was the next module, and 7b built it; boats and owning an aircraft remain.
 
-Evidence: `tests/inspections.test.ts` (5); 7 mutations, all killed. One first survived, the car's month calling the inspection, which no test reached until a used car's MOT was paid end to end.
+Evidence: `tests/inspections.test.ts` (8); 7 mutations, all killed. One first survived, the car's month calling the inspection, which no test reached until a used car's MOT was paid end to end. The failed test: 7 more, all killed; one first survived, New York's upstate rate against the city's, too near to tell apart by sampling, and the rates are now checked themselves.
 
 #### Stage 7b: qualified to fly, and flying oneself (done 2026-09-29)
 - Owning and operating part here: a plane is rented, and flying it asks a certificate one earns (`systems/aviation.ts`).

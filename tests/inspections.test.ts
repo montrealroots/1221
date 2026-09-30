@@ -9,7 +9,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { inspectIfDue, nextInspection } from '@/engine/systems/inspections';
+import { INSPECTION_RULES, inspectIfDue, inspectionFails, nextInspection } from '@/engine/systems/inspections';
 
 const YEAR = 365.2425 * MS_DAY;
 const at = Date.UTC(2026, 8, 29);
@@ -66,5 +66,46 @@ describe('what it costs', () => {
     const mot = sim.universe.transactions.filter((t) => t.memo === 'The car’s MOT');
     expect(mot).toHaveLength(1);
     expect(mot[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 54_85, 'GBP'));
+  });
+});
+
+describe('a test failed', () => {
+  const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, 'inspect-fail');
+  const share = (v: ReturnType<typeof car>) => {
+    let n = 0;
+    for (let i = 0; i < 4_000; i += 1) if (inspectionFails(sim, { ...v, id: `car${i}` }, at + YEAR)) n += 1;
+    return n / 4_000;
+  };
+
+  it('fails each place’s published share: the MOT 27.51%, the NCT 49.43%, New York City’s 6.0%, upstate 6.41%, Connecticut 7.4%, Mexico City none', () => {
+    expect(share(car('GB'))).toBeCloseTo(0.2751, 1);
+    expect(share(car('IE'))).toBeCloseTo(0.4943, 1);
+    expect(Math.abs(share(car('US-NY')) - 0.06)).toBeLessThan(0.012);
+    expect(Math.abs(share(car('US-NY', 0, 'us-ny-hudson')) - 0.0641)).toBeLessThan(0.012);
+    expect(Math.abs(share(car('US-CT')) - 0.074)).toBeLessThan(0.012);
+    expect(share(car('MX-CMX'))).toBe(0);
+    // Too near to tell apart by sampling: the rates themselves.
+    expect(INSPECTION_RULES['US-NY']!.fails!.rate('us-ny-newyork')).toBeCloseTo(0.06, 10);
+    expect(INSPECTION_RULES['US-NY']!.fails!.rate('us-ny-hudson')).toBeCloseTo(0.0641, 10);
+  });
+
+  it('prices the repair by the car’s age after an MOT, CarMD’s average in America, and the NCT’s €40 retest', () => {
+    const failing = (v: ReturnType<typeof car>, due: number) => { for (let i = 0; i < 400; i += 1) { const f = inspectionFails(sim, { ...v, id: `f${i}` }, due); if (f) return f; } throw new Error('none failed'); };
+    expect(failing(car('GB'), at + 5.9 * YEAR).repair).toBeCloseTo(332 - 54.85, 5);
+    expect(failing(car('GB'), at + 6 * YEAR).repair).toBeCloseTo(425 - 54.85, 5);
+    expect(failing(car('US-CT'), at + YEAR)).toEqual({ repair: 554.01, repairCurrency: 'USD', retest: 0 });
+    expect(failing(car('IE'), at + YEAR)).toMatchObject({ repairCurrency: 'GBP', retest: 40 });
+  });
+
+  it('pays the repair and the retest when the car fails, and tells the player', () => {
+    const ie = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'wealthy' }, 'inspect-ie');
+    let v: Parameters<typeof inspectIfDue>[2] | undefined;
+    for (let i = 0; i < 100 && !v; i += 1) { const c = { ...car('IE', 3.9, 'ie-lei-dublin'), id: `ie${i}`, boughtAt: ie.now - 0.2 * YEAR }; if (inspectionFails(ie, c, nextInspection(c, c.boughtAt)!)) v = c; }
+    expect(inspectIfDue(ie, ie.player, v!)).toBe(true);
+    const bill = ie.universe.transactions.filter((t) => t.memo === 'The car’s repair after its NCT, and the retest');
+    expect(bill).toHaveLength(1);
+    const want = exchange(Math.round((332 - 54.85) * 100), 'GBP', saveCurrency(ie.universe))! + inSave(ie, 40_00, 'EUR');
+    expect(bill[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(want);
+    expect(ie.universe.notifications.some((n) => n.title === 'The Car Failed Its NCT')).toBe(true);
   });
 });

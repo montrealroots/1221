@@ -47,6 +47,7 @@ import { bodyOf } from './systems/body';
 import { onsetMonth } from './systems/health';
 import { mayHurt } from './systems/injury';
 import { drawRental } from './systems/dwelling';
+import { inspectionFails } from './systems/inspections';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -808,4 +809,22 @@ defineDecider<{ sim: Simulation; ratio: number; tries: number }, string>({
     const listing = { id: 'x', market: 0, acres: 0.1, asking: 1_000_000_00, listedAt: sim.now };
     return Array.from({ length: 20 }, (_, n) => landAnswer(sim, sim.player, listing, Math.round(listing.asking * ratio), tries + n).answer[0]).join('');
   },
+});
+
+defineDecider<{ sim: Simulation; jurisdiction: 'GB' | 'IE' | 'US-NY' | 'US-CT'; key: number }, string>({
+  id: 'vehicle.inspection',
+  decides: 'Whether a car fails its periodic inspection, at the place’s published rate, and what the repair and retest cost (INSPECTION_RULES).',
+  drawnIn: 'src/engine/systems/inspections.ts',
+  reads: {
+    // Each car's each test is its own draw.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1000) }),
+    jurisdiction: (o, t) => ({ ...o, jurisdiction: (['GB', 'IE', 'US-NY', 'US-CT'] as const)[Math.min(3, Math.floor(t * 4))]! }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), jurisdiction: (['GB', 'IE', 'US-NY', 'US-CT'] as const)[seed % 4]!, key: seed * 7 }),
+  decide: ({ sim, jurisdiction, key }) => Array.from({ length: 40 }, (_, n) => {
+    const v = { id: `car${key + n}`, boughtAt: Date.UTC(2026, 0, 1), ageAtPurchase: 0, jurisdiction, cityId: 'us-ny-newyork' };
+    const f = inspectionFails(sim, v, Date.UTC(2031, 0, 1) + n * 86_400_000);
+    return f ? String(Math.round(f.repair)) : '-';
+  }).join(' '),
 });
