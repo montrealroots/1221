@@ -19,7 +19,7 @@ import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { OWN_172, PILOT_TRAINING, buyAircraftRefusal, ownHourCost, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { OWN_172, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, ownHourCost, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
@@ -302,7 +302,7 @@ function LearnToFly() {
         )}
         {no && !person.pilot ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
         <OwnPlane />
-        <Fine>An FAA private pilot certificate: 60 hours in a rented Cessna 172 at the median school’s $176 an hour with fuel, AOPA’s middle of the 50 to 70 most students take; 20 with an instructor at $75; PSI’s $175 knowledge test and a typical $1,000 checkride. The six months are SLATE’s. Qualified, By offers Fly Yourself between towns in America, in a rented 172 at Textron’s 124 knots within its range less a day flight’s half-hour reserve.</Fine>
+        <Fine>An FAA private pilot certificate: 60 hours in a rented Cessna 172 at the median school’s $176 an hour with fuel, AOPA’s middle of the 50 to 70 most students take; 20 with an instructor at $75; PSI’s $175 knowledge test and a typical $1,000 checkride; a third-class medical at the middle of two examiners’ $125 and $160, renewed every five years under 40 and two from 40. The six months are SLATE’s. Qualified, By offers Fly Yourself between towns in America, in a rented 172 at Textron’s 124 knots within its range less a day flight’s half-hour reserve, on a day with no fog or thunderstorm at either end.</Fine>
       </div>
     </Panel>
   );
@@ -314,7 +314,8 @@ function OwnPlane() {
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const a = person.aircraft && person.aircraft.soldAt === undefined ? person.aircraft : undefined;
-  const no = buyAircraftRefusal(sim, person);
+  const [financed, setFinanced] = useState(false);
+  const no = buyAircraftRefusal(sim, person, financed);
   const hour = ownHourCost(sim, a?.at ?? person.home?.cityId ?? person.currentLocationId);
   return (
     <div className="col gap-2">
@@ -324,10 +325,21 @@ function OwnPlane() {
         <Stat label="An Hour Flown" value={formatMoney(hour, cur, { cents: false })} note="Its fuel, against $176 to rent one" />
         <Stat label="Kept" value={`${formatMoney(Math.round((OWN_172.tiedownDefault + OWN_172.insuranceYear / 12) * 100), 'USD', { cents: false })} A Month`} note="A tiedown and insurance; the annual, and an overhaul in time" />
       </div>
+      {!a && (
+        <div className="field-row field-row-tight">
+          <div className="field">
+            <label htmlFor="plane-paid">Paid</label>
+            <select id="plane-paid" value={financed ? 'loan' : 'outright'} onChange={(e) => setFinanced(e.target.value === 'loan')}>
+              <option value="outright">Outright</option>
+              <option value="loan">{`A Loan, ${PLANE_LOAN.months} Months, ${Math.round(PLANE_LOAN.downShare * 100)}% Down`}</option>
+            </select>
+          </div>
+        </div>
+      )}
       <div className="row gap-2">
         {a
           ? <Gated feature="aircraft.sell" className="btn btn-sm btn-ghost" onClick={() => { if (run('aircraft.sell', {}).ok) toast('Sold.', 'positive'); }}>Sell The Plane</Gated>
-          : <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', {}).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>Buy A Plane</Gated>}
+          : <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', { financed }).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>Buy A Plane</Gated>}
       </div>
       {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it yourself does. Until you’re a pilot, By offers it flown by a hired commercial pilot, at $450 a half day and $900 a full one.</p> : null}
     </div>

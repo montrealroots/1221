@@ -79,7 +79,7 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
     liabilities += v.loan?.owed ?? 0;
   }
   // A plane of their own, at its price, held (`systems/aviation.ts`).
-  if (person?.aircraft && person.aircraft.soldAt === undefined) vehicles += person.aircraft.price;
+  if (person?.aircraft && person.aircraft.soldAt === undefined) { vehicles += person.aircraft.price; liabilities += person.aircraft.loan?.owed ?? 0; }
   // And a boat, the same way (`systems/boats.ts`).
   if (person?.boat && person.boat.soldAt === undefined) { vehicles += person.boat.price; liabilities += person.boat.loan?.owed ?? 0; }
   for (const p of person ? parcelsOf(person) : []) {

@@ -10,11 +10,12 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { OWN_172, hiredPilotUsd, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
+import { weatherOn } from '@/engine/systems/weather';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf, slotOf } from '@/engine/systems/journey';
 import { airportsFor } from '@/engine/systems/airports';
-import { distanceKm } from '@/engine/content/geography';
+import { CITIES, distanceKm } from '@/engine/content/geography';
 
 const YEAR = 365.2425 * MS_DAY;
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -73,7 +74,12 @@ describe('learning to fly', () => {
     sim.advanceBy(100 * MS_DAY);
     expect(sim.player.pilot?.authority).toBe('FAA');
     expect(sim.player.pilotTraining!.status).toBe('certified');
-    expect(sim.universe.transactions.filter((t) => t.memo === 'Flight training, a month')).toHaveLength(6);
+    expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Flight training, a month'))).toHaveLength(6);
+    // The medical with the first month, and the certificate's own months from the training's start.
+    expect(sim.universe.transactions.filter((t) => t.memo === 'Flight training, a month, and the medical')).toHaveLength(1);
+    const firstMonth = sim.universe.transactions.find((t) => t.memo === 'Flight training, a month, and the medical')!;
+    expect(firstMonth.postings.filter((x) => x.amount > 0).reduce((q, x) => q + x.amount, 0)).toBe(trainingCosts(sim).month + inSave(sim, 142_50, 'USD'));
+    expect(sim.player.pilot!.medicalUntil).toBeGreaterThan(sim.now);
     expect(sim.execute({ kind: 'pilot.train', payload: {} }).error).toMatch(/hold a private pilot certificate/);
   });
 });
@@ -201,5 +207,60 @@ describe('a light jet chartered', () => {
     expect(journeysOf(sim.player).some((j) => j.legs.some((l) => l.routeId === 'jet'))).toBe(true);
     // Its departure is the flight's, not the taxi's before it.
     expect(slotOf(journeysOf(sim.player).find((j) => j.legs.some((l) => l.routeId === 'jet'))!)).toBe(2);
+  });
+});
+
+describe('a pilot’s medical, the weather, and a loan on a plane', () => {
+  it('renews the medical when it runs out, paid; lapsed, a pilot doesn’t fly themselves', () => {
+    const sim = save('us-ny-newyork', 'medical', 45);
+    fund(sim, 50_000);
+    sim.player.pilot = { issuedAt: sim.now, authority: 'FAA', medicalUntil: sim.now + 10 * MS_DAY };
+    sim.schedule({ at: sim.player.pilot.medicalUntil!, kind: MEDICAL_KIND, label: 'Pilot’s Medical', category: 'personal', priority: 30, payload: { personId: sim.player.id } });
+    sim.advanceBy(12 * MS_DAY);
+    const renewed = sim.universe.transactions.filter((t) => t.memo === 'A pilot’s medical, renewed');
+    expect(renewed).toHaveLength(1);
+    expect(renewed[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 142_50, 'USD'));
+    // At 45, two years.
+    expect(Math.round((sim.player.pilot.medicalUntil! - sim.now) / (30.44 * MS_DAY))).toBe(24);
+    sim.player.pilot.medicalUntil = sim.now - MS_DAY;
+    expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', sim.now + 5 * MS_DAY, 2)).toMatch(/medical has lapsed/);
+  });
+
+  it('refuses a visual flight on a day of fog or a thunderstorm at either end', () => {
+    const sim = save('us-ny-newyork', 'vfr');
+    sim.player.pilot = { issuedAt: sim.now, authority: 'FAA' };
+    let found = false;
+    for (let d = 1; d < 400 && !found; d += 1) {
+      const day = sim.now + d * MS_DAY;
+      const w = [weatherOn(sim, CITIES.require('us-ny-newyork'), day).condition, weatherOn(sim, CITIES.require('us-ct-newhaven'), day).condition];
+      if (w.some((c) => NOT_VISUAL.has(c))) {
+        expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', day, 2)).toMatch(/no visual flight/);
+        found = true;
+      } else if (w.every((c) => c === 'Rain' || c === 'Snow') ) {
+        expect(planFlyYourself(sim, sim.player, 'us-ny-newyork', 'us-ct-newhaven', day, 2)).not.toBeTypeOf('string');
+      }
+    }
+    expect(found).toBe(true);
+  });
+
+  it('buys a 172 with 15% down on AOPA Finance’s middle rate over 20 years to a record of 700, and pays it off from a sale', () => {
+    const sim = save('us-ny-newyork', 'plane-loan');
+    fund(sim, 50_000);
+    sim.player.credit = { ...sim.player.credit!, score: 699 };
+    expect(buyAircraftRefusal(sim, sim.player, true)).toMatch(/record of 700/);
+    sim.player.credit.score = 760;
+    const before = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    expect(sim.execute({ kind: 'aircraft.buy', payload: { financed: true } }).ok).toBe(true);
+    const price = inSave(sim, 121_847_00, 'USD');
+    expect(before - sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(Math.round(price * 0.15) + inSave(sim, 5_00, 'USD'));
+    const loan = { ...sim.player.aircraft!.loan! };
+    expect(loan.owed).toBe(price - Math.round(price * 0.15));
+    sim.advanceBy(65 * MS_DAY);
+    expect(sim.universe.transactions.filter((t) => t.memo === 'Loan payment on the plane')).toHaveLength(2);
+    expect(sim.player.aircraft!.loan!.owed).toBeLessThan(loan.owed);
+    const owed = sim.player.aircraft!.loan!.owed;
+    const mid = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    expect(sim.execute({ kind: 'aircraft.sell', payload: {} }).ok).toBe(true);
+    expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance - mid).toBe(price - owed);
   });
 });

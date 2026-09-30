@@ -19,21 +19,24 @@
  * miles less the half hour's fuel a day flight must keep (14 CFR 91.151),
  * paid by the hour, with the taxi to the airport and from the far one
  * (from 2026-09-30; owning an aircraft came in 7c). A medical's renewal and
- * the weather a visual flight needs aren't kept, said so. Only an FAA certificate is kept, and a plane may not be rented
- * abroad on it.
+ * the weather a visual flight needs weren't kept until 2026-09-30; both are
+ * now (`MEDICAL`, `NOT_VISUAL`). Only an FAA certificate is kept, and a
+ * plane may not be rented abroad on it.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, addMonths, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { airportsFor } from './airports';
 import { groundLeg } from '../content/air';
 import { ageOn } from './mortality';
-import { inTheBank, owe, payFromBank } from './household';
+import { expenseFor, inTheBank, owe, payFromBank } from './household';
+import { amortized } from './vehicles';
+import { weatherOn } from './weather';
 import type { JourneyLeg } from './journey';
 
 export const PILOT_TRAINING = {
@@ -43,7 +46,36 @@ export const SKYHAWK = { knots: 124, rangeNm: 640, reserveHours: 0.5, overheadHo
 export const PILOT_MONTH_KIND = 'pilot.month';
 
 export interface PilotTraining { startedAt: Instant; monthsDone: number; status: 'training' | 'stopped' | 'certified' }
-export interface PilotCertificate { issuedAt: Instant; authority: 'FAA' }
+export interface PilotCertificate { issuedAt: Instant; authority: 'FAA'; /** When the medical runs out (14 CFR 61.23), from 2026-09-30. */ medicalUntil?: Instant }
+
+/**
+ * The medical a pilot flies on, from 2026-09-30 (researched in
+ * `docs/research/world/research-travel-aviation-boats.json`): a third-class
+ * certificate, 60 months under 40 and 24 from 40 (14 CFR 61.23), at the
+ * middle of the $125 and $160 two examiners publish (an examiner's fee isn't
+ * regulated). Taken with the training and renewed when it runs out, paid
+ * from the bank; one the bank can't pay lapses, and a lapsed pilot doesn't
+ * fly themselves until it's paid, a month on.
+ */
+export const MEDICAL = { usd: 142.5, youngMonths: 60, olderMonths: 24, olderFrom: 40 } as const;
+export const MEDICAL_KIND = 'pilot.medical';
+const medicalMonths = (sim: Simulation, person: Person) => (ageOn(sim, person, sim.now) < MEDICAL.olderFrom ? MEDICAL.youngMonths : MEDICAL.olderMonths);
+
+/**
+ * A plane bought on a loan, from 2026-09-30: AOPA Finance's single-engine
+ * terms, the middle of its 6.99% to 9.99%, at least 15% down on one built
+ * from 1960, and 20 years on a loan of $75,000 or more; the 700 most
+ * lenders ask, AOPA says. The FAA's registration is paid at the sale.
+ */
+export const PLANE_LOAN = { apr: 0.0849, downShare: 0.15, months: 240, minScore: 700 } as const;
+
+/**
+ * The weather a visual flight needs: fog is under the three miles of 14 CFR
+ * 91.155, and a thunderstorm is to be kept 20 miles off, as the FAA's pilot's
+ * handbook says; on either, a flight of one's own that day is refused. Rain
+ * and snow are flown in, the rule asking visibility and not dryness.
+ */
+export const NOT_VISUAL: ReadonlySet<string> = new Set(['Fog', 'Thunderstorm']);
 
 /**
  * A flight not by airline, with the taxi to its airport and from the far
@@ -74,11 +106,12 @@ export function trainingCosts(sim: Simulation): { month: Money; tests: Money; to
 }
 
 export function trainRefusal(sim: Simulation, person: Person): string | undefined {
+  const medical = person.pilotTraining === undefined ? usd(sim, Math.round(MEDICAL.usd * 100)) : 0;
   if (person.pilot) return 'You hold a private pilot certificate.';
   if (person.pilotTraining?.status === 'training') return 'You’re training already.';
   if (CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId !== 'us') return 'SLATE prices a pilot’s training in America only yet.';
   if (ageOn(sim, person, sim.now) < PILOT_TRAINING.minAge) return `A private pilot certificate is had from ${PILOT_TRAINING.minAge}.`;
-  if (inTheBank(sim, person) < trainingCosts(sim).month) return 'The bank can’t pay the first month.';
+  if (inTheBank(sim, person) < trainingCosts(sim).month + medical) return 'There isn’t enough in the bank for the first month.';
   return undefined;
 }
 
@@ -101,16 +134,20 @@ export const hiredPilotUsd = (hours: number): number => (hours <= HIRED_PILOT_US
 export function planFlyYourself(sim: Simulation, person: Person, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
   const ownsHere = person.aircraft !== undefined && person.aircraft.soldAt === undefined && person.aircraft.at === fromCity;
   if (!person.pilot && !ownsHere) return 'Flying yourself asks a pilot certificate.';
+  // A pilot flying needs a medical in force.
+  if (person.pilot?.medicalUntil !== undefined && person.pilot.medicalUntil < day) return 'Your medical has lapsed: it’s renewed when the bank can pay.';
   const fromAp = airportsFor(fromCity)[0];
   const toAp = airportsFor(toCity)[0];
   const from = fromAp?.airport;
   const to = toAp?.airport;
   if (!from || !to || from.country !== 'US' || to.country !== 'US') return 'A plane is rented on an FAA certificate in America only.';
-  if (from.iata === to.iata) return 'The same airport serves both towns.';
+  if (from.iata === to.iata) return 'One airport serves both towns.';
   const nm = distanceKm(from, to) / 1.852;
   const usable = SKYHAWK.rangeNm - SKYHAWK.knots * SKYHAWK.reserveHours;
   if (nm > usable) return `${Math.round(nm)} nautical miles is past a Skyhawk’s ${Math.round(usable)} with a day flight’s reserve.`;
   const hours = nm / SKYHAWK.knots + SKYHAWK.overheadHours;
+  // Visual flight: no fog or thunderstorm at either end that day.
+  for (const city of [fromCity, toCity]) { const w = weatherOn(sim, CITIES.require(city), day).condition; if (NOT_VISUAL.has(w)) return `${w === 'Fog' ? 'Fog' : 'A thunderstorm'} in ${CITIES.require(city).name} that day: no visual flight.`; }
   const zone = CITIES.require(fromCity).timeZone;
   const p = zonedParts(day, zone);
   const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(10, slot)) }, zone);
@@ -139,11 +176,23 @@ export function registerAviation(sim: Simulation): void {
       s.schedule({ at: s.now, kind: PILOT_MONTH_KIND, label: 'Flight Training', category: 'personal', priority: 30, payload: { personId: person.id } });
       return { month: 0, total: costs.tests };
     }
-    if (!payFromBank(s, person, costs.month, 'Flight training, a month', 'travel')) throw new CommandError('The bank couldn’t pay.');
+    const first = person.pilotTraining === undefined;
+    // The medical is had before the first solo: paid with the first month.
+    const medical = first ? usd(s, Math.round(MEDICAL.usd * 100)) : 0;
+    if (!payFromBank(s, person, costs.month + medical, first ? 'Flight training, a month, and the medical' : 'Flight training, a month', 'travel')) throw new CommandError('Your bank couldn’t pay.');
     const done = person.pilotTraining?.status === 'stopped' ? person.pilotTraining.monthsDone : 0;
     person.pilotTraining = { startedAt: person.pilotTraining?.startedAt ?? s.now, monthsDone: done + 1, status: 'training' };
     scheduleMonth(s, person);
     return { month: costs.month, total: costs.total };
+  });
+
+  sim.onSchedule(MEDICAL_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const pilot = person?.pilot;
+    if (!person || !pilot) return;
+    // Renewed and paid, for its months; or lapsed, and asked again a month on.
+    if (payFromBank(s, person, usd(s, Math.round(MEDICAL.usd * 100)), 'A pilot’s medical, renewed', 'travel')) pilot.medicalUntil = addMonths(s.now, medicalMonths(s, person), s.zone);
+    s.schedule({ at: pilot.medicalUntil !== undefined && pilot.medicalUntil > s.now ? pilot.medicalUntil : s.now + 30 * MS_DAY, kind: MEDICAL_KIND, label: 'Pilot’s Medical', category: 'personal', priority: 30, payload: { personId: person.id } });
   });
 
   sim.onSchedule(PILOT_MONTH_KIND, (item, s) => {
@@ -155,17 +204,18 @@ export function registerAviation(sim: Simulation): void {
     if (t.monthsDone >= PILOT_TRAINING.months) {
       if (!payFromBank(s, person, costs.tests, 'The knowledge test and the checkride', 'travel')) {
         t.status = 'stopped';
-        if (mine) s.notify({ category: 'personal', title: 'Training Stopped', body: `The bank couldn’t pay the tests, ${formatMoney(costs.tests, saveCurrency(s.universe))}.`, importance: 60, route: '/workspace/travel' });
+        if (mine) s.notify({ category: 'personal', title: 'Training Stopped', body: `Your bank couldn’t pay the tests, ${formatMoney(costs.tests, saveCurrency(s.universe))}.`, importance: 60, route: '/workspace/travel' });
         return;
       }
       t.status = 'certified';
-      person.pilot = { issuedAt: s.now, authority: 'FAA' };
+      person.pilot = { issuedAt: s.now, authority: 'FAA', medicalUntil: person.pilotTraining?.startedAt !== undefined ? addMonths(person.pilotTraining.startedAt, medicalMonths(s, person), s.zone) : addMonths(s.now, medicalMonths(s, person), s.zone) };
+      s.schedule({ at: person.pilot.medicalUntil!, kind: MEDICAL_KIND, label: 'Pilot’s Medical', category: 'personal', priority: 30, payload: { personId: person.id } });
       if (mine) s.notify({ category: 'personal', title: 'A Private Pilot', body: 'You passed the knowledge test and the checkride: the FAA’s private pilot certificate is yours.', importance: 70, route: '/workspace/travel' });
       return;
     }
     if (!payFromBank(s, person, costs.month, 'Flight training, a month', 'travel')) {
       t.status = 'stopped';
-      if (mine) s.notify({ category: 'personal', title: 'Training Stopped', body: 'The bank couldn’t pay the month’s flying. Take it up again on Travel.', importance: 60, route: '/workspace/travel' });
+      if (mine) s.notify({ category: 'personal', title: 'Training Stopped', body: 'Your bank couldn’t pay the month’s flying. Take it up again on Travel.', importance: 60, route: '/workspace/travel' });
       return;
     }
     t.monthsDone += 1;
@@ -206,7 +256,7 @@ export const OWN_172 = {
 export const AIRCRAFT_MONTH_KIND = 'aircraft.month';
 const YEAR = 365.2425 * MS_DAY;
 
-export interface OwnedAircraft { boughtAt: Instant; price: Money; homeCity: string; at: string; hours: number; overhauledAt: Instant; annualDue: Instant; registeredUntil: Instant; soldAt?: Instant }
+export interface OwnedAircraft { boughtAt: Instant; price: Money; homeCity: string; at: string; hours: number; overhauledAt: Instant; annualDue: Instant; registeredUntil: Instant; soldAt?: Instant; loan?: { owed: Money; monthly: Money; monthsLeft: number } }
 
 const regionOf = (cityId: string) => CITIES.get(cityId)?.parentId ?? '';
 
@@ -215,10 +265,11 @@ export function ownHourCost(sim: Simulation, cityId: string): Money {
   return usd(sim, Math.round(OWN_172.gph * (OWN_172.avgas[regionOf(cityId)] ?? OWN_172.avgasNational) * 100));
 }
 
-export function buyAircraftRefusal(sim: Simulation, person: Person): string | undefined {
+export function buyAircraftRefusal(sim: Simulation, person: Person, financed = false): string | undefined {
   if (person.aircraft && person.aircraft.soldAt === undefined) return 'You own a plane.';
   if (CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId !== 'us') return 'SLATE prices a plane’s keeping in America only yet.';
-  if (inTheBank(sim, person) < usd(sim, (OWN_172.priceUsd + OWN_172.registration) * 100)) return `A 172 costs about ${formatMoney(usd(sim, OWN_172.priceUsd * 100), saveCurrency(sim.universe), { cents: false })}.`;
+  if (financed && (person.credit?.score ?? 0) < PLANE_LOAN.minScore) return 'An aircraft lender asks a record of 700.';
+  if (inTheBank(sim, person) < usd(sim, Math.round(((financed ? OWN_172.priceUsd * PLANE_LOAN.downShare : OWN_172.priceUsd) + OWN_172.registration) * 100))) return `A 172 costs about ${formatMoney(usd(sim, OWN_172.priceUsd * 100), saveCurrency(sim.universe), { cents: false })}.`;
   return undefined;
 }
 
@@ -235,15 +286,21 @@ function scheduleAircraft(sim: Simulation, person: Person): void {
 }
 
 export function registerOwnedAircraft(sim: Simulation): void {
-  sim.onCommand<Record<string, never>, { paid: Money }>('aircraft.buy', (_p, { sim: s }) => {
+  sim.onCommand<{ financed?: boolean }, { paid: Money }>('aircraft.buy', (p, { sim: s }) => {
     const person = s.player;
-    const no = buyAircraftRefusal(s, person);
+    const financed = p?.financed === true;
+    const no = buyAircraftRefusal(s, person, financed);
     if (no) throw new CommandError(no);
     const price = usd(s, OWN_172.priceUsd * 100);
-    const paid = price + usd(s, OWN_172.registration * 100);
-    if (!payFromBank(s, person, paid, 'A Cessna 172, and its FAA registration', 'travel')) throw new CommandError('The bank couldn’t pay.');
+    const lent = financed ? price - Math.round(price * PLANE_LOAN.downShare) : 0;
+    const paid = price - lent + usd(s, OWN_172.registration * 100);
+    if (!payFromBank(s, person, paid, 'A Cessna 172, and its FAA registration', 'travel')) throw new CommandError('Your bank couldn’t pay.');
     const home = person.home?.cityId ?? person.currentLocationId;
     person.aircraft = { boughtAt: s.now, price, homeCity: home, at: home, hours: 0, overhauledAt: s.now, annualDue: s.now + YEAR, registeredUntil: s.now + OWN_172.registrationYears * YEAR };
+    if (lent > 0) {
+      person.aircraft.loan = { owed: lent, monthly: amortized(lent, PLANE_LOAN.apr, PLANE_LOAN.months), monthsLeft: PLANE_LOAN.months };
+      s.post({ memo: 'A loan on the Cessna 172', category: 'travel', postings: [{ accountId: s.nominalAccount('expense', expenseFor('travel')).id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: -lent }] });
+    }
     scheduleAircraft(s, person);
     return { paid };
   });
@@ -252,7 +309,9 @@ export function registerOwnedAircraft(sim: Simulation): void {
     const person = s.player;
     const a = person.aircraft;
     if (!a || a.soldAt !== undefined) throw new CommandError('You own no plane.');
-    s.post({ memo: 'Sold the Cessna 172', category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: a.price }, { accountId: s.nominalAccount('income', 'Plane Sold').id, amount: -a.price }] });
+    const payoff = a.loan?.owed ?? 0;
+    s.post({ memo: 'Sold the Cessna 172', category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: a.price - payoff }, ...(payoff > 0 ? [{ accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: payoff }] : []), { accountId: s.nominalAccount('income', 'Plane Sold').id, amount: -a.price }] });
+    delete a.loan;
     a.soldAt = s.now;
     for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === AIRCRAFT_MONTH_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
     return { value: a.price };
@@ -267,6 +326,17 @@ export function registerOwnedAircraft(sim: Simulation): void {
     pay(OWN_172.insuranceYear / 12, 'The plane’s insurance, a month');
     if (s.now >= a.annualDue) { pay(OWN_172.annual, 'The plane’s annual inspection'); a.annualDue += YEAR; }
     if (s.now >= a.registeredUntil) { pay(OWN_172.registration, 'The plane’s FAA registration'); a.registeredUntil += OWN_172.registrationYears * YEAR; }
+    // The loan: interest on what's owed, the rest off it, what the bank can't pay owed.
+    if (a.loan) {
+      const interest = Math.round((a.loan.owed * PLANE_LOAN.apr) / 12);
+      const payment = Math.min(a.loan.monthly, a.loan.owed + interest);
+      const principal = payment - interest;
+      if (!payFromBank(s, person, payment, 'Loan payment on the plane', 'travel')) owe(s, person, payment, 'Loan payment on the plane', 'travel');
+      s.post({ memo: 'Plane loan, principal repaid', category: 'travel', postings: [{ accountId: s.nominalAccount('liability_other', 'Aircraft Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', expenseFor('travel')).id, amount: -principal }] });
+      a.loan.owed -= principal;
+      a.loan.monthsLeft -= 1;
+      if (a.loan.owed <= 0 || a.loan.monthsLeft <= 0) delete a.loan;
+    }
     if (a.hours >= OWN_172.tboHours || s.now - a.overhauledAt >= OWN_172.tboYears * YEAR) { pay(OWN_172.overhaul, 'The plane’s engine overhauled'); a.hours = 0; a.overhauledAt = s.now; }
     scheduleAircraft(s, person);
   });
@@ -305,7 +375,7 @@ export function planCharterJet(sim: Simulation, fromCity: string, toCity: string
   const from = fromAp?.airport;
   const to = toAp?.airport;
   if (!from || !to || from.country !== 'US' || to.country !== 'US') return 'SLATE charters a jet between American airports only yet.';
-  if (from.iata === to.iata) return 'The same airport serves both towns.';
+  if (from.iata === to.iata) return 'One airport serves both towns.';
   const nm = distanceKm(from, to) / 1.852;
   const usable = LIGHT_JET.rangeNm - LIGHT_JET.knots * LIGHT_JET.reserveHours;
   // Past its range, it stops once for fuel, as a light jet crossing the country does.
