@@ -33,6 +33,8 @@ import { earningsOf, homeOf, ukTaxYear } from './earnings';
 import { rentOf } from './household';
 import { workedBetween } from './career';
 import { payeeAccount } from './cash';
+import { citizenOf } from './documents';
+import { residenceIn } from './residence';
 import { isoOfCountry } from './documents';
 
 export interface CreditClaim { filedAt: Instant; periodStart: Instant; nils: number; paid: Money; closedAt?: Instant; why?: string }
@@ -58,7 +60,8 @@ function capitalOf(sim: Simulation, person: Person): Money {
 export function creditRefusal(sim: Simulation, person: Person): string | undefined {
   if (!livesInBritain(person)) return 'Universal Credit is for someone living in Britain.';
   const own = isoOfCountry(person.citizenshipId);
-  if (own !== 'GB' && own !== 'IE') return 'On a visa, Britain gives no recourse to public funds.';
+  // Settled, indefinite leave to remain lifts the condition of no recourse to public funds (from 2026-09-30).
+  if (own !== 'GB' && own !== 'IE' && !citizenOf(person, 'GB') && residenceIn(person, 'GB', sim.now)?.route !== 'uk-settled') return 'On a visa, Britain gives no recourse to public funds.';
   const age = (sim.now - person.birthInstant) / YEAR;
   if (age >= UNIVERSAL_CREDIT.pensionAge) return 'Past the state pension age, it’s Pension Credit, not Universal Credit.';
   if (person.universalCredit && person.universalCredit.closedAt === undefined) return 'You have a claim open.';

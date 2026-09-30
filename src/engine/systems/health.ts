@@ -53,7 +53,8 @@ import { bmiOf } from './body';
 import { ONSET, onsetYearly } from '../content/body';
 import { fluByWeek, weekOfYear } from './seasons';
 import { isoOfCountry } from './documents';
-import { nhsByRoute } from './residence';
+import { nhsByRoute, residenceIn } from './residence';
+import { citizenOf, citizenshipsOf } from './documents';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -185,13 +186,28 @@ export function planKey(person: Person, at: Instant): string | undefined {
 /** The poverty line a month, in a year. */
 const povertyMonth = (year: number, into: string) => usd(byYear(POVERTY_LINE, year), into) / 12;
 
+/**
+ * Whether their status lets them have Medicaid: until 1 October 2026 SLATE
+ * asked none; from then, a US citizen, or five years with a green card
+ * (`systems/residence.ts`). An O-1's holder isn't among the groups the law
+ * names. In New York the Essential Plan's income band still reaches them,
+ * as SLATE had it; whether that plan takes an O-1's holder, and California's
+ * state-funded Medi-Cal for immigrants, weren't researched.
+ */
+export function medicaidStatus(person: Person, at: Instant): boolean {
+  if (at < Date.UTC(2026, 9, 1) || citizenOf(person, 'US')) return true;
+  const card = residenceIn(person, 'US', at);
+  return card?.route === 'us-green-card' && at - (card.issuedAt ?? at) >= 5 * 365.2425 * MS_DAY;
+}
+
 /** What program last month's income qualifies them for where they live: Medicaid, the Essential Plan, or none. */
 export function programFor(person: Person, at: Instant, into = 'USD'): { kind: 'medicaid' | 'essential'; band: 'low' | 'high' } | undefined {
   const state = BENEFIT_STATE[homeOf(person)];
   if (!state) return undefined;
   const income = earningsOf(person).months[lastMonthKey(at)] ?? 0;
   const ratio = income / povertyMonth(zonedParts(at, HOME).year, into);
-  if (ratio <= PUBLIC_COVER.medicaidShare) return { kind: 'medicaid', band: 'low' };
+  // From 1 October 2026 federal Medicaid is a citizen's, or a green card holder's after five years (Pub. L. 119-21 §71109).
+  if (ratio <= PUBLIC_COVER.medicaidShare && medicaidStatus(person, at)) return { kind: 'medicaid', band: 'low' };
   if (state === 'ny' && ratio <= PUBLIC_COVER.essentialShare) return { kind: 'essential', band: ratio <= PUBLIC_COVER.essentialCopaysFrom ? 'low' : 'high' };
   // Covered Connecticut reads the year before's poverty line, as the marketplace does.
   if (state === 'ct' && income / povertyMonth(zonedParts(at, HOME).year - 1, into) <= PUBLIC_COVER.coveredCtShare) return { kind: 'essential', band: 'low' };
@@ -538,7 +554,7 @@ export function publicCareShareOf(person: Person, care: Care, at: Instant, into 
   if (city?.countryId !== 'uk') return undefined;
   const iso = isoOfCountry(person.citizenshipId);
   // A visa's holder who paid the Immigration Health Surcharge is treated as ordinarily resident (`systems/residence.ts`, from 2026-09-30).
-  if (iso !== 'GB' && iso !== 'IE' && !nhsByRoute(person, at)) return undefined;
+  if (iso !== 'GB' && iso !== 'IE' && !citizenOf(person, 'GB') && !nhsByRoute(person, at)) return undefined;
   const pounds = (x: number) => { const c = Math.round(x * 100); return into === 'GBP' ? c : exchange(c, 'GBP', into) ?? c; };
   const england = city.parentId === 'uk-eng';
   const age = (at - person.birthInstant) / (365.25 * MS_DAY);
@@ -562,7 +578,8 @@ export function publicCareShareOf(person: Person, care: Care, at: Instant, into 
  * before.
  */
 function irishShareOf(person: Person, care: Care, into: string): Money | undefined {
-  if (!new Set(['IE', 'GB', 'DE', 'FR', 'ES', 'LV', 'IT', 'NL']).has(isoOfCountry(person.citizenshipId) ?? '')) return undefined;
+  const eligible = new Set(['IE', 'GB', 'DE', 'FR', 'ES', 'LV', 'IT', 'NL']);
+  if (!citizenshipsOf(person).some((c) => eligible.has(c))) return undefined;
   const euros = (x: number) => { const c = Math.round(x * 100); return into === 'EUR' ? c : exchange(c, 'EUR', into) ?? c; };
   if (care === 'stay') return 0;
   if (care === 'emergency') return euros(IRISH_CARE.emergency);
@@ -579,7 +596,7 @@ function irishShareOf(person: Person, care: Care, into: string): Money | undefin
  * optician are private, as before.
  */
 function mexicanShareOf(person: Person, care: Care): Money | undefined {
-  if (isoOfCountry(person.citizenshipId) !== 'MX') return undefined;
+  if (!citizenOf(person, 'MX')) return undefined;
   if (care === 'cleaning' || care === 'filling' || care === 'exam' || care === 'glasses') return undefined;
   return 0;
 }
@@ -598,7 +615,7 @@ function mexicanShareOf(person: Person, care: Care): Money | undefined {
  * medical care.
  */
 function canadianShareOf(person: Person, care: Care, at: Instant): Money | undefined {
-  if (isoOfCountry(person.citizenshipId) !== 'CA') return undefined;
+  if (!citizenOf(person, 'CA')) return undefined;
   if (care === 'cleaning' || care === 'filling' || care === 'exam' || care === 'glasses') return undefined;
   if (care === 'rx-generic' || care === 'rx-brand') {
     const age = (at - person.birthInstant) / (365.25 * MS_DAY);

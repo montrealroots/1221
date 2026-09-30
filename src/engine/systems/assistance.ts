@@ -50,6 +50,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { isoOfCountry } from './documents';
 import { earningsOf } from './earnings';
+import { citizenOf } from './documents';
 import { rentOf } from './household';
 
 export const ASSISTANCE_KIND = 'benefits.assistance_month';
@@ -100,8 +101,8 @@ export function assistanceRefusal(sim: Simulation, person: Person): string | und
   if (!scheme) return 'SLATE keeps assistance in Ontario, British Columbia, New York, California and Connecticut only yet.';
   if (person.assistance && person.assistance.closedAt === undefined) return 'You have a claim open.';
   const own = isoOfCountry(person.citizenshipId);
-  if (scheme === 'snap' && own !== 'US') return 'SNAP is kept for a citizen; a non-citizen’s eligibility turns on status SLATE doesn’t keep.';
-  if (scheme !== 'snap' && own !== 'CA') return 'Assistance is kept for a Canadian citizen; a newcomer’s eligibility turns on status SLATE doesn’t keep.';
+  if (scheme === 'snap' && own !== 'US' && !citizenOf(person, 'US')) return 'SNAP is kept for a citizen; a non-citizen’s eligibility turns on status SLATE doesn’t keep.';
+  if (scheme !== 'snap' && own !== 'CA' && !citizenOf(person, 'CA')) return 'Assistance is kept for a Canadian citizen; a newcomer’s eligibility turns on status SLATE doesn’t keep.';
   const age = (sim.now - person.birthInstant) / YEAR;
   if (age < 18) return 'It’s claimed by an adult.';
   if (scheme === 'ontario-works' && inLocal(sim, liquid(sim, person), 'CAD') > ONTARIO_WORKS.assets * 100) return `Ontario Works asks liquid assets under CAD ${ONTARIO_WORKS.assets.toLocaleString('en-US')}.`;

@@ -1,0 +1,624 @@
+{
+  "meta": {
+    "researchedOn": "2026-09-30",
+    "purpose": "Real sourced figures for SLATE: an actor's US green card (EB-1A / EB-2 NIW), naturalization in five countries, dual citizenship, Mexico's foreign-buyer permits, and easement registration.",
+    "confirmedMeaning": "confirmed=true means the figure was read on the cited page or document itself during this session (by fetch, or by downloading the PDF and extracting its text). confirmed=false means it came from a search-engine summary or a secondary page that could not be verified against the primary source.",
+    "blockedSources": [
+      "travel.state.gov (Visa Bulletin, passport fees, dual nationality page): HTTP 403 / Cloudflare block on every attempt",
+      "egov.uscis.gov processing-times tool and its API: Cloudflare block",
+      "sre.gob.mx and portales.sre.gob.mx: Radware bot wall; the Ley Federal de Derechos, Ley de Inversion Extranjera, Ley de Nacionalidad and Constitution were read from diputados.gob.mx instead",
+      "ircc.canada.ca citizenship-grant processing time: not present in the published processing-time JSON files",
+      "ireland.ie passport fees page: HTTP 403",
+      "congress.gov CRS report R48633: HTTP 403"
+    ],
+    "currencyNotes": "USD for US, CAD for Canada, GBP for UK, EUR for Ireland, MXN for Mexico."
+  },
+  "greenCard": {
+    "visaBulletin": {
+      "bulletin": "October 2026 (first bulletin of FY2027)",
+      "note": "travel.state.gov blocked; figures read on two independent law-firm summaries that agree exactly.",
+      "uscisChartForOctober2026": {
+        "value": "Dates for Filing chart for employment-based adjustment",
+        "url": "https://tandslaw.com/october-2026-visa-bulletin-issued-dates-for-filing-eb-cut-off-dates-will-apply-as-fy-2027-begins-rest-of-the-world-eb-2-and-eb-3-retrogress/",
+        "publisher": "Tindall & Sanders (law firm)",
+        "date": "2026-09-29",
+        "confirmed": true
+      },
+      "finalActionDates": {
+        "EB1": {
+          "allChargeability": "Current",
+          "china": "2023-07-01",
+          "india": "2023-02-01",
+          "mexico": "Current",
+          "philippines": "Current"
+        },
+        "EB2": {
+          "allChargeability": "2025-01-01",
+          "china": "2021-10-01",
+          "india": "2013-11-01",
+          "mexico": "2025-01-01",
+          "philippines": "2025-01-01"
+        }
+      },
+      "datesForFiling": {
+        "EB1": {
+          "allChargeability": "Current",
+          "china": "2024-07-01",
+          "india": "2024-07-01",
+          "mexico": "Current",
+          "philippines": "Current"
+        },
+        "EB2": {
+          "allChargeability": "2026-03-15",
+          "china": "2023-01-01",
+          "india": "2015-01-15",
+          "mexico": "2026-03-15",
+          "philippines": "2026-03-15"
+        }
+      },
+      "movementNotes": "EB-2 rest of world, Mexico and the Philippines retrogressed from Current (September 2026) to 2025-01-01. EB-1 India advanced from 2022-10-15. EB-2 India returned at 2013-11-01 after being unavailable July-September 2026. EB-2 China advanced one month.",
+      "sources": [
+        {
+          "url": "https://tandslaw.com/october-2026-visa-bulletin-issued-dates-for-filing-eb-cut-off-dates-will-apply-as-fy-2027-begins-rest-of-the-world-eb-2-and-eb-3-retrogress/",
+          "publisher": "Tindall & Sanders",
+          "date": "2026-09-29",
+          "confirmed": true
+        },
+        {
+          "url": "https://ogletree.com/insights-resources/blog-posts/october-2026-visa-bulletin-fy-2027-brings-employment-based-visa-movement/",
+          "publisher": "Ogletree Deakins",
+          "date": "2026-09-30",
+          "confirmed": true
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2027/visa-bulletin-for-october-2026.html",
+          "publisher": "US Department of State",
+          "date": "2026-09",
+          "confirmed": false,
+          "note": "Primary source; blocked (403)."
+        }
+      ]
+    },
+    "processingTimes": {
+      "I140": {
+        "EB1A_months": 31,
+        "EB2_NIW_months": 29,
+        "EB1B_months": 15.5,
+        "EB1C_months": 27,
+        "EB2_PERM_months": 2.5,
+        "basis": "USCIS processing-times tool, time to complete 80% of cases, as queried July 2026 and reported by Manifest Law (updated 2026-09-01).",
+        "url": "https://manifestlaw.com/blog/i140-processing-times",
+        "publisher": "Manifest Law (citing USCIS)",
+        "date": "2026-09-01",
+        "confirmed": true,
+        "caveat": "Read on the secondary page; the USCIS tool itself (egov.uscis.gov/processing-times) was blocked."
+      },
+      "I140_fy2026_median": {
+        "value_months": 3.7,
+        "note": "A search summary reported USCIS's FY2026 national median for regular I-140s as 3.7 months (Q1 FY2026: 4.9). This is all I-140 categories together, dominated by fast PERM cases, so it does not describe EB-1A or NIW.",
+        "url": "https://immione.com/i140-processing-times-trends-fy2026/",
+        "publisher": "ImmiOne (secondary)",
+        "date": "2026",
+        "confirmed": false
+      },
+      "I140_premium": {
+        "fee_usd": 2965,
+        "feeUrl": "https://www.uscis.gov/g-1055",
+        "feePublisher": "USCIS, Form G-1055 Fee Schedule",
+        "feeDate": "2026-09-09 edition",
+        "feeConfirmed": true,
+        "turnaround": "15 business days for EB-1A; 45 business days for EB-2 NIW",
+        "turnaroundUrl": "https://manifestlaw.com/blog/i140-processing-times",
+        "turnaroundConfirmed": false
+      },
+      "I485_employmentBased": {
+        "value": "Not confirmed. Secondary sources report a USCIS range of 8 to 24 months (as of July 2026) and an FY2026 median of about 5.8 months; FY2025 closed at 7.5 months.",
+        "url": "https://www.lighthousehq.com/blog/i-485-processing-times",
+        "publisher": "Lighthouse (secondary, via search summary)",
+        "date": "2026",
+        "confirmed": false,
+        "seeAlso": "greenCard.i485ProcessingTime"
+      }
+    },
+    "fees": {
+      "source": {
+        "url": "https://www.uscis.gov/g-1055",
+        "pdf": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+        "publisher": "USCIS, Form G-1055 Fee Schedule",
+        "date": "Edition 2026-09-09",
+        "confirmed": true
+      },
+      "I140": {
+        "paper_usd": 715,
+        "online_usd": 665,
+        "confirmed": true
+      },
+      "asylumProgramFee": {
+        "regularPetitioner_usd": 600,
+        "smallEmployerOrSelfPetitioner_usd": 300,
+        "nonprofit_usd": 0,
+        "note": "An actor filing EB-1A or EB-2 NIW normally self-petitions, so the fee is $300. A self-petitioned I-140 costs $1,015 on paper or $965 online.",
+        "confirmed": true
+      },
+      "I485": {
+        "over14_paper_usd": 1440,
+        "over14_online_usd": 1390,
+        "under14WithParent_paper_usd": 950,
+        "under14WithParent_online_usd": 900,
+        "confirmed": true
+      },
+      "biometrics": {
+        "value_usd": 0,
+        "note": "The G-1055 lists no separate biometric services fee for the I-485 or I-140. Since the April 1, 2024 fee rule, biometrics are built into the main fee. A separate $30 biometric fee survives only for certain EOIR forms and a few others.",
+        "confirmed": true
+      },
+      "I765_withPendingI485_usd": {
+        "value": 260,
+        "note": "For an I-485 filed with a fee on or after 2024-04-01. The standard I-765 fee is $520 on paper or $470 online.",
+        "confirmed": true
+      },
+      "I131_advanceParole_withPendingI485": {
+        "paper_usd": 630,
+        "online_usd": 580,
+        "confirmed": true
+      },
+      "N400": {
+        "paper_usd": 760,
+        "online_usd": 710,
+        "reducedFee_paper_usd": 380,
+        "reducedFeeRule": "household income not more than 400% of the Federal Poverty Guidelines; paper filing only",
+        "confirmed": true
+      },
+      "pendingChange": "The G-1055 notes that Pub. L. 119-21 fees adjust each year and names an update effective October 16, 2026 for certain fees. The fees above are not Pub. L. 119-21 fees, but recheck after that date."
+    },
+    "whatItChanges": {
+      "workAnywhere": {
+        "value": "A permanent resident may \"work in the United States at any legal work of your qualification and choosing\"; some jobs are limited to US citizens for security reasons.",
+        "url": "https://www.uscis.gov/green-card/after-we-grant-your-green-card/rights-and-responsibilities-of-a-green-card-holder-permanent-resident",
+        "publisher": "USCIS",
+        "date": "Last reviewed 2025-09-12",
+        "confirmed": true
+      },
+      "endOfO1Renewals": {
+        "value": "The O-1 is tied to an I-129 petition filed by a US employer or US agent. Initial admission is up to 3 years, and extensions come in increments of up to 1 year to continue the same event or activity. A green card replaces this. There is no petitioner, no event-based validity and no yearly extension.",
+        "url": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement",
+        "publisher": "USCIS",
+        "date": "Last reviewed 2023-03-03",
+        "confirmed": true
+      },
+      "medicaidFiveYearBar": {
+        "value": "From October 1, 2026, section 71109 of Pub. L. 119-21 limits federal Medicaid and CHIP matching to US citizens and nationals, LPRs, Cuban/Haitian entrants and COFA migrants. It did not amend PRWORA's five-year waiting period (8 U.S.C. 1613), so LPRs generally still wait five years from getting LPR status for full Medicaid. Veterans, active-duty service members and their family members are exempt. States may still use the CHIPRA 214 option for lawfully residing children and pregnant women. An O-1 holder is not in any FFP-eligible group, so the green card is what starts the five-year clock.",
+        "url": "https://www.medicaid.gov/medicaid/downloads/alien-elgblty-section-71109-deck.pdf",
+        "publisher": "CMS Center for Medicaid and CHIP Services (companion deck to SHO letter #26-001)",
+        "date": "2026-05",
+        "confirmed": true
+      }
+    },
+    "i485ProcessingTime": {
+      "metric": "USCIS historical national median processing time, all offices, Form I-485 employment-based adjustment applications (months). Median = time to complete half the cases; visa-retrogressed I-485s are excluded.",
+      "latestFiscalYear": {
+        "fiscalYear": "FY2026 (partial, through 2026-02-28)",
+        "median_months": 6.2,
+        "url": "https://egov.uscis.gov/processing-times/historic-pt",
+        "publisher": "USCIS Historic Processing Times page",
+        "confirmed": false,
+        "note": "The USCIS page returned 403 (Cloudflare) to both WebFetch and curl. The figure comes only from a search-engine summary of that page and USCIS results; other secondary sources give 5.8 months, and a quarterly figure falling from 6.9 to 6.0 months. Treat it as secondary."
+      },
+      "fy2025": {
+        "fiscalYear": "FY2025",
+        "median_months": 7.2,
+        "url": "https://egov.uscis.gov/processing-times/historic-pt",
+        "publisher": "USCIS (via search summary)",
+        "confirmed": false,
+        "note": "Secondary only. Another secondary source says 7.5 months."
+      },
+      "confirmedSeries": {
+        "url": "https://www.uscis.gov/sites/default/files/document/fact-sheets/historical_pt_factsheet_fy16_to_fy24.pdf",
+        "publisher": "USCIS fact sheet, Historical Processing Times Trends FY2016-2024",
+        "date": "Data as of 2024-03-05",
+        "confirmed": true,
+        "median_months": {
+          "FY2016": 5.5,
+          "FY2017": 7,
+          "FY2018": 10.6,
+          "FY2019": 10,
+          "FY2020": 8.8,
+          "FY2021": 9.9,
+          "FY2022": 11,
+          "FY2023": 8.6,
+          "FY2024": 7.2
+        },
+        "note": "Read in the PDF myself. FY2024 covers only 2023-10-01 to 2024-01-31. FY2023 (8.6) is the latest full fiscal year I could confirm on a USCIS publication."
+      },
+      "notToConfuseWith": "The USCIS processing-times tool shows an 80th-percentile time over the prior six months, not a median; secondary sources quoting 8-24 months for EB I-485s are using that tool."
+    }
+  },
+  "naturalization": {
+    "US": {
+      "residence": {
+        "value": "LPR for 5 years (3 if married to and living with a US citizen); continuous residence for 5 years before filing; physical presence at least 30 months of the 5 years; 3 months' residence in the state or USCIS district before filing; age 18+.",
+        "url": "https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-1",
+        "publisher": "USCIS Policy Manual, Vol. 12 Part D Ch. 1",
+        "date": "Page current 2026-09-23",
+        "confirmed": true
+      },
+      "fee": {
+        "paper_usd": 760,
+        "online_usd": 710,
+        "url": "https://www.uscis.gov/g-1055",
+        "publisher": "USCIS G-1055",
+        "date": "2026-09-09 edition",
+        "confirmed": true
+      },
+      "tests": {
+        "value": "English (reading 1 of 3 sentences, writing 1 of 3 sentences, speaking at the interview) and the 2025 civics test. For N-400s filed on or after 2025-10-20, the civics test is an oral test of 20 questions from a list of 128, and 12 correct answers pass. Two attempts; a failed part is retested 60-90 days later. No separate test fee: it is covered by the N-400 fee.",
+        "url": "https://www.uscis.gov/citizenship/find-study-materials-and-resources/study-for-the-test",
+        "publisher": "USCIS",
+        "date": "2025-10 onward",
+        "confirmed": false,
+        "note": "Read from a search summary drawing on USCIS pages, not fetched directly."
+      },
+      "processingTime": {
+        "value": "Not confirmed. Secondary sources give a national median of roughly 5 to 7 months in FY2026 (one reports 7.1 months through 2026-06-30), and another reports 11.5 months as of March 2026.",
+        "url": "https://egov.uscis.gov/processing-times/",
+        "publisher": "USCIS (blocked); figures from secondary law-firm pages",
+        "date": "2026",
+        "confirmed": false
+      },
+      "passport": {
+        "value_usd": 165,
+        "breakdown": "$130 application fee to the Department of State plus $35 execution (acceptance) fee for a first adult passport book on Form DS-11; +$60 to expedite.",
+        "url": "https://www.visaverge.com/news/us-state-department-updates-passport-book-fees-adds-execution-and-expedited-costs/",
+        "publisher": "VisaVerge (secondary; travel.state.gov blocked)",
+        "date": "Effective 2026-04-08 per the article",
+        "confirmed": false
+      }
+    },
+    "Canada": {
+      "residence": {
+        "value": "1,095 days (3 years) of physical presence in Canada within the 5 years before applying, as a permanent resident. Tax filing for at least 3 of those years if required.",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/eligibility.html",
+        "publisher": "IRCC",
+        "date": "Modified 2026-04-21",
+        "confirmed": true
+      },
+      "fee": {
+        "adult_cad": 653,
+        "breakdown": "$530 processing fee plus $123 right of citizenship fee (raised from $119.75 on 2026-03-31). Minors: $100.",
+        "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "publisher": "IRCC fee list",
+        "date": "Modified 2026-09-21",
+        "confirmed": true,
+        "secondUrl": "https://www.canada.ca/en/immigration-refugees-citizenship/news/notices/right-citizenship-fee-increasing.html"
+      },
+      "tests": {
+        "value": "Applicants aged 18-54 must show English or French at CLB/NCLC level 4 and pass the citizenship test on rights, responsibilities, history, geography, economy, government, laws and symbols. No separate test fee was found; the test is part of the application.",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/eligibility.html",
+        "publisher": "IRCC",
+        "date": "Modified 2026-04-21",
+        "confirmed": true,
+        "feeConfirmed": false
+      },
+      "processingTime": {
+        "value": "Not confirmed on IRCC. A secondary report of IRCC's 2026-09-02/03 update gives 33 months for a citizenship grant, up from 25 months in August. Other secondary sources gave about 13 months in March and May 2026. The jump is large enough to doubt.",
+        "url": "https://www.visasupdate.com/post/canada-ircc-processing-times-september-2026",
+        "publisher": "VisasUpdate (secondary)",
+        "date": "2026-09",
+        "confirmed": false
+      },
+      "passport": {
+        "tenYear_cad": 163.5,
+        "fiveYear_cad": 122.5,
+        "note": "Adult (16+) applying in Canada, for applications received on or after 2026-03-31 (previously $160 and $120).",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/fees/fee-changes-passport.html",
+        "publisher": "IRCC (via search summary; the fee pages rendered 'Error loading fee' when fetched)",
+        "date": "2026-03-31",
+        "confirmed": false
+      }
+    },
+    "UK": {
+      "residence": {
+        "value": "5 years' residence in the UK; no more than 450 days outside the UK in those 5 years and no more than 90 days in the last 12 months; must have held ILR, settled status or indefinite leave to enter for 12 months (waived if married to a British citizen). Getting ILR itself takes 5 years on most routes, or 3 years on Global Talent.",
+        "url": "https://www.gov.uk/apply-citizenship-indefinite-leave-to-remain",
+        "publisher": "GOV.UK (Home Office)",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "fee": {
+        "total_gbp": 1839,
+        "application_gbp": 1709,
+        "ceremony_gbp": 130,
+        "biometrics_gbp": 0,
+        "url": "https://www.gov.uk/apply-citizenship-indefinite-leave-to-remain",
+        "publisher": "GOV.UK",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "tests": {
+        "lifeInTheUK": {
+          "fee_gbp": 50,
+          "format": "24 questions in 45 minutes",
+          "exempt": "under 18 or 65 and over",
+          "url": "https://www.gov.uk/life-in-the-uk-test",
+          "publisher": "GOV.UK",
+          "confirmed": true
+        },
+        "english": {
+          "value": "A Secure English Language Test at B1 or higher, or a degree taught in English. Nationals of majority English-speaking countries are exempt, including the USA and Canada; Ireland is listed 'for citizenship only'. People aged 65 or over are exempt.",
+          "url": "https://www.gov.uk/english-language/exemptions",
+          "publisher": "GOV.UK",
+          "confirmed": true,
+          "selTestFee": "Not found; GOV.UK does not state SELT prices."
+        }
+      },
+      "processingTime": {
+        "value": "Usually a decision within 6 months",
+        "url": "https://www.gov.uk/apply-citizenship-indefinite-leave-to-remain",
+        "publisher": "GOV.UK",
+        "confirmed": true
+      },
+      "passport": {
+        "online_gbp": 102,
+        "paper_gbp": 115.5,
+        "note": "Adult standard 34-page passport. First-time adult applicants also have an identity interview.",
+        "url": "https://www.gov.uk/passport-fees",
+        "publisher": "GOV.UK (HM Passport Office)",
+        "date": "Read 2026-09-30",
+        "confirmed": true
+      },
+      "pendingReform": "The 'earned settlement' proposals would raise the baseline qualifying period for ILR from 5 to 10 years on most routes, with Global Talent kept at 3 years. A secondary source says no Statement of Changes had been laid as of August 2026, so the 5-year rules still apply. Not confirmed on GOV.UK."
+    },
+    "Ireland": {
+      "residence": {
+        "value": "1,825 days (5 years) of reckonable residence in the 9 years before applying, including 365 days of continuous residence immediately before the application. Up to 70 days' absence is allowed in that final year, plus 30 more in exceptional cases at the Minister's discretion. Spouses and civil partners of Irish citizens need 1,095 days (3 years). Applicants must attend a citizenship ceremony and make a declaration of fidelity.",
+        "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/",
+        "publisher": "Immigration Service Delivery (Department of Justice)",
+        "date": "Last updated 2026-04-15",
+        "confirmed": true
+      },
+      "fee": {
+        "application_eur": 175,
+        "certification_adult_eur": 950,
+        "certification_minor_eur": 200,
+        "certification_widowOfIrishCitizen_eur": 200,
+        "certification_refugeeOrStateless_eur": 0,
+        "note": "The €175 is paid on application and is not refunded if the application is refused. The €950 is paid only on approval, before the certificate of naturalisation is issued.",
+        "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/",
+        "publisher": "ISD",
+        "date": "2026-04-15",
+        "confirmed": true
+      },
+      "tests": {
+        "value": "No citizenship or language test appears in ISD's naturalisation requirements. The applicant must be of good character and intend to keep living in Ireland.",
+        "confirmed": true,
+        "note": "Absence of a test read from the ISD page; no fee applies."
+      },
+      "processingTime": {
+        "value": "Most applications processed within 12 months",
+        "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/",
+        "publisher": "ISD",
+        "date": "2026-04-15",
+        "confirmed": true
+      },
+      "passport": {
+        "adultTenYearOnline_eur": 75,
+        "note": "Adult standard 10-year book via Passport Online; a €15 postage fee applies if you live outside Ireland.",
+        "url": "https://www.ireland.ie/en/dfa/passports/passport-fees/",
+        "publisher": "Department of Foreign Affairs (page 403 on fetch; figure from a search summary of dfa.ie)",
+        "confirmed": false
+      }
+    },
+    "Mexico": {
+      "residence": {
+        "value": "5 years' residence immediately before applying (Ley de Nacionalidad art. 20). 2 years for: direct descendants of a Mexican by birth; parents of Mexican-born children; natives of a Latin American country or the Iberian Peninsula; and people who, in SRE's judgment, have given outstanding cultural, social, scientific, technical, ARTISTIC, sporting or business services that benefit the nation. That last category is a real route for an actor, and in exceptional cases the President may waive residence entirely. 2 years of married cohabitation in Mexico for spouses of Mexicans. Absences break residence only if they fall in the 2 years before applying and total more than 6 months (art. 21).",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/53.pdf",
+        "publisher": "Camara de Diputados, Ley de Nacionalidad (last reform DOF 2012-04-23)",
+        "confirmed": true
+      },
+      "fee": {
+        "statutory_mxn": 9502.01,
+        "payable_mxn": 9500,
+        "note": "Ley Federal de Derechos art. 26 fr. II: receipt, study and, where granted, issue of the carta de naturalizacion. 2026 amount, updated by the Resolucion Miscelanea Fiscal 2026 (DOF 2025-12-28). Payable amounts round to the nearest ten pesos, and secondary sources quote $9,500.",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+        "publisher": "Camara de Diputados, Ley Federal de Derechos (last reform DOF 2025-11-07; 2026 amounts)",
+        "confirmed": true
+      },
+      "tests": {
+        "value": "Must prove the applicant speaks Spanish, knows Mexico's history and is integrated into the national culture (art. 19 fr. III), by SRE examination. Secondary sources say refugees, minors and people over 60 take only the Spanish exam. No separate exam fee was found in the LFD; it falls under the $9,502.01 fee.",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/53.pdf",
+        "publisher": "Ley de Nacionalidad",
+        "confirmed": true,
+        "examFeeConfirmed": false
+      },
+      "processingTime": {
+        "value": "40 business days (down from 90 calendar days), under SRE's 2026 simplification, which merged the seven carta variants into one procedure (SRE-02-011).",
+        "url": "https://www.tiempo.com.mx/nacional/simplificacion-tramites-secretaria-de-relaciones-exteriores-nacionalidad-naturalizacion-inversion-extranjera-2026/",
+        "publisher": "Tiempo (news report of SRE's DOF simplification, June 2026)",
+        "date": "2026-06",
+        "confirmed": true,
+        "caveat": "Secondary source; sre.gob.mx was blocked. The clock likely runs from a complete file after the exams; one source says SRE resolves within 60 business days of receiving the INM's opinion."
+      },
+      "passport": {
+        "tenYear_statutory_mxn": 4277.69,
+        "tenYear_payable_mxn": 4280,
+        "note": "Ley Federal de Derechos art. 20 fr. IV, ordinary passport valid up to ten years (adults only). A 50% discount applies for people over 60, people with disabilities and seasonal farm workers in Canada. Abroad it costs US$209 (secondary).",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+        "publisher": "Ley Federal de Derechos 2026",
+        "confirmed": true
+      }
+    }
+  },
+  "dualCitizenship": {
+    "US": {
+      "ownCitizensMayHoldAnother": true,
+      "naturalizingForeignerMayKeepOld": "US law does not require it to be given up; depends on the other country",
+      "oathPosition": "The naturalization oath (8 U.S.C. 1448) requires the applicant to 'renounce and abjure absolutely and entirely all allegiance and fidelity' to any foreign state. The State Department nonetheless says 'current U.S. nationality laws do not explicitly address dual nationality', that some countries do not treat a foreign naturalization as loss of nationality, and so 'a naturalized U.S. citizen may retain the nationality of their birth'. US citizens who naturalize elsewhere or take a routine foreign oath are presumed to intend to keep US citizenship. The US does not encourage dual nationality as policy.",
+      "url": "https://fam.state.gov/FAM/07FAM/07FAM0080.html",
+      "publisher": "US Department of State, 7 FAM 080 Dual Nationality",
+      "date": "Sections dated 2022-10-20 to 2025-06-05",
+      "confirmed": true
+    },
+    "Canada": {
+      "ownCitizensMayHoldAnother": true,
+      "naturalizingForeignerMayKeepOld": true,
+      "note": "No application or certificate for dual citizenship. IRCC warns that the other country may not allow it.",
+      "url": "https://ircc.canada.ca/english/helpcentre/answer.asp?qnum=356&top=5",
+      "publisher": "IRCC Help Centre",
+      "date": "Modified 2026-09-28",
+      "confirmed": true
+    },
+    "UK": {
+      "ownCitizensMayHoldAnother": true,
+      "naturalizingForeignerMayKeepOld": true,
+      "note": "'Dual citizenship (also known as dual nationality) is allowed in the UK.' No application needed. The UK cannot give diplomatic help in the other country of nationality.",
+      "url": "https://www.gov.uk/dual-citizenship",
+      "publisher": "GOV.UK",
+      "confirmed": true
+    },
+    "Ireland": {
+      "ownCitizensMayHoldAnother": true,
+      "naturalizingForeignerMayKeepOld": true,
+      "note": "'Under Irish law you do not have to give up Irish citizenship to become the citizen of another country'; 'you do not have to give up another citizenship' to naturalise. Other countries may require renunciation of Irish citizenship.",
+      "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/dual-citizenship/",
+      "publisher": "Immigration Service Delivery",
+      "confirmed": true
+    },
+    "Mexico": {
+      "ownCitizensMayHoldAnother": "Mexicans by birth: yes. Constitution art. 37(A): no Mexican by birth may be deprived of Mexican nationality. They must enter and leave Mexico as Mexicans (Ley de Nacionalidad art. 12).",
+      "naturalizingForeignerMayKeepOld": false,
+      "note": "A foreigner naturalizing must formally renounce their prior nationality and all submission to a foreign state (Ley de Nacionalidad art. 19 fr. II, by reference to art. 17). SRE takes the renunciation only after deciding to grant, and the carta is issued once it is made. Whether the old nationality is actually lost depends on that country's law; the US, for instance, does not treat such a renunciation alone as loss of citizenship. A naturalized Mexican LOSES Mexican nationality by voluntarily acquiring a foreign nationality, presenting as a foreigner in any public instrument, USING A FOREIGN PASSPORT, or living 5 continuous years abroad (Constitution art. 37(B)).",
+      "urls": [
+        "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+        "https://www.diputados.gob.mx/LeyesBiblio/pdf/53.pdf"
+      ],
+      "publisher": "Camara de Diputados (Constitution; Ley de Nacionalidad)",
+      "confirmed": true
+    }
+  },
+  "mexicoForeignBuyer": {
+    "conveniodeRenunciaOutsideRestrictedZone": {
+      "whatItIs": "A foreigner buying real property outside the restricted zone (e.g. Mexico City) must first file with SRE a written agreement (convenio de renuncia, the Calvo clause) to consider themselves Mexican nationals regarding that property and not invoke their government's protection, and obtain SRE's permit (Ley de Inversion Extranjera art. 10-A; Constitution art. 27 fr. I).",
+      "fee_statutory_mxn": 5252.02,
+      "fee_payable_mxn": 5250,
+      "feeBasis": "Ley Federal de Derechos art. 25 fr. XV (added DOF 2022-11-14), 2026 amount per Resolucion Miscelanea Fiscal 2026 (DOF 2025-12-28). The payable amount rounds to $5,250, which a search summary of SRE's page also shows.",
+      "processingTime": "If the municipality lies wholly outside the restricted zone, the permit is deemed granted unless SRE publishes a refusal in the DOF within 5 business days of filing (LIE art. 10-A). If the municipality lies partly inside the restricted zone, SRE decides within 30 business days. SRE may also, by published general agreement, let foreigners just file the convenio without a permit.",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+      "secondUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIE.pdf",
+      "publisher": "Camara de Diputados (Ley Federal de Derechos 2026; Ley de Inversion Extranjera, last reform DOF 2024-05-27)",
+      "confirmed": true
+    },
+    "restrictedZoneFideicomisoPermit": {
+      "whatItIs": "Foreigners cannot hold direct title within 100 km of a border or 50 km of a coast; residential use is through a bank trust (fideicomiso) that needs an SRE permit (LIE art. 11). Maximum term 50 years, renewable (art. 13).",
+      "fee_statutory_mxn": 21648.83,
+      "fee_payable_mxn": 21650,
+      "examinationFee_mxn": 596.29,
+      "examinationNote": "LFD art. 25 fr. III charges $596.29 for examining each permit application under fracciones IV, V and VII; the fideicomiso permit is fr. V. Whether SRE collects both in practice was not confirmed.",
+      "modificationOfPermit_mxn": 9740.31,
+      "lateExtensionRequest_mxn": 10613.78,
+      "processingTime": "SRE must decide within 5 business days if filed at the central office, or 30 business days if filed at a state delegation; otherwise the permit is deemed approved (LIE art. 14).",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+      "publisher": "Ley Federal de Derechos 2026, art. 25 fr. V(a)",
+      "confirmed": true
+    }
+  },
+  "easements": {
+    "NewYorkCity_ACRIS": {
+      "value": "$32.00 + $5.00 per page + $5.00 for the cover page; 2-page minimum $42.00. Small print (under 8 point): $49.00 + $10.00 per page; minimum $64.00. $2 for each extra block and $3 for each extra lot beyond one.",
+      "example": "A 4-page deed of easement on one lot: $32 + 4 x $5 + $5 = $57.",
+      "url": "https://www.nyc.gov/site/finance/property/property-uniform-commercial-code-ucc-financing-statement.page",
+      "publisher": "NYC Department of Finance, Office of the City Register",
+      "date": "Read 2026-09-30 (no date on page)",
+      "confirmed": true,
+      "notResearched": "Whether an easement granted for consideration triggers NYC RPTT or NYS transfer tax was not researched."
+    },
+    "NewHaven_Connecticut": {
+      "value": "$70 for the first page and $5 for each additional page. Statutory: $10 first page + $5 per extra page (CGS 7-34a(a)), + $10 per document (7-34a(d)), + $50 per document (7-34a(e)). The same statewide at every town clerk, including New Haven. The $70 first-page total has applied since 2025-07-01 (P.A. 25-168, per secondary sources). Add $5 if a deed conveying title lacks the grantee's mailing address.",
+      "url": "https://www.cga.ct.gov/2026/sup/chap_092.htm",
+      "publisher": "Connecticut General Assembly, General Statutes ch. 92 s. 7-34a (2026 supplement)",
+      "confirmed": true
+    },
+    "LosAngelesCounty": {
+      "value": "$15 first page + $3 each additional page (Gov. Code 27361), + $75 SB2 Building Homes and Jobs Act fee per document (max $225 per transaction; not charged on transfers subject to documentary transfer tax), + $2 AB1466 fee, + Real Estate Fraud Prosecution fee ($5 in the bulletin read; a search summary says it rose to $10 from 2026-06-01, unconfirmed).",
+      "example": "A 3-page easement deed: $15 + $6 + $75 + $2 + $5 (or $10) = $103 (or $108).",
+      "url": "https://www.lavote.gov/docs/rrcc/documents/fees.pdf?v=3",
+      "publisher": "Los Angeles County Registrar-Recorder/County Clerk, Recording Fee Bulletin",
+      "confirmed": true,
+      "fraudFeeIncreaseConfirmed": false
+    },
+    "Ontario_LandRegistry": {
+      "value": "Registering a document (e.g. a transfer of easement). Electronic: $71.55 statutory + $11.90 ELRSA + $1.55 HST = $85.00, in effect since 2025-11-03. Paper under the Land Titles Act: $83.45. From 2026-11-02: electronic $72.75 + $12.10 + $1.57 HST = $86.42; paper $84.85.",
+      "url": "https://www.ontario.ca/land-registration/2026-04-electronic-land-registration-services-act-2010",
+      "secondUrl": "https://www.ontario.ca/land-registration/2025-07-land-services-fee-changes-effective-november-3-2025",
+      "publisher": "Ontario Ministry of Public and Business Service Delivery and Procurement, Bulletins 2025-07 and 2026-04",
+      "date": "Bulletin 2026-04 published 2026-09-14",
+      "confirmed": true
+    },
+    "BritishColumbia_LTSA": {
+      "value": "$83.82 to file a charge (an easement or statutory right of way is registered as a charge), regardless of how many titles are affected. Plus $3.55 per electronic transaction for standard accounts ($2.20 prepaid). GST/PST exempt.",
+      "url": "https://ltsa.ca/fees/",
+      "publisher": "Land Title and Survey Authority of British Columbia",
+      "date": "Fees as at 2026-04-01",
+      "confirmed": true
+    },
+    "MexicoCity": {
+      "registroPublico": {
+        "value": "Codigo Fiscal CDMX art. 196. A servidumbre is a limitation on ownership, so its registration falls under fr. I(b) at $25,098 (2026). Where the act has no stated value or its value is below the social-housing threshold, the base fee of $2,505 applies (fr. II), stepping up as the value rises. 2026 amounts reflect the 3.91% update in the Ley de Ingresos CDMX 2026 (Gaceta 2025-12-19). The earlier amounts in the Codigo text were $1,974 and $19,774 in an undated notary extract, and $2,411 and $24,154 in 2025.",
+        "url": "https://idconline.mx/corporativo/2025/12/26/cdmx-incrementa-derechos-en-tramites-y-servicios-2026",
+        "publisher": "IDC Online (secondary report of Gaceta Oficial CDMX)",
+        "date": "2025-12-26",
+        "confirmed": true,
+        "caveat": "The 2026 amounts were read on IDC, not in the Gaceta. The structure of art. 196 was read in the Codigo text at https://notaria23edomex.com.mx/Content/Archivos/DERECHOS_DE_REGISTRO_CDMX.pdf."
+      },
+      "notaryFee": {
+        "value": "Arancel de Notarios CDMX 2023: for acts with a value and no special rule, a fixed fee of MXN $6,072 up to an operation value of $208,388, plus progressive percentages above that (1.125% down to 0.327%), plus 16% IVA. Acts without a value are charged at the notary's discretion, subject to the arancel. Amounts update annually under the Ley del Notariado; the 2026 figures were not found. A secondary source puts CDMX notary fees at 1.5-3.0% of value for conveyances.",
+        "url": "https://www.consejeria.cdmx.gob.mx/storage/app/media/2023/Enero/aranceles-notarias-2023.pdf",
+        "publisher": "Gaceta Oficial de la Ciudad de Mexico, 2023-01-30",
+        "confirmed": true,
+        "yearCaveat": "2023 figures, not 2026."
+      }
+    },
+    "EnglandWales_HMLandRegistry": {
+      "value": "Registering the grant of an easement is an application for which the Fee Order prescribes no other fee, so it pays a fixed £40, or £20 through the portal or Business Gateway. The fee is per application, not per title. Noting an easement is different: it pays the notice fee.",
+      "matchesPreviouslyFound": true,
+      "url": "https://www.gov.uk/guidance/hm-land-registry-registration-services-fees",
+      "publisher": "HM Land Registry (Land Registration Fee Order 2024, effective 2024-12-09)",
+      "date": "Page last updated 2025-04-28",
+      "confirmed": true
+    },
+    "Ireland_TailteEireann": {
+      "value": "The correction matters. A deed-created easement is registered as a burden: Item 19, €40, or NIL if lodged with a transfer or assent (para. 7 of the Fees Order). €130 is Item 18(b), registering an easement or profit a prendre acquired by PRESCRIPTION under s. 49A of the Registration of Title Act 1964. So both previously found figures are real but apply to different cases: €40 for a granted easement, €130 for a prescriptive one.",
+      "matchesPreviouslyFound": "Yes as figures; the €130 is for prescriptive easements only.",
+      "url": "https://tailte.ie/wp-content/uploads/2025/02/what-are-fees-for-copy.pdf",
+      "publisher": "Tailte Eireann, 'What are the Fees for...?' (Land Registration (Fees) Order 2012, fees effective 2012-12-01)",
+      "date": "Uploaded 2025-02",
+      "confirmed": true
+    },
+    "lawyerDraftingFee": {
+      "US": {
+        "value": "About $1,000 for a simple easement, including recording, and $2,000-$5,000 for a more complex one; an overall range of $100-$5,000 is quoted. Some firms charge a flat fee; complex matters are billed hourly.",
+        "url": "https://www.contractscounsel.com/b/easement-agreement-cost",
+        "publisher": "ContractsCounsel (marketplace; page behind a bot wall, figures from a search summary)",
+        "confirmed": false
+      },
+      "Mexico": "See easements.MexicoCity.notaryFee: in Mexico the notary drafts the escritura, and the arancel fixes the fee.",
+      "UK_Ireland_Canada": "Not found. No sourced figure for a solicitor's fee to draft a deed of easement in England and Wales, Ireland, Ontario or British Columbia."
+    }
+  },
+  "uncertain": [
+    "Visa Bulletin figures come from two agreeing law-firm summaries; travel.state.gov was blocked.",
+    "I-140 category times (EB-1A 31 months, NIW 29 months) are USCIS 80th-percentile figures from July 2026 as reported by Manifest Law; the USCIS tool was blocked.",
+    "I-485 employment-based median: FY2026 6.2 months (through 2026-02-28) and FY2025 7.2 months come from secondary sources only, because egov.uscis.gov was blocked. The confirmed USCIS figures stop at FY2024 (7.2 months, partial year) and FY2023 (8.6 months, full year).",
+    "N-400 processing time: no confirmed figure. Secondary reports range from 5 to 11.5 months.",
+    "Canada citizenship-grant processing time: 33 months as of September 2026 per one secondary report, against about 13 months in spring 2026; not on IRCC's JSON feeds.",
+    "US passport ($130 + $35) and Irish passport (€75 online): primary pages blocked; figures from secondary sources.",
+    "Canadian passport fees ($163.50 for 10 years, $122.50 for 5) come from a search summary of canada.ca; the fee pages failed to render.",
+    "LA County Real Estate Fraud Prosecution fee: $5 in the bulletin; possibly $10 from 2026-06-01.",
+    "Mexico naturalization processing time: 40 business days is from a news report of SRE's 2026 simplification; sre.gob.mx was blocked.",
+    "CDMX Registro Publico 2026 amounts ($2,505 and $25,098) come from IDC Online's report of the 3.91% update, not the Gaceta itself.",
+    "CDMX notary arancel figures are from 2023; the 2026 update was not found.",
+    "UK SELT (English test) price not found; US, Canadian and Irish nationals are exempt anyway.",
+    "UK earned-settlement reform (10-year ILR baseline) was not in force as of August 2026 per a secondary source; recheck before modeling.",
+    "Lawyer fees to draft an easement: only a US marketplace estimate (unconfirmed); none found for the UK, Ireland or Canada.",
+    "USCIS G-1055 flags an update to certain Pub. L. 119-21 fees effective 2026-10-16; the core I-140, I-485 and N-400 fees above are not among them, but recheck."
+  ]
+}

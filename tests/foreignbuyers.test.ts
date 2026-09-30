@@ -7,7 +7,9 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Person } from '@/engine/domain/model';
-import { foreignBuyerRefusal, foreignBuyerTax } from '@/engine/systems/foreignbuyers';
+import { foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from '@/engine/systems/foreignbuyers';
+import { saveCurrency } from '@/engine/core/money';
+import { exchange } from '@/engine/content/currency';
 import { askingPrice, listingsIn, offerFor, offerRefusal } from '@/engine/systems/homes';
 
 const who = (citizenshipId: string, home?: string) => ({ citizenshipId, ...(home ? { home: { kind: 'own', cityId: home } } : {}) }) as unknown as Person;
@@ -43,5 +45,18 @@ describe('an offer', () => {
     const price = askingPrice(sim, london);
     const resident = { ...sim.player, home: { ...sim.player.home!, cityId: 'uk-eng-london' } } as Person;
     expect(offerFor(sim, sim.player, london, 0.4, price, false).closing - offerFor(sim, resident, london, 0.4, price, false).closing).toBe(Math.round(price * 0.02));
+  });
+
+  it('adds the SRE’s MXN 5,252.02 convenio de renuncia to a foreigner’s home in Mexico City, and nothing to a Mexican’s', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'foreign-mx');
+    const home = listingsIn(sim, 'mx-cmx-mexicocity')[0]!;
+    const price = askingPrice(sim, home);
+    const mexican = { ...sim.player, citizenshipId: 'mx' } as Person;
+    const cur = saveCurrency(sim.universe);
+    const fee = cur === 'MXN' ? 5_252_02 : exchange(5_252_02, 'MXN', cur)!;
+    expect(foreignBuyerFee(sim, sim.player, 'mx-cmx-mexicocity')).toBe(fee);
+    expect(foreignBuyerFee(sim, mexican, 'mx-cmx-mexicocity')).toBe(0);
+    expect(foreignBuyerFee(sim, sim.player, 'ie-lei-dublin')).toBe(0);
+    expect(offerFor(sim, sim.player, home, 0.4, price, false).closing - offerFor(sim, mexican, home, 0.4, price, false).closing).toBe(fee);
   });
 });

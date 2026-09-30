@@ -81,6 +81,20 @@ export function inForce(doc: PersonDocument, at: Instant): boolean {
   return doc.status === 'valid' && (doc.issuedAt ?? 0) <= at && (doc.expiresAt === undefined || doc.expiresAt > at);
 }
 
+/**
+ * The countries a person is a citizen of, ISO codes: by birth, and any they've
+ * naturalized in since (`systems/citizenship.ts`, from 2026-09-30). Travel
+ * is still on the passport of the first; the rest give the right to live,
+ * work, and claim there.
+ */
+export function citizenshipsOf(person: Person): string[] {
+  const own = isoOfCountry(person.citizenshipId);
+  return [...(own ? [own] : []), ...(person.naturalized ?? []).map((n) => n.iso)];
+}
+
+/** Whether they're a citizen of a country, by birth or naturalized. */
+export const citizenOf = (person: Person, iso: string): boolean => citizenshipsOf(person).includes(iso);
+
 /** The passport they'd travel on: their own country's, in force, the longest-lasting. */
 export function passportOf(person: Person, at: Instant): PersonDocument | undefined {
   const own = isoOfCountry(person.citizenshipId);
@@ -215,7 +229,7 @@ export function crossingRefusal(person: Person, fromCity: string, toCity: string
 export function residenceRefusal(person: Person, cityId: string, at: Instant): string | undefined {
   const to = isoOfCity(cityId);
   const own = isoOfCountry(person.citizenshipId);
-  if (!to || to === own) return undefined;
+  if (!to || citizenOf(person, to)) return undefined;
   const status = own ? ENTRY[to]?.citizens[own]?.status : undefined;
   if (status === 'citizen' || status === 'free-movement') return undefined;
   if (documentsOf(person).some((d) => d.kind === 'visa' && d.destination === to && inForce(d, at))) return undefined;

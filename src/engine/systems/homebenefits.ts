@@ -43,8 +43,8 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { payeeAccount } from './cash';
-import { isoOfCountry } from './documents';
 import { earningsOf, homeOf } from './earnings';
+import { citizenOf, citizenshipsOf } from './documents';
 import { computeAnnualTax } from '../content/tax';
 
 export const IRISH_JA = {
@@ -109,7 +109,7 @@ export const livesInDublinCity = (person: Person) => homeOf(person) === 'ie-lei-
 
 export function hapRefusal(sim: Simulation, person: Person): string | undefined {
   if (!livesInDublinCity(person)) return 'SLATE keeps Dublin City Council’s scheme: it’s for someone renting in Dublin.';
-  if (!EU.has(isoOfCountry(person.citizenshipId) ?? '')) return 'On a visa, Ireland’s social housing support isn’t yours.';
+  if (!citizenshipsOf(person).some((c) => EU.has(c))) return 'On a visa, Ireland’s social housing support isn’t yours.';
   if (person.home?.kind !== 'own' && person.home?.kind !== 'shared') return 'It pays a landlord: it’s for someone renting.';
   if (person.hap) return 'You have it.';
   if (netWeeklyEur(sim, person) * 52 > HAP.incomeLimit) return 'Your net income is over the council’s €40,000 a year.';
@@ -145,7 +145,7 @@ export function capitalMeans(savingsEur: Money): Money {
 
 export function jobseekerRefusal(sim: Simulation, person: Person): string | undefined {
   if (!livesInIreland(person)) return 'Jobseeker’s Allowance is for someone living in Ireland.';
-  if (!EU.has(isoOfCountry(person.citizenshipId) ?? '')) return 'On a visa, Ireland’s means-tested payments aren’t yours.';
+  if (!citizenshipsOf(person).some((c) => EU.has(c))) return 'On a visa, Ireland’s means-tested payments aren’t yours.';
   const age = (sim.now - person.birthInstant) / YEAR;
   if (age >= IRISH_JA.pensionAge) return 'At 66 it’s the State Pension, not Jobseeker’s Allowance.';
   if (person.jobseekers && person.jobseekers.closedAt === undefined) return 'You have a claim open.';
@@ -154,7 +154,7 @@ export function jobseekerRefusal(sim: Simulation, person: Person): string | unde
 
 export function desempleoRefusal(sim: Simulation, person: Person): string | undefined {
   if (!livesInMexicoCity(person)) return 'The Seguro de Desempleo is Mexico City’s, for someone living there.';
-  if (isoOfCountry(person.citizenshipId) !== 'MX') return 'Its track for those come home is for Mexican citizens.';
+  if (!citizenOf(person, 'MX')) return 'Its track for those come home is for Mexican citizens.';
   if (person.desempleo) return 'It’s paid once in a life, and you’ve had it.';
   const age = (sim.now - person.birthInstant) / YEAR;
   if (age < 18 || age > CDMX_DESEMPLEO.oldest) return 'It’s for someone of 18 to 64.';

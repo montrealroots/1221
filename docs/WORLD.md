@@ -160,11 +160,35 @@ Researched in `docs/research/world/research-residence.json` from the governments
 - **No route**, with the reason given:
   - Canada: the Self-Employed Persons Program is paused until further notice, and Express Entry has no arts category.
   - Ireland: an employment permit needs an employer's offer.
-  - A US green card: the Visa Bulletin's wait wasn't researched. The O-1 stays how an actor works there.
-- **Not kept:** citizenship by naturalization, since SLATE holds one citizenship; Ireland's IRP, which no route reaches; and a residence card's processing time.
+  - A US green card, until later the same day (stage 1e).
+- **Not kept:** Ireland's IRP, which no route reaches; and a residence card's processing time. Naturalization came later the same day (stage 1e).
 - Screen: Papers, Permission To Work, Residence Abroad.
 
 Evidence: `tests/residence.test.ts` (3). 9 mutations, all killed.
+
+#### Stage 1e: a green card, and a second citizenship (done 2026-09-30)
+
+Researched in `docs/research/world/research-citizenship.json`.
+
+- **A green card by extraordinary ability, EB-1A** (`documents.residence` for the US, `systems/residence.ts`):
+  - The fees: the I-140 ($715), its $300 Asylum Program Fee for a self-petitioner, and the I-485 ($1,440). Premium processing is $2,965 more.
+  - It is applied for from inside the US, on the O-1's record: three of its kinds of evidence, SLATE's reading of the ten criteria's three.
+  - The I-140 takes 31 months, or 15 business days with premium processing (USCIS figures, reported). The I-485 takes 8.6 months, FY2023's median on USCIS's own fact sheet.
+  - October 2026's Visa Bulletin has EB-1 current, except for those born in China (from 2023-07-01) or India (2023-02-01). They also wait the years their line is behind.
+  - It lets its holder live and work anywhere in the US without an O-1.
+- **Federal Medicaid from 1 October 2026** (`medicaidStatus` in `systems/health.ts`): a citizen's, or a green card holder's after five years (Pub. L. 119-21 §71109). An O-1's holder isn't among the groups named. New York's Essential Plan band still reaches them, as SLATE had it; whether it should, and California's state-funded Medi-Cal, weren't researched.
+- **A second citizenship** (`systems/citizenship.ts`, `documents.naturalize`, `citizenshipsOf`):
+  - Britain: twelve months after settlement, £1,839 with the ceremony, and £50 for the Life in the UK test. It is decided within six months.
+  - Mexico: five years' residence, or two for outstanding artistic work (Ley de Nacionalidad art. 20), read on the O-1's record. It costs MXN 9,502.01 and is decided in 40 business days.
+  - The United States: five years with a green card, $760. The processing time wasn't confirmed; SLATE's is eight months.
+  - The citizenship of birth is kept. The US, Canada, Britain and Ireland allow it, and none of them counts the renunciation Mexico asks. Travel stays on the passport of birth.
+  - A second citizenship gives the right to live and work there, public care, benefits and pensions there, and relief from foreign-buyer rules. Britain's settlement also opens Universal Credit, as indefinite leave lifts no recourse to public funds.
+  - The language and knowledge tests are taken as passed, since SLATE doesn't keep which languages a person speaks. Canada and Ireland aren't reached, since no route to residence there is open to an actor.
+- **Mexico's foreign buyer permit** (`foreignBuyerFee` in `systems/foreignbuyers.ts`): the SRE's convenio de renuncia, MXN 5,252.02, added to a foreigner's closing on a home in Mexico City, which lies outside the restricted zone.
+- **Easements aren't built.** Their recording fees were read (ACRIS, Connecticut, Los Angeles County, Ontario, BC, HM Land Registry, Tailte Éireann), but nothing makes a parcel need one: no share of parcels without legal access, and no price effect of one, is published.
+- A character is still created with one citizenship, from the birthplace (`70f3df7`). A second is only ever earned.
+
+Evidence: `tests/naturalize.test.ts` (6), `tests/foreignbuyers.test.ts`. 11 mutations: 10 killed once two tests were added, and one redundant guard removed (Britain's five years, which settlement already asks).
 
 ### Stage 2: Journeys
 

@@ -26,6 +26,7 @@ import { ATTRIBUTES, attributesOf } from './attributes';
 import { payFromBank } from './household';
 import { careerOf, homeAbroadOf, workDays, type Booking } from './career';
 import { earningsOf } from './earnings';
+import { citizenOf } from './documents';
 import { STARTING, addYears, documentsOf, inForce, isoOfCity, isoOfCountry, numberFor, theCountry, type PersonDocument } from './documents';
 
 export const PERMISSION_KIND = 'documents.permission';
@@ -81,7 +82,7 @@ export function permitFor(person: Person, iso: string, from: Instant, to: Instan
 export function workRefusal(person: Person, cityId: string, from: Instant, to: Instant, booking?: Booking): string | undefined {
   const iso = isoOfCity(cityId);
   const own = isoOfCountry(person.citizenshipId);
-  if (!iso || iso === own) return undefined;
+  if (!iso || citizenOf(person, iso)) return undefined;
   if (own && ENTRY[iso]?.citizens[own]?.status === 'free-movement') return undefined;
   if (permitFor(person, iso, from, to, booking?.id)) return undefined;
   if (iso === 'GB' && booking?.location) return undefined;
@@ -111,7 +112,7 @@ export function jobSpan(booking: Booking): { from: Instant; to: Instant } {
 
 export function optRefusal(sim: Simulation, person: Person): string | undefined {
   const end = programEnd(person);
-  if (isoOfCountry(person.citizenshipId) === 'US') return 'OPT is for a student on an F-1; you’re a citizen.';
+  if (citizenOf(person, 'US')) return 'OPT is for a student on an F-1; you’re a citizen.';
   if (end === undefined) return 'OPT is for a student on an F-1, and you haven’t held one.';
   if (person.school?.standing === 'dismissed') return 'OPT follows a degree completed.';
   const opens = end - WORK_RULES.opt.windowBeforeDays * MS_DAY;
@@ -176,7 +177,7 @@ export function o1Evidence(sim: Simulation, person: Person): O1Evidence[] {
 }
 
 export function o1Refusal(sim: Simulation, person: Person): string | undefined {
-  if (isoOfCountry(person.citizenshipId) === 'US') return 'An O-1 is for a citizen of another country.';
+  if (citizenOf(person, 'US')) return 'An O-1 is for a citizen of another country.';
   if (!careerOf(person).agencyId) return 'A US employer or agent petitions for an O-1, not the actor: sign with an agency first.';
   // An American agency: until 2026-09-29 a Dublin agency petitioned the US for its client, every year, at the fees.
   if ((AGENCIES.find((x) => x.id === careerOf(person).agencyId)?.countryId ?? 'us') !== 'us') return 'A US employer or agent petitions for an O-1: your agency isn’t American.';
@@ -256,7 +257,7 @@ export function caPermitRefusal(person: Person, booking: Booking | undefined): s
   if (!booking || (booking.status !== 'offered' && booking.status !== 'accepted')) return 'That isn’t a job you’ve been offered or taken.';
   if (!booking.location || isoOfCity(booking.location) !== 'CA') return 'It’s for a production in Canada.';
   if (isoOfCountry(person.citizenshipId) === 'US') return 'A US citizen’s is issued at the border on arrival.';
-  if (isoOfCountry(person.citizenshipId) === 'CA') return 'You’re a citizen.';
+  if (citizenOf(person, 'CA')) return 'You’re a citizen.';
   if (documentsOf(person).some((d) => d.kind === 'permit' && d.bookingId === booking.id)) return 'You’ve applied for it.';
   return undefined;
 }

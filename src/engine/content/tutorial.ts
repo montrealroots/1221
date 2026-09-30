@@ -272,7 +272,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'A license runs out: Renew It in the months before. Abroad, a license from elsewhere drives only as long and only where the road’s rules allow, and some ask an International Driving Permit beside it, issued at home before you go.',
     ],
     names: ['Passport And Travel', 'Permission To Work', 'Apply For OPT', 'Petition For An O-1', 'Apply For A Work Permit', 'Driving', 'Apply For One', 'Renew It', 'Apply Faster', 'Report Lost', 'Apply For The Authorization', 'Book The Test', 'Book It', 'Book A Visit', 'Book A Retake', 'Pay For The License', 'Exchange It', 'International Driving Permit'],
-    opens: ['documents.apply_passport', 'documents.apply_authorization', 'documents.apply_visa', 'documents.report_lost', 'documents.license_step', 'documents.renew_license', 'documents.apply_idp', 'documents.apply_idcard', 'documents.real_id', 'documents.apply_opt', 'documents.petition_o1', 'documents.residence', 'documents.settle', 'documents.renew_residence', 'documents.apply_work_permit', 'documents.exchange_license'],
+    opens: ['documents.apply_passport', 'documents.apply_authorization', 'documents.apply_visa', 'documents.report_lost', 'documents.license_step', 'documents.renew_license', 'documents.apply_idp', 'documents.apply_idcard', 'documents.real_id', 'documents.apply_opt', 'documents.petition_o1', 'documents.residence', 'documents.settle', 'documents.renew_residence', 'documents.naturalize', 'documents.apply_work_permit', 'documents.exchange_license'],
   },
   {
     id: 'home',

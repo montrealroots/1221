@@ -28,8 +28,20 @@
  *   December 2025, and Express Entry has no category for the arts.
  * - **Ireland** has none either: an employment permit needs an employer's
  *   offer, and there's no artist's route.
- * - **The United States:** the O-1 is kept (`systems/permission.ts`); a green
- *   card's wait on the Visa Bulletin wasn't researched, and none is granted.
+ * - **The United States, a green card** by extraordinary ability, EB-1A,
+ *   from later on 2026-09-30: the I-140 petition ($715), its Asylum Program
+ *   Fee for a self-petitioner ($300) and the I-485 ($1,440), filed together
+ *   while the category is current, from the US in status. Its extraordinary
+ *   ability is read on the O-1's record, three of its kinds of evidence,
+ *   SLATE's reading of the ten criteria's three. The I-140 takes 31 months,
+ *   or 15 business days with premium processing ($2,965) (USCIS figures,
+ *   reported); the I-485, FY2023's median, 8.6 months (USCIS's fact sheet).
+ *   EB-1 is current for all but China (2023-07-01) and India (2023-02-01),
+ *   October 2026's Visa Bulletin, by country of birth; one born there waits
+ *   the years their line is behind, SLATE taking it to move a year a year.
+ *   It lets its holder live and work anywhere in the US, ends the O-1's
+ *   renewals, and after five years opens federal Medicaid and naturalizing.
+ *   The card's renewal isn't charged, its ten years not read on USCIS's pages.
  * Citizenship by naturalization isn't kept: SLATE holds one citizenship.
  */
 
@@ -40,7 +52,9 @@ import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { payFromBank, inTheBank } from './household';
-import { documentsOf, inForce, isoOfCountry, numberFor, type PersonDocument } from './documents';
+import { DECIDED_KIND, citizenOf, documentsOf, inForce, isoOfCountry, numberFor, type PersonDocument } from './documents';
+import { CITIES } from '../content/geography';
+import { homeOf } from './earnings';
 import { earningsOf } from './earnings';
 import { o1Evidence } from './permission';
 
@@ -49,7 +63,18 @@ const YEAR_MS = 365.2425 * MS_DAY;
 export const GLOBAL_TALENT = { endorsement: 561, visa: 205, ihsYear: 1_035, years: 5, settleAfter: 5, ilr: 3_226, evidence: 3 } as const;
 export const MEXICAN_RESIDENCE = { uma: 117.31, savingsUma: 11_460, incomeUma: 680, temporary: 11_140.74, consularVisaUsd: 56, permanent: 13_578.96, permanentAfter: 4 } as const;
 
-export type Route = 'global-talent' | 'uk-settled' | 'mx-temporary' | 'mx-permanent';
+export type Route = 'global-talent' | 'uk-settled' | 'mx-temporary' | 'mx-permanent' | 'us-green-card';
+
+const GREEN_CARD_ROUTE: Route = 'us-green-card';
+export const GREEN_CARD = { i140: 715, asylumFee: 300, i485: 1_440, premium: 2_965, i140Days: 31 * 30.44, premiumDays: 21, i485Days: 8.6 * 30.44, cutoffs: { CN: Date.UTC(2023, 6, 1), IN: Date.UTC(2023, 1, 1) } as Readonly<Record<string, number>>, bulletinAt: Date.UTC(2026, 9, 1) } as const;
+
+/** Days to a green card from applying now: the I-140's time, or the wait for the line to reach the date and the I-485's. */
+export function greenCardDays(person: Person, premium: boolean): number {
+  const born = CITIES.get(person.homeRegionId ?? '')?.countryId?.toUpperCase() ?? '';
+  const cutoff = GREEN_CARD.cutoffs[born];
+  const behind = cutoff === undefined ? 0 : Math.max(0, GREEN_CARD.bulletinAt - cutoff) / MS_DAY;
+  return Math.max(premium ? GREEN_CARD.premiumDays : GREEN_CARD.i140Days, behind + GREEN_CARD.i485Days);
+}
 
 const inSave = (sim: Simulation, units: number, from: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur) ?? c; };
 
@@ -80,10 +105,16 @@ export function mexicanSolvency(sim: Simulation, person: Person): { savings: Mon
 
 export function routeRefusal(sim: Simulation, person: Person, iso: string): string | undefined {
   const own = isoOfCountry(person.citizenshipId);
-  if (own === iso) return 'You’re a citizen there.';
+  if (citizenOf(person, iso)) return 'You’re a citizen there.';
   if (iso === 'CA') return 'Canada has no route for a freelance actor: its Self-Employed Persons Program is paused until further notice, and Express Entry has no category for the arts.';
   if (iso === 'IE') return 'Ireland has no route for a freelance actor: an employment permit needs an employer’s offer.';
-  if (iso === 'US') return 'The O-1 is how an actor works in the United States; a green card’s wait wasn’t researched, and SLATE grants none.';
+  if (iso === 'US') {
+    if (residenceIn(person, 'US', sim.now)) return 'You hold a green card.';
+    if (documentsOf(person).some((d) => d.route === 'us-green-card' && d.status === 'pending')) return 'Your petition is being decided.';
+    if (CITIES.get(homeOf(person))?.countryId !== 'us') return 'A green card is applied for from inside the United States, in status.';
+    if (o1Evidence(sim, person).filter((e) => e.met).length < 3) return 'Extraordinary ability asks three kinds of the evidence an O-1 asks, which your record doesn’t show yet.';
+    return undefined;
+  }
   if (iso === 'GB') {
     if (own === 'IE') return 'An Irish citizen lives in Britain under the Common Travel Area.';
     if (residenceIn(person, 'GB', sim.now)) return 'You hold permission to live there.';
@@ -96,11 +127,12 @@ export function routeRefusal(sim: Simulation, person: Person, iso: string): stri
     if (!s.meets) return `Mexico asks savings of MXN ${Math.round(MEXICAN_RESIDENCE.savingsUma * MEXICAN_RESIDENCE.uma).toLocaleString('en-US')} or an income of MXN ${Math.round(MEXICAN_RESIDENCE.incomeUma * MEXICAN_RESIDENCE.uma).toLocaleString('en-US')} a month over six months.`;
     return undefined;
   }
-  return 'SLATE keeps routes to residence in Britain and Mexico.';
+  return 'SLATE keeps routes to residence in Britain, Mexico and the United States.';
 }
 
 /** What applying costs, in the save's money. */
-export function residenceFee(sim: Simulation, iso: 'GB' | 'MX'): Money {
+export function residenceFee(sim: Simulation, iso: 'GB' | 'MX' | 'US', premium = false): Money {
+  if (iso === 'US') return inSave(sim, GREEN_CARD.i140 + GREEN_CARD.asylumFee + GREEN_CARD.i485 + (premium ? GREEN_CARD.premium : 0), 'USD');
   if (iso === 'GB') return inSave(sim, GLOBAL_TALENT.endorsement + GLOBAL_TALENT.visa + GLOBAL_TALENT.ihsYear * GLOBAL_TALENT.years, 'GBP');
   return inSave(sim, MEXICAN_RESIDENCE.temporary, 'MXN') + inSave(sim, MEXICAN_RESIDENCE.consularVisaUsd, 'USD');
 }
@@ -127,12 +159,20 @@ function grant(sim: Simulation, person: Person, iso: string, route: Route, name:
 }
 
 export function registerResidence(sim: Simulation): void {
-  sim.onCommand<{ country: string }, { paid: Money }>('documents.residence', (p, { sim: s }) => {
+  sim.onCommand<{ country: string; premium?: boolean }, { paid: Money }>('documents.residence', (p, { sim: s }) => {
     const person = s.player;
     const iso = String(p?.country ?? '').toUpperCase();
     const no = routeRefusal(s, person, iso);
     if (no) throw new CommandError(no);
-    const fee = residenceFee(s, iso as 'GB' | 'MX');
+    const fee = residenceFee(s, iso as 'GB' | 'MX' | 'US', p?.premium === true);
+    if (iso === 'US') {
+      if (!payFromBank(s, person, fee, 'A green card: the I-140, its fee and the I-485', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+      const id = s.nextId('document');
+      const readyAt = s.now + Math.round(greenCardDays(person, p?.premium === true)) * MS_DAY;
+      documentsOf(person).push({ id, kind: 'permit', issuer: 'US', name: 'Permanent Resident Card', number: numberFor('R', id), status: 'pending', appliedAt: s.now, readyAt, destination: 'US', route: GREEN_CARD_ROUTE });
+      s.schedule({ at: readyAt, kind: DECIDED_KIND, label: 'Green Card Decided', category: 'system', priority: 20, payload: { personId: person.id } });
+      return { paid: fee };
+    }
     if (!payFromBank(s, person, fee, iso === 'GB' ? 'The Global Talent visa, its endorsement and the health surcharge' : 'Mexican temporary residence, the card and the visa', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
     if (iso === 'GB') grant(s, person, 'GB', 'global-talent', 'Global Talent Visa', GLOBAL_TALENT.years);
     else grant(s, person, 'MX', 'mx-temporary', 'Residente Temporal', 1);

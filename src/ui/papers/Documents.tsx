@@ -29,6 +29,7 @@ import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRef
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
 import { WORK_RULES } from '@/engine/content/workrules';
 import { residenceFee, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
+import { naturalizeRefusal } from '@/engine/systems/citizenship';
 
 const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work', idcard: 'State ID Card' };
 const STATUS_WORD: Record<PersonDocument['status'], string> = { pending: 'Being Decided', valid: 'In Force', lost: 'Reported Lost', cancelled: 'Canceled' };
@@ -349,7 +350,7 @@ function ResidencePanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
-  const places = (['CA', 'IE', 'MX', 'GB', 'US'] as const).filter((iso) => iso !== (person.citizenshipId ?? '').toUpperCase());
+  const places = (['CA', 'IE', 'MX', 'GB', 'US'] as const).filter((iso) => iso !== (person.citizenshipId ?? '').toUpperCase() && !(person.naturalized ?? []).some((n) => n.iso === iso));
   const act = (kind: string, iso: string, what: string) => { const a = run<{ paid: number }>(kind, { country: iso }); if (a.ok) toast(`${what}, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); };
   return (
     <Panel title="Residence Abroad" subtitle="The right to make a home in another country">
@@ -361,14 +362,17 @@ function ResidencePanel() {
               const held = residenceIn(person, iso, sim.now);
               const no = routeRefusal(sim, person, iso);
               const settle = held ? settleRefusal(sim, person, iso) : undefined;
+              const naturalize = naturalizeRefusal(sim, person, iso);
               const name = COUNTRIES.get(iso === 'GB' ? 'uk' : iso.toLowerCase())?.name ?? iso;
               return (
                 <tr key={iso}>
                   <td>{name}</td>
-                  <td className="small">{held ? `${held.name}${held.expiresAt ? `, to ${formatDate(held.expiresAt, sim.zone)}` : ''}` : no ?? `Open to you: ${formatMoney(residenceFee(sim, iso as 'GB' | 'MX'), cur)}`}</td>
+                  <td className="small">{held ? `${held.name}${held.expiresAt ? `, to ${formatDate(held.expiresAt, sim.zone)}` : ''}` : no ?? `Open to you: ${formatMoney(residenceFee(sim, iso as 'GB' | 'MX' | 'US'), cur)}`}{person.naturalizing?.iso === iso ? `; citizenship decided by ${formatDate(person.naturalizing.readyAt, sim.zone)}` : ''}</td>
                   <td>
                     <div className="row gap-1" style={{ justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-                      {!held && !no && <Gated feature="documents.residence" className="btn btn-sm" onClick={() => act('documents.residence', iso, iso === 'GB' ? 'The Global Talent visa is granted' : 'Temporary residence is granted')}>Apply</Gated>}
+                      {!held && !no && <Gated feature="documents.residence" className="btn btn-sm" onClick={() => act('documents.residence', iso, iso === 'GB' ? 'The Global Talent visa is granted' : iso === 'US' ? 'The petition is in' : 'Temporary residence is granted')}>Apply</Gated>}
+                      {!held && !no && iso === 'US' && <Gated feature="documents.residence" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('documents.residence', { country: iso, premium: true }); if (a.ok) toast(`The petition is in, premium, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); }}>Apply With Premium Processing</Gated>}
+                      {!naturalize && <Gated feature="documents.naturalize" className="btn btn-sm btn-ghost" onClick={() => act('documents.naturalize', iso, 'Applied for citizenship')}>Naturalize</Gated>}
                       {held && !settle && <Gated feature="documents.settle" className="btn btn-sm btn-ghost" onClick={() => act('documents.settle', iso, 'Settled')}>Settle</Gated>}
                       {held?.route === 'mx-temporary' && <Gated feature="documents.renew_residence" className="btn btn-sm btn-ghost" onClick={() => act('documents.renew_residence', iso, 'Renewed for a year')}>Renew</Gated>}
                     </div>
@@ -379,7 +383,7 @@ function ResidencePanel() {
           </tbody>
         </table>
       </div>
-      <Fine>Britain’s Global Talent visa is endorsed here on the record an O-1 asks, since Arts Council England’s criteria weren’t read; it and its health surcharge cover five years. Mexico’s temporary residence lets you live there, not work. Citizenship by naturalization isn’t kept.</Fine>
+      <Fine>Britain’s Global Talent visa is endorsed here on the record an O-1 asks, since Arts Council England’s criteria weren’t read; it and its health surcharge cover five years. Mexico’s temporary residence lets you live there, not work. A green card is by extraordinary ability, on the same record, and its wait depends on where you were born. Naturalizing keeps the citizenship you were born with; you travel on its passport.</Fine>
     </Panel>
   );
 }

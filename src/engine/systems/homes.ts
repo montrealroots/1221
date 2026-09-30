@@ -98,7 +98,7 @@ import { premiumOf } from './dwelling';
 import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
 import { alarmFactor } from './alarm';
-import { foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
+import { foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -802,7 +802,7 @@ export function offerFor(sim: Simulation, person: Person, listing: Listing, down
   const payment = loan > 0 ? paymentFor(loan, rate, months) : 0;
   const pmi = country === 'us' && live && loan > price * HOME.pmiOver;
   // A foreign or non-resident buyer's taxes on top, where they're kept (`systems/foreignbuyers.ts`).
-  const closing = closingCost(sim, listing.cityId, price, (person.homesOwned ?? 0) === 0 && live, (person.homes ?? []).length > 0) + foreignBuyerTax(person, listing.cityId, price);
+  const closing = closingCost(sim, listing.cityId, price, (person.homesOwned ?? 0) === 0 && live, (person.homes ?? []).length > 0) + foreignBuyerTax(person, listing.cityId, price) + foreignBuyerFee(sim, person, listing.cityId);
   const month = monthOf(sim, listing, listing.cityId, price, loan > 0 ? { mortgage: { payment, pmi, balance: loan } } : {});
   return { price, down: downCash, loan, closing, rate, payment, month, earnest: Math.round(price * HOME.earnest), cash: downCash + closing };
 }

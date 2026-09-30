@@ -34,7 +34,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 - **Canada's public pensions were done on 2026-09-30** (OAS, the GIS, GAINS, and the CPP paid in and out). The Toronto w4 life, replayed on them, dies at 87 worth +$54,242, with 86 hungry days at 61 to 64. `probe/play-to-death.ts` (local) now claims the CPP and OAS at 65.
 - **Customization still open:** a remap, suspension, an exhaust, a body kit and wheels, once priced in Britain where their loadings are; California's smog check (per-station prices) and its ECU check; New York's loud-exhaust fine.
 - **Land:** easements and a lot's legal access; Mexico's permit for foreign buyers. Services for a house on bare land were done on 2026-09-30 (stage 4f). Waterfront, islands and commercial land are researched, but lack figures that would give them an effect.
-- Residence and immigration were done on 2026-09-30 (stage 1d): Britain's Global Talent visa and settlement, and Mexico's temporary and permanent residence. Still open: naturalization, which needs a person to hold two citizenships, and a US green card, which needs the Visa Bulletin's waits.
+- Residence, a green card, naturalization and Mexico's foreign buyer permit were done on 2026-09-30 (stages 1d and 1e). Easements are blocked on data: nothing published makes a parcel need one.
 - **Played lives**, one at a time.
 
 **The owner's call, still open:** income outside acting for a life abroad.

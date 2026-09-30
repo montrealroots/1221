@@ -55,7 +55,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { earningsOf, homeOf } from './earnings';
 import { payeeAccount } from './cash';
-import { isoOfCountry } from './documents';
+import { citizenOf, citizenshipsOf } from './documents';
 import { capitalMeans, livesInIreland } from './homebenefits';
 
 export const IRISH_PENSION = {
@@ -139,7 +139,7 @@ export function nonContributoryWeekly(age: number, meansEur: Money): Money {
   return Math.max(0, rate - Math.ceil(over / IRISH_NCP.step) * IRISH_NCP.step);
 }
 
-const meansTested = (person: Person) => livesInIreland(person) && IRISH_RESIDENTS.has(isoOfCountry(person.citizenshipId) ?? '');
+const meansTested = (person: Person) => livesInIreland(person) && citizenshipsOf(person).some((c) => IRISH_RESIDENTS.has(c));
 const livesAlone = (person: Person) => person.home?.kind === 'own' || person.home?.kind === 'owned';
 
 /** The Irish pension's week as it's paid, in euro cents: the higher of the two, the Living Alone Increase, and the Fuel Allowance in its season. */
@@ -175,7 +175,7 @@ export const livesInMexico = (person: Person) => CITIES.get(homeOf(person))?.cou
 
 export function bienestarRefusal(sim: Simulation, person: Person): string | undefined {
   if (person.bienestarFrom !== undefined) return 'You’re drawing it.';
-  if (isoOfCountry(person.citizenshipId) !== 'MX') return 'It’s for Mexicans.';
+  if (!citizenOf(person, 'MX')) return 'It’s for Mexicans.';
   if (!livesInMexico(person)) return 'It’s for Mexicans living in Mexico.';
   if (ageAt(person, sim.now) < BIENESTAR.age) return 'From 65.';
   return undefined;

@@ -287,6 +287,10 @@ export interface Person {
   imss?: import('../systems/imss').ImssRecord;
   /** Canada's CPP paid in by year, and the pensions claimed (`systems/capensions.ts`, from 2026-09-30). */
   caPensions?: import('../systems/capensions').CanadaPensions;
+  /** Citizenships taken since birth, by naturalization (`systems/citizenship.ts`, from 2026-09-30). */
+  naturalized?: { iso: string; at: number }[];
+  /** A naturalization being decided. */
+  naturalizing?: { iso: string; readyAt: number };
   /** The body's clock a journey left out, and since when (`systems/jetlag.ts`). */
   bodyClock?: import('../systems/jetlag').BodyClock;
   /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`), and when they moved home from abroad. */

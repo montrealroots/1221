@@ -16,13 +16,19 @@
  *   home isn't in Britain as not resident, the test being 183 days there in
  *   the year before.
  * - Mexico City lies outside the restricted zone, where a foreigner may own
- *   directly under a Calvo clause with the SRE, whose fee wasn't read; none is
- *   charged. Ireland and America don't restrict a foreign buyer.
+ *   directly once they've signed the SRE's convenio de renuncia, the Calvo
+ *   clause: MXN 5,252.02 in the 2026 Ley Federal de Derechos, granted unless the
+ *   SRE refuses within five business days (`research-citizenship.json`, from
+ *   later on 2026-09-30; until then its fee wasn't read and none was charged).
+ *   SLATE keeps no home in the restricted zone, whose trust permit is
+ *   MXN 21,648.83. Ireland and America don't restrict a foreign buyer.
  */
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import type { Money } from '../core/money';
+import { saveCurrency, type Money } from '../core/money';
+import { exchange } from '../content/currency';
+import { citizenOf } from './documents';
 import { CITIES } from '../content/geography';
 
 export const FOREIGN_BUYERS = {
@@ -32,9 +38,19 @@ export const FOREIGN_BUYERS = {
   torontoNrst: 0.1,
   bcAptt: 0.2,
   englandSurcharge: 0.02,
+  /** Mexico's convenio de renuncia with the SRE, pesos. */
+  mexicoConvenio: 5_252.02,
 } as const;
 
-const isCanadian = (person: Person) => person.citizenshipId === 'ca';
+/** A foreigner's SRE permit to own in Mexico, outside the restricted zone, in the save's money, cents; nothing for anyone else. */
+export function foreignBuyerFee(sim: Simulation, person: Person, cityId: string): Money {
+  if (CITIES.get(cityId)?.countryId !== 'mx' || citizenOf(person, 'MX')) return 0;
+  const c = Math.round(FOREIGN_BUYERS.mexicoConvenio * 100);
+  const cur = saveCurrency(sim.universe);
+  return cur === 'MXN' ? c : exchange(c, 'MXN', cur) ?? c;
+}
+
+const isCanadian = (person: Person) => citizenOf(person, 'CA');
 
 /** Why a home here can't be bought by this person now, or nothing. */
 export function foreignBuyerRefusal(sim: Simulation, person: Person, cityId: string): string | undefined {

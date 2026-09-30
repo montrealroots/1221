@@ -36,9 +36,9 @@ import { HOME_TAX } from '../content/homes';
 import { CITIES } from '../content/geography';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, ENHANCED_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
 import { earningsOf, stateOf, yearOf } from './earnings';
-import { isoOfCountry } from './documents';
 import { drawFromBank, expenseFor, payFromBank } from './household';
 import { personalityOf } from './personality';
+import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -509,7 +509,7 @@ export function armCollection(sim: Simulation, person: Person): void {
 
 /** Whether a year asks a US return of them: a citizen, or anyone with wages or benefit earned in the US. */
 export function owesUsReturn(person: Person, year: number): boolean {
-  if (isoOfCountry(person.citizenshipId) === 'US' || person.citizenshipId === undefined) return true;
+  if (citizenOf(person, 'US') || person.citizenshipId === undefined) return true;
   const y = earningsOf(person).years[year];
   if (!y) return false;
   if (y.bySource === undefined) return y.acting + y.workStudy + y.unemployment > 0;
