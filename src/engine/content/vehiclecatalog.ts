@@ -35,6 +35,8 @@ export interface CarModel {
   fuel: 'petrol' | 'diesel' | 'hybrid' | 'phev' | 'ev';
   /** Liters per 100 km, or null where not yet rated. */
   per100km: number | null;
+  /** An electric car's consumption, kWh per 100 km (`content/evcatalog.ts`, from 2026-09-30). */
+  kwhPer100km?: number;
   economyBasis: string;
   co2: number | null;
   kerbKg: number | null;

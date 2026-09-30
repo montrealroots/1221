@@ -24,14 +24,16 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 - BC Ferries between Vancouver and Victoria, with Victoria's hotels (`78ee590`).
 - Vehicle theft at the published rates, recovered at the published share; full cover pays and liability doesn't (`78ee590`).
 
-**Gate at `78ee590`:** 2,012 tests.
+**Done on 2026-09-30 since `78ee590`:**
+- The TV, console and speaker; the alarm; winter tires; foreign buyers' taxes; the land loan; construction's retention and certificate of occupancy (`27f8fd33` to `f58756ea`).
+- Canada as an acting market (`4bc6464e`).
+- Locks, lights and timers against burglary (`0a7c05a1`).
+- Electric cars with home charging, and window tint, in the commit after it.
 
-**Next, in order, with the research already in `docs/research/world/`:**
-- **Home gear with effects:** a TV, a console and a speaker that let the screen, games and music interests be loved when unwinding; a window air conditioner that cuts hot nights' lost sleep; an alarm and locks against a burglary engine. For burglary, the rates are in `research-home-effects.json`, with Tseloni et al.'s device effects (an alarm alone protects least; window and door locks 12.5 times; the WIDE combination 49.1 times) and insurers' discounts. Also an EV charged at home at the published electricity prices.
-- **Customization with effects:** winter tires (Quebec's 5% fewer crash victims, BC's signed routes, Ontario's discount); modifications and insurers' loadings (cinch's secondary figures); New York's tint fine and inspection; California's smog check failing a tune.
-- **Land:** a land loan (Farm Credit's terms); foreign buyers (Canada's ban to 2027-01-01, Ontario's and BC's taxes, England's 2% surcharge, Mexico's permit); commercial land, waterfront, islands and utilities.
-- **Construction choices** (`research-construction-choices.json`).
-- Residence documents and immigration. (Canada as an acting market was done on 2026-09-30.)
+**Next, in order:**
+- **Customization still open:** modifications and insurers' loadings (cinch's secondary figures); California's smog check failing a tune.
+- **Land:** commercial land, waterfront, islands, utilities and easements; Mexico's permit for foreign buyers.
+- Residence documents and immigration: Ireland's IRP (€300), PR cards and Mexico's residence cards.
 - **Played lives**, one at a time.
 
 **The owner's call, still open:** income outside acting for a life abroad.

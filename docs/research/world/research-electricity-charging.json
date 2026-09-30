@@ -1,0 +1,458 @@
+{
+  "meta": {
+    "compiledOn": "2026-09-30",
+    "purpose": "Real, sourced 2026 figures for charging an electric car at home and in public, for SLATE's money system.",
+    "conventions": {
+      "confirmed": "true means the figure was read on the cited page during this research (for PDFs, in the PDF text itself). false means it came only from a search-result summary or a page that could not be opened, and must be checked before use.",
+      "derived": "Any 'derived' value was computed here by adding published components. It is arithmetic on sourced numbers, not a published figure, and says which components it adds.",
+      "currency": "Each figure carries its own currency. US cents and dollars for the US places, CAD for Canada, MXN for Mexico, GBP pence for Great Britain, EUR cents for Ireland.",
+      "publicFastTrackerNote": "US network averages come from DCFC Tracker, a third-party site that syncs the networks' public prices. Networks (Tesla, Electrify America, EVgo) publish prices only in their apps, not on a web price list, so no first-party per-state figure exists. DCFC Tracker records the peak rate where time-of-use pricing applies, and its averages are unweighted by site."
+    },
+    "globalHomeShareFallback": {
+      "value": "EV owners charge privately (at home or a workplace) almost 75% of the time, and at public fast chargers only 10% of the time",
+      "scope": "worldwide survey data; no country breakdown for the US, Canada, UK, Ireland or Mexico",
+      "url": "https://www.iea.org/reports/global-ev-outlook-2026/electric-vehicle-charging-chap-6-and-10",
+      "publisher": "International Energy Agency, Global EV Outlook 2026",
+      "date": "2026",
+      "confirmed": true
+    }
+  },
+
+  "nyc": {
+    "residential": {
+      "utility": "Con Edison, NYC Residential SC 1",
+      "allInCentsPerKwh": 33.8267,
+      "period": "2025 average (latest year published)",
+      "components2025": {"delivery": 18.3233, "commodity": 13.7533, "MAC": 0.8133, "RDM": 0.2867, "surcharges": 0.6500},
+      "includes": "Delivery, supply, MAC, RDM and surcharges, grossed up for gross receipts tax and sales tax, at 300 kWh a month",
+      "excludes": "Customer charge and BPP",
+      "url": "https://www.coned.com/-/media/files/coned/documents/save-energy-money/using-private-generation/historical-average-full-service-electric-rates.pdf",
+      "publisher": "Con Edison, 'Con Ed Electric Average Bill History'",
+      "date": "covers 2023 to 2025; read 2026-09-30",
+      "confirmed": true,
+      "earlierYears": {"2023": 29.52, "2024": 33.4533},
+      "fixedCharge": {
+        "value": "$21.00 a month",
+        "note": "This is the customer charge the Con Ed time-of-use page lists for its residential TOU rate. The standard SC 1 customer charge was not found on a Con Ed page.",
+        "url": "https://www.coned.com/en/accounts-billing/your-bill/time-of-use",
+        "publisher": "Con Edison",
+        "date": "read 2026-09-30",
+        "confirmed": true
+      },
+      "eiaCrossCheck": {
+        "value": "29.90 cents/kWh, New York State residential average, July 2026",
+        "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a",
+        "publisher": "U.S. Energy Information Administration, Electric Power Monthly Table 5.6.A",
+        "date": "July 2026 data",
+        "confirmed": true
+      }
+    },
+    "touOvernight": {
+      "plan": "Con Edison Residential Time-of-Use",
+      "offPeakDollarsPerKwh": 0.0522,
+      "offPeakHours": "Midnight to 8 a.m., every day (peak is 8 a.m. to midnight)",
+      "peakDollarsPerKwh": {"juneToSeptember": 0.2786, "otherMonths": 0.1711},
+      "superPeak": "June through September, weekdays 2 to 6 p.m., priced above peak (figure not captured)",
+      "monthlyCustomerCharge": "$21.00",
+      "caveat": "Con Ed says these rates exclude surcharges and taxes. The page read does not say plainly whether they are delivery-only (with supply billed separately) or delivery plus supply. Treat as not all-in until checked.",
+      "url": "https://www.coned.com/en/accounts-billing/your-bill/time-of-use",
+      "publisher": "Con Edison",
+      "date": "read 2026-09-30",
+      "confirmed": true
+    },
+    "publicFast": {
+      "note": "No first-party NYC figure. State averages for New York, August 2026, peak $/kWh.",
+      "networks": [
+        {"network": "Tesla Supercharger", "dollarsPerKwh": 0.578, "basis": "standard (non-member) rate, 77 NY sites", "nationalMemberAverage": 0.433, "nationalStandardAverage": 0.601, "url": "https://dcfctracker.com/reports/tesla/2026-08", "publisher": "DCFC Tracker", "date": "August 2026 (to Aug 31)", "confirmed": true},
+        {"network": "Electrify America", "dollarsPerKwh": 0.540, "basis": "86 NY sites", "nationalAverage": 0.615, "url": "https://dcfctracker.com/reports/electrify-america/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true},
+        {"network": "EVgo", "dollarsPerKwh": 0.698, "basis": "27 NY sites; NY was EVgo's priciest state", "nationalAverage": 0.644, "url": "https://dcfctracker.com/reports/evgo/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true}
+      ]
+    },
+    "homeShare": {
+      "value": "64% of EV charging estimated to take place at single-family homes; Level 1 and Level 2 together 80%, DC fast 20%",
+      "scope": "US national projection for 2030, not a measured current share and not NYC-specific. NYC's apartment-heavy housing would make its real home share lower.",
+      "url": "https://www.energy.gov/cmei/vehicles/articles/fotw-1335-march-25-2024-level-1-and-level-2-ev-charging-expected-account-80",
+      "publisher": "U.S. DOE Fact of the Week #1335, citing NREL, 'The 2030 National Charging Network' (June 2023)",
+      "date": "2024-03-25",
+      "confirmed": true,
+      "alsoSeen": {
+        "value": "most light-duty EV charging occurs at home (over 80%), about 15% at the workplace, the remainder public",
+        "url": "https://afdc.energy.gov/files/u/publication/community-emobility-charging.pdf",
+        "publisher": "U.S. DOE, DOE/EE-2806 'Community Charging' (2024)",
+        "confirmed": false
+      }
+    }
+  },
+
+  "connecticut": {
+    "residential": {
+      "utility": "Eversource (The Connecticut Light and Power Company), Rate 1",
+      "derivedAllInCentsPerKwh": 23.605,
+      "derivation": "Delivery per-kWh components from Eversource's summary (12.025 cents) plus the standard service generation rate from July 1, 2026 (11.58 cents). Excludes the monthly customer charge.",
+      "deliveryComponentsDollarsPerKwh": {
+        "distribution": 0.05844, "electricSystemImprovements": 0.02031, "revenueAdjustmentMechanism": 0.00011,
+        "transmission": 0.05050, "combinedPublicBenefits": 0.00504, "competitiveTransitionAssessment": 0.00496, "fmccDelivery": -0.01911,
+        "sum": 0.12025,
+        "url": "https://www.eversource.com/docs/default-source/rates-tariffs/ct-electric/ct-electric-rates.pdf",
+        "publisher": "Eversource, 'Summary of Connecticut Electric Rates'",
+        "date": "Last updated 2026-05-01",
+        "confirmed": true
+      },
+      "standardServiceGeneration": {
+        "centsPerKwh": 11.58,
+        "previous": "12.64 cents, first half of 2026",
+        "effective": "2026-07-01 (standard service resets each January and July)",
+        "url": "https://ctmirror.org/2026/05/15/eversource-ui-customers-summer-electricity-rates/",
+        "publisher": "CT Mirror",
+        "date": "2026-05-15",
+        "confirmed": true,
+        "note": "Search summaries give the exact figure as 11.577 cents; that three-decimal value was not read on a primary page."
+      },
+      "fixedCharge": {"value": "$9.62 a month (Distribution Customer Service Charge)", "url": "https://www.eversource.com/docs/default-source/rates-tariffs/ct-electric/ct-electric-rates.pdf", "publisher": "Eversource", "date": "2026-05-01", "confirmed": true},
+      "eiaCrossCheck": {
+        "value": "24.16 cents/kWh, Connecticut residential average, July 2026",
+        "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a",
+        "publisher": "U.S. Energy Information Administration, Electric Power Monthly Table 5.6.A",
+        "date": "July 2026 data",
+        "confirmed": true
+      }
+    },
+    "touOvernight": {
+      "plan": "Eversource Rate 7, Residential Time-of-Day",
+      "hours": "On-peak weekdays noon to 8 p.m. Eastern prevailing time; off-peak all other hours, including all weekend",
+      "deliveryDollarsPerKwh": {
+        "offPeakSum": 0.10125,
+        "onPeakSum": 0.15853,
+        "components": "distribution 0.05513 both periods; ESI 0.02031; RAM 0.00011; transmission 0.11741 on / 0.02525 off; public benefits 0.00504; CTA 0.00496; FMCC -0.04443 on / -0.00955 off"
+      },
+      "monthlyCustomerCharge": "$9.62",
+      "url": "https://www.eversource.com/docs/default-source/rates-tariffs/ct-electric/ct-electric-rates.pdf",
+      "publisher": "Eversource",
+      "date": "2026-05-01",
+      "confirmed": true,
+      "offPeakGeneration": {
+        "centsPerKwh": 10.629,
+        "period": "2026-07-01 to 2026-12-31 (11.746 cents January to June 2026)",
+        "source": "search-result summary only; not read on an Eversource or PURA page",
+        "confirmed": false
+      },
+      "derivedOffPeakAllInCentsPerKwh": {"value": 20.754, "derivation": "10.125 delivery (confirmed) + 10.629 generation (unconfirmed)"},
+      "evProgramNote": "Eversource also runs an EV managed-charging reward (reported up to $120 a year baseline, $300 advanced). Not confirmed on an Eversource page."
+    },
+    "publicFast": {
+      "note": "State averages for Connecticut, peak $/kWh.",
+      "networks": [
+        {"network": "Tesla Supercharger", "dollarsPerKwh": 0.631, "basis": "standard rate, 22 CT sites", "url": "https://dcfctracker.com/reports/tesla/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true},
+        {"network": "Electrify America", "dollarsPerKwh": 0.650, "basis": "8 CT sites", "url": "https://dcfctracker.com/reports/electrify-america/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true},
+        {"network": "EVgo", "dollarsPerKwh": 0.667, "basis": "8 CT sites", "url": "https://dcfctracker.com/reports/evgo/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true}
+      ]
+    },
+    "homeShare": {"value": "No Connecticut-specific figure found. Use the US national figure under nyc.homeShare.", "confirmed": false}
+  },
+
+  "california_la": {
+    "residential": {
+      "utility": "Los Angeles Department of Water and Power (LADWP), R-1A Standard (tiered)",
+      "status": "LADWP's rates page read during this research still shows 2025 tier totals. Official 2026 tier totals were not found on an LADWP page.",
+      "tier1DollarsPerKwh2025": {"janMar": 0.22296, "aprMay": 0.22765, "jun": 0.22765, "julSep": 0.24306, "octDec": 0.24604},
+      "tier2DollarsPerKwh2025": "0.28155 to 0.30463 depending on period",
+      "tier3DollarsPerKwh2025": "0.28155 to 0.38866, highest June to September",
+      "serviceCharge": "$2.30 to $22.70 a month, depending on tier",
+      "url": "https://www.ladwp.com/account/customer-service/electric-rates/residential-rates",
+      "publisher": "LADWP",
+      "date": "2025 rates; base rates from 2019-07-01 with quarterly adjustment factors; read 2026-09-30",
+      "confirmed": true,
+      "adjustmentFactors2026DollarsPerKwh": {
+        "janMar": {"ECA": 0.05690, "ESA": 0.00147, "RCA": 0.00300, "IRCA": 0.05505, "VEA": 0.00781, "CRPSEA": 0.01889, "VRPSEA": 0.03317},
+        "aprJun": {"ECA": 0.05690, "ESA": 0.00147, "RCA": 0.00300, "IRCA": 0.05505, "VEA": 0.00503, "CRPSEA": 0.01779, "VRPSEA": 0.03296},
+        "julSep": {"ECA": 0.05690, "ESA": 0.00147, "RCA": 0.00300, "IRCA": 0.06934, "VEA": 0.01071, "CRPSEA": 0.01817, "VRPSEA": 0.03307},
+        "note": "These add to base rates that were not read, so a 2026 total cannot be derived here.",
+        "url": "https://www.ladwp.com/account/customer-service/electric-rates/residential-adjustment-billing-factors",
+        "publisher": "LADWP",
+        "date": "2026 quarters",
+        "confirmed": true
+      },
+      "unconfirmed2026Tier1": {"value": "$0.24771/kWh Tier 1, $0.30630 Tiers 2 and 3, January to March 2026", "source": "search-result summary citing third-party sites", "confirmed": false},
+      "eiaCrossCheck": {
+        "value": "33.61 cents/kWh, California residential average, July 2026",
+        "caveat": "Statewide average dominated by the investor-owned utilities (PG&E, SCE, SDG&E). LADWP, a municipal utility, is priced well below it, so this is a poor proxy for Los Angeles city.",
+        "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a",
+        "publisher": "U.S. Energy Information Administration",
+        "date": "July 2026 data",
+        "confirmed": true
+      }
+    },
+    "touOvernight": {
+      "plan": "LADWP R-1B Time-of-Use, plus the EV discount",
+      "r1bDollarsPerKwh2025": {"highPeak": "0.25172 to 0.33022", "lowPeak": "0.25172 to 0.27182", "base": "0.22818 to 0.24438"},
+      "r1bServiceCharge": "$12.00 a month",
+      "r1bSource": {"url": "https://www.ladwp.com/account/customer-service/electric-rates/residential-rates", "publisher": "LADWP", "date": "2025 rates", "confirmed": true},
+      "hours": {
+        "value": "Weekdays: high peak 1 to 5 p.m., low peak 10 a.m. to 1 p.m. and 5 to 8 p.m., base 8 p.m. to 10 a.m.; weekends and holidays all base",
+        "source": "search-result summary of third-party sites; the LADWP page read did not list the hours",
+        "confirmed": false
+      },
+      "evDiscount": {
+        "value": "$0.025/kWh off base-period charges",
+        "conditions": "The EV charger must be on its own meter, on a time-of-use rate. $10 a month minimum charge plus adjustment factors. No service charge or ESA adjustment factor on the EV discount rate.",
+        "url": "https://www.ladwp.com/account/customer-service/electric-rates/ev-nem-reo-rates",
+        "publisher": "LADWP",
+        "date": "read 2026-09-30",
+        "confirmed": true
+      }
+    },
+    "publicFast": {
+      "note": "California state averages, peak $/kWh. No LA-only figure.",
+      "networks": [
+        {"network": "Tesla Supercharger", "dollarsPerKwh": 0.689, "basis": "standard rate, 478 CA sites", "url": "https://dcfctracker.com/reports/tesla/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true},
+        {"network": "Electrify America", "dollarsPerKwh": 0.693, "basis": "299 CA sites; CA was EA's most expensive state", "url": "https://dcfctracker.com/reports/electrify-america/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true},
+        {"network": "EVgo", "dollarsPerKwh": 0.667, "basis": "413 CA sites", "url": "https://dcfctracker.com/reports/evgo/2026-08", "publisher": "DCFC Tracker", "date": "August 2026", "confirmed": true}
+      ]
+    },
+    "homeShare": {"value": "No LA-specific figure found. Use the US national figure under nyc.homeShare.", "confirmed": false}
+  },
+
+  "ontario_toronto": {
+    "residential": {
+      "utility": "Toronto Hydro, with Ontario Energy Board Regulated Price Plan (RPP) commodity prices",
+      "commodityCentsPerKwh": {
+        "tiered": {"tier1": 12.0, "tier2": 14.2, "threshold": "600 kWh a month in summer (May to October), 1,000 kWh in winter"},
+        "timeOfUse": {"offPeak": 9.8, "midPeak": 15.7, "onPeak": 20.3}
+      },
+      "commoditySource": {"url": "https://www.oeb.ca/consumer-information-and-protection/electricity-rates/historical-electricity-rates", "publisher": "Ontario Energy Board", "date": "effective 2025-11-01 (the OEB now resets RPP prices each November 1)", "confirmed": true},
+      "deliveryAndRegulatory": {
+        "fixedCustomerCharge": "$51.18 per 30 days (distribution is all fixed for residential)",
+        "perKwhDollars": {"transmission": 0.02241, "capacityBasedRecoveryRider": 0.00048, "deferralVarianceRider": 0.00112, "wholesaleMarketService": 0.0053},
+        "perKwhSum": 0.02931,
+        "otherFixed": "Standard Supply Service Administration $0.25 per 30 days; 'change in useful life' credits of -$1.41, -$0.34 and -$0.99 per 30 days",
+        "hst": "13%",
+        "ontarioElectricityRebate": "23.5%, effective 2025-11-01",
+        "url": "https://www.torontohydro.com/for-home/rates",
+        "publisher": "Toronto Hydro",
+        "date": "delivery effective 2026-01-01; page shows commodity periods to 2026-10-31",
+        "confirmed": true
+      },
+      "derivedAllInTieredTier1CentsPerKwh": {
+        "value": 13.37,
+        "derivation": "(12.0 + 2.931) x (1 + 0.13 HST - 0.235 OER) = 14.931 x 0.895. Excludes the fixed charge and the line-loss adjustment, which was not captured."
+      }
+    },
+    "touOvernight": {
+      "plan": "RPP Ultra-Low Overnight (ULO)",
+      "centsPerKwh": {"ultraLowOvernight": 3.9, "weekendOffPeak": 9.8, "midPeak": 15.7, "onPeak": 39.1},
+      "hours": "Ultra-low overnight 11 p.m. to 7 a.m. every day; weekend off-peak 7 a.m. to 11 p.m. weekends and holidays; mid-peak weekdays 7 a.m. to 4 p.m. and 9 to 11 p.m.; on-peak weekdays 4 to 9 p.m.",
+      "url": "https://www.torontohydro.com/for-home/rates",
+      "publisher": "Toronto Hydro (OEB-set prices)",
+      "date": "2025-11-01 to 2026-10-31",
+      "confirmed": true,
+      "derivedAllInOvernightCentsPerKwh": {"value": 6.12, "derivation": "(3.9 + 2.931) x 0.895. Excludes the fixed charge and line loss."}
+    },
+    "publicFast": {
+      "status": "No reliable current per-kWh figure read on a network's own page. Ivy's and Petro-Canada's sites refused the fetch (HTTP 403).",
+      "networks": [
+        {"network": "Ivy Charging Network (ONroute highway stations)", "dollarsPerKwh": 0.62, "basis": "tax included; set when Ivy moved to per-kWh pricing", "url": "https://driveteslacanada.ca/news/ivy-charge-go-switches-to-kwh-pricing-in-ontario/", "publisher": "Drive Tesla Canada", "date": "2023-11-06", "confirmed": true, "caveat": "Nearly three years old; the current price was not confirmed."},
+        {"network": "Petro-Canada", "value": "reported ranges of $0.33 to $0.55/kWh", "source": "third-party 2026 guides in search summaries, mutually inconsistent", "confirmed": false},
+        {"network": "FLO", "value": "reported $0.25 to $0.65/kWh depending on site host", "source": "third-party guides in search summaries", "confirmed": false}
+      ]
+    },
+    "homeShare": {
+      "value": "over 80% of EV owners charge at home",
+      "scope": "Share of owners who charge at home, not share of energy charged at home. Canada-wide.",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/transportation-energy-efficiency/electric-vehicles/electric-vehicle-charging-charger-installation",
+      "publisher": "Natural Resources Canada",
+      "date": "page dated 2026-07-22",
+      "confirmed": true
+    }
+  },
+
+  "bc_vancouver": {
+    "residential": {
+      "utility": "BC Hydro",
+      "tieredRate1101": {
+        "step1CentsPerKwh": 11.87, "step2CentsPerKwh": 14.08,
+        "threshold": "about 675 kWh a month (1,350 bimonthly), 22.1918 kWh a day",
+        "basicChargeCentsPerDay": 23.44,
+        "url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/tiered.html",
+        "publisher": "BC Hydro", "date": "page read 2026-09-30; effective date not shown", "confirmed": true
+      },
+      "flatRate": {
+        "centsPerKwh": 12.70, "basicChargeCentsPerDay": 25.00,
+        "url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/flat.html",
+        "publisher": "BC Hydro", "date": "page read 2026-09-30; effective date not shown", "confirmed": true
+      },
+      "discrepancy": "Search summaries give April 1, 2026 figures of 11.72 / 14.08 cents and 23.30 cents a day, which differ slightly from the BC Hydro page. The page wins. A report that BC Hydro is moving residential billing to a blended flat rate could not be opened (HTTP 503) and is unconfirmed.",
+      "taxes": "Not confirmed on a BC Hydro page. GST 5% applies to residential electricity; BC PST is generally exempt for residential. Treat as unconfirmed."
+    },
+    "touOvernight": {
+      "plan": "BC Hydro Time-of-Day pricing (an adjustment on top of the tiered or flat rate)",
+      "adjustments": {"overnight": "-5 cents/kWh, 11 p.m. to 7 a.m.", "onPeak": "+5 cents/kWh, 4 to 9 p.m.", "offPeak": "no adjustment, 7 a.m. to 4 p.m. and 9 to 11 p.m."},
+      "url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/time-of-day.html",
+      "publisher": "BC Hydro",
+      "date": "page read 2026-09-30; effective date not shown",
+      "confirmed": true,
+      "derivedOvernightCentsPerKwh": {"onTieredStep1": 6.87, "onFlat": 7.70, "derivation": "base energy rate minus 5 cents; before tax and basic charge"}
+    },
+    "publicFast": {
+      "networks": [
+        {"network": "BC Hydro EV (fast chargers labeled 25 kW or higher)", "dollarsPerKwh": 0.3969, "basis": "before 5% GST; idle fee $0.40 a minute after a 5-minute grace period. Level 2 is $0.3083/kWh with no idle fee.", "url": "https://www.bchydro.com/powersmart/electric-vehicles/public-charging/charging-rates-roaming.html", "publisher": "BC Hydro", "date": "effective 2026-04-01", "confirmed": true}
+      ]
+    },
+    "homeShare": {"value": "No BC-specific figure. Use the Canada-wide NRCan figure under ontario_toronto.homeShare.", "confirmed": false}
+  },
+
+  "mexico_city": {
+    "residential": {
+      "utility": "CFE, Tarifa 1 (Mexico City's residential tariff)",
+      "pesosPerKwh": {"basico": 1.132, "intermedio": 1.377, "excedente": 4.028},
+      "period": "August 2026 (CFE table dated 2026-08-05)",
+      "url": "https://airegulasolutions.com/cfe/tarifas?year=2026&month=8&segment=DOMESTIC&page=1&pageSize=25",
+      "publisher": "AI Regula Solutions, reproducing CFE's published table",
+      "date": "2026-08-05",
+      "confirmed": true,
+      "primarySourceNote": "CFE's own tariff pages (app.cfe.mx, cfe.mx) sit behind a bot wall and TLS error and could not be read. The figures were read on a secondary page that cites CFE.",
+      "blocks": {"value": "Basic is the first 150 kWh per bimonthly period, intermediate 151 to 280 kWh, excess above 280 kWh", "source": "search-result summary", "confirmed": false},
+      "taxes": {"value": "16% IVA; municipal public-lighting fee (DAP) also applies", "url": "https://www.calcele.com/guias/cfe/tarifas-electricas/", "publisher": "CalcEle", "confirmed": true},
+      "dac": {
+        "value": "Fixed charge 142.41 pesos plus 6 to 7 pesos/kWh with no subsidy; a household on Tarifa 1 moves to DAC when its 12-month average passes 250 kWh a month",
+        "url": "https://www.infobae.com/mexico/2026/05/01/recibo-de-luz-cfe-2026-como-evitar-la-tarifa-domestica-de-alto-consumo/",
+        "publisher": "Infobae",
+        "date": "2026-05-01",
+        "confirmed": true,
+        "centralRegionFigure": {"value": "6.630 pesos/kWh (Central region, which includes Mexico City)", "confirmed": false}
+      },
+      "evRelevance": "An EV's charging load would push many Tarifa 1 homes into the excess block and then onto DAC, so DAC is the realistic home rate for a Mexico City EV owner."
+    },
+    "touOvernight": {"value": "No residential time-of-use or EV overnight tariff from CFE was found.", "confirmed": false},
+    "publicFast": {
+      "value": "Tesla Supercharger reported at 6 to 7 pesos/kWh (2026), or 7.50 to 9.00 pesos/kWh (2025)",
+      "source": "search-result summaries of Mexican press and blogs; no network page read",
+      "confirmed": false,
+      "note": "CFE does not run a public fast-charging network with published prices that was found."
+    },
+    "homeShare": {"value": "No Mexico-specific figure found. The IEA global figure (meta.globalHomeShareFallback) is the only one.", "confirmed": false}
+  },
+
+  "gb_london": {
+    "residential": {
+      "regulator": "Ofgem energy price cap, direct debit",
+      "gbAverage": {"unitRatePencePerKwh": 26.32, "standingChargePencePerDay": 54.83},
+      "period": "2026-10-01 to 2026-12-31",
+      "vat": "No VAT on electricity from 2026-10-01 to 2027-03-31",
+      "url": "https://www.ofgem.gov.uk/information-consumers/energy-advice-households/get-energy-price-cap-standing-charges-and-unit-rates-region",
+      "publisher": "Ofgem",
+      "date": "cap period starting 2026-10-01",
+      "confirmed": true,
+      "london": {"unitRatePencePerKwh": 26.60, "standingChargePencePerDay": 42.92, "source": "search-result summary; Ofgem's page shows only the GB average without a postcode lookup", "confirmed": false}
+    },
+    "touOvernight": {
+      "plan": "Intelligent Octopus Go (Octopus Energy)",
+      "offPeakPencePerKwh": 8.0,
+      "previous": "8.4p until 1 October 2026 (the change lines up with the removal of VAT)",
+      "hours": "11:30 p.m. to 5:30 a.m. for the whole home, plus up to 6 hours of smart charging per 24 hours at the off-peak rate",
+      "dayRateAndStanding": "Vary by region; not shown without a postcode",
+      "url": "https://octopus.energy/smart/intelligent-octopus-go/",
+      "publisher": "Octopus Energy",
+      "date": "read 2026-09-30",
+      "confirmed": true
+    },
+    "publicFast": {
+      "networks": [
+        {"network": "UK average, rapid and ultra-rapid (50 kW+)", "pencePerKwh": 77, "basis": "pay-as-you-go average; Standard/Standard Plus (3 to 49 kW) average 54p", "url": "https://www.zapmap.com/ev-stats/charging-price-index", "publisher": "Zapmap Price Index", "date": "August 2026 data, updated September 2026", "confirmed": true},
+        {"network": "bp pulse, 50 to 400 kW", "pencePerKwh": "79 to 93", "basis": "pay-as-you-go, depending on site and payment method", "url": "https://www.zapmap.com/ev-guides/public-charging-point-networks/bp-pulse", "publisher": "Zapmap", "date": "updated September 2026", "confirmed": true}
+      ]
+    },
+    "homeShare": {
+      "value": "No published share of charging energy done at home was found for the UK. The closest is access: 93% of surveyed EV drivers had home charging.",
+      "scope": "Non-probability sample of 848 UK EV drivers, fieldwork October to November 2021; not weighted; London respondents 19%",
+      "url": "https://assets.publishing.service.gov.uk/media/628f5603d3bf7f037097bd73/dft-ev-driver-survey-summary-report.pdf",
+      "publisher": "Department for Transport / BritainThinks, 'Electric Vehicle Charging Research: Survey with electric vehicle drivers'",
+      "date": "April 2022",
+      "confirmed": true,
+      "detail": "78% charged overnight at home at least once a week; 18% every day. Urban respondents were more likely to lack off-street parking (11% vs 5% overall)."
+    }
+  },
+
+  "ireland_dublin": {
+    "residential": {
+      "supplier": "Electric Ireland, the largest supplier (Ireland has no regulator price cap; CRU does not set retail prices)",
+      "standard24hrCentsPerKwhInclVat": 38.04,
+      "standingChargeUrbanEurosPerYear": 250.76,
+      "effective": "2026-07-01 (an 8% rise, Electric Ireland's first since October 2022)",
+      "url": "https://esb.ie/news---insights/press-releases/article/2026/05/28/electric-ireland-announces-price-increase-for-residential-electricity-and-gas-from-1st-of-july-2026",
+      "publisher": "ESB / Electric Ireland press release",
+      "date": "2026-05-28",
+      "confirmed": true,
+      "note": "Dublin is on the urban (DG1) standing charge."
+    },
+    "touOvernight": {
+      "plan": "Electric Ireland Home Electric+ Night Boost (smart meter)",
+      "centsPerKwhInclVat": {"day": 39.79, "night": 19.62, "nightBoost": 11.51},
+      "standingChargeUrbanEurosPerYear": 328.58,
+      "pricesSource": {"url": "https://esb.ie/news---insights/press-releases/article/2026/05/28/electric-ireland-announces-price-increase-for-residential-electricity-and-gas-from-1st-of-july-2026", "publisher": "ESB / Electric Ireland", "date": "effective 2026-07-01", "confirmed": true},
+      "hours": "Day 08:00 to 23:00; night 23:00 to 08:00; Night Boost 02:00 to 04:00",
+      "hoursSource": {"url": "https://www.electricireland.ie/residential/electricity-and-gas/ev-night-boost", "publisher": "Electric Ireland", "date": "read 2026-09-30", "confirmed": true},
+      "staleness": "The Electric Ireland product page still showed pre-July prices (37.60 / 18.54 / 10.88 cents). The press release's July 2026 prices are the current ones."
+    },
+    "publicFast": {
+      "networks": [
+        {"network": "ESB ecars", "eurosPerKwh": {"dcAbove50kW": 0.72, "acUpTo50kW": 0.60}, "membership": "EUR 4.79 a month, 12-month commitment, for 0.67 DC / 0.55 AC", "overstay": "EUR 0.50 a minute after 45 minutes on rapid or high-power chargers, capped at EUR 22.50 (from search summary, unconfirmed)", "url": "https://www.electrive.com/2026/07/01/esb-ecars-raises-charging-prices-across-ireland-and-northern-ireland/", "publisher": "electrive.com", "date": "2026-07-01", "confirmed": true, "caveat": "ESB's own price page was not reachable (HTTP 404). A Breaking News headline says further increases are likely in October 2026."}
+      ]
+    },
+    "homeShare": {
+      "value": "No reputable figure found for the share of charging done at home in Ireland. An RTÉ Brainstorm piece says about 80% of EV owners charge at home but cites no source, and about 30% of households lack easy private home charging.",
+      "url": "https://www.rte.ie/brainstorm/2026/0707/1581950-ireland-electric-cars-evs-home-charging-infrastructure-regulations/",
+      "publisher": "RTÉ Brainstorm (Fionn Rogan)",
+      "date": "2026-07-07",
+      "confirmed": true,
+      "usable": false
+    }
+  },
+
+  "tintEnforcement": {
+    "registrations": {
+      "newYorkStatePassenger": 9277782,
+      "nycFiveBoroughsPassenger": {"bronx": 221189, "kings": 437048, "newYork": 198283, "queens": 671786, "richmond": 259140, "total": 1787446},
+      "definition": "Records with record_type VEH and registration_class PAS (standard passenger plates) and a registration expiring on or after 2026-09-02. County is the owner's county of residence or use. Counting only PAS leaves out taxis, for-hire vehicles, vanity and special plate classes and commercial classes, so it undercounts cars on the road, most of all in NYC.",
+      "method": "Counted by this research through the Socrata API (SoQL count over the dataset); not a figure DMV publishes as a total.",
+      "url": "https://data.ny.gov/Transportation/Vehicle-Snowmobile-and-Boat-Registrations/w4pv-hbkt",
+      "publisher": "New York State DMV, on Open Data NY",
+      "date": "dataset refreshed 2026-09-02; queried 2026-09-30",
+      "confirmed": true,
+      "note": "The request asked for 2024 or 2025. The dataset is a rolling snapshot, not an annual series, so the count is as of September 2026."
+    },
+    "shareDarkerThanLegal": {
+      "value": null,
+      "finding": "No published estimate was found, from any survey, agency or study, of the share of cars whose window tint is darker than the legal limit, in New York or anywhere in the US, Canada or the UK.",
+      "searched": "NHTSA (its 1991 Report to Congress on window tinting and later interpretations cover what new cars transmit, not after-market compliance), NYS DMV, UK police and DVSA tint enforcement, and general survey searches. NY inspection has checked front-side tint since 2017, but DMV publishes no failure counts that were found.",
+      "confirmed": true
+    },
+    "relatedNyTicketCounts": {
+      "note": "Not a share of cars. Tickets for tint-type violations of VTL 375(12-a)(b) as recorded in DMV's ticket file. A ticket is not a vehicle, some drivers get several, and the windshield code also covers non-tint obstructions.",
+      "byYear": {"2022": 90016, "2023": 117291, "2024": 109527, "2025": 117521, "2026PartialToDate": 81895},
+      "codesCounted": "37512A1 front windshield non-transparent, 37512A2 side wings / side windows non-transparent, 37512A3 rear side windows non-transparent",
+      "allYearsInFileByCode": {"37512A1": 110225, "37512A2": 322322, "37512A3": 83703, "37512A4RearWindowReflective": 10479},
+      "url": "https://data.ny.gov/resource/q4hy-kbtf.json",
+      "publisher": "New York State DMV, 'Traffic Tickets Issued: Four Year Window', Open Data NY",
+      "date": "refreshed September 2026; queried 2026-09-30",
+      "confirmed": true,
+      "coverageCaveat": "The file draws on DMV's TSLED ticket records. Whether it fully covers tickets adjudicated by NYC's Traffic Violations Bureau was not confirmed, so NYC is likely undercounted."
+    }
+  },
+
+  "uncertain": [
+    "Con Ed TOU rates ($0.0522 off-peak, $0.2786 / $0.1711 peak): Con Ed says they exclude surcharges and taxes; whether they include supply was not confirmed.",
+    "Con Ed standard SC 1 monthly customer charge: not found. Only the TOU rate's $21.00 was read.",
+    "Eversource Rate 7 off-peak generation 10.629 cents (July to December 2026) and the exact 11.577-cent standard service figure: search summaries only.",
+    "LADWP 2026 tier totals: not published on the pages read. Only the 2025 totals and the 2026 adjustment factors were confirmed. The R-1B hours are from third-party summaries.",
+    "EIA California average (33.61 cents) is a poor proxy for LADWP, which is municipal and cheaper.",
+    "Ofgem London regional cap (26.60p, 42.92p/day): search summary only; Ofgem shows the GB average without a postcode.",
+    "Toronto all-in figures leave out the line-loss adjustment; Ontario Electricity Rebate and HST treatment follows Toronto Hydro's page but the combined arithmetic is this research's own.",
+    "Ontario public fast charging: no current first-party price for Petro-Canada, FLO, Ivy or Tesla Canada. Ivy's $0.62/kWh dates from November 2023.",
+    "BC Hydro: effective dates were not on the pages; search summaries give slightly different April 2026 figures (11.72 / 23.30). Tax treatment and a reported move to a blended flat rate are unconfirmed.",
+    "Mexico: CFE's own pages could not be read (bot wall, TLS error). Tarifa 1 prices come from a secondary page citing CFE; block limits, DAC's Central-region price and all Tesla Mexico prices are unconfirmed. No CFE residential TOU or EV tariff was found.",
+    "Ireland: prices are Electric Ireland's, one supplier among several, not a regulated national price. ESB ecars may raise prices again in October 2026.",
+    "Home share: no measured, country-specific share of charging energy done at home was found for any of the eight places. The US figure is an NREL 2030 projection; the Canada figure is a share of owners, not energy; the UK figure is access, not energy; the IEA global 75% (private, including workplace) is the only energy-use figure.",
+    "US public fast-charging averages come from a third-party tracker (DCFC Tracker), record peak prices, and are state-level, not city-level.",
+    "Tint: NY passenger count uses only the PAS registration class and is a September 2026 snapshot, not 2024 or 2025. No estimate of the share of cars with illegal tint exists that was found."
+  ]
+}

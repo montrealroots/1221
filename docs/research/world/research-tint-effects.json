@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "compiledOn": "2026-09-30",
+    "note": "confirmed=true means the figure was read in the source text itself: the page, the PDF extracted with pdftotext, or the Europe PMC abstract record. confirmed=false means it came only from a search-engine snippet or a secondary summary. Aftermarket film and factory solar-control glass are different things. Where a figure is for glass rather than film, the entry says so.",
+    "nrelDomainNote": "docs.nrel.gov did not resolve on 2026-09-30. The same NREL PDFs are served at docs.nlr.gov (NREL is now listed as the 'National Laboratory of the Rockies'), and they were read there."
+  },
+  "cabinTemperature": [
+    {
+      "figure": "Aftermarket 3M nonmetallic solar-reflective FILM on all glazings: maximum breath-level air temperature 1.8 C (3.2 F) lower than the untreated vehicle; maximum instrument panel temperature 3.4 C (6.1 F) lower. Parked soak test on two Dodge Grand Caravans and two Ford Explorers. NREL notes these results 'were not as good as other solar-reflective technologies.'",
+      "appliesTo": "aftermarket window film (the closest match to tint)",
+      "source": "Bharathan, Chaney, Farrington, Lustbader, Keyser, Rugh, 'An Overview of Vehicle Test and Analysis from NREL's A/C Fuel Use Reduction Research', NREL/CP-540-41155 (VTMS-8 conference)",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2007-06",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "Same 3M film test, restated: 1.8 C (3.2 F) reduction in maximum breath temperature.",
+      "appliesTo": "aftermarket window film",
+      "source": "J. Rugh and R. Farrington, 'Vehicle Ancillary Load Reduction Project Close-Out Report', NREL/TP-540-42454",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2008-01",
+      "url": "https://docs.nlr.gov/docs/fy08osti/42454.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "PPG Sungate laminated solar-reflective GLASS at all locations on a Ford Explorer: maximum breath temperature 2.7 C (4.9 F) lower, instrument panel 7.6 C (13.7 F) lower.",
+      "appliesTo": "factory solar-reflective glass, not film",
+      "source": "NREL/CP-540-41155 (above); original test is SAE 2001-01-3077, 'Effect of Solar Reflective Glazing on Ford Explorer Climate Control, Fuel Economy, and Emissions'",
+      "publisher": "National Renewable Energy Laboratory / SAE International",
+      "date": "2007-06 (overview); 2001 (SAE paper)",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "Sungate EP solar-reflective GLASS (passes 3% of infrared) at all locations on a 2005 Cadillac STS: average cabin air temperature 7.1 C (12.8 F) lower; seats 8.7 C (15.7 F) lower; windshield 19.3 C lower; instrument panel 14.6 C (26.3 F) lower. That is 34% of the maximum possible reduction for air and 35% for seats (maximum possible = baseline minus ambient). With solar-powered ventilation added: 46% (air) and 44% (seat) of the maximum possible.",
+      "appliesTo": "factory solar-reflective glass, not film",
+      "source": "NREL/CP-540-41155; underlying paper is SAE 2007-01-1194 (Rugh et al.)",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2007-06",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "Context: in a parked vehicle, 'typically 50 to 75% of the thermal energy entering the passenger compartment is from the transmitted and absorbed solar energy at the glazings.'",
+      "appliesTo": "all glazing",
+      "source": "NREL/CP-540-41155",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2007-06",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "Window tints on every window of a parked 1.5-liter sedan in direct sun for 5 hours: average maximum cabin air temperature reduction of about 5 C (snippets give 4.8 C front and 5.3 C rear). Tint was the best of the three passive methods tested (sunshades, ventilators, tints).",
+      "appliesTo": "aftermarket window tint (Malaysia)",
+      "source": "M.A. Jasni and F.M. Nasir, 'Experimental comparison study of the passive methods in reducing car cabin interior temperature', ICMAR 2012 conference, Penang",
+      "publisher": "International Conference on Mechanical, Automobile and Robotics Engineering (conference proceedings, not a journal)",
+      "date": "2012",
+      "url": "https://www.researchgate.net/publication/266136337_Experimental_comparison_study_of_the_passive_methods_in_reducing_car_cabin_interior_temperature",
+      "confirmed": false,
+      "whyUnconfirmed": "ResearchGate returned HTTP 403. The figures come from search-engine snippets only."
+    }
+  ],
+  "acEnergy": [
+    {
+      "figure": "On the Cadillac STS, solar-reflective glass plus the other load reductions cut the A/C capacity needed for the same 30-minute cool-down from 5.7 kW to 4.0 kW, a 30% reduction. Vehicle simulation (ADVISOR): 'reducing the A/C load by 30% resulted in a 26% reduction in A/C fuel use.' Simulated, not measured on the road.",
+      "appliesTo": "factory solar-reflective glass (plus the tested package), modeled",
+      "source": "NREL/CP-540-41155",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2007-06",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "Visteon test on a midsize sedan with insulated solar-reflective glazing and body insulation: a 3-4 C average soak temperature reduction gave a 4-16% reduction in A/C power.",
+      "appliesTo": "glazing plus insulation (Visteon data as cited by NREL)",
+      "source": "NREL/CP-540-41155, citing its reference 18",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2007-06",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "Ford Explorer with Sungate solar-reflective glass: 11% reduction in A/C compressor power.",
+      "appliesTo": "factory solar-reflective glass",
+      "source": "SAE 2001-01-3077 (Rugh et al.), as summarized in secondary literature",
+      "publisher": "SAE International",
+      "date": "2001",
+      "url": "https://saemobilus.sae.org/papers/effect-solar-reflective-glazing-ford-explorer-climate-control-fuel-economy-emissions-2001-01-3077",
+      "confirmed": false,
+      "whyUnconfirmed": "Seen only in a search snippet. The SAE paper is paywalled and was not read."
+    },
+    {
+      "figure": "National modeling: solar control glass cut A/C-related CO2 by 2.0 g/mi (solar reflective paint 0.8 g/mi; active ventilation 0.1 g/mi; passive ventilation 0.2 g/mi). Against the study's baseline of 23.5 g/mi CO2 for A/C per average vehicle (a snippet figure, not read on the page), that is about 8.5% of A/C fuel. The 8.5% is derived here and is not a published number.",
+      "appliesTo": "factory solar control glass, modeled across the U.S. fleet",
+      "source": "Rugh, Kreutzer, Kekelia, Titov, Lustbader, 'U.S. Light-Duty Vehicle Air Conditioning Fuel Use and Impact of Solar/Thermal Control Technologies', SAE Int. J. Passenger Cars - Mechanical Systems 12(1), paper 06-12-01-0002",
+      "publisher": "SAE International / NREL (OSTI record)",
+      "date": "2018-12-10",
+      "url": "https://www.osti.gov/pages/biblio/1492505",
+      "confirmed": true,
+      "confirmedPart": "The 2.0 and 0.8 g/mi figures were read on the OSTI abstract page. The 23.5 g/mi baseline and the 0.1/0.2 ventilation figures come from search snippets of the NREL conference version."
+    },
+    {
+      "figure": "EPA off-cycle CO2 credit for solar-control 'glass or glazing': Credit = Z x sum(Ti x Gi)/G, with Z = 0.3 (cars) or 0.4 (light trucks), Ti = 0.3987 x (Tts_base - Tts_new), Tts_base = 62 for the windshield, side and rear glass and 40 for the rooflite, and Tts measured under ISO 13837. Capped at 2.9 g/mi for cars and 3.9 g/mi for light trucks. All thermal-control credits together are capped at 3.0 and 4.3 g/mi. This is a regulatory credit value, not a measurement, and it applies to OEM glass, not aftermarket film.",
+      "appliesTo": "factory glazing (regulatory)",
+      "source": "40 CFR 86.1869-12(b)(4)(viii)",
+      "publisher": "U.S. EPA / eCFR (Office of the Federal Register)",
+      "date": "as in force 2025-01-01",
+      "url": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-C/part-86/subpart-S/section-86.1869-12",
+      "confirmed": true
+    },
+    {
+      "figure": "Per-vehicle A/C fuel use: A/C adds 1.8 to 2 L/100 km for a conventional gasoline or diesel midsize sedan on the FTP cycle (baseline 10.2 and 8.6 L/100 km, i.e. 23.1 and 27.2 mpg). Hybrids (2000 Insight, 2001 Prius) on SC03: +1.9 L/100 km. INL hybrids on SAE J1634: +1.8 L/100 km. 'A/C can also reduce the fuel economy of advanced vehicles by as much as 35%.'",
+      "appliesTo": "air conditioning in general (no tint)",
+      "source": "NREL/CP-540-41155",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2007-06",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "'AC use can reduce a conventional vehicle's fuel economy by more than 25%, particularly on short trips.' The effect on hybrids, plug-in hybrids and EVs 'can be even larger on a percentage basis.' The same page advises parking in shade or using a sunshade. It says nothing about window tint.",
+      "appliesTo": "air conditioning in general",
+      "source": "Fuel Economy in Hot Weather",
+      "publisher": "U.S. DOE / U.S. EPA (fueleconomy.gov)",
+      "date": "no date shown on the page (read 2026-09-30)",
+      "url": "https://www.fueleconomy.gov/feg/hotweather.shtml",
+      "confirmed": true
+    },
+    {
+      "figure": "EVs: at 95 F with the climate control on, combined driving range fell 17% on average against testing at 75 F. At 95 F with the climate control off, range fell only 4%, so about 13 points of the loss is the A/C. Five BEVs tested to SAE J1634: 2018 BMW i3s, 2018 Chevrolet Bolt, 2018 Nissan Leaf, 2017 Tesla Model S 75D and 2017 VW e-Golf.",
+      "appliesTo": "EV range lost to A/C",
+      "source": "AAA Electric Vehicle Range Testing (AAA proprietary research)",
+      "publisher": "American Automobile Association",
+      "date": "2019-02",
+      "url": "https://www.aaa.com/AAA/common/AAR/files/AAA-Electric-Vehicle-Range-Testing-Report.pdf",
+      "confirmed": true
+    }
+  ],
+  "acShareOfFuel": [
+    {
+      "figure": "About 7.0 billion gallons of gasoline a year for vehicle A/C in the U.S., equal to 5.5% of domestic light-duty vehicle petroleum consumption, or 9.5% of U.S. imported crude oil.",
+      "source": "NREL/CP-540-41155 (citing Rugh, Hovland and Andersen)",
+      "publisher": "National Renewable Energy Laboratory (U.S. DOE)",
+      "date": "2007-06",
+      "url": "https://docs.nlr.gov/docs/fy07osti/41155.pdf",
+      "confirmed": true
+    },
+    {
+      "figure": "7.6 billion gallons a year for U.S. vehicle A/C, 'equivalent to 6.1% of the total national light-duty vehicle fuel use' (journal version).",
+      "source": "Rugh et al., SAE Int. J. Passenger Cars - Mechanical Systems 12(1)",
+      "publisher": "SAE International / NREL (OSTI record)",
+      "date": "2018-12-10",
+      "url": "https://www.osti.gov/pages/biblio/1492505",
+      "confirmed": true
+    },
+    {
+      "figure": "7.6 billion gallons a year, equal to 5.7% of national light-duty vehicle fuel use, 30 gallons a year per vehicle and 23.5 g CO2/mile (conference version of the same study).",
+      "source": "Rugh et al., 'U.S. Light-duty Vehicle Air Conditioning Fuel Use and the Impact of Four Solar/Thermal Control Technologies' (conference paper)",
+      "publisher": "National Renewable Energy Laboratory",
+      "date": "2017 (OSTI conference record 1411130)",
+      "url": "https://www.osti.gov/biblio/1411130",
+      "confirmed": false,
+      "whyUnconfirmed": "Read only in search snippets. It conflicts with the 6.1% in the journal version (see uncertain)."
+    },
+    {
+      "figure": "Hot-weather share for a single car: more than 25% of fuel economy lost to A/C in very hot conditions, particularly on short trips (fueleconomy.gov). That is the worst case, not an annual average.",
+      "source": "Fuel Economy in Hot Weather",
+      "publisher": "U.S. DOE / U.S. EPA (fueleconomy.gov)",
+      "date": "no date shown on the page",
+      "url": "https://www.fueleconomy.gov/feg/hotweather.shtml",
+      "confirmed": true
+    }
+  ],
+  "theft": [
+    {
+      "figure": "NONE FOUND. No peer-reviewed or government study was found that measures the effect of window tint on theft of vehicles or theft from vehicles.",
+      "confirmed": true,
+      "note": "The 1995 FMVSS 205 Federal Register notice that cites NHTSA's 1991 report was read and contains nothing on theft or crime."
+    },
+    {
+      "figure": "Claim that tinted cars see an average 20% reduction in break-ins. This comes from window-tint vendors' marketing pages with no study behind it. REJECTED: do not use.",
+      "source": "vendor blogs (e.g. solarplexius.co.uk)",
+      "url": "https://solarplexius.co.uk/uk/is-window-tinting-an-effective-method-of-preventing-car-theft/",
+      "confirmed": false
+    },
+    {
+      "figure": "Anecdotal counter-evidence: New Orleans police reported juvenile car burglars targeting tinted cars, because the film holds broken glass together and keeps the break-in quiet. This is a news report, not a measured rate.",
+      "source": "FOX 8 WVUE, 'NOPD: Car burglars targeting tint windows'",
+      "publisher": "FOX 8 (WVUE-TV New Orleans)",
+      "date": "2019-07-05",
+      "url": "https://www.fox8live.com/2019/07/05/nopd-car-burglars-targeting-tint-windows/",
+      "confirmed": false,
+      "whyUnconfirmed": "Seen only as a search snippet. The article was not opened."
+    }
+  ],
+  "safety": [
+    {
+      "figure": "NHTSA's March 1991 'Report to Congress on Tinting of Motor Vehicle Windows' (as cited by NHTSA in 1995) found that windows complying with FMVSS 205 'did not present an unreasonable risk of accident occurrence', and noted new cars with effective line-of-sight transmittance through the windshield as low as about 63%. No crash-rate figure appears in the citing notice.",
+      "source": "Federal Register Vol. 60 No. 47, NHTSA notice on a Ford inconsequential-noncompliance petition, FMVSS No. 205 'Glazing Materials' (doc 95-5964)",
+      "publisher": "NHTSA / Office of the Federal Register",
+      "date": "1995-03-10",
+      "url": "https://www.govinfo.gov/content/pkg/FR-1995-03-10/html/95-5964.htm",
+      "confirmed": true,
+      "note": "The 1991 report itself was not found online. Its DOT HS number could not be verified."
+    },
+    {
+      "figure": "Ford's studies (accepted in the same notice): a 5-point drop in light transmittance, from 65% to 60%, reduced night-time seeing distance by only 1-2%, with little or no reduction at dusk or in daytime. At 68% transmittance the reduction in night-time seeing distance was under 1%.",
+      "source": "Federal Register Vol. 60 No. 47 (doc 95-5964)",
+      "publisher": "NHTSA / Office of the Federal Register",
+      "date": "1995-03-10",
+      "url": "https://www.govinfo.gov/content/pkg/FR-1995-03-10/html/95-5964.htm",
+      "confirmed": true
+    },
+    {
+      "figure": "Contrast sensitivity for 20 subjects (ten aged 20-29, ten aged 60-69), tested through a stock window and two film-darkened windows. Young drivers: 37% transmittance caused no significant loss, and 18% reduced sensitivity at higher spatial frequencies. Older drivers: 37% significantly reduced mid-to-high spatial frequency contrast sensitivity.",
+      "source": "LaMotte J, Ridder W, Yeung K, De Land P. 'Effect of aftermarket automobile window tinting films on driver vision.' Human Factors 42(2):327-336. PMID 11022888, doi:10.1518/001872000779656552",
+      "publisher": "Human Factors and Ergonomics Society (peer-reviewed)",
+      "date": "2000",
+      "url": "https://europepmc.org/article/MED/11022888",
+      "confirmed": true
+    },
+    {
+      "figure": "Backward-masking visual tasks at 100% down to 20% VLT, young vs elderly. Elderly performance fell at 63% VLT in experiment 1, and all participants' fell at 20% VLT. In experiment 2 the elderly fell at 35% VLT. The authors concluded that road safety 'may be compromised' if front side windows are tinted to 35% VLT. The DAAG dataset of the same study used 100%, 81.3% and 35.1% transmittance with 26 subjects.",
+      "source": "Burns NR, Nettelbeck T, White M, Willson J. 'Effects of car window tinting on visual performance: a comparison of elderly and young drivers.' Ergonomics 42(3):428-443",
+      "publisher": "Taylor & Francis (peer-reviewed); abstract read on TRID (Transportation Research Board)",
+      "date": "1999-03",
+      "url": "https://trid.trb.org/view/499311",
+      "confirmed": true
+    },
+    {
+      "figure": "No crash-rate study was found that measures crashes by tint level. The visibility studies above are laboratory measures of vision, not crash outcomes.",
+      "confirmed": true
+    },
+    {
+      "figure": "UV (health): the average front-windshield UV-A blockage was 96% (range 95-98%). The average side-window blockage was 71% (range 44-96%). Only 4 of 29 cars (13.8%) blocked more than 90% at the side window. 29 cars from 15 makers, model years 1990-2014.",
+      "source": "Boxer Wachler BS. 'Assessment of Levels of Ultraviolet A Light Protection in Automobile Windshields and Side Windows.' JAMA Ophthalmology 2016;134(7). PMID 27258091, doi:10.1001/jamaophthalmol.2016.1139",
+      "publisher": "American Medical Association (peer-reviewed)",
+      "date": "2016-07",
+      "url": "https://europepmc.org/article/MED/27258091",
+      "confirmed": true
+    },
+    {
+      "figure": "UV (health): clear UV-blocking window film 'can block 99 percent of UV light'. Laminated windshields block almost all UV. Side and rear windows block only UVB and leave UVA through. Darker tint protects no better than clear UV film. The page gives no separate UVA/UVB percentages and cites no study.",
+      "source": "Skin Cancer Foundation, 'Ask the Expert: Car Window Tint for UV Protection' (Lisa Winckler, interviewed by Beth Janes O'Keefe)",
+      "publisher": "The Skin Cancer Foundation",
+      "date": "2026-07-02 (updated 2026-07-07)",
+      "url": "https://www.skincancer.org/blog/ask-the-expert-car-window-tint-for-uv-protection/",
+      "confirmed": true
+    },
+    {
+      "figure": "Skin Cancer Foundation Seal of Recommendation criterion: window film must be shown to block 99% or more of solar UVA and UVB.",
+      "source": "Skin Cancer Foundation, 'UV Window Film & Tint'",
+      "publisher": "The Skin Cancer Foundation",
+      "date": "unknown",
+      "url": "https://www.skincancer.org/skin-cancer-prevention/sun-protection/uv-window-film/",
+      "confirmed": false,
+      "whyUnconfirmed": "Seen only as a search snippet."
+    },
+    {
+      "figure": "Left-side skin cancers: 52.6% of cancers were on the left vs 47.4% on the right (P = .059), with a stronger trend in men (P = .042). Melanoma in situ: 74% left vs 26% right (P = .002). This is an association, not a measured effect of tint.",
+      "source": "Butler ST, Fosko SW. 'Increased prevalence of left-sided skin cancers.' J Am Acad Dermatol 63(6). PMID 20226568",
+      "publisher": "American Academy of Dermatology / Elsevier (peer-reviewed)",
+      "date": "2010-12",
+      "url": "https://europepmc.org/article/MED/20226568",
+      "confirmed": true
+    }
+  ],
+  "uncertain": [
+    "NREL's two versions of the 7.6-billion-gallon estimate disagree: the 2018 journal abstract (read) says 6.1% of light-duty fuel, and the conference version (snippet only) says 5.7%. Prefer the journal's 6.1%.",
+    "Most NREL temperature and A/C savings figures are for factory solar-reflective GLASS (PPG Sungate, Sungate EP), not aftermarket tint film. The only NREL figure measured on aftermarket film is the 3M nonmetallic film: 1.8 C at breath level and 3.4 C at the instrument panel. No NREL measurement of the A/C fuel saving from aftermarket film was found.",
+    "A '20.5 C maximum soak cabin air temperature reduction' for Sungate EP on the Cadillac STS appears in a secondary snippet (ResearchGate / review). It was not found in the NREL text that was read, which gives 7.1 C average air and 19.3 C for the windshield. Treat it as unverified, and possibly a surface-temperature figure.",
+    "Jasni & Nasir (2012), about 5 C from tint on all windows, is a conference paper read only in snippets.",
+    "The '17% or more EV range loss' is sometimes credited to DOE, but it is AAA's 2019 figure. AAA's 17% is relative to 75 F with A/C on at 95 F; the A/C-only share is about 13 points, derived here from AAA's 4% (95 F, climate off).",
+    "NHTSA's 1991 Report to Congress itself was not located. Only its conclusion as quoted by NHTSA in 1995 was read. The document number DOT HS 807 794 could not be verified.",
+    "No measured figure exists (none found) for tint's effect on vehicle theft, theft from vehicles, or crash rates.",
+    "EPA's glazing credit formula is a regulatory value for OEM glass, not a measured result, and aftermarket film does not qualify for it."
+  ]
+}

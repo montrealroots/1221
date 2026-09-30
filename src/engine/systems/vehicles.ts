@@ -27,6 +27,9 @@ import { CAR_MODELS, type CarModel, type VehicleKind } from '../content/vehiclec
 import { BIKE_MODELS } from '../content/bikecatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
+import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
+import { homeShareOf, kwhPrice } from './charging';
+import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
 import { ATV_FEES, ATV_INSURANCE } from '../content/rides';
 import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
@@ -48,6 +51,8 @@ const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = sa
 
 export interface OwnedVehicle {
   id: string;
+  /** A shop's window tint (`systems/tint.ts`, from 2026-09-30). */
+  tint?: TintKind;
   modelId: string;
   /** When it was bought, and how old it was then: a used one's years. */
   boughtAt: Instant;
@@ -77,14 +82,19 @@ export interface OwnedVehicle {
   lease?: import('./leasing').Lease;
 }
 
-/** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep. */
-export function runningCost(sim: Simulation, v: OwnedVehicle, km: number): Money {
+/** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep; an electric car's kWh at the share charged at home (`systems/charging.ts`), none on a journey. */
+export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeShare = 0): Money {
   const m = modelById(v.modelId)!;
+  if (m.fuel === 'ev' && m.kwhPer100km) {
+    const kwh = (km * m.kwhPer100km) / 100;
+    return inSave(sim, Math.round(kwh * kwhPrice(v.jurisdiction, homeShare) * tintFuelFactor(v)), CHARGING[v.jurisdiction].currency) + inSave(sim, Math.round(km * UPKEEP_USD_PER_KM), 'USD');
+  }
   const fuel = FUEL[v.jurisdiction];
   const litre = m.fuel === 'diesel' ? fuel.diesel : fuel.petrol;
   // A motorcycle or scooter its maker doesn't rate burns the mean of those that are; an unrated car, AAA's cost a mile.
   const per100 = m.per100km ?? (onTwoWheels(m) ? BIKE_UNRATED_PER100 : null);
-  const fuelCost = per100 !== null ? inSave(sim, Math.round((km * per100 * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD');
+  // Tint keeps the cabin cooler, and the air conditioning burns a little less (`systems/tint.ts`).
+  const fuelCost = Math.round((per100 !== null ? inSave(sim, Math.round((km * per100 * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD')) * tintFuelFactor(v));
   return fuelCost + inSave(sim, Math.round(km * UPKEEP_USD_PER_KM), 'USD');
 }
 
@@ -145,10 +155,10 @@ export const classFor = (m: CarModel): VehicleClass => (onTwoWheels(m) ? 'motorc
 /** What's on sale where a town is, of a kind: cars, motorcycles or scooters. */
 export function modelsFor(cityId: string, kind: VehicleKind = 'car'): CarModel[] {
   const j = jurisdictionOf(cityId);
-  return j ? [...CAR_MODELS, ...BIKE_MODELS, ...RV_MODELS, ...RIDE_MODELS].filter((m) => m.market === MARKET[j] && kindOf(m) === kind) : [];
+  return j ? [...CAR_MODELS, ...EV_MODELS, ...BIKE_MODELS, ...RV_MODELS, ...RIDE_MODELS].filter((m) => m.market === MARKET[j] && kindOf(m) === kind) : [];
 }
 
-export const modelById = (id: string) => CAR_MODELS.find((m) => m.id === id) ?? BIKE_MODELS.find((m) => m.id === id) ?? RV_MODELS.find((m) => m.id === id) ?? RIDE_MODELS.find((m) => m.id === id);
+export const modelById = (id: string) => CAR_MODELS.find((m) => m.id === id) ?? EV_MODELS.find((m) => m.id === id) ?? BIKE_MODELS.find((m) => m.id === id) ?? RV_MODELS.find((m) => m.id === id) ?? RIDE_MODELS.find((m) => m.id === id);
 
 /** The share of its value new a car keeps at an age: iSeeCars' points, straight lines between. */
 export function kept(ageYears: number): number {
@@ -236,6 +246,11 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
       lines.push({ label: 'Plates And Circulation Card', amount: c(CMX.plates) });
       if (units > CMX.tenenciaWaivedTo) lines.push({ label: 'Tenencia (Its Tariff Above The Waiver Isn’t Kept)', amount: 0 });
       break;
+  }
+  // What's given toward a new electric car at the sale (`evIncentives`): MyFirstEV to a first-time buyer only.
+  if (!used) {
+    const firstEv = !(opts.person?.vehicles ?? []).some((x) => modelById(x.modelId)?.fuel === 'ev');
+    for (const l of evIncentives(model, j, at, firstEv)) lines.push({ label: l.label, amount: -l.amount });
   }
   // A resident's parking permit, where one's kept, and no garage at home.
   const permit = opts.person ? parkingYear(opts.person, model, cityId) : cityId === PERMITS.london.cityId || cityId === PERMITS.dublin.cityId ? parkingYear({ homes: [] } as unknown as Person, model, cityId) : undefined;
@@ -477,6 +492,9 @@ export function amortized(principal: Money, apr: number, months: number): Money 
 
 export const vehiclesOf = (person: Person) => (person.vehicles ??= []);
 
+/** Whether it has side windows a shop could tint: not a motorcycle, a scooter, a bicycle or an ATV. */
+export const glazed = (v: OwnedVehicle): boolean => { const m = modelById(v.modelId); return !!m && !onTwoWheels(m) && !forOutings(m); };
+
 export function buyRefusal(sim: Simulation, person: Person, modelId: string, opts: { age?: number; financed?: boolean; coverage?: OwnedVehicle['coverage'] }): string | undefined {
   const model = modelById(modelId);
   if (!model) return 'SLATE doesn’t sell that car.';
@@ -542,6 +560,7 @@ export function registerVehicles(sim: Simulation): void {
   });
 
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
+  registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
@@ -592,19 +611,22 @@ export function registerVehicles(sim: Simulation): void {
     let driven = 0;
     if (!v.repossessed && !missing && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m)).ok) {
       const km = monthKm(v);
-      const run = runningCost(s, v, km);
+      const run = runningCost(s, v, km, homeShareOf(person));
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
       // 2026-09-29 the fuel went into arrears as if it had been burned, and a New York life starved paying for it.
       if (spend(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) {
         v.km = (v.km ?? 0) + km;
         drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`, kindOf(m), tireFactor(v, item.at));
         driven = km;
+        // Tint darker than the law allows, on the road (`systems/tint.ts`).
+        tintOnTheRoad(s, person, v, item.at);
       }
     }
     // Winter tires: the kilometers on them, Ontario's switchovers, a set worn out (`systems/tires.ts`).
     if (!missing) tiresMonth(s, person, v, driven, item.at);
     // An inspection come due, where the law asks one (`systems/inspections.ts`).
-    if (!forOutings(m) && !missing) inspectIfDue(s, person, v, kindOf(m));
+    // An electric car in Mexico City is exempt from the verificación, its green plates say (from 2026-09-30).
+    if (!forOutings(m) && !missing && !(m.fuel === 'ev' && v.jurisdiction === 'MX-CMX') && inspectIfDue(s, person, v, kindOf(m))) tintAtInspection(s, person, v);
     // The loan: interest on what's owed, and the rest off it.
     if (v.loan) {
       const interest = Math.round((v.loan.owed * v.loan.apr) / 12);

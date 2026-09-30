@@ -478,6 +478,8 @@ export interface OwnedHome {
   alarm?: boolean;
   /** Window locks, an outside light and lamp timers fitted (`systems/homesecurity.ts`, from 2026-09-30). */
   security?: import('./homesecurity').Device[];
+  /** An electric car's charger fitted (`systems/charging.ts`, from 2026-09-30). */
+  charger?: boolean;
   listingId: string;
   cityId: string;
   facts: HomeFacts;

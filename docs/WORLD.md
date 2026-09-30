@@ -381,6 +381,52 @@ Researched in `docs/research/world/research-customization.json` and `research-cu
 
 Evidence: `tests/tires.test.ts` (4) and `tests/tires-drive.test.ts` (1). 9 mutations, all killed in the end. Three first survived and needed tests: the season's kilometers, the factor in the crash chance, and the car's month handing the factor to the road's draw, watched through a mocked `drive` because the draw is too rare to see.
 
+#### Stage 3l: electric cars and charging at home (done 2026-09-30)
+
+Researched in `docs/research/world/research-ev-tint-security.json` and `research-electricity-charging.json`.
+
+- **The cars** (`content/evcatalog.ts`): no best seller was electric, so SLATE now stocks Tesla's Model Y Standard in every market. It adds Chevrolet's Equinox EV in America and Canada, and Ford's Puma Gen-E in Britain. Consumption is kept in kWh a 100 km, the EPA's, NRCan's or WLTP's. Mexico's Model Y takes the EPA figure, since none was read there.
+- **What's given toward one at the sale, new only:**
+  - New York's Drive Clean Rebate: $2,000, or $500 over a $42,000 MSRP.
+  - Connecticut's CHEAPR: $1,000.
+  - California's MyFirstEV: $3,500 to a first-time buyer, from Tesla, Hyundai or Lucid.
+  - Canada's EVAP: $5,000 in 2026, falling to $2,000 by 2030, to a $50,000 price.
+  - Britain's Electric Car Grant: £3,750 on the Puma.
+  - Ireland's SEAI grant, €3,500, and VRT relief of up to €5,000, to the end of 2026.
+  - The federal 30D credit ended in September 2025.
+- **Charging** (`systems/charging.ts`):
+  - Each kilometer is bought as kWh at the public fast chargers' price.
+  - With a charger at home, three-quarters of it is bought at the home's overnight or residential price. That is the IEA's share of charging done privately.
+  - Home prices: Con Edison 33.83¢, Eversource 23.61¢, LADWP 23.45¢, Toronto's Ultra-Low Overnight 6.1¢ all in, BC Hydro's overnight 7.21¢, CFE's top block with IVA MXN 4.67, Intelligent Octopus Go 8p, and Electric Ireland's night rate 19.62c.
+  - On a journey, all of it is bought at public chargers.
+- **A home charger** (`home.charger`), on a house one owns:
+  - America: Tesla's Wall Connector and Qmerit's average installation, less LADWP's $1,000 rebate in Los Angeles.
+  - Canada: ChargePoint's Home Flex and Toronto's labor, less BC's rebate of half the cost, to $350.
+  - Britain: Ohme's Home Pro, installed.
+  - Ireland: a smart charger fitted, less SEAI's €300.
+  - Mexico City: a Wall Connector and a basic installation package.
+- **Mexico City's green plates:** an electric car is exempt from the verificación, so none is charged.
+- **Not kept:** charging from an ordinary socket; Connecticut's income-qualified Rebate+; utilities' managed-charging credits; range on a long journey.
+
+Evidence: `tests/evs.test.ts` (6). 15 mutations, 14 killed after three tests were added. The survivor is equivalent: BC's half-the-cost rule never binds under its $350 cap at these prices.
+
+#### Stage 3m: window tint (done 2026-09-30)
+
+Researched in `research-ev-tint-security.json`, `research-electricity-charging.json` and `research-tint-effects.json`.
+
+- **Sold** (`systems/tint.ts`, `vehicle.tint`): at a named shop's price where the car is registered. It is sold all round, or on the back alone where that's what the law allows and a shop prices it.
+- **The law decides whether it's legal:**
+  - Illegal: New York's 70% rule, even on rear side windows; California's front sides; Ontario's; Mexico City's 20% limit; Britain's and Ireland's front sides, all round.
+  - Legal: Connecticut's 35%; the back alone in British Columbia, Britain and Ireland.
+- **Illegal tint is caught:**
+  - New York's yearly inspection and Ireland's NCT fail it. The tint comes off and the retest is paid.
+  - On the road, a month driven draws a ticket: the place's fine, and the tint taken off where a removal was priced.
+  - No share of cars tinted darker than the law is published anywhere. So the ticket's rate is New York's tint tickets per registered passenger car, 119,808 over 9,277,782: the lowest the figures allow.
+- **Every tint keeps the cabin cooler.** NREL measured aftermarket film at 1.8 °C cooler. Scaled by its solar glass study's 26% off air conditioning, and air conditioning's 6.1% of fuel, that is about 0.4% off the fuel or charge. This is SLATE's reading of the three.
+- **Not drawn:** theft or crash effects, which no study measured. Older drivers' poorer contrast behind 35% film, which was measured but never as crashes.
+
+Evidence: `tests/tint.test.ts` (5) and `tests/tint-road.test.ts` (1). 9 mutations, all killed once three tests were added.
+
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.

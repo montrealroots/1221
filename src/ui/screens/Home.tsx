@@ -45,6 +45,7 @@ import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
 import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
 import { deviceCost, securityRefusal, type Device } from '@/engine/systems/homesecurity';
+import { chargerQuote } from '@/engine/systems/charging';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
@@ -774,6 +775,8 @@ function YourPlace({ cur }: { cur: string }) {
   const noAlarm = useWorld((s) => alarmRefusal(s.player));
   const home = useWorld((s) => s.player.home);
   const noUnits = useWorld((s) => unitsRefusal(s, s.player));
+  // A charger for an electric car, on a house they own that hasn't one (`systems/charging.ts`).
+  const charger = useWorld((s) => { const q = chargerQuote(s, s.player); return typeof q === 'string' ? undefined : q.cost; });
   // Locks, a light and timers, where they're priced and the home could take them (`systems/homesecurity.ts`).
   const security = useWorld((s) => (['windows', 'timers', 'lights'] as Device[]).flatMap((device) => {
     const cost = deviceCost(s, s.player, device);
@@ -816,9 +819,10 @@ function YourPlace({ cur }: { cur: string }) {
           {portables.map(({ kind, cost, no }) => <Gated key={kind} feature="home.buy_portable" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_portable', { kind }).ok) toast('Yours, and it moves with you.', 'positive'); }}>{`Buy ${PORTABLE_LABEL[kind]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
         </div>
       )}
-      {place.keeps && home.kind !== 'sofa' && security.length > 0 && (
+      {place.keeps && home.kind !== 'sofa' && (security.length > 0 || charger !== undefined) && (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           {security.map(({ device, cost, no }) => <Gated key={device} feature="home.security" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.security', { device }).ok) toast(device === 'timers' ? 'Lamps on a timer, as if somebody were home.' : 'Fitted. A burglar has a harder way in.', 'positive'); }}>{`${SECURITY_LABEL[device]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
+          {charger !== undefined && <Gated feature="home.charger" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.charger', {}).ok) toast('Charged at home now, overnight, at the home’s price.', 'positive'); }}>{`Fit A Home Charger (${formatMoney(charger, cur, { cents: false })})`}</Gated>}
         </div>
       )}
       {place.keeps && home.kind !== 'sofa' && place.fixtures.cooling === 'none' && unitsCost !== undefined && (
