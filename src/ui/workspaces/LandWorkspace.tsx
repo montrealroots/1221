@@ -13,7 +13,7 @@ import { formatDate } from '@/engine/core/time';
 import { homeOf } from '@/engine/systems/earnings';
 import { buildingOn, landBuyingOf, landQuote, landValue, listingsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, type LandAnswer } from '@/engine/systems/land';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_SOURCE, LAND_TAX, areaWords } from '@/engine/content/land';
-import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES } from '@/engine/content/construction';
+import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES, BUILD_LOANS } from '@/engine/content/construction';
 import { buildPlaceOf, buildQuote, buildRefusal } from '@/engine/systems/construction';
 
 /**
@@ -214,6 +214,7 @@ function Build() {
   const [designPick, setDesign] = useState('');
   const design = designs.find((d) => d.id === designPick) ?? designs[0];
   const [live, setLive] = useState(true);
+  const [financed, setFinanced] = useState(false);
   const b = person.building;
   if (b) {
     const rules = BUILD_RULES[b.place];
@@ -272,7 +273,8 @@ function Build() {
   }
   const rules = BUILD_RULES[place];
   const q = buildQuote(parcel, design.id, live);
-  const no = buildRefusal(sim, person, parcel.id, design.id, live);
+  const loan = BUILD_LOANS[place];
+  const no = buildRefusal(sim, person, parcel.id, design.id, live, financed && loan !== undefined);
   const money = (c: number) => formatMoney(c, rules.currency, { cents: true });
   const size = (sqft: number) => (rules.unit === 'm2' ? `${Math.round(sqft / SQFT_PER_M2)} m²` : `${sqft.toLocaleString('en-US')} sq ft`);
   const waits = place === 'london' ? 'Two Days' : q && typeof q !== 'string' && q.permitDays < 45 ? `About ${q.permitDays} Days` : `About ${Math.round((typeof q === 'string' ? 0 : q.permitDays) / 30.4)} Months`;
@@ -287,6 +289,15 @@ function Build() {
               {designs.map((d) => <option key={d.id} value={d.id}>{d.beds} Bedrooms, {size(d.sqft)}</option>)}
             </select>
           </div>
+          {loan && (
+            <div className="field">
+              <label htmlFor="build-paid">Paid</label>
+              <select id="build-paid" value={financed ? 'loan' : 'outright'} onChange={(e) => setFinanced(e.target.value === 'loan')}>
+                <option value="outright">Outright</option>
+                <option value="loan">{`A Construction Loan, ${Math.round(loan.down * 100)}% Down`}</option>
+              </select>
+            </div>
+          )}
         </div>
         {place === 'london' && (
           <label className="row gap-1 small" style={{ alignItems: 'center' }}>
@@ -315,11 +326,11 @@ function Build() {
         {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
         <div className="row gap-2">
           <Gated feature="build.start" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-            const a = run<{ finishesBy: number }>('build.start', { parcelId: parcel.id, designId: design.id, live });
+            const a = run<{ finishesBy: number }>('build.start', { parcelId: parcel.id, designId: design.id, live, financed: financed && loan !== undefined });
             if (a.ok) toast(`Started: it should be finished about ${formatDate(a.value!.finishesBy, sim.zone)}.`, 'positive');
           }}>Start Building</Gated>
         </div>
-        <Fine>{rules.rateBasis}; {rules.timeBasis}.{rules.bulk ? ` It fits by ${rules.bulk.basis}.` : ''} The bank pays each stage as it’s done; a bill it can’t pay stops the work. Finished, it’s a home you own, worth what the land and the building cost. A construction loan, delays, overruns, change orders and a structural warranty, which no authority prices for a house, aren’t kept. Sources: {BUILD_SOURCE}.</Fine>
+        <Fine>{rules.rateBasis}; {rules.timeBasis}.{rules.bulk ? ` It fits by ${rules.bulk.basis}.` : ''} The bank pays each stage as it’s done; a bill it can’t pay stops the work. Finished, it’s a home you own, worth what the land and the building cost.{loan ? ` On ${loan.lender}’s construction loan the lender pays ${Math.round((1 - loan.down) * 100)}% of each stage at ${(loan.rate * 100).toFixed(2)}%, interest only while it’s built, and it becomes the house’s mortgage when it’s finished.` : ''} Delays, overruns, change orders and a structural warranty, which no authority prices for a house, aren’t kept. Sources: {BUILD_SOURCE}.</Fine>
       </div>
     </Panel>
   );

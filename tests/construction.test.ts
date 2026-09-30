@@ -14,7 +14,7 @@ import { LAND_MARKETS } from '@/engine/content/land';
 import { SQFT_PER_M2, STAGES } from '@/engine/content/construction';
 import { buildFees, buildQuote, buildRefusal, mostFloor, type BuildQuote } from '@/engine/systems/construction';
 import { parcelsOf, type Parcel } from '@/engine/systems/land';
-import { homesOf } from '@/engine/systems/homes';
+import { homesOf, paymentFor } from '@/engine/systems/homes';
 
 const idx = (label: RegExp) => LAND_MARKETS.findIndex((m) => label.test(m.label));
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -233,5 +233,59 @@ describe('building it', () => {
     sim.advanceTo(home.clawback!.until + MS_DAY);
     expect(sim.execute({ kind: 'home.sell', payload: { homeId: home.id } }).ok).toBe(true);
     expect(memoed(sim, /self-build exemption lost/)).toHaveLength(0);
+  });
+});
+
+describe('a construction loan', () => {
+  it('pays 90% of each stage in New York, interest only on what’s advanced, and becomes the house’s mortgage at 7.25% over thirty years', () => {
+    const sim = save('us-ny-newyork', 'build-loan');
+    const p = own(sim, /Queens/, 2_850 / 43_560, 380_000_00);
+    const q = buildQuote(p, 'ne-owner', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total, 'USD'));
+    const before = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    const r = sim.execute<{ fees: number; finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner', financed: true } });
+    expect(r.ok, r.error).toBe(true);
+    const lent = q.contract * 0.9;
+    const loanFees = inSave(sim, Math.round((1_100 + (lent / 100) * 0.0025 + 1_400) * 100), 'USD');
+    expect(before - sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(inSave(sim, q.feesTotal, 'USD') + loanFees);
+    const account = Object.values(sim.universe.accounts).find((a) => a.category === 'construction-loan')!;
+    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    // The owner's tenth of each stage; the lender's nine-tenths on the loan.
+    const bills = memoed(sim, /^The contractor, /);
+    const own10 = bills.reduce((a, t) => a + t.postings.filter((x) => x.amount > 0).reduce((b, x) => b + x.amount, 0), 0);
+    const all = q.stages.reduce((a, s) => a + inSave(sim, s.amount, 'USD'), 0);
+    expect(Math.abs(own10 - Math.round(all * 0.1))).toBeLessThan(10);
+    expect(memoed(sim, /^The construction loan’s interest/).length).toBeGreaterThan(3);
+    const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House In Queens')!;
+    expect(home.mortgage).toBeDefined();
+    expect(home.mortgage!.rate).toBe(0.0725);
+    const balance = -sim.universe.accounts[home.mortgage!.accountId]!.balance;
+    expect(Math.abs(balance - (all - own10))).toBeLessThan(10);
+    expect(home.mortgage!.payment).toBe(paymentFor(balance, 0.0725, 360));
+    expect(account.closedAt).toBeDefined();
+    expect(sim.universe.accounts[account.id]!.balance).toBe(0);
+  });
+
+  it('stops for the owner’s tenth when the bank can’t pay it, the lender’s share already advanced', () => {
+    const sim = save('us-ny-newyork', 'build-loan-stop');
+    const p = own(sim, /Queens/, 2_850 / 43_560, 380_000_00);
+    const q = buildQuote(p, 'ne-owner', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total, 'USD'));
+    const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner', financed: true } });
+    expect(r.ok, r.error).toBe(true);
+    for (const x of Object.values(sim.universe.accounts)) if (x.ownerId === sim.player.id && !x.nominal && x.balance > 0) x.balance = 0;
+    for (let g = 0; g < 400 && sim.player.building?.unpaid === undefined; g += 1) sim.advanceBy(MS_DAY);
+    const b = sim.player.building!;
+    expect(b.unpaid).toBe(b.amounts[b.stage]! - Math.round(b.amounts[b.stage]! * 0.9));
+  });
+
+  it('refuses a record lenders won’t take, and where no lender’s terms are kept', () => {
+    const sim = save('us-ny-newyork', 'build-loan-poor');
+    const p = own(sim, /Queens/, 2_850 / 43_560);
+    sim.player.credit = { ...sim.player.credit!, score: 600 };
+    expect(buildRefusal(sim, sim.player, p.id, 'ne-owner', true, true)).toMatch(/better credit record/);
+    const ie = save('ie-lei-dublin', 'build-loan-ie');
+    const f = own(ie, /Leinster/, 10);
+    expect(buildRefusal(ie, ie.player, f.id, 'ie-scsi', true, true) ?? '').toMatch(/no construction lender/);
   });
 });

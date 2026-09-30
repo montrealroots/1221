@@ -243,3 +243,22 @@ export const NEW_HAVEN_FEES = { first: 25, perThousand: 15, processing: 10, educ
 export const LONDON_BUILDING_CONTROL = { fee: 1_018.5, vat: 0.2 } as const;
 
 export const BUILD_SOURCE = 'docs/research/world/research-construction.json: Census Survey of Construction 2025; SCSI 2023; Altus 2025; Irish Planning and Development Regulations and Kildare’s scheme; Cavan Monaghan by-laws; the Sunshine Coast Regional District’s bylaw 779; the Agricultural Land Commission; the NPPF, December 2024; NAHB Construction Cost Survey 2024 and its 2025 build times; NYC Admin Code 28-112.2; LAMC 91.107 and LADBS; California SMIP and Health and Safety Code 18931.6; New Haven and CGS 29-252a; the nationally described space standard; Planning Portal; Hackney, Croydon, Havering and the Mayor of London’s CIL schedules';
+
+/**
+ * A construction loan, from 2026-09-30
+ * (`docs/research/world/research-land-construction.json`). America: Space
+ * Coast Credit Union's construction-to-permanent loan, the one rate sheet
+ * read in full, a Florida lender's, as no lender in New York, Connecticut or
+ * California publishes one: 10% down, its 30-year 7.25%, interest only on
+ * what's been advanced for the twelve months of the build, then the
+ * permanent loan; $1,100 and a quarter of a percent to originate and $1,400
+ * for the inspections and draws. England: Ecology Building Society's
+ * self-build mortgage at 80%, 5.89% variable, £999 to apply and £625 for the
+ * valuation, then 30 years. No Irish or Canadian lender's rate was read.
+ */
+export interface BuildLoanTerms { down: number; rate: number; months: number; fees: (loanUnits: number) => number; lender: string }
+export const BUILD_LOANS: Readonly<Partial<Record<BuildPlace, BuildLoanTerms>>> = (() => {
+  const us: BuildLoanTerms = { down: 0.1, rate: 0.0725, months: 360, fees: (loan) => 1_100 + loan * 0.0025 + 1_400, lender: 'Space Coast Credit Union' };
+  const uk: BuildLoanTerms = { down: 0.2, rate: 0.0589, months: 360, fees: () => 999 + 625, lender: 'Ecology Building Society' };
+  return { nyc: us, 'ny-state': us, 'new-haven': us, 'ct-state': us, 'los-angeles': us, 'ca-state': us, london: uk };
+})();

@@ -13,9 +13,11 @@
  * (`homes.ts`), worth what the land and the building cost, the lot gone into
  * it; the Homes screen moves them in.
  *
- * Not kept, and said so: a construction loan, delays and overruns (no
- * authority publishes a rate for a house), change orders, a structural
- * warranty, builder's risk insurance, and a failed inspection.
+ * Financed, from 2026-09-30, a construction loan pays its share of each
+ * stage, interest only on what's been advanced, and becomes the house's
+ * mortgage when it's finished (`BUILD_LOANS`). Not kept, and said so: delays
+ * and overruns (no authority publishes a rate for a house), change orders,
+ * a structural warranty, builder's risk insurance, and a failed inspection.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -25,12 +27,14 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { LAND_MARKETS } from '../content/land';
-import { BC_PERMIT, BUILD_RULES, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
+import { BC_PERMIT, BUILD_LOANS, BUILD_RULES, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
 import { parcelsOf, type Parcel } from './land';
-import { ownBuilt } from './homes';
-import { inTheBank, payFromBank } from './household';
+import { HOME, ownBuilt, paymentFor } from './homes';
+import { expenseFor, inTheBank, owe, payFromBank } from './household';
+import { CITIES } from '../content/geography';
 
 export const BUILD_STAGE_KIND = 'build.stage';
+export const BUILD_LOAN_KIND = 'build.loan_month';
 /** A built house's one feature kept: its yard, the lot around it (`homes.ts`'s ids, not words on a screen). */
 const YARD = ['yard'] as const;
 const MONTH_DAYS = 30.436875;
@@ -52,6 +56,8 @@ export interface Build {
   days: number[];
   /** The stage under way; -1 while the permit's awaited. */
   stage: number;
+  /** A construction loan (from 2026-09-30): its account, and the share of each stage it pays. */
+  loan?: { accountId: string; share: number; rate: number; months: number };
   /** A finished stage's bill the bank couldn't pay, and when the work stopped for it. */
   unpaid?: Money;
   stoppedAt?: Instant;
@@ -166,15 +172,18 @@ export function buildQuote(p: Parcel, designId: string, live: boolean): BuildQuo
 }
 
 /** Why a house can't be started, or nothing. */
-export function buildRefusal(sim: Simulation, person: Person, parcelId: string, designId: string, live: boolean): string | undefined {
+export function buildRefusal(sim: Simulation, person: Person, parcelId: string, designId: string, live: boolean, financed = false): string | undefined {
   if (person.building) return 'A house is being built already.';
   const p = parcelsOf(person).find((x) => x.id === parcelId && x.soldAt === undefined);
   if (!p) return 'That isn’t land you own.';
   if (p.selling) return 'It’s for sale.';
   const q = buildQuote(p, designId, live);
   if (typeof q === 'string') return q;
-  const fees = inSave(sim, q.feesTotal, q.currency);
-  if (inTheBank(sim, person) < fees) return `The permit and fees, ${formatMoney(fees, saveCurrency(sim.universe), { cents: false })}, are more than the bank holds.`;
+  const terms = financed ? BUILD_LOANS[buildPlaceOf(p)!] : undefined;
+  if (financed && !terms) return 'SLATE keeps no construction lender’s terms here.';
+  if (financed && (person.credit?.score ?? 650) < HOME.minScore) return 'A lender asks for a better credit record than yours.';
+  const fees = inSave(sim, q.feesTotal + (terms ? cents(terms.fees(q.contract * (1 - terms.down) / 100)) : 0), q.currency);
+  if (inTheBank(sim, person) < fees) return `The permit and fees${terms ? ' and the loan’s' : ''}, ${formatMoney(fees, saveCurrency(sim.universe), { cents: false })}, are more than the bank holds.`;
   return undefined;
 }
 
@@ -214,15 +223,27 @@ function finish(sim: Simulation, person: Person, b: Build): void {
   p.builtOn = owned.id;
   for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.payload.parcelId === p.id) sim.timeline.cancel(one.id, sim.now);
   b.log.push({ at: sim.now, line: `${rules.occupancy} issued` });
+  // The construction loan becomes the house's mortgage, its permanent loan.
+  if (b.loan) {
+    const building = sim.universe.accounts[b.loan.accountId]!;
+    const balance = Math.max(0, -building.balance);
+    if (balance > 0) {
+      const account = sim.openAccount({ id: sim.nextId('account'), kind: 'mortgage', name: `Mortgage, ${address}`, ownerId: person.id, institution: BUILD_LOANS[b.place]!.lender, openedAt: sim.now, category: 'mortgage', apr: b.loan.rate });
+      sim.post({ memo: `The construction loan made permanent, ${address}`, category: 'home', postings: [{ accountId: account.id, amount: -balance }, { accountId: building.id, amount: balance }] });
+      owned.mortgage = { accountId: account.id, rate: b.loan.rate, payment: paymentFor(balance, b.loan.rate, b.loan.months), original: owned.price, pmi: CITIES.get(b.cityId)?.countryId === 'us' && balance > owned.price * HOME.pmiOver };
+    }
+    building.closedAt = sim.now;
+  }
   delete person.building;
   say(sim, person, 'Your House Is Finished', `${address} is built, and yours. Move In on the Homes screen.`, 80);
 }
 
 export function registerConstruction(sim: Simulation): void {
-  sim.onCommand<{ parcelId: string; designId: string; live?: boolean }, { fees: Money; finishesBy: Instant }>('build.start', (p, { sim: s }) => {
+  sim.onCommand<{ parcelId: string; designId: string; live?: boolean; financed?: boolean }, { fees: Money; finishesBy: Instant }>('build.start', (p, { sim: s }) => {
     const person = s.player;
     const live = p?.live !== false;
-    const no = buildRefusal(s, person, String(p?.parcelId), String(p?.designId), live);
+    const financed = p?.financed === true;
+    const no = buildRefusal(s, person, String(p?.parcelId), String(p?.designId), live, financed);
     if (no) throw new CommandError(no);
     const parcel = parcelsOf(person).find((x) => x.id === p.parcelId)!;
     const q = buildQuote(parcel, p.designId, live) as BuildQuote;
@@ -234,6 +255,15 @@ export function registerConstruction(sim: Simulation): void {
       contract: q.contract, fees: q.feesTotal, spared: q.spared, amounts: q.stages.map((x) => x.amount), days: q.stages.map((x) => x.days), stage: -1,
       log: [{ at: s.now, line: place === 'london' ? 'Building notice given' : place === 'leinster' ? 'Planning permission applied for' : 'Permit applied for' }],
     };
+    // Financed: the loan's fees now, its account opened, and its interest monthly on what's advanced.
+    const terms = financed ? BUILD_LOANS[place] : undefined;
+    if (terms) {
+      const loanFees = inSave(s, cents(terms.fees(q.contract * (1 - terms.down) / 100)), q.currency);
+      if (!payFromBank(s, person, loanFees, `A construction loan’s fees, ${terms.lender}`, 'construction')) throw new CommandError('The bank couldn’t pay the loan’s fees.');
+      const account = s.openAccount({ id: s.nextId('account'), kind: 'loan', name: 'Construction Loan', ownerId: person.id, institution: terms.lender, openedAt: s.now, category: 'construction-loan', apr: terms.rate });
+      b.loan = { accountId: account.id, share: 1 - terms.down, rate: terms.rate, months: terms.months };
+      s.schedule({ at: s.now + 30 * MS_DAY, kind: BUILD_LOAN_KIND, label: 'Construction Loan Interest', category: 'home', priority: 30, payload: { personId: person.id } });
+    }
     person.building = b;
     s.schedule({ at: s.now + q.permitDays * MS_DAY, kind: BUILD_STAGE_KIND, label: place === 'london' ? 'Work Starts' : 'The Permit Is Issued', category: 'home', priority: 30, payload: { personId: person.id } });
     const finishesBy = s.now + (q.permitDays + q.stages.reduce((a, x) => a + x.days, 0)) * MS_DAY;
@@ -253,6 +283,16 @@ export function registerConstruction(sim: Simulation): void {
     return { paid: due };
   });
 
+  sim.onSchedule(BUILD_LOAN_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const b = person?.building;
+    if (!person || !b?.loan) return;
+    const account = s.universe.accounts[b.loan.accountId];
+    const interest = Math.round((Math.max(0, -(account?.balance ?? 0)) * b.loan.rate) / 12);
+    if (interest > 0 && !payFromBank(s, person, interest, 'The construction loan’s interest, a month', 'construction')) owe(s, person, interest, 'The construction loan’s interest', 'construction');
+    s.schedule({ at: s.now + 30 * MS_DAY, kind: BUILD_LOAN_KIND, label: 'Construction Loan Interest', category: 'home', priority: 30, payload: { personId: person.id } });
+  });
+
   sim.onSchedule(BUILD_STAGE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const b = person?.building;
@@ -263,9 +303,13 @@ export function registerConstruction(sim: Simulation): void {
       next(s, person, b);
       return;
     }
-    const due = inSave(s, b.amounts[b.stage]!, BUILD_RULES[b.place].currency);
+    const bill = inSave(s, b.amounts[b.stage]!, BUILD_RULES[b.place].currency);
+    // The lender advances its share of each stage; the rest is the owner's.
+    const advanced = b.loan ? Math.round(bill * b.loan.share) : 0;
+    if (advanced > 0) s.post({ memo: `The construction loan, ${STAGES[b.stage]!.name}`, category: 'construction', postings: [{ accountId: b.loan!.accountId, amount: -advanced }, { accountId: s.nominalAccount('expense', expenseFor('construction')).id, amount: advanced }] });
+    const due = bill - advanced;
     if (!payFromBank(s, person, due, `The contractor, ${STAGES[b.stage]!.name}`, 'construction')) {
-      b.unpaid = b.amounts[b.stage]!;
+      b.unpaid = b.amounts[b.stage]! - Math.round(b.amounts[b.stage]! * (b.loan?.share ?? 0));
       b.stoppedAt = s.now;
       b.log.push({ at: s.now, line: `${STAGES[b.stage]!.name} done; its bill unpaid, work stopped` });
       say(s, person, 'Work Stopped', `The contractor finished the ${STAGES[b.stage]!.name.toLowerCase()} on ${formatDate(s.now, s.zone)} and stopped until ${formatMoney(due, saveCurrency(s.universe), { cents: false })} is paid.`, 80);
