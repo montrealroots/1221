@@ -13,6 +13,9 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
+import { APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '@/engine/content/appliances';
+import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
+import { fixturesOf } from '@/engine/systems/dwelling';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COOLING_LABEL, COUNCIL_TAX, FEATURE_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
@@ -410,6 +413,8 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           </div>
         </div>
 
+        <FitOut owned={owned} />
+
         <div className="col gap-2">
           <div className="strong small">Selling It</div>
           {owned.selling ? (
@@ -480,6 +485,44 @@ function Letting({ owned, unit }: { owned: OwnedHome; unit: Tenancy['unit'] }) {
           </div>
           <div className="xs dim">{refusal ?? `It lets for about ${money(market)} a month here; nearer that, a tenant comes sooner. A year’s lease, a month’s deposit, and the repairs are yours.`}</div>
         </>
+      )}
+    </div>
+  );
+}
+
+/** Appliances fitted to a home owned (`systems/appliances.ts`): what it has, what one costs fitted, and how long it lasts. */
+function FitOut({ owned }: { owned: OwnedHome }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const f = fixturesOf(sim, person, owned.cityId, owned.facts, owned.id);
+  const kinds = Object.keys(APPLIANCE_LABEL) as ApplianceKind[];
+  const table = appliancesIn(owned.cityId);
+  return (
+    <div className="col gap-2">
+      <div className="strong small">Appliances</div>
+      {!table ? <div className="xs dim">SLATE keeps no appliance prices in this country yet.</div> : (
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Appliance</th><th scope="col">Has It</th><th scope="col" className="num">Fitted</th><th scope="col" className="num">Lasts</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+            <tbody>
+              {kinds.map((kind) => {
+                const cost = applianceCost(sim, owned.cityId, kind);
+                const no = fitRefusal(sim, person, owned, kind);
+                const has = hasAppliance(f, kind);
+                return (
+                  <tr key={kind}>
+                    <td>{APPLIANCE_LABEL[kind]}{cost === undefined ? <div className="xs dim">No price published here</div> : null}</td>
+                    <td className="small">{has ? 'Yes' : 'No'}</td>
+                    <td className="num mono">{cost === undefined ? '—' : formatMoney(cost, cur, { cents: false })}</td>
+                    <td className="num mono">{APPLIANCE_LIFE[kind]} years</td>
+                    <td>{!has && cost !== undefined && <Gated feature="home.fit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.fit', { homeId: owned.id, kind }).ok) toast(`${APPLIANCE_LABEL[kind]} fitted.`, 'positive'); }}>Buy And Fit</Gated>}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
