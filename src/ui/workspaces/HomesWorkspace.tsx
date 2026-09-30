@@ -16,6 +16,8 @@ import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '@/engine/content/appliances';
 import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
+import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
+import { furnishRefusal, owns, pieceCost } from '@/engine/systems/furniture';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COOLING_LABEL, COUNCIL_TAX, FEATURE_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
@@ -413,6 +415,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           </div>
         </div>
 
+        <Furniture />
         <FitOut owned={owned} />
 
         <div className="col gap-2">
@@ -524,6 +527,41 @@ function FitOut({ owned }: { owned: OwnedHome }) {
           </table>
         </div>
       )}
+    </div>
+  );
+}
+
+/** Their own bed and sofa (`systems/furniture.ts`): theirs wherever they live, and what an empty home goes without. */
+function Furniture() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const where = person.home?.cityId ?? person.currentLocationId;
+  const pieces: Piece[] = ['bed', 'sofa'];
+  const does: Record<Piece, string> = { bed: 'Without one, an empty home’s nights are slept on the floor', sofa: 'Without one, unwinding in an empty home takes half the stress off' };
+  return (
+    <div className="col gap-2">
+      <div className="strong small">Your Furniture</div>
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Piece</th><th scope="col">Yours</th><th scope="col" className="num">Delivered</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+          <tbody>
+            {pieces.map((piece) => {
+              const cost = pieceCost(sim, where, piece);
+              const no = furnishRefusal(sim, person, piece);
+              const has = owns(person, piece);
+              return (
+                <tr key={piece}>
+                  <td>{PIECE_LABEL[piece]}<div className="xs dim">{does[piece]}</div></td>
+                  <td className="small">{has ? 'Yes' : 'No'}</td>
+                  <td className="num mono">{cost ? formatMoney(cost.amount, cur, { cents: false }) : '—'}</td>
+                  <td>{!has && cost && <Gated feature="home.furnish" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece }).ok) toast(`${PIECE_LABEL[piece]}, delivered.`, 'positive'); }}>Buy And Deliver</Gated>}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

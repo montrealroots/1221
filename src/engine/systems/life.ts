@@ -13,6 +13,7 @@
  * something.
  */
 
+import { onTheFloor, unwindComfort } from './furniture';
 import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -408,7 +409,7 @@ export function registerLife(sim: Simulation): void {
       // Eaten out where there's no kitchen: a restaurant's meal too.
       if (action === 'eat' && !cooks(s, person)) eatsOut(person);
       const where = action === 'exercise' ? trainingAt(s, person) : undefined;
-      applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : 1);
+      applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
       // An hour of it, at its injury rate (`content/injury.ts`).
       if (action === 'exercise' || action === 'swim') {
         const source = action === 'swim' ? 'swim' : where!.where === 'run' ? 'run' : 'gym';
@@ -570,7 +571,7 @@ export function workoutCosts(person: Person): number {
  * fitness no higher than a body that age can reach, and costs what an hour of
  * training costs: energy, food and a shower's worth of sweat.
  */
-export function applyLookingAfter(person: Person, action: LookAfter, at?: number, training = 1): void {
+export function applyLookingAfter(person: Person, action: LookAfter, at?: number, training = 1, comfort = 1): void {
   const w = person.wellbeing;
   // Somebody who loves what they're doing gets more of the mood and the
   // relief out of it, and nothing else (`systems/enjoyment.ts`).
@@ -608,8 +609,9 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
     w.morale = clamp(w.morale + (action === 'swim' ? 5 : 3) * swing, 0, 100);
   } else {
-    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
-    w.morale = clamp(w.morale + 3 * swing, 0, 100);
+    // Unwinding, less on the floor of an empty home with no sofa (`comfort`, `systems/furniture.ts`).
+    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery') * relief * comfort, 0, 100);
+    w.morale = clamp(w.morale + 3 * swing * comfort, 0, 100);
   }
 }
 
@@ -659,7 +661,8 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   // And a friend's sofa after an eviction sleeps worse than a bed of your own
   // (`systems/household.ts`), by what a late bedtime costs.
   // A friend's sofa, at home after an eviction or away when a sublet couldn't be paid.
-  const sofa = (person.home?.kind === 'sofa' && atHome(person)) || (!atHome(person) && person.stay?.kind === 'sofa' && person.stay.cityId === person.currentLocationId) ? 0.08 : 0;
+  // And the floor of an empty home of their own with no bed (`systems/furniture.ts`, from 2026-09-29), the same.
+  const sofa = (person.home?.kind === 'sofa' && atHome(person)) || (!atHome(person) && person.stay?.kind === 'sofa' && person.stay.cityId === person.currentLocationId) || (atHome(person) && onTheFloor(person)) ? 0.08 : 0;
   // And a hot night with no air conditioning, or only units (`systems/dwelling.ts`).
   const heat = heatLoss(sim, person, at);
   // And a body whose clock a journey left hours out (`systems/jetlag.ts`, from 2026-09-29).

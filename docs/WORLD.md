@@ -31,7 +31,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3d) |
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
-| 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a and 6b done 2026-09-29; furniture and bedrooms open, below |
+| 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Not begun |
 
@@ -199,7 +199,7 @@ What stood before: every home's fixtures, drawn from each country's survey of wh
 - A home owned can be fitted with a dishwasher, a washing machine, a dryer beside it, air conditioning units, or central air in a house (`systems/appliances.ts`, `content/appliances.ts`, researched in `docs/research/world/research-contents.json`). Each changes the fixture it is, so what it does is what the fixture already does.
 - Prices with their fitting, SLATE taking the middle where a body gives a range, said so: Consumer Reports' and the cost guides' in America; Which?'s in Britain. In Ireland, Canada and Mexico, a retailer's price as a search read it, the retailers refusing automated reads. What nobody prices isn't sold: central air in Britain, Ireland and Mexico, a dryer or a window unit in Mexico. Elsewhere none is sold yet, said so.
 - Each lasts its published life (NAHB's 2007 study: dishwasher 9 years, washer 10, dryer 13; the Department of Energy's room unit 9 and central air 18, the low end of its 18 to 25), then gives out, the home as it was without it. A washer's end leaves a flat its building's machines.
-- Open, and why: appliances in a rented home; what one adds to a home's value; furniture (the spending surveys are researched: BLS, ONS, CSO, Statistics Canada, INEGI; no body prices furnishing a home); a garage built was open, and 6b built it. Bedrooms holding people wait for a household, which SLATE hasn't kept since the family went with the revamp.
+- Open, and why: appliances in a rented home; what one adds to a home's value; furniture was open, and 6c built it; a garage built was open, and 6b built it. Bedrooms holding people wait for a household, which SLATE hasn't kept since the family went with the revamp.
 
 Evidence: `tests/appliances.test.ts` (5); 10 mutations, all killed. One first survived as a redundant guard: an appliance can't be refitted before its end, so the check that the one ending was the one fitted was removed. Another survived because its test never reached the dryer's end: a £400,000 home's thirteen years of bills left the life short of it. The test now advances to that end and checks it came.
 
@@ -209,6 +209,17 @@ Evidence: `tests/appliances.test.ts` (5); 10 mutations, all killed. One first su
 - A car kept at a home owned with a garage pays no resident parking permit, which stage 3d had kept for a garage the house came with. The garage door is new the year it's built.
 
 Evidence: `tests/permits.test.ts` (the garage, end to end: built in London and the Puma's Westminster permit gone); 2 mutations, both killed.
+
+#### Stage 6c: furniture of one's own (done 2026-09-29)
+- No body publishes what furnishing a home costs, but a shop publishes each piece's price. SLATE sells what furniture changes, at IKEA's own prices in America, Britain, Ireland, Canada and Mexico, read from its pages on 2026-09-29 (`content/furniture.ts`, researched in `docs/research/world/research-furniture.json`).
+  - A bed: a MALM high frame and a VALEVÅG mattress in the country's usual double size.
+  - A sofa: a KIVIK three-seat.
+  - The regular price, not a sale's; delivered at the cheapest large-item rate; with the town's sales tax on top in America and Canada, and VAT or IVA inside elsewhere.
+- A home bought or built from 2026-09-29 comes empty, as a real one does (`bare`). A rented room or flat comes furnished, SLATE's reading of a let; a home owned before then is taken as furnished, so no save wakes to an empty house. The pieces are the person's and move with them.
+- In an empty home a night without a bed is slept on the floor, costing a sofa night's 0.08. An hour unwinding without a sofa takes half the stress off. Both are SLATE's estimates, no study measuring either.
+- Open, and why: a removal's cost, a mattress wearing out (the Sleep Foundation's six to eight years is researched, secondary), and the rest of a home's furniture, which changes nothing SLATE keeps.
+
+Evidence: `tests/furniture.test.ts` (5); 8 mutations, all killed. A home bought through Homes is marked empty by the same flag as a built one, which is tested. The purchase path itself isn't mutation-tested, as it takes a whole offer to closing.
 
 ### Stages 7-8 (to be detailed in turn)
 

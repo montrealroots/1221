@@ -495,6 +495,8 @@ export interface OwnedHome {
   /** The months, `YYYY-MM`, a lender escrowed the tax and insurance: what a payoff mid-year leaves to pay. */
   escrowed?: string[];
   foreclosureAt?: Instant;
+  /** Came empty: bought or built from 2026-09-29, as a real home does (`systems/furniture.ts`). A home owned before is furnished. */
+  bare?: boolean;
   /** Appliances fitted, and when (`systems/appliances.ts`); the laundry it had before a washer was. */
   appliances?: Partial<Record<import('../content/appliances').ApplianceKind, Instant>>;
   laundryBefore?: 'building' | 'none';
@@ -1304,7 +1306,7 @@ function close(sim: Simulation, person: Person): void {
     // Numbered by how many they've bought: the first is home-1, which an older save's single home became.
     id: `home-${(person.homesOwned ?? 0) + 1}`, listingId: buying.listingId, cityId: buying.cityId, facts: buying.facts, boughtAt: sim.now, price, closing: offer.closing,
     investment: !buying.live, ...(mortgage ? { mortgage } : {}), improvements: [], works: [], owed: [], billedThrough: monthKey(sim, buying.cityId),
-    occupied: [], tenancies: [], claims: [], depreciated: 0,
+    occupied: [], tenancies: [], claims: [], depreciated: 0, bare: true,
   };
   // Without a lender, the first year's insurance is bought at closing.
   if (!mortgage) owned.owed.push({ kind: 'insurance', dueAt: sim.now, amount: ownedMonthFor(sim, owned).insurance * 12 });
@@ -1331,7 +1333,7 @@ const ownedMonthFor = (sim: Simulation, owned: OwnedHome): OwnerMonth => monthOf
 export function ownBuilt(sim: Simulation, person: Person, spec: { cityId: string; facts: HomeFacts; price: Money; closing: Money; clawback?: OwnedHome['clawback'] }): OwnedHome {
   const owned: OwnedHome = {
     id: `home-${(person.homesOwned ?? 0) + 1}`, listingId: `built-${sim.now}`, cityId: spec.cityId, facts: spec.facts, boughtAt: sim.now, price: spec.price, closing: spec.closing,
-    investment: false, improvements: [], works: [], owed: [], billedThrough: monthKey(sim, spec.cityId), occupied: [], tenancies: [], claims: [], depreciated: 0,
+    investment: false, improvements: [], works: [], owed: [], billedThrough: monthKey(sim, spec.cityId), occupied: [], tenancies: [], claims: [], depreciated: 0, bare: true,
     ...(spec.clawback ? { clawback: spec.clawback } : {}),
   };
   owned.owed.push({ kind: 'insurance', dueAt: sim.now, amount: ownedMonthFor(sim, owned).insurance * 12 });

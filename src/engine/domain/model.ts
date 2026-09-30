@@ -252,6 +252,8 @@ export interface Person {
   landBuying?: import('../systems/land').LandBuying;
   /** A house being built on land they own (`systems/construction.ts`). */
   building?: import('../systems/construction').Build;
+  /** The bed and sofa that are theirs, and when each was bought (`systems/furniture.ts`). */
+  furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
   /** Their driving record: points and a suspension (`systems/driving.ts`). */
   driving?: import('../systems/driving').DrivingRecord;
   /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */
