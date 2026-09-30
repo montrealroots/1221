@@ -108,7 +108,8 @@ const yearOf = (y: string) => Date.UTC(Number((y.match(/\d{4}/) ?? ['2026'])[0])
  */
 export function landValue(m: LandMarket, acres: number, at: Instant): Money {
   const from = yearOf(m.year);
-  const market = (t: Instant) => marketAt(m.cityId, m.currency, t);
+  // Farmland moves with its own town's market, a lot with the city's.
+  const market = (t: Instant) => marketAt(m.town ?? m.cityId, m.currency, t);
   if (m.kind === 'lot') return Math.round(m.perAcre * acres * market(at) / market(from) * 100);
   const edition = from + YEAR_MS;
   const first = (1 + m.yearlyChange) ** (Math.max(0, Math.min(at, edition) - from) / YEAR_MS);

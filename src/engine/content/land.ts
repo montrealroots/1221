@@ -40,6 +40,18 @@ export interface LandMarket {
   kind: 'lot' | 'acreage';
   /** A lot's zoning, and the least a lot may be to build on, in acres. */
   zoning?: { name: string; minAcres: number; builds: string };
+  /**
+   * Where farmland is: the town a house built on it stands in, which its
+   * value moves with. Leinster's is Naas, Kildare's county town, whose
+   * contribution a house pays; Ontario's Millbrook, in Cavan Monaghan, whose
+   * permit it pays; British Columbia's Sechelt, on the Sunshine Coast, whose
+   * permit it pays. America's are SLATE's choice of a farm town: Hudson, in
+   * Columbia County; Litchfield; Bakersfield, in Kern County. England's is
+   * none, no house being built on it. Until 2026-09-29 a house on farmland
+   * stood in the city the land was bought from, New York's upstate farm in
+   * Manhattan.
+   */
+  town?: string;
   /** Farmland's latest yearly change, from the same source, taken for the year until its next edition (`systems/land.ts`); none on a lot, which moves with the town's home market. */
   yearlyChange: number;
 }
@@ -53,18 +65,18 @@ export const LAND_MARKETS: readonly LandMarket[] = [
   { cityId: 'us-ny-newyork', place: 'nyc', label: 'A Lot In Brooklyn', currency: 'USD', perAcre: 15_217_700, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Kings County, 2022', sizes: [2_850 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R2', minAcres: 2_850 / SQFT_PER_ACRE, builds: 'a one- or two-family house, to a floor area of 0.75 of the lot' }, yearlyChange: 0 },
   { cityId: 'us-ny-newyork', place: 'nyc', label: 'A Lot In Queens', currency: 'USD', perAcre: 5_922_100, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Queens County, 2022', sizes: [2_850 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R2', minAcres: 2_850 / SQFT_PER_ACRE, builds: 'a one- or two-family house, to a floor area of 0.75 of the lot' }, yearlyChange: 0 },
   { cityId: 'us-ny-newyork', place: 'nyc', label: 'A Lot On Staten Island', currency: 'USD', perAcre: 3_561_000, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Richmond County, 2022', sizes: [2_850 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R2', minAcres: 2_850 / SQFT_PER_ACRE, builds: 'a one- or two-family house, to a floor area of 0.75 of the lot' }, yearlyChange: 0 },
-  { cityId: 'us-ny-newyork', place: 'ny-state', label: 'Farmland Upstate', currency: 'USD', perAcre: 4_500, year: '2026', basis: 'USDA’s farm real estate value, New York, 1 January 2026', sizes: [10, 40, 100], kind: 'acreage', yearlyChange: 0.047 },
+  { cityId: 'us-ny-newyork', place: 'ny-state', label: 'Farmland Upstate', town: 'us-ny-hudson', currency: 'USD', perAcre: 4_500, year: '2026', basis: 'USDA’s farm real estate value, New York, 1 January 2026', sizes: [10, 40, 100], kind: 'acreage', yearlyChange: 0.047 },
   { cityId: 'us-ct-newhaven', place: 'new-haven', label: 'A Lot In New Haven', currency: 'USD', perAcre: 269_500, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, New Haven County, 2022', sizes: [4_000 / SQFT_PER_ACRE, 0.25], kind: 'lot', zoning: { name: 'RS-2', minAcres: 4_000 / SQFT_PER_ACRE, builds: 'a single-family house, and an owner’s accessory unit' }, yearlyChange: 0 },
-  { cityId: 'us-ct-newhaven', place: 'ct-state', label: 'Farmland In Connecticut', currency: 'USD', perAcre: 14_600, year: '2026', basis: 'USDA’s farm real estate value, Connecticut, 1 January 2026', sizes: [5, 20, 50], kind: 'acreage', yearlyChange: 0.014 },
+  { cityId: 'us-ct-newhaven', place: 'ct-state', label: 'Farmland In Connecticut', town: 'us-ct-litchfield', currency: 'USD', perAcre: 14_600, year: '2026', basis: 'USDA’s farm real estate value, Connecticut, 1 January 2026', sizes: [5, 20, 50], kind: 'acreage', yearlyChange: 0.014 },
   { cityId: 'us-ca-losangeles', place: 'los-angeles', label: 'A Lot In Los Angeles', currency: 'USD', perAcre: 4_134_000, year: '2022', basis: 'the FHFA’s average land value an acre under single-family homes, Los Angeles County, 2022', sizes: [5_000 / SQFT_PER_ACRE], kind: 'lot', zoning: { name: 'R1', minAcres: 5_000 / SQFT_PER_ACRE, builds: 'a single-family house, and an accessory unit under state law' }, yearlyChange: 0 },
-  { cityId: 'us-ca-losangeles', place: 'ca-state', label: 'Farmland In California', currency: 'USD', perAcre: 14_100, year: '2026', basis: 'USDA’s farm real estate value, California, 1 January 2026', sizes: [10, 40, 160], kind: 'acreage', yearlyChange: 0.029 },
+  { cityId: 'us-ca-losangeles', place: 'ca-state', label: 'Farmland In California', town: 'us-ca-bakersfield', currency: 'USD', perAcre: 14_100, year: '2026', basis: 'USDA’s farm real estate value, California, 1 January 2026', sizes: [10, 40, 160], kind: 'acreage', yearlyChange: 0.029 },
   { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Hackney, With Planning Permission', currency: 'GBP', perAcre: Math.round(39_690_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Hackney, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'Planning Permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
   { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Croydon, With Planning Permission', currency: 'GBP', perAcre: Math.round(12_315_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Croydon, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'Planning Permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
   { cityId: 'uk-eng-london', place: 'london', label: 'A Plot In Havering, With Planning Permission', currency: 'GBP', perAcre: Math.round(7_610_000 * HA_PER_ACRE), year: '2019', basis: 'the government’s value of land with residential planning permission, Havering, April 2019, its latest edition', sizes: [200 / M2_PER_ACRE], kind: 'lot', zoning: { name: 'Planning Permission', minAcres: 0, builds: 'a house, as the permission allows' }, yearlyChange: 0 },
   { cityId: 'uk-eng-london', place: 'england', label: 'Farmland In England', currency: 'GBP', perAcre: 8_497, year: 'Q2 2026', basis: 'Knight Frank’s English farmland index, Q2 2026, read secondhand', sizes: [10, 50, 150], kind: 'acreage', yearlyChange: -0.041 },
-  { cityId: 'ie-lei-dublin', place: 'leinster', label: 'Farmland In Leinster', currency: 'EUR', perAcre: 16_603, year: '2025', basis: 'SCSI and Teagasc’s good land in Leinster, 2025, read secondhand; no Dublin figure is published', sizes: [10, 30, 80], kind: 'acreage', yearlyChange: 0.07 },
-  { cityId: 'ca-on-toronto', place: 'ontario', label: 'Farmland In Central East Ontario', currency: 'CAD', perAcre: 13_100, year: '2025', basis: 'FCC’s cultivated land, Central East Ontario, 2025', sizes: [25, 100, 200], kind: 'acreage', yearlyChange: 0 },
-  { cityId: 'ca-bc-vancouver', place: 'bc', label: 'Farmland On The South Coast', currency: 'CAD', perAcre: 104_600, year: '2025', basis: 'FCC’s cultivated land, British Columbia’s South Coast, 2025', sizes: [5, 20, 40], kind: 'acreage', yearlyChange: -0.074 },
+  { cityId: 'ie-lei-dublin', place: 'leinster', label: 'Farmland In Leinster', town: 'ie-l-naas', currency: 'EUR', perAcre: 16_603, year: '2025', basis: 'SCSI and Teagasc’s good land in Leinster, 2025, read secondhand; no Dublin figure is published', sizes: [10, 30, 80], kind: 'acreage', yearlyChange: 0.07 },
+  { cityId: 'ca-on-toronto', place: 'ontario', label: 'Farmland In Central East Ontario', town: 'ca-08-millbrook', currency: 'CAD', perAcre: 13_100, year: '2025', basis: 'FCC’s cultivated land, Central East Ontario, 2025', sizes: [25, 100, 200], kind: 'acreage', yearlyChange: 0 },
+  { cityId: 'ca-bc-vancouver', place: 'bc', label: 'Farmland On The South Coast', town: 'ca-02-sechelt', currency: 'CAD', perAcre: 104_600, year: '2025', basis: 'FCC’s cultivated land, British Columbia’s South Coast, 2025', sizes: [5, 20, 40], kind: 'acreage', yearlyChange: -0.074 },
 ];
 
 /** Land in acres as it's said: square feet for a small US lot, square meters for a plot, acres for acreage. */

@@ -176,7 +176,7 @@ Evidence: `tests/construction.test.ts` (11); 18 mutations, all killed. Three fir
   - British Columbia: the Sunshine Coast's permit by value (bylaw 779, 2025). A lot on a private well pays no water charge. A house on the Agricultural Land Reserve is capped at 500 m² without applying to the Commission.
 - **England**: no isolated house in the countryside unless a rural worker must live there (NPPF, December 2024, paragraph 84). SLATE's actors aren't rural workers, and the Build panel says so.
 - SLATE's estimates, and said so: twelve months to build in Ireland and Canada; two months for a British Columbia permit.
-- Finished, the house is a home on the farmland, the whole parcel gone into it.
+- Finished, the house is a home on the farmland, the whole parcel gone into it, in its market’s town (`content/land.ts`): Hudson, Litchfield and Bakersfield (SLATE’s choice of farm towns), Naas, Millbrook and Sechelt (the towns whose fees it paid). Farmland’s value moves with that town’s market. Until 2026-09-29 the house stood in the city the land was bought from: a played New York life moved into its upstate farmhouse and so lived in Manhattan.
 
 Evidence: `tests/construction.test.ts` (15); 8 mutations, all killed.
 

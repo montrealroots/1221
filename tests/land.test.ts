@@ -87,9 +87,10 @@ describe('what land costs', () => {
     const upstate = LAND_MARKETS[idx(/Upstate/)]!;
     const year = 365.2425 * MS_DAY;
     const ny = (t: number) => marketAt('us-ny-newyork', 'USD', t);
+    const hudson = (t: number) => marketAt('us-ny-hudson', 'USD', t);
     expect(landValue(upstate, 10, y(2026))).toBe(45_000_00);
     expect(landValue(upstate, 10, y(2026) + year)).toBe(Math.round(45_000_00 * 1.047));
-    expect(landValue(upstate, 10, y(2026) + 3 * year)).toBe(Math.round(45_000_00 * 1.047 * ny(y(2026) + 3 * year) / ny(y(2026) + year)));
+    expect(landValue(upstate, 10, y(2026) + 3 * year)).toBe(Math.round(45_000_00 * 1.047 * hudson(y(2026) + 3 * year) / hudson(y(2026) + year)));
     const brooklyn = LAND_MARKETS[idx(/Brooklyn/)]!;
     expect(landValue(brooklyn, 0.1, y(2030))).toBe(Math.round(15_217_700 * 0.1 * ny(y(2030)) / ny(y(2022)) * 100));
     // Until 2026-09-29 Knight Frank's one year's fall ran for ever: fifty years took nine-tenths of England's farmland away.

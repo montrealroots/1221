@@ -230,7 +230,7 @@ export function registerConstruction(sim: Simulation): void {
     if (fees > 0 && !payFromBank(s, person, fees, `Permits and fees for building on ${LAND_MARKETS[parcel.market]!.label}`, 'construction')) throw new CommandError('The bank couldn’t pay the permit and fees.');
     const place = buildPlaceOf(parcel)!;
     const b: Build = {
-      parcelId: parcel.id, place, cityId: LAND_MARKETS[parcel.market]!.cityId, designId: q.design.id, live, startedAt: s.now,
+      parcelId: parcel.id, place, cityId: LAND_MARKETS[parcel.market]!.town ?? LAND_MARKETS[parcel.market]!.cityId, designId: q.design.id, live, startedAt: s.now,
       contract: q.contract, fees: q.feesTotal, spared: q.spared, amounts: q.stages.map((x) => x.amount), days: q.stages.map((x) => x.days), stage: -1,
       log: [{ at: s.now, line: place === 'london' ? 'Building notice given' : place === 'leinster' ? 'Planning permission applied for' : 'Permit applied for' }],
     };

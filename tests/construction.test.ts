@@ -216,6 +216,8 @@ describe('building it', () => {
     sim.advanceTo(r.value!.finishesBy + MS_DAY);
     const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House On Farmland Upstate')!;
     expect(home.facts.lot).toBe(435_600);
+    // In Hudson, not in the city the land was bought from.
+    expect(home.cityId).toBe('us-ny-hudson');
     expect(home.price).toBe(inSave(sim, 45_000_00 + q.contract, 'USD'));
   });
 
