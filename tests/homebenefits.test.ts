@@ -47,6 +47,26 @@ describe('care at home', () => {
     expect(publicCareShareOf(sim.player, 'rx-brand', sim.now, cur)).toBe(eur(80_00));
   });
 
+  it('charges a Canadian in Toronto or Vancouver nothing for a doctor, the emergency department or a stay, and prescriptions only past OHIP+’s 25', () => {
+    for (const city of ['ca-on-toronto', 'ca-bc-vancouver']) {
+      const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true }, `ca-care-${city}`);
+      const cur = saveCurrency(sim.universe);
+      for (const care of ['stay', 'emergency', 'urgent', 'visit'] as const) expect(publicCareShareOf(sim.player, care, sim.now, cur)).toBe(0);
+      expect(publicCareShareOf(sim.player, 'cleaning', sim.now, cur)).toBeUndefined();
+      const age = (sim.now - sim.player.birthInstant) / (365.25 * MS_DAY);
+      const under25 = city === 'ca-on-toronto' && age < 25;
+      expect(publicCareShareOf(sim.player, 'rx-generic', sim.now, cur)).toBe(under25 ? 0 : undefined);
+      // Past 25 in Ontario, private.
+      expect(publicCareShareOf(sim.player, 'rx-brand', sim.player.birthInstant + 30 * 365.25 * MS_DAY, cur)).toBeUndefined();
+    }
+    const young = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true }, 'ca-care-young');
+    expect(publicCareShareOf(young.player, 'rx-brand', young.player.birthInstant + 20 * 365.25 * MS_DAY, saveCurrency(young.universe))).toBe(0);
+    // An American living in Toronto isn't insured by OHIP.
+    const us = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'us-ny-newyork' }, 'ca-care-us');
+    expect(us.player.citizenshipId).toBe('us');
+    expect(publicCareShareOf(us.player, 'stay', us.now, saveCurrency(us.universe))).toBeUndefined();
+  });
+
   it('charges a Mexican in Mexico City nothing on IMSS-Bienestar, and a foreigner there as before', () => {
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true }, 'mx-care');
     expect(publicCareShareOf(sim.player, 'stay', sim.now, 'USD')).toBe(0);

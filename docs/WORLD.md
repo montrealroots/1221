@@ -62,6 +62,12 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
   - **SNAP in New York, California and Connecticut:** the USDA's maximum ($298, then $306 from 2026-10-01) less 30% of net income. It goes onto an EBT card that pays for groceries first and nothing else. An adult of 18 to 64 without 80 hours of work a month is paid three months in three years. The gross and net limits never bind for a single adult without the shelter deduction, which isn't kept.
   - **Not kept:** Canada's Employment Insurance, because a performer is self-employed under the Status of the Artist Act; and a non-citizen's eligibility, which turns on status SLATE doesn't keep.
   - **Tests:** `tests/assistance.test.ts` (5).
+- **Canada's public health insurance (done 2026-09-30, `canadianShareOf` in `systems/health.ts`).** Found by the same Toronto life, replayed once Canada was an acting market. It lived to 87 with 578 credits, and died owing $1,083,058 for medical care, billed at American prices, uninsured.
+  - A Canadian citizen living in Ontario or British Columbia pays nothing for a doctor, the emergency department, urgent care or a stay in hospital. OHIP has had no waiting period since 2020.
+  - Prescriptions are private for an adult, but free under 25 in Ontario (OHIP+). A dentist and an optician are private.
+  - **Not kept:** Ontario's Drug Benefit past 65, Trillium's cap on high drug costs and BC's Fair PharmaCare, none of them researched. A permanent resident's or work-permit holder's cover isn't kept either, since SLATE keeps only citizenship.
+  - Replayed on the fix, the same life dies at 87 worth −$16,007, with a place of its own from 42. It still goes hungry at times after 60: Canada's public pensions (OAS, GIS and the CPP) aren't built yet, and they're next.
+  - **Tests:** `tests/homebenefits.test.ts`, the Canadian case. 5 mutations, all killed.
 
 ## Acceptance criteria
 

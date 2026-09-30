@@ -31,6 +31,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 - Electric cars with home charging, and window tint (`254b249f`); Britain's insurance loadings for declared modifications, and a respray, after it.
 
 **Next, in order:**
+- **Canada's public pensions (in progress):** OAS, the GIS and the CPP, researched into `research-canada-pensions.json`. The Toronto w4 life, replayed on 2026-09-30, lives to 87, but goes hungry at times after 60 without them.
 - **Customization still open:** a remap, suspension, an exhaust, a body kit and wheels, once priced in Britain where their loadings are; California's smog check (per-station prices) and its ECU check; New York's loud-exhaust fine.
 - **Land:** easements and a lot's legal access; Mexico's permit for foreign buyers. Services for a house on bare land were done on 2026-09-30 (stage 4f). Waterfront, islands and commercial land are researched, but lack figures that would give them an effect.
 - Residence documents and immigration: Ireland's IRP (€300), PR cards and Mexico's residence cards.

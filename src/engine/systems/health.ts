@@ -533,6 +533,7 @@ export function publicCareShareOf(person: Person, care: Care, at: Instant, into 
   const city = CITIES.get(homeOf(person));
   if (city?.countryId === 'ie') return irishShareOf(person, care, into);
   if (city?.countryId === 'mx') return mexicanShareOf(person, care);
+  if (city?.countryId === 'ca') return canadianShareOf(person, care, at);
   if (city?.countryId !== 'uk') return undefined;
   const iso = isoOfCountry(person.citizenshipId);
   if (iso !== 'GB' && iso !== 'IE') return undefined;
@@ -578,6 +579,29 @@ function irishShareOf(person: Person, care: Care, into: string): Money | undefin
 function mexicanShareOf(person: Person, care: Care): Money | undefined {
   if (isoOfCountry(person.citizenshipId) !== 'MX') return undefined;
   if (care === 'cleaning' || care === 'filling' || care === 'exam' || care === 'glasses') return undefined;
+  return 0;
+}
+
+/**
+ * Canada's public insurance for a citizen living there, from 2026-09-30: a
+ * doctor, the emergency department, urgent care and a stay in hospital cost
+ * nothing, under Ontario's OHIP and British Columbia's MSP alike. OHIP has
+ * had no waiting period since 2020 (ontario.ca, read 2026-09-30), and a
+ * Canadian-born resident waits for neither. Prescriptions are private for an
+ * adult, except under 25 in Ontario, where OHIP+ pays them all. Ontario's
+ * Drug Benefit for those over 65, Trillium's cap on high costs and BC's Fair
+ * PharmaCare weren't researched, and aren't kept. A dentist and an optician
+ * are private, as before. Until 2026-09-30 a Torontonian was billed American
+ * prices, uninsured, and a played life died at 87 owing $1,083,058 for
+ * medical care.
+ */
+function canadianShareOf(person: Person, care: Care, at: Instant): Money | undefined {
+  if (isoOfCountry(person.citizenshipId) !== 'CA') return undefined;
+  if (care === 'cleaning' || care === 'filling' || care === 'exam' || care === 'glasses') return undefined;
+  if (care === 'rx-generic' || care === 'rx-brand') {
+    const age = (at - person.birthInstant) / (365.25 * MS_DAY);
+    return CITIES.get(homeOf(person))?.parentId === 'ca-08' && age < 25 ? 0 : undefined;
+  }
   return 0;
 }
 
