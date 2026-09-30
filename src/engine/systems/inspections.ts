@@ -29,8 +29,13 @@
  *   retest at the same station within 30 days, which SLATE doesn't charge.
  * - Connecticut: 7.4% of cars fail (the 2024 I/M report); CarMD's repair,
  *   and the one free retest within 60 days.
- * - Great Britain: 27.51% fail first time (DVSA, 2025 to 2026, cars and vans
- *   together, which is how it's published); the bill after a failure,
+ * - Great Britain: by the car's age from 2026-10-01, motdata.uk's reading of
+ *   DVSA's anonymized 2024 tests of cars (`docs/research/world/research-aviation-boats-credit-mot.json`, secondary):
+ *   10.7% fail the first MOT at three, 22.8% at ten and 30.5% at fifteen,
+ *   held there past it, as its later ages were read only from an excerpt.
+ *   Until then 27.51% failed at any age, DVSA's rate for cars and vans
+ *   together, which counts a defect fixed during the test as a failure;
+ *   DVSA's own table by age is only of lorries and buses. The bill after a failure,
  *   BookMyGarage's invoices, £332 at three to five years and £425 from six,
  *   less the test fee they include (secondary); the partial retest free
  *   within ten working days.
@@ -61,16 +66,19 @@ export interface InspectionRule {
   first: number;
   every: (ageYears: number) => number;
   /** The share that fail, the repair in its money by the car's age, and the retest's fee. */
-  fails?: { rate: (cityId: string) => number; repair: { currency: string; amount: (ageYears: number) => number }; retest: number };
+  fails?: { rate: (cityId: string, ageYears: number) => number; repair: { currency: string; amount: (ageYears: number) => number }; retest: number };
 }
 
 const CARMD = { currency: 'USD', amount: () => 554.01 };
 const AFTER_MOT = { currency: 'GBP', amount: (age: number) => (age >= 6 ? 425 : 332) - 54.85 };
+/** The share of cars failing the MOT at three years old, four and on to fifteen. */
+export const MOT_FAIL_BY_AGE = [0.107, 0.111, 0.126, 0.142, 0.161, 0.183, 0.205, 0.228, 0.247, 0.264, 0.281, 0.297, 0.305] as const;
+export const motFails = (age: number): number => MOT_FAIL_BY_AGE[Math.max(0, Math.min(MOT_FAIL_BY_AGE.length - 1, Math.floor(age) - 3))]!;
 
 export const INSPECTION_RULES: Readonly<Partial<Record<Jurisdiction, InspectionRule>>> = {
   'US-NY': { label: 'State Inspection', currency: 'USD', fee: (city) => (city === 'us-ny-newyork' ? 37 : 21), from: 'sale', first: 1, every: () => 1, fails: { rate: (city) => (city === 'us-ny-newyork' ? 0.0494 + 0.0106 : 0.0453 + 0.0188), repair: CARMD, retest: 0 } },
   'US-CT': { label: 'Emissions Test', currency: 'USD', fee: () => 20, from: 'registration', first: 4, every: () => 2, fails: { rate: () => 0.074, repair: CARMD, retest: 0 } },
-  GB: { label: 'MOT', currency: 'GBP', fee: () => 54.85, from: 'registration', first: 3, every: () => 1, fails: { rate: () => 0.2751, repair: AFTER_MOT, retest: 0 } },
+  GB: { label: 'MOT', currency: 'GBP', fee: () => 54.85, from: 'registration', first: 3, every: () => 1, fails: { rate: (_, age) => motFails(age), repair: AFTER_MOT, retest: 0 } },
   IE: { label: 'NCT', currency: 'EUR', fee: () => 60, from: 'registration', first: 4, every: (age) => (age >= 10 ? 1 : 2), fails: { rate: () => 1 - 0.5057, repair: AFTER_MOT, retest: 40 } },
   'MX-CMX': { label: 'Verificación', currency: 'MXN', fee: () => 765.45, from: 'sale', first: 0.5, every: () => 0.5 },
 };
@@ -110,8 +118,8 @@ export function inspectIfDue(sim: Simulation, person: Person, v: { id: string; b
 /** Whether the test due fails (decider `vehicle.inspection`), and what putting it right costs, in the repair's and the rule's money. */
 export function inspectionFails(sim: Simulation, v: { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string }, due: Instant): { repair: number; repairCurrency: string; retest: number } | undefined {
   const fails = INSPECTION_RULES[v.jurisdiction]?.fails;
-  if (!fails || sim.rng('vehicle.inspection', v.id, due).next() >= fails.rate(v.cityId)) return undefined;
   const age = (due - (v.boughtAt - v.ageAtPurchase * YEAR_MS)) / YEAR_MS;
+  if (!fails || sim.rng('vehicle.inspection', v.id, due).next() >= fails.rate(v.cityId, age)) return undefined;
   return { repair: fails.repair.amount(age), repairCurrency: fails.repair.currency, retest: fails.retest };
 }
 

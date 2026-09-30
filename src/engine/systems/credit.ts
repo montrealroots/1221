@@ -282,14 +282,16 @@ const RAISE_FROM = 700;
  * (`docs/research/world/research-credit-damage-movers.json`): seven years in
  * America under the FCRA, six in Britain, as Experian UK keeps a default or
  * a judgment, and five in Ireland, as the Central Credit Register keeps a
- * loan after it's settled (taken here from the mark). Elsewhere no period was
+ * loan after it's settled (taken here from the mark). Canada's six, from
+ * 2026-10-01, is how long Equifax Canada and TransUnion keep a late payment
+ * or a collection (`docs/research/world/research-aviation-boats-credit-mot.json`). In Mexico no period was
  * researched and a mark stays. Its weight fades before it goes, as myFICO
  * says, which the months paid on time already carry; when it goes, the one
  * measured figure is the CFPB's, 25 points on average when the last medical
  * collection came off (2023), taken for every kind. From 2026-09-30; until
  * then a mark never left the record.
  */
-export const MARK_YEARS: Readonly<Record<string, number>> = { us: 7, uk: 6, ie: 5 };
+export const MARK_YEARS: Readonly<Record<string, number>> = { us: 7, uk: 6, ie: 5, ca: 6 };
 export const MARK_GONE_GIVES = 25;
 
 /** A mark on the record: the score falls by it, and it's kept until its country's years are up. */

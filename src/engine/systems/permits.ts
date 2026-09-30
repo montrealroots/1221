@@ -54,10 +54,31 @@ const c = (units: number) => Math.round(units * 100);
  * its inspection charge with VAT for one of 10 to 60 m², £1,875.55, read from
  * an excerpt, where both of SLATE's suites fall (35.7 m² and 59.5 m²); each
  * borough sets its own, and Camden's is taken for London's. A loft, a
- * basement or a garage converted has its own schedule, not read, and isn't
- * charged here.
+ * basement or a garage converted had its own schedule, not read, and wasn't
+ * charged until 2026-10-01.
  */
 const BUILDING_CONTROL_10_TO_60 = 750.22 + 1_125.33;
+
+/**
+ * Building control on a conversion in London, from 2026-10-01
+ * (`docs/research/world/research-land-construction-2.json`): Havering's
+ * 2026-27 schedule, read in full and with its VAT, where Camden's showed no
+ * garage row. A loft is charged by the floor it adds, and SLATE's attic adds
+ * 27.9 m², in the band to 30 m², £859 (£1,183 to 60 m² and £1,406 to 100 m²
+ * are never reached, and aren't kept); a garage made a room, £673. A basement has no row of its
+ * own and is charged as an extension by its floor, so at Camden's band for
+ * one, as the suites are. A garage built new of SLATE's 18 m², detached and
+ * not lived in, is exempt from the building regulations under 30 m²
+ * (Schedule 2, Class VI) and pays nothing.
+ */
+const LOFT_TO_30_M2 = 859;
+const GARAGE_CONVERSION = 673;
+function londonControl(id: string): number | undefined {
+  if (id === 'suite' || id === 'suite-upscale' || id === 'basement') return BUILDING_CONTROL_10_TO_60;
+  if (id === 'attic') return LOFT_TO_30_M2;
+  if (id === 'garage-room') return GARAGE_CONVERSION;
+  return undefined;
+}
 
 /** Los Angeles's Table 1-A fee on a value, dollars. */
 function la1A(value: number): number {
@@ -100,11 +121,13 @@ export function worksPermit(sim: Simulation, cityId: string, project: Project, c
   }
   if (cityId === 'uk-eng-london') {
     const f = WORKS_PERMITS.london;
-    // Building control on what's added, at Camden's schedule (from 2026-09-30).
-    const control = project.id === 'suite' || project.id === 'suite-upscale' ? BUILDING_CONTROL_10_TO_60 : undefined;
+    // Building control on what's added (from 2026-09-30), and on what's converted (from 2026-10-01).
+    const control = londonControl(project.id);
     const bc = control !== undefined ? [{ label: 'Building Control', amount: inSave(sim, c(control), 'GBP') }] : [];
     if (project.id === 'suite') return { lines: [{ label: 'Prior Approval, A Larger Home Extension', amount: inSave(sim, c(f.priorApproval), 'GBP') }, ...bc], waitDays: f.priorApprovalDays, basis: 'permitted development, the neighbors asked first' };
     if (project.id === 'suite-upscale' || project.id === 'adu') return { lines: [{ label: 'Householder Planning Application', amount: inSave(sim, c(f.householder), 'GBP') }, ...bc], waitDays: f.householderDays, basis: 'a householder application, decided in eight weeks' };
+    // A conversion inside the house is permitted development and asks building control alone.
+    if (bc.length) return { lines: bc, waitDays: 0, basis: 'building control on the conversion, permitted development asking no planning' };
     return undefined;
   }
   if (cityId === 'ie-lei-dublin') {

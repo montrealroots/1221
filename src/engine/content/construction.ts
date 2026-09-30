@@ -239,6 +239,22 @@ export const NYC_FEES = { perSqft: 0.06, least: 100 } as const;
  */
 export const NEW_HAVEN_FEES = { first: 25, perThousand: 15, processing: 10, education: 0.26 } as const;
 
+/**
+ * What a house's owner insures and warrants while it's built, from 2026-10-01
+ * (`docs/research/world/research-land-construction-2.json`). America: builder's
+ * risk, at the $105 a month Insureon's own customers paid on average, for
+ * each month of the build begun (Insureon, secondary; the published rates a
+ * thousand of value disagree tenfold and weren't used). England: a structural
+ * warranty, which a lender asks of a new house, at Homebuilding &
+ * Renovating's £2,000 average for self-build cover (2020, secondary), as
+ * NHBC, Premier Guarantee and LABC Warranty print no price. America's 2-10
+ * warranty is the builder's, under half a percent of the price and in the
+ * contract, so nothing is added for it. Ireland's HomeBond prints no price,
+ * and none is kept there, nor in Canada.
+ */
+export const BUILDERS_RISK_A_MONTH = 105;
+export const ENGLISH_WARRANTY = 2_000;
+
 /** London's building control charge for a new house: Hackney's £1,018.50 and VAT, read secondhand and taken for all three boroughs. */
 export const LONDON_BUILDING_CONTROL = { fee: 1_018.5, vat: 0.2 } as const;
 

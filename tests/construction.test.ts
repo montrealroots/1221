@@ -32,7 +32,8 @@ describe('what building costs', () => {
     expect(mostFloor('nyc', brooklyn.acres)).toBeCloseTo(2_137.5, 6);
     const q = buildQuote(brooklyn, 'ne-owner', true) as BuildQuote;
     expect(q.contract).toBe(30_857_530);
-    expect(q.fees).toEqual([{ label: 'New Building Permit', amount: 103_26 }]);
+    // From 2026-10-01 builder's risk too, Insureon's $105 a month for the build's 10.4 months begun.
+    expect(q.fees).toEqual([{ label: 'New Building Permit', amount: 103_26 }, { label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }]);
     expect(buildQuote(brooklyn, 'ne-median', true)).toMatch(/doesn’t fit: the land takes 2,137 sq ft/);
     // Under 1,667 sq ft, the $100 least.
     expect(buildFees('nyc', 1_000, 0).lines[0]!.amount).toBe(100_00);
@@ -67,6 +68,7 @@ describe('what building costs', () => {
     const letting = buildQuote(plot, 'nds-3b5p', false) as BuildQuote;
     expect(letting.contract).toBe(Math.round(2_640 * m2 * 100));
     expect(fee(letting, /Building Control/)).toBe(1_222_20);
+    expect(fee(letting, /Structural Warranty/)).toBe(2_000_00);
     expect(fee(letting, /Levy/)).toBe(Math.round((209.61 + 30.3) * m2 * 100));
     const living = buildQuote(plot, 'nds-3b5p', true) as BuildQuote;
     expect(fee(living, /Levy, Spared/)).toBe(0);
@@ -88,9 +90,9 @@ describe('what building costs', () => {
   it('builds on American farmland at the region’s price with the state’s fees, and a town’s permit not kept', () => {
     const upstate = buildQuote(lot(/Upstate/, 10), 'ne-owner', true) as BuildQuote;
     expect(upstate.contract).toBe(30_857_530);
-    expect(upstate.fees).toEqual([]);
+    expect(upstate.fees).toEqual([{ label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }]);
     const ct = buildQuote(lot(/Farmland In Connecticut/, 5), 'ne-owner', true) as BuildQuote;
-    expect(ct.fees).toEqual([{ label: 'State Education Fee', amount: 80_23 }]);
+    expect(ct.fees).toEqual([{ label: 'State Education Fee', amount: 80_23 }, { label: 'Builder’s Risk Insurance', amount: 12 * 105_00 }]);
     const ca = buildQuote(lot(/Farmland In California/, 10), 'w-owner', true) as BuildQuote;
     // $298,202.82 of work: $13 and $4 a $100,000.
     expect(fee(ca, /Strong-Motion/)).toBe(38_77);

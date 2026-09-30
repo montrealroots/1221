@@ -46,7 +46,13 @@ describe('what a permit costs', () => {
     const bigger = worksPermit(sim, 'uk-eng-london', project('suite-upscale'), 100_000_00)!;
     expect(bigger.lines[0]!.amount).toBe(inSave(sim, 548_00, 'GBP'));
     expect(bigger.waitDays).toBe(56);
-    expect(worksPermit(sim, 'uk-eng-london', project('attic'), 100_000_00)).toBeUndefined();
+    // From 2026-10-01 a conversion pays building control alone: Havering's £859 for a loft to 30 m² (the attic's 300 sq ft is 27.9),
+    // £673 for a garage made a room, and a basement's 600 sq ft (55.7 m²) at the extension band.
+    const only = (id: string) => worksPermit(sim, 'uk-eng-london', project(id), 100_000_00)!;
+    expect(only('attic')).toEqual({ lines: [{ label: 'Building Control', amount: inSave(sim, 859_00, 'GBP') }], waitDays: 0, basis: expect.any(String) });
+    expect(only('garage-room').lines[0]!.amount).toBe(inSave(sim, 673_00, 'GBP'));
+    expect(only('basement').lines[0]!.amount).toBe(inSave(sim, 1_875_55, 'GBP'));
+    expect(worksPermit(sim, 'uk-eng-london', project('bath-add'), 100_000_00)).toBeUndefined();
   });
 
   it('exempts a Dublin extension to 40 m², and asks €34 and twelve weeks for more or for a cottage', () => {

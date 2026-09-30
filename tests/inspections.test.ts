@@ -77,16 +77,20 @@ describe('a test failed', () => {
     return n / 4_000;
   };
 
-  it('fails each place’s published share: the MOT 27.51%, the NCT 49.43%, New York City’s 6.0%, upstate 6.41%, Connecticut 7.4%, Mexico City none', () => {
-    expect(share(car('GB'))).toBeCloseTo(0.2751, 1);
+  it('fails each place’s published share: the MOT by the car’s age, the NCT 49.43%, New York City’s 6.0%, upstate 6.41%, Connecticut 7.4%, Mexico City none', () => {
+    // From 2026-10-01 the MOT by age: 10.7% at three, 22.8% at ten, 30.5% at fifteen and past it.
+    expect(Math.abs(share(car('GB', 2)) - 0.107)).toBeLessThan(0.02);
+    expect(Math.abs(share(car('GB', 9)) - 0.228)).toBeLessThan(0.02);
+    expect(Math.abs(share(car('GB', 20)) - 0.305)).toBeLessThan(0.02);
+    expect([3, 4, 10, 15, 25, 1].map((age) => INSPECTION_RULES.GB!.fails!.rate('uk-eng-london', age))).toEqual([0.107, 0.111, 0.228, 0.305, 0.305, 0.107]);
     expect(share(car('IE'))).toBeCloseTo(0.4943, 1);
     expect(Math.abs(share(car('US-NY')) - 0.06)).toBeLessThan(0.012);
     expect(Math.abs(share(car('US-NY', 0, 'us-ny-hudson')) - 0.0641)).toBeLessThan(0.012);
     expect(Math.abs(share(car('US-CT')) - 0.074)).toBeLessThan(0.012);
     expect(share(car('MX-CMX'))).toBe(0);
     // Too near to tell apart by sampling: the rates themselves.
-    expect(INSPECTION_RULES['US-NY']!.fails!.rate('us-ny-newyork')).toBeCloseTo(0.06, 10);
-    expect(INSPECTION_RULES['US-NY']!.fails!.rate('us-ny-hudson')).toBeCloseTo(0.0641, 10);
+    expect(INSPECTION_RULES['US-NY']!.fails!.rate('us-ny-newyork', 5)).toBeCloseTo(0.06, 10);
+    expect(INSPECTION_RULES['US-NY']!.fails!.rate('us-ny-hudson', 5)).toBeCloseTo(0.0641, 10);
   });
 
   it('prices the repair by the car’s age after an MOT, CarMD’s average in America, and the NCT’s €40 retest', () => {

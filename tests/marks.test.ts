@@ -26,15 +26,16 @@ describe('a mark on the record', () => {
     expect(record.score).toBe(600 + MARK_GONE_GIVES);
   });
 
-  it('keeps Britain’s six years and Ireland’s five, and a mark where no period was researched', () => {
+  it('keeps Britain’s six years, Canada’s six and Ireland’s five, and a mark where no period was researched', () => {
     const sim = save('us-ny-newyork', 'marks-abroad');
     const record = sim.player.credit!;
     record.score = 700;
     markRecord(sim.player, 50, sim.now, 'uk-eng-london');
     markRecord(sim.player, 50, sim.now, 'ie-lei-dublin');
     markRecord(sim.player, 50, sim.now, 'mx-cmx-mexicocity');
+    markRecord(sim.player, 50, sim.now, 'ca-on-toronto');
     expect(marksFallOff(sim.player, sim.now + 5 * YEAR)).toBe(1);
-    expect(marksFallOff(sim.player, sim.now + 6 * YEAR)).toBe(1);
+    expect(marksFallOff(sim.player, sim.now + 6 * YEAR)).toBe(2);
     expect(marksFallOff(sim.player, sim.now + 30 * YEAR)).toBe(0);
     expect(record.marks).toHaveLength(1);
   });
