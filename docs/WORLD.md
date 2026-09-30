@@ -598,9 +598,21 @@ Researched in `docs/research/world/research-home-contents.json` and `research-ho
   - An hour unwinding at home is loved by a film or television lover only with a TV there, a gamer with a console, and a music lover with a speaker. Away from home, a hotel's or a sublet's TV does.
   - The gear: Samsung's 55-inch QN70H, a PlayStation 5 with a disc drive, and Sonos's Beam, at the regular price. Canada's console and the soundbars outside America are read from searches' summaries. No console is sold in Mexico, where no price was read.
   - They're carried in a move with the bed and sofa.
-- Not kept yet: the security that measurably cuts burglaries (window and door locks 12.5 times, the WIDE combination 49.1 times, per Tseloni). Tseloni's factors are against no security at all, and the devices' prices weren't read.
+- Until 2026-09-30 the security that measurably cuts burglaries wasn't kept; it is now (below).
 
 Evidence: `tests/alarm.test.ts` (5) and `tests/gear.test.ts` (4). 13 mutations, all killed in the end. Two first survived and needed tests: the day's burglary draw at Britain's rate, now checked at a scale a test can see, and an unknown piece refused.
+#### Stage 6g: locks, a light and timers (done 2026-09-30)
+
+- **What they do** (`systems/homesecurity.ts`, `home.security`, the day's burglary in `systems/dwelling.ts`): Tseloni et al.'s protection factors, the odds of a burglary with entry against a home with none, from the Crime Survey for England and Wales (Security Journal, 2017, Table 3). Door deadlocks alone are 2.8; window locks with them 12.54; outside lights too, 34.41; indoor lights on a timer as well, the WIDE combination, 49.12.
+  - SLATE takes a home as found to have locks on its doors, and the place's published rate as that home's. So window locks leave 2.8/12.54 of the risk, about a fifth, and the WIDE combination 2.8/49.12, about a eighteenth.
+  - A set the study didn't measure counts as the best one it did that the home holds. Outside lights without window locks add nothing.
+  - The alarm still counts for nothing. The study's window and door locks with an alarm came to 8.92, below the locks alone, but not significantly, so SLATE doesn't draw it.
+- **What they cost:** a named retailer's shelf in each country. The Home Depot in America and Canadian Tire in Canada, both read from search summaries and before sales tax, which is added. Screwfix in Britain, Woodie's in Ireland and The Home Depot México, all with VAT in.
+  - A lock on each window: a bedroom's, and three in the rooms lived in, in a house; four in a rented flat. Both counts are SLATE's estimates. Two timers, and one motion light, on a house only.
+  - They're screwed or plugged in, and no fitter is paid.
+- **Where they stay:** in a home one owns they stay with it. In a rented one, they're left behind on moving out. A shared home's windows and doors are the landlord's.
+
+Evidence: `tests/homesecurity.test.ts` (4). 9 mutations, 8 killed. The survivor was equivalent: it read a renter's devices in a home one owns, where a renter's never are.
 ### Stage 8: Rentals on a journey
 
 #### Stage 8a: a car rented at the far end (done 2026-09-29)

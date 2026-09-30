@@ -44,6 +44,7 @@ import { homeOf } from '@/engine/systems/earnings';
 import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
 import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
+import { deviceCost, securityRefusal, type Device } from '@/engine/systems/homesecurity';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
@@ -761,6 +762,8 @@ function YourCareer({ cur }: { cur: string }) {
  * home, what it has, how many clean clothes are left and what's drying, how
  * tidy it is, and a cleaner every week.
  */
+const SECURITY_LABEL: Readonly<Record<Device, string>> = { windows: 'Fit Window Locks', timers: 'Buy Lamp Timers', lights: 'Fit An Outside Motion Light' };
+
 function YourPlace({ cur }: { cur: string }) {
   const { run, toast } = useGame();
   const place = useWorld((s) => placeOf(s, s.player));
@@ -771,6 +774,12 @@ function YourPlace({ cur }: { cur: string }) {
   const noAlarm = useWorld((s) => alarmRefusal(s.player));
   const home = useWorld((s) => s.player.home);
   const noUnits = useWorld((s) => unitsRefusal(s, s.player));
+  // Locks, a light and timers, where they're priced and the home could take them (`systems/homesecurity.ts`).
+  const security = useWorld((s) => (['windows', 'timers', 'lights'] as Device[]).flatMap((device) => {
+    const cost = deviceCost(s, s.player, device);
+    const no = securityRefusal(s.player, device);
+    return cost === undefined || (no && /has them|not a flat|landlord|of your own/.test(no)) ? [] : [{ device, cost, no }];
+  }));
   // A machine offered where it's priced and the home lacks it: a dryer once there's a washer.
   const portables = useWorld((s) => (['dishwasher', 'washer', 'dryer'] as Portable[]).flatMap((kind) => {
     const cost = s.player.home ? portableCost(s, s.player.home.cityId, kind) : undefined;
@@ -805,6 +814,11 @@ function YourPlace({ cur }: { cur: string }) {
       {place.keeps && home.kind !== 'sofa' && portables.length > 0 && (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           {portables.map(({ kind, cost, no }) => <Gated key={kind} feature="home.buy_portable" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_portable', { kind }).ok) toast('Yours, and it moves with you.', 'positive'); }}>{`Buy ${PORTABLE_LABEL[kind]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
+        </div>
+      )}
+      {place.keeps && home.kind !== 'sofa' && security.length > 0 && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {security.map(({ device, cost, no }) => <Gated key={device} feature="home.security" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.security', { device }).ok) toast(device === 'timers' ? 'Lamps on a timer, as if somebody were home.' : 'Fitted. A burglar has a harder way in.', 'positive'); }}>{`${SECURITY_LABEL[device]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
         </div>
       )}
       {place.keeps && home.kind !== 'sofa' && place.fixtures.cooling === 'none' && unitsCost !== undefined && (

@@ -92,6 +92,8 @@ export interface HomeState {
    * landlord counted the old one's debt and could evict over it.
    */
   arrearsAtStart?: Money;
+  /** Window locks and lamp timers fitted to a rented home, left behind on moving out (`systems/homesecurity.ts`, from 2026-09-30). */
+  security?: import('./homesecurity').Device[];
 }
 
 /** What a friend's sofa is, for the screens. */

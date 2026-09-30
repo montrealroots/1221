@@ -45,6 +45,7 @@ import { exchange } from '../content/currency';
 import { drawFromBank, spend } from './household';
 import { weatherAt, weatherOn } from './weather';
 import { alarmMonth, renterAlarmFactor } from './alarm';
+import { securityFactor } from './homesecurity';
 import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
@@ -561,7 +562,8 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
   }
   const r = sim.rng('homes.upkeep', person.id, 'belongings', homeDay(sim, person));
   // The place's rate a year, over its days; a test's scale where it gives one.
-  const burgled = r.next() < (burglaryYear(home.cityId) / 365) * scale;
+  // Less by the locks, lights and timers fitted (`systems/homesecurity.ts`).
+  const burgled = r.next() < (burglaryYear(home.cityId) / 365) * scale * securityFactor(person);
   const burned = home.kind !== 'owned' && r.next() < BELONGINGS.fireYear / 365;
   if (!burgled && !burned) return;
   const [least, most] = burgled ? BELONGINGS.theftUsd : BELONGINGS.fireUsd;

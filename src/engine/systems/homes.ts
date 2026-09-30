@@ -476,6 +476,8 @@ export interface OwnedHome {
   occupiableFrom?: Instant;
   /** A burglar alarm fitted, monitored, its discount on the premium (`systems/alarm.ts`, from 2026-09-30). */
   alarm?: boolean;
+  /** Window locks, an outside light and lamp timers fitted (`systems/homesecurity.ts`, from 2026-09-30). */
+  security?: import('./homesecurity').Device[];
   listingId: string;
   cityId: string;
   facts: HomeFacts;
