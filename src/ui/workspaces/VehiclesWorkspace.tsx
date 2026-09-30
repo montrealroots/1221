@@ -4,6 +4,7 @@
  * (`systems/vehicles.ts`, from 2026-09-29).
  */
 
+import { tradeInFor } from '@/engine/systems/vehicles';
 import { redemption } from '@/engine/systems/repossession';
 import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
 import { useState } from 'react';
@@ -34,8 +35,11 @@ export function VehiclesWorkspace() {
   const [months, setMonths] = useState(0);
   const financed = months > 0;
   const [coverage, setCoverage] = useState<OwnedVehicle['coverage']>('full');
+  const [tradeId, setTradeId] = useState('');
   const model = modelById(pick) ?? models[0];
-  const q = model ? quote(model, home, sim.now, { age, financed, person }) : 'SLATE sells no cars where you live yet.';
+  const tradeCar = vehiclesOf(person).find((x) => x.id === tradeId && x.soldAt === undefined && !x.repossessed);
+  const trade = tradeCar ? tradeInFor(sim, home, tradeCar) : undefined;
+  const q = model ? quote(model, home, sim.now, { age, financed, person, ...(trade ? { tradeIn: trade } : {}) }) : 'SLATE sells no cars where you live yet.';
   const inHome = (c: number, from: string) => formatMoney(inSaveMoney(sim, c, from), cur);
   const no = model ? buyRefusal(sim, person, model.id, { age, financed, coverage }) : typeof q === 'string' ? q : undefined;
   const ins = j ? monthlyInsurance(j, coverage) : undefined;
@@ -119,6 +123,15 @@ export function VehiclesWorkspace() {
                   {j && INSURANCE[j]?.liability !== undefined && <option value="liability">Liability Only</option>}
                 </select>
               </div>
+              {owned.some((x) => !x.repossessed) && (
+                <div className="field">
+                  <label htmlFor="car-trade">Trade In</label>
+                  <select id="car-trade" value={tradeCar?.id ?? ''} onChange={(e) => setTradeId(e.target.value)}>
+                    <option value="">None</option>
+                    {owned.filter((x) => !x.repossessed).map((x) => <option key={x.id} value={x.id}>Your {modelById(x.modelId)!.make} {modelById(x.modelId)!.model}</option>)}
+                  </select>
+                </div>
+              )}
             </div>
             {typeof q !== 'string' && model && (
               <div className="table-scroll">
@@ -141,7 +154,7 @@ export function VehiclesWorkspace() {
             <div className="row gap-2">
               <Gated feature="vehicle.buy" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
                 if (!model) return;
-                const a = run<{ vehicleId: string; paid: number; monthly?: number }>('vehicle.buy', { modelId: model.id, age, financed, months, coverage });
+                const a = run<{ vehicleId: string; paid: number; monthly?: number }>('vehicle.buy', { modelId: model.id, age, financed, months, coverage, ...(tradeCar ? { tradeIn: tradeCar.id } : {}) });
                 if (a.ok) toast(`Bought, for ${money(a.value!.paid)} now${a.value!.monthly ? ` and ${money(a.value!.monthly)} a month` : ''}.`, 'positive');
               }}>Buy It</Gated>
             </div>
