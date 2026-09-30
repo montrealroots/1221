@@ -108,7 +108,7 @@ Evidence: `tests/rail.test.ts` (coaches, transit and cancellations). 5 mutations
 
 Evidence: `AIR.premiumMultiple` in `content/air.ts`, `planJourney`'s cabin; `tests/journey.test.ts` (a cabin other than economy). 3 mutations, all killed. The research is `docs/research/world/research-cabins-car.json`.
 
-Open in Stage 2, and why: a car of one's own as a leg waits for Stage 3, as SLATE has no vehicles to drive (AAA's 2026 costs, the IRS rate, fuel, parking and tolls are researched).
+Open in Stage 2 until 2026-09-29: a car of one's own as a leg, which waited for Stage 3; stage 3c made it one.
 ### Stage 3: Vehicles
 
 #### Stage 3a and 3b: a car bought, kept and run (done 2026-09-29)
@@ -116,7 +116,7 @@ Open in Stage 2, and why: a car of one's own as a leg waits for Stage 3, as SLAT
 - **Buying** where one lives, in eight jurisdictions (`content/vehiclefees.ts`): New York's, Connecticut's and California's sales tax, title and registration (New York by weight, Connecticut's 7.75% over $50,000, Los Angeles's rise on 1 October 2026); Britain's on-the-road price; Ireland's price with VAT and VRT and the motor tax by CO2; Ontario's HST; British Columbia's GST and PST; Mexico City's plates. Outright, or on a loan at the published rate: Experian's US rates by credit tier, the Bank of Canada's, Banxico's, the Central Bank of Ireland's, the Bank of England's £10,000 personal loan rate.
 - **Keeping it**: a month's insurance at the place's average paid (the NAIC's for the US states, full cover or liability only; the ABI's; the Central Bank's; FSRA's; ICBC's; Mexico City's only a comparison site's quote, said so), the loan's payment, the registration renewing on its term, and a month's everyday driving at the place's published mileage (the FHWA's, the DfT's, the CSO's, Statistics Canada's; Mexico's none, SLATE's mean), fuel at the week's pump prices by the car's official economy, and AAA's upkeep a mile.
 - **Its value** falls on iSeeCars' published points, straight lines between (SLATE's); a used car is the catalog at an age on the same curve; Sell It sells at that value, the loan paid off first, and a loan bigger than the car paid from the bank.
-- Not kept, and said so on the screen: a dealer's lower trade-in price, repossession, a car counted in net worth.
+- Not kept, and said so on the screen: a dealer's lower trade-in price, repossession. A car counted in net worth, and its loan among the debts, weren't until 2026-09-29 (`systems/finance.ts`).
 
 Evidence: `tests/vehicles.test.ts` (9); 11 mutations, all killed (one found the Irish diesel mild hybrid filed as a petrol hybrid). Screen: Cars, from Home's Cars panel, opened by the guide's chapter A Car Of Your Own.
 
@@ -147,7 +147,7 @@ Evidence: `tests/land.test.ts` (9); 17 mutations, all killed. Two first survived
 - **The deposit as each place takes it**: England's Standard Conditions of Sale and Ireland's Law Society conditions, 10% on exchange, subject to contract till then; America's earnest money, 1% on acceptance (SLATE's figure for a home); Canada's 5% on acceptance (SLATE's reading of custom). Until the thirtieth day the buyer can Walk Away, a deposit paid coming back; after it, walking away or not paying at the closing on the forty-fifth loses it (both days SLATE's estimates).
 - **Due diligence with published fees**, paid on acceptance: HM Land Registry's official copies and search (£13); upstate, Schenectady County's $100 percolation test application, one county's fee. **The closing** pays the rest, the buyer's taxes and, in England, the Land Registry's Scale 1 fee.
 - Fixed with it: New York State's transfer tax on land in the city from $2 million, 0.65%, not 0.4%.
-- Open, and why: a Phase I environmental assessment (only a vendor's range), a survey, title insurance and a lawyer have no authority's price and aren't kept, nor a split's fee; land isn't counted in net worth; nothing is built on it until Stage 5.
+- Open, and why: a Phase I environmental assessment (only a vendor's range), a survey, title insurance and a lawyer have no authority's price and aren't kept, nor a split's fee; land wasn't counted in net worth until 2026-09-29, and is now at its value, a house going up on it at what its stages have cost (`systems/finance.ts`); nothing is built on it until Stage 5.
 
 Evidence: `tests/land.test.ts` (14); 20 mutations, all killed. Two first survived. One was the seller's "yes at the asking price", which the odds already give, so it was removed. The other was the counter spent on acceptance, which is now asserted.
 
