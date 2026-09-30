@@ -58,3 +58,37 @@ export const FURNITURE: Readonly<Record<string, { currency: string; taxAdded: bo
 export const WITHOUT = { floorNight: 0.08, unwindBare: 0.5 } as const;
 
 export const FURNITURE_SOURCE = 'docs/research/world/research-furniture.json: IKEA’s own pages in the United States, Britain, Ireland, Canada and Mexico, 2026-09-29';
+
+/**
+ * The recycling fee a state charges on each mattress sold there, collected
+ * at the sale (\`docs/research/world/research-upkeep.json\`): California's
+ * $18 from 2026-04-01 (it was $16), Connecticut's $19.50 from 2026-10-01
+ * (it was $16), the Mattress Recycling Council's own notices. A MALM frame
+ * stands on slats, not a foundation, so a bed is one. From 2026-09-30.
+ */
+export const MATTRESS_FEE_USD: Readonly<Record<string, readonly { from: number; usd: number }[]>> = {
+  'us-ca': [{ from: 0, usd: 16 }, { from: Date.UTC(2026, 3, 1, 7), usd: 18 }],
+  'us-ct': [{ from: 0, usd: 16 }, { from: Date.UTC(2026, 9, 1, 4), usd: 19.5 }],
+};
+
+/**
+ * Movers for a bed and a sofa, the least a removal firm quotes for: a
+ * one-bedroom's move, the middle of its range, in the country's money.
+ * Local within 100 miles, as Angi counts one, and long distance past it:
+ * - America: Angi's $250 to $700 local and $700 to $3,000 long distance
+ *   for a one-bedroom (2026, secondary).
+ * - Britain: Konnect You's £466 for a one-bedroom, and £75 to £150 more
+ *   from 10 to 50 miles and £150 to £300 to 150; past that nothing is
+ *   published, and SLATE takes the last (secondary).
+ * - Canada: HomeStars' C$300 to C$900 local for a one-bedroom flat and
+ *   C$2,800 to C$6,000 across Canada (secondary, read from search extracts).
+ * - Mexico City: a marketplace's MX$3,515 local, every size together.
+ * Ireland publishes only a three-bedroom's €1,700, and a move abroad
+ * wasn't researched: neither is charged.
+ */
+export const MOVERS: Readonly<Record<string, { currency: string; local: (miles: number) => number; far?: number }>> = {
+  us: { currency: 'USD', local: () => 475, far: 1_850 },
+  uk: { currency: 'GBP', local: (mi) => 466 + (mi <= 10 ? 0 : mi <= 50 ? 112.5 : 225), far: 466 + 225 },
+  ca: { currency: 'CAD', local: () => 600, far: 4_400 },
+  mx: { currency: 'MXN', local: () => 3_515 },
+};

@@ -10,9 +10,10 @@ import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { salesTaxRate } from '@/engine/content/tax';
+import { MOVERS } from '@/engine/content/furniture';
 import { applyLookingAfter, sleepQuality } from '@/engine/systems/life';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
-import { onTheFloor, pieceCost, unwindComfort } from '@/engine/systems/furniture';
+import { mattressFeeUsd, moversCost, onTheFloor, pieceCost, unwindComfort } from '@/engine/systems/furniture';
 
 const save = (city: string, name: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, name);
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -84,5 +85,47 @@ describe('an empty home', () => {
     expect(sim.execute({ kind: 'home.furnish', payload: { piece: 'bed' } }).ok).toBe(true);
     empty(sim, 'us-ny-newyork');
     expect(onTheFloor(sim.player)).toBe(false);
+  });
+});
+
+describe('a mattress’s recycling fee, and movers', () => {
+  it('adds California’s and Connecticut’s mattress fee to a bed, each from its day, and none in New York', () => {
+    expect(mattressFeeUsd('us-ca-losangeles', Date.UTC(2026, 2, 31))).toBe(16);
+    expect(mattressFeeUsd('us-ca-losangeles', Date.UTC(2026, 3, 2))).toBe(18);
+    expect(mattressFeeUsd('us-ct-newhaven', Date.UTC(2026, 8, 30))).toBe(16);
+    expect(mattressFeeUsd('us-ct-newhaven', Date.UTC(2026, 9, 2))).toBe(19.5);
+    expect(mattressFeeUsd('us-ny-newyork', Date.UTC(2026, 9, 2))).toBe(0);
+    const sim = save('us-ct-newhaven', 'furn-fee');
+    const bed = pieceCost(sim, 'us-ct-newhaven', 'bed')!.amount;
+    const sofa = pieceCost(sim, 'us-ct-newhaven', 'sofa')!.amount;
+    const rate = salesTaxRate('us-ct-newhaven', sim.now, 'furniture');
+    expect(bed).toBe(inSave(sim, 677_00 + Math.round(648_00 * rate) + mattressFeeUsd('us-ct-newhaven', sim.now) * 100, 'USD'));
+    expect(sofa).toBe(inSave(sim, 828_00 + Math.round(799_00 * rate), 'USD'));
+  });
+
+  it('charges movers only for pieces of one’s own: a one-bedroom’s local or long-distance move, and nothing abroad or in Ireland', () => {
+    const sim = save('us-ny-newyork', 'furn-movers');
+    expect(moversCost(sim, sim.player, 'us-ny-newyork', 'us-ny-newyork')).toBe(0);
+    sim.player.furniture = { bed: sim.now };
+    expect(moversCost(sim, sim.player, 'us-ny-newyork', 'us-ny-newyork')).toBe(inSave(sim, 475_00, 'USD'));
+    expect(moversCost(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles')).toBe(inSave(sim, 1_850_00, 'USD'));
+    expect(moversCost(sim, sim.player, 'uk-eng-london', 'uk-eng-london')).toBe(inSave(sim, 466_00, 'GBP'));
+    expect(moversCost(sim, sim.player, 'uk-eng-london', 'uk-sct-edinburgh')).toBe(inSave(sim, 691_00, 'GBP'));
+    expect(moversCost(sim, sim.player, 'us-ny-newyork', 'uk-eng-london')).toBe(0);
+    // Britain's distance, for a town near enough to be local.
+    expect([5, 30, 80].map((mi) => MOVERS.uk!.local(mi))).toEqual([466, 578.5, 691]);
+    expect(moversCost(sim, sim.player, 'ie-lei-dublin', 'ie-lei-dublin')).toBe(0);
+  });
+
+  it('pays the movers on moving home with a bed of one’s own', () => {
+    const sim = save('us-ny-newyork', 'furn-move');
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 50_000_00, 'USD');
+    sim.player.furniture = { bed: sim.now };
+    const kind = sim.player.home!.kind === 'shared' ? 'own' : 'shared';
+    const r = sim.execute({ kind: 'home.move', payload: { kind } });
+    expect(r.ok, r.error).toBe(true);
+    const paid = sim.universe.transactions.filter((t) => t.memo === 'Movers, your bed and sofa');
+    expect(paid).toHaveLength(1);
+    expect(paid[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 475_00, 'USD'));
   });
 });

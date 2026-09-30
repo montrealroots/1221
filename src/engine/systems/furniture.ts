@@ -10,8 +10,10 @@
  * night without a bed is slept on the floor and an hour unwinding without a
  * sofa takes half the stress off (`WITHOUT`).
  *
- * Not kept, and said so: a removal's cost, a mattress wearing out, the rest
- * of a home's furniture.
+ * Movers take them from one home to the next, and a bed carries a state's
+ * mattress recycling fee, from 2026-09-30 (below); until then neither was
+ * kept. Not kept, and said so: a mattress wearing out, movers in Ireland or
+ * abroad, and the rest of a home's furniture.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -19,10 +21,10 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { CITIES } from '../content/geography';
+import { CITIES, distanceKm } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
-import { FURNITURE, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
-import { inTheBank, payFromBank } from './household';
+import { FURNITURE, MATTRESS_FEE_USD, MOVERS, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
+import { inTheBank, owe, payFromBank } from './household';
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
 
@@ -47,7 +49,9 @@ export function pieceCost(sim: Simulation, cityId: string, piece: Piece): { amou
   const item = country.items[piece];
   const taxRate = country.taxAdded ? salesTaxRate(cityId, sim.now, 'furniture') : 0;
   const tax = Math.round(item.price * 100 * taxRate);
-  return { amount: inSave(sim, Math.round((item.price + item.delivery) * 100) + tax, country.currency), tax: inSave(sim, tax, country.currency) };
+  // A bed's mattress carries its state's recycling fee, where one is charged.
+  const fee = piece === 'bed' ? inSave(sim, Math.round(mattressFeeUsd(cityId, sim.now) * 100), 'USD') : 0;
+  return { amount: inSave(sim, Math.round((item.price + item.delivery) * 100) + tax, country.currency) + fee, tax: inSave(sim, tax, country.currency) };
 }
 
 export function furnishRefusal(sim: Simulation, person: Person, piece: Piece): string | undefined {
@@ -71,4 +75,33 @@ export function registerFurniture(sim: Simulation): void {
     (person.furniture ??= {})[piece] = s.now;
     return { paid: cost.amount };
   });
+}
+
+/** A state's mattress recycling fee on a bed bought there, in dollars, or nothing. */
+export function mattressFeeUsd(cityId: string, at: number): number {
+  const steps = MATTRESS_FEE_USD[CITIES.get(cityId)?.parentId ?? ''];
+  return steps ? [...steps].reverse().find((s) => at >= s.from)!.usd : 0;
+}
+
+/**
+ * What movers charge to take one's own bed and sofa from one home to the
+ * next (\`MOVERS\`), in the save's money; nothing without pieces of one's own,
+ * across a border, or where no figure is kept.
+ */
+export function moversCost(sim: Simulation, person: Person, fromCity: string, toCity: string): Money {
+  if (!owns(person, 'bed') && !owns(person, 'sofa')) return 0;
+  const from = CITIES.get(fromCity);
+  const to = CITIES.get(toCity);
+  if (!from || !to || from.countryId !== to.countryId) return 0;
+  const rates = MOVERS[from.countryId];
+  if (!rates) return 0;
+  const miles = distanceKm(from, to) / 1.609344;
+  const units = miles <= 100 ? rates.local(miles) : rates.far;
+  return units === undefined ? 0 : inSave(sim, Math.round(units * 100), rates.currency);
+}
+
+/** Movers paid on moving home, where one's own pieces go too. */
+export function carryFurniture(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
+  const cost = moversCost(sim, person, fromCity, toCity);
+  if (cost > 0 && !payFromBank(sim, person, cost, 'Movers, your bed and sofa', 'home')) owe(sim, person, cost, 'Movers', 'home');
 }

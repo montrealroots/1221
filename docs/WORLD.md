@@ -233,9 +233,12 @@ Evidence: `tests/permits.test.ts` (the garage, end to end: built in London and t
   - The regular price, not a sale's; delivered at the cheapest large-item rate; with the town's sales tax on top in America and Canada, and VAT or IVA inside elsewhere.
 - A home bought or built from 2026-09-29 comes empty, as a real one does (`bare`). A rented room or flat comes furnished, SLATE's reading of a let; a home owned before then is taken as furnished, so no save wakes to an empty house. The pieces are the person's and move with them.
 - In an empty home a night without a bed is slept on the floor, costing a sofa night's 0.08. An hour unwinding without a sofa takes half the stress off. Both are SLATE's estimates, no study measuring either.
-- Open, and why: a removal's cost, a mattress wearing out (the Sleep Foundation's six to eight years is researched, secondary), and the rest of a home's furniture, which changes nothing SLATE keeps.
+- From 2026-09-30 (`docs/research/world/research-upkeep.json`):
+  - A bed in California or Connecticut carries the state's mattress recycling fee, collected at the sale: California's $18 from 1 April 2026, Connecticut's $19.50 from 1 October 2026, $16 each before (the Mattress Recycling Council's notices).
+  - Moving home with a bed or a sofa of one's own pays movers, a one-bedroom's move at the middle of its range: America's $475 within 100 miles and $1,850 past them (Angi); Britain's £466, with Konnect You's distance on top; Canada's C$600 local and C$4,400 across the country (HomeStars, read from search extracts); Mexico City's MX$3,515 (`MOVERS` in `content/furniture.ts`). A removal was open here until then.
+- Open, and why: movers in Ireland, where only a three-bedroom's €1,700 is published, and abroad, which wasn't researched; a mattress wearing out, since the one study measuring a new bed against an old one (Jacobson, 2009: sleep quality 52% better after beds averaging 9.5 years) has no control group, was paid for by the mattress industry's council, and measures nothing SLATE's sleep can be set against; and the rest of a home's furniture, which changes nothing SLATE keeps.
 
-Evidence: `tests/furniture.test.ts` (5); 8 mutations, all killed. A home bought through Homes is marked empty by the same flag as a built one, which is tested. The purchase path itself isn't mutation-tested, as it takes a whole offer to closing.
+Evidence: `tests/furniture.test.ts` (8); 8 mutations, all killed, and 7 for the fee and the movers, one first surviving, Britain's distance, which no town SLATE loads reaches, now tested on the table itself. A home bought through Homes is marked empty by the same flag as a built one, which is tested. The purchase path itself isn't mutation-tested, as it takes a whole offer to closing.
 
 ### Stage 8: Rentals on a journey
 
