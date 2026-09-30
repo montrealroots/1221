@@ -31,7 +31,7 @@ import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { expenseFor } from './household';
 import { AIR, fareUsd, groundLeg } from '../content/air';
-import { payFromBank } from './household';
+import { owe, payFromBank } from './household';
 import { present } from './career';
 import { crossingRefusal, isoOfCity , mayDrive } from './documents';
 import { itinerary, tripAirportFor, type Airport } from './airports';
@@ -514,6 +514,12 @@ export function registerJourneys(sim: Simulation): void {
       tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
       return;
     }
+    // Leaving a let: its host's claim, where there is one.
+    if (person.stay?.kind === 'let' && person.stay.cityId === j.fromCity && letDamaged(s, person, j.id)) {
+      const claim = inSave(s, LET_DAMAGE.usd, 'USD');
+      if (!payFromBank(s, person, claim, 'A holiday let’s damage claim, through the host’s platform', 'travel')) owe(s, person, claim, 'A holiday let’s damage claim', 'travel');
+      if (mine) s.notify({ category: 'personal', title: 'A Damage Claim', body: `The let’s host claimed for damage, and the platform charged ${formatMoney(claim, saveCurrency(s.universe))} to you.`, importance: 65 });
+    }
     fly(s, person, j);
     const late = j.lateMinutes ?? 0;
     const rebooked = j.rebooked === true;
@@ -688,3 +694,19 @@ export function slotOf(j: Journey): number {
   hours.forEach((h, i) => { if (Math.abs(h - hour) < Math.abs(hours[best]! - hour)) best = i; });
   return best;
 }
+
+/**
+ * A damage claim against a guest leaving a holiday let, from 2026-09-30
+ * (`docs/research/world/research-credit-damage-movers.json`): about 0.02% of
+ * Airbnb's reservations end in a damage reimbursement of $1,000 or more
+ * (Airbnb, 2023), the one platform-wide figure published, so a let left
+ * draws that, and the claim is the band's least, $1,000. The host files it
+ * within 14 days of check-out, the guest has 24 hours to answer, and Airbnb
+ * charges the guest's payment method; SLATE charges it as the let is left.
+ * One manager's figure of claims on 0.71% of Airbnb bookings covers every
+ * size, with no amounts, and isn't taken.
+ */
+export const LET_DAMAGE = { share: 0.0002, usd: 1_000 } as const;
+
+/** Whether a stay in a let ends in a claim (decider `travel.let_damage`). */
+export const letDamaged = (sim: Simulation, person: Person, journeyId: string): boolean => sim.rng('travel.let_damage', person.id, journeyId).next() < LET_DAMAGE.share;

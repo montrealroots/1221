@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { journeysOf, letQuote, letRefund } from '@/engine/systems/journey';
+import { journeysOf, letDamaged, letQuote, letRefund } from '@/engine/systems/journey';
 import { stayPlace } from '@/engine/systems/dwelling';
 
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -93,5 +93,34 @@ describe('a let lived in', () => {
     expect(stayPlace(sim, sim.player).cooks).toBe(true);
     liveTo(sim, j.let!.checkOutAt + MS_HOUR);
     expect(sim.player.stay?.kind).toBe('hotel');
+  });
+});
+
+describe('a let’s damage claim', () => {
+  it('comes on about 0.02% of stays', () => {
+    const sim = save('let-damage-share');
+    let n = 0;
+    for (let i = 0; i < 200_000; i += 1) if (letDamaged(sim, sim.player, `stay${i}`)) n += 1;
+    expect(n / 200_000).toBeGreaterThan(0.0001);
+    expect(n / 200_000).toBeLessThan(0.0003);
+  });
+
+  it('charges the guest $1,000 as they leave a let the host claims on, and nothing leaving a hotel', () => {
+    const sim = save('let-damage');
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 20_000_00, 'USD');
+    const day = saturday(sim, 14);
+    const booked = sim.execute<{ journeyId: string; returnId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ca-losangeles', day, slot: 1, returnDay: day + 4 * MS_DAY, returnSlot: 2 } });
+    expect(booked.ok, booked.error).toBe(true);
+    expect(sim.execute({ kind: 'travel.stay_let', payload: { journeyId: booked.value!.journeyId } }).ok).toBe(true);
+    const back = journeysOf(sim.player).find((j) => j.id === booked.value!.returnId)!;
+    // The way home given an id whose draw is a claim.
+    let id = '';
+    for (let i = 0; !id && i < 1_000_000; i += 1) if (letDamaged(sim, sim.player, `claim${i}`)) id = `claim${i}`;
+    for (const item of sim.universe.scheduled) if (item.payload.journeyId === back.id) item.payload.journeyId = id;
+    back.id = id;
+    liveTo(sim, back.leaveAt + MS_HOUR);
+    const claims = sim.universe.transactions.filter((t) => t.memo === 'A holiday let’s damage claim, through the host’s platform');
+    expect(claims).toHaveLength(1);
+    expect(claims[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 1_000_00, 'USD'));
   });
 });

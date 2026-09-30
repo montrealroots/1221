@@ -48,6 +48,7 @@ import { onsetMonth } from './systems/health';
 import { mayHurt } from './systems/injury';
 import { drawRental } from './systems/dwelling';
 import { inspectionFails } from './systems/inspections';
+import { letDamaged } from './systems/journey';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -827,4 +828,17 @@ defineDecider<{ sim: Simulation; jurisdiction: 'GB' | 'IE' | 'US-NY' | 'US-CT'; 
     const f = inspectionFails(sim, v, Date.UTC(2031, 0, 1) + n * 86_400_000);
     return f ? String(Math.round(f.repair)) : '-';
   }).join(' '),
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'travel.let_damage',
+  decides: 'A holiday let’s damage claim against its guest, or none, at Airbnb’s published share (LET_DAMAGE).',
+  drawnIn: 'src/engine/systems/journey.ts',
+  reads: {
+    // Each stay is its own draw.
+    key: (o, t) => ({ ...o, key: Math.round(t * 100_000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 50_000 }),
+  decide: ({ sim, key }) => String(Array.from({ length: 20_000 }, (_, n) => letDamaged(sim, sim.player, `stay${key + n}`)).filter(Boolean).length),
 });

@@ -290,7 +290,8 @@ Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a
 - Canceled, Airbnb's Moderate policy: all of it back until five days before, then half the nights after the first, the fee kept.
 - Lived in, a let is a home of the town's kind, its fixtures drawn as the town's rentals are, and its kitchen cooked in, where a hotel's guest eats out. On its last morning, still there, a hotel takes over.
 - Edinburgh's and Belfast's lets were open for want of a nightly rate until 2026-09-29: now AirDNA's $269 and $160, Edinburgh's 5% visitor levy on the first five nights.
-- Open, and why: a damage claim against a guest (Airbnb's 14-day window is researched, but SLATE draws no damage a guest does).
+- A damage claim against a guest (from 2026-09-30, researched in `docs/research/world/research-credit-damage-movers.json`): about 0.02% of Airbnb's reservations end in a damage reimbursement of $1,000 or more (Airbnb, 2023), the one platform-wide figure published, so leaving a let draws that (decider `travel.let_damage`) and the claim is the band's least, $1,000, charged to the guest as the platform charges the payment method after the host's 14 days and the guest's 24 hours. Until then no guest did any damage.
+- Open, and why: a claim's size past $1,000, and smaller claims, which no platform publishes (one manager's 0.71% of Airbnb bookings has no amounts).
 
 Evidence: `tests/lets.test.ts` (5); 8 mutations, all killed.
 
