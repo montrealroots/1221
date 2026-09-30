@@ -92,9 +92,11 @@ describe('what building costs', () => {
   it('builds on American farmland at the region’s price with the state’s fees, and a town’s permit not kept', () => {
     const upstate = buildQuote(lot(/Upstate/, 10), 'ne-owner', true) as BuildQuote;
     expect(upstate.contract).toBe(30_857_530);
-    expect(upstate.fees).toEqual([{ label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }]);
+    // From 2026-09-30, with the services land with none needs: a well, a septic system and its percolation test.
+    const services = [{ label: 'A Drilled Well', amount: 9_000_00 }, { label: 'A Septic System', amount: 8_021_00 }, { label: 'The Percolation Test', amount: 1_300_00 }];
+    expect(upstate.fees).toEqual([{ label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }, ...services]);
     const ct = buildQuote(lot(/Farmland In Connecticut/, 5), 'ne-owner', true) as BuildQuote;
-    expect(ct.fees).toEqual([{ label: 'State Education Fee', amount: 80_23 }, { label: 'Builder’s Risk Insurance', amount: 12 * 105_00 }]);
+    expect(ct.fees).toEqual([{ label: 'State Education Fee', amount: 80_23 }, { label: 'Builder’s Risk Insurance', amount: 12 * 105_00 }, ...services]);
     const ca = buildQuote(lot(/Farmland In California/, 10), 'w-owner', true) as BuildQuote;
     // $298,202.82 of work: $13 and $4 a $100,000.
     expect(fee(ca, /Strong-Motion/)).toBe(38_77);
@@ -109,6 +111,9 @@ describe('what building costs', () => {
     expect(fee(q, /Contribution/)).toBe(Math.round(62 * m2 * 100));
     expect(fee(q, /Commencement/)).toBe(30_00);
     expect(q.permitDays).toBe(98);
+    // ESB Networks' flat connection, from 2026-09-30; Ontario's is free.
+    expect(fee(q, /ESB Networks/)).toBe(3_602_00);
+    expect((buildQuote(lot(/Central East Ontario/, 25), 'ne-owner', true) as BuildQuote).fees.some((l) => /Well|Septic|Connection/.test(l.label))).toBe(false);
   });
 
   it('builds in Ontario on Cavan Monaghan’s permit and charge, the permit in ten business days, and in British Columbia on the Sunshine Coast’s permit, to the reserve’s 500 m²', () => {

@@ -32,7 +32,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { LAND_MARKETS } from '../content/land';
-import { OCCUPANCY_WAIT_DAYS, RETENTION, BC_PERMIT, BUILDERS_RISK_A_MONTH, BUILD_LOANS, BUILD_RULES, ENGLISH_WARRANTY, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
+import { OCCUPANCY_WAIT_DAYS, RETENTION, BC_PERMIT, BUILDERS_RISK_A_MONTH, BUILD_LOANS, BUILD_RULES, ENGLISH_WARRANTY, SERVICES, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
 import { parcelsOf, type Parcel } from './land';
 import { HOME, ownBuilt, paymentFor } from './homes';
 import { expenseFor, inTheBank, owe, payFromBank } from './household';
@@ -171,6 +171,8 @@ export function buildQuote(p: Parcel, designId: string, live: boolean): BuildQuo
   // Insured while it's built in America, and warranted in England (from 2026-10-01).
   if (rules.currency === 'USD') lines.push({ label: 'Builder’s Risk Insurance', amount: cents(BUILDERS_RISK_A_MONTH * Math.ceil(rules.buildMonths)) });
   if (place === 'london') lines.push({ label: 'A Structural Warranty', amount: cents(ENGLISH_WARRANTY) });
+  // Land with no services: water, sewage and power brought to it (`SERVICES`, from 2026-09-30).
+  for (const s of SERVICES[place] ?? []) lines.push({ label: s.label, amount: cents(s.amount) });
   const feesTotal = lines.reduce((a, l) => a + l.amount, 0);
   const whole = STAGES.reduce((a, s) => a + s.usd, 0);
   let paid = 0;

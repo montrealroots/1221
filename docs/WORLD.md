@@ -531,6 +531,21 @@ Researched in `docs/research/world/research-land-2.json` (`systems/landloan.ts`)
 
 Evidence: `tests/landloan.test.ts` (2). 6 mutations, all killed in the end. Two needed tests: a sale's payoff, and the payment repeating each month.
 
+
+#### Stage 4f: services for a house on bare land (done 2026-09-30)
+
+- **What's charged when a house is built** (`SERVICES` in `content/construction.ts`, researched in `research-land-2.json`):
+  - Rural New York, Connecticut and California: a drilled well ($9,000, the middle of a typical $3,000 to $15,000), a septic system ($8,021 on average) and the percolation test it's designed from ($1,300 on average). All three are 2026 cost guides, secondary, since no government series is published.
+  - Leinster: ESB Networks' standard connection, €3,602 with VAT. It is one flat charge however far away.
+  - A town lot has its services, and Ontario's Hydro One connects a house free within 30 m.
+- **Not kept:**
+  - BC Hydro's fee past its $2,798 contribution, and Irish and Canadian wells and septic systems, none of which were priced.
+  - NYSEG's per-foot extension, since SLATE's land keeps no distance to a line.
+  - A failed percolation test, whose rate isn't published.
+  - Waterfront, islands and commercial land. The waterfront premiums are one-off studies. The islands are asking prices, and Mexico's are federal land. Commercial land's averages are paywalled.
+
+Evidence: `tests/construction.test.ts`, the farmland and Leinster cases. 2 mutations, both killed.
+
 ### Stage 5: Construction
 
 #### Stage 5a: a house built on a town lot (done 2026-09-29)

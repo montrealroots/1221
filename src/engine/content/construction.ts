@@ -291,6 +291,26 @@ export const NEW_HAVEN_FEES = { first: 25, perThousand: 15, processing: 10, educ
 export const BUILDERS_RISK_A_MONTH = 105;
 export const ENGLISH_WARRANTY = 2_000;
 
+/**
+ * What a house on land with no services needs, from 2026-09-30
+ * (`docs/research/world/research-land-2.json`):
+ * - Rural America: a drilled well, the middle of the $3,000 to $15,000 a
+ *   typical one costs; a conventional septic system, $8,021 on average; and the
+ *   percolation test it's designed from, $1,300 on average. All three are
+ *   secondary, 2026 cost guides, no government series being published.
+ * - Ireland: ESB Networks' standard domestic connection, €3,602 with VAT from
+ *   1 October 2025, one flat charge however far the house is.
+ * Ontario's Hydro One connects a house for nothing within 30 m. BC Hydro's
+ * fee past its $2,798 contribution, and Irish and Canadian wells and septic
+ * systems, weren't priced, and aren't charged. A town lot has its services.
+ */
+export const SERVICES: Readonly<Partial<Record<BuildPlace, readonly { label: string; amount: number }[]>>> = {
+  'ny-state': [{ label: 'A Drilled Well', amount: 9_000 }, { label: 'A Septic System', amount: 8_021 }, { label: 'The Percolation Test', amount: 1_300 }],
+  'ct-state': [{ label: 'A Drilled Well', amount: 9_000 }, { label: 'A Septic System', amount: 8_021 }, { label: 'The Percolation Test', amount: 1_300 }],
+  'ca-state': [{ label: 'A Drilled Well', amount: 9_000 }, { label: 'A Septic System', amount: 8_021 }, { label: 'The Percolation Test', amount: 1_300 }],
+  leinster: [{ label: 'ESB Networks Connection', amount: 3_602 }],
+};
+
 /** London's building control charge for a new house: Hackney's £1,018.50 and VAT, read secondhand and taken for all three boroughs. */
 export const LONDON_BUILDING_CONTROL = { fee: 1_018.5, vat: 0.2 } as const;
 

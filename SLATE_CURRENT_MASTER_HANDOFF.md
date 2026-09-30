@@ -32,7 +32,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 **Next, in order:**
 - **Customization still open:** a remap, suspension, an exhaust, a body kit and wheels, once priced in Britain where their loadings are; California's smog check (per-station prices) and its ECU check; New York's loud-exhaust fine.
-- **Land:** commercial land, waterfront, islands, utilities and easements; Mexico's permit for foreign buyers.
+- **Land:** easements and a lot's legal access; Mexico's permit for foreign buyers. Services for a house on bare land were done on 2026-09-30 (stage 4f). Waterfront, islands and commercial land are researched, but lack figures that would give them an effect.
 - Residence documents and immigration: Ireland's IRP (€300), PR cards and Mexico's residence cards.
 - **Played lives**, one at a time.
 
