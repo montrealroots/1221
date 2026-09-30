@@ -14,6 +14,7 @@
  * as something held against a net worth, as a home is; SLATE's simplification.
  */
 
+import { REPO_SALE_KIND, loanMonth, registerRedeem, sellRepossessed } from './repossession';
 import { inspectIfDue } from './inspections';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -48,7 +49,9 @@ export interface OwnedVehicle {
   cityId: string;
   coverage: 'full' | 'liability';
   /** The loan, where financed: what's owed, in the save's money, and the month's payment. */
-  loan?: { owed: Money; monthly: Money; apr: number; monthsLeft: number };
+  loan?: { owed: Money; monthly: Money; apr: number; monthsLeft: number; original?: Money; missed?: number; missedAmount?: Money };
+  /** Taken back by the lender for payments missed, and when it's sold unless redeemed (`systems/repossession.ts`). */
+  repossessed?: { at: Instant; saleAt: Instant };
   registrationDue: Instant;
   soldAt?: Instant;
   /** Kilometers driven since it was bought: every day's, and the journeys'. */
@@ -314,7 +317,7 @@ export function registerVehicles(sim: Simulation): void {
     if (financed) {
       const months = Math.max(12, Math.min(84, Math.round(Number(p?.months ?? 60))));
       const apr = loanRate(j, person.credit?.score ?? 0, age > 0)!;
-      v.loan = { owed: lent, monthly: amortized(lent, apr, months), apr, monthsLeft: months };
+      v.loan = { owed: lent, monthly: amortized(lent, apr, months), apr, monthsLeft: months, original: lent };
       s.post({ memo: `A car loan, ${model.make} ${model.model}`, category: 'vehicle', postings: [{ accountId: s.nominalAccount('expense', 'Vehicles').id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: -lent }] });
     }
     vehiclesOf(person).push(v);
@@ -323,10 +326,21 @@ export function registerVehicles(sim: Simulation): void {
     return { vehicleId: id, paid: down, ...(v.loan ? { monthly: v.loan.monthly } : {}) };
   });
 
+  registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
+  sim.onSchedule(REPO_SALE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
+    if (!person || !v || !v.repossessed || v.soldAt !== undefined) return;
+    const m = modelById(v.modelId)!;
+    sellRepossessed(s, person, v, inSave(s, valueOf(v, s.now), m.currency), `${m.make} ${m.model}`);
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.vehicleId === v.id) s.timeline.cancel(one.id, s.now);
+  });
+
   sim.onCommand<{ vehicleId: string }, { value: Money }>('vehicle.sell', (p, { sim: s }) => {
     const person = s.player;
     const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
     if (!v) throw new CommandError('That isn’t a car you own.');
+    if (v.repossessed) throw new CommandError('The lender has it: redeem it, or it’s sold for the loan.');
     const value = inSave(s, valueOf(v, s.now), modelById(v.modelId)!.currency);
     const payoff = v.loan?.owed ?? 0;
     const into = person.primaryAccountId!;
@@ -343,6 +357,8 @@ export function registerVehicles(sim: Simulation): void {
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
     if (!person || !v || v.soldAt !== undefined) return;
     const m = modelById(v.modelId)!;
+    // With the lender, it's neither insured, driven nor paid for: the notice runs to its sale.
+    if (v.repossessed) { s.schedule({ at: item.at + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } }); return; }
     // Insurance, the month's share of the year.
     const ins = monthlyInsurance(v.jurisdiction, v.coverage);
     if (typeof ins === 'number' && ins > 0) {
@@ -351,7 +367,7 @@ export function registerVehicles(sim: Simulation): void {
     }
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
-    if ((v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now).ok) {
+    if (!v.repossessed && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km);
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
@@ -368,7 +384,10 @@ export function registerVehicles(sim: Simulation): void {
       const interest = Math.round((v.loan.owed * v.loan.apr) / 12);
       const payment = Math.min(v.loan.monthly, v.loan.owed + interest);
       const principal = payment - interest;
-      if (!payFromBank(s, person, payment, `Car loan payment, the ${m.make} ${m.model}`, 'vehicle')) owe(s, person, payment, 'Car loan payment', 'vehicle');
+      const paid = payFromBank(s, person, payment, `Car loan payment, the ${m.make} ${m.model}`, 'vehicle');
+      if (!paid) owe(s, person, payment, 'Car loan payment', 'vehicle');
+      // Missed payments counted, and the car taken where the law lets the lender (`systems/repossession.ts`).
+      loanMonth(s, person, v, paid, payment, `${m.make} ${m.model}`);
       // The payment above was booked to Vehicles; its principal part moves off the loan, the interest stays the cost.
       s.post({ memo: 'Car loan, principal repaid', category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: principal }, { accountId: s.nominalAccount('expense', 'Vehicles').id, amount: -principal }] });
       v.loan.owed -= principal;

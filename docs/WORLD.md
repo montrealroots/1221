@@ -116,7 +116,7 @@ Open in Stage 2 until 2026-09-29: a car of one's own as a leg, which waited for 
 - **Buying** where one lives, in eight jurisdictions (`content/vehiclefees.ts`): New York's, Connecticut's and California's sales tax, title and registration (New York by weight, Connecticut's 7.75% over $50,000, Los Angeles's rise on 1 October 2026); Britain's on-the-road price; Ireland's price with VAT and VRT and the motor tax by CO2; Ontario's HST; British Columbia's GST and PST; Mexico City's plates. Outright, or on a loan at the published rate: Experian's US rates by credit tier, the Bank of Canada's, Banxico's, the Central Bank of Ireland's, the Bank of England's £10,000 personal loan rate.
 - **Keeping it**: a month's insurance at the place's average paid (the NAIC's for the US states, full cover or liability only; the ABI's; the Central Bank's; FSRA's; ICBC's; Mexico City's only a comparison site's quote, said so), the loan's payment, the registration renewing on its term, and a month's everyday driving at the place's published mileage (the FHWA's, the DfT's, the CSO's, Statistics Canada's; Mexico's none, SLATE's mean), fuel at the week's pump prices by the car's official economy, and AAA's upkeep a mile.
 - **Its value** falls on iSeeCars' published points, straight lines between (SLATE's); a used car is the catalog at an age on the same curve; Sell It sells at that value, the loan paid off first, and a loan bigger than the car paid from the bank.
-- Not kept, and said so on the screen: a dealer's lower trade-in price, repossession. A car counted in net worth, and its loan among the debts, weren't until 2026-09-29 (`systems/finance.ts`).
+- Not kept, and said so on the screen: a dealer's lower trade-in price. Repossession wasn't until 2026-09-29 (stage 3e, below). A car counted in net worth, and its loan among the debts, weren't until 2026-09-29 (`systems/finance.ts`).
 
 Evidence: `tests/vehicles.test.ts` (9); 11 mutations, all killed (one found the Irish diesel mild hybrid filed as a petrol hybrid). Screen: Cars, from Home's Cars panel, opened by the guide's chapter A Car Of Your Own.
 
@@ -129,6 +129,19 @@ Evidence: `tests/driving.test.ts` (7); 11 mutations, all killed.
 
 #### Stage 3d: parking (done 2026-09-29)
 - A car kept on the street at home pays a resident's permit a year, on the quote and then with the registration: London's Westminster's by the car's CO2 (£40 to £353.10, from 2 March 2026), SLATE's borough for the city; Dublin City's €50. A home owned with a garage needs none. New York publishes no garage average and parks on the street for nothing; elsewhere no permit is kept, said so. Evidence: `tests/vehicles.test.ts` (parking); 3 mutations, all killed.
+
+#### Stage 3e: a car loan in default (done 2026-09-29)
+- Three payments missed running (SLATE's, a contract and not a law setting it), and where the loan is secured and the place's law lets the lender seize, the car is taken (`systems/repossession.ts`, `content/repossession.ts`, researched in `docs/research/world/research-repossession.json`). It sits, uninsured and undriven, while its notice runs.
+- Redeem It pays what the law says redeems it, with the tow and storage so far. Unredeemed, it's sold at its value less those; the loan is paid from the sale, a surplus comes back, and the shortfall is owed as the law has it.
+  - New York (UCC 9-609 to 9-623): redeemed by the whole balance, SLATE's ten days' notice for the statute's "reasonable," the shortfall owed.
+  - Connecticut (36a-785): redeemed within 15 days by what's missed, the shortfall owed only past the car's value.
+  - California (Civ. Code 2983.2 and 2983.3): reinstated by what's missed within 15 days, the shortfall owed.
+  - Ontario (PPSA): 15 days, redeemed by the balance, the shortfall owed.
+  - British Columbia (PPSA): not seized once two-thirds is paid; 20 days; reinstated by what's missed; seizing ends the debt, "seize or sue."
+- Britain's and Ireland's car loans are priced at personal-loan rates, which are unsecured, so no car is taken there and the arrears run. Mexico's are enforced before a notary or a court, with no day counts found: none kept. The tow's $300 and $47.50 a day in storage are the middles of consumer sites' ranges, secondary.
+- Open, and why: the credit record's mark (seven years under the FCRA, six in Britain, is researched, but no score effect is published); a dealer's trade-in price (no US gap is published; Britain's part-exchange is about 4% under a private sale, secondary) and the sales tax's trade-in credit (New York and Connecticut give it, California doesn't).
+
+Evidence: `tests/repossession.test.ts` (5); 8 mutations, all killed. One first survived, the count of payments missed running, which no test reached until one paid between two misses reset it.
 
 ### Stage 4: Land
 

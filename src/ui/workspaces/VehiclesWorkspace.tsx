@@ -4,6 +4,7 @@
  * (`systems/vehicles.ts`, from 2026-09-29).
  */
 
+import { redemption } from '@/engine/systems/repossession';
 import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -65,10 +66,20 @@ export function VehiclesWorkspace() {
                         <td>{formatDate(v.registrationDue, sim.zone)}</td>
                         <td className="small">{(() => { const due = nextInspection(v, v.inspected ?? v.boughtAt); const rule = INSPECTION_RULES[v.jurisdiction]; return due && rule ? `${rule.label}, ${formatDate(due, sim.zone)}` : '—'; })()}</td>
                         <td>
-                          <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
-                            const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id });
-                            if (a.ok) toast(`Sold: ${money(a.value!.value)} to you after the loan.`, 'positive');
-                          }}>Sell It</Gated>
+                          {v.repossessed ? (
+                            <div className="col gap-1" style={{ alignItems: 'flex-start' }}>
+                              <span className="xs dim">Repossessed: sold {formatDate(v.repossessed.saleAt, sim.zone)}</span>
+                              <Gated feature="vehicle.redeem" className="btn btn-sm btn-ghost" onClick={() => {
+                                const a = run<{ paid: number }>('vehicle.redeem', { vehicleId: v.id });
+                                if (a.ok) toast(`Redeemed for ${money(a.value!.paid)}.`, 'positive');
+                              }}>Redeem It, {money(redemption(sim, v) ?? 0)}</Gated>
+                            </div>
+                          ) : (
+                            <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
+                              const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id });
+                              if (a.ok) toast(`Sold: ${money(a.value!.value)} to you after the loan.`, 'positive');
+                            }}>Sell It</Gated>
+                          )}
                         </td>
                       </tr>
                     );

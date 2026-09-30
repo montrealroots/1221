@@ -272,6 +272,7 @@ export function planBy(sim: Simulation, by: string | undefined, fromCity: string
 export function planDrive(sim: Simulation, person: Person, vehicleId: string, fromCity: string, toCity: string, day: Instant, slot: number): JourneyLeg[] | string {
   const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
   if (!v) return 'That isn’t a car you own.';
+  if (v.repossessed) return 'The lender has the car.';
   if ((v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
   const may = mayDrive(person, fromCity, day);

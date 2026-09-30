@@ -259,7 +259,7 @@ export function arrearsOf(sim: Simulation, person: Person): Money {
   return owed ? Math.max(0, -owed.balance) : 0;
 }
 
-function arrearsAccount(sim: Simulation, person: Person): Account {
+export function arrearsAccount(sim: Simulation, person: Person): Account {
   const found = accountsOf(sim, person).find((a) => a.kind === 'loan' && a.category === 'arrears');
   if (found) return found;
   return sim.openAccount({
