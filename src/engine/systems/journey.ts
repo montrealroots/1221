@@ -20,7 +20,7 @@
 
 import { drawRental } from './dwelling';
 import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
-import { planRentalDrive, rentalDriven } from './rentals';
+import { RENTAL_RETURN_KIND, planRentalDrive, rentalDays, rentalDriven, rentalQuote, rentalsOf } from './rentals';
 import { ownFlown, planCharterJet, planFlyYourself } from './aviation';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -39,7 +39,7 @@ import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { modelById, runningCost, vehiclesOf } from './vehicles';
-import { fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
+import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
 export type Cabin = 'economy' | 'premium';
@@ -197,8 +197,8 @@ export function planJourney(sim: Simulation, fromCity: string, toCity: string, d
 }
 
 /** What else on the calendar a journey's hours would run into, if anything. */
-function clashWith(sim: Simulation, person: Person, from: Instant, to: Instant): string | undefined {
-  const clash = sim.universe.scheduled.find((i) => i.status === 'pending' && i.requiresPlayer === true && (i.payload.personId === undefined || i.payload.personId === person.id)
+function clashWith(sim: Simulation, person: Person, from: Instant, to: Instant, except?: string): string | undefined {
+  const clash = sim.universe.scheduled.find((i) => i.status === 'pending' && i.requiresPlayer === true && (i.payload.personId === undefined || i.payload.personId === person.id) && (except === undefined || i.payload.journeyId !== except)
     && i.at < to && i.at + (i.durationMinutes ?? 60) * 60_000 > from);
   return clash ? `${clash.label}, ${formatDate(clash.at, sim.zone)} at ${formatTime(clash.at, sim.zone)}` : undefined;
 }
@@ -430,6 +430,44 @@ export function registerJourneys(sim: Simulation): void {
     return { journeyId: first.id, ...(second ? { returnId: second.id } : {}), leaveAt: first.leaveAt, arriveAt: first.arriveAt, total: cost };
   });
 
+  sim.onCommand<{ journeyId: string; day: Instant; slot?: number }, { total: Money; leaveAt: Instant }>('travel.extend', (p, { sim: s }) => {
+    const person = s.player;
+    const q = extendQuote(s, person, String(p?.journeyId), Number(p?.day), Number(p?.slot ?? 0));
+    if (typeof q === 'string') throw new CommandError(q);
+    const back = journeysOf(person).find((x) => x.id === p.journeyId)!;
+    const out = partnerOf(person, back)!;
+    if (q.total > 0 && !payFromBank(s, person, q.total, `Staying longer in ${CITIES.require(back.fromCity).name}`, 'travel')) throw new CommandError(`${formatMoney(q.total, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (q.total < 0) s.post({ memo: `Staying longer in ${CITIES.require(back.fromCity).name}, the difference back`, category: 'travel', postings: refundPostings(s, person, -q.total) });
+    const leaveAt = q.legs[0]!.departAt;
+    const cancelKind = (kind: string, key: string, id: string) => { for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === kind && one.payload[key] === id) s.timeline.cancel(one.id, s.now); };
+    // The stay runs to the new morning home.
+    const checkOutAt = checkOutAfter(back.fromCity, out.arriveAt, q.nights);
+    if (out.let) { const lq = letQuote(s, back.fromCity, q.nights) as { price: Money; fee: Money; basis: string }; out.let = { nights: q.nights, price: lq.price, fee: lq.fee, basis: lq.basis, checkOutAt }; }
+    else if (out.hotel) out.hotel = { ...out.hotel, nights: q.nights, price: out.hotel.price + q.stay, checkOutAt };
+    if (out.let || out.hotel) {
+      cancelKind(CHECKOUT_KIND, 'journeyId', out.id);
+      s.schedule({ at: checkOutAt, kind: CHECKOUT_KIND, label: out.let ? 'Holiday Let Check-Out' : 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: out.id, cityId: back.fromCity } });
+    }
+    out.total += q.stay;
+    // The rental car kept to the new day.
+    const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
+    if (car) {
+      car.returnAt = leaveAt;
+      car.days = rentalDays(car.pickupAt, leaveAt);
+      car.paid += q.rental;
+      cancelKind(RENTAL_RETURN_KIND, 'rentalId', car.id);
+      s.schedule({ at: leaveAt, kind: RENTAL_RETURN_KIND, label: 'Rental Car Return', category: 'personal', priority: 27, payload: { personId: person.id, rentalId: car.id } });
+    }
+    // The way home, moved.
+    back.legs = q.legs;
+    back.leaveAt = leaveAt;
+    back.arriveAt = q.legs[q.legs.length - 1]!.arriveAt;
+    back.total += q.travel;
+    cancelKind(LEAVE_KIND, 'journeyId', back.id);
+    s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(back.toCity).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((back.arriveAt - leaveAt) / 60_000), locationId: back.fromCity, payload: { personId: person.id, journeyId: back.id } });
+    return { total: q.total, leaveAt };
+  });
+
   sim.onCommand<{ journeyId: string }, { refund: Money }>('travel.cancel', (p, { sim: s }) => {
     const person = s.player;
     const j = journeysOf(person).find((x) => x.id === p?.journeyId);
@@ -575,4 +613,72 @@ function refundPostings(sim: Simulation, person: Person, amount: Money) {
   const account = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking');
   if (!account) throw new CommandError('There’s no account to refund to.');
   return [{ accountId: account.id, amount }, { accountId: sim.nominalAccount('expense', expenseFor('travel')).id, amount: -amount }];
+}
+
+// ---------------------------------------------------------------------------
+// Staying longer (stage 8c, from 2026-09-30).
+
+/**
+ * What staying longer costs, or why it can't be done: the way home moved to a
+ * later day, and the stay and any rental car carried to it.
+ * - By air within the United States, the fare difference and no fee: United,
+ *   Delta and American ended change fees on domestic economy tickets in
+ *   August 2020. A cheaper fare leaves a credit with the airline, which
+ *   SLATE doesn't keep. Abroad, no carrier's change fee was researched, so
+ *   an airline's way home abroad isn't moved.
+ * - By train, the old ticket refunded on its own terms and a new one bought.
+ * - Driven, flown oneself or chartered, the old way home refunded and the new
+ *   one paid, its costs falling when it's taken.
+ * - The hotel's or the let's added nights at their price (a let within its
+ *   town's cap), and the rental car's added days at its company's terms.
+ */
+export interface Extension { legs: JourneyLeg[]; travel: Money; stay: Money; rental: Money; total: Money; nights: number }
+
+export function extendQuote(sim: Simulation, person: Person, backId: string, day: Instant, slot: number): Extension | string {
+  const back = journeysOf(person).find((x) => x.id === backId);
+  if (!back || back.status !== 'booked') return 'That isn’t a way home you have booked.';
+  const out = partnerOf(person, back);
+  if (!out || person.currentLocationId !== back.fromCity) return 'A stay is made longer once you’re there.';
+  const air = !back.by;
+  if (air && (isoOfCity(back.fromCity) !== 'US' || isoOfCity(back.toCity) !== 'US')) return 'SLATE keeps no airline’s change fee outside the United States, so a flight home abroad isn’t moved.';
+  const planned = planBy(sim, back.by, back.fromCity, back.toCity, day, slot, back.bags, back.cabin ?? 'economy');
+  if (typeof planned === 'string') return planned;
+  const legs = air ? asRoundTrip(planned) : planned;
+  if (legs[0]!.departAt <= back.leaveAt) return 'Staying longer goes home later than now.';
+  const clash = clashWith(sim, person, back.leaveAt, legs[legs.length - 1]!.arriveAt, back.id);
+  if (clash) return `It runs into ${clash}.`;
+  const old = total(back.legs);
+  const route = railRouteById(back.by);
+  const travel = air ? Math.max(0, total(legs) - old) : route ? total(legs) - trainRefund(sim, back, route) : total(legs) - old;
+  const nights = nightsBetween(back.fromCity, out.arriveAt, legs[0]!.departAt);
+  let stay = 0;
+  if (out.let) {
+    const q = letQuote(sim, back.fromCity, nights);
+    if (typeof q === 'string') return q;
+    stay = q.price - out.let.price;
+  } else if (out.hotel) {
+    stay = stayPrice(sim, back.fromCity, nights)!.price - out.hotel.price;
+  }
+  const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
+  let rental = 0;
+  if (car) {
+    const q = rentalQuote(sim, person, car.cityId, car.pickupAt, legs[0]!.departAt, true);
+    if (typeof q === 'string') return q;
+    rental = q.total - car.paid;
+  }
+  return { legs, travel, stay, rental, total: travel + stay + rental, nights };
+}
+
+/** The departure a journey was booked on, as `planBy`'s slot: the airline's or the train's of the day, or the hour from 7 AM. */
+export function slotOf(j: Journey): number {
+  const zone = CITIES.require(j.fromCity).timeZone;
+  const route = railRouteById(j.by);
+  const first = j.legs.find((l) => l.mode === 'flight' || l.mode === 'train' || l.mode === 'bus') ?? j.legs[0]!;
+  const at = zonedParts(first.departAt, zone);
+  const hour = at.hour + at.minute / 60;
+  const hours: readonly number[] | undefined = route ? departureHours(route) : !j.by ? AIR.departureHours : undefined;
+  if (!hours) return Math.max(0, Math.round(hour) - 7);
+  let best = 0;
+  hours.forEach((h, i) => { if (Math.abs(h - hour) < Math.abs(hours[best]! - hour)) best = i; });
+  return best;
 }

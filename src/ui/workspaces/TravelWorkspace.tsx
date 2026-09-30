@@ -17,7 +17,7 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
-import { asRoundTrip, bookRefusal, journeysOf, letQuote, nightsBetween, partnerOf, planBy, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { OWN_172, PILOT_TRAINING, buyAircraftRefusal, ownHourCost, trainRefusal, trainingCosts } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
@@ -218,7 +218,7 @@ export function TravelWorkspace() {
                 <tbody>
                   {journeys.map((j) => (
                     <tr key={j.id}>
-                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, By ${railRouteById(j.by)?.service ?? 'Train'}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}{j.let ? `, ${j.let.nights} ${j.let.nights === 1 ? 'night' : 'nights'} In A Let` : ''}</td>
+                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, ${byWord(j)}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}{j.let ? `, ${j.let.nights} ${j.let.nights === 1 ? 'night' : 'nights'} In A Let` : ''}</td>
                       <td>{formatDateTime(j.leaveAt, CITIES.require(j.fromCity).timeZone)}</td>
                       <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
                       <td className="mono">{money(j.total)}</td>
@@ -228,7 +228,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}</div></td>
+                      )}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}</div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -328,6 +328,38 @@ function OwnPlane() {
           : <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', {}).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>Buy A Plane</Gated>}
       </div>
       {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it yourself does. Until you’re a pilot, By offers it flown by a hired commercial pilot, at $450 a half day and $900 a full one.</p> : null}
+    </div>
+  );
+}
+
+/** How a journey not by airline goes. Until 2026-09-30 every one of them read By Train, a drive and a flight of one's own too. */
+function byWord(j: Journey): string {
+  if (j.by?.startsWith('car:')) return 'By Car';
+  if (j.by === 'rental') return 'By Rental Car';
+  if (j.by === 'jet') return 'By Chartered Jet';
+  if (j.by === 'fly') return 'By Plane Of Your Own';
+  return `By ${railRouteById(j.by)?.service ?? 'Train'}`;
+}
+
+/** Staying longer (`travel.extend`): the way home, booked, moved some days on at the same hour, with the stay and any rental car carried to it. */
+function StayLonger({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [days, setDays] = useState(2);
+  // Only a way home, from where they are now.
+  const out = partnerOf(person, j);
+  if (!out || person.currentLocationId !== j.fromCity || out.leaveAt > j.leaveAt) return null;
+  const q = extendQuote(sim, person, j.id, j.leaveAt + days * MS_DAY, slotOf(j));
+  const cur = saveCurrency(sim.universe);
+  return (
+    <div className="row gap-1" style={{ alignItems: 'center' }}>
+      <label className="sr-only" htmlFor={`longer-${j.id}`}>Days Longer</label>
+      <select id={`longer-${j.id}`} value={days} onChange={(e) => setDays(Number(e.target.value))}>
+        {Array.from({ length: 14 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n} {n === 1 ? 'Day' : 'Days'}</option>)}
+      </select>
+      <Gated feature="travel.extend" className="btn btn-sm btn-ghost" disabled={typeof q === 'string'} title={typeof q === 'string' ? q : undefined} onClick={() => {
+        if (run('travel.extend', { journeyId: j.id, day: j.leaveAt + days * MS_DAY, slot: slotOf(j) }).ok) toast(`Staying ${days} ${days === 1 ? 'day' : 'days'} longer.`, 'positive');
+      }}>{typeof q === 'string' ? 'Stay Longer' : `Stay Longer (${formatMoney(q.total, cur, { cents: false })})`}</Gated>
     </div>
   );
 }

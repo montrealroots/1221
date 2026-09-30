@@ -33,7 +33,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
 | 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a to 6c done 2026-09-29; bedrooms open, below |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | 7a to 7c done 2026-09-29, 7d to 7f (boats, crew and charter) 2026-09-30; open items below |
-| 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b); open items below |
+| 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Done 2026-09-29 (8a and 8b), 8c (extensions) 2026-09-30; open items below |
 
 ## Acceptance criteria
 
@@ -280,6 +280,17 @@ Evidence: `tests/rentals.test.ts` (7); 12 mutations, all killed. The excess on a
 - Open, and why: a damage claim against a guest (Airbnb's 14-day window is researched, but SLATE draws no damage a guest does).
 
 Evidence: `tests/lets.test.ts` (5); 8 mutations, all killed.
+
+#### Stage 8c: staying longer (done 2026-09-30)
+- Once there, Stay Longer on Travel's journeys moves the booked way home some days on at the hour it was booked for (`travel.extend`, `extendQuote` and `slotOf` in `systems/journey.ts`), and carries the stay and any rental car to it:
+  - By air within the United States, the fare's difference and no fee: United, Delta and American ended change fees on domestic economy tickets in August 2020. A cheaper fare leaves a credit with the airline, which SLATE doesn't keep. An airline's way home abroad isn't moved, no carrier's change fee there being researched.
+  - By train, the old ticket refunded on its own terms (`trainRefund`) and a new one bought. Driven, flown oneself or chartered, the old way home refunded and the new one paid.
+  - The hotel's nights at the town's rate, or the let's at its price for the longer stay, within its town's cap; the rental car's days at its company's terms, returned the new day.
+  - The old departure, check-out and car return are taken off the calendar, so nothing leaves or charges on the old day.
+- Found on the way, and fixed: Travel's journeys read "By Train" for every journey not by airline, a drive, a rental car and a flight of one's own among them; each now says how it goes.
+- Open, and why: a change abroad, and an airline's fee on a basic economy ticket, which none of the three changes.
+
+Evidence: `tests/extend.test.ts` (3); 18 mutations, all killed in the end. Four first survived: a cheaper fare's credit, the old check-out and the old departure (which charged another night and set the way home off early), and a check that a stay was arrived at, which the town's check already settles, and was removed.
 
 ### Stage 7: Vehicle work, boats and aircraft
 
