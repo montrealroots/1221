@@ -6,6 +6,8 @@
  * time where it happens, and every figure names whose it is.
  */
 
+import { RENTALS } from '@/engine/content/rentals';
+import { LETS } from '@/engine/content/lets';
 import { Fragment, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -214,12 +216,12 @@ export function TravelWorkspace() {
                       <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
                       <td className="mono">{money(j.total)}</td>
                       <td className="small">{STATUS_WORD[j.status]}{j.why ? `: ${j.why}` : j.rebooked ? ', Rebooked' : j.lateMinutes ? `, ${j.lateMinutes} Minutes Late` : ''}</td>
-                      <td><div className="row gap-2">{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && (
+                      <td><div className="col gap-1" style={{ alignItems: 'flex-start' }}>{j.status === 'booked' && (
                         <Gated feature="travel.cancel" className="btn btn-sm btn-ghost" onClick={() => {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}</div></td>
+                      )}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}</div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -238,7 +240,8 @@ function RentACar({ j }: { j: Journey }) {
   const person = useWorld((s) => s.player);
   const back = partnerOf(person, j);
   const has = rentalsOf(person).find((r) => r.journeyId === j.id && r.status !== 'canceled');
-  if (!back || back.leaveAt <= j.arriveAt) return null;
+  // Only where a rental is kept: elsewhere the button would say no to every journey.
+  if (!RENTALS[j.toCity] || !back || back.leaveAt <= j.arriveAt) return null;
   if (has) return <span className="xs dim">A Car Rented</span>;
   const q = rentalQuote(sim, person, j.toCity, j.arriveAt, back.leaveAt, true);
   const cur = saveCurrency(sim.universe);
@@ -255,7 +258,7 @@ function RentACar({ j }: { j: Journey }) {
 /** A holiday let in place of a booked journey's hotel (`content/lets.ts`): its price, and why not where it can't be had. */
 function StayInALet({ j }: { j: Journey }) {
   const { sim, run, toast } = useGame();
-  if (!j.hotel) return null;
+  if (!j.hotel || !LETS[j.toCity]) return null;
   const q = letQuote(sim, j.toCity, j.hotel.nights);
   const cur = saveCurrency(sim.universe);
   return (

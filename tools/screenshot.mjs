@@ -188,6 +188,10 @@ if (await begin.count()) {
     } else if (verb === 'fill') {
       const [selector, value] = arg.split('=');
       await page.locator(selector).first().fill(value ?? '').catch((e) => console.log('  fill failed:', selector, String(e).slice(0, 120)));
+    } else if (verb === 'select') {
+      // `select:#id=value` chooses an option of a dropdown by its value.
+      const [selector, value] = arg.split('=');
+      await page.locator(selector).first().selectOption(value ?? '').catch((e) => console.log('  select failed:', selector, String(e).slice(0, 120)));
     } else if (verb === 'advance') {
       const [choice, times] = arg.split('*');
       for (let i = 0; i < Number(times ?? 1); i += 1) {
