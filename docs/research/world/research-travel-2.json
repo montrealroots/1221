@@ -1,0 +1,385 @@
+{
+  "_meta": {
+    "title": "SLATE travel research 2: ferries, local transit, walking, taxis, rideshare, airports, connections, compensation, baggage",
+    "compiledOn": "2026-09-30",
+    "places": ["New York City", "New Haven", "Los Angeles", "London", "Edinburgh", "Belfast", "Dublin", "Toronto", "Vancouver", "Mexico City"],
+    "fieldKey": {
+      "value": "the figure as published; null where the operator or government does not publish it or it could not be read",
+      "url": "where the figure was read or reported",
+      "publisher": "who published that page",
+      "date": "effective date or publication date of the figure, ISO where known",
+      "sourceType": "primary-operator | primary-government | primary-airport | primary-regulator | secondary-news | secondary-aggregator | search-snippet",
+      "confirmed": "true only when the figure was read directly on the primary source during this research; false when it came from a secondary source, a search summary, or a primary page that could not be opened"
+    },
+    "method": "Primary pages were fetched where reachable. Several airline and TfL pages refused automated fetches (403 or bot walls); for those the figure is carried from secondary reporting or search summaries and marked confirmed:false. Fare PDFs (BC Ferries fare index v26-05, TfL adult caps 2026, TfL taxi fare card 2026, LADOT taxicab rates, Edinburgh taxi fare table) were downloaded and read as text.",
+    "currencyNote": "Each figure is in the local currency of the operator: USD (NYC, New Haven, LA), GBP (London, Edinburgh, Belfast), EUR (Dublin), CAD (Toronto, Vancouver), MXN (Mexico City).",
+    "dynamicPricingNote": "Ferry operators on the Irish Sea and the English Channel, and all rideshare apps, price dynamically. They publish 'from' prices only; any single fare in this file for those is a floor, not a typical price."
+  },
+
+  "ferries": {
+    "statenIslandFerry": {
+      "route": "Whitehall Terminal (Lower Manhattan) to St. George Terminal (Staten Island)",
+      "fare": {"value": 0, "currency": "USD", "url": "https://www.nyc.gov/html/dot/html/ferrybus/staten-island-ferry.shtml", "publisher": "NYC Department of Transportation", "date": null, "sourceType": "primary-government", "confirmed": true, "note": "Free service; fare-free since 1997 per secondary sources."},
+      "crossingMinutes": {"value": 25, "url": "https://siferry.com/schedules/", "publisher": "NYC DOT Staten Island Ferry", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "distanceMiles": {"value": 5.2, "url": "https://en.wikipedia.org/wiki/Staten_Island_Ferry", "publisher": "Wikipedia", "date": null, "sourceType": "secondary-aggregator", "confirmed": false},
+      "frequency": {"value": "Weekday rush every 15-20 min; off-peak and weekends every 30 min; runs 24 hours, 7 days", "url": "https://siferry.com/schedules/", "publisher": "NYC DOT Staten Island Ferry", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "carriesCars": {"value": false, "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false, "note": "The official pages read do not say. Vehicles have not been carried since the 2001 security measures, but no primary page confirming this was read. One search summary claimed vehicles ride free; that is not supported by the operator's pages. Bicycles are carried."},
+      "booking": "No booking or ticket; walk on."
+    },
+    "nycFerry": {
+      "oneWay": {"value": 4.50, "currency": "USD", "url": "https://www.ferry.nyc/ticketing-info/", "publisher": "NYC Ferry (NYC Economic Development Corporation)", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "tenTripPass": {"value": 29.00, "currency": "USD", "url": "https://www.ferry.nyc/ticketing-info/", "publisher": "NYC Ferry", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "unlimitedTwoDay": {"value": 15.00, "currency": "USD", "url": "https://www.ferry.nyc/ticketing-info/", "publisher": "NYC Ferry", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true, "note": "App only."},
+      "discountedFare": {"value": 1.45, "currency": "USD", "url": "https://www.ferry.nyc/ticketing-info/", "publisher": "NYC Ferry", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true, "note": "Seniors 65+, people with disabilities, Fair Fares NYC."},
+      "transferWindowMinutes": {"value": 120, "url": "https://www.ferry.nyc/ticketing-info/", "publisher": "NYC Ferry", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "ticketExpiryDays": {"value": 90, "url": "https://www.ferry.nyc/ticketing-info/", "publisher": "NYC Ferry", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "proposedIncrease": {"value": {"oneWay": 5.00, "tenTrip": 30.00, "discounted": 1.50, "effective": "2026-10-19"}, "url": "https://ny1.com/nyc/all-boroughs/transit/2026/09/30/nyc-ferry-fares-could-rise-to--5-under-new-proposal", "publisher": "NY1", "date": "2026-09-30", "sourceType": "secondary-news", "confirmed": false, "note": "NYCEDC board vote scheduled 2026-09-30; not known whether approved."},
+      "carriesCars": false,
+      "bikes": "Bikes allowed; folding bikes free."
+    },
+    "irishSea": {
+      "dublinHolyhead": {
+        "stenaLine": {
+          "crossing": {"value": "3h15m", "url": "https://www.stenaline.co.uk/routes/holyhead-dublin", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true},
+          "sailingsPerDay": {"value": 8, "url": "https://www.stenaline.co.uk/routes/holyhead-dublin", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "Stena Adventurer and Stena Estrid."},
+          "carAndDriverFrom": {"value": 155, "currency": "GBP", "url": "https://www.stenaline.co.uk/routes/holyhead-dublin", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "Single, 'from' price."},
+          "footPassengerFrom": {"value": null, "url": "https://www.stenaline.co.uk/routes/holyhead-dublin", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "Foot passengers accepted; price shown only at booking."},
+          "checkIn": {"value": "Vehicles close 30 min before departure; foot passengers close 40 min before on Holyhead-Dublin (other Stena routes 30 min)", "url": "https://www.stenaline.co.uk/customer-service/at-the-port/how-long-before-departure-do-i-need-to-check-in", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "Missing check-in may cancel the booking with no refund."}
+        },
+        "irishFerries": {
+          "crossing": {"value": "about 3h15m", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false, "note": "Ulysses and W.B. Yeats serve the route; crossing time not read on an Irish Ferries page."},
+          "footPassengerFrom": {"value": {"HolyheadToDublin": 27.04, "DublinToHolyhead": 29.92}, "currency": "EUR", "url": "https://www.ferryhopper.com/en/ferry-routes/direct/holyhead-dublin", "publisher": "Ferryhopper", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false},
+          "checkIn": {"value": "Cars and foot passengers: 30 min before departure", "url": "https://www.irishferries.com/uk-en/frequently-asked-questions/your-trip/", "publisher": "Irish Ferries", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "One search summary said foot passengers must check in 1 hour before; the FAQ page read says 30 minutes."},
+          "footPassengerLuggage": "Bags go on a carousel at check-in and are collected in the arrival terminal."
+        }
+      },
+      "belfastCairnryan": {
+        "stenaLine": {
+          "crossing": {"value": "2h15m", "url": "https://www.stenaline.co.uk/routes/cairnryan-belfast", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true},
+          "sailingsPerDay": {"value": 12, "url": "https://www.stenaline.co.uk/routes/cairnryan-belfast", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "Stena Superfast VII and VIII."},
+          "carAndDriverFrom": {"value": 155, "currency": "GBP", "url": "https://www.stenaline.co.uk/routes/cairnryan-belfast", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true},
+          "footPassengerFrom": {"value": null, "sourceType": "primary-operator", "url": "https://www.stenaline.co.uk/routes/cairnryan-belfast", "publisher": "Stena Line", "date": null, "confirmed": true, "note": "Priced at booking only."},
+          "checkIn": {"value": "Vehicles open 2h, close 30 min; foot passengers open 1h45m, close 30 min", "url": "https://www.stenaline.co.uk/customer-service/at-the-port/how-long-before-departure-do-i-need-to-check-in", "publisher": "Stena Line", "date": null, "sourceType": "primary-operator", "confirmed": true}
+        },
+        "pAndOLarneCairnryan": {"value": "P&O runs Larne-Cairnryan (not Belfast). Check-in closes 30 min for cars and 45 min for foot passengers per P&O-sourced search summary.", "url": "https://www.poferries.com/en/travel-information/travelling-as-a-foot-passenger", "publisher": "P&O Ferries", "date": null, "sourceType": "search-snippet", "confirmed": false}
+      },
+      "dublinLiverpool": {
+        "status": {"value": "P&O Ferries has run Liverpool-Dublin as a vehicle-only route (no foot passengers), about 7h30m-8h30m. One secondary source says the route stopped in December 2023; the P&O route page still exists but refused automated access.", "url": "https://www.poferries.com/en/liverpool-to-dublin", "publisher": "P&O Ferries", "date": null, "sourceType": "search-snippet", "confirmed": false},
+        "carFrom": {"value": 129, "currency": "GBP", "url": "https://www.poferries.com/en/liverpool-to-dublin", "publisher": "P&O Ferries (via search summary)", "date": null, "sourceType": "search-snippet", "confirmed": false, "note": "Small car, booked in advance."},
+        "footPassengers": {"value": false, "sourceType": "search-snippet", "url": "https://www.poferries.com/en/liverpool-to-dublin", "publisher": "P&O Ferries (via search summary)", "date": null, "confirmed": false},
+        "stenaBelfastLiverpool": "Stena runs Belfast-Liverpool (Birkenhead) with fixed foot-passenger check-in windows (08:00-09:30 for the 10:30, 19:30-21:30 for the 22:30) and vehicle close 30-60 min before, per Stena's check-in page."
+      }
+    },
+    "bcFerries": {
+      "fareIndexSource": {"url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "version": "26-05", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true},
+      "tsawwassenSwartzBay": {
+        "adultPassenger12plus": {"value": {"atTerminal": 21.00, "prepaid": 21.00, "saver": 15.00}, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true, "note": "One way; foot or vehicle passenger."},
+        "child5to11": {"value": {"atTerminal": 10.50, "prepaid": 10.50, "saver": 7.50}, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true},
+        "standardVehicleUpTo20ft": {"value": {"atTerminal": 89.00, "prepaid": 89.00, "saver": "34.00-84.00"}, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true, "note": "Excludes driver and passengers, who each pay the passenger fare. BC Ferries markets the standard vehicle plus one adult as $110."},
+        "motorcycle": {"value": 44.50, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true},
+        "bicycleStowage": {"value": 2.00, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": false, "note": "The $2.00 is the 'Stowage' line in the fare table as extracted; the layout was garbled, so the mapping is probable, not certain."},
+        "fuelSurcharge": {"value": "5% on net fares (not on stowage)", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true},
+        "reservationOnlyFee": {"value": 20.00, "currency": "CAD", "url": "https://www.bcferries.com/newfares", "publisher": "BC Ferries", "date": "2026", "sourceType": "primary-operator", "confirmed": true, "note": "Books a space without prepaying; the at-terminal fare is then paid on departure."},
+        "crossing": {"value": "about 1h35m", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false, "note": "Not read on a BC Ferries page during this research."},
+        "checkIn": {"value": "Bookings: check-in opens 60 min and closes 30 min before sailing (vehicles and foot); foot passengers told to arrive 30 min early", "url": "https://www.bcferries.com/travel-boarding/foot-passenger-check-in", "publisher": "BC Ferries", "date": null, "sourceType": "primary-operator", "confirmed": true},
+        "driveUp": "Drive-up (at terminal) customers travel after booked customers; sailing waits are possible."
+      },
+      "horseshoeBayDepartureBay": {
+        "adultPassenger12plus": {"value": {"atTerminal": 21.00, "prepaid": 21.00, "saver": 15.00}, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true},
+        "standardVehicle": {"value": {"atTerminal": null, "prepaid": 89.00, "saver": "34.00-84.00"}, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true, "note": "Horseshoe Bay to Departure Bay vehicles must be booked in advance; no drive-up fare in that direction. The return direction (Departure Bay to Horseshoe Bay) lists an at-terminal $89.00."},
+        "nanaimoPortAuthorityFee": {"value": {"adult": 0.50, "child": 0.30}, "currency": "CAD", "url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries / Nanaimo Port Authority", "date": "2026-06-16", "sourceType": "primary-operator", "confirmed": true},
+        "crossing": {"value": "about 1h40m", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false}
+      },
+      "changeAndCancel": {"value": "Saver: $5 change; $5 cancel 4+ days out, $20 within 3 days. Prepaid: $5 change; $5 cancel through previous day, $15 day-of up to 1h before", "url": "https://www.bcferries.com/newfares", "publisher": "BC Ferries", "date": "2026", "sourceType": "primary-operator", "confirmed": true}
+    },
+    "torontoIslandFerry": {
+      "roundTrip": {"value": {"adult20to64": 9.57, "senior65plus": 6.15, "youth15to19": 6.15, "child2to14": 4.51, "under2": 0}, "currency": "CAD", "url": "https://www.toronto.ca/explore-enjoy/toronto-island-ferries/ferry-ticket-passenger-information/", "publisher": "City of Toronto", "date": "2026", "sourceType": "primary-government", "confirmed": true},
+      "monthlyPass": {"value": {"adult": 121.64, "senior": 90.74, "youth": 90.74, "child": 60.99}, "currency": "CAD", "url": "https://www.toronto.ca/explore-enjoy/toronto-island-ferries/ferry-ticket-passenger-information/", "publisher": "City of Toronto", "date": "2026", "sourceType": "primary-government", "confirmed": true},
+      "bulkDiscount": "10% off 10 or more round-trip tickets.",
+      "ticketValidity": "Online tickets valid to 31 December of the purchase year; terminal tickets same day only.",
+      "terminal": "Jack Layton Ferry Terminal, 9 Queens Quay W.",
+      "carriesCars": {"value": false, "note": "Passenger ferries carry bikes, not private cars; a separate vehicle ferry exists for service use.", "url": "https://www.toronto.ca/explore-enjoy/toronto-island-ferries/ferry-ticket-passenger-information/", "publisher": "City of Toronto", "date": null, "sourceType": "primary-government", "confirmed": false},
+      "crossingMinutes": {"value": null, "note": "Not published on the page read."}
+    },
+    "englishChannelDoverCalais": {
+      "dfds": {
+        "crossing": {"value": "100 min", "url": "https://www.dfds.com/en/passenger-ferries/ferry-crossings/ferries-to-france/dover-calais", "publisher": "DFDS", "date": null, "sourceType": "primary-operator", "confirmed": true},
+        "sailingsPerDay": {"value": "up to 30", "url": "https://www.dfds.com/en/passenger-ferries/ferry-crossings/ferries-to-france/dover-calais", "publisher": "DFDS", "date": null, "sourceType": "primary-operator", "confirmed": true},
+        "carPlusUpTo5From": {"value": 114, "currency": "EUR", "url": "https://www.dfds.com/en/passenger-ferries/ferry-crossings/ferries-to-france/dover-calais", "publisher": "DFDS", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "One way."},
+        "footPassengers": {"value": false, "url": "https://www.dfds.com/en/passenger-ferries/ferry-crossings/ferries-to-france/dover-calais", "publisher": "DFDS", "date": null, "sourceType": "primary-operator", "confirmed": true},
+        "missedSailing": "DFDS lets you take the sailing before or after the one booked."
+      },
+      "pAndO": {
+        "footPassengerFrom": {"value": {"adult": 13.50, "child": 8.50}, "currency": "GBP", "url": "https://www.poferries.com/en/travel-information/travelling-as-a-foot-passenger", "publisher": "P&O Ferries (via search summary)", "date": null, "sourceType": "search-snippet", "confirmed": false, "note": "Only about three sailings a day carry foot passengers, per a secondary source."},
+        "checkIn": {"value": "Vehicles close 60 min before departure; foot passengers close 90 min before", "url": "https://www.poferries.com/en/routes/dover-to-calais/travel-information/passenger-travel-information", "publisher": "P&O Ferries (via search summary)", "date": null, "sourceType": "search-snippet", "confirmed": false},
+        "crossing": {"value": "about 90 min", "url": "https://pilgrimstorome.org.uk/planning-your-jouney/dover-to-calais-as-a-foot-passenger/", "publisher": "Pilgrims to Rome", "date": null, "sourceType": "secondary-aggregator", "confirmed": false}
+      },
+      "irishFerries": {"checkIn": {"value": "Vehicles: 1 hour before departure; border control comes after check-in", "url": "https://www.irishferries.com/uk-en/frequently-asked-questions/your-trip/", "publisher": "Irish Ferries", "date": null, "sourceType": "primary-operator", "confirmed": true}},
+      "portOfDoverBorder": {"value": "French border checks happen at Dover (juxtaposed controls). Tourist passengers should arrive at the Eastern Docks no more than 2 hours before departure. The full EU Entry/Exit System process for tourist traffic had not been implemented at Dover when the page was read.", "url": "https://www.portofdover.com/ferry/travel-advice/ees/", "publisher": "Port of Dover", "date": "read 2026-09-30", "sourceType": "primary-operator", "confirmed": true}
+    },
+    "generalHowCarFerriesWork": "Irish Sea, Channel and BC Ferries major routes carry cars, motorcycles and foot passengers (except DFDS Dover-Calais and P&O Liverpool-Dublin, which are vehicle-only). Car fares are per vehicle plus each occupant (BC Ferries) or per vehicle including a set number of people (Stena 'car and driver', DFDS 'car + up to 5'). Check-in closes 30-60 min before departure for vehicles; missing it can forfeit the ticket. NYC and Toronto island ferries are passenger-only walk-on services."
+  },
+
+  "transit": {
+    "newYorkCity": {
+      "subwayLocalBusFare": {"value": 3.00, "currency": "USD", "url": "https://www.mta.info/fares", "publisher": "MTA", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "expressBusFare": {"value": 7.25, "currency": "USD", "url": "https://www.mta.info/fares", "publisher": "MTA", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "reducedFare": {"value": 1.50, "currency": "USD", "url": "https://www.mta.info/fares", "publisher": "MTA", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "omnyWeeklyCap": {"value": {"subwayLocalBus": 35, "withExpressBus": 67}, "currency": "USD", "period": "7-day rolling", "url": "https://www.mta.info/fares-tolls/subway-bus", "publisher": "MTA", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "metroCard": {"value": "MetroCard sales and refills ended 2026-01-01; MetroCard and cash acceptance end later in 2026 on a date to be announced", "url": "https://www.mta.info/fares-tolls/subway-bus", "publisher": "MTA", "date": "2026-01-01", "sourceType": "primary-operator", "confirmed": true},
+      "journeyTimes": {"value": null, "note": "No MTA-published average speed was read. Use trip planner times."}
+    },
+    "newHaven": {
+      "cttransitLocalBus": {"value": {"twoHourPass": 1.75, "allDay": 3.50, "threeDay": 8.75, "fiveDay": 14.00, "sevenDay": 19.25, "thirtyOneDay": 63.00, "tenRide": 15.75}, "currency": "USD", "url": "https://www.cttransit.com/fares", "publisher": "CTtransit (Connecticut DOT)", "date": null, "sourceType": "search-snippet", "confirmed": false, "note": "cttransit.com failed a TLS check on fetch; figures from the search summary of that page."},
+      "metroNorthNewHavenGrandCentral": {"value": {"peakOneWay": 27.75, "offPeakOneWay": 20.25, "monthly": 314.25}, "currency": "USD", "url": "https://ctmirror.org/2025/07/03/ct-rail-metro-north-transit-fares-rising/", "publisher": "CT Mirror (reporting CTDOT/MTA)", "date": "2026-07-01", "sourceType": "secondary-news", "confirmed": false, "note": "Reflects the second 5% step effective 2026-07-01 as reported; the monthly figure was reported from an MTA fare document and may predate that step."}
+    },
+    "losAngeles": {
+      "metroFare": {"value": 1.75, "currency": "USD", "url": "https://www.metro.net/fares/", "publisher": "LA Metro", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "dailyCap": {"value": 5.00, "currency": "USD", "url": "https://www.metro.net/fares/", "publisher": "LA Metro", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "sevenDayCap": {"value": 18.00, "currency": "USD", "url": "https://www.metro.net/fares/", "publisher": "LA Metro", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "transferWindow": {"value": "Free transfers within 2 hours (round trips excluded)", "url": "https://www.metro.net/fares/", "publisher": "LA Metro", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "reduced": {"value": "Seniors/disabled: $2.50 daily, $5 weekly caps. LIFE low-income: 20 free rides a month. Under 6 free with adult.", "url": "https://www.metro.net/fares/", "publisher": "LA Metro", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "cashNote": "Cash accepted on buses only, exact fare, no capping."
+    },
+    "london": {
+      "adultCapsSource": {"url": "https://content.tfl.gov.uk/adult-fares.pdf", "publisher": "Transport for London", "title": "Adult rate prices 2026", "sourceType": "primary-operator", "confirmed": true},
+      "payAsYouGoDailyCap": {"value": {"zone1": 8.90, "zones1to2": 8.90, "zones1to3": 10.50, "zones1to4": 12.80, "zones1to5": 15.30, "zones1to6": 16.30}, "currency": "GBP", "url": "https://content.tfl.gov.uk/adult-fares.pdf", "publisher": "TfL", "date": "2026-03-01", "sourceType": "primary-operator", "confirmed": true, "note": "Caps frozen until March 2027 per TfL's 2026-02-20 release. Heathrow Express and Southeastern high-speed are outside caps."},
+      "payAsYouGoWeeklyCapMonToSun": {"value": {"zones1to2": 44.70, "zones1to3": 52.50, "zones1to4": 64.20, "zones1to5": 76.40, "zones1to6": 81.60}, "currency": "GBP", "url": "https://content.tfl.gov.uk/adult-fares.pdf", "publisher": "TfL", "date": "2026-03-01", "sourceType": "primary-operator", "confirmed": true},
+      "zone1Single": {"value": {"peak": 3.10, "offPeak": 3.00}, "currency": "GBP", "url": "https://www.london-now.co.uk/news/25893711.tfl-tube-fare-increase-march-1-2026---prices/", "publisher": "London Now (reporting TfL)", "date": "2026-03-01", "sourceType": "secondary-news", "confirmed": false, "note": "TfL single-fare pages refused automated fetch."},
+      "elizabethLineZone1ToHeathrow": {"value": 15.50, "currency": "GBP", "url": "https://tfl-newsroom.prgloo.com/news/tfl-reminds-customers-of-changes-to-tube-and-rail-fares-from-1-march-while-bus-and-tram-fares-frozen-until-july-2026", "publisher": "TfL press office", "date": "2026-03-01", "sourceType": "primary-operator", "confirmed": true, "note": "Rose from £13.90."},
+      "busTramSingle": {"value": 1.75, "currency": "GBP", "url": "https://tfl-newsroom.prgloo.com/news/tfl-reminds-customers-of-changes-to-tube-and-rail-fares-from-1-march-while-bus-and-tram-fares-frozen-until-july-2026", "publisher": "TfL press office", "date": "2026-02-20", "sourceType": "primary-operator", "confirmed": true, "note": "Hopper: unlimited bus/tram journeys within one hour."},
+      "busDailyCap": {"value": 5.25, "currency": "GBP", "url": "https://lasttrip.uk/blog/london-bus-fare-cap.html", "publisher": "LastTrip", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false},
+      "busFareChangeNovember2026": {"value": {"single": 1.85, "dailyCap": 5.55, "effective": "2026-11-01 (frozen at £1.75 until then)"}, "currency": "GBP", "url": "https://www.london.gov.uk/md3517-july-2026-fare-changes", "publisher": "Greater London Authority (Mayoral Decision MD3517), via search summary", "date": "2026-07", "sourceType": "search-snippet", "confirmed": false, "note": "GLA page refused automated fetch."}
+    },
+    "edinburgh": {
+      "lothianAdultSingle": {"value": 2.40, "currency": "GBP", "url": "https://www.lothianbuses.com/news/2026/01/fares-revision/", "publisher": "Lothian Buses", "date": "2026-02-22", "sourceType": "primary-operator", "confirmed": true},
+      "childSingle": {"value": 1.20, "currency": "GBP", "url": "https://www.lothianbuses.com/news/2026/01/fares-revision/", "publisher": "Lothian Buses", "date": "2026-02-22", "sourceType": "primary-operator", "confirmed": true},
+      "adultCityDay": {"value": 6.00, "currency": "GBP", "url": "https://www.lothianbuses.com/news/2026/01/fares-revision/", "publisher": "Lothian Buses", "date": "2026-02-22", "sourceType": "primary-operator", "confirmed": true, "note": "Covers Lothian day buses and Edinburgh Trams except the airport section."},
+      "tapTapCapWeekly": {"value": 26.50, "currency": "GBP", "url": "https://www.lothianbuses.com/news/2026/01/fares-revision/", "publisher": "Lothian Buses", "date": "2026-02-22", "sourceType": "primary-operator", "confirmed": true},
+      "tapTapCapDaily": {"value": 5.70, "currency": "GBP", "url": "https://www.edinburghtourism.org/buses-trams-lothian/", "publisher": "edinburghtourism.org", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "Not stated in Lothian's revision notice."},
+      "ridacard": {"value": {"oneWeekAdult": 26.50, "fourWeekAdult": 80.00, "annualDirectDebitMonthly": 74.00}, "currency": "GBP", "url": "https://www.lothianbuses.com/news/2026/01/fares-revision/", "publisher": "Lothian Buses", "date": "2026-02-22", "sourceType": "primary-operator", "confirmed": true},
+      "airportNetworkTicket": {"value": {"adult": 14.00, "child": 7.00}, "currency": "GBP", "url": "https://www.edinburghtourism.org/buses-trams-lothian/", "publisher": "edinburghtourism.org", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "Airlink fares were unchanged in the February 2026 revision."}
+    },
+    "belfast": {
+      "metroGliderAdultSingle": {"value": 2.30, "currency": "GBP", "url": "https://www.translink.co.uk/tickets/travelcards", "publisher": "Translink NI (via search summary)", "date": null, "sourceType": "search-snippet", "confirmed": false},
+      "smartlinkPerJourney": {"value": 2.00, "currency": "GBP", "url": "https://www.translink.co.uk/usingourservicesandproducts/ticketsandtravelcards/travelcardsuserguides/metrosmartlinkguide", "publisher": "Translink NI (via search summary)", "date": null, "sourceType": "search-snippet", "confirmed": false},
+      "dayTicketAdult": {"value": 4.00, "currency": "GBP", "url": "https://www.translink.co.uk/our-apps/mlink-ticketing-app/ticket-types", "publisher": "Translink NI (via search summary)", "date": null, "sourceType": "search-snippet", "confirmed": false},
+      "sevenDaySmartlink": {"value": 17.00, "currency": "GBP", "url": "https://www.translink.co.uk/tickets/travelcards", "publisher": "Translink NI (via search summary)", "date": null, "sourceType": "search-snippet", "confirmed": false}
+    },
+    "dublin": {
+      "tfi90MinuteFareAdult": {"value": 2.00, "currency": "EUR", "url": "https://about.leapcard.ie/tfi-90-minute-fare", "publisher": "TFI / National Transport Authority", "date": "current as read 2026-09-30", "sourceType": "search-snippet", "confirmed": false, "note": "Young adult/student €1.00, child €0.65. Leap only."},
+      "leapDailyCapAdult": {"value": 6.00, "currency": "EUR", "url": "https://about.leapcard.ie/fare-capping", "publisher": "TFI Leap Card (NTA)", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "leapWeeklyCapAdult": {"value": 24.00, "currency": "EUR", "url": "https://about.leapcard.ie/fare-capping", "publisher": "TFI Leap Card (NTA)", "date": "current as read 2026-09-30", "sourceType": "primary-operator", "confirmed": true},
+      "capPeriods": "Day runs 04:30-04:29; week runs Monday 04:30 to Sunday 04:29. Covers Dublin Bus, Go-Ahead Ireland city routes, Luas, DART and Commuter Rail in Zone 1.",
+      "announced2027": {"value": {"ninetyMinute": 2.30, "dailyCap": 6.90, "weeklyCap": 27.60}, "currency": "EUR", "url": "https://www.dublinpublictransport.ie/blog/public-transport-fares-to-rise-by-around-15-in-2027", "publisher": "dublinpublictransport.ie", "date": "2027", "sourceType": "secondary-aggregator", "confirmed": false}
+    },
+    "toronto": {
+      "adultFare": {"value": {"presto": 3.30, "creditDebitTap": 3.30, "cash": 3.35, "prestoTicket": 3.35}, "currency": "CAD", "url": "https://www.ttc.ca/Fares-and-passes", "publisher": "TTC", "date": "2026", "sourceType": "primary-operator", "confirmed": true, "note": "Fare frozen for 2026."},
+      "monthlyFareCap": {"value": "After 47 paid fares in a calendar month, remaining TTC trips that month are free (PRESTO, debit/credit, mobile wallet only)", "url": "https://www.ttc.ca/Fares-and-passes", "publisher": "TTC", "date": "2026-09-01", "sourceType": "primary-operator", "confirmed": true},
+      "monthlyPasses": {"value": "Most monthly passes discontinued 2026-08-31; Adult 12-Month Pass $143.00/month and Post-Secondary Monthly $128.15 remain", "url": "https://www.ttc.ca/Fares-and-passes", "publisher": "TTC", "date": "2026-08-31", "sourceType": "primary-operator", "confirmed": true},
+      "dayPass": {"value": 13.50, "currency": "CAD", "url": "https://www.ttc.ca/Fares-and-passes", "publisher": "TTC", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "transferWindow": {"value": "2 hours, automatic on PRESTO/debit/credit; none with cash", "url": "https://www.ttc.ca/Fares-and-passes", "publisher": "TTC", "date": null, "sourceType": "primary-operator", "confirmed": true}
+    },
+    "vancouver": {
+      "adultFares": {"value": {"storedValue": {"1zone": 2.85, "2zone": 4.20, "3zone": 5.40}, "cashContactless": {"1zone": 3.50, "2zone": 5.10, "3zone": 6.70}, "monthlyPass": {"1zone": 117.20, "2zone": 156.70, "3zone": 211.65}, "dayPassAllZones": 12.55}, "currency": "CAD", "url": "https://www.translink.ca/transit-fares/pricing-and-fare-zones", "publisher": "TransLink", "date": "2026-07-01", "sourceType": "primary-operator", "confirmed": true},
+      "zoneRules": {"value": "Buses always charge 1 zone. After 6:30 p.m. weekdays and all day weekends/holidays, the whole system is 1 zone.", "url": "https://www.translink.ca/transit-fares/pricing-and-fare-zones", "publisher": "TransLink", "date": "2026-07-01", "sourceType": "primary-operator", "confirmed": true},
+      "yvrAddFare": {"value": 6.50, "currency": "CAD", "url": "https://www.translink.ca/transit-fares/pricing-and-fare-zones", "publisher": "TransLink", "date": "2026-07-01", "sourceType": "primary-operator", "confirmed": true, "note": "Added to trips starting at YVR airport Canada Line stations."},
+      "transferWindowMinutes": {"value": 90, "url": "https://www.translink.ca/transit-fares/pricing-and-fare-zones", "publisher": "TransLink", "date": null, "sourceType": "primary-operator", "confirmed": true, "note": "120 min when West Coast Express is included."}
+    },
+    "mexicoCity": {
+      "metroFare": {"value": 5.00, "currency": "MXN", "url": "https://www.infobae.com/mexico/2025/12/14/metro-cdmx-esta-sera-la-tarifa-para-2026-segun-revelo-clara-brugada/", "publisher": "Infobae (reporting Mexico City government)", "date": "2026", "sourceType": "secondary-news", "confirmed": false, "note": "metro.cdmx.gob.mx refused connection. The fare has been 5 MXN since 2013."},
+      "metrobusFare": {"value": 6.00, "currency": "MXN", "url": null, "publisher": null, "date": "2026", "sourceType": "search-snippet", "confirmed": false},
+      "tarjetaMovilidadIntegrada": {"value": 15.00, "currency": "MXN", "url": "https://mexicocity.cdmx.gob.mx/e/getting-around/mexico-city-metro-card/?lang=en", "publisher": "Gobierno de la Ciudad de México", "date": null, "sourceType": "primary-government", "confirmed": true, "note": "Card cost only, plus top-up; max stored value 500 MXN; paper Metro tickets ended 2024-03-01; covers Metro, Metrobús, Tren Ligero, Cablebús, Trolebús, RTP, Ecobici, Tren Suburbano, Mexibús. Virtual card in the CDMX app."},
+      "capping": {"value": null, "note": "No daily or weekly fare cap exists or was found."}
+    },
+    "typicalSpeeds": {"value": null, "note": "None of the operators read publish an average door-to-door speed. Journey times should come from each operator's trip planner or GTFS schedules rather than a single speed constant."}
+  },
+
+  "walking": {
+    "usSignalTimingStandard": {"value": {"ftPerSec": 3.5, "mPerSec": 1.07}, "url": "https://mutcd.fhwa.dot.gov/htm/2009/part4/part4e.htm", "publisher": "Federal Highway Administration, Manual on Uniform Traffic Control Devices", "date": "2009 edition, carried into the 2023 11th edition Section 4I.06", "sourceType": "primary-government", "confirmed": false, "note": "Pedestrian clearance time assumes 3.5 ft/s; up to 4.0 ft/s (1.22 m/s) may be used where an extended push-button option is provided. This is a conservative design speed for slower walkers, not an average."},
+    "londonPTAL": {"value": {"kmPerHour": 4.8, "mPerMin": 80, "mPerSec": 1.33}, "url": "https://en.wikipedia.org/wiki/Public_transport_accessibility_level", "publisher": "Transport for London PTAL methodology (as summarized)", "date": null, "sourceType": "secondary-aggregator", "confirmed": false, "note": "TfL's Public Transport Accessibility Level method assumes 80 m/min, giving 8 min to a bus stop at 640 m and 12 min to a rail station at 960 m."},
+    "tflJourneyPlannerOptions": {"value": {"fastKmh": 5, "averageKmh": 4, "slowKmh": 3}, "url": "https://www.whatdotheyknow.com/request/walking_speeds_from_tfl_journey?unfold=1", "publisher": "TfL, via Freedom of Information response", "date": null, "sourceType": "secondary-aggregator", "confirmed": false},
+    "legibleLondon": {"value": {"kmPerHour": 4.5}, "url": "https://en.wikipedia.org/wiki/Legible_London", "publisher": "TfL Legible London (as summarized)", "date": null, "sourceType": "secondary-aggregator", "confirmed": false},
+    "recommendedModelValue": {"value": {"mPerSec": 1.33, "range": "1.07-1.4"}, "note": "For an average adult, 4.8 km/h (1.33 m/s, the London PTAL planning figure) is well supported. Use 1.07 m/s for slow walkers, older people, or signal-crossing worst cases (US MUTCD)."}
+  },
+
+  "taxis": {
+    "newYorkCity": {
+      "source": {"url": "https://www.nyc.gov/site/tlc/passengers/taxi-fare.page", "publisher": "NYC Taxi & Limousine Commission", "sourceType": "primary-regulator", "confirmed": true, "date": null},
+      "initialCharge": {"value": 3.00, "currency": "USD", "confirmed": true},
+      "perFifthMileOrPerMinute": {"value": 0.70, "currency": "USD", "rule": "per 1/5 mile above 12 mph, or per 60 seconds in slow traffic or stopped", "confirmed": true},
+      "surcharges": {"value": {"mtaState": 0.50, "improvement": 1.00, "overnight8pmTo6am": 1.00, "weekdayRush4to8pm": 2.50, "nyStateCongestionYellow": 2.50, "nyStateCongestionGreen": 2.75, "mtaCongestionReliefZoneTaxi": 0.75, "airportAccessFeeLgaJfkPickup": 2.00}, "currency": "USD", "confirmed": true},
+      "jfkManhattanFlat": {"value": 70.00, "currency": "USD", "note": "Flat fare either direction, plus applicable surcharges, tolls and tip.", "confirmed": true},
+      "laGuardia": {"value": "metered + $5.00 surcharge", "confirmed": true},
+      "newark": {"value": "metered + $20.00 Newark surcharge (plus tolls)", "confirmed": true}
+    },
+    "newHaven": {
+      "connecticutDotRate": {"value": {"dropFirstNinthMile": 3.75, "perAdditionalNinthMile": 0.40, "per30SecondsWaiting": 0.40, "perMileOver15Miles": 2.65}, "currency": "USD", "url": "https://www.m7ride.com/ct-dot-rate-increase/", "publisher": "M7 (reporting Connecticut DOT regulated rate)", "date": null, "sourceType": "secondary-aggregator", "confirmed": false, "note": "Connecticut DOT sets taxi rates statewide; primary tariff not read."}
+    },
+    "losAngeles": {
+      "source": {"url": "https://ladot.lacity.gov/sites/default/files/documents/taxicab-rates-2023.pdf", "publisher": "Los Angeles Department of Transportation", "date": "2023 (still the published tariff when read 2026-09-30)", "sourceType": "primary-regulator", "confirmed": true},
+      "flagDrop": {"value": 3.10, "currency": "USD", "rule": "first 1/9 mile or 37 seconds", "confirmed": true},
+      "perNinthMile": {"value": 0.33, "currency": "USD", "rule": "$2.97 per mile", "confirmed": true},
+      "per37SecondsWaiting": {"value": 0.33, "currency": "USD", "rule": "$32.11 per hour", "confirmed": true},
+      "laxOriginSurcharge": {"value": 4.00, "currency": "USD", "confirmed": true},
+      "laxMinimumFare": {"value": 16.50, "currency": "USD", "note": "Plus the $4 surcharge", "confirmed": true},
+      "laxDowntownFlat": {"value": 51.15, "currency": "USD", "note": "Per trip (group), either direction, plus $4 surcharge from LAX. Downtown means Alameda St., Santa Monica Fwy, Harbor Fwy, Cesar Chavez Ave., plus Union Station and Chinatown.", "confirmed": true},
+      "passengers": "All passengers ride for the price of one; card accepted at no extra cost."
+    },
+    "london": {
+      "source": {"url": "https://content.tfl.gov.uk/taxi-fare-card-2026.pdf", "publisher": "Transport for London", "date": "2026-04-25", "sourceType": "primary-regulator", "confirmed": true},
+      "minimumFare": {"value": 4.40, "currency": "GBP", "confirmed": true},
+      "tariffTimes": {"value": {"tariff1": "Mon-Fri 05:00-20:00", "tariff2": "Mon-Fri 20:00-22:00; Sat-Sun 05:00-22:00", "tariff3": "Every night 22:00-05:00 and public holidays"}, "confirmed": true},
+      "typicalFares": {"value": {"1mile_6to13min": {"t1": "8.40-13.00", "t2": "8.40-13.20", "t3": "9.00-13.20"}, "2miles_10to20min": {"t1": "12.60-20.20", "t2": "13.40-20.40", "t3": "13.60-20.40"}, "4miles_16to30min": {"t1": "21.00-31.00", "t2": "23.00-32.00", "t3": "23.00-35.00"}, "6miles_28to40min": {"t1": "33.00-42.00", "t2": "41.00-45.00", "t3": "41.00-45.00"}, "heathrowToCentralLondon_30to60min": "70.00-120.00"}, "currency": "GBP", "confirmed": true, "note": "TfL publishes typical ranges, not the per-unit meter increments, on the fare card. Above about 6 miles a higher rate applies."},
+      "extras": {"value": {"bookingByPhoneAppOnline": "up to 2.00", "heathrowRankPickup": 1.60, "heathrowOrLondonCityDropOffZone": 6.00, "christmasNewYear": 4.00, "soilingMax": 60.00}, "currency": "GBP", "confirmed": true, "note": "No extra charge for luggage, extra passengers or card payment."},
+      "obligation": "Drivers must accept hirings up to 12 miles (20 from Heathrow) or one hour within Greater London."
+    },
+    "edinburgh": {
+      "source": {"url": "https://www.edinburgh.gov.uk/downloads/download/15878/taxi-fare-table-from-25-july-2026", "publisher": "City of Edinburgh Council", "date": "2026-07-25", "sourceType": "primary-regulator", "confirmed": true},
+      "tariffTimes": {"value": {"tariff1": "Mon-Fri 06:00-18:00", "tariff2": "Mon-Fri 18:00-06:00; Sat 06:00 to Mon 06:00", "tariff3": "Mon-Fri 06:00-18:00 in the Christmas and New Year periods", "tariff4": "25 Dec and 1 Jan all day, Christmas/New Year weekends, and nights in those periods"}, "confirmed": true},
+      "initialCharge": {"value": {"tariff1": 3.60, "tariff2": 4.80, "tariff3": 4.60, "tariff4": 5.75}, "currency": "GBP", "rule": "covers the first 430 m or 100 seconds", "confirmed": false, "note": "Read from a PDF whose columns extracted out of order. The mapping of the four figures to the tariffs follows the column order and is probable, not certain."},
+      "increments": {"value": "£0.30 per 141 m (per 164 m beyond 1,699 m) or per 30 s on one pair of tariffs; £0.40/£0.52 per 154 m (per 178 m beyond 1,816 m) or per 32 s on the other pair", "confirmed": false, "note": "Same extraction problem."},
+      "extras": {"value": {"perPassengerOver3": 0.50, "preBookedCallOut": 1.00, "cancellationPreBooked": 3.00, "soilingMax": 50.00, "airport": "prevailing Edinburgh Airport pick-up/drop-off charge"}, "currency": "GBP", "confirmed": true},
+      "outsideCity": "Fares for trips ending outside the city must be agreed before the journey starts."
+    },
+    "belfast": {
+      "source": {"url": "https://www.infrastructure-ni.gov.uk/news/maximum-taxi-fares-increase", "publisher": "Department for Infrastructure (Northern Ireland)", "date": "2023-12-05 (latest change found)", "sourceType": "primary-government", "confirmed": true},
+      "maximumFares": {"value": {"rate1_MonFri0600to2000": {"initial": 3.20, "firstMileApprox": 4.20, "perAdditionalMile": 1.86}, "rate2_MonThu2000to0600": {"initial": 4.00, "firstMileApprox": 5.10, "perAdditionalMile": 2.03}, "rate3_Fri2000toMon0600andHolidays": {"initial": 5.00, "firstMileApprox": 6.10, "perAdditionalMile": 2.03}, "christmasNewYear": {"initial": 5.80, "firstMileApprox": 7.70, "perAdditionalMile": 3.60}}, "currency": "GBP", "confirmed": true, "note": "Maximums; drivers may charge less. A newer 2026 review may exist (DfI consultation page) but no newer tariff was found."}
+    },
+    "dublin": {
+      "source": {"url": "https://www.transportforireland.ie/fares/taxi-fares/", "publisher": "National Transport Authority / Transport for Ireland", "date": "2024-12-01", "sourceType": "primary-regulator", "confirmed": true},
+      "standardRate": {"value": {"times": "08:00-20:00 Mon-Sat except public holidays", "initial": 4.40, "tariffA_perKm": 1.32, "tariffA_perMin": 0.47, "tariffA_upTo": 23.60, "tariffB_perKm": 1.72, "tariffB_perMin": 0.61}, "currency": "EUR", "confirmed": true},
+      "premiumRate": {"value": {"times": "20:00-08:00 Mon-Sat, all day Sunday and public holidays", "initial": 5.40, "tariffA_perKm": 1.81, "tariffA_perMin": 0.64, "tariffA_upTo": 31.80, "tariffB_perKm": 2.20, "tariffB_perMin": 0.78}, "currency": "EUR", "confirmed": true},
+      "specialRate": {"value": {"times": "00:00-04:00 Saturday and Sunday mornings, and Christmas/New Year periods", "initial": 5.40, "perKm": 2.20, "perMin": 0.78}, "currency": "EUR", "confirmed": true},
+      "bookingFee": {"value": 3.00, "currency": "EUR", "confirmed": true},
+      "fixedAppFares": {"value": "Apps (Uber) may offer fixed fares below the metered maximum; NTA will not ban this", "url": "https://www.irishtimes.com/ireland/dublin/2026/08/27/uber-style-fixed-fares-will-remain-part-of-irish-taxi-market-says-nta/", "publisher": "The Irish Times", "date": "2026-08-27", "sourceType": "secondary-news", "confirmed": false}
+    },
+    "toronto": {
+      "meter": {"value": {"firstMeterIncludingFuelSurcharge": 4.25, "firstDistanceKm": 0.143, "perAdditional0143km": 0.25, "per29SecondsWaiting": 0.25, "perPassengerOver4": 2.00}, "currency": "CAD", "url": "https://co-opcabs.com/the-standard-rates-to-hire-a-taxi-in-toronto/", "publisher": "Co-op Cabs (reporting Toronto Municipal Code Chapter 546)", "date": null, "sourceType": "secondary-aggregator", "confirmed": false, "note": "Bylaw base is $3.25 plus a $1.00 per-trip fuel surcharge. The toronto.ca rate page was not read."},
+      "pearsonFlatRates": {"value": {"downtownUnionStationTaxi": 70, "limo": 77}, "currency": "CAD", "url": "https://www.torontopearson.com/en/transportation/taxis-and-limos", "publisher": "Greater Toronto Airports Authority (via secondary summary)", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "Pearson uses zone-based flat rates set by the GTAA; the Pearson page could not be fetched. Extras reported: $15 for 5+ passengers or 4+ checked bags, $15 per extra drop-off."}
+    },
+    "vancouver": {
+      "source": {"url": "https://www.ptboard.bc.ca/rule-9-common-rate-metro-vancouver", "publisher": "Passenger Transportation Board of British Columbia", "date": "Rates Rules manual updated 2026-04-30", "sourceType": "primary-regulator", "confirmed": true},
+      "meter": {"value": {"flagFirst45_95m": 3.75, "per45_95m": 0.10, "perKmApprox": 2.18, "per9_25secWaiting": 0.10, "waitingPerHour": 38.93}, "currency": "CAD", "confirmed": true},
+      "yvr": {"value": {"premiumLocationChargeOutsideRichmondVancouverZones": 4.00, "flatFareZonesRange": "about 20-47"}, "currency": "CAD", "url": "https://www.ptboard.bc.ca/rule-9-common-rate-metro-vancouver", "publisher": "Passenger Transportation Board", "date": null, "sourceType": "primary-regulator", "confirmed": true, "note": "Zone flat fares from YVR; one secondary source lists Zone 200 (South Vancouver) $24, Zone 205 (Kitsilano/Broadway) $36. The downtown zone value was not read."},
+      "cruiseTerminal": {"value": {"canadaPlaceToDowntownHotels": 16.00, "canadaPlaceToYvr": 42.00}, "currency": "CAD", "confirmed": true}
+    },
+    "mexicoCity": {
+      "tariffs": {"value": {"libreStreetHail": {"banderazo": 8.74, "per250mOr45s": 1.07}, "sitio": {"banderazo": 13.10, "per250mOr45s": 1.30}, "miTaxiApp": {"banderazo": 13.10, "per250mOr45s": 1.30}, "night2300to0600": "+20%"}, "currency": "MXN", "url": "https://www.semovi.cdmx.gob.mx/tramites-y-servicios/taxis", "publisher": "SEMOVI (Secretaría de Movilidad), as reported", "date": null, "sourceType": "search-snippet", "confirmed": false, "note": "Figures are SEMOVI-published tariffs as summarized in reporting (Infobae, El Universal); the Gaceta Oficial text was not read."},
+      "aicmAuthorizedTaxis": {"value": {"toCondesaRoma": "about 260-300", "toPolanco": "about 280-340 (some operators 440-475 sedan)"}, "currency": "MXN", "url": "https://www.infobae.com/mexico/2026/06/16/taxis-autorizados-del-aicm-bajan-tarifas-hasta-18-y-anuncian-modernizacion-del-servicio/", "publisher": "Infobae", "date": "2026-06-16", "sourceType": "secondary-news", "confirmed": false, "note": "Prepaid booth fares by zone from 11 authorized taxi groups; average cuts of up to 18% agreed June 2026. Figures conflict between sources."}
+    }
+  },
+
+  "rideshare": {
+    "methodology": {"value": "Uber gives riders an upfront price computed from estimated trip time and distance, plus base fare, booking fee, surge (dynamic) multiplier, tolls and local surcharges. The price can change with added stops, destination changes, big route deviations or unexpected tolls. Uber does not publish its formula.", "url": "https://www.uber.com/us/en/marketplace/pricing/", "publisher": "Uber", "date": null, "sourceType": "primary-operator", "confirmed": true},
+    "perCityPublishedRates": {"value": null, "note": "Uber publishes only a per-trip estimator (uber.com/global/en/price-estimate/), not stable rate cards. No per-city base/per-mile/per-minute figures were confirmed; any such table from third parties is an estimate."},
+    "newYorkCity": {
+      "congestionReliefZoneCharge": {"value": {"highVolumeForHire": 1.50, "taxiGreenBlackCar": 0.75}, "currency": "USD", "url": "https://congestionreliefzone.mta.info/tolling", "publisher": "MTA", "date": "2025-01-05 onward", "sourceType": "primary-operator", "confirmed": false, "note": "Per trip in the zone south of 60th St. Read via search summary."},
+      "nyStateCongestionSurcharge": {"value": {"forHireNonMedallion": 2.75, "medallionTaxi": 2.50}, "currency": "USD", "url": "https://www.tax.ny.gov/bus/cs/csidx.htm", "publisher": "NY State Department of Taxation and Finance", "date": null, "sourceType": "primary-government", "confirmed": false}
+    },
+    "vancouver": {
+      "tnsMinimumRate": {"value": 3.95, "currency": "CAD", "url": "https://www.ptboard.bc.ca/ride-hail-rates", "publisher": "Passenger Transportation Board", "date": "2026-08-18", "sourceType": "search-snippet", "confirmed": false, "note": "Region 4 (Metro Vancouver) minimum per trip; no discounting below it, surge allowed."}
+    },
+    "dublin": {"value": "Uber in Ireland dispatches licensed taxis only; since November 2025 it offers fixed fares below the metered maximum, which the NTA allows.", "url": "https://www.irishtimes.com/ireland/dublin/2026/08/27/uber-style-fixed-fares-will-remain-part-of-irish-taxi-market-says-nta/", "publisher": "The Irish Times", "date": "2026-08-27", "sourceType": "secondary-news", "confirmed": false},
+    "london": {"value": "Private hire (minicab and Uber) fares are not regulated by TfL; only black-cab tariffs are.", "url": "https://content.tfl.gov.uk/taxi-fare-card-2026.pdf", "publisher": "TfL", "date": null, "sourceType": "primary-regulator", "confirmed": false, "note": "Inferred from TfL's regulation of taxi fares only; not stated as such on the fare card."},
+    "mexicoCity": {"value": "Uber and DiDi trips from AICM can cost under 100 MXN at quiet times versus up to 1,300 MXN for authorized airport taxis; AICM ran enforcement operations against app pickups in 2026.", "url": "https://expansion.mx/finanzas-personales/2026/03/11/taxi-uber-o-didi-salir-acim-precio-diferencia", "publisher": "Expansión", "date": "2026-03-11", "sourceType": "secondary-news", "confirmed": false}
+  },
+
+  "airports": {
+    "terminals": {
+      "JFK": {"value": "Terminals 1, 4, 5, 7, 8 were in use through 2025. New Terminal One (first 14 gates) was due June 2026, and the first 6 gates of new Terminal 6 in 2026, with Terminal 7 decommissioned when Terminal 6 opens.", "url": "https://www.portauthoritybuilds.com/redevelopment/us/en/jfk.html", "publisher": "Port Authority of NY & NJ", "date": "2026", "sourceType": "primary-operator", "confirmed": false, "note": "Whether both new terminals actually opened by 2026-09-30 was not confirmed."},
+      "LAX": {"value": "Terminals 1-8 plus Tom Bradley International Terminal (TBIT)", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false},
+      "LHR": {"value": "Terminals 2, 3, 4, 5; free transfer buses between terminals", "url": "https://www.heathrow.com/connecting-flights", "publisher": "Heathrow", "date": null, "sourceType": "primary-airport", "confirmed": false},
+      "DUB": {"value": "Terminal 1 and Terminal 2; US Preclearance is in Terminal 2", "url": "https://www.dublinairport.com/flight-information/travelling-to-usa/usa-preclearance", "publisher": "daa / Dublin Airport", "date": null, "sourceType": "primary-airport", "confirmed": true},
+      "YYZ": {"value": "Terminal 1 and Terminal 3", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false},
+      "YVR": {"value": "One main terminal with domestic, international and US transborder areas, plus the small South Terminal", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false},
+      "MEX": {"value": "Terminal 1 and Terminal 2", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false}
+    },
+    "recommendedArrival": {
+      "usGeneral": {"value": "2 hours domestic, 3 hours international (airline guidance)", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false},
+      "heathrow": {"value": "2 hours UK/Europe, 3 hours long-haul", "url": "https://www.heathrow.com/heathrow-blog/top-tips-for-timing-your-airport-journey", "publisher": "Heathrow", "date": null, "sourceType": "search-snippet", "confirmed": false},
+      "dublin": {"value": "2 hours short-haul, 3 hours long-haul and US preclearance flights", "url": "https://www.dublinairport.com/at-the-airport/security", "publisher": "Dublin Airport", "date": null, "sourceType": "search-snippet", "confirmed": false}
+    },
+    "securityWaits": {
+      "tsa": {"value": "TSA publishes live waits in the MyTSA app (crowd-sourced and TSA-reported), not a historical dataset. Performance targets: PreCheck under 10 min, standard lanes under 20-30 min. About 99% of PreCheck passengers wait under 10 min.", "url": "https://www.tsa.gov/precheck", "publisher": "TSA", "date": null, "sourceType": "search-snippet", "confirmed": false},
+      "tsaObserved2026": {"value": "Spring 2026 observations across 41 large airports: standard screening averaged 15-30 min, PreCheck under 5 min; standard lanes at the largest airports averaged 35 min 5-8 a.m. Mondays and Fridays", "url": "https://www.mightytravels.com/2026/09/airport-security-wait-times-78-precheck-vs-35-minutes/", "publisher": "Mighty Travels", "date": "2026-09", "sourceType": "secondary-news", "confirmed": false},
+      "tsaPreCheckFee": {"value": 78, "currency": "USD", "url": "https://www.mightytravels.com/2026/09/airport-security-wait-times-78-precheck-vs-35-minutes/", "publisher": "Mighty Travels", "date": "2026-09", "sourceType": "secondary-news", "confirmed": false, "note": "Enrollment price varies by provider; five-year membership."},
+      "heathrow": {"value": "Regulated service standard: security queue under 5 min in at least 95% of measured 15-minute periods, under 10 min in 99%. Monthly results published as Central Security Queues.", "url": "https://www.heathrow.com/company/about-heathrow/performance/airport-operations/central-security-queues", "publisher": "Heathrow (under the CAA Service Quality Rebate scheme)", "date": null, "sourceType": "primary-airport", "confirmed": false},
+      "ukLiquids": {"value": "Heathrow removed the 100 ml liquid limit in January 2026 after installing CT scanners (up to 2 litres; no clear bag needed). Edinburgh, Birmingham and Bristol also lifted it; some UK airports still enforce 100 ml.", "url": "https://www.which.co.uk/news/article/100ml-rule-at-uk-airport-security-new-scanners-avLDH4E9xSVg", "publisher": "Which?", "date": "2026", "sourceType": "secondary-news", "confirmed": false}
+    },
+    "usArrivalProcessing": {
+      "cbpAirportWaitTimes": {"value": "CBP publishes historical passport-control wait times by airport, terminal and hour at awt.cbp.gov, with about a two-day lag.", "url": "https://awt.cbp.gov/", "publisher": "US Customs and Border Protection", "date": null, "sourceType": "primary-government", "confirmed": false},
+      "jfkAverage": {"value": {"allPassengersMin": 22, "peakAround5amMin": 33, "visitorLaneMin": 35}, "url": "https://flightqueue.com/airport/JFK", "publisher": "FlightQueue (from CBP AWT data, last 90 days)", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false},
+      "globalEntry": {"value": {"fee": 120, "validityYears": 5, "includesTsaPreCheck": true, "minorsFree": "if a parent is a member or applying"}, "currency": "USD", "url": "https://www.cbp.gov/travel/trusted-traveler-programs/global-entry", "publisher": "CBP", "date": "current as read 2026-09-30", "sourceType": "primary-government", "confirmed": true},
+      "mobilePassportControl": {"value": "Free CBP app; no application, background check or interview", "url": "https://www.cbp.gov/travel/us-citizens/mobile-passport-control", "publisher": "CBP", "date": null, "sourceType": "search-snippet", "confirmed": false}
+    },
+    "dublinUsPreclearance": {"value": "US Preclearance at Dublin T2 completes all US immigration, customs and agriculture checks before departure; the flight lands as a domestic arrival. Order: airline check-in, Dublin security, then enter Preclearance at an allocated time shown on screens (admission usually from about 2.5 h before departure). Aer Lingus asks passengers to be through Preclearance 2 h before departure. Busiest 05:00-12:00. ESTA needed at least 72 h before departure for Visa Waiver travelers. Bags are checked through.", "url": "https://www.dublinairport.com/flight-information/travelling-to-usa/usa-preclearance", "publisher": "Dublin Airport", "date": null, "sourceType": "primary-airport", "confirmed": true, "note": "The 2.5 h and Aer Lingus 2 h figures come from search summaries of Dublin Airport and Aer Lingus pages, not the page read."},
+    "ukEGates": {"value": "Open to passport holders of the UK, EU 27, Australia, Canada, Iceland, Japan, Liechtenstein, New Zealand, Norway, Singapore, South Korea, Switzerland and the United States. From 2026-07-08, children 8+ may use them if with an adult and at least 120 cm tall (was 10+ since 2023). More than 290 eGates at UK airports and ports and juxtaposed ports.", "url": "https://www.gov.uk/government/news/8-and-9-year-olds-now-eligible-to-use-egates", "publisher": "UK Home Office / Border Force (GOV.UK)", "date": "2026-07-08", "sourceType": "primary-government", "confirmed": true, "note": "The nationality list was not on the GOV.UK page read; it comes from secondary sources. Visitors from non-UK countries also need a UK ETA."},
+    "euEntryExitSystem": {"value": "Live across Schengen since 2025-10-12 with a six-month phase-in to April 2026; biometric capture for car passengers at Dover had not been switched on as of the Port of Dover page read.", "url": "https://www.portofdover.com/ferry/travel-advice/ees/", "publisher": "Port of Dover", "date": "read 2026-09-30", "sourceType": "primary-operator", "confirmed": true}
+  },
+
+  "connections": {
+    "minimumConnectionTimes": {
+      "airCanadaYYZ": {"value": {"domDom": "50m", "domUS": "1h10", "domIntl": "1h (1h20 from YVR/YOW/YUL)", "usDom": "1h10", "usIntl": "1h", "intlDom": "1h15", "intlUS": "1h25 (1h45 to LGA)", "intlIntl": "1h"}, "url": "https://www.aircanada.com/ca/en/aco/home/plan/check-in-information/minimum-connection-times.html", "publisher": "Air Canada", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "airCanadaYVR": {"value": {"domDom": "40m", "domUS": "1h10", "domIntl": "1h", "usDom": "1h10", "usIntl": "1h", "intlDom": "1h10", "intlUS": "1h10", "intlIntl": "1h"}, "url": "https://www.aircanada.com/ca/en/aco/home/plan/check-in-information/minimum-connection-times.html", "publisher": "Air Canada", "date": null, "sourceType": "primary-operator", "confirmed": true},
+      "heathrow": {"value": "Heathrow publishes no single figure; the airline quotes the MCT. Airlines commonly use 60-90 min same terminal and 90-120 min across terminals; self-connecting on separate tickets needs 3-4 h.", "url": "https://www.heathrow.com/connecting-flights", "publisher": "Heathrow (plus secondary guidance)", "date": null, "sourceType": "search-snippet", "confirmed": false},
+      "dublinSelfConnect": {"value": "Dublin Airport's guidance: 60 min minimum for self-connecting from a transatlantic to a short-haul flight", "url": "https://community.ricksteves.com/travel-forum/england/minimum-connection-times-needed-at-cdg-lhr-ams-and-dub", "publisher": "Rick Steves forum (quoting Dublin Airport)", "date": null, "sourceType": "secondary-aggregator", "confirmed": false},
+      "JFK": {"value": null, "note": "No published JFK MCT found; varies by airline and terminal pair."},
+      "usArrivalsNote": "An international arrival into the US must clear CBP and re-check bags before any onward flight, which is why US international-to-domestic MCTs run longer. Flights precleared at Dublin or in Canada skip this."
+    },
+    "missedConnection": {
+      "singleTicket": {"value": "On one ticket, the airline must rebook a passenger who misses a connection because the first flight was late, on its next available flight at no charge. Under UK261/EU261 the delay to the final destination sets compensation, including missed connections on one booking (Sturgeon/Folkerts case law). Separate tickets are not protected.", "url": "https://www.caa.co.uk/air-passengers/travel-problems-and-rights/flight-delays-and-cancellations/delays/", "publisher": "UK Civil Aviation Authority", "date": null, "sourceType": "primary-regulator", "confirmed": false, "note": "The missed-connection rule comes from EU case law as applied by UK and EU regulators; the CAA delays page read covers delays generally."},
+      "usCarriers": "US airlines rebook under their contracts of carriage; no federal rule requires rebooking on another airline or cash compensation."
+    }
+  },
+
+  "compensation": {
+    "uk261": {"value": {"rightToCare": "from 2 h (under 1,500 km), 3 h (1,500-3,500 km), 4 h (over 3,500 km) late departure: food and drink, two communications, hotel and transfers if overnight", "compensationArrival3hPlus": {"under1500km": 220, "1500to3500km": 350, "over3500km_3to4h": 260, "over3500km_4hPlus": 520}, "refundOption": "delay of 5+ hours: may choose not to fly and get a refund", "exception": "no compensation for extraordinary circumstances", "claim": "claim from airline first; after 8 weeks go to ADR or the CAA PACT"}, "currency": "GBP", "url": "https://www.caa.co.uk/air-passengers/travel-problems-and-rights/flight-delays-and-cancellations/delays/", "publisher": "UK Civil Aviation Authority", "date": "current as read 2026-09-30", "sourceType": "primary-regulator", "confirmed": true},
+    "eu261": {"value": {"currentAmounts": {"under1500km": 250, "1500to3500km": 400, "over3500km": 600, "over3500km_3to4h": 300}, "trigger": "arrival 3 h or more late, airline's fault", "reform2026": "Political agreement 2026-06-15, Council approval July 2026: 3-hour threshold and amounts kept; rerouting within 3 h or passenger may self-reroute and be reimbursed up to 400% of ticket within 14 days; 30-day payment deadline; expected in force second half of 2027"}, "currency": "EUR", "url": "https://www.dlapiper.com/en-us/insights/publications/2026/06/agreement-reached-on-ec261-reform-to-strengthen-passenger-rights", "publisher": "DLA Piper (current amounts are Regulation (EC) 261/2004)", "date": "2026-06", "sourceType": "secondary-news", "confirmed": false, "note": "The current amounts are the long-standing Regulation 261/2004 figures; the €300 half-payment for over-3,500 km flights arriving 3-4 h late is the Article 7(2) reduction. Applies to flights leaving the EU, including Dublin, and EU carriers flying into the EU."},
+    "usDot": {"value": {"refundRule": "Automatic cash refund if the airline cancels or significantly changes a flight and the passenger declines rebooking or a voucher; significant change means departure or arrival moved 3+ h domestic or 6+ h international, a different airport, added connections or downgrade", "effective": "2024-10-28", "refundTiming": "7 business days for card payments, 20 calendar days otherwise", "cashCompensationForDelays": "None required; DOT withdrew its compensation ANPRM on 2025-11-17"}, "url": "https://www.federalregister.gov/documents/2025/11/17/2025-20042/airline-passenger-rights-withdrawal", "publisher": "US Department of Transportation / Federal Register", "date": "2025-11-17", "sourceType": "primary-government", "confirmed": false, "note": "DOT's own refunds page refused automated fetch; refund rule details are from summaries of DOT's 2024 final rule."},
+    "canadaAPPR": {"value": {"largeCarrierDelay": {"3to6h": 400, "6to9h": 700, "9hPlus": 1000}, "smallCarrierDelay": {"3to6h": 125, "6to9h": 250, "9hPlus": 500}, "conditions": "within carrier control and not safety-required; not if told 14+ days ahead; claim within 1 year, airline answers within 30 days; complaints to Canadian Transportation Agency"}, "currency": "CAD", "url": "https://blog.wego.com/canada-appr/", "publisher": "Wego (summarizing the Air Passenger Protection Regulations)", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "Amendments were proposed in Canada Gazette Part I on 2024-12-21; whether they have taken effect was not confirmed."},
+    "mexico": {"value": {"trigger": "delay over 4 hours or cancellation attributable to the airline", "options": "(A) refund plus at least 25% compensation; (B) first available flight plus food, lodging and ground transfers if needed; (C) later flight plus at least 25% compensation", "delay2to4h": "airline compensation per its own policy (Article 47 Bis V)", "paymentDeadline": "10 business days"}, "url": "https://www.profeco.gob.mx/politicasaviacion/index.html", "publisher": "Profeco (Ley de Aviación Civil, Article 47 Bis)", "date": null, "sourceType": "search-snippet", "confirmed": false}
+  },
+
+  "baggage": {
+    "carryOnSize": {
+      "americanDeltaUnited": {"value": "22 x 14 x 9 in (56 x 36 x 23 cm) including wheels and handles, plus a personal item; no carry-on fee even on Basic Economy (American)", "url": "https://www.smartertravel.com/the-real-rules-for-carry-on-luggage/", "publisher": "SmarterTravel", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false},
+      "britishAirways": {"value": "Cabin bag 56 x 45 x 25 cm plus a personal item, on every fare including Basic", "url": "https://www.cabinzero.com/blogs/air-travel-tips/british-airways-baggage-allowance", "publisher": "CabinZero", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "BA's weight limit for the cabin bag (23 kg) was not confirmed."},
+      "aerLingus": {"value": "Cabin bag 55 x 40 x 24 cm, up to 10 kg", "url": "https://www.packset.travel/airlines/aerlingus/", "publisher": "Packset", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "On short-haul Saver fares a full cabin bag may need a paid add-on; not confirmed."},
+      "airCanada": {"value": "55 x 40 x 23 cm", "url": "https://www.smartertravel.com/the-real-rules-for-carry-on-luggage/", "publisher": "SmarterTravel", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false},
+      "aeromexico": {"value": "55 x 40 x 25 cm; carry-on plus personal item max 10 kg economy, 18 kg Clase Premier", "url": "https://milepro.com/aeromexico-carry-on-rules/", "publisher": "MilePro", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false}
+    },
+    "checkedBagFees": {
+      "american": {"value": {"domesticAndShortHaulIntl": {"first": {"prepaid": 45, "airport": 50}, "second": {"prepaid": 55, "airport": 60}, "third": 200}, "basicEconomyFromMay18": {"first": {"prepaid": 50, "airport": 55}, "second": {"prepaid": 60, "airport": 65}}, "effective": "tickets bought on/after 2026-04-09 (Basic Economy from 2026-05-18)"}, "currency": "USD", "url": "https://news.aa.com/news/news-details/2026/American-Airlines-updates-bag-fees-and-Basic-Economy-fares-OPS-POL-04/default.aspx", "publisher": "American Airlines Newsroom", "date": "2026-04-09", "sourceType": "primary-operator", "confirmed": true, "note": "Short-haul international includes Canada. Transatlantic fees were not read."},
+      "delta": {"value": {"northAmericaEconomy": {"first": 45, "second": 55, "third": 200}, "effective": "tickets booked on/after 2026-04-08"}, "currency": "USD", "url": "https://upgradedpoints.com/news/delta-raising-checked-bag-fees-2026/", "publisher": "Upgraded Points", "date": "2026-04", "sourceType": "secondary-news", "confirmed": false, "note": "Most long-haul economy fares keep a free first bag; transatlantic fee not confirmed. Delta.com fee page returned 404."},
+      "united": {"value": {"usCanadaMexicoLatam": {"first": {"prepaid24hPlus": 45, "within24h": 50}, "second": {"prepaid24hPlus": 55, "within24h": 60}, "third": 200}, "effective": "tickets bought on/after 2026-04-03; long-haul international (Europe etc.) changed for tickets bought on/after 2026-05-12"}, "currency": "USD", "url": "https://www.cnbc.com/2026/04/02/united-airlines-raises-checked-bag-fees-fuel-prices-climb.html", "publisher": "CNBC (via search summary)", "date": "2026-04-02", "sourceType": "secondary-news", "confirmed": false, "note": "united.com timed out."},
+      "britishAirways": {"value": {"euroTravellerBasicFirstBag23kg": {"online": 35, "airport": 75}, "secondBag": {"online": "65-80", "airport": "75-95"}, "transatlanticEconomyStandard": "1 x 23 kg included", "transatlanticBasic": "hand baggage only; about $70 USD to add a first bag online", "overweight": {"GBP": 65, "EUR": 75, "USD": 100}}, "currency": "GBP unless stated", "url": "https://www.cabinzero.com/blogs/air-travel-tips/british-airways-baggage-allowance", "publisher": "CabinZero / Deep Arrival (secondary)", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "ba.com returned a high-demand holding page."},
+      "aerLingus": {"value": {"europeanSaver20kg": {"near": {"atBooking": 25, "laterOnline": 27, "callCentre": 35}, "mid": {"atBooking": 40, "laterOnline": 42, "callCentre": 50}, "far": {"atBooking": 55, "laterOnline": 57, "callCentre": 65}}, "transatlanticSaverFirstBag": "about 75 online", "transatlanticSmartFlex": "1 x 23 kg free; additional bags 75"}, "currency": "EUR", "url": "https://www.aerlingus.com/prepare/bags/checked-baggage/", "publisher": "Aer Lingus (via secondary summaries)", "date": "2026", "sourceType": "secondary-aggregator", "confirmed": false, "note": "Aer Lingus site sits behind a bot wall."},
+      "airCanada": {"value": {"northAmericaSunCentralAmerica": {"economyBasicAndStandard": {"first": 45, "second": 60}, "economyFlex": {"first": 0, "second": 60}, "effective": "tickets bought on/after 2026-04-13"}, "longHaulIncludingEurope": {"economyBasic": {"first": 90, "second": 120}, "economyStandardAndFlex": {"first": 0, "second": 120}, "effective": "tickets bought on/after 2026-05-14"}}, "currency": "CAD or USD (same number)", "url": "https://www.aircanada.com/ca/en/aco/home/book/travel-news-and-updates/baggage-fee-changes.html", "publisher": "Air Canada", "date": "2026-04-13 / 2026-05-14", "sourceType": "primary-operator", "confirmed": true, "note": "Before taxes."},
+      "aeromexico": {"value": {"domesticBasic20kg": {"one": 800, "two": 1350}, "domesticBasic25kg": {"one": 1000, "two": 1550}, "domesticBasic20kgAtCheckIn": {"one": 1335, "two": 1600}, "mexicoUsCanadaBasic": {"firstOnlineUSD": "30-45", "firstAirportUSD": "55-60", "secondOnlineUSD": "55-65"}}, "currency": "MXN unless stated", "url": "https://www.telediario.mx/nacional/documentar-equipaje-en-aeromexico-cuanto-cuesta", "publisher": "Telediario / secondary summaries", "date": "2026", "sourceType": "secondary-news", "confirmed": false, "note": "Aeroméxico prices vary by date and season; no primary fee table was read."}
+    }
+  },
+
+  "uncertain": [
+    "NYC Ferry: the proposed rise to $5.00 one-way (from 2026-10-19) was up for an NYCEDC board vote on 2026-09-30; outcome unknown.",
+    "Staten Island Ferry car carriage: operator pages read are silent; treated as passenger- and bike-only.",
+    "P&O Liverpool-Dublin: one secondary source says it ended in December 2023; P&O's route page exists but could not be read. Treat as unconfirmed.",
+    "Irish Ferries foot-passenger check-in: the FAQ read says 30 min; a search summary said 1 h. Used the FAQ.",
+    "BC Ferries crossing times (about 1h35 Tsawwassen-Swartz Bay, 1h40 Horseshoe Bay-Departure Bay) were not read on a BC Ferries page.",
+    "TfL single fares, bus daily cap (£5.25) and the November 2026 bus fare (£1.85) come from secondary sources and a search summary of GLA decision MD3517; TfL/GLA pages refused fetch.",
+    "Belfast Translink Metro fares and New Haven CTtransit fares come from search summaries, not pages read.",
+    "Mexico City Metro 5 MXN and Metrobús 6 MXN: metro.cdmx.gob.mx refused connection; from reporting.",
+    "Mexico City taxi tariffs (8.74 MXN libre banderazo, etc.) are as reported from SEMOVI; the Gaceta was not read and may have been updated.",
+    "Edinburgh taxi tariff (from 2026-07-25): the PDF's columns extracted out of order; the initial charges £3.60/£4.80/£4.60/£5.75 map to Tariffs 1-4 by column order, but the increment mapping is uncertain. A search summary quoting £3.20/£3.80/£4.50 does not match the council PDF and was rejected.",
+    "Belfast maximum taxi fares: the latest found are from 2023-12-05; a later review may exist.",
+    "Toronto taxi meter ($4.25 incl. $1 fuel surcharge) and Pearson flat rates ($70 taxi to Union) are from secondary sources.",
+    "JFK: whether New Terminal One (due June 2026) and new Terminal 6 (due 2026) were open, and Terminal 7 closed, by 2026-09-30 was not confirmed.",
+    "Terminal lists for LAX, YYZ, YVR and MEX are stated from general knowledge without a source read in this research.",
+    "Canada APPR: the December 2024 proposed amendments may have changed thresholds or amounts; not confirmed in force.",
+    "EU261 reform: agreed June 2026, expected in force in the second half of 2027; current law (Regulation 261/2004) applies until then.",
+    "US airline and BA/Aer Lingus/Aeroméxico baggage fees mostly come from secondary reporting because airline sites blocked automated access. American (newsroom) and Air Canada were read on primary pages.",
+    "Transatlantic checked-bag fees for American, Delta and United economy were not confirmed.",
+    "Rideshare: no per-city published rate cards exist for Uber; only the upfront-pricing method and regulatory floors/surcharges (Vancouver $3.95 minimum, NYC surcharges) are sourced.",
+    "Walking speed: the MUTCD 3.5 ft/s figure and the TfL PTAL 80 m/min figure are well known but were read via summaries, not the primary documents."
+  ]
+}

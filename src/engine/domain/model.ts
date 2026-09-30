@@ -186,6 +186,8 @@ export interface Person {
   licensing?: import('../systems/licensing').LicensingRecord;
   /** The motorcycle license's path, kept apart from the car's (`systems/licensing.ts`, from 2026-09-30). */
   motoLicensing?: import('../systems/licensing').LicensingRecord;
+  /** ConfirmID paid at a TSA checkpoint, good until then (`systems/identity.ts`, from 2026-09-30). */
+  confirmIdUntil?: number;
   /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
   exclusionUsedAt?: number;
   /** How many homes they've bought: England's first-time buyer's relief is for the first. */

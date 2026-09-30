@@ -64,6 +64,8 @@ export interface Parcel {
   builtOn?: string;
   selling?: { closesAt: Instant };
   soldAt?: Instant;
+  /** Let to a farmer (`systems/landlease.ts`, from 2026-09-30). */
+  lease?: import('./landlease').LandLease;
 }
 
 /** Land for sale: a market's size at an asking price, in its money, cents. */
@@ -367,6 +369,7 @@ export function registerLand(sim: Simulation): void {
     if (!parcel) throw new CommandError('That isn’t land you own.');
     const no = splitRefusal(parcel, person);
     if (no) throw new CommandError(no);
+    if (parcel.lease) throw new CommandError('It’s let to a farmer: end the lease first.');
     // The authority's fee, where one's published (from 2026-10-01).
     const m = LAND_MARKETS[parcel.market]!;
     const fee = SPLIT_FEES[m.place];
@@ -385,6 +388,7 @@ export function registerLand(sim: Simulation): void {
     const b = parcelsOf(person).find((x) => x.id === p?.b && x.soldAt === undefined && !x.selling && x.id !== p?.a);
     if (!a || !b) throw new CommandError('Two parcels you own, neither for sale.');
     if (buildingOn(person, a) || buildingOn(person, b)) throw new CommandError('A house is being built on it.');
+    if (a.lease || b.lease) throw new CommandError('Let land isn’t joined: end the lease first.');
     if (LAND_MARKETS[a.market]!.place !== LAND_MARKETS[b.market]!.place || LAND_MARKETS[a.market]!.label !== LAND_MARKETS[b.market]!.label) throw new CommandError('Parcels combine only where they’re the same place.');
     a.acres += b.acres;
     a.paid += b.paid;

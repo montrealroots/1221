@@ -54,7 +54,7 @@ export function trailOut(person: Person): void {
 export function trailFor(person: Person): OwnedVehicle | undefined {
   const j = jurisdictionOf(person.currentLocationId);
   if (!j) return undefined;
-  const land = parcelsOf(person).some((p) => p.soldAt === undefined && LAND_MARKETS[p.market]?.kind === 'acreage' && jurisdictionOf(LAND_MARKETS[p.market]!.cityId) === j);
+  const land = parcelsOf(person).some((p) => p.soldAt === undefined && !p.lease && LAND_MARKETS[p.market]?.kind === 'acreage' && jurisdictionOf(LAND_MARKETS[p.market]!.cityId) === j);
   return land ? kindHere(person, ['atv'], (v) => v.jurisdiction === j) : undefined;
 }
 

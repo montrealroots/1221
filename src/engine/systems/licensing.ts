@@ -233,7 +233,7 @@ function grant(sim: Simulation, person: Person, jurisdiction: string, g: License
   const id = sim.nextId('document');
   const issuedAt = sim.now + issueDays * MS_DAY;
   for (const d of documentsOf(person)) if (d.kind === 'license' && classOf(d) === track && d.issuer === jurisdiction && d.status === 'valid') d.status = 'cancelled';
-  const doc: PersonDocument = { id, kind: 'license', issuer: jurisdiction, name: g.name, number: numberFor('D', id), status: 'valid', issuedAt, expiresAt: addYears(issuedAt, g.years), stage: g.stage, alone: g.alone, ...(track === 'car' ? {} : { vehicleClass: track }) };
+  const doc: PersonDocument = { id, kind: 'license', issuer: jurisdiction, name: g.name, number: numberFor('D', id), status: 'valid', issuedAt, expiresAt: addYears(issuedAt, g.years), stage: g.stage, alone: g.alone, ...(track === 'car' ? {} : { vehicleClass: track }), ...(jurisdiction.startsWith('us-') ? { realId: true } : {}) };
   documentsOf(person).push(doc);
   return doc;
 }
@@ -419,7 +419,8 @@ export function registerLicensing(sim: Simulation): void {
     held.status = 'cancelled';
     const id = s.nextId('document');
     const expiresAt = addYears(from, rule.validityYears ?? 5);
-    documentsOf(person).push({ ...held, id, number: numberFor('D', id), status: 'valid', issuedAt: s.now, expiresAt });
+    // Renewed by an American state, it's REAL ID, at the same fee (`content/identity.ts`).
+    documentsOf(person).push({ ...held, id, number: numberFor('D', id), status: 'valid', issuedAt: s.now, expiresAt, ...(held.issuer.startsWith('us-') ? { realId: true } : {}) });
     // The motorcycle class is on the same card, and renews with it.
     for (const d of documentsOf(person)) if (d.kind === 'license' && classOf(d) === 'motorcycle' && d.issuer === held.issuer && d.status === 'valid' && (d.stage ?? 'full') === 'full') d.expiresAt = expiresAt;
     return { expiresAt, fee };

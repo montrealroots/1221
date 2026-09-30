@@ -32,9 +32,10 @@ import { CITIES, COUNTRIES } from '../content/geography';
 import { ENTRY, type Authorization, type EntryRule } from '../content/entry';
 import { LICENSES, type LicenseRule } from '../content/licenses';
 import { payFromBank } from './household';
+import { realIdShare } from '../content/identity';
 import { PASSPORTS, type PassportRule } from '../content/passports';
 
-export type DocumentKind = 'passport' | 'authorization' | 'visa' | 'license' | 'idp' | 'permit';
+export type DocumentKind = 'passport' | 'authorization' | 'visa' | 'license' | 'idp' | 'permit' | 'idcard';
 
 export interface PersonDocument {
   id: string;
@@ -56,6 +57,8 @@ export interface PersonDocument {
   /** A license's stage on a graduated path, and whether its holder may drive with nobody beside them; a license without them is full. */
   stage?: import('../content/licensepaths').LicenseStage;
   alone?: boolean;
+  /** An American license or ID card that meets REAL ID, which the TSA asks from 2025-05-07 (`systems/identity.ts`, from 2026-09-30). */
+  realId?: boolean;
   /** A license's class, where it isn't a car's: the motorcycle class (from 2026-09-30). */
   vehicleClass?: VehicleClass;
   /** A permission to work tied to one job, and days without work counted against it (`systems/permission.ts`). */
@@ -474,7 +477,8 @@ export function startingDocuments(sim: Simulation, person: Person): void {
     let issuedAt = addYears(person.birthInstant, 18);
     while (addYears(issuedAt, term) <= sim.now) issuedAt = addYears(issuedAt, term);
     const id = sim.nextId('document');
-    docs.push({ id, kind: 'license', issuer: jurisdiction, name: LICENSES[jurisdiction]?.name ?? 'Driver License', number: numberFor('D', id), status: 'valid', issuedAt, expiresAt: addYears(issuedAt, term) });
+    // REAL ID at the state's published share (`content/identity.ts`, from 2026-09-30).
+    docs.push({ id, kind: 'license', issuer: jurisdiction, name: LICENSES[jurisdiction]?.name ?? 'Driver License', number: numberFor('D', id), status: 'valid', issuedAt, expiresAt: addYears(issuedAt, term), realId: rng.next() < realIdShare(jurisdiction) });
   }
 }
 

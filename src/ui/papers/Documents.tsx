@@ -23,12 +23,13 @@ import {
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, type VehicleClass,
 } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
+import { idCardRefusal, realIdRefusal, tsaAccepts } from '@/engine/systems/identity';
 import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
 import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal, usStatusEnds } from '@/engine/systems/permission';
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
 import { WORK_RULES } from '@/engine/content/workrules';
 
-const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work' };
+const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work', idcard: 'State ID Card' };
 const STATUS_WORD: Record<PersonDocument['status'], string> = { pending: 'Being Decided', valid: 'In Force', lost: 'Reported Lost', cancelled: 'Canceled' };
 const countryName = (iso: string) => COUNTRIES.get(iso.toLowerCase())?.name ?? iso;
 
@@ -207,7 +208,10 @@ export function DrivingPane() {
   const rule = here ? LICENSES[here] : undefined;
   const license = licenseOf(person, sim.now);
   const may = mayDrive(person, person.currentLocationId, sim.now);
-  const held = documentsOf(person).filter((d) => d.kind === 'license' || d.kind === 'idp');
+  const held = documentsOf(person).filter((d) => d.kind === 'license' || d.kind === 'idp' || d.kind === 'idcard');
+  const tsa = tsaAccepts(person, sim.now);
+  const idNo = idCardRefusal(person, sim.now);
+  const realNo = realIdRefusal(person, sim.now);
   const toRenew = renewable(person, sim.now);
   const renewNo = renewRefusal(person, sim.now);
   const idpNo = idpRefusal(person, sim.now);
@@ -230,8 +234,17 @@ export function DrivingPane() {
               const a = run<{ expiresAt: number; fee: number }>('documents.apply_idp', {});
               if (a.ok) toast(`An International Driving Permit, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}; good until ${formatDate(a.value!.expiresAt, sim.zone)}.`, 'positive');
             }}>International Driving Permit</Gated>
+            {!idNo && <Gated feature="documents.apply_idcard" className="btn btn-sm btn-ghost" onClick={() => {
+              const a = run<{ expiresAt: number; fee: number }>('documents.apply_idcard', {});
+              if (a.ok) toast(`A state ID card, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}; good until ${formatDate(a.value!.expiresAt, sim.zone)}.`, 'positive');
+            }}>Get A State ID Card</Gated>}
+            {!realNo && <Gated feature="documents.real_id" className="btn btn-sm btn-ghost" onClick={() => {
+              const a = run<{ fee: number }>('documents.real_id', {});
+              if (a.ok) toast(`Your license is REAL ID now, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.`, 'positive');
+            }}>Make It REAL ID</Gated>}
           </div>
-          {!held.length ? <p className="small muted" style={{ margin: 0 }}>You hold no license or permit.</p> : <DocumentList kinds={['license', 'idp']} />}
+          <p className="small" style={{ margin: 0 }}>At an American airport’s checkpoint: {tsa ? `your ${tsa.name}${tsa.kind === 'passport' ? '' : ', REAL ID'}.` : 'no REAL ID or passport, so TSA ConfirmID’s $45, good for ten days of travel.'}</p>
+          {!held.length ? <p className="small muted" style={{ margin: 0 }}>You hold no license or permit.</p> : <DocumentList kinds={['license', 'idcard', 'idp']} />}
           {rule && (
             <>
               <p className="small" style={{ margin: 0 }}>A visitor’s license: {rule.foreign.visitor ?? 'not confirmed'}</p>

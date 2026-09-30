@@ -101,6 +101,22 @@ Asked what of the instruction hadn't been built, the owner said: "Add it all and
 - **Done, 2026-09-29: a license exchanged on moving.** New York (a US state's or Canadian province's), Connecticut (those, Germany's and France's, $124), Ontario, British Columbia and New South Wales (their published lists) exchange a full license from elsewhere without the tests, and the old one is surrendered (`LICENSE_EXCHANGES`, `documents.exchange_license`). California's exchange for another state's license wasn't confirmed, and it's refused with that reason. Found by a played life: a British graduate with Connecticut's license took New York's tests again after moving. The same life showed an O-1 read too narrowly: regional and Off-Broadway companies are distinguished organizations, and the experts' letters a petition carries are read from reputation.
 - Probation and points after a first license weren't kept until 2026-09-29, SLATE having no driving offenses. Since stage 3c, Great Britain's New Drivers Act (six points in two years revokes) and Ireland's novice limit (seven points) are (`systems/driving.ts`); France's six points and Brazil's year wait for those countries' cars.
 
+#### Stage 1c: proving who one is at an American airport, and the state ID card (done 2026-09-30)
+Researched in `docs/research/world/research-documents-safetynet.json` and `research-home-effects.json` (`systems/identity.ts`, `content/identity.ts`).
+- **REAL ID:** since 7 May 2025 the TSA's checkpoint takes a REAL ID license or ID card, or a passport from anywhere. A domestic airline flight with neither costs TSA ConfirmID's $45, good for ten days of travel. Only airline flights pass the checkpoint: one's own plane, a charter or a rented one don't.
+- A license or ID card issued, exchanged or renewed by an American state from now is REAL ID, at the same fee in New York, Connecticut and California. Connecticut upgrades one early for its $30 duplicate fee; New York's and California's early upgrade price wasn't read, so theirs come at the renewal.
+- A starting license is REAL ID at its state's published share of holders:
+  - California's 58% (May 2025) and Connecticut's about 73%.
+  - New York's "more than half", taken at half, its floor.
+  - Another state's, the mean of the three.
+  - The TSA's 94% of travelers counts passports, and isn't used.
+- **A state ID card** (`documents.apply_idcard`) for someone the state hasn't licensed: New York's $14 for eight years, Connecticut's $28, California's $40. Each is REAL ID.
+- Not kept yet:
+  - Canada's, Mexico's, Britain's and Ireland's photo ID rules for domestic flights, which weren't read. Their ID cards (Ontario's Photo Card, the BCID, the INE credential, Ireland's passport card) wait on those rules.
+  - Residence documents abroad: Ireland's €300 IRP card, a Canadian PR card and Mexico's residence cards wait on a life being allowed to live abroad without citizenship, which SLATE doesn't grant yet.
+
+Evidence: `tests/identity.test.ts` (6). 12 mutations, all killed in the end. Two first survived and needed tests: Connecticut's upgrade refused a second time, and a license granted by exchange being REAL ID. The airline leg's mode was first misread as `fly`, which is one's own plane; a test booking a real flight caught it.
+
 ### Stage 2: Journeys
 
 #### Stage 2a: a journey by air, and somewhere to stay (done 2026-09-29)
@@ -353,6 +369,21 @@ Evidence: `tests/land.test.ts` (9); 17 mutations, all killed. Two first survived
 - Open, and why: a survey in California, Ireland and Canada, whose surveyors print no price (the one found, a Toronto firm's "$1,800 and up" of 2015, isn't a price); title insurance in British Columbia, sold from calculators with no published table; land wasn't counted in net worth until 2026-09-29, and is now at its value, a house going up on it at what its stages have cost (`systems/finance.ts`); nothing is built on it until Stage 5.
 
 Evidence: `tests/land.test.ts` (14); 20 mutations, all killed. Two first survived. One was the seller's "yes at the asking price", which the odds already give, so it was removed. The other was the counter spent on acceptance, which is now asserted.
+
+#### Stage 4c: farmland let to a farmer (done 2026-09-30)
+Researched in `docs/research/world/research-land-2.json` (`systems/landlease.ts`).
+- Acreage one owns, with nothing built or being built on it and not for sale, is let a year at a time at the place's published cash rent, paid at the start of each year:
+  - New York's $83.50 an acre (NASS 2025, as Farm Progress reported it).
+  - Connecticut's about $85 (2024, secondary).
+  - California's $346 (NASS 2025).
+  - England's £230 a hectare (Defra's farm business tenancies, 2024/25).
+  - Leinster's €299 an acre (SCSI and Teagasc, 2025).
+  - Ontario's 2.35% of the land's value (Farm Credit Canada, 2025). British Columbia takes the national ratio as SLATE's estimate, as FCC published none there.
+- Taxed as rental income: on the American return, and as it's paid elsewhere, Britain's after HMRC's £1,000 property allowance.
+- Let, the land is the farmer's: it isn't ridden on an ATV, split or joined, and a sale ends the lease. Ended on notice, the lease runs to the year's end.
+- Not kept yet: a land loan, commercial land, waterfront premiums and islands, utility connection, easements, and foreign buyers' rules (Canada's ban on non-Canadians buying homes to 2027-01-01, Ontario's and British Columbia's foreign buyer taxes, England's 2% surcharge, Mexico's permit), all researched.
+
+Evidence: `tests/landlease.test.ts` (4). 13 mutations, all killed in the end. One first survived as a redundant guard: a town lot's place has no farm rent, so `yearRent`'s acreage check was removed. Three needed tests: combining let land, and letting land for sale or being built on.
 
 ### Stage 5: Construction
 

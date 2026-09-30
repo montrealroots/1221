@@ -8,12 +8,13 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { centsFromTyped, formatMoney } from '@/engine/core/money';
+import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { homeOf } from '@/engine/systems/earnings';
 import { buildingOn, landBuyingOf, landQuote, landValue, listingsFor, offerRefusal, parcelsOf, saleProceeds, splitRefusal, type LandAnswer } from '@/engine/systems/land';
 import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_SOURCE, LAND_TAX, areaWords } from '@/engine/content/land';
 import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES, BUILD_LOANS } from '@/engine/content/construction';
+import { leaseRefusal, yearRent } from '@/engine/systems/landlease';
 import { buildPlaceOf, buildQuote, buildRefusal } from '@/engine/systems/construction';
 
 /**
@@ -72,6 +73,9 @@ function YourLand() {
                       <div className="row gap-2">
                         {!p.selling && !built && <Gated feature="land.sell" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ closesAt: number }>('land.sell', { parcelId: p.id }); if (a.ok) toast(`For sale: it closes ${formatDate(a.value!.closesAt, sim.zone)}, for ${money(saleProceeds(m, worth).net)} after the seller’s taxes.`, 'positive'); }}>Put It Up For Sale</Gated>}
                         {!p.selling && !built && <Gated feature="land.split" className="btn btn-sm btn-ghost" disabled={Boolean(splitRefusal(p, person))} title={splitRefusal(p, person)} onClick={() => { if (run('land.split', { parcelId: p.id }).ok) toast('Split in two.', 'positive'); }}>Split It</Gated>}
+                        {!leaseRefusal(person, p, sim.now) && <Gated feature="land.lease_out" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ rent: number }>('land.lease_out', { parcelId: p.id }); if (a.ok) toast(`Let for the year: ${formatMoney(a.value!.rent, saveCurrency(sim.universe))} in rent, before its tax.`, 'positive'); }}>Let It To A Farmer, {money(yearRent(p, sim.now)!)} A Year</Gated>}
+                        {p.lease && !p.lease.ending && <Gated feature="land.end_lease" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ endsAt: number }>('land.end_lease', { parcelId: p.id }); if (a.ok) toast(`The lease ends ${formatDate(a.value!.endsAt, sim.zone)}.`, 'positive'); }}>End The Lease</Gated>}
+                        {p.lease?.ending && <span className="xs dim">Let, to the year’s end</span>}
                         {!p.selling && !built && twin && !buildingOn(person, twin) && <Gated feature="land.combine" className="btn btn-sm btn-ghost" onClick={() => { if (run('land.combine', { a: p.id, b: twin.id }).ok) toast('Combined into one.', 'positive'); }}>Combine Them</Gated>}
                       </div>
                     </td>

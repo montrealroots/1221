@@ -40,6 +40,7 @@ import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
+import { atTheCheckpoint } from './identity';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
@@ -568,6 +569,8 @@ export function registerJourneys(sim: Simulation): void {
       if (!payFromBank(s, person, claim, 'A holiday let’s damage claim, through the host’s platform', 'travel')) owe(s, person, claim, 'A holiday let’s damage claim', 'travel');
       if (mine) s.notify({ category: 'personal', title: 'A Damage Claim', body: `The let’s host claimed for damage, and the platform charged ${formatMoney(claim, saveCurrency(s.universe))} to you.`, importance: 65 });
     }
+    // An American airline's checkpoint: a REAL ID or a passport, or ConfirmID (`systems/identity.ts`).
+    atTheCheckpoint(s, person, j);
     fly(s, person, j);
     const late = j.lateMinutes ?? 0;
     const rebooked = j.rebooked === true;

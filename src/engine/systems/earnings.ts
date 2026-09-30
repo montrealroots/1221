@@ -45,6 +45,9 @@ export interface YearEarnings {
   /** A lodger's rent in the year, and of it what was taxed outside America (`systems/lodgers.ts`), from 2026-09-30. */
   lodgerRent?: Money;
   lodgerTaxed?: Money;
+  /** Farm rent in the year, and of it what was taxed outside America (`systems/landlease.ts`), from 2026-09-30. */
+  farmRent?: Money;
+  farmTaxed?: Money;
   /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
   sagByProject?: Record<string, Money>;
   withheld: Money;
