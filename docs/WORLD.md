@@ -31,7 +31,7 @@ one day trip (Metro-North, New Haven to Grand Central).
 | 3 | Vehicles: a researched catalog by country, dealers and a used market, finance, title, registration, insurance, fuel, servicing, parking and a home's garage, depreciation, resale; driving as a journey's leg | 1, 2 | Done 2026-09-29 (3a to 3d) |
 | 4 | Land: identifiable parcels, listings, due diligence, offers, closing, taxes, resale, several parcels, combining and splitting where the rules allow | 2 | Done 2026-09-29 (4a and 4b); open items below |
 | 5 | Construction: what to build on a parcel, design, permits, contractors, stages, payments, delays, change orders, inspection, occupancy; renovation and extension of what stands | 4 | Done 2026-09-29 (5a to 5c); open items below |
-| 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a done 2026-09-29; furniture and garages open, below |
+| 6 | A home's contents: furniture, appliances, rooms, with what each makes possible; garages holding vehicles; bedrooms holding people | 3, 5 | 6a and 6b done 2026-09-29; furniture and bedrooms open, below |
 | 7 | Vehicle work: customization with fit rules, shops, work orders; boats and aircraft, crew, and the difference between owning one and being qualified to operate it; charter | 3 | Not begun |
 | 8 | Rentals on a journey: rental cars, holiday lets, their deposits, terms, extensions and damage | 2, 3 | Not begun |
 
@@ -199,9 +199,16 @@ What stood before: every home's fixtures, drawn from each country's survey of wh
 - A home owned can be fitted with a dishwasher, a washing machine, a dryer beside it, air conditioning units, or central air in a house (`systems/appliances.ts`, `content/appliances.ts`, researched in `docs/research/world/research-contents.json`). Each changes the fixture it is, so what it does is what the fixture already does.
 - Prices with their fitting, SLATE taking the middle where a body gives a range, said so: Consumer Reports' and the cost guides' in America; Which?'s in Britain. In Ireland, Canada and Mexico, a retailer's price as a search read it, the retailers refusing automated reads. What nobody prices isn't sold: central air in Britain, Ireland and Mexico, a dryer or a window unit in Mexico. Elsewhere none is sold yet, said so.
 - Each lasts its published life (NAHB's 2007 study: dishwasher 9 years, washer 10, dryer 13; the Department of Energy's room unit 9 and central air 18, the low end of its 18 to 25), then gives out, the home as it was without it. A washer's end leaves a flat its building's machines.
-- Open, and why: appliances in a rented home; what one adds to a home's value; furniture (the spending surveys are researched: BLS, ONS, CSO, Statistics Canada, INEGI; no body prices furnishing a home); a garage built (England's Class E and Ireland's Class 3 limits and cost guides are researched; no official cost).
+- Open, and why: appliances in a rented home; what one adds to a home's value; furniture (the spending surveys are researched: BLS, ONS, CSO, Statistics Canada, INEGI; no body prices furnishing a home); a garage built was open, and 6b built it. Bedrooms holding people wait for a household, which SLATE hasn't kept since the family went with the revamp.
 
 Evidence: `tests/appliances.test.ts` (5); 10 mutations, all killed. One first survived as a redundant guard: an appliance can't be refitted before its end, so the check that the one ending was the one fitted was removed. Another survived because its test never reached the dryer's end: a £400,000 home's thirteen years of bills left the life short of it. The test now advances to that end and checks it came.
+
+#### Stage 6b: a garage built (done 2026-09-29)
+- A detached house with a yard, on a lot of 5,000 sq ft or more, can Build A Garage. It's one car's (Manual for Streets' 6 m by 3 m), at Angi's $26,400 average for a detached garage (a cost guide's), at the town's cost of living as every job is. Its return and its month are SLATE's.
+- It asks New York's, Los Angeles's and New Haven's permits. It's exempt in London, within England's Class E outbuilding limits, and in Dublin, within Ireland's Class 3 25 m².
+- A car kept at a home owned with a garage pays no resident parking permit, which stage 3d had kept for a garage the house came with. The garage door is new the year it's built.
+
+Evidence: `tests/permits.test.ts` (the garage, end to end: built in London and the Puma's Westminster permit gone); 2 mutations, both killed.
 
 ### Stages 7-8 (to be detailed in turn)
 

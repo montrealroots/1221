@@ -965,6 +965,7 @@ function finishWorks(sim: Simulation, person: Person, owned: OwnedHome, works: W
     for (const [feature, part] of [['deck', 'deck'], ['solar', 'solar'], ['pool', 'pool']] as const) if ((a.gains ?? []).includes(feature)) f.parts[part] = year;
     if ((a.drops ?? []).includes('garage')) delete f.parts.garageDoor;
     if (a.gains?.includes('heatPump')) f.parts.hvac = year;
+    if (a.gains?.includes('garage')) f.parts.garageDoor = year;
   }
   owned.improvements.push({ projectId: project.id, at: sim.now, value: adds, cost: works.cost });
   if (person.id === sim.universe.playerId) {

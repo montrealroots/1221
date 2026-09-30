@@ -18,7 +18,9 @@
  * prior approval (£249, the neighbors' 42 days); a bigger suite or a
  * backyard cottage takes a householder application (£548, eight weeks).
  * Dublin: a rear extension to 40 m² is exempt; a bigger one or a cottage
- * takes the €34 application, eight weeks and four for an appeal. Where a
+ * takes the €34 application, eight weeks and four for an appeal. A garage
+ * is exempt in both, within England's Class E outbuilding limits and
+ * Ireland's Class 3 25 m² (from 2026-09-29). Where a
  * suite falls in London's permitted depths turns on the house's plan, which
  * SLATE doesn't draw: SLATE's reading. Elsewhere the permit isn't kept, said
  * so, and neither is building control's charge on an extension.
@@ -31,7 +33,7 @@ import type { Project } from '../content/homes';
 import { LA_FEES, NEW_HAVEN_FEES, SQFT_PER_M2 } from '../content/construction';
 
 /** The works that change the building, and so ask for a permit. */
-export const STRUCTURAL = new Set(['basement', 'attic', 'garage-room', 'bath-add', 'bath-add-upscale', 'suite', 'suite-upscale', 'adu']);
+export const STRUCTURAL = new Set(['garage-build', 'basement', 'attic', 'garage-room', 'bath-add', 'bath-add-upscale', 'suite', 'suite-upscale', 'adu']);
 
 export const WORKS_PERMITS = {
   nyc: { least: 130, first: 5_000, perThousand: 2.6 },

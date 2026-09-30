@@ -310,6 +310,8 @@ export const PROJECTS: readonly Project[] = [
   // Room.
   { id: 'basement', label: 'Finish The Basement', usd: 52_000, recoup: 0.72, days: 45, on: HOUSES, needs: ['basement'], adds: { gains: ['finishedBasement'], drops: ['basement'], size: 600 } },
   { id: 'attic', label: 'Turn The Attic Into A Bedroom', usd: 70_000, recoup: 0.55, days: 45, on: DETACHED, needs: ['attic'], adds: { drops: ['attic'], beds: 1, size: 300 }, bedsUpTo: 7 },
+  // A one-car garage (Manual for Streets' 6 m by 3 m), at Angi's $26,400 average for a detached garage, a cost guide's (research-contents.json, 2026-09-29); its return and its month are SLATE's.
+  { id: 'garage-build', label: 'Build A Garage', usd: 26_400, recoup: 0.6, days: 30, on: DETACHED, needs: ['yard'], lacks: ['garage'], lot: 5_000, adds: { gains: ['garage'] } },
   { id: 'garage-room', label: 'Turn The Garage Into A Room', usd: 28_000, recoup: 0.5, days: 30, on: DETACHED, needs: ['garage'], adds: { drops: ['garage'], size: 250 } },
   { id: 'bath-add', label: 'Add A Bathroom', usd: 60_000, recoup: 0.52, days: 45, on: HOUSES, adds: { baths: 1, size: 48 }, bathsUpTo: 'bedsPlusOne' },
   { id: 'bath-add-upscale', label: 'Add A Primary Bathroom', usd: 110_000, recoup: 0.36, days: 60, on: DETACHED, adds: { baths: 1, size: 100 }, bathsUpTo: 'bedsPlusOne' },

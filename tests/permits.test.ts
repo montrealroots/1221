@@ -12,6 +12,7 @@ import { exchange } from '@/engine/content/currency';
 import { PROJECTS } from '@/engine/content/homes';
 import { ownBuilt, projectCost, type HomeFacts } from '@/engine/systems/homes';
 import { worksPermit } from '@/engine/systems/permits';
+import { modelById, parkingYear } from '@/engine/systems/vehicles';
 
 const project = (id: string) => PROJECTS.find((p) => p.id === id)!;
 const save = (city: string, name: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, name);
@@ -75,5 +76,21 @@ describe('the work waiting for it', () => {
     const fee = sim.universe.transactions.find((t) => t.memo.startsWith('Householder Planning Application'))!;
     expect(fee.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, 548_00, 'GBP'));
     expect(projectCost(sim, owned, project('suite-upscale'))).toBeGreaterThan(0);
+  });
+  it('builds a garage, exempt in London, and a car kept in it pays no resident permit after', () => {
+    const sim = save('uk-eng-london', 'permit-garage');
+    const owned = ownBuilt(sim, sim.player, { cityId: 'uk-eng-london', facts: house(), price: 600_000_00, closing: 0 });
+    expect(worksPermit(sim, 'uk-eng-london', project('garage-build'), 20_000_00)).toBeUndefined();
+    expect(worksPermit(sim, 'ie-lei-dublin', project('garage-build'), 20_000_00)).toBeUndefined();
+    expect(worksPermit(sim, 'us-ny-newyork', project('garage-build'), 20_000_00)).toBeDefined();
+    const puma = modelById('gb-ford-puma')!;
+    expect(parkingYear(sim.player, puma, 'uk-eng-london')).toBeDefined();
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 100_000_00, 'GBP');
+    const r = sim.execute<{ doneAt: number }>({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'garage-build' } });
+    expect(r.ok, r.error).toBe(true);
+    sim.advanceTo(r.value!.doneAt + MS_DAY);
+    expect(owned.facts.features).toContain('garage');
+    expect(owned.facts.parts.garageDoor).toBe(new Date(sim.now).getUTCFullYear());
+    expect(parkingYear(sim.player, puma, 'uk-eng-london')).toBeUndefined();
   });
 });
