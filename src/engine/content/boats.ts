@@ -209,3 +209,21 @@ export const BOAT_REPO: Readonly<Partial<Record<BoatState, { noticeDays: number;
   // A financed boat carried into Ontario (from 2026-10-01): the Personal Property Security Act's 15 days, the shortfall owed, as a car's.
   'CA-ON': { noticeDays: 15, shortfall: 'owed' },
 };
+
+/**
+ * A boat kept in the water has its bottom painted with antifouling each
+ * spring, before launch (from 2026-09-30, `docs/research/world/research-customization.json`),
+ * in dollars a foot of its length:
+ * - New York: Nichols Yacht Yard, Mamaroneck, $27.50 a foot to 25 feet, the
+ *   ablative paint in it. Connecticut takes it too, the nearest yard read.
+ * - California: Monterey Bay Boatworks' $10 a foot for the first coat and
+ *   its $1.50 a foot environmental fee; the paint itself isn't published
+ *   there, and isn't charged.
+ * One kept on its trailer at home isn't painted: it doesn't sit in the
+ * water. Britain's, Ireland's and Ontario's yards weren't read.
+ */
+export const BOTTOM_PAINT: Readonly<Partial<Record<BoatState, { perFt: number; basis: string }>>> = {
+  'US-NY': { perFt: 27.5, basis: 'Nichols Yacht Yard, Mamaroneck, $27.50 a foot, paint included' },
+  'US-CT': { perFt: 27.5, basis: 'Nichols Yacht Yard, Mamaroneck, New York, the nearest yard read' },
+  'US-CA': { perFt: 10 + 1.5, basis: 'Monterey Bay Boatworks, $10 a foot and a $1.50 environmental fee; the paint isn’t published' },
+};

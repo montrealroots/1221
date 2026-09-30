@@ -448,3 +448,26 @@ describe('a save from before boats and planes were lists', () => {
     expect(paidFor(sim, 'The boat’s insurance, a month')).toHaveLength(1);
   });
 });
+
+describe('its bottom', () => {
+  it('is painted each April while it’s kept in the water, at the state’s yard a foot, and not while it’s kept on its trailer', () => {
+    const toMay = (sim: Simulation) => { for (let g = 0; g < 400 && zonedParts(sim.now, 'America/New_York').month !== 5; g += 1) sim.advanceBy(MS_DAY); };
+    const ny = save('us-ny-newyork', 'boat-bottom');
+    expect(ny.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    toMay(ny);
+    expect(paidFor(ny, 'Antifouling on the boat’s bottom, for the season')).toEqual([usd(ny, Math.round(27.5 * BOAT_RULES['US-NY'].model.lengthFt * 100))]);
+    // On its trailer at a house of one's own, it isn't.
+    const house = save('us-ca-losangeles', 'boat-bottom-house');
+    const facts: HomeFacts = { type: 'house', address: 'Test House', beds: 3, baths: 2, size: 1_600, built: 2000, features: [], parts: {}, hoaUsd: 0 };
+    const owned = ownBuilt(house, house.player, { cityId: 'us-ca-losangeles', facts, price: 900_000_00, closing: 0 });
+    house.player.home = { kind: 'owned', cityId: 'us-ca-losangeles', homeId: owned.id, since: house.now };
+    expect(house.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    toMay(house);
+    expect(paidFor(house, 'Antifouling on the boat’s bottom, for the season')).toEqual([]);
+    // In Los Angeles in a slip, Monterey Bay's labor and fee a foot.
+    const la = save('us-ca-losangeles', 'boat-bottom-la');
+    expect(la.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    toMay(la);
+    expect(paidFor(la, 'Antifouling on the boat’s bottom, for the season')).toEqual([usd(la, Math.round(11.5 * BOAT_RULES['US-CA'].model.lengthFt * 100))]);
+  });
+});

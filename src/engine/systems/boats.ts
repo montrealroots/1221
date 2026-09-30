@@ -31,7 +31,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
 import { FUEL } from '../content/vehiclefees';
-import { BOAT_LOAN, BOAT_REPO, BOAT_RULES, BOAT_WINTER, CHARTERS, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, laidUp, type BoatState, type Charter } from '../content/boats';
+import { BOAT_LOAN, BOAT_REPO, BOAT_RULES, BOAT_WINTER, CHARTERS, MARINA_MARKUP_USD, T18, VESSEL_TAX_CT, isBoatState, laidUp, type BoatState, type Charter, BOTTOM_PAINT } from '../content/boats';
 import { REPOSSESSED_ON_RECORD, REPO_FEES_USD } from '../content/repossession';
 import { markRecord } from './credit';
 import { inTheBank, owe, payFromBank } from './household';
@@ -226,6 +226,10 @@ export function registerBoats(sim: Simulation): void {
       else pay(winter.storage(rules.model.lengthFt), 'Boat hauled and stored for the winter');
       boat.winterPaid = p.year;
     }
+    // Each April, a boat kept in the water has its bottom painted before it's launched (`BOTTOM_PAINT`). Its month comes
+    // every thirty days, so once in April's thirty.
+    const bottom = BOTTOM_PAINT[boat.state];
+    if (bottom && p.month === 4 && !boat.repossessed && !onItsTrailer(person, boat)) pay(bottom.perFt * rules.model.lengthFt, 'Antifouling on the boat’s bottom, for the season');
     scheduleBoat(s, person, boat);
   });
 
