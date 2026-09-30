@@ -18,6 +18,11 @@
  * mortgage when it's finished (`BUILD_LOANS`). Not kept, and said so: delays
  * and overruns (no authority publishes a rate for a house), change orders,
  * a structural warranty, builder's risk insurance, and a failed inspection.
+ *
+ * From 2026-09-30, a stage's retention is held back where the law or the
+ * contract sets one, and paid after completion (`RETENTION`), and a house
+ * waits for its certificate of occupancy where a wait is published
+ * (`OCCUPANCY_WAIT_DAYS`).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -27,7 +32,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { LAND_MARKETS } from '../content/land';
-import { BC_PERMIT, BUILDERS_RISK_A_MONTH, BUILD_LOANS, BUILD_RULES, ENGLISH_WARRANTY, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
+import { OCCUPANCY_WAIT_DAYS, RETENTION, BC_PERMIT, BUILDERS_RISK_A_MONTH, BUILD_LOANS, BUILD_RULES, ENGLISH_WARRANTY, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
 import { parcelsOf, type Parcel } from './land';
 import { HOME, ownBuilt, paymentFor } from './homes';
 import { expenseFor, inTheBank, owe, payFromBank } from './household';
@@ -35,6 +40,7 @@ import { CITIES } from '../content/geography';
 
 export const BUILD_STAGE_KIND = 'build.stage';
 export const BUILD_LOAN_KIND = 'build.loan_month';
+export const RETENTION_KIND = 'build.retention';
 /** A built house's one feature kept: its yard, the lot around it (`homes.ts`'s ids, not words on a screen). */
 const YARD = ['yard'] as const;
 const MONTH_DAYS = 30.436875;
@@ -58,6 +64,8 @@ export interface Build {
   stage: number;
   /** A construction loan (from 2026-09-30): its account, and the share of each stage it pays. */
   loan?: { accountId: string; share: number; rate: number; months: number };
+  /** What's been held back of the stages' bills, in the place's money, cents (`RETENTION`, from 2026-09-30). */
+  retained?: Money;
   /** A finished stage's bill the bank couldn't pay, and when the work stopped for it. */
   unpaid?: Money;
   stoppedAt?: Instant;
@@ -226,6 +234,16 @@ function finish(sim: Simulation, person: Person, b: Build): void {
   p.builtOn = owned.id;
   for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.payload.parcelId === p.id) sim.timeline.cancel(one.id, sim.now);
   b.log.push({ at: sim.now, line: `${rules.occupancy} issued` });
+  // The retention, paid at its time; and a wait before it may be lived in, where one is published.
+  const r = RETENTION[b.place];
+  if (r && (b.retained ?? 0) > 0) {
+    const all = inSave(sim, b.retained!, BUILD_RULES[b.place].currency);
+    const now = r.halfAtCompletion ? Math.round(all / 2) : 0;
+    if (now > 0 && !payFromBank(sim, person, now, 'The contractor, half the retention at completion', 'construction')) owe(sim, person, now, 'The contractor’s retention', 'construction');
+    sim.schedule({ at: sim.now + r.releaseDays * MS_DAY, kind: RETENTION_KIND, label: 'Retention Released', category: 'home', priority: 30, payload: { personId: person.id, amount: all - now } });
+  }
+  const wait = OCCUPANCY_WAIT_DAYS[b.place];
+  if (wait) owned.occupiableFrom = sim.now + wait * MS_DAY;
   // The construction loan becomes the house's mortgage, its permanent loan.
   if (b.loan) {
     const building = sim.universe.accounts[b.loan.accountId]!;
@@ -242,6 +260,13 @@ function finish(sim: Simulation, person: Person, b: Build): void {
 }
 
 export function registerConstruction(sim: Simulation): void {
+  sim.onSchedule(RETENTION_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const amount = Number(item.payload.amount);
+    if (!person || !(amount > 0)) return;
+    if (!payFromBank(s, person, amount, 'The contractor, the retention released', 'construction')) owe(s, person, amount, 'The contractor’s retention', 'construction');
+  });
+
   sim.onCommand<{ parcelId: string; designId: string; live?: boolean; financed?: boolean }, { fees: Money; finishesBy: Instant }>('build.start', (p, { sim: s }) => {
     const person = s.player;
     const live = p?.live !== false;
@@ -310,15 +335,20 @@ export function registerConstruction(sim: Simulation): void {
     // The lender advances its share of each stage; the rest is the owner's.
     const advanced = b.loan ? Math.round(bill * b.loan.share) : 0;
     if (advanced > 0) s.post({ memo: `The construction loan, ${STAGES[b.stage]!.name}`, category: 'construction', postings: [{ accountId: b.loan!.accountId, amount: -advanced }, { accountId: s.nominalAccount('expense', expenseFor('construction')).id, amount: advanced }] });
-    const due = bill - advanced;
+    // What the law or the contract holds back of the bill until the house is finished (`RETENTION`).
+    const held = Math.round(b.amounts[b.stage]! * (RETENTION[b.place]?.share ?? 0));
+    const due = bill - advanced - inSave(s, held, BUILD_RULES[b.place].currency);
     if (!payFromBank(s, person, due, `The contractor, ${STAGES[b.stage]!.name}`, 'construction')) {
-      b.unpaid = b.amounts[b.stage]! - Math.round(b.amounts[b.stage]! * (b.loan?.share ?? 0));
+      // The retention is held whether or not the rest is paid now.
+      b.unpaid = b.amounts[b.stage]! - Math.round(b.amounts[b.stage]! * (b.loan?.share ?? 0)) - held;
+      b.retained = (b.retained ?? 0) + held;
       b.stoppedAt = s.now;
       b.log.push({ at: s.now, line: `${STAGES[b.stage]!.name} done; its bill unpaid, work stopped` });
       say(s, person, 'Work Stopped', `The contractor finished the ${STAGES[b.stage]!.name.toLowerCase()} on ${formatDate(s.now, s.zone)} and stopped until ${formatMoney(due, saveCurrency(s.universe), { cents: false })} is paid.`, 80);
       return;
     }
-    b.log.push({ at: s.now, line: `${STAGES[b.stage]!.name} done and paid` });
+    b.retained = (b.retained ?? 0) + held;
+    b.log.push({ at: s.now, line: `${STAGES[b.stage]!.name} done and paid${held > 0 ? ', its retention held back' : ''}` });
     advance(s, person, b);
   });
 }

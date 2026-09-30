@@ -54,6 +54,42 @@
 
 export type BuildPlace = 'nyc' | 'new-haven' | 'los-angeles' | 'london' | 'ny-state' | 'ct-state' | 'ca-state' | 'leinster' | 'ontario' | 'bc';
 
+/**
+ * What's held back of each stage's bill until the house is finished, and
+ * when it's paid (from 2026-09-30, `docs/research/world/research-construction-choices.json`,
+ * law firms' summaries of the statutes, not the statutes read):
+ * - New York: at most 5% on a private contract of $150,000 or more, released
+ *   within 30 days of final approval (GBL 756-a, from 2023-11-17).
+ * - California: at most 5% on a private contract from 2026 (Civil Code 8811,
+ *   SB 61), released within 45 days of completion (Civil Code 8812, not read).
+ * - Ontario: the Construction Act's 10% holdback, paid once the 60-day lien
+ *   period has run.
+ * - British Columbia: the Builders Lien Act's 10%, held 55 days.
+ * - London: the JCT Minor Works form's 5%, half released at practical
+ *   completion and half after its three-month rectification period.
+ * Connecticut's 7.5% cap is commonly cited but wasn't verified, and Ireland's
+ * Construction Contracts Act exempts a house its owner will live in: none is
+ * held there.
+ */
+export const RETENTION: Readonly<Partial<Record<BuildPlace, { share: number; releaseDays: number; halfAtCompletion?: boolean }>>> = {
+  nyc: { share: 0.05, releaseDays: 30 },
+  'ny-state': { share: 0.05, releaseDays: 30 },
+  'los-angeles': { share: 0.05, releaseDays: 45 },
+  'ca-state': { share: 0.05, releaseDays: 45 },
+  ontario: { share: 0.1, releaseDays: 60 },
+  bc: { share: 0.1, releaseDays: 55 },
+  london: { share: 0.05, releaseDays: 91, halfAtCompletion: true },
+};
+
+/**
+ * Days after the final inspection before a finished house may be lived in,
+ * where published: Los Angeles's certificate of occupancy two to four weeks
+ * on (secondary, SLATE's three), Toronto's occupancy permit applied for ten
+ * business days ahead (the City of Toronto, two weeks). Elsewhere it's issued
+ * with the final inspection, as SLATE had it.
+ */
+export const OCCUPANCY_WAIT_DAYS: Readonly<Partial<Record<BuildPlace, number>>> = { 'los-angeles': 21, 'ca-state': 21, ontario: 14 };
+
 export const SQFT_PER_M2 = 10.7639104;
 
 export interface Design { id: string; sqft: number; beds: number; baths: number; basis: string }

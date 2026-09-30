@@ -472,6 +472,8 @@ export interface Tenancy {
 
 export interface OwnedHome {
   id: string;
+  /** A house just built, not to be lived in before its certificate of occupancy (`systems/construction.ts`, from 2026-09-30). */
+  occupiableFrom?: Instant;
   /** A burglar alarm fitted, monitored, its discount on the premium (`systems/alarm.ts`, from 2026-09-30). */
   alarm?: boolean;
   listingId: string;
@@ -2031,6 +2033,7 @@ export function refinanceRefusal(sim: Simulation, person: Person, owned: OwnedHo
 export function moveInRefusal(sim: Simulation, person: Person, owned: OwnedHome): string | undefined {
   if (livingIn(person)?.id === owned.id) return 'You live in it.';
   if (owned.cityId !== person.currentLocationId) return `You’re not in ${CITIES.get(owned.cityId)?.name ?? 'its town'}.`;
+  if (owned.occupiableFrom !== undefined && sim.now < owned.occupiableFrom) return `Its certificate of occupancy comes ${formatDate(owned.occupiableFrom, sim.zone)}; it can’t be lived in before.`;
   // Until 2026-09-29 an actor on a shoot in London could move into a home they owned there, and live abroad on a visitor's stay.
   const abroad = residenceRefusal(person, owned.cityId, sim.now);
   if (abroad) return abroad;

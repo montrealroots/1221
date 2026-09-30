@@ -25,6 +25,8 @@ const lot = (market: RegExp, acres: number, paid = 500_000_00): Parcel => ({ id:
 const own = (sim: Simulation, market: RegExp, acres: number, paid = 500_000_00) => { const p = { ...lot(market, acres, paid), id: `parcel_${parcelsOf(sim.player).length + 1}`, boughtAt: sim.now }; parcelsOf(sim.player).push(p); return p; };
 const fee = (q: BuildQuote, re: RegExp) => q.fees.find((l) => re.test(l.label))!.amount;
 const memoed = (sim: Simulation, re: RegExp) => sim.universe.transactions.filter((t) => re.test(t.memo));
+/** New York's 5% held back of a stage's bill until the house is finished (`RETENTION`, from 2026-09-30). */
+const held = (amount: number) => Math.round(amount * 0.05);
 
 describe('what building costs', () => {
   it('prices New York at the Northeast’s $179.30 a square foot, with DOB’s $0.06 a square foot, and fits only what R2’s 0.75 takes', () => {
@@ -142,7 +144,8 @@ describe('building it', () => {
     sim.advanceTo(r.value!.finishesBy + MS_DAY);
     const bills = memoed(sim, /^The contractor, /);
     expect(bills).toHaveLength(STAGES.length);
-    expect(bills.reduce((a, t) => a + t.postings.filter((x) => x.amount > 0).reduce((b, x) => b + x.amount, 0), 0)).toBe(q.stages.reduce((a, s) => a + inSave(sim, s.amount, 'USD'), 0));
+    // Each stage less New York's 5% retention, released thirty days after it's finished.
+    expect(bills.reduce((a, t) => a + t.postings.filter((x) => x.amount > 0).reduce((b, x) => b + x.amount, 0), 0)).toBe(q.stages.reduce((a, s) => a + inSave(sim, s.amount, 'USD') - inSave(sim, held(s.amount), 'USD'), 0));
     expect(sim.player.building).toBeUndefined();
     const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House In Queens')!;
     expect(home).toBeDefined();
@@ -175,7 +178,8 @@ describe('building it', () => {
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
     sim.advanceBy((q.stages[0]!.days + 1) * MS_DAY);
     const b = sim.player.building!;
-    expect(b.unpaid).toBe(q.stages[0]!.amount);
+    expect(b.unpaid).toBe(q.stages[0]!.amount - held(q.stages[0]!.amount));
+    expect(b.retained).toBe(held(q.stages[0]!.amount));
     expect(b.stoppedAt).toBeDefined();
     expect(b.stage).toBe(0);
     // Stopped, nothing moves on.
@@ -185,7 +189,7 @@ describe('building it', () => {
     fund(sim, inSave(sim, q.contract, 'USD'));
     const paid = sim.execute<{ paid: number }>({ kind: 'build.pay', payload: {} });
     expect(paid.ok, paid.error).toBe(true);
-    expect(paid.value!.paid).toBe(inSave(sim, q.stages[0]!.amount, 'USD'));
+    expect(paid.value!.paid).toBe(inSave(sim, q.stages[0]!.amount - held(q.stages[0]!.amount), 'USD'));
     expect(sim.player.building!.stage).toBe(1);
     expect(sim.player.building!.unpaid).toBeUndefined();
   });
@@ -256,13 +260,14 @@ describe('a construction loan', () => {
     const bills = memoed(sim, /^The contractor, /);
     const own10 = bills.reduce((a, t) => a + t.postings.filter((x) => x.amount > 0).reduce((b, x) => b + x.amount, 0), 0);
     const all = q.stages.reduce((a, s) => a + inSave(sim, s.amount, 'USD'), 0);
-    expect(Math.abs(own10 - Math.round(all * 0.1))).toBeLessThan(10);
+    // Less the 5% retention, which comes out of the owner's part.
+    expect(Math.abs(own10 - Math.round(all * 0.05))).toBeLessThan(20);
     expect(memoed(sim, /^The construction loan’s interest/).length).toBeGreaterThan(3);
     const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House In Queens')!;
     expect(home.mortgage).toBeDefined();
     expect(home.mortgage!.rate).toBe(0.0725);
     const balance = -sim.universe.accounts[home.mortgage!.accountId]!.balance;
-    expect(Math.abs(balance - (all - own10))).toBeLessThan(10);
+    expect(Math.abs(balance - Math.round(all * 0.9))).toBeLessThan(20);
     expect(home.mortgage!.payment).toBe(paymentFor(balance, 0.0725, 360));
     expect(account.closedAt).toBeDefined();
     expect(sim.universe.accounts[account.id]!.balance).toBe(0);
@@ -278,7 +283,7 @@ describe('a construction loan', () => {
     for (const x of Object.values(sim.universe.accounts)) if (x.ownerId === sim.player.id && !x.nominal && x.balance > 0) x.balance = 0;
     for (let g = 0; g < 400 && sim.player.building?.unpaid === undefined; g += 1) sim.advanceBy(MS_DAY);
     const b = sim.player.building!;
-    expect(b.unpaid).toBe(b.amounts[b.stage]! - Math.round(b.amounts[b.stage]! * 0.9));
+    expect(b.unpaid).toBe(b.amounts[b.stage]! - Math.round(b.amounts[b.stage]! * 0.9) - held(b.amounts[b.stage]!));
   });
 
   it('refuses a record lenders won’t take, and where no lender’s terms are kept', () => {
@@ -289,5 +294,51 @@ describe('a construction loan', () => {
     const ie = save('ie-lei-dublin', 'build-loan-ie');
     const f = own(ie, /Leinster/, 10);
     expect(buildRefusal(ie, ie.player, f.id, 'ie-scsi', true, true) ?? '').toMatch(/no construction lender/);
+  });
+});
+
+describe('retention and the certificate of occupancy', () => {
+  it('releases New York’s 5% thirty days after the house is finished', () => {
+    const sim = save('us-ny-newyork', 'build-retain-ny');
+    const p = own(sim, /Queens/, 2_850 / 43_560, 380_000_00);
+    const q = buildQuote(p, 'ne-owner', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total, 'USD'));
+    const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } });
+    expect(r.ok, r.error).toBe(true);
+    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    expect(memoed(sim, /retention released/)).toHaveLength(0);
+    sim.advanceBy(31 * MS_DAY);
+    const release = memoed(sim, /retention released/);
+    expect(release).toHaveLength(1);
+    expect(release[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0)).toBe(inSave(sim, q.stages.reduce((a, s) => a + held(s.amount), 0), 'USD'));
+  });
+
+  it('pays half of London’s retention at completion and half three months on', () => {
+    const sim = save('uk-eng-london', 'build-retain-gb');
+    const p = own(sim, /Croydon/, 200 / 4_046.8564224, 400_000_00);
+    const q = buildQuote(p, 'nds-3b5p', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total, 'GBP'));
+    const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'nds-3b5p', live: true } });
+    expect(r.ok, r.error).toBe(true);
+    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    expect(memoed(sim, /half the retention at completion/)).toHaveLength(1);
+    expect(memoed(sim, /retention released/)).toHaveLength(0);
+    sim.advanceBy(92 * MS_DAY);
+    expect(memoed(sim, /retention released/)).toHaveLength(1);
+  });
+
+  it('keeps a finished Los Angeles house empty three weeks, until its certificate of occupancy', () => {
+    const sim = save('us-ca-losangeles', 'build-occupy-la');
+    const p = own(sim, /Los Angeles/, 5_000 / 43_560, 400_000_00);
+    const q = buildQuote(p, 'w-owner', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total + 100_000_00, 'USD'));
+    const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'w-owner' } });
+    expect(r.ok, r.error).toBe(true);
+    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    const home = homesOf(sim.player).find((h) => h.cityId === 'us-ca-losangeles')!;
+    expect(sim.execute({ kind: 'home.move_in', payload: { homeId: home.id } }).error).toMatch(/certificate of occupancy/);
+    sim.advanceBy(22 * MS_DAY);
+    const moved = sim.execute({ kind: 'home.move_in', payload: { homeId: home.id } });
+    expect(moved.ok, moved.error).toBe(true);
   });
 });

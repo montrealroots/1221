@@ -509,6 +509,24 @@ Renovation and extension stood before this work (`homes.ts`: thirty-nine jobs, f
 
 Evidence: `tests/permits.test.ts` (6); 7 mutations, all killed.
 
+#### Stage 5c: retention, and the certificate of occupancy (done 2026-09-30)
+Researched in `docs/research/world/research-construction-choices.json` (`RETENTION`, `OCCUPANCY_WAIT_DAYS` in `content/construction.ts`).
+- **Retention:** each stage's bill has the law's or the contract's share held back, paid after completion. The sources are law firms' summaries of the statutes; the statutes weren't read.
+  - New York: 5% at most, within 30 days of final approval (GBL 756-a).
+  - California: 5% from 2026 (Civil Code 8811), within 45 days (8812, not read).
+  - Ontario: the Construction Act's 10% holdback, after the 60-day lien period.
+  - British Columbia: the Builders Lien Act's 10%, held 55 days.
+  - London: the JCT Minor Works form's 5%, half at practical completion and half three months on.
+  - Held from the owner's part of a financed stage, and set aside even when a stage's bill goes unpaid, so paying it later doesn't hand it over early.
+  - None held in Connecticut (its 7.5% cap unverified) or Ireland, whose Construction Contracts Act exempts a house its owner will live in.
+- **The certificate of occupancy:** a finished house can't be lived in before its certificate: three weeks in Los Angeles (two to four, secondary), two in Toronto (its ten business days). Elsewhere it's issued with the final inspection.
+- **Not kept:**
+  - Delays and change orders, whose only figures are for large projects.
+  - A spec tier's effect on value, as no free source splits a new home's cost by spec.
+  - An architect's fee, which the AIA doesn't publish.
+
+Evidence: `tests/construction.test.ts`, 3 new tests and 4 updated for the retention. 8 mutations, all killed in the end; one needed a test, the retention set aside on an unpaid stage.
+
 ### Stage 6: A home's contents
 
 What stood before: every home's fixtures, drawn from each country's survey of what households have (`content/homes.ts`), decide real things. A dishwasher keeps the place tidier; laundry at home spares the laundromat; air conditioning cools hot nights and runs up the summer's bills; a bath, somewhere outside, a gym each open what can be done. None could be changed.
