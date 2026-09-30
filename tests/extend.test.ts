@@ -12,7 +12,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, normalDate, zonedParts } from '@/eng
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
-import { extendQuote, journeysOf, letQuote, slotOf, trainRefund } from '@/engine/systems/journey';
+import { changeFee, extendQuote, journeysOf, letQuote, slotOf, trainRefund } from '@/engine/systems/journey';
 import { railRouteById } from '@/engine/systems/rail';
 import { rentalDays, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { stayPrice } from '@/engine/systems/stays';
@@ -105,7 +105,7 @@ describe('staying longer', () => {
     expect(car.status).toBe('returned');
   });
 
-  it('refuses a day no later than the way home, and a flight home abroad', () => {
+  it('refuses a day no later than the way home, and moves a flight abroad only where its airline’s fee is kept', () => {
     const { sim, out, back, day } = there('extend-refuse');
     liveTo(sim, out.arriveAt + (out.lateMinutes ?? 0) * 60_000 + 2 * MS_HOUR);
     expect(extendQuote(sim, sim.player, back.id, day + 2 * MS_DAY, 1)).toMatch(/later than now/);
@@ -115,7 +115,17 @@ describe('staying longer', () => {
     expect(b.ok, b.error).toBe(true);
     const o = journeysOf(uk.player).find((j) => j.id === b.value!.journeyId)!;
     liveTo(uk, o.arriveAt + (o.lateMinutes ?? 0) * 60_000 + 2 * MS_HOUR);
-    expect(extendQuote(uk, uk.player, b.value!.returnId, d + 7 * MS_DAY, 1)).toMatch(/outside the United States/);
+    // To or from Ireland, Aer Lingus's €40 short-haul fee and the fare's difference.
+    const ie = extendQuote(uk, uk.player, b.value!.returnId, d + 7 * MS_DAY, 1);
+    if (typeof ie === 'string') throw new Error(ie);
+    const ieBack = journeysOf(uk.player).find((j) => j.id === b.value!.returnId)!;
+    expect(ie.travel).toBe(changeFee(uk, 'ie-lei-dublin', 'uk-eng-london')! + Math.max(0, ie.legs.reduce((q, l) => q + l.fare, 0) - ieBack.legs.reduce((q, l) => q + l.fare, 0)));
+    expect(changeFee(uk, 'ie-lei-dublin', 'uk-eng-london')).toBe(exchange(40_00, 'EUR', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'ie-lei-dublin', 'us-ny-newyork')).toBe(exchange(100_00, 'EUR', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'ca-on-toronto', 'ca-bc-vancouver')).toBe(exchange(110_00, 'CAD', saveCurrency(uk.universe)));
+    expect(changeFee(uk, 'us-ny-newyork', 'us-ca-losangeles')).toBe(0);
+    // Within Britain, British Airways' fee couldn't be read: not moved.
+    expect(changeFee(uk, 'uk-eng-london', 'uk-sct-edinburgh')).toBeUndefined();
   });
 
   it('moves a train home and a holiday let in Edinburgh: the old ticket refunded on its terms, the let’s price for the longer stay', () => {

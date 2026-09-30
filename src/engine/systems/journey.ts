@@ -652,7 +652,8 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   const out = partnerOf(person, back);
   if (!out || person.currentLocationId !== back.fromCity) return 'A stay is made longer once you’re there.';
   const air = !back.by;
-  if (air && (isoOfCity(back.fromCity) !== 'US' || isoOfCity(back.toCity) !== 'US')) return 'SLATE keeps no airline’s change fee outside the United States, so a flight home abroad isn’t moved.';
+  const fee = air ? changeFee(sim, back.fromCity, back.toCity) : 0;
+  if (fee === undefined) return 'SLATE keeps no airline’s change fee for this flight, so it isn’t moved.';
   const planned = planBy(sim, back.by, back.fromCity, back.toCity, day, slot, back.bags, back.cabin ?? 'economy');
   if (typeof planned === 'string') return planned;
   const legs = air ? asRoundTrip(planned) : planned;
@@ -661,7 +662,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   if (clash) return `It runs into ${clash}.`;
   const old = total(back.legs);
   const route = railRouteById(back.by);
-  const travel = air ? Math.max(0, total(legs) - old) : route ? total(legs) - trainRefund(sim, back, route) : total(legs) - old;
+  const travel = air ? fee! + Math.max(0, total(legs) - old) : route ? total(legs) - trainRefund(sim, back, route) : total(legs) - old;
   const nights = nightsBetween(back.fromCity, out.arriveAt, legs[0]!.departAt);
   let stay = 0;
   if (out.let) {
@@ -710,3 +711,27 @@ export const LET_DAMAGE = { share: 0.0002, usd: 1_000 } as const;
 
 /** Whether a stay in a let ends in a claim (decider `travel.let_damage`). */
 export const letDamaged = (sim: Simulation, person: Person, journeyId: string): boolean => sim.rng('travel.let_damage', person.id, journeyId).next() < LET_DAMAGE.share;
+
+/**
+ * An airline's fee to move a flight, from 2026-09-30, in the save's money, or
+ * nothing where none is kept (`docs/research/world/research-travel-aviation-boats.json`).
+ * SLATE's flights name no airline, so a flight's carrier is taken as the one
+ * whose fees are published for it: within the United States none, since
+ * United, Delta and American ended domestic change fees in 2020; to or from
+ * Ireland Aer Lingus's online fee, €40 short-haul and €100 across the
+ * Atlantic; within Canada Air Canada's Standard fare, the middle of its
+ * C$100 to C$120. The fare's difference is paid on top wherever it's dearer.
+ */
+export function changeFee(sim: Simulation, fromCity: string, toCity: string): Money | undefined {
+  const a = isoOfCity(fromCity);
+  const b = isoOfCity(toCity);
+  const cur = saveCurrency(sim.universe);
+  const money = (units: number, currency: string) => { const c = Math.round(units * 100); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
+  if (a === 'US' && b === 'US') return 0;
+  if (a === 'IE' || b === 'IE') {
+    const other = a === 'IE' ? b : a;
+    return other === 'US' || other === 'CA' ? money(100, 'EUR') : money(40, 'EUR');
+  }
+  if (a === 'CA' && b === 'CA') return money(110, 'CAD');
+  return undefined;
+}
