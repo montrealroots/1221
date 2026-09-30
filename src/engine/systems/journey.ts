@@ -39,7 +39,7 @@ import { itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
-import { classFor, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
+import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'drive' | 'arrival';
@@ -312,6 +312,7 @@ export function planDrive(sim: Simulation, person: Person, vehicleId: string, fr
   const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
   if (!v) return 'That isn’t a car you own.';
   if (v.repossessed) return 'The lender has the car.';
+  if (forOutings(modelById(v.modelId)!)) return 'A bicycle or an ATV isn’t taken on a journey between towns.';
   if ((willBeAt ?? v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
   const may = mayDrive(person, fromCity, day, day, classFor(modelById(v.modelId)!));

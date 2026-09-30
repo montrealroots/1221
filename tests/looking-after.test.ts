@@ -44,7 +44,8 @@ describe('looking after yourself', () => {
       sim.player.living = { clean: 7, dirty: 7, drying: [], tidy: 30 };
       // A bath, a pool, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
       // A boat is its owner's (`systems/boats.ts`, tested in `tests/boats.test.ts`).
-      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'outside', 'boat', 'charter'].includes(action)) return;
+      // A bicycle and an ATV are their owner's (`systems/outings.ts`, tested in `tests/outings.test.ts`).
+      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'outside', 'boat', 'charter', 'ride', 'trail'].includes(action)) return;
       const minutes = minutesFor(sim, action);
       const before = sim.now;
       const result = doIt(sim, action);

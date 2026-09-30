@@ -26,6 +26,8 @@ import { CITIES } from '../content/geography';
 import { CAR_MODELS, type CarModel, type VehicleKind } from '../content/vehiclecatalog';
 import { BIKE_MODELS } from '../content/bikecatalog';
 import { RV_MODELS } from '../content/rvcatalog';
+import { RIDE_MODELS } from '../content/ridecatalog';
+import { ATV_FEES, ATV_INSURANCE } from '../content/rides';
 import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
 import { owe, payFromBank, spend } from './household';
@@ -106,7 +108,7 @@ const CURRENCY: Record<Jurisdiction, string> = { 'US-NY': 'USD', 'US-CT': 'USD',
  */
 export function parkingYear(person: Person, model: CarModel, cityId: string): { amount: Money; currency: string } | undefined {
   // A motorcycle's parking isn't kept: Westminster's and Dublin's permits are a car's.
-  if (onTwoWheels(model)) return undefined;
+  if (onTwoWheels(model) || forOutings(model)) return undefined;
   if ((person.homes ?? []).some((h) => h.cityId === cityId && !h.selling && (h.facts?.features ?? []).includes('garage'))) return undefined;
   if (cityId === PERMITS.london.cityId) {
     const pounds = model.fuel === 'ev' ? PERMITS.london.ev : bracket(PERMITS.london.bands, model.co2 ?? 150);
@@ -120,6 +122,15 @@ export function parkingYear(person: Person, model: CarModel, cityId: string): { 
 export const kindOf = (m: CarModel): VehicleKind => m.kind ?? 'car';
 /** Whether it's ridden on two wheels: a motorcycle's or a scooter's rules. */
 export const onTwoWheels = (m: CarModel) => kindOf(m) === 'motorcycle' || kindOf(m) === 'scooter';
+/** Whether it's for an outing, not the road: a bicycle, e-bike or ATV isn't driven every day or between towns (`systems/life.ts`). */
+export const forOutings = (m: CarModel) => kindOf(m) === 'bicycle' || kindOf(m) === 'ebike' || kindOf(m) === 'atv';
+/** Whether it's registered where it's kept, and so renews: a road vehicle, and an ATV where a renewal is asked. */
+export function registers(m: CarModel, j: Jurisdiction): boolean {
+  if (kindOf(m) === 'bicycle' || kindOf(m) === 'ebike') return false;
+  if (kindOf(m) === 'atv') { const f = ATV_FEES[j as keyof typeof ATV_FEES]; return Boolean(f && 'renew' in f); }
+  return true;
+}
+
 /** Whether it's a home on wheels, which a campground takes (`systems/stays.ts`). */
 export const sleepsIn = (m: CarModel) => kindOf(m) === 'motorhome' || kindOf(m) === 'campervan';
 /** The license class a model is ridden or driven on: a car license drives a van or any motorhome SLATE sells (New York's class D to 26,000 lb, Britain's B to 3,500 kg, Ontario's G to 11,000 kg). */
@@ -128,10 +139,10 @@ export const classFor = (m: CarModel): VehicleClass => (onTwoWheels(m) ? 'motorc
 /** What's on sale where a town is, of a kind: cars, motorcycles or scooters. */
 export function modelsFor(cityId: string, kind: VehicleKind = 'car'): CarModel[] {
   const j = jurisdictionOf(cityId);
-  return j ? [...CAR_MODELS, ...BIKE_MODELS, ...RV_MODELS].filter((m) => m.market === MARKET[j] && kindOf(m) === kind) : [];
+  return j ? [...CAR_MODELS, ...BIKE_MODELS, ...RV_MODELS, ...RIDE_MODELS].filter((m) => m.market === MARKET[j] && kindOf(m) === kind) : [];
 }
 
-export const modelById = (id: string) => CAR_MODELS.find((m) => m.id === id) ?? BIKE_MODELS.find((m) => m.id === id) ?? RV_MODELS.find((m) => m.id === id);
+export const modelById = (id: string) => CAR_MODELS.find((m) => m.id === id) ?? BIKE_MODELS.find((m) => m.id === id) ?? RV_MODELS.find((m) => m.id === id) ?? RIDE_MODELS.find((m) => m.id === id);
 
 /** The share of its value new a car keeps at an age: iSeeCars' points, straight lines between. */
 export function kept(ageYears: number): number {
@@ -169,9 +180,11 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
   const units = sold / 100;
   // A trade-in's value comes off the price New York and Connecticut tax, a dealer's sale; California taxes the whole (CDTFA).
   const taxedPrice = Math.max(0, sold - (opts.tradeIn?.value ?? 0));
-  const doc = DEALER_DOC_FEE[j];
+  // A bicycle shop and an ATV dealer title nothing: the documentation fee is a road vehicle's.
+  const doc = forOutings(model) ? undefined : DEALER_DOC_FEE[j];
   if (doc) lines.push({ label: doc.label, amount: c(used ? doc.used : doc.new) });
-  if (onTwoWheels(model)) lines.push(...bikeLines(model, j, cityId, at, sold, taxedPrice));
+  if (forOutings(model)) lines.push(...outingLines(model, j, cityId, at, sold, taxedPrice));
+  else if (onTwoWheels(model)) lines.push(...bikeLines(model, j, cityId, at, sold, taxedPrice));
   else switch (j) {
     case 'US-NY': {
       const rate = NYC.has(cityId) ? NY.nycRate : NY.stateRate;
@@ -262,6 +275,28 @@ function bikeLines(model: CarModel, j: Jurisdiction, cityId: string, at: Instant
   return out;
 }
 
+/**
+ * A bicycle's, e-bike's or ATV's taxes where it's bought, and an ATV's
+ * registration (`ATV_FEES`), in the place's money, cents. British Columbia
+ * charges no PST on a bicycle or an e-bike (PST Bulletin 110) and its PST on an
+ * ATV; the rest as a road vehicle's sale.
+ */
+function outingLines(model: CarModel, j: Jurisdiction, cityId: string, at: Instant, sold: Money, taxedPrice: Money): { label: string; amount: Money }[] {
+  const out: { label: string; amount: Money }[] = [];
+  if (j.startsWith('US-')) {
+    const rate = usSalesTaxRate(j, cityId, at, sold / 100);
+    out.push({ label: `Sales Tax, ${(rate * 100).toFixed(3).replace(/0+$/, '').replace(/\.$/, '')}%`, amount: Math.round((j === 'US-CA' ? sold : taxedPrice) * rate) });
+  }
+  if (j === 'CA-ON') out.push({ label: 'HST, 13%', amount: Math.round(sold * ON.hst) });
+  if (j === 'CA-BC') {
+    out.push({ label: 'GST, 5%', amount: Math.round(sold * BC.gst) });
+    if (kindOf(model) === 'atv') { const pst = bracket(BC.pst, sold / 100); out.push({ label: `PST, ${Math.round(pst * 100)}%`, amount: Math.round(sold * pst) }); }
+  }
+  const f = kindOf(model) === 'atv' ? ATV_FEES[j as keyof typeof ATV_FEES] : undefined;
+  if (f) out.push({ label: f.label, amount: Math.round(f.first * 100) });
+  return out;
+}
+
 /** Mexico City's tenencia on a motorcycle's value, cents: 3% before IVA, subsidized whole to MXN 250,000. */
 function bikeTenencia(value: Money): Money {
   return value / 100 <= BIKE_FEES.CMX.subsidizedTo ? 0 : Math.round((value / 1.16) * BIKE_FEES.CMX.tenencia);
@@ -284,6 +319,8 @@ function caYear(model: CarModel, value: Money): Money {
 export function carryCars(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
   if (fromCity === toCity) return;
   for (const v of vehiclesOf(person)) {
+    // A bicycle, e-bike or ATV goes with the household, wherever it moves; its registration isn't moved (from 2026-09-30).
+    if (v.soldAt === undefined && (v.at ?? v.cityId) === fromCity && forOutings(modelById(v.modelId)!)) { v.at = toCity; continue; }
     if (v.soldAt !== undefined || (v.at ?? v.cityId) !== fromCity || !roadBetween(fromCity, toCity)) continue;
     v.at = toCity;
     const j = jurisdictionOf(toCity);
@@ -337,6 +374,9 @@ export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: In
   const age = v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS;
   const year = (n: number) => at + n * YEAR_MS;
   const c = (x: number) => Math.round(x * 100);
+  // An ATV renews where it's asked (`ATV_FEES`); a bicycle never registers.
+  if (kindOf(m) === 'atv') { const f = ATV_FEES[v.jurisdiction as keyof typeof ATV_FEES]; return f && 'renew' in f ? { amount: c(f.renew), next: year(f.years), memo: 'ATV registration renewed' } : { amount: 0, next: year(100), memo: 'No registration asked' }; }
+  if (kindOf(m) === 'bicycle' || kindOf(m) === 'ebike') return { amount: 0, next: year(100), memo: 'No registration asked' };
   // Ireland taxes a van as a goods vehicle and a motorhome as a motor caravan.
   if (v.jurisdiction === 'IE' && kindOf(m) === 'van') return { amount: c(RV_FEES.IE.goods), next: year(1), memo: 'Motor tax, the year, a goods vehicle' };
   if (v.jurisdiction === 'IE' && sleepsIn(m)) return { amount: c(RV_FEES.IE.motorCaravan), next: year(1), memo: 'Motor tax, the year, a motor caravan' };
@@ -367,6 +407,8 @@ export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: In
 
 /** What a model's insurance figure is, said plainly. */
 export function insuranceBasis(j: Jurisdiction, m: CarModel): string | undefined {
+  if (kindOf(m) === 'bicycle' || kindOf(m) === 'ebike') return 'None asked, and none kept';
+  if (kindOf(m) === 'atv') return j.startsWith('US-') ? ATV_INSURANCE.basis : 'No premium was found here, and none is charged';
   if (sleepsIn(m) && RV_INSURANCE[j]) return RV_INSURANCE[j]!.basis;
   if (onTwoWheels(m)) return BIKE_INSURANCE[j].basis;
   const car = INSURANCE[j]?.basis;
@@ -375,6 +417,8 @@ export function insuranceBasis(j: Jurisdiction, m: CarModel): string | undefined
 
 /** Whether liability-only cover is offered for a model where it's kept: a car's or van's where the place's is published, a scooter's where one is. */
 export function liabilityOffered(j: Jurisdiction, m: CarModel): boolean {
+  if (kindOf(m) === 'atv') return j.startsWith('US-');
+  if (forOutings(m)) return false;
   if (onTwoWheels(m)) return kindOf(m) === 'scooter' && BIKE_INSURANCE[j].scooterLiability !== undefined;
   if (sleepsIn(m) && RV_INSURANCE[j]) return false;
   return INSURANCE[j]?.liability !== undefined;
@@ -382,6 +426,7 @@ export function liabilityOffered(j: Jurisdiction, m: CarModel): boolean {
 
 /** The money a model's insurance is quoted in where it's kept. */
 export function insuranceCurrency(j: Jurisdiction, m: CarModel): string {
+  if (kindOf(m) === 'atv' && j.startsWith('US-')) return ATV_INSURANCE.currency;
   if (sleepsIn(m) && RV_INSURANCE[j]) return RV_INSURANCE[j]!.currency;
   return onTwoWheels(m) ? BIKE_INSURANCE[j].currency : CURRENCY[j];
 }
@@ -389,6 +434,8 @@ export function insuranceCurrency(j: Jurisdiction, m: CarModel): string {
 /** A month's insurance in the jurisdiction's money, cents, or why there isn't one: a car's, or a motorcycle's or scooter's by its kind and engine. */
 export function monthlyInsurance(j: Jurisdiction, coverage: OwnedVehicle['coverage'], model?: CarModel): Money | string {
   // A motorhome's or campervan's where an RV average is published; elsewhere, and a van, a car's (`RV_INSURANCE`).
+  if (model && (kindOf(model) === 'bicycle' || kindOf(model) === 'ebike')) return 0;
+  if (model && kindOf(model) === 'atv') return j.startsWith('US-') ? Math.round(((coverage === 'liability' ? ATV_INSURANCE.liability : ATV_INSURANCE.full) * 100) / 12) : 0;
   const rv = model && sleepsIn(model) ? RV_INSURANCE[j] : undefined;
   if (rv) return Math.round((rv.year * 100) / 12);
   if (model && onTwoWheels(model)) {
@@ -433,7 +480,7 @@ export function buyRefusal(sim: Simulation, person: Person, modelId: string, opt
   const ins = monthlyInsurance(j, opts.coverage ?? 'full', model);
   if (typeof ins === 'string') return ins;
   // A motorcycle's or scooter's liability-only cover is kept only where it's published.
-  if (kindOf(model) !== 'car' && opts.coverage === 'liability' && !liabilityOffered(j, model)) return 'Liability-only cover for this isn’t kept here: full cover.';
+  if (kindOf(model) !== 'car' && !forOutings(model) && opts.coverage === 'liability' && !liabilityOffered(j, model)) return 'Liability-only cover for this isn’t kept here: full cover.';
   if (opts.financed && opts.coverage === 'liability') return 'A lender asks for full cover on a car it finances.';
   if (opts.financed && loanRate(j, person.credit?.score ?? 0, (opts.age ?? 0) > 0) === undefined) return 'SLATE doesn’t have a published car loan rate there yet: buy it outright.';
   if ((opts.age ?? 0) < 0 || (opts.age ?? 0) > 15) return 'A used car of up to fifteen years.';
@@ -484,7 +531,7 @@ export function registerVehicles(sim: Simulation): void {
     }
     vehiclesOf(person).push(v);
     s.schedule({ at: s.now + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
-    s.schedule({ at: v.registrationDue, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
+    if (registers(model, j)) s.schedule({ at: v.registrationDue, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
     return { vehicleId: id, paid: down, ...(v.loan ? { monthly: v.loan.monthly } : {}) };
   });
 
@@ -530,7 +577,7 @@ export function registerVehicles(sim: Simulation): void {
     }
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
-    if (!v.repossessed && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m)).ok) {
+    if (!v.repossessed && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m)).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km);
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
@@ -541,7 +588,7 @@ export function registerVehicles(sim: Simulation): void {
       }
     }
     // An inspection come due, where the law asks one (`systems/inspections.ts`).
-    inspectIfDue(s, person, v, kindOf(m));
+    if (!forOutings(m)) inspectIfDue(s, person, v, kindOf(m));
     // The loan: interest on what's owed, and the rest off it.
     if (v.loan) {
       const interest = Math.round((v.loan.owed * v.loan.apr) / 12);

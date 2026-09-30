@@ -269,6 +269,38 @@ Evidence: `tests/motorhomes.test.ts` (9). 16 mutations, all killed in the end. T
 - That a van with nothing to carry isn't driven for it.
 - That a campground in New York City charges no hotel parking.
 
+#### Stage 3i: bicycles, e-bikes and ATVs (done 2026-09-30)
+Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehicle-insurance.json` and `research-kind-effects.json`.
+- **The catalog** (`content/ridecatalog.ts`): 26 models at the retailers' and makers' published prices, on Cars' Kind.
+  - Trek, MEC, Benotto, Carrera and Decathlon bicycles.
+  - Legal e-bikes where they're sold, 250 W to 500 W: no license, registration or insurance.
+  - Honda, Can-Am, Polaris and Italika ATVs. Britain's are at the dealers' price with VAT added. Ireland's Honda is at Honda Ireland's price, which doesn't say whether VAT is in it.
+  - Not sold: Mexico City's e-bikes, since its hologram and plate rules begin on 20 November 2026 and the only e-bike read there is over their line.
+- **What each costs** (`outingLines` in `systems/vehicles.ts`, `ATV_FEES`, `ATV_INSURANCE` in `content/rides.ts`):
+  - A sale's tax, and no dealer's documentation fee. British Columbia charges its PST on an ATV but not on a bicycle or an e-bike (PST Bulletin 110).
+  - An ATV's registration: New York's $12.50 a year and its plate, Connecticut's $30 with its plate and Clean Air Act fee, and California's $54 green sticker every two years, each renewing. Ontario's $38 and British Columbia's $48 are paid once.
+  - An ATV's insurance: ValuePenguin's $88 liability or $327 full in the American states, from one Wisconsin rider's average. Elsewhere none was found and none is charged.
+  - A bicycle never registers and insures nothing.
+- **Where it goes:** neither kind is driven every day or taken between towns. Each moves with the household to a new home anywhere.
+- **What it's for** (`systems/outings.ts`, Look After Yourself):
+  - **Go For A Ride**, on one's own bicycle or e-bike where one is, in fine weather.
+    - The Compendium's 7.0 METs for a bicycle (01014) and 6.0 for an e-bike with light assistance (01084).
+    - It builds fitness as a run does, SLATE's estimate for the same hour outdoors.
+    - A crash's injury is drawn at DfT's 4,367 reported cyclist casualties per billion miles over an hour at 10 mph. An e-bike's risk is the Oslo study's 5.14 against 7.26.
+  - **Ride The ATV**, two hours on acreage one owns in the state or province where one is (a city lot isn't ridden), with one's ATV kept there.
+    - The Compendium's 4.0 METs (15470), and an hour outside's mood.
+    - No injury is drawn and no fuel is charged. The CPSC counts about 100,400 emergency-room injuries in 2023, but publishes no rate a rider or an hour, and no maker publishes an ATV's fuel.
+- Not kept:
+  - A bicycle stolen.
+  - An ATV ridden on the road where a place allows it.
+  - The trailer that takes an ATV to its land.
+  - Cycling to work, as SLATE has no commute.
+
+Evidence: `tests/outings.test.ts` (8). 22 mutations, all killed in the end. Three first survived:
+- The ride's crash draw, one chance in about 23,000 an hour, too rare for a test to see. It's now `rideOut`, taking its chance, and is tested at certainty.
+- The effort of a ride and of the trail, now measured against the body's sedentary 1.4.
+- The trail's mood, now tested against an hour outside and an hour unwinding.
+
 #### Stage 3c: driving (done 2026-09-29)
 - **A drive as a journey** (`planDrive`, Travel's By): one's own car, where it is, with a license that lets one drive there; the road the straight line stretched by the US network's circuity (1.20, Ballou et al. 2002, read everywhere), at England's motorway and major A-road average (56.6 mph, DfT 2025, read everywhere), with the Highway Code's break every two hours; its fuel and upkeep, and the New York to Washington corridor's tolls. The car is where it's driven to. Towns joined by road: one country, North America's three, the island of Ireland.
 - **What the road brings**, every day's driving and a journey's: a crash's injury at NHTSA's 74 people injured a hundred million vehicle miles, scaled by the driver's age as AAA's injury crash involvement runs, through the injury system; a speeding ticket at New York's or England's published tickets a driver a year, spread over the place's miles, with the place's own fine and points; a license suspended or revoked where the points reach its law's line (New York's 11 in 24 months, Connecticut's, California's 4 in 12, Britain's 12 in three years and its novices' 6 in two, Ireland's 12 and its novices' 7, Ontario's 15). A car whose owner may not drive sits idle. Road deaths are in the all-cause life table, so none is drawn here.

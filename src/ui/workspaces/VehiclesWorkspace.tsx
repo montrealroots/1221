@@ -18,7 +18,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
-import { buyRefusal, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
+import { buyRefusal, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
 import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { buyoutPrice, leaseQuote, leaseRefusal, milesOver } from '@/engine/systems/leasing';
@@ -64,7 +64,7 @@ export function VehiclesWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Day</div>
         <h1>Cars</h1>
-        <p className="muted">A car, motorcycle, scooter, van or motorhome of your own: what it costs to buy, to keep and to run where you live.</p>
+        <p className="muted">A car, motorcycle, scooter, van, motorhome, bicycle or ATV of your own: what it costs to buy, to keep and to run where you live.</p>
       </div>
       <div className="col gap-5">
         <Panel title="Your Vehicles">
@@ -81,7 +81,7 @@ export function VehiclesWorkspace() {
                         <td>{formatDate(v.boughtAt, sim.zone)}{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
                         <td className="num mono">{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</td>
                         <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? money(v.loan.owed) : 'None'}</td>
-                        <td>{formatDate(v.registrationDue, sim.zone)}</td>
+                        <td>{registers(modelById(v.modelId)!, v.jurisdiction) ? formatDate(v.registrationDue, sim.zone) : '—'}</td>
                         <td className="small">{(() => { const due = nextInspection(v, v.inspected ?? v.boughtAt); const rule = INSPECTION_RULES[v.jurisdiction]; return due && rule ? `${rule.label}, ${formatDate(due, sim.zone)}` : '—'; })()}</td>
                         <td>
                           {v.lease ? (
@@ -121,6 +121,9 @@ export function VehiclesWorkspace() {
               <div className="field">
                 <label htmlFor="car-kind">Kind</label>
                 <select id="car-kind" value={kind} onChange={(e) => { setKind(e.target.value as VehicleKind); setPick(''); setMonths(0); }}>
+                  <option value="atv">ATV</option>
+                  <option value="ebike">E-Bike</option>
+                  <option value="bicycle">Bicycle</option>
                   <option value="campervan">Campervan</option>
                   <option value="motorhome">Motorhome</option>
                   <option value="van">Cargo Van</option>
@@ -149,13 +152,13 @@ export function VehiclesWorkspace() {
                   {leasable && US_LEASE.terms.map((n) => <option key={-n} value={-n}>A Lease, {n} Months</option>)}
                 </select>
               </div>
-              <div className="field">
+              {!(kind === 'bicycle' || kind === 'ebike') && <div className="field">
                 <label htmlFor="car-cover">Insurance</label>
                 <select id="car-cover" value={coverage} onChange={(e) => setCoverage(e.target.value === 'liability' ? 'liability' : 'full')}>
                   <option value="full">Full Cover</option>
                   {liability && <option value="liability">Liability Only</option>}
                 </select>
-              </div>
+              </div>}
               {owned.some((x) => !x.repossessed && !x.lease) && (
                 <div className="field">
                   <label htmlFor="car-trade">Trade In</label>
@@ -184,7 +187,7 @@ export function VehiclesWorkspace() {
                 <table>
                   <thead><tr><th scope="col">Line</th><th scope="col" className="num">Amount</th></tr></thead>
                   <tbody>
-                    <tr><td>{model.make} {model.model}, {FUEL_WORD[model.fuel]}{age ? `, ${Math.round(kept(age) * 100)}% Of New` : ''}</td><td className="num mono">{inHome(q.price, q.currency)}</td></tr>
+                    <tr><td>{model.make} {model.model}{kind === 'bicycle' ? '' : `, ${FUEL_WORD[model.fuel]}`}{age ? `, ${Math.round(kept(age) * 100)}% Of New` : ''}</td><td className="num mono">{inHome(q.price, q.currency)}</td></tr>
                     {q.lines.map((l) => <tr key={l.label}><td>{l.label}</td><td className="num mono">{inHome(l.amount, q.currency)}</td></tr>)}
                     <tr><th scope="row">In All</th><td className="num mono">{inHome(q.total, q.currency)}</td></tr>
                   </tbody>
@@ -194,7 +197,7 @@ export function VehiclesWorkspace() {
             <div className="grid grid-3">
               <Stat label="Insurance" value={typeof ins === 'number' && insCurrency ? `${inHome(ins, insCurrency)} A Month` : '—'} note={insBasis ?? 'Not kept here yet'} />
               {leaseMonths ? <Stat label="Money Factor" value={String(US_LEASE.moneyFactor)} note={`About ${(US_LEASE.moneyFactor * 2400).toFixed(2)}% a year, worked back from Toyota’s offers`} /> : <Stat label="Loan Rate" value={rate !== undefined ? `${(rate * 100).toFixed(2)}%` : '—'} note={rate !== undefined ? 'For your record, where it’s published' : 'Not published here: buy it outright'} />}
-              <Stat label="Economy" value={model?.per100km ? `${model.per100km} L/100 km` : 'Not Yet Rated'} note={model?.per100km ? model.economyBasis : 'Fuel at AAA’s cost a mile until it’s rated'} />
+              <Stat label="Economy" value={model?.per100km ? `${model.per100km} L/100 km` : kind === 'bicycle' ? 'Pedaled' : kind === 'ebike' ? 'Charged At Home' : 'Not Yet Rated'} note={model?.per100km || kind === 'bicycle' || kind === 'ebike' || kind === 'atv' ? model?.economyBasis : 'Fuel at AAA’s cost a mile until it’s rated'} />
             </div>
             {(leaseMonths ? noLease : no) ? <p className="small" style={{ margin: 0 }}>{leaseMonths ? noLease : no}</p> : null}
             <div className="row gap-2">
