@@ -34,7 +34,7 @@
 
 import type { Jurisdiction } from './vehiclefees';
 
-export type BoatState = 'US-NY' | 'US-CT' | 'US-CA' | 'GB' | 'CA-ON';
+export type BoatState = 'US-NY' | 'US-CT' | 'US-CA' | 'GB' | 'IE' | 'CA-ON';
 
 export const T18 = {
   label: 'Bayliner Trophy T18 Bay',
@@ -102,6 +102,13 @@ export const BOAT_RULES: Readonly<Record<BoatState, BoatRules>> = {
     currency: 'GBP', model: { label: 'Jeanneau Cap Camarat 5.5 CC', price: 39_995, lengthFt: 18, litersPerHour: 14.1, fuelPerLiter: 2.3 }, insuranceYear: 39_995 * 0.0125, taxAdded: false,
     slip: { amount: 386.55 * 5.5, per: 'year', basis: 'Hamble Point Marina’s trailer storage on the Solent, £386.55 a meter a year to 5.9 m, where a Londoner keeps a trailer boat; the drive there isn’t kept' },
   },
+  // Ireland, from 2026-10-01 (`docs/research/world/research-boats-ireland-border.json` and
+  // `research-aviation-boats-credit-mot.json`): no license and no registration for a private boat
+  // (Citizens Information), so none is asked.
+  IE: {
+    currency: 'EUR', model: { label: 'Jeanneau Cap Camarat 5.5 CC', price: 56_100, lengthFt: 18, litersPerHour: 14.1, fuelPerLiter: 1.8686 }, insuranceYear: (400 + 900) / 2, taxAdded: false,
+    slip: { amount: 360 * 2, per: 'year', basis: 'POD Marine at Dún Laoghaire, €360 a season for a boat of 2.1 to 5.5 m ashore, with VAT, summer and winter; the price a Dublin dealer (MGM Boats) asked for a new one, €56,100 with VAT, read from a listing’s excerpt; Yachtsman Euromarine’s €400 to €900 a year for a powerboat, the middle; no marina posts its petrol, so the AA’s September 2026 forecourt average, €1.8686 a liter' },
+  },
   'CA-ON': {
     currency: 'CAD', model: { label: 'Princecraft Sport 175 MAX', price: 68_235, lengthFt: 17.5, litersPerHour: T18.gph * LITERS_PER_GALLON, fuelPerLiter: 2.45 }, insuranceYear: 68_235 * 0.015, taxAdded: true,
     certificate: { amount: 49.95, label: 'Pleasure Craft Operator Card', basis: 'Transport Canada’s card for any motorized pleasure craft, by BOATsmart’s C$49.95 course (secondary)' },
@@ -119,7 +126,7 @@ export const BOAT_RULES: Readonly<Record<BoatState, BoatRules>> = {
  */
 export const BOAT_LOAN = { downUsd: 1_500, apr: 0.065, months: 144, minScore: 740 } as const;
 
-export const isBoatState = (j: Jurisdiction | undefined): j is BoatState => j === 'US-NY' || j === 'US-CT' || j === 'US-CA' || j === 'GB' || j === 'CA-ON';
+export const isBoatState = (j: Jurisdiction | undefined): j is BoatState => j === 'US-NY' || j === 'US-CT' || j === 'US-CA' || j === 'GB' || j === 'IE' || j === 'CA-ON';
 
 /**
  * A boat chartered with its captain, from 2026-09-30 (researched in
@@ -199,4 +206,6 @@ export const BOAT_REPO: Readonly<Partial<Record<BoatState, { noticeDays: number;
   'US-NY': { noticeDays: 10, shortfall: 'owed' },
   'US-CT': { noticeDays: 15, shortfall: 'past-value' },
   'US-CA': { noticeDays: 10, shortfall: 'owed' },
+  // A financed boat carried into Ontario (from 2026-10-01): the Personal Property Security Act's 15 days, the shortfall owed, as a car's.
+  'CA-ON': { noticeDays: 15, shortfall: 'owed' },
 };

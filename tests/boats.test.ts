@@ -46,12 +46,12 @@ describe('buying one', () => {
     const on = boatQuote(ny, 'ca-on-toronto')!;
     expect(on.tax).toBe(exchange(Math.round(68_235 * 0.13 * 100), 'CAD', saveCurrency(ny.universe)));
     expect(on.registration).toBe(exchange(24_41, 'CAD', saveCurrency(ny.universe)));
-    expect(boatQuote(ny, 'ie-lei-dublin')).toBeUndefined();
+    expect(boatQuote(ny, 'mx-cmx-mexicocity')).toBeUndefined();
     expect([2026, 2027].map((y) => BOAT_RULES['US-CA'].registration!.first(y))).toEqual([37, 65]);
   });
 
   it('refuses one outside the three states, a second, and what the bank can’t pay', () => {
-    expect(buyBoatRefusal(save('ie-lei-dublin', 'boat-ie'), save('ie-lei-dublin', 'boat-ie2').player)).toMatch(/only yet/);
+    expect(buyBoatRefusal(save('mx-cmx-mexicocity', 'boat-mx'), save('mx-cmx-mexicocity', 'boat-mx2').player)).toMatch(/only yet/);
     const sim = save('us-ny-newyork', 'boat-refuse');
     expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
     expect(buyBoatRefusal(sim, sim.player)).toMatch(/own a boat/);
@@ -182,9 +182,52 @@ describe('Bayliner’s loan, and a boat moved', () => {
     expect(paidFor(sim, 'Registering the boat in its new home')).toEqual([usd(sim, 45_00)]);
     carryBoat(sim, sim.player, 'us-ct-newhaven', 'uk-eng-london');
     expect(sim.player.boat!.cityId).toBe('us-ct-newhaven');
-    // By road, but into a province SLATE keeps no boat's rules for.
-    carryBoat(sim, sim.player, 'us-ct-newhaven', 'ca-on-toronto');
+    // By road into British Columbia, whose boat rules SLATE doesn't keep.
+    carryBoat(sim, sim.player, 'us-ct-newhaven', 'ca-bc-vancouver');
     expect(sim.player.boat!.cityId).toBe('us-ct-newhaven');
+  });
+
+  it('crosses into Ontario as a settler’s effects, free of duty and tax, and back into California within a year at its use tax, into New York at none', () => {
+    const sim = save('us-ny-newyork', 'boat-border');
+    expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    const price = sim.player.boat!.price;
+    carryBoat(sim, sim.player, 'us-ny-newyork', 'ca-on-toronto');
+    expect(sim.player.boat).toMatchObject({ cityId: 'ca-on-toronto', state: 'CA-ON' });
+    expect(paidFor(sim, 'Use tax on the boat brought in, the state’s')).toEqual([]);
+    expect(paidFor(sim, 'Registering the boat in its new home')).toEqual([exchange(24_41, 'CAD', saveCurrency(sim.universe))]);
+    carryBoat(sim, sim.player, 'ca-on-toronto', 'us-ca-losangeles');
+    expect(sim.player.boat!.state).toBe('US-CA');
+    expect(paidFor(sim, 'Use tax on the boat brought in, the state’s')).toEqual([Math.round(price * salesTaxRate('us-ca-losangeles', sim.now, 'goods'))]);
+    // Connecticut's 2.99% on a vessel; New York none.
+    const ct = save('us-ny-newyork', 'boat-border-ct');
+    expect(ct.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    carryBoat(ct, ct.player, 'us-ny-newyork', 'ca-on-toronto');
+    carryBoat(ct, ct.player, 'ca-on-toronto', 'us-ct-newhaven');
+    expect(paidFor(ct, 'Use tax on the boat brought in, the state’s')).toEqual([Math.round(ct.player.boat!.price * 0.0299)]);
+    const ny = save('us-ny-newyork', 'boat-border-ny');
+    expect(ny.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    carryBoat(ny, ny.player, 'us-ny-newyork', 'ca-on-toronto');
+    carryBoat(ny, ny.player, 'ca-on-toronto', 'us-ny-hudson');
+    expect(ny.player.boat!.state).toBe('US-NY');
+    expect(paidFor(ny, 'Use tax on the boat brought in, the state’s')).toEqual([]);
+    // California's presumption ends a year after the purchase.
+    const late = save('us-ny-newyork', 'boat-border-late');
+    expect(late.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    carryBoat(late, late.player, 'us-ny-newyork', 'ca-on-toronto');
+    late.player.boat!.boughtAt -= 366 * MS_DAY;
+    carryBoat(late, late.player, 'ca-on-toronto', 'us-ca-losangeles');
+    expect(paidFor(late, 'Use tax on the boat brought in, the state’s')).toEqual([]);
+  });
+
+  it('sells a Dubliner a Cap Camarat at its Dublin dealer’s €56,100 with VAT, no license or registration, kept at Dún Laoghaire, fueled at the forecourt’s average', () => {
+    const sim = save('ie-lei-dublin', 'boat-ie');
+    const q = boatQuote(sim, 'ie-lei-dublin')!;
+    expect(q).toEqual({ price: exchange(56_100_00, 'EUR', saveCurrency(sim.universe)), tax: 0, registration: 0 });
+    expect(sim.execute({ kind: 'boat.buy', payload: {} }).ok).toBe(true);
+    expect(certifyRefusal(sim, sim.player)).toMatch(/None is asked/);
+    expect(outingCost(sim, sim.player.boat!)).toBe(exchange(Math.round(3 * 14.1 * 1.8686 * 100), 'EUR', saveCurrency(sim.universe)));
+    sim.advanceBy(40 * MS_DAY);
+    expect(paidFor(sim, 'The boat’s storage, the year')).toEqual([exchange(720_00, 'EUR', saveCurrency(sim.universe))]);
   });
 
   it('moves within its state without registering it again, and comes along when its owner moves home', () => {
@@ -303,6 +346,16 @@ describe('the Northeast’s winter, and a boat loan in default', () => {
     const short = Math.max(0, owed - (boat.price - usd(sim, 300_00)));
     const shortfall = sim.universe.transactions.filter((t) => t.memo.startsWith('Boat loan short after its sale'));
     expect(shortfall.length > 0 ? shortfall[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0) : 0).toBe(short);
+  });
+
+  it('takes back a financed boat carried into Ontario after the Personal Property Security Act’s 15 days', () => {
+    const sim = save('us-ny-newyork', 'boat-repo-on');
+    sim.player.credit = { ...sim.player.credit!, score: 800 };
+    expect(sim.execute({ kind: 'boat.buy', payload: { financed: true } }).ok).toBe(true);
+    carryBoat(sim, sim.player, 'us-ny-newyork', 'ca-on-toronto');
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0) a.balance = 0;
+    sim.advanceBy(95 * MS_DAY);
+    expect(sim.player.boat!.repossessed!.saleAt - sim.player.boat!.repossessed!.at).toBe(15 * MS_DAY);
   });
 
   it('owes a Connecticut shortfall only past the boat’s value, which SLATE holds it at', () => {

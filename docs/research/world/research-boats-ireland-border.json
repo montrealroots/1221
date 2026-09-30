@@ -1,0 +1,310 @@
+{
+  "_meta": {
+    "researchedOn": "2026-09-30",
+    "spelling": "American in own words; quotations are verbatim from the source pages",
+    "confirmedMeans": "true only where the figure or wording was read on the page itself during this session (WebFetch, curl or PDF text); false where it came from a search-engine summary or inference",
+    "correctionToBrief": "Memorandum D2-3-1 is not the settlers' memo. D2-3-1 (April 30, 2013) covers returning residents' personal exemptions under tariff heading 98.04 and says nothing about boats. The settlers' memo is D2-2-1, 'Settlers' Effects - Tariff Item No. 9807.00.00'. Form BSF186 (Personal Effects Accounting Document, formerly B4) is the right form."
+  },
+
+  "intoCanada": {
+    "scenario": "US resident moves NY -> Ontario towing an 18 ft US-built Bayliner Trophy T18 on its trailer, owned over 6 months",
+    "qualifiesAsSettlersEffects": true,
+    "tariffItem": "9807.00.00",
+    "memorandum": {
+      "number": "D2-2-1",
+      "title": "Settlers' Effects - Tariff Item No. 9807.00.00",
+      "dated": "2010-05-04 (Ottawa); page modified 2012-06-26",
+      "url": "https://www.cbsa-asfc.gc.ca/publications/dm-md/d2/d2-2-1-eng.html",
+      "publisher": "Canada Border Services Agency",
+      "sourceType": "primary",
+      "confirmed": true,
+      "quotes": {
+        "whatCounts": "personal and household effects can include such items as: wearing apparel, household furniture and appliances, books, musical instruments, personal computers, bicycles, hobby tools, firearms, travel and utility trailers, pleasure boats, and personal aircraft",
+        "tariffItemCondition": "Goods imported by a settler for the settler's household or personal use, if actually owned, possessed and used abroad by the settler prior to the settler's arrival in Canada, and accompanying the settler at the time of the settler's arrival in Canada.",
+        "travelTrailerWidth": "travel trailers not exceeding 2.6 metres (9 ft.) in width",
+        "excluded": "office equipment and furniture, dental chairs, welding equipment, metal and woodworking machines, vehicles and trailers for commercial use"
+      },
+      "twelveMonthRule": "Goods may not be sold or otherwise disposed of within twelve months after importation without paying the duty and taxes exempted; counted 'from the date of physical arrival of such goods into Canada' (paraphrase of the memo, quoted phrase verbatim).",
+      "form": "BSF186 Personal Effects Accounting Document (formerly B4); the memo refers to 'Form B4'"
+    },
+    "cbsaTravelPage": {
+      "url": "https://www.cbsa-asfc.gc.ca/travel-voyage/mrc-drc-eng.html",
+      "publisher": "Canada Border Services Agency",
+      "pageModified": "2018-05-18",
+      "sourceType": "primary",
+      "confirmed": true,
+      "quotes": {
+        "boats": "pleasure boats and the trailers to carry them (trailers are subject to Transport Canada requirements)",
+        "ownership": "must have owned, possessed and used the goods abroad prior to arriving in Canada",
+        "formerResidentsOnly": "owned, possessed and used the goods abroad for at least six months before returning to resume residence",
+        "disposal": "sell or give the goods away within one year after importation, you will have to pay the duty and taxes initially exempted"
+      },
+      "note": "No minimum ownership period applies to a new settler; the six-month minimum applies only to former residents returning to resume residence. Outboard motors are not named on either page; a motor mounted on and imported with the boat goes with the boat. The settlers' exemption covers duty and GST/HST alike ('duty- and tax-free')."
+    },
+    "trailerRIV": {
+      "rule": "A US-market boat trailer bought from a US dealer, or lacking a bilingual CMVSS label, must go through Transport Canada's Registrar of Imported Vehicles (RIV) program even when it is a settler's effect.",
+      "url": "https://www.cbsa-asfc.gc.ca/publications/dm-md/d19/d19-12-1-eng.html",
+      "publisher": "Canada Border Services Agency (Memorandum D19-12-1)",
+      "date": "2026-09-02",
+      "sourceType": "primary",
+      "confirmed": true,
+      "rivFee": {
+        "amountCAD": 325,
+        "taxes": "plus GST/PST or HST (Ontario 13%)",
+        "effective": "2020-08-01",
+        "url": "https://www.cbsa-asfc.gc.ca/publications/cn-ad/cn20-26-eng.html",
+        "publisher": "CBSA Customs Notice 20-26",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Latest fee notice found is from 2020; a later increase was not found but not ruled out."
+      }
+    },
+    "ifNotSettlersEffects": {
+      "note": "Boats do qualify, so this fallback applies only if the conditions fail, for example the boat is sold within 12 months or was never used abroad.",
+      "duty": {
+        "tariffItem": "8903.99.90 (outboard motorboats, reinforced plastics, stat. 22) under the 2026 Canadian Customs Tariff; 8903.93.90 for other craft not over 7.5 m",
+        "mfnRate": "9.5%",
+        "cusmaUST": "Free (UST = United States Tariff, for CUSMA-originating goods)",
+        "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/html/00/ch89-eng.html",
+        "publisher": "Canada Border Services Agency, Customs Tariff 2026, Chapter 89",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "hst": {
+        "rate": "13% for Ontario (5% GST + 8% provincial part)",
+        "cbsaCollectsFullHST": true,
+        "quote": "The HST rate will be levied on all taxable non-commercial importations by residents of participating provinces. The HST rate will be collected regardless of where a resident or the goods enter into Canada.",
+        "appendixA": "13% of value for HST",
+        "url": "https://www.cbsa-asfc.gc.ca/publications/dm-md/d2/d2-3-6-eng.html",
+        "publisher": "CBSA Memorandum D2-3-6, Non-commercial provincial tax collection programs",
+        "date": "2026-04-08",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    }
+  },
+
+  "ontarioAfter": {
+    "pleasureCraftLicence": {
+      "required": "Pleasure craft with motors totaling 10 hp (7.5 kW) or more must be licensed.",
+      "feeCAD": 24,
+      "feeNote": "'a $24 service fee will apply to issuing, renewing, transferring, or replacing a Pleasure Craft Licence'; 'This fee will be updated annually for inflation'. The fees page adds 'Fees may change based on inflation every year on April 1', so the amount in force after 2026-04-01 may be slightly higher; the fee cells on that page did not render as text. Updating or canceling a licence costs $0.",
+      "validity": "five years ('new and renewed pleasure craft licences will only be valid for five years'); effective 2025-12-31; the licence was free before then",
+      "addressChange": "licence holders must now update their information within 30 days of a change in their name or address",
+      "urls": [
+        "https://www.canada.ca/en/transport-canada/news/2026/01/minister-of-transport-and-leader-of-the-government-in-the-house-of-commons-announces-changes-to-make-boating-safer-for-canadians.html",
+        "https://tc.canada.ca/en/marine-transportation/vessel-licensing-registration/licensing-pleasure-craft/apply-manage-pleasure-craft-licence-pcl/fees-service-standards"
+      ],
+      "publisher": "Transport Canada",
+      "date": "2026-01-06",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "ontarioRST": {
+      "appliesToBoatBroughtInByNewResident": false,
+      "quotes": {
+        "boatsAreSpecifiedVehicles": "boats (e.g., motor boats, personal watercraft, sail boats, canoes, etc.)",
+        "privateSale": "RST at the rate of 13 per cent is payable on the fair market value of a specified vehicle purchased privately in Ontario.",
+        "fromOutsideCanada": "RST does not apply when a specified vehicle is brought into Ontario from outside Canada.",
+        "settlers": "owned by them for at least 30 days immediately before taking up residence in Ontario, and the vehicle is brought into Ontario for use and consumption in Ontario within six months"
+      },
+      "url": "https://www.ontario.ca/document/retail-sales-tax/specified-vehicles",
+      "publisher": "Ontario Ministry of Finance",
+      "date": "updated 2025-06-30",
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "A boat arriving from New York is exempt from Ontario RST on two grounds: it comes from outside Canada, and the settlers' 30-day rule. Any HST on a non-settler import is collected by CBSA at the border, not by ServiceOntario."
+    }
+  },
+
+  "intoUS": {
+    "scenario": "Ontario resident moves to NY, CT or CA with a Canadian-built Princecraft Sport 175 (aluminum outboard boat, about 17 ft), owned over 6 months",
+    "householdEffects9804_00_05": {
+      "text": "Books, libraries, usual and reasonable furniture and similar household effects, if actually used abroad by him or by him and his family not less than one year, and not intended for any other person, or for sale",
+      "rate": "Free",
+      "url": "https://hts.usitc.gov/reststop/search?keyword=9804.00.05",
+      "publisher": "US International Trade Commission, HTSUS",
+      "sourceType": "primary",
+      "confirmed": true,
+      "regulation": {
+        "cite": "19 CFR 148.52",
+        "quote": "Furniture, carpets, paintings, tableware, books, libraries, and other usual household furnishings and effects",
+        "url": "https://www.law.cornell.edu/cfr/text/19/148.52",
+        "publisher": "Cornell LII copy of the eCFR",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      "appliesToThisBoat": false,
+      "why": "Two reasons. First, the exemption requires one year of use abroad, and this boat has only six months. Second, neither the HTSUS text nor 19 CFR 148.52 names boats; CBP treats boats separately (19 CFR 148.1-type conveyance provisions and its own boat-import guidance), so a boat is not a clear 'household effect' even after a year. CBP's own help pages (help.cbp.gov Article-1283, Article-1392) would not render outside a browser and were not read."
+    },
+    "tariff": {
+      "hts": "8903.93.20 Outboard motorboats (under 8903.93 'Of a length not exceeding 7.5 m'); stat. 8903.93.20.30 'Exceeding 5 m in length'",
+      "generalRate": "1%",
+      "special": "Free (A*,AU,BH,CL,CO,D,E,IL,JO,KR,MA,OM,P,PA,PE,S,SG); S = USMCA",
+      "usmcaResult": "Free if the boat qualifies as USMCA-originating (Canadian-built; origin must be claimed and supportable)",
+      "url": "https://hts.usitc.gov/reststop/search?keyword=8903",
+      "publisher": "US International Trade Commission, HTSUS",
+      "sourceType": "primary",
+      "confirmed": true,
+      "otherBoatRates": "8903.31-.33 motorboats other than outboard 1.5%; 8903.11/.12/.19 2.4%; 8903.93.15 other 2.7%; canoes Free"
+    },
+    "cbpFees": {
+      "merchandiseProcessingFee": {
+        "rate": "0.3464% ad valorem (formal entry)",
+        "fy2026": {"min": 33.58, "max": 651.50, "period": "2025-10-01 to 2026-09-30", "sourceType": "secondary", "confirmed": false},
+        "fy2027": {"min": 34.58, "max": 670.86, "effective": "2026-10-01"},
+        "informalEntryFY2027": {"automated": 2.77, "manualNotPreparedByCBP": 8.30, "manualPreparedByCBP": 12.45, "manualSurcharge": 4.15},
+        "url": "https://www.govinfo.gov/content/pkg/FR-2026-07-31/html/2026-15530.htm",
+        "publisher": "Federal Register, 91 FR 48398, CBP Dec., 2026-07-31",
+        "sourceType": "primary",
+        "confirmed": true,
+        "usmcaExemption": "Goods originating under USMCA are exempt from the MPF (19 U.S.C. 58c(b)); this came from search summaries and was not read in the statute this session.",
+        "usmcaExemptionConfirmed": false
+      },
+      "entryThreshold": "An entry valued at $2,500 or less may use an informal entry; above that, a formal entry (CBP Form 7501) is needed. General CBP rule, not re-read this session.",
+      "otherPaperwork": "EPA Form 3520-21 engine declaration for the outboard; USCG and CBP arrival reporting. From secondary sources, confirmed false."
+    }
+  },
+
+  "usStates": {
+    "newYork": {
+      "useTax": {
+        "result": "No NY sales or use tax if the buyer was a nonresident when they bought the boat. For an individual the test is residency at purchase, not a six-month period; the 'six months' idea in Tax Law 1118(2) concerns property used in a business and is not the DMV test for a household boat.",
+        "form": "DTF-803, Claim for Sales and Use Tax Exemption - Title/Registration",
+        "quote": "Nonresident of New York State (NYS) (purchases of motor vehicles, trailers, or boats only) -- At the time of purchase the purchaser was not a resident of NYS, did not have a place of abode in NYS, and was not engaged in any trade business, employment, or profession in NYS.",
+        "url": "https://www.tax.ny.gov/pdf/current_forms/st/dtf803.pdf",
+        "publisher": "New York State Department of Taxation and Finance, DTF-803 (4/14)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "dmvQuote": "If you were not a resident of New York when the vehicle was purchased, use the form Sales Tax Exemption {Sales Tax Form} (PDF) (DTF-803) to receive a non-resident exemption from New York State sales tax.",
+        "dmvUrl": "https://dmv.ny.gov/registration/sales-tax-information",
+        "sixMonthRuleConfirmed": false
+      },
+      "registration": {
+        "feesUSD": {"under16ft": 22.50, "16toUnder26ft": 45.00, "26ftPlus": 75.00},
+        "term": "Boat registrations are issued for 3 years.",
+        "titleFee": 50,
+        "titleRule": "The DMV issues title certificates for boats that are all of the following: model year 1987 and newer, at least 14 feet long, registered in New York State.",
+        "exemption": "registered in another state and not kept in New York for more than 90 consecutive days",
+        "url": "https://dmv.ny.gov/registration/register-a-boat",
+        "publisher": "New York State DMV",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The fee tiers are as shown on the page, for a 3-year term. They are lower than the older published NY figures, so recheck before relying on them. The page gives no deadline for registering a newly arrived foreign boat."
+      }
+    },
+    "connecticut": {
+      "useTax": {
+        "rate": "2.99% on vessels, motors for vessels and trailers used to transport a vessel (DMV-registrable types) purchased on or after 2018-07-01; 6.35% otherwise",
+        "rateUrl": "https://portal.ct.gov/-/media/drs/publications/pubsip/2018/ip-2018(20).pdf",
+        "ratePublisher": "Connecticut DRS, IP 2018(20)",
+        "rateSourceType": "primary",
+        "rateConfirmed": true,
+        "newResidentExemptionForVessels": null,
+        "newResidentNote": "Not published for vessels. The CT DMV's new-resident rule is written for vehicles only: 'New Connecticut residents aren't required to pay sales tax if the vehicle was registered in the same name in another state for at least 30 days prior to establishing Connecticut residency.' Under the use-tax statute (12-411), tax falls on property bought 'for storage, acceptance, consumption or any other use in this state', so a boat bought and used in Ontario before the move should not be taxable in principle. Neither DRS nor the DMV says so for boats, and the DMV collects 'sales tax on registration' unless it is satisfied otherwise.",
+        "newResidentUrl": "https://portal.ct.gov/dmv/vehicle-services/sales-tax-registrations",
+        "newResidentConfirmed": true
+      },
+      "registration": {
+        "feesUSD": {"16to17ft": 30.00, "17to18ft": 37.50, "18to19ft": 45.00, "19to20ft": 52.50},
+        "note": "Fiberglass/metal hull, from the DMV fee chart ('At least / Less than' feet). A Princecraft Sport 175 (about 17.5 ft) falls in 17-18 ft: $37.50. Registration is annual. The page did not state the term; 'annual' is from general knowledge, confirmed false. Out-of-state-numbered boats need a CT decal after more than 60 days a year in CT waters.",
+        "url": "https://portal.ct.gov/DMV/Fees/Fees/Fees-for-Registration",
+        "publisher": "Connecticut DMV",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "california": {
+      "useTax": {
+        "rule": "12-month test. A vessel bought outside CA, first functionally used outside CA and brought into CA within 12 months of purchase is presumed bought for use in CA if any of four conditions holds. A boat owned more than 12 months before it enters CA is outside the presumption. The Princecraft, owned just over 6 months, falls inside the window, so it is presumed taxable unless the owner rebuts the presumption.",
+        "quote": "A vehicle or vessel purchased outside of California, first functionally used outside of California, and brought into California within 12 months from the date of its purchase is also presumed to have been purchased for use in California and subject to tax if any of the following conditions occur: Purchased by a California resident as defined in section 516 of the California Vehicle Code, or ... In the case of a vessel, subject to property tax in California during the first 12 months of ownership, or Used or stored in California for more than one-half of the time during the first 12 months of ownership.",
+        "rebuttal": "If a purchaser brings a vehicle or vessel to California during the first 12 months of ownership and provides evidence that, at the time of the purchase, the purchaser had no intention that the vehicle or vessel would be used in California, this alone is sufficient to establish that it was purchased for use outside California. ... a voluntary move is one factor to consider",
+        "creditForTaxPaidElsewhere": "Credit is allowed for sales or use tax paid to another state. Whether Ontario HST counts as 'another state' is not addressed.",
+        "url": "https://cdtfa.ca.gov/formspubs/pub52.pdf",
+        "publisher": "California Department of Tax and Fee Administration, Publication 52 (November 2025)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "ninetyDayHistory": "The 90-day test applied before 2004-10-02 and again from 2007-07-01 through 2008-09-30 (CDTFA 12-month test FAQ). The DMV agents' handbook still says 'use tax if the vessel was brought into California within 90 days' and cites a minimum rate of 8.25%. Both are stale; CDTFA's 12-month test governs, and the statewide base rate is 7.25% plus district taxes (the base rate is general knowledge, confirmed false)."
+      },
+      "registration": {
+        "deadline": "California vessel registration is required within 90 days (30 after the 60-day reciprocity period) of the date of entry into California.",
+        "feesUSD": {"nonresidentVesselEvenYear": 57, "nonresidentVesselOddYear": 77, "originalRegistration": 29, "renewal": 20, "transfer": 15},
+        "musselFee": "$16 odd-year original or renewal; $8 even-year original (fresh water only; marine-only use exempt)",
+        "urls": [
+          "https://www.dmv.ca.gov/portal/handbook/agents-handbook-for-registration-of-undocumented-vessels/vessel-registration-fees-and-use-tax/",
+          "https://www.dmv.ca.gov/portal/handbook/agents-handbook-for-registration-of-undocumented-vessels/new-and-nonresident-vessels/"
+        ],
+        "publisher": "California DMV",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "A boat entering from out of state or country pays the 'nonresident vessel' fee: $57 in even years, $77 in odd years. Registration is biennial."
+      }
+    }
+  },
+
+  "irishMarineFuel": {
+    "marinaPetrolPricePerLiter": null,
+    "note": "No Dublin-area marina publishes a petrol price. Dún Laoghaire Marina says only that it sells 'standard 95 octane unleaded petrol, gas-oil' and gives no price. Howth Yacht Club gives no petrol price; for diesel it says 'Due to the current market price volatility, please contact the Marina Office (01 8392777) for current pricing', and petrol and LPG information is 'available from the Marina' office. Malahide Marina lists 'Petrol and diesel available' at a fuel dock open 9am to 7pm, with no price. A search for other Irish marinas found no published petrol price for 2025-2026.",
+    "checked": [
+      {"url": "https://www.dlmarina.com/services/", "publisher": "Dún Laoghaire Marina", "sourceType": "primary", "confirmed": true},
+      {"url": "https://hyc.ie/rates", "publisher": "Howth Yacht Club (rates issue date 01/01/2026)", "sourceType": "primary", "confirmed": true},
+      {"url": "https://hyc.ie/marina-services-facilities", "publisher": "Howth Yacht Club", "sourceType": "primary", "confirmed": true},
+      {"url": "https://www.malahidemarina.ie/marina", "publisher": "Malahide Marina", "sourceType": "primary", "confirmed": true}
+    ],
+    "roadPriceProxy": {
+      "petrolEURPerLiter": 1.8686,
+      "dieselEURPerLiter": 1.9420,
+      "survey": "AA Ireland monthly survey, September 2026 ('186.86c' petrol, '194.20c' diesel); next update 12 October",
+      "url": "https://www.theaa.ie/aa-membership/fuel-prices/",
+      "publisher": "AA Ireland",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "This is the national forecourt average, not a marina price. Marina petrol is road-taxed petrol sold at a dock and is typically priced at or above the forecourt. Any markup is an estimate and should be labeled as one."
+    }
+  },
+
+  "irishSummerStorage": {
+    "dublinArea": {
+      "operator": "POD Marine, West Pier Road, Dún Laoghaire, Co. Dublin",
+      "quote": "POD Marine offer storage for trailers and boats on trailers. ... Storage Fees for [ Winter 15 Oct to 10 April 2027 OR Summer 2027: Up until to 14 Oct - ] ... 2.1 metres (6ft 7\") to 5.5 metres (18ft) inclusive = €360 5.6 metres (18ft 1\") to 7.0 metres (23ft) inclusive = €480 ... Minimum Fee is €175 (up to 30 days) ... All prices above are inclusive of VAT. Our rates for Summer trailer storage are the same as Winter boat & trailer storage.",
+      "ratesEUR": {"upTo2m_orPWC": 300, "2.1to5.5m": 360, "5.6to7.0m": 480, "7.0to8.0m": 600, "8.1to11m": 725, "minimumUpTo30Days": 175, "multihull": "1.5 x"},
+      "period": "season: summer up to 14 October 2027, or winter 15 October to 10 April 2027",
+      "vat": "included",
+      "url": "https://www.podmarine.com/storage/",
+      "publisher": "POD Marine Dublin",
+      "sourceType": "primary",
+      "confirmed": true,
+      "caveats": "The wording 'Summer trailer storage' may mean storing an empty trailer while the boat is afloat, not a boat kept ashore on its trailer, although the page opens with 'storage for trailers and boats on trailers'. The page is also labeled 2027, which reads like the season rolling over; it is live as of 2026-09-30. An 18 ft Bayliner (about 5.5 m) sits on the €360 / €480 boundary, so the exact length overall decides the tier. The only monthly figure is the €175 minimum for up to 30 days."
+    },
+    "otherIrishPublished": {
+      "operator": "Kilrush Marina, Co. Clare (not Dublin)",
+      "ratesEUR": {"outdoorYardStoragePerMetrePerWeek": 4.50, "indoorStoragePerMetrePerWeek": 7.50, "unladenTrailerStorage1May_30Sep": 100, "unladenTrailerStorage1Oct_30Apr": 100, "trailerHoistTransfer": 150, "hoistPerLiftPerMetre": 25},
+      "vat": "'All prices are subject to VAT at the applicable rate' (boatyard page)",
+      "period": "year-round weekly rate; no seasonal split for yard storage",
+      "url": "https://kilrushmarina.ie/wp-content/uploads/2026/01/2026-Price-List.pdf",
+      "publisher": "Kilrush Marina, 2026 Boatyard Services/Tariff",
+      "sourceType": "primary",
+      "confirmed": true,
+      "worked": "Outdoor yard, 5.5 m x €4.50 x 26 weeks (April-September) = €643.50 plus VAT. This is an arithmetic illustration, not a published package."
+    },
+    "malahideReference": {
+      "note": "Malahide publishes only winter packages (1 October - 31 March, from €199/m). Its 10 m example prices 'Cradles / Chocks (full season 26 weeks) €497.20' and '(2 weeks) €34.40', which is €17.20 a week for a cradle, on top of €1,990 'Storage Ashore'. No summer ashore rate is published.",
+      "url": "https://www.malahidemarina.ie/winter-storage-afloat-ashore",
+      "publisher": "Malahide Marina",
+      "sourceType": "primary",
+      "confirmed": true
+    }
+  },
+
+  "uncertain": [
+    "The Pleasure Craft Licence fee after the 2026-04-01 inflation adjustment: the $24 figure is from the January 2026 release, and the fee cells on the fees page did not render.",
+    "Whether the RIV fee has risen since the $325 set on 2020-08-01.",
+    "Connecticut: no published statement exempts a boat bought and used abroad before a move from the use tax collected at registration; the 30-day new-resident rule is published for vehicles only.",
+    "New York registration fee tiers ($22.50 / $45 / $75 for 3 years) are as the DMV page shows them now, but they are lower than NY's older published fees; recheck before relying on them.",
+    "The USMCA exemption from the MPF, and CBP's own boat-import help article (help.cbp.gov Article-1283), were not read directly.",
+    "Whether CBP would ever treat a pleasure boat as a 9804.00.05 household effect. Moot here because the boat fails the one-year-use requirement, and USMCA duty is Free anyway.",
+    "Whether California credits Canadian HST paid on the original purchase as tax paid to 'another state'.",
+    "Irish marina petrol: no published price anywhere in the Dublin area; the AA forecourt average is only a proxy.",
+    "POD Marine's 'Summer trailer storage' may be for empty trailers rather than boats kept ashore on their trailers."
+  ]
+}

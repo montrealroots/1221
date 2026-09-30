@@ -189,7 +189,7 @@ function BoatPanel() {
   const here = (units: number) => money(inSaveMoney(sim, Math.round(units * 100), rules?.currency ?? 'USD'));
   return (
     <Panel title="A Boat" subtitle={rules?.model.label ?? T18.label}>
-      {!rules || !q ? <p className="small muted" style={{ margin: 0 }}>SLATE sells a boat in New York, Connecticut, California, London and Toronto only yet.</p> : (
+      {!rules || !q ? <p className="small muted" style={{ margin: 0 }}>SLATE sells a boat in New York, Connecticut, California, London, Dublin and Toronto only yet.</p> : (
         <div className="col gap-3">
           <div className="grid grid-3">
             <Stat label={boat ? 'Yours' : rules.taxAdded ? 'Taxed And Registered' : 'Its Price'} value={boat ? money(boat.price) : money(q.price + q.tax + q.registration)} note={boat ? (boat.loan ? `${money(boat.loan.owed)} owed, ${money(boat.loan.monthly)} a month` : `Kept in ${CITIES.get(boat.cityId)?.name ?? boat.cityId}`) : rules.taxAdded ? `${money(q.price)}${state?.startsWith('US') ? ' with its trailer' : ''}, ${money(q.tax)} tax` : 'A dealer’s price, its VAT in it'} />

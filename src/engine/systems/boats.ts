@@ -63,7 +63,7 @@ export function boatQuote(sim: Simulation, cityId: string): { price: Money; tax:
 export function buyBoatRefusal(sim: Simulation, person: Person, financed = false): string | undefined {
   if (boatOf(person)) return 'You own a boat.';
   const q = boatQuote(sim, homeCity(person));
-  if (!q) return 'SLATE sells a boat in New York, Connecticut, California, London and Toronto only yet.';
+  if (!q) return 'SLATE sells a boat in New York, Connecticut, California, London, Dublin and Toronto only yet.';
   if (financed && !jurisdictionOf(homeCity(person))?.startsWith('US')) return 'Bayliner’s loan is American; none is kept here.';
   if (financed && (person.credit?.score ?? 0) < BOAT_LOAN.minScore) return 'Bayliner lends to a well-qualified record, which yours isn’t yet.';
   const total = (financed ? usd(sim, BOAT_LOAN.downUsd) : q.price) + q.tax + q.registration;
@@ -76,7 +76,7 @@ export const certified = (person: Person, state: BoatState): boolean => !BOAT_RU
 
 export function certifyRefusal(sim: Simulation, person: Person): string | undefined {
   const state = jurisdictionOf(homeCity(person));
-  if (!isBoatState(state)) return 'SLATE keeps a boating certificate in New York, Connecticut, California and Toronto only yet.';
+  if (!isBoatState(state)) return 'SLATE keeps a boating certificate in New York, Connecticut, California and Toronto only yet, and Britain and Ireland ask none.';
   const cert = BOAT_RULES[state].certificate;
   if (!cert) return 'None is asked here.';
   if (certified(person, state)) return 'You hold it.';
@@ -236,15 +236,37 @@ export function registerBoats(sim: Simulation): void {
  * new home is in one of the boat's places, registered there when the state
  * changes; otherwise it stays where it was kept. From 2026-09-30; until then
  * a boat stayed where it was bought.
+ *
+ * Across the border between America and Canada from 2026-10-01
+ * (`docs/research/world/research-boats-ireland-border.json`); until then it
+ * stayed behind:
+ * - Into Canada, a pleasure boat and its trailer are a settler's effects,
+ *   owned and used before arriving, free of duty and GST/HST (CBSA's D2-2-1),
+ *   and Ontario charges no retail sales tax on one brought from outside
+ *   Canada; Transport Canada's license is paid.
+ * - Into America, a boat is free of duty under USMCA; the household-effects
+ *   exemption asks a year's use abroad. New York charges no use tax on a boat
+ *   bought while its owner lived elsewhere. Connecticut's new-resident
+ *   exemption is written for vehicles, so its 2.99% on a vessel is charged.
+ *   California presumes a boat brought in within 12 months of its purchase
+ *   taxable, and its rate is charged then. The state's registration is paid.
+ * Between Britain and Ireland, by the Northern Irish road, a boat still stays
+ * behind: neither country's relief was read for one.
  */
 export function carryBoat(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
   const boat = boatOf(person);
   if (!boat || boat.cityId !== fromCity || fromCity === toCity || !byRoad(fromCity, toCity)) return;
   const state = jurisdictionOf(toCity);
-  // Within a country only: importing a boat across a border isn't kept.
-  if (!isBoatState(state) || CITIES.get(fromCity)?.countryId !== CITIES.get(toCity)?.countryId) return;
+  const from = CITIES.get(fromCity)?.countryId;
+  const to = CITIES.get(toCity)?.countryId;
+  // Within a country, or between America and Canada (from 2026-10-01).
+  const across = from !== to;
+  if (!isBoatState(state) || (across && !((from === 'us' && to === 'ca') || (from === 'ca' && to === 'us')))) return;
   boat.cityId = toCity;
   if (state === boat.state) return;
+  // Into America, the state's use tax where it's charged on a boat brought in.
+  const useTax = !across ? 0 : state === 'US-CT' ? VESSEL_TAX_CT : state === 'US-CA' && sim.now - boat.boughtAt < YEAR ? salesTaxRate(toCity, sim.now, 'goods') : 0;
+  if (useTax > 0) { const tax = Math.round(boat.price * useTax); if (!payFromBank(sim, person, tax, 'Use tax on the boat brought in, the state’s', 'vehicle')) owe(sim, person, tax, 'Use tax on the boat', 'vehicle'); }
   const year = zonedParts(sim.now, CITIES.require(toCity).timeZone).year;
   const due = inPlace(sim, state, BOAT_RULES[state].registration?.first(year) ?? 0);
   if (!payFromBank(sim, person, due, 'Registering the boat in its new home', 'vehicle')) owe(sim, person, due, 'Registering the boat', 'vehicle');
