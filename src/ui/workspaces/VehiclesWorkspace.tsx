@@ -30,6 +30,7 @@ import { tiresRefusal } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
+import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn, type Finish } from '@/engine/systems/wraps';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -123,6 +124,8 @@ export function VehiclesWorkspace() {
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
                             <RepairControl v={v} />
+                            <WrapControl v={v} />
+                            <CoverControl v={v} />
                             <ModifyControl v={v} />
                             {!v.hitch && towRating(v) > 0 && <Gated feature="vehicle.hitch" className="btn btn-sm btn-ghost" disabled={Boolean(hitchRefusal(sim, person, v))} title={hitchRefusal(sim, person, v) ?? `Rated to tow ${Math.round(towRating(v))} kg`} onClick={() => { const a = run<{ paid: number }>('vehicle.hitch', { vehicleId: v.id }); if (a.ok) toast(`A towbar fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>Fit A Towbar</Gated>}
                             <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
@@ -410,4 +413,42 @@ function RepairControl({ v }: { v: OwnedVehicle }) {
       <Gated feature="vehicle.repair" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? chosen?.address} onClick={() => { const a = run<{ paid: number }>('vehicle.repair', { vehicleId: v.id, shopId: chosen!.id }); if (a.ok) toast(`In at ${chosen!.name}, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{chosen && shops.length === 1 ? `Book The Repair At ${chosen.name}` : 'Book The Repair'}</Gated>
     </>
   );
+}
+
+/** A wrap in the color and finish chosen, at a shop in the car's town that posts its price (`systems/wraps.ts`). */
+function WrapControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast, sim } = useGame();
+  const m = modelById(v.modelId)!;
+  const shops = wrapShopsIn(v.at ?? v.cityId);
+  const [shopId, setShopId] = useState('');
+  const [color, setColor] = useState<string>(WRAP_COLORS[0]);
+  const [finish, setFinish] = useState<Finish>('gloss');
+  if (!shops.length) return null;
+  const shop = shops.find((x) => x.id === shopId) ?? shops[0]!;
+  const no = wrapRefusal(sim.player, v, shop.id, color, finish, sim.now);
+  const cur = saveCurrency(sim.universe);
+  return (
+    <>
+      {v.wrap && <span className="xs dim">{`Wrapped, ${v.wrap.finish === 'gloss' ? 'Gloss' : v.wrap.finish === 'satin' ? 'Satin' : 'Matte'} ${v.wrap.color}`}</span>}
+      <select aria-label="Wrap Shop" value={shop.id} onChange={(e) => setShopId(e.target.value)} style={{ width: 'auto' }}>
+        {shops.map((x) => <option key={x.id} value={x.id}>{`${x.name}, ${formatMoney(wrapCost(sim, x, m), cur, { cents: false })}`}</option>)}
+      </select>
+      <select aria-label="Wrap Color" value={color} onChange={(e) => setColor(e.target.value)} style={{ width: 'auto' }}>
+        {WRAP_COLORS.map((c) => <option key={c} value={c}>{c}</option>)}
+      </select>
+      <select aria-label="Wrap Finish" value={finish} onChange={(e) => setFinish(e.target.value as Finish)} style={{ width: 'auto' }}>
+        {FINISHES.map((x) => <option key={x} value={x}>{x === 'gloss' ? 'Gloss' : x === 'satin' ? 'Satin' : 'Matte'}</option>)}
+      </select>
+      <Gated feature="vehicle.wrap" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ paid: number }>('vehicle.wrap', { vehicleId: v.id, shopId: shop.id, color, finish }); if (a.ok) toast(`At ${shop.name} to be wrapped, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>Wrap It</Gated>
+    </>
+  );
+}
+
+/** Full cover or liability, changed after buying where the law and the lender allow (`systems/wraps.ts`). */
+function CoverControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast } = useGame();
+  const other = v.coverage === 'full' ? 'liability' : 'full';
+  const no = coverRefusal(v, other, liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
+  if (no === 'Liability alone isn’t offered for it here.') return null;
+  return <Gated feature="vehicle.coverage" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('vehicle.coverage', { vehicleId: v.id, coverage: other }).ok) toast(other === 'full' ? 'Full cover from the next month.' : 'Liability only from the next month.', 'positive'); }}>{other === 'full' ? 'Change To Full Cover' : 'Change To Liability Only'}</Gated>;
 }

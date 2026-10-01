@@ -42,7 +42,9 @@ export const MODS: readonly Mod[] = ['wheels', 'respray', 'remap', 'lowering', '
 export function modLoading(v: OwnedVehicle): number {
   if (v.jurisdiction !== 'GB') return 1;
   const fitted = [...(v.mods ?? []), ...(v.resprayed ? ['respray' as const] : [])];
-  return fitted.reduce((f, m) => f * (1 + MOD_LOADING[m]), v.tint ? 1 + MOD_LOADING.tint : 1);
+  // A wrap is told as a non-standard respray is, the nearest loading published (`systems/wraps.ts`, from 2026-10-01).
+  const wrapped = v.wrap && !fitted.includes('respray') ? 1 + MOD_LOADING.respray : 1;
+  return fitted.reduce((f, m) => f * (1 + MOD_LOADING[m]), (v.tint ? 1 + MOD_LOADING.tint : 1) * wrapped);
 }
 
 export function modRefusal(v: OwnedVehicle | undefined, mod: Mod, glazed: boolean): string | undefined {

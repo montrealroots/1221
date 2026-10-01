@@ -48,7 +48,7 @@ import { spend } from './household';
 import type { OwnedVehicle } from './vehicles';
 
 export interface Fault { at: Instant; severe: boolean; /** The repair, US dollars. */ usd: number }
-export interface InShop { shopId: string; until: Instant }
+export interface InShop { shopId: string; until: Instant; /** The shop's name where it isn't a garage of `content/carshops.ts`: a wrap shop's. */ name?: string }
 
 /** The states whose inspection reads the car's computer, and fails a lit check engine light. */
 export const READS_THE_LIGHT: ReadonlySet<Jurisdiction> = new Set(['US-NY', 'US-CT', 'US-CA']);
@@ -76,7 +76,7 @@ export const inShopNow = (v: OwnedVehicle, at: Instant): boolean => Boolean(v.in
 
 /** Why a car can't be driven now for want of a repair, or nothing. */
 export function laidUp(v: OwnedVehicle, at: Instant): string | undefined {
-  if (v.inShop && v.inShop.until > at) return `It’s at ${shopById(v.inShop.shopId)?.name ?? 'the garage'} until ${formatDate(v.inShop.until, CITIES.require(shopById(v.inShop.shopId)?.cityId ?? v.cityId).timeZone)}.`;
+  if (v.inShop && v.inShop.until > at) return `It’s at ${v.inShop.name ?? shopById(v.inShop.shopId)?.name ?? 'the garage'} until ${formatDate(v.inShop.until, CITIES.require(shopById(v.inShop.shopId)?.cityId ?? v.at ?? v.cityId).timeZone)}.`;
   if (v.fault?.severe) return 'It’s broken down, and needs a repair before it goes anywhere.';
   return undefined;
 }

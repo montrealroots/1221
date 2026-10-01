@@ -39,6 +39,7 @@ import { mayDrive, type VehicleClass } from './documents';
 import { gone, mayBeStolen, stolenNow } from './theft';
 import { tireFactor, tireInsuranceFactor, tiresMonth } from './tires';
 import { byRoad as roadBetween, drive } from './driving';
+import { registerWraps } from './wraps';
 import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -93,6 +94,8 @@ export interface OwnedVehicle {
   inShop?: import('./repairs').InShop;
   /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
   errandKm?: number;
+  /** A wrap in film over the paint (`systems/wraps.ts`, from 2026-10-01). */
+  wrap?: import('./wraps').Wrap;
   /** Leased, not owned (`systems/leasing.ts`, from 2026-09-30): the lessor's until bought out. */
   lease?: import('./leasing').Lease;
 }
@@ -583,6 +586,7 @@ export function registerVehicles(sim: Simulation): void {
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerWraps(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!, (v) => liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
   registerRepairs(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
