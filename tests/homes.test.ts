@@ -21,9 +21,11 @@ import { saveCurrency } from '@/engine/core/money';
 import { depositCapMonths } from '@/engine/systems/household';
 import { PROPERTY_MANAGERS } from '@/engine/content/propertymanagers';
 import { lettingFee, managementFee, renewalFee } from '@/engine/systems/propertymanagers';
+import { fixturesOf, trainingAt } from '@/engine/systems/dwelling';
+import { billsOf } from '@/engine/systems/household';
 import {
   HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
-  lifeOf, livingIn, loanBalance, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
+  lifeOf, livingIn, loanBalance, marketRent, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
   type Listing, type OwnedHome, renewTenancy } from '@/engine/systems/homes';
 
 function save(seed: string, city = 'us-ct-newhaven'): Simulation {
@@ -332,6 +334,58 @@ describe('renovating', () => {
     expect(projectRefusal(sim, sim.player, owned, rebuild)).toBeUndefined();
     owned.facts.baths = owned.facts.beds + 1;
     expect(projectRefusal(sim, sim.player, owned, PROJECTS.find((p) => p.id === 'bath-add')!)).toMatch(/baths enough/);
+  });
+});
+
+describe('rooms and removals', () => {
+  it('makes a spare bedroom a home gym, which trains as a gym does and lets for more', () => {
+    const { sim, owned } = bought('homes-gym', 1);
+    give(sim, 100_000_00);
+    owned.facts.fixtures = { ...fixturesOf(sim, sim.player, owned.cityId, owned.facts, owned.id), gym: 'none' };
+    const gym = PROJECTS.find((p) => p.id === 'home-gym')!;
+    const beds = owned.facts.beds;
+    owned.facts.beds = 1;
+    expect(projectRefusal(sim, sim.player, owned, gym)).toBe('It has no spare bedroom.');
+    owned.facts.beds = Math.max(2, beds);
+    const rent = marketRent(sim, owned, 'main');
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'home-gym' } });
+    sim.advanceBy((gym.days + 1) * MS_DAY);
+    expect(owned.facts.fixtures!.gym).toBe('home');
+    expect(marketRent(sim, owned, 'main')).toBeGreaterThan(rent);
+    expect(trainingAt(sim, sim.player).where).toBe('gym');
+    expect(projectRefusal(sim, sim.player, owned, gym)).toBe('It has a gym already.');
+  });
+
+  it('takes out a pool, its upkeep gone from the bills and its part no longer wearing', () => {
+    const { sim, owned } = bought('homes-pool-out', 1);
+    give(sim, 100_000_00);
+    owned.facts.type = 'house';
+    if (!owned.facts.features.includes('pool')) owned.facts.features.push('pool');
+    owned.facts.parts.pool = 2000;
+    const removal = PROJECTS.find((p) => p.id === 'pool-removal')!;
+    const bills = billsOf(sim, sim.player);
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'pool-removal' } });
+    sim.advanceBy((removal.days + 1) * MS_DAY);
+    expect(owned.facts.features).not.toContain('pool');
+    expect(owned.facts.parts.pool).toBeUndefined();
+    expect(billsOf(sim, sim.player)).toBeLessThan(bills);
+    expect(projectRefusal(sim, sim.player, owned, removal)).toBe('It needs a pool.');
+  });
+
+  it('takes down a deck, and pulls down a garage', () => {
+    const { sim, owned } = bought('homes-deck-out', 1);
+    give(sim, 100_000_00);
+    owned.facts.type = 'house';
+    for (const one of ['deck', 'garage'] as const) if (!owned.facts.features.includes(one)) owned.facts.features.push(one);
+    owned.facts.parts.deck = 2010;
+    owned.facts.parts.garageDoor = 2010;
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'deck-removal' } });
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'garage-demolition' } });
+    sim.advanceBy(3 * MS_DAY);
+    expect(owned.facts.features).not.toContain('deck');
+    expect(owned.facts.features).not.toContain('garage');
+    expect(owned.facts.parts.deck).toBeUndefined();
+    expect(owned.facts.parts.garageDoor).toBeUndefined();
   });
 });
 

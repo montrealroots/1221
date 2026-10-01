@@ -262,7 +262,9 @@ export interface Project {
   /** A lot at least this big, in square feet. */
   lot?: number;
   /** What it adds or changes. */
-  adds?: { gains?: readonly Feature[]; drops?: readonly Feature[]; beds?: number; baths?: number; size?: number };
+  adds?: { gains?: readonly Feature[]; drops?: readonly Feature[]; beds?: number; baths?: number; size?: number; /** A gym of its own, a fixture (`premiumOf`, `trainingAt`). */ gym?: 'home' };
+  /** A spare bedroom it's made in: two or more. */
+  spareBedroom?: boolean;
   /** A cap: a bath added only while there are fewer baths than beds and one more, a bedroom only to this many. */
   bathsUpTo?: 'bedsPlusOne';
   bedsUpTo?: number;
@@ -337,6 +339,15 @@ export const PROJECTS: readonly Project[] = [
   { id: 'suite', label: 'Add A Primary Suite', usd: 168_000, recoup: 0.34, days: 90, on: DETACHED, lot: 5_000, adds: { beds: 1, baths: 1, size: 384 }, bedsUpTo: 7 },
   { id: 'suite-upscale', label: 'Add An Upscale Primary Suite', usd: 345_000, recoup: 0.2, days: 120, on: DETACHED, lot: 7_000, adds: { beds: 1, baths: 1, size: 640 }, bedsUpTo: 8 },
   { id: 'adu', label: 'Build A Backyard Cottage', usd: 162_000, recoup: 0.44, days: 150, on: DETACHED, needs: ['yard'], lacks: ['adu'], lot: 6_000, adds: { gains: ['adu'] } },
+  // From 2026-10-01 (research-construction-process.json, cost guides, US): a spare bedroom made a home gym, the middle of Fixr's
+  // $2,000 to $10,000 (January 2025), its equipment in it; a week, SLATE's, Fixr giving no time. A buyer's return isn't published.
+  { id: 'home-gym', label: 'Make A Spare Bedroom A Home Gym', usd: 6_000, recoup: 0, days: 7, on: ALL, spareBedroom: true, adds: { gym: 'home' } },
+  // Taking things out: an in-ground pool removed and filled, the middle of Angi's $7,000 to $16,000 and its 5 to 10 days; a deck,
+  // the middle of Fixr's $300 to $3,000; a detached two-car garage, Fixr's $3,500 average for 24 by 24 feet. The deck's and the
+  // garage's days aren't published, and SLATE takes one and two. What a home is worth without them isn't published either.
+  { id: 'pool-removal', label: 'Take Out The Pool', usd: 11_500, recoup: 0, days: 8, on: DETACHED, needs: ['pool'], adds: { drops: ['pool'] } },
+  { id: 'deck-removal', label: 'Take Down The Deck', usd: 1_650, recoup: 0, days: 1, on: HOUSES, needs: ['deck'], adds: { drops: ['deck'] } },
+  { id: 'garage-demolition', label: 'Pull Down The Garage', usd: 3_500, recoup: 0, days: 2, on: DETACHED, needs: ['garage'], adds: { drops: ['garage'] } },
 ];
 
 /**

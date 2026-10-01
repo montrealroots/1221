@@ -103,6 +103,7 @@ import { alarmFactor } from './alarm';
 import { bcSvtRate, foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
 import { moveTo } from './luggage';
 import { chargeAgent, keysHandedOver, lettingFee, managementFee, managerOf, renewalFee } from './propertymanagers';
+import { fixturesOf } from './dwelling';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -932,6 +933,8 @@ export function projectRefusal(sim: Simulation, person: Person, owned: OwnedHome
   if (project.lot !== undefined && (f.lot ?? 0) < project.lot) return 'The lot isn’t big enough.';
   if (project.bathsUpTo === 'bedsPlusOne' && f.baths >= Math.max(1, f.beds) + 1) return 'It has baths enough for its bedrooms.';
   if (project.bedsUpTo !== undefined && f.beds >= project.bedsUpTo) return 'It has bedrooms enough.';
+  if (project.spareBedroom && f.beds < 2) return 'It has no spare bedroom.';
+  if (project.adds?.gym && fixturesOf(sim, person, owned.cityId, f, owned.id).gym === 'home') return 'It has a gym already.';
   if (project.renews && f.parts[project.renews] === undefined) return 'It has none to replace.';
   if (project.adds?.beds && owned.tenancies.some((t) => t.unit === 'main' && t.status === 'let')) return 'Not with a tenant living in it.';
   const busy = owned.works.find((w) => {
@@ -995,6 +998,9 @@ function finishWorks(sim: Simulation, person: Person, owned: OwnedHome, works: W
     // What it adds starts new: a deck, a pool, solar panels, a garage gone.
     for (const [feature, part] of [['deck', 'deck'], ['solar', 'solar'], ['pool', 'pool']] as const) if ((a.gains ?? []).includes(feature)) f.parts[part] = year;
     if ((a.drops ?? []).includes('garage')) delete f.parts.garageDoor;
+    // Taken out, a pool or a deck no longer wears (from 2026-10-01).
+    for (const part of ['pool', 'deck'] as const) if ((a.drops ?? []).includes(part)) delete f.parts[part];
+    if (a.gym) f.fixtures = { ...fixturesOf(sim, person, owned.cityId, f, owned.id), gym: a.gym };
     if (a.gains?.includes('heatPump')) f.parts.hvac = year;
     if (a.gains?.includes('garage')) f.parts.garageDoor = year;
   }
