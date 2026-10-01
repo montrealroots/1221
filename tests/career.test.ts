@@ -82,6 +82,8 @@ describe('the showcase', () => {
     expect(career.since).toBeUndefined();
     play(sim, at(2029, 6, 1, 12));
     expect(sim.player.school!.standing).toBe('graduated');
+    // The class, known after it, every one of them, by name (`systems/people.ts`).
+    expect(sim.player.contacts?.filter((c) => c.met.how === 'school').map((c) => c.name)).toEqual(sim.player.school!.classmates.map((c) => c.name));
     expect(career.since).toBeDefined();
     expect(pending(sim, CAREER_WEEK_KIND)).toHaveLength(1);
   }, 120_000);
@@ -591,6 +593,8 @@ describe('pay', () => {
     expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime + fitting);
     expect(b.status).toBe('worked');
     expect(careerOf(sim.player).credits).toEqual([{ roleId: 'costar', year: 2026, cityId: 'us-ny-newyork' }]);
+    // A castmate known from it, in the town it was worked in (`systems/people.ts`).
+    expect(sim.player.contacts?.map((c) => [c.met.how, c.cityId, c.hours])).toEqual([['work', 'us-ny-newyork', 0]]);
     expect(sim.player.earnings!.years['2026']!.sag).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime + fitting);
   });
 

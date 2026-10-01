@@ -271,6 +271,8 @@ export interface Person {
   alcohol?: import('../systems/alcohol').Alcohol;
   /** Routines they've saved (`systems/routines.ts`, from 2026-10-01). */
   routines?: import('../systems/routines').Routine[];
+  /** The people they know, met at school and at work (`systems/people.ts`, from 2026-10-01). */
+  contacts?: import('../systems/people').Contact[];
   /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
   suppliesSince?: number;
   groomedAt?: number;

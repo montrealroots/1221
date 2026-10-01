@@ -104,6 +104,7 @@ import { cppOnCheck } from './capensions';
 import { eiOnCheck } from './eiself';
 import { citizenOf } from './documents';
 import { moveTo } from './luggage';
+import { metAtWork } from './people';
 import { sagHoliday } from '../content/usholidays';
 
 export const SHOWCASE_KIND = 'career.showcase';
@@ -1324,6 +1325,8 @@ function finishJob(s: Simulation, person: Person, career: CareerRecord, booking:
     if (!television && !role.id.startsWith('film')) nudge(s, person, 'recognition', recognitionFrom(role));
     if (role.id.startsWith('film')) schedulePremiere(s, person, role, item.at);
     career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
+    // A castmate known from it (`systems/people.ts`, from 2026-10-01).
+    metAtWork(s, person, workCityOf(booking), booking.id, role.label);
     const life = role.after ? afterlife(s, person, booking, item.at) : undefined;
     if (television) {
       const a = FILM_ROAD.audience;

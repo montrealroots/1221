@@ -70,7 +70,8 @@ describe('the chance of the end', () => {
 
   it('ends lives about as often as the table says, drawn one by one', () => {
     // Two thousand people of seventy in the US, at their best: the table's
-    // 0.018 a year, times 0.8.
+    // 0.018 a year, times 0.8, and not living alone (a room in a shared flat),
+    // the table spread over those who do (`livingFactor`, from 2026-10-01).
     const sim = quickSave({}, 'end-count');
     const from = sim.now;
     let ended = 0;
@@ -81,7 +82,7 @@ describe('the chance of the end', () => {
       if (endBetween(sim, person, from, from + MS_YEAR) !== undefined) ended += 1;
     }
     const want = 2000 * chanceOfEndingYear({ ...sim.player, wellbeing: { ...sim.player.wellbeing, condition: 100 } }, 70, 'us');
-    expect(want).toBeCloseTo(2000 * 0.018110 * 0.8, 0);
+    expect(want).toBeCloseTo(2000 * 0.018110 * 0.8 / (1 + 0.32 * 38.5 / 262), 0);
     // Three standard deviations of a binomial count.
     expect(Math.abs(ended - want)).toBeLessThan(3 * Math.sqrt(want));
   });

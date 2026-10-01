@@ -29,6 +29,9 @@
  *   includes the ill: 0.8 of the table. Worn to nothing, it is three times it,
  *   about what poor self-rated health carries in the survey studies.
  *
+ * - Living alone, from 2026-10-01, at Holt-Lunstad's odds, spread so the
+ *   table stays everybody's (`livingFactor` in `systems/people.ts`).
+ *
  * None of it is shown. Nothing on a screen says how likely the end is or when.
  */
 
@@ -41,6 +44,7 @@ import { clamp } from '../core/rng';
 import { homeOf } from './earnings';
 import { bmiOf } from './body';
 import { BMI_SURVIVAL_LIMIT, bmiHazard } from '../content/body';
+import { livingFactor } from './people';
 
 export const END_KIND = 'life.end';
 const MS_YEAR = 365.2425 * 86_400_000;
@@ -93,9 +97,9 @@ export function frailty(condition: number, age: number): number {
   return 0.8 + 2.2 * short ** 1.5;
 }
 
-/** The chance a year from this age ends their life, all of it together: the table, the country, the shape they're in and their weight (`bmiHazard`). */
+/** The chance a year from this age ends their life, all of it together: the table, the country, the shape they're in, their weight (`bmiHazard`) and, from 2026-10-01, whether they live alone (`livingFactor`). */
 export function chanceOfEndingYear(person: Person, age: number, countryId: string | undefined): number {
-  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age) * (person.body ? bmiHazard(bmiOf(person.body)) : 1));
+  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age) * (person.body ? bmiHazard(bmiOf(person.body)) : 1) * livingFactor(person));
 }
 
 /**

@@ -82,6 +82,7 @@ import { chanceOver, laidUp, mayHurt } from './injury';
 import { INJURY } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
+import { knowTheClass } from './people';
 import { payeeAccount } from './cash';
 
 export type Craft = Record<Skill, number>;
@@ -906,6 +907,8 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     keepCredit(sim, school);
     // The degree's filmed monologues, posted at the end of the final term.
     if (to === 'graduated') school.filmed = true;
+    // The class, known for life after it (`systems/people.ts`, from 2026-10-01).
+    if (to === 'graduated') knowTheClass(sim, person, school.classmates);
     for (const item of sim.universe.scheduled) {
       // The showcase too: until 2026-09-27 a student dismissed between New York's and Los Angeles's still had the second, and the clock stopped at it.
       if (item.status === 'pending' && (item.kind.startsWith('school.') || item.kind === SHOWCASE_KIND) && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);

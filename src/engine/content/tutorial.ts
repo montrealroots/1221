@@ -345,6 +345,18 @@ export const CHAPTERS: readonly Chapter[] = [
     names: ['You, when you press your name'],
     opens: ['look.person'],
   },
+  {
+    id: 'people',
+    title: 'People',
+    lead: 'Who you know, and time spent with them.',
+    body: [
+      'People are met where most close friends are, at school and at work. The class is known at the degree, each as near as the three years made them, and each job leaves you a castmate from the town it was in. Each lives somewhere, is about your age, and has the dearest kind of place they’ll eat at.',
+      'Ask Them to a meal at a restaurant in their town, each paying their own, or to come over to your home. They say yes or no, and say why: a rival would rather not; they live elsewhere; they don’t come to the home of somebody they hardly know; it’s too early or too late; the place is dearer than they’d go to; they saw you in the last three days; or you didn’t come last time. Said yes, it’s on your calendar.',
+      'Time together is what makes a friend, about fifty hours a casual one, ninety a friend and two hundred a close one, as Hall measured it. Each meeting kept lifts the mood by as much as you need company and eases stress, and your meal is paid and eaten. Living alone, in a place of your own with nobody in its spare rooms, shortens a life by the odds the studies find.',
+    ],
+    names: ['People', 'Ask Them'],
+    opens: ['ui.people', 'social.invite'],
+  },
 ];
 
 export const CHAPTER_BY_ID: Readonly<Record<string, Chapter>> = Object.fromEntries(CHAPTERS.map((c) => [c.id, c]));

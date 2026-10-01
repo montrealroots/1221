@@ -41,6 +41,7 @@ import { flightFate } from './systems/journey';
 import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
+import { metAtWork } from './systems/people';
 import { tintOnTheRoad } from './systems/tint';
 import type { OwnedVehicle } from './systems/vehicles';
 import { modelById } from './systems/vehicles';
@@ -461,6 +462,19 @@ defineDecider<{ sim: Simulation }, string>({
     delete sim.player.attrs;
     return attributesOf(sim, sim.player).presence.toFixed(1);
   },
+});
+
+defineDecider<{ sim: Simulation; job: number }, string>({
+  id: 'social.person',
+  decides: 'Who a castmate met at work is: a name of their country, an age within five years of the actor’s, and the dearest kind of place they’d eat at.',
+  drawnIn: 'src/engine/systems/people.ts',
+  reads: {
+    // Each job's castmate is drawn on its own.
+    job: (o, t) => ({ ...o, job: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), job: seed }),
+  decide: ({ sim, job }) => metAtWork(sim, sim.player, 'us-ny-newyork', `job-${job}`, 'A Job').spends,
 });
 
 defineDecider<{ sim: Simulation }, string>({

@@ -551,6 +551,9 @@ export function Home() {
               <Gated feature="ui.routines" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/routines', 'Routines')}>
                 Routines
               </Gated>
+              <Gated feature="ui.people" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/people', 'People')}>
+                People
+              </Gated>
               <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
                 Homes
               </Gated>
