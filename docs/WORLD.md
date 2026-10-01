@@ -321,8 +321,14 @@ Researched in `docs/research/world/research-car-buying.json`.
   - At the end of the term there's a month to buy it out, at the residual plus the state's sales tax. If it isn't bought out, it goes back for the disposition fee and the miles over.
   - A longer lease isn't cheaper a month: the fourth year loses more value than a longer term spreads, so 48 months cost more a month than 36.
 - Not kept:
-  - Ending a lease early. Toyota publishes no formula for its charge, only that it "may be substantial".
-  - Buying a lease out before its end, whose price is the lessor's payoff.
+  - Ending a lease early, and buying one out before its end, until later on 2026-09-30 (`earlyEnd`, `leaseBalance` in `systems/leasing.ts`, researched in `research-sweep3.json`). Toyota publishes no formula, only that the charge "may be substantial", but the Federal Reserve's "Keys to Vehicle Leasing" gives the method:
+    - The charge for ending early is the remaining balance less the car's realized value, its wholesale price. SLATE takes the trade-in value as the wholesale.
+    - The balance is kept by the constant yield method, the most common. SLATE solves the lease's own rate from its capitalized cost, payments and residual. Right after each payment the balance stands where the Fed's worked example keeps it: at signing, the capitalized cost less the first payment.
+    - Bought out early, the price is the balance, the purchase option fee and the tax.
+    - No lessor's own early termination fee was found, so none is added; the disposition fee is charged, as at any return.
+    - Miles over are counted against the whole term's allowance, as no proration was read.
+    - A lease signed before then keeps no capitalized cost and ends at its term.
+    - Evidence: `tests/leasing.test.ts`, `tests/leasesabroad.test.ts`. 13 mutations, all killed in the end. Three survivors were redundant guards that were removed; three needed tests.
   - The lessor taking back a car whose payments are missed, until later on 2026-09-30 (`takeLeasedCar`). Now, three missed running where the law lets a car be seized, the lessor takes its car back. It goes on the record as a repossession, and what's missed stays owed. The early-termination charge, with no published formula, isn't charged. 3 mutations, all killed.
   - Leases outside America, until later on 2026-09-30. Now (`CA_LEASE` and `PCP` in `content/vehiclefees.ts`, `tests/leasesabroad.test.ts`, 14 mutations, all killed in the end):
     - **Canada:** Honda Canada's lease at 2.99% APR. Its residual is worked back from the published $797.47 on $51,993 over 24 months, 68.2%, and scaled along SLATE's curve for 36 and 48 months. It allows 20,000 km a year at 15 cents a kilometer over, and each payment and a buyout are taxed as the province taxes a sale. It doesn't end early, as Honda publishes no charge for that.

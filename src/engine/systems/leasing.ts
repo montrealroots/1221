@@ -21,10 +21,26 @@
  * once half the total's paid, the rest to half paid first.
  *
  * A leased car, and a PCP's until its final payment, is the lender's: it
- * isn't held in a net worth, sold or traded in. Returning an American or a
- * Canadian lease early isn't kept, as the lessors publish no formula for its
- * charge ("may be substantial"); a missed payment goes into arrears, and the
- * lessor taking the car back isn't kept. Britain's PCH isn't sold: its one
+ * isn't held in a net worth, sold or traded in. Until later on 2026-09-30
+ * returning an American or a Canadian lease early wasn't kept, as the lessors
+ * publish no formula for its charge ("may be substantial"), and the lessor
+ * taking the car back for missed payments wasn't either (`takeLeasedCar` keeps
+ * it now).
+ *
+ * From later on 2026-09-30, an American or a Canadian lease ends early, or is
+ * bought out before its end, on the method the Federal Reserve's "Keys to
+ * Vehicle Leasing" describes (`docs/research/world/research-sweep3.json`):
+ * the early termination charge is the lease's remaining balance less the
+ * car's realized value, its wholesale price; the balance is kept by the
+ * constant yield method, the one most lessors use, falling each month by the
+ * depreciation part of the payment. SLATE solves the lease's own rate, the
+ * one at which its payments and residual come to its capitalized cost, and
+ * takes the trade-in value as the wholesale. No lessor's own early
+ * termination fee was found, so none is added; the disposition fee is
+ * charged, as at any return. Bought out early, it's the balance, the
+ * purchase option fee and the tax. The miles over are counted against the
+ * whole term's allowance, as no lessor's proration was read. Until then
+ * neither was kept. Britain's PCH isn't sold: its one
  * published offer is on a Corolla, which SLATE doesn't sell there. Mexico's
  * arrendamiento puro publishes no residual or allowance.
  */
@@ -40,7 +56,7 @@ import { CA_LEASE, PCP, US_LEASE, US_NEW_BELOW_STICKER, type Jurisdiction } from
 import { homeOf } from './earnings';
 import { owe, payFromBank } from './household';
 import { takeLeasedCar } from './repossession';
-import { VEHICLE_MONTH_KIND, VEHICLE_RENEWAL_KIND, jurisdictionOf, kept, kindOf, loanRate, modelById, monthlyInsurance, quote, renewal, usSalesTaxRate, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { VEHICLE_MONTH_KIND, VEHICLE_RENEWAL_KIND, tradeInValue, jurisdictionOf, kept, kindOf, loanRate, modelById, monthlyInsurance, quote, renewal, usSalesTaxRate, vehiclesOf, type OwnedVehicle } from './vehicles';
 
 export const LEASE_MONTH_KIND = 'vehicle.lease_month';
 export const LEASE_END_KIND = 'vehicle.lease_end';
@@ -73,6 +89,9 @@ export interface Lease {
   /** A PCP's half rule: half the total payable, and what's been paid, in the save's money, cents. */
   halfTotal?: Money;
   paid?: Money;
+  /** A lease's capitalized cost and its monthly payment before tax, in its money, cents: what its balance is kept by (from later on 2026-09-30). */
+  capitalized?: Money;
+  base?: Money;
 }
 
 export interface LeaseQuote {
@@ -223,6 +242,39 @@ export function buyoutPrice(v: OwnedVehicle, at: Instant): Money | undefined {
   return Math.round(v.lease.residual * (1 + usSalesTaxRate(v.jurisdiction, v.cityId, at, v.lease.residual / 100)));
 }
 
+/**
+ * A lease's balance after so many payments, by the constant yield method: the
+ * payments still to come and the residual, at the rate that brings all of
+ * them, from the first at signing, to the capitalized cost. In its money.
+ */
+export function leaseBalance(lease: Lease, made: number): Money | undefined {
+  const { capitalized, base, months, residual } = lease;
+  if (capitalized === undefined || base === undefined) return undefined;
+  const worth = (r: number, from: number) => { let sum = 0; for (let k = from; k < months; k += 1) sum += base / (1 + r) ** (k - from); return sum + residual / (1 + r) ** (months - from); };
+  // The monthly rate, by halving: what's paid falls as the rate rises.
+  let lo = 0;
+  let hi = 0.05;
+  for (let i = 0; i < 60; i += 1) { const mid = (lo + hi) / 2; if (worth(mid, 0) > capitalized) lo = mid; else hi = mid; }
+  // Right after the payment last made, as the Federal Reserve's example keeps it: at signing, the capitalized cost less the first.
+  const r = (lo + hi) / 2;
+  return Math.round(worth(r, Math.min(made, months)) / (1 + r));
+}
+
+/** Ending an American or a Canadian lease before its term, or buying it out early, in the lease's money; or why it can't be. */
+export function earlyEnd(sim: Simulation, v: OwnedVehicle): { balance: Money; realized: Money; charge: Money; buyout: Money } | string {
+  const lease = v.lease;
+  if (!lease) return 'That isn’t a car you lease.';
+  const balance = leaseBalance(lease, lease.months - lease.monthsLeft);
+  // A PCP keeps none, and goes back under the half rule; a lease signed before the balance was kept, none either.
+  if (balance === undefined) return 'A lease signed before its balance was kept: ended at its term.';
+  const cur = saveCurrency(sim.universe);
+  const into = leaseCurrency(v);
+  const trade = tradeInValue(sim, v);
+  const realized = cur === into ? trade : exchange(trade, cur, into) ?? trade;
+  const tax = v.jurisdiction === 'CA-ON' || v.jurisdiction === 'CA-BC' ? salesTaxRate(v.cityId, sim.now, 'goods') : usSalesTaxRate(v.jurisdiction, v.cityId, sim.now, balance / 100);
+  return { balance, realized, charge: Math.max(0, balance - realized), buyout: Math.round(balance * (1 + tax)) + termsOf(lease).buyoutFee };
+}
+
 /** A PCP's early return under the half rule: what's to pay to reach half the total, in the save's money; or why it can't. */
 export function halfRule(v: OwnedVehicle): { topUp: Money } | string {
   if (v.lease?.kind !== 'pcp' || v.lease.halfTotal === undefined) return 'Only a PCP goes back early, under the half rule.';
@@ -232,12 +284,12 @@ export function halfRule(v: OwnedVehicle): { topUp: Money } | string {
 const cancelFor = (sim: Simulation, v: OwnedVehicle) => { for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === v.id) sim.timeline.cancel(item.id, sim.now); };
 
 /** The car back to the lender: the disposition fee, the miles over, and before its end a PCP's top-up to half. */
-function giveBack(sim: Simulation, person: Person, v: OwnedVehicle, topUp = 0): Money {
+function giveBack(sim: Simulation, person: Person, v: OwnedVehicle, topUp = 0, why = 'early, under the half rule'): Money {
   const m = modelById(v.modelId)!;
   const t = termsOf(v.lease!);
   const over = milesOver(v);
   const due = inSave(sim, t.disposition + over.charge, t.currency) + topUp;
-  const memo = `The ${m.make} ${m.model} returned ${topUp || v.lease!.maturedAt === undefined ? 'early, under the half rule' : 'at its term’s end'}${over.miles ? `, ${over.miles.toLocaleString('en-US')} ${over.unit === 'km' ? 'km' : 'miles'} over` : ''}`;
+  const memo = `The ${m.make} ${m.model} returned ${topUp || v.lease!.maturedAt === undefined ? why : 'at its term’s end'}${over.miles ? `, ${over.miles.toLocaleString('en-US')} ${over.unit === 'km' ? 'km' : 'miles'} over` : ''}`;
   if (due > 0 && !payFromBank(sim, person, due, memo, 'vehicle')) owe(sim, person, due, 'The lease’s return', 'vehicle');
   v.soldAt = sim.now;
   cancelFor(sim, v);
@@ -261,6 +313,7 @@ export function registerLeasing(sim: Simulation): void {
     const lease: Lease = {
       months, monthsLeft: months - 1, monthly: inSave(s, q.monthly, q.currency), residual: q.residual,
       kind: q.kind, currency: q.currency, allowance: q.allowance, unit: q.unit, perUnitOver: q.perUnitOver, disposition: q.disposition, buyoutFee: q.buyoutFee,
+      ...(q.kind === 'lease' ? { capitalized: q.capitalized, base: q.base } : {}),
       ...(q.kind === 'pcp' ? { halfTotal: Math.round(inSave(s, q.total!, q.currency) / 2), paid: inSave(s, q.atSigning[0]!.amount, q.currency) } : {}),
     };
     const v: OwnedVehicle = { id, modelId: model.id, boughtAt: s.now, ageAtPurchase: 0, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0, lease };
@@ -308,26 +361,29 @@ export function registerLeasing(sim: Simulation): void {
     if (!v?.lease) throw new CommandError('That isn’t a car you lease.');
     return v;
   };
-  const matured = (s: Simulation, vehicleId: unknown) => {
-    const v = leased(s, vehicleId);
-    if (v.lease!.maturedAt === undefined) throw new CommandError('The lease hasn’t run its term: the lessor publishes no charge for ending it early.');
-    return v;
-  };
 
   sim.onCommand<{ vehicleId: string }, { paid: Money }>('vehicle.lease_return', (p, { sim: s }) => {
     const v = leased(s, p?.vehicleId);
     if (v.lease!.maturedAt !== undefined) return { paid: giveBack(s, s.player, v) };
-    // Before its end, only a PCP, under the half rule.
-    const half = halfRule(v);
-    if (typeof half === 'string') throw new CommandError('The lease hasn’t run its term: the lessor publishes no charge for ending it early.');
-    return { paid: giveBack(s, s.player, v, half.topUp) };
+    // Before its end, a PCP under the half rule, and a lease for its early termination charge.
+    if (v.lease!.kind === 'pcp') {
+      const half = halfRule(v);
+      if (typeof half === 'string') throw new CommandError(half);
+      return { paid: giveBack(s, s.player, v, half.topUp) };
+    }
+    const early = earlyEnd(s, v);
+    if (typeof early === 'string') throw new CommandError(early);
+    return { paid: giveBack(s, s.player, v, inSave(s, early.charge, leaseCurrency(v)), 'early, its early termination charge paid') };
   });
 
   sim.onCommand<{ vehicleId: string }, { paid: Money }>('vehicle.lease_buyout', (p, { sim: s }) => {
-    const v = matured(s, p?.vehicleId);
+    const v = leased(s, p?.vehicleId);
     const m = modelById(v.modelId)!;
-    const paid = inSave(s, buyoutPrice(v, s.now)!, leaseCurrency(v));
-    if (!payFromBank(s, s.player, paid, `Bought out the ${m.make} ${m.model} at its ${v.lease!.kind === 'pcp' ? 'PCP' : 'lease'}’s end`, 'vehicle')) throw new CommandError(`${formatMoney(paid, saveCurrency(s.universe))} is more than the bank can cover.`);
+    // Before its end, a lease at its balance (`earlyEnd`); a PCP only at its end.
+    const early = v.lease!.maturedAt === undefined ? earlyEnd(s, v) : undefined;
+    if (typeof early === 'string') throw new CommandError(v.lease!.kind === 'pcp' ? 'A PCP is bought at its final payment, at its end.' : early);
+    const paid = inSave(s, early ? early.buyout : buyoutPrice(v, s.now)!, leaseCurrency(v));
+    if (!payFromBank(s, s.player, paid, `Bought out the ${m.make} ${m.model} ${early ? 'before' : 'at'} its ${v.lease!.kind === 'pcp' ? 'PCP' : 'lease'}’s end`, 'vehicle')) throw new CommandError(`${formatMoney(paid, saveCurrency(s.universe))} is more than the bank can cover.`);
     // Its pending return finds no lease and passes.
     delete v.lease;
     return { paid };

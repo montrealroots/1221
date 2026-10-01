@@ -26,7 +26,7 @@ import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { tiresRefusal } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MODS, MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
-import { buyoutPrice, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
+import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
 const PLACE_NAME = { 'US-NY': 'New York', 'US-CT': 'Connecticut', 'US-CA': 'California', GB: 'Great Britain', IE: 'Ireland', 'CA-ON': 'Ontario', 'CA-BC': 'British Columbia', 'MX-CMX': 'Mexico City' } as const;
@@ -94,6 +94,7 @@ export function VehiclesWorkspace() {
                             v.lease.maturedAt === undefined ? (
                               <div className="col gap-1" style={{ alignItems: 'flex-end' }}>
                                 <span className="xs dim">Ends {formatDate(v.boughtAt + v.lease.months * 30 * 86_400_000, sim.zone)}{milesOver(v).miles ? `, ${milesOver(v).miles.toLocaleString('en-US')} ${milesOver(v).unit === 'km' ? 'km' : 'miles'} over` : ''}</span>
+                                {(() => { const e = earlyEnd(sim, v); return typeof e === 'string' ? null : (<div className="row gap-1"><Gated feature="vehicle.lease_buyout" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_buyout', { vehicleId: v.id }); if (a.ok) toast(`Bought out early, for ${money(a.value!.paid)}.`, 'positive'); }}>Buy It Out Early, {inHome(e.buyout, leaseCurrency(v))}</Gated><Gated feature="vehicle.lease_return" className="btn btn-sm btn-ghost" title={`The balance, ${inHome(e.balance, leaseCurrency(v))}, less its trade-in value, ${inHome(e.realized, leaseCurrency(v))}`} onClick={() => { const a = run<{ paid: number }>('vehicle.lease_return', { vehicleId: v.id }); if (a.ok) toast(`Ended early, for ${money(a.value!.paid)}.`, 'positive'); }}>End It Early, {inHome(e.charge, leaseCurrency(v))}</Gated></div>); })()}
                                 {typeof halfRule(v) !== 'string' && <Gated feature="vehicle.lease_return" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.lease_return', { vehicleId: v.id }); if (a.ok) toast(`Handed back, for ${money(a.value!.paid)}.`, 'positive'); }}>Hand It Back Early</Gated>}
                               </div>
                             ) : (

@@ -11,7 +11,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { salesTaxRate } from '@/engine/content/tax';
 import { CA_LEASE, PCP } from '@/engine/content/vehiclefees';
-import { buyoutPrice, halfRule, leaseQuote, milesOver, pcpPayment, type LeaseQuote } from '@/engine/systems/leasing';
+import { buyoutPrice, earlyEnd, halfRule, leaseQuote, milesOver, pcpPayment, type LeaseQuote } from '@/engine/systems/leasing';
 import { kept, modelById, vehiclesOf } from '@/engine/systems/vehicles';
 
 const AT = Date.UTC(2026, 9, 1);
@@ -99,7 +99,9 @@ describe('a PCP in Ireland, and a lease in Canada', () => {
     v.km = 40_000 + 500;
     expect(milesOver(v)).toEqual({ miles: 500, unit: 'km', charge: 75_00 });
     expect(buyoutPrice(v, AT)).toBe(Math.round(residual * (1 + salesTaxRate('ca-on-toronto', AT, 'goods'))));
-    // A Canadian lease doesn't end early.
-    expect(sim.execute({ kind: 'vehicle.lease_return', payload: { vehicleId: v.id } }).error).toMatch(/run its term/);
+    // A Canadian lease ends early as an American one does, at its balance less its trade-in value (from later on 2026-09-30).
+    const early = earlyEnd(sim, v);
+    expect(typeof early).toBe('object');
+    expect(sim.execute({ kind: 'vehicle.lease_return', payload: { vehicleId: v.id } }).ok).toBe(true);
   });
 });

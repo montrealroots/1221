@@ -13,7 +13,8 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { kept, tradeInFor, vehiclesOf } from '@/engine/systems/vehicles';
 import { netWorth } from '@/engine/systems/finance';
-import { buyoutPrice, leaseQuote, leaseRefusal, milesOver, type LeaseQuote } from '@/engine/systems/leasing';
+import { buyoutPrice, earlyEnd, leaseBalance, leaseQuote, leaseRefusal, milesOver, type LeaseQuote } from '@/engine/systems/leasing';
+import { tradeInValue, usSalesTaxRate } from '@/engine/systems/vehicles';
 
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -57,7 +58,7 @@ describe('the payment', () => {
 });
 
 describe('a lease', () => {
-  it('is the lessor’s car: not held, sold or traded, nor ended early; at its end it’s returned for $350 and the miles over', () => {
+  it('is the lessor’s car: not held, sold or traded; at its end it’s returned for $350 and the miles over', () => {
     const sim = life('us-ny-newyork', 'lease-ny');
     const before = netWorth(sim, sim.player.id).vehicles;
     const r = sim.execute<{ vehicleId: string; paid: number; monthly: number }>({ kind: 'vehicle.lease', payload: { modelId: 'us-honda-cr-v', months: 24 } });
@@ -68,8 +69,6 @@ describe('a lease', () => {
     expect(sim.execute({ kind: 'vehicle.sell', payload: { vehicleId: id } }).error).toMatch(/lessor/);
     expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', tradeIn: id } }).error).toMatch(/lessor/);
     expect(tradeInFor(sim, 'us-ny-newyork', v)).toBeUndefined();
-    expect(sim.execute({ kind: 'vehicle.lease_return', payload: { vehicleId: id } }).error).toMatch(/early/);
-    expect(sim.execute({ kind: 'vehicle.lease_buyout', payload: { vehicleId: id } }).error).toMatch(/early/);
     sim.advanceBy(24 * 30 * MS_DAY + MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'Lease payment, the Honda CR-V')).toHaveLength(23);
     expect(v.lease!.maturedAt).toBeDefined();
@@ -117,5 +116,54 @@ describe('a lease in default', () => {
     expect(v.soldAt).toBeDefined();
     expect(sim.player.credit!.score).toBeLessThan(score);
     expect(sim.player.credit!.marks!.some((m) => m.points === 100 && m.at === v.soldAt)).toBe(true);
+  });
+
+  it('keeps the balance by the constant yield method: the capitalized cost less the first payment, falling each month to the residual at its end', () => {
+    const sim = life('us-ny-newyork', 'lease-balance');
+    const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.lease', payload: { modelId: 'us-honda-cr-v', months: 36 } });
+    const lease = vehiclesOf(sim.player).find((x) => x.id === r.value!.vehicleId)!.lease!;
+    expect(lease.capitalized).toBeGreaterThan(lease.residual);
+    expect(Math.abs(leaseBalance(lease, 1)! - (lease.capitalized! - lease.base!))).toBeLessThanOrEqual(2);
+    // After the last payment, a month short of its end: the residual less a month's yield.
+    expect(leaseBalance(lease, 36)!).toBeLessThan(lease.residual);
+    expect(leaseBalance(lease, 36)!).toBeGreaterThan(lease.residual * 0.99);
+    for (let k = 1; k < 36; k += 1) expect(leaseBalance(lease, k + 1)!).toBeLessThan(leaseBalance(lease, k)!);
+    // A lease signed before the balance was kept ends at its term.
+    expect(leaseBalance({ ...lease, capitalized: undefined }, 3)).toBeUndefined();
+    expect(leaseBalance({ ...lease, base: undefined }, 3)).toBeUndefined();
+  });
+
+  it('ends early for its balance less the trade-in value and the disposition fee, or is bought out early for the balance, the fee and the tax', () => {
+    const sim = life('us-ny-newyork', 'lease-early');
+    const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.lease', payload: { modelId: 'us-honda-cr-v', months: 36 } });
+    const v = vehiclesOf(sim.player).find((x) => x.id === r.value!.vehicleId)!;
+    sim.advanceBy(6 * 30 * MS_DAY + MS_DAY);
+    v.lease!.buyoutFee = 300_00;
+    const e = earlyEnd(sim, v) as Exclude<ReturnType<typeof earlyEnd>, string>;
+    const made = v.lease!.months - v.lease!.monthsLeft;
+    expect(e.balance).toBe(leaseBalance(v.lease!, made));
+    expect(e.realized).toBe(exchange(tradeInValue(sim, v), saveCurrency(sim.universe), 'USD') ?? tradeInValue(sim, v));
+    expect(e.charge).toBe(Math.max(0, e.balance - e.realized));
+    expect(e.charge).toBeGreaterThan(0);
+    // Worth more than its balance, there's no charge, and nothing back.
+    expect((earlyEnd(sim, { ...v, listPrice: v.listPrice * 3 }) as { charge: number }).charge).toBe(0);
+    expect(e.buyout).toBe(Math.round(e.balance * (1 + usSalesTaxRate('US-NY', 'us-ny-newyork', sim.now, e.balance / 100))) + v.lease!.buyoutFee!);
+    // Bought out early: kept, the lease gone.
+    const twin = life('us-ny-newyork', 'lease-early');
+    const t = twin.execute<{ vehicleId: string }>({ kind: 'vehicle.lease', payload: { modelId: 'us-honda-cr-v', months: 36 } });
+    twin.advanceBy(6 * 30 * MS_DAY + MS_DAY);
+    const tv = vehiclesOf(twin.player).find((x) => x.id === t.value!.vehicleId)!;
+    const tb = (earlyEnd(twin, tv) as { buyout: number }).buyout;
+    const b = twin.execute<{ paid: number }>({ kind: 'vehicle.lease_buyout', payload: { vehicleId: tv.id } });
+    expect(b.ok, b.error).toBe(true);
+    expect(b.value!.paid).toBe(inSave(twin, tb, 'USD'));
+    expect(tv.lease).toBeUndefined();
+    expect(tv.soldAt).toBeUndefined();
+    // Ended early: the charge and the $350, and the car gone.
+    const end = sim.execute<{ paid: number }>({ kind: 'vehicle.lease_return', payload: { vehicleId: v.id } });
+    expect(end.ok, end.error).toBe(true);
+    expect(end.value!.paid).toBe(inSave(sim, e.charge + 350_00, 'USD'));
+    expect(v.soldAt).toBeDefined();
+    expect(sim.universe.transactions.some((x) => x.memo.includes('early, its early termination charge paid'))).toBe(true);
   });
 });
