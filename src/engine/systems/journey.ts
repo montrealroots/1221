@@ -47,6 +47,7 @@ import { stolenNow } from './theft';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { moveTo } from './luggage';
+import { hotelById, namedStayQuote, namedStayRefusal } from './hotels';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'ferry' | 'drive' | 'arrival';
@@ -87,7 +88,7 @@ export interface Journey {
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
-  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money };
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string } };
   /** A holiday let there instead (`content/lets.ts`, from 2026-09-29): its nights, price and the service fee in it. */
   let?: { nights: number; price: Money; fee: Money; basis: string; checkOutAt: Instant };
   /** Business or first, where not economy (from 2026-09-29). */
@@ -442,7 +443,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -489,7 +490,14 @@ export function registerJourneys(sim: Simulation): void {
     if (cls === 'street' && !inMotorhome(person, by)) throw new CommandError('Sleeping on the street is in a motorhome or campervan of your own, driven there.');
     const noStreet = cls === 'street' && !ownPlaceIn(person, toCity) && nights > 0 ? streetRefusal(toCity, nights) : undefined;
     if (noStreet) throw new CommandError(noStreet);
-    const room = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity), arriveOut) : undefined;
+    // A named hotel's own room and rate where one was chosen (`systems/hotels.ts`, from 2026-10-01); else the town's average.
+    const named = p?.hotelId && cls === 'hotel' ? { hotelId: String(p.hotelId), room: String(p.room ?? '') } : undefined;
+    if (named) {
+      if (hotelById(named.hotelId)?.cityId !== toCity) throw new CommandError('That hotel is in another town.');
+      const noHotel = namedStayRefusal(person, named.hotelId, named.room, plan, arriveOut);
+      if (noHotel) throw new CommandError(noHotel);
+    }
+    const room = !ownPlaceIn(person, toCity) && nights > 0 ? (named ? namedStayQuote(s, named.hotelId, named.room, plan, arriveOut, nights) : stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity), arriveOut)) : undefined;
     // A campground closed on one of the nights says when it's open.
     const closed = cls === 'campground' ? CAMPGROUNDS[jurisdictionOf(toCity) ?? '']?.closed : undefined;
     if (!ownPlaceIn(person, toCity) && nights > 0 && !room && closed) throw new CommandError(closed);
@@ -509,7 +517,7 @@ export function registerJourneys(sim: Simulation): void {
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;
     };
-    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}) } : undefined);
+    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}), ...(named ? { named } : {}) } : undefined);
     const second = back ? add(back, toCity, fromCity, total(back)) : undefined;
     return { journeyId: first.id, ...(second ? { returnId: second.id } : {}), leaveAt: first.leaveAt, arriveAt: first.arriveAt, total: cost };
   });

@@ -30,6 +30,7 @@ import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
+import { hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
@@ -57,6 +58,8 @@ export function TravelWorkspace() {
   const [bags, setBags] = useState(0);
   const [nights, setNights] = useState(3);
   const [stayCls, setStayCls] = useState<StayClass>('hotel');
+  // A named hotel's room, as "hotel|room", or the town's average (`systems/hotels.ts`).
+  const [hotelPick, setHotelPick] = useState('');
   const [ratePlan, setRatePlan] = useState<RatePlan>('flexible');
   const [daysThere, setDaysThere] = useState(4);
   const [tow, setTow] = useState(false);
@@ -103,7 +106,12 @@ export function TravelWorkspace() {
   const cls: StayClass = classes.includes(stayCls) ? stayCls : 'hotel';
   const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, fromCity, toCity, outLegs, Math.max(1, stayNights), stayNights, cls === 'campground' || cls === 'street')
     ?? (typeof backLegs === 'string' ? backLegs : backPlan && outPlan && backPlan[0]!.departAt <= outPlan[outPlan.length - 1]!.arriveAt ? 'The way home leaves before the way out arrives.' : undefined);
-  const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan, residentOf(person, toCity), outPlan ? outPlan[outPlan.length - 1]!.arriveAt : day) : undefined;
+  const arrival = outPlan ? outPlan[outPlan.length - 1]!.arriveAt : day;
+  // The named hotels' rooms in the town on this rate, cheapest first, priced for the nights.
+  const rooms = toCity && cls === 'hotel' && !own && stayNights > 0 ? hotelsIn(toCity).flatMap((h) => h.rooms.map((r) => ({ key: `${h.id}|${r.name}`, hotel: h, room: r, quote: namedStayQuote(sim, h.id, r.name, ratePlan, arrival, stayNights) })))
+    .filter((x) => x.quote).sort((a, b) => a.quote!.price - b.quote!.price) : [];
+  const picked = rooms.find((x) => x.key === hotelPick);
+  const hotel = picked ? picked.quote : toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan, residentOf(person, toCity), arrival) : undefined;
   const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
   const fares = plan ? plan.reduce((a, l) => a + l.fare, 0) : 0;
   const journeys = journeysOf(person).slice().sort((a, b) => b.leaveAt - a.leaveAt);
@@ -200,6 +208,15 @@ export function TravelWorkspace() {
                     {arrange(stayCatalog(sim, toCity, stayNights, ratePlan, residentOf(person, toCity), inMotorhome(person, mode) || Boolean(towing), outPlan ? outPlan[outPlan.length - 1]!.arriveAt : day)).map((e) => <option key={e.id} value={e.id}>{`${e.label}, ${catalogPrice(e, (c) => formatMoney(c, saveCurrency(sim.universe), { cents: false }))} The Stay`}</option>)}
                   </select>
                 </div>
+                {rooms.length > 0 && (
+                  <div className="field">
+                    <label htmlFor="travel-hotel">Hotel</label>
+                    <select id="travel-hotel" value={picked ? picked.key : ''} onChange={(e) => setHotelPick(e.target.value)}>
+                      <option value="">The Town’s Average Hotel</option>
+                      {rooms.map((x) => <option key={x.key} value={x.key}>{`${x.hotel.name}, ${x.room.name}, ${formatMoney(x.quote!.price, saveCurrency(sim.universe), { cents: false })}${x.quote!.estimated ? ' (Estimate)' : ''}`}</option>)}
+                    </select>
+                  </div>
+                )}
                 <div className="field">
                   <label htmlFor="travel-rate">Rate</label>
                   <select id="travel-rate" value={ratePlan} onChange={(e) => setRatePlan(e.target.value === 'prepaid' ? 'prepaid' : 'flexible')}>
@@ -247,7 +264,7 @@ export function TravelWorkspace() {
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}) });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>

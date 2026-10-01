@@ -15,10 +15,10 @@ corrected in the same commit, as the backlog's progress table is.
 | Step | Status | How |
 |---|---|---|
 | Destination, dates, guests, rooms, budget | Part | `travel.book` takes a destination, a date and a stay; one traveler, one room. |
-| Named properties | Missing | A stay is a class of hotel at the town's published average rate (`content/stays.ts`), not a named property. 43 hotels and 162 room types are researched (`research-hotels.json`) without dated rates, which the hotels' booking engines render in script. Stage 6. |
+| Named properties | Works | 28 real hotels in the eight towns, each room at its own booking engine's rates (`systems/hotels.ts`); Marriott's, Hilton's and Hyatt's refused an automated read. |
 | Compared by total price | Works | Travel's stay classes are a catalog, cheapest first, total with the town's hotel taxes. |
 | Location, room categories, policies | Missing | Stage 6. |
-| Room and bed configuration | Missing | Stage 6. |
+| Room and bed configuration | Works | Each hotel's own room types and their beds, as its engine lists them. |
 | Extras and requests | Missing | Stage 6. |
 | Costs, taxes, deposit, cancellation | Part | The nightly rate and the town's hotel taxes; a cancellation refunds all but the first night, a no-show's (`hotelRefund`). No deposit or hold. |
 | Confirm and pay | Works | Paid from the bank or the card. |
