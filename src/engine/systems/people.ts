@@ -28,10 +28,21 @@
  * by how much you need company and eases stress, and your meal is paid and
  * eaten. Missed, they remember it.
  *
+ * **A partner** (from later on 2026-10-01). Somebody known for Hall's
+ * fifty hours can be asked out, one at a time, and says yes or no and why:
+ * a rival would rather not; they live elsewhere; they'd like to know you
+ * better first; they're seeing somebody (all but Pew's 38%); they don't
+ * feel that way (one in two, SLATE's estimate). Seeing each other, each
+ * meeting kept is a date, and the ninth makes a couple (`PARTNERS`). A
+ * couple can move in together, in a place of your own in their town, and
+ * each then pays the landlord half the rent and the bills. Breaking up, or
+ * moving away from them, ends it, and they move out; it weighs on the mood
+ * and adds stress.
+ *
  * **Living alone** weighs on how long a life lasts, at Holt-Lunstad's odds
  * (`livingFactor`, read by `systems/mortality.ts`): a place of one's own
- * with no lodger is living alone; a room in a shared flat or a friend's
- * sofa isn't.
+ * with no lodger or partner is living alone; a room in a shared flat or a
+ * friend's sofa isn't.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -40,7 +51,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, formatTime, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { CITIES } from '../content/geography';
-import { HALL, LIVING_ALONE, NAMES, SOCIAL } from '../content/people';
+import { HALL, LIVING_ALONE, NAMES, PARTNERS, SOCIAL } from '../content/people';
 import type { Tier } from '../content/restaurants';
 import { DINING_MINUTES } from '../content/dining';
 import { BONDS } from './school';
@@ -72,6 +83,13 @@ export interface Contact {
   memory: { at: Instant; what: string }[];
   /** When you last didn't come. */
   stoodUp?: Instant;
+  /** Free to be asked out, and whether they'd want to be by you (`PARTNERS`, `SOCIAL.interested`). */
+  single?: boolean;
+  interested?: boolean;
+  /** Seeing each other, and the dates kept since; a couple from the ninth. */
+  dating?: { since: Instant; dates: number; couple?: Instant };
+  /** Living with you, since when (`householdShare`). */
+  livesWith?: Instant;
 }
 
 export interface Invitation { contactId: string; at: Instant; what: 'meal' | 'visit'; restaurantId?: string; item?: string }
@@ -96,7 +114,7 @@ function newContact(sim: Simulation, person: Person, cityId: string, key: string
   return {
     id: sim.nextId('contact'), name: `${pick(given)} ${pick(names.family)}`, cityId,
     born: person.birthInstant + Math.round((rng.next() * 10 - 5) * years),
-    met, hours: 0, spends: pick(['casual', 'mid', 'upscale'] as const), memory: [{ at: sim.now, what: met.how === 'school' ? 'At school together' : `Worked together${met.what ? ` on ${met.what}` : ''}` }],
+    met, hours: 0, spends: pick(['casual', 'mid', 'upscale'] as const), single: rng.next() < PARTNERS.single, interested: rng.next() < SOCIAL.interested, memory: [{ at: sim.now, what: met.how === 'school' ? 'At school together' : `Worked together${met.what ? ` on ${met.what}` : ''}` }],
   };
 }
 
@@ -198,11 +216,108 @@ export function registerPeople(sim: Simulation): void {
     c.hours += hours;
     // A missed meeting lapses on its own a week on, and nothing is kept inside that week, so it isn't cleared here.
     c.lastSeen = item.at;
+    // A date, while you're seeing each other: the ninth makes a couple.
+    if (c.dating) {
+      c.dating.dates += 1;
+      if (!c.dating.couple && c.dating.dates >= PARTNERS.datesToCouple) {
+        c.dating.couple = item.at;
+        if (person.id === s.universe.playerId) s.notify({ category: 'relationship', title: `You And ${first} Are A Couple`, body: `Nine dates on, ${c.name} and you are together.`, importance: 60, route: '/workspace/people' });
+      }
+    }
     c.memory.unshift({ at: item.at, what: r ? `A meal at ${r.name}, ${formatTime(item.at, CITIES.require(r.cityId).timeZone)}` : 'Came over' });
     const w = person.wellbeing;
     w.morale = clamp(w.morale + SOCIAL.morale * personalityOf(person, 'company') * personalityOf(person, 'moraleSwing'), 0, 100);
     w.stress = clamp(w.stress - SOCIAL.stress, 0, 100);
   });
+}
+
+/** Who you're seeing, if anybody. */
+export const seeing = (person: Person): Contact | undefined => contactsOf(person).find((c) => c.dating);
+
+/** Why you can't ask anybody out now: you're seeing somebody, and it's one at a time. */
+export function askingRefusal(person: Person): string | undefined {
+  const now = seeing(person);
+  return now ? `You’re seeing ${now.name.split(' ')[0]}.` : undefined;
+}
+
+/** Why somebody would say no to being asked out, or nothing where they'd say yes. */
+export function asksOutRefusal(person: Person, c: Contact): string | undefined {
+  const first = c.name.split(' ')[0];
+  if (c.rival) return `${first} would rather not.`;
+  if (c.cityId !== (person.home?.cityId ?? person.currentLocationId)) return `${first} lives in ${CITIES.require(c.cityId).name}.`;
+  if (c.hours < HALL.casual) return `${first} would like to know you better first.`;
+  if (!c.single) return `${first} is seeing somebody.`;
+  if (!c.interested) return `${first} doesn’t feel that way about you.`;
+  return undefined;
+}
+
+/** Why a partner can't move in, or nothing. */
+export function moveInRefusal(person: Person, c: Contact): string | undefined {
+  const first = c.name.split(' ')[0];
+  if (!c.dating?.couple) return `You and ${first} aren’t a couple yet.`;
+  if (c.livesWith !== undefined) return `${first} lives with you already.`;
+  const home = person.home;
+  if (!home || home.kind === 'sofa') return 'You have no home of your own to share.';
+  if (home.kind === 'shared') return 'A room in a shared flat has no room for two.';
+  if (home.cityId !== c.cityId) return `${first} lives in ${CITIES.require(c.cityId).name}.`;
+  return undefined;
+}
+
+/** The share of the rent and the bills somebody pays: half with a partner living with them, all of it otherwise. */
+export function householdShare(person: Person): number {
+  const partner = contactsOf(person).find((c) => c.livesWith !== undefined);
+  return partner && partner.cityId === person.home?.cityId ? 1 - PARTNERS.share : 1;
+}
+
+function partWays(sim: Simulation, person: Person, c: Contact, why: string): void {
+  delete c.dating;
+  delete c.livesWith;
+  c.memory.unshift({ at: sim.now, what: why });
+  const w = person.wellbeing;
+  w.stress = clamp(w.stress + SOCIAL.breakup * personalityOf(person, 'stressGain'), 0, 100);
+  w.morale = clamp(w.morale - SOCIAL.breakup * personalityOf(person, 'moraleSwing'), 0, 100);
+}
+
+export function registerPartners(sim: Simulation): void {
+  sim.onCommand<{ contactId: string }, { accepted: boolean; reason?: string }>('social.ask_out', (p, { sim: s }) => {
+    const person = s.player;
+    const c = contactsOf(person).find((x) => x.id === String(p?.contactId));
+    if (!c) throw new CommandError('You don’t know them.');
+    const mine = askingRefusal(person);
+    if (mine) throw new CommandError(mine);
+    const reason = asksOutRefusal(person, c);
+    c.memory.unshift({ at: s.now, what: reason ? `Said no to going out: ${reason}` : 'Said yes to going out' });
+    if (reason) return { accepted: false, reason };
+    c.dating = { since: s.now, dates: 0 };
+    return { accepted: true };
+  });
+
+  sim.onCommand<{ contactId: string }, { since: Instant }>('social.move_in', (p, { sim: s }) => {
+    const person = s.player;
+    const c = contactsOf(person).find((x) => x.id === String(p?.contactId));
+    if (!c) throw new CommandError('You don’t know them.');
+    const no = moveInRefusal(person, c);
+    if (no) throw new CommandError(no);
+    c.livesWith = s.now;
+    c.memory.unshift({ at: s.now, what: 'Moved in with you' });
+    return { since: s.now };
+  });
+
+  sim.onCommand<{ contactId: string }, { ended: boolean }>('social.break_up', (p, { sim: s }) => {
+    const person = s.player;
+    const c = contactsOf(person).find((x) => x.id === String(p?.contactId));
+    if (!c?.dating) throw new CommandError('You aren’t seeing them.');
+    partWays(s, person, c, c.livesWith !== undefined ? 'Broke up, and moved out' : 'Broke up');
+    return { ended: true };
+  });
+}
+
+/** A partner who lives with you stays where they live when you move away, and it ends there. */
+export function partnerStays(sim: Simulation, person: Person): void {
+  const c = contactsOf(person).find((x) => x.livesWith !== undefined);
+  if (!c || c.cityId === person.home?.cityId) return;
+  partWays(sim, person, c, `Stayed in ${CITIES.require(c.cityId).name} when you moved`);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: `${c.name.split(' ')[0]} Stayed`, body: `${c.name} stayed in ${CITIES.require(c.cityId).name}, and it’s over.`, importance: 60, route: '/workspace/people' });
 }
 
 /** How living alone, or not, moves the life table (`systems/mortality.ts`). */
@@ -215,6 +330,7 @@ export function livingFactor(person: Person): number {
 export function livesAlone(person: Person): boolean {
   const home = person.home;
   if (!home || home.kind === 'shared' || home.kind === 'sofa') return false;
+  if (householdShare(person) < 1) return false;
   if (home.kind === 'owned' && home.homeId) return !(homeById(person, home.homeId)?.lodgers?.length);
   return true;
 }

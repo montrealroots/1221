@@ -466,7 +466,7 @@ defineDecider<{ sim: Simulation }, string>({
 
 defineDecider<{ sim: Simulation; job: number }, string>({
   id: 'social.person',
-  decides: 'Who a castmate met at work is: a name of their country, an age within five years of the actor’s, and the dearest kind of place they’d eat at.',
+  decides: 'Who a castmate met at work is: a name of their country, an age within five years of the actor’s, the dearest kind of place they’d eat at, whether they’re free to be asked out (Pew’s 38%) and whether they’d want to be.',
   drawnIn: 'src/engine/systems/people.ts',
   reads: {
     // Each job's castmate is drawn on its own.

@@ -1,7 +1,8 @@
 /**
  * People (`systems/people.ts`, from 2026-10-01): who you know, met at school
  * and at work, how near each is by the hours you've spent together, and an
- * invitation to a meal or to your home, which they answer and say why.
+ * invitation to a meal or to your home, which they answer and say why; and
+ * asking somebody out, moving in together, and breaking up.
  */
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -12,7 +13,10 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { RESTAURANTS } from '@/engine/content/restaurants';
 import { diningQuote } from '@/engine/systems/dining';
-import { contactsOf, inviteRefusal, levelOf, type Contact, type Invitation } from '@/engine/systems/people';
+import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, type Contact, type Invitation } from '@/engine/systems/people';
+
+/** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
+const standing = (c: Contact): string => (c.livesWith !== undefined ? 'Your Partner, Living With You' : c.dating?.couple !== undefined ? 'Your Partner' : c.dating ? `Seeing Each Other, ${c.dating.dates} ${c.dating.dates === 1 ? 'Date' : 'Dates'}` : levelOf(c));
 
 export function PeopleWorkspace() {
   const person = useWorld((s) => s.player);
@@ -38,7 +42,7 @@ export function PeopleWorkspace() {
                       <td>{c.name}</td>
                       <td>{CITIES.get(c.cityId)?.name}</td>
                       <td className="small">{c.met.how === 'school' ? 'At School' : `At Work${c.met.what ? `: ${c.met.what}` : ''}`}</td>
-                      <td>{levelOf(c)}</td>
+                      <td>{standing(c)}</td>
                       <td className="num">{Math.round(c.hours)}</td>
                       <td className="small">{c.lastSeen !== undefined ? formatDate(c.lastSeen, CITIES.require(c.cityId).timeZone) : '—'}</td>
                     </tr>
@@ -118,6 +122,7 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
             if (a.ok) toast(a.value!.accepted ? `${first} said yes.` : `${first} said no: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral');
           }}>{quote ? `Ask Them, Your Meal ${formatMoney(quote.total, cur, { cents: false })}` : 'Ask Them'}</button>
         </div>
+        <Together contact={contact} />
         {contact.memory.length > 0 && (
           <ul className="small muted" style={{ margin: 0, paddingLeft: '1.2em' }}>
             {contact.memory.slice(0, 6).map((m, i) => <li key={i}>{formatDate(m.at, zone)}: {m.what}</li>)}
@@ -125,5 +130,32 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
         )}
       </div>
     </Panel>
+  );
+}
+
+/** Asking them out, moving in together, and breaking up (`systems/people.ts`). */
+function Together({ contact }: { contact: Contact }) {
+  const { sim, run, toast } = useGame();
+  const askOut = useFeature('social.ask_out');
+  const moveIn = useFeature('social.move_in');
+  const breakUp = useFeature('social.break_up');
+  const first = contact.name.split(' ')[0];
+  const mine = askingRefusal(sim.player);
+  const noMove = moveInRefusal(sim.player, contact);
+  return (
+    <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+      {!contact.dating && (
+        <button type="button" className="btn btn-sm btn-ghost" disabled={!askOut.open || Boolean(mine)} title={mine ?? askOut.reason} onClick={() => {
+          const a = run<{ accepted: boolean; reason?: string }>('social.ask_out', { contactId: contact.id });
+          if (a.ok) toast(a.value!.accepted ? `${first} said yes.` : `${first} said no: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral');
+        }}>Ask Them Out</button>
+      )}
+      {contact.dating?.couple !== undefined && contact.livesWith === undefined && (
+        <button type="button" className="btn btn-sm btn-ghost" disabled={!moveIn.open || Boolean(noMove)} title={noMove ?? moveIn.reason} onClick={() => { if (run('social.move_in', { contactId: contact.id }).ok) toast(`${first} moved in. Each of you pays half the rent and the bills.`, 'positive'); }}>Move In Together</button>
+      )}
+      {contact.dating && (
+        <button type="button" className="btn btn-sm btn-ghost" disabled={!breakUp.open} title={breakUp.reason} onClick={() => { if (run('social.break_up', { contactId: contact.id }).ok) toast(`You and ${first} broke up.`, 'neutral'); }}>Break Up</button>
+      )}
+    </div>
   );
 }

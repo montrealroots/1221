@@ -56,6 +56,19 @@ export const NAMES: Readonly<Record<'us' | 'uk' | 'ie' | 'ca' | 'mx', Names>> = 
   },
 };
 
+/**
+ * **Partners.** Pew Research found 38% of American adults aged 25 to 54
+ * unpartnered in 2019, neither married nor living with anybody (2021, from
+ * SLATE's knowledge, not re-read), which is the chance somebody known is
+ * free to be asked out. A couple calls itself one after nine dates on
+ * average (a Mic and Google Consumer Surveys poll of 3,058, in the
+ * research; no academic figure was found). A couple who move in together
+ * split the rent and the bills evenly, as 69% of British couples on similar
+ * incomes do (YouGov); what each earns isn't kept for the other, so it's
+ * always even.
+ */
+export const PARTNERS = { single: 0.38, datesToCouple: 9, share: 0.5 } as const;
+
 /** Hall's hours together: a casual friend, a friend, a close one. */
 export const HALL = { casual: 50, friend: 90, close: 200 } as const;
 
@@ -69,5 +82,7 @@ export const LIVING_ALONE = { oddsRatio: 1.32, share: 38.5 / 262 } as const;
  * - `morale` and `stress`: what time with a friend lifts the mood by, by how much the person needs company, and the stress it takes off.
  * - `visitMinutes`: how long a visit at home lasts.
  * - A castmate becomes somebody you know, one a job.
+ * - `interested`: the chance somebody free to be asked out would want to, one in two.
+ * - `breakup`: the stress a parting adds, and the mood it takes.
  */
-export const SOCIAL = { notBefore: 10, notAfter: 22, rest: 3, morale: 4, stress: 3, visitMinutes: 120 } as const;
+export const SOCIAL = { notBefore: 10, notAfter: 22, rest: 3, morale: 4, stress: 3, visitMinutes: 120, interested: 0.5, breakup: 10 } as const;

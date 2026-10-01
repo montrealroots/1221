@@ -11,7 +11,7 @@ import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { HALL, NAMES } from '@/engine/content/people';
 import { RESTAURANTS } from '@/engine/content/restaurants';
-import { contactsOf, declines, inviteRefusal, knowTheClass, levelOf, livesAlone, livingFactor, metAtWork, type Contact, type Invitation } from '@/engine/systems/people';
+import { asksOutRefusal, contactsOf, declines, householdShare, inviteRefusal, knowTheClass, levelOf, livesAlone, livingFactor, metAtWork, moveInRefusal, partnerStays, type Contact, type Invitation } from '@/engine/systems/people';
 import { diningQuote } from '@/engine/systems/dining';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -172,5 +172,109 @@ describe('living alone', () => {
     expect(livesAlone(p)).toBe(false);
     p.homes = [{ id: 'h1', lodgers: [] } as never];
     expect(livesAlone(p)).toBe(true);
+  });
+});
+
+describe('a partner', () => {
+  const known = (sim: Simulation, hours: number = HALL.casual): Contact => { const c = metAtWork(sim, sim.player, 'us-ny-newyork', `p-${hours}`, 'A Job'); c.hours = hours; c.single = true; c.interested = true; c.spends = 'upscale'; return c; };
+
+  it('is asked out, and says no and why, or yes', () => {
+    const sim = life('us-ny-newyork', 'pp-ask');
+    const c = known(sim);
+    const first = c.name.split(' ')[0];
+    expect(asksOutRefusal(sim.player, { ...c, hours: HALL.casual - 1 })).toBe(`${first} would like to know you better first.`);
+    expect(asksOutRefusal(sim.player, { ...c, single: false })).toBe(`${first} is seeing somebody.`);
+    expect(asksOutRefusal(sim.player, { ...c, interested: false })).toBe(`${first} doesn’t feel that way about you.`);
+    expect(asksOutRefusal(sim.player, { ...c, rival: true })).toBe(`${first} would rather not.`);
+    expect(asksOutRefusal(sim.player, { ...c, cityId: 'uk-eng-london' })).toBe(`${first} lives in London.`);
+    expect(asksOutRefusal(sim.player, c)).toBeUndefined();
+    const r = sim.execute<{ accepted: boolean }>({ kind: 'social.ask_out', payload: { contactId: c.id } });
+    expect(r.value).toEqual({ accepted: true });
+    expect(c.dating).toEqual({ since: sim.now, dates: 0 });
+    // One at a time.
+    const other = known(sim, 60);
+    expect(sim.execute({ kind: 'social.ask_out', payload: { contactId: other.id } }).error).toBe(`You’re seeing ${first}.`);
+  });
+
+  it('is a couple from the ninth date kept', () => {
+    const sim = life('us-ny-newyork', 'pp-dates');
+    const c = known(sim);
+    c.dating = { since: sim.now, dates: 7 };
+    let ninth = 0;
+    for (let n = 0; n < 3; n += 1) {
+      const at = evening(sim, 4);
+      if (n === 1) ninth = at;
+      expect(sim.execute({ kind: 'social.invite', payload: { contactId: c.id, at, what: 'visit' } }).ok).toBe(true);
+      sim.advanceTo(at - 60_000);
+      sim.player.currentLocationId = 'us-ny-newyork';
+      sim.advanceTo(at + 1);
+      // A couple from the ninth, and still from the ninth after the tenth.
+      expect(c.dating.couple).toBe(n === 0 ? undefined : ninth);
+    }
+    expect(c.dating.dates).toBe(10);
+  });
+
+  it('moves in to a place of your own in their town, and pays half the rent and the bills', () => {
+    const month = (together: boolean) => {
+      const sim = life('us-ny-newyork', 'pp-split');
+      sim.player.home = { ...sim.player.home!, kind: 'own' };
+      const c = known(sim);
+      c.dating = { since: sim.now, dates: 9, couple: sim.now };
+      if (together) expect(sim.execute({ kind: 'social.move_in', payload: { contactId: c.id } }).ok).toBe(true);
+      expect(livesAlone(sim.player)).toBe(!together);
+      sim.advanceBy(32 * MS_DAY);
+      const paid = (memo: string) => sim.universe.transactions.filter((t) => t.memo === memo).reduce((sum, t) => sum + t.postings.filter((q) => q.accountId === sim.player.primaryAccountId).reduce((a, q) => a - q.amount, 0), 0);
+      return { rent: paid('Rent'), bills: paid('Bills') };
+    };
+    const alone = month(false);
+    const shared = month(true);
+    expect(alone.rent).toBeGreaterThan(0);
+    expect(shared.rent).toBe(Math.round(alone.rent / 2));
+    expect(shared.bills).toBe(Math.round(alone.bills / 2));
+  });
+
+  it('can’t move in before you’re a couple, to a room in a shared flat, or from another town', () => {
+    const sim = life('us-ny-newyork', 'pp-move');
+    const c = known(sim);
+    const first = c.name.split(' ')[0];
+    c.dating = { since: sim.now, dates: 3 };
+    expect(moveInRefusal(sim.player, c)).toBe(`You and ${first} aren’t a couple yet.`);
+    c.dating.couple = sim.now;
+    sim.player.home = { ...sim.player.home!, kind: 'shared' };
+    expect(moveInRefusal(sim.player, c)).toBe('A room in a shared flat has no room for two.');
+    sim.player.home = { ...sim.player.home, kind: 'own' };
+    expect(moveInRefusal(sim.player, c)).toBeUndefined();
+    expect(moveInRefusal(sim.player, { ...c, cityId: 'us-ct-newhaven' })).toBe(`${first} lives in New Haven.`);
+    c.livesWith = sim.now;
+    expect(moveInRefusal(sim.player, c)).toBe(`${first} lives with you already.`);
+  });
+
+  it('broken up with, moves out and weighs on you; left behind on a move, ends it', () => {
+    const sim = life('us-ny-newyork', 'pp-break');
+    sim.player.home = { ...sim.player.home!, kind: 'own' };
+    const c = known(sim);
+    c.dating = { since: sim.now, dates: 9, couple: sim.now };
+    c.livesWith = sim.now;
+    expect(householdShare(sim.player)).toBe(0.5);
+    Object.assign(sim.player.wellbeing, { stress: 20, morale: 60 });
+    expect(sim.execute({ kind: 'social.break_up', payload: { contactId: c.id } }).ok).toBe(true);
+    expect(c.dating).toBeUndefined();
+    expect(householdShare(sim.player)).toBe(1);
+    expect(sim.player.wellbeing.stress).toBeGreaterThan(20);
+    expect(sim.player.wellbeing.morale).toBeLessThan(60);
+    // Living together, and you move to New Haven: they stay, and it's over.
+    c.dating = { since: sim.now, dates: 9, couple: sim.now };
+    c.livesWith = sim.now;
+    sim.player.home = { ...sim.player.home, cityId: 'us-ct-newhaven' };
+    expect(householdShare(sim.player)).toBe(1);
+    partnerStays(sim, sim.player);
+    expect(c.livesWith).toBeUndefined();
+    expect(c.dating).toBeUndefined();
+    // And the month's rent ends it too, on its own.
+    c.dating = { since: sim.now, dates: 9, couple: sim.now };
+    c.livesWith = sim.now;
+    sim.advanceBy(32 * MS_DAY);
+    expect(c.livesWith).toBeUndefined();
+    expect(c.memory[0]!.what).toBe('Stayed in New York when you moved');
   });
 });

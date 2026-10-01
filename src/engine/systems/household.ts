@@ -70,6 +70,7 @@ import { followTheMove, leavingHome } from './items';
 import { carryBoat } from './boats';
 import { mealsFromHelp } from './foodhelp';
 import { mealsFromStock } from './pantry';
+import { householdShare, partnerStays } from './people';
 import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
@@ -866,10 +867,13 @@ export function registerHousehold(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId ?? s.universe.playerId)];
     if (!person?.home) return;
     const currency = saveCurrency(s.universe);
-    const full = rentOf(s, person);
+    // A partner living with them pays half the rent and the bills, and one who stayed behind on a move doesn't (`systems/people.ts`, from 2026-10-01).
+    partnerStays(s, person);
+    const share = householdShare(person);
+    const full = Math.round(rentOf(s, person) * share);
     // With Dublin's Housing Assistance Payment the council pays its part to the landlord (`systems/homebenefits.ts`).
     const rent = full - hapPaid(s, person, full);
-    const bills = billsOf(s, person);
+    const bills = Math.round(billsOf(s, person) * share);
     const before = arrearsOf(s, person);
     // Paid at the same moment, they post in the bank's order: highest first unless it takes the lowest first.
     for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
