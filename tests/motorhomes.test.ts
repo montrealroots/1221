@@ -16,7 +16,8 @@ import { documentsOf } from '@/engine/systems/documents';
 import { crashChance, roadKm } from '@/engine/systems/driving';
 import { stayClassesIn, stayPrice, streetRefusal } from '@/engine/systems/stays';
 import { journeysOf } from '@/engine/systems/journey';
-import { carryFurniture, moversCost } from '@/engine/systems/furniture';
+import { carryFurniture, moversCost, truckFor } from '@/engine/systems/furniture';
+import { FUEL } from '@/engine/content/vehiclefees';
 
 const YEAR = 365.25 * MS_DAY;
 const at = Date.UTC(2026, 9, 1);
@@ -174,5 +175,38 @@ describe('a move in one’s own van', () => {
     sim.player.documents = [];
     carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
     expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Movers'))).toHaveLength(2);
+  });
+});
+
+describe('a move in a rented truck', () => {
+  it('prices U-Haul’s day, its miles there and back and its fuel, only in America, within 100 miles, on a license', () => {
+    const sim = life('us-ca-losangeles', 'truck-price');
+    const miles = roadKm('us-ca-losangeles', 'us-ca-burbank') / 1.609344;
+    const fuel = (2 * miles) / 10 * 3.785411784 * FUEL['US-CA'].petrol;
+    expect(truckFor(sim, sim.player, 'us-ca-losangeles', 'us-ca-burbank')).toBe(inSave(sim, Math.round((29.95 + 1.19 * 2 * miles) * 100 + fuel), 'USD'));
+    expect(truckFor(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco')).toMatch(/within 100 miles/);
+    expect(truckFor(sim, sim.player, 'uk-eng-london', 'uk-eng-london')).toMatch(/only in America/);
+    expect(truckFor(sim, sim.player, 'us-ca-losangeles', 'uk-eng-london')).toMatch(/only in America/);
+    expect(truckFor(sim, sim.player, 'uk-eng-london', 'us-ca-losangeles')).toMatch(/only in America/);
+    sim.player.documents = [];
+    expect(truckFor(sim, sim.player, 'us-ca-losangeles', 'us-ca-burbank')).toMatch(/license/);
+  });
+
+  it('is taken in place of the movers only when chosen', () => {
+    const sim = life('us-ca-losangeles', 'truck-move');
+    sim.player.furniture = { bed: sim.now, sofa: sim.now };
+    const paid = (memo: string) => sim.universe.transactions.filter((t) => t.memo.startsWith(memo)).length;
+    carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-burbank');
+    expect([paid('Movers'), paid('U-Haul')]).toEqual([1, 0]);
+    expect(sim.execute({ kind: 'home.move_by', payload: { by: 'truck' } }).ok).toBe(true);
+    carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-burbank');
+    expect([paid('Movers'), paid('U-Haul')]).toEqual([1, 1]);
+    const t = sim.universe.transactions.find((x) => x.memo.startsWith('U-Haul'))!;
+    expect(t.postings.find((p) => p.accountId === sim.player.primaryAccountId)!.amount).toBe(-(truckFor(sim, sim.player, 'us-ca-losangeles', 'us-ca-burbank') as number));
+    // Too far for it, the movers come anyway.
+    carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
+    expect([paid('Movers'), paid('U-Haul')]).toEqual([2, 1]);
+    expect(sim.execute({ kind: 'home.move_by', payload: { by: 'movers' } }).ok).toBe(true);
+    expect(sim.player.moveBy).toBeUndefined();
   });
 });

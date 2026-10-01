@@ -260,6 +260,8 @@ export interface Person {
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
   /** When the mattress in their bed was replaced, if it has been (`systems/furniture.ts`). */
   mattressAt?: number;
+  /** A move made in a rented truck they drive, not by movers (`truckFor` in `systems/furniture.ts`). */
+  moveBy?: 'truck';
   /** Air conditioning units of their own, and when they were bought (`systems/appliances.ts`). */
   acUnits?: number;
   /** Countertop and portable machines of their own, and when each was bought (`systems/appliances.ts`). */

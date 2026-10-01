@@ -128,6 +128,20 @@ export const MATTRESS_FEE_USD: Readonly<Record<string, readonly { from: number; 
  * residence come in free of duty in each of these countries, under its
  * transfer-of-residence relief, so none is charged.
  */
+/**
+ * A truck rented to make the move oneself, from later on 2026-09-30
+ * (`docs/research/world/research-kind-effects.json`): U-Haul's 15-foot
+ * truck, its size for a one- or two-bedroom home, in town at $29.95 a day and
+ * $1.19 a mile (U-Haul's own comparison, December 2025: a day in Dallas, the
+ * mile's rate varying by place and date), burning 10 mpg (U-Haul's page, read
+ * from a summary). In town, it goes back where it was hired, so it's driven
+ * there and back. Kept within America and within the movers' local band of
+ * 100 miles: U-Haul prices a one-way rental only after a search, which wasn't
+ * read, and Britain's and Canada's van hire wasn't published where it was
+ * looked for.
+ */
+export const RENTED_TRUCK = { currency: 'USD', perDay: 29.95, perMile: 1.19, mpg: 10, withinMiles: 100 } as const;
+
 export const MOVERS: Readonly<Record<string, { currency: string; local: (miles: number) => number; far?: number }>> = {
   us: { currency: 'USD', local: () => 475, far: 1_850 },
   uk: { currency: 'GBP', local: (mi) => 466 + (mi <= 10 ? 0 : mi <= 50 ? 112.5 : 225), far: 466 + 225 },

@@ -24,10 +24,11 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
-import { FURNITURE, MATTRESS, MATTRESS_FEE_USD, MATTRESS_YEARS, MOVERS, MOVERS_ABROAD, PIECE_LABEL, WITHOUT, type Piece } from '../content/furniture';
+import { FURNITURE, MATTRESS, MATTRESS_FEE_USD, MATTRESS_YEARS, MOVERS, MOVERS_ABROAD, PIECE_LABEL, RENTED_TRUCK, WITHOUT, type Piece } from '../content/furniture';
+import { FUEL } from '../content/vehiclefees';
 import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
-import { kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { jurisdictionOf, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { mayDrive } from './documents';
 import { byRoad, roadKm } from './driving';
 
@@ -70,6 +71,13 @@ export function furnishRefusal(sim: Simulation, person: Person, piece: Piece): s
 }
 
 export function registerFurniture(sim: Simulation): void {
+  // How they'd move their pieces: the movers, or a rented truck they drive.
+  sim.onCommand<{ by: 'movers' | 'truck' }, { by: 'movers' | 'truck' }>('home.move_by', (p, { sim: s }) => {
+    const by = p?.by === 'truck' ? 'truck' : 'movers';
+    if (by === 'truck') s.player.moveBy = 'truck';
+    else delete s.player.moveBy;
+    return { by };
+  });
   sim.onCommand<{ piece: Piece }, { paid: Money }>('home.furnish', (p, { sim: s }) => {
     const person = s.player;
     const piece = p?.piece;
@@ -123,7 +131,25 @@ export function ownVanFor(sim: Simulation, person: Person, fromCity: string, toC
   return vehiclesOf(person).find((v) => v.soldAt === undefined && !v.repossessed && (v.at ?? v.cityId) === fromCity && kindOf(modelById(v.modelId)!) === 'van');
 }
 
-/** Movers paid on moving home, where one's own pieces go too; one's own van instead, where there is one. */
+/**
+ * A rented truck for the move (`RENTED_TRUCK`): its day, its miles there and
+ * back, and its fuel at the town's price, in the save's money; or why it
+ * can't be one, and the movers come.
+ */
+export function truckFor(sim: Simulation, person: Person, fromCity: string, toCity: string): Money | string {
+  const from = CITIES.get(fromCity);
+  const to = CITIES.get(toCity);
+  if (from?.countryId !== 'us' || to?.countryId !== 'us') return 'U-Haul’s in-town rate is kept only in America.';
+  const may = mayDrive(person, fromCity, sim.now);
+  if (!may.ok) return may.why ?? 'You may not drive here.';
+  const miles = roadKm(fromCity, toCity) / 1.609344;
+  if (miles > RENTED_TRUCK.withinMiles) return `An in-town truck is kept for a move within ${RENTED_TRUCK.withinMiles} miles; farther, the movers come.`;
+  const there = 2 * miles;
+  const fuel = there / RENTED_TRUCK.mpg * 3.785411784 * FUEL[jurisdictionOf(fromCity)!].petrol;
+  return inSave(sim, Math.round((RENTED_TRUCK.perDay + RENTED_TRUCK.perMile * there) * 100 + fuel), RENTED_TRUCK.currency);
+}
+
+/** Movers paid on moving home, where one's own pieces go too; one's own van instead, where there is one; a rented truck, where they'd rather. */
 export function carryFurniture(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
   if (moversCost(sim, person, fromCity, toCity) === 0) return;
   const van = ownVanFor(sim, person, fromCity, toCity);
@@ -131,6 +157,11 @@ export function carryFurniture(sim: Simulation, person: Person, fromCity: string
     const m = modelById(van.modelId)!;
     const fuel = runningCost(sim, van, roadKm(fromCity, toCity));
     if (!payFromBank(sim, person, fuel, `Your bed and sofa moved in the ${m.make} ${m.model}`, 'home')) owe(sim, person, fuel, 'The move, in your van', 'home');
+    return;
+  }
+  const truck = person.moveBy === 'truck' ? truckFor(sim, person, fromCity, toCity) : undefined;
+  if (typeof truck === 'number') {
+    if (!payFromBank(sim, person, truck, 'U-Haul’s 15-foot truck, your bed and sofa moved yourself', 'home')) owe(sim, person, truck, 'U-Haul', 'home');
     return;
   }
   const cost = moversCost(sim, person, fromCity, toCity);

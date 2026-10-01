@@ -11,13 +11,14 @@
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { Gated } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '@/engine/content/appliances';
 import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
 import { furnishRefusal, mattressCost, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
+import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -542,6 +543,7 @@ function Furniture() {
   const pieces: Piece[] = ['speaker', 'console', 'tv', 'sofa', 'bed'];
   const does: Record<Piece, string> = { bed: 'Without one, an empty home’s nights are slept on the floor', sofa: 'Without one, unwinding in an empty home takes half the stress off', tv: 'A film or television lover enjoys unwinding at home only with one', console: 'A gamer enjoys unwinding at home only with one', speaker: 'A music lover enjoys unwinding at home only with one' };
   const mattress = mattressCost(sim, person.home?.cityId ?? person.currentLocationId);
+  const moveBy = useFeature('home.move_by');
   return (
     <div className="col gap-2">
       <div className="strong small">Your Furniture</div>
@@ -565,6 +567,16 @@ function Furniture() {
           </tbody>
         </table>
       </div>
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        <div className="field" style={{ margin: 0 }}>
+          <label htmlFor="move-by">When You Move</label>
+        <select id="move-by" value={person.moveBy ?? 'movers'} disabled={!moveBy.open} title={moveBy.reason} onChange={(e) => run('home.move_by', { by: e.target.value === 'truck' ? 'truck' : 'movers' })}>
+          <option value="truck">A Rented Truck, Driven Yourself</option>
+          <option value="movers">Movers</option>
+        </select>
+        </div>
+      </div>
+      <div className="xs dim">{`U-Haul’s 15-foot truck, $${RENTED_TRUCK.perDay} a day and $${RENTED_TRUCK.perMile} a mile there and back, and its fuel: in America, within ${RENTED_TRUCK.withinMiles} miles, on a license you may drive on. Anywhere else, the movers come. A van of your own carries it first.`}</div>
     </div>
   );
 }
