@@ -125,7 +125,8 @@ describe('a series’ later seasons', () => {
   it('holds an option after a season, and picks it up by mid-June at 4% more, or cancels', () => {
     let picked = 0;
     let cancelled = 0;
-    for (const seed of ['s1', 's2', 's3', 's4', 's5', 's6']) {
+    // Six seasons no emergency interrupts: since 2026-10-01 an emergency keeps the actor in hospital its hours, and s2's fell on a shooting day.
+    for (const seed of ['s1', 's7', 's3', 's4', 's5', 's6']) {
       const sim = pro(seed, 'us-ca-losangeles', 90);
       const b = booking(sim, 'series-half', 13, at(2026, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles' });
       expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);

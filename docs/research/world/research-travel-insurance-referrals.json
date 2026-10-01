@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "purpose": "SLATE research: travel insurance and specialist referrals/visits for US (NY, CA, CT), UK, Ireland, Canada (ON, BC), Mexico (CDMX)",
+    "date_read": "2026-10-01",
+    "basis_legend": {
+      "page": "figure read from the fetched page itself",
+      "search-summary": "figure taken from a web-search result summary; the page was not opened or could not be read. Lower confidence; re-verify before treating as exact."
+    },
+    "rule": "No invented figures. Where a figure was not found, value is null with a note."
+  },
+
+  "travel_insurance": {
+    "US": {
+      "applies_to": ["NY", "CA", "CT"],
+      "state_note": "No state-specific premium figures found for NY/CA/CT; US pricing sources are national. CFAR availability varies by state of residence (Travel Guard page states this) but a per-state list was not retrieved.",
+      "providers": ["Allianz Travel", "Travel Guard (AIG)", "World Nomads", "AXA Assistance USA", "Generali"],
+      "pricing_model": {
+        "description": "Premium priced as a share of insured prepaid, non-refundable trip cost; also varies with age, trip length, destination and plan level.",
+        "typical_share_of_trip_cost": {"min_pct": 4, "max_pct": 10, "basis": "page", "url": "https://www.squaremouth.com/travel-advice/cost-for-travel-insurance", "date_read": "2026-10-01"},
+        "average_share_2026_pct": {"value": 6, "basis": "page", "url": "https://www.squaremouth.com/travel-advice/cost-for-travel-insurance", "date_read": "2026-10-01", "note": "Squaremouth internal sales data, last 12 months"}
+      },
+      "sample_premiums": [
+        {"desc": "Overall average comprehensive policy, 15-day trip", "premium_usd": 314, "per_day_usd": 21, "basis": "page", "url": "https://www.squaremouth.com/travel-advice/cost-for-travel-insurance", "date_read": "2026-10-01"},
+        {"desc": "Age band labelled by Squaremouth by generation (summary said '30-year-old' but labelled Gen X; age band unclear)", "premium_usd": 274, "trip_cost_usd": 7611, "per_day_usd": 21, "basis": "page", "url": "https://www.squaremouth.com/travel-advice/cost-for-travel-insurance", "date_read": "2026-10-01", "note": "Age mapping ambiguous; do not treat as a confirmed age-30 figure."},
+        {"desc": "$2,500 trip, travellers aged 20-50", "premium_usd": 98, "trip_cost_usd": 2500, "share_pct": 3.9, "basis": "search-summary", "url": "https://www.moneygeek.com/insurance/travel/how-much-does-travel-insurance-cost/", "date_read": "2026-10-01"},
+        {"desc": "$5,000 trip, average", "premium_usd": 204, "trip_cost_usd": 5000, "basis": "search-summary", "url": "https://www.experian.com/blogs/ask-experian/average-cost-of-travel-insurance/", "date_read": "2026-10-01"},
+        {"desc": "Age ~30, one-week trip, stated trip cost, single named insurer quote", "premium_usd": null, "note": "No published fixed quote for exactly this profile found; insurers quote dynamically."}
+      ],
+      "sample_plans": [
+        {"provider": "Allianz Travel", "plan": "OneTrip Prime", "trip_cancellation_usd": 100000, "trip_interruption_usd": 150000, "emergency_medical_usd": 50000, "emergency_medical_transport_usd": 500000, "baggage_loss_usd": 1000, "baggage_delay_usd": 300, "travel_delay_usd": "800 total, 200/day", "deductible": null, "deductible_note": "None stated on plan page", "cancel_anytime_upgrade_refund_pct": 80, "kids_17_under_free_with_parent_or_grandparent": true, "basis": "page", "url": "https://www.allianztravelinsurance.com/find-a-plan/onetrip-prime.htm", "date_read": "2026-10-01"},
+        {"provider": "World Nomads", "plan": "Standard", "emergency_medical_usd": 100000, "trip_cancellation_usd": 2500, "evacuation_usd": 300000, "deductible": null, "basis": "search-summary", "url": "https://www.moneygeek.com/insurance/travel/world-nomads-review/", "date_read": "2026-10-01"},
+        {"provider": "World Nomads", "plan": "Explorer", "emergency_medical_usd": 100000, "trip_cancellation_usd": 10000, "evacuation_usd": 500000, "deductible": null, "basis": "search-summary", "url": "https://www.moneygeek.com/insurance/travel/world-nomads-review/", "date_read": "2026-10-01"}
+      ],
+      "trip_cancellation": {
+        "covered_reasons": ["Serious illness or injury of the traveller, a travelling companion or close family member", "Death of traveller, companion or family member", "Natural disaster or severe weather making destination uninhabitable", "Unexpected job loss (layoff/termination not your fault) or employer-initiated transfer", "Military deployment or jury duty", "Transportation strike that cancels your transport"],
+        "illness_injury_counts": true,
+        "not_covered": ["Changing your mind", "Ignoring medical advice against travel", "Fear of travel / general uncertainty", "Work: employer denies or revokes time off, or work obligations known before purchase (unless the separate 'Cancel for Work Reasons' benefit is held)"],
+        "covered_reasons_basis": "page", "covered_reasons_url": "https://www.travelguard.com/travel-resources/travel-tips/trip-cancellations-what-is-covered",
+        "layoff_conditions": {"text": "Termination/layoff must not be your fault, employment permanent (not temp/contract), in position at least 1 or 3 years depending on plan; 86% of cancellation policies cover layoff", "basis": "search-summary", "url": "https://www.squaremouth.com/travel-insurance-benefits/cancel-for-work-reasons", "date_read": "2026-10-01"},
+        "cancel_for_work_reasons_availability_pct_of_policies": {"value": 35, "basis": "search-summary", "url": "https://www.squaremouth.com/travel-insurance-benefits/cancel-for-work-reasons", "date_read": "2026-10-01"},
+        "date_read": "2026-10-01"
+      },
+      "cfar": {
+        "refund_pct_range": [50, 75], "most_common_refund_pct": 75, "share_of_cfar_plans_at_75pct": 80,
+        "premium_increase_pct_range": [40, 60],
+        "addon_cost_share_of_trip_pct": 3,
+        "purchase_window_days_after_first_payment": [14, 21],
+        "must_cancel_days_before_departure": [2, 3],
+        "must_insure_100pct_of_trip_cost": true,
+        "basis": "page", "url": "https://www.squaremouth.com/travel-insurance-benefits/cancel-for-any-reason", "date_read": "2026-10-01"
+      },
+      "domestic_health_cover_abroad": {
+        "aca_marketplace_plans": {"text": "Marketplace (ACA) plans are US-only; generally no coverage abroad beyond US territories; some carriers offer limited, non-standard emergency benefits. State Dept recommends separate travel medical insurance.", "basis": "search-summary", "url": "https://www.towerhilltravelinsurance.com/articles/does-us-health-insurance-cover-international-travel", "date_read": "2026-10-01", "note": "No healthcare.gov primary page found stating this; secondary sources only."},
+        "medicare": {"text": "Medicare generally does not pay for care outside the US. Exceptions: in the US when an emergency occurs and a foreign hospital is closer; travelling through Canada between Alaska and another state; cruise ship in a US port or within 6 hours of one. Prescription drugs bought abroad not covered.", "basis": "page", "url": "https://www.medicare.gov/coverage/travel-outside-the-u.s.", "date_read": "2026-10-01"},
+        "medigap_foreign_travel_emergency": {"plans": ["C", "D", "E", "F", "G", "H", "I", "J", "M", "N"], "coinsurance_pct_paid": 80, "annual_deductible_usd": 250, "must_begin_within_days_of_trip": 60, "lifetime_limit_usd": null, "lifetime_limit_note": "Not confirmed in sources read", "basis": "search-summary", "url": "https://www.medicare.gov/publications/11037-medicare-coverage-outside-the-united-states.pdf", "date_read": "2026-10-01"}
+      }
+    },
+
+    "UK": {
+      "providers": ["Post Office", "Aviva", "AXA", "Staysure"],
+      "pricing_model": {"description": "Flat premium per policy: single-trip (priced by age, destination region, duration) or annual multi-trip; not a percentage of trip cost. Excess per claim, optionally waived for extra premium.", "basis": "search-summary", "url": "https://www.postoffice.co.uk/travel-insurance/excess-waiver", "date_read": "2026-10-01"},
+      "sample_premiums": [
+        {"desc": "Single trip, no pre-existing conditions, age 25-34, average", "premium_gbp": 21, "basis": "search-summary", "url": "https://www.gocompare.com/travel-insurance/how-much-does-travel-insurance-cost/", "date_read": "2026-10-01", "note": "Search summary did not tie each figure to a specific URL in the result list; attribution approximate"},
+        {"desc": "Annual multi-trip, no pre-existing conditions, age 25-34, average", "premium_gbp": 40, "basis": "search-summary", "url": "https://www.gocompare.com/travel-insurance/how-much-does-travel-insurance-cost/", "date_read": "2026-10-01"},
+        {"desc": "Single trip, age 55-64 / 65-79, average", "premium_gbp": [32, 49], "basis": "search-summary", "url": "https://www.gocompare.com/travel-insurance/how-much-does-travel-insurance-cost/", "date_read": "2026-10-01"},
+        {"desc": "Week in Europe, from", "premium_gbp": 14.50, "basis": "search-summary", "url": "https://www.myinsuranceexpert.co.uk/travel-insurance/travel-insurance-cost-uk-2026", "date_read": "2026-10-01"},
+        {"desc": "Trip to America, from", "premium_gbp": 39.50, "basis": "search-summary", "url": "https://www.myinsuranceexpert.co.uk/travel-insurance/travel-insurance-cost-uk-2026", "date_read": "2026-10-01"}
+      ],
+      "sample_plans": [
+        {"provider": "Post Office", "tier": "Economy", "medical_and_repatriation_gbp": 5000000, "cancellation_curtailment_gbp": 1000, "excess_gbp": 125, "basis": "search-summary", "url": "https://hellosafe.com/travel-insurance/post-office", "date_read": "2026-10-01"},
+        {"provider": "Post Office", "tier": "Standard", "medical_and_repatriation_gbp": 10000000, "cancellation_curtailment_gbp": 3000, "excess_gbp": 99, "baggage_gbp": 2000, "basis": "search-summary", "url": "https://hellosafe.com/travel-insurance/post-office", "date_read": "2026-10-01"},
+        {"provider": "Post Office", "tier": "Premier", "medical_and_repatriation_gbp": 15000000, "cancellation_curtailment_gbp": 5000, "excess_gbp": 50, "baggage_gbp": 3000, "basis": "search-summary", "url": "https://hellosafe.com/travel-insurance/post-office", "date_read": "2026-10-01"}
+      ],
+      "cfar_note": "CFAR is essentially a US product; no UK CFAR figures found. null.",
+      "ghic_ehic": {
+        "text": "Free NHS card. Gives medically necessary state healthcare (cannot reasonably wait until return) on same terms as residents: emergency treatment, chronic/pre-existing condition care, routine maternity care (not travelling to give birth), dialysis and oxygen (pre-arranged). Not covered: repatriation, private care, residents' statutory charges (non-refundable), travel costs. Not a substitute for travel insurance. Valid in EU, plus some other countries (e.g. Switzerland via EHIC, Australia, Montenegro etc.).",
+        "basis": "page", "url": "https://faq.nhsbsa.nhs.uk/knowledgebase/article/KA-26795/en-us", "date_read": "2026-10-01"
+      }
+    },
+
+    "Ireland": {
+      "providers": ["Aviva", "AXA", "Blue Insurance", "AA Ireland"],
+      "pricing_model": {"description": "Flat premium per single trip or annual multi-trip; discounts for holders of Irish private health insurance with medical cover abroad (Blue Insurance).", "basis": "search-summary", "url": "https://www.blueinsurance.ie/travel-insurance.asp", "date_read": "2026-10-01"},
+      "sample_premiums": [
+        {"provider": "Aviva", "desc": "8 days Europe, age 30", "premium_eur": 19.63, "basis": "search-summary", "url": "https://hellosafe.com/travel-insurance/aviva-ireland", "date_read": "2026-10-01"},
+        {"provider": "Aviva", "desc": "USA, age 60", "premium_eur": 70.16, "basis": "search-summary", "url": "https://hellosafe.com/travel-insurance/aviva-ireland", "date_read": "2026-10-01"},
+        {"provider": "Blue Insurance", "desc": "Single trip from, 1 day Europe Premier, under 66 with private health insurance", "premium_eur": 15.33, "basis": "search-summary", "url": "https://www.blueinsurance.ie/travel-insurance.asp", "date_read": "2026-10-01"},
+        {"provider": "Blue Insurance", "desc": "Annual from, Europe Premier, under 66 with private health insurance", "premium_eur": 41.93, "basis": "search-summary", "url": "https://www.blueinsurance.ie/travel-insurance.asp", "date_read": "2026-10-01"}
+      ],
+      "sample_plans": [
+        {"provider": "Aviva", "medical_eur": 5000000, "cancellation_eur": 3000, "max_days_per_trip": 31, "excess_eur": null, "basis": "search-summary", "url": "https://hellosafe.com/travel-insurance/aviva-ireland", "date_read": "2026-10-01"}
+      ],
+      "ehic": {
+        "text": "Free, from HSE. Public healthcare in EU/EEA (and Switzerland) at free or reduced cost on resident terms; temporary stays; pre-existing conditions; routine maternity care; students for an academic year. Does not cover private healthcare. Digital card in HSE app; physical card within 10 working days.",
+        "basis": "search-summary", "url": "https://www2.hse.ie/services/schemes-allowances/ehic/", "date_read": "2026-10-01",
+        "validity_years": null, "validity_note": "Not confirmed; Citizens Information page returned 403."
+      }
+    },
+
+    "Canada": {
+      "providers": ["Blue Cross (Ontario Blue Cross / Pacific Blue Cross)", "Manulife (CoverMe)", "TuGo", "RBC Insurance"],
+      "pricing_model": {"description": "Flat premium by age, trip length, destination (US costs more) and medical questionnaire; emergency medical commonly sold standalone or in an all-inclusive package with cancellation.", "basis": "search-summary", "url": "https://www.thetraveler.org/tugo-vs-manulife-which-travel-insurance-is-better-for-canadians/", "date_read": "2026-10-01"},
+      "sample_premiums": [
+        {"desc": "One-week trip, starting price", "TuGo_cad": 60, "Manulife_cad": 100, "BlueCross_cad": 120, "basis": "search-summary", "url": "https://www.thetraveler.org/tugo-vs-manulife-which-travel-insurance-is-better-for-canadians/", "date_read": "2026-10-01", "note": "Age/destination not stated in source summary; low confidence."}
+      ],
+      "emergency_medical_limits": [
+        {"provider": "Ontario Blue Cross", "limit_cad": 5000000, "basis": "search-summary", "url": "https://on.bluecross.ca/travel-insurance/emergency-medical-care", "date_read": "2026-10-01"},
+        {"provider": "TuGo", "limit_cad": [5000000, 10000000], "basis": "search-summary", "url": "https://www.policyadvisor.com/travel-insurance/tugo-travel-insurance-review/", "date_read": "2026-10-01"}
+      ],
+      "provincial_out_of_country": {
+        "Ontario": {
+          "text": "OHIP pays limited emergency amounts for services received outside Canada after 1 Jan 2020: outpatient up to CAD 50/day; inpatient up to CAD 400/day for OR, CCU, ICU, neonatal/paediatric special care, CAD 200/day for lower levels of care. Hemodialysis reimbursement program exists. Page updated 16 Jan 2026.",
+          "outpatient_cad_per_day": 50, "inpatient_high_acuity_cad_per_day": 400, "inpatient_lower_cad_per_day": 200,
+          "basis": "page", "url": "https://www.ontario.ca/page/ohip-coverage-while-outside-canada", "date_read": "2026-10-01",
+          "conflict_note": "Secondary sources (CBC, CoverMe) say OHIP eliminated out-of-country emergency coverage from 1 Jan 2020 except dialysis (CAD 210/treatment). The official ontario.ca page read on 2026-10-01 still lists the 50/400/200 limits. Unresolved conflict; verify against the live official page before use. Official page preferred."
+        },
+        "British_Columbia": {
+          "text": "Emergency hospital care outside Canada: max CAD 75/day. Physician services paid at BC rates. Not covered outside BC: prescriptions, ambulance, non-physician practitioners. Claims within 90 days (physician) / 6 months (hospital). Province advises supplemental travel insurance.",
+          "hospital_cad_per_day": 75,
+          "basis": "page", "url": "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/benefits/services-covered-by-msp/medical-benefits/medical-benefits-outside-of-british-columbia", "date_read": "2026-10-01"
+        }
+      }
+    },
+
+    "Mexico": {
+      "providers": ["AXA Assistance México", "Seguros Monterrey New York Life (international cover via major medical, SGMM)", "GNP"],
+      "pricing_model": {"description": "Travel 'asistencia' sold per trip or annual multi-trip, flat price by plan tier/destination; medical limits stated in USD (international) or MXN (domestic).", "basis": "search-summary", "url": "https://hellosafe.com.mx/seguro-viaje/axa", "date_read": "2026-10-01"},
+      "sample_premiums": [
+        {"provider": "AXA", "desc": "Per trip, from", "premium_mxn": 400, "basis": "search-summary", "url": "https://hellosafe.com.mx/seguro-viaje/axa", "date_read": "2026-10-01"},
+        {"desc": "Age ~30, one-week trip quote", "premium_mxn": null, "note": "AXA México site requires quote tool; no published price."}
+      ],
+      "sample_plans": [
+        {"provider": "AXA (international)", "tiers": {"Travel Lite_medical_usd": 35000, "Platinum_medical_usd": 300000, "Black_medical_usd": 750000}, "basis": "search-summary", "url": "https://hellosafe.com.mx/seguro-viaje/axa", "date_read": "2026-10-01"},
+        {"provider": "AXA (domestic plans Gold/Platinum/Multiviaje Anual Nacional)", "medical_mxn_range": [1000000, 2000000], "preexisting_mxn": 20000, "dental_mxn_range": [5000, 10000], "deductible": null, "basis": "page", "url": "https://axa-asistenciaviaje.com.mx/asistencia-viaje/multiviaje-anual-internacional", "date_read": "2026-10-01"}
+      ],
+      "schengen_rule": {"text": "Mexicans needing a Schengen visa must hold travel medical insurance of at least EUR 30,000 covering emergency treatment, hospitalisation and repatriation, valid across Schengen (Reg. (EC) 810/2009). Note: Mexicans are generally visa-exempt for short Schengen stays, so this binds only visa cases; ETIAS holders are not obliged.", "minimum_eur": 30000, "basis": "search-summary", "url": "https://www.americanvisitorinsurance.com/travel-insurance/mexico/europe-travel-schengen-visa-insurance.asp", "date_read": "2026-10-01"},
+      "imss_abroad": {"value": null, "note": "No source retrieved on IMSS coverage abroad."},
+      "cfar_note": "No Mexican CFAR figures found. null."
+    }
+  },
+
+  "specialist_referrals": {
+    "US": {
+      "applies_to": ["NY", "CA", "CT"],
+      "rules": {
+        "HMO": "Must usually choose a PCP and get a referral to see a specialist; out-of-network not covered (except emergencies).",
+        "POS": "Referral required to see a specialist; out-of-network covered at higher cost.",
+        "PPO": "No referral needed; in or out of network.",
+        "EPO": "No referral needed; in-network only.",
+        "basis": "page", "url": "https://www.healthcare.gov/glossary/referral/", "secondary_url": "https://www.healthinsurance.org/blog/hmo-ppo-epo-or-pos-choosing-a-managed-care-option/", "date_read": "2026-10-01"
+      },
+      "wait_time_weeks": {"value": null, "note": "No national US referral-to-specialist wait statistic retrieved."},
+      "price_new_patient_specialist_visit": [
+        {"desc": "Medicare PFS CPT 99204 (new patient, moderate complexity), national non-facility, 2026", "usd_range": [118, 120], "total_rvu": 3.56, "conversion_factor_2026": 33.4009, "basis": "search-summary", "url": "https://oneosevenrcm.com/cpt-code-99204/", "official_file": "https://www.cms.gov/medicare/payment/fee-schedules/physician/national-payment-amount-file/pfrev26d", "date_read": "2026-10-01", "note": "3.56 x 33.4009 = 118.90; official file not opened. NY/CA/CT localities would differ (GPCI)."},
+        {"desc": "Self-pay new-patient visit, general", "usd_range": [120, 300], "basis": "search-summary", "url": "https://coveredusa.org/en/cost/doctor-visit", "date_read": "2026-10-01"},
+        {"desc": "FAIR Health uninsured/out-of-network charge for specialist new-patient visit in NY/CA/CT", "usd": null, "note": "FAIR Health consumer lookup is interactive; no figure retrieved."}
+      ]
+    },
+    "UK": {
+      "rules": "NHS: GP referral needed to see a consultant (specialist); statutory standard 92% of patients start treatment within 18 weeks of referral (RTT). Private: GP referral usually requested by insurers/consultants.",
+      "rtt_standard_pct": 92,
+      "rtt_standard_last_met": {"value": "2015 (target not met since ~2016)", "basis": "search-summary", "url": "https://fullfact.org/government-tracker/cut-waiting-times-18-week-standard/", "date_read": "2026-10-01"},
+      "interim_target": {"text": "65% within 18 weeks by March 2026; 92% by March 2029", "basis": "search-summary", "url": "https://www.health.org.uk/reports-and-analysis/analysis/government-s-plan-for-18-week-nhs-waiting-times-is-it-realistic", "date_read": "2026-10-01"},
+      "england_performance_july_2026": {
+        "waiting_list_pathways_m": 7.33, "unique_patients_m_est": 6.2, "pct_within_18_weeks": 65.3, "pct_within_18_weeks_june_2026": 65.8, "median_wait_weeks": 12, "over_52_weeks": 111379, "over_65_weeks": 9095, "published": "2026-09-10",
+        "basis": "page (list size, %, median via Cover Magazine); search-summary (pathway breakdown, 52/65-week counts, from NHS England press notice which could not be text-extracted)",
+        "url": "https://www.covermagazine.co.uk/news/4535557/nhs-waiting-list-increases-733m",
+        "official_url": "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/09/Jul26-RTT-statistical-press-notice-PDF-578K-97ylx5.pdf",
+        "date_read": "2026-10-01",
+        "note": "England only; Scotland/Wales/NI run separate targets not retrieved."
+      },
+      "price_private_consultant_initial": {
+        "gbp_range": [170, 250], "note": "PHIN: 'around £170 to £250', more for top experts and London; follow-ups often charged the same.",
+        "basis": "page", "url": "https://www.phin.org.uk/help/self-funding-your-private-treatment", "date_read": "2026-10-01"
+      },
+      "price_private_consultant_by_specialty": {"dermatology_gbp": [200, 350], "cardiology_gbp": [250, 450], "orthopaedics_gbp": [220, 400], "psychiatry_gbp": "300-500+", "basis": "search-summary", "url": "https://wecovr.com/guides/how-much-does-a-private-consultation-cost-in-the-uk/", "date_read": "2026-10-01"}
+    },
+    "Ireland": {
+      "rules": "Public: GP referral to hospital consultant outpatient clinic; Sláintecare (2017) recommended max 10 weeks for a new outpatient appointment and 12 weeks for inpatient/day case or GI scope. Private: pay consultant directly; private health insurance refunds part (e.g. Vhi EUR 60 per consultation on a cited plan).",
+      "slaintecare_max_wait_weeks": {"outpatient": 10, "inpatient_daycase": 12, "basis": "search-summary", "url": "https://www.thejournal.ie/waiting-lists-exceeding-slaintecare-targets-6089773-Jun2023/", "date_read": "2026-10-01"},
+      "ntpf_end_may_2026": {"outpatient_first_consultation": 669506, "inpatient_daycase": 115450, "gi_endoscopy": 40986, "pre_admit": 36978, "planned_procedures": 111643, "suspended": 34049, "basis": "page", "url": "https://www.ntpf.ie/news_and_events/ntpf-publishes-may-2026-national-public-hospital-waiting-list-data/", "date_read": "2026-10-01"},
+      "ntpf_end_march_2026_outpatients": {"value": 650632, "basis": "search-summary", "url": "https://www.ntpf.ie/news_and_events/ntpf-publishes-march-2026-national-public-hospital-waiting-list-data/", "date_read": "2026-10-01"},
+      "ntpf_august_2026_outpatients": {"value": 687839, "basis": "search-summary", "url": "https://github.com/AGHASHAHNOOR/irish-hospital-waiting-lists", "date_read": "2026-10-01", "note": "From a third-party analysis of NTPF open data; gov.ie July 2026 release returned 403."},
+      "median_wait_weeks": {"value": null, "note": "No median outpatient wait figure retrieved."},
+      "price_private_consultant": [
+        {"eur_range": [150, 250], "desc": "Initial private consultant consultation, typical", "basis": "search-summary", "url": "https://healthmapireland.ie/how-much-does-healthcare-cost-in-ireland-full-breakdown/", "date_read": "2026-10-01"},
+        {"eur": 200, "desc": "The Coombe hospital, perinatal mental health first consultation", "basis": "search-summary", "url": "https://www.coombe.ie/hospital-charges", "date_read": "2026-10-01"},
+        {"vhi_refund_eur_per_consultation": 60, "desc": "Vhi outpatient consultant benefit on one plan (Dec 2019 table of benefits)", "basis": "search-summary", "url": "https://www.vhi.ie/pdf/myvhi/TOBHA%20V31%20Dec19.pdf", "date_read": "2026-10-01", "note": "Old (2019) plan document"}
+      ]
+    },
+    "Canada": {
+      "rules": "Family physician (GP) referral required for a specialist to bill provincial plan at full specialist rate; specialist visit covered by OHIP/MSP, no fee to patient.",
+      "rules_basis": "null - general knowledge, no source retrieved for the billing rule; treat as unverified",
+      "fraser_2025": {
+        "national_median_gp_to_specialist_weeks": 15.3, "national_2024_weeks": 15.0,
+        "national_specialist_to_treatment_weeks": 13.3,
+        "national_total_weeks": 28.6,
+        "ontario_gp_to_specialist_weeks": 10.7, "ontario_total_weeks": 19.2,
+        "bc_gp_to_specialist_weeks": null, "bc_total_weeks": 32.2,
+        "basis": "search-summary", "url": "https://www.fraserinstitute.org/sites/default/files/2025-12/waiting-your-turn-2025-17913.pdf", "secondary_url": "https://thehub.ca/2025/12/09/2025-health-care-wait-times-for-treatment-in-canada-hits-28-6-weeks-as-ontario-has-lowest-waits-study/", "date_read": "2026-10-01",
+        "note": "BC GP-to-specialist segment not retrieved."
+      },
+      "price_specialist_visit": {"patient_cost_cad": 0, "note": "Insured service under provincial plan when referred. Fee-schedule amounts paid to physician not retrieved.", "basis": "null - no source retrieved"}
+    },
+    "Mexico": {
+      "rules": "IMSS: family doctor (UMF, first level) refers to second-level hospital specialist. Private: no referral needed.",
+      "imss_wait": {"referral_to_first_specialty_consult_days": 61, "scheduled_to_attended_days_avg": 53, "basis": "search-summary", "url": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_2nivel.pdf", "date_read": "2026-10-01", "note": "IMSS ENCAL 2025 user-perception survey (self-reported); PDF could not be text-extracted to confirm."},
+      "price_private_specialist_cdmx": {
+        "national_avg_mxn": {"pediatrics": 750, "dermatology": 900, "cardiology": 1200, "oncology": 1800},
+        "national_range_mxn": {"pediatrics": [500, 1200], "dermatology": [600, 1500], "cardiology": [800, 2000], "oncology": [1000, 3000]},
+        "cdmx_avg_mxn": {"pediatrics": 900, "dermatology": 1080, "cardiology": 1440, "orthopedics": 1320},
+        "cdmx_note": "Stated as ~20% above national average; last updated March 2026; private market data.",
+        "basis": "page", "url": "https://doktor.mx/precios", "date_read": "2026-10-01"
+      },
+      "price_specialist_general_range_mxn": {"value": [800, 2000], "basis": "search-summary", "url": "https://www.ambito.com/mexico/economia/cuanto-cuesta-una-consulta-medica-cdmx-y-los-angeles-agosto-2025-n6175170", "date_read": "2026-10-01"}
+    }
+  },
+
+  "gaps": [
+    "No fixed published quote for an age-30, one-week trip with a stated trip cost from any named US insurer (all quote dynamically). Squaremouth age-band average exists but its age mapping is ambiguous.",
+    "OHIP conflict: ontario.ca (read 2026-10-01) lists 50/400/200 CAD/day limits; news sources say the program ended 1 Jan 2020 except dialysis. Must be resolved against the official page before use.",
+    "No state-specific (NY/CA/CT) travel insurance pricing or CFAR availability list; no FAIR Health local figure for a new-patient specialist visit.",
+    "Medicare 99204 figure is derived (RVU x conversion factor) from a secondary source; CMS file not opened; no NY/CA/CT locality amounts.",
+    "UK sample premiums are search summaries; NHS England press notice PDF could not be text-extracted (figures corroborated by Cover Magazine).",
+    "Ireland: no median outpatient wait; gov.ie and Citizens Information returned 403; EHIC validity period unconfirmed.",
+    "Canada: BC GP-to-specialist weeks not retrieved; Canadian sample premiums low confidence (age/destination unstated).",
+    "Mexico: no published per-week premium; no IMSS-abroad rule; IMSS 61-day figure from survey summary only.",
+    "ACA-abroad statement rests on secondary sources, not healthcare.gov."
+  ]
+}

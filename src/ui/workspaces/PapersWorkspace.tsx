@@ -31,6 +31,7 @@ import { CDMX_DESEMPLEO, HAP, IRISH_JA, desempleoRefusal, hapRefusal, hapSplit, 
 import { rentOf } from '@/engine/systems/household';
 import { BC_ASSISTANCE, ONTARIO_WORKS, SNAP, assistanceRefusal, ebtBalance, schemeFor } from '@/engine/systems/assistance';
 import { eiRefusal, eiWeekly } from '@/engine/systems/eiself';
+import { US_PHARMACIES } from '@/engine/content/carevisits';
 import { exchange } from '@/engine/content/currency';
 
 type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
@@ -509,6 +510,8 @@ function YourDoctor() {
   const { run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const choose = useFeature('health.choose_clinic');
+  const pharmacy = useFeature('health.choose_pharmacy');
+  const american = (person.home?.cityId ?? '').startsWith('us-');
   const practices = clinicsIn(person.home?.cityId ?? '').filter((c) => DOCTOR_KINDS.includes(c.kind));
   if (practices.length === 0) return null;
   const doctor = clinicFor(person, 'visit');
@@ -525,9 +528,18 @@ function YourDoctor() {
               {practices.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </div>
+          {american && (
+            <div className="field">
+              <label htmlFor="own-pharmacy">Your Pharmacy</label>
+              <select id="own-pharmacy" value={person.health?.pharmacy ?? ''} disabled={!pharmacy.open} title={pharmacy.reason} onChange={(e) => { if (e.target.value && run('health.choose_pharmacy', { chain: e.target.value }).ok) toast('Your pharmacy, chosen.', 'positive'); }}>
+                <option value="">Any Pharmacy, At The Median</option>
+                {US_PHARMACIES.map((c) => <option key={c.id} value={c.id}>{`${c.name}, A Generic ${c.generic.toFixed(2)} Uninsured`}</option>)}
+              </select>
+            </div>
+          )}
         </div>
         <div className="small">{[doctor && `A doctor’s visit: ${doctor.name}`, urgent && `Urgent care: ${urgent.name}`, emergency && `An emergency: ${emergency.name}`].filter(Boolean).join(' · ')}</div>
-        <Fine>The practices, clinics and hospitals are real. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215.</Fine>
+        <Fine>The practices, clinics and hospitals are real. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you the department’s median time, missing what that time held. In America, a generic is filled at your pharmacy’s own cash price, a plan’s copay never more.</Fine>
       </div>
     </Panel>
   );

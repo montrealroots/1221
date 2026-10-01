@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-218 commands; 212 named by a test, 6 not.
+219 commands; 213 named by a test, 6 not.
 
 ## aircraft
 
@@ -222,6 +222,7 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `health.apply_aid` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `safetynet.test.ts` | Between Jobs |
 | `health.choose_clinic` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `clinics.test.ts` | Between Jobs |
+| `health.choose_pharmacy` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carevisits.test.ts` | Between Jobs |
 | `health.dental` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `costs.test.ts` | Between Jobs |
 | `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | **none** | Between Jobs |
 | `health.elect_cobra` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `worklife.test.ts` | Between Jobs |

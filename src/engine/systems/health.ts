@@ -59,6 +59,7 @@ import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
 import { eiWeek } from './eiself';
 import { laidUp } from './injury';
 import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
+import { US_PHARMACIES, edMinutes } from '../content/carevisits';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -103,8 +104,10 @@ export interface HealthRecord {
   spent: Record<string, Money>;
   deductible: Record<string, Money>;
   bills: MedicalBill[];
-  /** In hospital until. */
+  /** In hospital until: a stay, or an emergency department's hours. */
   inHospitalUntil?: Instant;
+  /** The American pharmacy their prescriptions are filled at (`US_PHARMACIES`, from 2026-10-01). */
+  pharmacy?: string;
   /** An injury mending, or the last one (`systems/injury.ts`). */
   injury?: import('./injury').Injury;
   /** Down with the flu until, and excused from classes for it (`school.call_in_sick`). */
@@ -727,7 +730,9 @@ function canadianDrugShare(person: Person, at: Instant, price: Money, into: stri
 export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD', cash?: Money): Money {
   const nhs = cash === undefined ? publicCareShareOf(person, brand ? 'rx-brand' : 'rx-generic', at, into) : undefined;
   if (nhs !== undefined) return nhs;
-  const price = cash ?? usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
+  // A generic at the chosen chain's own cash price (`US_PHARMACIES`, from 2026-10-01), which a plan's copay is never more than; a brand's, and an unchosen pharmacy's, the median.
+  const chain = !brand && cash === undefined ? US_PHARMACIES.find((c) => c.id === healthOf(person).pharmacy) : undefined;
+  const price = cash ?? (chain ? usd(Math.round(chain.generic * 100), into) : usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into));
   // A Canadian's provincial drug plan, where one takes them (from later on 2026-09-30).
   const provincial = cash === undefined ? canadianDrugShare(person, at, price, into) : undefined;
   if (provincial !== undefined) return provincial;
@@ -873,6 +878,8 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     w.energy = Math.max(0, w.energy - toll.energy * takes);
   }
   if (event.care === 'stay') h.inHospitalUntil = at + CARE.stayDays * MS_DAY;
+  // An emergency department keeps them its median time, missing what that time held (`edMinutes`, from 2026-10-01).
+  if (event.care === 'emergency') h.inHospitalUntil = Math.max(h.inHospitalUntil ?? 0, at + Math.round(edMinutes(homeOf(person)) * 60_000));
   if (event.flu) h.fluUntil = at + CARE.fluDays * MS_DAY;
   // A flu that isn't seen costs nothing.
   if (event.flu && event.care === 'visit') return undefined;
@@ -1026,6 +1033,14 @@ export function registerHealth(sim: Simulation): void {
     h.cobra = { plan: offer.plan, from: offer.lostAt, until: firstOf(end.year, end.month + COBRA.months), subsidized };
     delete h.cobraOffer;
     return { from: offer.lostAt, months };
+  });
+
+  sim.onCommand<{ chain: string }, { chain: string }>('health.choose_pharmacy', (p, { sim: s }) => {
+    const chain = US_PHARMACIES.find((c) => c.id === String(p?.chain));
+    if (!chain) throw new CommandError('There’s no such pharmacy.');
+    if (CITIES.get(homeOf(s.player))?.countryId !== 'us') throw new CommandError('A pharmacy’s own cash price is kept only in America.');
+    healthOf(s.player).pharmacy = chain.id;
+    return { chain: chain.id };
   });
 
   sim.onCommand<{ clinicId: string }, { clinicId: string }>('health.choose_clinic', (p, { sim: s }) => {
