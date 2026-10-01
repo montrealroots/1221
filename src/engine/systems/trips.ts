@@ -25,6 +25,7 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { FUEL_STOP_MINUTES, LEG_KM, METER, MIN_PER_KM, STATIONS, WALK_KM, WALK_KMH, type LegKind } from '../content/errandtrips';
+import { UNRATED_FUEL_USD_PER_KM } from '../content/vehiclefees';
 import { spend } from './household';
 import { contactsOf } from './people';
 import { laidUp } from './repairs';
@@ -32,9 +33,10 @@ import { stolenNow } from './theft';
 import { mayDrive } from './documents';
 import { classFor, forOutings, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { drive } from './driving';
+import { standInFor } from './standin';
 import { tireFactor } from './tires';
 
-export interface Trip { by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; fuel: Money; km: number }
+export interface Trip { by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string }
 export interface Stop { kind: string; payload: Record<string, unknown>; leg: LegKind }
 
 const market = (cityId: string): 'na' | 'eu' => (['us', 'ca'].includes(CITIES.get(cityId)?.countryId ?? '') ? 'na' : 'eu');
@@ -66,7 +68,8 @@ export function tripRefusal(sim: Simulation, person: Person, by: 'car' | 'foot',
     if ((v.at ?? v.cityId) !== here) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
     if (v.repossessed) return 'The lender has the car.';
     if (stolenNow(v, sim.now)) return 'It’s been stolen.';
-    const laid = laidUp(v, sim.now);
+    // In the shop with a stand-in, it's the stand-in that goes (`systems/standin.ts`, from 2026-10-01).
+    const laid = standInFor(person, v) ? undefined : laidUp(v, sim.now);
     if (laid) return laid;
     const may = mayDrive(person, here, sim.now, sim.now, classFor(m), m.cc);
     if (!may.ok) return may.why ?? 'You may not drive here.';
@@ -99,12 +102,20 @@ export function registerTrips(sim: Simulation): void {
       const by = p?.by === 'car' ? 'car' : 'foot';
       const no = tripRefusal(s, person, by, p?.vehicleId, p?.passengerId);
       if (no) throw new CommandError(no);
-      trip = person.trip = { by, ...(by === 'car' ? { vehicleId: String(p!.vehicleId) } : {}), ...(p?.passengerId ? { passengerId: String(p.passengerId) } : {}), fuel: 0, km: 0 };
+      const own = by === 'car' ? vehiclesOf(person).find((x) => x.id === p!.vehicleId) : undefined;
+      const standIn = own ? standInFor(person, own) : undefined;
+      trip = person.trip = { by, ...(by === 'car' ? { vehicleId: String(p!.vehicleId) } : {}), ...(p?.passengerId ? { passengerId: String(p.passengerId) } : {}), fuel: 0, km: 0, ...(standIn ? { standInId: standIn.id } : {}) };
     }
     const here = person.currentLocationId;
     const l = leg(here, trip.by, p?.to === 'errand' ? 'errand' : 'shopping');
     const v = carOf(person, trip);
-    if (v) {
+    if (v && trip.standInId) {
+      // The stand-in, at AAA's average fuel a mile; the car itself gains no kilometers.
+      const usd = Math.round(UNRATED_FUEL_USD_PER_KM * l.km);
+      const cur = saveCurrency(s.universe);
+      trip.fuel += cur === 'USD' ? usd : exchange(usd, 'USD', cur) ?? usd;
+      drive(s, person, v.jurisdiction, l.km, s.now, `${trip.standInId}-errand-${s.now}`, 'car');
+    } else if (v) {
       trip.fuel += runningCost(s, v, l.km);
       v.errandKm = (v.errandKm ?? 0) + l.km;
       v.km = (v.km ?? 0) + l.km;

@@ -22,6 +22,14 @@
  * annual cost, the least a severe repair can be, SLATE's estimate of it. US
  * figures, SLATE carries them everywhere at the exchange, as it does AAA's
  * upkeep.
+ *
+ * **A loaner**, from later on 2026-10-01, where the dealer publishes one:
+ * Toyota of Manhattan's complimentary, by appointment; A-1 Toyota's $34.95 a
+ * day; Toronto Honda's free, "limitations apply"; Jemca Toyota's courtesy
+ * car "offered as an option", taken as free, SLATE's reading, a courtesy car
+ * being free where it's offered. Toyota of Hollywood, Jim Pattison Toyota
+ * Downtown, Tadg Riordan and Mexico City's agencias publish none
+ * (`systems/standin.ts`).
  */
 
 import type { Week } from './storehours';
@@ -37,6 +45,8 @@ export interface CarShop {
   /** A dealer's make, the only one it works on. */
   make?: string;
   week?: Week;
+  /** The loaner a dealer publishes, a day, US dollars (`systems/standin.ts`). */
+  loaner?: { perDayUsd: number };
   source: string;
 }
 
@@ -48,26 +58,26 @@ const week = (weekdays: [number, number], saturday?: [number, number], sunday?: 
 });
 
 export const CAR_SHOPS: readonly CarShop[] = [
-  { id: 'toyota-of-manhattan', name: 'Toyota of Manhattan', cityId: 'us-ny-newyork', kind: 'dealer', make: 'Toyota', address: '679 11th Avenue, New York, NY 10019', week: week([7, 18]), source: 'https://www.toyotaofmanhattan.com/service/center.htm' },
+  { id: 'toyota-of-manhattan', name: 'Toyota of Manhattan', cityId: 'us-ny-newyork', kind: 'dealer', make: 'Toyota', address: '679 11th Avenue, New York, NY 10019', week: week([7, 18]), loaner: { perDayUsd: 0 }, source: 'https://www.toyotaofmanhattan.com/service/center.htm' },
   { id: 'pep-boys-4th-ave', name: 'Pep Boys Auto Service & Tire', cityId: 'us-ny-newyork', kind: 'chain', address: '354 4th Ave, Brooklyn, NY 11215', week: week([7, 20], [7, 19], [9, 18]), source: 'https://www.yellowpages.com/brooklyn-ny/mip/pep-boys-541028096' },
   { id: 'midas-w53', name: 'Midas', cityId: 'us-ny-newyork', kind: 'chain', address: '455 W 53rd St, New York, NY 10019', source: 'https://www.yellowpages.com/new-york-ny/midas-auto-service-experts' },
   { id: 'manhattan-auto-repair', name: 'Manhattan Auto Repair', cityId: 'us-ny-newyork', kind: 'independent', address: '552 W 48th St, New York, NY 10036', source: 'https://www.yelp.com/biz/manhattan-auto-repair-new-york-3' },
   { id: 'toyota-of-hollywood', name: 'Toyota of Hollywood', cityId: 'us-ca-losangeles', kind: 'dealer', make: 'Toyota', address: '6920 W Sunset Blvd, Los Angeles, CA 90028', week: week([7, 18], [7, 17]), source: 'https://www.hollywoodtoyota.com/service/center.htm' },
   { id: 'firestone-santa-monica-blvd', name: 'Firestone Complete Auto Care', cityId: 'us-ca-losangeles', kind: 'chain', address: '10785 Santa Monica Blvd, Los Angeles, CA 90025', source: 'https://www.firestonecompleteautocare.com/california/los-angeles/10785-santa-monica-blvd/' },
-  { id: 'a1-toyota', name: 'A-1 Toyota', cityId: 'us-ct-newhaven', kind: 'dealer', make: 'Toyota', address: '50 Amity Road, New Haven, CT 06515', week: week([7.5, 19], [7.5, 17]), source: 'https://www.a1toyota.com/service/' },
+  { id: 'a1-toyota', name: 'A-1 Toyota', cityId: 'us-ct-newhaven', kind: 'dealer', make: 'Toyota', address: '50 Amity Road, New Haven, CT 06515', week: week([7.5, 19], [7.5, 17]), loaner: { perDayUsd: 34.95 }, source: 'https://www.a1toyota.com/service/' },
   { id: 'midas-whalley-ave', name: 'Midas Auto Service Experts', cityId: 'us-ct-newhaven', kind: 'chain', address: '75 Whalley Ave, New Haven, CT 06511', source: 'https://auto-parts-stores.cmac.ws/midas-auto-service-experts/12371/' },
   { id: 'meineke-122', name: 'Meineke Car Care Center #122', cityId: 'us-ct-newhaven', kind: 'chain', address: '1175 Whalley Avenue, New Haven, CT 06515', source: 'https://www.meineke.com/locations/ct/new-haven-122/' },
   { id: 'firestone-chapel-st', name: 'Firestone Complete Auto Care', cityId: 'us-ct-newhaven', kind: 'chain', address: '680 Chapel St, New Haven, CT 06510', source: 'https://www.yellowpages.com/new-haven-ct/auto-repair-service' },
   { id: 'kwik-fit-holloway', name: 'Kwik Fit Holloway', cityId: 'uk-eng-london', kind: 'chain', address: '379 Camden Road, London N7 0SH', week: week([8.5, 18], [8.5, 17], [10, 16]), source: 'https://www.kwik-fit.com/locate-a-centre/london-islington-holloway' },
   { id: 'halfords-southfields', name: 'Halfords Autocentre Southfields', cityId: 'uk-eng-london', kind: 'chain', address: '271 Merton Road, Southfields, London SW18 5JS', week: week([8, 18], [8, 17]), source: 'https://www.halfords.com/locations/southfields-london-autocentre/' },
-  { id: 'jemca-toyota-edgware-road', name: 'Jemca Toyota Edgware Road', cityId: 'uk-eng-london', kind: 'dealer', make: 'Toyota', address: '78 Capitol Way, London NW9 0EW', week: week([8, 18], [8, 13]), source: 'https://www.toyota.co.uk/dealers/jemcaedgwareroad' },
+  { id: 'jemca-toyota-edgware-road', name: 'Jemca Toyota Edgware Road', cityId: 'uk-eng-london', kind: 'dealer', make: 'Toyota', address: '78 Capitol Way, London NW9 0EW', week: week([8, 18], [8, 13]), loaner: { perDayUsd: 0 }, source: 'https://www.toyota.co.uk/dealers/jemcaedgwareroad' },
   { id: 'advance-pitstop-townsend-st', name: 'Advance Pitstop Townsend Street', cityId: 'ie-lei-dublin', kind: 'chain', address: '53 Townsend Street, Dublin 2', week: week([8.5, 18], [9, 17]), source: 'https://www.yelp.com/biz/advance-pitstop-dublin-2' },
   { id: 'sweeneys-bridgefoot-st', name: 'Sweeneys Garage', cityId: 'ie-lei-dublin', kind: 'independent', address: 'Bridgefoot Street, Dublin', source: 'https://sweeneysgarage.ie/car-service/' },
   { id: 'tadg-riordan-motors', name: 'Tadg Riordan Motors', cityId: 'ie-lei-dublin', kind: 'dealer', make: 'Toyota', address: 'Airton Rd, Tallaght, Dublin 24, D24 F252', week: week([9, 18]), source: 'https://www.trmtallaght.ie/service-at-tadg-riordan-motors' },
   { id: 'canadian-tire-yonge-st', name: 'Canadian Tire Auto Service Centre', cityId: 'ca-on-toronto', kind: 'chain', address: '839 Yonge St, Toronto, ON M4W 2H2', week: week([8, 21], [8, 21]), source: 'https://www.yellowpages.ca/bus/Ontario/Toronto/Canadian-Tire-Associate-Stores-Auto-Service-Centre/101568658.html' },
   { id: 'mr-lube-overlea', name: 'Mr. Lube', cityId: 'ca-on-toronto', kind: 'chain', address: '61 Overlea Blvd., Toronto, ON M4H 1C2', source: 'https://www.mrlube.com/en/locations/40' },
   { id: 'downtown-toyota', name: 'Downtown Toyota', cityId: 'ca-on-toronto', kind: 'dealer', make: 'Toyota', address: '79 E Don Roadway, Toronto, ON M4M 2A5', source: 'https://www.yelp.ca/biz/downtown-toyota-toronto-18' },
-  { id: 'toronto-honda', name: 'Toronto Honda', cityId: 'ca-on-toronto', kind: 'dealer', make: 'Honda', address: '2300 Danforth Ave, Toronto', source: 'https://www.torontohonda.com/service/' },
+  { id: 'toronto-honda', name: 'Toronto Honda', cityId: 'ca-on-toronto', kind: 'dealer', make: 'Honda', address: '2300 Danforth Ave, Toronto', loaner: { perDayUsd: 0 }, source: 'https://www.torontohonda.com/service/' },
   { id: 'jim-pattison-toyota-downtown', name: 'Jim Pattison Toyota Downtown', cityId: 'ca-bc-vancouver', kind: 'dealer', make: 'Toyota', address: '1290 Burrard Street, Vancouver, BC V6Z 1Z1', week: week([7.5, 18], [7.5, 18]), source: 'http://www.jptoyota-downtown.com/service' },
   { id: 'canadian-tire-604', name: 'Canadian Tire Grandview Highway', cityId: 'ca-bc-vancouver', kind: 'chain', address: '2830 Bentall Street, Vancouver, BC V5M 4H4', week: week([7, 19], [8, 18], [8, 18]), source: 'https://www.canadianplanet.net/canadian-tire-604-grandview-highway-F110EC00F1FD441' },
   { id: 'kal-tire-w4th', name: 'Kal Tire Vancouver Downtown', cityId: 'ca-bc-vancouver', kind: 'chain', address: '1500 W 4th Ave, Vancouver, BC V6J 1L7', source: 'https://www.michelin.ca/en/auto/dealer-locator/vancouver/kal-tire-vancouver-673' },

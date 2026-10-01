@@ -42,6 +42,7 @@ import { byRoad as roadBetween, drive } from './driving';
 import { registerWraps } from './wraps';
 import { mayCollide, registerCarCare, serviceMonth, servicingKept } from './carcare';
 import { NO_HISTORY_GB } from '../content/carcare';
+import { registerStandIn } from './standin';
 import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -593,6 +594,7 @@ export function registerVehicles(sim: Simulation): void {
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerStandIn(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerCarCare(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   registerWraps(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!, (v) => liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
   registerRepairs(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);

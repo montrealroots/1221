@@ -58,6 +58,8 @@ export interface Rental {
   /** Its class, from 2026-10-01; a small car before. */
   cls?: RentalClass;
   escrowAccountId?: string;
+  /** Standing in for a car in the shop, a dealer's loaner or a rental, from 2026-10-01 (`systems/standin.ts`); no journey then. */
+  standIn?: { vehicleId: string; loaner?: string };
 }
 
 export const rentalsOf = (person: Person): Rental[] => (person.rentals ??= []);
@@ -137,12 +139,27 @@ export function rentalDriven(sim: Simulation, person: Person, routeId: string, f
   if (!j) return;
   const { hurt } = drive(sim, person, j, roadKm(fromCity, toCity), sim.now, key);
   const t = RENTALS[r.cityId]!;
-  const bill = damageBill(t, r.waived === true);
+  const bill = crashBill(r);
   if (hurt && bill.amount > 0) {
     const due = inSave(sim, c(bill.amount), bill.currency);
     const what = t.excess ? 'excess' : 'repair bill';
     if (!payFromBank(sim, person, due, `${t.company}’s ${what}, the rental damaged`, 'travel')) owe(sim, person, due, `A rental car’s ${what}`, 'travel');
   }
+}
+
+/** The desk's deposit, held on the card until the car goes back; none held where the bank can't cover it. */
+export function holdDeposit(sim: Simulation, person: Person, r: Rental, deposit: Money): void {
+  const t = RENTALS[r.cityId]!;
+  const draw = drawFromBank(sim, person, deposit, false, true);
+  if (draw.short !== 0) return;
+  const escrow = sim.openAccount({ id: sim.nextId('account'), kind: 'escrow', name: 'Rental Car Deposit', ownerId: person.id, institution: t.company, openedAt: sim.now, category: 'rental-deposit' });
+  sim.post({ memo: `${t.company}’s deposit, held`, category: 'travel', postings: [...draw.postings, { accountId: escrow.id, amount: deposit }] });
+  r.escrowAccountId = escrow.id;
+}
+
+/** What a crash in this rental costs, in what money: a dealer's loaner is driven on your own cover, no desk's excess (`systems/standin.ts`). */
+export function crashBill(r: Rental): { amount: number; currency: string } {
+  return r.standIn?.loaner ? { amount: 0, currency: 'USD' } : damageBill(RENTALS[r.cityId]!, r.waived === true);
 }
 
 /** What a crash costs the renter and in what money: the excess in the terms', or the repair in its own. */
@@ -199,17 +216,9 @@ export function registerRentals(sim: Simulation, journeys: { journeysOf: (p: Per
     }
     r.status = 'out';
     r.at = r.cityId;
-    const t = RENTALS[r.cityId]!;
     const q = rentalQuote(s, person, r.cityId, r.pickupAt, r.returnAt, true, r.waived === true);
     const deposit = typeof q === 'string' ? 0 : q.deposit;
-    if (deposit > 0) {
-      const draw = drawFromBank(s, person, deposit, false, true);
-      if (draw.short === 0) {
-        const escrow = s.openAccount({ id: s.nextId('account'), kind: 'escrow', name: 'Rental Car Deposit', ownerId: person.id, institution: t.company, openedAt: s.now, category: 'rental-deposit' });
-        s.post({ memo: `${t.company}’s deposit, held`, category: 'travel', postings: [...draw.postings, { accountId: escrow.id, amount: deposit }] });
-        r.escrowAccountId = escrow.id;
-      }
-    }
+    if (deposit > 0) holdDeposit(s, person, r, deposit);
   });
 
   sim.onSchedule(RENTAL_RETURN_KIND, (item, s) => {

@@ -33,6 +33,7 @@ import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/
 import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn, type Finish } from '@/engine/systems/wraps';
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
+import { standInFor, standInQuote } from '@/engine/systems/standin';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -392,6 +393,21 @@ function ModifyControl({ v }: { v: OwnedVehicle }) {
   );
 }
 
+/** A loaner or a rental while the car is in the shop (`systems/standin.ts`). */
+function StandInControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast, sim } = useGame();
+  const has = standInFor(sim.player, v);
+  if (has) return <span className="xs dim">{has.standIn?.loaner ? 'Driving The Loaner' : 'Driving A Rental'}</span>;
+  const q = standInQuote(sim, sim.player, v, sim.now);
+  if (typeof q === 'string' && q === 'It isn’t in a shop.') return null;
+  const cur = saveCurrency(sim.universe);
+  const loaner = typeof q !== 'string' && Boolean(q.loaner);
+  const price = typeof q === 'string' ? '' : q.total > 0 ? `, ${formatMoney(q.total, cur, { cents: false })}` : ', Free';
+  return (
+    <Gated feature="vehicle.stand_in" className="btn btn-sm btn-ghost" disabled={typeof q === 'string'} title={typeof q === 'string' ? q : `${q.what}, ${q.days} ${q.days === 1 ? 'day' : 'days'}${q.deposit ? `, a ${formatMoney(q.deposit, cur, { cents: false })} deposit held` : ''}.`} onClick={() => { const a = run('vehicle.stand_in', { vehicleId: v.id }); if (a.ok) toast(loaner ? 'The loaner is yours until the car is ready.' : 'The rental is yours until the car is ready.', 'positive'); }}>{`${loaner ? 'Take The Loaner' : 'Rent A Car Meanwhile'}${price}`}</Gated>
+  );
+}
+
 /** A fault the car has, and the garages in its town that would take it (`systems/repairs.ts`). */
 function RepairControl({ v }: { v: OwnedVehicle }) {
   const { run, toast, sim } = useGame();
@@ -399,7 +415,7 @@ function RepairControl({ v }: { v: OwnedVehicle }) {
   const shops = shopsFor(v.at ?? v.cityId, m);
   const [shopId, setShopId] = useState('');
   const laid = laidUp(v, sim.now);
-  if (inShopNow(v, sim.now)) return <span className="xs dim">{laid}</span>;
+  if (inShopNow(v, sim.now)) return <><span className="xs dim">{laid}</span><StandInControl v={v} /></>;
   if (!v.fault) return null;
   const cur = saveCurrency(sim.universe);
   const cost = formatMoney(faultCost(v, cur), cur, { cents: false });
