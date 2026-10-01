@@ -31,6 +31,7 @@ import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
 import { hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
+import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
@@ -294,7 +295,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}</div></td>
+                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}</div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -308,6 +309,17 @@ export function TravelWorkspace() {
 }
 
 /** A car rented at the far end of a booked journey with its way home (`systems/rentals.ts`): its price, and why not where it can't be had. */
+/** Travel insurance for a trip booked, at the home market's price (`systems/travelinsurance.ts`). */
+function InsureIt({ j }: { j: Journey }) {
+  const { run, toast, sim } = useGame();
+  if (j.insured) return <span className="xs dim">Insured</span>;
+  const q = insuranceQuote(sim, sim.player, j, sim.now);
+  const cur = saveCurrency(sim.universe);
+  return (
+    <Gated feature="travel.insure" className="btn btn-sm btn-ghost" disabled={typeof q === 'string'} title={typeof q === 'string' ? q : `${q.terms.insurer}: medical to ${formatMoney(Math.round(q.terms.medical * 100), q.terms.currency, { cents: false })}${q.terms.cancellation ? `, cancellation to ${formatMoney(Math.round(q.terms.cancellation * 100), q.terms.currency, { cents: false })}` : ', no cancellation cover'}${q.terms.excess ? `, a ${formatMoney(Math.round(q.terms.excess * 100), q.terms.currency, { cents: false })} excess` : ''}.`} onClick={() => { const a = run('travel.insure', { journeyId: j.id }); if (a.ok) toast('Insured.', 'positive'); }}>{`Insure The Trip${typeof q === 'string' ? '' : `, ${formatMoney(q.premium, cur, { cents: false })}`}`}</Gated>
+  );
+}
+
 function RentACar({ j }: { j: Journey }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

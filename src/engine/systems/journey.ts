@@ -49,6 +49,7 @@ import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { moveTo } from './luggage';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking } from './hotels';
+import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'ferry' | 'drive' | 'arrival';
@@ -102,6 +103,8 @@ export interface Journey {
   bookingId?: string;
   paidBy?: 'production' | 'self';
   onArrival?: Person['stay'];
+  /** Travel insurance bought with it, a round trip's halves sharing one (`systems/travelinsurance.ts`, from 2026-10-01). */
+  insured?: import('./travelinsurance').TripPolicy;
 }
 
 export const LEAVE_KIND = 'travel.leave';
@@ -123,9 +126,10 @@ export const HOTEL_FREE_UNTIL_HOURS = 24;
  * arrival forfeited every night.
  */
 /** A journey missed: its hotel's nights released as a no-show's are, the first kept on a flexible rate (from 2026-10-01). */
-function missedHotel(sim: Simulation, person: Person, j: Journey): void {
+function missedHotel(sim: Simulation, person: Person, j: Journey): Money {
   const back = j.hotel ? hotelRefund(j.hotel, j.arriveAt, j.arriveAt) : 0;
   if (back > 0) sim.post({ memo: 'A hotel’s nights released, the first kept for the no-show', category: 'travel', postings: refundPostings(sim, person, back) });
+  return back;
 }
 
 export function hotelRefund(hotel: NonNullable<Journey['hotel']>, arriveAt: Instant, now: Instant): Money {
@@ -589,7 +593,9 @@ export function registerJourneys(sim: Simulation): void {
       for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === h.id) s.timeline.cancel(item.id, s.now);
     }
     if (refund > 0) s.post({ memo: `A ${halves.length > 1 ? 'round trip' : 'journey'} canceled, refunded`, category: 'travel', postings: refundPostings(s, person, refund) });
-    return { refund };
+    // Called off in hospital or laid up hurt, travel insurance pays what didn't come back (`systems/travelinsurance.ts`).
+    const claimed = claimCancellation(s, person, first, halves.reduce((a, h) => a + (h.paidBy === 'production' ? 0 : h.total), 0) - refund, s.now);
+    return { refund: refund + claimed };
   });
 
   sim.onSchedule(LEAVE_KIND, (item, s) => {
@@ -601,8 +607,13 @@ export function registerJourneys(sim: Simulation): void {
     if (!present(person, item.at, j.fromCity)) {
       j.status = 'missed';
       j.why = 'You weren’t there to leave.';
-      missedHotel(s, person, j);
-      tell('Journey Missed', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the airline canceled the way home with it, as it does a round trip whose first flight goes unflown' : ''}.`);
+      const hotelBack = missedHotel(s, person, j);
+      const back = partnerOf(person, j);
+      const forfeited = forfeitReturn(s, person, j);
+      tell('Journey Missed', `${j.why} The fare is gone${forfeited ? ', and the airline canceled the way home with it, as it does a round trip whose first flight goes unflown' : ''}.`);
+      // In hospital or laid up hurt, travel insurance pays back what was lost (`systems/travelinsurance.ts`).
+      const lost = (j.paidBy === 'production' ? 0 : j.total - hotelBack) + (forfeited && back && back.paidBy !== 'production' ? back.total : 0);
+      claimCancellation(s, person, j, lost, item.at);
       return;
     }
     // At the airport, as the airline checks: the papers the far end asks.

@@ -120,6 +120,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Seats, baggage, extras | Part | Cabin class and bags at the carriers' fees; seats are missing. |
 | Pack items | Part | A week's clothes and the toiletries packed on leaving home, the cleanest first; not chosen by hand. |
 | Home and vehicle responsibilities | Part | Rent and bills run while away; a car stays where it is. |
+| Travel insurance | Works | Bought with the trip at the home market's price; a trip lost to illness or injury paid back, care away the insurer's (`travel.insure`). |
 | Departure, terminal, connections | Works | Check-in, the flights, delays and cancellations at BTS's rates, compensation where due. |
 | Entry procedures | Works | The border, refused without the papers. |
 | Belongings and local transport | Part | A taxi into town; belongings stay at home. |

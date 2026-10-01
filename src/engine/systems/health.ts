@@ -60,6 +60,7 @@ import { eiWeek } from './eiself';
 import { laidUp } from './injury';
 import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
 import { US_PHARMACIES, edMinutes } from '../content/carevisits';
+import { careAway } from './travelinsurance';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -883,7 +884,13 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   if (event.flu) h.fluUntil = at + CARE.fluDays * MS_DAY;
   // A flu that isn't seen costs nothing.
   if (event.flu && event.care === 'visit') return undefined;
-  const amount = shareOf(person, event.care, at, cur);
+  let amount = shareOf(person, event.care, at, cur);
+  // Had in another country: travel insurance's, or a visitor's price in America (`systems/travelinsurance.ts`, from 2026-10-01).
+  if (MEDICAL.includes(event.care)) {
+    const care = event.care as 'visit' | 'urgent' | 'emergency' | 'stay';
+    const usUninsured = Math.round(usd(grown(CARE.price[care], care as 'visit', at), cur) * CARE.uninsuredMarkup);
+    amount = careAway(sim, person, care, amount, usUninsured, CARE.stayDays, canadianShareOf(person, care, at) !== undefined, at);
+  }
   const year = zonedParts(at, HOME).year;
   if (event.care === 'glasses') h.lastGlasses = year;
   if (planOf(person, at) && (MEDICAL.includes(event.care) || event.care.startsWith('rx'))) h.spent[year] = (h.spent[year] ?? 0) + amount;

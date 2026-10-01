@@ -112,6 +112,7 @@ import { registerMarriage } from './systems/marriage';
 import { registerChildren } from './systems/children';
 import { registerDating } from './systems/dating';
 import { registerTailoring } from './systems/tailoring';
+import { registerTravelInsurance } from './systems/travelinsurance';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
@@ -179,6 +180,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerMattress(sim);
   registerFurniture(sim);
   registerRentals(sim, { journeysOf: journeysFor, partnerOf: partnerFor });
+  registerTravelInsurance(sim);
   registerAviation(sim);
   registerOwnedAircraft(sim);
   registerBoats(sim);
