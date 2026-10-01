@@ -35,22 +35,22 @@
 
 export interface FoodHelp {
   /** Meals at a soup kitchen or a comedor, by weekday (0 Sunday), each day it serves. */
-  kitchen?: { meals: number; days: readonly number[]; name: string; fee?: { amount: number; currency: string } };
+  kitchen?: { meals: number; days: readonly number[]; place: string; fee?: { amount: number; currency: string } };
   /** A pantry's or food bank's package: its meals, how often, and how many in a window. */
-  pantry?: { meals: number; everyDays: number; name: string; most?: { count: number; days: number } };
+  pantry?: { meals: number; everyDays: number; place: string; most?: { count: number; days: number } };
 }
 
 const WEEKDAYS = [1, 2, 3, 4, 5] as const;
 const EVERY_DAY = [0, 1, 2, 3, 4, 5, 6] as const;
 
 export const FOOD_HELP: Readonly<Record<string, FoodHelp>> = {
-  nyc: { kitchen: { meals: 1, days: WEEKDAYS, name: 'Holy Apostles Soup Kitchen' }, pantry: { meals: 9, everyDays: 14, name: 'a food pantry' } },
-  'us-ca-losangeles': { kitchen: { meals: 3, days: EVERY_DAY, name: 'the Midnight Mission' } },
-  'us-ct-newhaven': { kitchen: { meals: 1, days: EVERY_DAY, name: 'the Downtown Evening Soup Kitchen' } },
-  'uk-eng-london': { pantry: { meals: 9, everyDays: 0, name: 'a Trussell food bank', most: { count: 3, days: 182 } } },
-  'ie-lei-dublin': { kitchen: { meals: 2, days: [1, 2, 3, 4, 5, 6], name: 'the Capuchin Day Centre' } },
-  'ca-on-toronto': { pantry: { meals: 7.5, everyDays: 7, name: 'Daily Bread' } },
-  'mx-cmx-mexicocity': { kitchen: { meals: 1, days: WEEKDAYS, name: 'a comedor comunitario', fee: { amount: 11, currency: 'MXN' } } },
+  nyc: { kitchen: { meals: 1, days: WEEKDAYS, place: 'Holy Apostles Soup Kitchen' }, pantry: { meals: 9, everyDays: 14, place: 'a food pantry' } },
+  'us-ca-losangeles': { kitchen: { meals: 3, days: EVERY_DAY, place: 'the Midnight Mission' } },
+  'us-ct-newhaven': { kitchen: { meals: 1, days: EVERY_DAY, place: 'the Downtown Evening Soup Kitchen' } },
+  'uk-eng-london': { pantry: { meals: 9, everyDays: 0, place: 'a Trussell food bank', most: { count: 3, days: 182 } } },
+  'ie-lei-dublin': { kitchen: { meals: 2, days: [1, 2, 3, 4, 5, 6], place: 'the Capuchin Day Centre' } },
+  'ca-on-toronto': { pantry: { meals: 7.5, everyDays: 7, place: 'Daily Bread' } },
+  'mx-cmx-mexicocity': { kitchen: { meals: 1, days: WEEKDAYS, place: 'a comedor comunitario', fee: { amount: 11, currency: 'MXN' } } },
 };
 
 /** New York City's boroughs, which share its help. */

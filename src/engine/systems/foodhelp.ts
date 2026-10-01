@@ -36,7 +36,7 @@ export function mealsFromHelp(sim: Simulation, person: Person, at: Instant = sim
     if (k.fee) {
       const cents = Math.round(k.fee.amount * 100 * k.meals);
       const cur = saveCurrency(sim.universe);
-      spend(sim, person, cur === k.fee.currency ? cents : exchange(cents, k.fee.currency, cur) ?? cents, `A meal at ${k.name}`, 'food');
+      spend(sim, person, cur === k.fee.currency ? cents : exchange(cents, k.fee.currency, cur) ?? cents, `A meal at ${k.place}`, 'food');
     }
     meals += k.meals;
   }
