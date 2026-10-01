@@ -162,18 +162,22 @@ export const KM_A_YEAR: Readonly<Record<Jurisdiction, number>> = {
  * September 2026: the EIA's New York and California regular and its US
  * average for Connecticut (a gallon over 3.785 liters); DESNZ's UK petrol and
  * diesel; AA Ireland's; NRCan's Toronto and Vancouver; Mexico City's Magna,
- * read secondhand.
+ * read secondhand. Diesel in America is AAA's metro average of 1 October 2026,
+ * in Toronto and Vancouver Canadians for Affordable Energy's forecast for 1
+ * and 2 October, in Mexico City CRE's and Profeco's of 30 September
+ * (`research-errands.json`); until 2026-10-01 diesel there was charged at
+ * petrol's price, about a third under the pump's.
  */
 const GAL = 3.785411784;
 export const FUEL: Readonly<Record<Jurisdiction, { petrol: number; diesel: number; currency: string }>> = {
-  'US-NY': { petrol: Math.round(440.5 / GAL), diesel: Math.round(440.5 / GAL), currency: 'USD' },
-  'US-CT': { petrol: Math.round(446.5 / GAL), diesel: Math.round(446.5 / GAL), currency: 'USD' },
-  'US-CA': { petrol: Math.round(618.9 / GAL), diesel: Math.round(618.9 / GAL), currency: 'USD' },
+  'US-NY': { petrol: Math.round(440.5 / GAL), diesel: Math.round(673.8 / GAL), currency: 'USD' },
+  'US-CT': { petrol: Math.round(446.5 / GAL), diesel: Math.round(643.8 / GAL), currency: 'USD' },
+  'US-CA': { petrol: Math.round(618.9 / GAL), diesel: Math.round(836.6 / GAL), currency: 'USD' },
   GB: { petrol: 173, diesel: 198, currency: 'GBP' },
   IE: { petrol: 187, diesel: 194, currency: 'EUR' },
-  'CA-ON': { petrol: 184, diesel: 184, currency: 'CAD' },
-  'CA-BC': { petrol: 209, diesel: 209, currency: 'CAD' },
-  'MX-CMX': { petrol: 2_381, diesel: 2_381, currency: 'MXN' },
+  'CA-ON': { petrol: 184, diesel: 259, currency: 'CAD' },
+  'CA-BC': { petrol: 209, diesel: 285, currency: 'CAD' },
+  'MX-CMX': { petrol: 2_381, diesel: 2_698, currency: 'MXN' },
 };
 
 /**

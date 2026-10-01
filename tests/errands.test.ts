@@ -8,6 +8,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { instantFromZoned } from '@/engine/core/time';
 import { closedNow } from '@/engine/systems/errands';
+import { FUEL } from '@/engine/content/vehiclefees';
 import { groceryCatalog, groceryRefusal } from '@/engine/systems/kitchen';
 import { toiletryRefusal, toiletryCatalog } from '@/engine/systems/hygiene';
 
@@ -35,5 +36,13 @@ describe('a store', () => {
     expect(toiletryRefusal(sim.player, t.id, 1)).toBeUndefined();
     const g = groceryCatalog(sim, 'ca-on-toronto').find((e) => e.value.chain === 'gianttiger')!.value;
     expect(groceryRefusal(sim, sim.player, g.id, 1)).toMatch(/Giant Tiger has closed/);
+  });
+});
+
+describe('the pump', () => {
+  it('charges diesel at diesel’s price, not petrol’s: AAA’s New York metro $6.738 a gallon against $4.405', () => {
+    expect(FUEL['US-NY'].diesel).toBe(Math.round(673.8 / 3.785411784));
+    expect(FUEL['US-NY'].diesel).toBeGreaterThan(FUEL['US-NY'].petrol);
+    expect(FUEL['MX-CMX'].diesel).toBe(2_698);
   });
 });
