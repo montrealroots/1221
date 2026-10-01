@@ -25,7 +25,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Reservation on the calendar and the trip | Works | The journey and its hotel are one commitment on the calendar. |
 | Travel there | Works | The journey's legs, each at its local time. |
 | Check in | Part | Arrival puts them in the hotel; no check-in requirement is modeled. |
-| Luggage to the room | Missing | Bags are counted for fees; they aren't items yet. Packing waits on Stage 3's luggage. |
+| Luggage to the room | Part | The carry-on goes with them, packed with a week's clothes and the bathroom's things (`systems/luggage.ts`); it isn't put in a room, and checked bags aren't items. |
 | Facilities and services | Part | A hotel room has its bath, air conditioning and the building's gym (`HOTEL_FIXTURES`), and no kitchen. |
 | Modify or extend | Works | `travel.extend`. |
 | Charges and check-out | Part | Check-out is scheduled; there are no extra charges to review. |
@@ -43,7 +43,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Received at the right place | Works | Carried home, or delivered to the home they live in (`systems/orders.ts`). |
 | Storage or worn | Works | The wardrobe; Belongings moves it (`items.move`). |
 | An outfit | Works | `clothes.save_outfit`, from what's to hand. |
-| Packed, cleaned, altered | Part | Washed at home or the laundromat and dry-cleaned at real shops' prices; packing and alterations are missing (no body to fit, `docs/UNBITTEN.md`). |
+| Packed, cleaned, altered | Part | Packed for going away, washed at home or the laundromat and dry-cleaned at real shops' prices; alterations are missing (no body to fit, `docs/UNBITTEN.md`). |
 | Return, repair, resell | Part | Returns inside the window, unworn (`clothes.return`); repair and resale are missing. |
 | Unavailable sizes, delays, returns, location | Works | Each is refused or said in words; tests in `tests/clothing.test.ts`. |
 
@@ -118,14 +118,14 @@ corrected in the same commit, as the backlog's progress table is.
 | Documents and permissions | Works | Passports, visas for the pairs that need one, ETAs and permission to work (`systems/permission.ts`). |
 | Transport and accommodation | Works | Flights, trains, coaches or a car, and a hotel. |
 | Seats, baggage, extras | Part | Cabin class and bags at the carriers' fees; seats are missing. |
-| Pack items | Missing | Luggage isn't items yet. |
+| Pack items | Part | A week's clothes and the toiletries packed on leaving home, the cleanest first; not chosen by hand. |
 | Home and vehicle responsibilities | Part | Rent and bills run while away; a car stays where it is. |
 | Departure, terminal, connections | Works | Check-in, the flights, delays and cancellations at BTS's rates, compensation where due. |
 | Entry procedures | Works | The border, refused without the papers. |
 | Belongings and local transport | Part | A taxi into town; belongings stay at home. |
 | Check in | Part | As in 34. |
 | Live at the destination | Works | Days there, jet lag, work there. |
-| Return and unpack | Part | The way home is booked the same way; nothing to unpack yet. |
+| Return and unpack | Works | The way home is booked the same way, and the suitcase unpacked at home. |
 
 ## 41. Doctor Visit And Follow-Up
 

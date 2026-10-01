@@ -46,6 +46,7 @@ import { claimDelay } from './compensation';
 import { stolenNow } from './theft';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
+import { moveTo } from './luggage';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'ferry' | 'drive' | 'arrival';
@@ -650,7 +651,7 @@ export function registerJourneys(sim: Simulation): void {
     // One's own plane: there now, its hours on the engine (`systems/aviation.ts`).
     const flown = j.legs.find((l) => l.mode === 'fly' && l.routeId === 'own');
     if (flown) ownFlown(person, j.fromCity, j.toCity, (flown.arriveAt - flown.departAt) / 3_600_000);
-    person.currentLocationId = j.toCity;
+    moveTo(person, j.toCity);
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;
     else if (j.onArrival) person.stay = j.onArrival;

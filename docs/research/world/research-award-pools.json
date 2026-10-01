@@ -1,0 +1,592 @@
+{
+  "meta": {
+    "title": "Award eligible-field sizes, campaign costs, and documented effects of nominations and wins",
+    "compiled": "2026-10-01",
+    "companionTo": "docs/research/world/research-career-depth.json (awards section: bodies, categories, calendars, nominee counts)",
+    "method": "WebSearch and WebFetch. PDFs that the fetch tool could not read (Television Academy fee schedule, Sylvestre et al. 2006, Rossman and Schilke 2014, NATAS Daytime call for entries) were text-extracted locally from the downloaded file and read directly.",
+    "rules": "No invented numbers. Where a figure was not found, value is null with a note. 'confirmed' is true when the figure was read from the primary source or from a named trade report of it; false when it came only from a search-engine summary, a secondary aggregator, or a count made by the fetch tool.",
+    "corrections": [
+      "The brief cites 'Redelmeier & Singh 1999'. The paper is Redelmeier DA, Singh SM. Survival in Academy Award-winning actors and actresses. Annals of Internal Medicine 2001;134(10):955-962. Sylvestre et al. 2006 opens with 'In an article published in Annals of Internal Medicine in 2001, Redelmeier and Singh reported...'.",
+      "The brief's example of 323 eligible films is the 97th Academy Awards (2025 ceremony). The 98th (2026 ceremony) list was 317."
+    ]
+  },
+
+  "pools": {
+    "academyAwards": {
+      "note": "The Academy publishes one Reminder List covering all general-entry categories, including the four acting categories. The Reminder List carries up to 10 actresses and 10 actors per film (see research-career-depth.json), so the performer pool is bounded by films x 20 but the Academy does not publish a performer count.",
+      "entries": [
+        {
+          "edition": "98th Academy Awards (ceremony 2026, films of 2025)",
+          "measure": "feature films on the Reminder List (general entry, includes all acting categories)",
+          "value": 317,
+          "year": 2026,
+          "source": "https://press.oscars.org/news/317-feature-films-contention-98th-academy-awardsr",
+          "confirmed": true
+        },
+        {
+          "edition": "98th Academy Awards",
+          "measure": "feature films eligible for Best Picture (subset)",
+          "value": 201,
+          "year": 2026,
+          "source": "https://variety.com/2026/film/awards/oscars-best-picture-201-eligible-films-2026-1236626440/",
+          "confirmed": true
+        },
+        {
+          "edition": "97th Academy Awards (ceremony 2025)",
+          "measure": "feature films on the Reminder List",
+          "value": 323,
+          "year": 2025,
+          "source": "https://variety.com/2025/awards/awards/oscars-2025-eligible-films-list-1236267373/",
+          "confirmed": true
+        },
+        {
+          "edition": "97th Academy Awards",
+          "measure": "feature films eligible for Best Picture",
+          "value": 207,
+          "year": 2025,
+          "source": "https://awardswatch.com/2025-oscars-323-films-eligible-for-97th-academy-awards-but-only-207-for-best-picture/",
+          "confirmed": true
+        }
+      ],
+      "context": {
+        "fact": "Above-the-line Oscar nominations characterize only about 10 percent of eligible films.",
+        "source": "Rossman G, Schilke O. Close, But No Cigar: The Bimodal Rewards to Prize-Seeking. American Sociological Review 2014;79(1):86-108, footnote. https://www.oliverschilke.com/fileadmin/pdf/Rossman_Schilke._Close_But_No_Cigar-_The_Bimodal_Rewards_to_Prize-Seeking.pdf",
+        "confirmed": true
+      }
+    },
+
+    "goldenGlobes": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. Golden Globes publishes eligibility rules (submissions open 1 Aug 2025, motion-picture deadline 31 Oct 2025 for the 83rd) but no count of submitted films, series or performances was found in its press material or trade coverage.",
+      "sources": [
+        "https://goldenglobes.com/wp-content/uploads/2025/06/83rd-Golden-Globes-Eligibility-and-Consideration-Rules-Updated-18Jun2025-1.pdf"
+      ],
+      "confirmed": false
+    },
+
+    "actorAwards": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. The Actor Awards (formerly SAG Awards) do not publish a count of submitted films or performances. The nominating committees are two panels of 2,500 randomly selected SAG-AFTRA members each (film and television), drawn annually in the spring.",
+      "sources": [
+        "https://www.backstage.com/magazine/article/sag-actor-awards-explained-79829/"
+      ],
+      "confirmed": false
+    },
+
+    "baftaFilm": {
+      "note": "BAFTA publishes, with each longlist, how many films or performances were submitted per category. Acting chapter votes its top 10 per performance category; the first five go to the longlist and a jury picks five more from those ranked 6-15.",
+      "entries": [
+        { "edition": "2026 EE BAFTA Film Awards", "category": "Leading Actor", "measure": "performances submitted", "value": 108, "longlisted": 10, "year": 2026, "source": "https://www.bafta.org/stories/longlists-2026-ee-bafta-film-awards/", "confirmed": false, "confirmedNote": "BAFTA page returned 403 to fetch; figure taken from the search engine's quotation of that page." },
+        { "edition": "2026 EE BAFTA Film Awards", "category": "Leading Actress", "measure": "performances submitted", "value": 84, "longlisted": 10, "year": 2026, "source": "https://www.bafta.org/stories/longlists-2026-ee-bafta-film-awards/", "confirmed": false, "confirmedNote": "As above; 84 appeared consistently in two separate searches." },
+        { "edition": "2026 EE BAFTA Film Awards", "category": "Supporting Actor", "measure": "performances submitted", "value": 301, "longlisted": 10, "year": 2026, "source": "https://www.bafta.org/stories/longlists-2026-ee-bafta-film-awards/", "confirmed": false, "confirmedNote": "As above." },
+        { "edition": "2026 EE BAFTA Film Awards", "category": "Supporting Actress", "measure": "performances submitted", "value": 208, "longlisted": 10, "year": 2026, "source": "https://www.bafta.org/stories/longlists-2026-ee-bafta-film-awards/", "confirmed": false, "confirmedNote": "As above." },
+        { "edition": "2026 EE BAFTA Film Awards", "category": "Best Film", "measure": "films submitted", "value": 109, "longlisted": 10, "year": 2026, "source": "https://www.bafta.org/stories/longlists-2026-ee-bafta-film-awards/", "confirmed": false },
+        { "edition": "2026 EE BAFTA Film Awards", "category": "Outstanding British Film", "measure": "films submitted", "value": 70, "longlisted": 15, "year": 2026, "source": "https://www.bafta.org/stories/longlists-2026-ee-bafta-film-awards/", "confirmed": false },
+        { "edition": "2026 EE BAFTA Film Awards", "category": "Casting", "measure": "films submitted", "value": 121, "longlisted": 10, "year": 2026, "source": "https://www.bafta.org/stories/longlists-2026-ee-bafta-film-awards/", "confirmed": false }
+      ]
+    },
+
+    "baftaTelevision": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. BAFTA does not publish entry counts for the TV Awards performance categories. Known: 2026 TV Awards had 124 programmes nominated across 49 categories (TV and TV Craft combined); performance categories carry six nominees each.",
+      "sources": [
+        "https://www.bafta.org/media-centre/press-releases/nominations-tv-craft-and-tv-2026/"
+      ],
+      "confirmed": false
+    },
+
+    "primetimeEmmys": {
+      "note": "Television Academy ballots list every submission; Gold Derby and AwardsWatch tally them. Slot formula since 2020: 20-80 submissions = 5 nominees, 81-160 = 6, 161-240 = 7, 241+ = 8; paired actor/actress categories in the same genre take the higher slot count. Series categories (Drama, Comedy) are fixed at 8.",
+      "slotRuleSource": "https://www.yahoo.com/entertainment/tv/articles/2026-emmy-nominations-voting-number-162341359.html",
+      "edition2026": {
+        "edition": "78th Primetime Emmys (eligibility 1 Jun 2025 - 31 May 2026)",
+        "year": 2026,
+        "source": "https://www.yahoo.com/entertainment/tv/articles/2026-emmy-nominations-voting-number-162341359.html",
+        "sourceOrigin": "Gold Derby syndicated (https://www.goldderby.com/tv/2026/2026-emmy-nominations-voting-slots-categories/)",
+        "confirmed": true,
+        "categories": [
+          { "category": "Lead Actor, Comedy Series", "submissions": 43, "slots": 5 },
+          { "category": "Lead Actress, Comedy Series", "submissions": 46, "slots": 5 },
+          { "category": "Supporting Actor, Comedy Series", "submissions": 185, "slots": 7 },
+          { "category": "Supporting Actress, Comedy Series", "submissions": 149, "slots": 7 },
+          { "category": "Guest Actor, Comedy Series", "submissions": 84, "slots": 6 },
+          { "category": "Guest Actress, Comedy Series", "submissions": 82, "slots": 6 },
+          { "category": "Lead Actor, Drama Series", "submissions": 78, "slots": 5 },
+          { "category": "Lead Actress, Drama Series", "submissions": 63, "slots": 5 },
+          { "category": "Supporting Actor, Drama Series", "submissions": 228, "slots": 7 },
+          { "category": "Supporting Actress, Drama Series", "submissions": 222, "slots": 7 },
+          { "category": "Guest Actor, Drama Series", "submissions": 84, "slots": 6 },
+          { "category": "Guest Actress, Drama Series", "submissions": 51, "slots": 6 },
+          { "category": "Lead Actor, Limited or Anthology Series or Movie", "submissions": 52, "slots": 5 },
+          { "category": "Lead Actress, Limited or Anthology Series or Movie", "submissions": 41, "slots": 5 },
+          { "category": "Supporting Actor, Limited or Anthology Series or Movie", "submissions": 84, "slots": 6 },
+          { "category": "Supporting Actress, Limited or Anthology Series or Movie", "submissions": 66, "slots": 6 }
+        ],
+        "programSubmissionsTotal": { "value": 555, "note": "across 14 program categories, down from 600 in 2025", "source": "https://www.goldderby.com/tv/2026/2026-emmy-nominations-voting-slots-categories/", "confirmed": false, "confirmedNote": "from search summary of the Gold Derby article" }
+      },
+      "edition2025": {
+        "edition": "77th Primetime Emmys",
+        "year": 2025,
+        "source": "https://awardswatch.com/2025-emmys-as-voting-opens-heres-how-many-nomination-slots-well-have-in-top-categories/",
+        "confirmed": true,
+        "categories": [
+          { "category": "Lead Actor, Comedy Series", "submissions": 51, "slots": 5 },
+          { "category": "Lead Actress, Comedy Series", "submissions": 47, "slots": 5 },
+          { "category": "Supporting Actor, Comedy Series", "submissions": 163, "slots": 7 },
+          { "category": "Supporting Actress, Comedy Series", "submissions": 141, "slots": 7 },
+          { "category": "Guest Actor, Comedy Series", "submissions": 97, "slots": 6 },
+          { "category": "Guest Actress, Comedy Series", "submissions": 74, "slots": 6 },
+          { "category": "Lead Actor, Drama Series", "submissions": 77, "slots": 5 },
+          { "category": "Lead Actress, Drama Series", "submissions": 75, "slots": 5 },
+          { "category": "Supporting Actor, Drama Series", "submissions": 233, "slots": 7 },
+          { "category": "Supporting Actress, Drama Series", "submissions": 225, "slots": 7, "discrepancy": "TheWrap counted 227 names on the ballot" },
+          { "category": "Guest Actor, Drama Series", "submissions": 87, "slots": 6 },
+          { "category": "Guest Actress, Drama Series", "submissions": 67, "slots": 6 },
+          { "category": "Lead Actor, Limited or Anthology Series or Movie", "submissions": 48, "slots": 5 },
+          { "category": "Lead Actress, Limited or Anthology Series or Movie", "submissions": 53, "slots": 5 },
+          { "category": "Supporting Actor, Limited or Anthology Series or Movie", "submissions": 124, "slots": 6 },
+          { "category": "Supporting Actress, Limited or Anthology Series or Movie", "submissions": 105, "slots": 6 }
+        ],
+        "programSubmissionsTotal": { "value": 600, "source": "https://variety.com/2025/tv/awards/emmys-2025-voting-opens-submissions-1236428346/", "confirmed": true }
+      }
+    },
+
+    "daytimeEmmys": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. NATAS does not publish per-category submission counts for the Daytime acting categories. Its rule, which shapes the pool: in categories with 4 to 10 submissions the default number of nominations is 50% of submissions, rounded up (53rd Daytime Emmys call for entries). Enforcement of this rule in 2025 left some programmes without nominations. 53rd edition eligibility window 1 Jan - 31 Dec 2025; entry deadline 9 Apr 2026; late deadline 23 Apr 2026 (extra fee per entry); judging 20 May - 10 Jun 2026; ceremony 30 Oct 2026.",
+      "sources": [
+        "https://theemmys.tv/wp-content/uploads/2026/04/Daytime-Call-for-Entries_v2026_full_v2.pdf",
+        "https://www.soapoperanetwork.com/2025/07/daytime-emmys-ceremony-date-rule-enforcement-new-categories"
+      ],
+      "confirmed": false
+    },
+
+    "tonyAwards": {
+      "note": "Tony eligibility is per production; there are no per-performer submissions. Eligible productions are the pool for all acting categories (lead/featured, play/musical).",
+      "entries": [
+        {
+          "edition": "79th Tony Awards (2025-26 season, eligibility 28 Apr 2025 - 26 Apr 2026)",
+          "measure": "eligible Broadway productions",
+          "value": 30,
+          "year": 2026,
+          "detail": "34 shows opened; the Beetlejuice tour and Rob Lake Magic With Special Guests The Muppets were ineligible; Jeff Ross: Take a Banana for the Ride and All Out: Comedy About Ambition withdrew. 24 of the 30 received nominations.",
+          "source": "https://www.newyorktheatreguide.com/theatre-news/news/the-2026-tony-awards-by-the-numbers",
+          "confirmed": true
+        },
+        {
+          "edition": "78th Tony Awards (2024-25 season, cut-off 27 Apr 2025)",
+          "measure": "eligible Broadway productions",
+          "value": 42,
+          "year": 2025,
+          "source": "https://en.wikipedia.org/wiki/78th_Tony_Awards",
+          "confirmed": false,
+          "confirmedNote": "from search summary; not read from the Tony Awards' own release"
+        }
+      ],
+      "playVsMusicalSplit": null,
+      "playVsMusicalNote": "Not found as a published count; would need to be tallied from the season list."
+    },
+
+    "olivierAwards": {
+      "entries": [
+        {
+          "edition": "Olivier Awards 2026 (productions opening 15 Feb 2025 - 17 Feb 2026 in a SOLT-member theatre)",
+          "measure": "eligible productions by panel",
+          "theatre": 143,
+          "affiliate": 65,
+          "family": 12,
+          "dance": 73,
+          "opera": 12,
+          "total": 305,
+          "year": 2026,
+          "actingRelevant": "Acting categories are judged from the Theatre panel's 143 productions (plays and musicals); 14 affiliate venues paid to be eligible in the main categories.",
+          "source": "https://officiallondontheatre.com/news/eligible-productions-for-the-olivier-awards-2026-with-cunard/",
+          "affiliateSource": "https://www.whatsonstage.com/news/olivier-awards-confirms-eligibility-for-2025-and-2026-productions_1710652/",
+          "confirmed": false,
+          "confirmedNote": "Counts were tallied by the fetch tool from the list on the official page, not stated as totals by SOLT. Recount before relying on exact figures."
+        }
+      ]
+    },
+
+    "independentSpiritAwards": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. Film Independent publishes the nominees' budget range (2025 edition: $112,000 to $28 million, from over 17 countries) but no count of feature submissions.",
+      "sources": [
+        "https://www.filmindependent.org/press-releases/film-independent-announces-nominees-for-the-40th-anniversary-2025-spirit-awards/"
+      ],
+      "confirmed": false
+    },
+
+    "gothamAwards": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. The Gotham publishes only the nominee totals: the 35th Gotham Film Awards (2025) nominated 40 feature films and 25 performances across ten categories. That is the shortlist, not the eligible field.",
+      "sources": [
+        "https://thegotham.org/press/nominations-announced-for-35th-annual-gotham-film-awards/"
+      ],
+      "confirmed": false
+    },
+
+    "ifta": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. The 2026 IFTA nominations release (29 categories, ceremony 20 Feb 2026) gives no entry count.",
+      "sources": [
+        "https://ifta.ie/news/nominations-26.php"
+      ],
+      "confirmed": false
+    },
+
+    "canadianScreenAwards": {
+      "entries": [],
+      "value": null,
+      "note": "Not found. The Academy of Canadian Cinema & Television announced 146 categories for 2026 but published no submission count.",
+      "sources": [
+        "https://www.academy.ca/2026/nominees-announced-for-the-2026-canadian-screen-awards/"
+      ],
+      "confirmed": false
+    },
+
+    "premiosAriel": {
+      "entries": [
+        {
+          "edition": "Ariel 68 (2026; registration 9-27 Feb 2026; ceremony 3 Oct 2026)",
+          "measure": "productions registered",
+          "featuresTotal": 84,
+          "featuresMexican": 74,
+          "featuresMexicanBreakdown": { "fiction": 43, "documentary": 29, "animation": 2 },
+          "iberoamericanFeatures": 10,
+          "shorts": 67,
+          "shortsBreakdown": { "fiction": 38, "documentary": 20, "animation": 9 },
+          "total": 151,
+          "actingRelevant": "The 43 Mexican fiction features are the pool for the acting categories.",
+          "year": 2026,
+          "source": "https://oaxaca.quadratin.com.mx/inscriben-151-peliculas-y-cortos-al-ariel-68/",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+
+  "campaigns": {
+    "whatACampaignIs": {
+      "description": "A 'For Your Consideration' campaign is paid by the distributor or studio: trade and outdoor advertising, screenings and Q&As, events, publicists, and screeners. Screeners to Academy members may only be delivered digitally via the Academy Screening Room or a private link through an Academy-approved mailing house; digital screeners must be closed-captioned and may not carry extra material such as interviews or behind-the-scenes footage.",
+      "source": "https://www.oscars.org/sites/oscars/files/2025-08/98th_aa_campaign_regulations_FINAL%20V2.pdf",
+      "confirmed": false,
+      "confirmedNote": "Rules quoted from search summary of the Academy's 98th campaign regulations PDF; not read line by line."
+    },
+    "studioSpend": [
+      {
+        "film": "Anora (Neon), Best Picture 2025",
+        "value": 18000000,
+        "currency": "USD",
+        "covers": "marketing, distribution and awards campaign combined (Neon CEO Tom Quinn); the film's production budget was $6 million",
+        "comparison": "Neon spent $20 million on Parasite",
+        "source": "https://www.nme.com/news/film/heres-how-much-it-cost-anora-to-win-the-oscars-3844114",
+        "secondarySource": "https://x.com/Variety/status/1897310767671861721",
+        "confirmed": true
+      },
+      {
+        "measure": "typical prestige-film FYC budget range",
+        "low": 10000000,
+        "high": 30000000,
+        "currency": "USD",
+        "source": "https://elliotgrove.substack.com/p/the-real-cost-of-an-oscars-campaign",
+        "confirmed": false,
+        "confirmedNote": "Industry estimate from a commentary blog, not audited data. Other outlets give $3-15 million for independents and $5-25 million for winners; treat as estimates."
+      },
+      {
+        "measure": "Best Picture national TV ad spend, 2024 nominees",
+        "value": null,
+        "note": "Variety reported Oppenheimer spent the most on national TV ads among 2024 Best Picture nominees and three nominees spent $0; the article was not readable (paywall redirect), so no dollar figure is recorded.",
+        "source": "https://variety.com/2024/film/news/oscars-oppenheimer-national-tv-ad-spending-1235934099",
+        "confirmed": false
+      }
+    ],
+    "screenerCosts": [
+      {
+        "item": "Academy Screening Room inclusion fee",
+        "value": 20000,
+        "currency": "USD",
+        "note": "Films with budgets under $10 million may apply for an alternate rate.",
+        "source": "https://deadline.com/2023/10/oscars-campaign-fees-rising-1235585681/",
+        "confirmed": false,
+        "confirmedNote": "from search summary; Deadline article not readable"
+      },
+      {
+        "item": "physical DVD mailing to all opted-in Academy members",
+        "low": 30000,
+        "high": 40000,
+        "currency": "USD",
+        "source": "https://filmmakermagazine.com/120208-how-to-run-a-diy-oscar-campaign/",
+        "confirmed": false,
+        "confirmedNote": "from search summary"
+      }
+    ],
+    "doPerformersPay": {
+      "rule": "Ordinarily no: the distributor funds the campaign. A performer whose distributor declines can fund their own, within the Academy's campaign regulations.",
+      "examples": [
+        {
+          "performer": "Ann Dowd",
+          "film": "Compliance (2012)",
+          "amount": 13000,
+          "currency": "USD",
+          "what": "Pressed and mailed DVD screeners to Academy members after Magnolia Pictures declined to fund a campaign; money from her own account and friends. She had been paid $100 a day for 16 days. Not nominated; won National Board of Review Best Supporting Actress.",
+          "source": "https://www.npr.org/2013/01/12/169064986/ann-dowds-one-woman-oscar-nomination-campaign",
+          "confirmed": true
+        },
+        {
+          "performer": "Melissa Leo",
+          "film": "The Fighter (2010)",
+          "amount": null,
+          "what": "Paid personally for trade ads; won Best Supporting Actress.",
+          "source": "https://deadline.com/2011/02/oscar-melissa-leo-goes-rogue-with-her-own-personal-campaign-ads-103757/",
+          "confirmed": true
+        },
+        {
+          "performer": "Candy Clark",
+          "film": "American Graffiti (1973)",
+          "amount": 1700,
+          "currency": "USD",
+          "what": "Quarter-page ads in The Hollywood Reporter and Variety; nominated for Best Supporting Actress (the only cast member nominated).",
+          "source": "https://www.digitaltrends.com/movies/academy-awards-oscar-campaigning-history/",
+          "confirmed": false,
+          "confirmedNote": "from search summary"
+        },
+        {
+          "performer": "Sally Kirkland",
+          "film": "Anna (1987)",
+          "amount": null,
+          "what": "Self-funded FYC ads and critics' screenings; nominated for Best Actress.",
+          "source": "https://laist.com/news/arts-and-entertainment/the-campaign-complex-behind-the-oscars",
+          "confirmed": false
+        }
+      ]
+    },
+    "entryFees": {
+      "primetimeEmmys": {
+        "year": 2026,
+        "individualAchievement": "Processing charge $125 per submission plus $100 entry fee per individual listed on the entry (one-entrant performer entry = $225).",
+        "program": "Processing charge $225 per submission plus $100 per entrant.",
+        "memberDiscount": "Television Academy National Active and Associate members: for up to two entries where they are the sole entrant, the $125 processing fee and $100 entry fee are waived. Further entries pay in full.",
+        "nonMember": "Pays their portion of the processing fee plus $100. A non-member who joins before 7 April (applied and paid) has both waived if their member number is added by 7 May and before payment.",
+        "deadline": "Paid online by credit card by 31 May 2026; not refunded for incorrect submissions.",
+        "natasNote": "National Academy of Television Arts & Sciences (Daytime) memberships are not valid as entry-fee waivers.",
+        "source": "https://www.televisionacademy.com/files/assets/Downloads/2026-entry-fees-v1.pdf",
+        "confirmed": true
+      },
+      "daytimeEmmys": {
+        "value": null,
+        "note": "Fee amounts were not recoverable from the 53rd Daytime call for entries (fee table not in extractable text). It confirms a late-entry deadline of 23 Apr 2026 with an extra fee per entry. A search summary claimed a $500 late fee; unverified.",
+        "source": "https://theemmys.tv/wp-content/uploads/2026/04/Daytime-Call-for-Entries_v2026_full_v2.pdf",
+        "confirmed": false
+      }
+    },
+    "membershipDues": {
+      "ampas": {
+        "votingMember": 450,
+        "associate": 350,
+        "emeritus": 0,
+        "currency": "USD",
+        "period": "annual",
+        "since": "Raised from $350 to $450 for voting members from fall 2018; first rise since 2015.",
+        "currentness": "No later change found; not confirmed against a 2026 Academy document.",
+        "source": "https://deadline.com/2018/10/film-academy-raises-dues-for-voting-members-800000-in-added-revenue-1202485504/",
+        "confirmed": false,
+        "confirmedNote": "from search summaries of Deadline and The Hollywood Reporter; articles not readable"
+      },
+      "televisionAcademy": {
+        "activeMember": 225,
+        "currency": "USD",
+        "period": "annual",
+        "source": "https://www.televisionacademy.com/faq",
+        "confirmed": false,
+        "confirmedNote": "from search summary of the Television Academy FAQ"
+      },
+      "bafta": {
+        "fullVotingMembership": 630,
+        "regionalCymruScotlandOrOverseas": 420,
+        "joiningFeeNewFullMembers": 150,
+        "currency": "GBP",
+        "includesVAT": true,
+        "membershipYear": "2026-27",
+        "regionalDefinition": "living and working more than 60 miles from 195 Piccadilly, London; overseas = primarily based outside the UK and USA",
+        "source": "https://www.bafta.org/membership/full-voting-membership/",
+        "confirmed": false,
+        "confirmedNote": "BAFTA page returned 403 to fetch; figures from the search engine's quotation of it."
+      }
+    }
+  },
+
+  "effects": {
+    "boxOffice": [
+      {
+        "study": "Deuchert E, Adjamah K, Pauly F. For Oscar Glory Or Oscar Money? Journal of Cultural Economics 2005;29:159-176.",
+        "data": "US releases 1990-2000, weekly box office",
+        "findings": [
+          "A Best Picture or Best Actor nomination raises weekly box office in the following weeks by more than 200%.",
+          "A Best Actress nomination raises it by about 150%.",
+          "The effect comes mainly from the nomination; winning adds little, except Best Actress, where winning produces substantially larger revenue than a nomination alone.",
+          "The prospect of a nomination gives studios an incentive to release late in the year."
+        ],
+        "source": "https://link.springer.com/article/10.1007/s10824-005-3338-6",
+        "secondarySource": "https://daily.jstor.org/when-it-comes-to-the-oscars-nomination-as-good-as-win",
+        "confirmed": true
+      },
+      {
+        "study": "Nelson RA, Donihue MR, Waldman DM, Wheaton C. What's an Oscar Worth? Economic Inquiry 2001;39(1):1-16.",
+        "findings": [
+          "A nomination in a major category can add up to $4.8 million to a film's box office; a win up to $12 million."
+        ],
+        "source": "https://www.researchgate.net/publication/274409185_What's_an_Oscar_worth",
+        "confirmed": false,
+        "confirmedNote": "figures from search summary; paper not read"
+      },
+      {
+        "study": "Rossman G, Schilke O. Close, But No Cigar: The Bimodal Rewards to Prize-Seeking. American Sociological Review 2014;79(1):86-108.",
+        "findings": [
+          "Oscar nominations have a strong positive relationship with financial returns.",
+          "Net of nominations, 'Oscar appeal' (films built to court the Academy) has an appreciable negative effect on returns: prize-seeking pays above normal for those who get nominated and below normal for those who don't.",
+          "Without the nomination term, the effect of Oscar appeal is near zero (t = .75), consistent with rent dissipation: the expected value of prize-seeking is zero.",
+          "Illustration: Brokeback Mountain and The Three Burials of Melquiades Estrada (both ~$15 million budgets, Dec 2005): eight nominations and $83 million domestic versus none and $9 million."
+        ],
+        "source": "https://www.oliverschilke.com/fileadmin/pdf/Rossman_Schilke._Close_But_No_Cigar-_The_Bimodal_Rewards_to_Prize-Seeking.pdf",
+        "confirmed": true
+      }
+    ],
+    "actorPayAndCasting": [
+      {
+        "study": "Sweeney K. Economics senior honors thesis, Colgate University, 2010 (reported by Colgate 2014 and Forbes 2013/2016).",
+        "findings": [
+          "Winning Best Actor increases a male winner's salary by 81%, holding other variables constant.",
+          "Average post-win salary increase close to $3.9 million for men and under $0.5 million for women.",
+          "For women the win had no statistically significant effect on salary in some specifications; actresses' salaries seemed to decrease.",
+          "Average age at winning about 43.1 for men and 31.1 for women in the sample."
+        ],
+        "caveat": "Undergraduate thesis, not peer-reviewed; dataset built from IMDb and Box Office Mojo.",
+        "source": "http://news.colgate.edu/2014/03/oscar-win-leads-to-payday-for-men-not-women-according-to-colgate-economics-research.html/",
+        "secondarySource": "https://www.forbes.com/sites/hayleycuccinello/2016/02/29/do-oscar-wins-boost-actors-and-actresses-earning-potential/",
+        "confirmed": false,
+        "confirmedNote": "Both pages returned 403 or were unreadable; figures from search summaries quoting them."
+      },
+      {
+        "claim": "Agents report an Oscar win typically raises the asking price for the next film by about 20%; other reporting cites 20-60%.",
+        "source": "https://www.forbes.com/sites/learnvest/2013/02/25/what-does-winning-an-oscar-do-for-actors-salaries/",
+        "confirmed": false,
+        "confirmedNote": "Anecdotal industry estimate from search summary."
+      },
+      {
+        "claim": "Reported per-film fee anecdotes: Tom Hanks about $700,000 before Philadelphia to $10 million after; Kate Winslet about $2 million to $2.5 million after The Reader. These are press reports, not a study, and are not adjusted for other career factors.",
+        "source": "https://www.forbes.com/sites/learnvest/2013/02/25/what-does-winning-an-oscar-do-for-actors-salaries/",
+        "confirmed": false,
+        "confirmedNote": "from search summary. A Halle Berry figure in the same summary (from $118,750 to $6.5 million, labeled a '98% boost') is arithmetically inconsistent and is left out."
+      },
+      {
+        "study": "Rossman G, Esparza N, Bonacich P. I'd Like to Thank the Academy, Team Spillovers, and Network Centrality. American Sociological Review 2010;75(1):31-51.",
+        "findings": [
+          "Top-10 credited roles in films released 1936-2005.",
+          "An actor's chance of an Oscar nomination rises with the quality of collaborators (director, writer, co-stars): talent spills over onto the team, and high-skilled workers attach to one another, a mechanism of cumulative advantage."
+        ],
+        "numbers": null,
+        "numbersNote": "Effect sizes not retrieved.",
+        "source": "https://www.researchgate.net/publication/249802920_I'd_Like_to_Thank_the_Academy_Team_Spillovers_and_Network_Centrality",
+        "confirmed": false
+      },
+      {
+        "study": "Rotman School of Management (University of Toronto) and Carnegie Mellon University, 2011 ('Oscar curse').",
+        "findings": [
+          "751 Best Actor and Best Actress nominees, 1936-2010.",
+          "Best Actress winners were 63% more likely to divorce than nominees who did not win.",
+          "Average marriage after the award: 4.3 years for winners, 9.5 years for non-winners.",
+          "No such effect for Best Actor winners."
+        ],
+        "source": "https://www.eurekalert.org/news-releases/582706",
+        "confirmed": true
+      }
+    ],
+    "lifespan": [
+      {
+        "study": "Redelmeier DA, Singh SM. Survival in Academy Award-winning actors and actresses. Annals of Internal Medicine 2001;134(10):955-962.",
+        "findings": [
+          "Life expectancy 3.9 years longer for Oscar winners than less recognised performers (controls).",
+          "28% reduction in death rates for winners (P = 0.003)."
+        ],
+        "flaw": "Winners were classified as winners from birth, crediting the years before the win ('immortal time') to the award.",
+        "source": "https://www.researchgate.net/publication/11984474_Survival_in_Academy_Award-Winning_Actors_and_Actresses",
+        "confirmed": true,
+        "confirmedNote": "Numbers verified as quoted in Sylvestre et al. 2006."
+      },
+      {
+        "study": "Sylvestre MP, Huszti E, Hanley JA. Do Oscar Winners Live Longer than Less Successful Peers? A Reanalysis of the Evidence. Annals of Internal Medicine 2006;145(5):361-363.",
+        "findings": [
+          "On updated data, the original method gave 3.7 years and a 26% reduction (P = 0.006).",
+          "Correcting for immortal time and adjusting for sex and year of birth, winners against controls: 15% mortality reduction (CI -5% to 32%, P = 0.129 time-dependent Cox; CI -6% to 32%, P = 0.161 performer-years), an average advantage of 0.7 year (CI -0.3 to 1.6).",
+          "Winners against nominees: 18% reduction (CI -4% to 35%), an average advantage of 1.0 year (CI -0.2 to 2.0), not significant.",
+          "Ignoring immortal time produces an artificial longevity advantage of 0.8 year (winners against nominees) and 1.7 years (winners against controls).",
+          "20.7% of actresses won the year of their first nomination."
+        ],
+        "conclusion": "Once corrected, the data do not show that winning an Oscar lengthens life.",
+        "source": "https://jhanley.biostat.mcgill.ca/Reprints/Sylvestre_et_al_OSCARS.pdf",
+        "confirmed": true
+      },
+      {
+        "study": "Han X et al. (authors beyond first not verified). The effect of winning an Oscar Award on survival: correcting for healthy performer survivor bias with a rank preserving structural accelerated failure time model. Annals of Applied Statistics 2011;5(2A).",
+        "findings": [
+          "Further correction for healthy-performer survivor bias. Effect sizes not retrieved."
+        ],
+        "numbers": null,
+        "source": "https://arxiv.org/pdf/1108.0822",
+        "confirmed": false
+      },
+      {
+        "study": "Redelmeier DA, Singh SM (as reported on the PLOS page). Long-term mortality of academy award winning actors and actresses. PLOS ONE 2022;17(4):e0266563.",
+        "findings": [
+          "Winners against controls: 5.1-year absolute increase in life expectancy (95% CI 3.0-7.2).",
+          "41% improvement in mortality hazard (95% CI 19%-68%, p < 0.001).",
+          "Mean age at death 77.1 (winners) against 73.6 (controls).",
+          "Advantage tied to winning, not to nomination alone; larger in recent eras, for those who won younger, and for multiple winners."
+        ],
+        "caveat": "Authors' own follow-up; whether it fully answers the immortal-time critique was not assessed here.",
+        "source": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0266563",
+        "confirmed": true
+      }
+    ],
+    "television": [
+      {
+        "study": "Luminate, 'The Emmy Effect' (2024 Emmys, streaming minutes viewed, week 37 to week 38/39)",
+        "findings": [
+          "Hacks (Outstanding Comedy Series): 5.4 million to 13.3 million minutes (+146%), then 19.7 million (+48%).",
+          "Baby Reindeer (Outstanding Limited or Anthology Series): 8.4 million to 48.8 million minutes (+481%), then +99%.",
+          "Shogun (Outstanding Drama Series): +345% week 37 to 38, then -12%.",
+          "The Bear season 2 (no win): +71% week 37 to 38 (spillover)."
+        ],
+        "source": "https://luminatedata.com/blog/the-emmy-effect/",
+        "confirmed": true
+      },
+      {
+        "study": "Parrot Analytics, effect of Emmy wins on demand for digital originals",
+        "findings": [
+          "Seven Seconds: demand up 560% the day after the Emmys (more than 11.5 million Demand Expressions)."
+        ],
+        "source": "https://www.parrotanalytics.com/insights/effect-of-emmy-wins-on-demand-for-digital-originals-and-streaming-services-share-price/",
+        "confirmed": false,
+        "confirmedNote": "from search summary"
+      },
+      {
+        "claim": "Industry reporting: an Emmy win is not a direct financial windfall by ad sales, renewal price or syndication value, but has helped rescue low-rated, acclaimed young shows (Cheers, All in the Family cited).",
+        "source": "https://www.nexttv.com/news/emmy-rewards-107141",
+        "confirmed": false,
+        "confirmedNote": "from search summary"
+      },
+      {
+        "performerPay": null,
+        "note": "No peer-reviewed study of an Emmy nomination's or win's effect on an individual actor's subsequent pay was found."
+      }
+    ]
+  }
+}

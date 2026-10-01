@@ -101,6 +101,7 @@ import { earningsOf, recordHome } from './earnings';
 import { weatherOn } from './weather';
 import { alarmFactor } from './alarm';
 import { bcSvtRate, foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
+import { moveTo } from './luggage';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -1382,7 +1383,7 @@ export function emptyHomeIn(person: Person, cityId: string): OwnedHome | undefin
 
 /** Moves them into a home they own, from anywhere: `moveInto`, and the day on its clock. */
 export function moveIntoOwned(sim: Simulation, person: Person, owned: OwnedHome): void {
-  person.currentLocationId = owned.cityId;
+  moveTo(person, owned.cityId);
   moveInto(sim, person, owned);
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(owned.cityId).timeZone);
 }

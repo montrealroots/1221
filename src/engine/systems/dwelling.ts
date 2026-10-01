@@ -49,6 +49,7 @@ import { securityFactor } from './homesecurity';
 import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterWardrobe } from './clothing';
 import { restock, starterSupplies } from './hygiene';
+import { starterLuggage } from './luggage';
 import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
@@ -332,6 +333,7 @@ export function livingDay(sim: Simulation, person: Person): void {
   // A life's own clothes, the first day they have a home to keep them in.
   starterWardrobe(sim, person);
   starterSupplies(sim, person);
+  starterLuggage(sim, person);
   const w = person.wellbeing;
   // Left to themselves, somebody with a free day keeps up: the washing when it's nearly all worn, a tidy-up when the
   // place is getting bad, not as well as a proper clean. A day of work doesn't leave the time, and it all waits.

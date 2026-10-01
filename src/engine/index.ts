@@ -41,6 +41,7 @@ import { registerKitchen } from './systems/kitchen';
 import { registerRoutines } from './systems/routines';
 import { registerHygiene, starterSupplies } from './systems/hygiene';
 import { registerFittings } from './systems/fittings';
+import { starterLuggage } from './systems/luggage';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
@@ -308,6 +309,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   starterWardrobe(sim, sim.player);
   // And the toiletries (`systems/hygiene.ts`).
   starterSupplies(sim, sim.player);
+  // And a suitcase to pack them in (`systems/luggage.ts`).
+  starterLuggage(sim, sim.player);
   return sim;
 }
 
@@ -323,6 +326,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) starterWardrobe(sim, sim.player);
   // A save from before 2026-10-01 kept no toiletries: its set is given (`systems/hygiene.ts`).
   if (universe.people[universe.playerId]) starterSupplies(sim, sim.player);
+  if (universe.people[universe.playerId]) starterLuggage(sim, sim.player);
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.

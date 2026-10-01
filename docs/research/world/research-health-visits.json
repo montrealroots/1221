@@ -1,0 +1,1155 @@
+{
+  "meta": {
+    "title": "SLATE research: health visits, providers, prices, waits, pharmacy and referrals",
+    "compiledOn": "2026-10-01",
+    "method": "WebSearch result summaries plus WebFetch where sites allowed it. Many publisher pages (citizensinformation.ie, beckershospitalreview.com, goodrx.com, vch.ca) returned HTTP 403 to WebFetch, so the figure was taken from the search engine's summary of that page; those carry verification 'search-summary'. Figures read from a fetched page carry verification 'fetched'. Nothing here is invented; where nothing was found the value is null with a note.",
+    "verificationLevels": {
+      "fetched": "Read directly from the cited page by WebFetch.",
+      "search-summary": "Taken from the search engine's summary of the cited page; the page itself was not opened. Treat as likely-correct, re-check before shipping as a hard figure.",
+      "estimate": "A published range or typical figure, not a fixed tariff. Must be shown as an estimate in-game."
+    },
+    "cities": {
+      "us-ny-newyork": "New York, NY, USA (USD)",
+      "us-ca-losangeles": "Los Angeles, CA, USA (USD)",
+      "us-ct-newhaven": "New Haven, CT, USA (USD)",
+      "uk-eng-london": "London, England, UK (GBP)",
+      "ie-lei-dublin": "Dublin, Ireland (EUR)",
+      "ca-on-toronto": "Toronto, ON, Canada (CAD)",
+      "ca-bc-vancouver": "Vancouver, BC, Canada (CAD)",
+      "mx-cmx-mexicocity": "Mexico City, Mexico (MXN)"
+    },
+    "providerKinds": ["primary-care", "urgent-care", "walk-in", "emergency-department", "pharmacy", "pharmacy-clinic", "public-clinic"],
+    "notableCorrections": [
+      "Vhi SwiftCare clinics were rebranded Vhi 360 Health Centres and have been restricted to Vhi members since September 2017 (Irish Examiner / Irish Times); the old EUR 125 walk-in price no longer applies to non-members.",
+      "LA County+USC Medical Center is now named Los Angeles General Medical Center (LA General); the main hospital address is 2051 Marengo St, the Department of Emergency Medicine is listed at 1200 N State St.",
+      "Two different CMS-derived state ED figures exist for different periods; both are recorded under waits with their periods."
+    ]
+  },
+
+  "providers": [
+    {
+      "id": "us-ny-onemedical-flatiron",
+      "name": "One Medical, Flatiron",
+      "cityId": "us-ny-newyork",
+      "kind": "primary-care",
+      "address": "35 E 21st St, 7th Floor, New York, NY 10010",
+      "neighborhood": "Flatiron District",
+      "hours": null,
+      "url": "https://www.onemedical.com/locations/nyc/35e21st/",
+      "notes": "Membership-based primary care (Amazon One Medical). Hours not captured.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ny-citymd-w57",
+      "name": "CityMD West 57th Urgent Care",
+      "cityId": "us-ny-newyork",
+      "kind": "urgent-care",
+      "address": null,
+      "neighborhood": "Midtown West (W 57th St), ZIP 10019",
+      "hours": null,
+      "url": "https://www.solvhealth.com/citymd-urgent-care-new-york-ny-zp8b40",
+      "notes": "Branch exists per Solv listing (New York, NY 10019); street number not captured.",
+      "confirmed": false,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ny-hh-bellevue-ed",
+      "name": "NYC Health + Hospitals/Bellevue Emergency Department",
+      "cityId": "us-ny-newyork",
+      "kind": "emergency-department",
+      "address": "462 First Avenue, New York, NY 10016",
+      "neighborhood": "Kips Bay, Manhattan",
+      "hours": "24/7",
+      "url": "https://www.nychealthandhospitals.org/locations/bellevue/",
+      "notes": "Public hospital; Level I adult trauma centre. Also the entry point for NYC Care (public-clinic programme for uninsured residents).",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ny-cvs-1440broadway",
+      "name": "CVS Pharmacy, 1440 Broadway",
+      "cityId": "us-ny-newyork",
+      "kind": "pharmacy",
+      "address": "1440 Broadway (Floors 1 & 2), New York, NY 10018",
+      "neighborhood": "Theater District / Midtown West",
+      "hours": "24 hours (per Yelp listing)",
+      "url": "https://www.yelp.com/biz/cvs-pharmacy-new-york-103",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "us-ca-onemedical-centurycity",
+      "name": "One Medical, Century City",
+      "cityId": "us-ca-losangeles",
+      "kind": "primary-care",
+      "address": "10250 Santa Monica Blvd, Suite 1280, Los Angeles, CA 90067",
+      "neighborhood": "Century City (Westfield Century City)",
+      "hours": null,
+      "url": "https://www.onemedical.com/locations/la/centurycity/",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ca-exer-downtown",
+      "name": "Exer Urgent Care, Downtown",
+      "cityId": "us-ca-losangeles",
+      "kind": "urgent-care",
+      "address": "269 S San Pedro St, Los Angeles, CA 90013",
+      "neighborhood": "Downtown LA",
+      "hours": null,
+      "url": "https://www.solvhealth.com/exer-urgent-care-los-angeles-ca-gbx2w3",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ca-lageneral-ed",
+      "name": "Los Angeles General Medical Center (LA General) Emergency",
+      "cityId": "us-ca-losangeles",
+      "kind": "emergency-department",
+      "address": "2051 Marengo St, Los Angeles, CA 90033 (Dept. of Emergency Medicine listed at 1200 N State St)",
+      "neighborhood": "Boyle Heights",
+      "hours": "24/7",
+      "url": "https://dhs.lacounty.gov/lageneral/",
+      "notes": "County-owned public teaching hospital (LA County Department of Health Services), formerly LAC+USC Medical Center.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ca-cedars-ed",
+      "name": "Cedars-Sinai Emergency Room",
+      "cityId": "us-ca-losangeles",
+      "kind": "emergency-department",
+      "address": "8700 Beverly Blvd, North Tower, Los Angeles, CA 90048",
+      "neighborhood": "Beverly Grove",
+      "hours": "24/7",
+      "url": "https://www.cedars-sinai.org/locations/emergency-department-148.html",
+      "notes": "Private non-profit; Level I trauma centre.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ca-walgreens-hollywood",
+      "name": "Walgreens, 6801 Hollywood Blvd",
+      "cityId": "us-ca-losangeles",
+      "kind": "pharmacy",
+      "address": "6801 Hollywood Blvd, Los Angeles, CA 90028",
+      "neighborhood": "Hollywood",
+      "hours": "Store daily 9am-12am; pharmacy Mon-Fri 9am-1:30pm and 2pm-8pm, Sat 9am-1:30pm and 2pm-6pm, Sun 11am-3pm",
+      "url": "https://www.walgreens.com/locator/walgreens-6801+hollywood+blvd-los+angeles-ca-90028/id=16540",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "us-ct-fhchc-grand",
+      "name": "Fair Haven Community Health Care",
+      "cityId": "us-ct-newhaven",
+      "kind": "public-clinic",
+      "address": "374 Grand Ave, New Haven, CT 06513",
+      "neighborhood": "Fair Haven",
+      "hours": null,
+      "url": "https://www.fhchc.org/374-grand-ave",
+      "notes": "Federally qualified community health center (primary care, sliding-fee). Also at 50 Grand Ave.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ct-physicianone-newhaven",
+      "name": "PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven",
+      "cityId": "us-ct-newhaven",
+      "kind": "urgent-care",
+      "address": null,
+      "neighborhood": null,
+      "hours": null,
+      "url": "https://physicianoneurgentcare.com/location-services/ct-new-haven-urgent-care",
+      "notes": "Chain has a New Haven location page; search summaries disagreed on whether the nearest sites are in Orange (236 Boston Post Rd) and Hamden (2165 Dixwell Ave). Address not confirmed.",
+      "confirmed": false,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ct-ynhh-ed",
+      "name": "Yale New Haven Hospital, York Street Campus Emergency Department",
+      "cityId": "us-ct-newhaven",
+      "kind": "emergency-department",
+      "address": "20 York St, New Haven, CT 06510",
+      "neighborhood": "Downtown / Hill",
+      "hours": "24/7",
+      "url": "https://www.ynhh.org/locations/new-haven-20-york-street",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ct-cvs-newhaven",
+      "name": "CVS Pharmacy (New Haven branch)",
+      "cityId": "us-ct-newhaven",
+      "kind": "pharmacy",
+      "address": null,
+      "neighborhood": null,
+      "hours": null,
+      "url": "https://www.cvs.com/store-locator/",
+      "notes": "No specific New Haven branch was researched; chain-level only.",
+      "confirmed": false,
+      "verification": null
+    },
+
+    {
+      "id": "uk-ldn-sohosquare-gp",
+      "name": "Soho Square General Practice",
+      "cityId": "uk-eng-london",
+      "kind": "primary-care",
+      "address": "1 Frith Street, London W1D 3HZ",
+      "neighborhood": "Soho, Westminster",
+      "hours": "Mon-Fri 08:00-18:30; Sat-Sun closed",
+      "url": "https://www.nhs.uk/services/gp-surgery/soho-square-general-practice/E87714",
+      "notes": "NHS GP surgery (ODS code E87714); free at point of use for registered patients.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-ldn-soho-wic",
+      "name": "Soho NHS Walk-in Centre (Central London Community Healthcare NHS Trust)",
+      "cityId": "uk-eng-london",
+      "kind": "walk-in",
+      "address": "2nd Floor, 1 Frith Street, Soho Square, London W1D 3HZ",
+      "neighborhood": "Soho",
+      "hours": "Mon-Fri 08:00-20:00; Sat-Sun and bank holidays 10:00-20:00; closed Christmas Day",
+      "url": "https://clch.nhs.uk/services/walk-in-centres",
+      "notes": "NHS North West London ICB has announced weekend operation as a booked-appointment clinic; check current mode.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-ldn-stthomas-ed",
+      "name": "St Thomas' Hospital Emergency Department (A&E)",
+      "cityId": "uk-eng-london",
+      "kind": "emergency-department",
+      "address": "East Wing, St Thomas' Hospital, Westminster Bridge Road, London SE1 7EH (vehicle/A&E entrance on Lambeth Palace Road)",
+      "neighborhood": "Lambeth / Waterloo",
+      "hours": "24/7",
+      "url": "https://www.guysandstthomas.nhs.uk/our-services/emergency-department",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-ldn-boots-piccadilly",
+      "name": "Boots, Piccadilly Circus",
+      "cityId": "uk-eng-london",
+      "kind": "pharmacy",
+      "address": "44-46 Regent Street, London W1B 5RA",
+      "neighborhood": "Piccadilly Circus",
+      "hours": "Mon-Fri 08:00-23:00; Sat 09:00-23:00; Sun 12:00-18:00",
+      "url": "https://www.npn.org.uk/pharmacies/1041329-boots-44-46-regent-st-london-greater-london-w1b-5ra-england",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-ldn-bupa-gp",
+      "name": "Bupa Private GP (pay-as-you-go)",
+      "cityId": "uk-eng-london",
+      "kind": "primary-care",
+      "address": null,
+      "neighborhood": "London Basinghall among other London centres",
+      "hours": null,
+      "url": "https://www.bupa.co.uk/health/payg/gp-services",
+      "notes": "Private (self-pay) alternative to the NHS GP; prices under visitPrices.",
+      "confirmed": false,
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "ie-dub-grafton-medical",
+      "name": "Grafton Medical (Centric Health)",
+      "cityId": "ie-lei-dublin",
+      "kind": "primary-care",
+      "address": "Grafton Buildings, 34 Grafton Street, Dublin 2",
+      "neighborhood": "Grafton Street",
+      "hours": "In-person Mon-Fri 08:00-17:00; online Mon-Sun 07:00-19:00",
+      "url": "https://centrichealth.ie/locations/grafton-medical/",
+      "notes": "Private GP practice (GP visits are private fees in Ireland unless medical card / GP visit card).",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-dub-vhi360-swords",
+      "name": "Vhi 360 Health Centre, Swords (formerly Vhi SwiftCare)",
+      "cityId": "ie-lei-dublin",
+      "kind": "urgent-care",
+      "address": "Columba House, Airside Retail Park, Swords, Co. Dublin, K67 R2Y9",
+      "neighborhood": "Swords (north Co. Dublin)",
+      "hours": "Clinic Mon-Sun 08:00-21:00; phone 08:00-18:00",
+      "url": "https://www1.vhi.ie/360health/urgent-care/swords",
+      "notes": "Walk-in urgent care for minor injury/illness; Vhi members only. Other Dublin sites: Dundrum, Carrickmines.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-dub-stjames-ed",
+      "name": "St James's Hospital Emergency Department",
+      "cityId": "ie-lei-dublin",
+      "kind": "emergency-department",
+      "address": "James's Street, Dublin 8, D08 NHY1",
+      "neighborhood": "Dublin 8",
+      "hours": "24/7",
+      "url": "https://www2.hse.ie/services/find-urgent-emergency-care/st-jamess-hospital-dublin-emergency-department/",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-dub-mater-ed",
+      "name": "Mater Misericordiae University Hospital Emergency Department",
+      "cityId": "ie-lei-dublin",
+      "kind": "emergency-department",
+      "address": "Eccles Street, Dublin 7, D07 R2WY",
+      "neighborhood": "Phibsborough / Dublin 7",
+      "hours": "24/7",
+      "url": "https://www2.hse.ie/services/find-urgent-emergency-care/mater-misericordiae-university-hospital-emergency-department/",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-dub-hickeys-oconnell",
+      "name": "Hickey's Pharmacy, O'Connell Street",
+      "cityId": "ie-lei-dublin",
+      "kind": "pharmacy",
+      "address": "55 O'Connell Street Lower, Dublin 1, D01 W2V3",
+      "neighborhood": "O'Connell Street",
+      "hours": "Directory listing: Mon-Sat 08:30-20:30, Sun 10:00-20:00 (Yelp brands it 'Late Night'; verify)",
+      "url": "https://www.hickeyspharmacies.ie/store/hickeys-pharmacy-oconnell-st/",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-dub-boots-henry",
+      "name": "Boots, Henry Street",
+      "cityId": "ie-lei-dublin",
+      "kind": "pharmacy",
+      "address": "20 Henry Street, Dublin 1",
+      "neighborhood": "Henry Street",
+      "hours": "Mon-Sat 08:30-19:00; Sun 11:00-18:00 (directory listing)",
+      "url": "https://www.boots.ie/",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "ca-tor-appletree-dundas",
+      "name": "Appletree Medical Group, 275 Dundas St W (The Grange)",
+      "cityId": "ca-on-toronto",
+      "kind": "walk-in",
+      "address": "275 Dundas St W, Toronto, ON",
+      "neighborhood": "Dundas & University / Grange Park",
+      "hours": "Mon/Wed/Fri 09:00-20:00; Tue/Thu 10:00-20:00",
+      "url": "https://appletreemedicalgroup.com/clinic-locations/275-dundas-st-w-the-grange/",
+      "notes": "OHIP-insured walk-in and family practice; free with a valid Ontario health card.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-tor-stmichaels-ed",
+      "name": "St. Michael's Hospital Emergency Department (Unity Health Toronto)",
+      "cityId": "ca-on-toronto",
+      "kind": "emergency-department",
+      "address": "30 Bond St, Toronto, ON M5B 1W8 (public entrance near Queen St E and Victoria St)",
+      "neighborhood": "Downtown Yonge",
+      "hours": "24/7",
+      "url": "https://unityhealth.to/clinics-services/emergency-department-2/",
+      "notes": "Regional trauma and stroke centre.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-tor-sdm-465yonge",
+      "name": "Shoppers Drug Mart, 465 Yonge Street",
+      "cityId": "ca-on-toronto",
+      "kind": "pharmacy",
+      "address": "465 Yonge St, Toronto, ON M4Y 1X4",
+      "neighborhood": "Yonge & College / Church-Wellesley",
+      "hours": "Sources disagree: 08:00-24:00 daily vs 24 hours",
+      "url": "https://www.yelp.ca/biz/shoppers-drug-mart-toronto-31",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "ca-van-citycentre-upcc",
+      "name": "City Centre Urgent and Primary Care Centre (UPCC)",
+      "cityId": "ca-bc-vancouver",
+      "kind": "urgent-care",
+      "address": "1290 Hornby St, Vancouver, BC V6Z 0A3",
+      "neighborhood": "Downtown",
+      "hours": "Mon-Sat 08:00-22:00; Sun 09:00-17:00; open 365 days",
+      "url": "https://www.healthlinkbc.ca/clinic/vancouver-city-centre-urgent-and-primary-care-centre",
+      "notes": "Public (Vancouver Coastal Health). Walk-in only, seen by urgency. Phone 604-416-1811.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-van-vgh-ed",
+      "name": "Vancouver General Hospital Emergency Department",
+      "cityId": "ca-bc-vancouver",
+      "kind": "emergency-department",
+      "address": "920 W 10th Ave, Vancouver, BC V5Z 1M9 (entrance at Laurel St & W 10th Ave)",
+      "neighborhood": "Fairview",
+      "hours": "24/7",
+      "url": "https://www.vch.ca/en/location-service/emergency-department-vancouver-general-hospital",
+      "notes": "Level 1 trauma site.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-van-stpauls-ed",
+      "name": "St. Paul's Hospital Emergency Department (Providence Health Care)",
+      "cityId": "ca-bc-vancouver",
+      "kind": "emergency-department",
+      "address": "1081 Burrard St, Vancouver, BC",
+      "neighborhood": "West End / Downtown",
+      "hours": "24/7",
+      "url": "https://sphemerg.ca/",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-van-londondrugs-granville",
+      "name": "London Drugs, Granville & Georgia",
+      "cityId": "ca-bc-vancouver",
+      "kind": "pharmacy",
+      "address": "710 Granville St, Vancouver, BC V6Z 1E4",
+      "neighborhood": "Downtown",
+      "hours": "Mon-Fri 08:00-22:00; Sat 09:00-22:00; Sun 10:00-20:00",
+      "url": "https://www.healthlinkbc.ca/clinic/london-drugs-1",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "mx-cdmx-imss-umf1",
+      "name": "IMSS Unidad de Medicina Familiar No. 1",
+      "cityId": "mx-cmx-mexicocity",
+      "kind": "public-clinic",
+      "address": "C. Orizaba 15, Roma Nte., Cuauhtémoc, 06700 Ciudad de México",
+      "neighborhood": "Roma Norte",
+      "hours": "Mon-Sun 08:00-20:00 (directory listing)",
+      "url": "https://tuclinicaimss.com.mx/cdmx/ciudad-de-mexico/clinica-unidad-de-medicina-familiar-no-1-en-ciudad-de-mexico/",
+      "notes": "Primary-care entry point for IMSS-insured workers; appointments line 800 623 2323.",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-cdmx-hgm-urgencias",
+      "name": "Hospital General de México Dr. Eduardo Liceaga, Urgencias",
+      "cityId": "mx-cmx-mexicocity",
+      "kind": "emergency-department",
+      "address": "Dr. Balmis 148, Doctores, Cuauhtémoc, 06720 Ciudad de México",
+      "neighborhood": "Doctores (Metro Hospital General, Line 3)",
+      "hours": "24/7",
+      "url": "https://www.gob.mx/salud/articulos/conoce-el-hospital-general-dr-eduardo-liceaga",
+      "notes": "Federal public hospital (Secretaría de Salud).",
+      "confirmed": true,
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-cdmx-similares-consultorio",
+      "name": "Farmacias Similares with Dr. Simi consultorio (Consultorio Médico Similares)",
+      "cityId": "mx-cmx-mexicocity",
+      "kind": "pharmacy-clinic",
+      "address": null,
+      "neighborhood": null,
+      "hours": null,
+      "url": "https://www.farmaciasdesimilares.com/",
+      "notes": "Chain-level entry; thousands of branches with attached doctor's offices. No specific branch researched.",
+      "confirmed": false,
+      "verification": null
+    },
+    {
+      "id": "mx-cdmx-fahorro-laespiga",
+      "name": "Farmacias del Ahorro, La Espiga",
+      "cityId": "mx-cmx-mexicocity",
+      "kind": "pharmacy-clinic",
+      "address": "Av. Insurgentes Sur, Hipódromo, Cuauhtémoc, 06100 Ciudad de México",
+      "neighborhood": "Hipódromo (Condesa)",
+      "hours": "24 hours, Mon-Sun (directory listing)",
+      "url": "https://sucursal.mx/sucursal/ciudad-de-mexico/farmacias-del-ahorro-cdmx-la-espiga/",
+      "notes": "Street number not captured. Chain offers 'orientación médica' at branches.",
+      "confirmed": false,
+      "verification": "search-summary"
+    }
+  ],
+
+  "visitPrices": [
+    {
+      "id": "us-citymd-selfpay",
+      "cityIds": ["us-ny-newyork"],
+      "providerId": "us-ny-citymd-w57",
+      "service": "Urgent care base visit, self-pay",
+      "currency": "USD",
+      "amount": null,
+      "range": [225, 250],
+      "notes": "Secondary sources disagree ($225 vs $250). Base visit covers exam and minor in-clinic tests (rapid flu/strep); excludes send-out labs. Self-pay add-ons reported: flu shot $30, chest X-ray $225. CityMD does not publish a self-pay tariff on its own site that was found.",
+      "source": "https://www.talktomira.com/post/how-much-does-city-md-cost-without-insurance ; https://upsurance.co/providers/citymd/",
+      "verification": "estimate"
+    },
+    {
+      "id": "us-onemedical-membership",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles"],
+      "service": "One Medical membership (annual fee, visits billed to insurance or self-pay separately)",
+      "currency": "USD",
+      "amount": 199,
+      "per": "year",
+      "notes": "Amazon Prime members: $99/yr first membership, $66/yr each additional (max 6 per Prime account).",
+      "source": "https://www.amazon.com/gp/help/customer/display.html?nodeId=TjqvKqjxQH0HOams6s ; https://benefits.georgetown.edu/one-medical/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-exer-selfpay",
+      "cityIds": ["us-ca-losangeles"],
+      "providerId": "us-ca-exer-downtown",
+      "service": "Urgent care base visit, self-pay",
+      "currency": "USD",
+      "amount": 215,
+      "notes": "Add-ons (plus office visit): extremity X-ray $95; laceration repair $95-$250; flu shot $45-$95; physicals $75-$150.",
+      "source": "https://www.solvhealth.com/company/exer-urgent-care",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-physicianone-selfpay",
+      "cityIds": ["us-ct-newhaven"],
+      "service": "Urgent care self-pay visit",
+      "currency": "USD",
+      "amount": null,
+      "notes": "No published tariff found; one anecdotal patient report of $205 for a visit plus two X-rays is not a tariff and is not used.",
+      "source": null,
+      "verification": null
+    },
+    {
+      "id": "us-er-hcci-average",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "service": "Emergency room visit, average price paid (commercially insured, under 65)",
+      "currency": "USD",
+      "amount": 1389,
+      "year": 2017,
+      "notes": "HCCI: average ER visit price $1,389 in 2017, up 176% over the decade from 2008. HCCI's later report (ER spending, price and use trends 2012-2021) exists but its headline average was not captured. Old figure; treat as a floor, not a current price.",
+      "source": "https://healthcostinstitute.org/hcci-originals-dropdown/all-hcci-reports/emergency-room-spending-price-and-use-trends-2012-2021",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-er-fairhealth-99283",
+      "cityIds": ["us-ny-newyork", "us-ct-newhaven"],
+      "service": "ER physician professional fee, CPT 99283 (moderate-severity level 3), Northeast",
+      "currency": "USD",
+      "amount": null,
+      "allowedAmountNortheast": 127,
+      "chargeRangeByRegion": [371, 651],
+      "notes": "FAIR Health white paper (2025): average charge for 99283 ranged $371 (Midwest) to $651 (South); average allowed amount ranged $127 (Northeast) to $142 (South). Professional fee only — the hospital facility fee is billed separately and is NOT in FAIR Health's figure. Third-party sites quote facility fees of $500-$2,000 (99283) and $500-$2,500 (99284), unsourced; not used as data.",
+      "source": "https://s3.amazonaws.com/media2.fairhealth.org/whitepaper/asset/FH+Healthcare+Indicators+and+FH+Medical+Price+Index+2025+-+A+FAIR+Health+White+Paper.pdf",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-er-medicare-pfs-2026",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "service": "ER physician fee, Medicare Physician Fee Schedule 2026 (national)",
+      "currency": "USD",
+      "levels": {"99283": 69.47, "99284": 118.24},
+      "notes": "Medicare allowed amounts, physician only, before geographic adjustment. Reported via careroute.ai; verify against CMS PFS lookup.",
+      "source": "https://www.careroute.ai/costs/cpt/99283",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-nyc-care",
+      "cityIds": ["us-ny-newyork"],
+      "service": "NYC Care (NYC Health + Hospitals) for uninsured residents",
+      "currency": "USD",
+      "amount": 0,
+      "notes": "No membership fee or premium; free at or below 200% FPL, sliding-scale discounts 201-400% FPL; open regardless of immigration status.",
+      "source": "https://access.nyc.gov/programs/nyc-care/",
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "uk-nhs-gp",
+      "cityIds": ["uk-eng-london"],
+      "service": "NHS GP appointment / NHS walk-in centre / A&E",
+      "currency": "GBP",
+      "amount": 0,
+      "notes": "Free at point of use for those eligible for NHS care.",
+      "source": "https://www.nhs.uk/nhs-services/hospitals/referrals-for-specialist-care/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-bupa-payg-gp",
+      "cityIds": ["uk-eng-london"],
+      "providerId": "uk-ldn-bupa-gp",
+      "service": "Bupa private GP, pay-as-you-go",
+      "currency": "GBP",
+      "faceToFace": {"15min": 79, "30min": 140, "45min": 200, "60min": 250},
+      "remote": {"15min": 59, "30min": 99, "45min": 140},
+      "notes": "Tests and follow-ups extra.",
+      "source": "https://www.bupa.co.uk/health/payg/gp-services",
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "ie-gp-typical",
+      "cityIds": ["ie-lei-dublin"],
+      "service": "Private GP visit (no medical card / GP visit card)",
+      "currency": "EUR",
+      "amount": null,
+      "range": [45, 70],
+      "typical": [50, 60],
+      "notes": "No set fee in Ireland; practices set their own. Dublin city centre at the higher end. Healthy Ireland Survey 2025 reported a median EUR 70 paid for healthcare services (not specifically GP). Children under 8 and adults 70+ are entitled to a GP visit card (free GP visits).",
+      "source": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/gps-and-private-patients/ ; https://www.rte.ie/news/2025/1107/1542755-healthy-ireland-survey/",
+      "verification": "estimate"
+    },
+    {
+      "id": "ie-grafton-medical",
+      "cityIds": ["ie-lei-dublin"],
+      "providerId": "ie-dub-grafton-medical",
+      "service": "GP consultation, in person or online",
+      "currency": "EUR",
+      "amount": 55,
+      "notes": "'From EUR 55'.",
+      "source": "https://centrichealth.ie/locations/grafton-medical/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-hse-ed-charge",
+      "cityIds": ["ie-lei-dublin"],
+      "service": "Public hospital emergency department charge without GP referral",
+      "currency": "EUR",
+      "amount": 100,
+      "notes": "No charge if referred by a GP (bring the letter). Exempt: medical card holders, those admitted as in-patients from the ED, prescribed infectious diseases, babies up to 6 weeks, certain children's illnesses/disabilities. Charged once per illness/accident; HSE may waive for hardship.",
+      "source": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-vhi360-urgentcare",
+      "cityIds": ["ie-lei-dublin"],
+      "providerId": "ie-dub-vhi360-swords",
+      "service": "Vhi 360 urgent care visit (members only)",
+      "currency": "EUR",
+      "amount": 0,
+      "notes": "Usually no excess (plan dependent). A return visit for the same issue more than 72 hours after the first carries an excess of EUR 50 or EUR 75 depending on plan. Non-members cannot attend (since Sept 2017). Historical self-pay walk-in price EUR 125 (pre-2017 reporting) no longer applies.",
+      "source": "https://www1.vhi.ie/360health/urgent-care/swords ; https://www.irishexaminer.com/news/arid-20452571.html",
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "ca-on-ohip-visit",
+      "cityIds": ["ca-on-toronto"],
+      "service": "Walk-in / family doctor / ED visit with valid OHIP card",
+      "currency": "CAD",
+      "amount": 0,
+      "source": "https://lockwoodclinic.com/how-much-is-a-doctor-visit-without-ohip/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-on-uninsured-walkin",
+      "cityIds": ["ca-on-toronto"],
+      "service": "Walk-in visit without OHIP (uninsured / no health card)",
+      "currency": "CAD",
+      "amount": null,
+      "range": [50, 150],
+      "examples": [
+        {"clinic": "Markham Stouffville Urgent Care Centre", "amount": 50},
+        {"clinic": "Byward Family Health Team (Ottawa)", "amount": 110, "source": "https://bywardfht.ca/our-clinic/fees/"},
+        {"clinic": "Medcentre Health", "amount": 120, "source": "https://medcentrehealth.com/patient-info/"}
+      ],
+      "notes": "No standard rate in Ontario. Lockwood Clinic estimates ~CAD 100 average. None of the examples is in Toronto proper.",
+      "source": "https://lockwoodclinic.com/how-much-does-it-cost-to-go-to-a-walk-in-clinic-in-ontario/",
+      "verification": "estimate"
+    },
+    {
+      "id": "ca-bc-uninsured-gp",
+      "cityIds": ["ca-bc-vancouver"],
+      "service": "GP consultation, uninsured (Doctors of BC recommended uninsured-services fee)",
+      "currency": "CAD",
+      "amount": 167,
+      "effective": "2024-04-01",
+      "notes": "Doctors of BC guide; clinics may charge differently. Walk-In (walkin.ca) virtual visit for uninsured Metro Vancouver residents: CAD 95. Visits are free with active MSP.",
+      "source": "https://www.doctorsofbc.ca/sites/default/files/uninsured_services1apr2024.pdf ; https://walkin.ca/pricing/",
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "mx-similares-consulta",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "providerId": "mx-cdmx-similares-consultorio",
+      "service": "Consulta médica general, Farmacias Similares consultorio",
+      "currency": "MXN",
+      "amount": 60,
+      "effective": "2024-09-01",
+      "notes": "Rose from MXN 50 to 60 in central Mexico (incl. CDMX) and from 70 to 80 in the north on 1 Sept 2024. Specialist 'Simiclínicas' reportedly over MXN 1,000.",
+      "source": "https://www.saludiario.com/farmacias-similares-sube-el-precio-de-sus-consultas-medicas/",
+      "verification": "fetched"
+    },
+    {
+      "id": "mx-fahorro-consulta",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "service": "Medical consultation at Farmacias del Ahorro",
+      "currency": "MXN",
+      "amount": 0,
+      "notes": "Officially advertised as free 'orientación médica' (09:00-21:00); reporting says patients give a voluntary contribution to the doctor, typically MXN 50-70. Model the fee as voluntary.",
+      "source": "https://www.fahorro.com/preguntas-frecuentes ; https://www.asistenciamedicolegal.com/single-post/en-farmacias-del-ahorro-la-aportaci%C3%B3n-al-m%C3%A9dico-es-voluntaria",
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-private-gp-cdmx",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "service": "Private general-practitioner consultation, CDMX",
+      "currency": "MXN",
+      "amount": null,
+      "range": [300, 600],
+      "notes": "Typical range reported in 2025 press coverage; no PROFECO figure found.",
+      "source": "https://www.ambito.com/mexico/economia/cuanto-cuesta-una-consulta-medica-cdmx-y-los-angeles-agosto-2025-n6175170",
+      "verification": "estimate"
+    },
+    {
+      "id": "mx-imss",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "service": "IMSS UMF / hospital care for affiliated workers and dependants",
+      "currency": "MXN",
+      "amount": 0,
+      "notes": "No charge at point of use; funded by worker/employer contributions.",
+      "source": "https://en.wikipedia.org/wiki/Mexican_Social_Security_Institute",
+      "verification": "search-summary"
+    }
+  ],
+
+  "waits": [
+    {
+      "id": "us-ed-cms-2024",
+      "scope": "state",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "measure": "Average/median time in ED, arrival to departure (CMS Care Compare, OP-18-type measure)",
+      "values": {"NY": "3 h 24 min", "CA": "3 h 6 min", "CT": "3 h 9 min", "US": "2 h 42 min"},
+      "valuesMinutes": {"NY": 204, "CA": 186, "CT": 189, "US": 162},
+      "period": "CMS data as updated 30 Oct 2024",
+      "source": "https://www.visualcapitalist.com/mapped-emergency-room-visit-times-by-state/",
+      "verification": "fetched"
+    },
+    {
+      "id": "us-ed-cms-2025",
+      "scope": "state",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "measure": "Median ED time, arrival to departure (CMS, Becker's ranking)",
+      "valuesMinutes": {"NY": 200, "CT": 195, "CA": 180, "US": 162},
+      "period": "12 months ending September 2025",
+      "notes": "Page returned 403; values from search summary only. Differs slightly from the 2024 set.",
+      "source": "https://www.beckershospitalreview.com/rankings-and-ratings/ed-visit-times-by-state/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-new-patient-appt-amn-2025",
+      "scope": "15 largest US metros (incl. New York, Los Angeles)",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles"],
+      "measure": "Average wait for a new-patient physician appointment",
+      "values": {"allSixSpecialtiesDays": 31, "familyMedicineDays": 23.5, "familyMedicineRangeDays": [1, 207]},
+      "period": "Calls made 15 Jan-24 Feb 2025",
+      "notes": "Per-city breakdowns (New York, Los Angeles) are in the AMN white paper but were not extracted. New Haven not covered (not a top-15 metro).",
+      "source": "https://ir.amnhealthcare.com/2025-05-27-New-Survey-Shows-Physician-Appointment-Wait-Times-Surge-19-Since-2022,-48-Since-2004 ; https://www.amnhealthcare.com/siteassets/amn-insights/physician/ps-2025-physician-appt-wait-times---wp-v6.pdf",
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-ae-4hr-aug2026",
+      "scope": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "A&E attendances admitted, transferred or discharged within 4 hours",
+      "values": {"percent": 75.0, "previousMonthPercent": 75.4, "operationalTargetPercent": 78, "constitutionalStandardPercent": 95},
+      "period": "August 2026",
+      "notes": "London-only figure not extracted.",
+      "source": "https://www.nuffieldtrust.org.uk/resource/a-e-waiting-times ; https://rcem.ac.uk/nhs-performance-tracker/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-gp-appt-timing",
+      "scope": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "GP appointments by time from booking to appointment",
+      "values": {"sameDayPercent": 45.0, "within2WeeksPercent12mo": 81.6},
+      "period": "12 months to August 2026 (same-day also 45.0% in August 2026)",
+      "source": "https://digital.nhs.uk/data-and-information/publications/statistical/appointments-in-general-practice/august-2026 ; https://www.bma.org.uk/advice-and-support/nhs-delivery-and-workforce/pressures/pressures-in-general-practice-data-analysis",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-ed-time-2025",
+      "scope": "Ireland (HSE EDs)",
+      "cityIds": ["ie-lei-dublin"],
+      "measure": "Median time spent in ED",
+      "values": {"medianHours": 5.76, "beaumontMedianHours": 8.5, "patientsOver24h": 38000},
+      "targets": {"under24hPercent": 97, "age75PlusUnder24hPercent": 99},
+      "period": "First nine months of 2025",
+      "notes": "Beaumont is a north Dublin hospital. Figures from HSE data reported by Irish Medical Times.",
+      "source": "https://www.imt.ie/news/more-than-38000-spent-at-least-24-hours-in-an-ed-in-first-nine-months-of-2025-24-10-2025/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-gp-wait",
+      "scope": "Ireland",
+      "cityIds": ["ie-lei-dublin"],
+      "measure": "GP appointment wait",
+      "values": null,
+      "notes": "No published average found.",
+      "source": null,
+      "verification": null
+    },
+    {
+      "id": "ca-ed-cihi-2024-25",
+      "scope": "Canada",
+      "cityIds": ["ca-on-toronto", "ca-bc-vancouver"],
+      "measure": "ED waits (CIHI NACRS)",
+      "values": {
+        "medianHoursToPhysician": "just under 2",
+        "p90HoursToPhysician": "over 5",
+        "medianTotalHoursInED": 4,
+        "medianHoursToInpatientBed": "under 5",
+        "p90HoursToInpatientBed": "over 36",
+        "visits": 16100000
+      },
+      "period": "2024-25",
+      "source": "https://www.cihi.ca/en/news/how-gaps-in-the-system-show-up-in-emergency-department-wait-times ; https://www.cihi.ca/en/nacrs-emergency-department-visits-and-lengths-of-stay",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-on-ed-2024-25",
+      "scope": "Ontario",
+      "cityIds": ["ca-on-toronto"],
+      "measure": "ED 90th-percentile waits",
+      "values": {"p90HoursToPhysicianAssessment": 4.5, "p90HoursToInpatientBed": 44},
+      "targets2025_26": {"p90HoursToPhysicianAssessment": 3.4, "p90HoursLengthOfStayNonAdmitted": 6},
+      "period": "2024-25 (vs 2.7 h and 29 h in 2020-21)",
+      "source": "https://www.thetrillium.ca/news/health/sharp-spike-in-emergency-room-wait-times-putting-ontario-patients-at-risk-study-12265938 ; https://www.ontariohealth.ca/news/operational-direction-priorities-spring-summer-24-25",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-gp-wait",
+      "scope": "Toronto / Vancouver",
+      "cityIds": ["ca-on-toronto", "ca-bc-vancouver"],
+      "measure": "Family doctor appointment wait",
+      "values": null,
+      "notes": "Not found in this pass.",
+      "source": null,
+      "verification": null
+    },
+    {
+      "id": "mx-imss-specialty-wait",
+      "scope": "IMSS national (ENCAL 2025 user survey, second level)",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "measure": "Days from referral to first specialty consultation",
+      "values": {"referralToFirstSpecialtyDays": 61, "scheduledToSeenDays": 53, "satisfiedWithSameDayWaitPercent": 80},
+      "period": "2025",
+      "notes": "PDF could not be parsed; figures from search summary only. Verify before use.",
+      "source": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_2nivel.pdf",
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-ed-wait",
+      "scope": "Mexico City",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "measure": "ED wait",
+      "values": null,
+      "notes": "No published figure found.",
+      "source": null,
+      "verification": null
+    }
+  ],
+
+  "pharmacy": [
+    {
+      "id": "us-amoxicillin-500-21",
+      "market": "US",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "item": "Amoxicillin 500 mg, 21 capsules (generic, Rx)",
+      "currency": "USD",
+      "averageRetail": 13.66,
+      "goodrxLow": 8.19,
+      "notes": "Another GoodRx figure: average $10.55 with coupon vs $13.68 retail. Walmart/Costco reported ~$4-$10, CVS/Walgreens ~$10-$15.",
+      "source": "https://www.goodrx.com/amoxicillin/amoxicillin-cost-without-insurance",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-atorvastatin-20-30",
+      "market": "US",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "item": "Atorvastatin 20 mg, 30 tablets (generic statin, Rx)",
+      "currency": "USD",
+      "goodrxLow": 6.10,
+      "retailCashExamples": {"Walmart": 4.00, "Costco": 4.10, "Kroger": 5.00},
+      "notes": "GoodRx page returned 403; figures from search summary.",
+      "source": "https://www.goodrx.com/atorvastatin",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-cvs-ibuprofen-100",
+      "market": "US",
+      "chain": "CVS",
+      "item": "CVS Health ibuprofen 200 mg, 100 count (OTC)",
+      "currency": "USD",
+      "amount": 9.99,
+      "notes": "Dye-free 100 ct listed at $8.79.",
+      "source": "https://www.cvs.com/shop/cvs-dye-free-ibuprofen-200-mg-tablets-100-ct-prodid-1012013",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-cvs-cetirizine-30",
+      "market": "US",
+      "chain": "CVS",
+      "item": "CVS 24HR Allergy Relief cetirizine 10 mg, 30 count (OTC)",
+      "currency": "USD",
+      "amount": 16.79,
+      "notes": "14 ct $11.29.",
+      "source": "https://www.cvs.com/shop/cvs-24hr-allergy-relief-tablets-10mg-cetirizine-hcl-prodid-1170281?skuId=444238",
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "uk-nhs-prescription-charge",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "item": "NHS prescription charge per item",
+      "currency": "GBP",
+      "amount": 9.90,
+      "prepaymentCertificates": {"3month": 32.05, "12month": 114.50},
+      "notes": "GBP 9.90 since 1 May 2024; frozen for 2025-26 and again for 2026-27. England only (free in Scotland, Wales, NI). Many exemptions (under 16, 16-18 in education, 60+, maternity, certain conditions, low income).",
+      "source": "https://www.healthwatchwestsussex.co.uk/advice-and-information/2025-05-07/nhs-prescription-charges-frozen-2025-26 ; https://questions-statements.parliament.uk/written-statements/detail/2025-11-25/hlws1092",
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-boots-ibuprofen-16",
+      "market": "UK",
+      "chain": "Boots",
+      "item": "Boots ibuprofen 200 mg, 16 tablets (OTC; UK general-sale pack limit is 16, pharmacy up to 24/32)",
+      "currency": "GBP",
+      "amount": null,
+      "range": [0.55, 1.49],
+      "notes": "Different Boots SKUs listed at GBP 0.55, 1.34 (was 1.49) and 1.49. A 100-count OTC pack is not sold in the UK. Pack-limit rule not verified in this pass.",
+      "source": "https://www.boots.com/boots-ibuprofen-tablets-200mg-16s-10267906",
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-boots-cetirizine-30",
+      "market": "UK",
+      "chain": "Boots",
+      "item": "Boots Hayfever & Allergy Relief cetirizine 10 mg, 30 tablets",
+      "currency": "GBP",
+      "amount": 5.99,
+      "notes": "Seen on offer at GBP 2.99.",
+      "source": "https://www.boots.com/boots-pharmaceuticals-hayfever-and-allergy-relief-10mg-tablets-30-days-supply-one-a-day-10172560",
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "ie-dps-cap",
+      "market": "Ireland",
+      "cityIds": ["ie-lei-dublin"],
+      "item": "Drugs Payment Scheme monthly cap",
+      "currency": "EUR",
+      "amount": 80,
+      "per": "calendar month per household",
+      "since": "2022-03-01",
+      "notes": "Covers approved prescribed drugs and some appliances. Calendar month, not rolling. Using two pharmacies in a month can exceed the cap; refund claimable.",
+      "source": "https://www.citizensinformation.ie/en/health/drugs-and-medicines/drugs-payment-scheme/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-private-dispensing-fee",
+      "market": "Ireland",
+      "item": "Pharmacy dispensing fee, private (non-scheme) prescription",
+      "currency": "EUR",
+      "amount": null,
+      "range": [3, 10],
+      "notes": "Reported range EUR 3-5 per item to EUR 5-10+ per script; pharmacies set their own. Patient also pays the drug price.",
+      "source": "https://www.irishtimes.com/health/2025/04/22/plan-to-make-pharmacies-display-dispensing-fees-will-not-make-a-blind-bit-of-difference/",
+      "verification": "estimate"
+    },
+    {
+      "id": "ie-boots-ibuprofen-24",
+      "market": "Ireland",
+      "chain": "Boots Ireland",
+      "item": "Perrigo ibuprofen 200 mg, 24 tablets",
+      "currency": "EUR",
+      "amount": 6.29,
+      "notes": "Nurofen 200 mg 24: EUR 8.99; Nurofen Express 24: EUR 10.49.",
+      "source": "https://www.boots.ie/perrigo-ibuprofen-200mg-24-tablets-10284973",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-amoxicillin",
+      "market": "Ireland",
+      "item": "Amoxicillin course, private",
+      "currency": "EUR",
+      "amount": null,
+      "notes": "Not found.",
+      "source": null,
+      "verification": null
+    },
+
+    {
+      "id": "ca-on-ohipplus",
+      "market": "Ontario",
+      "cityIds": ["ca-on-toronto"],
+      "item": "OHIP+ (under 25 without a private plan)",
+      "currency": "CAD",
+      "amount": 0,
+      "notes": "Covered ODB-formulary drugs free: no deductible or dispensing fee. Under-25s with a private plan are not on OHIP+.",
+      "source": "https://www.ontario.ca/page/get-help-high-prescription-drug-costs",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-on-trillium",
+      "market": "Ontario",
+      "cityIds": ["ca-on-toronto"],
+      "item": "Trillium Drug Program deductible",
+      "currency": "CAD",
+      "amount": null,
+      "rule": "Approx. 4% of net household income per year, paid in four quarterly instalments (~1% each), after which the province pays covered drug costs.",
+      "notes": "For households with high drug costs relative to income who are not otherwise covered. The per-prescription co-payment after the deductible was not confirmed in this pass (null).",
+      "source": "https://forms.mgcs.gov.on.ca/dataset/3d092ae0-4efe-4b33-9a58-b935cf2728bf/resource/147dc3fa-0991-4312-aaac-d9523b472ad2/download/3693-87e_guide.pdf",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-on-odb-seniors",
+      "market": "Ontario",
+      "cityIds": ["ca-on-toronto"],
+      "item": "Ontario Drug Benefit, seniors 65+",
+      "currency": "CAD",
+      "rule": "Above income threshold (single > CAD 25,000; couple > CAD 41,500): CAD 100 annual deductible then up to CAD 6.11 per prescription. At/below threshold (Seniors Co-Payment Program): no deductible, up to CAD 2 per prescription.",
+      "source": "https://forms.mgcs.gov.on.ca/dataset/4486f32e-6743-4f11-8dff-f89c07bf1427/resource/a17d9a2b-86f7-4cc6-a415-ccfad459755c/download/3233-87e_guide.pdf",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-sdm-ibuprofen",
+      "market": "Canada",
+      "chain": "Shoppers Drug Mart",
+      "item": "Life Brand ibuprofen 200 mg (24 count per search summary)",
+      "currency": "CAD",
+      "amount": 6.99,
+      "notes": "Pack size uncertain; 100-count price not found.",
+      "source": "https://www.shoppersdrugmart.ca/life-brand-lb-ibuprofen-200mg/p/BB_057800071693?variantCode=057800071693",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-bc-fair-pharmacare",
+      "market": "British Columbia",
+      "cityIds": ["ca-bc-vancouver"],
+      "item": "Fair PharmaCare (income-based)",
+      "currency": "CAD",
+      "rule": "Family net income <= CAD 13,750: no deductible, no family maximum (PharmaCare pays 100%). CAD 13,750-30,000: no deductible, PharmaCare pays 70%, family maximum CAD 100-800. Above CAD 30,000: deductible and family maximum rise with income (see BC income-band table). Enhanced assistance if a spouse born 1939 or earlier.",
+      "source": "https://www2.gov.bc.ca/assets/gov/health/health-drug-coverage/pharmacare/income_bands_fair_pcare_regular.pdf ; https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan",
+      "verification": "search-summary"
+    },
+
+    {
+      "id": "mx-similares-amoxicillin",
+      "market": "Mexico",
+      "chain": "Farmacias Similares",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "item": "Amoxicilina 500 mg, 12 cápsulas (Rx required)",
+      "currency": "MXN",
+      "amount": 39.00,
+      "notes": "Seen with 25% online discount at MXN 29.25.",
+      "source": "https://www.farmaciasdesimilares.com/amoxicilina_500mg_12cap/p",
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-fahorro-ibuprofen",
+      "market": "Mexico",
+      "chain": "Farmacias del Ahorro",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "item": "Ibuprofeno 400 mg, marca del Ahorro",
+      "currency": "MXN",
+      "prices": {"10caps": 65.00, "20caps": 89.00},
+      "notes": "Online prices on fahorro.com.",
+      "source": "https://www.fahorro.com/ibuprofeno-400-mg-20-caps-marca-del-ahorro.html",
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-fahorro-cetirizine",
+      "market": "Mexico",
+      "chain": "Farmacias del Ahorro",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "item": "Cetirizina 10 mg, marca del Ahorro",
+      "currency": "MXN",
+      "prices": {"10tabs": 91.00, "20tabs": 158.00},
+      "source": "https://www.fahorro.com/cetirizina-10-mg-oral-20tabletas-marca-del-ahorro.html",
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-statin",
+      "market": "Mexico",
+      "item": "Generic statin 30-day",
+      "currency": "MXN",
+      "amount": null,
+      "notes": "Not found.",
+      "source": null,
+      "verification": null
+    }
+  ],
+
+  "referrals": [
+    {
+      "id": "us-hmo",
+      "system": "US commercial HMO",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "rule": "Member chooses a primary care physician (PCP). A written referral from the PCP is usually required before seeing a specialist; without it the plan may not pay. Out-of-network care generally not covered except emergencies.",
+      "source": "https://www.healthcare.gov/glossary/referral/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "us-ppo",
+      "system": "US commercial PPO",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "rule": "No referral needed; member can see any provider in or out of network, paying more out of network.",
+      "source": "https://www.marylandhealthconnection.gov/hmo-vs-ppo/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "uk-nhs",
+      "system": "NHS England",
+      "cityIds": ["uk-eng-london"],
+      "rule": "Specialist (consultant) care normally requires referral by the registered GP or a hospital doctor (NHS e-Referral Service). Self-referral exists for some services: talking therapies, sexual health, stop-smoking, some maternity/antenatal and drug-and-alcohol services; A&E needs no referral. You cannot self-refer to a hospital specialist.",
+      "source": "https://www.nhs.uk/nhs-services/hospitals/referrals-for-specialist-care/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ie-hse",
+      "system": "Ireland (HSE public and private)",
+      "cityIds": ["ie-lei-dublin"],
+      "rule": "A GP referral is required to see a consultant. As a public patient, outpatient consultant care is free but you do not choose the consultant and waiting lists apply. As a private patient you pay the consultant (private health insurance may cover). GP referral also removes the EUR 100 ED charge.",
+      "source": "https://www.citizensinformation.ie/en/health/health-overview/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-on-ohip",
+      "system": "Ontario (OHIP)",
+      "cityIds": ["ca-on-toronto"],
+      "rule": "Specialist visits are paid by OHIP as a consultation only with a referral from a physician or nurse practitioner; a visit without a referral cannot be billed as a consultation and many specialists will not see the patient. Self-paid specialist visits reported at roughly CAD 150-300+.",
+      "source": "https://www.dr-bill.ca/blog/ohip/ohip-assessments-and-consultation-guidelines ; https://doktr.ca/specialist-referrals-and-appointments/do-i-need-a-referral-to-see-a-specialist-in-ontario/",
+      "verification": "search-summary"
+    },
+    {
+      "id": "ca-bc-msp",
+      "system": "British Columbia (MSP)",
+      "cityIds": ["ca-bc-vancouver"],
+      "rule": "Publicly funded specialist visits require a referral from a family doctor or nurse practitioner; without it MSP will not cover the appointment. EDs need no referral. Once accepted, a referral no longer expires (BC scrapped the six-month re-referral rule).",
+      "source": "https://www.doctorsofbc.ca/news/2021/breaking-down-complexity-referral-process ; https://www.vancouverisawesome.com/highlights/six-month-re-referral-requirement-for-specialists-to-be-scrapped-7128547",
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-imss",
+      "system": "Mexico (IMSS)",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "rule": "Affiliates are assigned to a Unidad de Medicina Familiar (first level). The family doctor refers to second-level specialty care (Hospital General de Zona) with the referral/counter-referral form 4-30-8; the specialist returns the patient via counter-referral. Urgencias needs no referral. Reported wait from referral to first specialty consult ~61 days (see waits).",
+      "source": "https://www.scribd.com/document/325738586/REFERENCIA-4308 ; https://repositorioinstitucional.uaslp.mx/xmlui/handle/i/2353",
+      "verification": "search-summary"
+    },
+    {
+      "id": "mx-private",
+      "system": "Mexico (private / pharmacy clinics)",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "rule": "No referral needed to see a private specialist; patient pays directly (Simiclínicas specialist consults reported over MXN 1,000).",
+      "source": "https://www.saludiario.com/farmacias-similares-precio-de-sus-servicios/",
+      "verification": "search-summary"
+    }
+  ]
+}
