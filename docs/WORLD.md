@@ -406,14 +406,21 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
   - Ireland's Carrowkeel, €31 with one adult and electricity.
   - About MXN 300 near Mexico City, from travelers' reports, not confirmed.
   - None in Britain, whose clubs publish no site's price, or in Connecticut, which wasn't read.
+- **A night on the street** (`STREET_NIGHTS` and `streetRefusal`, from later on 2026-09-30, `research-vehicles5.json`): a journey in one's own motorhome can sleep on the street, free, where the city lets it stand overnight.
+  - New York City has no rule against an RV overnight (NYC311). A vehicle may stay in one spot up to seven days, so up to seven nights; SLATE doesn't move the motorhome during a stay. The 24-hour "mobile home" limit quoted from 34 RCNY 4-08 wasn't read, as its page refused.
+  - Refused, with the reason given where it's asked:
+    - Toronto: a three-hour limit on any road (Municipal Code 950-400D(5)).
+    - Vancouver: a large vehicle is kept off residential streets from 10 p.m. to 6 a.m., read from search excerpts.
+    - Los Angeles: the oversize ban from 2 to 6 a.m. where posted, and LAMC 85.02's ban on living in a vehicle, whose current status couldn't be read.
+    - London: each borough sets its own rules, and none was read.
+  - Everywhere else it isn't researched, and it says so.
 - **A move in one's own van** (`ownVanFor` in `systems/furniture.ts`): a van where the move starts, a road to the new home and a license to drive it carry the bed and sofa for its fuel and upkeep. Until then the movers were paid whatever one owned.
 - Not kept:
   - Towing, and with it travel trailers and caravans.
   - Renting a truck for a move (U-Haul's $29.95 a day and $1.19 a mile were read).
   - A park's shoulder and winter rates.
-  - Sleeping in a motorhome anywhere but a campground.
 
-Evidence: `tests/motorhomes.test.ts` (9). 16 mutations, all killed in the end. Three first survived, and each needed a test:
+Evidence: `tests/motorhomes.test.ts` (11; two for the street, whose 7 mutations were all killed). 16 mutations before it, all killed in the end. Three first survived, and each needed a test:
 - That a car doesn't carry the furniture.
 - That a van with nothing to carry isn't driven for it.
 - That a campground in New York City charges no hotel parking.

@@ -17,7 +17,7 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { PER_DIEM, STAYS, type StayRate } from '../content/stays';
-import { CAMPGROUNDS, PREPAID_OFF, STAY_CLASS_LABEL, STAY_OPTIONS, type RatePlan, type StayClass } from '../content/staytypes';
+import { CAMPGROUNDS, PREPAID_OFF, STAY_CLASS_LABEL, STAY_OPTIONS, STREET_NIGHTS, STREET_REFUSED, type RatePlan, type StayClass } from '../content/staytypes';
 import { jurisdictionOf } from './vehicles';
 
 /** How far a town may borrow a nearby town's hotel rate: SLATE's estimate, a metropolitan area's reach. */
@@ -47,7 +47,15 @@ export function nightRateFor(cityId: string): NightRate | undefined {
 /** The kinds of stay a town offers, its hotel first where it has one (`content/staytypes.ts`, from 2026-10-01); and a campground, come in one's own motorhome (from 2026-09-30). */
 export function stayClassesIn(cityId: string, inMotorhome = false): StayClass[] {
   const j = jurisdictionOf(cityId);
-  return [...(nightRateFor(cityId) ? ['hotel' as const] : []), ...(STAY_OPTIONS[cityId] ?? []).map((o) => o.cls), ...(inMotorhome && j && CAMPGROUNDS[j] ? ['campground' as const] : [])];
+  return [...(nightRateFor(cityId) ? ['hotel' as const] : []), ...(STAY_OPTIONS[cityId] ?? []).map((o) => o.cls), ...(inMotorhome && j && CAMPGROUNDS[j] ? ['campground' as const] : []), ...(inMotorhome && STREET_NIGHTS[cityId] ? ['street' as const] : [])];
+}
+
+/** Why a motorhome can't be slept in on a town's street for so many nights, or nothing (`STREET_NIGHTS`, from 2026-09-30). */
+export function streetRefusal(cityId: string, nights: number): string | undefined {
+  const street = STREET_NIGHTS[cityId];
+  if (!street) return STREET_REFUSED[cityId] ?? `SLATE doesn’t have ${CITIES.get(cityId)?.name ?? 'this town'}’s rules for sleeping in a vehicle on the street.`;
+  if (nights > street.nights) return `${street.basis}: ${street.nights} nights at most.`;
+  return undefined;
 }
 
 /** A campground's nights where a town is, in the save's money: its fee, taxes in it, and a visitor's surcharge for someone who lives elsewhere. */
@@ -68,6 +76,7 @@ export function campgroundPrice(sim: Simulation, cityId: string, nights: number,
 export function stayPrice(sim: Simulation, cityId: string, nights: number, guests = 1, cls: StayClass = 'hotel', plan: RatePlan = 'flexible', resident = true): { price: Money; basis: string } | undefined {
   if (nights <= 0) return undefined;
   if (cls === 'campground') return campgroundPrice(sim, cityId, nights, resident);
+  if (cls === 'street') return streetRefusal(cityId, nights) ? undefined : { price: 0, basis: `${STAY_CLASS_LABEL.street}: ${STREET_NIGHTS[cityId]!.basis}.` };
   const hotel = nightRateFor(cityId);
   const option = cls === 'hotel' ? undefined : STAY_OPTIONS[cityId]?.find((o) => o.cls === cls);
   if (cls === 'hotel' ? !hotel : !option) return undefined;

@@ -14,7 +14,7 @@ import { exchange } from '@/engine/content/currency';
 import { buyRefusal, classFor, modelById, modelsFor, monthlyInsurance, quote, renewal, runningCost, vehiclesOf, type OwnedVehicle, type Quote } from '@/engine/systems/vehicles';
 import { documentsOf } from '@/engine/systems/documents';
 import { crashChance, roadKm } from '@/engine/systems/driving';
-import { stayClassesIn, stayPrice } from '@/engine/systems/stays';
+import { stayClassesIn, stayPrice, streetRefusal } from '@/engine/systems/stays';
 import { journeysOf } from '@/engine/systems/journey';
 import { carryFurniture, moversCost } from '@/engine/systems/furniture';
 
@@ -113,6 +113,38 @@ describe('a campground', () => {
     const out = journeysOf(sim.player).find((j) => j.id === r.value!.journeyId)!;
     expect(out.hotel!.parking).toBeUndefined();
     expect(out.hotel!.price).toBe(inSave(sim, out.hotel!.nights * 29_00, 'USD'));
+  });
+});
+
+describe('a night on the street, in one’s own motorhome', () => {
+  it('is offered in New York City for up to seven nights, free, and refused where the city’s rules forbid it, saying why', () => {
+    expect(stayClassesIn('us-ny-newyork', true)).toContain('street');
+    expect(stayClassesIn('us-ny-newyork')).not.toContain('street');
+    expect(stayClassesIn('ca-on-toronto', true)).not.toContain('street');
+    const sim = life('us-ct-newhaven', 'rv-street-price');
+    expect(stayPrice(sim, 'us-ny-newyork', 7, 1, 'street')!.price).toBe(0);
+    expect(stayPrice(sim, 'us-ny-newyork', 8, 1, 'street')).toBeUndefined();
+    expect(streetRefusal('us-ny-newyork', 8)).toMatch(/7 nights at most/);
+    expect(streetRefusal('ca-on-toronto', 1)).toMatch(/three hours/);
+    expect(streetRefusal('ca-bc-vancouver', 1)).toMatch(/10 p.m. to 6 a.m./);
+    expect(streetRefusal('us-ct-newhaven', 1)).toMatch(/doesn’t have New Haven’s rules/);
+  });
+
+  it('is booked with a trip in the motorhome, with no hotel parking, refused in a car, and refused past the week', () => {
+    const sim = life('us-ct-newhaven', 'rv-street-book');
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-thor-four-winds' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }).ok).toBe(true);
+    const [rv, car] = vehiclesOf(sim.player);
+    const day = saturday(sim, 14);
+    const trip = (v: OwnedVehicle, nights: number) => sim.execute<{ journeyId: string; total: number }>({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day, slot: 2, by: `car:${v.id}`, nights, stay: 'street' } });
+    expect(trip(car!, 2).error).toMatch(/motorhome or campervan/);
+    expect(trip(rv!, 8).error).toMatch(/7 nights at most/);
+    const r = trip(rv!, 2);
+    expect(r.ok, r.error).toBe(true);
+    const out = journeysOf(sim.player).find((j) => j.id === r.value!.journeyId)!;
+    expect(out.hotel!.cls).toBe('street');
+    expect(out.hotel!.price).toBe(0);
+    expect(out.hotel!.parking).toBeUndefined();
   });
 });
 

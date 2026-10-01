@@ -12,10 +12,10 @@
  * rural ones had too few published figures to keep (the research's own list).
  */
 
-export type StayClass = 'hotel' | 'budget' | 'motel' | 'extended' | 'hostel' | 'campground';
+export type StayClass = 'hotel' | 'budget' | 'motel' | 'extended' | 'hostel' | 'campground' | 'street';
 
 export interface StayOption {
-  cls: Exclude<StayClass, 'hotel' | 'campground'>;
+  cls: Exclude<StayClass, 'hotel' | 'campground' | 'street'>;
   perNight: number;
   currency: string;
   /** By the room, or a bed by the person. */
@@ -25,6 +25,7 @@ export interface StayOption {
 }
 
 export const STAY_CLASS_LABEL: Readonly<Record<StayClass, string>> = {
+  street: 'The Street, In Your Motorhome',
   hostel: 'A Hostel Bed',
   motel: 'A Motel',
   budget: 'A Budget Hotel',
@@ -50,6 +51,28 @@ export const CAMPGROUNDS: Readonly<Record<string, { perNight: number; visitorExt
   'CA-BC': { perNight: 51, visitorExtra: 20, currency: 'CAD', basis: 'Rathtrevor Beach Provincial Park’s peak rate, $20 more for a non-resident; its shoulder and winter rates aren’t kept', confirmed: true },
   IE: { perNight: 20 + 6 + 5, currency: 'EUR', basis: 'Carrowkeel’s pitch in July and August, €20, with one adult’s €6 and €5 for electricity', confirmed: true },
   'MX-CMX': { perNight: 300, currency: 'MXN', basis: 'About MXN 300 at an RV park near Mexico City, from travelers’ reports', confirmed: false },
+};
+
+/**
+ * A night in one's own motorhome or campervan parked on the street, from
+ * 2026-09-30 (`docs/research/world/research-vehicles5.json`), free where a
+ * city's rules let it stand overnight, for as many nights as a vehicle may
+ * stand in one spot. SLATE doesn't move it during a stay. New York City has
+ * no rule against an RV overnight on NYC311, and no vehicle stays in one spot
+ * more than seven days. The 24-hour limit that search results quote from 34
+ * RCNY 4-08 for a "mobile home" wasn't read, as its page refused, and isn't
+ * kept.
+ */
+export const STREET_NIGHTS: Readonly<Record<string, { nights: number; basis: string }>> = {
+  'us-ny-newyork': { nights: 7, basis: 'No New York City rule bars an RV overnight (NYC311), and no vehicle stays in one spot more than seven days' },
+};
+
+/** Where a city's rules keep it off the street overnight, or SLATE couldn't read them: why, said where it's asked. */
+export const STREET_REFUSED: Readonly<Record<string, string>> = {
+  'ca-on-toronto': 'Toronto’s Municipal Code (950-400D(5)) lets no vehicle stand on a road more than three hours unless signs say otherwise.',
+  'ca-bc-vancouver': 'Vancouver keeps a large vehicle, taller than 2.2 m or longer than 6.4 m, off its residential streets from 10 p.m. to 6 a.m. (from search excerpts of the city’s page).',
+  'us-ca-losangeles': 'Los Angeles bars an oversize vehicle from 2 to 6 a.m. where posted, and whether its ban on living in a vehicle overnight (LAMC 85.02) still stands couldn’t be read, so SLATE doesn’t offer it.',
+  'uk-eng-london': 'London’s boroughs each set their own rules, and SLATE couldn’t read one, so it doesn’t offer it.',
 };
 
 export const STAY_OPTIONS: Readonly<Record<string, readonly StayOption[]>> = {

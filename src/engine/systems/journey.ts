@@ -36,7 +36,7 @@ import { owe, payFromBank } from './household';
 import { present } from './career';
 import { crossingRefusal, isoOfCity , mayDrive } from './documents';
 import { itinerary, tripAirportFor, type Airport } from './airports';
-import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
+import { nightRateFor, ownPlaceIn, stayPrice, streetRefusal } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
@@ -469,13 +469,17 @@ export function registerJourneys(sim: Simulation): void {
     const plan: RatePlan = p?.plan === 'prepaid' ? 'prepaid' : 'flexible';
     // A campground is for a journey made in one's own motorhome or campervan (from 2026-09-30).
     if (cls === 'campground' && !inMotorhome(person, by)) throw new CommandError('A campground’s site is for a motorhome or campervan of your own, driven there.');
+    // The street, the same, where the town lets it stand overnight.
+    if (cls === 'street' && !inMotorhome(person, by)) throw new CommandError('Sleeping on the street is in a motorhome or campervan of your own, driven there.');
+    const noStreet = cls === 'street' && !ownPlaceIn(person, toCity) && nights > 0 ? streetRefusal(toCity, nights) : undefined;
+    if (noStreet) throw new CommandError(noStreet);
     const room = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity)) : undefined;
     if (!ownPlaceIn(person, toCity) && nights > 0 && !room) throw new CommandError(`SLATE doesn’t have ${STAY_CLASS_LABEL[cls].toLowerCase()} in ${CITIES.require(toCity).name}.`);
-    const park = room && cls !== 'campground' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
+    const park = room && cls !== 'campground' && cls !== 'street' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
     const hotel = room ? { price: room.price + park, basis: `${room.basis}${park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
     const outCost = total(out) + (hotel?.price ?? 0);
     const cost = outCost + (back ? total(back) : 0);
-    if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} ${cls === 'campground' ? 'at a campground' : 'in a hotel'}` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} ${cls === 'campground' ? 'at a campground' : cls === 'street' ? 'on the street' : 'in a hotel'}` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
     const tripId = back ? s.nextId('journey') : undefined;
     const add = (legs: JourneyLeg[], from: string, to: string, price: Money, stay?: Journey['hotel']): Journey => {
       const id = s.nextId('journey');
@@ -747,7 +751,10 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   } else if (out.hotel) {
     // The longer stay at the same kind and plan; the parking with it for the nights added.
     const per = out.hotel.parking ? Math.round(out.hotel.parking / out.hotel.nights) : 0;
-    stay = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible', residentOf(person, back.fromCity))!.price + per * nights - out.hotel.price;
+    const longer = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible', residentOf(person, back.fromCity));
+    // A street's nights run out (`STREET_NIGHTS`).
+    if (!longer) return streetRefusal(back.fromCity, nights) ?? 'The stay can’t run longer.';
+    stay = longer.price + per * nights - out.hotel.price;
   }
   const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
   let rental = 0;
