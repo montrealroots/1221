@@ -42,6 +42,7 @@ import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { metAtWork } from './systems/people';
+import { mayDivorce } from './systems/marriage';
 import { tintOnTheRoad } from './systems/tint';
 import type { OwnedVehicle } from './systems/vehicles';
 import { modelById } from './systems/vehicles';
@@ -475,6 +476,21 @@ defineDecider<{ sim: Simulation; job: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), job: seed }),
   decide: ({ sim, job }) => metAtWork(sim, sim.player, 'us-ny-newyork', `job-${job}`, 'A Job').spends,
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'social.divorce',
+  decides: 'A marriage’s year ending in your partner asking for a divorce or not, at the place’s published rate for the marriage’s length (divorceRate); swept at even odds, the real ones being small.',
+  drawnIn: 'src/engine/systems/marriage.ts',
+  reads: {
+    year: (o, t) => ({ ...o, year: 1 + Math.round(t * 30) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: 1 + (seed % 30) }),
+  decide: ({ sim, year }) => {
+    sim.player.marriage = { contactId: 'c', at: sim.now, worthAt: 0 };
+    return mayDivorce(sim, sim.player, year, 0.5) ? 'asked' : 'stays';
+  },
 });
 
 defineDecider<{ sim: Simulation }, string>({

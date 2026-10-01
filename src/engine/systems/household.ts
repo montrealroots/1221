@@ -70,7 +70,8 @@ import { followTheMove, leavingHome } from './items';
 import { carryBoat } from './boats';
 import { mealsFromHelp } from './foodhelp';
 import { mealsFromStock } from './pantry';
-import { householdShare, partnerStays } from './people';
+import { partnerStays } from './people';
+import { billShare } from './marriage';
 import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
@@ -870,7 +871,8 @@ export function registerHousehold(sim: Simulation): void {
     const currency = saveCurrency(s.universe);
     // A partner living with them pays half the rent and the bills, and one who stayed behind on a move doesn't (`systems/people.ts`, from 2026-10-01).
     partnerStays(s, person);
-    const share = householdShare(person);
+    // Your share: evenly, or by what you each earn (`systems/marriage.ts`).
+    const share = billShare(s, person);
     const full = Math.round(rentOf(s, person) * share);
     // With Dublin's Housing Assistance Payment the council pays its part to the landlord (`systems/homebenefits.ts`).
     const rent = full - hapPaid(s, person, full);

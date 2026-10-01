@@ -13,10 +13,11 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { RESTAURANTS } from '@/engine/content/restaurants';
 import { diningQuote } from '@/engine/systems/dining';
+import { billShare, divorceTerms, marriageCost, marryRefusal } from '@/engine/systems/marriage';
 import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, type Contact, type Invitation } from '@/engine/systems/people';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
-const standing = (c: Contact): string => (c.livesWith !== undefined ? 'Your Partner, Living With You' : c.dating?.couple !== undefined ? 'Your Partner' : c.dating ? `Seeing Each Other, ${c.dating.dates} ${c.dating.dates === 1 ? 'Date' : 'Dates'}` : levelOf(c));
+const standing = (c: Contact, spouse?: string): string => (c.id === spouse ? 'Your Spouse' : c.livesWith !== undefined ? 'Your Partner, Living With You' : c.dating?.couple !== undefined ? 'Your Partner' : c.dating ? `Seeing Each Other, ${c.dating.dates} ${c.dating.dates === 1 ? 'Date' : 'Dates'}` : levelOf(c));
 
 export function PeopleWorkspace() {
   const person = useWorld((s) => s.player);
@@ -42,7 +43,7 @@ export function PeopleWorkspace() {
                       <td>{c.name}</td>
                       <td>{CITIES.get(c.cityId)?.name}</td>
                       <td className="small">{c.met.how === 'school' ? 'At School' : `At Work${c.met.what ? `: ${c.met.what}` : ''}`}</td>
-                      <td>{standing(c)}</td>
+                      <td>{standing(c, person.marriage?.contactId)}</td>
                       <td className="num">{Math.round(c.hours)}</td>
                       <td className="small">{c.lastSeen !== undefined ? formatDate(c.lastSeen, CITIES.require(c.cityId).timeZone) : '—'}</td>
                     </tr>
@@ -139,6 +140,19 @@ function Together({ contact }: { contact: Contact }) {
   const askOut = useFeature('social.ask_out');
   const moveIn = useFeature('social.move_in');
   const breakUp = useFeature('social.break_up');
+  const split = useFeature('social.split');
+  const marry = useFeature('social.marry');
+  const divorce = useFeature('social.divorce');
+  const [ceremony, setCeremony] = useState<'registry' | 'wedding'>('registry');
+  const [separate, setSeparate] = useState(false);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  const married = sim.player.marriage?.contactId === contact.id;
+  const reg = marriageCost(sim, sim.player, false);
+  const wed = marriageCost(sim, sim.player, true);
+  const noMarry = marryRefusal(sim, sim.player, contact.id);
+  const terms = married ? divorceTerms(sim, sim.player) : undefined;
+  const mexico = (sim.player.home?.cityId ?? '').startsWith('mx-');
   const first = contact.name.split(' ')[0];
   const mine = askingRefusal(sim.player);
   const noMove = moveInRefusal(sim.player, contact);
@@ -153,9 +167,32 @@ function Together({ contact }: { contact: Contact }) {
       {contact.dating?.couple !== undefined && contact.livesWith === undefined && (
         <button type="button" className="btn btn-sm btn-ghost" disabled={!moveIn.open || Boolean(noMove)} title={noMove ?? moveIn.reason} onClick={() => { if (run('social.move_in', { contactId: contact.id }).ok) toast(`${first} moved in. Each of you pays half the rent and the bills.`, 'positive'); }}>Move In Together</button>
       )}
-      {contact.dating && (
+      {contact.dating && !married && (
         <button type="button" className="btn btn-sm btn-ghost" disabled={!breakUp.open} title={breakUp.reason} onClick={() => { if (run('social.break_up', { contactId: contact.id }).ok) toast(`You and ${first} broke up.`, 'neutral'); }}>Break Up</button>
       )}
+      {contact.livesWith !== undefined && (
+        <select aria-label="The Bills" value={sim.player.billSplit ?? 'even'} disabled={!split.open} title={split.reason} onChange={(e) => run('social.split', { how: e.target.value })} style={{ width: 'auto' }}>
+          <option value="income">{`The Bills By What You Each Earn: Yours ${Math.round(billShare(sim, sim.player) * 100)}%`}</option>
+          <option value="even">The Bills Split Evenly</option>
+        </select>
+      )}
+      {contact.dating?.couple !== undefined && !married && (
+        <>
+          <select aria-label="The Ceremony" value={ceremony} onChange={(e) => setCeremony(e.target.value as 'registry' | 'wedding')} style={{ width: 'auto' }}>
+            <option value="registry">{reg ? `A Civil Ceremony, ${money(reg.fee)}` : 'A Civil Ceremony'}</option>
+            <option value="wedding">{wed ? `A Wedding, Your Share ${money(wed.fee + wed.wedding)}` : 'A Wedding'}</option>
+          </select>
+          {mexico && <label className="small row gap-1"><input type="checkbox" checked={separate} onChange={(e) => setSeparate(e.target.checked)} />Separate Property</label>}
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!marry.open || Boolean(noMarry)} title={noMarry ?? (reg ? reg.basis : marry.reason)} onClick={() => { const a = run<{ at: number }>('social.marry', { contactId: contact.id, wedding: ceremony === 'wedding', separate }); if (a.ok) toast(`Set for ${formatDate(a.value!.at, sim.zone)}.`, 'positive'); }}>Marry</button>
+        </>
+      )}
+      {married && (
+        <span className="small">{sim.player.marriage!.divorcing ? `Divorcing, Final ${formatDate(sim.player.marriage!.divorcing.finalAt, sim.zone)}` : `Married Since ${formatDate(sim.player.marriage!.at, sim.zone)}`}</span>
+      )}
+      {married && !sim.player.marriage!.divorcing && (
+        <button type="button" className="btn btn-sm btn-ghost" disabled={!divorce.open} title={terms ? `${terms.basis}: ${money(terms.fee)}, and ${money(terms.settlement)} on the division as things stand` : divorce.reason} onClick={() => { const a = run<{ finalAt: number }>('social.divorce', {}); if (a.ok) toast(`It’s final on ${formatDate(a.value!.finalAt, sim.zone)}.`, 'neutral'); }}>Ask For A Divorce</button>
+      )}
+      {contact.income && contact.dating?.couple !== undefined && <span className="xs dim">{contact.income.employed ? `Earns ${formatMoney(Math.round(contact.income.annual * 100), contact.income.currency, { cents: false })} A Year` : 'Not Working'}</span>}
     </div>
   );
 }

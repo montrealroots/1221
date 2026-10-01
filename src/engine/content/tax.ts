@@ -408,7 +408,7 @@ export interface TaxComputation {
 /** Annual tax on employment income at a location. */
 export function computeAnnualTax(
   income: Money, cityId: string, at: number,
-  opts: { selfEmployed?: boolean; deductions?: Money; currency?: string } = {},
+  opts: { selfEmployed?: boolean; deductions?: Money; currency?: string; relief?: { deductions?: Money; credit?: Money } } = {},
 ): TaxComputation {
   // Each rule is written in its own money (`currency`, dollars where not
   // said): an amount is taxed on what it comes to in the rule's money, and the
@@ -429,9 +429,12 @@ export function computeAnnualTax(
 
   for (const rule of layers) {
     const rc = rule.currency ?? 'USD';
-    const taxable = Math.max(0, inRule(gross, rc) - rule.standardDeduction - inRule(opts.deductions ?? 0, rc));
+    // A married person's relief (`systems/marriage.ts`, from 2026-10-01): a deduction from the national tax's income, a credit off it.
+    const depth0 = jurisdictionPath(cityId).indexOf(rule.jurisdictionCode) === 0;
+    const reliefDeduction = depth0 ? inRule(opts.relief?.deductions ?? 0, rc) : 0;
+    const taxable = Math.max(0, inRule(gross, rc) - rule.standardDeduction - inRule(opts.deductions ?? 0, rc) - reliefDeduction);
     const levy = rule.levy && inRule(gross, rc) > rule.levy.exemptUpTo ? outOf(applyBrackets(inRule(gross, rc), { ...rule, kind: 'progressive', brackets: rule.levy.brackets }), rc) : 0;
-    const amount = outOf(Math.max(0, applyBrackets(taxable, rule) - (rule.credit ?? 0)), rc) + levy;
+    const amount = Math.max(0, outOf(Math.max(0, applyBrackets(taxable, rule) - (rule.credit ?? 0)), rc) - (depth0 ? opts.relief?.credit ?? 0 : 0)) + levy;
     if (amount === 0 && rule.kind === 'none') {
       lines.push({ label: rule.label, amount: 0, note: rule.note });
       continue;

@@ -39,6 +39,7 @@ import { earningsOf, stateOf, yearOf } from './earnings';
 import { drawFromBank, expenseFor, payFromBank } from './household';
 import { personalityOf } from './personality';
 import { citizenOf } from './documents';
+import { spouseIncomeFor } from './marriage';
 import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -439,7 +440,12 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const itemizedFederal = (y.homeInterest ?? 0) + Math.min(saltCap(year, income + gainLong, into), (y.homeTax ?? 0) + stateAndLocal) + (year >= HOME_TAX.pmiFrom ? Math.round((y.homePmi ?? 0) * pmiShare) : 0);
   const itemizing = (y.homeInterest ?? 0) + (y.homeTax ?? 0) > 0 && itemizedFederal > standard;
   const beyond = itemizing ? itemizedFederal - standard : 0;
-  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
+  // Married at the year's end, filed jointly (`systems/marriage.ts`, from 2026-10-01): the joint brackets and standard deduction are
+  // twice the single ones to the 35% band, so the joint tax is twice a single tax on half of what you both made, and yours is your share of it.
+  const spouse = spouseIncomeFor(person, year, into);
+  const federalBefore = spouse !== undefined && taxed + spouse > 0
+    ? Math.round(2 * computeAnnualTax(Math.round((taxed + spouse) / 2), cityId, at, { currency: into, ...(beyond > 0 ? { deductions: Math.round(beyond / 2) } : {}) }).federal * (taxed / (taxed + spouse)))
+    : computeAnnualTax(taxed, cityId, at, { currency: into, ...(beyond > 0 ? { deductions: beyond } : {}) }).federal;
   // A long-term gain on top of the rest, at 0%, 15% and 20%; and 3.8% on investment income over $200,000.
   const ordinary = Math.max(0, taxed - standard - beyond);
   let gainTax = 0;

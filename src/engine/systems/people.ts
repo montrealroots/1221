@@ -60,6 +60,7 @@ import { spend } from './household';
 import { personalityOf } from './personality';
 import { homeById } from './homes';
 import { bedSleepsOne } from './furniture';
+import { incomeOf } from './marriage';
 import { applyLookingAfter } from './life';
 
 export const MEET_KIND = 'social.meet';
@@ -91,6 +92,8 @@ export interface Contact {
   dating?: { since: Instant; dates: number; couple?: Instant };
   /** Living with you, since when (`householdShare`). */
   livesWith?: Instant;
+  /** A partner's job and pay, drawn when you became a couple (`systems/marriage.ts`). */
+  income?: import('./marriage').Income;
 }
 
 export interface Invitation { contactId: string; at: Instant; what: 'meal' | 'visit'; restaurantId?: string; item?: string }
@@ -222,6 +225,8 @@ export function registerPeople(sim: Simulation): void {
       c.dating.dates += 1;
       if (!c.dating.couple && c.dating.dates >= PARTNERS.datesToCouple) {
         c.dating.couple = item.at;
+        // Their job and pay, drawn now (`systems/marriage.ts`).
+        incomeOf(s, person, c);
         if (person.id === s.universe.playerId) s.notify({ category: 'relationship', title: `You And ${first} Are A Couple`, body: `Nine dates on, ${c.name} and you are together.`, importance: 60, route: '/workspace/people' });
       }
     }
@@ -310,6 +315,7 @@ export function registerPartners(sim: Simulation): void {
     const person = s.player;
     const c = contactsOf(person).find((x) => x.id === String(p?.contactId));
     if (!c?.dating) throw new CommandError('You aren’t seeing them.');
+    if (person.marriage?.contactId === c.id) throw new CommandError('You’re married: only a divorce ends it.');
     partWays(s, person, c, c.livesWith !== undefined ? 'Broke up, and moved out' : 'Broke up');
     return { ended: true };
   });
@@ -319,6 +325,8 @@ export function registerPartners(sim: Simulation): void {
 export function partnerStays(sim: Simulation, person: Person): void {
   const c = contactsOf(person).find((x) => x.livesWith !== undefined);
   if (!c || c.cityId === person.home?.cityId) return;
+  // Married, they stay where they live, and the marriage goes on apart (`systems/marriage.ts`).
+  if (person.marriage?.contactId === c.id) { delete c.livesWith; c.memory.unshift({ at: sim.now, what: `Stayed in ${CITIES.require(c.cityId).name} when you moved` }); return; }
   partWays(sim, person, c, `Stayed in ${CITIES.require(c.cityId).name} when you moved`);
   if (person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: `${c.name.split(' ')[0]} Stayed`, body: `${c.name} stayed in ${CITIES.require(c.cityId).name}, and it’s over.`, importance: 60, route: '/workspace/people' });
 }

@@ -105,6 +105,7 @@ import { eiOnCheck } from './eiself';
 import { citizenOf } from './documents';
 import { moveTo } from './luggage';
 import { metAtWork } from './people';
+import { marriedRelief } from './marriage';
 import { sagHoliday } from '../content/usholidays';
 
 export const SHOWCASE_KIND = 'career.showcase';
@@ -1223,7 +1224,7 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
  * check makes to the year's tax on the year's wages at the job's town, so a
  * year's withholding comes to the year's tax on what was earned.
  */
-export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant; resident?: boolean; currency?: string; commission?: number; actraRoom?: Money }) {
+export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant; resident?: boolean; currency?: string; commission?: number; actraRoom?: Money; relief?: { deductions?: Money; credit?: Money } }) {
   const { scale, role, rehearsal, represented, before, cityId } = opts;
   const agentRate = role.union === 'equity' && rehearsal ? AGENT_COMMISSION.equityRehearsalRate : opts.commission ?? AGENT_COMMISSION.rate;
   // A commercial is commissioned at scale; other SAG-AFTRA work is paid scale plus 10% for the agent's share.
@@ -1237,7 +1238,7 @@ export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; reh
   // A city's resident tax is withheld only from its residents: New York City
   // withholds nothing from a New Haven or Los Angeles actor working there.
   // Until 2026-09-27 it withheld it from everybody, and the return refunded it.
-  const owing = (income: Money) => { const t = computeAnnualTax(income, cityId, opts.at, { currency: opts.currency }); return t.total - (opts.resident === false ? t.local : 0); };
+  const owing = (income: Money) => { const t = computeAnnualTax(income, cityId, opts.at, { currency: opts.currency, ...(opts.relief ? { relief: opts.relief } : {}) }); return t.total - (opts.resident === false ? t.local : 0); };
   const withheld = owing(before + gross) - owing(before);
   return { gross, commission: agent + manager, agent, manager, dues, withheld, net: gross - agent - manager - dues - withheld };
 }
@@ -1757,7 +1758,7 @@ export function registerCareer(sim: Simulation): void {
       const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium !== 'stage' ? rate * line.days : Math.round((rate * line.days) / 6);
       // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
       // Use paid with the fees: an ACTRA producer's prepaid use, a Canadian commercial's year on television (`Role.prepaid`).
-      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week) * (1 + (role.prepaid ?? 0))), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission, actraRoom: actraRoom(person, year, cur) });
+      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week) * (1 + (role.prepaid ?? 0))), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person), currency: cur, commission: agencyById(career.agencyId ?? '')?.commission, actraRoom: actraRoom(person, year, cur), relief: marriedRelief(person, taxCity, item.at, cur) });
       if (role.union === 'actra' && career.unions.actra) { const by = (career.unions.actra.duesBy ??= {}); by[year] = (by[year] ?? 0) + inMoney(check.dues, cur, ACTRA.currency); }
       overtime = 0;
       const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
