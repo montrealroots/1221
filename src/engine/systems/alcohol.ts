@@ -14,9 +14,9 @@
  * offense: its fine, its suspension and, in Mexico City, El Torito
  * (`impairedDrive`, called by `systems/driving.ts`).
  *
- * Not yet: drinking at home, which waits on groceries (Stage 4c), and what
- * alcohol does to a night's sleep, which the research describes but doesn't
- * size.
+ * A drink at home is a pint or a glass from what's in stock (`drinkAtHome` in
+ * `systems/kitchen.ts`). Not yet: what alcohol does to a night's sleep, which
+ * the research describes but doesn't size.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -84,7 +84,11 @@ export function drinkRefusal(sim: Simulation, person: Person, pints: number): st
 
 /** Drinks taken: the grams into the blood, the calories into the day, and the mood. */
 export function drinkPints(sim: Simulation, person: Person, pints: number, at: Instant): void {
-  const grams = pintGrams(person.currentLocationId) * pints;
+  drinkGrams(sim, person, pintGrams(person.currentLocationId) * pints, pints, at);
+}
+
+/** Drinks taken, as grams in so many drinks: the blood alcohol, the calories into the day, and the mood each brings below the binge line. */
+export function drinkGrams(sim: Simulation, person: Person, grams: number, drinks: number, at: Instant): void {
   const before = bacAt(person, at);
   const bac = before + grams * perGram(sim, person);
   const prior = person.alcohol;
@@ -92,7 +96,8 @@ export function drinkPints(sim: Simulation, person: Person, pints: number, at: I
   person.alcohol = { bac, at, peak, peakAt: peak === bac ? at : prior!.peakAt };
   eatsBack(person, grams * WIDMARK.kcalPerGram);
   // Below the binge line a drink relaxes; over it, the mood stops rising.
-  const easing = Math.max(0, Math.min(pints, Math.ceil((DRINKING.binge - before) / Math.max(1e-9, pintGrams(person.currentLocationId) * perGram(sim, person)))));
+  const each = (grams / drinks) * perGram(sim, person);
+  const easing = Math.max(0, Math.min(drinks, Math.ceil((DRINKING.binge - before) / Math.max(1e-9, each))));
   const w = person.wellbeing;
   w.morale = clamp(w.morale + easing * DRINKING.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   w.stress = clamp(w.stress - easing * DRINKING.stress, 0, 100);

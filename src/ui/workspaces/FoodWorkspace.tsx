@@ -1,7 +1,9 @@
 /**
- * Food (`systems/dining.ts`, from 2026-10-01): the town's restaurants and
- * their menus, cheapest first, and a meal from one of them, at a table,
- * taken away or delivered, with its tax, tip and fees said before it's paid.
+ * Food (`systems/kitchen.ts`, `systems/dining.ts`, `systems/alcohol.ts`,
+ * from 2026-10-01): the kitchen and what's in it, the recipes and what each
+ * is short of, the town's groceries, a bar, and the town's restaurants and
+ * their menus, cheapest first, a meal from one at a table, taken away or
+ * delivered, with its tax, tip and fees said before it's paid.
  */
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -13,6 +15,11 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
+import { cookRefusal, groceryCatalog, groceryRefusal, kitchenStock, unitPrice } from '@/engine/systems/kitchen';
+import { MEAL_KEYS } from '@/engine/systems/pantry';
+import { RECIPES } from '@/engine/content/groceries';
+import { SPOT_LABEL } from '@/engine/systems/items';
+import { formatDate } from '@/engine/core/time';
 
 const PAGE = 40;
 /** Ordered least to most: taken away, delivered, at a table. */
@@ -35,9 +42,12 @@ export function FoodWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Day</div>
         <h1>Food</h1>
-        <p className="muted">The restaurants of {town} and their menus, the cheapest first.</p>
+        <p className="muted">Your kitchen, the shops and restaurants of {town}, and a bar: the cheapest first.</p>
       </div>
       <div className="col gap-5">
+        <Kitchen />
+        <Recipes />
+        <Groceries />
         {basket && <Meal basket={basket} onChange={setBasket} />}
         <Bar />
         {entries.length === 0 ? (
@@ -147,6 +157,116 @@ function Bar() {
         </div>
         {no && <div className="xs dim">{no}</div>}
         <Fine>A pint is Numbeo’s crowd-sourced price for a draft beer here, an estimate. What it puts in the blood is Widmark’s formula for your weight, falling 0.017 an hour, NHTSA’s rate. A drive with alcohol in the blood carries NHTSA’s crash risk for it, and one over the line can end in the place’s first offense: its fine, its suspension, and in Mexico City a night or more at El Torito.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
+/** How much is left of a food, in words. */
+const amount = (left: number, unit: string) => (unit === 'ct' ? `${Math.round(left)} Left` : unit === 'ml' ? (left >= 1000 ? `${(left / 1000).toFixed(1)} L Left` : `${Math.round(left)} ml Left`) : left >= 1000 ? `${(left / 1000).toFixed(1)} kg Left` : `${Math.round(left)} g Left`);
+
+/** What's in the fridge, the freezer and the pantry, the soonest to go off first. */
+function Kitchen() {
+  const { sim, run, toast } = useGame();
+  const stock = useWorld((s) => [...kitchenStock(s, s.player)].sort((a, b) => (a.food.expiresAt ?? Infinity) - (b.food.expiresAt ?? Infinity)));
+  const eat = useFeature('food.eat_ready');
+  const drink = useFeature('food.drink_home');
+  return (
+    <Panel title="Your Kitchen" subtitle="The day’s meals come out of what’s ready first; groceries are bought for the rest">
+      {stock.length === 0 ? <p className="small muted" style={{ margin: 0 }}>The fridge, the freezer and the pantry are bare.</p> : (
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Food</th><th scope="col">Where</th><th scope="col" className="num">Left</th><th scope="col">Keeps Until</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+            <tbody>
+              {stock.map((i) => (
+                <tr key={i.id}>
+                  <td>{i.label}</td>
+                  <td className="small">{i.at.kind === 'home' ? SPOT_LABEL[i.at.spot ?? 'floor'] : 'Elsewhere'}</td>
+                  <td className="num mono">{i.food.key === 'dish' ? `${i.food.left} ${i.food.left === 1 ? 'Portion' : 'Portions'}` : amount(i.food.left, i.food.unit)}</td>
+                  <td className="small">{i.food.expiresAt ? formatDate(i.food.expiresAt, sim.zone) : 'Keeps'}</td>
+                  <td>
+                    {MEAL_KEYS.has(i.food.key) && <button type="button" className="btn btn-sm btn-ghost" disabled={!eat.open} title={eat.reason} onClick={() => { if (run('food.eat_ready', { itemId: i.id }).ok) toast(`${i.label}, eaten.`, 'positive'); }}>Heat And Eat</button>}
+                    {(i.food.key === 'beer' || i.food.key === 'wine') && <button type="button" className="btn btn-sm btn-ghost" disabled={!drink.open} title={drink.reason} onClick={() => { if (run('food.drink_home', { itemId: i.id }).ok) toast(i.food.key === 'beer' ? 'A pint, at home.' : 'A glass, at home.', 'positive'); }}>{i.food.key === 'beer' ? 'Have A Pint' : 'Have A Glass'}</button>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </Panel>
+  );
+}
+
+/** The recipes, those that can be cooked now first, and what each of the rest is short of. */
+function Recipes() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cookable = useFeature('food.cook');
+  const rows = RECIPES.map((r) => ({ r, no: cookRefusal(sim, person, r.id) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
+  const ready = rows.filter((x) => !x.no).length;
+  return (
+    <Panel title="Recipes" subtitle={`${ready} of ${RECIPES.length} can be cooked with what’s in the kitchen`}>
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Recipe</th><th scope="col" className="num">Serves</th><th scope="col" className="num">Minutes</th><th scope="col">Source</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+          <tbody>
+            {rows.slice(0, 12).map(({ r, no }) => (
+              <tr key={r.id}>
+                <td>{r.name}{no ? <div className="xs dim">{no}</div> : null}</td>
+                <td className="num mono">{r.servings}</td>
+                <td className="num mono">{r.minutes ?? '30*'}</td>
+                <td className="small">{r.source}</td>
+                <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!cookable.open || Boolean(no)} title={no ?? cookable.reason} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id }); if (res.ok) toast(`${r.name}: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Fine>The recipes are their sources’ own. A recipe makes all its servings: one eaten, the rest in the fridge for its own days or FoodSafety.gov’s three. Seasonings, spices, stock and water are taken as in the cupboard; a count is weighed by USDA’s medium portion. A starred time is SLATE’s 30 minutes where the source gave none. A home’s kitchen has a stove, an oven, a grill, a fridge-freezer and a microwave; a blender or a slow cooker isn’t kept yet.</Fine>
+    </Panel>
+  );
+}
+
+/** The town's groceries, cheapest first, each with its price a kilo, a liter or each. */
+function Groceries() {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const person = useWorld((s) => s.player);
+  const here = useWorld((s) => s.player.currentLocationId);
+  const entries = useWorld((s) => groceryCatalog(s, here), [here]);
+  const [view, setView] = useCatalogView(`groceries-${here}`);
+  const shown = arrange(entries, view);
+  const [count, setCount] = useState(PAGE);
+  const buy = useFeature('food.buy_groceries');
+  if (entries.length === 0) return <Panel title="Groceries"><p className="small muted" style={{ margin: 0 }}>SLATE doesn’t keep a grocery chain’s prices in this town yet.</p></Panel>;
+  return (
+    <Panel title="Groceries" subtitle={`${entries.length} things from ${new Set(entries.map((e) => e.value.chain)).size === 1 ? 'one chain' : `${new Set(entries.map((e) => e.value.chain)).size} chains`}`}>
+      <div className="col gap-3">
+        <CatalogControls id="groceries-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ aisle: 'Aisle', chain: 'Chain' }} />
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Unit Price</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+            <tbody>
+              {shown.slice(0, count).map((e) => {
+                const unit = unitPrice(sim, here, e.value);
+                const no = groceryRefusal(sim, person, e.id, 1);
+                return (
+                  <tr key={e.id}>
+                    <td>{e.label}</td>
+                    <td className="small">{e.facets?.chain}</td>
+                    <td className="num mono small">{`${money(unit.price)} / ${unit.per}`}</td>
+                    <td className="num mono">{catalogPrice(e, money)}</td>
+                    <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('food.buy_groceries', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
+        <Fine>Each product is its chain’s regular shelf price as its own data listed it, or a price tracker’s where the chain blocked the read, with the town’s sales tax where groceries carry one. How long each keeps where it’s kept is USDA FoodKeeper’s, from purchase, or SLATE’s estimate where FoodKeeper gives none. Groceries are bought in a store and go home.</Fine>
       </div>
     </Panel>
   );

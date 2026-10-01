@@ -69,6 +69,7 @@ import { carryFurniture } from './furniture';
 import { followTheMove, leavingHome } from './items';
 import { carryBoat } from './boats';
 import { mealsFromHelp } from './foodhelp';
+import { mealsFromStock } from './pantry';
 import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
@@ -517,7 +518,9 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
  */
 export function buyTheDaysFood(sim: Simulation, person: Person): boolean {
   if (!person.home) return true;
-  let cost = foodOf(sim, person);
+  // The day's meals out of what's ready at home first, a portion each, and groceries bought for the rest (`systems/pantry.ts`).
+  const fromStock = mealsFromStock(sim, person);
+  let cost = Math.round((foodOf(sim, person) * (3 - fromStock)) / 3);
   // An EBT card's SNAP pays for groceries first, and for nothing else (from 2026-10-01).
   const ebtId = person.assistance?.ebtAccountId;
   const ebt = ebtId ? sim.universe.accounts[ebtId] : undefined;

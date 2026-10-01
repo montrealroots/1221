@@ -68,6 +68,8 @@ export interface Item {
   bulky?: boolean;
   /** A garment's kind, care and wear (`systems/wardrobe.ts`). */
   garment?: import('./wardrobe').Garment;
+  /** Food: what it is, how much is left, and when it goes off (`systems/pantry.ts`). */
+  food?: import('./pantry').Food;
 }
 
 /** The key of a home they live in: an owned home by its id, any other by its kind, town and when it began. */
@@ -145,7 +147,7 @@ export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Pla
 /** Whether a thing goes in a spot at home: furniture in the rooms or storage, and only food in the fridge, freezer or pantry. */
 export function spotRefusal(item: Item, spot: Spot): string | undefined {
   if (item.bulky && spot !== 'floor' && spot !== 'storage') return `The ${item.label} stands in a room, or in storage.`;
-  const food = item.kind.startsWith('food:');
+  const food = item.food !== undefined;
   if ((spot === 'fridge' || spot === 'freezer' || spot === 'pantry') && !food) return `${SPOT_LABEL[spot]} is for food.`;
   return undefined;
 }
