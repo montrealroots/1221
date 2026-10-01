@@ -44,10 +44,10 @@ describe('looking after yourself', () => {
       // Clothes to wash and a place to clean.
       sim.player.living = { tidy: 30 };
       for (let i = 0; i < 7; i += 1) wearTheDay(sim, sim.player);
-      // A bath, a pool, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
+      // A bath, a pool, a court, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
       // A boat is its owner's (`systems/boats.ts`, tested in `tests/boats.test.ts`).
       // A bicycle and an ATV are their owner's (`systems/outings.ts`, tested in `tests/outings.test.ts`).
-      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'outside', 'boat', 'charter', 'ride', 'trail'].includes(action)) return;
+      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'court', 'outside', 'boat', 'charter', 'ride', 'trail'].includes(action)) return;
       const minutes = minutesFor(sim, action);
       const before = sim.now;
       const result = doIt(sim, action);

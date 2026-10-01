@@ -230,12 +230,13 @@ export function conditionWord(age: number, life: number): 'New' | 'Good' | 'Date
 }
 
 export type Feature = 'garage' | 'yard' | 'basement' | 'finishedBasement' | 'attic' | 'furnace' | 'heatPump' | 'metalRoof'
-  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone';
+  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights';
 
 export const FEATURE_LABEL: Readonly<Record<Feature, string>> = {
   garage: 'Garage', yard: 'Yard', basement: 'Unfinished Basement', finishedBasement: 'Finished Basement', attic: 'Attic',
   furnace: 'Gas Furnace', heatPump: 'Heat Pump', metalRoof: 'Metal Roof', deck: 'Deck', patio: 'Patio', pool: 'Pool',
   solar: 'Solar Panels', generator: 'Backup Generator', adu: 'Backyard Cottage', stone: 'Stone Front',
+  tennisCourt: 'Tennis Court', basketballCourt: 'Half Basketball Court', tennisLights: 'Lights On The Tennis Court', basketballLights: 'Lights On The Basketball Court',
 };
 
 // ---------------------------------------------------------------------------
@@ -306,6 +307,24 @@ export const PROJECTS: readonly Project[] = [
   { id: 'deck-renew', label: 'Rebuild The Deck', usd: 18_000, recoup: 0.8, days: 10, renews: 'deck', on: HOUSES, needs: ['deck'] },
   { id: 'patio', label: 'Stone Patio And Outdoor Kitchen', usd: 51_000, recoup: 0.45, days: 21, on: DETACHED, needs: ['yard'], lacks: ['patio'], adds: { gains: ['patio'] } },
   { id: 'pool', label: 'Put In A Pool', usd: 65_000, recoup: 0.45, days: 60, on: DETACHED, needs: ['yard'], lacks: ['pool'], lot: 6_000, adds: { gains: ['pool'] } },
+  /*
+   * Courts (Stage 12 of docs/BACKLOG.md, from 2026-10-01; research-facilities.json), each
+   * at the middle of Fixr's installed range for it (read 2026-10-01). A tennis court by
+   * its surface, on Fixr's singles area of 130 by 55 ft; a half basketball court, half
+   * an NBA court, 47 by 50 ft, at Fixr's $15,500 to $40,000; lights at Fixr's residential
+   * line, $2,000 to $5,000 for tennis and $2,000 to $4,000 for basketball. What a buyer
+   * pays back for one and how long it takes aren't published: SLATE's estimates.
+   */
+  { id: 'tennis-grass', label: 'Build A Grass Tennis Court', usd: 47_500, recoup: 0.3, days: 45, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
+  { id: 'tennis-synthetic', label: 'Build A Synthetic Grass Tennis Court', usd: 52_500, recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
+  { id: 'tennis-asphalt', label: 'Build An Asphalt Tennis Court', usd: 60_000, recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
+  { id: 'tennis-concrete', label: 'Build A Concrete Tennis Court', usd: 62_500, recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
+  { id: 'tennis-clay', label: 'Build A Clay Tennis Court', usd: 75_000, recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
+  { id: 'tennis-acrylic', label: 'Build An Acrylic Hard Tennis Court', usd: 82_500, recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
+  { id: 'tennis-rubber', label: 'Build A Cushioned Rubber Tennis Court', usd: 87_500, recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
+  { id: 'tennis-lights', label: 'Light The Tennis Court', usd: 3_500, recoup: 0.3, days: 3, on: DETACHED, needs: ['tennisCourt'], lacks: ['tennisLights'], adds: { gains: ['tennisLights'] } },
+  { id: 'basketball-half', label: 'Build A Half Basketball Court', usd: 27_750, recoup: 0.3, days: 14, on: HOUSES, needs: ['yard'], lacks: ['basketballCourt'], lot: 2_350, adds: { gains: ['basketballCourt'] } },
+  { id: 'basketball-lights', label: 'Light The Basketball Court', usd: 3_000, recoup: 0.3, days: 3, on: HOUSES, needs: ['basketballCourt'], lacks: ['basketballLights'], adds: { gains: ['basketballLights'] } },
   { id: 'pool-renew', label: 'Resurface And Re-Equip The Pool', usd: 20_000, recoup: 0.5, days: 14, renews: 'pool', on: DETACHED, needs: ['pool'] },
   // Room.
   { id: 'basement', label: 'Finish The Basement', usd: 52_000, recoup: 0.72, days: 45, on: HOUSES, needs: ['basement'], adds: { gains: ['finishedBasement'], drops: ['basement'], size: 600 } },

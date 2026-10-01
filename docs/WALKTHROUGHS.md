@@ -71,14 +71,14 @@ corrected in the same commit, as the backlog's progress table is.
 | Find and compare parcels | Works | Land: listings by market, cheapest first (`systems/land.ts`). |
 | Access, utilities, constraints | Part | Each market's kind and acreage; easements are missing (WORLD.md). |
 | Purchase | Works | `land.offer`. |
-| A project such as a field or a pool | Part | A house built on land (`build.start`), and on a home a pool, deck, patio, garage, suite or ADU (`home.renovate`); courts and fields are Stage 12. |
+| A project such as a field or a pool | Part | A house built on land (`build.start`), and on a home a pool, deck, patio, garage, suite or ADU, a tennis court in seven surfaces, a half basketball court, and lights for either (`home.renovate`); fields are Stage 12. |
 | Feasibility and alternatives | Part | Whether the place allows a house; England doesn't. |
-| Dimensions, materials, equipment | Missing | Stage 12. |
+| Dimensions, materials, equipment | Part | A court's surface and its lot, Fixr's singles area for tennis and half an NBA court for basketball; rooms and finishes are Stage 12. |
 | Quotes and approvals | Part | The permit and the place's fees, paid at the start; one cost, not bids. |
 | Schedule and payments | Works | Staged payments on a build (`build.pay`). |
 | Follow construction | Works | Stages, inspections, a failed one possible. |
 | Inspection and acceptance | Works | |
-| Use it | Part | A pool or a home's rooms add to its value; a pool to swim in (`life.look_after` swim). |
+| Use it | Part | A pool or a home's rooms add to its value; a pool to swim in (`life.look_after` swim), a court to play on in daylight or under its lights (`life.look_after` court). |
 | Maintain, repair, remove | Part | Parts wear and are renewed (`pool-renew`, `deck-renew`); removal is missing. |
 
 ## 38. A Day At Home

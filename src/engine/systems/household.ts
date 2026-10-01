@@ -127,12 +127,13 @@ export const OWNED = { label: 'A Home You Own', billsUsd: 250 };
  * proportion; solar panels halve them, and a pool's upkeep adds $120 a month.
  * SLATE's estimates.
  */
-const OWNED_BILLS = { size: 1_500, power: 0.7, solar: 0.5, poolUsd: 120 };
+// A tennis court's upkeep, Fixr's $1,800 a year (research-facilities.json, from 2026-10-01), a month's share with the pool's.
+const OWNED_BILLS = { size: 1_500, power: 0.7, solar: 0.5, poolUsd: 120, tennisUsd: 1_800 / 12 };
 function ownedBillsFactor(person: Person): { factor: number; poolUsd: number } {
   const facts = person.homes?.find((h) => h.id === person.home?.homeId)?.facts;
   if (!facts) return { factor: 1, poolUsd: 0 };
   const factor = Math.pow(facts.size / OWNED_BILLS.size, OWNED_BILLS.power) * (facts.features.includes('solar') ? OWNED_BILLS.solar : 1);
-  return { factor, poolUsd: facts.features.includes('pool') ? OWNED_BILLS.poolUsd : 0 };
+  return { factor, poolUsd: (facts.features.includes('pool') ? OWNED_BILLS.poolUsd : 0) + (facts.features.includes('tennisCourt') ? OWNED_BILLS.tennisUsd : 0) };
 }
 
 /**

@@ -50,6 +50,7 @@ import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForEx
 import { replaceWornOut, starterWardrobe } from './clothing';
 import { restock, starterSupplies } from './hygiene';
 import { starterLuggage } from './luggage';
+import { sunTimes } from '../core/sun';
 import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
@@ -427,6 +428,35 @@ export function swimRefusal(sim: Simulation, person: Person): string | undefined
   if (!atHome(person) || !owned?.facts.features.includes('pool')) return 'You have no pool.';
   const w = weatherNow(sim, person);
   if (w && (wet(w.condition) || w.highC < FINE.swimC)) return 'It isn’t a day for the pool.';
+  return undefined;
+}
+
+/**
+ * The court a home has to play on, tennis before basketball where it has
+ * both (Stage 12 of docs/BACKLOG.md, from 2026-10-01): tennis at the 2024
+ * Adult Compendium's 6.8 METs for a moderate game, a half basketball court
+ * at its 5.0 for shooting baskets.
+ */
+export const COURT_MET = { tennis: 6.8, basketball: 5.0 } as const;
+export function courtAt(person: Person): { court: 'tennis' | 'basketball'; lit: boolean } | undefined {
+  const f = atHome(person) ? livingIn(person)?.facts.features : undefined;
+  if (f?.includes('tennisCourt')) return { court: 'tennis', lit: f.includes('tennisLights') };
+  if (f?.includes('basketballCourt')) return { court: 'basketball', lit: f.includes('basketballLights') };
+  return undefined;
+}
+
+/** Why the court can't be played on now: none, the weather a run would stop for, or the dark on an unlit court. */
+export function courtRefusal(sim: Simulation, person: Person): string | undefined {
+  const court = courtAt(person);
+  if (!court) return 'You have no court.';
+  const w = weatherNow(sim, person);
+  if (w && (wet(w.condition) || heatIndexC(w.highC, w.humidity) > FINE.highC || w.highC < FINE.runLowC)) return 'It isn’t a day for the court.';
+  if (!court.lit) {
+    const city = CITIES.require(person.currentLocationId);
+    const sun = sunTimes(sim.now, city.latitude, city.longitude, city.timeZone);
+    const dark = sun.polar === 'night' || (sun.polar !== 'day' && (sun.sunrise === undefined || sun.sunset === undefined || sim.now < sun.sunrise || sim.now >= sun.sunset));
+    if (dark) return 'It’s dark, and the court has no lights.';
+  }
   return undefined;
 }
 
