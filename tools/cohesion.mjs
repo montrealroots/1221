@@ -15,7 +15,7 @@
 import { readFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
-const files = execSync('git ls-files "src/**/*.ts" "src/**/*.tsx"', { encoding: 'utf8' })
+const files = execSync('git ls-files --cached --others --exclude-standard "src/**/*.ts" "src/**/*.tsx"', { encoding: 'utf8' })
   .split('\n').filter(Boolean);
 const source = new Map(files.map((f) => [f, readFileSync(f, 'utf8')]));
 const all = [...source.values()].join('\n');

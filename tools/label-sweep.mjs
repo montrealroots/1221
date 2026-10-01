@@ -78,7 +78,7 @@ const LABEL_ARRAY_KEYS = /\b(features|amenities|perks|highlights|inclusions|equi
 
 const WRITE = process.argv.includes('--write');
 
-const files = execSync('git ls-files "src/engine/**/*.ts" "src/engine/*.ts"', { encoding: 'utf8' })
+const files = execSync('git ls-files --cached --others --exclude-standard "src/engine/**/*.ts" "src/engine/*.ts"', { encoding: 'utf8' })
   .split('\n').filter(Boolean)
   .filter((f) => !/world-data|records|market-profiles|premise|logline|holidays-data|geography-data/.test(f));
 
