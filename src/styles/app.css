@@ -312,7 +312,9 @@ a:hover { text-decoration: underline; }
 .panel-head > :first-child { min-width: 0; flex: 1 1 12rem; }
 /* Four actions do not fit across a phone. They wrap onto a second line rather
    than pushing the card open and bleeding out of its right edge. */
-.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; }
+.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; min-width: 0; max-width: 100%; }
+/* A panel that passes its own row of actions wraps the same way: Home's grew to five and ran past the card's edge. */
+.panel-head > .row > .row { flex-wrap: wrap; justify-content: flex-end; min-width: 0; }
 .panel-head h2, .panel-head h3 { margin: 0; }
 
 .eyebrow {
@@ -794,6 +796,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
 }
 .rail-item:hover { background: var(--surface-2); color: var(--text); }
+/* The rail's search sits where its items do, as wide, so it lines up with them. */
+.rail-find { width: 100%; font-size: var(--size-sm); padding: var(--s2) var(--s3); }
+.rail-empty { padding: var(--s2) var(--s3); }
 .rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
 .rail-badge {
   margin-left: auto; font-size: var(--size-xs); font-weight: 700;

@@ -35,6 +35,12 @@ export function GameShell() {
   const here = breadcrumbs[breadcrumbs.length - 1];
   const pinned = favourites.some((f) => f.route === route);
   const [railOpen, setRailOpen] = useState(false);
+  // A search over the rail: what it lists, and the places already visited or pinned, each opened before from its own gated button.
+  const [find, setFind] = useState('');
+  const query = find.trim().toLowerCase();
+  const known: { route: string; label: string; detail?: string }[] = [...RAIL_DESTINATIONS.flatMap((g) => g.items), ...favourites, ...recent];
+  const found = query ? [...new Map(known.filter((d) => d.route !== '/home').map((d) => [d.route, d])).values()]
+    .filter((d) => `${d.label} ${d.detail ?? ''}`.toLowerCase().includes(query)) : [];
   const waiting = useWorld((s) => openDecisions(s).length);
   const unread = useWorld((s) => unreadNotifications(s).length);
 
@@ -123,7 +129,21 @@ export function GameShell() {
             </button>
           </div>
 
-          {favourites.length > 0 && (
+          <div className="rail-group">
+            <label htmlFor="rail-find" className="sr-only">Find A Place</label>
+            <input id="rail-find" className="rail-find" value={find} placeholder="Find A Place" onChange={(e) => setFind(e.target.value)} />
+          </div>
+          {query && (
+            <div className="rail-group">
+              <div className="rail-group-label">Found</div>
+              {found.length === 0 ? <div className="rail-empty xs dim">None by that name yet</div> : found.map((item) => (
+                <button key={item.route} className="rail-item" aria-current={route === item.route ? 'page' : undefined} onClick={() => { go(item.route, item.label); setFind(''); }}>
+                  <span className="grow truncate">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+          {!query && favourites.length > 0 && (
             <div className="rail-group">
               <div className="rail-group-label">Pinned</div>
               {favourites.map((item) => (
@@ -133,7 +153,7 @@ export function GameShell() {
               ))}
             </div>
           )}
-          {recentShown.length > 0 && (
+          {!query && recentShown.length > 0 && (
             <div className="rail-group">
               <div className="rail-group-label">Recent</div>
               {recentShown.map((item) => (
@@ -144,7 +164,7 @@ export function GameShell() {
             </div>
           )}
 
-          {RAIL_DESTINATIONS.map((group) => (
+          {!query && RAIL_DESTINATIONS.map((group) => (
             <div key={group.label} className="rail-group">
               <div className="rail-group-label">{group.label}</div>
               {group.items.map((item) => (
