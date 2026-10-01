@@ -17,18 +17,18 @@ corrected in the same commit, as the backlog's progress table is.
 | Destination, dates, guests, rooms, budget | Part | `travel.book` takes a destination, a date and a stay; one traveler, one room. |
 | Named properties | Works | 28 real hotels in the eight towns, each room at its own booking engine's rates (`systems/hotels.ts`); Marriott's, Hilton's and Hyatt's refused an automated read. |
 | Compared by total price | Works | Travel's stay classes are a catalog, cheapest first, total with the town's hotel taxes. |
-| Location, room categories, policies | Missing | Stage 6. |
+| Location, room categories, policies | Works | Each named hotel's address, room types, minimum age, check-out hour, deposit and parking (`content/hotels.ts`). |
 | Room and bed configuration | Works | Each hotel's own room types and their beds, as its engine lists them. |
-| Extras and requests | Missing | Stage 6. |
-| Costs, taxes, deposit, cancellation | Part | The nightly rate and the town's hotel taxes; a cancellation refunds all but the first night, a no-show's (`hotelRefund`). No deposit or hold. |
+| Extras and requests | Part | Parking with a car, at the hotel's own lot, valet or garage, a confirmed extra on the bill. Requests aren't kept: early check-in and late check-out are granted when available, which no hotel publishes. |
+| Costs, taxes, deposit, cancellation | Part | The nightly rate and the town's hotel taxes; a cancellation refunds all but the first night, a no-show's (`hotelRefund`). A named hotel's deposit, a stay's or a night's, is held at arrival and returned at check-out. |
 | Confirm and pay | Works | Paid from the bank or the card. |
 | Reservation on the calendar and the trip | Works | The journey and its hotel are one commitment on the calendar. |
 | Travel there | Works | The journey's legs, each at its local time. |
-| Check in | Part | Arrival puts them in the hotel; no check-in requirement is modeled. |
+| Check in | Works | Arrival puts them in the room they booked, the hotel's minimum age checked at booking, its deposit held. |
 | Luggage to the room | Part | The carry-on goes with them, packed with a week's clothes and the bathroom's things (`systems/luggage.ts`); it isn't put in a room, and checked bags aren't items. |
 | Facilities and services | Part | A hotel room has its bath, air conditioning and the building's gym (`HOTEL_FIXTURES`), and no kitchen. |
 | Modify or extend | Works | `travel.extend`. |
-| Charges and check-out | Part | Check-out is scheduled; there are no extra charges to review. |
+| Charges and check-out | Works | Check-out at the hotel's own hour, the deposit returned; staying on is a night at its own rate; the Travel screen shows the folio. |
 | Belongings and onward | Part | Belongings stay where they are (`systems/items.ts`); nothing is left behind in a room. |
 
 ## 35. Clothing Purchase And Use

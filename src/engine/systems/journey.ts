@@ -48,7 +48,7 @@ import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { moveTo } from './luggage';
-import { hotelById, namedStayQuote, namedStayRefusal } from './hotels';
+import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking } from './hotels';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'ferry' | 'drive' | 'arrival';
@@ -89,7 +89,7 @@ export interface Journey {
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
-  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string } };
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money };
   /** A holiday let there instead (`content/lets.ts`, from 2026-09-29): its nights, price and the service fee in it. */
   let?: { nights: number; price: Money; fee: Money; basis: string; checkOutAt: Instant };
   /** Business or first, where not economy (from 2026-09-29). */
@@ -137,12 +137,13 @@ export function hotelRefund(hotel: NonNullable<Journey['hotel']>, arriveAt: Inst
 }
 
 /** Check-out after some nights from an arrival, at eleven in the town's time. */
-export function checkOutAfter(cityId: string, arriveAt: Instant, nights: number): Instant {
+export function checkOutAfter(cityId: string, arriveAt: Instant, nights: number, hour: number = CHECKOUT_HOUR): Instant {
   const zone = CITIES.require(cityId).timeZone;
   const p = zonedParts(arriveAt, zone);
   // A night begins the evening of arrival; one that lands after midnight but before morning is the night before's.
   const firstNight = p.hour < 6 ? p.day - 1 : p.day;
-  return instantFromZoned({ year: p.year, month: p.month, day: firstNight + nights, hour: CHECKOUT_HOUR }, zone);
+  // A named hotel's own hour (`checkOutHourOf`, from 2026-10-01), eleven otherwise.
+  return instantFromZoned({ year: p.year, month: p.month, day: firstNight + nights, hour: Math.floor(hour), minute: Math.round((hour % 1) * 60) }, zone);
 }
 
 /** The nights between arriving in a town and leaving it: from the night of arrival to the morning of the day one leaves. */
@@ -505,8 +506,10 @@ export function registerJourneys(sim: Simulation): void {
     const closed = cls === 'campground' ? CAMPGROUNDS[jurisdictionOf(toCity) ?? '']?.closed : undefined;
     if (!ownPlaceIn(person, toCity) && nights > 0 && !room && closed) throw new CommandError(closed);
     if (!ownPlaceIn(person, toCity) && nights > 0 && !room) throw new CommandError(`SLATE doesn’t have ${STAY_CLASS_LABEL[cls].toLowerCase()} in ${CITIES.require(toCity).name}.`);
-    const park = room && cls !== 'campground' && cls !== 'street' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
-    const hotel = room ? { price: room.price + park, basis: `${room.basis}${park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
+    // A named hotel's own parking where it names one (`hotelParking`, from 2026-10-01); the town's otherwise.
+    const ownPark = named && by?.startsWith('car:') ? hotelParking(s, named.hotelId, nights) : undefined;
+    const park = ownPark ? ownPark.price : room && cls !== 'campground' && cls !== 'street' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
+    const hotel = room ? { price: room.price + park, basis: `${room.basis}${ownPark ? ` ${ownPark.basis}.` : park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
     const outCost = total(out) + (hotel?.price ?? 0);
     const cost = outCost + (back ? total(back) : 0);
     if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} ${cls === 'campground' ? 'at a campground' : cls === 'street' ? 'on the street' : 'in a hotel'}` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
@@ -520,7 +523,7 @@ export function registerJourneys(sim: Simulation): void {
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;
     };
-    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}), ...(named ? { named } : {}) } : undefined);
+    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights, checkOutHourOf(named?.hotelId)), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}), ...(named ? { named } : {}) } : undefined);
     const second = back ? add(back, toCity, fromCity, total(back)) : undefined;
     return { journeyId: first.id, ...(second ? { returnId: second.id } : {}), leaveAt: first.leaveAt, arriveAt: first.arriveAt, total: cost };
   });
@@ -536,7 +539,7 @@ export function registerJourneys(sim: Simulation): void {
     const leaveAt = q.legs[0]!.departAt;
     const cancelKind = (kind: string, key: string, id: string) => { for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === kind && one.payload[key] === id) s.timeline.cancel(one.id, s.now); };
     // The stay runs to the new morning home.
-    const checkOutAt = checkOutAfter(back.fromCity, out.arriveAt, q.nights);
+    const checkOutAt = checkOutAfter(back.fromCity, out.arriveAt, q.nights, checkOutHourOf(out.hotel?.named?.hotelId));
     if (out.let) { const lq = letQuote(s, back.fromCity, q.nights) as { price: Money; fee: Money; basis: string }; out.let = { nights: q.nights, price: lq.price, fee: lq.fee, basis: lq.basis, checkOutAt }; }
     else if (out.hotel) out.hotel = { ...out.hotel, nights: q.nights, price: out.hotel.price + q.stay, checkOutAt };
     if (out.let || out.hotel) {
@@ -672,6 +675,9 @@ export function registerJourneys(sim: Simulation): void {
       s.schedule({ at: j.let.checkOutAt, kind: CHECKOUT_KIND, label: 'Holiday Let Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
     } else if (j.hotel) {
       person.stay = { kind: 'hotel', cityId: j.toCity };
+      // A named hotel's deposit, held at arrival and returned at check-out (`depositFor`, from 2026-10-01).
+      const deposit = j.hotel.named ? depositFor(s, j.hotel.named.hotelId, j.hotel.nights) : 0;
+      if (deposit > 0 && payFromBank(s, person, deposit, `${hotelById(j.hotel.named!.hotelId)!.name}, the deposit held`, 'travel')) j.hotel.deposit = deposit;
       s.schedule({ at: j.hotel.checkOutAt, kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
     }
     if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: `In ${CITIES.require(j.toCity).name}`, body: `${j.lateMinutes ? `${j.lateMinutes} minutes late. ` : ''}You’re here.`, importance: 55 });
@@ -700,6 +706,13 @@ export function trainRefund(sim: Simulation, j: Journey, route: import('../conte
 
 /** Check-out: gone from the town, nothing; still there and not home, another night at the rate, or a friend's sofa if the bank can't pay for it. */
 function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: string): void {
+  // The deposit comes back at check-out, wherever they are (`depositFor`, from 2026-10-01).
+  const held = journeysOf(person).find((j) => j.id === journeyId)?.hotel;
+  if (held?.deposit) {
+    sim.post({ memo: 'The hotel’s deposit, returned', category: 'travel', postings: refundPostings(sim, person, held.deposit) });
+    held.returned = held.deposit;
+    delete held.deposit;
+  }
   if (person.currentLocationId !== cityId || (person.stay?.kind !== 'hotel' && person.stay?.kind !== 'let') || person.home?.cityId === cityId) return;
   // Leaving town that day, checked out and on their way: no night more. Until 2026-09-30 a way home leaving the
   // morning of check-out, or in the afternoon after it, was charged another night, every trip.
@@ -710,10 +723,12 @@ function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: st
   // A let's last morning with no way out yet: a hotel from here, as a hotel's guest stays on.
   if (person.stay.kind === 'let') person.stay = { kind: 'hotel', cityId };
   // Another journey out before the next check-out takes them; the night before it is still the hotel's.
-  const night = stayPrice(sim, cityId, 1);
+  // At the named hotel's own rate where it's one (`namedStayQuote`, from 2026-10-01), the town's otherwise.
+  const named = held?.named ? namedStayQuote(sim, held.named.hotelId, held.named.room, held.plan ?? 'flexible', sim.now, 1) : undefined;
+  const night = named ? { price: named.price } : stayPrice(sim, cityId, 1);
   const mine = person.id === sim.universe.playerId;
   if (night && payFromBank(sim, person, night.price, `Another night in a hotel in ${CITIES.require(cityId).name}`, 'travel')) {
-    sim.schedule({ at: checkOutAfter(cityId, sim.now, 1), kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId, cityId } });
+    sim.schedule({ at: checkOutAfter(cityId, sim.now, 1, checkOutHourOf(held?.named?.hotelId)), kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId, cityId } });
     if (mine) sim.notify({ category: 'personal', title: 'Another Night', body: `Still in ${CITIES.require(cityId).name}: the hotel keeps you another night, ${formatMoney(night.price, saveCurrency(sim.universe))}.`, importance: 45 });
     return;
   }

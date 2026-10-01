@@ -30,7 +30,7 @@ import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
-import { hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
+import { hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
@@ -284,7 +284,7 @@ export function TravelWorkspace() {
                 <tbody>
                   {journeys.map((j) => (
                     <tr key={j.id}>
-                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, ${byWord(j)}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}{j.let ? `, ${j.let.nights} ${j.let.nights === 1 ? 'night' : 'nights'} In A Let` : ''}</td>
+                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, ${byWord(j)}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}{j.let ? `, ${j.let.nights} ${j.let.nights === 1 ? 'night' : 'nights'} In A Let` : ''}{j.hotel ? <Folio hotel={j.hotel} /> : null}</td>
                       <td>{formatDateTime(j.leaveAt, CITIES.require(j.fromCity).timeZone)}</td>
                       <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
                       <td className="mono">{money(j.total)}</td>
@@ -482,4 +482,20 @@ function StayLonger({ j }: { j: Journey }) {
       }}>{typeof q === 'string' ? 'Stay Longer' : `Stay Longer (${formatMoney(q.total, cur, { cents: false })})`}</Gated>
     </div>
   );
+}
+
+/** A hotel stay's folio: the room and its taxes, parking, and the deposit held and returned. */
+function Folio({ hotel }: { hotel: NonNullable<Journey['hotel']> }) {
+  const { sim } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  const named = hotel.named ? hotelById(hotel.named.hotelId) : undefined;
+  const lines = [
+    `${named ? `${named.name}, ${hotel.named!.room}` : 'The Room'}, ${money(hotel.price - (hotel.parking ?? 0))}`,
+    ...(hotel.parking ? [`Parking, ${money(hotel.parking)}`] : []),
+    ...(hotel.deposit ? [`Deposit Held, ${money(hotel.deposit)}`] : []),
+    ...(hotel.returned ? [`Deposit Returned, ${money(hotel.returned)}`] : []),
+    ...(named?.checkOut ? [`Check-Out ${named.checkOut}`] : []),
+  ];
+  return <div className="xs dim">{lines.join(' · ')}</div>;
 }

@@ -69,3 +69,33 @@ export function namedStayQuote(sim: Simulation, hotelId: string, roomName: strin
   const basis = `${h.name}, ${room.name}${room.bed ? ` (${room.bed})` : ''}, ${plan === 'prepaid' ? 'paid ahead, not refunded' : 'refundable'}: its own rate${estimated ? ', the mean of the nights it was read, an estimate' : ''}${room.basis === 'before-tax' ? ' with the town’s hotel taxes' : ', taxes in'}${h.fee ? `, and its ${h.fee.name.toLowerCase()}` : ''}.`;
   return { price, basis, estimated };
 }
+
+/**
+ * The stay at a named hotel, from later on 2026-10-01 (Stage 6): its own
+ * check-out hour; its parking for a car brought, the cheapest it names a
+ * night, its lot, its valet or the garage it sends guests to; and the
+ * deposit it holds at arrival, a stay's or a night's, returned at
+ * check-out.
+ */
+export function checkOutHourOf(hotelId: string | undefined): number | undefined {
+  const h = hotelId ? hotelById(hotelId) : undefined;
+  const m = h?.checkOut?.match(/^(\d{1,2}):(\d{2})/);
+  return m ? Number(m[1]) + Number(m[2]) / 60 : undefined;
+}
+
+export function hotelParking(sim: Simulation, hotelId: string, nights: number): { price: Money; basis: string } | undefined {
+  const h = hotelById(hotelId);
+  if (!h?.parking) return undefined;
+  const cents = Math.round(h.parking.perNight * nights * 100);
+  const cur = saveCurrency(sim.universe);
+  const where = h.parking.kind === 'offsite' ? 'the garage it sends guests to' : h.parking.kind === 'valet' ? 'its valet' : 'its own lot';
+  return { price: cur === h.parking.currency ? cents : exchange(cents, h.parking.currency, cur) ?? cents, basis: `Parking at ${where}, ${h.parking.perNight} ${h.parking.currency} a night` };
+}
+
+export function depositFor(sim: Simulation, hotelId: string, nights: number): Money {
+  const h = hotelById(hotelId);
+  if (!h?.deposit) return 0;
+  const cents = Math.round(h.deposit.amount * (h.deposit.per === 'night' ? Math.max(1, nights) : 1) * 100);
+  const cur = saveCurrency(sim.universe);
+  return cur === h.deposit.currency ? cents : exchange(cents, h.deposit.currency, cur) ?? cents;
+}

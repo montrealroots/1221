@@ -7,7 +7,8 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
-import { hotelById, hotelsIn, namedStayQuote, namedStayRefusal, roomRate } from '@/engine/systems/hotels';
+import { checkOutHourOf, depositFor, hotelById, hotelParking, hotelsIn, namedStayQuote, namedStayRefusal, roomRate } from '@/engine/systems/hotels';
+import { documentsOf } from '@/engine/systems/documents';
 import { nightRateFor } from '@/engine/systems/stays';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -76,3 +77,53 @@ describe('a journey', () => {
   });
 });
 
+
+describe('the stay at a named hotel', () => {
+  it('checks out at its own hour, holds its deposit from arrival and returns it at check-out', () => {
+    const sim = life('us-ct-newhaven', 'ht-stay');
+    const p = zonedParts(sim.now + 10 * MS_DAY, sim.zone);
+    const day = instantFromZoned({ ...normalDate(p.year, p.month, p.day), hour: 12 }, sim.zone);
+    const r = sim.execute<{ journeyId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day, slot: 2, nights: 2, hotelId: 'pod-times-square', room: 'Bunk Pod' } });
+    expect(r.ok, r.error).toBe(true);
+    const j = sim.player.journeys!.find((x) => x.id === r.value!.journeyId)!;
+    expect(checkOutHourOf('pod-times-square')).toBe(13);
+    expect(zonedParts(j.hotel!.checkOutAt, 'America/New_York')).toMatchObject({ hour: 13, minute: 0 });
+    // Until it's in, however late it runs.
+    while (j.status !== 'arrived' && sim.now < j.arriveAt + 2 * MS_DAY) sim.advanceTo(sim.now + 30 * 60_000);
+    expect(sim.player.stay?.kind).toBe('hotel');
+    expect(j.hotel!.deposit).toBe(depositFor(sim, 'pod-times-square', 2));
+    expect(sim.universe.transactions.some((t) => t.memo === 'Pod Times Square, the deposit held')).toBe(true);
+    sim.advanceTo(j.hotel!.checkOutAt + 60_000);
+    expect(j.hotel!.deposit).toBeUndefined();
+    expect(j.hotel!.returned).toBe(depositFor(sim, 'pod-times-square', 2));
+    expect(sim.universe.transactions.some((t) => t.memo === 'The hotel’s deposit, returned')).toBe(true);
+    // Not leaving, the hotel keeps them another night at its own rate, not the town's.
+    const another = sim.universe.transactions.find((t) => t.memo === 'Another night in a hotel in New York')!;
+    const paid = another.postings.filter((q) => q.amount < 0 && sim.universe.accounts[q.accountId]?.ownerId === sim.player.id).reduce((x, q) => x - q.amount, 0);
+    expect(paid).toBe(namedStayQuote(sim, 'pod-times-square', 'Bunk Pod', 'flexible', another.at ?? j.hotel!.checkOutAt, 1)!.price);
+  });
+
+  it('booked by car, parks at the hotel’s own garage', () => {
+    const sim = life('us-ct-newhaven', 'ht-car');
+    documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'us-ct', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
+    const car = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } });
+    expect(car.ok, car.error).toBe(true);
+    const p = zonedParts(sim.now + 10 * MS_DAY, sim.zone);
+    const day = instantFromZoned({ ...normalDate(p.year, p.month, p.day), hour: 12 }, sim.zone);
+    const r = sim.execute<{ journeyId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ny-newyork', day, slot: 2, nights: 2, by: `car:${car.value!.vehicleId}`, hotelId: 'pod-times-square', room: 'Bunk Pod' } });
+    expect(r.ok, r.error).toBe(true);
+    const j = sim.player.journeys!.find((x) => x.id === r.value!.journeyId)!;
+    expect(j.hotel!.parking).toBe(hotelParking(sim, 'pod-times-square', 2)!.price);
+    expect(j.hotel!.basis).toMatch(/the garage it sends guests to/);
+  });
+
+  it('parks at its own lot, valet or garage, and a night’s deposit is the nights’', () => {
+    const sim = life('us-ny-newyork', 'ht-park');
+    expect(hotelParking(sim, 'pod-times-square', 2)).toMatchObject({ price: Math.round(57 * 2 * 100) });
+    expect(hotelParking(sim, 'pod-times-square', 2)!.basis).toMatch(/the garage it sends guests to/);
+    expect(hotelParking(sim, 'hoxton-holborn', 2)).toBeUndefined();
+    expect(depositFor(sim, 'omni-new-haven-at-yale', 3)).toBe(3 * 100_00);
+    expect(depositFor(sim, 'ace-hotel-brooklyn', 3)).toBe(300_00);
+    expect(depositFor(sim, 'the-plaza-nyc', 3)).toBe(0);
+  });
+});

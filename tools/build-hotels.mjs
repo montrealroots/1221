@@ -10,6 +10,9 @@
 // from the agent's raw capture.
 import { readFileSync, writeFileSync } from 'node:fs';
 
+/** A town's money, for a figure the hotel gives without one. */
+const hotelCurrency = (city) => (city.startsWith('us-') ? 'USD' : city.startsWith('uk-') ? 'GBP' : city.startsWith('ie-') ? 'EUR' : city.startsWith('ca-') ? 'CAD' : 'MXN');
+
 const RATES = 'docs/research/world/research-hotel-rates.json';
 const QUALIFIED = /member|resident|aaa|aarp|senior|govern|military|employee|corporate|teacher|student|first responder|healthcare|loyal/i;
 const PREPAID = /non-?refundable|no refund|not refundable|prepaid|pay now/i;
@@ -44,10 +47,15 @@ for (const h of hotels) {
     rooms.set(r.roomType, room);
   }
   const fee = h.fees?.resortOrDestinationFeePerNight;
+  // The deposit held at arrival, and the cheapest parking it names a night: its own, its valet's, or a garage it sends you to.
+  const dep = h.policies?.deposit;
+  const parkOpts = ['self', 'valet', 'offsite'].map((k) => { const v = h.fees?.parkingPerNight?.[k]; const amount = typeof v === 'number' ? v : typeof v?.amount === 'number' ? v.amount : null; return amount === null ? null : { kind: k, perNight: amount, currency: (typeof v === 'object' && v?.currency) || hotelCurrency(h.city) }; }).filter(Boolean).sort((a, b) => a.perNight - b.perNight);
   out.push({
     id: h.id, name: h.name, brand: h.brand ?? null, cityId: h.city, address: h.address ?? null,
     checkIn: h.checkIn ?? null, checkOut: h.checkOut ?? null, minAge: h.policies?.minCheckInAge ?? null,
     fee: fee && typeof fee.amount === 'number' ? { amount: fee.amount, currency: fee.currency, name: fee.name ?? 'Resort fee', taxIncluded: fee.taxIncluded === true } : null,
+    deposit: dep && typeof dep.amount === 'number' && dep.amount > 0 ? { amount: dep.amount, currency: dep.currency ?? hotelCurrency(h.city), per: /night/i.test(dep.basis ?? '') ? 'night' : 'stay' } : null,
+    parking: parkOpts[0] ?? null,
     rooms: [...rooms.values()],
     url: h.url ?? null,
   });
@@ -77,6 +85,10 @@ export interface Hotel {
   checkIn: string | null; checkOut: string | null; minAge: number | null;
   /** A resort, destination or facility fee a night, where it charges one. */
   fee: { amount: number; currency: string; name: string; taxIncluded: boolean } | null;
+  /** The deposit held at arrival, a stay's or a night's, returned at check-out. */
+  deposit: { amount: number; currency: string; per: 'stay' | 'night' } | null;
+  /** The cheapest parking it names, a night: its own lot, its valet, or the garage it sends guests to. */
+  parking: { kind: 'self' | 'valet' | 'offsite'; perNight: number; currency: string } | null;
   rooms: readonly HotelRoom[];
   url: string | null;
 }
