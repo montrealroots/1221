@@ -164,6 +164,15 @@ const BC_FERRIES_ROUTE: RailRoute = {
   source: 'bcferries.com fare index 26-05 and departures board, 2026-09-30; BC Ferries sailing statistics, fiscal 2026; TransLink and BC Transit fares',
 };
 
+/**
+ * A car taken across on BC Ferries, from later on 2026-09-30 (`research-travel4.json`,
+ * fare index 26-05): a standard car to 20 feet, C$89, and its driver, C$21,
+ * with the 5% fuel surcharge, Tsawwassen to Swartz Bay, 95 minutes across.
+ * Until then a drive to Victoria crossed the strait free, as if by road. A
+ * longer motorhome's and a motorcycle's fares weren't read: they pay a car's.
+ */
+export const CAR_FERRY = { islandTowns: ['ca-02-victoria'] as readonly string[], vehicle: 89, driver: 21, surcharge: 0.05, minutes: 95, currency: 'CAD' } as const;
+
 export const RAIL_ROUTES: readonly RailRoute[] = [
   BC_FERRIES_ROUTE,
   { id: 'nec-nyp-was-acela', operator: 'Amtrak', service: 'Acela', from: 'us-ny-newyork', to: 'us-dc-washington', fromStation: 'New York Penn Station', toStation: 'Washington Union Station', minutes: 180, perDay: 19, miles: NEC_MILES.newYorkWashington, fare: amtrakFare(AMTRAK_PER_MILE.acela, NEC_MILES.newYorkWashington, 'Acela'), ...AMTRAK_ARRIVE, onTime: ACELA_ON_TIME, refund: AMTRAK_REFUND, source: AMTRAK_SRC },

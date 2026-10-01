@@ -10,7 +10,9 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { railRouteById, railRoutes } from '@/engine/systems/rail';
-import { journeysOf, planBy } from '@/engine/systems/journey';
+import { crossesByCarFerry, journeysOf, planBy, planChauffeur, planDrive } from '@/engine/systems/journey';
+import { roadKm, driveMinutes } from '@/engine/systems/driving';
+import { runningCost, vehiclesOf } from '@/engine/systems/vehicles';
 
 describe('BC Ferries', () => {
   it('joins Vancouver and Victoria both ways, at C$21 with its surcharge and the transit to its terminals', () => {
@@ -35,5 +37,29 @@ describe('BC Ferries', () => {
     sim.advanceTo(j.arriveAt + 6 * 3_600_000);
     expect(j.status).toBe('arrived');
     expect(sim.player.currentLocationId).toBe('ca-02-victoria');
+  });
+});
+
+describe('a car on BC Ferries', () => {
+  it('pays the car and its driver, C$110 with the 5% surcharge, and the 95 minutes across, driving to Victoria and back; not driving within the mainland', () => {
+    const sim = quickSave({ startLocationId: 'ca-bc-vancouver', homeRegionId: 'ca-bc-vancouver', livesWhereBorn: true, wealth: 'wealthy' }, 'ferry-car');
+    sim.player.documents = [...(sim.player.documents ?? []), { id: 'lic', kind: 'license', issuer: 'ca-bc', name: 'Class 5', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY }];
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'ca-honda-cr-v' } }).ok).toBe(true);
+    const v = vehiclesOf(sim.player)[0]!;
+    const day = sim.now + 2 * MS_DAY;
+    const legs = planDrive(sim, sim.player, v.id, 'ca-bc-vancouver', 'ca-02-victoria', day, 2);
+    if (typeof legs === 'string') throw new Error(legs);
+    const km = roadKm('ca-bc-vancouver', 'ca-02-victoria');
+    const cur = saveCurrency(sim.universe);
+    const ferry = cur === 'CAD' ? 115_50 : exchange(115_50, 'CAD', cur)!;
+    expect(Math.abs(legs[0]!.fare - runningCost(sim, v, km) - ferry)).toBeLessThanOrEqual(1);
+    expect(legs[0]!.arriveAt - legs[0]!.departAt).toBe((driveMinutes(km) + 95) * 60_000);
+    expect(crossesByCarFerry('ca-02-victoria', 'ca-bc-vancouver')).toBe(true);
+    expect(crossesByCarFerry('ca-bc-vancouver', 'ca-bc-vancouver')).toBe(false);
+    // A car and driver bills the sailing's hours too, and pays the fare.
+    const hired = planChauffeur(sim, 'ca-bc-vancouver', 'ca-02-victoria', day, 2);
+    if (typeof hired === 'string') throw new Error(hired);
+    expect(hired[0]!.arriveAt - hired[0]!.departAt).toBe((driveMinutes(km) + 95) * 60_000);
+    expect(hired[0]!.fare).toBeGreaterThan(ferry);
   });
 });

@@ -280,7 +280,7 @@ Researched in `docs/research/world/research-travel-2.json`, `research-travel-3.j
   - Its terminals are far out, so the route runs town to town: TransLink's three zones (C$6.70) and bus 620 to Tsawwassen, and BC Transit's 70 (C$3.00) from Swartz Bay. The Canada Line's own minutes weren't read and aren't counted.
 - Victoria joined SLATE's towns for it, with its hotels: the Greater Victoria Hotel Development Working Group's 2025 average, C$224, on CoStar's data, taxed at GST, PST and the 3% MRDT, and Ocean Island Inn's dormitory bed.
 - Not kept yet:
-  - A car on the ferry, as a journey by one's own car across water.
+  - A car on the ferry, until later on 2026-09-30. Before that, a drive to Victoria crossed the strait free, as if by road. Now a car, or a car and driver, pays BC Ferries' C$89 for the car and C$21 for its driver with the 5% surcharge, and the 95 minutes across (`CAR_FERRY`, `crossesByCarFerry`). A longer motorhome's and a motorcycle's fares weren't read, and they pay a car's. Tests: `tests/ferries.test.ts`; 5 mutations, all killed.
   - Horseshoe Bay to Nanaimo, for want of Nanaimo as a town.
   - Dublin to Holyhead and on to London: Stena's €44 foot fare and Avanti's £39.50 were read, but the connection between them wasn't.
   - The city ferries (Staten Island, NYC Ferry, Toronto Island), since SLATE's journeys run between towns.

@@ -44,6 +44,7 @@ import { atTheCheckpoint, boardingIdRefusal } from './identity';
 import { claimDelay } from './compensation';
 import { stolenNow } from './theft';
 import { inWinterSeason, tireFactor } from './tires';
+import { CAR_FERRY } from '../content/rail';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
 export type LegMode = 'ground' | 'check-in' | 'flight' | 'fly' | 'train' | 'bus' | 'ferry' | 'drive' | 'arrival';
@@ -315,6 +316,9 @@ export function inMotorhome(person: Person, by: string | undefined): boolean {
 /** Whether someone lives in the state or province a town is in, for a park's visitor's surcharge. */
 export const residentOf = (person: Person, cityId: string): boolean => jurisdictionOf(person.home?.cityId ?? person.homeRegionId) === jurisdictionOf(cityId);
 
+/** Whether a drive between two towns crosses to Vancouver Island on BC Ferries (`CAR_FERRY`). */
+export const crossesByCarFerry = (fromCity: string, toCity: string): boolean => CAR_FERRY.islandTowns.includes(fromCity) !== CAR_FERRY.islandTowns.includes(toCity) && CITIES.get(fromCity)?.parentId === 'ca-02' && CITIES.get(toCity)?.parentId === 'ca-02';
+
 export function planDrive(sim: Simulation, person: Person, vehicleId: string, fromCity: string, toCity: string, day: Instant, slot: number, willBeAt?: string): JourneyLeg[] | string {
   const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
   if (!v) return 'That isn’t a car you own.';
@@ -332,9 +336,12 @@ export function planDrive(sim: Simulation, person: Person, vehicleId: string, fr
   const minutes = driveMinutes(km);
   const cur = saveCurrency(sim.universe);
   const tolls = tollsUsd(fromCity, toCity);
-  const fare = runningCost(sim, v, km) + (tolls > 0 ? (cur === 'USD' ? tolls : exchange(tolls, 'USD', cur) ?? tolls) : 0);
+  // Across to Vancouver Island, the car goes on BC Ferries (`CAR_FERRY`).
+  const ferry = crossesByCarFerry(fromCity, toCity);
+  const ferryCad = ferry ? Math.round((CAR_FERRY.vehicle + CAR_FERRY.driver) * (1 + CAR_FERRY.surcharge) * 100) : 0;
+  const fare = runningCost(sim, v, km) + (tolls > 0 ? (cur === 'USD' ? tolls : exchange(tolls, 'USD', cur) ?? tolls) : 0) + (ferryCad ? (cur === 'CAD' ? ferryCad : exchange(ferryCad, 'CAD', cur) ?? ferryCad) : 0);
   const m = modelById(v.modelId)!;
-  return [{ mode: 'drive', from: fromCity, to: toCity, departAt: depart, arriveAt: depart + minutes * 60_000, fare, routeId: `car:${v.id}`, basis: `${Math.round(km)} km by road in the ${m.make} ${m.model}: its fuel and upkeep${tolls > 0 ? ', and the corridor’s tolls' : ', no tolls kept for this road'}. ${ROAD.source}.` }];
+  return [{ mode: 'drive', from: fromCity, to: toCity, departAt: depart, arriveAt: depart + (minutes + (ferry ? CAR_FERRY.minutes : 0)) * 60_000, fare, routeId: `car:${v.id}`, basis: `${Math.round(km)} km by road in the ${m.make} ${m.model}: its fuel and upkeep${tolls > 0 ? ', and the corridor’s tolls' : ', no tolls kept for this road'}. ${ROAD.source}.` }];
 }
 
 /**
@@ -860,6 +867,10 @@ export function planChauffeur(sim: Simulation, fromCity: string, toCity: string,
   const depart = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 + Math.max(0, Math.min(14, slot)) }, zone);
   const km = roadKm(fromCity, toCity);
   const minutes = driveMinutes(km);
-  const units = chauffeurUnits(c, minutes / 60) * (1 + c.tax);
-  return [{ mode: 'drive', from: fromCity, to: toCity, departAt: depart, arriveAt: depart + minutes * 60_000, fare: inSave(sim, units, c.currency), routeId: 'chauffeur', basis: `${Math.round(km)} km by road with ${c.company}’s car and driver, ${(minutes / 60).toFixed(1)} hours billed at its ${c.minHours > 1 && !c.packageHours ? `least of ${c.minHours}, ` : ''}hourly rate${c.tax ? ', with its tax' : ''}.` }];
+  // Across to Vancouver Island the driver's hours run on through the sailing, and the car and driver pay BC Ferries' fare.
+  const ferry = crossesByCarFerry(fromCity, toCity);
+  const hours = (minutes + (ferry ? CAR_FERRY.minutes : 0)) / 60;
+  const units = chauffeurUnits(c, hours) * (1 + c.tax);
+  const ferryFare = ferry ? inSave(sim, (CAR_FERRY.vehicle + CAR_FERRY.driver) * (1 + CAR_FERRY.surcharge), CAR_FERRY.currency) : 0;
+  return [{ mode: 'drive', from: fromCity, to: toCity, departAt: depart, arriveAt: depart + hours * 3_600_000, fare: inSave(sim, units, c.currency) + ferryFare, routeId: 'chauffeur', basis: `${Math.round(km)} km by road with ${c.company}’s car and driver, ${(minutes / 60).toFixed(1)} hours billed at its ${c.minHours > 1 && !c.packageHours ? `least of ${c.minHours}, ` : ''}hourly rate${c.tax ? ', with its tax' : ''}.` }];
 }
