@@ -132,8 +132,9 @@ describe('the day’s meals', () => {
     const sim = life('us-ny-newyork', 'ready');
     buy(sim, P.pizza);
     sim.player.wellbeing.nourishment = 30;
-    const pizza = mealsReady(sim, sim.player)[0]!;
-    sim.must({ kind: 'food.eat_ready', payload: { itemId: pizza.id } });
+    expect(mealsReady(sim, sim.player)).toHaveLength(1);
+    // Without one named, what's ready that goes off soonest, as a routine's step eats.
+    sim.must({ kind: 'food.eat_ready', payload: {} });
     expect(mealsReady(sim, sim.player)).toHaveLength(0);
     expect(sim.player.wellbeing.nourishment).toBeGreaterThan(30);
   });

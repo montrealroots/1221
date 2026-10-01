@@ -269,6 +269,8 @@ export interface Person {
   clothesSince?: number;
   /** Their blood alcohol as it stood, and the night's highest (`systems/alcohol.ts`, from 2026-10-01). */
   alcohol?: import('../systems/alcohol').Alcohol;
+  /** Routines they've saved (`systems/routines.ts`, from 2026-10-01). */
+  routines?: import('../systems/routines').Routine[];
   /** A save's bed, sofa and gear from before items, each when it was bought; moved into `items` when first read. */
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
   /** A soup kitchen's or a pantry's help, for a day the bank can't feed them (`systems/foodhelp.ts`, from 2026-10-01). */

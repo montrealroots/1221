@@ -218,9 +218,12 @@ export function registerKitchen(sim: Simulation): void {
   });
   sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('food.buy_groceries', (p, { sim: s }) => ({ paid: buyGroceries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
   sim.onCommand<{ recipeId: string }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId)) }));
-  sim.onCommand<{ itemId: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
+  sim.onCommand<{ itemId?: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
     if (s.player.wellbeing.nourishment >= 90) throw new CommandError('You aren’t hungry.');
-    eatReady(s, s.player, String(p?.itemId));
+    // Without one named, what's ready that goes off soonest: a routine's "eat something ready".
+    const id = p?.itemId ?? mealsReady(s, s.player)[0]?.id;
+    if (!id) throw new CommandError('There’s no meal ready to eat here.');
+    eatReady(s, s.player, String(id));
     return { ate: true };
   });
   sim.onCommand<{ itemId: string }, { ml: number }>('food.drink_home', (p, { sim: s }) => ({ ml: drinkAtHome(s, s.player, String(p?.itemId)) }));

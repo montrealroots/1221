@@ -38,6 +38,7 @@ import { registerOrders } from './systems/orders';
 import { registerClothing, starterWardrobe } from './systems/clothing';
 import { registerAlcohol } from './systems/alcohol';
 import { registerKitchen } from './systems/kitchen';
+import { registerRoutines } from './systems/routines';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
@@ -175,6 +176,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerClothing(sim);
   registerAlcohol(sim);
   registerKitchen(sim);
+  registerRoutines(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);
