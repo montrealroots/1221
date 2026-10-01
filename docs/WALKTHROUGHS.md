@@ -86,7 +86,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Step | Status | How |
 |---|---|---|
 | Wake at the right time and place | Works | `life.sleep`, the night where they are. |
-| Bathroom facilities | Part | A shower, a bath where the home has one (`life.look_after`); toiletries as supplies are being researched (Stage 5). |
+| Bathroom facilities | Works | A shower, a bath where the home has one (`life.look_after`), using the bathroom's soap and shampoo; without them it leaves you less clean (`systems/hygiene.ts`). |
 | Accessible clothes | Works | The day's outfit from what's to hand and clean (`systems/wardrobe.ts`). |
 | Food from supplies and equipment | Works | Groceries in the fridge, freezer and pantry, a recipe cooked in a kitchen that has what it needs (`food.cook`). |
 | Leftovers and cleanup | Part | Leftovers kept and eaten first; washing up isn't separate from the recipe's minutes. |
@@ -164,7 +164,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Location, timing, terms | Works | The role, the production's town, the dates, the scale pay. |
 | Schedule conflicts | Works | One commitment at a time; a clash is flagged on the calendar. |
 | Preparation | Works | Classes, coaching, workshops, the kit. |
-| Clothing, grooming, documents, transport, accommodation | Part | Documents and travel are checked and booked; the production's hotel; clothing and grooming aren't asked for yet (Stage 13: fittings, a performer's own wardrobe). |
+| Clothing, grooming, documents, transport, accommodation | Part | Documents and travel are checked and booked; the production's hotel; a barber or a salon by name (`hygiene.groom`), which a production doesn't yet ask for; clothing isn't asked for yet (Stage 13: fittings, a performer's own wardrobe). |
 | Travel and attend | Works | The career's trips as journeys. |
 | The professional activity | Works | The shoot or the run. |
 | Career and money | Works | Credits, pay, residuals, reputation. |

@@ -70,6 +70,8 @@ export interface Item {
   garment?: import('./wardrobe').Garment;
   /** Food: what it is, how much is left, and when it goes off (`systems/pantry.ts`). */
   food?: import('./pantry').Food;
+  /** A toiletry: its kind and how much is left (`systems/hygiene.ts`). */
+  supply?: import('./hygiene').Supply;
 }
 
 /** The key of a home they live in: an owned home by its id, any other by its kind, town and when it began. */

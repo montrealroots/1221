@@ -39,6 +39,7 @@ import { registerClothing, starterWardrobe } from './systems/clothing';
 import { registerAlcohol } from './systems/alcohol';
 import { registerKitchen } from './systems/kitchen';
 import { registerRoutines } from './systems/routines';
+import { registerHygiene, starterSupplies } from './systems/hygiene';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
@@ -177,6 +178,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerAlcohol(sim);
   registerKitchen(sim);
   registerRoutines(sim);
+  registerHygiene(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);
@@ -302,6 +304,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   scheduleUsStatus(sim, sim.player);
   // The clothes the life begins with (`systems/clothing.ts`).
   starterWardrobe(sim, sim.player);
+  // And the toiletries (`systems/hygiene.ts`).
+  starterSupplies(sim, sim.player);
   return sim;
 }
 
@@ -315,6 +319,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
   // A save from before 2026-10-01 counted outfits: its wardrobe of garments is given, its dirty ones worn into it (`systems/clothing.ts`).
   if (universe.people[universe.playerId]) starterWardrobe(sim, sim.player);
+  // A save from before 2026-10-01 kept no toiletries: its set is given (`systems/hygiene.ts`).
+  if (universe.people[universe.playerId]) starterSupplies(sim, sim.player);
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.

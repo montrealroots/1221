@@ -1,0 +1,830 @@
+{
+  "meta": {
+    "compiledOn": "2026-10-01",
+    "purpose": "SLATE career depth: awards bodies, wardrobe fittings, performer-furnished wardrobe, deal negotiation, press/promotion obligations.",
+    "rules": "No invented numbers. Every figure carries a source URL. null means not found in a source that could be read; the note says what is missing. Where a figure came only from a search-engine excerpt of a page that blocked direct fetching (sagaftra.org, backstage.com, bafta.org and deadline.com all returned 403 or paywall redirects), the entry says so in 'verification'.",
+    "verificationLevels": {
+      "primary-read": "Read directly from the official rules/agreement document (PDF text extracted locally or page fetched).",
+      "official-excerpt": "Official page, but only a search-engine excerpt could be read (page blocked direct fetch).",
+      "trade-excerpt": "Trade press or industry secondary source, read via excerpt or fetch.",
+      "unconfirmed": "Only a non-authoritative source; treat as provisional."
+    },
+    "importantCaveats": [
+      "SAG-AFTRA ratified a new TV/Theatrical Agreement on 2026-06-04 running 2026-07-01 to 2030-06-30 (3% compounded annual minimum increases). The official 2026 MOA PDF on sagaftra.org could not be fetched (403); 2026 changes below come from SAGindie (a SAG-AFTRA-affiliated site) and GreenSlate summaries, and the base rule text comes from the 2014 Codified Basic Agreement and the 2023 MOA hosted on amptp.org.",
+      "SAG-AFTRA's own help-centre answer (servicesagaftra.custhelp.com a_id 997) still states the 2014 cleaning allowances ($18 formal / $12 other per outfit per week). The 2023 MOA raised formal wear to $27; the help page is stale on formal wear.",
+      "Several 2026-27 dates (Primetime Emmys 2027, Daytime Emmys 2027, Tony 2027 cutoff/nominations, Olivier 2027 window, IFTA 2027 ceremony, Canadian Screen Awards 2027 nominations/ceremony, Premios Ariel 2027 call) were not yet published by the bodies as of 2026-10-01. They are null with a note; prior-year patterns are given only as labelled patterns, never as dates."
+    ]
+  },
+
+  "awards": [
+    {
+      "id": "oscars",
+      "name": "Academy Awards (99th Oscars)",
+      "body": "Academy of Motion Picture Arts and Sciences (AMPAS)",
+      "country": "US",
+      "medium": ["film"],
+      "voters": {
+        "totalMembersIf2026InviteesAccept": 11319,
+        "votingMembersIf2026InviteesAccept": 10338,
+        "branches": 19,
+        "actingNominationsVotedBy": "Active members of the Actors Branch (nominations); all active voting members vote final winners.",
+        "source": ["https://deadline.com/2026/06/jacob-elordi-josh-oconnor-jenna-ortega-529-new-oscar-voters-1236966297/", "https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf?VersionId=84FilOcTNI7wpFAxl56.8xesZyP5.UWl"],
+        "verification": "trade-excerpt (membership counts); official-excerpt (rules)"
+      },
+      "actingCategories": [
+        "Performance by an Actor in a Leading Role",
+        "Performance by an Actress in a Leading Role",
+        "Performance by an Actor in a Supporting Role",
+        "Performance by an Actress in a Supporting Role"
+      ],
+      "nomineesPerActingCategory": 5,
+      "nominationMechanics": "Reminder List of up to 10 actresses and 10 actors per eligible film goes to Actors Branch; preferential ballot of up to five per category; top five vote-getters are nominated. New for the 99th: a performer may receive more than one nomination in the same category if two performances rank in the top five.",
+      "eligibility": {
+        "window": {"start": "2026-01-01", "end": "2026-12-31"},
+        "qualifyingRun": "Paid-admission commercial theatrical run of at least 7 consecutive days in one venue in one of six US metro areas: Los Angeles County; New York City (five boroughs); Bay Area (San Francisco, Marin, Alameda, San Mateo, Contra Costa counties); Chicago (Cook County); Dallas-Fort Worth (Dallas and Tarrant counties); Atlanta (Fulton County). At least three screenings daily, at least one starting between 6pm and 10pm.",
+        "source": "https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf?VersionId=84FilOcTNI7wpFAxl56.8xesZyP5.UWl",
+        "verification": "official-excerpt"
+      },
+      "calendar2026_27": {
+        "eligibilityStart": "2026-01-01",
+        "finalSubmissionDeadline": "2026-11-12",
+        "governorsAwards": "2026-11-15",
+        "preliminaryVoting": ["2026-12-07", "2026-12-11"],
+        "shortlists": "2026-12-15",
+        "eligibilityEnd": "2026-12-31",
+        "nominationsVoting": ["2027-01-11", "2027-01-15"],
+        "nominationsAnnounced": "2027-01-21",
+        "nomineesLuncheon": "2027-02-16",
+        "finalVoting": ["2027-02-25", "2027-03-04"],
+        "ceremony": "2027-03-14",
+        "venue": "Dolby Theatre, Hollywood",
+        "source": ["https://variety.com/2026/film/awards/oscars-2027-2028-ceremony-dates-march-1236710777/", "https://www.thegoldknight.com/2026/04/oscars-2027-key-dates.html"],
+        "verification": "trade-excerpt"
+      },
+      "howToJoin": {
+        "process": "By sponsorship, not application. A candidate must be sponsored by two Academy members of the branch they seek to join. Oscar nominees are automatically considered and need no sponsors. Branch committee review, then Board of Governors approval, then invitation (announced each June).",
+        "actorsBranchCredits": "Three film credits, at least one within the last five years; scripted roles of a calibre reflecting Academy standards.",
+        "sponsorshipDeadlineCurrentCycle": "2026-09-25 5pm PT",
+        "2026InviteClass": 529,
+        "source": ["https://www.oscars.org/about/join-academy", "https://www.yahoo.com/entertainment/oscarssowhite-academy-membership-requirements-anyway-233017346.html", "https://deadline.com/2026/06/jacob-elordi-josh-oconnor-jenna-ortega-529-new-oscar-voters-1236966297/"],
+        "verification": "primary-read (process, deadline); trade-excerpt (actors branch credit rule)"
+      }
+    },
+    {
+      "id": "golden-globes",
+      "name": "84th Annual Golden Globes",
+      "body": "Golden Globes, LLC (voters are entertainment journalists; HFPA dissolved 2023)",
+      "country": "US",
+      "medium": ["film", "tv"],
+      "voters": {
+        "count": 500,
+        "countries": 76,
+        "who": "Entertainment journalists for recognized media outlets; must certify no paid industry work (journalism exempt).",
+        "source": ["https://www.goldderby.com/film/2026/golden-globes-awards-membership-us-outlets/", "https://goldenglobes.com/wp-content/uploads/2026/05/FINAL_84th-ANNUAL-GOLDEN-GLOBES-ELIGIBILITY-AND-CONSIDERATION-RULES-.pdf"],
+        "verification": "trade-excerpt (count, countries); primary-read (certification)"
+      },
+      "actingCategories": {
+        "film": [
+          "Best Performance by a Female Actor in a Motion Picture - Drama",
+          "Best Performance by a Male Actor in a Motion Picture - Drama",
+          "Best Performance by a Female Actor in a Motion Picture - Musical or Comedy",
+          "Best Performance by a Male Actor in a Motion Picture - Musical or Comedy",
+          "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+          "Best Performance by a Male Actor in a Supporting Role in any Motion Picture"
+        ],
+        "tv": [
+          "Best Performance by a Female Actor in a Television Series - Drama",
+          "Best Performance by a Male Actor in a Television Series - Drama",
+          "Best Performance by a Female Actor in a Television Series - Musical or Comedy",
+          "Best Performance by a Male Actor in a Television Series - Musical or Comedy",
+          "Best Performance by a Female Actor in a Limited Series, Anthology Series, or Motion Picture Made for Television",
+          "Best Performance by a Male Actor in a Limited Series, Anthology Series, or Motion Picture Made for Television",
+          "Best Performance by a Female Actor in a Supporting Role on Television",
+          "Best Performance by a Male Actor in a Supporting Role on Television"
+        ]
+      },
+      "nomineesPerActingCategory": 6,
+      "nomineesNote": "Voters vote for up to six nominees per category (eight for Cinematic and Box Office Achievement).",
+      "eligibility": {
+        "window": {"start": "2026-01-01", "end": "2026-12-31"},
+        "filmRelease": "Feature 70+ minutes, released in commercial theatres or on pay-per-view (not subscription) in greater Atlanta, Chicago, Dallas, Los Angeles, Miami, New York City or San Francisco for at least 7 consecutive days, starting before 11:59pm Dec 31; also made available to all voters. Festival screenings alone do not count.",
+        "tvRelease": "First aired or made available in the US during the qualifying year; broadcast programs in prime time (8-11pm Mon-Sat, 7-11pm Sun); cable/subscription platforms exempt from the prime-time rule.",
+        "voiceOnly": "Voice-only performances (face not shown) not eligible in acting categories.",
+        "source": "https://goldenglobes.com/wp-content/uploads/2026/05/FINAL_84th-ANNUAL-GOLDEN-GLOBES-ELIGIBILITY-AND-CONSIDERATION-RULES-.pdf",
+        "verification": "primary-read"
+      },
+      "calendar2026_27": {
+        "submissionsOpen": "2026-06-01",
+        "submissionDeadline": "2026-10-30",
+        "nominationsAnnounced": "2026-12-07",
+        "finalBallotsSent": "2026-12-18",
+        "ceremony": "2027-01-10",
+        "venue": "Beverly Hilton, Beverly Hills (CBS / Paramount+)",
+        "source": ["https://www.billboard.com/music/awards/2027-golden-globes-key-dates-1236241818/", "https://goldenglobes.com/award-rules-and-entry-forms/"],
+        "verification": "trade-excerpt + primary-read (submission dates)"
+      },
+      "howToJoin": {
+        "process": "Voter application for entertainment journalists (goldenglobes.com/voter-application). Not open to working actors.",
+        "source": "https://goldenglobes.com/voter-application/",
+        "verification": "official-excerpt"
+      }
+    },
+    {
+      "id": "actor-awards",
+      "name": "33rd Annual Actor Awards presented by SAG-AFTRA (formerly SAG Awards)",
+      "body": "SAG-AFTRA",
+      "country": "US",
+      "medium": ["film", "tv"],
+      "voters": {
+        "nominations": "Two nominating committees (Motion Pictures; Television), each 2,500 randomly selected active paid-up members who have not served in the past 8 years.",
+        "final": "All active, paid-up SAG-AFTRA members (November 2026 dues paid by 2026-12-10).",
+        "totalMembership": null,
+        "totalMembershipNote": "Not stated on actorawards.org FAQ.",
+        "source": "https://www.actorawards.org/faq",
+        "verification": "primary-read"
+      },
+      "actingCategories": null,
+      "actingCategoriesNote": "Not enumerated on the pages read. Known structure (male/female actor in leading role, supporting role, cast ensemble, TV drama/comedy/limited) was not confirmed from an official 2027 page.",
+      "nomineesPerActingCategory": null,
+      "eligibility": {
+        "rule": "Productions must be made under SAG-AFTRA jurisdiction / signatory to a SAG-AFTRA agreement. Non-English titles eligible.",
+        "window": null,
+        "windowNote": "Eligibility window not published on the FAQ or calendar pages read.",
+        "source": "https://www.actorawards.org/faq",
+        "verification": "primary-read"
+      },
+      "calendar2026_27": {
+        "submissionsClose": "2026-11-02",
+        "nominationBallotsToCommittees": "2026-11-30",
+        "duesDeadlineForFinalVoting": "2026-12-10",
+        "nominationVotingOpens": "2026-12-14",
+        "nominationVotingCloses": "2027-01-03",
+        "nominationsAnnounced": "2027-01-06",
+        "finalVotingOpens": "2027-01-13",
+        "paperBallotRequestDeadline": "2027-02-05",
+        "finalVotingCloses": "2027-02-26 12:00 PT",
+        "ceremony": "2027-02-28",
+        "broadcast": "Netflix 8pm ET / 5pm PT",
+        "source": "https://www.actorawards.org/awards/calendar",
+        "verification": "primary-read",
+        "conflictNote": "A Gold Derby/search excerpt gave nomination voting opening 2026-12-10; the official calendar says 2026-12-14 (Dec 10 is the dues deadline). Official calendar used."
+      },
+      "howToJoin": "Voting is a membership right of SAG-AFTRA; joining SAG-AFTRA itself is the path (see union eligibility, not researched here)."
+    },
+    {
+      "id": "bafta-film",
+      "name": "2027 EE BAFTA Film Awards",
+      "body": "British Academy of Film and Television Arts",
+      "country": "UK",
+      "medium": ["film"],
+      "voters": {
+        "totalMembershipAllSectors": "almost 13,500 (film, games, TV)",
+        "actingNominations": "For 2027 the Casting Chapter joins the Acting Chapter in Rounds One and Two for performance categories. Chapter vote sets the first five of a 10-name longlist; a longlisting jury picks the other five from those ranked 6-15.",
+        "source": ["https://www.bafta.org/membership/", "https://www.screendaily.com/news/bafta-tweaks-film-voting-rules-expands-longlist-in-key-categories/5218813.article", "https://deadline.com/2026/07/bafta-ai-clause-submission-rules-2027-1237000067/"],
+        "verification": "trade-excerpt (bafta.org returned 403)"
+      },
+      "actingCategories": ["Leading Actress", "Leading Actor", "Supporting Actress", "Supporting Actor"],
+      "nomineesPerActingCategory": 6,
+      "eligibility": {
+        "window": {"start": "2026-01-01", "end": "2027-02-19"},
+        "windowNote": "First UK theatrical release in this window. Films Not in the English Language and Documentaries get to 2027-03-19.",
+        "qualifyingRun": "Feature 70+ minutes. At least 10 commercial UK screenings across at least 7 days in aggregate (or equivalent of 70 screenings) for all categories except Best Film; Best Film needs 50+ screenings over at least 7 days (or 350 screenings).",
+        "source": ["https://www.bafta.org/awards/film-rules/", "https://www.bafta.org/media-centre/press-releases/2027-film-awards-opens-for-entries/"],
+        "verification": "official-excerpt"
+      },
+      "calendar2026_27": {
+        "entriesOpen": "2026-07-22",
+        "roundOneOpens": "2026-12-04",
+        "longlistsAndRoundTwo": "2027-01-07",
+        "nominationsAnnounced": "2027-01-19",
+        "roundThreeOpens": "2027-01-26",
+        "ceremony": "2027-02-21",
+        "source": "https://www.bafta.org/media-centre/press-releases/2027-film-awards-opens-for-entries/",
+        "verification": "official-excerpt"
+      },
+      "howToJoin": {
+        "process": "Application-based membership; next window for Full Voting (Global) and North America Professional membership is in 2027. Scotland and Cymru branch membership year-round.",
+        "criteria": null,
+        "criteriaNote": "Detailed credit criteria not readable (bafta.org 403).",
+        "source": "https://www.bafta.org/membership/",
+        "verification": "official-excerpt"
+      }
+    },
+    {
+      "id": "bafta-tv",
+      "name": "BAFTA Television Awards with P&O Cruises 2027",
+      "body": "British Academy of Film and Television Arts",
+      "country": "UK",
+      "medium": ["tv"],
+      "voters": {
+        "process": "Entries voted online by eligible Academy members to produce nominees; the winner in each category is chosen by a jury of Academy members selected by the Television Committee (jury of nine reported).",
+        "source": "https://en.wikipedia.org/wiki/British_Academy_Television_Award_for_Best_Female_Comedy_Performance",
+        "verification": "unconfirmed (secondary; official TV rules page blocked)"
+      },
+      "actingCategories": ["Leading Actress", "Leading Actor", "Supporting Actress", "Supporting Actor", "Female Performance in a Comedy", "Male Performance in a Comedy"],
+      "actingCategoriesNote": "2026 ceremony listed comedy lead as 'Actor in a Comedy' per Gold Derby excerpt; official naming for 2027 not read.",
+      "nomineesPerActingCategory": 6,
+      "nomineesNote": "Six nominees seen in 2026 Leading Actress, Supporting Actor and comedy actor lists.",
+      "eligibility": {
+        "window": {"start": "2026-01-01", "end": "2026-12-31"},
+        "rule": "First UK transmission in the window, aired to UK audiences, minimum running time 3 minutes unless category rules say otherwise.",
+        "source": ["https://www.bafta.org/media-centre/press-releases/2027-tv-and-tv-craft-awards-open-for-entries/", "https://www.advanced-television.com/2026/08/06/2027-bafta-tv-awards-and-bafta-tv-craft-awards-open-for-entries/"],
+        "verification": "trade-excerpt"
+      },
+      "calendar2026_27": {
+        "entriesOpen": "2026-08-06",
+        "finalDeadlineForDecemberTransmissions": "2027-01-05 16:00 GMT",
+        "nominationsAnnounced": "2027-03-22",
+        "craftCeremony": "2027-04-25",
+        "ceremony": "2027-05-09",
+        "source": "https://www.advanced-television.com/2026/08/06/2027-bafta-tv-awards-and-bafta-tv-craft-awards-open-for-entries/",
+        "verification": "trade-excerpt"
+      }
+    },
+    {
+      "id": "primetime-emmys",
+      "name": "Primetime Emmy Awards",
+      "body": "Television Academy (ATAS)",
+      "country": "US",
+      "medium": ["tv"],
+      "voters": {
+        "membership": "27,000+ members",
+        "actingNominations": "Peer-group voting: Performers peer group votes performer categories.",
+        "source": ["https://www.goldderby.com/tv/2026/2026-emmy-nominations-voting-slots-categories/", "https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf"],
+        "verification": "trade-excerpt (membership); primary-read (rules)"
+      },
+      "actingCategories": [
+        "Outstanding Lead Actor in a Comedy Series", "Outstanding Lead Actor in a Drama Series", "Outstanding Lead Actor in a Limited or Anthology Series or Movie",
+        "Outstanding Lead Actress in a Comedy Series", "Outstanding Lead Actress in a Drama Series", "Outstanding Lead Actress in a Limited or Anthology Series or Movie",
+        "Outstanding Supporting Actor in a Comedy Series", "Outstanding Supporting Actor in a Drama Series", "Outstanding Supporting Actor in a Limited or Anthology Series or Movie",
+        "Outstanding Supporting Actress in a Comedy Series", "Outstanding Supporting Actress in a Drama Series", "Outstanding Supporting Actress in a Limited or Anthology Series or Movie",
+        "Outstanding Guest Actor in a Comedy Series", "Outstanding Guest Actress in a Comedy Series", "Outstanding Guest Actor in a Drama Series", "Outstanding Guest Actress in a Drama Series"
+      ],
+      "nomineesPerActingCategory": "variable",
+      "nomineeRule": {
+        "bySubmissions": [{"submissions": "20-80", "nominees": 5}, {"submissions": "81-160", "nominees": 6}, {"submissions": "161-240", "nominees": 7}, {"submissions": ">240", "nominees": 8}],
+        "parity": "Actor and actress categories of the same genre/designation get the same number of nominations (except categories with fewer than 20 submissions).",
+        "source": "https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf",
+        "verification": "primary-read (78th rules, v4 04.07.26)"
+      },
+      "performerRules": {
+        "guest": "Only performers in less than 50% of eligible episodes may enter Guest; guest needs at least 5% stand-alone contiguous screen time of the submitted episode; one episode submitted with 50-word log line. A performer nominated/won in Lead or Supporting for a role cannot later enter Guest for the same role.",
+        "supportingLimitedOrMovie": "Minimum 5% of total running time.",
+        "category": "Performers must follow the show's categorization (comedy/drama); same character in more than one program enters one category only.",
+        "series": "Series need 6 episodes premiering by May 31 to qualify (comedy, drama, etc.).",
+        "excluded": "Voice-over performers, narrators, documentary performers and brief cameos are ineligible for lead/supporting/guest.",
+        "source": "https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf",
+        "verification": "primary-read"
+      },
+      "eligibility": {
+        "standingRule": "Eligibility year runs June 1 to May 31 (78th: 2025-06-01 to 2026-05-31).",
+        "window2027": null,
+        "window2027Note": "79th (2027) rules not yet published as of 2026-10-01. Under the standing June-May rule it would cover 2026-06-01 to 2027-05-31, but this is a pattern, not a published date.",
+        "source": "https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf",
+        "verification": "primary-read (78th)"
+      },
+      "calendar2026_27": {
+        "lastCompleted78th": {"entryDeadline": "2026-05-07", "nominationVoting": ["2026-06-11", "2026-06-22"], "nominationsAnnounced": "2026-07-08", "ceremony": "2026-09-14"},
+        "79th": null,
+        "79thNote": "Not announced as of 2026-10-01.",
+        "source": ["https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf", "https://en.wikipedia.org/wiki/78th_Primetime_Emmy_Awards"],
+        "verification": "primary-read"
+      },
+      "howToJoin": {
+        "performersActive": "Employment as a performer for at least 2 years with 10 qualifying credits of nationally exhibited TV content in contracted/principal roles within the past 4 years (background excluded); at least 50% from network/cable/streaming original content, up to 50% from independent webseries. OR an Emmy nomination in the Performers peer group within the past 4 years. Body-of-work waiver possible.",
+        "performersAssociate": "1 year professional TV work with at least 2 aired featured credits on network/cable/streaming original content.",
+        "applicationFee": "USD 50 one-time, nonrefundable processing fee",
+        "dues": null,
+        "duesNote": "Annual dues not stated on the page read.",
+        "source": "https://www.televisionacademy.com/academy/organization/peer-groups/performers",
+        "verification": "primary-read"
+      }
+    },
+    {
+      "id": "daytime-emmys",
+      "name": "Daytime Emmy Awards",
+      "body": "National Academy of Television Arts & Sciences (NATAS)",
+      "country": "US",
+      "medium": ["tv"],
+      "voters": {
+        "process": "Peer judging: blue-ribbon panels of peer judges screen every submission and determine nominees. Judges drawn from NATAS members, Television Academy members or dual members; if a panel cannot be filled, prior Emmy winners, prior nominees, then those meeting peer-group criteria. Drama entrants supply judges via a Judging Grid for parity.",
+        "source": ["https://theemmys.tv/wp-content/uploads/2025/04/Daytime-Judging-101-2025-Version.pdf", "https://theemmys.tv/wp-content/uploads/2026/04/Daytime-Call-for-Entries_v2026_full_v2.pdf"],
+        "verification": "trade-excerpt (via search excerpt of official PDFs)"
+      },
+      "actingCategories": ["Lead Actor in a Drama Series", "Lead Actress in a Drama Series", "Supporting Actor in a Drama Series", "Supporting Actress in a Drama Series", "Emerging Talent in a Daytime Drama Series", "Guest Performer in a Daytime Drama Series"],
+      "nomineesPerActingCategory": "variable (scaled by number of submissions)",
+      "eligibility": {
+        "53rd2026": "Calendar year 2025 (2025-01-01 to 2025-12-31).",
+        "guestRule": "Guest Performer capped at 19% of episodes aired in the eligibility period; more than that must enter Lead, Supporting or Emerging Talent.",
+        "source": ["https://www.soapoperanetwork.com/2026/07/53rd-annual-daytime-emmy-awards-nominations-announcement-date", "https://variety.com/2026/tv/news/daytime-emmys-rule-changes-date-category-eliminated-2026-1236693065/"],
+        "verification": "trade-excerpt"
+      },
+      "calendar2026_27": {
+        "53rd": {"nominationsAnnounced": "2026-07-14", "ceremony": "2026-10-30", "venue": "Hollywood Palladium"},
+        "54th2027": null,
+        "54thNote": "Not announced. Pattern only: calendar-year eligibility (would be 2026), ceremony moved to October from the 52nd onward.",
+        "source": ["https://www.soapoperanetwork.com/2026/07/53rd-annual-daytime-emmy-awards-nominations-announcement-date", "https://en.wikipedia.org/wiki/53rd_Daytime_Emmy_Awards"],
+        "verification": "trade-excerpt"
+      },
+      "howToJoin": null,
+      "howToJoinNote": "NATAS membership criteria not researched to a readable source."
+    },
+    {
+      "id": "tonys",
+      "name": "Tony Awards (80th, 2026-27 season)",
+      "body": "American Theatre Wing and The Broadway League",
+      "country": "US",
+      "medium": ["theatre"],
+      "voters": {
+        "count": 857,
+        "who": "Voting members of The Broadway League; ATW board and designated advisory members; governing boards of Actors' Equity, Dramatists Guild, SDC, United Scenic Artists, ATPAM; Casting Society of America members; New York Drama Critics Circle; Tony Nominating Committee.",
+        "nominatingCommittee2026_27": 65,
+        "source": ["https://www.tonyawards.com/about/faq/", "https://www.broadway.com/buzz/207730/roslyn-s-ruff-william-ivey-long-pearl-sun-more-join-20262027-tony-awards-nominating-committee/"],
+        "verification": "official-excerpt (voter count, 857 was the figure on the FAQ at time of search); trade (committee size)"
+      },
+      "actingCategories": [
+        "Best Performance by an Actor in a Leading Role in a Play", "Best Performance by an Actress in a Leading Role in a Play",
+        "Best Performance by an Actor in a Leading Role in a Musical", "Best Performance by an Actress in a Leading Role in a Musical",
+        "Best Performance by an Actor in a Featured Role in a Play", "Best Performance by an Actress in a Featured Role in a Play",
+        "Best Performance by an Actor in a Featured Role in a Musical", "Best Performance by an Actress in a Featured Role in a Musical"
+      ],
+      "nomineesPerActingCategory": "4 normally; 5 if at least 9 eligible candidates; ties for last slot add nominees",
+      "eligibility": {
+        "rule": "Production must officially open in an eligible Broadway theatre (500+ seats, used principally for legitimate theatre, listed in Exhibit A) on or before the season's Eligibility Date and after the prior season's. Eligibility Date set by the Tony Awards Management Committee, at least 32 days before the ceremony; submission date is 14 days before it. Producers must make 32 paid performances available to voters if opening before April 1, or 8 if opening April 1 to the cutoff.",
+        "source": "https://www.tonyawards.com/documents/24/2025-2026_Tony_Rules_and_Regulations.pdf",
+        "verification": "primary-read (2025-26 rules; 2026-27 rules not yet read)"
+      },
+      "calendar2026_27": {
+        "eligibilityCutoff": null,
+        "nominationsAnnounced": null,
+        "ceremony": null,
+        "note": "80th Tony Awards dates not confirmed by an official source as of 2026-10-01 (one search summary claimed 2027-06-13 citing Wikipedia; ATW site says 'stay tuned'). Prior pattern: cutoff late April, nominations early May, ceremony early-mid June (79th was 2026-06-07 at Radio City).",
+        "source": ["https://americantheatrewing.org/program/tony-awards/", "https://en.wikipedia.org/wiki/79th_Tony_Awards"],
+        "verification": "unconfirmed"
+      },
+      "howToJoin": "No individual membership; a performer becomes a voter only via a seat on a listed governing board/committee or membership of a listed body."
+    },
+    {
+      "id": "oliviers",
+      "name": "Laurence Olivier Awards",
+      "body": "Society of London Theatre (SOLT)",
+      "country": "UK",
+      "medium": ["theatre"],
+      "voters": {
+        "process": "Five panels (Theatre, Affiliate, Opera, Dance, Family). Theatre panel is made up of members of the public with no professional theatre background who must attend all eligible productions (two complimentary tickets per show; unpaid, one year). Theatre categories: two-stage process with panellists producing a longlist, SOLT members voting, then panellists and SOLT members voting winners.",
+        "count": null,
+        "countNote": "Total voter count not published on the pages read.",
+        "source": ["https://officiallondontheatre.com/olivier-awards/choosing-the-winners/", "https://officiallondontheatre.com/news/applications-for-the-olivier-awards-2027-public-panels/"],
+        "verification": "primary-read"
+      },
+      "actingCategories": ["Best Actor", "Best Actress", "Best Actor in a Musical", "Best Actress in a Musical", "Best Actor in a Supporting Role", "Best Actress in a Supporting Role", "Best Actor in a Supporting Role in a Musical", "Best Actress in a Supporting Role in a Musical"],
+      "nomineesPerActingCategory": 5,
+      "nomineesNote": "Five in each acting category at the 2026 awards; a performer can be double-nominated in one category (Zachary Hart, 2026); job-shared roles nominated jointly.",
+      "eligibility": {
+        "rule": "New production opening between set dates in a theatre represented in SOLT membership, meeting the category's minimum performance requirement.",
+        "2026Window": {"start": "2025-02-15", "end": "2026-02-17"},
+        "2027Window": null,
+        "2027WindowNote": "Not published (SOLT detail is members-only). Productions opening after the 2026 cutoff roll into 2027.",
+        "minimumPerformances": null,
+        "minimumPerformancesNote": "Behind SOLT members' login.",
+        "source": ["https://officiallondontheatre.com/olivier-awards/choosing-the-winners/", "https://solt.co.uk/olivier-awards/info-for-productions/"],
+        "verification": "primary-read"
+      },
+      "calendar2026_27": {
+        "2026": {"nominationsAnnounced": "2026-03-05", "ceremony": "2026-04-12", "venue": "Royal Albert Hall"},
+        "2027Ceremony": "2027-04-11",
+        "2027CeremonyVerification": "unconfirmed (hospitality vendor listing only)",
+        "source": ["https://en.wikipedia.org/wiki/2026_Laurence_Olivier_Awards", "https://www.cornucopia-events.co.uk/olivier-awards/"]
+      },
+      "howToJoin": "Members of the public may apply to the annual panels (18+); applications for 2027 panels closed."
+    },
+    {
+      "id": "critics-choice",
+      "name": "32nd Annual Critics Choice Awards",
+      "body": "Critics Choice Association",
+      "country": "US",
+      "medium": ["film", "tv"],
+      "voters": {"count": "500+ critics and entertainment journalists", "source": "https://www.criticschoice.com/about-the-critics-choice-association/", "verification": "trade-excerpt"},
+      "actingCategories": null,
+      "actingCategoriesNote": "Film: Best Actor, Best Actress, Best Supporting Actor, Best Supporting Actress, Best Young Actor/Actress, plus TV acting categories by drama/comedy/limited; exact 2027 list not read from an official source.",
+      "nomineesPerActingCategory": 6,
+      "nomineesNote": "Usually six in film acting categories (search excerpt).",
+      "eligibility": null,
+      "eligibilityNote": "Official 2027 eligibility rules not found.",
+      "calendar2026_27": {"nominationsAnnounced": "2026-12-04", "ceremony": "2027-01-03", "venue": "Barker Hangar, Santa Monica (USA Network / E!)", "source": ["https://deadline.com/2026/04/critics-choice-awards-sets-date-for-2027-ceremony-renewed-e-1236865814/", "https://www.goldderby.com/film/2026/2027-critics-choice-association-awards-nominations-dates/"], "verification": "trade-excerpt"},
+      "howToJoin": "Membership for working critics/journalists; not an actors' route."
+    },
+    {
+      "id": "spirit-awards",
+      "name": "42nd Film Independent Spirit Awards",
+      "body": "Film Independent",
+      "country": "US",
+      "medium": ["film", "tv"],
+      "voters": {
+        "nominations": "Nominating committees of working film professionals (critics, programmers, producers, directors, writers, DPs, editors, actors, past nominees, board members).",
+        "final": "Film Independent members only; members current by 2026-12-17 (2027-01-15 for some tiers).",
+        "count": null,
+        "source": "https://www.filmindependent.org/spirit-awards/faq/",
+        "verification": "primary-read"
+      },
+      "actingCategories": ["Best Lead Performance", "Best Supporting Performance", "Best Breakthrough Performance", "Best Lead Performance in a New Scripted Series", "Best Supporting Performance in a New Scripted Series"],
+      "actingCategoriesNote": "Gender-neutral since the 2023 ceremony.",
+      "nomineesPerActingCategory": "10 (Breakthrough: 5)",
+      "nomineeSource": "https://variety.com/2022/awards/news/independent-spirit-awards-gender-neutral-acting-categories-1235348072/",
+      "eligibility": {
+        "filmWindow": {"start": "2026-01-01", "end": "2026-12-31"},
+        "tvWindow": {"start": "2025-10-01", "end": "2026-09-30"},
+        "budgetCap": "USD 30 million after tax incentives (John Cassavetes Award: USD 1 million)",
+        "release": "At least one week in a US commercial theatre in 2026 and/or a commercial VOD/streaming distribution deal; or screening at a qualifying festival (Sundance, SXSW, Tribeca, Telluride, TIFF, NYFF, New Directors/New Films, Hot Docs, Berlinale new for 2027).",
+        "source": ["https://www.filmindependent.org/spirit-awards/faq/", "https://www.filmindependent.org/press-releases/2027-film-independent-spirit-awards-announces-new-categories-call-for-submissions/"],
+        "verification": "primary-read"
+      },
+      "calendar2026_27": {"submissionsOpen": "2026-08-18", "filmFinalDeadline": "2026-09-29", "nominationsAnnounced": "2026-12-02", "nomineeBrunch": "2027-01-09", "ceremony": "2027-03-06", "venue": "The Palladium", "source": "https://www.filmindependent.org/press-releases/2027-film-independent-spirit-awards-announces-new-categories-call-for-submissions/", "verification": "primary-read"},
+      "howToJoin": {"process": "Anyone can buy Film Independent membership and vote for winners.", "cost": null, "costNote": "Membership price not read.", "source": "https://www.filmindependent.org/spirit-awards/faq/"}
+    },
+    {
+      "id": "gothams",
+      "name": "36th Annual Gotham Awards (film)",
+      "body": "The Gotham Film & Media Institute",
+      "country": "US",
+      "medium": ["film"],
+      "voters": {"process": "Executive Criteria Committee checks eligibility; nominating committees of critics, journalists, curators and programmers pick nominees; a final jury of filmmakers picks winners. No member vote.", "source": "https://awards.thegotham.org/criteria/", "verification": "primary-read"},
+      "actingCategories": ["Outstanding Lead Performance", "Outstanding Supporting Performance", "Breakthrough Performer"],
+      "nomineesPerActingCategory": "up to 10 (Lead, Supporting); Breakthrough Performer nominee count not stated",
+      "eligibility": {"window": {"start": "2026-01-01", "end": "2026-12-31 23:59"}, "rule": "Feature over 70 minutes scheduled for theatrical release in the window; no budget cap stated on the criteria page.", "source": "https://awards.thegotham.org/criteria/", "verification": "primary-read"},
+      "calendar2026_27": {"submissionDeadline": "2026-09-17", "nominationsAnnounced": "2026-10-27", "ceremony": "2026-11-30", "source": ["https://awards.thegotham.org/criteria/", "https://awardswatch.com/gotham-film-institute-reveals-dates-for-2026-film-and-television-awards/"], "verification": "primary-read + trade"},
+      "howToJoin": "Jury/committee by invitation; no membership vote."
+    },
+    {
+      "id": "ifta",
+      "name": "IFTA Film & Drama Awards (Irish Film & Television Academy)",
+      "body": "Irish Film & Television Academy",
+      "country": "IE",
+      "medium": ["film", "tv"],
+      "voters": {
+        "process": "Registered voting Academy members plus juries. Acting categories (lead/supporting actor/actress, film and drama) are voted by all Academy members with a weighted vote for the Acting Chapter. Round One: rank up to 3 (3/2/1 points) to shortlist. Rising Star by special jury only.",
+        "count": null,
+        "source": "https://ifta.ie/awards/votingfilm.html",
+        "verification": "primary-read"
+      },
+      "actingCategories": ["Actor in a Lead Role in Film", "Actress in a Lead Role in Film", "Actor in a Supporting Role in Film", "Actress in a Supporting Role in Film", "Actor in a Lead Role in Drama", "Actress in a Lead Role in Drama", "Actor in a Supporting Role in Drama", "Actress in a Supporting Role in Drama"],
+      "nomineesPerActingCategory": null,
+      "nomineesNote": "Shortlist size for acting categories not stated on the voting page (other categories shortlist 4; Best Film 6).",
+      "eligibility": {
+        "performerRule": "Acting entries open to Irish persons: born on the island of Ireland (32 counties), Irish citizens, or full-time residents for at least 3 years, on Irish or international projects.",
+        "releaseRule": "First screened in Ireland or internationally (theatrical, festival or broadcast) within the calendar-year awards period; festival-only prior screenings must then be televised or shown to a paying audience. Feature over 80 minutes. Supporting roles must be integral to the plot (no cameos).",
+        "window2027": null,
+        "window2027Note": "Rules PDF read is the 2025-ceremony edition (window 2024-01-01 to 2024-12-31). Calendar-year pattern implies 2026 for the 2027 awards, not confirmed.",
+        "source": "https://ifta.ie/awards/rulesandguidelines.pdf",
+        "verification": "primary-read (prior-year rules)"
+      },
+      "calendar2026_27": {"submissionDeadline": "2026-10-09", "ceremony": null, "ceremonyNote": "Not announced; 2026 ceremony was 2026-02-20, 2025 was 2025-02-14.", "source": ["https://www.ifta.ie/", "https://en.wikipedia.org/wiki/22nd_Irish_Film_&_Television_Awards"], "verification": "primary-read"},
+      "howToJoin": null,
+      "howToJoinNote": "Membership tiers/criteria not readable on ifta.ie (members section)."
+    },
+    {
+      "id": "canadian-screen-awards",
+      "name": "2027 Canadian Screen Awards",
+      "body": "Academy of Canadian Cinema & Television",
+      "country": "CA",
+      "medium": ["film", "tv"],
+      "voters": {
+        "filmPerformance": "Feature Film Nominating Committee (directors, writers, performers, producers, critics, distributors, programmers) selects performance nominees; Cinema Division voting members vote winners online.",
+        "tvPerformance": "Nominating juries determine program and performance nominees.",
+        "source": ["https://www.academy.ca/wp-content/uploads/2026/09/2027-Canadian-Screen-Awards-Film-Rules-Regulations-1.pdf", "https://www.academy.ca/wp-content/uploads/2026/09/2027-Canadian-Screen-Awards-Television-Digital-Media-Rules-Regulations-v.Sept-18-2026.pdf"],
+        "verification": "primary-read"
+      },
+      "actingCategories": {
+        "film": ["Performance in a Leading Role, Drama", "Performance in a Leading Role, Comedy", "Performance in a Supporting Role, Drama", "Performance in a Supporting Role, Comedy", "Best Voice Performance (platform-agnostic, TV stream)"],
+        "tv": ["Best Lead Performer, Drama Series", "Best Supporting Performer, Drama", "Best Guest Performance, Drama Series", "Best Lead Performer, Comedy", "Best Supporting Performer, Comedy", "Best Guest Performance, Comedy", "Best Lead Performer, TV Movie", "Best Lead Performer, Children's or Youth", "Best Supporting Performer, Children's or Youth"]
+      },
+      "actingCategoriesNote": "Gender-neutral since 2023. TV guest = one episode or less than 50% of the series.",
+      "nomineesPerActingCategory": {"film": 8, "tv": null, "tvNote": "Not located in the TV rules text searched."},
+      "eligibility": {
+        "filmWindow": {"start": "2026-01-01", "end": "2027-03-31"},
+        "filmQualifying": "Minimum 5 Canadian screening dates in a regular commercial theatre to a paying audience with at least one in Montreal, Toronto or Vancouver; OR release on an approved SVOD platform. First public exposure within 1.5 years of the eligibility period. Dubbed dialogue makes a performance ineligible; animated performances go to Voice Performance.",
+        "tvWindowExclNewsSports": {"start": "2025-09-01", "end": "2026-11-15"},
+        "windowNote": "academy.ca page layout places each period above its rules link; read as TV = 2025-09-01..2026-11-15 and Film = 2026-01-01..2027-03-31. Film rules PDF confirms the film window directly.",
+        "source": ["https://www.academy.ca/canadian-screen-awards/rules-eligibility/", "https://www.academy.ca/wp-content/uploads/2026/09/2027-Canadian-Screen-Awards-Film-Rules-Regulations-1.pdf"],
+        "verification": "primary-read"
+      },
+      "calendar2026_27": {"entriesOpen": "2026-09-23", "earlyBird": "2026-10-09", "finalDeadline": "2026-10-26", "nominationsAnnounced": null, "ceremony": null, "note": "'Additional 2027 Canadian Screen Award dates will be announced shortly' per academy.ca.", "source": "https://www.academy.ca/canadian-screen-awards/rules-eligibility/", "verification": "primary-read"},
+      "entryFeeNote": "CAD 130 deposit to submit an entry (subsidy available via Equity & Inclusion Fund).",
+      "howToJoin": null,
+      "howToJoinNote": "Academy membership criteria not researched to a readable source."
+    },
+    {
+      "id": "premios-ariel",
+      "name": "Premios Ariel",
+      "body": "Academia Mexicana de Artes y Ciencias Cinematográficas (AMACC)",
+      "country": "MX",
+      "medium": ["film"],
+      "voters": {"who": "AMACC members, open review and viewing process", "count": "more than 2,500 members", "source": ["https://www.amacc.org.mx/convocatoria-premio-ariel", "https://cinepremiere.com.mx/academia-mexicana-de-artes-y-ciencias-cinematograficas-amacc.html"], "verification": "primary-read (voters); trade-excerpt (count)"},
+      "actingCategories": ["Mejor Actriz", "Mejor Actor", "Mejor Coactuación Femenina", "Mejor Coactuación Masculina", "Mejor Revelación Actoral"],
+      "nomineesPerActingCategory": 5,
+      "nomineesNote": "Expanded to five per category at Ariel 67; held at Ariel 68.",
+      "eligibility": {"rule": "Mexican films exhibited in the prior calendar year (Ariel 68 / 2026: films released in 2025).", "minimumRun": null, "minimumRunNote": "Not on the convocatoria page read.", "source": "https://www.amacc.org.mx/convocatoria-premio-ariel", "verification": "primary-read"},
+      "calendar2026_27": {
+        "ariel68": {"registration": ["2026-02-09", "2026-02-27"], "nominationsAnnounced": "2026-07-08", "ceremony": "2026-10-03", "city": "Ciudad de México"},
+        "ariel69_2027": null,
+        "ariel69Note": "Convocatoria for 2027 not published; pattern implies films released in 2026, registration in February.",
+        "source": ["https://www.amacc.org.mx/convocatoria-premio-ariel", "https://lasillarota.com/yo-soi-tu/2026/7/8/premio-ariel-2026-angela-molina-hoze-melendez-mas-entre-los-nominados-de-la-edicion-68-519468.html", "https://es.wikipedia.org/wiki/LXVIII_edici%C3%B3n_de_los_Premios_Ariel"],
+        "verification": "primary-read + trade"
+      },
+      "howToJoin": null,
+      "howToJoinNote": "AMACC admission process not on pages read (89 new associate members were admitted in one cohort per UDGTV)."
+    }
+  ],
+
+  "fittings": {
+    "sagAftraTheatricalTV": {
+      "dayPerformer": {
+        "sameDayAsWork": "Fitting time is work time and part of the continuous day; a voucher signed in/out at every fitting.",
+        "priorDay": "One hour minimum pay per call; additional time in 15-minute units.",
+        "moneyBreak": [
+          {"rule": "No fitting pay for day performers earning over USD 1,000/day (1,200 for contracts from 2015-07-01)", "era": "2014 CBA"},
+          {"rule": "Over USD 1,400/day (1,500 for contracts after 2023 ratification)", "era": "2023 MOA"},
+          {"rule": "Over USD 1,500/day (1,700 for contracts on/after the 2026 effective date)", "era": "2026 MOA"}
+        ],
+        "fittedNotUsed": "If fitted and not used in the picture: one day's pay, nothing further.",
+        "wardrobeOrMakeupTestNotUsed": "Half a day's pay per test day.",
+        "source": ["https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf", "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2023%20CBA%20and%20TVA%20MOA.pdf", "https://greenslate.com/blog/sag-aftra-tv-theatrical-agreement"],
+        "section": "CBA Schedule A, Section 16.A",
+        "verification": "primary-read (2014 CBA, 2023 MOA); trade (2026 threshold)"
+      },
+      "weeklyFreelancePerformer": {
+        "priorDay": "Producer gets up to 4 hours free fitting time on 2 days for each week worked in the picture. Excess paid at contract salary rate: initial call minimum 1 hour, then 15-minute units, paid at end of engagement.",
+        "fittedNoContract": "Fitted but not offered a written contract at prior agreed (or usual) salary: one day's pay per fitting day (capped at the day performer minimum if salary disputed).",
+        "doesNotStartEmployment": "Fittings after hire but before start date do not start consecutive employment.",
+        "source": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+        "section": "CBA Schedule B, Section 20",
+        "verification": "primary-read (2014 text; later MOAs read did not amend it)"
+      },
+      "backgroundActors": {
+        "priorDay": "Minimum 3 hours at the hourly rate (raised from 2), then 30-minute units.",
+        "source": "https://greenslate.com/blog/sag-aftra-basic-television-moa-summary-by-date",
+        "verification": "trade-excerpt"
+      },
+      "minimumsForContext": {
+        "theatricalDayPerformer": {"2025-07-01": 1246, "2026-07-01": 1283},
+        "theatricalWeeklyPerformer": {"2025-07-01": 4326, "2026-07-01": 4456},
+        "tvExhibitADayPerformer2025": 1290,
+        "currency": "USD",
+        "source": ["https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/Wage%20Scales%20%E2%80%93%202023-26%20CBA%20and%20TVA.pdf", "https://www.wrapbook.com/blog/essential-guide-sag-rates"],
+        "verification": "primary-read (2025); trade (2026, = 2025 x 1.03)"
+      }
+    },
+    "sagAftraCommercials": {
+      "sameDay": "Fittings on the work day are work time.",
+      "priorDay": "Minimum 1 hour, then 15-minute increments.",
+      "rates": [
+        {"period": "2026-04-01 to 2027-03-31 (Year 2)", "firstHour": 106.90, "per15MinAfter": 26.73, "currency": "USD", "derivation": "First hour equals 1/8 of the Year-2 on-camera principal session fee (USD 855.20)."}
+      ],
+      "rateConflictNote": "A SAG-AFTRA cheat-sheet excerpt gave USD 26.75 per 15 minutes; Union Talent Services gave 26.73 (=106.90/4). Year 1 (2025-04-01..2026-03-31) fitting fee not confirmed; session fee was USD 822.30.",
+      "source": ["https://www.uniontalentservices.com/sag-aftra-commercial-rates/", "https://www.sagaftra.org/sites/default/files/2026-05/Member%20Tips%20and%20Tools%20-%20Commercials%20Cheat%20Sheet%202026-2027.pdf", "https://cmsproductions.com/blog/regulations-under-sag-aftra-commercial-contract/"],
+      "verification": "trade + official-excerpt"
+    },
+    "equityUK": {
+      "pactCinemaFilms": {
+        "rule": "Second-call day for make-up, hairdressing, wig and wardrobe fitting, camera tests: half the negotiated daily Performance Salary up to 5 hours; full daily salary over 5 hours; subject to a cap. Not part of Total Applicable Salary; no use fees.",
+        "cap": [
+          {"period": "2020-04-06..2021-04-05", "gbp": 144},
+          {"period": "2021-04-06..2022-04-05", "gbp": 147},
+          {"period": "2022-04-06..2023-04-05", "gbp": 150},
+          {"period": "2023-04-06..2024-04-05", "gbp": 156},
+          {"period": "2024-04-06..2025-04-05", "gbp": 161},
+          {"period": "2025-04-06..", "gbp": 166, "verification": "trade-excerpt only (2025 Pact rate card on productionguild.com could not be downloaded)"}
+        ],
+        "stuntPerformerWigWardrobeFitting": {"2024-25": {"perDay": 22, "perWeek": 44}, "currency": "GBP", "note": "Appendix FB 6 line on rate card; layout extraction, verify before use."},
+        "makeupHairWardrobeOnShootDay": "Included as part of the working day (F14.6).",
+        "minimumDailyPerformanceSalary2024_25": {"gbp": 161, "note": "Budget GBP 3m+; LBF and VLBF have their own uplifted packages."},
+        "source": ["https://www.pact.co.uk/static/c00ac5e7-c037-4f76-8221c5258896569f/Pact-Equity-Cinema-Films-Agreement-2021-effective-from-6th-April-2021.pdf", "https://www.pact.co.uk/static/f436df45-7436-439d-a15f0b4645448bd1/7e26a0f1-8c1d-4846-bcbc729ec3c57037/Pact-Equity-Cinema-Film-Agreement-Rate-Card-APPENDIX-FG-to-April-2025-FINAL.pdf?userDownload=true", "https://www.thecdg.co.uk/Secure/CFA%20Digest_April%202024-25.pdf"],
+        "section": "CFA 2021 F11.2(iii)(a)",
+        "verification": "primary-read"
+      },
+      "bbcInHouseTV2024": {
+        "readThroughsAndFittings": {"upTo4Hours": 86, "4to8Hours": 173, "currency": "GBP"},
+        "verification": "primary-read, but extracted from a multi-column PDF digest whose columns interleave; treat as probable, confirm before use",
+        "source": "https://www.thecdg.co.uk/Secure/equity-tv-digest-agreement-2024.pdf"
+      },
+      "itvContinuingDrama2024": {
+        "scope": "Coronation Street, Emmerdale, Hollyoaks",
+        "costumeFittings": {"callsUpTo3Hours": 77.10, "callsOver3Hours": 154.19, "currency": "GBP"},
+        "verification": "primary-read, same column-interleave caveat",
+        "source": "https://www.thecdg.co.uk/Secure/equity-tv-digest-agreement-2024.pdf"
+      },
+      "bbcSupportingArtistes": {
+        "costumeFittingAndMakeupTestsUpTo4Hours_ContinuingDrama_fromApril2026": 53.83,
+        "fittingOvertimePerHour": 13.46,
+        "currency": "GBP",
+        "source": "https://www.castingcollective.co.uk/production/payrates",
+        "verification": "trade-excerpt"
+      }
+    },
+    "actraCanada": {
+      "rule": "IPA A1502 Choosing and Fitting Wardrobe: when required to report on other than a regular production day, paid the greater of the scheduled rate or the performer's contracted hourly rate for all time spent, minimum call 2 hours; not owed if the time is otherwise credited at the hourly rate. Performer signs ACTRA sign-in sheet.",
+      "ratePerHour": {"2025": 116.50, "2026": 121.25, "2027": 125.50, "currency": "CAD"},
+      "onShootDay": "IPA A1501: up to 18 minutes of make-up/hair/wardrobe/fitting immediately before production call is paid at straight-time hourly rate and does not create overtime; beyond 18 minutes counts as part of the 8-hour day.",
+      "agreementTerm": "IPA 2025-01-26 to 2027-12-31",
+      "source": ["https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf", "https://www.actra.ca/wp-content/uploads/2025/01/2025-2027-IPA-Rates_EN_FINAL.pdf"],
+      "verification": "primary-read"
+    },
+    "irishEquity": {
+      "rule": "Irish Film Agreement (Irish Equity / Screen Producers Ireland, in force Feb 2021): before first call the artist is on second call and attends camera/sound tests, make-up tests, costume and wig fittings, publicity stills. Second-call sessions of not more than 5 hours paid 50 (currency symbol lost in PDF text; euro, as all figures in the agreement are euro). No use fees.",
+      "sessionPayment": {"amount": 50, "currency": "EUR", "maxHours": 5},
+      "onShootDay": "Make-up, hairdressing and wardrobe time counts as part of the working day.",
+      "contextMinimum": {"dailyRate": 158, "weeklyRate": 632, "currency": "EUR", "band": "budgets EUR 1.25m and under"},
+      "source": "https://www.scannain.com/media/New-Film-Agreement-2021.pdf",
+      "verification": "primary-read (2021 agreement; later rate uplifts not found)"
+    },
+    "mexicoANDA": {
+      "fittingPay": null,
+      "note": "No ANDA tabulador or contract clause on paid fittings found. Reported practice at Televisa: a 'carta de vestuario' (wardrobe letter) payment to actors to obtain their own on-screen clothes, ranging from MXN 5,000 to over MXN 1,000,000; per-recording-day pay MXN 1,500-2,500 depending on level. These are press reports, not union rates.",
+      "source": ["https://www.infobae.com/america/mexico/2022/09/29/cuanto-cobran-los-actores-y-actrices-de-televisa/?outputType=amp-type", "https://www.elfinanciero.com.mx/espectaculos/2022/09/25/como-cobran-los-actores-de-televisa-la-actriz-lizy-martinez-lo-explica/"],
+      "verification": "trade-excerpt"
+    }
+  },
+
+  "wardrobe": {
+    "sagAftraTheatricalTVPrincipal": {
+      "rule": "When a performer supplies their own wardrobe at the producer's request, producer pays a cleaning allowance and reimbursement per outfit, for each calendar week employed (Schedule A) / each workweek (Schedule B), separately itemised. Producer gives a voucher of outfits supplied each week. Performer-owned wardrobe damaged in employment is repaired by or at the producer's expense if notice is given before employment ends.",
+      "ratesUSD": [
+        {"effective": "pre-2014-09-24", "formalWear": 17.00, "allOther": 11.50, "source": "2014 CBA"},
+        {"effective": "2014-09-24", "formalWear": 18.00, "allOther": 12.00, "source": "2014 CBA"},
+        {"effective": "2023 MOA ratification (Nov 2023)", "formalWear": 27.00, "allOther": 12.00, "source": "2023 MOA item 22.a (formal only raised)"},
+        {"effective": "2027-07-01", "formalWear": 30.00, "allOther": 14.00, "source": "2026 agreement per SAGindie and GreenSlate"}
+      ],
+      "unit": "per outfit, per week",
+      "corsetAdjustment": {"amount": 21.50, "unit": "per day", "effective": "2026-07-01", "scope": "Principals (Schedules A, B, C, E and TV Agreement) and background", "source": "https://greenslate.com/blog/sag-aftra-tv-theatrical-agreement", "verification": "trade"},
+      "hair": "Special hairdress required by the producer: producer furnishes it or reimburses.",
+      "source": ["https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf", "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2023%20CBA%20and%20TVA%20MOA.pdf", "https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/", "https://greenslate.com/blog/sag-aftra-tv-theatrical-agreement"],
+      "section": "CBA Schedule A §11.D, Schedule B §16.D, Schedule C §16.D, TV Agreement §30(e)",
+      "verification": "primary-read (2014, 2023); trade (2026)",
+      "staleSourceNote": "servicesagaftra.custhelp.com a_id 997 still lists USD 18 formal / 12 other."
+    },
+    "sagAftraBackground": {
+      "ratesUSDPerDay": [
+        {"effective": "2026-07-01", "generalNationalCostumePeriodUniform": 18.00, "formal": 27.00, "policeUniform": 36.00},
+        {"effective": "2027-07-01", "generalNationalCostumePeriodUniform": 20.00, "formal": 30.00, "policeUniform": 40.00}
+      ],
+      "completeChanges": {"firstChange": 9.00, "eachAdditional": 6.25, "unit": "per day", "era": "July 2024 bulletin (excerpt)"},
+      "source": ["https://greenslate.com/blog/sag-aftra-tv-theatrical-agreement", "https://www.sagaftra.org/sites/default/files/sa_documents/Bulletin%20Background%20Wardrobe%20Allowance.pdf"],
+      "verification": "trade + official-excerpt"
+    },
+    "sagAftraCommercials": {
+      "unit": "per garment/costume requested by producer",
+      "ratesUSD": [
+        {"period": "2025-04-01..2026-03-31 (Year 1)", "nonEvening": 21.38, "evening": 35.61},
+        {"period": "2026-04-01..2027-03-31 (Year 2)", "nonEvening": 22.24, "evening": 37.03, "note": "Cheat sheet labels evening as 'evening/period'"}
+      ],
+      "olderReference": {"era": "2022 contract", "everyday": 20.36, "evening": 33.91, "source": "https://cmsproductions.com/blog/regulations-under-sag-aftra-commercial-contract/"},
+      "source": ["https://www.sagaftra.org/sites/default/files/2025-05/2025%20Commercials%20Contract%20Rate%20Sheets%20-%20Year%201.pdf", "https://www.sagaftra.org/sites/default/files/2026-05/Member%20Tips%20and%20Tools%20-%20Commercials%20Cheat%20Sheet%202026-2027.pdf", "https://www.uniontalentservices.com/sag-aftra-commercial-rates/"],
+      "verification": "official-excerpt (Year 1 figure attributed to the Year 1 sheet by search excerpt only)"
+    },
+    "equityUK": {
+      "pactCinemaFilms": {
+        "rule": "Artist may be asked to provide modern dress and footwear they possess and would normally use privately; producer provides all other visible modern dress and all character, period and special costume. If the artist's own clothing is soiled or damaged during rehearsal/recording, producer pays for cleaning or compensates/makes good. Producer transports necessary clothing to/from resident location.",
+        "allowanceAmount": null,
+        "allowanceNote": "CFA sets no per-outfit allowance for principal artists; obligation is cleaning/compensation.",
+        "source": "https://www.pact.co.uk/static/c00ac5e7-c037-4f76-8221c5258896569f/Pact-Equity-Cinema-Films-Agreement-2021-effective-from-6th-April-2021.pdf",
+        "section": "CFA 2021 F36",
+        "verification": "primary-read"
+      },
+      "bbcSupportingArtistes": {
+        "eveningDressOrUniform": 25.90,
+        "secondOutfit": 12.40,
+        "currency": "GBP",
+        "source": "https://www.universalextras.co.uk/files/4114/7621/6947/Uni-versalEXTRAS-BBC-Equity-Agreement.pdf",
+        "verification": "trade-excerpt (agency copy of BBC/Equity supporting-artiste rates; year not confirmed)"
+      }
+    },
+    "actraCanada": {
+      "principal": {
+        "rule": "IPA A1601: if producer requires the performer to supply more than 2 changes of clothing, CAD 30.00 per week per change in excess of two; formal or specialty wardrobe (tuxedo, formal gown, culturally specific formal/ceremonial wardrobe, clown uniform etc.) CAD 50.00 per costume per week. Producer may not make wardrobe a condition of engagement. Negotiated wage increases do not apply (flat 2025-2027).",
+        "damage": "If performer-furnished wardrobe is damaged in work time through producer negligence or an accident not the performer's fault (excluding reasonable wear and tear), producer reimburses justifiable repair/replacement cost; notice by end of production day; receipt required.",
+        "repairsAndLaundering": "Producer provides repair facilities; all production-supplied wardrobe must be cleaned/laundered before the performer wears it, subject to continuity.",
+        "ratesCAD": {"regularPerChangeOverTwoPerWeek": 30.00, "formalOrSpecialtyPerCostumePerWeek": 50.00, "years": "2025, 2026, 2027"},
+        "previousAgreement": {"regular": 20.00, "formal": 35.00},
+        "source": ["https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf", "https://www.actra.ca/wp-content/uploads/2025/01/2025-2027-IPA-Rates_EN_FINAL.pdf", "https://www.actra.ca/wp-content/uploads/2025/01/Condensed_Highlights_EN.pdf"],
+        "verification": "primary-read (rates, rule); trade-excerpt (previous agreement)"
+      },
+      "background": {"regularInExcessOfOne": 10.00, "formalOrSpecialty": 50.00, "currency": "CAD", "source": "https://www.actra.ca/wp-content/uploads/2025/01/2025-2027-IPA-Rates_EN_FINAL.pdf", "verification": "primary-read (rate chart C407; layout interleaved, values match search excerpt)"}
+    },
+    "irishEquity": {
+      "rule": "Own clothing soiled or damaged during rehearsal/recording: producer pays cleaning or compensates/makes good. Producer transports clothing/costume to and from resident location. No per-outfit allowance figure in the agreement.",
+      "source": "https://www.scannain.com/media/New-Film-Agreement-2021.pdf",
+      "section": "Clause 28",
+      "verification": "primary-read"
+    },
+    "mexico": {"allowance": null, "note": "See fittings.mexicoANDA: 'carta de vestuario' is a negotiated, reported practice, not a published union rate."}
+  },
+
+  "negotiation": {
+    "scaleAndScalePlusTen": {
+      "scale": "Union minimum for the job under the applicable agreement.",
+      "scalePlusTen": "Offer of scale plus 10% so the agent's 10% commission does not reduce the performer below scale. For SAG-AFTRA theatrical/TV/streaming work an agent must negotiate above scale (generally scale+10) to commission; the +10 is then the agent's entire compensation. For performers well above scale, the agent may commission 10% of gross as long as it does not invade scale.",
+      "source": ["https://www.sagaftra.org/agency-commission-limitations-los-angeles-members", "https://www.backstage.com/magazine/article/work-for-scale-explained-77065/"],
+      "verification": "official-excerpt + trade-excerpt"
+    },
+    "agentCommission": {
+      "us": {
+        "max": 0.10,
+        "rule": "SAG-AFTRA franchised agents (Rule 16(g) regulations): no commission above 10%, cannot be evaded by side fees; no miscellaneous fees.",
+        "source": ["https://www.sagaftra.org/sites/default/files/sag_rule_16_g.pdf", "https://www.sagaftra.org/contracts-industry-resources/agents-managers/frequently-asked-questions"],
+        "verification": "official-excerpt"
+      },
+      "usManagers": {
+        "range": "10% to 15% commonly; 15% to 20% also cited",
+        "legal": "In California a manager is unlicensed and may not procure employment (Talent Agencies Act, Labor Code 1700.4); contracts can be voided and commissions refunded by the Labor Commissioner.",
+        "source": ["https://laactorguide.com/managers/", "https://www.filmtvlaw.com/blog/2020/10/5/repping-managers", "https://mcpherson-llp.com/articles/talent-agencies-act-a-personal-managers-nightmare/"],
+        "verification": "trade-excerpt"
+      },
+      "uk": {
+        "range": "10%-15% typical across TV, film, theatre, commercials; theatre and lower-paid screen 10%-12.5%; commercials/voice-over/overseas often 15%-20%.",
+        "vat": "VAT (20%) is charged on the commission, not on the fee.",
+        "regulation": "Employment Agencies Act 1973 and Conduct of Employment Agencies and Employment Businesses Regulations 2003: agents cannot charge a fee for finding work. The Personal Managers' Association publishes a code of practice but no set rate.",
+        "source": ["https://agent.co.uk/guides/how-acting-agents-make-money/", "https://aamartists.com/news/what-does-an-acting-agent-cost/"],
+        "verification": "trade-excerpt (agency-sector sites, not Equity)"
+      },
+      "canada": null,
+      "canadaNote": "ACTRA agent commission norms not found in a readable source.",
+      "ireland": null,
+      "mexico": null
+    },
+    "overscaleAndQuotes": {
+      "overscale": "Any negotiated fee above the union minimum; the minimum agreements set floors only. ACTRA IPA A806 obliges casting directors to negotiate in good faith and not to pressure or coerce performers into accepting only minimum terms, and to negotiate only the engagement at hand.",
+      "quote": "An actor's quote is what they were paid on their most recent comparable job; agents push for an increment each job (reported range USD 2,500 to seven figures depending on medium and profile).",
+      "salaryHistoryLaw": "California Labor Code 432.3 (effective 2018-01-01) bars employers from asking for or verifying salary history; agents may disclose a client's quote only with written consent, and studios may not call to verify.",
+      "source": ["https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf", "https://deadline.com/2017/12/hollywood-dealmaking-california-labor-code-432-3-salary-quotes-1202225985/", "https://www.forbes.com/sites/natalierobehmed/2018/04/11/no-more-quotes-how-a-salary-history-law-has-changed-hollywood/", "https://www.backstage.com/magazine/article/thing-remember-holiday-season-2734/"],
+      "verification": "primary-read (ACTRA); trade-excerpt (quotes)"
+    },
+    "favoredNations": {
+      "definition": "Most favored nations (MFN / favored nations): no other similarly situated performer on the project may get better terms; if one does, the MFN-protected performer's terms rise to match. Can cover salary, billing, dressing rooms, transport, perks.",
+      "whereUsed": "Ensemble films and plays, independent films, TV series with several roughly equal leads.",
+      "example": "Meryl Streep's reported use of favored nations to secure equal pay for Anne Hathaway and Emily Blunt on The Devil Wears Prada 2 (amount reported as USD 2.5 million by a secondary blog; treat as unverified).",
+      "source": ["https://www.backstage.com/magazine/article/favored-nations-clauses-20381/", "https://www.pon.harvard.edu/daily/business-negotiations/teaming-up-in-job-negotiations-collective-bargaining-and-a-most-favored-nations-clause/", "https://greyjournal.net/play/devil-wears-prada-2-cast-salary-favored-nations/"],
+      "verification": "trade-excerpt"
+    },
+    "guestStarsAndCoStars": {
+      "topOfShow": "Traditionally a guest star was paid 'top of show': the full episode production cycle (8 days for one-hour drama, 5 for half-hour comedy) plus 10%. Under SAG-AFTRA TV rules, a 'Major Role' performer (half-hour or one-hour scripted dramatic series for ABC, CBS, FBC, NBC prime time, The CW, or pay-TV series of that type at Exhibit A rates) gets 10% above the day performer rate for 5 days (half-hour) or 8 days (one-hour). Guest Star, Special Guest Star, Starring or Special Appearance By credit triggers Major Role pay.",
+      "majorRoleMinimumsUSD": [
+        {"period": "2023-11-09..2024-06-30", "halfHour": 6589, "oneHour": 10542},
+        {"period": "2024-07-01..2025-06-30", "halfHour": 6853, "oneHour": 10965},
+        {"period": "2025-07-01..2026-06-30", "halfHour": 7095, "oneHour": 11352}
+      ],
+      "majorRoleCheck": "7,095 = 1,290 x 1.10 x 5; 11,352 = 1,290 x 1.10 x 8 (TV Exhibit A day performer 2025).",
+      "trend": "Deadline reported guest-star deals increasingly done as 1-3 day stints at discounted pay, sometimes scale for one day, for non-recurring roles.",
+      "negotiables": "Rate (scale, scale+10, top of show), number of guaranteed days, screen credit wording and placement (which also drives Major Role status), episodic guarantees for recurring roles.",
+      "source": ["https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/Wage%20Scales%20%E2%80%93%202023-26%20CBA%20and%20TVA.pdf", "https://deadline.com/2015/12/tv-guest-actors-pay-recurring-regulars-guest-stars-1201669407/", "https://www.sagaftra.org/sites/default/files/sa_documents/Contract%20Bulletin%20-%20Guest%20Stars.pdf", "https://www.backstage.com/magazine/article/what-is-a-guest-star-76879/"],
+      "verification": "primary-read (wage table); trade-excerpt (practice); 2026-07-01 Major Role figures not read",
+      "tvSeriesRegularContext2026": {"halfHourPerWeek": 4456, "oneHourPerWeek": 5361, "currency": "USD", "source": "https://www.wrapbook.com/blog/essential-guide-sag-rates", "verification": "trade"}
+    },
+    "unionMinimumsVsNegotiated": {
+      "equityUKCinema2024_25": {"dailyMinimumGBP": 161, "weeklyMinimumGBP": 644, "budgetBand": "GBP 3m and over (basic, excluding pre-purchased use fees)", "source": "https://www.thecdg.co.uk/Secure/CFA%20Digest_April%202024-25.pdf", "verification": "primary-read"},
+      "actraIPA_principalActorDaily": {"2025": 1402.75, "2026": 1458.75, "currency": "CAD", "note": "Rate chart B101(a); 2027 cell extracted as 679.50 which is a PDF layout artifact, not a real figure.", "source": "https://www.actra.ca/wp-content/uploads/2025/01/2025-2027-IPA-Rates_EN_FINAL.pdf", "verification": "primary-read (layout-sensitive)"},
+      "irishFilmDaily": {"eur": 158, "band": "budgets EUR 1.25m and under", "source": "https://www.scannain.com/media/New-Film-Agreement-2021.pdf", "verification": "primary-read (2021)"},
+      "principle": "All union figures are floors; above-floor fees, billing, perks and back end are negotiated by agents."
+    }
+  },
+
+  "press": {
+    "sagAftra": {
+      "dayPerformersScheduleA": "Publicity interviews, whether on a work day or not, are not work time for any purpose; the performer is under no obligation to report for them.",
+      "weeklyPerformersScheduleB": "Publicity interviews at a mutually satisfactory time are not work time unless held on a day the performer is otherwise working; even then, if after dismissal for the day at a mutually agreed time, not work time. An interview in a meal period is not a meal violation.",
+      "publicityStills": "Performer agrees to render publicity still services. If the producer wants them unpaid it must get a union waiver; without a waiver, minimum 2 hours' pay then hourly units.",
+      "toursAndPersonalAppearances": "Transportation per General Provisions §35.D and reasonable expenses paid; producer must ensure adequate rest periods.",
+      "promotionalFilms": "30-minute-or-less theatrical promotional films: compensation is individually bargained; performer may agree to appear without compensation (CBA §18.B).",
+      "whatCountsAsPromotion": "SAG-AFTRA's 2023 strike rules listed covered promotion/publicity services: tours, personal appearances, interviews, conventions, fan expos, festivals, FYC events, panels, premieres/screenings, award shows, junkets, podcasts, social media, studio showcases.",
+      "paidUnderUnionMinimums": "No separate union minimum for junket days was found. Under the CBA, interviews are not work time; junket participation for principals is governed by the personal services contract, where promotional services are typically included in the guaranteed fee, with travel and expenses paid by the distributor.",
+      "source": ["https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf", "https://variety.com/2023/biz/news/sag-strike-rules-no-interviews-premieres-fyc-events-1235669838/", "https://www.agg.com/news-insights/publications/controlling-the-spotlight-promotional-clauses-in-performance-contracts/", "http://www.medialawyer.com/article15.php"],
+      "section": "CBA Schedule A §19-20; Schedule B §23-24; General Provisions §18, §27",
+      "verification": "primary-read (CBA 2014 text; later MOAs read did not amend these sections); trade (contract practice)"
+    },
+    "equityUK": {
+      "rule": "Pact/Equity CFA F26.8: during and after the engagement the artist agrees, subject to reasonable professional availability, to perform such reasonable press and publicity services as the producer or its distributors require in any territory, subject only to payment of the artist's reasonable expenses: stills, publicity, interviews (radio, TV, film) and press events. No fee.",
+      "source": "https://www.pact.co.uk/static/c00ac5e7-c037-4f76-8221c5258896569f/Pact-Equity-Cinema-Films-Agreement-2021-effective-from-6th-April-2021.pdf",
+      "verification": "primary-read"
+    },
+    "irishEquity": {
+      "rule": "Clause 9.6: all publicity and promotion is included in the initial performance fee, subject to availability; during and after the engagement the artist performs reasonable press and publicity services in any territory (stills, interviews incl. radio and TV, press events).",
+      "source": "https://www.scannain.com/media/New-Film-Agreement-2021.pdf",
+      "verification": "primary-read"
+    },
+    "actraCanada": {
+      "rule": "IPA A3201: performer shall be available as reasonably required to promote and publicize the production, ensuring availability for no less than an aggregate of 4 hours. A3203: if the producer wants the performer to make publicity stills, promos or trailers, the performer (not background) is paid at least the scheduled fee with 4 hours included.",
+      "publicityStillsPromosTrailersFeeCAD": {"2025": 680.75, "2026": 708.00, "2027": 732.75, "hoursIncluded": 4},
+      "rateChartConflictNote": "The IPA rate chart PDF lays out A3203 next to 118.50/123.25/127.50 due to column interleaving; the agreement body text gives 680.75/708.00/732.75 and is used here.",
+      "promoUseFees": "Promotion does not attract use fees on New Media; converting promotional content to a New Media use pays 3.6% of DGR from the first dollar.",
+      "source": "https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf",
+      "verification": "primary-read"
+    },
+    "junketNorms": {
+      "format": "One concentrated press day or weekend in a single location; press come to talent. Round-robin: broadcast/online video outlets get individual camera slots, rotating crews; print/digital often in roundtables.",
+      "tvSlotLength": "4 to 6 minutes per on-camera TV interview (one source); 5-15 minutes generally, some limited to 5-minute slots (others).",
+      "interviewsPerDay": null,
+      "interviewsPerDayNote": "No documented numeric count found. Sources say only 'dozens of outlets per talent chair' in a full junket day. Not quantified by any union or trade source read.",
+      "source": ["https://www.lacastlestudios.com/blog/what-is-a-press-junket/", "https://www.fashionmonitor.com/blog/Ws/anatomy-of-a-press-junket-what-media-need-to-know", "https://en.wikipedia.org/wiki/Film_promotion"],
+      "verification": "trade-excerpt (low authority)"
+    }
+  }
+}

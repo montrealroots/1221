@@ -1,8 +1,10 @@
 /**
- * Clothes (`systems/clothing.ts` and `systems/wardrobe.ts`, from 2026-10-01):
- * the wardrobe and what's clean in it, the dry cleaner, what to wear and the
- * outfits put together, the shops of the country they're in, cheapest first,
- * and what they've bought, to take back while they may.
+ * Clothes (`systems/clothing.ts`, `systems/wardrobe.ts` and
+ * `systems/hygiene.ts`, from 2026-10-01): the wardrobe and what's clean in
+ * it, the dry cleaner, what to wear and the outfits put together, the
+ * bathroom's toiletries, the town's barbers and salons, the shops of the
+ * country they're in, cheapest first, and what they've bought, to take back
+ * while they may.
  */
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -17,6 +19,7 @@ import type { ClothingProduct } from '@/engine/content/clothingcatalog';
 import { arrange } from '@/engine/systems/catalog';
 import { reachable, type Item } from '@/engine/systems/items';
 import { cleanOutfits, dryCleanDirty, garmentsOf, outfitFor, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
+import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
 import { buyRefusal, clothingCatalog, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
@@ -71,6 +74,8 @@ export function ClothesWorkspace() {
           </div>
         </Panel>
         <WhatToWear />
+        <Bathroom />
+        <Salons />
         <Shop />
         <Bought />
         <Fine>
@@ -293,6 +298,93 @@ function Bought() {
           </tbody>
         </table>
       </div>
+    </Panel>
+  );
+}
+
+/** How much of a toiletry is left, in words. */
+const supplyLeft = (left: number, unit: string) => (unit === 'ct' ? `${Math.round(left)} Left` : `${Math.round(left)} ${unit} Left`);
+
+/** What's in the bathroom, and the toiletries on sale here, cheapest first. */
+function Bathroom() {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const person = useWorld((s) => s.player);
+  const here = useWorld((s) => s.player.currentLocationId);
+  const kept = useWorld((s) => suppliesOf(s.player));
+  const entries = useWorld((s) => toiletryCatalog(s, here), [here]);
+  const [view, setView] = useCatalogView(`toiletries-${here}`);
+  const shown = arrange(entries, view).slice(0, PAGE);
+  const buy = useFeature('hygiene.buy');
+  return (
+    <Panel title="Your Bathroom" subtitle="Each shower uses its soap and shampoo, each day its toothpaste and deodorant; what runs out is bought again on a free day">
+      <div className="col gap-3">
+        {kept.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE doesn’t count toiletries where you live.</p> : (
+          <div className="small">{kept.map((i) => `${i.label}: ${supplyLeft(i.supply.left, i.supply.unit)}`).join(' · ')}</div>
+        )}
+        {entries.length > 0 && (
+          <>
+            <CatalogControls id="toiletries-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', chain: 'Chain' }} />
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+                <tbody>
+                  {shown.map((e) => {
+                    const no = toiletryRefusal(person, e.id, 1);
+                    return (
+                      <tr key={e.id}>
+                        <td>{e.label}</td>
+                        <td className="small">{e.facets?.chain}</td>
+                        <td className="num mono">{catalogPrice(e, money)}</td>
+                        <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('hygiene.buy', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+        <Fine>What a shower and a day use is weighed use: 11.3 g of body wash and 11.76 g of shampoo a shower (Loretz et al., via the EPA), two pea-sized brushings of 0.25 g a day (the CDC), 0.898 g of deodorant a day, a toothbrush every three months (the ADA). Without soap a shower leaves you at most 85 clean, without shampoo 90, and a morning without toothpaste or deodorant starts five points down for each, SLATE’s estimates.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
+/** The town's barbers and salons, each service at its own price, tipped as the place tips. */
+function Salons() {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const person = useWorld((s) => s.player);
+  const here = useWorld((s) => s.player.currentLocationId);
+  const since = useWorld((s) => daysSince(s, lastGroomed(s.player)));
+  const groom = useFeature('hygiene.groom');
+  const places = salonsIn(here);
+  if (places.length === 0) return null;
+  return (
+    <Panel title="Barbers And Salons" subtitle={since === undefined ? 'You haven’t been to one in this life yet' : `Your last visit was ${since} ${since === 1 ? 'day' : 'days'} ago`}>
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Place</th><th scope="col">Service</th><th scope="col" className="num">With The Tip</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+          <tbody>
+            {places.flatMap((p) => p.services.map((svc) => {
+              const q = groomingQuote(sim, p, svc.service);
+              const no = groomingRefusal(sim, person, p.id, svc.service);
+              return (
+                <tr key={`${p.id}-${svc.service}`}>
+                  <td>{p.name}<div className="xs dim">{p.neighborhood ?? p.address}</div></td>
+                  <td className="small">{svc.label}</td>
+                  <td className="num mono">{q ? `${money(q.price + q.tip)}${svc.from ? ' Up' : ''}` : 'Not Known'}</td>
+                  <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!groom.open || Boolean(no)} title={no ?? groom.reason} onClick={() => { if (run('hygiene.groom', { salonId: p.id, service: svc.service }).ok) toast(`${svc.label} at ${p.name}.`, 'positive'); }}>Book It</button></td>
+                </tr>
+              );
+            }))}
+          </tbody>
+        </table>
+      </div>
+      <Fine>Each place is real and each price its own list’s, read on the date it was; one not found is never shown as nothing. The tip is the custom’s middle: 15 to 20% in America and Canada (Emily Post), 10% in Britain (Debrett’s), 5 to 10% in Ireland, 10 to 20% in Mexico. A service with no time on its list takes 45 minutes, SLATE’s estimate.</Fine>
     </Panel>
   );
 }

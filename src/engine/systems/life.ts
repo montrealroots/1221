@@ -35,6 +35,7 @@ import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import { cleanOutfits, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
+import { GROOMING, dailyCare, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit,
@@ -407,6 +408,22 @@ export function registerLife(sim: Simulation): void {
     return { doneAt: s.now, paid: quote.total };
   });
 
+  // --- A barber or a salon (`systems/hygiene.ts`, from 2026-10-01) ---
+  sim.onCommand<{ salonId: string; service: string }, { doneAt: number; paid: number }>('hygiene.groom', (p, { sim: s }) => {
+    const person = s.player;
+    const no = groomingRefusal(s, person, String(p?.salonId), String(p?.service));
+    if (no) throw new CommandError(no);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    const salon = salonById(String(p.salonId))!;
+    const q = groomingQuote(s, salon, String(p.service))!;
+    if (!spend(s, person, q.price + q.tip, salon.name, 'personal')) throw new CommandError('The payment didn’t go through.');
+    s.advanceTo(s.now + q.minutes * 60_000);
+    person.groomedAt = s.now;
+    person.wellbeing.morale = clamp(person.wellbeing.morale + GROOMING.morale * personalityOf(person, 'moraleSwing'), 0, 100);
+    return { doneAt: s.now, paid: q.price + q.tip };
+  });
+
   // --- Looking after yourself ---------------------------------------------
 
   sim.onCommand<{ action: LookAfter }, { doneAt: number; changed: Partial<Wellbeing> }>(
@@ -438,6 +455,8 @@ export function registerLife(sim: Simulation): void {
       // A bike's ride builds as a run does, the same hour's work outdoors (`content/rides.ts`).
       const bike = action === 'ride' ? bikeHere(person) : undefined;
       applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
+      // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
+      if (action === 'wash' || action === 'bathe') person.wellbeing.hygiene = Math.min(person.wellbeing.hygiene ?? 100, showerUses(s, person));
       // An hour of it, at its injury rate (`content/injury.ts`).
       if (action === 'exercise' || action === 'swim') {
         const source = action === 'swim' ? 'swim' : where!.where === 'run' ? 'run' : 'gym';
@@ -896,7 +915,9 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // their share of the day's three on top of what a broke day scrapes together, SLATE's reading.
     else { eatWhatThereIs(w); eatsShort(person, Math.min(1, BODY.shortDay + (person.foodHelp?.today ?? 0) / 3)); }
     // Out of clean clothes, the morning starts less fresh (`systems/dwelling.ts`).
-    const fresh = cleanOutfits(sim, person) <= 0 ? WORN_CLOTHES.hygiene : 82;
+    // The morning's shower uses its soap and shampoo, and the day its toothpaste and deodorant (`systems/hygiene.ts`):
+    // without them it starts less fresh.
+    const fresh = Math.min(cleanOutfits(sim, person) <= 0 ? WORN_CLOTHES.hygiene : 82, showerUses(sim, person)) - dailyCare(sim, person);
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, fresh), 0, 100);
   }
 }
