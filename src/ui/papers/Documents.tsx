@@ -23,7 +23,7 @@ import {
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, type VehicleClass,
 } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
-import { idCardRefusal, realIdRefusal, tsaAccepts } from '@/engine/systems/identity';
+import { idCardHere, idCardRefusal, realIdRefusal, tsaAccepts } from '@/engine/systems/identity';
 import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
 import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal, usStatusEnds } from '@/engine/systems/permission';
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
@@ -237,9 +237,9 @@ export function DrivingPane() {
               if (a.ok) toast(`An International Driving Permit, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}; good until ${formatDate(a.value!.expiresAt, sim.zone)}.`, 'positive');
             }}>International Driving Permit</Gated>
             {!idNo && <Gated feature="documents.apply_idcard" className="btn btn-sm btn-ghost" onClick={() => {
-              const a = run<{ expiresAt: number; fee: number }>('documents.apply_idcard', {});
-              if (a.ok) toast(`A state ID card, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}; good until ${formatDate(a.value!.expiresAt, sim.zone)}.`, 'positive');
-            }}>Get A State ID Card</Gated>}
+              const a = run<{ expiresAt?: number; fee: number }>('documents.apply_idcard', {});
+              if (a.ok) toast(`${idCardHere(person)?.card.name ?? 'An ID card'}, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}${a.value!.expiresAt ? `; good until ${formatDate(a.value!.expiresAt, sim.zone)}` : ''}.`, 'positive');
+            }}>Get {idCardHere(person)?.card.name ?? 'An ID Card'}</Gated>}
             {!realNo && <Gated feature="documents.real_id" className="btn btn-sm btn-ghost" onClick={() => {
               const a = run<{ fee: number }>('documents.real_id', {});
               if (a.ok) toast(`Your license is REAL ID now, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.`, 'positive');

@@ -152,9 +152,18 @@ Researched in `docs/research/world/research-documents-safetynet.json` and `resea
   - Another state's, the mean of the three.
   - The TSA's 94% of travelers counts passports, and isn't used.
 - **A state ID card** (`documents.apply_idcard`) for someone the state hasn't licensed: New York's $14 for eight years, Connecticut's $28, California's $40. Each is REAL ID.
-- Not kept yet:
-  - Canada's, Mexico's, Britain's and Ireland's photo ID rules for domestic flights, which weren't read. Their ID cards (Ontario's Photo Card, the BCID, the INE credential, Ireland's passport card) wait on those rules.
-  - Residence documents abroad: Ireland's €300 IRP card, a Canadian PR card and Mexico's residence cards wait on a life being allowed to live abroad without citizenship, which SLATE doesn't grant yet.
+- **Since, later on 2026-09-30:** an airline's ID outside America (`boardingIdRefusal`, researched in `research-travel4.json`):
+  - Canada: a government photo ID, which a passport, a license or a provincial photo card is.
+  - Mexico: a passport, a driver's license or the INE.
+  - Britain: a passport or a photo driving license.
+  - Ireland to Britain or back: a passport or an Irish passport card, Aer Lingus's rule since 25 February 2026.
+  Without one, the traveler isn't boarded and the fare is gone.
+- **The cards:**
+  - Ontario's Photo Card and BC's BCID, CA$35 each (the BCID's from search summaries).
+  - Mexico's INE, free to a Mexican of 18.
+  - Ireland's passport card, €35, for five years or to the passport book's expiry, to a holder of an Irish passport.
+  - The Ontario, BC and INE cards' terms weren't read, and they don't expire in SLATE. Tests: `tests/boardingid.test.ts` (4); 9 mutations, all killed.
+- Residence documents abroad were built later the same day (stages 1d and 1e). Ireland's IRP card stays unbuilt, since no route reaches it.
 
 Evidence: `tests/identity.test.ts` (6). 12 mutations, all killed in the end. Two first survived and needed tests: Connecticut's upgrade refused a second time, and a license granted by exchange being REAL ID. The airline leg's mode was first misread as `fly`, which is one's own plane; a test booking a real flight caught it.
 

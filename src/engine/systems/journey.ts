@@ -40,7 +40,7 @@ import { nightRateFor, ownPlaceIn, stayPrice } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
-import { atTheCheckpoint } from './identity';
+import { atTheCheckpoint, boardingIdRefusal } from './identity';
 import { claimDelay } from './compensation';
 import { stolenNow } from './theft';
 import { inWinterSeason, tireFactor } from './tires';
@@ -575,6 +575,15 @@ export function registerJourneys(sim: Simulation): void {
       const claim = inSave(s, LET_DAMAGE.usd, 'USD');
       if (!payFromBank(s, person, claim, 'A holiday let’s damage claim, through the host’s platform', 'travel')) owe(s, person, claim, 'A holiday let’s damage claim', 'travel');
       if (mine) s.notify({ category: 'personal', title: 'A Damage Claim', body: `The let’s host claimed for damage, and the platform charged ${formatMoney(claim, saveCurrency(s.universe))} to you.`, importance: 65 });
+    }
+    // The airline's ID outside America (`systems/identity.ts`): without it, not boarded.
+    const noId = boardingIdRefusal(person, j, s.now);
+    if (noId) {
+      j.status = 'missed';
+      j.why = `Not boarded without it: ${noId}`;
+      missedHotel(s, person, j);
+      tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
+      return;
     }
     // An American airline's checkpoint: a REAL ID or a passport, or ConfirmID (`systems/identity.ts`).
     atTheCheckpoint(s, person, j);
