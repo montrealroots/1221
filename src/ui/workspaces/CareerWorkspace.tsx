@@ -37,6 +37,7 @@ import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { allowanceFor, furnishRefusal } from '@/engine/systems/fittings';
+import { categoryName, categoryOf, emmyEntry, entriesOf, entryRefusal } from '@/engine/systems/awards';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
@@ -437,6 +438,7 @@ function WorkPane() {
           </div>
         ) : <p className="small muted" style={{ margin: 0 }}>A job you take puts its days on your calendar. You must be in its city, awake, for every one: a day missed ends the job, and an agency you have lets you go. A day in hospital is no walking off: on screen the part is recast, and on stage the understudy covers.</p>}
       </Panel>
+      <AwardsPanel />
       <ResidualsPanel />
       {(person.school?.credits?.length ?? 0) > 0 && (
         <Panel title="Training" subtitle={YALE_DRAMA.name}>
@@ -819,5 +821,36 @@ function LendClothes({ booking }: { booking: Booking }) {
         {allowance !== undefined ? `Lend It, ${formatMoney(allowance, saveCurrency(sim.universe))}` : 'Lend It'}
       </button>
     </span>
+  );
+}
+
+/** Work entered for awards and what came of it, and guest work that can still be entered, with its fee. */
+function AwardsPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = person.career!;
+  const enter = useFeature('career.enter_award');
+  const entries = entriesOf(person);
+  const open = career.bookings.filter((b) => b.status === 'worked' && !entryRefusal(sim, person, b.id));
+  if (entries.length === 0 && open.length === 0) return null;
+  const fee = formatMoney(emmyEntry(sim), saveCurrency(sim.universe));
+  return (
+    <Panel title="Awards" subtitle="The Primetime Emmys and BAFTA Film: a network or a film enters its own; a guest performer enters themselves">
+      <div className="col gap-2">
+        {open.map((b) => (
+          <div key={b.id} className="row-between small">
+            <span>{roleById(b.roleId).label}: {categoryName(person, categoryOf(b)!)}</span>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!enter.open} title={enter.reason} onClick={() => { if (run('career.enter_award', { bookingId: b.id }).ok) toast('Entered for the Emmys.', 'positive'); }}>{`Enter It, ${fee}`}</button>
+          </div>
+        ))}
+        {[...entries].reverse().map((e) => (
+          <div key={`${e.bookingId}-${e.body}`} className="row-between small">
+            <span>{e.year} · {categoryName(person, e)}</span>
+            <span className="mono">{e.won ? 'Won' : e.won === false ? 'Nominated' : e.nominated ? 'Nominated, The Ceremony To Come' : e.nominated === false ? 'Not Nominated' : 'Entered'}</span>
+          </div>
+        ))}
+        <Fine>A performance’s chance at a nomination is its category’s slots over the performances submitted the last year counted, weighed by how far above the part you stood, SLATE’s estimate; a nomination and a win lift your recognition, which sets what you’re paid over scale. The Oscars, Tonys, Oliviers and Ariels publish how many films or productions are eligible, not performances, so SLATE doesn’t put work up for them.</Fine>
+      </div>
+    </Panel>
   );
 }

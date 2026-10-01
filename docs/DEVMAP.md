@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-198 commands; 194 named by a test, 4 not.
+199 commands; 195 named by a test, 4 not.
 
 ## aircraft
 
@@ -115,6 +115,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.coach` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
 | `career.commercial_leave` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` | The Business |
 | `career.commercial_meet` | `src/engine/systems/commercial.ts` | `CareerWorkspace.tsx` | `commercial.test.ts` | The Business |
+| `career.enter_award` | `src/engine/systems/awards.ts` | `CareerWorkspace.tsx` | `awards.test.ts` | The Business |
 | `career.furnish_wardrobe` | `src/engine/systems/fittings.ts` | `CareerWorkspace.tsx` | `fittings.test.ts` | The Business |
 | `career.headshots` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `costs.test.ts` | The Business |
 | `career.improv` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` | The Business |

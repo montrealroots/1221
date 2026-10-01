@@ -55,6 +55,8 @@ import { drawRental } from './systems/dwelling';
 import { inspectionFails } from './systems/inspections';
 import { letDamaged } from './systems/journey';
 import { impairedDrive } from './systems/alcohol';
+import { announceNominations, entriesOf } from './systems/awards';
+import { careerOf } from './systems/career';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -289,6 +291,26 @@ defineDecider<{ sim: Simulation; km: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), km: 200_000 + seed * 997 }),
   decide: ({ sim, km }) => { const r = drive(sim, sim.player, 'US-NY', km, sim.now, `d-${km}`); return r.ticket ? 'a ticket' : 'none'; },
+});
+
+defineDecider<{ sim: Simulation; work: number }, string>({
+  id: 'awards.vote',
+  decides: 'A performance entered for an award nominated or not, at the category’s slots over its submissions weighed by how far the actor stood above the part (awardChances), and a nominee’s win; swept at even odds, the real ones being small.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    // Each piece of work is drawn on its own.
+    work: (o, t) => ({ ...o, work: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), work: seed }),
+  decide: ({ sim, work }) => {
+    sim.player.craft ??= evenCraft(70);
+    const career = careerOf(sim.player);
+    const id = `work-${work}`;
+    career.bookings.push({ id, roleId: 'guest-hour', cityId: 'us-ny-newyork', starts: sim.now, units: 1, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 1, owed: 0 });
+    entriesOf(sim.player).push({ bookingId: id, body: 'emmys', year: 2027, category: 'guest-drama', entered: sim.now, byThem: true });
+    return announceNominations(sim, sim.player, 'emmys', 2027, 0.5) > 0 ? 'nominated' : 'not';
+  },
 });
 
 defineDecider<{ sim: Simulation; drive: number }, string>({

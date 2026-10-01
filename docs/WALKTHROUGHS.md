@@ -168,5 +168,5 @@ corrected in the same commit, as the backlog's progress table is.
 | Travel and attend | Works | The career's trips as journeys. |
 | The professional activity | Works | The shoot or the run. |
 | Career and money | Works | Credits, pay, residuals, reputation. |
-| Follow-up | Part | Residuals; press and junkets are Stage 13. |
+| Follow-up | Part | Residuals, and the Emmys or BAFTA Film where the work goes up for them (`systems/awards.ts`); press and junkets aren't built. |
 | Back to ordinary life | Works | Everything persists. |

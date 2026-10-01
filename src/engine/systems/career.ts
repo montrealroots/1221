@@ -377,6 +377,8 @@ export interface Offer { agencyId: string; cityId: CareerCity; until: Instant }
 export interface ManagerOffer { managerId: string; until: Instant }
 
 export interface CareerRecord {
+  /** Work entered for awards, and what came of it (`systems/awards.ts`, from 2026-10-01). */
+  awards?: import('./awards').AwardEntry[];
   /** Each showcase's reading, by city. */
   showcases: { cityId: CareerCity; at: Instant; score: number }[];
   /** Offers of representation standing. */
