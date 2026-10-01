@@ -73,7 +73,7 @@ import { isHolidaysLoaded, loadCountryHolidays } from './content/holidays';
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
-import { armHousehold, moveIn, registerHousehold } from './systems/household';
+import { armHousehold, moveIn, registerHousehold, spend } from './systems/household';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
@@ -113,6 +113,7 @@ import { registerChildren } from './systems/children';
 import { registerDating } from './systems/dating';
 import { registerTailoring } from './systems/tailoring';
 import { registerTravelInsurance } from './systems/travelinsurance';
+import { registerTelecom } from './systems/telecom';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
@@ -130,6 +131,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerWorld(sim);
   registerPlans(sim);
   registerHousehold(sim);
+  registerTelecom(sim, (s, person, amount, memo) => spend(s, person, amount, memo, 'bills'));
   registerCredit(sim);
   registerBirthdays(sim);
   registerMortality(sim);

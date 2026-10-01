@@ -72,6 +72,7 @@ import { mealsFromHelp } from './foodhelp';
 import { mealsFromStock } from './pantry';
 import { partnerStays } from './people';
 import { billShare } from './marriage';
+import { TELECOM_OF_BILLS, billedApart, telecomLines } from './telecom';
 import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
@@ -218,6 +219,19 @@ export function rentOf(sim: Simulation, person: Person): Money {
  * month's was the same.
  */
 export function billsOf(sim: Simulation, person: Person): Money {
+  // Where the internet and the phone are billed by their providers, their part comes out (`systems/telecom.ts`, from 2026-10-01).
+  return Math.max(0, atlasBillsOf(sim, person) - telecomPartOf(sim, person));
+}
+
+/** The atlas's estimate of the phone and internet in a home's bills, where their providers bill them instead; nothing elsewhere. */
+export function telecomPartOf(sim: Simulation, person: Person): Money {
+  if (!person.home || person.home.kind === 'sofa' || !billedApart(person.home.cityId)) return 0;
+  const base = person.home.kind === 'owned' ? OWNED.billsUsd : HOUSING[person.home.kind].billsUsd;
+  return Math.round(atTown(person.home.cityId, base, saveCurrency(sim.universe)) * TELECOM_OF_BILLS);
+}
+
+/** The month's bills as the atlas has them, the phone and internet in them. */
+export function atlasBillsOf(sim: Simulation, person: Person): Money {
   const flat = costsOf(sim, person)?.bills ?? 0;
   if (!flat || !person.home) return flat;
   const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone);
@@ -433,16 +447,16 @@ function payRent(sim: Simulation, person: Person, full: Money): void {
 }
 
 /** The month's bills, the way they're paid. */
-function payBills(sim: Simulation, person: Person, bills: Money): void {
+function payBills(sim: Simulation, person: Person, bills: Money, memo = 'Bills'): void {
   const pay = paymentsOf(person);
-  if (pay.bills === 'manual') { owe(sim, person, bills, 'Bills', 'bills'); return; }
+  if (pay.bills === 'manual') { owe(sim, person, bills, memo, 'bills'); return; }
   if (pay.bills === 'card') {
-    if (!onCard(sim, person, bills, 'Bills', 'bills')) owe(sim, person, bills, 'Bills', 'bills');
+    if (!onCard(sim, person, bills, memo, 'bills')) owe(sim, person, bills, memo, 'bills');
     return;
   }
-  if (payFromCurrent(sim, person, bills, 'Bills', 'bills')) return;
+  if (payFromCurrent(sim, person, bills, memo, 'bills')) return;
   chargeReturned(sim, person, bills);
-  owe(sim, person, bills, 'Bills', 'bills');
+  owe(sim, person, bills, memo, 'bills');
 }
 
 /**
@@ -880,6 +894,8 @@ export function registerHousehold(sim: Simulation): void {
     const before = arrearsOf(s, person);
     // Paid at the same moment, they post in the bank's order: highest first unless it takes the lowest first.
     for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
+    // The internet and the phone, each by its provider, the internet shared as the bills are (`systems/telecom.ts`).
+    for (const line of telecomLines(s, person, item.at)) payBills(s, person, line.shared ? Math.round(line.amount * share) : line.amount, line.memo);
     if (person.living) delete person.living.loads;
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {

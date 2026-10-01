@@ -47,6 +47,7 @@ import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } fro
 import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
 import { deviceCost, securityRefusal, type Device } from '@/engine/systems/homesecurity';
 import { chargerQuote } from '@/engine/systems/charging';
+import { billedApart, internetIn, internetShare, leavingCost, telecomOf } from '@/engine/systems/telecom';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
@@ -893,6 +894,7 @@ function YourHome({ cur }: { cur: string }) {
         value={homeLabel}
         note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
       />
+      <InternetControl />
       {home && home.kind !== 'sofa' && home.kind !== 'owned' && (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
           <div className="field" style={{ margin: 0 }}>
@@ -992,4 +994,33 @@ function calledBy(person: { firstName: string; lastName: string; middleName?: st
   const full = [person.firstName, person.middleName, person.lastName].filter(Boolean).join(' ');
   const plain = `${person.firstName} ${person.lastName}`;
   return person.displayName && person.displayName !== full && person.displayName !== plain ? person.displayName : person.firstName;
+}
+
+/** The home's internet provider and the other offers in town (`systems/telecom.ts`). */
+function InternetControl() {
+  const { run, toast, sim } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const home = sim.player.home;
+  const [planId, setPlanId] = useState('');
+  if (!home || !billedApart(home.cityId) || internetShare(home.kind) === 0) return null;
+  const now = telecomOf(sim.player).internet;
+  const offers = internetIn(home.cityId);
+  const current = offers.find((x) => x.id === now?.planId && now?.cityId === home.cityId);
+  const others = offers.filter((x) => x.id !== current?.id);
+  const chosen = others.find((x) => x.id === planId) ?? others[0];
+  const priced = (x: (typeof offers)[number]) => `${x.provider}, ${x.plan}, ${formatMoney(Math.round(x.monthly * 100), x.currency)} A Month${x.months && x.after !== undefined ? ` For ${x.months} Months, Then ${formatMoney(Math.round(x.after * 100), x.currency)}` : ''}`;
+  const leaving = leavingCost(sim, sim.player, sim.now);
+  return (
+    <div className="field-row">
+      <span className="small">{current ? `Internet: ${priced(current)}` : `Internet: ${priced(offers[0]!)}, From The First`}</span>
+      {chosen && others.length > 1 && (
+        <select aria-label="Internet Offer" value={chosen.id} onChange={(e) => setPlanId(e.target.value)} style={{ width: 'auto' }}>
+          {others.map((x) => <option key={x.id} value={x.id}>{priced(x)}</option>)}
+        </select>
+      )}
+      {chosen && current && (
+        <Gated feature="home.internet" className="btn btn-sm btn-ghost" title={leaving > 0 ? `What's left of the contract, ${formatMoney(leaving, cur, { cents: false })}, is owed on leaving.` : `${chosen.source}.`} onClick={() => { if (run('home.internet', { planId: chosen.id }).ok) toast(`${chosen.provider} from now.`, 'positive'); }}>{`Switch To ${chosen.provider}`}</Gated>
+      )}
+    </div>
+  );
 }

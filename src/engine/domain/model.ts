@@ -277,6 +277,8 @@ export interface Person {
   gym?: import('../systems/gyms').Membership;
   /** A trip out on errands, while it's under way (`systems/trips.ts`, from 2026-10-01). */
   trip?: import('../systems/trips').Trip;
+  /** The internet at home and the phone, by provider (`systems/telecom.ts`, from 2026-10-01). */
+  telecom?: import('../systems/telecom').Telecom;
   /** A marriage, and a divorce under way (`systems/marriage.ts`, from 2026-10-01). */
   marriage?: import('../systems/marriage').Marriage;
   /** How a couple living together splits the rent and the bills: evenly unless by income. */

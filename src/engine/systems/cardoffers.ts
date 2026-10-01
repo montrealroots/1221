@@ -45,6 +45,7 @@ import { CARDS } from '../content/cards';
 import { cardFor, cardRoom, cardTerms, stateOf, type CardPlan, type CardState, type CardTerms, type CardTransfer } from './credit';
 import { ENERGY } from './seasons';
 import { INTEREST_PLANS, planPayment } from '../content/plans';
+import { TELECOM_OF_BILLS } from './telecom';
 import { cashOwedOn } from './cash';
 
 /** The months a plan may run: the lengths Chase, Bank of America and the Canadian banks all offer. */
@@ -64,15 +65,8 @@ export function planMonthsOf(card: Account): number[] {
  * currency's hundredths.
  */
 export interface Bonus { rate: number; cap?: Money; after?: number }
-/**
- * The phone and internet's share of SLATE's bills: the part that isn't
- * energy (`ENERGY.share` in `systems/seasons.ts`) is the phone, the internet
- * and getting about, and Mexico's households spend 4.8% of what they spend
- * on communications against 19.5% on transport and communications together
- * (INEGI, ENIGH 2024, published July 2025), so communications are that
- * part's 4.8/19.5.
- */
-export const TELECOM_OF_BILLS = (1 - ENERGY.share) * (4.8 / 19.5);
+/** The phone and internet's share of SLATE's bills, which moved to `systems/telecom.ts` on 2026-10-01. */
+export { TELECOM_OF_BILLS };
 
 /**
  * Korea's: its households spent ₩167,000 a month on communications against

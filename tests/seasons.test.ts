@@ -11,7 +11,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { CARE } from '@/engine/content/safetynet';
 import { billsFactor, degreeDays, energyByMonth, energyScale, energyYear, ENERGY, fluByWeek, weekOfYear } from '@/engine/systems/seasons';
 import { CITIES } from '@/engine/content/geography';
-import { atTown, billsOf, costsAt } from '@/engine/systems/household';
+import { atTown, billsOf, costsAt, telecomPartOf } from '@/engine/systems/household';
 import { illnessWeek } from '@/engine/systems/health';
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
@@ -51,9 +51,10 @@ describe('the bills', () => {
     const cooling = homePlace(sim, sim.player)!.fixtures.cooling;
     const machines = () => atTown('us-ny-newyork', machineUsd(sim.player), saveCurrency(sim.universe));
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 12 }, 'America/New_York'));
-    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines());
+    // Less the phone and internet, billed by their providers from 2026-10-01 (`telecomPartOf`).
+    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines() - telecomPartOf(sim, sim.player));
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 12 }, 'America/New_York'));
-    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines());
+    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines() - telecomPartOf(sim, sim.player));
   });
 });
 

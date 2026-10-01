@@ -57,7 +57,9 @@ describe('locking a card', () => {
     sim.advanceBy(40 * MS_DAY);
     const bills = sim.universe.transactions.filter((t) => t.at >= from && t.category === 'bills');
     expect(bills.length).toBeGreaterThan(0);
-    expect(bills.every((t) => t.memo === 'Bills' && t.postings.some((p) => p.accountId === card.id))).toBe(true);
+    // The bills, and from 2026-10-01 the internet and the phone by their providers (`systems/telecom.ts`).
+    expect(bills.every((t) => /^(Bills|Internet, |Phone, )/.test(t.memo) && t.postings.some((p) => p.accountId === card.id))).toBe(true);
+    expect(bills.some((t) => t.memo.startsWith('Internet, '))).toBe(true);
   });
 });
 
