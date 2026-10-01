@@ -200,7 +200,12 @@ Researched in `docs/research/world/research-citizenship.json`.
   - The I-140 takes 31 months, or 15 business days with premium processing (USCIS figures, reported). The I-485 takes 8.6 months, FY2023's median on USCIS's own fact sheet.
   - October 2026's Visa Bulletin has EB-1 current, except for those born in China (from 2023-07-01) or India (2023-02-01). They also wait the years their line is behind.
   - It lets its holder live and work anywhere in the US without an O-1.
-- **Federal Medicaid from 1 October 2026** (`medicaidStatus` in `systems/health.ts`): a citizen's, or a green card holder's after five years (Pub. L. 119-21 §71109). An O-1's holder isn't among the groups named. New York's Essential Plan band still reaches them, as SLATE had it; whether it should, and California's state-funded Medi-Cal, weren't researched.
+- **Federal Medicaid from 1 October 2026** (`medicaidStatus` in `systems/health.ts`): a citizen's, or a green card holder's after five years (Pub. L. 119-21 §71109). An O-1's holder isn't among the groups named. New York's Essential Plan band still reaches them, and rightly: it takes anyone lawfully present up to 200% of the poverty line (NY State of Health, `research-sweep5.json`). California's state-funded Medi-Cal, for someone without satisfactory status, from later on 2026-09-30 (`MEDI_CAL_UIS`):
+  - From 1 January 2026 a new adult applicant gets restricted scope, which pays an emergency and the stay it brings. It pays no visit, prescription or dental care.
+  - Someone enrolled before 2026 keeps full scope while enrolled. Its non-emergency dental ends on 1 July 2026.
+  - From 1 July 2027 it costs $30 a month from 19 to 59, and after three months unpaid it's restricted (ACWDL 25-33).
+  - The federal work rule isn't asked of it. Lost once, full scope isn't regained; the three months' grace to re-enroll isn't kept.
+  - Evidence: `tests/medicaluis.test.ts` (7). 13 mutations, all killed in the end; five needed tests.
 - **A second citizenship** (`systems/citizenship.ts`, `documents.naturalize`, `citizenshipsOf`):
   - Britain: twelve months after settlement, £1,839 with the ceremony, and £50 for the Life in the UK test. It is decided within six months.
   - Mexico: five years' residence, or two for outstanding artistic work (Ley de Nacionalidad art. 20), read on the O-1's record. It costs MXN 9,502.01 and is decided in 40 business days.

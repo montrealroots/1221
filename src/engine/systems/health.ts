@@ -82,7 +82,7 @@ export interface HealthRecord {
   sag?: { from: Instant; until: Instant };
   equity?: { from: Instant; until: Instant };
   /** Medicaid, Medi-Cal or the Essential Plan, and when it's next renewed. */
-  program?: { kind: 'medicaid' | 'essential'; state: BenefitState; from: Instant; until?: Instant; renewAt: Instant; band: 'low' | 'high' };
+  program?: { kind: 'medicaid' | 'essential'; state: BenefitState; from: Instant; until?: Instant; renewAt: Instant; band: 'low' | 'high'; /** California's state-funded Medi-Cal for someone without satisfactory status: kept from before 2026 in full, or restricted to emergencies (`MEDI_CAL_UIS`). */ scope?: 'state' | 'restricted'; /** Its premium's months unpaid. */ unpaid?: number };
   cobra?: { plan: 'sag' | 'equity'; from: Instant; until: Instant; subsidized: boolean };
   /** A union plan lost, and until when COBRA may be elected. */
   cobraOffer?: { plan: 'sag' | 'equity'; lostAt: Instant; until: Instant };
@@ -196,9 +196,33 @@ const povertyMonth = (year: number, into: string) => usd(byYear(POVERTY_LINE, ye
  * asked none; from then, a US citizen, or five years with a green card
  * (`systems/residence.ts`). An O-1's holder isn't among the groups the law
  * names. In New York the Essential Plan's income band still reaches them,
- * as SLATE had it; whether that plan takes an O-1's holder, and California's
- * state-funded Medi-Cal for immigrants, weren't researched.
+ * as SLATE had it, and rightly: it takes anyone lawfully present to 200% of
+ * the poverty line (NY State of Health, `research-sweep5.json`).
+ *
+ * California's state-funded Medi-Cal, from later on 2026-09-30, for someone
+ * without satisfactory immigration status (a citizen's, or a green card's
+ * after five years, here; an O-1's holder among those without), from DHCS's
+ * guidance as the research read it:
+ * - from 1 January 2026, a new adult applicant gets restricted scope only,
+ *   emergency care (and pregnancy, which SLATE's lives don't carry);
+ * - one enrolled before then keeps full scope while enrolled;
+ * - its non-emergency dental ends on 1 July 2026;
+ * - from 1 July 2027, $30 a month from 19 to 59, and after 90 days unpaid
+ *   it's restricted scope (ACWDL 25-33).
+ * Its three months' grace to re-enroll isn't kept. The federal work rule
+ * isn't asked of it: the state funds it.
  */
+export const MEDI_CAL_UIS = { freezeFrom: Date.UTC(2026, 0, 1), dentalEnds: Date.UTC(2026, 6, 1), premiumFrom: Date.UTC(2027, 6, 1), premium: 30, ages: [19, 59] as const, unpaidMonths: 3 } as const;
+
+/** A citizen's status, or a green card's after five years: what Medicaid and Medi-Cal call satisfactory. */
+const satisfactory = (person: Person, at: Instant): boolean => {
+  if (citizenOf(person, 'US')) return true;
+  const card = residenceIn(person, 'US', at);
+  return card?.route === 'us-green-card' && at - (card.issuedAt ?? at) >= 5 * 365.2425 * MS_DAY;
+};
+
+/** Whether their cover is California's restricted scope: emergency care only. */
+export const restrictedScope = (person: Person, at: Instant): boolean => coverOn(person, at) === 'medicaid' && person.health?.program?.scope === 'restricted';
 export function medicaidStatus(person: Person, at: Instant): boolean {
   if (at < Date.UTC(2026, 9, 1) || citizenOf(person, 'US')) return true;
   const card = residenceIn(person, 'US', at);
@@ -206,11 +230,17 @@ export function medicaidStatus(person: Person, at: Instant): boolean {
 }
 
 /** What program last month's income qualifies them for where they live: Medicaid, the Essential Plan, or none. */
-export function programFor(person: Person, at: Instant, into = 'USD'): { kind: 'medicaid' | 'essential'; band: 'low' | 'high' } | undefined {
+export function programFor(person: Person, at: Instant, into = 'USD'): { kind: 'medicaid' | 'essential'; band: 'low' | 'high'; scope?: 'state' | 'restricted' } | undefined {
   const state = BENEFIT_STATE[homeOf(person)];
   if (!state) return undefined;
   const income = earningsOf(person).months[lastMonthKey(at)] ?? 0;
   const ratio = income / povertyMonth(zonedParts(at, HOME).year, into);
+  // California's state-funded Medi-Cal for someone without satisfactory status, from 2026 (`MEDI_CAL_UIS`).
+  if (state === 'ca' && ratio <= PUBLIC_COVER.medicaidShare && at >= MEDI_CAL_UIS.freezeFrom && !satisfactory(person, at)) {
+    const prog = person.health?.program;
+    const kept = prog && prog.kind === 'medicaid' && prog.state === 'ca' && prog.from < MEDI_CAL_UIS.freezeFrom && (prog.until === undefined || prog.until > at) && prog.scope !== 'restricted';
+    return { kind: 'medicaid', band: 'low', scope: kept ? 'state' : 'restricted' };
+  }
   // From 1 October 2026 federal Medicaid is a citizen's, or a green card holder's after five years (Pub. L. 119-21 §71109).
   if (ratio <= PUBLIC_COVER.medicaidShare && medicaidStatus(person, at)) return { kind: 'medicaid', band: 'low' };
   if (state === 'ny' && ratio <= PUBLIC_COVER.essentialShare) return { kind: 'essential', band: ratio <= PUBLIC_COVER.essentialCopaysFrom ? 'low' : 'high' };
@@ -386,14 +416,23 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     else if (at >= prog.renewAt) {
       const still = programFor(person, at, cur);
       const work = lastMonthWork(person, at);
-      const worksEnough = prog.kind !== 'medicaid' || monthKey(at) < PUBLIC_COVER.workFrom.slice(0, 7) || work.hours >= PUBLIC_COVER.workHours || work.earnings >= usd(PUBLIC_COVER.workEarnings, cur);
+      const worksEnough = prog.kind !== 'medicaid' || prog.scope !== undefined || monthKey(at) < PUBLIC_COVER.workFrom.slice(0, 7) || work.hours >= PUBLIC_COVER.workHours || work.earnings >= usd(PUBLIC_COVER.workEarnings, cur);
       if (still?.kind === prog.kind && worksEnough) {
         prog.band = still.band;
+        if (still.scope) prog.scope = still.scope; else delete prog.scope;
         prog.renewAt = firstOf(p.year, p.month + renewMonths(at, prog.state));
       } else {
         prog.until = at;
         if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ended At Renewal', body: !worksEnough ? `Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work or ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings a month, and last month had neither.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
       }
+    }
+  }
+  // California's premium on its state-funded Medi-Cal, from July 2027; 90 days unpaid and it's restricted scope.
+  if (prog && active(prog, at) && prog.scope === 'state' && at >= MEDI_CAL_UIS.premiumFrom) {
+    const age = (at - person.birthInstant) / (365.2425 * MS_DAY);
+    if (age >= MEDI_CAL_UIS.ages[0] && age < MEDI_CAL_UIS.ages[1] + 1) {
+      if (payFromCurrent(sim, person, usd(MEDI_CAL_UIS.premium * 100, cur), 'Medi-Cal premium', 'health')) prog.unpaid = 0;
+      else if ((prog.unpaid = (prog.unpaid ?? 0) + 1) >= MEDI_CAL_UIS.unpaidMonths) prog.scope = 'restricted';
     }
   }
   // The marketplace: a plan is the state's, and ends on leaving it.
@@ -498,9 +537,10 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
   if (!MEDICAL.includes(care)) return teethAndEyesShareOf(person, care as 'cleaning' | 'filling' | 'exam' | 'glasses', at, into);
   const price = usd(grown(CARE.price[care as 'visit' | 'urgent' | 'emergency' | 'stay'], care as 'visit', at), into);
   const year = zonedParts(at, HOME).year;
-  const plan = planOf(person, at);
-  const h = healthOf(person);
   const hospital = care === 'emergency' || care === 'stay';
+  // Restricted scope pays an emergency and the stay it brings, nothing else.
+  const plan = restrictedScope(person, at) && !hospital ? undefined : planOf(person, at);
+  const h = healthOf(person);
   const state = CITIES.get(homeOf(person))?.parentId;
   // The last year's income against the poverty line, which a hospital's charity reads.
   const ratio = () => incomeRatio(person, at, into);
@@ -685,7 +725,7 @@ export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'U
   // A Canadian's provincial drug plan, where one takes them (from later on 2026-09-30).
   const provincial = cash === undefined ? canadianDrugShare(person, at, price, into) : undefined;
   if (provincial !== undefined) return provincial;
-  const key = planKey(person, at);
+  const key = restrictedScope(person, at) ? undefined : planKey(person, at);
   const plan = key ? PHARMACY.plans[key] : undefined;
   if (!plan) return price;
   const year = zonedParts(at, HOME).year;
@@ -745,7 +785,10 @@ export function dentalPlanFor(person: Person, at: Instant): DentalPlan | undefin
 /** The dentist and the optician: what the plan pays of each, where it has them, or a stand-alone dental plan; otherwise the price. */
 export function teethAndEyesShareOf(person: Person, care: 'cleaning' | 'filling' | 'exam' | 'glasses', at: Instant, into = 'USD'): Money {
   const price = usd(grown(DENTAL_VISION.price[care], care === 'cleaning' || care === 'filling' ? 'dental' : 'vision', at), into);
-  const key = planKey(person, at);
+  // Restricted scope pays none of it; state-funded Medi-Cal no teeth but an emergency's from July 2026.
+  const prog = person.health?.program;
+  const noTeeth = (care === 'cleaning' || care === 'filling') && coverOn(person, at) === 'medicaid' && prog?.scope === 'state' && at >= MEDI_CAL_UIS.dentalEnds;
+  const key = restrictedScope(person, at) || noTeeth ? undefined : planKey(person, at);
   const plan = key ? DENTAL_VISION.plans[key] : undefined;
   const dental = person.health?.dental;
   // A dental plan of their own pays where the health plan pays nothing.
@@ -941,7 +984,8 @@ export function registerHealth(sim: Simulation): void {
     const h = healthOf(person);
     if (may.program) {
       const band = programFor(person, s.now, cur)!.band;
-      h.program = { kind: may.program, state, from, band, renewAt: firstOf(p.year, p.month + 1 + renewMonths(s.now, state)) };
+      const scope = programFor(person, s.now, cur)!.scope;
+      h.program = { kind: may.program, state, from, band, renewAt: firstOf(p.year, p.month + 1 + renewMonths(s.now, state)), ...(scope ? { scope } : {}) };
     } else h.marketplace = { from, state };
     armHealth(s, person);
     return { from, kind: may.program ?? 'marketplace' };
