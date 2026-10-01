@@ -17,7 +17,7 @@
  * because it cannot land anywhere else without saying what it reads.
  */
 
-import { drive } from './systems/driving';
+import { drive, riderDeath } from './systems/driving';
 import { landAnswer, listingsFor } from './systems/land';
 import { trainFate } from './systems/rail';
 import { RAIL_ROUTES } from './content/rail';
@@ -288,6 +288,18 @@ defineDecider<{ sim: Simulation; km: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), km: 200_000 + seed * 997 }),
   decide: ({ sim, km }) => { const r = drive(sim, sim.player, 'US-NY', km, sim.now, `d-${km}`); return r.ticket ? 'a ticket' : 'none'; },
+});
+
+defineDecider<{ sim: Simulation; km: number }, string>({
+  id: 'driving.rider_death',
+  decides: 'A month on a motorcycle ending the life or not, at the rider’s death rate above a car occupant’s a kilometer (RIDER_DEATH); swept at even odds, the real ones being too small to see.',
+  drawnIn: 'src/engine/systems/driving.ts',
+  reads: {
+    km: (o, t) => ({ ...o, km: Math.round(t * 400_000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), km: 200_000 + seed * 997 }),
+  decide: ({ sim, km }) => (riderDeath(sim, sim.player, 'US-NY', km, sim.now, `r-${km}`, 0.5) ? 'died' : 'rode on'),
 });
 
 defineDecider<{ sim: Simulation; train: number }, string>({

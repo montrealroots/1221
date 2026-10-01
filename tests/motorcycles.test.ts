@@ -11,7 +11,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { BIKE_UNRATED_PER100, runningCost, kindOf, modelById, modelsFor, monthlyInsurance, quote, renewal, buyRefusal, vehiclesOf, type OwnedVehicle, type Quote } from '@/engine/systems/vehicles';
 import { documentsOf, mayDrive, type PersonDocument } from '@/engine/systems/documents';
 import { pathHere, stepRefusal } from '@/engine/systems/licensing';
-import { crashChance } from '@/engine/systems/driving';
+import { crashChance , RIDER_DEATH, drive, riderDeath, riderDeathPerKm } from '@/engine/systems/driving';
 import { inspectIfDue } from '@/engine/systems/inspections';
 import { FUEL, UPKEEP_USD_PER_KM } from '@/engine/content/vehiclefees';
 import { saveCurrency } from '@/engine/core/money';
@@ -195,5 +195,29 @@ describe('the motorcycle license', () => {
     const r = sim.execute<{ expiresAt: number }>({ kind: 'documents.renew_license', payload: {} });
     expect(r.ok, r.error).toBe(true);
     expect(moto.expiresAt).toBe(r.value!.expiresAt);
+  });
+});
+
+describe('a rider’s death risk', () => {
+  it('adds the motorcyclist’s death rate above a car occupant’s, a kilometer: NHTSA’s in America, the DfT’s in Britain', () => {
+    expect(RIDER_DEATH.american).toBeCloseTo((28 - 1.05) / 1e8 / 1.609344, 15);
+    expect(RIDER_DEATH.british).toBeCloseTo(65.3 / 1e9, 15);
+    expect(riderDeathPerKm('GB')).toBe(RIDER_DEATH.british);
+    expect(riderDeathPerKm('IE')).toBe(RIDER_DEATH.british);
+    expect(riderDeathPerKm('CA-ON')).toBe(RIDER_DEATH.american);
+    const ends = (sim: ReturnType<typeof quickSave>) => sim.universe.scheduled.filter((i) => i.kind === 'life.end' && i.status === 'pending').length;
+    // Twenty million kilometers makes the rare draw nearly sure, on two wheels and not on four.
+    const rider = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'rider-death');
+    const before = ends(rider);
+    drive(rider, rider.player, 'US-NY', 20_000_000, rider.now, 'far', 'motorcycle');
+    expect(ends(rider)).toBe(before + 1);
+    const driver = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'rider-death');
+    const was = ends(driver);
+    drive(driver, driver.player, 'US-NY', 20_000_000, driver.now, 'far', 'car');
+    expect(ends(driver)).toBe(was);
+    // Once a life's end is set, another isn't.
+    const gb = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true }, 'rider-gb');
+    expect(riderDeath(gb, gb.player, 'GB', 1, gb.now, 'one', 1)).toBe(true);
+    expect(riderDeath(gb, gb.player, 'GB', 1, gb.now, 'two', 1)).toBe(false);
   });
 });

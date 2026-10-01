@@ -14,6 +14,11 @@
  *   over the DMV's 36,190,654, 379.
  * - Ontario: Équité Association's 19,319 over 8.8 million light vehicles
  *   (Statistics Canada, 2024), 220.
+ * - A bicycle or an e-bike in Britain, from later on 2026-09-30
+ *   (`research-vehicles5.json`): the Crime Survey for England and Wales's 17.6
+ *   thefts a year per 1,000 households owning one (year to March 2026), taken
+ *   as an owner's; found again at Toronto Police's 1% (2014 to 2025, the only
+ *   share published), else gone. No other place's rate is published.
  * Connecticut's, British Columbia's, London's, Ireland's and Mexico City's
  * counts come without a count of vehicles to set them against, and none is
  * drawn there.
@@ -43,13 +48,15 @@ export const THEFT = {
   losAngeles: 502,
   california: 136_988 / 36_190_654 * 1e5,
   ontario: 19_319 / 8_800_000 * 1e5,
-  recovered: { ontario: 0.51, canada: 0.59 },
+  bicycleEngland: 17.6 / 1_000 * 1e5,
+  recovered: { ontario: 0.51, canada: 0.59, bicycle: 0.01 },
   recoverDays: 30,
 } as const;
 
 /** Thefts a year per 100,000 where a vehicle is kept, or nothing where none is published with a count of vehicles. */
-export function theftRate(v: Pick<OwnedVehicle, 'jurisdiction' | 'cityId' | 'at'>): number | undefined {
+export function theftRate(v: Pick<OwnedVehicle, 'jurisdiction' | 'cityId' | 'at'>, m?: CarModel): number | undefined {
   const city = v.at ?? v.cityId;
+  if (m && pedaled(m)) return v.jurisdiction === 'GB' ? THEFT.bicycleEngland : undefined;
   switch (v.jurisdiction) {
     case 'US-NY': return NYC.has(city) ? THEFT.nyc : THEFT.nyRest;
     case 'US-CA': return city === 'us-ca-losangeles' ? THEFT.losAngeles : THEFT.california;
@@ -58,8 +65,9 @@ export function theftRate(v: Pick<OwnedVehicle, 'jurisdiction' | 'cityId' | 'at'
   }
 }
 
-/** Whether a kind is stolen as a road vehicle is: not a bicycle, an e-bike or an ATV, whose thefts aren't counted here. */
-const counted = (m: CarModel) => !['bicycle', 'ebike', 'atv'].includes(m.kind ?? 'car');
+/** Whether a kind's thefts are counted: not an ATV's, whose aren't published. A bicycle's and an e-bike's are, in Britain. */
+const counted = (m: CarModel) => (m.kind ?? 'car') !== 'atv';
+const pedaled = (m: CarModel) => m.kind === 'bicycle' || m.kind === 'ebike';
 
 /** A stolen vehicle off the books: nothing more is owed on it. */
 export function gone(sim: Simulation, v: OwnedVehicle): void {
@@ -77,11 +85,11 @@ export const stolenNow = (v: OwnedVehicle, at: number) => Boolean(v.stolen && (v
  */
 export function mayBeStolen(sim: Simulation, person: Person, v: OwnedVehicle, m: CarModel, value: Money, currency: string, odds: { stolen?: number; recovered?: number } = {}): boolean {
   if (v.stolen || v.soldAt !== undefined || v.repossessed || !counted(m)) return false;
-  const rate = theftRate(v);
+  const rate = theftRate(v, m);
   if (rate === undefined) return false;
   const rng = sim.rng('vehicle.theft', v.id, sim.now);
   if (rng.next() >= (odds.stolen ?? 1 - Math.exp(-rate / 1e5 / 12))) return false;
-  const back = rng.next() < (odds.recovered ?? (v.jurisdiction === 'CA-ON' ? THEFT.recovered.ontario : THEFT.recovered.canada));
+  const back = rng.next() < (odds.recovered ?? (pedaled(m) ? THEFT.recovered.bicycle : v.jurisdiction === 'CA-ON' ? THEFT.recovered.ontario : THEFT.recovered.canada));
   const label = `${m.make} ${m.model}`;
   const mine = person.id === sim.universe.playerId;
   if (back) {

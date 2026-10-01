@@ -372,7 +372,7 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
   - British Columbia's Class 8 program for a new rider.
   - A moped ridden on a car license where a place allows it.
   - A motorcycle's own depreciation, which no source publishes; the car curve is used.
-  - A rider's deaths above the life table's.
+  - A rider's deaths above the life table's, until later on 2026-09-30 (`riderDeath`, `research-vehicles5.json`). Now a month's riding adds the motorcyclist's death rate above a car occupant's, a kilometer. America's NHTSA, 2024: 28.00 per 100 million vehicle miles against 1.05. Britain's DfT: 66.3 per billion passenger kilometers against 1.0. Canada and Mexico take America's, and Ireland Britain's. Decider `driving.rider_death`; 5 mutations, all killed.
 
 Evidence: `tests/motorcycles.test.ts` (17). 23 mutations, all killed in the end. Six first survived, and each needed a test:
 - The mean an unrated bike burns, which the first test read back from the code.
@@ -442,7 +442,7 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
     - The Compendium's 4.0 METs (15470), and an hour outside's mood.
     - No injury is drawn and no fuel is charged. The CPSC counts about 100,400 emergency-room injuries in 2023, but publishes no rate a rider or an hour, and no maker publishes an ATV's fuel.
 - Not kept:
-  - A bicycle stolen.
+  - A bicycle stolen, until later on 2026-09-30. Now in Britain, at the Crime Survey for England and Wales's 17.6 thefts a year per 1,000 owning households, found again at Toronto Police's 1%, the only share published. No other place publishes a rate. 3 mutations, all killed.
   - An ATV ridden on the road where a place allows it.
   - The trailer that takes an ATV to its land.
   - Cycling to work, as SLATE has no commute.

@@ -28,6 +28,21 @@ describe('the rate', () => {
     expect(theftRate(place('CA-ON', 'ca-on-toronto'))).toBeCloseTo(219.5, 1);
     expect(theftRate(place('US-CT', 'us-ct-newhaven'))).toBeUndefined();
   });
+
+  it('counts a bicycle’s theft in Britain only, at the CSEW’s 17.6 a year in 1,000 owning households', () => {
+    const bike = modelById('gb-carrera-vengeance')!;
+    expect(theftRate(place('GB', 'uk-eng-london'), bike)).toBeCloseTo(1_760, 6);
+    expect(theftRate(place('US-NY', 'us-ny-newyork'), { ...bike, kind: 'bicycle' })).toBeUndefined();
+    // A bicycle stolen in London, at Toronto's 1% found again.
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, 'theft-bike');
+    const v = buy(sim, { modelId: bike.id });
+    expect(mayBeStolen(sim, sim.player, v, bike, valueOf(v, sim.now), bike.currency, { stolen: 1 })).toBe(true);
+    expect(v.stolen).toBeDefined();
+    // Found again rarely: Toronto's 1%, not a car's 59%.
+    let found = 0;
+    for (let i = 0; i < 80; i += 1) { const w: OwnedVehicle = { ...v, id: `bike-${i}`, stolen: undefined, soldAt: undefined }; mayBeStolen(sim, sim.player, w, bike, valueOf(w, sim.now), bike.currency, { stolen: 1 }); if (w.stolen?.recoverAt !== undefined) found += 1; }
+    expect(found).toBeLessThanOrEqual(6);
+  });
 });
 
 describe('a theft', () => {

@@ -37,6 +37,7 @@ import { CITIES, distanceKm } from '../content/geography';
 import { KM_A_YEAR, type Jurisdiction } from '../content/vehiclefees';
 import type { VehicleKind } from '../content/vehiclecatalog';
 import { mayHurt } from './injury';
+import { END_KIND } from './mortality';
 import { documentsOf, licenseOf } from './documents';
 import { owe, payFromBank } from './household';
 
@@ -134,7 +135,34 @@ export function drive(sim: Simulation, person: Person, j: Jurisdiction, km: numb
   const ticketChance = 1 - Math.exp(-(rule.perYear * km) / KM_A_YEAR[j]);
   const ticket = rng.next() < ticketChance;
   if (ticket) ticketed(sim, person, j, at);
+  if (kind === 'motorcycle' || kind === 'scooter') riderDeath(sim, person, j, km, at, key);
   return { hurt, ticket };
+}
+
+/**
+ * What riding adds to the chance of dying, a kilometer, from later on
+ * 2026-09-30 (`research-vehicles5.json`): the life table already holds the
+ * road's ordinary deaths, so it's the rider's rate above a car occupant's.
+ * America's NHTSA, 2024: 28.00 motorcyclists killed per 100 million vehicle
+ * miles against 1.05 car occupants; Britain's DfT (RAS0203): 66.3 per billion
+ * passenger kilometers against 1.0. Canada and Mexico take America's, and
+ * Ireland Britain's, the nearest published.
+ */
+export const RIDER_DEATH = {
+  american: (28.0 - 1.05) / 1e8 / 1.609344,
+  british: (66.3 - 1.0) / 1e9,
+} as const;
+
+/** The rider's excess a kilometer where they ride: Britain's in Britain and Ireland, America's in North America. */
+export const riderDeathPerKm = (j: Jurisdiction): number => (j === 'GB' || j === 'IE' ? RIDER_DEATH.british : RIDER_DEATH.american);
+
+/** A month's riding: the life ended on the road, at the rider's excess (decider `driving.rider_death`); true where it was. */
+export function riderDeath(sim: Simulation, person: Person, j: Jurisdiction, km: number, at: Instant, key: string, odds?: number): boolean {
+  const chance = odds ?? 1 - Math.exp(-riderDeathPerKm(j) * km);
+  if (sim.rng('driving.rider_death', person.id, key).next() >= chance) return false;
+  if (sim.universe.scheduled.some((i) => i.kind === END_KIND && i.status === 'pending' && (i.payload.personId ?? sim.universe.playerId) === person.id)) return false;
+  sim.schedule({ at: Math.max(sim.now, at) + 60_000, kind: END_KIND, label: 'World Simulation', category: 'system', priority: 1, payload: { personId: person.id } });
+  return true;
 }
 
 /** A speeding ticket: the fine paid or owed, the points, and the license taken where they reach the line. */
