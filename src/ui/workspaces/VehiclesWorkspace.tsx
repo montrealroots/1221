@@ -13,6 +13,9 @@ import { CARAVANS, CARAVAN_YEAR, HITCH_FIT, LB } from '@/engine/content/caravans
 import { CITIES } from '@/engine/content/geography';
 import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
 import { useState } from 'react';
+import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
+import { arrange } from '@/engine/systems/catalog';
+import { modCatalog, vehicleCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -20,12 +23,12 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
-import { buyRefusal, glazed, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, modelsFor, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
+import { buyRefusal, glazed, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
 import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { tiresRefusal } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
-import { MODS, MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
+import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -39,9 +42,12 @@ export function VehiclesWorkspace() {
   const home = homeOf(person);
   const j = jurisdictionOf(home);
   const [kind, setKind] = useState<VehicleKind>('car');
-  const models = modelsFor(home, kind);
   const [pick, setPick] = useState('');
   const [age, setAge] = useState(0);
+  // The models as a catalog: the cheapest whole price first, searched and filtered (`systems/catalogs.ts`).
+  const [view, setView] = useCatalogView(`vehicles-${kind}`);
+  const entries = vehicleCatalog(sim, person, home, kind, age);
+  const models = arrange(entries, view).map((e) => e.value);
   // Outright, a loan's months or a lease's: one choice, a lease's months negative.
   const [months, setMonths] = useState(0);
   const financed = months > 0;
@@ -135,25 +141,27 @@ export function VehiclesWorkspace() {
 
         <Panel title="Buy One" subtitle={j ? `Where you live: ${PLACE_NAME[j]}` : 'Where you live, SLATE sells no cars yet'}>
           <div className="col gap-3">
+            <CatalogControls id="car-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setPick(''); }} facets={{ make: 'Make', fuel: 'Fuel' }} lead={(
+                <div className="field">
+                  <label htmlFor="car-kind">Kind</label>
+                  <select id="car-kind" value={kind} onChange={(e) => { setKind(e.target.value as VehicleKind); setPick(''); setMonths(0); }}>
+                    <option value="atv">ATV</option>
+                    <option value="ebike">E-Bike</option>
+                    <option value="bicycle">Bicycle</option>
+                    <option value="campervan">Campervan</option>
+                    <option value="motorhome">Motorhome</option>
+                    <option value="van">Cargo Van</option>
+                    <option value="scooter">Scooter</option>
+                    <option value="motorcycle">Motorcycle</option>
+                    <option value="car">Car</option>
+                  </select>
+                </div>
+              )} />
             <div className="field-row field-row-tight">
-              <div className="field">
-                <label htmlFor="car-kind">Kind</label>
-                <select id="car-kind" value={kind} onChange={(e) => { setKind(e.target.value as VehicleKind); setPick(''); setMonths(0); }}>
-                  <option value="atv">ATV</option>
-                  <option value="ebike">E-Bike</option>
-                  <option value="bicycle">Bicycle</option>
-                  <option value="campervan">Campervan</option>
-                  <option value="motorhome">Motorhome</option>
-                  <option value="van">Cargo Van</option>
-                  <option value="scooter">Scooter</option>
-                  <option value="motorcycle">Motorcycle</option>
-                  <option value="car">Car</option>
-                </select>
-              </div>
               <div className="field">
                 <label htmlFor="car-model">Model</label>
                 <select id="car-model" value={model?.id ?? ''} onChange={(e) => setPick(e.target.value)}>
-                  {models.map((m) => <option key={m.id} value={m.id}>{m.make} {m.model}</option>)}
+                  {arrange(entries, view).map((e) => <option key={e.id} value={e.id}>{`${e.label}, ${catalogPrice(e, (c) => formatMoney(c, cur, { cents: false }))}`}</option>)}
                 </select>
               </div>
               <div className="field">
@@ -359,10 +367,10 @@ function BoatPanel() {
   );
 }
 
-/** Britain's modifications, one at a time, the least of them first (`systems/mods.ts`). */
+/** Britain's modifications, one at a time, the cheapest fitted first (`modCatalog`); until 2026-10-01 the least of them first. */
 function ModifyControl({ v }: { v: OwnedVehicle }) {
   const { run, toast, sim } = useGame();
-  const open = MODS.filter((m) => !modRefusal(v, m, glazed(v)));
+  const open = arrange(modCatalog(sim)).map((e) => e.value).filter((m) => !modRefusal(v, m, glazed(v)));
   const [mod, setMod] = useState<Mod | ''>('');
   if (!open.length) return null;
   const chosen = mod && open.includes(mod) ? mod : open[0]!;

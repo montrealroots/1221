@@ -5,6 +5,9 @@
  */
 
 import { useState } from 'react';
+import { CatalogControls, useCatalogView } from '@/ui/components/Catalog';
+import { arrange } from '@/engine/systems/catalog';
+import { landCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -134,6 +137,10 @@ function ForSale() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const listings = useWorld((s) => listingsFor(s, s.player, homeOf(s.player)));
+  // The land as a catalog: the cheapest asking price first (`systems/catalogs.ts`).
+  const [view, setView] = useCatalogView('land');
+  const landEntries = useWorld((s) => landCatalog(s, s.player, homeOf(s.player)));
+  const shown = arrange(landEntries, view).map((e) => e.value);
   const [pick, setPick] = useState('');
   const listing = listings.find((l) => l.id === pick) ?? listings[0];
   const [typed, setTyped] = useState('');
@@ -157,11 +164,12 @@ function ForSale() {
   return (
     <Panel title="For Sale" subtitle="Listed where you live this month">
       <div className="col gap-3">
+        <CatalogControls id="land-catalog" entries={landEntries} view={view} onChange={setView} facets={{ kind: 'Kind' }} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Land</th><th scope="col">Size</th><th scope="col" className="num">Asking</th><th scope="col">Listed</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
             <tbody>
-              {listings.map((l) => {
+              {shown.map((l) => {
                 const lm = LAND_MARKETS[l.market]!;
                 return (
                   <tr key={l.id}>

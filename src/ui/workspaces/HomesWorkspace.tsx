@@ -9,11 +9,14 @@
  */
 
 import { useState } from 'react';
+import { CatalogControls, useCatalogView } from '@/ui/components/Catalog';
+import { arrange } from '@/engine/systems/catalog';
+import { applianceCatalog, furnitureCatalog, homeCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
-import { APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '@/engine/content/appliances';
+import { APPLIANCE_LABEL, APPLIANCE_LIFE } from '@/engine/content/appliances';
 import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
@@ -116,6 +119,10 @@ function ForSalePane() {
   const [town, setTown] = useState(homeTown);
   const city = CITIES.require(town);
   const homes = useWorld((s) => listingsIn(s, town), [town]);
+  // The listings as a catalog: the cheapest asking price first, searched and filtered (`systems/catalogs.ts`).
+  const [view, setView] = useCatalogView(`homes-${town}`);
+  const homeEntries = useWorld((s) => homeCatalog(s, town), [town]);
+  const shown = arrange(homeEntries, view).map((e) => e.value);
   const buying = useWorld((s) => s.player.buying);
   const counter = useWorld((s) => s.player.counter);
   const [chosen, setChosen] = useState<string | undefined>(undefined);
@@ -219,13 +226,14 @@ function ForSalePane() {
       )}
       <Panel title={`For Sale In ${city.name}`} subtitle={`The typical home: ${money(typical.value)} as of ${formatDate(typical.asOf, city.timeZone)}, ${(typical.growth * 100).toFixed(1)}% a year`}>
         <div className="col gap-3">
+          <CatalogControls id="homes-catalog" entries={homeEntries} view={view} onChange={setView} facets={{ type: 'Kind', beds: 'Bedrooms' }} />
           <div className="table-scroll">
             <table>
               <thead>
                 <tr><th scope="col" className="num">#</th><th scope="col">Home</th><th scope="col">Address</th><th scope="col" className="num">Size</th><th scope="col" className="num">Built</th><th scope="col" className="num">Days Listed</th><th scope="col" className="num">Price</th><th scope="col" /></tr>
               </thead>
               <tbody>
-                {homes.map((one) => (
+                {shown.map((one) => (
                   <tr key={one.id} aria-selected={one.id === chosen}>
                     <td className="num mono">{one.rank}</td>
                     <td>{typeLabel(one.type, city.countryId)}, {bedsText(one.beds)}, {bathsText(one.baths)}</td>
@@ -402,7 +410,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
             <table>
               <thead><tr><th scope="col">Work</th><th scope="col" className="num">Cost</th><th scope="col" className="num">Permit</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
               <tbody>
-                {projects.map(({ project, cost, adds, permit, refusal }) => (
+                {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, cost, adds, permit, refusal }) => (
                   <tr key={project.id}>
                     <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}</td>
                     <td className="num mono">{money(cost)}</td>
@@ -502,7 +510,8 @@ function FitOut({ owned }: { owned: OwnedHome }) {
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const f = fixturesOf(sim, person, owned.cityId, owned.facts, owned.id);
-  const kinds = Object.keys(APPLIANCE_LABEL) as ApplianceKind[];
+  // The cheapest fitted first, an appliance without a published price last (`applianceCatalog`).
+  const kinds = arrange(applianceCatalog(sim, owned.cityId)).map((e) => e.value);
   const table = appliancesIn(owned.cityId);
   return (
     <div className="col gap-2">
@@ -540,7 +549,8 @@ function Furniture() {
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const where = person.home?.cityId ?? person.currentLocationId;
-  const pieces: Piece[] = ['speaker', 'console', 'tv', 'sofa', 'bed'];
+  // The cheapest delivered first, one without a price here last (`furnitureCatalog`).
+  const pieces: Piece[] = arrange(furnitureCatalog(sim, where)).map((e) => e.value);
   const does: Record<Piece, string> = { bed: 'Without one, an empty home’s nights are slept on the floor', sofa: 'Without one, unwinding in an empty home takes half the stress off', tv: 'A film or television lover enjoys unwinding at home only with one', console: 'A gamer enjoys unwinding at home only with one', speaker: 'A music lover enjoys unwinding at home only with one' };
   const mattress = mattressCost(sim, person.home?.cityId ?? person.currentLocationId);
   const moveBy = useFeature('home.move_by');

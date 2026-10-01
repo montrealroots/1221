@@ -20,7 +20,10 @@ import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf } from '@/engine/systems/journey';
-import { rentalAt, rentalQuote, rentalsOf, rentalClassesIn } from '@/engine/systems/rentals';
+import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
+import { arrange } from '@/engine/systems/catalog';
+import { rentalCatalog, stayCatalog } from '@/engine/systems/catalogs';
+import { catalogPrice } from '@/ui/components/Catalog';
 import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
@@ -194,7 +197,7 @@ export function TravelWorkspace() {
                 <div className="field">
                   <label htmlFor="travel-stay">Stay</label>
                   <select id="travel-stay" value={cls} onChange={(e) => setStayCls(e.target.value as StayClass)}>
-                    {(Object.keys(STAY_CLASS_LABEL) as StayClass[]).filter((c) => classes.includes(c)).map((c) => <option key={c} value={c}>{STAY_CLASS_LABEL[c]}</option>)}
+                    {arrange(stayCatalog(sim, toCity, stayNights, ratePlan, residentOf(person, toCity), inMotorhome(person, mode) || Boolean(towing), outPlan ? outPlan[outPlan.length - 1]!.arriveAt : day)).map((e) => <option key={e.id} value={e.id}>{`${e.label}, ${catalogPrice(e, (c) => formatMoney(c, saveCurrency(sim.universe), { cents: false }))} The Stay`}</option>)}
                   </select>
                 </div>
                 <div className="field">
@@ -301,7 +304,8 @@ function RentACar({ j }: { j: Journey }) {
   // The damage waiver, where its price is known (from 2026-10-01): declined, a crash leaves the repair owed.
   const offered = RENTALS[j.toCity]!.waiverOffered !== undefined;
   // The class, from those the airport rents (from 2026-10-01).
-  const classesHere = rentalClassesIn(j.toCity);
+  // The classes, the cheapest whole rental first (`rentalCatalog`).
+  const classesHere = arrange(rentalCatalog(sim, person, j.toCity, j.arriveAt, back.leaveAt, offered && waiver)).map((e) => e.value);
   const chosen: RentalClass = classesHere.includes(carCls) ? carCls : 'small';
   const q = rentalQuote(sim, person, j.toCity, j.arriveAt, back.leaveAt, true, offered && waiver, chosen);
   const cur = saveCurrency(sim.universe);

@@ -226,5 +226,5 @@ Requirements 44, 46, 47 and 48.
 | Stage | Status | Commit |
 |---|---|---|
 | 1 Possessions | DONE: items, places, spots, containers, orders, moves, migration, Belongings screen | (this commit) |
-| 2 Catalogs | MISSING | |
+| 2 Catalogs | DONE for every existing list: cars and every vehicle kind, homes, land, furniture, appliances, renovations, mods, stays, rentals. Departures stay by hour, each a single fare. Lists added later use the same machinery. | (this commit) |
 | 3–15 | MISSING or PARTIAL as above | |
