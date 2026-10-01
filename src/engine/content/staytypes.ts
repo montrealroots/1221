@@ -43,13 +43,26 @@ export const STAY_CLASS_LABEL: Readonly<Record<StayClass, string>> = {
  * the region's, not the town's own: New York City has no state park to camp
  * in, and SLATE takes the state's fee. Britain's clubs publish no site's
  * price, and Connecticut's wasn't read: none is kept there.
+ *
+ * By the night's date, from later on 2026-09-30 (`research-sweep3.json`);
+ * until then every night was the peak's:
+ * - Rathtrevor Beach: $51 from 15 June to 7 September, $35 in the shoulder
+ *   and $13 in winter, open all year. Its winter, mid-October to mid-March,
+ *   was read only from an excerpt, as were its shoulder dates ("remaining
+ *   months").
+ * - New York State Parks: $4 more a Friday or Saturday night. The night
+ *   before a holiday isn't kept.
+ * - Carrowkeel, at Ballyvary in County Mayo: a pitch €15 outside July and
+ *   August, and closed from 2 October to 31 March.
+ * - Ontario Parks' and Lake Perris's fees don't vary by season.
+ * The non-resident's surcharge applies all year where one is published.
  */
-export const CAMPGROUNDS: Readonly<Record<string, { perNight: number; visitorExtra?: number; currency: string; basis: string; confirmed: boolean }>> = {
-  'US-NY': { perNight: 17 + 7, visitorExtra: 5, currency: 'USD', basis: 'New York State Parks’ $17 campsite and $7 for electric, $5 more for someone from out of state', confirmed: true },
+export const CAMPGROUNDS: Readonly<Record<string, { perNight: number; visitorExtra?: number; currency: string; basis: string; confirmed: boolean; /** A night's fee by its date, or null where the park is closed. */ night?: (month: number, day: number, weekday: number) => number | null; closed?: string }>> = {
+  'US-NY': { perNight: 17 + 7, visitorExtra: 5, currency: 'USD', basis: 'New York State Parks’ $17 campsite and $7 for electric, $4 more on a Friday or Saturday night, $5 more for someone from out of state', confirmed: true, night: (_m, _d, weekday) => 17 + 7 + (weekday === 5 || weekday === 6 ? 4 : 0) },
   'US-CA': { perNight: 45, currency: 'USD', basis: 'Lake Perris State Recreation Area’s RV hookup site', confirmed: true },
   'CA-ON': { perNight: (59.33 + 53.68 + 49.44 + 43.79) / 4, currency: 'CAD', basis: 'The middle of Ontario Parks’ four fee levels for an electrical site, HST in it', confirmed: true },
-  'CA-BC': { perNight: 51, visitorExtra: 20, currency: 'CAD', basis: 'Rathtrevor Beach Provincial Park’s peak rate, $20 more for a non-resident; its shoulder and winter rates aren’t kept', confirmed: true },
-  IE: { perNight: 20 + 6 + 5, currency: 'EUR', basis: 'Carrowkeel’s pitch in July and August, €20, with one adult’s €6 and €5 for electricity', confirmed: true },
+  'CA-BC': { perNight: 51, visitorExtra: 20, currency: 'CAD', basis: 'Rathtrevor Beach Provincial Park’s $51 from 15 June to 7 September, $35 in the shoulder and $13 in winter, $20 more for a non-resident', confirmed: true, night: (m, d) => ((m === 6 && d >= 15) || m === 7 || m === 8 || (m === 9 && d <= 7) ? 51 : (m === 10 && d >= 15) || m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && d < 15) ? 13 : 35) },
+  IE: { perNight: 20 + 6 + 5, currency: 'EUR', basis: 'Carrowkeel’s pitch, €20 in July and August and €15 otherwise, with one adult’s €6 and €5 for electricity', confirmed: true, night: (m, d) => (m < 4 || m > 10 || (m === 10 && d > 1) ? null : (m === 7 || m === 8 ? 20 : 15) + 6 + 5), closed: 'Carrowkeel is open from 1 April to 1 October.' },
   'MX-CMX': { perNight: 300, currency: 'MXN', basis: 'About MXN 300 at an RV park near Mexico City, from travelers’ reports', confirmed: false },
 };
 

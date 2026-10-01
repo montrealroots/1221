@@ -23,7 +23,7 @@ import { LETS, LET_FEE, LET_FREE_DAYS } from '../content/lets';
 import { RENTAL_RETURN_KIND, planRentalDrive, rentalDays, rentalDriven, rentalQuote, rentalsOf } from './rentals';
 import { ownFlown, planCharterJet, planFlyYourself } from './aviation';
 import type { Simulation } from '../core/simulation';
-import { HOTEL_PARKING, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '../content/staytypes';
+import { CAMPGROUNDS, HOTEL_PARKING, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '../content/staytypes';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, MS_HOUR, formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
@@ -235,14 +235,15 @@ function clashWith(sim: Simulation, person: Person, from: Instant, to: Instant, 
   return clash ? `${clash.label}, ${formatDate(clash.at, sim.zone)} at ${formatTime(clash.at, sim.zone)}` : undefined;
 }
 
-/** Why a journey can't be booked, or nothing. */
-export function bookRefusal(sim: Simulation, person: Person, fromCity: string, toCity: string, legs: JourneyLeg[] | string, stayDays: number, nights = 0): string | undefined {
+/** Why a journey can't be booked, or nothing. A night in one's own motorhome or caravan asks no hotel of the town; its stay's own price says where there's none. */
+export function bookRefusal(sim: Simulation, person: Person, fromCity: string, toCity: string, legs: JourneyLeg[] | string, stayDays: number, nights = 0, sleepsInIt = false): string | undefined {
   if (typeof legs === 'string') return legs;
   if (!CITIES.get(toCity)) return 'SLATE doesn’t have that town.';
   if (legs[0]!.departAt <= sim.now) return 'That departure has gone.';
   if (!ownPlaceIn(person, toCity)) {
     if (nights <= 0) return `Somewhere to sleep in ${CITIES.require(toCity).name}: book the hotel’s nights with it.`;
-    if (!nightRateFor(toCity)) return `SLATE doesn’t have ${CITIES.require(toCity).name}’s hotels yet, and you have no home there.`;
+    // Until later on 2026-09-30 a motorhome's trip to a town without hotel figures was refused, its campground offered and never bookable.
+    if (!sleepsInIt && !nightRateFor(toCity)) return `SLATE doesn’t have ${CITIES.require(toCity).name}’s hotels yet, and you have no home there.`;
   }
   // The towns, not the first leg's place: a flight of one's own starts at an airport, whose code isn't a town,
   // and until 2026-09-30 a domestic one asked for a passport as if it crossed a border.
@@ -470,7 +471,7 @@ export function registerJourneys(sim: Simulation): void {
     if (back && back[0]!.departAt <= arriveOut) throw new CommandError('The way home leaves before the way out arrives.');
     // A round trip's hotel runs from the night it lands to the morning it flies home.
     const nights = back ? nightsBetween(toCity, arriveOut, back[0]!.departAt) : Math.max(0, Math.min(90, Math.floor(Number(p?.nights ?? 0))));
-    const no = bookRefusal(s, person, fromCity, toCity, out, Math.max(1, nights), nights);
+    const no = bookRefusal(s, person, fromCity, toCity, out, Math.max(1, nights), nights, p?.stay === 'campground' || p?.stay === 'street');
     if (no) throw new CommandError(no);
     if (back) {
       const noBack = bookRefusal(s, person, toCity, fromCity, back, 1, 1);
@@ -487,7 +488,10 @@ export function registerJourneys(sim: Simulation): void {
     if (cls === 'street' && !inMotorhome(person, by)) throw new CommandError('Sleeping on the street is in a motorhome or campervan of your own, driven there.');
     const noStreet = cls === 'street' && !ownPlaceIn(person, toCity) && nights > 0 ? streetRefusal(toCity, nights) : undefined;
     if (noStreet) throw new CommandError(noStreet);
-    const room = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity)) : undefined;
+    const room = !ownPlaceIn(person, toCity) && nights > 0 ? stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity), arriveOut) : undefined;
+    // A campground closed on one of the nights says when it's open.
+    const closed = cls === 'campground' ? CAMPGROUNDS[jurisdictionOf(toCity) ?? '']?.closed : undefined;
+    if (!ownPlaceIn(person, toCity) && nights > 0 && !room && closed) throw new CommandError(closed);
     if (!ownPlaceIn(person, toCity) && nights > 0 && !room) throw new CommandError(`SLATE doesn’t have ${STAY_CLASS_LABEL[cls].toLowerCase()} in ${CITIES.require(toCity).name}.`);
     const park = room && cls !== 'campground' && cls !== 'street' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
     const hotel = room ? { price: room.price + park, basis: `${room.basis}${park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
@@ -767,7 +771,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   } else if (out.hotel) {
     // The longer stay at the same kind and plan; the parking with it for the nights added.
     const per = out.hotel.parking ? Math.round(out.hotel.parking / out.hotel.nights) : 0;
-    const longer = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible', residentOf(person, back.fromCity));
+    const longer = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible', residentOf(person, back.fromCity), out.arriveAt);
     // A street's nights run out (`STREET_NIGHTS`).
     if (!longer) return streetRefusal(back.fromCity, nights) ?? 'The stay can’t run longer.';
     stay = longer.price + per * nights - out.hotel.price;

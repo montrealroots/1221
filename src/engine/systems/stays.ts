@@ -12,6 +12,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { MS_DAY, zonedParts } from '../core/time';
 import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
@@ -58,12 +59,20 @@ export function streetRefusal(cityId: string, nights: number): string | undefine
   return undefined;
 }
 
-/** A campground's nights where a town is, in the save's money: its fee, taxes in it, and a visitor's surcharge for someone who lives elsewhere. */
-export function campgroundPrice(sim: Simulation, cityId: string, nights: number, resident: boolean): { price: Money; basis: string } | undefined {
+/** A campground's nights where a town is, from a night on, in the save's money: each night's fee by its date, taxes in it, and a visitor's surcharge for someone who lives elsewhere; nothing where it's closed on one of them. */
+export function campgroundPrice(sim: Simulation, cityId: string, nights: number, resident: boolean, from = sim.now): { price: Money; basis: string } | undefined {
   const j = jurisdictionOf(cityId);
   const c = j ? CAMPGROUNDS[j] : undefined;
   if (!c || nights <= 0) return undefined;
-  const cents = Math.round(nights * (c.perNight + (resident ? 0 : c.visitorExtra ?? 0)) * 100);
+  const zone = CITIES.require(cityId).timeZone;
+  let units = 0;
+  for (let n = 0; n < nights; n += 1) {
+    const p = zonedParts(from + n * MS_DAY, zone);
+    const fee = c.night ? c.night(p.month, p.day, new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay()) : c.perNight;
+    if (fee === null) return undefined;
+    units += fee + (resident ? 0 : c.visitorExtra ?? 0);
+  }
+  const cents = Math.round(units * 100);
   const into = saveCurrency(sim.universe);
   return { price: c.currency === into ? cents : exchange(cents, c.currency, into) ?? cents, basis: `${STAY_CLASS_LABEL.campground}: ${c.basis}${c.confirmed ? '' : ', not confirmed'}.` };
 }
@@ -73,9 +82,9 @@ export function campgroundPrice(sim: Simulation, cityId: string, nights: number,
  * of stay, a hostel's by the bed, and the town's taxes on top; paid ahead, the
  * prepaid rate's discount off the room.
  */
-export function stayPrice(sim: Simulation, cityId: string, nights: number, guests = 1, cls: StayClass = 'hotel', plan: RatePlan = 'flexible', resident = true): { price: Money; basis: string } | undefined {
+export function stayPrice(sim: Simulation, cityId: string, nights: number, guests = 1, cls: StayClass = 'hotel', plan: RatePlan = 'flexible', resident = true, from = sim.now): { price: Money; basis: string } | undefined {
   if (nights <= 0) return undefined;
-  if (cls === 'campground') return campgroundPrice(sim, cityId, nights, resident);
+  if (cls === 'campground') return campgroundPrice(sim, cityId, nights, resident, from);
   if (cls === 'street') return streetRefusal(cityId, nights) ? undefined : { price: 0, basis: `${STAY_CLASS_LABEL.street}: ${STREET_NIGHTS[cityId]!.basis}.` };
   const hotel = nightRateFor(cityId);
   const option = cls === 'hotel' ? undefined : STAY_OPTIONS[cityId]?.find((o) => o.cls === cls);

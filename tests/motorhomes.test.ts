@@ -119,7 +119,39 @@ describe('a campground', () => {
     expect(r.ok, r.error).toBe(true);
     const out = journeysOf(sim.player).find((j) => j.id === r.value!.journeyId)!;
     expect(out.hotel!.parking).toBeUndefined();
-    expect(out.hotel!.price).toBe(inSave(sim, out.hotel!.nights * 29_00, 'USD'));
+    // Two nights from a Saturday: its  weekend fee, and Sunday's none.
+    expect(out.hotel!.nights).toBe(2);
+    expect(out.hotel!.price).toBe(inSave(sim, 33_00 + 29_00, 'USD'));
+  });
+
+  it('prices each night by its date: Rathtrevor’s peak, shoulder and winter, Carrowkeel’s high season, and closed in winter', () => {
+    const sim = life('us-ca-losangeles', 'rv-camp-seasons');
+    const on = (y: number, m: number, d: number) => Date.UTC(y, m - 1, d, 20);
+    const bc = (m: number, d: number) => stayPrice(sim, 'ca-bc-vancouver', 1, 1, 'campground', 'flexible', true, on(2027, m, d))!.price;
+    expect([bc(7, 1), bc(9, 7), bc(9, 8), bc(5, 1), bc(12, 1), bc(3, 14), bc(3, 15)]).toEqual([51, 51, 35, 35, 13, 13, 35].map((x) => inSave(sim, x * 100, 'CAD')));
+    const ie = (m: number, d: number) => stayPrice(sim, 'ie-lei-dublin', 1, 1, 'campground', 'flexible', true, on(2027, m, d))?.price;
+    expect(ie(8, 1)).toBe(inSave(sim, 31_00, 'EUR'));
+    expect(ie(5, 1)).toBe(inSave(sim, 26_00, 'EUR'));
+    expect(ie(10, 1)).toBe(inSave(sim, 26_00, 'EUR'));
+    expect(ie(10, 2)).toBeUndefined();
+    expect(ie(3, 31)).toBeUndefined();
+    // Three nights from 30 September: the third falls after it closes.
+    expect(stayPrice(sim, 'ie-lei-dublin', 3, 1, 'campground', 'flexible', true, on(2027, 9, 30))).toBeUndefined();
+    // New York's $4 falls on a Friday night too (1 January 2027 is a Friday), and not on a Thursday.
+    expect(stayPrice(sim, 'us-ny-newyork', 1, 1, 'campground', 'flexible', true, on(2027, 1, 1))!.price).toBe(inSave(sim, 28_00, 'USD'));
+    expect(stayPrice(sim, 'us-ny-newyork', 1, 1, 'campground', 'flexible', true, on(2026, 12, 31))!.price).toBe(inSave(sim, 24_00, 'USD'));
+    // A booking for Carrowkeel's closed months says when it's open.
+    const dub = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'wealthy' }, 'rv-camp-closed');
+    dub.player.documents = [{ id: 'lic', kind: 'license', issuer: 'ie', name: 'License', number: 'L1', status: 'valid', issuedAt: dub.now - 10 * YEAR, expiresAt: dub.now + 5 * YEAR }];
+    expect(dub.execute({ kind: 'vehicle.buy', payload: { modelId: 'ie-swift-escape-640' } }).ok).toBe(true);
+    const van = vehiclesOf(dub.player)[0]!;
+    const winter = dub.execute({ kind: 'travel.book', payload: { toCity: 'ie-m-cork', day: saturday(dub, 7), slot: 2, by: `car:${van.id}`, nights: 2, stay: 'campground' } });
+    expect(winter.error).toMatch(/open from 1 April to 1 October/);
+    // In summer it books, though Cork has no hotel figures: the motorhome sleeps at the park.
+    const summer = dub.execute<{ journeyId: string }>({ kind: 'travel.book', payload: { toCity: 'ie-m-cork', day: saturday(dub, 180), slot: 2, by: 'car:' + van.id, nights: 2, stay: 'campground' } });
+    expect(summer.ok, summer.error).toBe(true);
+    // A visitor pays BC's $20 in winter too.
+    expect(stayPrice(sim, 'ca-bc-vancouver', 1, 1, 'campground', 'flexible', false, on(2027, 12, 1))!.price).toBe(inSave(sim, 33_00, 'CAD'));
   });
 });
 

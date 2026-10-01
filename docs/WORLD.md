@@ -449,8 +449,12 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
     - The drive is slower where the law sets a lower limit for towing: Britain's 60 mph against 70, and California's 55 against its freeways' 65. The ratio is applied to the whole drive, since SLATE keeps no split of road types.
     - Its nights can be at the region's campground, as a motorhome's are.
     - It stays in its own country; no border crossing with one was read.
-- Not kept:
-  - A park's shoulder and winter rates.
+- **A park's nights by their dates** (from later on 2026-09-30, `research-sweep3.json`); until then every night was the peak's:
+  - Rathtrevor Beach: $51 from 15 June to 7 September, $35 in the shoulder and $13 in winter. Its winter dates (mid-October to mid-March) and its shoulder were read only from excerpts.
+  - New York State Parks: $4 more a Friday or Saturday night. The night before a holiday isn't kept.
+  - Carrowkeel, at Ballyvary in County Mayo: €15 a pitch outside July and August, and closed from 2 October to 31 March, the booking saying so.
+  - Ontario Parks and Lake Perris: no seasonal fee, said so.
+  - Writing the tests found that a motorhome's trip to a town without hotel figures, Cork for one, was refused for want of a hotel. The campground was offered there and could never be booked. A stay in one's own motorhome or caravan no longer asks the town for a hotel. Evidence: `tests/motorhomes.test.ts` (14); 12 mutations, all killed in the end.
 
 Evidence for the caravan: `tests/caravans.test.ts` (7). Of 22 mutations, 15 were killed. Two survivors were redundant guards that were removed: a leg's drive-only check, since `planDrive` returns only drive legs, and the same-town early return, which the loop already settles. Five needed tests: the bank checks, the hitch's place, the second renewal, a caravan left in another town, and the towed way home.
 
