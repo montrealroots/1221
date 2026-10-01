@@ -46,7 +46,8 @@ export interface Body {
   /** The day so far: eaten beyond the habit, spent beyond the sedentary day, and whether it was a day they couldn't pay for. */
   intake: number;
   extra: number;
-  short?: boolean;
+  /** A day they couldn't pay for, and the share of the habit it ate where help gave some of it (`systems/foodhelp.ts`). */
+  short?: boolean | number;
 }
 
 const ageOf = (person: Person, at: Instant) => Math.max(18, (at - person.birthInstant) / MS_YEAR);
@@ -101,9 +102,9 @@ export function eatsOut(person: Person): void {
   if (person.body) person.body.intake += BODY.eatenOut;
 }
 
-/** A day they couldn't pay for: it eats a broke day's share of the habit (`BODY.shortDay`). */
-export function eatsShort(person: Person): void {
-  if (person.body) person.body.short = true;
+/** A day they couldn't pay for: it eats a broke day's share of the habit (`BODY.shortDay`), or more where a soup kitchen or a pantry gave some of its meals. */
+export function eatsShort(person: Person, share?: number): void {
+  if (person.body) person.body.short = share !== undefined && share > BODY.shortDay ? share : true;
 }
 
 /** Hunger eaten back: what a workout's own hunger or a day's work asked for, in kcal. */
@@ -129,7 +130,7 @@ export function exerts(person: Person, met: number, hours: number, hungry = fals
 export function bodyDay(person: Person, at: Instant): void {
   const body = person.body;
   if (!body) return;
-  const eaten = body.habitKcal * personalityOf(person, 'appetite') * (body.short ? BODY.shortDay : 1) + body.intake;
+  const eaten = body.habitKcal * personalityOf(person, 'appetite') * (body.short === undefined || body.short === false ? 1 : typeof body.short === 'number' ? body.short : BODY.shortDay) + body.intake;
   const gap = eaten - spentOn(body, ageOf(person, at));
   const perKg = BODY.kcalPerKgDay * (BODY.halfLifeDays / Math.LN2);
   body.weightKg = clamp(Math.round((body.weightKg + gap / perKg) * 1000) / 1000, 30, 250);

@@ -85,7 +85,7 @@ const REAL_NAMES = [
   'Kalyan Jewellers', 'Chow Tai Fook Jewellery', 'PC Jeweller', 'Joyalukkas',
   'Silverbend Jewellers', 'Halliwell Goldsmiths',
   // Venues and institutions.
-  'Theatre Royal', 'Canadian Theatre Agreement', 'Professional Association of Canadian Theatres', 'Old Vic', 'National Theatre', 'Barbican Centre', 'Centre Pompidou',
+  'Theatre Royal', 'Canadian Theatre Agreement', 'Professional Association of Canadian Theatres', 'Old Vic', 'National Theatre', 'Barbican Centre', 'Capuchin Day Centre', 'Centre Pompidou',
   // Point Grey is the headland the University of British Columbia stands on.
   'Point Grey',
   // The studio behind Total Extreme Wrestling, named in docs/DEPTH.md. It is a

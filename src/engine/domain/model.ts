@@ -258,6 +258,8 @@ export interface Person {
   building?: import('../systems/construction').Build;
   /** The bed and sofa that are theirs, and when each was bought (`systems/furniture.ts`). */
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
+  /** A soup kitchen's or a pantry's help, for a day the bank can't feed them (`systems/foodhelp.ts`, from 2026-10-01). */
+  foodHelp?: import('../systems/foodhelp').FoodHelpRecord;
   /** When the mattress in their bed was replaced, if it has been (`systems/furniture.ts`). */
   mattressAt?: number;
   /** A move made in a rented truck they drive, not by movers (`truckFor` in `systems/furniture.ts`). */

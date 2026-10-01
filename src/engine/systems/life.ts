@@ -871,7 +871,9 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // bought first (`systems/household.ts`), and a day nobody can pay for is
     // eaten thin (`eatWhatThereIs`).
     if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);
-    else { eatWhatThereIs(w); eatsShort(person); }
+    // A short day eats more where a soup kitchen or a pantry gave some of its meals (`systems/foodhelp.ts`):
+    // their share of the day's three on top of what a broke day scrapes together, SLATE's reading.
+    else { eatWhatThereIs(w); eatsShort(person, Math.min(1, BODY.shortDay + (person.foodHelp?.today ?? 0) / 3)); }
     // Out of clean clothes, the morning starts less fresh (`systems/dwelling.ts`).
     const fresh = person.living && person.living.clean <= 0 ? WORN_CLOTHES.hygiene : 82;
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, fresh), 0, 100);

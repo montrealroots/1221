@@ -67,6 +67,7 @@ import { drawRental, homePlace, machineUsd, type RentedUnit } from './dwelling';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { carryFurniture } from './furniture';
 import { carryBoat } from './boats';
+import { mealsFromHelp } from './foodhelp';
 import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
@@ -525,16 +526,25 @@ export function buyTheDaysFood(sim: Simulation, person: Person): boolean {
     cost -= fromEbt;
   }
   const bought = cost === 0 || spend(sim, person, cost, 'Groceries', 'food');
-  if (bought) person.home.fedOn = sim.now;
-  if (!bought && person.id === sim.universe.playerId) {
+  if (bought) { person.home.fedOn = sim.now; if (person.foodHelp) person.foodHelp.helping = false; return true; }
+  // Unpaid, the day's meals from a soup kitchen or a pantry where they are (`systems/foodhelp.ts`, from 2026-10-01).
+  const meals = mealsFromHelp(sim, person);
+  const record = (person.foodHelp ??= { store: 0, visits: [] });
+  record.today = meals;
+  const fed = meals >= 3;
+  if (fed) person.home.fedOn = sim.now;
+  if (person.id === sim.universe.playerId && (!meals || !record.helping)) {
     sim.notify({
       category: 'money',
-      title: 'No Money For Food Today',
-      body: `A day's groceries cost ${formatMoney(cost, saveCurrency(sim.universe))}, and there's nothing left to pay with. It's what's in the cupboard today, and not enough of it.`,
+      title: meals ? 'Fed By Help Today' : 'No Money For Food Today',
+      body: meals
+        ? `A day's groceries cost ${formatMoney(cost, saveCurrency(sim.universe))}, and there's nothing left to pay with. A soup kitchen or a pantry here gave ${meals >= 3 ? 'the day’s three meals' : `${meals} of the day’s three meals`}.`
+        : `A day's groceries cost ${formatMoney(cost, saveCurrency(sim.universe))}, and there's nothing left to pay with. It's what's in the cupboard today, and not enough of it.`,
       importance: 70,
     });
   }
-  return bought;
+  record.helping = meals > 0;
+  return fed;
 }
 
 /**

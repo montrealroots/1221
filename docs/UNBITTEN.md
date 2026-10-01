@@ -723,7 +723,16 @@ part the tool cannot see.
   holder in the UK was billed as before. Ireland's and Mexico's public care
   have been in since `145916e6` (2026-09-29: `irishShareOf`,
   `mexicanShareOf`). This entry said all three were missing until 2026-10-01.
-- **Nobody broke is fed by a food bank.** Since 2026-09-29 a body starved
+
+- **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
+  it: nothing in the build produces an official result. It's a Base44 entity
+  and a deployed function, so taking it out is a deployment and waits for the
+  owner. (`search()`, the five record shapes with no table and the history
+  categories for systems long gone were taken out on 2026-09-25.)
+
+## Settled on 2026-10-01, by wiring
+
+- **Nobody broke was fed by a food bank.** Since 2026-09-29 a body starved
   below a body mass index of 12 ends the life (`BMI_SURVIVAL_LIMIT`), and
   12 to 15 carries Zheng's 2.8. A day the bank can't pay for eats a short
   plate (`BODY.shortDay`), and a life with nothing coming in loses weight
@@ -733,14 +742,7 @@ part the tool cannot see.
   them, so a British graduate out of permission to work, played broke,
   starved in New York; a pantry's plate would be the fix, and its size
   isn't researched.
-- **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
-  it: nothing in the build produces an official result. It's a Base44 entity
-  and a deployed function, so taking it out is a deployment and waits for the
-  owner. (`search()`, the five record shapes with no table and the history
-  categories for systems long gone were taken out on 2026-09-25.)
-
-## Settled on 2026-10-01, by wiring
-
+  Settled on 2026-10-01 (`systems/foodhelp.ts`, `research-foodbanks.json`): a day the bank can't pay for takes the help where they are, each a named site's published rule. New York gives a weekday lunch and a pantry's 9 meals every 14 days; Los Angeles the Midnight Mission's three meals; New Haven an evening meal; London a Trussell parcel, three in six months; Dublin the Capuchin Day Centre's two meals Monday to Saturday; Toronto Daily Bread weekly; Mexico City a comedor's MXN 11 meal on weekdays. Vancouver's is left out, its items being no measure of meals. Three meals is a fed day. Fewer add their share to what a broke day scrapes together, which is SLATE's reading. A broke life eating one meal a day keeps more of its weight than one eating none (`tests/foodhelp.test.ts`, 7; 15 mutations, all killed in the end).
 - **Humidity was drawn and only shown.** The weather drew a day's humidity
   from its climate type and only the screens read it, until an audit found it
   on 2026-10-01. Now a run and sitting out read the National Weather
