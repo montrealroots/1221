@@ -586,10 +586,12 @@ describe('pay', () => {
     const overtime = careerOf(sim.player).days.reduce((sum, d, n) => sum + overtimeFor(roleById('costar'), 1_283_00, 1_283_00, d.hours, '2026-10-05') + mealPenalty(sim, sim.player, `${b.id}-${n + 1}`), 0);
     expect(careerOf(sim.player).days.map((d) => d.hours).every((h) => h >= 10 && h <= 12)).toBe(true);
     expect(overtime).toBeGreaterThan(0);
-    expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime);
+    // And the fitting the day before, an hour at the day rate (`FITTING`), wages too.
+    const fitting = Math.round(1_283_00 / 8);
+    expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime + fitting);
     expect(b.status).toBe('worked');
     expect(careerOf(sim.player).credits).toEqual([{ roleId: 'costar', year: 2026, cityId: 'us-ny-newyork' }]);
-    expect(sim.player.earnings!.years['2026']!.sag).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime);
+    expect(sim.player.earnings!.years['2026']!.sag).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime + fitting);
   });
 
   it('follows each contract’s steps, and holds past the last', () => {

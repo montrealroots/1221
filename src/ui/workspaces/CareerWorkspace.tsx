@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { plural } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
-import { Gated } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -36,6 +36,7 @@ import { COMMERCIAL_AGENCIES, COMMERCIAL_LEAVING, commercialAgencyById, commerci
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
+import { allowanceFor, furnishRefusal } from '@/engine/systems/fittings';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
@@ -423,9 +424,11 @@ function WorkPane() {
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
+                  {(b.fittingOwed ?? 0) + (b.wardrobeOwed ?? 0) > 0 ? `, ${formatMoney((b.fittingOwed ?? 0) + (b.wardrobeOwed ?? 0), cur)} of fitting and wardrobe owed` : ''}
                   {(b.travelOwed ?? 0) + (b.perDiemOwed ?? 0) > 0 ? `, ${formatMoney((b.travelOwed ?? 0) + (b.perDiemOwed ?? 0), cur)} of travel and per diem owed` : ''}
                   {b.t1287Rate !== undefined ? `, Canada withholding ${(b.t1287Rate * 100).toFixed(1)}% by your T1287` : ''}
                 </span>
+                <LendClothes booking={b} />
                 {!('refused' in t1287Quote(sim, person, b)) && (
                   <Gated feature="career.t1287" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ rate: number }>('career.t1287', { bookingId: b.id }); if (r.ok) toast(`Filed: Canada withholds ${(r.value!.rate * 100).toFixed(1)}% instead of 23%.`, 'positive'); }}>File Form T1287</Gated>
                 )}
@@ -792,5 +795,29 @@ function ResidualsPanel() {
         </Fine>
       </div>
     </Panel>
+  );
+}
+
+/** Clothes of the actor's own lent for a screen job, paid the union's allowance, from the outfits they've put together. */
+function LendClothes({ booking }: { booking: Booking }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const outfits = person.outfits ?? [];
+  const [chosen, setChosen] = useState('');
+  const lend = useFeature('career.furnish_wardrobe');
+  if (booking.furnished) return <span className="xs dim">Your clothes are with the production.</span>;
+  if (outfits.length === 0 || furnishRefusal(sim, person, booking.id, [outfits[0]!.id]) === 'Only screen work asks for clothes of your own here.') return null;
+  const pick = outfits.find((o) => o.id === chosen) ?? outfits[0]!;
+  const no = furnishRefusal(sim, person, booking.id, [pick.id]);
+  const allowance = no ? undefined : allowanceFor(sim, person, booking, [pick.id]);
+  return (
+    <span className="row gap-1" style={{ alignItems: 'center' }}>
+      <select aria-label="An outfit to lend" value={pick.id} onChange={(e) => setChosen(e.target.value)}>
+        {outfits.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
+      </select>
+      <button type="button" className="btn btn-sm btn-ghost" disabled={!lend.open || Boolean(no)} title={no ?? lend.reason} onClick={() => { if (run('career.furnish_wardrobe', { bookingId: booking.id, outfitIds: [pick.id] }).ok) toast(`${pick.name}, lent to the production.`, 'positive'); }}>
+        {allowance !== undefined ? `Lend It, ${formatMoney(allowance, saveCurrency(sim.universe))}` : 'Lend It'}
+      </button>
+    </span>
   );
 }

@@ -164,7 +164,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Location, timing, terms | Works | The role, the production's town, the dates, the scale pay. |
 | Schedule conflicts | Works | One commitment at a time; a clash is flagged on the calendar. |
 | Preparation | Works | Classes, coaching, workshops, the kit. |
-| Clothing, grooming, documents, transport, accommodation | Part | Documents and travel are checked and booked; the production's hotel; a barber or a salon by name (`hygiene.groom`), which a production doesn't yet ask for; clothing isn't asked for yet (Stage 13: fittings, a performer's own wardrobe). |
+| Clothing, grooming, documents, transport, accommodation | Part | Documents and travel are checked and booked; the production's hotel; a barber or a salon by name (`hygiene.groom`), which a production doesn't yet ask for; a wardrobe fitting the day before screen work, paid as the union pays one, and the actor's own outfits lent at the union's allowance (`career.furnish_wardrobe`). |
 | Travel and attend | Works | The career's trips as journeys. |
 | The professional activity | Works | The shoot or the run. |
 | Career and money | Works | Credits, pay, residuals, reputation. |

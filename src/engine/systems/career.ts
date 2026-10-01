@@ -69,7 +69,7 @@ import { CITIES } from '../content/geography';
 import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
   ACTRA, AFTERLIFE, AGENCIES, ANDA, AGENT_COMMISSION, AUDITION_READ, PART_DEMANDS, PRODUCTS, CALLS, GENRE_READS, MEMORIZE, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
-  type Agency, type CareerCity, type Manager, type Role,
+  type Agency, type CareerCity, type Manager, type RateSteps, type Role,
   partsForAge,
 } from '../content/career';
 import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
@@ -140,6 +140,61 @@ export const RESIDUAL_KIND = 'career.residual';
 export const TRAVEL_KIND = 'career.travel';
 export const RENEWAL_KIND = 'career.renewal';
 export const AGENCY_TERM_KIND = 'career.agency_term';
+export const FITTING_KIND = 'career.fitting';
+
+/**
+ * A wardrobe fitting before screen work, the day before the first call, in
+ * the actor's own town (one flown to a location is fitted there, on the
+ * first day), and what each union pays for one (`research-career-depth.json`):
+ * - SAG-AFTRA: a fitting on an earlier day is an hour's pay at least, at the
+ *   day rate over eight hours (CBA Schedule A §16.A), unless the day rate is
+ *   over $1,500, or $1,700 on contracts from 1 July 2026, when none is owed.
+ *   A series regular's weekly contract gives the producer four free hours
+ *   (Schedule B §20), so none is owed them either.
+ * - ACTRA: a two-hour minimum at its fitting rate, CA$116.50 an hour from
+ *   2025, CA$121.25 from 2026, CA$125.50 from 2027.
+ * - Equity UK, under Pact: half a day's pay up to five hours, capped at
+ *   £161 (2024-25, the latest confirmed).
+ * - Irish Equity: €50 a session.
+ * A fitting takes an hour, the minimum SAG-AFTRA pays, and ACTRA's two:
+ * SLATE's reading, since no figure for a fitting's length was found. Stage
+ * fittings and Mexico's aren't researched, so none is booked.
+ */
+export const FITTING = {
+  sagCap: [['2025-07-01', 1_500_00], ['2026-07-01', 1_700_00]] as RateSteps,
+  actraHour: [['2025-01-01', 116_50], ['2026-01-01', 121_25], ['2027-01-01', 125_50]] as RateSteps,
+  actraHours: 2,
+  equityUkCap: 161_00,
+  irishSession: 50_00,
+} as const;
+
+/** What a fitting pays for a booking, in the save's money, cents; and how many minutes it takes. Nothing where the union pays none or none is booked. */
+export function fittingFor(booking: Booking, when: Instant, into: string): { pay: Money; minutes: number } | undefined {
+  const role = roleById(booking.roleId);
+  if (role.medium !== 'screen') return undefined;
+  const day = dayKey(when, zoneOf(workCityOf(booking)));
+  const rate = unitRate(booking, when, into);
+  if (role.union === 'sag') {
+    if (role.series || rate > usd(rateOn(FITTING.sagCap, day), into)) return { pay: 0, minutes: 60 };
+    return { pay: Math.round(rate / 8), minutes: 60 };
+  }
+  if (role.union === 'actra') return { pay: Math.round(inMoney(rateOn(FITTING.actraHour, day) * FITTING.actraHours, ACTRA.currency, into)), minutes: 120 };
+  if (role.union === 'equity-uk') return { pay: Math.min(Math.round(rate / 2), Math.round(inMoney(FITTING.equityUkCap, 'GBP', into))), minutes: 60 };
+  if (role.union === 'irish-equity') return { pay: Math.round(inMoney(FITTING.irishSession, 'EUR', into)), minutes: 60 };
+  return undefined;
+}
+
+/** Books the fitting the day before the first call, at two in the afternoon, where it's in their own town and still to come. */
+function scheduleFitting(sim: Simulation, person: Person, booking: Booking, firstCall: Instant): void {
+  if (booking.location) return;
+  const city = workCityOf(booking);
+  if (city !== (person.home?.cityId ?? person.currentLocationId)) return;
+  const fit = fittingFor(booking, firstCall, saveCurrency(sim.universe));
+  if (!fit) return;
+  const when = at(firstCall, zoneOf(city), -1, 14);
+  if (when <= sim.now) return;
+  sim.schedule({ at: when, kind: FITTING_KIND, label: `Wardrobe Fitting: ${roleById(booking.roleId).label}`, category: 'career', priority: 34, requiresPlayer: true, durationMinutes: fit.minutes, locationId: city, payload: { personId: person.id, bookingId: booking.id } });
+}
 
 /** SLATE's estimates of what the business doesn't publish, each named where it's used. */
 export const ESTIMATE = {
@@ -282,6 +337,11 @@ export interface Booking {
   /** Travel days and meal allowance owed, paid with the job. */
   travelOwed?: Money;
   perDiemOwed?: Money;
+  /** A fitting's pay, wages paid with the job's; and the allowance for wardrobe of the actor's own, paid beside them (`systems/fittings.ts`). */
+  fittingOwed?: Money;
+  wardrobeOwed?: Money;
+  /** The actor's own outfits, lent for it, and when the production gives them back. */
+  furnished?: { outfitIds: string[]; itemIds: string[]; backAt: Instant };
 }
 
 /** A job's life after it's made, and what it has paid (`RESIDUALS`, `AFTERLIFE`). */
@@ -1615,6 +1675,15 @@ export function registerCareer(sim: Simulation): void {
     finishJob(s, person, career, booking, role, item);
   });
 
+  // A fitting attended: its pay owed with the job's; a booking released or passed meanwhile owes nothing.
+  sim.onSchedule(FITTING_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const booking = person && careerOf(person).bookings.find((b) => b.id === item.payload.bookingId);
+    if (!person || !booking || booking.status !== 'accepted') return;
+    const fit = fittingFor(booking, item.at, saveCurrency(s.universe));
+    if (fit && fit.pay > 0) booking.fittingOwed = (booking.fittingOwed ?? 0) + fit.pay;
+  });
+
   sim.onSchedule(PAY_KIND, (item, s) => {
     const person = personOf(item);
     if (!person) return;
@@ -1622,7 +1691,7 @@ export function registerCareer(sim: Simulation): void {
     const booking = career.bookings.find((b) => b.id === item.payload.bookingId);
     const account = payeeAccount(s, person);
     if (!booking) return;
-    if (booking.owed <= 0 && !booking.travelOwed && !booking.perDiemOwed) return;
+    if (booking.owed <= 0 && !booking.travelOwed && !booking.perDiemOwed && !booking.fittingOwed && !booking.wardrobeOwed) return;
     const role = roleById(booking.roleId);
     const cur = saveCurrency(s.universe);
     const workCity = workCityOf(booking);
@@ -1636,7 +1705,7 @@ export function registerCareer(sim: Simulation): void {
     const cutoff = item.payload.final === true ? Number.POSITIVE_INFINITY : role.union === 'sag' ? item.at - 4 * MS_DAY : item.at;
     const from = booking.worked - booking.owed;
     const calls = workDays(booking).slice(from, booking.worked).filter((c) => c.at <= cutoff);
-    const extras = (booking.travelOwed ?? 0) + (booking.perDiemOwed ?? 0);
+    const extras = (booking.travelOwed ?? 0) + (booking.perDiemOwed ?? 0) + (booking.fittingOwed ?? 0) + (booking.wardrobeOwed ?? 0);
     if (!calls.length && !extras) return;
     // A day's scale on screen; on stage, each week's, a sixth for each of its six days.
     const lines = new Map<number, { rehearsal: boolean; days: number }>();
@@ -1646,8 +1715,10 @@ export function registerCareer(sim: Simulation): void {
     let net = 0;
     let gross = 0;
     // Travel days are paid as days' work, with the first line.
-    let overtime = (booking.overtimeDays ?? []).slice(from, from + calls.length).reduce((sum, o) => sum + (o ?? 0), 0) + (booking.travelOwed ?? 0);
+    // And a fitting's, which is wages too.
+    let overtime = (booking.overtimeDays ?? []).slice(from, from + calls.length).reduce((sum, o) => sum + (o ?? 0), 0) + (booking.travelOwed ?? 0) + (booking.fittingOwed ?? 0);
     booking.travelOwed = 0;
+    booking.fittingOwed = 0;
     for (const [week, line] of lines) {
       const rate = unitRate(booking, item.at, cur);
       // A series regular's episodes, spread over the season's workweeks.
@@ -1690,9 +1761,13 @@ export function registerCareer(sim: Simulation): void {
     const perDiem = booking.perDiemOwed ?? 0;
     booking.perDiemOwed = 0;
     if (perDiem) postings.push({ accountId: s.nominalAccount('income', 'Per Diem').id, amount: -perDiem });
+    // So is the allowance for wardrobe of their own: a reimbursement, untaxed.
+    const wardrobe = booking.wardrobeOwed ?? 0;
+    booking.wardrobeOwed = 0;
+    if (wardrobe) postings.push({ accountId: s.nominalAccount('income', 'Wardrobe Allowance').id, amount: -wardrobe });
     s.post({
-      memo: `${role.label}: ${calls.length} ${calls.length === 1 ? 'day' : 'days'}${perDiem ? ', with the meal allowance' : ''}`, category: 'salary',
-      postings: [{ accountId: account.id, amount: net + perDiem }, { accountId: s.nominalAccount('income', 'Acting').id, amount: -gross }, ...postings],
+      memo: `${role.label}: ${calls.length} ${calls.length === 1 ? 'day' : 'days'}${perDiem ? ', with the meal allowance' : ''}${wardrobe ? ', with the wardrobe allowance' : ''}`, category: 'salary',
+      postings: [{ accountId: account.id, amount: net + perDiem + wardrobe }, { accountId: s.nominalAccount('income', 'Acting').id, amount: -gross }, ...postings],
     });
   });
 
@@ -2036,6 +2111,8 @@ export function registerCareer(sim: Simulation): void {
       paydays.add(role.union === 'sag' ? at(d.at, zone, toSaturday + 5, 17) : at(d.at, zone, (5 - wd + 7) % 7, 18));
     }
     for (const when of paydays) schedulePay(s, person, booking, when);
+    // A wardrobe fitting the day before, where the union's rules pay one (`FITTING`).
+    scheduleFitting(s, person, booking, days[0]!.at);
     closeDecision(s, booking.id);
     stillTakeable(s, person);
     if (isPlayer(person)) reportBooking(s, person, role);
