@@ -825,6 +825,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap;
   font-size: var(--size-xs); color: var(--text-dim); margin-bottom: var(--s4);
 }
+/* The breadcrumbs and the page's pin share one row, level (from 2026-10-01); the row keeps the space beneath. */
+.crumb-row { display: flex; justify-content: space-between; align-items: center; gap: var(--s2); margin-bottom: var(--s4); }
+.crumb-row .breadcrumbs { margin-bottom: 0; }
 .breadcrumbs button {
   background: none; border: 0; color: var(--text-muted); font: inherit;
   cursor: pointer; padding: 0;
