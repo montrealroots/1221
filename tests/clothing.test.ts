@@ -161,6 +161,8 @@ describe('outfits', () => {
     const outfit = sim.player.outfits![0]!;
     sim.must({ kind: 'clothes.wear_outfit', payload: { outfitId: outfit.id } });
     expect(outfitFor(sim, sim.player)!.map((x) => x.id)).toEqual(expect.arrayContaining([top.id, bottom.id]));
+    sim.must({ kind: 'clothes.delete_outfit', payload: { outfitId: outfit.id } });
+    expect(sim.player.outfits).toHaveLength(0);
     // Away from home, the wardrobe isn't to hand to build one from.
     sim.player.currentLocationId = 'us-ca-losangeles';
     expect(sim.execute({ kind: 'clothes.save_outfit', payload: { name: 'Away', itemIds: [top.id] } }).ok).toBe(false);

@@ -206,9 +206,9 @@ Requirements 44, 46, 47 and 48.
 - **Navigation:** the rail, search, favorites and history surfaced (they're
   kept in state today but never shown).
 - **Tutorials:** chapters for each stage.
-- **Walkthroughs:** a walkthroughs page (to be written: WALKTHROUGHS.md in docs), one per required scenario, each
+- **Walkthroughs:** a walkthroughs page (`docs/WALKTHROUGHS.md`), one per required scenario, each
   saying what actually works and what's missing.
-- **Developer map:** a developer map (to be written: DEVMAP.md in docs), from each action to its code and tests.
+- **Developer map:** a developer map (`docs/DEVMAP.md`), from each action to its code and tests.
 
 ### Throughout
 - **Worldwide** (requirements 8, 9 and 10): each stage researches the seven
@@ -228,5 +228,7 @@ Requirements 44, 46, 47 and 48.
 | 1 Possessions | DONE: items, places, spots, containers, orders, moves, migration, Belongings screen | 0c9a3415 |
 | 2 Catalogs | DONE for every existing list: cars and every vehicle kind, homes, land, furniture, appliances, renovations, mods, stays, rentals. Departures stay by hour, each a single fare. Lists added later use the same machinery. | bd44d3cb |
 | 3 Clothing | PARTIAL. Done: 1,198 real products from 74 retailers in America, Britain, Ireland, Canada and Mexico, with their prices, sizes and colors, the source and date on each (`content/clothingcatalog.ts`, built by `tools/build-clothing.mjs`); buying in a store or online at each retailer's fee, threshold and days; returns inside its window, unworn; garments worn and washed one by one, replacing the clean-clothes count; dry cleaning at real shops' prices; outfits from what's to hand; a starter wardrobe; the Clothes screen. Not yet: alterations and fit (no body to fit, `docs/UNBITTEN.md`), sizing conversion, repair, resale, packing into luggage. | e23a218c |
-| 4 Food | DONE. 107 real restaurants in the business's eight towns with 451 dishes, eaten at a table, taken away or delivered, at the menu's price with each town's meal tax, the custom's tip and a delivery app's fees (`systems/dining.ts`); drinking at a bar, blood alcohol by Widmark, a hangover over the binge line, NHTSA's crash risk on any drive and each jurisdiction's first offense (`systems/alcohol.ts`); the Food screen. Groceries: 512 products from 9 chains, kept in the fridge, freezer or pantry for FoodKeeper's days and thrown out when they go off; 44 recipes cooked from what's in stock, servings kept as leftovers; the day's meals from what's ready first; a drink at home (`systems/kitchen.ts`, `systems/pantry.ts`). Known gaps: New York and New Haven have one chain each with readable prices, missing milk and onions, so few recipes cook there; blenders and slow cookers aren't kept. | b1bd404b and (this commit) |
-| 5–15 | MISSING or PARTIAL as above | |
+| 4 Food | DONE. 107 real restaurants in the business's eight towns with 451 dishes, eaten at a table, taken away or delivered, at the menu's price with each town's meal tax, the custom's tip and a delivery app's fees (`systems/dining.ts`); drinking at a bar, blood alcohol by Widmark, a hangover over the binge line, NHTSA's crash risk on any drive and each jurisdiction's first offense (`systems/alcohol.ts`); the Food screen. Groceries: 512 products from 9 chains, kept in the fridge, freezer or pantry for FoodKeeper's days and thrown out when they go off; 44 recipes cooked from what's in stock, servings kept as leftovers; the day's meals from what's ready first; a drink at home (`systems/kitchen.ts`, `systems/pantry.ts`). Known gaps: New York and New Haven have one chain each with readable prices, missing milk and onions, so few recipes cook there; blenders and slow cookers aren't kept. | b1bd404b, 8d3ab15d |
+| 5 Hygiene And Routines | PARTIAL. Done: routines (`systems/routines.ts`). Not yet: toiletries as supplies, grooming at named barbers and salons. | 6e5bc091 |
+| 15 Walkthroughs And Map | PARTIAL. Done: `docs/DEVMAP.md`, built and gate-checked by `tools/devmap.mjs`; `docs/WALKTHROUGHS.md`, each of the ten scenarios' steps marked as working, partial or missing. Not yet: search, favorites and history surfaced in the rail beyond Pinned and Recent; tutorial chapters per stage. | (this commit) |
+| 6–14 | MISSING or PARTIAL as above | |
