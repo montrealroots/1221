@@ -26,6 +26,7 @@ import { CITIES, distanceKm } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
 import { FURNITURE, MATTRESS, MATTRESS_FEE_USD, MATTRESS_YEARS, MOVERS, MOVERS_ABROAD, PIECE_LABEL, RENTED_TRUCK, WITHOUT, type Piece } from '../content/furniture';
 import { FUEL } from '../content/vehiclefees';
+import { BED_MARKET, BED_PARTS, DEFAULT_BED_SIZE, SLEEPS_TWO_CM, bedSize, type BedPart } from '../content/beds';
 import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
 import { jurisdictionOf, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
@@ -82,15 +83,22 @@ export function registerFurniture(sim: Simulation): void {
     else delete s.player.moveBy;
     return { by };
   });
-  sim.onCommand<{ piece: Piece }, { paid: Money }>('home.furnish', (p, { sim: s }) => {
+  sim.onCommand<{ piece: Piece; frameId?: string; mattressId?: string }, { paid: Money }>('home.furnish', (p, { sim: s }) => {
     const person = s.player;
     const piece = p?.piece;
     if (!piece || !(piece in PIECE_LABEL)) throw new CommandError('No such piece.');
     const no = furnishRefusal(s, person, piece);
     if (no) throw new CommandError(no);
-    const cost = pieceCost(s, person.home?.cityId ?? person.currentLocationId, piece)!;
+    const cityId = person.home?.cityId ?? person.currentLocationId;
+    const country = CITIES.get(cityId)?.countryId ?? '';
+    // A bed of your choosing, its frame and its mattress the same size (`content/beds.ts`), or the country's usual double.
+    const chosen = piece === 'bed' && p.frameId ? bedQuote(s, cityId, String(p.frameId), String(p.mattressId ?? '')) : undefined;
+    if (typeof chosen === 'string') throw new CommandError(chosen);
+    const cost = chosen ?? pieceCost(s, cityId, piece)!;
+    const label = chosen ? `${chosen.frame.name} ${bedSize(BED_MARKET[country]!, chosen.frame.size)!.label} Bed` : PIECE_LABEL[piece].replace(/^An? /, '');
     if (!payFromBank(s, person, cost.amount, `${PIECE_LABEL[piece]}, bought and delivered`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
-    addItem(s, person, { kind: `furniture:${piece}`, label: PIECE_LABEL[piece].replace(/^An? /, ''), quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: cost.amount, bulky: true });
+    addItem(s, person, { kind: `furniture:${piece}`, label, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: cost.amount, bulky: true,
+      ...(piece === 'bed' && BED_MARKET[country] ? { bed: { country, size: chosen?.frame.size ?? DEFAULT_BED_SIZE[country]! } } : {}) });
     // A new bed brings its own mattress.
     if (piece === 'bed') delete person.mattressAt;
     return { paid: cost.amount };
@@ -188,10 +196,13 @@ export function mattressWorn(person: Person, at: number): boolean {
 }
 
 /** What a new mattress costs where they live, the old one taken away, in the save's money; or nothing where none is priced. */
-export function mattressCost(sim: Simulation, cityId: string): Money | undefined {
+export function mattressCost(sim: Simulation, cityId: string, size?: string): Money | undefined {
   const countryId = CITIES.get(cityId)?.countryId ?? '';
   const country = FURNITURE[countryId];
-  const m = MATTRESS[countryId];
+  // A bed of the country's usual double takes its mattress; another size the cheapest of its size sold there (`content/beds.ts`, from 2026-10-01).
+  const other = size && size !== DEFAULT_BED_SIZE[countryId] ? [...(BED_PARTS[countryId]?.mattresses ?? [])].filter((x) => x.size === size).sort((a, b) => a.price - b.price)[0] : undefined;
+  if (size && size !== DEFAULT_BED_SIZE[countryId] && !other) return undefined;
+  const m = other ? { price: other.price, removal: MATTRESS[countryId]?.removal } : MATTRESS[countryId];
   if (!country || !m) return undefined;
   const taxRate = country.taxAdded ? salesTaxRate(cityId, sim.now, 'furniture') : 0;
   const units = m.price + country.items.bed!.delivery + (m.removal ?? 0);
@@ -200,11 +211,65 @@ export function mattressCost(sim: Simulation, cityId: string): Money | undefined
   return inSave(sim, Math.round(units * 100) + tax, country.currency) + fee;
 }
 
+/**
+ * Beds by market (from 2026-10-01, `content/beds.ts`): a frame and a
+ * mattress of the same size, the country's own, at IKEA's prices with the
+ * country's delivery, tax and fee. A frame with no mattress of its size
+ * sold there isn't offered.
+ */
+export function bedQuote(sim: Simulation, cityId: string, frameId: string, mattressId: string): { amount: Money; tax: Money; frame: BedPart; mattress: BedPart } | string {
+  const countryId = CITIES.get(cityId)?.countryId ?? '';
+  const parts = BED_PARTS[countryId];
+  const country = FURNITURE[countryId];
+  if (!parts || !country) return 'SLATE keeps no beds where you live yet.';
+  const frame = parts.frames.find((f) => f.id === frameId);
+  const mattress = parts.mattresses.find((m) => m.id === mattressId);
+  if (!frame || !mattress) return 'Choose a frame and a mattress sold here.';
+  if (frame.size !== mattress.size) return `A ${bedSize(BED_MARKET[countryId]!, mattress.size)!.label} mattress doesn’t fit a ${bedSize(BED_MARKET[countryId]!, frame.size)!.label} frame.`;
+  const units = frame.price + mattress.price;
+  const tax = Math.round(units * 100 * (country.taxAdded ? salesTaxRate(cityId, sim.now, 'furniture') : 0));
+  const fee = inSave(sim, Math.round(mattressFeeUsd(cityId, sim.now) * 100), 'USD');
+  return { amount: inSave(sim, Math.round((units + country.items.bed!.delivery) * 100) + tax, country.currency) + fee, tax: inSave(sim, tax, country.currency), frame, mattress };
+}
+
+/** The beds a town sells, frame and mattress of a size, each frame with each mattress that fits it. */
+export function bedsIn(cityId: string): { frame: BedPart; mattress: BedPart }[] {
+  const parts = BED_PARTS[CITIES.get(cityId)?.countryId ?? ''];
+  return parts ? parts.frames.flatMap((frame) => parts.mattresses.filter((m) => m.size === frame.size).map((mattress) => ({ frame, mattress }))) : [];
+}
+
+/** The bed they sleep in at home: its country and size, an older bed its country's usual double. */
+export function bedAtHome(person: Person): { country: string; size: string; widthCm: number } | undefined {
+  const item = itemsOf(person).find((i) => i.kind === 'furniture:bed' && i.at.kind === 'home' && i.at.home === homeKeyOf(person.home));
+  if (!item) return undefined;
+  const country = item.bed?.country ?? CITIES.get(person.home?.cityId ?? '')?.countryId ?? 'us';
+  const size = item.bed?.size ?? DEFAULT_BED_SIZE[country] ?? 'queen';
+  const market = BED_MARKET[country];
+  return { country, size, widthCm: (market && bedSize(market, size)?.widthCm) ?? SLEEPS_TWO_CM };
+}
+
+/** Whether their bed at home sleeps only one: under 120 cm wide. */
+export const bedSleepsOne = (person: Person): boolean => (bedAtHome(person)?.widthCm ?? SLEEPS_TWO_CM) < SLEEPS_TWO_CM;
+
+/** Why their bed can't take a new mattress here: none sold here fits it, as a British bed in America. */
+export function mattressRefusal(person: Person, cityId: string): string | undefined {
+  const bed = bedAtHome(person);
+  if (!bed) return 'You have no bed of your own.';
+  const here = CITIES.get(cityId)?.countryId ?? '';
+  const market = BED_MARKET[bed.country];
+  const label = market ? bedSize(market, bed.size)?.label : undefined;
+  const sold = bed.size === DEFAULT_BED_SIZE[here] || BED_PARTS[here]?.mattresses.some((m) => m.size === bed.size);
+  if (market !== BED_MARKET[here] || !sold) return `No mattress sold here fits your ${label ?? ''} bed.`.replace('  ', ' ');
+  return undefined;
+}
+
 export function registerMattress(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { paid: Money }>('home.replace_mattress', (_p, { sim: s }) => {
     const person = s.player;
     if (!owns(person, 'bed')) throw new CommandError('You have no bed of your own.');
-    const cost = mattressCost(s, person.home?.cityId ?? person.currentLocationId);
+    const no = mattressRefusal(person, person.home?.cityId ?? person.currentLocationId);
+    if (no) throw new CommandError(no);
+    const cost = mattressCost(s, person.home?.cityId ?? person.currentLocationId, bedAtHome(person)!.size);
     if (cost === undefined) throw new CommandError('SLATE keeps no mattress price where you live yet.');
     if (!payFromBank(s, person, cost, 'A new mattress, delivered and the old one taken away', 'home')) throw new CommandError('The bank couldn’t pay for it.');
     person.mattressAt = s.now;

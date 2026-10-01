@@ -59,6 +59,7 @@ import { diningQuote, restaurantById } from './dining';
 import { spend } from './household';
 import { personalityOf } from './personality';
 import { homeById } from './homes';
+import { bedSleepsOne } from './furniture';
 import { applyLookingAfter } from './life';
 
 export const MEET_KIND = 'social.meet';
@@ -259,6 +260,8 @@ export function moveInRefusal(person: Person, c: Contact): string | undefined {
   const home = person.home;
   if (!home || home.kind === 'sofa') return 'You have no home of your own to share.';
   if (home.kind === 'shared') return 'A room in a shared flat has no room for two.';
+  // A bed under 120 cm sleeps one (`content/beds.ts`, from 2026-10-01).
+  if (bedSleepsOne(person)) return 'Your bed sleeps one: buy a bigger one first.';
   if (home.cityId !== c.cityId) return `${first} lives in ${CITIES.require(c.cityId).name}.`;
   return undefined;
 }

@@ -20,7 +20,8 @@ import { APPLIANCE_LABEL, APPLIANCE_LIFE } from '@/engine/content/appliances';
 import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
-import { furnishRefusal, mattressCost, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
+import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefusal, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
+import { BED_MARKET, bedSize } from '@/engine/content/beds';
 import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
@@ -552,7 +553,8 @@ function Furniture() {
   // The cheapest delivered first, one without a price here last (`furnitureCatalog`).
   const pieces: Piece[] = arrange(furnitureCatalog(sim, where)).map((e) => e.value);
   const does: Record<Piece, string> = { bed: 'Without one, an empty home’s nights are slept on the floor', sofa: 'Without one, unwinding in an empty home takes half the stress off', tv: 'A film or television lover enjoys unwinding at home only with one', console: 'A gamer enjoys unwinding at home only with one', speaker: 'A music lover enjoys unwinding at home only with one' };
-  const mattress = mattressCost(sim, person.home?.cityId ?? person.currentLocationId);
+  const mattress = mattressCost(sim, person.home?.cityId ?? person.currentLocationId, bedAtHome(person)?.size);
+  const noMattress = mattressRefusal(person, person.home?.cityId ?? person.currentLocationId);
   const moveBy = useFeature('home.move_by');
   return (
     <div className="col gap-2">
@@ -570,13 +572,14 @@ function Furniture() {
                   <td>{PIECE_LABEL[piece]}<div className="xs dim">{does[piece]}</div></td>
                   <td className="small">{has ? 'Yes' : 'No'}</td>
                   <td className="num mono">{cost ? formatMoney(cost.amount, cur, { cents: false }) : '—'}</td>
-                  <td>{!has && cost && <Gated feature="home.furnish" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece }).ok) toast(`${PIECE_LABEL[piece]}, delivered.`, 'positive'); }}>Buy And Deliver</Gated>}{has && piece === 'bed' && mattressWorn(person, sim.now) && mattress !== undefined && <Gated feature="home.replace_mattress" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.replace_mattress', {}).ok) toast('A new mattress.', 'positive'); }}>{`Replace The Mattress (${formatMoney(mattress, cur, { cents: false })})`}</Gated>}</td>
+                  <td>{!has && cost && <Gated feature="home.furnish" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece }).ok) toast(`${PIECE_LABEL[piece]}, delivered.`, 'positive'); }}>Buy And Deliver</Gated>}{has && piece === 'bed' && mattressWorn(person, sim.now) && (mattress !== undefined || noMattress) && <Gated feature="home.replace_mattress" className="btn btn-sm btn-ghost" disabled={Boolean(noMattress)} title={noMattress} onClick={() => { if (run('home.replace_mattress', {}).ok) toast('A new mattress.', 'positive'); }}>{mattress !== undefined ? `Replace The Mattress (${formatMoney(mattress, cur, { cents: false })})` : 'Replace The Mattress'}</Gated>}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
+      {!owns(person, 'bed') && <ChooseABed cityId={where} />}
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>
@@ -587,6 +590,31 @@ function Furniture() {
         </div>
       </div>
       <div className="xs dim">{`U-Haul’s 15-foot truck, $${RENTED_TRUCK.perDay} a day and $${RENTED_TRUCK.perMile} a mile there and back, and its fuel: in America, within ${RENTED_TRUCK.withinMiles} miles, on a license you may drive on. Anywhere else, the movers come. A van of your own carries it first.`}</div>
+    </div>
+  );
+}
+
+/** A bed of your choosing: each frame sold here with each mattress of its size, cheapest first (`content/beds.ts`). */
+function ChooseABed({ cityId }: { cityId: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const market = BED_MARKET[CITIES.get(cityId)?.countryId ?? ''];
+  const beds = bedsIn(cityId).map((b) => ({ ...b, quote: bedQuote(sim, cityId, b.frame.id, b.mattress.id) }))
+    .filter((b): b is typeof b & { quote: Exclude<typeof b.quote, string> } => typeof b.quote !== 'string').sort((a, b) => a.quote.amount - b.quote.amount);
+  const [pick, setPick] = useState('');
+  if (!market || beds.length === 0) return null;
+  const chosen = beds.find((b) => `${b.frame.id}|${b.mattress.id}` === pick) ?? beds[0]!;
+  const no = furnishRefusal(sim, person, 'bed');
+  return (
+    <div className="field-row">
+      <div className="field">
+        <label htmlFor="bed-pick">A Bed Of Your Choosing</label>
+        <select id="bed-pick" value={`${chosen.frame.id}|${chosen.mattress.id}`} onChange={(e) => setPick(e.target.value)}>
+          {beds.map((b) => <option key={`${b.frame.id}|${b.mattress.id}`} value={`${b.frame.id}|${b.mattress.id}`}>{`${bedSize(market, b.frame.size)!.label}: ${b.frame.name} Frame, ${b.mattress.name} Mattress, ${formatMoney(b.quote.amount, cur, { cents: false })}`}</option>)}
+        </select>
+      </div>
+      <Gated feature="home.furnish" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece: 'bed', frameId: chosen.frame.id, mattressId: chosen.mattress.id }).ok) toast('Your bed, delivered.', 'positive'); }}>Buy This Bed</Gated>
     </div>
   );
 }

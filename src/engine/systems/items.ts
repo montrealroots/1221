@@ -72,6 +72,8 @@ export interface Item {
   food?: import('./pantry').Food;
   /** A toiletry: its kind and how much is left (`systems/hygiene.ts`). */
   supply?: import('./hygiene').Supply;
+  /** A bed's market and size (`content/beds.ts`, from 2026-10-01); an older bed is its country's usual double. */
+  bed?: { country: string; size: string };
 }
 
 /** The key of a home they live in: an owned home by its id, any other by its kind, town and when it began. */
