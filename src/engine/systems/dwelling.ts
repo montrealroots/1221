@@ -43,7 +43,7 @@ import { drawFixtures, isFlat, type Fixtures, type HomeType } from '../content/h
 import { atTown, HOME, insured as insuredHome, livingIn, type HomeFacts } from './homes';
 import { exchange } from '../content/currency';
 import { drawFromBank, spend } from './household';
-import { weatherAt, weatherOn } from './weather';
+import { heatIndexC, weatherAt, weatherOn } from './weather';
 import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
 import { personalityOf } from './personality';
@@ -387,13 +387,18 @@ export function heatLoss(sim: Simulation, person: Person, at: Instant): number {
   return cooling === 'none' ? (w.lowC >= HOT_NIGHT.hotC ? HOT_NIGHT.hot : HOT_NIGHT.none) : cooling === 'units' ? HOT_NIGHT.units : 0;
 }
 
-/** Weather to be out in: dry, and neither freezing nor sweltering. A swim needs a warm day. */
-export const FINE = { lowC: 10, highC: 32, swimC: 24, runLowC: 0 };
+/**
+ * Weather to be out in: dry, and neither freezing nor sweltering. A swim needs a warm day. Sweltering is
+ * read on the heat index from 2026-10-01 (`heatIndexC`), at the National Weather Service's "extreme caution"
+ * from 90°F, where heat stroke is possible with physical activity; until then it was the day's high alone, at
+ * SLATE's 32 °C, and the humidity changed nothing.
+ */
+export const FINE = { lowC: 10, highC: (90 - 32) * 5 / 9, swimC: 24, runLowC: 0 };
 
 /** The weather this hour where they are, as the Weather panel shows it: the sky now, and the temperature now. */
-export function weatherNow(sim: Simulation, person: Person): { condition: string; highC: number } | undefined {
+export function weatherNow(sim: Simulation, person: Person): { condition: string; highC: number; humidity: number } | undefined {
   const w = weatherAt(sim, person.currentLocationId, sim.now);
-  return w ? { condition: w.condition, highC: w.temperatureC } : undefined;
+  return w ? { condition: w.condition, highC: w.temperatureC, humidity: w.humidity } : undefined;
 }
 
 const FALLING: Readonly<Record<string, string>> = { Rain: 'raining', Thunderstorm: 'storming', Snow: 'snowing', Drizzle: 'drizzling' };
@@ -412,7 +417,7 @@ export function fineWeatherRefusal(sim: Simulation, person: Person, doing: strin
   if (!w) return undefined;
   if (wet(w.condition)) return `It’s ${FALLING[w.condition] ?? 'wet'} out.`;
   if (w.highC < FINE.lowC) return `It’s too cold to ${doing}.`;
-  if (w.highC > FINE.highC) return `It’s too hot to ${doing}.`;
+  if (heatIndexC(w.highC, w.humidity) > FINE.highC) return `It’s too hot to ${doing}.`;
   return undefined;
 }
 
@@ -435,7 +440,7 @@ export const TRAINING = { gym: 1.2, run: 1.1, home: 1 };
 export function trainingAt(sim: Simulation, person: Person): { where: 'gym' | 'run' | 'home'; builds: number } {
   if ((placeOf(sim, person)?.fixtures.gym ?? 'none') !== 'none') return { where: 'gym', builds: TRAINING.gym };
   const w = weatherNow(sim, person);
-  if (w && !wet(w.condition) && w.highC <= FINE.highC && w.highC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
+  if (w && !wet(w.condition) && heatIndexC(w.highC, w.humidity) <= FINE.highC && w.highC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
   return { where: 'home', builds: TRAINING.home };
 }
 

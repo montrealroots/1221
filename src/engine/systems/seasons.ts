@@ -23,8 +23,9 @@
  * The flu: its chance a year stays `CARE.flu`, and its weeks follow the town:
  * the coldest weeks where the coldest month is under 18 °C, the wettest where
  * it's over 21 °C, and a blend between (Tamerius et al., 2013). SLATE's
- * climate has no humidity, so temperature stands in for "cold and dry", and
- * wet-day frequency for "humid and rainy".
+ * climate normals hold no humidity, so temperature stands in for "cold and
+ * dry", and wet-day frequency for "humid and rainy". The day's weather draws
+ * one from its climate type, which the heat index reads (`heatIndexC`).
  */
 
 import { CITIES } from '../content/geography';

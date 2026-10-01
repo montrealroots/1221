@@ -739,6 +739,17 @@ part the tool cannot see.
   owner. (`search()`, the five record shapes with no table and the history
   categories for systems long gone were taken out on 2026-09-25.)
 
+## Settled on 2026-10-01, by wiring
+
+- **Humidity was drawn and only shown.** The weather drew a day's humidity
+  from its climate type and only the screens read it, until an audit found it
+  on 2026-10-01. Now a run and sitting out read the National Weather
+  Service's heat index (`heatIndexC`) against its "extreme caution" from
+  90°F, where until then they read the bare temperature at SLATE's 32 °C. The
+  humidity itself is still SLATE's model, a base by climate type and more on
+  a wet day. Evidence: `tests/heatindex.test.ts`; 5 mutations, all killed in
+  the end.
+
 ## Settled on 2026-09-28, by wiring or deletion
 
 The crafts: the thirty that were trades an actor's jobs don't do are each
