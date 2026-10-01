@@ -64,7 +64,7 @@ describe('an offer', () => {
 });
 
 describe('British Columbia’s speculation and vacancy tax', () => {
-  it('takes 3% for 2026 and 4% from 2027 of a foreign owner’s empty home, and nothing of one lived in half the year, let, or a Canadian’s', () => {
+  it('takes 3% for 2026 and 4% from 2027 of a foreign owner’s empty home, a Canadian’s 0.5% for 2025 and 1% after, and nothing of one lived in half the year or let', () => {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'svt');
     expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2026, 0, false)).toBe(0.03);
     expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2027, 0, false)).toBe(0.04);
@@ -72,7 +72,11 @@ describe('British Columbia’s speculation and vacancy tax', () => {
     expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2026, 200, false)).toBe(0);
     expect(bcSvtRate(sim.player, 'ca-bc-vancouver', 2026, 0, true)).toBe(0);
     expect(bcSvtRate(sim.player, 'ca-on-toronto', 2026, 0, false)).toBe(0);
-    expect(bcSvtRate({ ...sim.player, citizenshipId: 'ca' } as Person, 'ca-bc-vancouver', 2026, 0, false)).toBe(0);
+    const canadian = { ...sim.player, citizenshipId: 'ca' } as Person;
+    expect(bcSvtRate(canadian, 'ca-bc-vancouver', 2025, 0, false)).toBe(0.005);
+    expect(bcSvtRate(canadian, 'ca-bc-vancouver', 2026, 0, false)).toBe(0.01);
+    expect(bcSvtRate(canadian, 'ca-bc-vancouver', 2027, 0, false)).toBe(0.01);
+    expect(bcSvtRate(canadian, 'ca-bc-vancouver', 2026, 200, false)).toBe(0);
   });
 
   it('is billed in July on an American’s Vancouver house left empty', () => {

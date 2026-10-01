@@ -412,6 +412,9 @@ export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: In
   // Ireland taxes a van as a goods vehicle and a motorhome as a motor caravan.
   if (v.jurisdiction === 'IE' && kindOf(m) === 'van') return { amount: c(RV_FEES.IE.goods), next: year(1), memo: 'Motor tax, the year, a goods vehicle' };
   if (v.jurisdiction === 'IE' && sleepsIn(m)) return { amount: c(RV_FEES.IE.motorCaravan), next: year(1), memo: 'Motor tax, the year, a motor caravan' };
+  // Britain's light goods rate on a van, and its private light goods rate on a motorhome (`RV_FEES`).
+  if (v.jurisdiction === 'GB' && kindOf(m) === 'van') { const built = new Date(v.boughtAt - v.ageAtPurchase * YEAR_MS).toISOString().slice(0, 10); const [from, to] = RV_FEES.GB.euro45; return { amount: c(built >= from && built <= to ? RV_FEES.GB.vanEuro45 : RV_FEES.GB.van), next: year(1), memo: 'Vehicle tax, the year, a van' }; }
+  if (v.jurisdiction === 'GB' && sleepsIn(m)) return { amount: c(RV_FEES.GB.motorCaravan), next: year(1), memo: 'Vehicle tax, the year, a motor caravan' };
   if (onTwoWheels(m)) {
     const cc = m.cc ?? 125;
     switch (v.jurisdiction) {

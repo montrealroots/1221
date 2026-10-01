@@ -57,6 +57,12 @@ describe('what one costs', () => {
   it('taxes an Irish van as a goods vehicle and a motorhome as a motor caravan', () => {
     expect(renewal(held('ie-ford-transit', 'IE'), at).amount).toBe(333_00);
     expect(renewal(held('ie-swift-escape-640', 'IE'), at).amount).toBe(102_00);
+    // Britain's light goods rate on a van, £140 for one registered to Euro 4 or 5, and a motorhome's private light goods rate.
+    expect(renewal(held('gb-ford-transit-custom', 'GB'), at).amount).toBe(360_00);
+    expect(renewal({ ...held('gb-ford-transit-custom', 'GB'), ageAtPurchase: 18 }, at).amount).toBe(140_00);
+    expect(renewal({ ...held('gb-ford-transit-custom', 'GB'), ageAtPurchase: 26 }, at).amount).toBe(360_00);
+    expect(renewal(held('gb-swift-escape', 'GB'), at).amount).toBe(375_00);
+    expect(renewal(held('gb-auto-trail-v-line-610', 'GB'), at).amount).toBe(375_00);
   });
 
   it('insures a motorhome at Progressive’s and Quotezone’s averages, full cover only, and a van as a car', () => {

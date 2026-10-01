@@ -305,7 +305,21 @@ export const PCP = {
  * Britain's private light goods and light goods vehicle rates weren't
  * researched: a motorhome and a van there pay a car's standard rate, said so.
  */
-export const RV_FEES = { IE: { goods: 333, motorCaravan: 102 } } as const;
+/**
+ * Ireland's motor tax on a van as a goods vehicle and a motorhome as a motor
+ * caravan. Britain's vehicle excise duty from later on 2026-09-30 (DVLA's
+ * V149 for 1 April 2026, `research-sweep5.json`), used before that date too,
+ * as the earlier rates weren't read:
+ * - a van's light goods rate, £360 a year, or £140 for one registered
+ *   between 1 March 2003 and 31 December 2010 to Euro 4 or 5;
+ * - a motorhome's or campervan's private light goods rate, £375 over 1,549cc.
+ * Every one SLATE sells there is on a Fiat or Peugeot van chassis with a
+ * 2.2-liter diesel. That's the makers' published engine as commonly known,
+ * not read in this research. Each is under the 3,500 kg a car license drives,
+ * so the heavy rate doesn't apply.
+ * Until then a van and a motorhome paid a car's standard rate in Britain.
+ */
+export const RV_FEES = { IE: { goods: 333, motorCaravan: 102 }, GB: { van: 360, vanEuro45: 140, euro45: ['2003-03-01', '2010-12-31'], motorCaravan: 375 } } as const;
 
 /**
  * A year's insurance for a motorhome or campervan where an average is

@@ -1467,7 +1467,7 @@ function bill(sim: Simulation, person: Person, owned: OwnedHome): void {
     owned.owed.push({ kind: 'council', dueAt: due, amount: Math.round(councilTaxYear(sim, councilBand(sim, homeValue(sim, owned), owned.cityId), true, 1, owned.cityId) / COUNCIL_TAX.instalments) });
   }
   if (month.hoa > 0) owned.owed.push({ kind: 'hoa', dueAt: due, amount: month.hoa });
-  // British Columbia's speculation and vacancy tax, each July, on last year for a foreign owner's home left empty (`systems/foreignbuyers.ts`).
+  // British Columbia's speculation and vacancy tax, each July, on last year for a home left empty, a foreign owner's or a Canadian's (`systems/foreignbuyers.ts`).
   if (m === 7) {
     const year = Number(key.slice(0, 4)) - 1;
     const from = Date.UTC(year, 0, 1);

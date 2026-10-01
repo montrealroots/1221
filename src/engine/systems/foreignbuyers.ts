@@ -41,21 +41,26 @@ export const FOREIGN_BUYERS = {
   bcAptt: 0.2,
   englandSurcharge: 0.02,
   /**
-   * British Columbia's speculation and vacancy tax on a foreign owner's home
-   * left empty (not lived in half the year, and not let), on its assessed
-   * value, by the year it's for: 2% through 2025, 3% for 2026, 4% from 2027
-   * (gov.bc.ca, read from a search's extract, research-land-2.json), billed
-   * in July. From later on 2026-09-30; a Canadian's 0.5% isn't kept.
+   * British Columbia's speculation and vacancy tax on a home left empty (not
+   * lived in half the year, and not let), on its assessed value, by the year
+   * it's for, billed in July. A foreign owner's 2% through 2025, 3% for 2026
+   * and 4% from 2027; a Canadian citizen's 0.5% for 2025 and 1% from 2026
+   * (gov.bc.ca, read on the page, research-sweep5.json). The Canadian's was
+   * kept from later on 2026-09-30; until then a Canadian paid none. BC's
+   * untaxed worldwide earner, who pays the foreign rate, isn't kept: SLATE
+   * doesn't hold where a household's income is taxed. A permanent resident's
+   * is the citizen's, and SLATE keeps no permanent residence in Canada.
    */
   bcSvt: [[2025, 0.02], [2026, 0.03], [Infinity, 0.04]] as readonly (readonly [number, number])[],
+  bcSvtCanadian: [[2025, 0.005], [Infinity, 0.01]] as readonly (readonly [number, number])[],
   /** Mexico's convenio de renuncia with the SRE, pesos. */
   mexicoConvenio: 5_252.02,
 } as const;
 
-/** BC's speculation and vacancy tax for a year on a home, as a share of its assessed value: a foreign owner's, where it stood empty; else none. */
+/** BC's speculation and vacancy tax for a year on a home, as a share of its assessed value, where it stood empty: a foreign owner's or a Canadian's; else none. */
 export function bcSvtRate(person: Person, cityId: string, year: number, daysLivedIn: number, let_: boolean): number {
-  if (CITIES.get(cityId)?.parentId !== 'ca-02' || isCanadian(person) || let_ || daysLivedIn >= 183) return 0;
-  return FOREIGN_BUYERS.bcSvt.find(([upTo]) => year <= upTo)![1];
+  if (CITIES.get(cityId)?.parentId !== 'ca-02' || let_ || daysLivedIn >= 183) return 0;
+  return (isCanadian(person) ? FOREIGN_BUYERS.bcSvtCanadian : FOREIGN_BUYERS.bcSvt).find(([upTo]) => year <= upTo)![1];
 }
 
 /** A foreigner's SRE permit to own in Mexico, outside the restricted zone, in the save's money, cents; nothing for anyone else. */

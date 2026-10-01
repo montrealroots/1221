@@ -397,7 +397,9 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
 - **What each costs and insures:**
   - A van sells below the American sticker, as KBB's light vehicles do; an RV doesn't.
   - Ireland taxes a van as a goods vehicle (€333) and a motorhome as a motor caravan (€102, read from the table, not confirmed).
-  - Britain's private light goods and light goods rates weren't researched, so a car's standard rate is charged there.
+  - Britain's rates, from later on 2026-09-30 (DVLA's V149 for 1 April 2026, `research-sweep5.json`); until then a car's standard rate was charged:
+    - A van pays the light goods rate, £360, or £140 if registered between March 2003 and 2010 to Euro 4 or 5.
+    - A motorhome or campervan pays the private light goods rate, £375 over 1,549cc. Each one sold is on a 2.2-liter Fiat or Peugeot chassis, as commonly published; that wasn't read in this research.
   - Insurance: Progressive's countrywide motorhome average ($1,052) in the American states and Quotezone's index average (£598) in Britain, full cover only. Elsewhere, and for a van, a car's, and the screen says so.
   - Everything SLATE sells is driven on a car license: New York's class D to 26,000 lb, Britain's B to 3,500 kg, Ontario's G to 11,000 kg. Everything is driven at a car's risk.
 - **Economy**, gasoline or diesel as the base engine burns. No Class C motorhome or cargo van publishes a figure where one was read, so the nearest published is used, and said so:
@@ -667,7 +669,7 @@ Researched in `docs/research/world/research-land-2.json` (`systems/foreignbuyers
   - British Columbia's 20% additional property transfer tax on a foreign national (not re-read on 2026-09-30).
 - **England:** a buyer not resident in the UK pays 2% more Stamp Duty Land Tax (HMRC, not re-read). SLATE takes a buyer whose home isn't in Britain as not resident; the test is 183 days in the year before.
 - **Mexico City** is outside the restricted zone, so a foreigner may own directly under a Calvo clause with the SRE. Its fee wasn't read, and none is charged. Ireland and America don't restrict a foreign buyer.
-- British Columbia's speculation and vacancy tax (`bcSvtRate`, later on 2026-09-30): each July, on the assessed value of a foreign owner's home that last year was lived in under half the year and not let. It is 2% through 2025, 3% for 2026 and 4% from 2027, read from a search's extract. A Canadian's 0.5% isn't kept.
+- British Columbia's speculation and vacancy tax (`bcSvtRate`, later on 2026-09-30): each July, on the assessed value of a foreign owner's home that last year was lived in under half the year and not let. It is 2% through 2025, 3% for 2026 and 4% from 2027, now read on gov.bc.ca (`research-sweep5.json`). Since later on 2026-09-30 a Canadian citizen's empty home pays 0.5% for 2025 and 1% from 2026; until then a Canadian paid none. BC's untaxed worldwide earner, who pays the foreign rate, isn't kept, as SLATE doesn't hold where a household's income is taxed.
 - Not kept: America's FIRPTA withholding on a foreign seller, which needs a nonresident's US return that SLATE doesn't file.
 
 Evidence: `tests/foreignbuyers.test.ts` (3). 7 mutations, all killed in the end. Two needed tests: the ban lapsing on its date, and a small town outside it.
