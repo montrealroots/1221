@@ -432,7 +432,16 @@ export const AUDITION_READ = { share: 0.2 } as const;
 /** Lines learned on every job but the booth's, where the script is on the stand; a series or a play most. */
 export const MEMORIZE = { job: 0.3, long: 0.6 } as const;
 
-/** The major role's flat price, per day over the days it's priced on. */
+/**
+ * The major role's flat price, per day over the days it's priced on: a guest
+ * star's top of show, 10% over television's day performer rate for five days
+ * on a half-hour, eight on an hour. SAG-AFTRA's wage table gives $7,095 and
+ * $11,352 from 1 July 2025 ($1,290 × 1.1 × 5 and × 8); from 1 July 2026 SLATE
+ * raises it 3% a year, as the 2026 agreement raises the day rate ($1,246 to
+ * $1,283), its estimate, the 2026 table's Major Role figures not having been
+ * read. Until 2026-10-01 each year's figure was the year before's, $6,853
+ * and $10,965 being 2024-25's (`research-career-depth.json`).
+ */
 const perDay = (steps: RateSteps, days: number): RateSteps => steps.map(([from, cents]) => [from, Math.round(cents / days)] as const);
 
 export const ROLES: readonly Role[] = [
@@ -444,13 +453,13 @@ export const ROLES: readonly Role[] = [
   },
   {
     id: 'guest-half', label: 'Guest Star, A Half-Hour Series', medium: 'screen', union: 'sag',
-    steps: perDay([['2025-07-01', 6_853_00], ['2026-07-01', 7_057_00], ['2027-07-01', 7_266_00], ['2028-07-01', 7_486_00], ['2029-07-01', 7_711_00]], 5),
+    steps: perDay([['2025-07-01', 7_095_00], ['2026-07-01', 7_308_00], ['2027-07-01', 7_527_00], ['2028-07-01', 7_753_00], ['2029-07-01', 7_986_00]], 5),
     units: [5, 5], bar: 68, weight: 4, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, reads: READS.screen,
     basis: 'week', after: { kind: 'tv', length: 'half' }, travels: true, source: AMPTP,
   },
   {
     id: 'guest-hour', label: 'Guest Star, An Hour Series', medium: 'screen', union: 'sag',
-    steps: perDay([['2025-07-01', 10_965_00], ['2026-07-01', 11_290_00], ['2027-07-01', 11_625_00], ['2028-07-01', 11_977_00], ['2029-07-01', 12_338_00]], 8),
+    steps: perDay([['2025-07-01', 11_352_00], ['2026-07-01', 11_693_00], ['2027-07-01', 12_044_00], ['2028-07-01', 12_405_00], ['2029-07-01', 12_777_00]], 8),
     units: [8, 8], bar: 72, weight: 4, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 7, reads: READS.screen,
     basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },

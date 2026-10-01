@@ -597,7 +597,10 @@ describe('pay', () => {
   it('follows each contract’s steps, and holds past the last', () => {
     const day = roleById('costar').steps;
     expect([rateOn(day, '2026-06-30'), rateOn(day, '2026-07-01'), rateOn(day, '2029-07-01'), rateOn(day, '2031-01-01')]).toEqual([1_246_00, 1_283_00, 1_402_00, 1_402_00]);
-    expect(rateOn(roleById('guest-hour').steps, '2026-07-01') * 8).toBeCloseTo(11_290_00, -1);
+    // Top of show on an hour: SAG-AFTRA's $11,352 from 1 July 2025, and 3% on from 2026, SLATE's estimate.
+    expect(rateOn(roleById('guest-hour').steps, '2025-07-01') * 8).toBeCloseTo(11_352_00, -1);
+    expect(rateOn(roleById('guest-half').steps, '2025-07-01') * 5).toBeCloseTo(7_095_00, -1);
+    expect(rateOn(roleById('guest-hour').steps, '2026-07-01') * 8).toBeCloseTo(11_693_00, -1);
     expect(rateOn(roleById('broadway').steps, '2026-09-28')).toBe(2_799_00);
     expect(rateOn(roleById('lort-b').steps, '2027-01-01')).toBe(1_213_00);
     for (const r of ROLES) expect(r.tiers.length).toBeGreaterThan(0);
