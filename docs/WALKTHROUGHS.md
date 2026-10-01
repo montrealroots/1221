@@ -59,9 +59,9 @@ corrected in the same commit, as the backlog's progress table is.
 | Collect | Works | It's theirs where they bought it. |
 | Compatible modifications | Part | `vehicle.modify`, `vehicle.tint`, `vehicle.winter_tires`: a list of mods at fitted prices; compatibility by model, paint, wraps and upholstery are Stage 8. |
 | Itemized quote | Part | Each mod's price; no named shop's quote. |
-| Book work, transport meanwhile | Part | A repair is booked at a named garage in its hours, and the car is in until closing or three days (`vehicle.repair`); loaners and rentals aren't kept. |
+| Book work, transport meanwhile | Part | A repair or a service is booked at a named garage in its hours, and the car is in until it's done (`vehicle.repair`, `vehicle.service`); loaners and rentals aren't kept. |
 | Collect the work | Part | A mod is fitted at once. |
-| Drive, park, fuel, maintain | Part | Driven every day at published mileage and fuel prices, parking permits, inspections; faults at RepairPal's rates, mended at a garage (`systems/repairs.ts`). Fuel stops and scheduled servicing aren't built. |
+| Drive, park, fuel, maintain | Part | Driven every day at published mileage and fuel prices, parking permits, inspections; faults at RepairPal's rates, mended at a garage, free under the maker's warranty (`systems/repairs.ts`); fuel stops on errands (`errand.fuel`); servicing by the maker's interval and its history, and collisions claimed on full cover (`systems/carcare.ts`). |
 | Change mods or sell | Works | `vehicle.sell`; mods stay on the car. |
 
 ## 37. Land Purchase And Backyard Construction

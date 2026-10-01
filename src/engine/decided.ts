@@ -41,6 +41,7 @@ import { flightFate } from './systems/journey';
 import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
+import { mayCollide } from './systems/carcare';
 import { metAtWork } from './systems/people';
 import { mayDivorce } from './systems/marriage';
 import { mayConceive } from './systems/children';
@@ -432,6 +433,21 @@ defineDecider<{ sim: Simulation; car: number }, string>({
   decide: ({ sim, car }) => {
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
+  },
+});
+
+defineDecider<{ sim: Simulation; car: number }, string>({
+  id: 'vehicle.collision',
+  decides: 'A month driven with a collision or not, at America’s 4.16 collision claims a year in 100 insured cars (COLLISION), and whether it writes the car off; swept at even odds, the real ones being small.',
+  drawnIn: 'src/engine/systems/carcare.ts',
+  reads: {
+    car: (o, t) => ({ ...o, car: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), car: seed }),
+  decide: ({ sim, car }) => {
+    const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'full', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
+    return !mayCollide(sim, sim.player, v, modelById(v.modelId)!, 20_000_00, sim.now, 0.5) ? 'none' : v.soldAt !== undefined ? 'written off' : 'damaged';
   },
 });
 

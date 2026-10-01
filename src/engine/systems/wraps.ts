@@ -26,6 +26,7 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import type { CarModel } from '../content/vehiclecatalog';
 import { spend } from './household';
+import { COVER_CHANGE_FEE_GB } from '../content/carcare';
 import type { OwnedVehicle } from './vehicles';
 
 export type Finish = 'gloss' | 'satin' | 'matte';
@@ -91,6 +92,12 @@ export function registerWraps(sim: Simulation, find: (person: Person, id: string
     const v = find(s.player, String(p?.vehicleId));
     const no = coverRefusal(v, String(p?.coverage), v ? liability(v) : false);
     if (no) throw new CommandError(no);
+    // Britain's insurers charge to change cover mid-term; Direct Line's fee (`COVER_CHANGE_FEE_GB`, from later on 2026-10-01).
+    if (v!.jurisdiction === 'GB') {
+      const cur = saveCurrency(s.universe);
+      const fee = cur === 'GBP' ? Math.round(COVER_CHANGE_FEE_GB * 100) : exchange(Math.round(COVER_CHANGE_FEE_GB * 100), 'GBP', cur) ?? 0;
+      if (!spend(s, s.player, fee, 'The insurer’s fee to change cover', 'vehicle')) throw new CommandError('The payment didn’t go through.');
+    }
     v!.coverage = p.coverage;
     return { coverage: p.coverage };
   });

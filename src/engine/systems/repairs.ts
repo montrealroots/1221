@@ -45,9 +45,10 @@ import type { CarModel } from '../content/vehiclecatalog';
 import { CAR_SHOPS, ORDINARY_REPAIR_USD, RELIABILITY, SEVERE_DAYS, SEVERE_TIMES_ANNUAL, type CarShop, type Reliability } from '../content/carshops';
 import { shutAt } from './errands';
 import { spend } from './household';
+import { expectedServicesUsd, repairShare } from './carcare';
 import type { OwnedVehicle } from './vehicles';
 
-export interface Fault { at: Instant; severe: boolean; /** The repair, US dollars. */ usd: number }
+export interface Fault { at: Instant; severe: boolean; /** The repair, US dollars. */ usd: number; /** A collision's damage, which insurance and not a warranty pays (`systems/carcare.ts`). */ collision?: boolean }
 export interface InShop { shopId: string; until: Instant; /** The shop's name where it isn't a garage of `content/carshops.ts`: a wrap shop's. */ name?: string }
 
 /** The states whose inspection reads the car's computer, and fails a lit check engine light. */
@@ -69,7 +70,8 @@ export const expectedRepairsUsd = (r: Reliability): number => r.visits * ((1 - r
 export function upkeepPerKm(m: CarModel, j: Jurisdiction): number {
   const r = reliabilityOf(m);
   // The most taken off is the all-brand average's in Britain, the fewest kilometers: about 2.5 cents of the 7.3.
-  return r ? UPKEEP_USD_PER_KM - (expectedRepairsUsd(r) * 100) / KM_A_YEAR[j] : UPKEEP_USD_PER_KM;
+  // And the services it's expected to need, now booked as services (`systems/carcare.ts`, from later on 2026-10-01).
+  return (r ? UPKEEP_USD_PER_KM - (expectedRepairsUsd(r) * 100) / KM_A_YEAR[j] : UPKEEP_USD_PER_KM) - (expectedServicesUsd(m, j) * 100) / KM_A_YEAR[j];
 }
 
 export const inShopNow = (v: OwnedVehicle, at: Instant): boolean => Boolean(v.inShop && v.inShop.until > at);
@@ -145,8 +147,10 @@ export function registerRepairs(sim: Simulation, find: (person: Person, id: stri
     if (no) throw new CommandError(no);
     const shop = shopById(String(p.shopId))!;
     const cur = saveCurrency(s.universe);
-    const bill = faultCost(v, cur);
-    if (!spend(s, person, bill, `Repair at ${shop.name}, the ${m.make} ${m.model}`, 'vehicle')) throw new CommandError('The payment didn’t go through.');
+    // Under the maker's warranty at its dealer, or a collision's over the deductible on full cover (`repairShare`, from 2026-10-01).
+    const share = repairShare(s, v, m, shop.make, faultCost(v, cur), s.now);
+    const bill = share.yours;
+    if (!spend(s, person, bill, `Repair at ${shop.name}, the ${m.make} ${m.model}${share.why ? `, ${share.why}` : ''}`, 'vehicle')) throw new CommandError('The payment didn’t go through.');
     const until = readyAt(shop, v.fault!.severe, s.now);
     v.inShop = { shopId: shop.id, until };
     delete v.fault;

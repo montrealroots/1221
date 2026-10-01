@@ -40,6 +40,8 @@ import { gone, mayBeStolen, stolenNow } from './theft';
 import { tireFactor, tireInsuranceFactor, tiresMonth } from './tires';
 import { byRoad as roadBetween, drive } from './driving';
 import { registerWraps } from './wraps';
+import { mayCollide, registerCarCare, serviceMonth, servicingKept } from './carcare';
+import { NO_HISTORY_GB } from '../content/carcare';
 import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -96,6 +98,9 @@ export interface OwnedVehicle {
   errandKm?: number;
   /** A wrap in film over the paint (`systems/wraps.ts`, from 2026-10-01). */
   wrap?: import('./wraps').Wrap;
+  /** Its services, and when one was first missed (`systems/carcare.ts`, from 2026-10-01). */
+  services?: import('./carcare').Service[];
+  serviceMissed?: Instant;
   /** Leased, not owned (`systems/leasing.ts`, from 2026-09-30): the lessor's until bought out. */
   lease?: import('./leasing').Lease;
 }
@@ -407,7 +412,9 @@ export function tradeInFor(sim: Simulation, cityId: string, v: OwnedVehicle): { 
 
 /** A car's value now, in its money: its price new less what the curve says it's lost, and less a repair it needs (`systems/repairs.ts`). */
 export function valueOf(v: OwnedVehicle, at: Instant): Money {
-  return Math.max(0, Math.round(v.listPrice * kept(v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS)) - faultCost(v, modelById(v.modelId)!.currency));
+  // In Britain, a car whose servicing wasn't kept is worth less (`NO_HISTORY_GB`, from 2026-10-01).
+  const history = v.jurisdiction === 'GB' && !servicingKept(v, modelById(v.modelId)!, at) ? 1 - NO_HISTORY_GB : 1;
+  return Math.max(0, Math.round(v.listPrice * kept(v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS) * history) - faultCost(v, modelById(v.modelId)!.currency));
 }
 
 /** A renewal's fee in the jurisdiction's money, cents, and when the next is due. */
@@ -586,6 +593,7 @@ export function registerVehicles(sim: Simulation): void {
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerCarCare(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   registerWraps(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!, (v) => liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
   registerRepairs(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
@@ -651,12 +659,15 @@ export function registerVehicles(sim: Simulation): void {
         v.km = (v.km ?? 0) + km;
         drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`, kindOf(m), tireFactor(v, item.at));
         driven = km;
-        // And may need a repair for it.
+        // And may need a repair for it, or meet another car (`systems/carcare.ts`).
         mayBreak(s, person, v, m, item.at);
+        if (mayCollide(s, person, v, m, inSave(s, valueOf(v, item.at), m.currency), item.at) && v.soldAt !== undefined) return;
         // Tint darker than the law allows, on the road (`systems/tint.ts`).
         tintOnTheRoad(s, person, v, item.at);
       }
     }
+    // A service gone past due without one, missed for good (`systems/carcare.ts`).
+    serviceMonth(v, m, item.at);
     // Winter tires: the kilometers on them, Ontario's switchovers, a set worn out (`systems/tires.ts`).
     if (!missing) tiresMonth(s, person, v, driven, item.at);
     // An inspection come due, where the law asks one (`systems/inspections.ts`).

@@ -31,6 +31,8 @@ import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
 import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn, type Finish } from '@/engine/systems/wraps';
+import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
+import { CAR_SHOPS } from '@/engine/content/carshops';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -124,6 +126,7 @@ export function VehiclesWorkspace() {
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
                             <RepairControl v={v} />
+                            <ServiceControl v={v} />
                             <WrapControl v={v} />
                             <CoverControl v={v} />
                             <ModifyControl v={v} />
@@ -451,4 +454,30 @@ function CoverControl({ v }: { v: OwnedVehicle }) {
   const no = coverRefusal(v, other, liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
   if (no === 'Liability alone isn’t offered for it here.') return null;
   return <Gated feature="vehicle.coverage" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('vehicle.coverage', { vehicleId: v.id, coverage: other }).ok) toast(other === 'full' ? 'Full cover from the next month.' : 'Liability only from the next month.', 'positive'); }}>{other === 'full' ? 'Change To Full Cover' : 'Change To Liability Only'}</Gated>;
+}
+
+/** Its servicing, by the maker's interval, and its warranty (`systems/carcare.ts`). */
+function ServiceControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast, sim } = useGame();
+  const m = modelById(v.modelId)!;
+  const due = serviceDue(v, m);
+  const [shopId, setShopId] = useState('');
+  if (!due) return null;
+  const shops = CAR_SHOPS.filter((x) => x.cityId === (v.at ?? v.cityId) && (!x.make || x.make === m.make));
+  const shop = shops.find((x) => x.id === shopId) ?? shops[0];
+  const no = shop ? serviceRefusal(sim.player, v, m, shop.id, sim.now) : 'No garage SLATE knows of in its town services it.';
+  const kept = servicingKept(v, m, sim.now);
+  const w = warrantyOf(v, m);
+  const cur = saveCurrency(sim.universe);
+  return (
+    <>
+      <span className="xs dim">{`Service Due ${formatDate(due.at, sim.zone)} Or ${Math.round(due.km).toLocaleString('en-US')} Km${kept ? '' : ', Servicing Not Kept'}${w ? (inWarranty(v, m, sim.now) ? ', Under Warranty' : ', Out Of Warranty') : ''}`}</span>
+      {shops.length > 1 && (
+        <select aria-label="Service Garage" value={shop?.id ?? ''} onChange={(e) => setShopId(e.target.value)} style={{ width: 'auto' }}>
+          {shops.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+        </select>
+      )}
+      <Gated feature="vehicle.service" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `${serviceWhat(v)}.`} onClick={() => { const a = run<{ paid: number }>('vehicle.service', { vehicleId: v.id, shopId: shop!.id }); if (a.ok) toast(`Serviced, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{`Book The Service, ${formatMoney(serviceCost(sim, v), cur, { cents: false })}`}</Gated>
+    </>
+  );
 }
