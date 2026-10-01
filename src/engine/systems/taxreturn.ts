@@ -40,6 +40,7 @@ import { drawFromBank, expenseFor, payFromBank } from './household';
 import { personalityOf } from './personality';
 import { citizenOf } from './documents';
 import { spouseIncomeFor } from './marriage';
+import { childTaxCredit } from './children';
 import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -463,7 +464,11 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const investment = gainLong + gain1250 + gainShort + Math.max(0, rental) + (y.interest ?? 0);
   gainTax = Math.round(gainTax + HOME_TAX.niitRate * Math.min(investment, Math.max(0, taxed + gainLong + gain1250 - usd(HOME_TAX.niitFrom, into))));
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
-  const federal = federalBefore - foreignCredit + gainTax;
+  // The Child Tax Credit (`systems/children.ts`, from 2026-10-01): off the tax, and the refundable part of what's left paid back.
+  const ctc = childTaxCredit(person, year, income + (spouse ?? 0), spouse !== undefined, into);
+  const before = federalBefore - foreignCredit + gainTax;
+  const offTax = Math.min(Math.max(0, before), ctc.credit);
+  const federal = before - offTax - Math.min(ctc.credit - offTax, ctc.refundable);
   const incomeTax = federal + stateAndLocal;
   // Payroll tax is on the acting wages alone: a student's work-study and a benefit carry none.
   const payroll = computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;

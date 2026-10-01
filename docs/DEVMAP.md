@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-213 commands; 207 named by a test, 6 not.
+215 commands; 209 named by a test, 6 not.
 
 ## aircraft
 
@@ -153,6 +153,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.return` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
 | `clothes.save_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `fittings.test.ts` | Rent And A Roof |
 | `clothes.wear_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
+
+## dating
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `dating.app` | `src/engine/systems/dating.ts` | `PeopleWorkspace.tsx` | `dating.test.ts` | People |
 
 ## documents
 
@@ -330,6 +336,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
 | `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `people.test.ts` | People |
 | `social.split` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
+| `social.try_for_child` | `src/engine/systems/children.ts` | `PeopleWorkspace.tsx` | `children.test.ts` | People |
 
 ## tax
 

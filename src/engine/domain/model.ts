@@ -281,6 +281,12 @@ export interface Person {
   marriage?: import('../systems/marriage').Marriage;
   /** How a couple living together splits the rent and the bills: evenly unless by income. */
   billSplit?: 'income';
+  /** Children, a child on the way, and trying for one (`systems/children.ts`, from 2026-10-01). */
+  children?: import('../systems/children').Child[];
+  pregnancy?: import('../systems/children').Pregnancy;
+  trying?: boolean;
+  /** A dating app they're on (`systems/dating.ts`, from 2026-10-01). */
+  datingApp?: import('../systems/dating').DatingApp;
   /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
   suppliesSince?: number;
   groomedAt?: number;

@@ -74,7 +74,7 @@ export interface Contact {
   /** Where they live. */
   cityId: string;
   born: Instant;
-  met: { at: Instant; how: 'school' | 'work'; what?: string };
+  met: { at: Instant; how: 'school' | 'work' | 'online'; what?: string };
   /** Hours spent together, Hall's measure. */
   hours: number;
   rival?: boolean;
@@ -94,6 +94,8 @@ export interface Contact {
   livesWith?: Instant;
   /** A partner's job and pay, drawn when you became a couple (`systems/marriage.ts`). */
   income?: import('./marriage').Income;
+  /** Whether they can carry a child: their given name's list, SLATE's reading (`systems/children.ts`). */
+  carries?: boolean;
 }
 
 export interface Invitation { contactId: string; at: Instant; what: 'meal' | 'visit'; restaurantId?: string; item?: string }
@@ -109,25 +111,27 @@ export function levelOf(c: Contact): 'Rival' | 'Close Friend' | 'Friend' | 'Casu
 const NAME_MARKET: Record<string, keyof typeof NAMES> = { us: 'us', uk: 'uk', ie: 'ie', ca: 'ca', mx: 'mx' };
 
 /** Somebody new, named as their country names people, near the actor's age. */
-function newContact(sim: Simulation, person: Person, cityId: string, key: string, met: Contact['met']): Contact {
+export function newContact(sim: Simulation, person: Person, cityId: string, key: string, met: Contact['met']): Contact {
   const rng = sim.rng('social.person', person.id, key);
   const names = NAMES[NAME_MARKET[CITIES.get(cityId)?.countryId ?? 'us'] ?? 'us'];
   const pick = <T,>(list: readonly T[]) => list[Math.floor(rng.next() * list.length)]!;
-  const given = rng.next() < 0.5 ? names.female : names.male;
+  const carries = rng.next() < 0.5;
+  const given = carries ? names.female : names.male;
   const years = 365.2425 * MS_DAY;
   return {
     id: sim.nextId('contact'), name: `${pick(given)} ${pick(names.family)}`, cityId,
     born: person.birthInstant + Math.round((rng.next() * 10 - 5) * years),
-    met, hours: 0, spends: pick(['casual', 'mid', 'upscale'] as const), single: rng.next() < PARTNERS.single, interested: rng.next() < SOCIAL.interested, memory: [{ at: sim.now, what: met.how === 'school' ? 'At school together' : `Worked together${met.what ? ` on ${met.what}` : ''}` }],
+    met, hours: 0, ...(carries ? { carries } : {}), spends: pick(['casual', 'mid', 'upscale'] as const), single: rng.next() < PARTNERS.single, interested: rng.next() < SOCIAL.interested, memory: [{ at: sim.now, what: met.how === 'school' ? 'At school together' : met.how === 'online' ? `Matched on ${met.what ?? 'an app'}` : `Worked together${met.what ? ` on ${met.what}` : ''}` }],
   };
 }
 
 /** The class known at the degree, each as near as the three years made them. */
-export function knowTheClass(sim: Simulation, person: Person, classmates: readonly { name: string; bond?: number }[]): void {
+export function knowTheClass(sim: Simulation, person: Person, classmates: readonly { name: string; bond?: number; title?: 'actor' | 'actress' }[]): void {
   for (const [i, mate] of classmates.entries()) {
     const c = newContact(sim, person, 'us-ny-newyork', `class-${i}`, { at: sim.now, how: 'school' });
     const bond = mate.bond ?? 0;
     c.name = mate.name;
+    if (mate.title === 'actress') c.carries = true; else delete c.carries;
     c.hours = bond >= BONDS.close ? HALL.close : bond >= BONDS.friend ? HALL.friend : HALL.casual;
     if (bond <= BONDS.rival) c.rival = true;
     contactsOf(person).push(c);

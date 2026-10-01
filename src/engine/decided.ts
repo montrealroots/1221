@@ -43,6 +43,7 @@ import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { metAtWork } from './systems/people';
 import { mayDivorce } from './systems/marriage';
+import { mayConceive } from './systems/children';
 import { tintOnTheRoad } from './systems/tint';
 import type { OwnedVehicle } from './systems/vehicles';
 import { modelById } from './systems/vehicles';
@@ -490,6 +491,26 @@ defineDecider<{ sim: Simulation; year: number }, string>({
   decide: ({ sim, year }) => {
     sim.player.marriage = { contactId: 'c', at: sim.now, worthAt: 0 };
     return mayDivorce(sim, sim.player, year, 0.5) ? 'asked' : 'stays';
+  },
+});
+
+defineDecider<{ sim: Simulation; month: number }, string>({
+  id: 'social.conceive',
+  decides: 'A month trying for a child conceiving or not, at PRESTO’s chance for the carrier’s age (conceptionChance), a birth by caesarean or not, and the child’s name; swept at even odds.',
+  drawnIn: 'src/engine/systems/children.ts',
+  reads: {
+    month: (o, t) => ({ ...o, month: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), month: seed }),
+  decide: ({ sim, month }) => {
+    const c = metAtWork(sim, sim.player, sim.player.currentLocationId, `k-${month}`, 'A Job');
+    c.carries = true;
+    c.livesWith = sim.now;
+    c.dating = { since: sim.now, dates: 9, couple: sim.now };
+    sim.player.home = { ...sim.player.home!, cityId: sim.player.currentLocationId };
+    sim.player.trying = true;
+    return mayConceive(sim, sim.player, sim.now + month * 86_400_000, 0.5) ? 'conceived' : 'not';
   },
 });
 
