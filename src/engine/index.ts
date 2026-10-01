@@ -35,6 +35,7 @@ import { registerBoats } from './systems/boats';
 import { registerCaravans } from './systems/caravans';
 import { itemsOf, registerItems } from './systems/items';
 import { registerOrders } from './systems/orders';
+import { registerClothing, starterWardrobe } from './systems/clothing';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
@@ -169,6 +170,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCaravans(sim);
   registerItems(sim);
   registerOrders(sim);
+  registerClothing(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);
@@ -292,6 +294,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   startingDocuments(sim, sim.player);
   // A foreign student's status looked at when it can next change (`systems/permission.ts`, from 2026-10-01).
   scheduleUsStatus(sim, sim.player);
+  // The clothes the life begins with (`systems/clothing.ts`).
+  starterWardrobe(sim, sim.player);
   return sim;
 }
 
@@ -303,6 +307,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) attributesOf(sim, sim.player);
   // A save from before papers: the ones the life would have begun with (`startingDocuments`).
   if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
+  // A save from before 2026-10-01 counted outfits: its wardrobe of garments is given, its dirty ones worn into it (`systems/clothing.ts`).
+  if (universe.people[universe.playerId]) starterWardrobe(sim, sim.player);
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.

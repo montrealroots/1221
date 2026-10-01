@@ -66,6 +66,8 @@ export interface Item {
   holdsL?: number;
   /** Moved by movers or a delivery, never by hand: furniture. It goes between spots at a home, and with a move. */
   bulky?: boolean;
+  /** A garment's kind, care and wear (`systems/wardrobe.ts`). */
+  garment?: import('./wardrobe').Garment;
 }
 
 /** The key of a home they live in: an owned home by its id, any other by its kind, town and when it began. */

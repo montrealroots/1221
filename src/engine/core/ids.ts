@@ -22,10 +22,11 @@ export type Id = string;
  * issues is a table the game never fills, so the list holds only the nouns
  * something in this build actually creates. Since 2026-10-01 that is the
  * player, money, the clock, the three logs, documents, journeys, vehicles,
- * land, and possessions and their orders (`systems/items.ts`).
+ * land, possessions and their orders (`systems/items.ts`), and clothes bought and outfits
+ * put together (`systems/clothing.ts`).
  */
 export const ID_NAMESPACES = [
-  'person', 'account', 'txn', 'sched', 'history', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order',
+  'person', 'account', 'txn', 'sched', 'history', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order', 'purchase', 'outfit',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

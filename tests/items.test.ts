@@ -21,7 +21,8 @@ describe('owning a thing, and having it to hand', () => {
   it('moves a save’s bed and sofa into items at the home they live in', () => {
     const sim = life('us-ny-newyork', 'items-migrate');
     sim.player.furniture = { bed: sim.now - 10 * DAY, sofa: sim.now - 5 * DAY };
-    const items = itemsOf(sim.player);
+    // Beside the clothes the life began with.
+    const items = itemsOf(sim.player).filter((i) => !i.garment);
     expect(items.map((i) => i.kind).sort()).toEqual(['furniture:bed', 'furniture:sofa']);
     expect(items.every((i) => i.at.kind === 'home' && i.at.home === homeKeyOf(sim.player.home))).toBe(true);
     expect(items.find((i) => i.kind === 'furniture:bed')!.acquiredAt).toBe(sim.now - 10 * DAY);

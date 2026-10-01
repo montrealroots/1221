@@ -46,6 +46,8 @@ import { drawFromBank, spend } from './household';
 import { heatIndexC, weatherAt, weatherOn } from './weather';
 import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
+import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearTheDay } from './wardrobe';
+import { replaceWornOut, starterWardrobe } from './clothing';
 import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
@@ -167,13 +169,13 @@ export const atHome = (person: Person): boolean => Boolean(person.home && person
  * 25 minutes (the Coin Laundry Association's 2024 survey), so $6.29 a load
  * with a 64-minute dry; a building's machines about $1.50 to $2 a wash and as much to dry
  * (CSC ServiceWorks rooms), $3.50 a load; both at the town's cost of living.
- * SLATE's estimates: two weeks of outfits and seven to a load, a person's
- * one load or two a week (the American Cleaning Institute found 1 to 3 the
- * commonest in 2026), and a rack drying overnight, since no source measures it.
+ * SLATE's estimates: a person's one load or two a week (the American
+ * Cleaning Institute found 1 to 3 the commonest in 2026), and a rack drying
+ * overnight, since no source measures it. Until 2026-10-01 a wardrobe was
+ * fourteen outfits and a load seven of them; it's garments now
+ * (`systems/wardrobe.ts`), twenty-three to a load (`GARMENTS_PER_LOAD`).
  */
 export const LAUNDRY = {
-  outfits: 14,
-  perLoad: 7,
   /** Their own time, in minutes, by how it's done; and when the clothes are wearable after. */
   minutes: { 'in-unit': 20, 'washer-only': 20, building: 30, none: 120 } as const,
   readyHours: { 'in-unit': 2, 'washer-only': 18, building: 2, none: 0 } as const,
@@ -205,10 +207,15 @@ export const CLEANING = { baseMinutes: 60, sqftPerMinute: 40, most: 240, cleaner
 export const WORN_CLOTHES = { hygiene: 55, morale: 1 };
 
 export interface Living {
-  clean: number;
-  dirty: number;
-  /** Clothes washed and drying, and when they're dry. */
-  drying: { count: number; readyAt: Instant }[];
+  /**
+   * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
+   * of loads drying. A save from before keeps them until its wardrobe of
+   * garments is given (`starterWardrobe` in `systems/clothing.ts`), which
+   * wears the dirty ones into it and deletes them.
+   */
+  clean?: number;
+  dirty?: number;
+  drying?: { count: number; readyAt: Instant }[];
   tidy: number;
   /** Renters insurance on what's inside, paid monthly. */
   rentersInsurance?: boolean;
@@ -221,17 +228,13 @@ export interface Living {
 }
 
 export function livingOf(person: Person): Living {
-  person.living ??= { clean: LAUNDRY.outfits, dirty: 0, drying: [], tidy: 80 };
+  person.living ??= { tidy: 80 };
   return person.living;
 }
 
-/** An outfit worn: from the clean, or worn again when there are none. */
-export function wearOutfit(person: Person): boolean {
-  const l = livingOf(person);
-  if (l.clean <= 0) return false;
-  l.clean -= 1;
-  l.dirty += 1;
-  return true;
+/** An outfit worn from their wardrobe (`systems/wardrobe.ts`), or a workout's clothes. */
+export function wearOutfit(sim: Simulation, person: Person, exercise = false): boolean {
+  return exercise ? wearForExercise(sim, person) : wearTheDay(sim, person);
 }
 
 /** How long cleaning the place takes them. */
@@ -251,7 +254,7 @@ export function laundryWay(sim: Simulation, person: Person): Fixtures['laundry']
 
 /** What a laundry costs now, in loads and money. */
 export function laundryCost(sim: Simulation, person: Person): { loads: number; cost: Money } {
-  const loads = Math.ceil(livingOf(person).dirty / LAUNDRY.perLoad);
+  const loads = Math.ceil(washableDirty(sim, person).length / GARMENTS_PER_LOAD);
   const way = laundryWay(sim, person);
   const usd = way === 'building' ? LAUNDRY.buildingUsd : way === 'none' ? LAUNDRY.laundromatUsd : 0;
   // At the prices where it's done: home, or the laundromat where a job has them.
@@ -264,16 +267,12 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
   const way = laundryWay(sim, person);
   const { cost } = laundryCost(sim, person);
   if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
-  const count = l.dirty;
-  l.dirty = 0;
+  // What's dirty and to hand goes in, dry-clean-only kept out (`systems/wardrobe.ts`).
+  const washed = washableDirty(sim, person);
+  const loads = Math.ceil(washed.length / GARMENTS_PER_LOAD);
   // A home's own machines run on its electricity, billed with the month.
-  if (way === 'in-unit' || way === 'washer-only') {
-    const loads = Math.ceil(count / LAUNDRY.perLoad);
-    l.loads = { washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' ? loads : 0) };
-  }
-  const ready = finishedAt + LAUNDRY.readyHours[way] * MS_HOUR;
-  if (ready <= finishedAt) l.clean += count;
-  else l.drying.push({ count, readyAt: ready });
+  if (way === 'in-unit' || way === 'washer-only') l.loads = { washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' ? loads : 0) };
+  washGarments(washed, finishedAt + LAUNDRY.readyHours[way] * MS_HOUR);
   return true;
 }
 
@@ -320,15 +319,6 @@ export function premiumOf(f: Fixtures): number {
   return (1 + p.laundry[f.laundry] + p.cooling[f.cooling] + p.outdoor[f.outdoor] + (f.dishwasher ? p.dishwasher : 0) + p.gym[f.gym] + (f.bathtub ? p.bathtub : 0)) / FIXTURE_TYPICAL;
 }
 
-/** Clothes dry by now back in the wardrobe. */
-export function collectDry(person: Person, at: Instant): void {
-  const l = livingOf(person);
-  const dry = l.drying.filter((d) => d.readyAt <= at);
-  if (dry.length === 0) return;
-  l.clean += dry.reduce((s, d) => s + d.count, 0);
-  l.drying = l.drying.filter((d) => d.readyAt > at);
-}
-
 /**
  * The day's turn of the place, at midnight: an outfit worn, the clothes that
  * dried, the mess a day makes, a cleaner on their day, and what a mess or
@@ -338,13 +328,17 @@ export function livingDay(sim: Simulation, person: Person): void {
   const place = placeOf(sim, person);
   if (!place) return;
   const l = livingOf(person);
-  collectDry(person, sim.now);
+  // A life's own clothes, the first day they have a home to keep them in.
+  starterWardrobe(sim, person);
   const w = person.wellbeing;
   // Left to themselves, somebody with a free day keeps up: the washing when it's nearly all worn, a tidy-up when the
   // place is getting bad, not as well as a proper clean. A day of work doesn't leave the time, and it all waits.
   const free = !busyDay(sim, person);
-  if (free && l.clean <= 1 && l.drying.length === 0 && l.dirty > 0) doLaundry(sim, person, sim.now);
-  if (!wearOutfit(person)) {
+  const lowOnClean = cleanOutfits(sim, person) <= 1 && washableDirty(sim, person).length > 0;
+  if (free && lowOnClean) doLaundry(sim, person, sim.now);
+  // What's worn out, replaced the same way, on a day with time for the shops.
+  if (free) replaceWornOut(sim, person);
+  if (!wearOutfit(sim, person)) {
     w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   }
   // Away, the place stands as they left it: no mess made, and none cleared.

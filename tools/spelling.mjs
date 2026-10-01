@@ -156,7 +156,9 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
  */
 // The airports' table is nothing but real names as OurAirports records them, a seaplane base's and a flight
 // school's among them, each spelled its owner's way (src/engine/content/airports.ts, tools/build-airports.mjs).
-const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts'];
+// The clothes on sale are retailers' products under their exact names and colors, a British shop's
+// spellings among them (src/engine/content/clothingcatalog.ts, tools/build-clothing.mjs).
+const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts', 'src/engine/content/clothingcatalog.ts'];
 const oursToFix = (path) => !NOT_OURS.some((dir) => path.startsWith(dir));
 
 function walk(dir) {

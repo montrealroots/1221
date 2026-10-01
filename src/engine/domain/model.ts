@@ -260,6 +260,13 @@ export interface Person {
   items?: import('../systems/items').Item[];
   /** Things bought to be delivered, and their deliveries (`systems/orders.ts`, from 2026-10-01). */
   orders?: import('../systems/orders').Order[];
+  /** The outfit they chose to wear, and the one they have on (`systems/wardrobe.ts`, from 2026-10-01). */
+  dressed?: string[];
+  wearing?: string[];
+  /** Outfits they've put together and named, the clothes they bought, and when their own wardrobe began (`systems/clothing.ts`, from 2026-10-01). */
+  outfits?: import('../systems/clothing').Outfit[];
+  clothesBought?: import('../systems/clothing').ClothesPurchase[];
+  clothesSince?: number;
   /** A save's bed, sofa and gear from before items, each when it was bought; moved into `items` when first read. */
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
   /** A soup kitchen's or a pantry's help, for a day the bank can't feed them (`systems/foodhelp.ts`, from 2026-10-01). */

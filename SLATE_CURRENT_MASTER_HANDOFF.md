@@ -86,9 +86,10 @@ Done and gated so far:
 - **Stage 2, catalogs** (`bd44d3cb`): `systems/catalog.ts`'s `arrange`, one builder per list in `systems/catalogs.ts`, and `ui/components/Catalog.tsx`. Every buy or book list is cheapest first, on a labeled basis.
 - **Navigation** (`34d85a3f`): the rail's Pinned and Recent groups, and a page pin.
 
+- **Stage 3, clothing, in part** (the commit after `092fd918`): 1,198 real products from 74 retailers in America, Britain, Ireland, Canada and Mexico (`content/clothingcatalog.ts`, rebuilt by `tools/build-clothing.mjs` from the four `research-clothing-*.json` files). The garment is read from its name's head noun. Buying is in a store where SLATE has its address, or online at the retailer's fee, threshold and working days (`systems/clothing.ts`). New York's and Massachusetts's clothing exemptions are applied by item. Returns are unworn, inside the window. Dry cleaning is at real shops' lists (`content/garmentservices.ts`). Outfits are built from what's to hand, and worn-out garments are replaced on a free day. Garments are worn and washed one by one (`systems/wardrobe.ts`), replacing the 14-outfit counter, which a save from before wears into its starter wardrobe. Screen: Clothes, from Home's Home panel. Gate: 157 files, 2,180 tests; 43 mutations, all killed in the end. **Not yet:** alterations and fit (no body to fit, `docs/UNBITTEN.md`), size conversion, repair, resale, and packing into luggage.
+
 In progress:
-- **Stage 3, clothing.** Four research agents were writing `research-clothing-us.json`, `-ukie.json`, `-camx.json` and `-services.json` to the session scratchpad. Copy them to `docs/research/world/`. The design is in the backlog: garments become items; the 14-outfit laundry counter in `systems/dwelling.ts` is replaced by real garments, with a starter wardrobe of real basics at migration.
-- **Stage 6, hotels.** `research-hotels.json` was being written.
+- **Stage 6, hotels.** `research-hotels.json` (43 hotels, 162 rooms) has no dated rates: booking engines render them in JavaScript.
 
 Standing memories that bind this work: catalogs cheapest first; acting is the only career, with hired services allowed; "unlimited" means breadth of options.
 

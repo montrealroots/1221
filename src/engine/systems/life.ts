@@ -33,6 +33,7 @@ import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
+import { cleanOutfits, washableDirty } from './wardrobe';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit,
@@ -409,7 +410,7 @@ export function registerLife(sim: Simulation): void {
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
-      if (action === 'exercise' || action === 'swim' || action === 'ride') wearOutfit(person);
+      if (action === 'exercise' || action === 'swim' || action === 'ride') wearOutfit(s, person, true);
       const before = { ...person.wellbeing };
       // Eaten out where there's no kitchen: a restaurant's meal too.
       if (action === 'eat' && !cooks(s, person)) eatsOut(person);
@@ -558,7 +559,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'outside') { const no = outsideRefusal(sim, person); if (no) return no; }
   if (action === 'boat') { const no = outingRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water'); if (no) return no; }
   if (action === 'charter') { const no = charterRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water'); if (no) return no; }
-  if (action === 'laundry' && livingOf(person).dirty === 0) return 'Your clothes are all clean.';
+  if (action === 'laundry' && washableDirty(sim, person).length === 0) return 'Your clothes are all clean.';
   if (action === 'laundry' && !person.home) return 'You have nowhere to keep clothes.';
   if (action === 'tidy' && !(atHome(person) && place?.keeps)) return 'It isn’t your place to clean.';
   if (action === 'tidy' && livingOf(person).tidy >= 90) return 'The place is clean.';
@@ -875,7 +876,7 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // their share of the day's three on top of what a broke day scrapes together, SLATE's reading.
     else { eatWhatThereIs(w); eatsShort(person, Math.min(1, BODY.shortDay + (person.foodHelp?.today ?? 0) / 3)); }
     // Out of clean clothes, the morning starts less fresh (`systems/dwelling.ts`).
-    const fresh = person.living && person.living.clean <= 0 ? WORN_CLOTHES.hygiene : 82;
+    const fresh = cleanOutfits(sim, person) <= 0 ? WORN_CLOTHES.hygiene : 82;
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, fresh), 0, 100);
   }
 }

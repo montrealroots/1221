@@ -385,7 +385,7 @@ export function owe(sim: Simulation, person: Person, amount: Money, memo: string
  * anything not rent or bills went to Food, so union dues, health premiums,
  * tax paid and the work's costs all read as food.
  */
-const EXPENSE_LINE: Record<string, string> = { rent: 'Rent', bills: 'Bills', food: 'Food', dues: 'Union Dues', health: 'Medical Care', tax: 'Tax Paid', career: 'Work Costs', school: 'School', documents: 'Documents And Their Fees', travel: 'Travel', vehicle: 'Vehicles', land: 'Land', construction: 'Building A House' };
+const EXPENSE_LINE: Record<string, string> = { rent: 'Rent', bills: 'Bills', food: 'Food', dues: 'Union Dues', health: 'Medical Care', tax: 'Tax Paid', career: 'Work Costs', school: 'School', documents: 'Documents And Their Fees', travel: 'Travel', vehicle: 'Vehicles', land: 'Land', construction: 'Building A House', clothing: 'Clothing' };
 export const expenseFor = (category: string) => EXPENSE_LINE[category] ?? 'Other';
 
 setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amount) => chargeReturned(sim, person, amount) });

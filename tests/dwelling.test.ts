@@ -15,6 +15,7 @@ import type { Fixtures } from '@/engine/content/homes';
 import { depositFor } from '@/engine/systems/household';
 import { listingsIn } from '@/engine/systems/homes';
 import { LAUNDRY, TIDY, cleanerCost, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
+import { cleanOutfits, garmentsOf, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { applyLookingAfter, lookAfterRefusal } from '@/engine/systems/life';
 
 function save(seed: string, city = 'us-ny-newyork', month = 1): Simulation {
@@ -69,35 +70,37 @@ describe('clothes', () => {
     for (const laundry of ['building', 'washer-only', 'none'] as const) {
       const sim = save(`laundry-${laundry}`);
       fitted(sim, { laundry });
-      sim.player.living = { clean: 3, dirty: 11, drying: [], tidy: 80 };
+      // Eleven days worn from the wardrobe a life begins with.
+      for (let i = 0; i < 11; i += 1) wearTheDay(sim, sim.player);
+      const washing = washableDirty(sim, sim.player);
+      expect(washing.length).toBeGreaterThan(0);
       const bank = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
       const before = bank();
       const start = sim.now;
       sim.must({ kind: 'life.look_after', payload: { action: 'laundry' } });
       expect(sim.now - start).toBe(LAUNDRY.minutes[laundry] * 60_000);
-      const l = livingOf(sim.player);
-      if (laundry === 'none') {
-        expect(l.clean).toBe(14);
-      } else {
-        expect(l.drying[0]!.readyAt - sim.now).toBe(LAUNDRY.readyHours[laundry] * MS_HOUR);
-      }
+      expect(washableDirty(sim, sim.player)).toHaveLength(0);
+      for (const g of washing) expect(g.garment.dryUntil! - sim.now).toBe(LAUNDRY.readyHours[laundry] * MS_HOUR);
+      // The laundromat's dryers have it dry when they're done; a rack and a building's machines take their hours.
+      expect(cleanOutfits(sim, sim.player) > 3).toBe(laundry === 'none');
       expect(before - bank() > 0).toBe(laundry !== 'washer-only');
     }
   });
 
   it('run out on working days, and a day without clean clothes weighs on the mood', () => {
-    const day = (clean: number) => {
+    const day = (clean: boolean) => {
       const sim = save('worn');
-      sim.player.living = { clean, dirty: 14 - clean, drying: [], tidy: 90 };
+      sim.player.living = { tidy: 90 };
+      if (!clean) for (const g of garmentsOf(sim.player)) if (g.garment.slot === 'underwear') g.garment.dirty = true;
       // A long day of work behind them, so there was no time for the washing.
       sim.onSchedule('test.work', () => undefined);
       sim.schedule({ at: sim.now + 60_000, kind: 'test.work', label: 'A Long Day', category: 'career', requiresPlayer: true, durationMinutes: 600, payload: {} });
       sim.advanceBy(MS_DAY);
       return sim;
     };
-    const worn = day(0);
-    const fresh = day(14);
-    expect(livingOf(worn.player).clean).toBe(0);
+    const worn = day(false);
+    const fresh = day(true);
+    expect(cleanOutfits(worn, worn.player)).toBe(0);
     expect(fresh.player.wellbeing.morale - worn.player.wellbeing.morale).toBeGreaterThan(0.5);
     expect(fresh.player.wellbeing.hygiene).toBeGreaterThan(worn.player.wellbeing.hygiene);
   });

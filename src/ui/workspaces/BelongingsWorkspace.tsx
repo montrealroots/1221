@@ -29,7 +29,7 @@ function placesNow(sim: Parameters<typeof reachable>[0], person: Parameters<type
 }
 
 /** Words for a place, as a heading. */
-const titled = (words: string) => words.replace(/(^|[s,]+)(w)/g, (_m, sep: string, c: string) => sep + c.toUpperCase());
+const titled = (words: string) => words.replace(/(^|[\s,]+)(\w)/g, (_m, sep: string, c: string) => sep + c.toUpperCase());
 
 export function BelongingsWorkspace() {
   const { sim, run, toast } = useGame();

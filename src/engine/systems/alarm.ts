@@ -77,7 +77,7 @@ export function registerAlarm(sim: Simulation): void {
     const a = ALARM[countryOf(person)]!;
     const kit = inSave(s, a.kit, a.currency);
     if (!payFromBank(s, person, kit, 'A burglar alarm, its kit', 'household')) throw new CommandError(`${formatMoney(kit, saveCurrency(s.universe))} is more than the bank can cover.`);
-    if (owned) owned.alarm = true; else person.living = { ...(person.living ?? { clean: 7, dirty: 0, drying: [], tidy: 80 }), alarm: true };
+    if (owned) owned.alarm = true; else person.living = { ...(person.living ?? { tidy: 80 }), alarm: true };
     return { paid: kit };
   });
 }

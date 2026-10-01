@@ -12,6 +12,7 @@
 import { describe, expect, it } from 'vitest';
 import { injuryOf } from '@/engine/systems/injury';
 import { quickSave } from '@/engine';
+import { wearTheDay } from '@/engine/systems/wardrobe';
 import type { Person, Personality } from '@/engine/domain/model';
 import {
   LOOKING_AFTER, applyLookingAfter, freshWellbeing, lookAfterRefusal, mendsTo, minutesFor, readiness, type LookAfter,
@@ -41,7 +42,8 @@ describe('looking after yourself', () => {
       const w = sim.player.wellbeing;
       w.nourishment = 40; w.hygiene = 50; w.energy = 70;
       // Clothes to wash and a place to clean.
-      sim.player.living = { clean: 7, dirty: 7, drying: [], tidy: 30 };
+      sim.player.living = { tidy: 30 };
+      for (let i = 0; i < 7; i += 1) wearTheDay(sim, sim.player);
       // A bath, a pool, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
       // A boat is its owner's (`systems/boats.ts`, tested in `tests/boats.test.ts`).
       // A bicycle and an ATV are their owner's (`systems/outings.ts`, tested in `tests/outings.test.ts`).

@@ -55,6 +55,17 @@ part the tool cannot see.
 
 ## Dead: declared, and nothing reads it
 
+- **A garment's size is chosen, checked and kept, and fits nobody.** Since
+  2026-10-01 clothes are bought in a size the product comes in
+  (`systems/clothing.ts`), and the size is kept on the garment. SLATE keeps
+  no body for it to fit: no measurements, and nothing that reads a fit, so a
+  size wrong for them is worn the same as a right one. The same gap is why
+  a tailor's alterations aren't built, though their prices are researched
+  (`research-clothing-services.json`): a hem changes a fit nothing reads.
+  The fix is a body's measurements, drawn as NHANES's are spread (that
+  research is in the same file), and a fit that a garment worn too small
+  wears out faster, and an audition's look reads.
+
 - **Rent is published in twenty places, and estimated everywhere else.** (Nineteen until New Haven's was added, `c5616e1f`, 2026-09-26; this said nineteen until 2026-10-01.)
   The atlas put a one-bedroom in Mosfellsbær at $3,424 a month, about what it
   says for New York, because its formula stacks Iceland's price level on a

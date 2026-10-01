@@ -41,7 +41,8 @@ import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
-import { LAUNDRY, TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
+import { TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
+import { cleanOutfits, dryCleanDirty, garmentsOf, washableDirty } from '@/engine/systems/wardrobe';
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
 import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
 import { deviceCost, securityRefusal, type Device } from '@/engine/systems/homesecurity';
@@ -541,6 +542,9 @@ export function Home() {
               <Gated feature="ui.belongings" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
                 Belongings
               </Gated>
+              <Gated feature="ui.clothes" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/clothes', 'Clothes')}>
+                Clothes
+              </Gated>
               <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
                 Homes
               </Gated>
@@ -775,6 +779,13 @@ function YourPlace({ cur }: { cur: string }) {
   const place = useWorld((s) => placeOf(s, s.player));
   const living = useWorld((s) => ({ ...livingOf(s.player) }));
   const cleaner = useWorld((s) => cleanerCost(s, s.player));
+  // The wardrobe's state (`systems/wardrobe.ts`): whole clean outfits to hand, and what's in the wash, drying or for the dry cleaner.
+  const clothes = useWorld((s) => ({
+    outfits: cleanOutfits(s, s.player),
+    toWash: washableDirty(s, s.player).length,
+    toDryClean: dryCleanDirty(s, s.player).length,
+    drying: garmentsOf(s.player).filter((g) => (g.garment.dryUntil ?? 0) > s.now).length,
+  }));
   const premium = useWorld((s) => rentersPremium(s, s.player));
   const hasAlarm = useWorld((s) => alarmed(s.player));
   const noAlarm = useWorld((s) => alarmRefusal(s.player));
@@ -800,13 +811,12 @@ function YourPlace({ cur }: { cur: string }) {
   const f = place.fixtures;
   const has = [f.bathtub ? 'Bath And Shower' : 'Shower', f.dishwasher ? 'Dishwasher' : 'No Dishwasher', LAUNDRY_LABEL[f.laundry], COOLING_LABEL[f.cooling], OUTDOOR_LABEL[f.outdoor], GYM_LABEL[f.gym]];
   const kind = home.kind === 'sofa' ? 'A friend’s place' : place.shared ? `A room in a shared ${typeLabel(place.type, country, true).toLowerCase()}` : typeLabel(place.type, country, !place.owned);
-  const drying = living.drying.reduce((sum, d) => sum + d.count, 0);
   return (
     <div className="col gap-2 small">
       <div>{kind} · {sizeText(place.size, country)}</div>
       <div className="muted">{has.join(' · ')}</div>
       <div className="stats">
-        <Stat label="Clean Clothes" value={`${living.clean} Of ${LAUNDRY.outfits}`} note={drying > 0 ? `${drying} drying` : living.dirty > 0 ? `${living.dirty} to wash` : 'All washed'} tone={living.clean <= 2 ? 'warning' : undefined} />
+        <Stat label="Clean Outfits" value={`${clothes.outfits}`} note={clothes.drying > 0 ? `${clothes.drying} drying` : clothes.toWash > 0 ? `${clothes.toWash} to wash` : clothes.toDryClean > 0 ? `${clothes.toDryClean} for the dry cleaner` : 'All washed'} tone={clothes.outfits <= 2 ? 'warning' : undefined} />
         {place.keeps && <Stat label="Tidy" value={`${Math.round(living.tidy)}`} note={living.tidy < TIDY.messy ? 'A mess, and it weighs on you' : living.cleaner ? 'A cleaner comes weekly' : 'Out of a hundred'} tone={living.tidy < TIDY.messy ? 'warning' : undefined} />}
       </div>
       {place.keeps && (home.kind === 'own' || home.kind === 'shared') && (

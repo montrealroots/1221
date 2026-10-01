@@ -225,6 +225,7 @@ Requirements 44, 46, 47 and 48.
 
 | Stage | Status | Commit |
 |---|---|---|
-| 1 Possessions | DONE: items, places, spots, containers, orders, moves, migration, Belongings screen | (this commit) |
-| 2 Catalogs | DONE for every existing list: cars and every vehicle kind, homes, land, furniture, appliances, renovations, mods, stays, rentals. Departures stay by hour, each a single fare. Lists added later use the same machinery. | (this commit) |
-| 3–15 | MISSING or PARTIAL as above | |
+| 1 Possessions | DONE: items, places, spots, containers, orders, moves, migration, Belongings screen | 0c9a3415 |
+| 2 Catalogs | DONE for every existing list: cars and every vehicle kind, homes, land, furniture, appliances, renovations, mods, stays, rentals. Departures stay by hour, each a single fare. Lists added later use the same machinery. | bd44d3cb |
+| 3 Clothing | PARTIAL. Done: 1,198 real products from 74 retailers in America, Britain, Ireland, Canada and Mexico, with their prices, sizes and colors, the source and date on each (`content/clothingcatalog.ts`, built by `tools/build-clothing.mjs`); buying in a store or online at each retailer's fee, threshold and days; returns inside its window, unworn; garments worn and washed one by one, replacing the clean-clothes count; dry cleaning at real shops' prices; outfits from what's to hand; a starter wardrobe; the Clothes screen. Not yet: alterations and fit (no body to fit, `docs/UNBITTEN.md`), sizing conversion, repair, resale, packing into luggage. | (this commit) |
+| 4–15 | MISSING or PARTIAL as above | |

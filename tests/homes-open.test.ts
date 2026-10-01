@@ -20,6 +20,7 @@ import {
   refinanceOffer, type OwnedHome,
 } from '@/engine/systems/homes';
 import { BELONGINGS, MACHINES, belongingsDay, coveredInside, doLaundry, machineUsd, premiumOf } from '@/engine/systems/dwelling';
+import { GARMENTS_PER_LOAD, garmentsOf, washableDirty } from '@/engine/systems/wardrobe';
 
 function save(seed: string, city = 'us-ct-newhaven'): Simulation {
   return quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -156,7 +157,10 @@ describe('what a home has inside', () => {
     expect(billsFactor('us-ny-newyork', 1, 'none')).toBeCloseTo(billsFactor('us-ny-newyork', 1, 'central'), 6);
     const sim = save('machines');
     sim.player.home!.unit!.fixtures = { ...sim.player.home!.unit!.fixtures, laundry: 'in-unit' };
-    sim.player.living = { clean: 0, dirty: 14, drying: [], tidy: 80 };
+    // Everything washable in the wash: two loads of twenty-three garments.
+    sim.player.living = { tidy: 80 };
+    for (const g of garmentsOf(sim.player)) if (g.garment.slot !== 'shoes') g.garment.dirty = true;
+    expect(Math.ceil(washableDirty(sim, sim.player).length / GARMENTS_PER_LOAD)).toBe(2);
     doLaundry(sim, sim.player, sim.now);
     expect(machineUsd(sim.player)).toBeCloseTo(2 * (MACHINES.washerUsd + MACHINES.dryerUsd), 6);
     // A wash is its motor and the hot water it draws, ten times the motor’s 0.23 kWh (ENERGY STAR’s 90%), at 18.19 cents.
