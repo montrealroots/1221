@@ -109,7 +109,29 @@ Done and gated so far:
 - **Stage 7, done** (`50743fa0`): Run Errands, a trip of up to eight stops on foot or by car with somebody along; legs at the NHTS's and NTS's average trips and TomTom's traffic; fuel at a named station; meters by the minute; errand kilometers off the month's driving (`systems/trips.ts`).
 - **Stage 10, done** (`171ef3cc`, `080fa305`): a partner's own pay from their country's earnings; bills split evenly or by income; marriage, divorce and a married person's tax in each country (`systems/marriage.ts`); children, from conception at PRESTO's odds to eighteen, with the birth's cost, leave pay, the cost of raising and each country's child benefit and America's credit (`systems/children.ts`); Tinder and Hinge (`systems/dating.ts`). Not kept: adoption and surrogacy, custody, caring for parents.
 - **Gate at `080fa305`:** 2,343 tests, exit 0.
-- **Still to finish, in order:** Stage 3 (alterations, sizes, repair, resale), 6 (extras, check-in), 8 (servicing, customization), 9 (waits, referrals, pharmacy, hospital), 11 (separate utility bills, plans, hired services), 12 (rooms, finishes, fields, the building process), 13 (negotiation), 15 (walkthroughs), then 14 with the owner's key.
+- **Stage 3, done but for three things** (`0a72e420`): clothes fit the weight they were bought for, within a size's step; one grown out of is bought again; one too big is taken in at one of 11 named tailors at its price and days (`systems/tailoring.ts`). Not kept: the size label and its conversion, repair, resale.
+- **Stage 6, done but for requests** (`178f9357`): a named hotel's own check-out hour, its deposit held from arrival to check-out, its parking, a night more at its rate, and the folio on Travel.
+- **Stage 8, done but for four things** (`2e223352`, `5db02ce1`, `a8a1401f`):
+  - A wrap at three named shops, with cover changed after buying and Britain's £53.25 fee.
+  - Servicing by each maker's interval, at each market's chain price. A service a month or 1,000 km overdue is missed for good, voiding the warranty and taking 10% off a British car's worth.
+  - The maker's warranty: a fault repaired free at a dealer of the make.
+  - Collisions at ISO/Verisk's 4.16 a year in 100 cars, at each place's average claim. Full cover pays over a $500 deductible, and damage past the car's worth writes it off (`systems/carcare.ts`, decider `vehicle.collision`).
+  - While the car is in the shop: the dealer's published loaner, or a rental on the airport desk's terms, back the hour the car is ready, driving errands and Travel's By Rental (`systems/standin.ts`).
+  - Not kept: upholstery (no named shop in the towns), audio (no head-unit price kept), wheel fitment (alloys are sold fitted to their car), labor rates (one shop posts them).
+- **Stage 9, more** (`0a9c82bd`, `333369e4`):
+  - An emergency keeps you the department's median hours.
+  - A US pharmacy chosen fills generics at its own cash price.
+  - Travel insurance at each home market's price (`systems/travelinsurance.ts`):
+    - A trip missed or called off in hospital or laid up is paid back, to its limit less its excess.
+    - Care in another country is the insurer's.
+    - Uninsured, a visitor in America pays America's own price, less OHIP's out-of-country day rates for an Ontarian.
+  - Not kept: booking with waits and specialist referrals. GP waits aren't published in Ireland, Canada or Mexico City, and none of SLATE's conditions maps to a specialist without inventing one. A visitor's price outside America isn't kept either.
+- **Stage 11, more** (`6e76bd18`, `bcaf242f`):
+  - In the eight towns, the internet and phone are billed by named providers (`systems/telecom.ts`). An offer runs its months, then its published standard price; a room pays half the internet; switching owes a contract's months left; the phone is the country's cheapest plan, Mint's a year ahead. The atlas's telecom estimate comes out of the bills there.
+  - A letting agent in six towns, at its published fees (`systems/propertymanagers.ts`). Let yourself, a tenant moves in only while you're in town; an agent lets it while you're away.
+  - Not kept: electricity, gas and water by tariff (SLATE keeps no kWh or cubic meters), gardeners, chauffeurs, instructors and trades (nothing yet reads what they'd change).
+- **Gate at `bcaf242f`:** 2,390 tests, exit 0.
+- **Still to finish, in order:** 12 (rooms, finishes, fields, the building process: `research-construction-process.json`, `research-facilities.json`), 13 (negotiation over scale), 15 (walkthroughs complete), then 14 with the owner's key. The lives haven't been replayed since `1bd7dbf8`; the care-abroad and telecom changes move money in every life and are worth a replay.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.
 - **Stage 15, in part** (`71e9dbb5`, `dbfe58bd`): `docs/DEVMAP.md`, built and checked by `tools/devmap.mjs` in the gate; `docs/WALKTHROUGHS.md`; the rail's search; panel actions wrap inside their card.
