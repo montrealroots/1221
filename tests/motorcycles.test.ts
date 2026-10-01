@@ -179,12 +179,72 @@ describe('the motorcycle license', () => {
     expect(stepRefusal(sim, sim.player, 'cbt', 'motorcycle')).toBeUndefined();
   });
 
-  it('adds British Columbia’s Class 6 to a Class 5 or 7 license only', () => {
+  it('adds British Columbia’s Class 6 to a Class 5 or 7 license, and puts a new rider through Class 8', () => {
     const sim = life('ca-bc-vancouver', 'moto-bc');
     sim.player.documents = [];
-    expect(stepRefusal(sim, sim.player, 'knowledge', 'motorcycle')).toMatch(/Class 8/);
+    expect(stepRefusal(sim, sim.player, 'knowledge', 'motorcycle')).toMatch(/isn’t a step/);
+    expect(stepRefusal(sim, sim.player, 'knowledge8', 'motorcycle')).toBeUndefined();
+    // A learner's car license, not driven alone on, is no Class 5 or 7.
+    sim.player.documents = [{ ...license('ca-bc'), alone: false }];
+    expect(stepRefusal(sim, sim.player, 'knowledge8', 'motorcycle')).toBeUndefined();
     sim.player.documents = [license('ca-bc')];
     expect(stepRefusal(sim, sim.player, 'knowledge', 'motorcycle')).toBeUndefined();
+    expect(stepRefusal(sim, sim.player, 'knowledge8', 'motorcycle')).toMatch(/isn’t a step/);
+  });
+
+  it('waits Class 8’s thirty days for the skills test, twelve months for the road test, and two years a novice for Class 6', () => {
+    const sim = life('ca-bc-vancouver', 'moto-bc8');
+    sim.player.documents = [];
+    const done = (days: number) => sim.now - days * MS_DAY;
+    sim.player.motoLicensing = { jurisdiction: 'ca-bc', done: { knowledge8: done(29) }, attempts: {}, failedAt: {}, used: {} };
+    expect(stepRefusal(sim, sim.player, 'skills8', 'motorcycle')).toMatch(/30 days after/);
+    sim.player.motoLicensing.done.knowledge8 = done(31);
+    expect(stepRefusal(sim, sim.player, 'skills8', 'motorcycle')).toBeUndefined();
+    sim.player.motoLicensing.done.skills8 = done(1);
+    expect(stepRefusal(sim, sim.player, 'road8', 'motorcycle')).toMatch(/365 days after/);
+    sim.player.motoLicensing.done.knowledge8 = done(366);
+    expect(stepRefusal(sim, sim.player, 'road8', 'motorcycle')).toBeUndefined();
+    expect(stepRefusal(sim, sim.player, 'road6', 'motorcycle')).toMatch(/Class 8 Road Test first/);
+    sim.player.motoLicensing.done.road8 = done(729);
+    expect(stepRefusal(sim, sim.player, 'road6', 'motorcycle')).toMatch(/730 days after/);
+    sim.player.motoLicensing.done.road8 = done(731);
+    expect(stepRefusal(sim, sim.player, 'road6', 'motorcycle')).toBeUndefined();
+  });
+
+  it('takes New York’s rider course or California’s in place of the test, after the permit or the knowledge test', () => {
+    const ny = life('us-ny-newyork', 'moto-brc');
+    ny.player.documents = [license('us-ny')];
+    expect(stepRefusal(ny, ny.player, 'brc', 'motorcycle')).toMatch(/Motorcycle Permit Test first/);
+    ny.player.motoLicensing = { jurisdiction: 'us-ny', done: { permit: ny.now - MS_DAY }, attempts: {}, failedAt: {}, used: {} };
+    expect(stepRefusal(ny, ny.player, 'road', 'motorcycle')).toBeUndefined();
+    const r = ny.execute({ kind: 'documents.license_step', payload: { step: 'brc', track: 'motorcycle' } });
+    expect(r.ok, r.error).toBe(true);
+    ny.advanceBy(30 * MS_DAY);
+    const m = documentsOf(ny.player).find((d) => d.vehicleClass === 'motorcycle' && d.stage === 'full');
+    expect(m?.name).toBe('Class M Motorcycle License');
+    // The road test is then not asked.
+    expect(stepRefusal(ny, ny.player, 'road', 'motorcycle')).toMatch(/hold/);
+    const ca = life('us-ca-losangeles', 'moto-cmsp');
+    ca.player.documents = [];
+    ca.player.motoLicensing = { jurisdiction: 'us-ca', done: { application: ca.now - MS_DAY }, attempts: {}, failedAt: {}, used: {} };
+    expect(stepRefusal(ca, ca.player, 'cmsp', 'motorcycle')).toMatch(/Motorcycle Knowledge Test first/);
+    ca.player.motoLicensing.done.knowledge = ca.now - MS_DAY;
+    expect(stepRefusal(ca, ca.player, 'cmsp', 'motorcycle')).toBeUndefined();
+  });
+
+  it('lets a British Columbia driver ride a 50cc moped on the car license, and nobody in New York', () => {
+    const p = life('ca-bc-vancouver', 'moped').player;
+    const cc = (id: string) => modelById(id)!.cc;
+    p.documents = [license('ca-bc')];
+    expect(mayDrive(p, 'ca-bc-vancouver', at, at, 'motorcycle', cc('ca-honda-giorno')).ok).toBe(true);
+    expect(mayDrive(p, 'ca-bc-vancouver', at, at, 'motorcycle', cc('ca-yamaha-bws-125')).why).toMatch(/motorcycle license/);
+    p.documents = [{ ...license('ca-bc'), alone: false }];
+    expect(mayDrive(p, 'ca-bc-vancouver', at, at, 'motorcycle', cc('ca-honda-giorno')).ok).toBe(false);
+    // A car license from elsewhere carries none.
+    p.documents = [license('ca-on')];
+    expect(mayDrive(p, 'ca-bc-vancouver', at, at, 'motorcycle', cc('ca-honda-giorno')).ok).toBe(false);
+    p.documents = [license('us-ny')];
+    expect(mayDrive(p, 'us-ny-newyork', at, at, 'motorcycle', cc('us-honda-metropolitan')).why).toMatch(/motorcycle license/);
   });
 
   it('renews with the car license, the class on the same card', () => {

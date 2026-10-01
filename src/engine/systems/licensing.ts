@@ -88,6 +88,9 @@ export function applies(step: PathStep, person: Person, at: Instant): boolean {
   if (step.until && day >= step.until) return false;
   // A step for someone without the car license it stands in for, as Britain's provisional license.
   if (step.unlessCarLicense && documentsOf(person).some((d) => d.kind === 'license' && classOf(d) === 'car' && d.issuer === step.unlessCarLicense && inForce(d, at))) return false;
+  const drives = (issuer: string) => documentsOf(person).some((d) => d.kind === 'license' && classOf(d) === 'car' && d.issuer === issuer && inForce(d, at) && d.alone !== false);
+  if (step.withCarLicense && !drives(step.withCarLicense)) return false;
+  if (step.withoutCarLicense && drives(step.withoutCarLicense)) return false;
   const age = ageAt(person, at);
   if (step.under !== undefined && age >= step.under) return false;
   if (step.over !== undefined && age < step.over) return false;

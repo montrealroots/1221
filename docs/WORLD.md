@@ -357,24 +357,22 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
   - Ireland, Ontario and Mexico City publish only ranges, so their middles are taken, as SLATE's estimates.
   - Liability-only cover is offered only where it's published.
 - **The motorcycle license** (`content/motorcyclepaths.ts`, a second track in `systems/licensing.ts`): each place's own path, run by the car's machinery with its own record. A car license doesn't ride a motorcycle, and the class is on the same card: renewing the car license carries it.
-  - New York: the permit test and the road test.
+  - New York: the permit test, then the road test or the MSF Basic RiderCourse ($321 at Mohawk Valley Community College; the DMV sets no price).
   - Connecticut: the knowledge test, the permit, the novice course and the endorsement.
-  - California at 21 and over: the application, the knowledge test and the skills test.
+  - California at 21 and over: the application, the knowledge test, then the skills test or a CMSP course ($425 at Motorcycle Rider Education Corp), whose DL 389 waives it.
   - Britain, direct access to A at twenty-four: CBT, theory, and modules 1 and 2. A British car licence stands in for the provisional licence.
   - Ireland: theory, the permit, IBT and the test.
   - Ontario: M1, M2 and M, with their waits.
-  - British Columbia: Class 6 added to a Class 5 or 7.
+  - British Columbia: Class 6 added to a Class 5 or 7. A new rider without one takes Class 8 (ICBC's MV2023, revision 03/2026). That's the knowledge test; the skills test after 30 days, which lifts the supervisor and the 60 km/h limit; the Class 8 road test after twelve months ($35, and $75 for the novice license); and the Class 6 road test after 24 months as a novice.
   - Mexico City: the CONOCER certificate and the A1 license.
 - **Riding** (`crashChance` in `systems/driving.ts`): a month's riding and a journey's are injury-drawn at NHTSA's 391 injured per 100 million miles against a car occupant's 86 (Traffic Safety Facts, 2024 data), 4.5 times. Fuel is the maker's economy where published (Honda's, Kawasaki's, Royal Enfield's, Vespa's), and the mean of those for a model whose maker publishes none. A motorcycle whose owner holds no motorcycle class isn't ridden. Britain's MOT is kept for a motorcycle at its £29.65; elsewhere a motorcycle's test isn't researched and none is kept.
+- **A moped on a car license** (`MOPED_ON_CAR` in `systems/documents.ts`): in British Columbia a full-privilege Class 5 or 7 of its own rides a scooter of 50cc or under, such as the Honda Giorno; ICBC's 70 km/h and 95 kg limits aren't kept, as SLATE holds neither figure. Nowhere else, each for a reason: New York's Class D covers only a moped held to 30 mph, a speed SLATE doesn't hold. California's and Ontario's car licenses cover none. Britain's and Ireland's cover one only if issued before February 2001 and October 2006, and no life beginning at twenty-four holds one.
+- **Britain's and Ireland's progressive routes** to category A (A2 from 19 and 18, then A after two years) are for riders under twenty-four. A life begins at twenty-four, where direct access is open and shorter, so the routes are never the one taken. That is the law applied, not a gap.
 - Not kept:
-  - The progressive routes to category A in Britain and Ireland.
-  - New York's MSF course in place of the road test, and California's CHP course in place of the skills test.
-  - British Columbia's Class 8 program for a new rider.
-  - A moped ridden on a car license where a place allows it.
   - A motorcycle's own depreciation, which no source publishes; the car curve is used.
   - A rider's deaths above the life table's, until later on 2026-09-30 (`riderDeath`, `research-vehicles5.json`). Now a month's riding adds the motorcyclist's death rate above a car occupant's, a kilometer. America's NHTSA, 2024: 28.00 per 100 million vehicle miles against 1.05. Britain's DfT: 66.3 per billion passenger kilometers against 1.0. Canada and Mexico take America's, and Ireland Britain's. Decider `driving.rider_death`; 5 mutations, all killed.
 
-Evidence: `tests/motorcycles.test.ts` (17). 23 mutations, all killed in the end. Six first survived, and each needed a test:
+The courses, Class 8 and the moped were built later on 2026-09-30. Evidence: `tests/motorcycles.test.ts` (21, four for these). Of 15 mutations, 11 were killed and 4 survived. Three of the survivors were guards a later check already settled: a learner's car license, which the car check refuses anyway; holding a motorcycle license as well; and the road test's named need, which is the step before it anyway. Those three guards were removed. The fourth survivor, the moped's own-province rule, got a test. Before them, `tests/motorcycles.test.ts` (17). 23 mutations, all killed in the end. Six first survived, and each needed a test:
 - The mean an unrated bike burns, which the first test read back from the code.
 - A bike's trade-in lowering New York's tax.
 - The motorcycle record surviving its scheduled test.

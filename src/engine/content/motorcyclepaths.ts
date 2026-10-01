@@ -7,7 +7,16 @@
  *
  * The path is an adult's at twenty-four and over, the age a life begins.
  * Britain and Ireland give category A, unrestricted, directly from
- * twenty-four; the progressive routes through A1 and A2 aren't kept. A test
+ * twenty-four. Their progressive routes through A1 and A2 are for younger
+ * riders, from 2026-09-30 (`research-vehicles5.json`): Britain's A2 from 19,
+ * then A from 21 after two years on it; Ireland's A2 from 18, then A from 20
+ * after two years on it. A life begins at twenty-four, where direct access is
+ * open to it and shorter, so it never takes either.
+ *
+ * A training course that stands in for a test, from the same date: New
+ * York's MSF Basic RiderCourse for its road test, and California's CMSP
+ * course for its skills test. Each is a second way past the permit, beside
+ * the test, and the first done ends the path. A test
  * whose pass rate nobody publishes is passed at SLATE's mean of those that
  * do, and says so. A course whose price no authority sets is at a named
  * school's published price, or the middle of a published range, and says so.
@@ -18,7 +27,7 @@ import type { LicensePath } from './licensepaths';
 export const MOTORCYCLE_PATHS: Readonly<Record<string, LicensePath>> = {
   'us-ny': {
     currency: 'USD',
-    note: 'Adding class M to a New York license: the motorcycle permit test, then the road test on your own motorcycle, a licensed driver following in a car. Taking the MSF Basic RiderCourse instead of the road test isn’t kept.',
+    note: 'Adding class M to a New York license: the motorcycle permit test, then the road test on your own motorcycle, a licensed driver following in a car. Or, in place of the road test, the MSF Basic RiderCourse at an approved provider.',
     steps: [
       { id: 'permit', kind: 'test', name: 'Motorcycle Permit Test', fee: 68.75, minutes: 60, pass: 'moto-theory', retakeDays: 1, retakeFee: 0,
         grants: { stage: 'learner', name: 'Motorcycle Learner Permit', years: 5, yearsEstimated: true, alone: false },
@@ -26,6 +35,9 @@ export const MOTORCYCLE_PATHS: Readonly<Record<string, LicensePath>> = {
       { id: 'road', kind: 'test', name: 'Motorcycle Road Test', fee: 0, minutes: 45, pass: 'moto-road', retakeDays: 14, retakeFee: 0,
         grants: { stage: 'full', name: 'Class M Motorcycle License', years: 8, alone: true },
         note: 'On your own motorcycle, with an accompanying licensed driver in a car.' },
+      { id: 'brc', kind: 'course', name: 'MSF Basic RiderCourse', fee: 321, feeBasis: 'Mohawk Valley Community College’s price through Go Motorcycling; the DMV sets none. Its length is SLATE’s estimate, California’s like course’s sixteen hours.', source: 'https://www.gomotorcycling.net/basic-ridercourse/', minutes: 480, sessions: 2, everyDays: 1, needs: ['permit'],
+        grants: { stage: 'full', name: 'Class M Motorcycle License', years: 8, alone: true },
+        note: 'At an approved provider, the bike and helmet theirs; the DMV waives the road test for it.' },
     ],
   },
   'us-ct': {
@@ -47,7 +59,7 @@ export const MOTORCYCLE_PATHS: Readonly<Record<string, LicensePath>> = {
   },
   'us-ca': {
     currency: 'USD',
-    note: 'At 21 and over no instruction permit is asked: the application, the knowledge test, and the DMV’s skills test. The CHP’s course, which can stand in for the skills test, isn’t kept.',
+    note: 'At 21 and over no instruction permit is asked: the application, the knowledge test, and the DMV’s skills test. Or, in place of the skills test, the California Motorcyclist Safety Program’s course and its DL 389.',
     steps: [
       { id: 'application', kind: 'office', name: 'M1 Application', fee: 46, minutes: 60,
         note: 'Adding M1 to a class C license, or an original application: $46.' },
@@ -56,6 +68,9 @@ export const MOTORCYCLE_PATHS: Readonly<Record<string, LicensePath>> = {
       { id: 'skills', kind: 'test', name: 'Motorcycle Skills Test', fee: 0, minutes: 30, pass: 'moto-road', retakeDays: 14,
         grants: { stage: 'full', name: 'Class M1 License', years: 5, alone: true },
         note: 'At the DMV, on your own motorcycle.' },
+      { id: 'cmsp', kind: 'course', name: 'Motorcyclist Training Course', fee: 425, feeBasis: 'Motorcycle Rider Education Corp’s price at 21 and over, a CMSP training site; the DMV sets none.', source: 'https://www.mre-corp.com/training/get-licensed/', minutes: 480, sessions: 2, everyDays: 1, needs: ['knowledge'],
+        grants: { stage: 'full', name: 'Class M1 License', years: 5, alone: true },
+        note: 'About sixteen hours; its DL 389, taken to the DMV within twelve months, waives the skills test.' },
     ],
   },
   gb: {
@@ -110,18 +125,30 @@ export const MOTORCYCLE_PATHS: Readonly<Record<string, LicensePath>> = {
   },
   'ca-bc': {
     currency: 'CAD',
-    note: 'A holder of a Class 5 or 7 license adds Class 6: the knowledge test, the skills test fourteen days on, the road test thirty days on, and $17 for the license.',
-    needsCar: 'Class 6 as SLATE keeps it is added to a British Columbia Class 5 or 7 license; the Class 8 graduated program for a new rider isn’t kept.',
+    note: 'A holder of a Class 5 or 7 license adds Class 6: the knowledge test, the skills test fourteen days on, the road test thirty days on, and $17 for the license. A new rider without one takes the Class 8 graduated program: a learner twelve months, a novice twenty-four, then the Class 6 road test.',
     steps: [
-      { id: 'knowledge', kind: 'test', name: 'Motorcycle Knowledge Test', fee: 15, minutes: 60, pass: 'moto-theory', retakeDays: 1, retakeFee: 15,
+      { id: 'knowledge', kind: 'test', withCarLicense: 'ca-bc', name: 'Motorcycle Knowledge Test', fee: 15, minutes: 60, pass: 'moto-theory', retakeDays: 1, retakeFee: 15,
         grants: { stage: 'learner', name: 'Class 6 Learner Licence', years: 1, yearsEstimated: true, alone: false },
         note: 'Riding in sight of a supervisor, no passengers, 60 km/h at most, daylight only.' },
-      { id: 'skills', kind: 'test', name: 'Motorcycle Skills Test', fee: 0, minutes: 30, wait: { days: 14, since: 'knowledge' }, pass: 'moto-road', retakeDays: 7,
+      { id: 'skills', kind: 'test', withCarLicense: 'ca-bc', name: 'Motorcycle Skills Test', fee: 0, minutes: 30, wait: { days: 14, since: 'knowledge' }, pass: 'moto-road', retakeDays: 7,
         grants: { stage: 'learner', name: 'Class 6 Learner Licence, Skills Passed', years: 1, yearsEstimated: true, alone: true },
         note: 'Then riding without a supervisor in sight.' },
-      { id: 'road', kind: 'test', name: 'Class 6 Road Test', fee: 50, minutes: 45, wait: { days: 30, since: 'knowledge' }, pass: 'moto-road', retakeDays: 7, issueFee: 17,
+      { id: 'road', kind: 'test', withCarLicense: 'ca-bc', name: 'Class 6 Road Test', fee: 50, minutes: 45, wait: { days: 30, since: 'knowledge' }, pass: 'moto-road', retakeDays: 7, issueFee: 17,
         grants: { stage: 'full', name: 'Class 6 Licence', years: 5, alone: true },
         note: '$50, and $17 for the license where the one you hold runs more than six months yet.' },
+      // The Class 8 program, from 2026-09-30: ICBC's MV2023 (revision 03/2026), read in `research-vehicles5.json`.
+      { id: 'knowledge8', kind: 'test', withoutCarLicense: 'ca-bc', name: 'Motorcycle Knowledge Test', fee: 15, minutes: 60, pass: 'moto-theory', retakeDays: 1, retakeFee: 15,
+        grants: { stage: 'learner', name: 'Class 8L Learner Licence', years: 2, yearsEstimated: true, alone: false },
+        note: 'Daylight only, in sight of a supervisor of 25 or older holding Class 6, 60 km/h at most, no passengers, the L sign shown. Its term wasn’t read; lapsed, the knowledge test is taken again.' },
+      { id: 'skills8', kind: 'test', withoutCarLicense: 'ca-bc', name: 'Motorcycle Skills Test', fee: 0, minutes: 30, wait: { days: 30, since: 'knowledge8' }, pass: 'moto-road', retakeDays: 7,
+        grants: { stage: 'learner', name: 'Class 8L Learner Licence, Skills Passed', years: 2, yearsEstimated: true, alone: true },
+        note: 'Thirty days on the learner license; it lifts the supervisor and the speed limit. Its fee wasn’t captured.' },
+      { id: 'road8', kind: 'test', withoutCarLicense: 'ca-bc', name: 'Class 8 Road Test', fee: 35, minutes: 45, wait: { days: 365, since: 'knowledge8' }, pass: 'moto-road', retakeDays: 7, issueFee: 75,
+        grants: { stage: 'provisional', name: 'Class 8 Novice Licence', years: 5, yearsEstimated: true, alone: true },
+        note: 'Twelve months on the learner license; $35, and $75 for the novice license.' },
+      { id: 'road6', kind: 'test', withoutCarLicense: 'ca-bc', name: 'Class 6 Road Test', fee: 50, minutes: 45, wait: { days: 730, since: 'road8' }, pass: 'moto-road', retakeDays: 7, issueFee: 17,
+        grants: { stage: 'full', name: 'Class 6 Licence', years: 5, alone: true },
+        note: 'Twenty-four months a novice; $50, and $17 for the license, Class 6’s figures, the novice’s exit fee not read apart.' },
     ],
   },
   'mx-cmx': {

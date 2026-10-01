@@ -327,7 +327,7 @@ export function planDrive(sim: Simulation, person: Person, vehicleId: string, fr
   if (forOutings(modelById(v.modelId)!)) return 'A bicycle or an ATV isn’t taken on a journey between towns.';
   if ((willBeAt ?? v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';
-  const may = mayDrive(person, fromCity, day, day, classFor(modelById(v.modelId)!));
+  const may = mayDrive(person, fromCity, day, day, classFor(modelById(v.modelId)!), modelById(v.modelId)!.cc);
   if (!may.ok) return may.why ?? 'You may not drive there.';
   const zone = CITIES.require(fromCity).timeZone;
   const p = zonedParts(day, zone);

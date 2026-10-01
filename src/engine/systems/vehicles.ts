@@ -619,7 +619,7 @@ export function registerVehicles(sim: Simulation): void {
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
     let driven = 0;
-    if (!v.repossessed && !missing && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m)).ok) {
+    if (!v.repossessed && !missing && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km, homeShareOf(person));
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until

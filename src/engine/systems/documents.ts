@@ -569,10 +569,26 @@ export function licenseOf(person: Person, at: Instant, cls: VehicleClass = 'car'
  * an EU or EEA license within the EU and EEA, recognized as the law
  * recognises them.
  */
-export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt = at, cls: VehicleClass = 'car'): { ok: boolean; why?: string } {
+/**
+ * A moped ridden on a car license, from 2026-09-30 (`research-vehicles5.json`),
+ * the most cc it may have: British Columbia's limited-speed motorcycle, 50cc
+ * or under, on a full-privilege Class 5 or 7 of its own (ICBC). Its 70 km/h
+ * and 95 kg limits aren't kept, SLATE not holding a scooter's top speed or
+ * weight. Nowhere else: New York's Class D covers a moped held to 30 mph,
+ * whose speed SLATE doesn't hold either; California's and Ontario's car
+ * licenses cover none; Britain's and Ireland's only those from before
+ * February 2001 and October 2006, which no life beginning at twenty-four
+ * holds.
+ */
+export const MOPED_ON_CAR: Readonly<Record<string, number>> = { 'ca-bc': 50 };
+
+export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt = at, cls: VehicleClass = 'car', cc?: number): { ok: boolean; why?: string } {
   const here = licensingOf(cityId);
   const place = CITIES.get(cityId)?.name ?? 'here';
   if (!here) return { ok: false, why: `SLATE doesn’t have the driving rules for ${place} yet.` };
+  const car = cls === 'motorcycle' && cc !== undefined && cc <= (MOPED_ON_CAR[here] ?? 0) ? licenseOf(person, at, 'car') : undefined;
+  // Its own: a car license from elsewhere carries no moped. A learner's is refused below as for a car.
+  if (car && car.issuer === here) cls = 'car';
   const license = licenseOf(person, at, cls);
   if (!license) return { ok: false, why: cls === 'motorcycle' ? `You don’t hold a motorcycle license in force: earn one on the Papers screen.` : `You don’t hold a driving license in force. ${LICENSES[here]!.authority} issues ${LICENSES[here]!.name}.` };
   // Points that suspended it (`systems/driving.ts`, from 2026-09-29).

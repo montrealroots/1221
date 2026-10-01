@@ -68,6 +68,9 @@ export interface PathStep {
   validDays?: number;
   /** Not asked of someone holding a car license from this issuer, which carries the entitlement. */
   unlessCarLicense?: string;
+  /** Only for, or only for someone without, a car license from this issuer that lets them drive alone, as British Columbia's Class 6 and Class 8. */
+  withCarLicense?: string;
+  withoutCarLicense?: string;
   /** Paid on passing, for what it grants. */
   issueFee?: number;
   /** Days after passing before the license arrives. */
