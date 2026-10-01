@@ -54,6 +54,8 @@ export interface OwnedVehicle {
   id: string;
   /** A shop's window tint (`systems/tint.ts`, from 2026-09-30). */
   tint?: TintKind;
+  /** A hitch or towbar fitted, to tow a caravan (`systems/caravans.ts`, from 2026-09-30). */
+  hitch?: boolean;
   /** Months an electric car has earned charging rewards at home (`systems/charging.ts`). */
   monthsCharged?: number;
   /** A full respray, declared to the insurer (`systems/mods.ts`, from 2026-09-30); an older save's, before `mods`. */

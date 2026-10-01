@@ -8,6 +8,8 @@ import { tradeInFor } from '@/engine/systems/vehicles';
 import { redemption } from '@/engine/systems/repossession';
 import { boatsOf, boatQuote, buyBoatRefusal, certified, certifyRefusal, onItsTrailer } from '@/engine/systems/boats';
 import { BOAT_LOAN, BOAT_RULES, T18, isBoatState } from '@/engine/content/boats';
+import { buyCaravanRefusal, caravanQuote, caravansOf, caravanValue, hitchRefusal, towRating } from '@/engine/systems/caravans';
+import { CARAVANS, CARAVAN_YEAR, HITCH_FIT, LB } from '@/engine/content/caravans';
 import { CITIES } from '@/engine/content/geography';
 import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
 import { useState } from 'react';
@@ -113,6 +115,7 @@ export function VehiclesWorkspace() {
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
                             <ModifyControl v={v} />
+                            {!v.hitch && towRating(v) > 0 && <Gated feature="vehicle.hitch" className="btn btn-sm btn-ghost" disabled={Boolean(hitchRefusal(sim, person, v))} title={hitchRefusal(sim, person, v) ?? `Rated to tow ${Math.round(towRating(v))} kg`} onClick={() => { const a = run<{ paid: number }>('vehicle.hitch', { vehicleId: v.id }); if (a.ok) toast(`A towbar fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>Fit A Towbar</Gated>}
                             <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
                               const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id });
                               if (a.ok) toast(`Sold: ${money(a.value!.value)} to you after the loan.`, 'positive');
@@ -233,8 +236,59 @@ export function VehiclesWorkspace() {
           </div>
         </Panel>
         <BoatPanel />
+        <CaravanPanel />
       </div>
     </>
+  );
+}
+
+/** Caravans of one's own (`systems/caravans.ts`): bought and kept at a house of one's own, towed behind a car with a towbar its maker rates for it. */
+function CaravanPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  const where = homeOf(person);
+  const q = caravanQuote(sim, where);
+  const mine = caravansOf(person);
+  const noBuy = buyCaravanRefusal(sim, person);
+  const place = jurisdictionOf(where);
+  const year = place && place in CARAVAN_YEAR ? CARAVAN_YEAR[place as keyof typeof CARAVAN_YEAR] : undefined;
+  const model = q ? CARAVANS[q.market] : undefined;
+  return (
+    <Panel title={mine.length > 1 ? 'Your Caravans' : 'A Caravan'} subtitle={model?.label ?? 'A Travel Trailer Or Touring Caravan'}>
+      {!q || !model || !year ? <p className="small muted" style={{ margin: 0 }}>SLATE sells a caravan in New York, Connecticut, California and Britain only yet.</p> : (
+        <div className="col gap-3">
+          <div className="grid grid-3">
+            <Stat label={model.taxIncluded ? 'Its Price' : 'Taxed And Registered'} value={money(q.price + q.tax + q.registration)} note={model.taxIncluded ? 'The maker’s price, its VAT in it; no registration or road tax' : `${money(q.price)}, ${money(q.tax)} tax, ${money(q.registration)} registered`} />
+            <Stat label="Kept" value={`${money(inSaveMoney(sim, Math.round((year.insurance / 12) * 100), year.currency))} A Month`} note="Its insurance, on the drive of a house of your own" />
+            <Stat label="Towed" value={q.market === 'US' ? `Up To ${Math.round(model.maxKg / LB).toLocaleString('en-US')} lb` : `Up To ${Math.round(model.maxKg).toLocaleString('en-US')} kg`} note={`Behind a car its maker rates to tow that, with a towbar fitted, ${money(inSaveMoney(sim, HITCH_FIT[q.market].amount * 100, HITCH_FIT[q.market].currency))}`} />
+          </div>
+          {mine.length > 0 && (
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Caravan</th><th scope="col">Where</th><th scope="col" className="num">Worth</th><th scope="col">Sell</th></tr></thead>
+                <tbody>
+                  {mine.map((c) => (
+                    <tr key={c.id}>
+                      <td>{CARAVANS[c.market].label}</td>
+                      <td>{CITIES.get(c.at ?? c.cityId)?.name ?? c.cityId}</td>
+                      <td className="num mono">{money(caravanValue(c, sim.now))}</td>
+                      <td><Gated feature="caravan.sell" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ value: number }>('caravan.sell', { caravanId: c.id }); if (a.ok) toast(`Sold, for ${money(a.value!.value)}.`, 'positive'); }}>Sell</Gated></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            <Gated feature="caravan.buy" className="btn btn-sm btn-ghost" disabled={Boolean(noBuy)} title={noBuy} onClick={() => { if (run('caravan.buy', {}).ok) toast('A caravan of your own.', 'positive'); }}>{mine.length ? 'Buy Another Caravan' : 'Buy A Caravan'}</Gated>
+          </div>
+          {noBuy && <div className="xs dim">{noBuy}</div>}
+          <Fine>Tow it on a journey from the Travel screen: its nights can be at the region’s campground, the drive burns 1% more fuel for each 100 lb it weighs (fueleconomy.gov), and it’s slower where the law sets a lower limit for towing. Its worth follows the car curve, as no caravan’s depreciation was read. Moving to a home with no drive of your own, it’s sold.</Fine>
+        </div>
+      )}
+    </Panel>
   );
 }
 

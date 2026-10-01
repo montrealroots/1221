@@ -41,6 +41,7 @@ import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { atTheCheckpoint, boardingIdRefusal } from './identity';
+import { caravansOf, towFor, towedLegs } from './caravans';
 import { claimDelay } from './compensation';
 import { stolenNow } from './theft';
 import { inWinterSeason, tireFactor } from './tires';
@@ -92,6 +93,8 @@ export interface Journey {
   cabin?: Cabin;
   /** By train, the route's id; by air where not said (from 2026-09-29). */
   by?: string;
+  /** The caravan towed behind it (`systems/caravans.ts`, from 2026-09-30). */
+  towing?: string;
   /** A trip the career makes (from 2026-09-29): the job's, who paid the fares, and where they sleep on arrival. */
   bookingId?: string;
   paidBy?: 'production' | 'self';
@@ -437,7 +440,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -452,6 +455,17 @@ export function registerJourneys(sim: Simulation): void {
     let back = round ? planBy(s, by, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags, cabin, toCity) : undefined;
     if (typeof out === 'string') throw new CommandError(out);
     if (typeof back === 'string') throw new CommandError(back);
+    // A caravan behind one's own car (`systems/caravans.ts`, from 2026-09-30).
+    let towing: string | undefined;
+    if (p?.tow) {
+      const car = by?.startsWith('car:') ? vehiclesOf(person).find((x) => `car:${x.id}` === by) : undefined;
+      if (!car) throw new CommandError('A caravan is towed behind a car of your own.');
+      const caravan = towFor(person, car, fromCity, toCity);
+      if (typeof caravan === 'string') throw new CommandError(caravan);
+      towing = caravan.id;
+      out = towedLegs(s, car, caravan, out);
+      if (back) back = towedLegs(s, car, caravan, back);
+    }
     const arriveOut = out[out.length - 1]!.arriveAt;
     if (back && back[0]!.departAt <= arriveOut) throw new CommandError('The way home leaves before the way out arrives.');
     // A round trip's hotel runs from the night it lands to the morning it flies home.
@@ -468,7 +482,7 @@ export function registerJourneys(sim: Simulation): void {
     const cls: StayClass = p?.stay ?? 'hotel';
     const plan: RatePlan = p?.plan === 'prepaid' ? 'prepaid' : 'flexible';
     // A campground is for a journey made in one's own motorhome or campervan (from 2026-09-30).
-    if (cls === 'campground' && !inMotorhome(person, by)) throw new CommandError('A campground’s site is for a motorhome or campervan of your own, driven there.');
+    if (cls === 'campground' && !inMotorhome(person, by) && !towing) throw new CommandError('A campground’s site is for a motorhome, a campervan or a caravan of your own, brought there.');
     // The street, the same, where the town lets it stand overnight.
     if (cls === 'street' && !inMotorhome(person, by)) throw new CommandError('Sleeping on the street is in a motorhome or campervan of your own, driven there.');
     const noStreet = cls === 'street' && !ownPlaceIn(person, toCity) && nights > 0 ? streetRefusal(toCity, nights) : undefined;
@@ -485,7 +499,7 @@ export function registerJourneys(sim: Simulation): void {
       const id = s.nextId('journey');
       const leaveAt = legs[0]!.departAt;
       const arriveAt = legs[legs.length - 1]!.arriveAt;
-      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(by ? { by } : {}), ...(cabin === 'premium' ? { cabin } : {}), ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}) };
+      const j: Journey = { id, fromCity: from, toCity: to, legs, status: 'booked', bookedAt: s.now, bags, total: price, leaveAt, arriveAt, ...(by ? { by } : {}), ...(cabin === 'premium' ? { cabin } : {}), ...(tripId ? { tripId } : {}), ...(stay ? { hotel: stay } : {}), ...(towing ? { towing } : {}) };
       journeysOf(person).push(j);
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;
@@ -622,6 +636,8 @@ export function registerJourneys(sim: Simulation): void {
     if (driven && car) {
       const km = roadKm(j.fromCity, j.toCity);
       car.at = j.toCity;
+      const towed = j.towing ? caravansOf(person).find((c) => c.id === j.towing) : undefined;
+      if (towed) towed.at = j.toCity === towed.cityId ? undefined : j.toCity;
       car.km = (car.km ?? 0) + km;
       drive(s, person, car.jurisdiction, km, s.now, j.id, kindOf(modelById(car.modelId)!), tireFactor(car, s.now));
       if (car.winterTires && inWinterSeason(s.now, j.fromCity)) car.winterTires.km += km;

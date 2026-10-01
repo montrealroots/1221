@@ -96,7 +96,7 @@ describe('a campground', () => {
     const [rv, car] = vehiclesOf(sim.player);
     const day = saturday(sim, 14);
     const trip = (v: OwnedVehicle) => sim.execute<{ journeyId: string }>({ kind: 'travel.book', payload: { toCity: 'us-ca-sanfrancisco', day, slot: 2, by: `car:${v.id}`, returnDay: day + 2 * MS_DAY, returnSlot: 2, stay: 'campground' } });
-    expect(trip(car!).error).toMatch(/motorhome or campervan/);
+    expect(trip(car!).error).toMatch(/motorhome, a campervan or a caravan/);
     const r = trip(rv!);
     expect(r.ok, r.error).toBe(true);
     const out = journeysOf(sim.player).find((j) => j.id === r.value!.journeyId)!;

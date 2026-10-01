@@ -18,6 +18,7 @@ import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
+import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf, rentalClassesIn } from '@/engine/systems/rentals';
 import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
@@ -55,6 +56,7 @@ export function TravelWorkspace() {
   const [stayCls, setStayCls] = useState<StayClass>('hotel');
   const [ratePlan, setRatePlan] = useState<RatePlan>('flexible');
   const [daysThere, setDaysThere] = useState(4);
+  const [tow, setTow] = useState(false);
   // A town chosen before arriving in it isn't a destination from it: until 2026-09-30 it stayed chosen, the list showing
   // another town while the plan said both fly from the same airport.
   const toCity = (destinations.includes(to) ? to : '') || destinations[0] || '';
@@ -81,8 +83,13 @@ export function TravelWorkspace() {
   const own = toCity ? ownPlaceIn(person, toCity) : false;
   const round = daysThere > 0;
   const seat = mode ? 'economy' : cabin;
-  const outLegs = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
-  const backLegs = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
+  // A caravan of one's own behind the car (`systems/caravans.ts`, from 2026-09-30).
+  const caravanHere = car && toCity && caravansOf(person).some((c) => (c.at ?? c.cityId) === fromCity) ? towFor(person, car, fromCity, toCity) : undefined;
+  const towing = tow && car && caravanHere && typeof caravanHere !== 'string' ? caravanHere : undefined;
+  const planned = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
+  const outLegs = towing && typeof planned !== 'string' ? towedLegs(sim, car!, towing, planned) : planned;
+  const plannedBack = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
+  const backLegs = towing && plannedBack && typeof plannedBack !== 'string' ? towedLegs(sim, car!, towing, plannedBack) : plannedBack;
   // A round trip's discount is the airlines'; a train's return is two singles.
   const outPlan = typeof outLegs === 'string' ? undefined : round && !mode ? asRoundTrip(outLegs) : outLegs;
   const backPlan = backLegs && typeof backLegs !== 'string' ? (mode ? backLegs : asRoundTrip(backLegs)) : undefined;
@@ -91,7 +98,7 @@ export function TravelWorkspace() {
   const no = !toCity ? 'Choose where.' : bookRefusal(sim, person, fromCity, toCity, outLegs, Math.max(1, stayNights), stayNights)
     ?? (typeof backLegs === 'string' ? backLegs : backPlan && outPlan && backPlan[0]!.departAt <= outPlan[outPlan.length - 1]!.arriveAt ? 'The way home leaves before the way out arrives.' : undefined);
   // The kinds of stay the town has; one chosen for another town falls back to its hotel.
-  const classes = toCity ? stayClassesIn(toCity, inMotorhome(person, mode)) : [];
+  const classes = toCity ? stayClassesIn(toCity, inMotorhome(person, mode) || Boolean(towing)) : [];
   const cls: StayClass = classes.includes(stayCls) ? stayCls : 'hotel';
   const hotel = toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan, residentOf(person, toCity)) : undefined;
   const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
@@ -170,6 +177,18 @@ export function TravelWorkspace() {
                 <input id="travel-nights" type="number" min={0} max={90} value={stayNights} disabled={own || round} onChange={(e) => setNights(Math.max(0, Math.min(90, Number(e.target.value) || 0)))} />
               </div>
             </div>
+            {caravanHere !== undefined && (
+              <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+                <div className="field" style={{ margin: 0 }}>
+                  <label htmlFor="travel-tow">Your Caravan</label>
+                  <select id="travel-tow" value={towing ? 'tow' : 'leave'} disabled={typeof caravanHere === 'string'} title={typeof caravanHere === 'string' ? caravanHere : undefined} onChange={(e) => setTow(e.target.value === 'tow')}>
+                    <option value="leave">Left Where It Is</option>
+                    <option value="tow">Towed Behind</option>
+                  </select>
+                </div>
+                {typeof caravanHere === 'string' && <div className="xs dim">{caravanHere}</div>}
+              </div>
+            )}
             {!own && classes.length > 0 && (
               <div className="field-row">
                 <div className="field">
@@ -225,7 +244,7 @@ export function TravelWorkspace() {
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>

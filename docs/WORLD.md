@@ -416,9 +416,35 @@ Researched in `docs/research/world/research-vehicle-kinds.json`, `research-vehic
   - Everywhere else it isn't researched, and it says so.
 - **A move in one's own van** (`ownVanFor` in `systems/furniture.ts`): a van where the move starts, a road to the new home and a license to drive it carry the bed and sofa for its fuel and upkeep. Until then the movers were paid whatever one owned.
 - **A move in a rented truck** (`truckFor` in `systems/furniture.ts`, `home.move_by`, from later on 2026-09-30): for a player who chooses it on the Homes screen. U-Haul's 15-foot truck in town costs $29.95 a day and $1.19 a mile (U-Haul's December 2025 comparison). It is driven there and back, since an in-town truck goes back where it was hired, and burns 10 mpg at the state's fuel price. That holds within America, within the movers' 100-mile local band, and on a license they may drive on. Anything else gets the movers: a one-way rental is priced only after a search, which wasn't read, and Britain's and Canada's van hire wasn't found published. A van of one's own still carries the pieces first. Before this, the movers were always paid.
+- **A caravan, and towing it** (`content/caravans.ts`, `systems/caravans.ts`, from later on 2026-09-30, researched in `research-vehicles5.json` and `research-towing2.json`; until then towing wasn't kept):
+  - Sold where a price and a weight were both read:
+    - America: Jayco's Jay Flight SLX 178DBS, $17,318 before sales tax, GVWR 4,800 lb.
+    - Britain: Bailey's Discovery D4-2, £21,499 with VAT, MTPLM 998 kg.
+  - Not sold elsewhere:
+    - Canada's only price read, CA$31,956 at a dealer, came without its model's weight.
+    - No Irish price in euros was found.
+    - Mexico's prices were only used-or-new listings.
+  - Kept on the drive of a house of one's own. Storing one elsewhere wasn't researched, so it can't be bought without one, and a move to a home without one sells it at its worth. Its worth follows the car curve.
+  - Registered as each place asks:
+    - New York: $5.39 a 500 lb of GVWR, so $53.90.
+    - Connecticut: a camp trailer's $22.50 (the top of its range), the $5 plate, the $24 Passport to the Parks fee, and the $25 title at purchase.
+    - California: $76, the CHP's $34, and 0.65% of its worth.
+    - Britain: nothing; no registration or road tax is asked.
+  - Insured by the month at Progressive's 2024 average travel-trailer policy: New York's $351.44 (also used for Connecticut, which Progressive doesn't publish) and California's $405.14. Britain's is InsureMy's £162.45.
+  - Towed only behind a car with a towbar fitted and a maker's braked rating at least the caravan's most (`TOW_RATINGS`). A towbar costs Towbar Express's £760 in Britain, and in America the middle of U-Haul's $100 to $600 (2023). Of the ratings:
+    - Confirmed on the maker's page: the RAV4's 1,750 lb, the CR-V's 1,500 lb and the XC40's 1,600 kg. The rest are from dealers' and the press's pages.
+    - The Camry and anything unlisted, electric cars among them, tow nothing.
+    - So in America only a pickup or a van tows the Jay Flight. In Britain every car SLATE sells tows the Bailey.
+    - Britain's clubs advise 85% of the car's curb weight. That's advice, not law, and too few curb weights are held to apply it.
+  - On a journey (`tow` on `travel.book`):
+    - Fuel rises by fueleconomy.gov's 1% a 100 lb, at the caravan's most. That's 48% for the Jay Flight; Oak Ridge measured 30% to 50% for a 3,500 lb trailer.
+    - The drive is slower where the law sets a lower limit for towing: Britain's 60 mph against 70, and California's 55 against its freeways' 65. The ratio is applied to the whole drive, since SLATE keeps no split of road types.
+    - Its nights can be at the region's campground, as a motorhome's are.
+    - It stays in its own country; no border crossing with one was read.
 - Not kept:
-  - Towing, and with it travel trailers and caravans.
   - A park's shoulder and winter rates.
+
+Evidence for the caravan: `tests/caravans.test.ts` (7). Of 22 mutations, 15 were killed. Two survivors were redundant guards that were removed: a leg's drive-only check, since `planDrive` returns only drive legs, and the same-town early return, which the loop already settles. Five needed tests: the bank checks, the hitch's place, the second renewal, a caravan left in another town, and the towed way home.
 
 Evidence: `tests/motorhomes.test.ts` (13: two for the street, whose 7 mutations were all killed, and two for the truck). Of the truck's 10 mutations, 9 were killed. The survivor was the road check, which `byRoad` already settles for any two American towns, so it was removed; the from-country check got a test. 16 mutations before it, all killed in the end. Three first survived, and each needed a test:
 - That a car doesn't carry the furniture.

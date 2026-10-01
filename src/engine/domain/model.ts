@@ -279,6 +279,8 @@ export interface Person {
   aircraft?: import('../systems/aviation').OwnedAircraft;
   /** The boats they own, and the states whose operator's certificate they hold (`systems/boats.ts`). A save from before 2026-10-01 held one, as `boat`, moved into the list on opening. */
   boats?: import('../systems/boats').OwnedBoat[];
+  /** Travel trailers and touring caravans of their own (`systems/caravans.ts`, from 2026-09-30). */
+  caravans?: import('../systems/caravans').OwnedCaravan[];
   boat?: import('../systems/boats').OwnedBoat;
   boatCertificates?: import('../content/boats').BoatState[];
   /** Their driving record: points and a suspension (`systems/driving.ts`). */
