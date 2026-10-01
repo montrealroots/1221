@@ -39,6 +39,7 @@ import { salesTaxRate } from '../content/tax';
 import { CA_LEASE, PCP, US_LEASE, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
 import { owe, payFromBank } from './household';
+import { takeLeasedCar } from './repossession';
 import { VEHICLE_MONTH_KIND, VEHICLE_RENEWAL_KIND, jurisdictionOf, kept, kindOf, loanRate, modelById, monthlyInsurance, quote, renewal, usSalesTaxRate, vehiclesOf, type OwnedVehicle } from './vehicles';
 
 export const LEASE_MONTH_KIND = 'vehicle.lease_month';
@@ -278,7 +279,12 @@ export function registerLeasing(sim: Simulation): void {
     const m = modelById(v.modelId)!;
     if (v.lease.monthsLeft > 0) {
       if (payFromBank(s, person, v.lease.monthly, `${v.lease.kind === 'pcp' ? 'PCP' : 'Lease'} payment, the ${m.make} ${m.model}`, 'vehicle')) { v.lease.missed = 0; if (v.lease.paid !== undefined) v.lease.paid += v.lease.monthly; }
-      else { owe(s, person, v.lease.monthly, 'Lease payment', 'vehicle'); v.lease.missed = (v.lease.missed ?? 0) + 1; }
+      else {
+        owe(s, person, v.lease.monthly, 'Lease payment', 'vehicle');
+        v.lease.missed = (v.lease.missed ?? 0) + 1;
+        // Three missed, the lessor takes its car back (`systems/repossession.ts`).
+        if (takeLeasedCar(s, person, v, `${m.make} ${m.model}`)) return;
+      }
       v.lease.monthsLeft -= 1;
       s.schedule({ at: item.at + 30 * MS_DAY, kind: LEASE_MONTH_KIND, label: 'The Lease’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: v.id } });
       return;

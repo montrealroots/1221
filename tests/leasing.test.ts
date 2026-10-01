@@ -101,3 +101,21 @@ describe('a lease', () => {
     expect(netWorth(sim, sim.player.id).vehicles).toBeGreaterThan(0);
   });
 });
+
+describe('a lease in default', () => {
+  it('has its car taken back by the lessor after three missed payments, and the repossession on the record', () => {
+    const sim = life('us-ny-newyork', 'lease-default');
+    const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.lease', payload: { modelId: 'us-toyota-rav4', months: 36 } });
+    expect(r.ok, r.error).toBe(true);
+    const v = vehiclesOf(sim.player).find((x) => x.id === r.value!.vehicleId)!;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal) { a.balance = -1e9; if (a.kind === 'credit_card') a.creditLimit = 0; }
+    const score = sim.player.credit?.score ?? 0;
+    sim.advanceBy(65 * MS_DAY);
+    expect(v.soldAt).toBeUndefined();
+    sim.advanceBy(40 * MS_DAY);
+    expect(v.lease!.missed).toBeGreaterThanOrEqual(3);
+    expect(v.soldAt).toBeDefined();
+    expect(sim.player.credit!.score).toBeLessThan(score);
+    expect(sim.player.credit!.marks!.some((m) => m.points === 100 && m.at === v.soldAt)).toBe(true);
+  });
+});

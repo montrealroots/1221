@@ -68,6 +68,22 @@ export function loanMonth(sim: Simulation, person: Person, v: OwnedVehicle, paid
   if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Your Car Was Repossessed', body: `${DEFAULT_AFTER_MISSED} payments on the ${label} missed, the lender took it. It’s sold on ${formatDate(saleAt, sim.zone)} unless you redeem it on the Cars screen, and it’s on your record.`, importance: 85, route: '/workspace/vehicles' });
 }
 
+/**
+ * A leased car taken back, from later on 2026-09-30: the same three missed
+ * payments, where the place's law lets a car be seized, and the lessor, whose
+ * car it is, takes it. It goes on the record as a repossession; what's
+ * missed stays owed. The lease's early-termination charge, which Toyota
+ * publishes no formula for, isn't charged. True where it was taken.
+ */
+export function takeLeasedCar(sim: Simulation, person: Person, v: OwnedVehicle, label: string): boolean {
+  if (!v.lease || !REPOSSESSION[v.jurisdiction] || (v.lease.missed ?? 0) < DEFAULT_AFTER_MISSED) return false;
+  mark(person, REPOSSESSED_ON_RECORD, sim.now);
+  v.soldAt = sim.now;
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === v.id) sim.timeline.cancel(item.id, sim.now);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Your Leased Car Was Taken Back', body: `${DEFAULT_AFTER_MISSED} payments on the ${label} missed, the lessor took its car back. What you missed is still owed.`, importance: 85, route: '/workspace/vehicles' });
+  return true;
+}
+
 /** The car sold after its notice: the loan paid from it, a surplus back, the shortfall owed or ended by the law. */
 export function sellRepossessed(sim: Simulation, person: Person, v: OwnedVehicle, value: Money, label: string): void {
   const rule = REPOSSESSION[v.jurisdiction]!;
