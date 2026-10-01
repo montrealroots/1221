@@ -323,9 +323,14 @@ const UK_RADIO = 'Equity’s BBC audio rates summary, July 2023';
 const IE_FILM = 'Screen Producers Ireland and Irish Equity, Irish Film Agreement, from 1 February 2021';
 
 /**
- * Mexico City's rates are SLATE's estimate, not ANDA's: ANDA keeps every
- * tabulador confidential (laanda.org.mx, "Tabuladores ANDA", 2026-09-29), and
- * no published figure prices a part there. Each is the American minimum for
+ * Mexico City's rates were all SLATE's estimate until later on 2026-09-30:
+ * ANDA keeps its tabuladores confidential (laanda.org.mx, "Tabuladores ANDA",
+ * 2026-09-29). Its salary agreements, though, are deposited with the federal
+ * labor registry, whose public repository serves their tables
+ * (`docs/research/world/research-mx-acting.json`), and from then the
+ * telenovela, the streaming series and the play are real figures. The film,
+ * dubbing and commercial rates stay estimates, as no producer or studio
+ * deposited a table for them. Each estimate is the American minimum for
  * the like part in 2026, scaled by what a Mexican worker earns against an
  * American: IMSS's average registered wage, MXN 662.80 a day at the end of
  * January 2026 (imss.gob.mx/prensa/archivo/202602/075), a year of it against
@@ -654,21 +659,31 @@ export const ROLES: readonly Role[] = [
     steps: [['2023-07-01', inIreland(294_00)]],
     units: [1, 1], bar: 60, weight: 2, tiers: [1, 2, 3], selfSubmit: false, cities: IE, leadDays: 7, reads: READS.voice ?? READS.screen, sessionHours: 8, source: IE_EST,
   },
-  // Mexico City, from 2026-09-29, each rate SLATE's estimate (`MEXICO_SCALE`)
-  // from the American part named beside it. What a part asks is SLATE's
-  // estimate too. It's the dubbing capital of Spanish-speaking America, and
-  // the telenovela its daily work.
+  // Mexico City, from 2026-09-29. What a part asks is SLATE's estimate. It's
+  // the dubbing capital of Spanish-speaking America, and the telenovela its
+  // daily work.
   {
-    // By a television co-star's day, $1,283 from July 2026.
+    // Televisa's tabulador from 1 March 2024, a segunda parte, the supporting
+    // part nearest an American co-star: its contract pays a 7½-hour
+    // telenovela day as two half-hour chapters, 2 × MXN 1,093, and its two 3%
+    // bonuses, culture and efficiency. Televisa's later revisions weren't
+    // deposited, so 2024's stands. The production fee the press reports on
+    // top (MXN 5,000 to 20,000 a chapter, one actress's account, Milenio) isn't
+    // kept. Until later on 2026-09-30, SLATE's estimate from a co-star's
+    // day, MXN 4,444.
     id: 'mx-telenovela', label: 'A Part, A Telenovela', medium: 'screen', union: 'anda', currency: 'MXN',
-    steps: [['2026-07-01', inMexico(1_283_00)]],
-    units: [1, 3], bar: 58, weight: 10, tiers: [1, 2, 3], selfSubmit: true, cities: MX, leadDays: 5, reads: READS.screen, basis: 'day', source: MX_EST,
+    steps: [['2024-03-01', Math.round(2 * 1_093_00 * 1.06)]],
+    units: [1, 3], bar: 58, weight: 10, tiers: [1, 2, 3], selfSubmit: true, cities: MX, leadDays: 5, reads: READS.screen, basis: 'day', source: 'ANDA and Televisa Producciones, tabulador mínimo from 1 March 2024, deposited with the Centro Federal de Conciliación y Registro Laboral (repositorio.centrolaboral.gob.mx/contrato/640750)',
   },
   {
-    // By the same day.
+    // Argos Televisión's tabulador for television or a digital platform, a
+    // primera parte, as it has no segunda: two half-hour chapters a day, as
+    // Televisa's contract counts a day (Argos's own rule wasn't read), MXN
+    // 1,355.60 each in 2025 and 0.41% more from 2026, with its two 3%
+    // bonuses. Until later on 2026-09-30, SLATE's estimate, MXN 4,444.
     id: 'mx-streaming', label: 'A Part, A Series For A Streaming Service', medium: 'screen', union: 'anda', currency: 'MXN',
-    steps: [['2026-07-01', inMexico(1_283_00)]],
-    units: [2, 5], bar: 66, weight: 5, tiers: [1, 2], selfSubmit: false, cities: MX, leadDays: 7, reads: READS.screen, basis: 'day', source: MX_EST,
+    steps: [['2025-01-14', Math.round(2 * 1_355_60 * 1.06)], ['2026-01-01', Math.round(2 * 1_355_60 * 1.0041 * 1.06)]],
+    units: [2, 5], bar: 66, weight: 5, tiers: [1, 2], selfSubmit: false, cities: MX, leadDays: 7, reads: READS.screen, basis: 'day', source: 'ANDA and Argos Televisión, tabulador mínimo para televisión o plataforma digital, 2025, deposited with the Centro Federal de Conciliación y Registro Laboral (repositorio.centrolaboral.gob.mx/contrato/657954)',
   },
   {
     // By a low budget film's day, $834.
@@ -677,10 +692,13 @@ export const ROLES: readonly Role[] = [
     units: [3, 10], bar: 62, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 14, reads: READS.screen, basis: 'day', source: MX_EST,
   },
   {
-    // By an Off-Broadway week, $868.
+    // Teatro UNAM's Carro de Comedias, 2025: MXN 12,000 a month, a week of
+    // it. ANDA's own theater payroll recommends MXN 600 a day, but no count
+    // of days a week was read. Until later on 2026-09-30, SLATE's estimate
+    // from an Off-Broadway week, MXN 3,006.
     id: 'mx-theater', label: 'A Play In Mexico City', medium: 'stage', union: 'anda', currency: 'MXN',
-    steps: [['2026-07-27', inMexico(868_00)]],
-    units: [4, 9], rehearsalWeeks: [3, 4], bar: 60, weight: 3, tiers: [2, 3], selfSubmit: true, cities: MX, leadDays: 28, reads: READS.stage, source: MX_EST,
+    steps: [['2025-01-01', Math.round((12_000_00 * 12) / 52)]],
+    units: [4, 9], rehearsalWeeks: [3, 4], bar: 60, weight: 3, tiers: [2, 3], selfSubmit: true, cities: MX, leadDays: 28, reads: READS.stage, source: 'Teatro UNAM, Carro de Comedias convocatoria 2025',
   },
   {
     // By an animated voice's session, $1,246.

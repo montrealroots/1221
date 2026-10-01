@@ -27,7 +27,11 @@ describe('the business in Mexico City', () => {
     // A year at MXN 662.80 a day, in dollars, over $69,846.57.
     expect(MEXICO_SCALE).toBeCloseTo(exchange(662_80 * 365, 'MXN', 'USD')! / 69_846_57, 10);
     const tele = roleById('mx-telenovela');
-    expect(Math.abs(tele.steps[0]![1] - exchange(1_283_00, 'USD', 'MXN')! * MEXICO_SCALE)).toBeLessThanOrEqual(100);
+    // Dubbing is still SLATE's estimate; the telenovela is Televisa's tabulador, two half-hour chapters a day and 6% in bonuses.
+    expect(Math.abs(roleById('mx-dubbing').steps[0]![1] - exchange(1_246_00, 'USD', 'MXN')! * MEXICO_SCALE)).toBeLessThanOrEqual(100);
+    expect(tele.steps[0]![1]).toBe(2_317_16);
+    expect(roleById('mx-streaming').steps.map(([, c]) => c)).toEqual([2_873_87, 2_885_65]);
+    expect(roleById('mx-theater').steps[0]![1]).toBe(2_769_23);
     const sim = capitalino('mx-parts');
     expect(workCity(sim.player)).toBe(MXC);
     const agency = AGENCIES.find((a) => a.id === 'shoot-management')!;

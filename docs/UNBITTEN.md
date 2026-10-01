@@ -685,7 +685,14 @@ part the tool cannot see.
   SLATE's estimate (`MEXICO_SCALE`): each American minimum for the like
   part, scaled by IMSS's average wage against SSA's. Estimated, and said
   so on every part; ANDA's 15% dues are its own, from 2019. Its agencies'
-  commission is America's, SLATE's estimate.
+  commission is America's, SLATE's estimate. Later on 2026-09-30 three of
+  the six were found published after all. ANDA's salary agreements are
+  deposited with the federal labor registry, whose repository serves their
+  tables, so the telenovela is now Televisa's 2024 tabulador and the
+  streaming series Argos's 2025 (`research-mx-acting.json`). The play is now
+  Teatro UNAM's monthly fee. The telenovela's real floor, MXN 2,317 a day, is
+  about half the estimate's 4,444. Film, dubbing and commercials stay
+  estimates: no studio or producer deposited a table.
 - **The NHS is partly kept.** Since 2026-09-29 a British or Irish citizen
   living in the UK is treated by the NHS: free at the point of use, England's
   £9.90 a prescription item (none at 60 or over, nor in Scotland, Wales or
