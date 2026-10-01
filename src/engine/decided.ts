@@ -56,6 +56,7 @@ import { inspectionFails } from './systems/inspections';
 import { letDamaged } from './systems/journey';
 import { impairedDrive } from './systems/alcohol';
 import { announceNominations, entriesOf } from './systems/awards';
+import { powerDay } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
@@ -291,6 +292,23 @@ defineDecider<{ sim: Simulation; km: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), km: 200_000 + seed * 997 }),
   decide: ({ sim, km }) => { const r = drive(sim, sim.player, 'US-NY', km, sim.now, `d-${km}`); return r.ticket ? 'a ticket' : 'none'; },
+});
+
+defineDecider<{ sim: Simulation; day: number }, string>({
+  id: 'utilities.outage',
+  decides: 'A day with a power cut at home or not, at the distributor’s interruptions a customer a year (RELIABILITY), and its length around their mean; swept in Dublin, the likeliest of the towns.',
+  drawnIn: 'src/engine/systems/utilities.ts',
+  reads: {
+    day: (o, t) => ({ ...o, day: Math.round(t * 4000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), day: seed }),
+  decide: ({ sim, day }) => {
+    sim.player.home = { ...sim.player.home!, cityId: 'ie-lei-dublin' };
+    let cuts = 0;
+    for (let d = 0; d < 400; d += 1) if (powerDay(sim, sim.player, sim.now + (day * 400 + d) * 86_400_000) !== undefined) cuts += 1;
+    return cuts > 1 ? 'cuts' : 'few';
+  },
 });
 
 defineDecider<{ sim: Simulation; work: number }, string>({

@@ -1,0 +1,309 @@
+{
+  "meta": {
+    "compiled": "2026-10-01",
+    "purpose": "SLATE errands research: fuel, EV charging, parking, store hours and Sunday trading, urban driving speeds for eight towns.",
+    "towns": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven", "uk-eng-london", "ie-lei-dublin", "ca-on-toronto", "ca-bc-vancouver", "mx-cmx-mexicocity"],
+    "confidence": {
+      "official": "Read from the publisher's own page or data (AAA, gov.uk via its own figures, AA Ireland, CNE/Profeco, ESB, BC Hydro, Zapmap, NYC DOF/DOT, Dublin City Council, Westminster PDF, Sainsbury's/SuperValu/Giant Tiger/Price Rite/Smart & Final/CVS/Walgreens locator data, ontario.ca, Toronto Municipal Code).",
+      "secondary": "Read from a reputable news outlet or aggregator quoting the publisher (CP24/McTeague, Global News, The Journal, Daily Hive, dcfctracker, Yelp-style listings). Marked 'secondary' per record.",
+      "null": "Not found or not verifiable; never filled with an invented number."
+    },
+    "notes": [
+      "Fuel prices in autumn 2026 are high by historical standards (UK diesel ~198p/L, CA regular ~$6.40/gal); these are the published figures, not typos.",
+      "SLATE's GROCERY_CHAINS maps Price Rite to New Haven as 'nearestTo' (store is in Hamden) and The Fresh Grocer to New York: the only NYC Fresh Grocer is 523 Fulton St, Brooklyn (opened February 2026).",
+      "Several store locator pages (Tesco, Boots, Save-On-Foods, Shoppers Drug Mart, London Drugs) block automated reads; their hours here are secondary and flagged."
+    ]
+  },
+
+  "fuel": {
+    "us-ny-newyork": {
+      "currency": "USD", "unit": "gallon",
+      "regular": 4.576, "diesel": 6.738,
+      "area": "AAA metro 'New York' (Nassau-Suffolk listed separately: regular 4.463, diesel 6.592; NY state: regular 4.482, diesel 6.524)",
+      "date": "2026-10-01", "source": "AAA Gas Prices, New York", "url": "https://gasprices.aaa.com/?state=NY", "confidence": "official",
+      "stations": [
+        { "brand": "BP", "address": "3936 10th Ave, New York, NY 10034", "source": "https://map.bp.com/en-US/US/gas-station/new-york/bp/106482" },
+        { "brand": "BP", "address": "255 E 125th St, New York, NY", "source": "https://www.gasbuddy.com/gasprices/new-york/manhattan" },
+        { "brand": "Shell", "address": "232 W 145th St, New York, NY", "source": "https://www.gasbuddy.com/gasprices/new-york/manhattan" },
+        { "brand": "Exxon (AFD 10th Ave)", "address": "10th Ave, New York, NY (exact street number not read; station id 200327743)", "source": "https://www.exxonmobilfuels.com/en/find-gas-station/newyork-ny-afd10thave-200327743" }
+      ]
+    },
+    "us-ca-losangeles": {
+      "currency": "USD", "unit": "gallon",
+      "regular": 6.440, "diesel": 8.366,
+      "area": "AAA metro Los Angeles-Long Beach (CA state: regular 6.402, diesel 8.383)",
+      "date": "2026-10-01", "source": "AAA Gas Prices, California", "url": "https://gasprices.aaa.com/?state=CA", "confidence": "official",
+      "stations": [
+        { "brand": "Chevron", "address": "2065 S La Cienega Blvd, Los Angeles, CA", "hours": "24 hours", "source": "https://www.gasbuddy.com/station/5380" },
+        { "brand": "Chevron", "address": "3300 S La Cienega Blvd, Los Angeles, CA", "source": "https://www.gasbuddy.com/station/5822" },
+        { "brand": "Chevron", "address": "1107 N La Cienega Blvd, West Hollywood, CA", "hours": "24 hours", "source": "https://www.gasbuddy.com/station/11133" }
+      ]
+    },
+    "us-ct-newhaven": {
+      "currency": "USD", "unit": "gallon",
+      "regular": 4.442, "diesel": 6.438,
+      "area": "AAA metro New Haven-Meriden (CT state: regular 4.471, diesel 6.472)",
+      "date": "2026-10-01", "source": "AAA Gas Prices, Connecticut", "url": "https://gasprices.aaa.com/?state=CT", "confidence": "official",
+      "stations": [
+        { "brand": "CITGO", "address": "801 Whalley Ave, New Haven, CT", "hours": "24 hours", "source": "https://www.gasbuddy.com/station/155478" },
+        { "brand": "Mobil (Whalley Avenue Mart)", "address": "284 Whalley Ave, New Haven, CT 06511", "hours": "24 hours", "source": "https://www.gasbuddy.com/station/117073" },
+        { "brand": "Mobil", "address": "1474 Whalley Ave, New Haven, CT", "source": "https://www.gasbuddy.com/station/104319" }
+      ]
+    },
+    "uk-eng-london": {
+      "currency": "GBP", "unit": "litre",
+      "regular": 1.7346, "diesel": 1.9758,
+      "area": "UK national average (ULSP and ULSD pump prices); no London-only official weekly series found",
+      "date": "2026-09-28 (week commencing; published 2026-09-29)",
+      "source": "DESNZ Weekly road fuel prices (gov.uk), figures as reported by IndexBox; the gov.uk page confirms the 28 Sept publication but holds the numbers in its CSV/XLSX",
+      "url": "https://www.gov.uk/government/statistics/weekly-road-fuel-prices",
+      "corroboration": "https://www.indexbox.io/blog/uk-pump-prices-extend-gains-as-diesel-premium-widens/",
+      "confidence": "secondary (quoting official series)",
+      "stations": [
+        { "brand": "Esso (MFG Park Lane)", "address": "77-83 Park Lane, London W1K 7HB", "source": "https://www.esso.co.uk/en-gb/find-station/esso-london-essomfgparklane-100347239" },
+        { "brand": "Shell", "address": "106 Old Brompton Road, London SW7 3RA", "source": "https://petrolmap.co.uk/petrol-stations/inner-london/london/shell-old-brompton/4409" },
+        { "brand": "Esso", "address": "Marylebone Road, London NW1 5AR", "source": "https://petrolmap.co.uk/petrol-stations/london/london" }
+      ]
+    },
+    "ie-lei-dublin": {
+      "currency": "EUR", "unit": "litre",
+      "regular": 1.87, "diesel": 1.94,
+      "area": "Ireland national average, September 2026 monthly survey",
+      "date": "2026-09 (AA Ireland September analysis)",
+      "source": "AA Ireland fuel price analysis, September 2026",
+      "url": "https://www.theaa.ie/blog/september-fuel-prices-2026/",
+      "confidence": "official",
+      "note": "Excise restoration (+9c petrol, +10c diesel) deferred; reduced rates remain to 31 October 2026.",
+      "stations": [
+        { "brand": "Maxol", "address": "134 Richmond Road, Ballybough/Drumcondra, Dublin 3, D03 R684", "hours": "06:00-21:00 daily (secondary)", "source": "https://www.yelp.com/biz/maxol-filling-station-dublin-2" },
+        { "brand": "Maxol", "address": "Ringsend Road, Dublin 4", "source": "https://stations.maxol.ie/dublin/dublin/ringsend-road" },
+        { "brand": "Circle K", "address": "Greenhills Road, Dublin (Eircode D24 N5YD)", "source": "https://pickapump.com/station/a5fa1d7e-efc9-4c62-8f5f-80870f1a9e6f" },
+        { "brand": "Applegreen", "address": "16 Ballinteer Ave, Ballinteer, Dublin 16, D16 AH39", "source": "https://pickapump.com/stations/dublin/applegreen-16-ballinteer-ave-ballinteer-d16-ah39-86ee5e" }
+      ]
+    },
+    "ca-on-toronto": {
+      "currency": "CAD", "unit": "litre",
+      "regular": 1.789, "diesel": 2.589,
+      "area": "Toronto/GTA; regular is the 1 Oct 2026 posted price, diesel is the 2 Oct forecast (no 1 Oct diesel figure published on the page)",
+      "date": "2026-10-01",
+      "source": "Canadians for Affordable Energy (Dan McTeague) Gas Wizard, Toronto",
+      "url": "https://www.affordableenergy.ca/gas-prices/toronto/",
+      "corroboration": "CP24 16 Sept 2026: regular 190.9, diesel 268.9 c/L (https://www.cp24.com/local/toronto/2026/09/16/gas-prices-in-gta-to-rise-overnight-before-double-digit-drop-by-friday-analyst-says/)",
+      "statcan": "Statistics Canada table 18-10-0001-01 not readable by fetch; a search summary claimed Aug 2026 Toronto regular 170.0 c/L but it was not verified, so not used",
+      "confidence": "secondary",
+      "stations": [
+        { "brand": "Petro-Canada", "address": "117 Jarvis St, Toronto, ON", "hours": "24 hours", "source": "https://www.gasbuddy.com/station/4441" },
+        { "brand": "Esso (Circle K)", "address": "1110 Bathurst St, Toronto, ON", "hours": "24 hours", "source": "https://www.esso.ca/en-ca/find-station/toronto-on-esso-200302395" },
+        { "brand": "Esso", "address": "3069 Bathurst St, Toronto, ON", "hours": "24 hours", "source": "https://www.gasbuddy.com/station/22194" }
+      ]
+    },
+    "ca-bc-vancouver": {
+      "currency": "CAD", "unit": "litre",
+      "regular": 2.029, "diesel": 2.849,
+      "area": "Vancouver; Gas Wizard forecast for Thursday 1 Oct 2026",
+      "date": "2026-10-01",
+      "source": "Canadians for Affordable Energy (Dan McTeague) Gas Wizard, Vancouver",
+      "url": "https://www.affordableenergy.ca/gas-prices/vancouver/",
+      "context": "Federal fuel tax relief ended 8 Sept 2026 (+~10 c/L regular, +4 c/L diesel), per Kalibrate via Daily Hive (https://dailyhive.com/vancouver/vancouver-gas-prices-sept-2026).",
+      "confidence": "secondary",
+      "stations": [
+        { "brand": "Esso", "address": "1205 Burrard St, Vancouver, BC", "source": "https://www.gasbuddy.com/station/9707" },
+        { "brand": "Chevron", "address": "1900 Burrard St, Vancouver, BC", "source": "https://www.gasbuddy.com/station/65543" },
+        { "brand": "Esso", "address": "1795 W Broadway, Vancouver, BC", "source": "https://www.gasbuddy.com/station/65554" }
+      ]
+    },
+    "mx-cmx-mexicocity": {
+      "currency": "MXN", "unit": "litre",
+      "regular": 23.805, "premium": 28.808, "diesel": 26.975,
+      "area": "CDMX average (Magna = regular)",
+      "date": "2026-09-30",
+      "source": "Comisión Nacional de Energía (CNE, successor to CRE) and Profeco data, as reported by Infobae",
+      "url": "https://www.infobae.com/mexico/2026/09/30/cual-es-el-precio-de-la-gasolina-hoy-miercoles-30-de-septiembre-en-ciudad-de-mexico/",
+      "corroboration": "Profeco 'Quién es Quién' 7 Sept 2026 reported regular 23.68 MXN/L (https://www.poresto.com/mexico/2026/9/7/profeco-reporta-gasolina-regular-en-2368-pesos-y-canasta-basica-desde-740-pesos.html)",
+      "confidence": "secondary (quoting official data)",
+      "stations": [
+        { "brand": "TotalEnergies (Total Insurgentes)", "address": "Av. Insurgentes Sur 507, Hipódromo Condesa, Cuauhtémoc, CDMX", "hours": "24 hours", "source": "https://www.eluniversal.com.mx/autopistas/las-mejores-gasolineras-de-la-cdmx-segun-google-maps/" },
+        { "brand": "BP (BP San Rafael)", "address": "Av. Ribera de San Cosme 114, San Rafael, Cuauhtémoc, CDMX", "source": "https://www.eluniversal.com.mx/autopistas/las-mejores-gasolineras-de-la-cdmx-segun-google-maps/" },
+        { "brand": "Pemex (Pemex Doctores)", "address": "Calle Dr. José María Vértiz 431, Doctores, Cuauhtémoc, CDMX", "source": "https://www.eluniversal.com.mx/autopistas/las-mejores-gasolineras-de-la-cdmx-segun-google-maps/" },
+        { "brand": "Valero (Valero Cuitláhuac)", "address": "Calle Muitle 189, Victoria de las Democracias, Azcapotzalco, CDMX", "hours": "24 hours", "source": "https://www.eluniversal.com.mx/autopistas/las-mejores-gasolineras-de-la-cdmx-segun-google-maps/" }
+      ]
+    }
+  },
+
+  "charging": {
+    "US": {
+      "currency": "USD", "unit": "kWh",
+      "basis": "dcfctracker.com: unweighted average of peak (time-of-use) per-kWh price across tracked public DC fast sites, October 2026; free and per-minute-only sites excluded",
+      "networks": [
+        { "network": "Tesla Supercharger (sites open to non-Teslas, standard rate)", "national": 0.614, "CA": 0.706, "NY": 0.547, "CT": 0.691, "url": "https://dcfctracker.com/reports/tesla", "membership": "Non-Tesla Supercharging membership $12.99/month (secondary: https://recharged.com/articles/ev-supercharger-cost-per-kwh)" },
+        { "network": "Electrify America", "national": 0.613, "CA": 0.693, "NY": 0.540, "CT": 0.650, "url": "https://dcfctracker.com/reports/electrify-america" },
+        { "network": "EVgo", "national": 0.640, "CA": 0.663, "NY": 0.694, "CT": 0.667, "url": "https://dcfctracker.com/reports/evgo", "membership": "EVgo Plus $6.99/month (secondary)" },
+        { "network": "ChargePoint", "national": null, "note": "ChargePoint is a hardware/software network; each site host sets its own price (per kWh, per hour or free). No representative published figure found." }
+      ],
+      "date": "2026-10", "confidence": "secondary (independent tracker of operators' published prices)"
+    },
+    "GB": {
+      "currency": "GBP", "unit": "kWh",
+      "networks": [
+        { "network": "Zapmap Price Index, rapid/ultra-rapid (50kW+) weighted average PAYG", "price": 0.77, "date": "2026-08", "url": "https://www.zapmap.com/ev-stats/charging-price-index" },
+        { "network": "Zapmap Price Index, slow/fast (3-49kW) weighted average PAYG", "price": 0.54, "date": "2026-08", "url": "https://www.zapmap.com/ev-stats/charging-price-index" },
+        { "network": "Tesla Supercharger (public sites, average)", "price": 0.63, "teslaOwners": 0.46, "date": "2026-08", "url": "https://www.zapmap.com/ev-stats/charging-price-index" },
+        { "network": "IONITY (150-400kW) PAYG", "price": 0.83, "date": "2026-09", "url": "https://www.zapmap.com/ev-guides/public-charging-point-networks/ionity-network" },
+        { "network": "InstaVolt PAYG", "price50to149kW": 0.85, "price150to400kW": 0.92, "date": "2026-09", "url": "https://www.zapmap.com/ev-guides/public-charging-point-networks/instavolt-network" },
+        { "network": "bp pulse", "price": null, "note": "Zapmap bp pulse page 404; secondary sites quote 79p/kWh ultra-rapid (https://chargefinder.uk/network/bp-pulse/), not verified at source." }
+      ],
+      "homeReference": "Ofgem price cap ~26p/kWh; EV off-peak tariffs average 8.6p/kWh (Zapmap, Aug 2026)",
+      "confidence": "official (Zapmap is the UK's standard public-charging price index)"
+    },
+    "IE": {
+      "currency": "EUR", "unit": "kWh",
+      "networks": [
+        { "network": "ESB ecars PAYG", "ac": 0.60, "dc50kWPlus": 0.72 },
+        { "network": "ESB ecars Membership (EUR 4.79/month, 12-month minimum)", "ac": 0.55, "dc50kWPlus": 0.67 }
+      ],
+      "overstay": "EUR 0.50/min after 45 min on fast/high-power or 10 h on AC; cap EUR 22.50",
+      "date": "valid from 2026-07-01", "url": "https://esb.ie/what-we-do/ecars/price-plans", "confidence": "official"
+    },
+    "CA": {
+      "currency": "CAD", "unit": "kWh",
+      "networks": [
+        { "network": "BC Hydro EV (Vancouver)", "dcFast25kWPlus": 0.3969, "level2": 0.3083, "idleFee": "CAD 0.40/min after 5-min grace (DC only)", "pricesBeforeTax": true, "date": "effective 2026-04-01", "url": "https://www.bchydro.com/powersmart/electric-vehicles/public-charging/charging-rates-roaming.html", "confidence": "official" },
+        { "network": "Electrify Canada", "BC": 0.70, "ON": "0.60-0.70 by site", "membership": "Pass+ CAD 7/month, 20% off", "date": "2024-01-09 (switch to kWh billing; no newer published table found; current prices are shown only in app/charger)", "url": "https://driveteslacanada.ca/news/electrify-canada-switches-to-kwh-billing/", "confidence": "secondary, dated" },
+        { "network": "FLO", "price": null, "note": "Only blog ranges found (CAD 0.30-0.45/kWh, thinkev.ca, Mar 2026); not verified at FLO." },
+        { "network": "Tesla Supercharger (Canada)", "price": null, "note": "Only blog ranges found (CAD 0.35-0.45/kWh non-Tesla, Ontario); not verified." }
+      ]
+    },
+    "MX": {
+      "currency": "MXN", "unit": "kWh",
+      "networks": [
+        { "network": "Tesla Supercharger (Mexico)", "price": null, "note": "Tesla publishes per-site prices only in-app. Press figures: MXN 1.71-1.81/kWh at Nov-Dec 2022 launch (El Universal); a 2025 blog claims MXN 7.50-9.00/kWh for public DC (Tesla/Evergo), unverified." },
+        { "network": "CFE residential (home charging reference)", "range": "MXN ~1.8-3.5/kWh, average ~2.65", "date": "2026-04-18", "url": "https://www.motorpasion.com.mx/industria/cuanto-cuesta-cargar-auto-electrico-mexico-2026", "confidence": "secondary" }
+      ]
+    }
+  },
+
+  "parking": {
+    "us-ny-newyork": {
+      "currency": "USD",
+      "meters": {
+        "M1 Midtown Core & Lower Manhattan": { "hour1": 5.50, "hour2": 9.00 },
+        "M2 Manhattan south of 96th St": { "hour1": 5.00, "hour2": 8.25 },
+        "M3 Manhattan 96th-110th St": { "hour1": 3.00, "hour2": 5.00 },
+        "Other boroughs Zone 1 business districts": { "hour1": 2.50, "hour2": 5.00 },
+        "Other boroughs Zone 2 neighborhood retail": { "hour1": 2.00, "hour2": 3.00 },
+        "Other boroughs Zone 3 all other": { "hour1": 1.50, "hour2": 2.50 },
+        "Commercial M1": { "hour1": 7.00, "hour2": 10.00, "hour3": 13.00 },
+        "Commercial M2": { "hour1": 6.00, "hour2": 9.00, "hour3": 12.00 }
+      },
+      "meterNote": "Rates are cumulative per hour in progressive pricing; 'hour2' is the price for the second hour as listed. No effective date on page.",
+      "meterSource": "https://www.nyc.gov/html/dot/html/motorist/parking-rates.shtml",
+      "garage": null, "garageNote": "No authoritative published average found; garage prices are posted per facility (NYC DCWP requires posting).",
+      "fineExpiredMeter": { "manhattanAt96thStAndBelow": 65, "allOtherAreas": 35, "codes": "37 (overtime) / 38 (no receipt)", "includes": "$15 NYS surcharge", "source": "https://www.nyc.gov/site/finance/vehicles/services-violation-codes.page", "confidence": "official" },
+      "fineStreetCleaning": 65
+    },
+    "us-ca-losangeles": {
+      "currency": "USD",
+      "meters": {
+        "baseRate": 1.50, "baseRateNote": "Council raised base meter rate from $1.00 to $1.50/hr (Oct 2025); extended hours to 8 pm (midnight in high-activity areas) and Sunday enforcement planned, rollout up to six months",
+        "laExpressPark": "Demand-based (DTLA, Hollywood, Westwood, Venice); rates shown on each meter, adjusted periodically (latest DTLA change 2026-08-10). Secondary sources cite $0.50-$7.00/hr in DTLA.",
+        "sources": ["https://lakebalboanc.org/2025/10/la-city-council-approved-an-increase-in-parking-meter-rates-the-first-since-2014/", "https://www.laexpresspark.org/category/rate-changes/"]
+      },
+      "garage": null,
+      "fineExpiredMeter": { "amount": 63, "code": "LAMC 88.13(b) Overtime use of meter space", "latePenalty1": 126, "latePenalty2": 151, "note": "A July 2025 LADOT fine study proposed raising it to $70; no evidence of adoption found. Crosstown (Aug 2026) still reports $63.", "sources": ["https://www.spotangels.com/blog/complete-guide-to-la-street-parking-rules-and-tickets/", "https://xtown.la/2026/08/20/parking-ticket-where-you-live-in-l-a-can-determine-how-much-you-pay/", "https://cityclerk.lacity.org/onlinedocs/2025/25-0600-s40_rpt_dot_7-02-25.pdf"], "confidence": "secondary" },
+      "fineStreetCleaning": 73
+    },
+    "us-ct-newhaven": {
+      "currency": "USD",
+      "meters": { "range": "1.00-2.00 per hour (e.g. 1-Hour/$1.50, 2-Hour/$1.00-$1.50; some 15/30-min meters $2.00/hr)", "enforcement": "Mon-Sat until 9 pm, except holidays; no time limits after 5 pm", "source": "https://parknewhaven.com/on-street-parking/ (via search summary; page timed out)", "confidence": "secondary" },
+      "garage": null,
+      "fineExpiredMeter": { "amount": 25, "source": "https://www.parksy.com/fines/us/ct/new-haven", "confidence": "secondary (aggregator); New Haven Code ch. 29 not read" }
+    },
+    "uk-eng-london": {
+      "currency": "GBP",
+      "westminster": {
+        "effective": "2026-03-02",
+        "basePerHour": { "A": 4.70, "B": 3.81, "C": 2.16, "D": 3.15, "E": 6.52, "F": 6.83, "G": 6.83 },
+        "previousBasePerHour": { "A": 4.55, "B": 3.69, "C": 2.09, "D": 3.05, "E": 6.30, "F": 6.60, "G": 6.60 },
+        "emissionsBands": "Band 1 (0 g/km) -30%; band 2 (1-90) about -17%; band 3 (91-150) about +14%; band 4 (151-255) about +28%; band 5 (>256 or unregistered) about +55% vs zone base; plus up to 50% surcharge for pre-2015 diesels",
+        "operatorFee": "Up to 30p per transaction (RingGo, PayByPhone, JustPark)",
+        "source": "https://www.westminster.gov.uk/media/document/new-charges-from-mon-2-march-2026", "confidence": "official"
+      },
+      "camden": { "perHour": null, "note": "Camden fees and charges 2026-27 PDF exists but returned 403: https://www.camden.gov.uk/documents/d/guest/fees-and-charges-2026-27-april-2-" },
+      "garage": null,
+      "fineExpiredMeter": { "amount": 110, "discounted14Days": 55, "band": "Band A lower-level contravention (Westminster and Camden are Band A); higher-level is 160", "chargeCertificate": 165, "sources": ["https://www.westminster.gov.uk/media/document/new-charges-from-mon-2-march-2026", "https://www.londoncouncils.gov.uk/services/parking-services/parking-and-traffic-charges-london"], "confidence": "official" }
+    },
+    "ie-lei-dublin": {
+      "currency": "EUR",
+      "meters": { "Yellow": 4.00, "Red": 3.50, "Green": 2.00, "Orange": 1.20, "Blue": 0.90, "White (Sun 14:00-18:00 only)": 1.80, "hours": "As signed, e.g. 07:00-19:00 Mon-Sat; free on designated public holidays", "source": "https://www.dublincity.ie/travel-and-transport/parking-dublin-city/pay-and-display-parking", "confidence": "official" },
+      "garage": null,
+      "fineExpiredMeter": { "fixedCharge": 80, "after28Days": 120, "clampRelease": 125, "towRemoval": 250, "storagePerDay": 35, "note": "Dublin is moving from clamping to a tow-and-fine regime (Apcoa contract, Sept 2026)", "sources": ["https://www.odo.ie/guides/clamping-parking-fines-ireland", "https://www.irishtimes.com/transport/2026/09/16/i-was-distraught-motorists-share-clamping-stories-as-dublin-moves-to-new-tow-and-fine-regime/"], "confidence": "secondary" }
+    },
+    "ca-on-toronto": {
+      "currency": "CAD",
+      "meters": { "range": "1.50-6.75 per hour incl. HST; downtown typically ~5.00 with 1-hour maximums", "note": "Toronto Parking Authority raised downtown on-street rates for 2026", "source": "https://www.drivee.ca/blog/green-p-parking-rates-2026.html", "confidence": "secondary" },
+      "garage": null,
+      "fineExpiredMeter": { "onStreet": 30, "offStreetGreenPLot": 75, "note": "On-street $30 from secondary sources; TPA's Oct 2020 report proposed raising off-street (Green P lot) penalties from $30 to $75, implemented 2021.", "sources": ["https://appealpro.ca/cities/toronto", "https://www.toronto.ca/legdocs/mmis/2020/ex/bgrd/backgroundfile-159068.pdf"], "confidence": "secondary" }
+    },
+    "ca-bc-vancouver": {
+      "currency": "CAD",
+      "meters": { "range": "1.00-11.00 per hour daytime (9am-6pm), 1.00-7.00 evening (6-10pm), demand-based by block; 2026 minimum rises from 1.00 to 1.50", "source": "https://vancouver.ca/news-calendar/council-approves-parking-fees-and-regulations-nov-2024.aspx (via search summary)", "confidence": "secondary" },
+      "garage": null,
+      "fineExpiredMeter": { "amount": null, "note": "Set in Schedule A of By-law 10201 (https://bylaws.vancouver.ca/10201c.pdf), which blocked fetch. Search results giving $25/$50 come from Vancouver, Washington's code (vancouver.municipal.codes), not Vancouver BC, so not used." }
+    },
+    "mx-cmx-mexicocity": {
+      "currency": "MXN",
+      "meters": { "per15Min": 3.40, "perHour": 13.60, "effective": "2026-01-01", "hours": "Mostly Mon-Fri 08:00-20:00; Polanco Wed-Sat to 01:00; Roma-Hipódromo Thu-Sat to 01:00", "zones": "Polanco, Roma-Condesa, Anzures, Lomas, Benito Juárez (Nápoles, Florida, Guadalupe Inn, etc.)", "legal": "Código Fiscal CDMX 2026, art. 259", "source": "https://www.chilango.com/noticias/transporte/parquimetros-en-cdmx-suben-de-precio-en-2026-horarios-y-como-pagar/", "confidence": "secondary" },
+      "garage": null,
+      "fineExpiredMeter": { "umaMultiples": [5, 7, 10], "umaDaily2026": 117.31, "amountRange": "586.55-1173.10", "immobilizerRelease": 340, "sources": ["https://www.chilango.com/noticias/transporte/parquimetros-en-cdmx-suben-de-precio-en-2026-horarios-y-como-pagar/", "https://calculadora-uma.com/umas-2026"], "confidence": "secondary" }
+    }
+  },
+
+  "hours": {
+    "grocery": [
+      { "chain": "Price Rite Marketplace", "town": "us-ct-newhaven", "store": "Price Rite of Hamden, 1869 Dixwell Avenue, Hamden, CT 06514", "hours": "Mon-Sat 08:00-21:00; Sun 08:00-20:00", "source": "Price Rite store data (rsid 301) on priceritemarketplace.com", "confidence": "official" },
+      { "chain": "The Fresh Grocer", "town": "us-ny-newyork", "store": "The Fresh Grocer of Fulton St, 523 Fulton St, Brooklyn, NY 11201", "hours": "Daily 07:00-22:00", "source": "https://www.yelp.com/biz/the-fresh-grocer-brooklyn ; chain site lists store but openingHours null", "confidence": "secondary" },
+      { "chain": "Smart & Final", "town": "us-ca-losangeles", "store": "Smart & Final Extra!, 845 S Figueroa St, Los Angeles, CA 90017", "hours": "Daily 06:00-22:00", "source": "smartandfinal.com/stores/los-angeles store data", "confidence": "official" },
+      { "chain": "Tesco", "town": "uk-eng-london", "store": "Tesco Kensington Superstore, West Cromwell Road, London W14 8PB", "hours": "Mon-Sat 24 hours; Sun 11:00-17:00", "source": "https://www.opening-times.co.uk/Tesco-Superstore/London/West-Cromwell-Rd-Kensington/ (tesco.com locator blocks automated reads)", "confidence": "secondary" },
+      { "chain": "Sainsbury's", "town": "uk-eng-london", "store": "Sainsbury's Nine Elms, 62 Wandsworth Road, London SW8 2LF", "hours": "Mon-Sat 07:00-23:00; Sun 11:00-17:00", "also": "Camden, 17-21 Camden Road NW1 9LJ: Mon-Fri 07:00-23:00, Sat 07:00-22:00, Sun 11:00-17:00; Whitechapel, 1 Cambridge Heath Road E1 5SD: Mon-Sat 07:00-23:00, Sun 11:00-17:00", "source": "https://api.stores.sainsburys.co.uk/v1/stores/2665 (store locator API)", "confidence": "official" },
+      { "chain": "SuperValu", "town": "ie-lei-dublin", "store": "SuperValu Aston Quay, City Centre, Dublin", "hours": "Mon-Sat 07:00-23:00; Sun 07:00-22:00", "also": "SuperValu Ranelagh, Main Street, Dublin 6: daily 06:00-22:00", "source": "https://supervalu.ie/store-locator (embedded store data, modified 2026-08-27)", "confidence": "official" },
+      { "chain": "Save-On-Foods", "town": "ca-bc-vancouver", "store": "Save-On-Foods Cambie, 2308 Cambie Street, Vancouver, BC V5Z 2T8", "hours": "Daily 07:00-22:00 (in-store pharmacy Mon-Fri 09:00-19:00, Sat-Sun 09:00-17:00)", "source": "https://www.saveonfoods.com/store-information/cambie/937 (blocked; hours via secondary listings)", "confidence": "secondary" },
+      { "chain": "Giant Tiger", "town": "ca-on-toronto", "store": "Giant Tiger Kennedy Rd, 682 Kennedy Road, Scarborough (Toronto), ON M1K 2B5", "hours": "Mon-Sat 08:00-21:00; Sun 08:00-19:00", "also": "No Giant Tiger in old Toronto; others at 3750 Lawrence Ave E (Scarborough) and 2145 Kipling Ave (Etobicoke)", "source": "https://stores.gianttiger.com/on/scarborough/scarborough-kennedy-rd-00159.html", "confidence": "official" },
+      { "chain": "Chedraui", "town": "mx-cmx-mexicocity", "store": "Chedraui Eduardo Molina, Av. Ing. Eduardo Molina 1623, El Coyol, 17420 CDMX", "hours": "Daily 07:00-23:00", "also": "Selecto Chedraui Centro Santa Fe (Vasco de Quiroga 3800): daily 11:00-20:00 (mall hours)", "source": "search summary of Chedraui store listings (sucursales.net / centrosantafe.com.mx)", "confidence": "secondary" }
+    ],
+    "pharmacy": [
+      { "chain": "CVS Pharmacy", "town": "us-ny-newyork", "store": "CVS #4014, 2182 Broadway (77th-78th St), New York, NY 10024", "storeHours": "Daily 07:00-00:00", "pharmacyHours": "Mon-Fri 09:00-18:00; Sat-Sun 10:00-18:00", "note": "24-hour CVS stores exist at 1440 Broadway and 217 Broadway (secondary)", "source": "https://www.cvs.com/store-locator/new-york-ny-pharmacies/2182-broadway-new-york-ny-10024/storeid=4014", "confidence": "official" },
+      { "chain": "CVS Pharmacy", "town": "us-ct-newhaven", "store": "CVS #811, 1150 Whalley Ave, New Haven, CT 06515", "storeHours": "Mon-Fri 08:00-22:00; Sat-Sun 08:00-21:00", "pharmacyHours": "Mon-Fri 08:00-18:00; Sat 09:00-18:00; Sun 10:00-18:00", "source": "https://www.cvs.com/store-locator/new-haven-ct-pharmacies/1150-whalley-ave-new-haven-ct-06515/storeid=811", "confidence": "official" },
+      { "chain": "Walgreens", "town": "us-ca-losangeles", "store": "Walgreens #6516, 5467 Wilshire Blvd, Los Angeles, CA 90036", "storeHours": "Daily 07:00-23:00", "pharmacyHours": "Mon-Fri 09:00-18:00; Sat-Sun 10:00-18:00; closed 13:30-14:00 daily", "source": "https://www.walgreens.com/locator/walgreens-5467+wilshire+blvd-los+angeles-ca-90036/id=6516", "confidence": "official" },
+      { "chain": "Boots", "town": "uk-eng-london", "store": "Boots Piccadilly Circus, 44-46 Regent Street, London W1B 5RA", "storeHours": "Mon-Fri 08:00-23:00; Sat 09:00-23:00; Sun 12:00-18:00", "pharmacyHours": null, "source": "https://www.boots.com/stores/1000-london-piccadilly-circus-w1b-5ra (bot-blocked; hours via search summary of that page)", "confidence": "secondary" },
+      { "chain": "Boots", "town": "ie-lei-dublin", "store": "Boots Henry Street, 20 Henry Street, Dublin 1, D01 CD63", "pharmacyHours": "Mon-Sat 08:30-19:00; Sun 11:00-18:00", "source": "https://www.boots.ie/stores/dublin-boots-henry-street (bot-blocked; hours via secondary listings)", "confidence": "secondary" },
+      { "chain": "Shoppers Drug Mart", "town": "ca-on-toronto", "store": "Shoppers Drug Mart #1378 Yonge & Charles, 728 Yonge Street, Toronto, ON M4Y 2B3", "storeHours": "Daily 08:00-00:00 (Yelp lists Sat from 09:00, Sun from 10:00)", "pharmacyHours": null, "source": "https://www.shoppersdrugmart.ca/en/stores/1378-shoppers-drug-mart-yonge-charles/ (JS-rendered; hours via secondary listings)", "confidence": "secondary, sources disagree on weekend opening" },
+      { "chain": "London Drugs", "town": "ca-bc-vancouver", "store": "London Drugs Granville & Georgia, 710 Granville Street, Vancouver, BC V6Z 1E4", "storeHours": "Mon-Fri 08:00-22:00; Sat 09:00-22:00; Sun 10:00-20:00", "pharmacyHours": "Mon-Fri 09:00-19:00; Sat 09:00-18:00; Sun 10:00-18:00", "source": "https://www.yellowpages.ca/bus/British-Columbia/Vancouver/London-Drugs-Pharmacy/2381176.html", "confidence": "secondary" },
+      { "chain": "Farmacias del Ahorro", "town": "mx-cmx-mexicocity", "store": "Farmacias del Ahorro Hospital General, C. Dr. Lucio 269, Doctores, Cuauhtémoc, CDMX", "storeHours": "24 hours", "also": "24-hour: Simón Bolívar 219 (Obrera); Belisario Domínguez 3 (Centro); Av. Cuauhtémoc 919 B (Narvarte); Matías Romero 68 (Del Valle); Av. Revolución 8 (San José Insurgentes)", "source": "https://sucursales.net/farmacia-del-ahorro-cuauhtemoc/", "confidence": "secondary" }
+    ],
+    "sundayTrading": {
+      "uk-eng-london": { "rule": "Sunday Trading Act 1994 (England & Wales): shops over 280 m2 (3,000 sq ft) may open for at most 6 continuous hours between 10:00 and 18:00 on Sunday; must close Easter Sunday; Christmas Day closed under Christmas Day (Trading) Act 2004. Small shops (<280 m2) unrestricted. Registered pharmacies selling only medicinal products and medical/surgical appliances are exempt (Schedule 1 exemption; not fetched, verify).", "observed": "Sainsbury's Nine Elms, Camden, Whitechapel and Tesco Kensington all open Sun 11:00-17:00", "source": "https://commonslibrary.parliament.uk/research-briefings/sn05522/" },
+      "ie-lei-dublin": { "rule": "No Sunday trading restrictions in Ireland; stores set their own hours (e.g. SuperValu Aston Quay Sun 07:00-22:00).", "source": "SuperValu store data; no statutory Sunday trading law exists (the Commons Library note covers GB only)", "citationNote": "No primary Irish source fetched stating the absence; inferred from store hours" },
+      "ca-on-toronto": { "rule": "No Sunday restriction. Retail holiday closures: Ontario's Retail Business Holidays Act does not apply to Toronto (s.1.1); Toronto Municipal Code ch. 510 closes retail on New Year's Day, Family Day, Good Friday, Easter Sunday, Victoria Day, Canada Day, Labour Day, Thanksgiving and Christmas Day. Exempt: small stores (<2,400 sq ft, <=3 staff, listed goods), pharmacies (<7,500 sq ft, dispensing available, principally pharmacy goods), gas stations, nurseries, tourist areas. From April 2026 municipalities may no longer require closure on Family Day and Victoria Day.", "sources": ["https://www.toronto.ca/legdocs/municode/1184_510.pdf", "https://www.ontario.ca/page/retail-business-holidays"] },
+      "ca-bc-vancouver": { "rule": "No Sunday or statutory-holiday closure requirement found; retailers may open on holidays if they pay statutory holiday pay under the Employment Standards Act.", "source": "https://www2.gov.bc.ca/gov/content/employment-business/employment-standards-advice/employment-standards/statutory-holidays", "confidence": "secondary for the 'no closure law' point" },
+      "us-ny-newyork": { "rule": "No general Sunday retail restriction. Alcohol: off-premises beer sales not permitted 03:00-08:00 Sunday; liquor stores may open Sunday (hours restricted by NY ABC Law).", "source": null, "note": "Alcohol hour detail from general knowledge, not fetched; verify before use." },
+      "us-ct-newhaven": { "rule": "No general Sunday retail restriction.", "source": null },
+      "us-ca-losangeles": { "rule": "No general Sunday retail restriction.", "source": null },
+      "mx-cmx-mexicocity": { "rule": "No Sunday retail restriction; many chains open daily, some 24 hours.", "source": null }
+    }
+  },
+
+  "driving": {
+    "basis": "TomTom Traffic Index 2025 (data year 2025, published Jan 2026), average travel time per 10 km in the city; per-km figures multiplied by 10 where only per-km was published",
+    "cities": {
+      "us-ny-newyork": { "per10km": "31:00", "year": 2024, "note": "2025 per-10km figure not confirmed; 2024 index: ~31 min per 10 km vs 24 min free-flow. 2025: congestion 45.6% (H1) / 51.3% (H2), 120 hours lost at peak; secondary search snippets claim 31:35 per 10 km and 19.0 km/h average speed (unverified)", "sources": ["https://www.tomtom.com/newsroom/explainers-and-insights/new-york-is-usa-slowest-moving-city/", "https://www.tomtom.com/newsroom/explainers-and-insights/tomtom-traffic-index-2026-headline-numbers/"] },
+      "us-ca-losangeles": { "per10km": "15:30", "perKm": "1:33", "freeFlowPerKm": "0:58", "congestion": 59.8, "hoursLostPeak": 80, "year": 2025, "sources": ["https://www.tomtom.com/newsroom/explainers-and-insights/tomtom-traffic-index-2026-headline-numbers/", "https://www.tomtom.com/newsroom/press-releases/general/136190136013341/traffic-index-us-ranks-among-worlds-least-congested-countries-despite-gridlocked-cities/"], "note": "TomTom press release text gives 58.9% congestion vs 59.8% elsewhere" },
+      "us-ct-newhaven": { "per10km": null, "note": "New Haven is not in the TomTom Traffic Index city list as far as found" },
+      "uk-eng-london": { "per10km": "36:20", "perKm": "3:38", "freeFlowPerKm": "2:23", "congestion": 51.6, "year": 2025, "source": "https://www.tomtom.com/newsroom/explainers-and-insights/tomtom-traffic-index-2026-headline-numbers/" },
+      "ie-lei-dublin": { "per10km": "34:29", "perKm": "3:27", "congestion": 72.9, "rushHourSpeedKmh": 13.5, "timeLostPeak": "7 days 23 hours", "year": 2025, "rank": "3rd most congested, 6th slowest worldwide", "source": "https://www.thejournal.ie/dublin-traffic-congestion-tomtom-research-6933461-Jan2026/" },
+      "ca-on-toronto": { "per10km": "26:40", "congestion": 47.7, "rushHourSpeedKmh": 18.9, "hoursLostPeak": 100, "year": 2025, "source": "https://globalnews.ca/news/11644993/toronto-traffic-report-2025/" },
+      "ca-bc-vancouver": { "per10km": null, "per10kmMorningRush": "29:33", "per10kmEveningRush": "35:18", "rushSpeedKmh": { "morning": 20.3, "evening": 17.0 }, "congestion": 56.5, "hoursLostPeak": 112, "year": 2025, "note": "All-day average per 10 km not published in the article", "source": "https://dailyhive.com/vancouver/vancouver-most-congested-traffic" },
+      "mx-cmx-mexicocity": { "per10km": "34:30", "perKm": "3:27", "freeFlowPerKm": "1:57", "congestion": 75.9, "year": 2025, "rank": "most congested city in the index", "source": "https://www.tomtom.com/newsroom/explainers-and-insights/tomtom-traffic-index-2026-headline-numbers/" }
+    },
+    "usFuelEconomy": { "mpg": 27.2, "basis": "Estimated real-world fuel economy, average new vehicle, model year 2024 (record); 1.7 mpg lower without BEVs/PHEVs", "source": "EPA Automotive Trends Report 2025", "url": "https://www.epa.gov/automotive-trends/highlights-automotive-trends-report", "confidence": "secondary (search summary of EPA page)" }
+  }
+}
