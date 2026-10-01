@@ -19,11 +19,12 @@ import { figuresFor, latePenalty } from '@/engine/systems/taxreturn';
 import { exchange } from '@/engine/content/currency';
 import { saveCurrency } from '@/engine/core/money';
 import { depositCapMonths } from '@/engine/systems/household';
+import { PROPERTY_MANAGERS } from '@/engine/content/propertymanagers';
+import { lettingFee, managementFee, renewalFee } from '@/engine/systems/propertymanagers';
 import {
   HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
   lifeOf, livingIn, loanBalance, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
-  type Listing, type OwnedHome,
-} from '@/engine/systems/homes';
+  type Listing, type OwnedHome, renewTenancy } from '@/engine/systems/homes';
 
 function save(seed: string, city = 'us-ct-newhaven'): Simulation {
   return quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -352,6 +353,77 @@ describe('letting', () => {
     expect(sim.execute({ kind: 'home.let', payload: { homeId: owned.id, rent: 1_000_00 } }).ok).toBe(false);
     const other = bought('homes-let-high', 0.25, false);
     expect(other.sim.execute({ kind: 'home.let', payload: { homeId: other.owned.id, rent: 1_000_000_00 } }).ok).toBe(false);
+  });
+});
+
+describe('a letting agent', () => {
+  it('lets a home while you’re away, where letting it yourself waits for you to hand over the keys', () => {
+    const self = bought('homes-agent-self', 0.25, false);
+    self.sim.player.currentLocationId = 'us-ny-newyork';
+    self.sim.must({ kind: 'home.let', payload: { homeId: self.owned.id, rent: 2_000_00 } });
+    self.sim.advanceBy(200 * MS_DAY);
+    expect(self.owned.tenancies[0]!.status).toBe('advertised');
+    self.sim.player.currentLocationId = 'us-ct-newhaven';
+    self.sim.advanceBy(2 * MS_DAY);
+    expect(self.owned.tenancies[0]!.status).toBe('let');
+
+    const { sim, owned } = bought('homes-agent', 0.25, false);
+    sim.player.currentLocationId = 'us-ny-newyork';
+    sim.must({ kind: 'home.manager', payload: { homeId: owned.id, on: true } });
+    expect(owned.manager).toBe('nexus-new-haven');
+    sim.must({ kind: 'home.let', payload: { homeId: owned.id, rent: 2_000_00 } });
+    const before = sim.universe.transactions.length;
+    sim.advanceBy(200 * MS_DAY);
+    expect(owned.tenancies[0]!.status).toBe('let');
+    const fees = sim.universe.transactions.slice(before).filter((t) => t.memo.startsWith('Nexus Property Management'));
+    const paid = (memo: string) => fees.filter((t) => t.memo.includes(memo)).map((t) => t.postings.find((q) => q.amount > 0 && q.accountId !== sim.player.primaryAccountId)?.amount ?? 0);
+    // The greater of half the first month or $450; then 8% of a rent over $1,200 a month.
+    expect(paid('letting it')).toEqual([1_000_00]);
+    expect(paid('managing it').length).toBeGreaterThan(0);
+    expect(paid('managing it').every((x) => x === 160_00)).toBe(true);
+  }, 120_000);
+
+  it('charges its own terms: a least, a flat fee, a share by renewals, a year’s share to let', () => {
+    const { sim } = bought('homes-agent-terms', 0.25, false);
+    const t = (rent: number, renewals = 0) => ({ unit: 'main' as const, rent, status: 'let' as const, since: 0, renewals });
+    const usd = (n: number) => { const c = Math.round(n * 100); return saveCurrency(sim.universe) === 'USD' ? c : exchange(c, 'USD', saveCurrency(sim.universe))!; };
+    const m = (id: string) => PROPERTY_MANAGERS.find((x) => x.id === id)!;
+    expect(managementFee(sim, m('pmi-los-angeles'), t(usd(1_000)))).toBe(usd(175));
+    expect(managementFee(sim, m('pmi-los-angeles'), t(usd(5_000)))).toBe(usd(300));
+    expect(managementFee(sim, m('nexus-new-haven'), t(usd(800)))).toBe(usd(80));
+    expect(managementFee(sim, m('nexus-new-haven'), t(usd(1_000)))).toBe(usd(90));
+    expect(m('foxtons').share(2_000, 0)).toBeCloseTo(0.204, 9);
+    expect(m('foxtons').share(2_000, 2)).toBeCloseTo(0.168, 9);
+    expect(m('foxtons').share(2_000, 3)).toBeCloseTo(0.132, 9);
+    expect(m('property-vision').flat).toBeCloseTo(738, 9);
+    expect(m('pmp-toronto').letting(2_000)).toBeCloseTo(2_016, 9);
+    expect(lettingFee(sim, m('pmi-los-angeles'), t(usd(2_000)))).toBe(usd(1_500));
+    expect(renewalFee(sim, m('pmi-los-angeles'))).toBe(usd(195));
+  });
+
+  it('is hired where one publishes its fees, and let go', () => {
+    const { sim, owned } = bought('homes-agent-cmd', 0.25, false);
+    expect(sim.execute({ kind: 'home.manager', payload: { homeId: owned.id, on: false } }).error).toBe('No agent manages it.');
+    sim.must({ kind: 'home.manager', payload: { homeId: owned.id, on: true } });
+    expect(sim.execute({ kind: 'home.manager', payload: { homeId: owned.id, on: true } }).error).toBe('Nexus Property Management manages it already.');
+    sim.must({ kind: 'home.manager', payload: { homeId: owned.id, on: false } });
+    expect(owned.manager).toBeUndefined();
+    owned.cityId = 'us-ny-newyork';
+    expect(sim.execute({ kind: 'home.manager', payload: { homeId: owned.id, on: true } }).error).toBe('No agent there publishes its fees.');
+  });
+
+  it('charges a renewal’s fee, and counts the renewals its share reads', () => {
+    const { sim, owned } = bought('homes-agent-renew', 0.25, false);
+    owned.cityId = 'us-ca-losangeles';
+    owned.manager = 'pmi-los-angeles';
+    const t = { unit: 'main' as const, rent: 2_000_00, status: 'let' as const, since: sim.now, leaseEnds: sim.now };
+    const before = sim.universe.transactions.length;
+    renewTenancy(sim, sim.player, owned, t, 1_900_00);
+    expect(t).toMatchObject({ rent: 2_000_00, renewals: 1 });
+    const fee = sim.universe.transactions.slice(before).find((x) => x.memo.startsWith('PMI Los Angeles, a renewal'))!;
+    expect(fee.postings.find((q) => q.amount > 0)!.amount).toBe(renewalFee(sim, PROPERTY_MANAGERS[0]!));
+    renewTenancy(sim, sim.player, owned, t, 2_100_00);
+    expect(t).toMatchObject({ rent: 2_100_00, renewals: 2 });
   });
 });
 

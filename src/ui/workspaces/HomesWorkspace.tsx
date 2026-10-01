@@ -33,6 +33,7 @@ import {
   sellRefusal, sizeText, termsIn, type HomeFacts, type Listing, type OwnedHome, type SellerAnswer, type Tenancy,
 } from '@/engine/systems/homes';
 import { CAREER_CITIES } from '@/engine/content/career';
+import { managerIn } from '@/engine/systems/propertymanagers';
 import { inTheBank } from '@/engine/systems/household';
 
 type HomesTab = 'sale' | 'yours';
@@ -152,7 +153,7 @@ function ForSalePane() {
     const a = answer.value!;
     if (a.answer === 'accepted') toast(`Accepted at ${money(at)}. It closes in ${HOME.closingDays} days.`, 'positive');
     else if (a.answer === 'countered') toast(`The seller countered at ${money(a.price)}.`, 'neutral');
-    else toast('The seller turned it down.', 'neutral');
+    else toast('Turned down by the seller.', 'neutral');
   };
   const countered = counter && counter.until >= sim.now ? listingById(sim, counter.listingId) : undefined;
   return (
@@ -299,7 +300,7 @@ function Purchase() {
 function YourHomesPane() {
   const homes = useWorld((s) => s.player.homes ?? []);
   if (homes.length === 0) {
-    return <div className="empty"><h3>You Don’t Own A Home</h3><p className="small">The homes for sale are on the other tab.</p></div>;
+    return <div className="empty"><h3>You Don’t Own A Home</h3><p className="small">Homes for sale are on the other tab.</p></div>;
   }
   return <div className="col gap-4">{homes.map((h) => <HomeCard key={h.id} owned={h} />)}</div>;
 }
@@ -366,6 +367,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
         )}
 
         {units.map((unit) => <Letting key={unit} owned={owned} unit={unit} />)}
+        <Agent owned={owned} />
 
         {mortgage > 0 && refi && (
           <div className="col gap-1">
@@ -459,6 +461,22 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
         <Fine>What each job costs and returns at sale is SLATE’s estimate of a typical American job, at the town’s cost of living; the pattern follows the remodeling trade’s cost-against-value surveys. Past half again what the home cost, a job returns half as much. A worn part can fail, the likelier the more worn; storms and hard freezes can damage a house, and a fire any home; the insurance pays that damage over a {money(atTown(sim, owned.cityId, HOME.deductibleUsd))} deductible, never wear, and each claim puts a fifth on the premium for three years. What fails and how often, what it costs, what a home lets for by its bedrooms and how tenants behave are SLATE’s estimates.</Fine>
       </div>
     </Panel>
+  );
+}
+
+/** A letting agent for a home, where one publishes its fees (`systems/propertymanagers.ts`). */
+function Agent({ owned }: { owned: OwnedHome }) {
+  const { run, toast } = useGame();
+  const m = managerIn(owned.cityId);
+  if (!m) return null;
+  const terms = `${m.flat ? 'a flat fee a month' : 'a share of each month’s rent'}, a fee to let it to a new tenant${m.renewal ? ' and one on a renewal' : ''}`;
+  return (
+    <div className="field-row">
+      <span className="xs dim">{owned.manager ? `${m.name} manages it: ${terms}.` : `Let yourself, a tenant moves in while you’re in town. ${m.name} would manage it: ${terms}.`}</span>
+      {owned.manager
+        ? <Gated feature="home.manager" className="btn btn-sm btn-ghost" onClick={() => run('home.manager', { homeId: owned.id, on: false })}>Manage It Yourself</Gated>
+        : <Gated feature="home.manager" className="btn btn-sm btn-ghost" title={`${m.source}`} onClick={() => { if (run('home.manager', { homeId: owned.id, on: true }).ok) toast(`${m.name} manages it from now.`, 'positive'); }}>{`Hire ${m.name}`}</Gated>}
+    </div>
   );
 }
 

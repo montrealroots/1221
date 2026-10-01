@@ -102,6 +102,7 @@ import { weatherOn } from './weather';
 import { alarmFactor } from './alarm';
 import { bcSvtRate, foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from './foreignbuyers';
 import { moveTo } from './luggage';
+import { chargeAgent, keysHandedOver, lettingFee, managementFee, managerOf, renewalFee } from './propertymanagers';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -471,10 +472,14 @@ export interface Tenancy {
   leaseEnds?: Instant;
   notice?: boolean;
   depositAccountId?: string;
+  /** How many times it's been renewed, which an agent's share reads (`systems/propertymanagers.ts`). */
+  renewals?: number;
 }
 
 export interface OwnedHome {
   id: string;
+  /** The letting agent managing it, where one is hired (`systems/propertymanagers.ts`, from 2026-10-01). */
+  manager?: string;
   /** A house just built, not to be lived in before its certificate of occupancy (`systems/construction.ts`, from 2026-09-30). */
   occupiableFrom?: Instant;
   /** A burglar alarm fitted, monitored, its discount on the premium (`systems/alarm.ts`, from 2026-09-30). */
@@ -1077,6 +1082,15 @@ function tenantLeaves(sim: Simulation, person: Person, owned: OwnedHome, t: Tena
   return damage;
 }
 
+/** A tenant renewing for another year, at the market's rent if it's risen; an agent's fee on it. */
+export function renewTenancy(sim: Simulation, person: Person, owned: OwnedHome, t: Tenancy, market: Money): void {
+  t.rent = Math.max(t.rent, market);
+  t.leaseEnds = (t.leaseEnds ?? sim.now) + HOME.leaseMonths * 30.4375 * MS_DAY;
+  t.renewals = (t.renewals ?? 0) + 1;
+  const agent = managerOf(owned);
+  if (agent) chargeAgent(sim, person, owned, agent, renewalFee(sim, agent), 'a renewal');
+}
+
 /** Each day: tenants found, rent in on the first, leases renewed or ended. */
 function tenancies(sim: Simulation, person: Person, owned: OwnedHome, firstOfMonth: boolean): void {
   const cur = saveCurrency(sim.universe);
@@ -1086,20 +1100,26 @@ function tenancies(sim: Simulation, person: Person, owned: OwnedHome, firstOfMon
   for (const t of [...owned.tenancies]) {
     if (t.status === 'advertised') {
       t.tenantAt ??= tenantArrives(sim, person, owned, t);
-      if (sim.now >= t.tenantAt) tenantMovesIn(sim, person, owned, t);
+      // Let yourself, the keys are handed over in person; an agent does it while you're away (`systems/propertymanagers.ts`).
+      if (sim.now >= t.tenantAt && keysHandedOver(person, owned)) {
+        tenantMovesIn(sim, person, owned, t);
+        const agent = managerOf(owned);
+        if (agent) chargeAgent(sim, person, owned, agent, lettingFee(sim, agent, t), 'letting it');
+      }
       continue;
     }
     if (firstOfMonth && sim.now > t.since) {
       const checking = sim.universe.accounts[person.primaryAccountId!]!;
       sim.post({ memo: `Rent, ${owned.facts.address}`, category: 'home', postings: [{ accountId: checking.id, amount: t.rent }, { accountId: sim.nominalAccount('income', 'Rent Received').id, amount: -t.rent }] });
       recordHome(person, sim.now, CITIES.require(owned.cityId).timeZone, 'rentalRent', t.rent);
+      const agent = managerOf(owned);
+      if (agent) chargeAgent(sim, person, owned, agent, managementFee(sim, agent, t), 'managing it');
     }
     if (t.leaseEnds !== undefined && sim.now >= t.leaseEnds) {
       const market = marketRent(sim, owned, t.unit);
       const stays = !t.notice && t.rent <= market * 1.05 && sim.rng('homes.market', person.id, owned.id, t.unit, 'renew', t.leaseEnds).next() < HOME.renewal;
       if (stays) {
-        t.rent = Math.max(t.rent, market);
-        t.leaseEnds += HOME.leaseMonths * 30.4375 * MS_DAY;
+        renewTenancy(sim, person, owned, t, market);
         if (player) sim.notify({ category: 'home', title: 'Your Tenant Renewed', body: `${owned.facts.address}: another year at ${formatMoney(t.rent, cur, { cents: false })} a month.`, importance: 45, route: '/workspace/homes' });
         continue;
       }

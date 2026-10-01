@@ -91,7 +91,7 @@ import { enroll, registerSchool, yearOfStudy } from './systems/school';
 import { agencyById, closeStaleBookings, registerCareer } from './systems/career';
 import { registerPension } from './systems/pension';
 import { registerCommercial } from './systems/commercial';
-import { registerHomes } from './systems/homes';
+import { homeById, registerHomes } from './systems/homes';
 import { registerDwelling } from './systems/dwelling';
 import { registerInjury } from './systems/injury';
 import { attributesOf } from './systems/attributes';
@@ -114,6 +114,7 @@ import { registerDating } from './systems/dating';
 import { registerTailoring } from './systems/tailoring';
 import { registerTravelInsurance } from './systems/travelinsurance';
 import { registerTelecom } from './systems/telecom';
+import { registerPropertyManagers } from './systems/propertymanagers';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
@@ -149,6 +150,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPension(sim);
   registerCommercial(sim);
   registerHomes(sim);
+  registerPropertyManagers(sim, homeById);
   registerDwelling(sim);
   registerHealth(sim);
   registerInjury(sim);

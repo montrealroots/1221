@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-223 commands; 217 named by a test, 6 not.
+224 commands; 218 named by a test, 6 not.
 
 ## aircraft
 
@@ -247,6 +247,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` `gear.test.ts` | Rent And A Roof |
 | `home.internet` | `src/engine/systems/telecom.ts` | `Home.tsx` | `telecom.test.ts` | Rent And A Roof |
 | `home.let` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
+| `home.manager` | `src/engine/systems/propertymanagers.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
 | `home.move` | `src/engine/systems/household.ts` | `Home.tsx` | `furniture.test.ts` `homes-cohesion.test.ts` `items.test.ts` `livelihood.test.ts` | Rent And A Roof |
 | `home.move_by` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `motorhomes.test.ts` | Rent And A Roof |
 | `home.move_in` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` | Rent And A Roof |
