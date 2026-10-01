@@ -29,16 +29,23 @@
  * **SNAP**, in New York, California and Connecticut, for a single adult: the
  * USDA's maximum allotment ($298 a month in fiscal 2026, $306 from 1 October
  * 2026) less 30% of net income, which is gross income less 20% of earnings
- * and the standard deduction ($209, then $217). The state's gross limit (New
- * York's 150% of poverty, $1,995 a month; California's and Connecticut's
- * 200%) and the federal net limit ($1,305, then $1,330) never bind for a
- * single adult here: 30% of net income takes the whole benefit well before
- * either, the shelter deduction that would lift them not being kept. Paid onto an EBT card that buys groceries only, which a day's
+ * and the standard deduction ($209, then $217), and from later on 2026-09-30
+ * the excess shelter deduction (`research-sweep5.json`): rent, and the state's
+ * standard utility allowance where they pay the bills, above half of what's
+ * left, at most $744 in fiscal 2026 (the states' copies of the USDA's
+ * adjustment) and $769 in 2027 (read from an excerpt of the USDA's memo, its
+ * page refusing). The allowance is the state's heating and cooling one for
+ * fiscal 2026, held after it as 2027's wasn't read: New York City's $1,062,
+ * the rest of New York's $877 (Nassau's and Suffolk's $988 not kept, SLATE not
+ * holding a town's county), California's $663 and Connecticut's $976. With
+ * it, New York's gross limit binds, 150% of the federal poverty line (the
+ * net limit, $1,305, then $1,330). California's and Connecticut's 200% are
+ * kept and never do, nor does the net limit: 30% of net income takes a single
+ * adult's benefit first. Until then the shelter deduction wasn't kept, and
+ * SLATE's benefit was the lower one a household with low rent gets. Paid onto an EBT card that buys groceries only, which a day's
  * food draws on first. An able-bodied adult of 18 to 64 without 80 hours of
  * work a month is paid three months in three years (7 U.S.C. 2015(o), as the
- * 2025 law widened it). The excess shelter deduction isn't kept, its cap not
- * being read, so SLATE's benefit is the lower one a household with low rent
- * gets. A citizen's; a non-citizen's eligibility isn't kept.
+ * 2025 law widened it). A citizen's; a non-citizen's eligibility isn't kept.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -51,7 +58,7 @@ import { CITIES } from '../content/geography';
 import { isoOfCountry } from './documents';
 import { earningsOf } from './earnings';
 import { citizenOf } from './documents';
-import { rentOf } from './household';
+import { billsOf, rentOf } from './household';
 
 export const ASSISTANCE_KIND = 'benefits.assistance_month';
 
@@ -59,9 +66,14 @@ export const ONTARIO_WORKS = { basic: 343, shelterMax: 390, assets: 10_000, exem
 export const BC_ASSISTANCE = { support: 560, shelterMax: 500, assets: 5_000, exempt: 600, exemptAfterMonths: 1, workSearchDays: 21 } as const;
 export const SNAP = {
   fy: [
-    { from: '2025-10-01', max: 298, standard: 209 },
-    { from: '2026-10-01', max: 306, standard: 217 },
+    { from: '2025-10-01', max: 298, standard: 209, shelterCap: 744, poverty: 1_305 },
+    { from: '2026-10-01', max: 306, standard: 217, shelterCap: 769, poverty: 1_330 },
   ],
+  /** The state's gross limit, of the poverty line, and its heating and cooling utility allowance a month, fiscal 2026. */
+  grossLimit: { 'us-ny': 1.5, 'us-ca': 2, 'us-ct': 2 } as Readonly<Record<string, number>>,
+  utilities: { 'us-ny': 877, 'us-ca': 663, 'us-ct': 976 } as Readonly<Record<string, number>>,
+  utilitiesNyc: 1_062,
+  nyc: ['us-ny-newyork', 'us-ny-manhattan', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-thebronx'] as readonly string[],
   /** The states it's kept in, where SLATE keeps benefits. */
   states: ['us-ny', 'us-ca', 'us-ct'] as readonly string[],
   earnedDeduction: 0.2,
@@ -122,11 +134,27 @@ export function provincialMonth(scheme: 'ontario-works' | 'bc-assistance', rentC
   return Math.max(0, r.support * 100 + Math.min(rentCad, r.shelterMax * 100) - (earnedCad - kept));
 }
 
-/** A month's SNAP, in dollar cents: the maximum less 30% of net income, or none past a limit. */
-export function snapMonth(grossUsd: Money, earnedUsd: Money, at: Instant): Money {
+/**
+ * A month's SNAP, in dollar cents: the maximum less 30% of net income, net of
+ * the excess shelter deduction where shelter costs are given; or none over the
+ * state's gross limit.
+ */
+export function snapMonth(grossUsd: Money, earnedUsd: Money, at: Instant, shelterUsd = 0, state?: string): Money {
   const fy = [...SNAP.fy].reverse().find((f) => at >= Date.parse(`${f.from}T00:00:00Z`)) ?? SNAP.fy[0]!;
-  const net = Math.max(0, grossUsd - Math.round(earnedUsd * SNAP.earnedDeduction) - fy.standard * 100);
-  return Math.max(0, fy.max * 100 - Math.round(net * SNAP.share));
+  if (state && grossUsd > Math.round(fy.poverty * (SNAP.grossLimit[state] ?? 1) * 100)) return 0;
+  const before = Math.max(0, grossUsd - Math.round(earnedUsd * SNAP.earnedDeduction) - fy.standard * 100);
+  const shelter = Math.min(fy.shelterCap * 100, Math.max(0, shelterUsd - Math.round(before / 2)));
+  // Net income is never below nothing, and the benefit never above the maximum.
+  return Math.max(0, fy.max * 100 - Math.round(Math.max(0, before - shelter) * SNAP.share));
+}
+
+/** The shelter costs SNAP counts a month, in dollar cents: the rent, and the state's utility allowance where they pay bills. */
+export function snapShelter(sim: Simulation, person: Person): Money {
+  const city = person.home?.cityId ?? person.currentLocationId;
+  const state = CITIES.get(city)?.parentId ?? '';
+  const pays = billsOf(sim, person) > 0;
+  const utilities = !pays ? 0 : SNAP.nyc.includes(city) ? SNAP.utilitiesNyc : SNAP.utilities[state] ?? 0;
+  return inLocal(sim, rentOf(sim, person), 'USD') + utilities * 100;
 }
 
 function schedule(sim: Simulation, person: Person, at: Instant): void {
@@ -166,7 +194,7 @@ export function registerAssistance(sim: Simulation): void {
         schedule(s, person, item.at + 30 * MS_DAY);
         return;
       }
-      due = toSave(s, snapMonth(inLocal(s, earned, 'USD'), inLocal(s, earned, 'USD'), item.at), 'USD');
+      due = toSave(s, snapMonth(inLocal(s, earned, 'USD'), inLocal(s, earned, 'USD'), item.at, snapShelter(s, person), CITIES.get(person.home?.cityId ?? person.currentLocationId)?.parentId), 'USD');
       if (due > 0) {
         if (limited) claim.counted = [...within, key];
         const ebt = claim.ebtAccountId ? s.universe.accounts[claim.ebtAccountId] : undefined;

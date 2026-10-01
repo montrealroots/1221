@@ -10,7 +10,9 @@ import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { assistanceRefusal, ebtBalance, provincialMonth, snapMonth } from '@/engine/systems/assistance';
+import { assistanceRefusal, ebtBalance, provincialMonth, snapMonth, snapShelter } from '@/engine/systems/assistance';
+import { billsOf, rentOf } from '@/engine/systems/household';
+import { earningsOf } from '@/engine/systems/earnings';
 import { buyTheDaysFood } from '@/engine/systems/household';
 
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -44,6 +46,56 @@ describe('the rates', () => {
     expect(snapMonth(2_000_00, 2_000_00, fy27)).toBe(0);
     // Under California's $2,610 gross limit but past the $1,330 net one.
     expect(snapMonth(2_500_00, 2_500_00, fy27)).toBe(0);
+  });
+
+  it('takes off the excess shelter deduction, rent and utilities above half of what’s left, to its cap, and stops at the state’s gross limit', () => {
+    const fy26 = Date.UTC(2026, 8, 15);
+    const fy27 = Date.UTC(2026, 9, 15);
+    // $1,000 earned, $583 left; $900 of shelter is $608.50 over half of it, under the $769 cap: net $0, the maximum.
+    expect(snapMonth(1_000_00, 1_000_00, fy27, 900_00)).toBe(306_00);
+    // $400 of shelter is $108.50 over half: net $474.50.
+    expect(snapMonth(1_000_00, 1_000_00, fy27, 400_00)).toBe(306_00 - Math.round(474_50 * 0.3));
+    // $2,000 earned: $1,383 left; $3,000 of shelter is capped at $769 ($744 in fiscal 2026).
+    expect(snapMonth(2_000_00, 2_000_00, fy27, 3_000_00)).toBe(306_00 - Math.round((1_383_00 - 769_00) * 0.3));
+    expect(snapMonth(2_000_00, 2_000_00, fy26, 3_000_00)).toBe(298_00 - Math.round((2_000_00 - 400_00 - 209_00 - 744_00) * 0.3));
+    // New York's 150% of $1,330 is $1,995: a dollar over, nothing.
+    expect(snapMonth(1_995_00, 1_995_00, fy27, 3_000_00, 'us-ny')).toBeGreaterThan(0);
+    expect(snapMonth(1_996_00, 1_996_00, fy27, 3_000_00, 'us-ny')).toBe(0);
+    // ,000 is past New York's limit but within California's, where 30% of net income ends it first.
+    expect(snapMonth(2_000_00, 2_000_00, fy27, 3_000_00, 'us-ny')).toBe(0);
+    expect(snapMonth(2_000_00, 2_000_00, fy27, 3_000_00, 'us-ca')).toBeGreaterThan(0);
+  });
+
+  it('counts the rent, and the state’s utility allowance where they pay the bills: New York City’s apart from the rest of the state', () => {
+    const nyc = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'snap-shelter');
+    const usd = (c: number) => { const cur = saveCurrency(nyc.universe); return cur === 'USD' ? c : exchange(c, cur, 'USD')!; };
+    const rent = usd(rentOf(nyc, nyc.player));
+    expect(snapShelter(nyc, nyc.player)).toBe(rent + (billsOf(nyc, nyc.player) > 0 ? 1_062_00 : 0));
+    const ca = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: true }, 'snap-shelter-ca');
+    expect(saveCurrency(ca.universe)).toBe('USD');
+    expect(snapShelter(ca, ca.player)).toBe(rentOf(ca, ca.player) + (billsOf(ca, ca.player) > 0 ? 663_00 : 0));
+    // On a friend's sofa, no rent and no bills: nothing counted.
+    ca.player.home = { kind: 'sofa', cityId: 'us-ca-losangeles', since: ca.now };
+    expect(billsOf(ca, ca.player)).toBe(0);
+    expect(snapShelter(ca, ca.player)).toBe(0);
+  });
+
+  it('pays a claim its month with the shelter deduction taken', () => {
+    const sim = life('us-ny-newyork', 'assist-ny-shelter');
+    expect(saveCurrency(sim.universe)).toBe('USD');
+    sim.player.birthInstant = sim.now - 30 * 365.25 * MS_DAY;
+    drain(sim);
+    // $1,500 earned in every month around the claim.
+    const months = earningsOf(sim.player).months;
+    for (let d = -60; d < 60; d += 10) { const p = new Date(sim.now + d * MS_DAY); months[`${p.getUTCFullYear()}-${String(p.getUTCMonth() + 1).padStart(2, '0')}`] = 1_500_00; }
+    expect(sim.execute({ kind: 'benefits.assistance', payload: {} }).ok).toBe(true);
+    sim.advanceBy(8 * MS_DAY);
+    const paid = sim.universe.transactions.find((t) => t.memo === 'SNAP, the month, onto the EBT card');
+    const at = paid ? sim.universe.transactions.indexOf(paid) : -1;
+    expect(at).toBeGreaterThanOrEqual(0);
+    const amount = paid!.postings.find((p) => p.amount > 0)!.amount;
+    const without = snapMonth(1_500_00, 1_500_00, sim.now, 0, 'us-ny');
+    expect(amount).toBeGreaterThan(without);
   });
 });
 
