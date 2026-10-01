@@ -10,6 +10,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { railRouteById, railRoutes } from '@/engine/systems/rail';
+import { boardingIdRefusal } from '@/engine/systems/identity';
 import { crossesByCarFerry, journeysOf, planBy, planChauffeur, planDrive } from '@/engine/systems/journey';
 import { roadKm, driveMinutes } from '@/engine/systems/driving';
 import { runningCost, vehiclesOf } from '@/engine/systems/vehicles';
@@ -61,5 +62,21 @@ describe('a car on BC Ferries', () => {
     if (typeof hired === 'string') throw new Error(hired);
     expect(hired[0]!.arriveAt - hired[0]!.departAt).toBe((driveMinutes(km) + 95) * 60_000);
     expect(hired[0]!.fare).toBeGreaterThan(ferry);
+  });
+});
+
+describe('SailRail', () => {
+  it('joins Dublin and London through Holyhead at the Single’s €58, and from 28 September 2026 asks a passport or an Irish passport card', () => {
+    expect(railRoutes('ie-lei-dublin', 'uk-eng-london').map((r) => r.id)).toContain('sailrail-dublin-london');
+    const route = railRouteById('sailrail-dublin-london')!;
+    expect(route.fare).toMatchObject({ amount: 58_00, currency: 'EUR' });
+    expect(route.minutes).toBe(502);
+    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true }, 'sailrail-id');
+    sim.player.documents = [];
+    const sail = { fromCity: 'ie-lei-dublin', toCity: 'uk-eng-london', legs: [{ mode: 'ferry' as const }] } as never;
+    expect(boardingIdRefusal(sim.player, sail, Date.UTC(2026, 8, 27))).toBeUndefined();
+    expect(boardingIdRefusal(sim.player, sail, Date.UTC(2026, 8, 29))).toMatch(/Irish Sea/);
+    sim.player.documents = [{ id: 'pc', kind: 'idcard', issuer: 'ie', name: 'Passport Card', number: 'P1', status: 'valid', issuedAt: Date.UTC(2026, 0, 1), expiresAt: Date.UTC(2030, 0, 1) }];
+    expect(boardingIdRefusal(sim.player, sail, Date.UTC(2026, 8, 29))).toBeUndefined();
   });
 });

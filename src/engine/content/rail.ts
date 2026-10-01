@@ -173,8 +173,34 @@ const BC_FERRIES_ROUTE: RailRoute = {
  */
 export const CAR_FERRY = { islandTowns: ['ca-02-victoria'] as readonly string[], vehicle: 89, driver: 21, surcharge: 0.05, minutes: 95, currency: 'CAD' } as const;
 
+/**
+ * SailRail, Dublin to London through Holyhead, from later on 2026-09-30
+ * (`docs/research/world/research-sailrail.json`, `research-travel4.json`): Stena
+ * Line's crossing and Avanti West Coast's train on one ticket, the Single's
+ * €58 from Dublin Port (Stena Line Ireland), refunded for £5 unused; 08:15 from
+ * Dublin to Euston at 16:37, 502 minutes. Four weekday connections are Seat
+ * 61's normal timetable, which it warns 2026 runs short of, one Holyhead berth
+ * being out after storm damage. Check-in closes 40 minutes before the sailing
+ * (Stena Line). Avanti's punctuality is the ORR's for 2025–26, 57.4% of stops
+ * within three minutes and 5.6% of trains canceled; Stena publishes none for
+ * the crossing. From 28 September 2026 every passenger shows a passport or a
+ * passport card at check-in (Stena Line, RTÉ), which `boardingIdRefusal` asks.
+ */
+const SAILRAIL_ROUTE: RailRoute = {
+  id: 'sailrail-dublin-london', vehicle: 'ferry', operator: 'Stena Line And Avanti West Coast', service: 'SailRail, Via Holyhead',
+  from: 'ie-lei-dublin', to: 'uk-eng-london', fromStation: 'Dublin Port Terminal 2', toStation: 'London Euston',
+  minutes: 502, perDay: 4,
+  fare: { amount: 58_00, currency: 'EUR', basis: 'SailRail’s Single, Dublin Port to London, €58 (Stena Line Ireland)' },
+  arriveBeforeMinutes: 40, arriveBasis: 'Stena Line closes foot passengers’ check-in 40 minutes before the sailing.',
+  onTime: { share: 0.574, withinMinutes: 3, basis: 'ORR, Avanti West Coast, April 2025 to March 2026: 57.4% of stops within three minutes; Stena publishes none for the crossing' },
+  cancelShare: 0.056, cancelBasis: 'ORR, Avanti West Coast, 2025–26: 5.6% of trains canceled',
+  refund: { keepShare: 0, fee: 5_00, feeCurrency: 'GBP', basis: 'An unused SailRail Single is refunded for a £5 fee (Transport for Wales’s SailRail answers).' },
+  source: 'stenaline.ie; seat61.com/ireland (2026-06-09); orr.gov.uk passenger rail performance, 2025–26; tfw.wales SailRail FAQ',
+};
+
 export const RAIL_ROUTES: readonly RailRoute[] = [
   BC_FERRIES_ROUTE,
+  SAILRAIL_ROUTE,
   { id: 'nec-nyp-was-acela', operator: 'Amtrak', service: 'Acela', from: 'us-ny-newyork', to: 'us-dc-washington', fromStation: 'New York Penn Station', toStation: 'Washington Union Station', minutes: 180, perDay: 19, miles: NEC_MILES.newYorkWashington, fare: amtrakFare(AMTRAK_PER_MILE.acela, NEC_MILES.newYorkWashington, 'Acela'), ...AMTRAK_ARRIVE, onTime: ACELA_ON_TIME, refund: AMTRAK_REFUND, source: AMTRAK_SRC },
   { id: 'nec-nyp-was-ner', operator: 'Amtrak', service: 'Northeast Regional', from: 'us-ny-newyork', to: 'us-dc-washington', fromStation: 'New York Penn Station', toStation: 'Washington Union Station', minutes: 215, perDay: 37, miles: NEC_MILES.newYorkWashington, fare: amtrakFare(AMTRAK_PER_MILE.regional, NEC_MILES.newYorkWashington, 'Northeast Regional'), ...AMTRAK_ARRIVE, onTime: NER_ON_TIME, refund: AMTRAK_REFUND, source: AMTRAK_SRC },
   { id: 'nec-nyp-bos-acela', operator: 'Amtrak', service: 'Acela', from: 'us-ny-newyork', to: 'us-ma-boston', fromStation: 'New York Penn Station', toStation: 'Boston South Station', minutes: 238, perDay: 10, miles: NEC_MILES.newYorkBoston, fare: amtrakFare(AMTRAK_PER_MILE.acela, NEC_MILES.newYorkBoston, 'Acela'), ...AMTRAK_ARRIVE, onTime: ACELA_ON_TIME, refund: AMTRAK_REFUND, source: AMTRAK_SRC },

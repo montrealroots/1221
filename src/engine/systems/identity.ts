@@ -51,9 +51,12 @@ export function atTheCheckpoint(sim: Simulation, person: Person, j: Journey): bo
  * Without it they aren't boarded, and the fare is lost.
  */
 export function boardingIdRefusal(person: Person, j: Pick<Journey, 'legs' | 'fromCity' | 'toCity'>, at: Instant): string | undefined {
-  if (!j.legs.some((l) => l.mode === 'flight')) return undefined;
   const from = isoOfCity(j.fromCity);
   const to = isoOfCity(j.toCity);
+  const irishSea = (from === 'IE' && to === 'GB') || (from === 'GB' && to === 'IE');
+  // The ferries across the Irish Sea ask the same from 28 September 2026 (Stena Line, RTÉ).
+  if (irishSea && at >= Date.UTC(2026, 8, 28) && j.legs.some((l) => l.mode === 'ferry') && !documentsOf(person).some((d) => inForce(d, at) && (d.kind === 'passport' || (d.kind === 'idcard' && d.issuer === 'ie')))) return 'The ferries across the Irish Sea ask a passport or an Irish passport card.';
+  if (!j.legs.some((l) => l.mode === 'flight')) return undefined;
   const docs = documentsOf(person).filter((d) => inForce(d, at));
   const passport = docs.some((d) => d.kind === 'passport');
   const issued = (kinds: readonly string[], prefix: string) => docs.some((d) => kinds.includes(d.kind) && d.issuer.startsWith(prefix));

@@ -1,0 +1,124 @@
+{
+  "researched": "2026-09-30",
+  "topic": "SailRail Dublin to London via Holyhead (Stena Line and Avanti West Coast), punctuality, and the Irish Sea ferry ID rule",
+  "sailrail_tickets": {
+    "advance": {
+      "refundable": false,
+      "rule": "SailRail Advance tickets cannot be refunded unless your train or ferry is canceled and you decide not to travel.",
+      "change_fee_gbp": 5,
+      "change_rule": "Date or time changes allowed if requested by 20:00 on the day before departure, with a £5 administration fee (TfW FAQ wording does not limit this answer to a ticket type). Seat 61 says Advance changes cost 'about £10' at British stations; the two sources differ.",
+      "sources": [
+        {"url": "https://tfw.wales/ways-to-travel/rail/ticket-types/sailrail/faq", "publisher": "Transport for Wales (SailRail retailer)", "date": "undated page, read 2026-09-30", "confirmed": true},
+        {"url": "https://www.seat61.com/train-and-ferry-to-dublin.htm", "publisher": "The Man in Seat 61 (Mark Smith)", "date": "page last updated 2026-06-09", "confirmed": true, "note": "Advance: non-refundable, date/time changes for 'about £10' at British stations."}
+      ]
+    },
+    "anytime_single": {
+      "refundable": true,
+      "refund_fee_gbp": 5,
+      "rule": "SailRail Single tickets that have not been used can be refunded, with a refund administration fee of £5 per ticket.",
+      "note": "TfW calls the flexible fare 'SailRail Single'; no ticket explicitly named 'Anytime SailRail' was found. No separate Return refund rule was found.",
+      "sources": [
+        {"url": "https://tfw.wales/ways-to-travel/rail/ticket-types/sailrail/faq", "publisher": "Transport for Wales", "date": "undated page, read 2026-09-30", "confirmed": true}
+      ]
+    },
+    "stena_direct_booking": {
+      "admin_fee_gbp_per_person": 10,
+      "rule": "For bookings made directly with Stena Line by phone, a £10 per person administration fee applies to any cancellation or amendment. Advance fares are non-refundable.",
+      "sources": [
+        {"url": "https://www.stenaline.co.uk/rail-and-sail/to-britain", "publisher": "Stena Line", "date": "undated page, read 2026-09-30", "confirmed": true}
+      ]
+    }
+  },
+  "check_in": {
+    "stena_foot_passenger_minutes_before_departure": 40,
+    "stena_car_minutes_before_departure": 30,
+    "rule": "Stena Line: check-in for foot passengers closes 40 minutes before departure (Dublin-Holyhead, both ports).",
+    "note": "The TfW SailRail FAQ still says 30 minutes at Dublin and refers to retired craft (Swift/HSS/Super Ferry), so it looks out of date. Seat 61 agrees with Stena: 40 minutes for Stena, 30 for Irish Ferries.",
+    "sources": [
+      {"url": "https://www.stenaline.ie/customer-service/at-the-port/how-long-before-departure-do-i-need-to-check-in", "publisher": "Stena Line", "date": "undated page, read 2026-09-30", "confirmed": true},
+      {"url": "https://www.seat61.com/train-and-ferry-to-dublin.htm", "publisher": "The Man in Seat 61", "date": "2026-06-09", "confirmed": true}
+    ]
+  },
+  "timetable_dublin_to_london": {
+    "status_warning": "Seat 61 (updated 2026-06-09) says these are the NORMAL times that should apply but currently do not: in 2026 there are major sailing-time changes because only one deepwater berth at Holyhead is working after storm damage. Treat these as the standard timetable, not the live one. Stena's own page did not list Dublin-Holyhead SailRail times.",
+    "source": {"url": "https://www.seat61.com/train-and-ferry-to-dublin.htm", "publisher": "The Man in Seat 61", "date": "2026-06-09", "confirmed": true},
+    "stena_line": {
+      "dublin_terminal": "Dublin Port Terminal 2",
+      "monday_to_friday": [
+        {"dublin_depart": "02:15", "holyhead_arrive": "05:45", "holyhead_train_depart": "06:48", "euston_arrive": "10:35"},
+        {"dublin_depart": "08:15", "holyhead_arrive": "11:50", "holyhead_train_depart": "12:48", "euston_arrive": "16:37"},
+        {"dublin_depart": "14:45", "holyhead_arrive": "18:20", "holyhead_train_depart": "19:48", "euston_arrive": "01:17", "note": "arrives after midnight, the next day"},
+        {"dublin_depart": "20:30", "holyhead_arrive": "00:01", "holyhead_train_depart": "05:48", "euston_arrive": "09:35", "note": "next morning"}
+      ],
+      "saturday": [
+        {"dublin_depart": "02:15", "holyhead_arrive": "05:45", "holyhead_train_depart": "07:46", "euston_arrive": "11:35"},
+        {"dublin_depart": "08:15", "holyhead_arrive": "11:50", "holyhead_train_depart": "13:53", "euston_arrive": "17:35"},
+        {"dublin_depart": "20:30", "holyhead_arrive": "00:01", "holyhead_train_depart": "07:47", "euston_arrive": "12:37", "note": "Sunday"}
+      ],
+      "sunday": [
+        {"dublin_depart": "02:15", "holyhead_arrive": "05:45", "holyhead_train_depart": "07:47", "euston_arrive": "12:37"},
+        {"dublin_depart": "08:15", "holyhead_arrive": "11:50", "holyhead_train_depart": "12:53", "euston_arrive": "16:36"},
+        {"dublin_depart": "20:30", "holyhead_arrive": "00:01", "holyhead_train_depart": "05:48", "euston_arrive": "09:35", "note": "Monday"}
+      ]
+    },
+    "irish_ferries_for_reference": {
+      "dublin_terminal": "Dublin Port Terminal 1",
+      "monday_to_friday": [
+        {"dublin_depart": "07:30", "vessel": "Swift", "holyhead_arrive": "09:45", "holyhead_train_depart": "10:38", "euston_arrive": "14:35"},
+        {"dublin_depart": "08:05", "vessel": "Ulysses", "holyhead_arrive": "11:30", "holyhead_train_depart": "12:48", "euston_arrive": "16:37"},
+        {"dublin_depart": "13:50", "vessel": "Swift", "holyhead_arrive": "16:05", "holyhead_train_depart": "17:20", "euston_arrive": "22:14"},
+        {"dublin_depart": "20:55", "vessel": "Ulysses", "holyhead_arrive": "00:20", "holyhead_train_depart": "05:48", "euston_arrive": "09:35"}
+      ],
+      "saturday": [
+        {"dublin_depart": "08:00", "vessel": "Swift", "holyhead_arrive": "10:15", "holyhead_train_depart": "12:32", "euston_arrive": "16:35"},
+        {"dublin_depart": "08:05", "vessel": "Ulysses", "holyhead_arrive": "11:30", "holyhead_train_depart": "13:53", "euston_arrive": "17:35"},
+        {"dublin_depart": "14:20", "vessel": "Swift", "holyhead_arrive": "16:25", "holyhead_train_depart": "17:20", "euston_arrive": "22:54"},
+        {"dublin_depart": "20:55", "vessel": "Ulysses", "holyhead_arrive": "00:20", "holyhead_train_depart": "07:47", "euston_arrive": "12:37"}
+      ],
+      "sunday": [
+        {"dublin_depart": "08:00", "vessel": "Swift", "holyhead_arrive": "10:15", "holyhead_train_depart": "10:55", "euston_arrive": "14:41"},
+        {"dublin_depart": "08:05", "vessel": "Ulysses", "holyhead_arrive": "11:30", "holyhead_train_depart": "12:48", "euston_arrive": "16:39"},
+        {"dublin_depart": "14:20", "vessel": "Swift", "holyhead_arrive": "16:25", "holyhead_train_depart": "17:53", "euston_arrive": "22:37"},
+        {"dublin_depart": "20:55", "vessel": "Ulysses", "holyhead_arrive": "00:20", "holyhead_train_depart": "05:48", "euston_arrive": "09:35"}
+      ]
+    }
+  },
+  "punctuality": {
+    "avanti_west_coast_2025_26": {
+      "period": "April 2025 to March 2026 (moving annual average to Jan-Mar 2026)",
+      "time_to_3_percent": 57.4,
+      "on_time_percent": 37.9,
+      "within_15_minutes_percent": 87.3,
+      "cancellations_percent": 5.6,
+      "previous_year_2024_25": {"time_to_3_percent": 59.3, "on_time_percent": 39.9, "cancellations_percent": 6.3},
+      "great_britain_2025_26": {"time_to_3_percent": 84.8, "on_time_percent": 66.7, "cancellations_percent": 3.5},
+      "definitions": "Time to 3: share of recorded station stops arrived at early or less than 3 minutes late. On Time: less than 1 minute late. Cancellations: share of planned trains canceled, full = 1, part = 0.5.",
+      "sources": [
+        {"url": "https://dataportal.orr.gov.uk/media/1425/table-3133-train-punctuality-at-recorded-station-stops-by-operator.ods", "publisher": "Office of Rail and Road, Table 3133", "date": "2026-09-17", "confirmed": true, "note": "Time to 3, On Time and 15-minute figures read from the Avanti row 'Jan to Mar 2026', moving annual average columns. Quarterly Time to 3: Apr-Jun 2025 58.5, Jul-Sep 2025 57.0, Oct-Dec 2025 51.8, Jan-Mar 2026 62.4; provisional Apr-Jun 2026 57.4."},
+        {"url": "https://dataportal.orr.gov.uk/media/owid4p5l/avanti-west-coast.pdf", "publisher": "Office of Rail and Road, TOC key statistics April 2025 to March 2026: Avanti West Coast", "date": "2026-08-06", "confirmed": true, "note": "On Time 37.9% (39.9% prior year); Cancellations 5.6% (6.3% prior year)."},
+        {"url": "https://dataportal.orr.gov.uk/media/4pmhex4x/performance-stats-release-jan-mar-2026.pdf", "publisher": "Office of Rail and Road, Passenger rail performance Jan-Mar 2026", "date": "2026-05-28", "confirmed": true, "note": "GB Time to 3 for the 12 months to March 2026 was 84.8%; GB Cancellations 3.5%."}
+      ]
+    },
+    "stena_dublin_holyhead_on_time": {
+      "value": null,
+      "found": false,
+      "note": "No published on-time figure for Stena Line Dublin-Holyhead was found. Stena reports call its punctuality 'market leading' without route percentages."
+    },
+    "dublin_holyhead_cancellation_share": {
+      "value": null,
+      "found": false,
+      "note": "No published cancellation share for the crossing was found. Only individual disruptions were reported, such as Holyhead closing in December 2024 and service resuming on 2025-01-16 (Ships Monthly), and Seat 61's 2026 notice that only one deepwater berth is working."
+    }
+  },
+  "ferry_id_rule": {
+    "effective_date": "2026-09-28",
+    "rule": "From Monday 28 September 2026, all passengers traveling from Dublin, Holyhead, Fishguard or Rosslare ports must show a valid passport at check-in. Stena: passport or passport card, regardless of age or nationality; no other ID accepted. Irish Ferries applies it on Dublin-Holyhead and Rosslare-Pembroke.",
+    "reason": "To comply with UK Border Force requirements on the accuracy and integrity of passenger data before boarding. Under the Common Travel Area, Irish and British citizens are not legally required to have a passport for travel between the two countries; this is a carrier boarding rule.",
+    "sources": [
+      {"url": "https://www.stenaline.co.uk/rail-and-sail/to-britain", "publisher": "Stena Line", "date": "read 2026-09-30", "confirmed": true},
+      {"url": "https://www.rte.ie/news/ireland/2026/0826/1589303-irish-ferries/", "publisher": "RTÉ News", "date": "2026-08-26", "confirmed": true, "note": "Quotes Stena saying passengers must show passports or passport cards."},
+      {"url": "https://www.irishtimes.com/ireland/2026/08/26/passports-to-be-required-for-ferry-passengers-crossing-irish-sea/", "publisher": "The Irish Times", "date": "2026-08-26", "confirmed": false, "note": "Seen in search results only."}
+    ],
+    "avanti_page_found": false
+  }
+}

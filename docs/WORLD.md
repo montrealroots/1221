@@ -282,7 +282,11 @@ Researched in `docs/research/world/research-travel-2.json`, `research-travel-3.j
 - Not kept yet:
   - A car on the ferry, until later on 2026-09-30. Before that, a drive to Victoria crossed the strait free, as if by road. Now a car, or a car and driver, pays BC Ferries' C$89 for the car and C$21 for its driver with the 5% surcharge, and the 95 minutes across (`CAR_FERRY`, `crossesByCarFerry`). A longer motorhome's and a motorcycle's fares weren't read, and they pay a car's. Tests: `tests/ferries.test.ts`; 5 mutations, all killed.
   - Horseshoe Bay to Nanaimo, for want of Nanaimo as a town.
-  - Dublin to Holyhead and on to London: Stena's €44 foot fare and Avanti's £39.50 were read, but the connection between them wasn't.
+  - Dublin to London by SailRail, until later on 2026-09-30, when it was built from `research-sailrail.json`:
+    - The Single costs €58 and is refunded for £5 unused. It takes 502 minutes, 08:15 to Euston at 16:37, with four weekday connections on Seat 61's normal timetable, which it warns 2026 runs short of.
+    - Check-in closes 40 minutes before the sailing. Avanti's 57.4% within three minutes and 5.6% canceled are the ORR's for 2025–26.
+    - From 28 September 2026 every passenger on the Irish Sea ferries shows a passport or a passport card, which the check at departure asks.
+    - Tests: `tests/ferries.test.ts`; 3 mutations, all killed.
   - The city ferries (Staten Island, NYC Ferry, Toronto Island), since SLATE's journeys run between towns.
 
 Evidence: `tests/ferries.test.ts` (2). 2 mutations, both killed.
