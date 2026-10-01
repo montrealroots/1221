@@ -43,8 +43,8 @@ corrected in the same commit, as the backlog's progress table is.
 | Received at the right place | Works | Carried home, or delivered to the home they live in (`systems/orders.ts`). |
 | Storage or worn | Works | The wardrobe; Belongings moves it (`items.move`). |
 | An outfit | Works | `clothes.save_outfit`, from what's to hand. |
-| Packed, cleaned, altered | Part | Packed for going away, washed at home or the laundromat and dry-cleaned at real shops' prices; alterations are missing (no body to fit, `docs/UNBITTEN.md`). |
-| Return, repair, resell | Part | Returns inside the window, unworn (`clothes.return`); repair and resale are missing. |
+| Packed, cleaned, altered | Works | Packed for going away, washed at home or the laundromat and dry-cleaned at real shops' prices; a garment fits the weight it was bought for, and one too big is taken in at one of 11 named tailors (`clothes.alter`). |
+| Return, repair, resell | Part | Returns inside the window, unworn (`clothes.return`). Not kept: repair, SLATE keeping no tear to mend, and resale, no platform publishing what used clothes fetch. |
 | Unavailable sizes, delays, returns, location | Works | Each is refused or said in words; tests in `tests/clothing.test.ts`. |
 
 ## 36. Vehicle Purchase, Modification And Use
@@ -53,14 +53,14 @@ corrected in the same commit, as the backlog's progress table is.
 |---|---|---|
 | Real models and listings | Works | Cars: each market's best-sellers at the makers' prices, new or used (`systems/vehicles.ts`). |
 | Compare | Works | A catalog, cheapest first, taxed and registered. |
-| Inspect or test | Missing | Stage 8. |
+| Inspect or test | Missing | Not kept: a test drive or a pre-purchase inspection would change nothing SLATE reads, every model being sold at its published condition. |
 | Payment or financing | Works | Cash, a loan, or a lease (`vehicle.lease`). |
 | Registration and insurance | Works | Each jurisdiction's fees and insurance. |
 | Collect | Works | It's theirs where they bought it. |
-| Compatible modifications | Part | `vehicle.modify`, `vehicle.tint`, `vehicle.winter_tires`: a list of mods at fitted prices; compatibility by model, paint, wraps and upholstery are Stage 8. |
+| Compatible modifications | Part | `vehicle.modify`, `vehicle.tint`, `vehicle.winter_tires`, and a wrap in ten colors and three finishes at three named shops (`vehicle.wrap`). Not kept: upholstery and audio, no named shop or effect being published in the towns, and wheel fitment, alloys being sold fitted to the car they're bought for. |
 | Itemized quote | Part | Each mod's price; no named shop's quote. |
 | Book work, transport meanwhile | Works | A repair or a service is booked at a named garage in its hours, and the car is in until it's done (`vehicle.repair`, `vehicle.service`); meanwhile the dealer's loaner where one is published, or a rental (`vehicle.stand_in`). |
-| Collect the work | Part | A mod is fitted at once. |
+| Collect the work | Part | A wrap, a repair or a service keeps the car at the shop its days, a loaner or a rental standing in (`vehicle.stand_in`); a mod is fitted at once, no tuner publishing its time. |
 | Drive, park, fuel, maintain | Part | Driven every day at published mileage and fuel prices, parking permits, inspections; faults at RepairPal's rates, mended at a garage, free under the maker's warranty (`systems/repairs.ts`); fuel stops on errands (`errand.fuel`); servicing by the maker's interval and its history, and collisions claimed on full cover (`systems/carcare.ts`). |
 | Change mods or sell | Works | `vehicle.sell`; mods stay on the car. |
 
@@ -71,15 +71,15 @@ corrected in the same commit, as the backlog's progress table is.
 | Find and compare parcels | Works | Land: listings by market, cheapest first (`systems/land.ts`). |
 | Access, utilities, constraints | Part | Each market's kind and acreage; easements are missing (WORLD.md). |
 | Purchase | Works | `land.offer`. |
-| A project such as a field or a pool | Part | A house built on land (`build.start`), and on a home a pool, deck, patio, garage, suite or ADU, a tennis court in seven surfaces, a half basketball court, and lights for either (`home.renovate`); fields are Stage 12. |
+| A project such as a field or a pool | Part | A house built on land (`build.start`), and on a home a pool, deck, patio, garage, suite or ADU, a tennis court in seven surfaces, a half basketball court, and lights for either (`home.renovate`); fields aren't kept, changing nothing SLATE reads. |
 | Feasibility and alternatives | Part | Whether the place allows a house; England doesn't. |
-| Dimensions, materials, equipment | Part | A court's surface and its lot, Fixr's singles area for tennis and half an NBA court for basketball; rooms and finishes are Stage 12. |
-| Quotes and approvals | Part | The permit and the place's fees, paid at the start; one cost, not bids. |
+| Dimensions, materials, equipment | Part | A court's surface and its lot, Fixr's singles area for tennis and half an NBA court for basketball; a spare bedroom made a home gym. Floors, counters and cabinets aren't kept: they change nothing SLATE reads. |
+| Quotes and approvals | Part | The permit and the place's fees, paid at the start; one cost, not bids, no source publishing how far a home's bids spread. |
 | Schedule and payments | Works | Staged payments on a build (`build.pay`). |
 | Follow construction | Works | Stages, inspections, a failed one possible. |
 | Inspection and acceptance | Works | |
 | Use it | Part | A pool or a home's rooms add to its value; a pool to swim in (`life.look_after` swim), a court to play on in daylight or under its lights (`life.look_after` court). |
-| Maintain, repair, remove | Part | Parts wear and are renewed (`pool-renew`, `deck-renew`); removal is missing. |
+| Maintain, repair, remove | Works | Parts wear and are renewed (`pool-renew`, `deck-renew`); a pool, a deck or a garage taken out, the pool's upkeep with it (`pool-removal`, `deck-removal`, `garage-demolition`). |
 
 ## 38. A Day At Home
 
@@ -91,7 +91,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Food from supplies and equipment | Works | Groceries in the fridge, freezer and pantry, a recipe cooked in a kitchen that has what it needs (`food.cook`). |
 | Leftovers and cleanup | Part | Leftovers kept and eaten first; washing up isn't separate from the recipe's minutes. |
 | Household activities or relaxing | Works | Laundry, tidying, unwinding, a cleaner. |
-| Invite someone, or leave for an appointment | Part | The calendar's commitments; inviting someone waits on Stage 10. |
+| Invite someone, or leave for an appointment | Works | The calendar's commitments; a friend invited to a meal or home, answered for a stated reason (`social.invite`). |
 | The same home state on return | Works | Everything persists in the save. |
 | Evening routine and sleep | Works | A saved routine (`systems/routines.ts`), then sleep. |
 | Depleted supplies, no clean clothes, interrupted cooking | Part | Each is refused with its reason; cooking isn't interrupted mid-way. |
@@ -134,12 +134,12 @@ corrected in the same commit, as the backlog's progress table is.
 |---|---|---|
 | A provider | Part | Each visit is at a named practice, urgent care centre or emergency department in the town, their own doctor where chosen (`health.choose_clinic`); it isn't searched or booked. |
 | Eligibility, coverage, payment | Works | Plans, Medicaid, the NHS, COBRA, aid (`health.enroll`, `health.apply_aid`, `health.elect_cobra`). |
-| Book and prepare | Missing | Stage 9. |
-| Travel and check in | Missing | Stage 9. |
+| Book and prepare | Missing | Not kept: an appointment's wait is published for a GP in England and a new patient in America, not in Ireland, Canada or Mexico City, and a condition's care begins at its diagnosis. |
+| Travel and check in | Part | An emergency keeps you the department's median hours, missing what they held (`edMinutes`); a visit isn't travelled to. |
 | Consultation | Part | `health.treat` treats an illness or injury at its cost. |
-| Next steps, tests, referrals | Missing | Stage 9. |
+| Next steps, tests, referrals | Missing | Not kept: none of SLATE's conditions goes to a specialist without inventing which, though the waits are published for England, Canada and IMSS. |
 | Payment or coverage | Works | The bill, the plan's share, `health.pay_bill`. |
-| Prescriptions | Missing | Stage 9. |
+| Prescriptions | Part | Filled at the counter at the plan's share or the chain's own cash price for a generic in America (`health.choose_pharmacy`); not picked up or delivered. |
 | Recovery and follow-up | Part | Recovery runs its course; no follow-up visits. |
 | Conflicts with work | Part | An injury recasts a part it can't be done in. |
 
@@ -169,5 +169,5 @@ corrected in the same commit, as the backlog's progress table is.
 | Travel and attend | Works | The career's trips as journeys. |
 | The professional activity | Works | The shoot or the run. |
 | Career and money | Works | Credits, pay, residuals, reputation. |
-| Follow-up | Part | Residuals, and the Emmys or BAFTA Film where the work goes up for them (`systems/awards.ts`); press and junkets aren't built. |
+| Follow-up | Part | Residuals, and the Emmys or BAFTA Film where the work goes up for them (`systems/awards.ts`); a press day the week before a studio film opens or a series airs; junkets aren't kept, no agreement setting their terms. |
 | Back to ordinary life | Works | Everything persists. |
