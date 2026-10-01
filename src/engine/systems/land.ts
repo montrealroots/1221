@@ -13,7 +13,8 @@
  * back; after it, walking away or not paying at the closing on the
  * forty-fifth day loses it. The closing pays the rest of the price, the
  * buyer's transfer taxes and, in England, the Land Registry's fee. Land is
- * bought with money in the bank: a land loan isn't kept. Until 2026-09-29 a
+ * bought with money in the bank, or on a land loan where one is kept
+ * (`systems/landloan.ts`, from 2026-09-30). Until 2026-09-29 a
  * parcel was bought at once at its value, with none of this.
  *
  * OWNING (stage 4a). A year's holding tax where one's kept; sold after the
@@ -44,11 +45,14 @@ import { DAYS_TO_SELL, LAND_DEAL, LAND_MARKETS, LAND_REGISTRATION, LAND_SEARCHES
 import { homeOf } from './earnings';
 import { marketAt } from './homes';
 import { LAND_LOAN_KIND, financeable, landLoanMonth, openLandLoan } from './landloan';
+import { HOME } from './homes';
+import { markRecord } from './credit';
 import { drawFromBank, inTheBank, owe, payFromBank } from './household';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 export const LAND_TAX_KIND = 'land.tax_year';
 export const LAND_SALE_KIND = 'land.sale_closes';
+const LAND_ROUTE = '/workspace/land';
 export const LAND_EXCHANGE_KIND = 'land.exchange';
 export const LAND_CLOSING_KIND = 'land.closing';
 
@@ -281,7 +285,7 @@ export function registerLand(sim: Simulation): void {
   sim.onSchedule(LAND_LOAN_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const parcel = person ? parcelsOf(person).find((x) => x.id === item.payload.parcelId && x.soldAt === undefined) : undefined;
-    if (person && parcel) landLoanMonth(s, person, parcel);
+    if (person && parcel && landLoanMonth(s, person, parcel)) foreclose(s, person, parcel);
   });
 
   sim.onCommand<{ listingId: string; price: number; financed?: boolean }, { answer: LandAnswer['answer']; price?: Money }>('land.offer', (p, { sim: s }) => {
@@ -442,4 +446,30 @@ export function registerLand(sim: Simulation): void {
     for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.parcelId === parcel.id) s.timeline.cancel(one.id, s.now);
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Land Sold', body: `${m.label}: ${formatMoney(net, saveCurrency(s.universe))} to you, on ${formatDate(s.now, s.zone)}.`, importance: 50, route: '/workspace/land' });
   });
+}
+
+/**
+ * The lender's sale of land whose loan went unpaid (`landLoanMonth`): at the
+ * home's forced-sale share of its worth, the seller's taxes from it, the loan
+ * paid first, anything over theirs, a shortfall owed, and on the record as a
+ * home's foreclosure is.
+ */
+function foreclose(sim: Simulation, person: Person, parcel: Parcel): void {
+  const m = LAND_MARKETS[parcel.market]!;
+  const sale = saleProceeds(m, Math.round(landValue(m, parcel.acres, sim.now) * HOME.forcedSale));
+  const net = inSave(sim, sale.net, m.currency);
+  const owed = parcel.loan?.owed ?? 0;
+  const paidOff = Math.min(owed, net);
+  sim.post({ memo: `Foreclosure sale: ${m.label}, ${areaWords(parcel.acres, m.place)}`, category: 'land', postings: [{ accountId: person.primaryAccountId!, amount: net - paidOff }, { accountId: sim.nominalAccount('income', 'Land Sold').id, amount: -net }, ...(paidOff > 0 ? [{ accountId: sim.nominalAccount('liability_other', 'Land Loans').id, amount: paidOff }] : [])] });
+  if (owed > paidOff) {
+    // What the sale didn't cover moves from the loan to what they owe.
+    sim.post({ memo: 'Land loan short after its foreclosure sale', category: 'land', postings: [{ accountId: sim.nominalAccount('liability_other', 'Land Loans').id, amount: owed - paidOff }, { accountId: sim.nominalAccount('expense', 'Land').id, amount: -(owed - paidOff) }] });
+    owe(sim, person, owed - paidOff, 'Land loan short after its sale', 'land');
+  }
+  markRecord(person, HOME.foreclosureFall, sim.now, homeOf(person));
+  delete parcel.loan;
+  delete parcel.selling;
+  parcel.soldAt = sim.now;
+  for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.payload.parcelId === parcel.id) sim.timeline.cancel(one.id, sim.now);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Your Land Was Sold', body: `The lender foreclosed on ${m.label} and sold it, ${formatMoney(net, saveCurrency(sim.universe), { cents: false })} after its taxes. ${net > owed ? `${formatMoney(net - owed, saveCurrency(sim.universe), { cents: false })} of it was yours.` : 'It didn’t cover the loan; the rest is owed.'} It’s on your record.`, importance: 95, route: LAND_ROUTE });
 }

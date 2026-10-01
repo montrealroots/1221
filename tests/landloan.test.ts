@@ -62,4 +62,55 @@ describe('a land loan', () => {
     const sale = sim.universe.transactions.find((t) => t.memo.startsWith('Sold: '))!;
     expect(sale.postings.find((p) => p.accountId === sim.nominalAccount('liability_other', 'Land Loans').id)!.amount).toBeGreaterThan(0);
   });
+
+  it('is foreclosed when payments go unpaid: begun at 120 days late, the land sold at 210, the loan paid first, on the record', () => {
+    const sim = save('us-ny-newyork', 'landloan-fc');
+    const l = listingsFor(sim, sim.player, homeOf(sim.player)).find((x) => financeable(x.market))!;
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += 5_000_000_00;
+    expect(sim.execute({ kind: 'land.offer', payload: { listingId: l.id, price: l.asking, financed: true } }).ok).toBe(true);
+    sim.advanceBy((LAND_DEAL.closingDays + 1) * MS_DAY);
+    const parcel = parcelsOf(sim.player).find((p) => p.listingId === l.id)!;
+    expect(parcel.loan).toBeDefined();
+    // Nothing left to pay with, from here on.
+    const empty = () => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0) a.balance = 0; };
+    const score = sim.player.credit?.score ?? 0;
+    for (let d = 0; d < 150; d += 5) { empty(); sim.advanceBy(5 * MS_DAY); }
+    expect(parcel.loan?.foreclosureAt).toBeDefined();
+    expect(parcel.soldAt).toBeUndefined();
+    for (let d = 0; d < 100; d += 5) { empty(); sim.advanceBy(5 * MS_DAY); }
+    expect(parcel.soldAt).toBeDefined();
+    expect(parcel.loan).toBeUndefined();
+    const sale = sim.universe.transactions.find((t) => t.memo.startsWith('Foreclosure sale: '))!;
+    expect(sale.postings.find((p) => p.accountId === sim.nominalAccount('liability_other', 'Land Loans').id)!.amount).toBeGreaterThan(0);
+    expect(sim.player.credit!.score).toBeLessThan(score);
+    expect(sim.player.credit!.marks!.some((m) => m.points === 120 && m.at === parcel.soldAt)).toBe(true);
+  });
+
+  it('stops the foreclosure once payments are made again', () => {
+    const sim = save('us-ny-newyork', 'landloan-cure');
+    const l = listingsFor(sim, sim.player, homeOf(sim.player)).find((x) => financeable(x.market))!;
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += 5_000_000_00;
+    expect(sim.execute({ kind: 'land.offer', payload: { listingId: l.id, price: l.asking, financed: true } }).ok).toBe(true);
+    sim.advanceBy((LAND_DEAL.closingDays + 1) * MS_DAY);
+    const parcel = parcelsOf(sim.player).find((p) => p.listingId === l.id)!;
+    const kept: Record<string, number> = {};
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0) { kept[a.id] = a.balance; a.balance = 0; }
+    for (let d = 0; d < 150; d += 5) { for (const id of Object.keys(kept)) sim.universe.accounts[id]!.balance = 0; sim.advanceBy(5 * MS_DAY); }
+    expect(parcel.loan?.foreclosureAt).toBeDefined();
+    for (const [id, b] of Object.entries(kept)) sim.universe.accounts[id]!.balance = b;
+    sim.advanceBy(120 * MS_DAY);
+    expect(parcel.soldAt).toBeUndefined();
+    expect(parcel.loan?.foreclosureAt).toBeUndefined();
+  });
+
+  it('isn’t foreclosed while payments are made', () => {
+    const sim = save('us-ny-newyork', 'landloan-paid');
+    const l = listingsFor(sim, sim.player, homeOf(sim.player)).find((x) => financeable(x.market))!;
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += 5_000_000_00;
+    expect(sim.execute({ kind: 'land.offer', payload: { listingId: l.id, price: l.asking, financed: true } }).ok).toBe(true);
+    sim.advanceBy(300 * MS_DAY);
+    const parcel = parcelsOf(sim.player).find((p) => p.listingId === l.id)!;
+    expect(parcel.soldAt).toBeUndefined();
+    expect(parcel.loan?.foreclosureAt).toBeUndefined();
+  });
 });
