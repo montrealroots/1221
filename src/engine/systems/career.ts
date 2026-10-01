@@ -113,6 +113,28 @@ export const CAREER_WEEK_KIND = 'career.week';
 export const IMPROV_KIND = 'career.improv';
 export const WORKSHOP_KIND = 'career.workshop';
 export const FESTIVAL_KIND = 'career.festival';
+export const PRESS_KIND = 'career.press';
+
+/**
+ * A press day before a studio film opens or a series airs (Stage 13 of
+ * `docs/BACKLOG.md`, from 2026-10-01; `research-career-depth.json`). A
+ * weekly performer, a studio film's or a series regular's, does the press
+ * the distributor asks, unpaid but for expenses, as their contracts and
+ * Equity's and Irish Equity's agreements say; a day performer has no such
+ * obligation (SAG-AFTRA Schedule A), and is asked to none. ACTRA asks four
+ * hours at least, taken as the day's length everywhere; a week before the
+ * opening, SLATE's estimate. Kept, it's in the trades and lifts
+ * recognition as a trade item does (`report`).
+ */
+export const PRESS = { daysBefore: 7, minutes: 240, hour: 10 } as const;
+
+export function schedulePress(sim: Simulation, person: Person, role: Role, opens: Instant, cityId: string): void {
+  const zone = zoneOf(cityId);
+  const p = zonedParts(opens - PRESS.daysBefore * MS_DAY, zone);
+  const when = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: PRESS.hour }, zone);
+  if (when <= sim.now) return;
+  sim.schedule({ at: when, kind: PRESS_KIND, label: `Press Day: ${role.label}`, category: 'career', priority: 30, requiresPlayer: true, durationMinutes: PRESS.minutes, locationId: cityId, payload: { personId: person.id, roleId: role.id, cityId } });
+}
 export const AIRS_KIND = 'career.airs';
 
 /**
@@ -844,6 +866,8 @@ function schedulePremiere(sim: Simulation, person: Person, role: Role, wrapped: 
   }
   const label = { studio: 'Premiere', tribeca: 'Tribeca Premiere', brooklyn: 'Brooklyn Film Festival Premiere', streaming: 'Released To Streaming' }[road];
   sim.schedule({ at: when, kind: FESTIVAL_KIND, label: `${label}: ${role.label}`, category: 'career', priority: 30, requiresPlayer: road !== 'streaming', durationMinutes: road === 'streaming' ? 0 : 180, locationId: cityId, payload: { personId: person.id, roleId: role.id, studio, road } });
+  // A studio film's weekly performer does its press the week before (`PRESS`).
+  if (studio) schedulePress(sim, person, role, when, cityId);
 }
 
 /** What a call costs in stress by its hour: before nine in the morning, or a performance that runs late. */
@@ -1332,6 +1356,8 @@ function finishJob(s: Simulation, person: Person, career: CareerRecord, booking:
       const a = FILM_ROAD.audience;
       const audience = life?.kind === 'network' ? a.network : life?.kind === 'svod' ? a[life.size ?? 'middle'] * (life.hit ? a.hit : 1) : 1;
       s.schedule({ at: Math.max(s.now + 60_000, life?.airsAt ?? s.now + 60_000), kind: AIRS_KIND, label: `It Airs: ${role.label}`, category: 'system', priority: 20, payload: { personId: person.id, roleId: role.id, audience } });
+      // A series regular, a weekly performer, does the press the week before it airs (`PRESS`).
+      if (role.series && life?.airsAt !== undefined) schedulePress(s, person, role, life.airsAt, workCityOf(booking));
     }
     // A season done, the series holds its option until it's picked up or dropped, by mid-June.
     if (role.series && life) {
@@ -2282,6 +2308,15 @@ export function registerCareer(sim: Simulation): void {
   });
 
   // Television seen: recognition by its audience.
+  sim.onSchedule(PRESS_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    if (!person) return;
+    const role = roleById(String(item.payload.roleId));
+    // Kept, it's in the trades; missed, nothing comes of it, the contract asking no more than reasonable availability.
+    if (person.currentLocationId !== item.payload.cityId) return;
+    report(s, person, 'Press Day', `${person.displayName} talks ${role.label} with the press`, 'you');
+  });
+
   sim.onSchedule(AIRS_KIND, (item, s) => {
     const person = personOf(item);
     if (!person) return;

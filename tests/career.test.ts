@@ -10,11 +10,12 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGE_ON_SCREEN, AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
-  AGENCY_TERM, DAY_TRIPS, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
+  AGENCY_TERM, DAY_TRIPS, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, PRESS_KIND, schedulePress, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
   acceptRefusal, beginCareer, closeStaleBookings, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { actingOf, bindCeiling, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
+import { RIVALS } from '@/engine/systems/rivals';
 import { ATTRIBUTES, attributesOf } from '@/engine/systems/attributes';
 import { rehome } from '@/engine/systems/household';
 import { healthOf } from '@/engine/systems/health';
@@ -835,6 +836,50 @@ describe('the attributes at work', () => {
     const tribeca = Array.from({ length: n }, (_, k) => sim.rng('career.selection', sim.player.id, `f${k}`).next() < FILM_ROAD.tribeca).filter(Boolean).length;
     expect(tribeca / n).toBeGreaterThan(0.17);
     expect(tribeca / n).toBeLessThan(0.23);
+  });
+
+  it('puts a studio film’s weekly performer on a press day a week before it opens, and an independent’s on none', () => {
+    const press = (there: boolean) => {
+      const sim = pro('attr-press');
+      const film = offer(sim, 'film-weekly', 1, 0, at(2026, 10, 5, 8));
+      expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
+      play(sim, at(2026, 10, 14, 12));
+      expect(film.status).toBe('worked');
+      const day = pending(sim, PRESS_KIND)[0]!;
+      const premiere = pending(sim, FESTIVAL_KIND)[0]!;
+      expect(zonedParts(day.at, 'America/Los_Angeles')).toMatchObject({ ...zonedParts(premiere.at - 7 * MS_DAY, 'America/Los_Angeles'), hour: 10, minute: 0 });
+      expect(day).toMatchObject({ durationMinutes: 240, requiresPlayer: true, locationId: 'us-ca-losangeles' });
+      sim.advanceTo(day.at - MS_HOUR);
+      sim.player.currentLocationId = there ? 'us-ca-losangeles' : 'us-ny-newyork';
+      const recognition = attributesOf(sim, sim.player).recognition;
+      sim.advanceTo(day.at + MS_HOUR);
+      return { gained: attributesOf(sim, sim.player).recognition - recognition, news: careerOf(sim.player).news?.[0]?.source };
+    };
+    const kept = press(true);
+    expect(kept.gained).toBeCloseTo(RIVALS.press, 10);
+    expect(kept.news).toBe('Press Day');
+    expect(press(false).gained).toBe(0);
+    // An independent film's day performer is asked to none.
+    const sim = pro('attr-press-indie');
+    const film = offer(sim, 'film-low', 1, 0, at(2026, 10, 5, 8));
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
+    play(sim, at(2026, 10, 9, 12));
+    expect(pending(sim, PRESS_KIND)).toHaveLength(0);
+  });
+
+  it('puts a series regular on a press day a week before it airs', () => {
+    const sim = pro('attr-press-series');
+    const series = offer(sim, 'series-half', 13, 0, at(2026, 10, 5, 8));
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: series.id } }).ok).toBe(true);
+    tended(sim, at(2027, 1, 20, 12));
+    expect(series.status).toBe('worked');
+    const airs = pending(sim, AIRS_KIND)[0]!;
+    const day = pending(sim, PRESS_KIND)[0]!;
+    expect(zonedParts(day.at, NY)).toMatchObject({ ...zonedParts(airs.at - 7 * MS_DAY, NY), hour: 10, minute: 0 });
+    // And none is put in the past: an opening under a week away has none.
+    const late = pending(sim, PRESS_KIND).length;
+    schedulePress(sim, sim.player, roleById('series-half'), sim.now + 3 * MS_DAY, 'us-ny-newyork');
+    expect(pending(sim, PRESS_KIND)).toHaveLength(late);
   });
 
   it('loses reputation for a walk-off', () => {
