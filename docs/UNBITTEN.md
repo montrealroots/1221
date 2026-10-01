@@ -590,7 +590,7 @@ part the tool cannot see.
   burglary or a fire, and how much less wall units cool than central air.
   Since 2026-09-28 a washer's load counts the hot water it draws, about 90%
   of its energy (ENERGY STAR), priced as electricity whatever heats it.
-- **Papers are partly SLATE's estimate, and a border isn't checked yet.**
+- **Papers are partly SLATE's estimate.** This said "and a border isn't checked yet" until 2026-10-01; a border has been checked since `bc90d7b8` (2026-09-29, `crossingRefusal`).
   Since 2026-09-29 a person holds a passport, travel authorizations, visas,
   a driver's license and an International Driving Permit
   (`systems/documents.ts`, `systems/licensing.ts`; docs/WORLD.md, stage 1).
@@ -603,8 +603,9 @@ part the tool cannot see.
   entry, and since 2026-09-29 a job abroad asks it at the offer and on the
   travel day, and a home abroad asks the right to live there; until then a
   production abroad moved the actor with no check. Permission to work is
-  asked since 2026-09-29 as well (`systems/permission.ts`), and journeys of
-  the player's own don't exist (stage 2). SLATE's estimates in permission to
+  asked since 2026-09-29 as well (`systems/permission.ts`). Journeys of the
+  player's own didn't exist when this was written; they have since stage 2,
+  and cross a border on its papers. SLATE's estimates in permission to
   work: USCIS's and IRCC's standard processing times, which neither
   publishes as one figure (OPT 90 days, an O-1 90 and the union's opinion
   15, a Canadian permit 30); what counts as a day at work on OPT (inside a
@@ -617,8 +618,10 @@ part the tool cannot see.
   $205) its holder would travel on. Someone whose permission has ended isn't
   made to leave: they can't work, move into a home or buy one to live in,
   and nothing enforces more.
-  `mayDrive` decides driving, and nothing drives yet (stage 3). A license's
-  probation and points aren't kept, since SLATE has no driving offenses.
+  `mayDrive` decides driving, which nothing did until stage 3 (`f4648fce`,
+  2026-09-29). Since then a ticket puts points on a license and enough of
+  them suspend it (`systems/driving.ts`). A graduated license's probation is
+  read in `content/licenses.ts`, and no rule of it is enforced.
 - **A journey is partly SLATE's estimate.** Since 2026-09-29 a journey by
   air is booked, kept and taken (`systems/journey.ts`). SLATE's estimates:
   the schedule (three departures a day) and the route (direct between large
@@ -698,9 +701,12 @@ part the tool cannot see.
   £9.90 a prescription item (none at 60 or over, nor in Scotland, Wales or
   Northern Ireland), the dental bands. Not kept: the other exemptions from
   the prescription charge (a low Universal Credit award, a medical exemption,
-  a prepayment certificate), free sight tests, and the Immigration Health
-  Surcharge a visa holder would pay, so a visa holder in the UK is still
-  billed as before. Ireland's and Mexico's public care aren't in.
+  a prepayment certificate) and free sight tests. The Immigration Health
+  Surcharge a visa holder pays, and the NHS it buys, have been kept since
+  2026-09-30 (`nhsByRoute`, `systems/residence.ts`); until then a visa
+  holder in the UK was billed as before. Ireland's and Mexico's public care
+  have been in since `145916e6` (2026-09-29: `irishShareOf`,
+  `mexicanShareOf`). This entry said all three were missing until 2026-10-01.
 - **Nobody broke is fed by a food bank.** Since 2026-09-29 a body starved
   below a body mass index of 12 ends the life (`BMI_SURVIVAL_LIMIT`), and
   12 to 15 carries Zheng's 2.8. A day the bank can't pay for eats a short
