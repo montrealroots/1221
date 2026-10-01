@@ -273,6 +273,8 @@ export interface Person {
   routines?: import('../systems/routines').Routine[];
   /** The people they know, met at school and at work (`systems/people.ts`, from 2026-10-01). */
   contacts?: import('../systems/people').Contact[];
+  /** A gym they're a member of (`systems/gyms.ts`, from 2026-10-01). */
+  gym?: import('../systems/gyms').Membership;
   /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
   suppliesSince?: number;
   groomedAt?: number;

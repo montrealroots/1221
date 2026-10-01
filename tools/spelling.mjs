@@ -162,8 +162,8 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
 // groceries and the recipes their sources' way (src/engine/content/groceries.ts, tools/build-groceries.mjs), and the
 // toiletries and salons theirs (src/engine/content/hygiene.ts, tools/build-hygiene.mjs), and the clinics and hospitals
 // theirs (src/engine/content/clinics.ts, tools/build-clinics.mjs), and the hotels and their rooms theirs
-// (src/engine/content/hotels.ts, tools/build-hotels.mjs), and the garages' names theirs (src/engine/content/carshops.ts).
-const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts', 'src/engine/content/clothingcatalog.ts', 'src/engine/content/restaurants.ts', 'src/engine/content/groceries.ts', 'src/engine/content/hygiene.ts', 'src/engine/content/clinics.ts', 'src/engine/content/hotels.ts', 'src/engine/content/carshops.ts'];
+// (src/engine/content/hotels.ts, tools/build-hotels.mjs), the garages' names theirs (src/engine/content/carshops.ts), and the gyms' (src/engine/content/gyms.ts).
+const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts', 'src/engine/content/clothingcatalog.ts', 'src/engine/content/restaurants.ts', 'src/engine/content/groceries.ts', 'src/engine/content/hygiene.ts', 'src/engine/content/clinics.ts', 'src/engine/content/hotels.ts', 'src/engine/content/carshops.ts', 'src/engine/content/gyms.ts'];
 const oursToFix = (path) => !NOT_OURS.some((dir) => path.startsWith(dir));
 
 function walk(dir) {

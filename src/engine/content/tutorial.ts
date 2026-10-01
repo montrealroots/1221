@@ -129,9 +129,10 @@ export const CHAPTERS: readonly Chapter[] = [
       'You have two weeks of clean clothes. Do The Laundry washes what you’ve worn, the way your home allows: your own washer and dryer, a washer and a rack that dries by the next day, the machines in the building for a fee, or an hour or two at the laundromat. Out of clean clothes, the morning starts less fresh and the day weighs on you.',
       'A home gets untidy every day, a little slower with a dishwasher, and a mess weighs on the mood and adds stress. Clean The Place takes longer the bigger it is. On a free day you keep up with both yourself, roughly; a working day leaves no time, and they wait.',
       'Something you love lifts you more: the menu says so beside it. When one can’t be done, it’s gray, with the reason.',
+      'Join a gym in the town you’re in, on a membership your age allows, while it’s open: the joining fee, the first month and any annual fee are paid then, with the place’s tax, and each month after on the day you joined, wherever you are, until you Leave The Gym. Leaving inside a minimum term pays the months left of it. A workout there, while it’s open, builds what a gym builds, and one with a pool can be swum in.',
     ],
-    names: ['Look After Yourself'],
-    opens: ['ui.look-after', 'life.look_after'],
+    names: ['Look After Yourself', 'Join', 'Leave The Gym'],
+    opens: ['ui.look-after', 'life.look_after', 'gym.join', 'gym.leave'],
   },
   {
     id: 'plans',

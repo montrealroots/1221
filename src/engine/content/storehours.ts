@@ -18,7 +18,8 @@
  */
 
 export interface Hours { open: number; close: number }
-export interface Week { weekdays: Hours; saturday: Hours; sunday: Hours }
+/** A week's hours; a Friday that keeps its own, as gyms' do, from 2026-10-01. */
+export interface Week { weekdays: Hours; saturday: Hours; sunday: Hours; friday?: Hours }
 
 const daily = (open: number, close: number): Week => ({ weekdays: { open, close }, saturday: { open, close }, sunday: { open, close } });
 const sundays = (week: Hours, sunday: Hours): Week => ({ weekdays: week, saturday: week, sunday });
@@ -36,4 +37,4 @@ export const CHAIN_HOURS: Readonly<Record<string, Week>> = {
 };
 
 /** The hours a day's week gives, by its weekday (0 Sunday, 6 Saturday). */
-export const hoursOn = (week: Week, weekday: number): Hours => (weekday === 0 ? week.sunday : weekday === 6 ? week.saturday : week.weekdays);
+export const hoursOn = (week: Week, weekday: number): Hours => (weekday === 0 ? week.sunday : weekday === 6 ? week.saturday : weekday === 5 && week.friday ? week.friday : week.weekdays);

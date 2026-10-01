@@ -10,6 +10,9 @@ import { useFeature } from '@/ui/guide/Guide';
 import { LOOKING_AFTER, type LookAfter } from '@/engine/systems/life';
 import { RECIPES } from '@/engine/content/groceries';
 import { MAX_STEPS, routineRefusal, runRoutine, stepLabel, type RoutineStep } from '@/engine/systems/routines';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { gymById } from '@/engine/content/gyms';
+import { gymsIn, joinRefusal, joiningCost, leavingCost, taxed } from '@/engine/systems/gyms';
 
 export function RoutinesWorkspace() {
   const { sim, run, toast } = useGame();
@@ -88,8 +91,52 @@ export function RoutinesWorkspace() {
             <div className="small">{steps.length ? steps.map((s, i) => `${i + 1}. ${stepLabel(person, s)}`).join('   ') : 'No steps yet.'}</div>
           </div>
         </Panel>
+        <GymPanel />
         <Fine>A routine runs each step as you would, with its own time and checks: a shower when you aren’t clean, a meal when you’re hungry and can pay, a recipe when the kitchen has what it takes. It stops at the first that can’t be done and says why; what was done before it stays done.</Fine>
       </div>
     </>
+  );
+}
+
+/** A gym of your own (`systems/gyms.ts`): the town's gyms and their memberships, cheapest first, and leaving one. */
+function GymPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const join = useFeature('gym.join');
+  const leave = useFeature('gym.leave');
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  const mine = person.gym ? gymById(person.gym.gymId) : undefined;
+  const offers = gymsIn(person.currentLocationId).flatMap((g) => g.tiers.map((t) => ({ g, t, month: taxed(sim, g, t.monthly) }))).sort((a, b) => a.month - b.month);
+  return (
+    <Panel title="Your Gym" subtitle={mine ? `${mine.name}, ${person.gym!.tier}` : 'The gyms where you are, by the month, cheapest first'}>
+      {mine ? (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="small">{mine.address}{mine.pool ? ', with a pool' : ''}</span>
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!leave.open} title={leave.reason} onClick={() => { const a = run<{ paid: number }>('gym.leave', {}); if (a.ok) toast(a.value!.paid ? `You left, paying the rest of the term, ${money(a.value!.paid)}.` : 'You left the gym.', 'neutral'); }}>{leavingCost(sim, person) ? `Leave The Gym, ${money(leavingCost(sim, person))}` : 'Leave The Gym'}</button>
+        </div>
+      ) : offers.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE keeps no gyms where you are.</p> : (
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Gym</th><th scope="col">Membership</th><th scope="col" className="num">A Month</th><th scope="col" className="num">To Join</th><th scope="col">Term</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+            <tbody>
+              {offers.map(({ g, t, month }) => {
+                const no = joinRefusal(sim, person, g.id, t.name);
+                return (
+                  <tr key={`${g.id}-${t.name}`}>
+                    <td>{g.name}{g.pool ? <div className="xs dim">A Pool</div> : null}</td>
+                    <td>{t.name}{t.annual === null ? <div className="xs dim">Annual Fee Not Published</div> : t.annual ? <div className="xs dim">{`And ${money(taxed(sim, g, t.annual))} A Year`}</div> : null}</td>
+                    <td className="num mono">{money(month)}</td>
+                    <td className="num mono">{t.joining === null ? 'Not Published' : money(joiningCost(sim, g, t))}</td>
+                    <td className="small">{t.termMonths ? `${t.termMonths} Months` : 'None'}</td>
+                    <td><button type="button" className="btn btn-sm btn-ghost" disabled={!join.open || Boolean(no)} title={no ?? join.reason} onClick={() => { const a = run<{ paid: number }>('gym.join', { gymId: g.id, tier: t.name }); if (a.ok) toast(`You joined ${g.name}, for ${money(a.value!.paid)}.`, 'positive'); }}>Join</button></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </Panel>
   );
 }

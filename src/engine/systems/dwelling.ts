@@ -51,6 +51,7 @@ import { replaceWornOut, starterWardrobe } from './clothing';
 import { restock, starterSupplies } from './hygiene';
 import { starterLuggage } from './luggage';
 import { sunTimes } from '../core/sun';
+import { gymHere } from './gyms';
 import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
@@ -424,6 +425,8 @@ export function fineWeatherRefusal(sim: Simulation, person: Person, doing: strin
 
 /** Why a swim can't be had now, or nothing where it can. */
 export function swimRefusal(sim: Simulation, person: Person): string | undefined {
+  // A member's gym with a pool, indoors, open now (`systems/gyms.ts`, from 2026-10-01).
+  if (gymHere(sim, person)?.pool) return undefined;
   const owned = livingIn(person);
   if (!atHome(person) || !owned?.facts.features.includes('pool')) return 'You have no pool.';
   const w = weatherNow(sim, person);
@@ -468,6 +471,8 @@ export function courtRefusal(sim: Simulation, person: Person): string | undefine
  */
 export const TRAINING = { gym: 1.2, run: 1.1, home: 1 };
 export function trainingAt(sim: Simulation, person: Person): { where: 'gym' | 'run' | 'home'; builds: number } {
+  // A member's own gym, in its town and open (`systems/gyms.ts`, from 2026-10-01).
+  if (gymHere(sim, person)) return { where: 'gym', builds: TRAINING.gym };
   if ((placeOf(sim, person)?.fixtures.gym ?? 'none') !== 'none') return { where: 'gym', builds: TRAINING.gym };
   const w = weatherNow(sim, person);
   if (w && !wet(w.condition) && heatIndexC(w.highC, w.humidity) <= FINE.highC && w.highC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
