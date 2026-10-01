@@ -106,7 +106,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Time and resources | Part | A journey's car leg costs its time and fuel. |
 | Fuel or charging stops | Missing | Stage 7. |
 | Pay and update | Part | Fuel bought monthly with the everyday driving. |
-| Park and complete errands | Missing | Stage 7. |
+| Park and complete errands | Part | A store sells only in its own opening hours (`systems/errands.ts`); parking isn't built. |
 | Load purchases | Part | Clothes and groceries go home; not into the car. |
 | Put things away | Works | Belongings. |
 

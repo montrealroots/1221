@@ -36,6 +36,7 @@ import { SALONS, TOILETRIES, type Salon, type Toiletry } from '../content/hygien
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { spend } from './household';
+import { closedNow } from './errands';
 import { addItem, homeKeyOf, itemsOf, reachable, type Item } from './items';
 
 /** What makes an item a supply: its kind, its unit and how much is left. */
@@ -121,18 +122,20 @@ export function dailyCare(sim: Simulation, person: Person): number {
 }
 
 /** Why they can't buy it here, or nothing. */
-export function toiletryRefusal(person: Person, id: string, quantity: number): string | undefined {
+export function toiletryRefusal(person: Person, id: string, quantity: number, at?: Instant): string | undefined {
   const t = toiletryById(id);
   if (!t) return 'That isn’t on sale.';
   if (!chainsHere(person.currentLocationId).has(t.chain)) return 'There’s no store of that chain here.';
   if (!(Number.isInteger(quantity) && quantity >= 1 && quantity <= 10)) return 'From one to ten.';
   if (!(person.home && person.home.cityId === person.currentLocationId)) return 'Toiletries go home to your bathroom, here.';
+  // Only while the store is open, for a purchase made at a moment; the day's restocking is done in its open hours (`systems/errands.ts`).
+  if (at !== undefined) { const shut = closedNow(t.chain, GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? 'The store', person.currentLocationId, at); if (shut) return shut; }
   return undefined;
 }
 
 /** Buys toiletries: paid, and into the bathroom. */
-export function buyToiletries(sim: Simulation, person: Person, id: string, quantity: number): Money {
-  const no = toiletryRefusal(person, id, quantity);
+export function buyToiletries(sim: Simulation, person: Person, id: string, quantity: number, inOpenHours = false): Money {
+  const no = toiletryRefusal(person, id, quantity, inOpenHours ? undefined : sim.now);
   if (no) throw new CommandError(no);
   const t = toiletryById(id)!;
   const paid = toiletryPrice(sim, person.currentLocationId, t) * quantity;
@@ -176,7 +179,7 @@ export function restock(sim: Simulation, person: Person): number {
     if (have.length > 0 || (kind === 'body-wash' && toHand(sim, person, 'soap').length > 0)) continue;
     const pick = cheapestToiletry(sim, person.currentLocationId, kind);
     if (!pick || toiletryRefusal(person, pick.id, 1)) continue;
-    try { buyToiletries(sim, person, pick.id, 1); bought += 1; } catch (e) { if (!(e instanceof CommandError)) throw e; }
+    try { buyToiletries(sim, person, pick.id, 1, true); bought += 1; } catch (e) { if (!(e instanceof CommandError)) throw e; }
   }
   return bought;
 }

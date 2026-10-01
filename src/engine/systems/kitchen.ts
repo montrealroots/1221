@@ -43,6 +43,7 @@ import { addItem, homeKeyOf, itemById } from './items';
 import { placeOf } from './dwelling';
 import { applyLookingAfter, occupiedAt } from './life';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
+import { closedNow } from './errands';
 import { foodOf, fresh, mealsReady, stockOf, takePortion, throwOutSpoiled, type Stocked } from './pantry';
 
 const MARKET: Readonly<Record<string, string>> = { us: 'US', uk: 'GB', ie: 'IE', ca: 'CA', mx: 'MX' };
@@ -101,6 +102,9 @@ export function groceryRefusal(sim: Simulation, person: Person, productId: strin
   if (!p) return 'That isn’t on sale.';
   if (!chainsIn(person.currentLocationId).some((c) => c.id === p.chain)) return 'There’s no store of that chain here.';
   if (!(Number.isInteger(quantity) && quantity >= 1 && quantity <= 20)) return 'From one to twenty.';
+  // Only while the store is open (`systems/errands.ts`).
+  const shut = closedNow(p.chain, GROCERY_CHAINS.find((c) => c.id === p.chain)?.name ?? 'The store', person.currentLocationId, sim.now);
+  if (shut) return shut;
   if (!(person.home && person.home.kind !== 'sofa' && person.home.cityId === person.currentLocationId)) return 'Groceries go home to your kitchen, here.';
   if (p.category === 'alcohol' && yearsOld(person, sim.now) < drinkingAge(person.currentLocationId)) return `You have to be ${drinkingAge(person.currentLocationId)} to buy it here.`;
   return undefined;
