@@ -1,0 +1,852 @@
+{
+  "meta": {
+    "title": "Clothing services and conventions: alterations, repair, resale, size conversion, fit",
+    "cities": ["New York", "Los Angeles", "New Haven CT", "London", "Dublin", "Toronto", "Vancouver", "Mexico City"],
+    "date_read": "2026-10-01",
+    "method_key": {
+      "page": "figure read from the cited page itself via fetch (a summarising fetch; wording quoted where the tool returned it verbatim)",
+      "search-summary": "figure taken from a web-search result summary, not confirmed on the page itself; treat as lower confidence"
+    },
+    "rules": "No figure invented. Where nothing published was found the field is null with a note. Prices are the shop's own published 'from'/'& up' prices unless stated; they exclude sales tax/VAT/HST unless the source says otherwise. Currency is local: USD, GBP, EUR, CAD, MXN."
+  },
+
+  "alterations": {
+    "new_york": {
+      "currency": "USD",
+      "shops": [
+        {
+          "name": "East Side Tailor",
+          "address": "434 E 11th St, New York, NY 10009",
+          "address_source": {"url": "https://www.yelp.com/biz/east-side-tailor-new-york", "method": "search-summary"},
+          "hours": "Mon-Fri 9:00-19:00; Sat 9:00-18:00; Sun 10:00-18:00",
+          "hours_source": {"url": "https://www.yelp.com/biz/east-side-tailor-new-york", "method": "search-summary"},
+          "prices": {
+            "trouser_hem": {"value": "25-60", "note": "'Shorten Hem $25-60*' (*prices may vary according to the design)"},
+            "jacket_sleeves": {"value": 55, "note": "'Shorten Sleeves $55'"},
+            "take_in_waist": {"value": "45-110", "note": "'Waist $45-110*'"},
+            "shorten_dress_or_skirt": {"value": 65, "note": "Dresses: 'Regular Hem $65'"},
+            "replace_zip": {"value": 35, "note": "'Add or Repair Zipper $35' (pants/shirts); $45 dresses"}
+          },
+          "turnaround_days": null,
+          "turnaround_note": "Not stated. Same-day service costs an additional $24-45.",
+          "source": {"url": "https://eastsidetailor.com/service", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Mid City Tailoring",
+          "address": "150 W 36th St, Floor 3, New York, NY (between 7th Ave & Broadway)",
+          "hours": "Page says 'Open 6 days a week' and 'CLOSED SUNDAY & MONDAY' (internally inconsistent); weekday opening 8am. Phone (212) 719-2215",
+          "prices": {
+            "trouser_hem": {"value": "25+"},
+            "jacket_sleeves": {"value": "55+", "note": "$165+ if shortened from the shoulder"},
+            "take_in_waist": {"value": "35+", "note": "trousers; $55+ jeans"},
+            "shorten_dress_or_skirt": {"value": "25+ (dress) / 45-75 (skirt)", "note": "unlined and lined dresses both listed from $25+"},
+            "replace_zip": {"value": "35+", "note": "trousers; $45+ dresses; $35 jeans"}
+          },
+          "turnaround_days": "10-14 business days",
+          "turnaround_note": "'General turn around time is 10 to 14 business days, however same day or next day rush service is available upon request' at extra charge.",
+          "source": {"url": "https://midcitytailoring.com/alteration-services.html", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Michael Andrews Bespoke (alterations on own garments only)",
+          "address": "NoHo and Midtown Manhattan showrooms (street addresses not on the alterations page)",
+          "hours": null,
+          "prices": {
+            "trouser_hem": {"value": 40, "note": "plain hem"},
+            "jacket_sleeves": {"value": 50, "note": "per sleeve, as printed"},
+            "take_in_waist": {"value": 65, "note": "'Waist/Seat: In/Out'"},
+            "shorten_dress_or_skirt": {"value": null, "note": "not listed"},
+            "replace_zip": {"value": 75, "note": "trousers"}
+          },
+          "turnaround_days": "7-14",
+          "turnaround_note": "'We generally complete them in-house within one to two weeks.' Does NOT alter outside garments; a player could not walk in with a store-bought suit.",
+          "source": {"url": "https://www.michaelandrews.com/alterations/", "date_read": "2026-10-01", "method": "page"}
+        }
+      ],
+      "excluded": "Imperial Alterations (imperialalterations.com/pricing) appears in NYC searches but its shops are in Hoboken and Jersey City, NJ."
+    },
+
+    "los_angeles": {
+      "currency": "USD",
+      "shops": [
+        {
+          "name": "Mika and Kamila Alterations",
+          "address": "1168 Carmona Ave, 2nd Floor, Los Angeles, CA 90019 (behind Pasquale Shoe Repair)",
+          "hours": "By appointment only, Tue-Sat 10:00-16:00; closed Sun & Mon",
+          "address_hours_source": {"url": "https://www.yelp.com/biz/mika-and-kamila-alterations-los-angeles", "method": "search-summary"},
+          "prices": {
+            "trouser_hem": {"value": 25, "note": "regular hem; $30 original hem"},
+            "jacket_sleeves": {"value": 45, "note": "blazer with vents"},
+            "take_in_waist": {"value": 30, "note": "trousers; $40 jeans"},
+            "shorten_dress_or_skirt": {"value": 35},
+            "replace_zip": {"value": 25}
+          },
+          "turnaround_days": null,
+          "turnaround_note": "Standard time not stated; expedited '2 to 4 days' or 'next day' for an extra $20-35.",
+          "source": {"url": "https://mikaandkamila.com/pricing/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Art Lewin Bespoke (DTLA)",
+          "address": "714 W Olympic Blvd, Suite 1010, Los Angeles, CA 90015",
+          "hours": null,
+          "prices": {
+            "trouser_hem": {"value": 24, "note": "plain; $28 with cuffs"},
+            "jacket_sleeves": {"value": 48},
+            "take_in_waist": {"value": 38},
+            "shorten_dress_or_skirt": {"value": 95, "note": "$125 with lining"},
+            "replace_zip": {"value": 38}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://artlewinbespoke.com/expert-tailoring-mens-suit-tailor/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Laundromat of San Pedro (alterations counter; San Pedro is within the City of Los Angeles)",
+          "address": "940 S Pacific Ave, San Pedro, CA 90731",
+          "hours": "Daily 6:00-22:00 (laundromat hours); formal-wear fittings Sundays 8:00-18:30 by appointment",
+          "prices": null,
+          "price_note": "Prices are on a separate price menu not captured.",
+          "turnaround_days": "4-7",
+          "turnaround_note": "'Our typical turn-around for Alteration/Tailoring service is 4 - 7 Days'",
+          "source": {"url": "https://laundromatofsanpedro.com/alterations-and-tailoring", "date_read": "2026-10-01", "method": "page"}
+        }
+      ]
+    },
+
+    "new_haven": {
+      "currency": "USD",
+      "shops": [
+        {
+          "name": "Valentino Tailors",
+          "address": "817 Grand Ave, Unit 101, New Haven, CT 06511",
+          "hours": "Tue-Fri 9:30-18:00; Sat 9:30-17:00 (14:00 close in July & August); closed Sun & Mon; by appointment only",
+          "prices": null,
+          "price_note": "No prices published on the website.",
+          "turnaround_days": null,
+          "source": {"url": "https://valentinotailors.com/", "date_read": "2026-10-01", "method": "page"}
+        }
+      ],
+      "other_named_shops_no_prices": [
+        {"name": "Enson's", "address": "1050 Chapel St, New Haven", "source": {"url": "https://yelp.com/search?amp=&find_desc=tailor&find_loc=New+Haven%2C+CT", "method": "search-summary"}},
+        {"name": "Greg's Tailor Shop", "address": "113 Court St, New Haven", "source": {"url": "https://yelp.com/search?amp=&find_desc=tailor&find_loc=New+Haven%2C+CT", "method": "search-summary"}}
+      ],
+      "gap": "No New Haven alteration shop with a published price list was found. Prices: null."
+    },
+
+    "london": {
+      "currency": "GBP",
+      "shops": [
+        {
+          "name": "Fielding & Nicholson (Mayfair tailor)",
+          "address": "35 Sackville St, London W1S 3EG",
+          "hours": "Weekdays 09:00-17:30; weekend appointments 09:00-17:00",
+          "prices": {
+            "trouser_hem": {"value": 40, "note": "'Shorten/lengthen trouser – £40.00'"},
+            "jacket_sleeves": {"value": 80},
+            "take_in_waist": {"value": 40},
+            "shorten_dress_or_skirt": {"value": null, "note": "not listed"},
+            "replace_zip": {"value": 80}
+          },
+          "turnaround_days": null,
+          "turnaround_note": "'Our turnaround time varies by season'",
+          "source": {"url": "https://fieldingandnicholson.com/alterations-price-list/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "LQ Tailoring (Soho)",
+          "address": null,
+          "address_note": "Soho; street address not on the price page. Phone +44 20 3432 7688",
+          "hours": null,
+          "prices": {
+            "trouser_hem": {"value": 15, "note": "from"},
+            "jacket_sleeves": {"value": 20, "note": "from"},
+            "take_in_waist": {"value": 15, "note": "from"},
+            "shorten_dress_or_skirt": {"value": "20 (dress) / 15 (skirt)", "note": "from"},
+            "replace_zip": {"value": 20, "note": "trousers/jeans; £30 dress"},
+            "mend_tear_patch": {"value": 15, "note": "patch, from"}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://lqtailoring.co.uk/tailoring/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "1 Stop Wash (Islington)",
+          "address": "100 Caledonian Rd, Islington, London N1 9DN",
+          "hours": "Mon-Fri 08:00-18:00; Sat 09:00-17:00; Sun closed",
+          "prices": {
+            "trouser_hem": {"value": 15, "note": "from"},
+            "jacket_sleeves": {"value": 25, "note": "from"},
+            "take_in_waist": {"value": null, "note": "quoted individually"},
+            "shorten_dress_or_skirt": {"value": 20, "note": "from"},
+            "replace_zip": {"value": null, "note": "quoted per job"}
+          },
+          "turnaround_days": "2 (up to 3-4)",
+          "turnaround_note": "Most work 'within 48 hours', some jobs 3-4 days. Minimum order £20.",
+          "source": {"url": "https://1stopwash.com/repairs-and-alterations/", "date_read": "2026-10-01", "method": "page"}
+        }
+      ]
+    },
+
+    "dublin": {
+      "currency": "EUR",
+      "shops": [
+        {
+          "name": "Paul Henry Tailoring",
+          "address": "23 William Street South, Dublin 2, D02 FK10",
+          "hours": "By appointment only",
+          "prices": {
+            "trouser_hem": {"value": 10, "note": "re-hem; search summary also lists 'Shorten length €15/€20'"},
+            "jacket_sleeves": {"value": 50, "note": "gents €50; ladies €50/€60"},
+            "take_in_waist": {"value": "25-40 (ladies) / 30-60 (gents)"},
+            "shorten_dress_or_skirt": {"value": "20-30", "note": "per layer"},
+            "replace_zip": {"value": "20-25", "note": "trousers/jeans; dresses/skirts €25/€60; jackets €60"},
+            "mend_tear_patch": {"value": 10, "note": "trousers/jeans tear repair"}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://paulhenrytailoring.ie/alterations-dublin", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Dry Cleaners D1 (Gardiner Street, Dublin 1)",
+          "address": null,
+          "address_note": "Gardiner Street, Dublin 1 per search summary; page gives no street number",
+          "hours": null,
+          "prices": {
+            "trouser_hem": {"value": 12},
+            "jacket_sleeves": {"value": 25, "note": "'Jacket cuffs'"},
+            "take_in_waist": {"value": 15},
+            "shorten_dress_or_skirt": {"value": "18 (dress) / 14 (skirt)"},
+            "replace_zip": {"value": 15, "note": "trousers; jacket/coat €30"},
+            "mend_tear_patch": {"value": 10, "note": "patch on jeans/trousers"}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://drycleanersd1.com/index.php/alterations-repairs/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Fitz Alterations",
+          "address": null,
+          "hours": null,
+          "prices": {
+            "trouser_hem": {"value": 15, "note": "from"},
+            "jacket_sleeves": {"value": null},
+            "take_in_waist": {"value": null},
+            "shorten_dress_or_skirt": {"value": null},
+            "replace_zip": {"value": 18, "note": "from"}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://fitz.ie/pricing/", "date_read": "2026-10-01", "method": "search-summary", "note": "Page refused connection; figures only from search summary."}
+        }
+      ]
+    },
+
+    "toronto": {
+      "currency": "CAD",
+      "shops": [
+        {
+          "name": "Love Your Tailor",
+          "address": "41 Advance Rd, Toronto, ON M8Z 2S6 (drop-off)",
+          "hours": "Mon-Fri 08:00-18:00; Sat 08:00-16:00",
+          "prices": {
+            "trouser_hem": {"value": "25-40", "note": "depending on finish"},
+            "jacket_sleeves": {"value": 40, "note": "'roughly $40' (blog figure, search-summary)"},
+            "take_in_waist": {"value": null},
+            "shorten_dress_or_skirt": {"value": null},
+            "replace_zip": {"value": 20, "note": "search-summary"}
+          },
+          "turnaround_days": "<=7",
+          "turnaround_note": "Standard 'within one week'; next-day rush; 14 days for pickup-and-delivery orders.",
+          "source": {"url": "https://www.loveyourtailor.ca/pants-alterations/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Revamped (Parkdale)",
+          "address": null,
+          "address_note": "Parkdale, Toronto; street address not found",
+          "hours": null,
+          "prices": {
+            "trouser_hem": {"value": "15-20"},
+            "jacket_sleeves": {"value": "20-30"},
+            "take_in_waist": {"value": 25},
+            "shorten_dress_or_skirt": {"value": "15-25+", "note": "plain hem"},
+            "replace_zip": {"value": "20-30 (dress) / 30-50 (jacket)"},
+            "mend_tear_patch": {"value": "20-60+ (denim mending) / 5-25 per patch"}
+          },
+          "turnaround_days": null,
+          "turnaround_note": "Early pick-up $5 & up. 'Taxes are additional.'",
+          "source": {"url": "https://revamped-clothing.com/pages/rates-alterations-customizations-and-repairs", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Perfect Fit For You (dressmaker, North York)",
+          "address": "204-115 Antibes Dr, North York, ON M2R 2Y9",
+          "hours": "By appointment only",
+          "prices": {
+            "trouser_hem": {"value": 14, "note": "starting from"},
+            "jacket_sleeves": {"value": "40-80"},
+            "take_in_waist": {"value": 30, "note": "starting price"},
+            "shorten_dress_or_skirt": {"value": 30, "note": "skirt, starting"},
+            "replace_zip": {"value": "20-50", "note": "invisible zipper; jackets $50-80"}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://www.perfectfitforyou.com/alterations-pricelist-toronto/", "date_read": "2026-10-01", "method": "page"}
+        }
+      ]
+    },
+
+    "vancouver": {
+      "currency": "CAD",
+      "shops": [
+        {
+          "name": "Joyce Station Tailor & Dry Cleaner",
+          "address": "5030 Joyce St, Vancouver, BC V5R 4G6",
+          "hours": "Mon-Fri 10:00-18:00; Sat 10:00-17:00; Sun & holidays closed",
+          "prices": {
+            "trouser_hem": {"value": 15, "note": "& up"},
+            "jacket_sleeves": {"value": 35, "note": "& up"},
+            "take_in_waist": {"value": 30, "note": "& up"},
+            "shorten_dress_or_skirt": {"value": 25, "note": "& up"},
+            "replace_zip": {"value": 25, "note": "& up; jackets $50 & up per search summary"}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://www.thejoycetailor.com/vancouver-alteration/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Maho's Sewing Studio",
+          "address": null,
+          "hours": null,
+          "prices": {
+            "trouser_hem": {"value": 13, "note": "plus tax; dress pants $15"},
+            "jacket_sleeves": {"value": 35, "note": "coat sleeves, plus tax"},
+            "take_in_waist": {"value": null},
+            "shorten_dress_or_skirt": {"value": null},
+            "replace_zip": {"value": null}
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://mahosewingstudio.com/pages/price-list", "date_read": "2026-10-01", "method": "search-summary", "note": "Page returned empty on fetch."}
+        }
+      ]
+    },
+
+    "mexico_city": {
+      "currency": "MXN",
+      "shops": [],
+      "gap": "No CDMX alteration shop with a published per-job price list was found. Named sastrerías (address/hours, no prices) are listed below.",
+      "named_shops_no_prices": [
+        {"name": "Sastrería, Trajes, Smoking y Camisería Polanco", "address": "Av. Emilio Castelar 208, Polanco", "hours": "Mon-Sat 10:30-19:30, Sun closed", "source": {"url": "https://modamaz.mx/sastrerias/sastreria-en-cdmx/", "method": "search-summary"}},
+        {"name": "Casa Huitzil Sastrería", "address": "Div. del Norte 3651 Local 10, San Pablo Tepetlapa, Coyoacán", "hours": null, "source": {"url": "https://guia-distrito-federal.guiamexico.com.mx/sastrerias-sastres/coyoacan-distrito-federal/empresas-guia.html", "method": "search-summary"}}
+      ],
+      "national_price_guide": {
+        "publisher": "Cronoshare México (marketplace price guide, not a shop)",
+        "guide_date": "2026-01-10",
+        "scope": "Mexico nationally; guide says prices are higher in large cities but gives no CDMX-specific figures",
+        "prices": {
+          "trouser_hem": "50-60",
+          "jacket_sleeves": "60-70",
+          "take_in_waist": "55-65",
+          "shorten_dress_or_skirt": "80-150",
+          "replace_zip": "60-70",
+          "mend_tear_patch": "25-45 (remiendo)"
+        },
+        "source": {"url": "https://www.cronoshare.com.mx/cuanto-cuesta/compostura-ropa", "date_read": "2026-10-01", "method": "page"}
+      },
+      "high_end_reference": {
+        "note": "A search summary attributes trouser waist $350, hem $350 and zip change $350 (and dress zip $750) to a high-end CDMX sastrería (Il Taglio Esclusivo); its site failed TLS on fetch so this is unconfirmed.",
+        "source": {"url": "https://sastreriailtaglioesclusivo.com/", "date_read": "2026-10-01", "method": "search-summary"}
+      }
+    }
+  },
+
+  "clothing_repair": {
+    "shoe_repair": {
+      "new_york": [
+        {
+          "name": "Cobbler Express",
+          "address": "60 E 42nd St (Lobby), New York, NY 10165",
+          "hours": "Mon-Thu 9:00-17:00; Fri 9:00-13:30",
+          "currency": "USD",
+          "prices": {
+            "mens_heels": "45.00 & up (English heels 65 & up)",
+            "mens_half_sole_rubber_with_heels": "130.00 & up",
+            "mens_full_resole_rubber_with_heels": "136.95 & up",
+            "mens_half_sole_leather_with_heels": "165 & up",
+            "mens_full_resole_leather_with_heels": "188 & up",
+            "womens_heels_rubber": "28.00 & up (pin lifts 26.00 & up)",
+            "womens_half_sole_rubber_with_heels": "111.00 & up",
+            "womens_half_sole_leather_with_heels": "126.95 & up"
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://cobblerexpress.com/in-store-shoes-repair-service/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Jim's Shoe Repair",
+          "address": "50 E 59th St, New York (between Madison & Park)",
+          "hours": null,
+          "currency": "USD",
+          "prices": {"resole": "38-85", "heel_height_adjustment": "18"},
+          "source": {"url": "https://www.timeout.com/newyork/shopping/ten-best-shoe-repair-shops-in-nyc", "date_read": "2026-10-01", "method": "search-summary", "note": "Time Out list; publication date unknown, figures may be old."}
+        }
+      ],
+      "los_angeles": [
+        {
+          "name": "Shoe Doctor (Westfield Fashion Square, Sherman Oaks)",
+          "address": "Westfield Fashion Square, Sherman Oaks, Los Angeles",
+          "hours": null,
+          "currency": "USD",
+          "prices": {"boot_heel_replacement_example": "12", "note": "page says repairs start at 'less than $10'; no full list"},
+          "turnaround_note": "While-you-wait service offered",
+          "source": {"url": "https://www.shoedoctorla.com/", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Progressive Shoe Shop (Beverly Hills - separate city inside LA County)",
+          "address": "9418 Dayton Way, Beverly Hills",
+          "currency": "USD",
+          "prices": {"heel_taps": "10-18", "flat_shoe_sole_replacement": "25-125"},
+          "source": {"url": "https://la.racked.com/2013/4/23/7675585/seven-la-shoe-repair-shops-to", "date_read": "2026-10-01", "method": "search-summary", "note": "Racked LA article dated 2013-04-23; page returned HTTP 500; figures are 13 years old."}
+        }
+      ],
+      "new_haven": {
+        "named_shops_no_prices": [
+          {"name": "Cristhian Shoe Repair", "address": "2 Whitney Ave, New Haven, CT 06510", "phone": "(203) 553-2700", "source": {"url": "https://www.cristhianshoerepair.com/index.html", "method": "page"}},
+          {"name": "Dave's Cobbler Shoppe", "address": "46 Union St, New Haven", "source": {"url": "https://www.yelp.com/search?cflt=shoerepair&find_loc=New+Haven%2C+CT", "method": "search-summary"}},
+          {"name": "Mike's Shoe Repair", "address": "1190 Whalley Ave, New Haven", "source": {"url": "https://www.yelp.com/biz/mikes-shoe-repair-new-haven", "method": "search-summary"}},
+          {"name": "Star Shoe Repairing", "address": "250 College St, New Haven", "source": {"url": "https://www.yelp.com/biz/star-shoe-repairing-new-haven", "method": "search-summary"}}
+        ],
+        "gap": "No New Haven cobbler publishes prices. null."
+      },
+      "london": [
+        {
+          "name": "Cobblers Nest",
+          "address": "76 Redcross Way, London SE1 1HA",
+          "hours": "Mon-Fri 10:00-18:00; Sat-Sun closed",
+          "currency": "GBP",
+          "prices": {
+            "womens_heels": "from 8.50",
+            "womens_half_sole_leather": "from 45.00",
+            "womens_full_sole_leather": "from 65.00",
+            "mens_heels": "from 15.00",
+            "mens_half_sole_leather": "from 55.00",
+            "mens_full_sole_leather": "from 85.00"
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://www.cobblersnest.com/prices-list", "date_read": "2026-10-01", "method": "page"}
+        },
+        {
+          "name": "Bradshaw & Lloyd (collection service, central London)",
+          "address": null,
+          "currency": "GBP",
+          "prices": {"half_leather_or_rubber_stitched_sole_and_rubber_heel": "58.00", "half_stitched_sole_only": "42.00"},
+          "source": {"url": "https://www.bradshawandlloyd.com/blog/london-shoe-repairs-3/", "date_read": "2026-10-01", "method": "search-summary"}
+        },
+        {
+          "name": "Timpson (UK chain)",
+          "currency": "GBP",
+          "prices": null,
+          "note": "Official price page returned HTTP 403. Forum figures (£35 normal / £45 hard-wearing full soles) are not used. Timpson branch managers can set their own prices.",
+          "source": {"url": "https://www.timpson.co.uk/services/shoe-repairs", "date_read": "2026-10-01", "method": "page", "status": "403"}
+        }
+      ],
+      "dublin": [
+        {
+          "name": "Clegg's Shoe Repair (Rathmines)",
+          "address": "124 Rathmines Rd Lower, Dublin D06 DW24",
+          "hours": "Tue-Fri 09:00-17:00; Sat 09:00-15:00; Sun & Mon closed",
+          "currency": "EUR",
+          "prices": {
+            "womens_stiletto_heels": "15.00 per pair",
+            "womens_flat_or_block_heels": "20.00-25.00",
+            "womens_non_slip_sole": "35.00-45.00 per pair",
+            "womens_leather_sole": "40.00-60.00 per pair",
+            "mens_rubber_heels": "24.00-35.00 per pair",
+            "mens_rubber_sole": "40.00 per pair",
+            "mens_leather_sole_unstitched": "60.00 per pair",
+            "mens_leather_sole_stitched": "75.00 per pair",
+            "mens_premium_full_sole": "175.00 per pair"
+          },
+          "turnaround_days": null,
+          "source": {"url": "https://cleggsshoerepair.ie/shoe-repair-dublin/", "date_read": "2026-10-01", "method": "page"}
+        }
+      ],
+      "toronto": [
+        {
+          "name": "ShoeMedic (Oakville, GTA; also mail-in)",
+          "address": "240 Leighland Ave, Unit 101A, Oakville, ON (not in the City of Toronto)",
+          "currency": "CAD",
+          "prices": {"heel_tip_or_lift": "from 25", "half_sole": "from 60", "full_resole": "150-220"},
+          "turnaround_days": "7-14",
+          "turnaround_note": "'approximately 1–2 weeks'; prices before HST",
+          "source": {"url": "https://shoemedic.com/blogs/blog/shoe-repair-cost-toronto", "date_read": "2026-10-01", "method": "page"}
+        }
+      ],
+      "vancouver": [
+        {
+          "name": "The Cobbler (formerly Quick Cobbler)",
+          "address": "1547 Venables St, Vancouver, BC V5L 2G8",
+          "hours": "Mon-Sat 08:00-17:00",
+          "currency": "CAD",
+          "prices": {"full_resole": "145 + tax (search summary of a gravitypope article)"},
+          "source": {"url": "https://thecobbler.ca/", "date_read": "2026-10-01", "method": "page", "price_method": "search-summary", "price_url": "https://www.gravitypope.com/blogs/news/gravitypope-community-series-quick-cobbler"}
+        },
+        {
+          "name": "Parson's Shoe Re-Nu (Bentall Centre, downtown)",
+          "currency": "CAD",
+          "prices": {"full_resole_with_heel": "around 130"},
+          "source": {"url": "https://www.styleforum.net/threads/cobbler-for-goodyear-welt-in-vancouver-and-or-canada.430994/", "date_read": "2026-10-01", "method": "search-summary", "note": "Forum post; age unknown. Low confidence."}
+        }
+      ],
+      "mexico_city": [
+        {
+          "name": "El Zapatitos / Suelas y Tacones Gerardo (street stall)",
+          "address": "Corner of Colima and Cozumel, Col. Roma",
+          "hours": "Mon-Fri 10:00-18:00",
+          "currency": "MXN",
+          "prices": {"heel_caps_tapas": "40-80", "full_sole": "200-250", "shine": "20"},
+          "turnaround_days": "3-5",
+          "source": {"url": "https://www.local.mx/donde-comprar/el-zapatitos/", "date_read": "2026-10-01", "method": "page", "note": "Article dated 2019-08-21; prices may be stale."}
+        },
+        {
+          "name": "Hakky (franchise)",
+          "address": "Av. Colonia del Valle 712-C, Del Valle",
+          "currency": "MXN",
+          "prices": {"mens_tapas": "85", "heel": "145"},
+          "source": {"url": "https://www.chilango.com/general/zapatero-a-tus-zapatos/", "date_read": "2026-10-01", "method": "page", "note": "Article dated 2012-12-14; very stale."}
+        },
+        {
+          "name": "Maestro Zapatero (Roma Sur)",
+          "address": "Calle Bajío 96 Local 1 and Calle Manzanillo 197 Local A, Col. Roma Sur, Cuauhtémoc 06760",
+          "currency": "MXN",
+          "prices": {"cleaning_classic": "250", "cleaning_deep": "350", "repair_heel_or_sole": null},
+          "turnaround_note": "Restoration '2 a 3 semanas'",
+          "source": {"url": "https://maestrozapatero.mx/", "date_read": "2026-10-01", "method": "page"}
+        }
+      ]
+    },
+    "mending_a_tear": {
+      "note": "Few shops publish a tear-repair price. Collected figures:",
+      "figures": [
+        {"city": "London", "shop": "LQ Tailoring", "price": "from GBP 15 (patch)", "source": {"url": "https://lqtailoring.co.uk/tailoring/", "method": "page"}},
+        {"city": "Dublin", "shop": "Paul Henry Tailoring", "price": "EUR 10 trousers/jeans; EUR 15-25 leather", "source": {"url": "https://paulhenrytailoring.ie/alterations-dublin", "method": "page"}},
+        {"city": "Dublin", "shop": "Dry Cleaners D1", "price": "EUR 10 patch on jeans/trousers", "source": {"url": "https://drycleanersd1.com/index.php/alterations-repairs/", "method": "page"}},
+        {"city": "Toronto", "shop": "Revamped", "price": "CAD 20-60+ denim mending; CAD 5-25 per patch", "source": {"url": "https://revamped-clothing.com/pages/rates-alterations-customizations-and-repairs", "method": "page"}},
+        {"city": "Mexico (national)", "shop": "Cronoshare guide", "price": "MXN 25-45 remiendo", "source": {"url": "https://www.cronoshare.com.mx/cuanto-cuesta/compostura-ropa", "method": "page"}},
+        {"city": "New York / Los Angeles / New Haven / Vancouver", "shop": null, "price": null, "note": "No published figure found."}
+      ]
+    }
+  },
+
+  "resale": {
+    "platforms": {
+      "poshmark_us": {
+        "markets": ["US"],
+        "seller_fee": "Flat $2.95 on sales under $15; 20% on sales $15 and over. No listing fee; fee not charged on shipping.",
+        "source": {"url": "https://flowlister.com/poshmark-fees/", "date_read": "2026-10-01", "method": "search-summary", "note": "Official support.poshmark.com failed TLS on fetch; multiple 2026 summaries agree."}
+      },
+      "poshmark_canada": {
+        "markets": ["Canada"],
+        "seller_fee": "Flat C$3.95 on sales under C$20; 20% on C$20 and over; seller also pays GST/HST on the Poshmark fee at their province's rate.",
+        "source": {"url": "https://support.poshmark.ca/s/article/What-are-the-fees-for-selling-on-Poshmark-CA?language=en_US", "date_read": "2026-10-01", "method": "search-summary", "note": "Official page failed TLS on fetch."}
+      },
+      "depop": {
+        "markets": ["US", "UK", "others"],
+        "seller_fee": "0% selling fee in US (since 2024-07-18) and UK. Payment processing: US 3.3% + $0.45 per transaction on the full amount the buyer pays (item + shipping + tax); UK 2.9% + £0.30. Sellers outside US/UK may still pay a 10% selling fee. Boosted listings 12% of sale (from 2026-03-23).",
+        "source": {"url": "https://sellerfeecalc.com/blog/depop-fees-explained-2026", "date_read": "2026-10-01", "method": "search-summary", "note": "Official Depop help centre returned 403."}
+      },
+      "vinted_uk": {
+        "markets": ["UK"],
+        "seller_fee": "None. Buyer pays Buyer Protection fee: '3% to 8% + £0.3 to £0.8' of item/bundle price, plus VAT. Item verification £10 (buyer-paid). Bumps/Showcase priced at checkout.",
+        "source": {"url": "https://www.vinted.co.uk/pricelist", "date_read": "2026-10-01", "method": "page"}
+      },
+      "vinted_ireland": {
+        "markets": ["Ireland"],
+        "seller_fee": "None. Buyer Protection fee 'usually 5% + €0.70' plus VAT. Price list last updated 2026-07-22.",
+        "source": {"url": "https://www.vinted.ie/pricelist", "date_read": "2026-10-01", "method": "page"}
+      },
+      "ebay_us": {
+        "markets": ["US"],
+        "seller_fee": "Clothing, Shoes & Accessories: 13.6% of total sale up to $7,500 + 2.35% of the portion over $7,500; per-order fee $0.30 (orders <=$10) or $0.40 (>$10). Athletic shoes: 8% and no per-order fee if sale >= $150, else 13.6%. Women's bags & handbags: 15% if <= $2,000, 9% if > $2,000. 250 free listings/month, then $0.35 each.",
+        "source": {"url": "https://www.ebay.com/help/selling/fees-credits-invoices/selling-fees?id=4822", "date_read": "2026-10-01", "method": "page"}
+      },
+      "ebay_uk_private": {
+        "markets": ["UK"],
+        "seller_fee": "UK-based private sellers: no final value fee, no regulatory operating fee; 300 free listings/month then 35p. Buyer pays Buyer Protection fee: £0.10 fixed + 7% of first £20 + 4% of £20.01-£300 + 2% of £300-£4,000 (fixed part cut from £0.75 to £0.10 in July 2025, per search summary). Non-UK private sellers: 12.8% + 30p plus 0.42% regulatory fee (trainers >= £100: 8% + 30p).",
+        "source": {"url": "https://www.ebay.co.uk/help/selling/fees-credits-invoices/fees-private-sellers-activated-managed-payments?id=4822", "date_read": "2026-10-01", "method": "page", "buyer_fee_method": "search-summary"}
+      },
+      "ebay_ireland": {"markets": ["Ireland"], "seller_fee": null, "note": "Not researched/found; Irish sellers mostly use eBay.ie (EU fees) or Vinted/DoneDeal."},
+      "ebay_canada": {
+        "markets": ["Canada"],
+        "seller_fee": "Clothing, Shoes & Accessories 13.6% + C$0.30-0.40 per order; athletic shoes >= C$150 8% no per-order fee. Applies to total incl. shipping and GST/HST.",
+        "source": {"url": "https://www.size.ly/tools/ebay-fee-calculator-ca", "date_read": "2026-10-01", "method": "search-summary"}
+      },
+      "thredup": {
+        "markets": ["US"],
+        "model": "Consignment by mail (Clean Out bag). ThredUp sets the listing price.",
+        "seller_payout_schedule": "Payout share rises with listing price: e.g. $5 item 3% ($0.15); $20 item 15% ($3); $50 item 30% ($15); $100 item 60% ($60); $200 item 80% ($160). Service fee $14.99 (Standard bag) or $34.99 (Premium) deducted from earnings once items sell.",
+        "source": {"url": "https://www.thredup.com/cleanout/guide", "date_read": "2026-10-01", "method": "search-summary", "note": "Official page returned 403; schedule taken from search summaries quoting it."}
+      },
+      "vestiaire_collective": {
+        "markets": ["US", "Canada", "UK", "EU"],
+        "seller_fee": "Items listed from 2025-07-18: USD - $10 flat under $83; 12% from $83 to $16,667; $2,000 flat above $16,667; plus 3% payment processing (min $3); minimum listing $18. CAD - C$15 flat under C$125; 12% from C$125 to C$25,000; C$3,000 flat above; plus 3% processing (min C$4); minimum listing C$34. GBP/EUR schedule not on this article.",
+        "source": {"url": "https://faq.vestiairecollective.com/hc/en-us/articles/24659638721425-Seller-Selling-Fees", "date_read": "2026-10-01", "method": "page"}
+      },
+      "mercado_libre_mexico": {
+        "markets": ["Mexico"],
+        "seller_fee": "Ropa, Bolsas y Calzado: Clásica 15%; Premium 19.5% (price < $999) or 18% (>= $1,000). Fixed per-unit charge on low-price items: < $99 MXN: $25; $99-149: $30; $149-299: $37.",
+        "source": {"url": "https://www.upseller.com/es/blog-article-515", "date_read": "2026-10-01", "method": "search-summary", "note": "Not verified on mercadolibre.com.mx; Mercado Libre changes its tables often."}
+      },
+      "gotrendier_mexico": {
+        "markets": ["Mexico"],
+        "seller_fee": "18% + $19 MXN (IVA included) per sale regardless of value, effective 2026-01-02; includes payment processing; prepaid shipping label provided. History: 16% + $17 (Apr 2025), 18% + $18 (from 2025-06-20).",
+        "source": {"url": "https://www.gotrendier.mx/statics/listadecostes", "date_read": "2026-10-01", "method": "search-summary"}
+      }
+    },
+    "market_size_thredup_2025": {
+      "us_secondhand_apparel_growth_2024": "14%",
+      "us_secondhand_apparel_2029_projection": "$74B",
+      "us_online_resale_2029_projection": "$40B",
+      "global_2029_projection": "$367B",
+      "us_consumers_shopped_secondhand_2024": "58%",
+      "source": {"url": "https://newsroom.thredup.com/news/thredup-13th-resale-report", "date_read": "2026-10-01", "method": "search-summary", "note": "2026 (14th) report exists (BusinessWire 2026-04-02) but its figures were not captured."}
+    },
+    "resale_value_as_share_of_retail": {
+      "authoritative_figure": null,
+      "note": "No platform or official report found publishing resale value as a share of original retail by condition or brand tier. The ThredUp payout table above is the only first-party schedule (payout to seller as share of ThredUp's listing price, not of original retail).",
+      "practitioner_estimates": {
+        "general_good_condition": "25-35% of original retail",
+        "new_with_tags": "85-95%",
+        "excellent_worn_1_3_times": "35-50%",
+        "by_tier": "designer 40-80%+; luxury 30-60%; premium 25-50%; mid-range 15-35%; fast fashion 5-15%",
+        "warning": "Blog/pricing-tool estimates, not survey data. Do not present as real measured figures.",
+        "source": {"url": "https://www.panaprium.com/blogs/i/price-used-clothes", "date_read": "2026-10-01", "method": "search-summary"}
+      },
+      "irs_statement": "IRS Pub 561: 'Used clothing and other personal items are usually worth far less than the price you paid for them.'",
+      "irs_source": {"url": "https://www.irs.gov/publications/p561", "date_read": "2026-10-01", "method": "page"}
+    },
+    "time_to_sell": {
+      "value": null,
+      "note": "No platform publishes an average days-to-sell. Third-party blogs claim Poshmark items sell in '1-3 weeks' or '1-3 months' (contradictory). Not usable as data.",
+      "source": {"url": "https://closo.co/blogs/platform-specific-guides/how-long-does-it-take-to-sell-something-on-poshmark", "date_read": "2026-10-01", "method": "search-summary"}
+    },
+    "donation_tax_rules": {
+      "us": {
+        "itemizing": "Generally must itemize on Schedule A to deduct a charitable contribution.",
+        "condition": "'You can't take a deduction for clothing or household items you donate unless the clothing or household items are in good used condition or better.' Exception: a single item not in good used condition may be deducted if claimed at more than $500 with a qualified appraisal and Form 8283 Section B.",
+        "valuation": "Fair market value; 'The price that buyers of used items actually pay in used clothing stores, such as consignment or thrift shops, is an indication of the value.'",
+        "form_8283": "Required when noncash deductions total more than $500. Section A: items/groups claimed at $5,000 or less. Section B: over $5,000 (and the not-in-good-condition clothing case over $500).",
+        "non_itemizer_2026": "From tax year 2026 (OBBBA) non-itemizers may deduct up to $1,000 ($2,000 joint) of CASH gifts to public charities; noncash gifts such as clothing do not qualify.",
+        "goodwill_value_guides": "Regional Goodwill affiliates publish their own ranges, e.g. men's shirt ~$3-12, women's dress ~$6-25 (aggregated by a third-party guide; affiliates differ).",
+        "sources": [
+          {"url": "https://www.irs.gov/publications/p526", "date_read": "2026-10-01", "method": "page"},
+          {"url": "https://www.irs.gov/publications/p561", "date_read": "2026-10-01", "method": "page"},
+          {"url": "https://www.irs.gov/instructions/i8283", "date_read": "2026-10-01", "method": "page"},
+          {"url": "https://turbotax.intuit.com/tax-tips/tax-deductions-and-credits/one-big-beautiful-bill-charitable-deduction-for-non-itemizers/c1AWtyaTS", "date_read": "2026-10-01", "method": "search-summary"},
+          {"url": "https://deductable.ai/blog/goodwill-donation-value-guide/", "date_read": "2026-10-01", "method": "search-summary"}
+        ]
+      },
+      "uk": {
+        "rule": "No income-tax deduction for the donor on donated goods. Under Retail Gift Aid the charity shop sells goods as the donor's agent; net proceeds are treated as a Gift Aid donation, letting the charity reclaim 25p per £1 from HMRC (e.g. goods sold for £25 are worth ~£31 to the charity). Donor must be a UK income/capital-gains taxpayer and sign a declaration.",
+        "source": {"url": "https://www.scope.org.uk/charity-shops/donating-goods2/how-retail-gift-aid-works", "date_read": "2026-10-01", "method": "search-summary"}
+      },
+      "ireland": {
+        "rule": "Charitable Donation Scheme applies only to donations of money (or designated securities) totalling at least €250 and at most €1m a year; goods are not eligible. No relief for donated clothing.",
+        "source": {"url": "https://www.revenue.ie/en/companies-and-charities/charities-and-sports-bodies/charitable-donation-scheme/what-is-a-qualifying-donation.aspx", "date_read": "2026-10-01", "method": "search-summary"}
+      },
+      "canada": {
+        "rule": "Gifts in kind can earn an official donation receipt at fair market value, but many thrift charities do not issue receipts for ordinary used clothing; one charity thrift operator states receipts only where combined FMV is $500 or more (charity policy, not a CRA threshold).",
+        "value": null,
+        "note": "CRA's own page was not read; treat as low confidence.",
+        "source": {"url": "https://thriftstore.ca/tax-receipts/", "date_read": "2026-10-01", "method": "search-summary"}
+      },
+      "mexico": {
+        "rule": "Donations (including in kind) to SAT-authorised donatarias are deductible for individuals up to 7% of the prior year's accumulable income; an in-kind gift needs a CFDI stating description and value.",
+        "source": {"url": "https://www.sat.gob.mx/minisitio/DeduccionesPersonales/donaciones.html", "date_read": "2026-10-01", "method": "search-summary"}
+      }
+    }
+  },
+
+  "size_conversion": {
+    "standards": {
+      "eu": {"name": "EN 13402", "note": "Labels by body dimensions in cm with pictograms; primary dimension: chest/bust for jackets and women's shirts, waist for trousers, neck for men's shirts; women's bust 76-152 cm in 4 cm steps. Letter codes e.g. women M = 90-98 cm bust, L = 98-107 cm.", "source": {"url": "https://en.wikipedia.org/wiki/EN_13402", "date_read": "2026-10-01", "method": "page"}},
+      "us": {"name": "ASTM D5585 (women's misses body measurements; voluntary; the commercial standard sizes were withdrawn by NBS in 1983)", "note": "Sizes are not legally standardised; brands vanity-size.", "source": {"url": "https://en.wikipedia.org/wiki/U.S._standard_clothing_size", "date_read": "2026-10-01", "method": "page"}},
+      "uk_ireland": {"name": "UK dress sizes (Ireland uses UK sizes); EN 13402 also adopted as BS EN 13402", "note": "UK women's = US women's + 4 (M&S: US/CAN 2 = UK 6 = EU 34)."},
+      "canada": {"name": "Same numeric sizes as US for clothing and shoes", "source": {"url": "https://www.marksandspencer.com/us/sizeguides/?cid=sizeguidewomens-tops", "date_read": "2026-10-01", "method": "page", "note": "M&S labels the column 'US/CAN'."}},
+      "mexico": {"name": "NMX standards (voluntary): NMX-A-102-INNTEX size designation; NMX-A-23 women's/girls' outerwear; NMX-A-45 men's/boys' outerwear", "note": "Women's numeric sizes 26, 28, 30 ... 48 correspond to US 2, 4, 6 ... 24 (MX = US + 24). Men's letters ECH, CH, M, G, EG, EEG. Footwear in cm of foot length.", "source": {"url": "https://www.blitzresults.com/en/mexican-sizes/", "date_read": "2026-10-01", "method": "search-summary"}}
+    },
+    "womens_dresses_tops": {
+      "rule": "US = UK - 4 = EU - 32 (French/Spanish EU numbering; German EU runs 2 lower, not covered here) = MX - 24",
+      "table": [
+        {"US_CA": 2, "UK_IE": 6, "EU": 34, "MX": 26},
+        {"US_CA": 4, "UK_IE": 8, "EU": 36, "MX": 28},
+        {"US_CA": 6, "UK_IE": 10, "EU": 38, "MX": 30},
+        {"US_CA": 8, "UK_IE": 12, "EU": 40, "MX": 32},
+        {"US_CA": 10, "UK_IE": 14, "EU": 42, "MX": 34},
+        {"US_CA": 12, "UK_IE": 16, "EU": 44, "MX": 36},
+        {"US_CA": 14, "UK_IE": 18, "EU": 46, "MX": 38},
+        {"US_CA": 16, "UK_IE": 20, "EU": 48, "MX": 40}
+      ],
+      "sources": [
+        {"url": "https://www.marksandspencer.com/us/sizeguides/?cid=sizeguidewomens-tops", "date_read": "2026-10-01", "method": "page", "covers": "US/CAN to EU"},
+        {"url": "https://www.size.ly/conversion-charts/international-dress-size-conversion-chart", "date_read": "2026-10-01", "method": "search-summary", "covers": "EU 38 = US 6 = UK 10"},
+        {"url": "https://www.blitzresults.com/en/mexican-sizes/", "date_read": "2026-10-01", "method": "search-summary", "covers": "MX 26-48 = US 2-24"}
+      ]
+    },
+    "mens_trousers": {
+      "rule": "US, Canada, UK, Ireland and Mexico label waist and inseam in inches (e.g. 32x32). French/Italian EU size = waist in inches + 16 (32\" = EU 48); German/Scandinavian brands may label waist in cm.",
+      "table": [
+        {"waist_in": 30, "EU": 46}, {"waist_in": 32, "EU": 48}, {"waist_in": 34, "EU": 50}, {"waist_in": 36, "EU": 52}, {"waist_in": 38, "EU": 54}
+      ],
+      "mexico_note": "Mexican men's trousers commonly labelled in inch-based waist numbers (search summary: men's numbers 36-46 for shirts/outerwear). Not confirmed against an NMX table.",
+      "source": {"url": "https://thomsweeney.com/pages/trouser-size-conversions", "date_read": "2026-10-01", "method": "search-summary"}
+    },
+    "mens_shirts_collar": {
+      "rule": "US/UK/IE/CA/MX label neck in inches; EU labels neck in cm; Italian brands use jacket-style numbers.",
+      "table": [
+        {"in": 14.5, "EU_cm": 37, "Italy": 44},
+        {"in": 15, "EU_cm": 38, "Italy": 46},
+        {"in": 15.5, "EU_cm": 39, "Italy": 48},
+        {"in": 16, "EU_cm": 41, "Italy": 50},
+        {"in": 16.5, "EU_cm": 42, "Italy": 52},
+        {"in": 17, "EU_cm": 43, "Italy": 54}
+      ],
+      "source": {"url": "https://www.nordstrom.com/sizeguides/3412_sizeguide.pdf", "date_read": "2026-10-01", "method": "page", "note": "Oliver Spencer chart hosted by Nordstrom. 15.75\" = 40 cm is the usual missing step."}
+    },
+    "shoes": {
+      "formulas_wikipedia": {
+        "UK": "adult size ≈ 3 × foot length (in) − 23",
+        "US_men": "≈ 3 × foot length (in) − 22  (so US men ≈ UK + 1)",
+        "US_women": "≈ 3 × foot length (in) − 21  (so US women ≈ UK + 2)",
+        "EU_Paris_point": "≈ 1.5 × foot length (cm) + 2",
+        "Mondopoint_ISO_9407": "foot length (and width) in mm",
+        "Mexico_wikipedia": "≈ 3 × foot length (in) − 23.5",
+        "Mexico_practice": "Retail practice: Mexican adult size equals foot length in cm (e.g. 24 = US women 7; 24.5 = US women 7.5). The Wikipedia formula and the cm practice disagree; use the cm practice for retail labels.",
+        "source": {"url": "https://en.wikipedia.org/wiki/Shoe_size", "date_read": "2026-10-01", "method": "page"},
+        "mexico_cm_source": {"url": "https://www.blitzresults.com/en/shoe-size-mexican/", "date_read": "2026-10-01", "method": "search-summary"}
+      },
+      "clarks_uk_table_women": {
+        "columns": ["UK", "Clarks_EU", "standard_EU", "foot_length_mm"],
+        "rows": [
+          [3, 35.5, 36, 221], [3.5, 36, 36.5, 225], [4, 37, 37, 229], [4.5, 37.5, 37.5, 233],
+          [5, 38, 38, 237], [5.5, 39, 38.5, 241], [6, 39.5, 39, 246], [6.5, 40, 40, 250],
+          [7, 41, 41, 254], [7.5, 41.5, 41.5, 258], [8, 42, 42, 263], [8.5, 42.5, 42.5, 267], [9, 43, 43, 272]
+        ],
+        "us_women_note": "US women ≈ UK + 2 (Wikipedia formula); Clarks' own UK page omits US.",
+        "source": {"url": "https://www.clarks.com/en-gb/fitguide", "date_read": "2026-10-01", "method": "page"}
+      },
+      "clarks_uk_table_men": {
+        "columns": ["UK", "Clarks_EU", "standard_EU", "foot_length_mm"],
+        "rows": [
+          [5, 38, 38, 237], [5.5, 39, 38.5, 241], [6, 39.5, 39, 246], [6.5, 40, 40, 250],
+          [7, 41, 41, 254], [7.5, 41.5, 41.5, 258], [8, 42, 42, 263], [8.5, 42.5, 42.5, 267],
+          [9, 43, 43, 272], [9.5, 44, 44, 276], [10, 44.5, 45, 280], [10.5, 45, 45.5, 285],
+          [11, 46, 46, 289], [12, 47, 47, 298], [13, 48, 48, 306], [14, 49.5, 49, 314]
+        ],
+        "us_men_note": "US men ≈ UK + 1 (Wikipedia formula; a search summary of Clarks charts gives UK 6 = US 7, UK 9 = US 10).",
+        "source": {"url": "https://www.clarks.com/en-gb/fitguide", "date_read": "2026-10-01", "method": "page"}
+      }
+    }
+  },
+
+  "fit": {
+    "retailer_body_measurements": {
+      "marks_and_spencer_women": {
+        "note": "Body measurements; 'Standard' range designed for height 168 cm and inside leg 79 cm.",
+        "columns": ["US_CAN", "UK", "EU", "bust_cm", "waist_cm"],
+        "rows": [
+          [2, 6, 34, 78, 61], [4, 8, 36, 82, 65], [6, 10, 38, 87, 70], [8, 12, 40, 92, 75],
+          [10, 14, 42, 97, 80.5], [12, 16, 44, 102.5, 86], [14, 18, 46, 108, 92], [16, 20, 48, 114, 98],
+          [18, 22, 50, 120, 104], [20, 24, 52, 126, 110]
+        ],
+        "hip_cm_partial": {"UK8": 90, "UK10": 95, "UK12": 100, "UK14": 105, "hip_method": "search-summary"},
+        "uk_column_note": "UK column derived as US + 4 from the M&S US/CAN-EU pairing.",
+        "source": {"url": "https://www.marksandspencer.com/us/sizeguides/?cid=sizeguidewomens-tops", "date_read": "2026-10-01", "method": "page"}
+      },
+      "hm_women": {
+        "columns": ["EU", "letter", "bust_cm", "waist_cm", "low_hip_cm"],
+        "rows": [
+          [34, "XS", "78-82", "62-66", "86-90"],
+          [36, "S", "82-86", "66-70", "90-94"],
+          [38, "S", "86-90", "70-74", "94-97.5"],
+          [40, "M", "90-94", "74-78", "97.5-100.5"]
+        ],
+        "source": {"url": "https://ae.hm.com/en/fragments/pdp/size-guide/size-guide-women", "date_read": "2026-10-01", "method": "search-summary", "note": "H&M pages 403/timeout on fetch."}
+      },
+      "gap_women": {
+        "unit": "inches",
+        "dresses": [
+          {"size": "XS/2", "bust": 33.25, "waist": 26.5, "hip": 36.25},
+          {"size": "S/4", "bust": 34.25, "waist": 27.5, "hip": 37.25},
+          {"size": "S/6", "bust": 35.25, "waist": 28.5, "hip": 38.25},
+          {"size": "M/8", "bust": 36.25, "waist": 29.5, "hip": 39.25}
+        ],
+        "source": {"url": "https://sizecharter.com/brands/gap/womens", "date_read": "2026-10-01", "method": "search-summary", "note": "gap.com returned an error page; third-party mirror."}
+      },
+      "uniqlo_women": {
+        "value": null,
+        "note": "Official Uniqlo chart (uniqlo.com/ca/en/size/417764.html) timed out. A search summary gave XS 80/64/87, S 84/68/91, M 87/71/94, L 91/74/98 cm (chest/waist/hip) but its own text contradicted itself, so it is not recorded as data.",
+        "source": {"url": "https://www.uniqlo.com/ca/en/size/417764.html", "date_read": "2026-10-01", "method": "search-summary"}
+      },
+      "zara": {"value": null, "note": "Not retrieved."},
+      "astm_d5585_11_misses": {
+        "unit": "inches",
+        "note": "US voluntary body-measurement standard for women's misses sizes (straight figure), as tabulated on Wikipedia.",
+        "rows": [
+          {"size": "00", "bust": 31.125, "waist": 25.375, "hip": 33.25},
+          {"size": "0", "bust": 31.75, "waist": 26.125, "hip": 33.875},
+          {"size": "2", "bust": 33, "waist": 26.875, "hip": 35.125},
+          {"size": "4", "bust": 34.125, "waist": 27.625, "hip": 36.375},
+          {"size": "6", "bust": 35.25, "waist": 28.5, "hip": 37.5},
+          {"size": "8", "bust": 36.25, "waist": 29.5, "hip": 38.5},
+          {"size": "10", "bust": 37.25, "waist": 30.5, "hip": 39.5},
+          {"size": "12", "bust": 38.75, "waist": 32.25, "hip": 41},
+          {"size": "14", "bust": 40.375, "waist": 34, "hip": 42.5},
+          {"size": "16", "bust": 42.125, "waist": 36, "hip": 44.25},
+          {"size": "18", "bust": 44, "waist": 38.25, "hip": 46},
+          {"size": "20", "bust": 46, "waist": 40.5, "hip": 48}
+        ],
+        "source": {"url": "https://en.wikipedia.org/wiki/U.S._standard_clothing_size", "date_read": "2026-10-01", "method": "page"}
+      },
+      "mens_retailer_charts": {"value": null, "note": "Men's chest/waist by size not retrieved (M&S and H&M men's pages returned empty or timed out)."}
+    },
+    "national_anthropometrics": {
+      "united_states": {
+        "survey": "NHANES August 2021-August 2023, adults 20+",
+        "men": {"height_in": 68.9, "height_cm_derived": 175.0, "weight_lb": 199.0, "waist_in": 40.6, "waist_cm": 103.0},
+        "women": {"height_in": 63.5, "height_cm_derived": 161.3, "weight_lb": 171.8, "waist_in": 38.5, "waist_cm": 97.8},
+        "note": "cm heights are converted from inches here (x2.54), not read from the cm tables. Waist cm figures from search summary.",
+        "source": {"url": "https://www.cdc.gov/nchs/fastats/body-measurements.htm", "date_read": "2026-10-01", "method": "page"},
+        "report": {"url": "https://www.cdc.gov/nchs/data/series/sr_03/sr03-050.pdf", "method": "search-summary"}
+      },
+      "england": {
+        "survey": "Health Survey for England 2024 (England only, not whole UK)",
+        "men": {"height_cm": 175.8, "waist_cm": 98.4},
+        "women": {"height_cm": 162.1, "waist_cm": 88.7},
+        "hse_2022_height": {"men_cm": 176.2, "women_cm": 162.3},
+        "source": {"url": "https://digital.nhs.uk/data-and-information/publications/statistical/health-survey-for-england/2024/adults-overweight-and-obesity", "date_read": "2026-10-01", "method": "search-summary", "note": "NHS Digital page returned 403; heights via Statista summary of HSE."}
+      },
+      "ireland": {
+        "survey": "National Adult Nutrition Survey (NANS) 2008-2010, adults 18-64 - most recent measured national survey found; Healthy Ireland does not measure waist",
+        "men": {"height_cm": 177, "weight_kg": 86.22, "bmi": 27.55, "waist_cm": 95.51, "n": 575},
+        "women": {"height_cm": 163, "weight_kg": 69.98, "bmi": 26.43, "waist_cm": 86.33, "n": 594},
+        "source": {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10282270/", "date_read": "2026-10-01", "method": "page", "note": "Table 1. Data are ~15 years old."}
+      },
+      "canada": {
+        "survey": "Canadian Health Measures Survey 2012-2013, ages 18-79",
+        "men": {"waist_cm": 97.5, "height_cm": null},
+        "women": {"waist_cm": 90.5, "height_cm": null},
+        "height_note": "StatCan's article gives no mean height. Search summaries cite ~175 cm men / ~162 cm women from CHMS but no StatCan table was read; recorded as null. CHMS Cycle 2 height table exists: https://www150.statcan.gc.ca/n1/pub/82-626-x/2012001/t023-eng.htm (not read).",
+        "source": {"url": "https://www150.statcan.gc.ca/n1/pub/82-625-x/2014001/article/14104-eng.htm", "date_read": "2026-10-01", "method": "page"}
+      },
+      "mexico": {
+        "survey": "ENSANUT 2022",
+        "men": {"height_cm": null, "waist_cm": null},
+        "women": {"height_cm": null, "waist_cm": null},
+        "published_facts": "ENSANUT 2022: 75.2% of adults 20+ overweight or obese (women 76.8%, men 73.5%); abdominal obesity cut-offs waist >= 80 cm women, >= 90 cm men; ~80% above cut-off.",
+        "note": "No mean height or mean waist by sex found in an ENSANUT publication. News articles cite 'INEGI' means of 1.69-1.70 m men and 1.56-1.58 m women without a traceable table; not recorded.",
+        "source": {"url": "https://ensanut.insp.mx/encuestas/ensanutcontinua2022/doctos/analiticos/31-Obesidad.y.riesgo-ENSANUT2022-14809-72498-2-10-20230619.pdf", "date_read": "2026-10-01", "method": "search-summary"}
+      }
+    }
+  },
+
+  "gaps": [
+    "New Haven: no tailor or cobbler publishes prices (named shops with addresses only).",
+    "Mexico City: no named alteration shop with a price list; only a national Cronoshare price guide (Jan 2026). CDMX cobbler prices come from 2012 and 2019 articles.",
+    "Los Angeles and Vancouver cobblers: no current published price list from a shop inside the city; LA figure is a 2013 article, Vancouver resole figures are forum/blog quotes.",
+    "Toronto cobbler figures are from ShoeMedic in Oakville (GTA), not the City of Toronto.",
+    "Turnaround days published by only a few shops (Mid City NYC 10-14 business days; Michael Andrews 7-14; San Pedro 4-7; 1 Stop Wash 2-4; Love Your Tailor <=7; El Zapatitos 3-5).",
+    "Several official fee pages were blocked (Poshmark, Depop, ThredUp); their fee schedules are search-summary only.",
+    "No authoritative resale-value-to-retail ratio or time-to-sell data exists from platforms; only blog estimates.",
+    "Uniqlo, Zara and men's retailer charts not retrieved.",
+    "Mexico has no published ENSANUT mean height/waist; Canada mean height not read from a StatCan table; Ireland's latest measured data is 2008-2010."
+  ]
+}

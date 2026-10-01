@@ -102,12 +102,12 @@ corrected in the same commit, as the backlog's progress table is.
 |---|---|---|
 | A vehicle they may drive | Works | A license checked per class (`mayDrive`). |
 | Load belongings | Works | Into a car (`items.move`). |
-| Several destinations | Missing | Stage 7. |
-| Time and resources | Part | A journey's car leg costs its time and fuel. |
-| Fuel or charging stops | Missing | Stage 7. |
-| Pay and update | Part | Fuel bought monthly with the everyday driving. |
-| Park and complete errands | Part | A store sells only in its own opening hours (`systems/errands.ts`); parking isn't built. |
-| Load purchases | Part | Clothes and groceries go home; not into the car. |
+| Several destinations | Works | Run Errands: up to eight stops in the town, each the screen's own command (`runErrands` in `systems/trips.ts`). |
+| Time and resources | Works | Each leg the published average trip at the town's TomTom traffic or at a walk, with its fuel; errand kilometers come off the month's driving. |
+| Fuel or charging stops | Works | A stop at a named station pays the trip's fuel (`errand.fuel`). Public charging isn't a stop: an electric car charges at home. |
+| Pay and update | Works | The trip's fuel at its station, the month's with the everyday driving. |
+| Park and complete errands | Works | The meter for each stop's minutes at the town's rate (`errand.park`); a shop shut on arrival ends the trip home. Tickets aren't drawn: how often meters are checked isn't published. |
+| Load purchases | Works | Purchases go home with the trip; they aren't held in the car between stops, which nothing would read. |
 | Put things away | Works | Belongings. |
 
 ## 40. International Travel

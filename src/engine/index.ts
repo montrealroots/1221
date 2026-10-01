@@ -107,6 +107,7 @@ import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import { registerGyms } from './systems/gyms';
+import { registerTrips } from './systems/trips';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
@@ -187,6 +188,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPeople(sim);
   registerPartners(sim);
   registerGyms(sim);
+  registerTrips(sim);
   registerHygiene(sim);
   registerFittings(sim);
   registerAwards(sim);

@@ -91,6 +91,8 @@ export interface OwnedVehicle {
   /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
   fault?: import('./repairs').Fault;
   inShop?: import('./repairs').InShop;
+  /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
+  errandKm?: number;
   /** Leased, not owned (`systems/leasing.ts`, from 2026-09-30): the lessor's until bought out. */
   lease?: import('./leasing').Lease;
 }
@@ -632,7 +634,9 @@ export function registerVehicles(sim: Simulation): void {
     let driven = 0;
     // Broken down, or at the garage, it stays put (`systems/repairs.ts`).
     if (!v.repossessed && !missing && !forOutings(m) && !v.fault?.severe && !inShopNow(v, s.now) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
-      const km = monthKm(v);
+      // The month's everyday driving, less what errands have already driven and paid for (`systems/trips.ts`).
+      const km = Math.max(0, monthKm(v) - (v.errandKm ?? 0));
+      v.errandKm = 0;
       const run = runningCost(s, v, km, homeShareOf(person));
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
       // 2026-09-29 the fuel went into arrears as if it had been burned, and a New York life starved paying for it.

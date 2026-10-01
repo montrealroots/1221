@@ -275,6 +275,8 @@ export interface Person {
   contacts?: import('../systems/people').Contact[];
   /** A gym they're a member of (`systems/gyms.ts`, from 2026-10-01). */
   gym?: import('../systems/gyms').Membership;
+  /** A trip out on errands, while it's under way (`systems/trips.ts`, from 2026-10-01). */
+  trip?: import('../systems/trips').Trip;
   /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
   suppliesSince?: number;
   groomedAt?: number;
