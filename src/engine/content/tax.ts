@@ -11,7 +11,8 @@
  * states, sales tax, property tax, payroll tax. They are close enough for the
  * simulation to teach real intuitions and they are not filing advice. A
  * vehicle's registration and purchase tax were kept too until 2026-09-27,
- * and nothing is driven. Property tax was a fact the place showed, charged to
+ * when nothing was driven; since 2026-09-29 they are kept again in
+ * `content/vehiclefees.ts`. Property tax was a fact the place showed, charged to
  * no one, until homes could be owned on 2026-09-28 (`systems/homes.ts`),
  * which charges it, and reads California's cap on how fast an assessment grows.
  */

@@ -31,10 +31,13 @@ may not rise.
 
 | Declared | Nothing reads | Of |
 |---|---|---|
-| Id namespaces | 1 | 7 |
-| Save tables nothing fills | 1 | 9 |
-| Personality knobs nothing reads | 0 | 7 |
+| Id namespaces | 1 | 11 |
+| Save tables nothing fills | 1 | 8 |
+| Personality knobs nothing reads | 0 | 16 |
 | Personality axes nothing consults | 0 | 7 |
+
+The "Of" column read 7, 9, 7 and 7 until 2026-10-01, when the tool was run
+again against it.
 
 The first two are the player. The family was the only thing that made a person after
 boot, so `person` has no `nextId` call and `people` is filled only by
@@ -52,14 +55,16 @@ part the tool cannot see.
 
 ## Dead: declared, and nothing reads it
 
-- **Rent is published in nineteen places, and estimated everywhere else.**
+- **Rent is published in twenty places, and estimated everywhere else.** (Nineteen until New Haven's was added, `c5616e1f`, 2026-09-26; this said nineteen until 2026-10-01.)
   The atlas put a one-bedroom in Mosfellsbær at $3,424 a month, about what it
   says for New York, because its formula stacks Iceland's price level on a
   town-size factor; Iceland's housing agency puts it near 205,000 krónur.
   Rent now reads published figures where there are some (`content/rents.ts`)
   and scales the atlas to them elsewhere in the same country. A country with
   none keeps the atlas's estimate, and the screen says which a town has.
-  Food and bills are SLATE's estimates everywhere. The legal floors under
+  Food is SLATE's estimate everywhere, and so are bills, but for an American
+  town's energy, which is its state's EIA household figure since `77c64892`
+  (2026-09-28, `energyScale` in `systems/seasons.ts`). The legal floors under
   wages were real and sourced until they went with the job engine on
   2026-09-26.
 - **A few words of the traits' costs are said back.** Each is written for
@@ -76,8 +81,11 @@ part the tool cannot see.
   are worth, and none (`company`: Needs People and Guarded more, Independent
   less). How much each is is SLATE's estimate. What's left: a visitor seeing
   the mess (Chaotic), people slept through (Sleeps Anywhere) and others
-  keeping accounts about you (Keeps Accounts), since nobody visits, sleeps
-  beside or owes the player. Injury, which SLATE didn't model, has been
+  keeping accounts about you (Keeps Accounts). The reason given until
+  2026-10-01, that nobody visits, sleeps beside or owes the player, no longer
+  holds: a tenant owes rent since 2026-09-28 (`systems/homes.ts`) and a lodger
+  lives in the player's home since 2026-09-30 (`systems/lodgers.ts`). The
+  traits still read none of it. Injury, which SLATE didn't model, has been
   since 2026-09-28 (`systems/injury.ts`).
 - **Some banks' figures weren't found, and a few are given as words.** The
   thirteen countries' waivers are modeled as the banks write them since
@@ -443,8 +451,12 @@ part the tool cannot see.
   contract's own rule ($4,000 from commercials in 91 days); which agencies
   sign whom, how many auditions each sends and its renewal are SLATE's
   estimate.
-- **The weather decides the bills' energy and the flu's weeks, and nothing
-  else.** Since 2026-09-27 (`systems/seasons.ts`), a month's bills carry its
+- **The weather decides the bills' energy and the flu's weeks, and more.**
+  This said "and nothing else" until 2026-10-01. Since 2026-09-28 it also
+  decides sleep lost to a hot night (`heatLoss`), whether a run or a swim can
+  happen (`FINE`, `systems/dwelling.ts`) and a roof's storm and gale damage
+  (`systems/homes.ts`), and since 2026-09-30 whether a visual flight can go
+  (`NOT_VISUAL`, `systems/aviation.ts`). Since 2026-09-27 (`systems/seasons.ts`), a month's bills carry its
   heating and cooling by the home's degree days, from the EIA's 2020 survey,
   and the flu comes in the town's cold weeks, or its wet ones where it's warm
   all year, keeping its 8.9% a year (Tamerius et al., 2013). Holidays that
@@ -481,7 +493,11 @@ part the tool cannot see.
     fraud's transaction went.
   - Content researched for features not built went on 2026-09-27: the
     airports (`nearestAirport`), the neighbourhoods, a city's home price,
-    vehicle fees, and cashier's check and money order fees. A bank's
+    vehicle fees, and cashier's check and money order fees. The features
+    were built later with new content: the airports (`content/airports.ts`,
+    2026-09-29), a city's home price (`content/homevalues-us.ts`,
+    2026-09-28) and vehicle fees (`content/vehiclefees.ts`, 2026-09-29). The
+    neighbourhoods and those fees are still absent. A bank's
     payment hold on freed credit is read since that day, and its
     posting-order words, the maturity, dormancy, replacement, credit-card
     and refund wording, and the countries' claim-back words are shown.
@@ -746,7 +762,10 @@ buys (the day's food is groceries, which the states SLATE taxes a life in
 exempt); its property tax since homes were bought, an owned home's
 assessed value at the engine's rate for the town. Its vehicle rules went on
 2026-09-27, with nothing driven, and this page kept an entry for them after
-they had gone. Its tables are in dollars, and money in another currency is
+they had gone; cars have been driven since `f4648fce` (2026-09-29), and
+their registration and purchase tax are kept again in `content/vehiclefees.ts`.
+Its sales tax is read since by boats, caravans, chargers, furniture, home
+security and leases too. Its tables are in dollars, and money in another currency is
 taxed on what it comes to in dollars.
 
 The performer title: this page said nothing read it, which was wrong since
@@ -770,13 +789,12 @@ log.
 
 ## Unreachable: correct, and nothing can get there
 
-- **Northern Ireland's license path.** Its steps and fees are set down
-  (`content/licensepaths.ts`, `gb-nir`) and `licensingOf` maps Northern
-  Ireland's towns to it, but SLATE's list of towns has none in Northern
-  Ireland, so no life can stand there to take it. It's reached when the list
-  gains Belfast.
+Nothing, since 2026-09-29. Northern Ireland's license path was here, its
+steps and fees set down (`content/licensepaths.ts`, `gb-nir`) with no town in
+Northern Ireland to take it from; Belfast was added that day (`80e77789`),
+and `licensingOf` reaches it. This page kept it here until 2026-10-01.
 
-Until 2026-09-29 nothing was here, since 2026-09-27. What a bank reads from
+Until 2026-09-29 nothing else was here, since 2026-09-27. What a bank reads from
 wages is reached again by acting pay, and the Decision Center by offers of
 representation, management and work and by each year's return.
 
@@ -784,7 +802,7 @@ representation, management and work and by each year's return.
 
 Each was researched or calibrated and read by nothing, and nothing in SLATE
 could read it: each country's deposit guarantee and its central bank's rate
-(no bank fails and no rate moves), a sentence on how money moves there and
+(no bank fails; no rate moved then, though a mortgage's has since 2026-09-28, `RATE_WALK` in `systems/homes.ts`, which reads no central bank's rate), a sentence on how money moves there and
 each country's own names for its ways of paying (`content/banks*.ts`,
 `content/payments.ts`), and every hand-calibrated town's film-industry and
 job-market ratings (`content/geography.ts`). They are in the history, and
