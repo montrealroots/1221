@@ -14,6 +14,7 @@ import { MOVERS } from '@/engine/content/furniture';
 import { applyLookingAfter, sleepQuality } from '@/engine/systems/life';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { mattressCost, mattressFeeUsd, mattressWorn, moversCost, onTheFloor, pieceCost, unwindComfort } from '@/engine/systems/furniture';
+import { followTheMove, itemsOf, leavingHome } from '@/engine/systems/items';
 
 const save = (city: string, name: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, name);
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -21,7 +22,10 @@ const facts: HomeFacts = { type: 'house', address: 'Test House', beds: 3, baths:
 /** A home of their own, built empty, lived in. */
 function empty(sim: Simulation, city: string) {
   const owned = ownBuilt(sim, sim.player, { cityId: city, facts: { ...facts }, price: 400_000_00, closing: 0 });
+  // Moved into, the belongings coming along as a move brings them (`systems/items.ts`).
+  const from = leavingHome(sim.player);
   sim.player.home = { kind: 'owned', cityId: city, homeId: owned.id, since: sim.now };
+  followTheMove(sim.player, from);
   return owned;
 }
 
@@ -150,7 +154,8 @@ describe('a mattress wearing out', () => {
     expect(sim.execute({ kind: 'home.replace_mattress', payload: {} }).ok).toBe(true);
     expect(mattressWorn(sim.player, sim.now)).toBe(false);
     expect(sleepQuality(sim, sim.player) - worn).toBeCloseTo(0.04, 10);
-    sim.player.furniture = { bed: sim.now - 5 * 365.2425 * 86_400_000 };
+    // A bed bought five years ago, its first mattress still in it: an item since 2026-10-01.
+    itemsOf(sim.player).find((i) => i.kind === 'furniture:bed')!.acquiredAt = sim.now - 5 * 365.2425 * 86_400_000;
     delete sim.player.mattressAt;
     expect(mattressWorn(sim.player, sim.now)).toBe(false);
   });

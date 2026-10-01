@@ -66,6 +66,7 @@ import { deadline, latePenalty } from './taxreturn';
 import { drawRental, homePlace, machineUsd, type RentedUnit } from './dwelling';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { carryFurniture } from './furniture';
+import { followTheMove, leavingHome } from './items';
 import { carryBoat } from './boats';
 import { mealsFromHelp } from './foodhelp';
 import { carryCaravans } from './caravans';
@@ -693,9 +694,10 @@ export function move(sim: Simulation, person: Person, kind: Housing, where = per
   refundRentAhead(sim, person);
   const carried = arrearsOf(sim, person);
   const left = person.home?.cityId;
+  const fromHome = leavingHome(person);
   person.home = { kind, cityId: where, since: sim.now, unit: drawRental(sim, person, where, kind === 'shared', sim.now), ...(carried > 0 ? { arrearsAtStart: carried } : {}), ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
   // Movers, or one's own van, bring one's own bed and sofa (`systems/furniture.ts`), and then the car comes along where a road reaches (`systems/vehicles.ts`).
-  if (left) { carryFurniture(sim, person, left, where); carryCars(sim, person, left, where); carryBoat(sim, person, left, where); carryCaravans(sim, person, left, where); }
+  if (left) { carryFurniture(sim, person, left, where, fromHome); carryCars(sim, person, left, where); carryBoat(sim, person, left, where); carryCaravans(sim, person, left, where); }
   // The first rent after the move is next month's: the rest of this one was paid moving in.
   if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(person.home.cityId).timeZone);
@@ -749,7 +751,9 @@ function evict(sim: Simulation, person: Person): void {
   refundRentAhead(sim, person);
   if (person.credit) { markRecord(person, EVICTION_ON_RECORD, sim.now, person.home?.cityId ?? person.currentLocationId); person.credit.late.push(sim.now); }
   // A friend's sofa, until the day's rollover finds them a home of their own in town or a room they can pay for.
+  const fromHome = leavingHome(person);
   person.home = { kind: 'sofa', cityId: person.home?.cityId ?? person.currentLocationId, since: sim.now };
+  followTheMove(person, fromHome);
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'money',
@@ -952,7 +956,9 @@ export function registerHousehold(sim: Simulation): void {
  * landlord, theirs, out of the opening balances.
  */
 export function moveIn(sim: Simulation, person: Person, kind: Housing): void {
+  const fromHome = leavingHome(person);
   person.home = { kind, cityId: person.currentLocationId, since: sim.now, unit: drawRental(sim, person, person.currentLocationId, kind === 'shared', sim.now) };
+  followTheMove(person, fromHome);
   const rent = rentOf(sim, person);
   if (rent > 0) {
     sim.openAccount({

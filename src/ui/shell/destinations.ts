@@ -38,6 +38,8 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       { route: '/workspace/travel', label: 'Travel', detail: 'A journey by air or train, a hotel, and the way home', homeOnly: true },
       // Opened from the Cars panel on Home.
       { route: '/workspace/vehicles', label: 'Cars', detail: 'A car of your own, to buy, keep and run', homeOnly: true },
+      // Opened from the Home panel on Home.
+      { route: '/workspace/belongings', label: 'Belongings', detail: 'What you own, and where each thing is', homeOnly: true },
       // Opened from the Land panel on Home.
       { route: '/workspace/land', label: 'Land', detail: 'A parcel of your own, to buy, split, combine and sell', homeOnly: true },
     ],

@@ -75,6 +75,7 @@
 
 import { carryCars } from './vehicles';
 import { carryFurniture } from './furniture';
+import { followTheMove, leavingHome } from './items';
 import { carryBoat } from './boats';
 import { carryCaravans } from './caravans';
 import { residenceRefusal } from './documents';
@@ -1394,9 +1395,10 @@ function moveInto(sim: Simulation, person: Person, owned: OwnedHome): Money {
   owned.tenancies = owned.tenancies.filter((t) => t.unit !== 'main');
   occupy(sim, owned);
   const left = person.home?.cityId;
+  const fromHome = leavingHome(person);
   person.home = { kind: 'owned', cityId: owned.cityId, homeId: owned.id, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
   // Movers, or one's own van, bring one's own bed and sofa (`systems/furniture.ts`), and then the car comes along where a road reaches (`systems/vehicles.ts`).
-  if (left) { carryFurniture(sim, person, left, owned.cityId); carryCars(sim, person, left, owned.cityId); carryBoat(sim, person, left, owned.cityId); carryCaravans(sim, person, left, owned.cityId); }
+  if (left) { carryFurniture(sim, person, left, owned.cityId, fromHome); carryCars(sim, person, left, owned.cityId); carryBoat(sim, person, left, owned.cityId); carryCaravans(sim, person, left, owned.cityId); }
   scheduleRentFor(sim, person);
   return back;
 }
@@ -1690,7 +1692,7 @@ function foreclose(sim: Simulation, person: Person, owned: OwnedHome): void {
   if (lived) {
     const own = emptyHomeIn(person, owned.cityId);
     if (own) moveInto(sim, person, own);
-    else person.home = { kind: 'sofa', cityId: owned.cityId, since: sim.now };
+    else { const fromHome = leavingHome(person); person.home = { kind: 'sofa', cityId: owned.cityId, since: sim.now }; followTheMove(person, fromHome); }
   }
   if (person.id === sim.universe.playerId) {
     sim.notify({ category: 'home', title: 'Your Home Was Sold', body: `The lender foreclosed on ${owned.facts.address} and sold it for ${formatMoney(sale, cur, { cents: false })}. ${left >= 0 ? `${formatMoney(left, cur, { cents: false })} of it was yours.` : `It left ${formatMoney(-left, cur, { cents: false })} unpaid, which is with collections.`} It’s on your record${lived ? ', and you’re on a friend’s sofa' : ''}.`, importance: 95, route: '/workspace/homes' });
@@ -1732,7 +1734,9 @@ function saleCloses(sim: Simulation, person: Person, owned: OwnedHome): void {
     const own = emptyHomeIn(person, owned.cityId);
     if (own) moveInto(sim, person, own);
     else {
+      const fromHome = leavingHome(person);
       person.home = { kind: 'sofa', cityId: owned.cityId, since: sim.now };
+      followTheMove(person, fromHome);
       refusal = moveRefusal(sim, person, then ?? 'own', owned.cityId);
       if (!refusal) move(sim, person, then ?? 'own', owned.cityId);
     }

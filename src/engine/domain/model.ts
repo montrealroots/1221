@@ -256,7 +256,11 @@ export interface Person {
   landBuying?: import('../systems/land').LandBuying;
   /** A house being built on land they own (`systems/construction.ts`). */
   building?: import('../systems/construction').Build;
-  /** The bed and sofa that are theirs, and when each was bought (`systems/furniture.ts`). */
+  /** What they own, and where each thing is (`systems/items.ts`, from 2026-10-01). */
+  items?: import('../systems/items').Item[];
+  /** Things bought to be delivered, and their deliveries (`systems/orders.ts`, from 2026-10-01). */
+  orders?: import('../systems/orders').Order[];
+  /** A save's bed, sofa and gear from before items, each when it was bought; moved into `items` when first read. */
   furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
   /** A soup kitchen's or a pantry's help, for a day the bank can't feed them (`systems/foodhelp.ts`, from 2026-10-01). */
   foodHelp?: import('../systems/foodhelp').FoodHelpRecord;

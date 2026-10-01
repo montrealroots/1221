@@ -33,6 +33,8 @@ import { registerRentals } from './systems/rentals';
 import { registerAviation, registerOwnedAircraft } from './systems/aviation';
 import { registerBoats } from './systems/boats';
 import { registerCaravans } from './systems/caravans';
+import { itemsOf, registerItems } from './systems/items';
+import { registerOrders } from './systems/orders';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
 import { registerImss } from './systems/imss';
 import { registerHomePensions } from './systems/homepensions';
@@ -165,6 +167,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerOwnedAircraft(sim);
   registerBoats(sim);
   registerCaravans(sim);
+  registerItems(sim);
+  registerOrders(sim);
   registerTaxReturn(sim);
   registerLending(sim);
   registerDocuments(sim);
@@ -757,6 +761,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     if (tied > 0) steps.push(`Made ${plural(tied, 'card', 'cards')} the bank’s own.`);
   }
+
+  // A bed, a sofa and gear kept as timestamps become items at the home they live in (`systems/items.ts`, 2026-10-01).
+  let pieces = 0;
+  for (const person of Object.values(universe.people ?? {})) {
+    if (!person.furniture || !Object.keys(person.furniture).length) continue;
+    pieces += Object.keys(person.furniture).length;
+    itemsOf(person);
+  }
+  if (pieces > 0) steps.push(`Moved ${plural(pieces, 'piece', 'pieces')} of furniture into belongings.`);
 
   // The slot's career line is the player's title. Before 80 it named the film
   // career, and under 80 it was left empty.

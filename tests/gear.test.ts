@@ -5,6 +5,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { owns } from '@/engine/systems/furniture';
 import { lovedIn } from '@/engine/systems/enjoyment';
 import { pieceCost } from '@/engine/systems/furniture';
 import type { Person } from '@/engine/domain/model';
@@ -25,7 +26,8 @@ describe('the gear', () => {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'gear-buy');
     const r = sim.execute({ kind: 'home.furnish', payload: { piece: 'tv' } });
     expect(r.ok, r.error).toBe(true);
-    expect(sim.player.furniture?.tv).toBeDefined();
+    // An item at the home they live in, since 2026-10-01 (`systems/items.ts`).
+    expect(owns(sim.player, 'tv')).toBe(true);
     expect(sim.execute({ kind: 'home.furnish', payload: { piece: 'piano' } }).error).toMatch(/No such piece/);
   });
 });

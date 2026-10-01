@@ -225,6 +225,6 @@ Requirements 44, 46, 47 and 48.
 
 | Stage | Status | Commit |
 |---|---|---|
-| 1 Possessions | in progress | |
+| 1 Possessions | DONE: items, places, spots, containers, orders, moves, migration, Belongings screen | (this commit) |
 | 2 Catalogs | MISSING | |
 | 3–15 | MISSING or PARTIAL as above | |

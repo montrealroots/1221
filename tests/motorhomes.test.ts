@@ -200,7 +200,8 @@ describe('a move in one’s own van', () => {
     // With nothing to move, the van isn't driven for it.
     expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-ram-promaster' } }).ok).toBe(true);
     const van = vehiclesOf(sim.player).find((v) => v.modelId === 'us-ram-promaster')!;
-    delete sim.player.furniture;
+    // No pieces of one's own: items since 2026-10-01.
+    sim.player.items = [];
     const before = sim.universe.transactions.length;
     carryFurniture(sim, sim.player, 'us-ca-losangeles', 'us-ca-sanfrancisco');
     expect(sim.universe.transactions.length).toBe(before);

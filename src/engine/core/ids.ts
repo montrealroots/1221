@@ -18,13 +18,14 @@ export type Id = string;
  * had its own counter, below, and `tools/wired.mjs`, which fails the gate on a
  * namespace nothing ever asks for.
  *
- * Seven, and it was a hundred and twenty-five. A namespace nothing issues is
- * a table the game never fills, so the list holds only the nouns something in
- * this build actually creates: the player, money, the clock, and the three
- * logs.
+ * Seven once, and a hundred and twenty-five before that. A namespace nothing
+ * issues is a table the game never fills, so the list holds only the nouns
+ * something in this build actually creates. Since 2026-10-01 that is the
+ * player, money, the clock, the three logs, documents, journeys, vehicles,
+ * land, and possessions and their orders (`systems/items.ts`).
  */
 export const ID_NAMESPACES = [
-  'person', 'account', 'txn', 'sched', 'history', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel',
+  'person', 'account', 'txn', 'sched', 'history', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

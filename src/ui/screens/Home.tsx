@@ -537,9 +537,14 @@ export function Home() {
           title="Home"
           tight
           actions={(
-            <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
-              Homes
-            </Gated>
+            <div className="row gap-1">
+              <Gated feature="ui.belongings" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
+                Belongings
+              </Gated>
+              <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
+                Homes
+              </Gated>
+            </div>
           )}
         >
           <YourHome cur={cur} />

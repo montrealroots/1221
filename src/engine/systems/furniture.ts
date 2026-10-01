@@ -30,6 +30,7 @@ import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
 import { jurisdictionOf, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { mayDrive } from './documents';
+import { addItem, followTheMove, hasAtHome, homeKeyOf, itemsOf } from './items';
 import { byRoad, roadKm } from './driving';
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -40,7 +41,10 @@ function bareHome(person: Person): boolean {
   return (person.homes ?? []).find((h) => h.id === person.home!.homeId)?.bare === true;
 }
 
-export const owns = (person: Person, piece: Piece): boolean => person.furniture?.[piece] !== undefined;
+/** Whether they have a piece at the home they live in (`systems/items.ts`); from 2026-10-01 a piece is an item at a home, where it was a timestamp that went everywhere with them. */
+export const owns = (person: Person, piece: Piece): boolean => hasAtHome(person, `furniture:${piece}`);
+/** Whether a piece was at a home, by the home's key. */
+const hadAt = (person: Person, home: string | undefined, piece: Piece): boolean => Boolean(home) && itemsOf(person).some((i) => i.kind === `furniture:${piece}` && i.at.kind === 'home' && i.at.home === home);
 
 /** Sleeping at home on the floor: an empty home and no bed of their own. */
 export const onTheFloor = (person: Person): boolean => bareHome(person) && !owns(person, 'bed');
@@ -86,7 +90,7 @@ export function registerFurniture(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const cost = pieceCost(s, person.home?.cityId ?? person.currentLocationId, piece)!;
     if (!payFromBank(s, person, cost.amount, `${PIECE_LABEL[piece]}, bought and delivered`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
-    (person.furniture ??= {})[piece] = s.now;
+    addItem(s, person, { kind: `furniture:${piece}`, label: PIECE_LABEL[piece].replace(/^An? /, ''), quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: cost.amount, bulky: true });
     // A new bed brings its own mattress.
     if (piece === 'bed') delete person.mattressAt;
     return { paid: cost.amount };
@@ -104,8 +108,8 @@ export function mattressFeeUsd(cityId: string, at: number): number {
  * next (\`MOVERS\`, and \`MOVERS_ABROAD\` across a border), in the save's
  * money; nothing without pieces of one's own, or where no figure is kept.
  */
-export function moversCost(sim: Simulation, person: Person, fromCity: string, toCity: string): Money {
-  if (!owns(person, 'bed') && !owns(person, 'sofa')) return 0;
+export function moversCost(sim: Simulation, person: Person, fromCity: string, toCity: string, fromHome = homeKeyOf(person.home)): Money {
+  if (!hadAt(person, fromHome, 'bed') && !hadAt(person, fromHome, 'sofa')) return 0;
   const from = CITIES.get(fromCity);
   const to = CITIES.get(toCity);
   if (!from || !to) return 0;
@@ -150,8 +154,14 @@ export function truckFor(sim: Simulation, person: Person, fromCity: string, toCi
 }
 
 /** Movers paid on moving home, where one's own pieces go too; one's own van instead, where there is one; a rented truck, where they'd rather. */
-export function carryFurniture(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
-  if (moversCost(sim, person, fromCity, toCity) === 0) return;
+/** Movers, a van or a truck for the bed and sofa at the home left, and every belonging there brought along (`followTheMove`). */
+export function carryFurniture(sim: Simulation, person: Person, fromCity: string, toCity: string, fromHome?: string): void {
+  payTheMove(sim, person, fromCity, toCity, fromHome ?? homeKeyOf(person.home));
+  followTheMove(person, fromHome);
+}
+
+function payTheMove(sim: Simulation, person: Person, fromCity: string, toCity: string, fromHome: string | undefined): void {
+  if (moversCost(sim, person, fromCity, toCity, fromHome) === 0) return;
   const van = ownVanFor(sim, person, fromCity, toCity);
   if (van) {
     const m = modelById(van.modelId)!;
@@ -164,12 +174,12 @@ export function carryFurniture(sim: Simulation, person: Person, fromCity: string
     if (!payFromBank(sim, person, truck, 'U-Haul’s 15-foot truck, your bed and sofa moved yourself', 'home')) owe(sim, person, truck, 'U-Haul', 'home');
     return;
   }
-  const cost = moversCost(sim, person, fromCity, toCity);
+  const cost = moversCost(sim, person, fromCity, toCity, fromHome);
   if (cost > 0 && !payFromBank(sim, person, cost, 'Movers, your bed and sofa', 'home')) owe(sim, person, cost, 'Movers', 'home');
 }
 
 /** When the mattress they sleep on was new: the bed's, or the one put in it since. */
-const mattressSince = (person: Person): number | undefined => person.mattressAt ?? person.furniture?.bed;
+const mattressSince = (person: Person): number | undefined => person.mattressAt ?? itemsOf(person).find((i) => i.kind === 'furniture:bed' && i.at.kind === 'home' && i.at.home === homeKeyOf(person.home))?.acquiredAt;
 
 /** Whether their own mattress has outlived its years. */
 export function mattressWorn(person: Person, at: number): boolean {

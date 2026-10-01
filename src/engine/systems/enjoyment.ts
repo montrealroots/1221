@@ -27,6 +27,7 @@ import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
 import { personalityOf } from './personality';
 import type { Piece } from '../content/furniture';
+import { homeKeyOf } from './items';
 import { PRODUCT_INTEREST } from '../content/career';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
@@ -61,10 +62,16 @@ export const LOVED_RELIEF = 1.25;
 export const GEAR_FOR: Readonly<Record<string, Piece>> = { film: 'tv', film_history: 'tv', film_preservation: 'tv', television: 'tv', games: 'console', music: 'speaker' };
 
 /** The interests of theirs this is, by id, in the order the list above gives them; at home, those whose gear they own. */
-export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person, 'furniture' | 'home' | 'currentLocationId'>>, action: LookAfter): string[] {
+export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person, 'furniture' | 'items' | 'home' | 'currentLocationId'>>, action: LookAfter): string[] {
   const theirs = person.interests ?? [];
   const atHome = person.home !== undefined && person.home.kind !== 'sofa' && person.currentLocationId === person.home.cityId;
-  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || !GEAR_FOR[id] || person.furniture?.[GEAR_FOR[id]!] !== undefined));
+  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!)));
+}
+
+/** Their gear at the home they live in: an item there (`systems/items.ts`), or a save's piece from before items. */
+function hasGear(person: Partial<Pick<Person, 'furniture' | 'items' | 'home'>>, piece: Piece): boolean {
+  const home = homeKeyOf(person.home);
+  return person.furniture?.[piece] !== undefined || (person.items ?? []).some((i) => i.kind === `furniture:${piece}` && i.at.kind === 'home' && i.at.home === home);
 }
 
 /** A day's work as enjoyment sees it: what it is, what it's filed under, and whether it's away from home. */
