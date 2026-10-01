@@ -44,6 +44,7 @@ import { atTheCheckpoint, boardingIdRefusal } from './identity';
 import { caravansOf, towFor, towedLegs } from './caravans';
 import { claimDelay } from './compensation';
 import { stolenNow } from './theft';
+import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { moveTo } from './luggage';
@@ -330,6 +331,8 @@ export function planDrive(sim: Simulation, person: Person, vehicleId: string, fr
   if (!v) return 'That isn’t a car you own.';
   if (v.repossessed) return 'The lender has the car.';
   if (stolenNow(v, day)) return 'It’s been stolen.';
+  const laid = laidUp(v, day);
+  if (laid) return laid;
   if (forOutings(modelById(v.modelId)!)) return 'A bicycle or an ATV isn’t taken on a journey between towns.';
   if ((willBeAt ?? v.at ?? v.cityId) !== fromCity) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
   if (!byRoad(fromCity, toCity)) return 'No road joins those towns.';

@@ -25,7 +25,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
-import { UPKEEP_USD_PER_KM } from '../content/vehiclefees';
+import { upkeepPerKm } from './repairs';
 import { CARAVANS, CARAVAN_YEAR, HITCH_FIT, LB, TOWING, TOW_RATINGS, type CaravanMarket } from '../content/caravans';
 import { inTheBank, owe, payFromBank } from './household';
 import { livingIn } from './homes';
@@ -113,7 +113,7 @@ export function towedLegs(sim: Simulation, v: OwnedVehicle, caravan: OwnedCarava
   return legs.map((l) => {
     const km = roadKm(l.from, l.to);
     // Upkeep is in cents a kilometer.
-    const upkeep = inSave(sim, Math.round(km * UPKEEP_USD_PER_KM) / 100, 'USD');
+    const upkeep = inSave(sim, Math.round(km * upkeepPerKm(modelById(v.modelId)!, v.jurisdiction)) / 100, 'USD');
     const fuel = runningCost(sim, v, km) - upkeep;
     const more = Math.round(fuel * (lb / 100) * TOWING.fuelPer100Lb);
     const minutes = (l.arriveAt - l.departAt) * slower;

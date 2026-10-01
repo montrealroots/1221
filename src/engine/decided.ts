@@ -40,6 +40,7 @@ import { passesTest } from './systems/licensing';
 import { flightFate } from './systems/journey';
 import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
+import { mayBreak } from './systems/repairs';
 import { tintOnTheRoad } from './systems/tint';
 import type { OwnedVehicle } from './systems/vehicles';
 import { modelById } from './systems/vehicles';
@@ -412,6 +413,22 @@ defineDecider<{ sim: Simulation; car: number }, string>({
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     const stolen = mayBeStolen(sim, sim.player, v, modelById(v.modelId)!, 0, 'USD', { stolen: 0.5 });
     return !stolen ? 'kept' : v.stolen?.recoverAt !== undefined ? 'stolen, found' : 'stolen';
+  },
+});
+
+defineDecider<{ sim: Simulation; car: number }, string>({
+  id: 'vehicle.fault',
+  decides: 'A month driven needing an unscheduled repair or not, at RepairPal’s visits a year for the model (RELIABILITY), and if so severe at its share; swept at even odds, the real ones being small.',
+  drawnIn: 'src/engine/systems/repairs.ts',
+  reads: {
+    // Each car is drawn on its own.
+    car: (o, t) => ({ ...o, car: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), car: seed }),
+  decide: ({ sim, car }) => {
+    const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
+    return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
   },
 });
 

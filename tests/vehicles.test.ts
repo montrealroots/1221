@@ -126,10 +126,15 @@ describe('owning one', () => {
     const eur = (c: number) => (cur === 'EUR' ? c : exchange(c, 'EUR', cur)!);
     const usd = (c: number) => (cur === 'USD' ? c : exchange(c, 'USD', cur)!);
     const km = 1_000;
-    expect(runningCost(sim, v, km)).toBe(eur(Math.round((km * 5.3 * 187) / 100)) + usd(Math.round(km * 11.7 / 1.609344)));
+    // Upkeep is AAA's 11.7 cents a mile less the repairs drawn as faults (`systems/repairs.ts`): RepairPal's all-brand
+    // 0.4 a year for a Skoda, which it doesn't rate, CarMD's $554.01 or a severe one at three times $652, 12% of them.
+    const skodaRepairs = 0.4 * (0.88 * 554.01 + 0.12 * 3 * 652);
+    expect(runningCost(sim, v, km)).toBe(eur(Math.round((km * 5.3 * 187) / 100)) + usd(Math.round(km * (11.7 / 1.609344 - (skodaRepairs * 100) / 15_196))));
     // A diesel at the diesel pump, €1.94: the Sportage, a diesel mild hybrid, 5.1 liters a hundred.
     const sportage = { ...v, modelId: 'ie-kia-sportage' };
-    expect(runningCost(sim, sportage, km)).toBe(eur(Math.round((km * 5.1 * 194) / 100)) + usd(Math.round(km * 11.7 / 1.609344)));
+    // The Sportage's own rating: 0.19 a year, 11% severe, $462 a year.
+    const kiaRepairs = 0.19 * (0.89 * 554.01 + 0.11 * 3 * 462);
+    expect(runningCost(sim, sportage, km)).toBe(eur(Math.round((km * 5.1 * 194) / 100)) + usd(Math.round(km * (11.7 / 1.609344 - (kiaRepairs * 100) / 15_196))));
     sim.advanceBy(31 * MS_DAY);
     expect(sim.universe.transactions.some((t) => t.memo === 'Fuel and upkeep, the Skoda Octavia')).toBe(true);
     expect(v.km).toBeCloseTo(15_196 / 12, 6);

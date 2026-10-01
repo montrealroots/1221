@@ -29,6 +29,7 @@ import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { tiresRefusal } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
+import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -121,6 +122,7 @@ export function VehiclesWorkspace() {
                             <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: 240 }}>
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
+                            <RepairControl v={v} />
                             <ModifyControl v={v} />
                             {!v.hitch && towRating(v) > 0 && <Gated feature="vehicle.hitch" className="btn btn-sm btn-ghost" disabled={Boolean(hitchRefusal(sim, person, v))} title={hitchRefusal(sim, person, v) ?? `Rated to tow ${Math.round(towRating(v))} kg`} onClick={() => { const a = run<{ paid: number }>('vehicle.hitch', { vehicleId: v.id }); if (a.ok) toast(`A towbar fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>Fit A Towbar</Gated>}
                             <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
@@ -380,6 +382,32 @@ function ModifyControl({ v }: { v: OwnedVehicle }) {
         {open.map((m) => <option key={m} value={m}>{MOD_LABEL[m]}</option>)}
       </select>
       <Gated feature="vehicle.modify" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.modify', { vehicleId: v.id, mod: chosen }); if (a.ok) toast(`${MOD_LABEL[chosen]} fitted, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}, and declared to the insurer.`, 'positive'); }}>Fit It</Gated>
+    </>
+  );
+}
+
+/** A fault the car has, and the garages in its town that would take it (`systems/repairs.ts`). */
+function RepairControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast, sim } = useGame();
+  const m = modelById(v.modelId)!;
+  const shops = shopsFor(v.at ?? v.cityId, m);
+  const [shopId, setShopId] = useState('');
+  const laid = laidUp(v, sim.now);
+  if (inShopNow(v, sim.now)) return <span className="xs dim">{laid}</span>;
+  if (!v.fault) return null;
+  const cur = saveCurrency(sim.universe);
+  const cost = formatMoney(faultCost(v, cur), cur, { cents: false });
+  const chosen = shops.find((x) => x.id === shopId) ?? shops[0];
+  const no = chosen ? repairRefusal(sim.player, v, m, chosen.id, sim.now) : 'No garage SLATE knows of in its town works on it.';
+  return (
+    <>
+      <span className="xs" title={v.fault.severe ? 'RepairPal’s severe repair: three times the model’s annual cost, at least' : 'CarMD’s average check engine repair'}>{v.fault.severe ? `Broken Down, About ${cost}` : `Check Engine Light, About ${cost}`}</span>
+      {shops.length > 1 && (
+        <select aria-label="Garage" value={chosen?.id ?? ''} onChange={(e) => setShopId(e.target.value)} style={{ width: 'auto' }}>
+          {shops.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+        </select>
+      )}
+      <Gated feature="vehicle.repair" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? chosen?.address} onClick={() => { const a = run<{ paid: number }>('vehicle.repair', { vehicleId: v.id, shopId: chosen!.id }); if (a.ok) toast(`In at ${chosen!.name}, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{chosen && shops.length === 1 ? `Book The Repair At ${chosen.name}` : 'Book The Repair'}</Gated>
     </>
   );
 }

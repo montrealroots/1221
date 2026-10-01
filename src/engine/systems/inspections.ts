@@ -50,6 +50,10 @@
  *   in Ireland, so SLATE takes Britain's, in euros, its estimate.
  * - Mexico City publishes no rejection rate, and none is drawn.
  * Until 2026-09-30 no test was failed, the rates being thought unpublished.
+ * From 2026-10-01 a car with its check engine light lit for a fault
+ * (`systems/repairs.ts`) fails New York's, Connecticut's and California's
+ * test whatever the draw, those tests reading the car's computer, and the
+ * repair is that fault's.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -61,8 +65,12 @@ import type { Jurisdiction } from '../content/vehiclefees';
 import type { VehicleKind } from '../content/vehiclecatalog';
 import { BIKE_FEES } from '../content/vehiclefees';
 import { owe, payFromBank } from './household';
+import { READS_THE_LIGHT } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
+
+/** What an inspection reads of a car. */
+type Inspected = { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string; fault?: { usd: number } };
 
 export interface InspectionRule {
   label: string;
@@ -104,7 +112,7 @@ export function nextInspection(v: { boughtAt: Instant; ageAtPurchase: number; ju
 }
 
 /** Any inspection come due since the last: paid, or owed; true if one was. */
-export function inspectIfDue(sim: Simulation, person: Person, v: { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string; inspected?: Instant; soldAt?: Instant }, kind: VehicleKind = 'car'): boolean {
+export function inspectIfDue(sim: Simulation, person: Person, v: Inspected & { inspected?: Instant; soldAt?: Instant }, kind: VehicleKind = 'car'): boolean {
   if (v.soldAt !== undefined) return false;
   // A motorcycle's test is kept only in Britain, the MOT at its £29.65 (from 2026-09-30); elsewhere a motorcycle's isn't researched.
   if ((kind === 'motorcycle' || kind === 'scooter') && v.jurisdiction !== 'GB') return false;
@@ -120,6 +128,8 @@ export function inspectIfDue(sim: Simulation, person: Person, v: { id: string; b
     const inSave = (units: number, from: string) => { const c = Math.round(units * 100); return cur === from ? c : exchange(c, from, cur) ?? c; };
     const bill = inSave(failed.repair, failed.repairCurrency) + inSave(failed.retest, rule.currency);
     if (!payFromBank(sim, person, bill, `The car’s repair after its ${rule.label}, and the retest`, 'vehicle')) owe(sim, person, bill, `The car’s repair after its ${rule.label}`, 'vehicle');
+    // The fault the light showed is the one mended (`systems/repairs.ts`).
+    if (failed.light) delete v.fault;
     if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: `The Car Failed Its ${rule.label}`, body: `Repaired and passed on the retest: ${formatMoney(bill, cur, { cents: false })}.`, importance: 55, route: '/workspace/vehicles' });
   }
   v.inspected = due;
@@ -127,8 +137,10 @@ export function inspectIfDue(sim: Simulation, person: Person, v: { id: string; b
 }
 
 /** Whether the test due fails (decider `vehicle.inspection`), and what putting it right costs, in the repair's and the rule's money. */
-export function inspectionFails(sim: Simulation, v: { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string }, due: Instant): { repair: number; repairCurrency: string; retest: number } | undefined {
+export function inspectionFails(sim: Simulation, v: Inspected, due: Instant): { repair: number; repairCurrency: string; retest: number; light?: boolean } | undefined {
   const fails = INSPECTION_RULES[v.jurisdiction]?.fails;
+  // A lit check engine light fails a test that reads the car's computer, whatever the draw (`systems/repairs.ts`, from 2026-10-01).
+  if (fails && v.fault && READS_THE_LIGHT.has(v.jurisdiction)) return { repair: v.fault.usd, repairCurrency: 'USD', retest: fails.retest, light: true };
   const age = (due - (v.boughtAt - v.ageAtPurchase * YEAR_MS)) / YEAR_MS;
   if (!fails || sim.rng('vehicle.inspection', v.id, due).next() >= fails.rate(v.cityId, age)) return undefined;
   return { repair: fails.repair.amount(age), repairCurrency: fails.repair.currency, retest: fails.retest };

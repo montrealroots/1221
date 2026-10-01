@@ -32,13 +32,14 @@ import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
 import { modLoading, registerMods } from './mods';
 import { ATV_FEES, ATV_INSURANCE } from '../content/rides';
-import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, UPKEEP_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
+import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
 import { homeOf } from './earnings';
 import { owe, payFromBank, spend } from './household';
 import { mayDrive, type VehicleClass } from './documents';
 import { gone, mayBeStolen, stolenNow } from './theft';
 import { tireFactor, tireInsuranceFactor, tiresMonth } from './tires';
 import { byRoad as roadBetween, drive } from './driving';
+import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 const NYC = new Set(['us-ny-newyork', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-manhattan', 'us-ny-thebronx', 'us-ny-statenisland']);
@@ -87,6 +88,9 @@ export interface OwnedVehicle {
   winterTires?: import('./tires').WinterTires;
   /** Stolen, and when it comes back where it was found (`systems/theft.ts`, from 2026-09-30). */
   stolen?: { at: Instant; recoverAt?: Instant };
+  /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
+  fault?: import('./repairs').Fault;
+  inShop?: import('./repairs').InShop;
   /** Leased, not owned (`systems/leasing.ts`, from 2026-09-30): the lessor's until bought out. */
   lease?: import('./leasing').Lease;
 }
@@ -96,7 +100,7 @@ export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeSh
   const m = modelById(v.modelId)!;
   if (m.fuel === 'ev' && m.kwhPer100km) {
     const kwh = (km * m.kwhPer100km) / 100;
-    return inSave(sim, Math.round(kwh * kwhPrice(v.jurisdiction, homeShare) * tintFuelFactor(v)), CHARGING[v.jurisdiction].currency) + inSave(sim, Math.round(km * UPKEEP_USD_PER_KM), 'USD');
+    return inSave(sim, Math.round(kwh * kwhPrice(v.jurisdiction, homeShare) * tintFuelFactor(v)), CHARGING[v.jurisdiction].currency) + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
   }
   const fuel = FUEL[v.jurisdiction];
   const litre = m.fuel === 'diesel' ? fuel.diesel : fuel.petrol;
@@ -104,7 +108,8 @@ export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeSh
   const per100 = m.per100km ?? (onTwoWheels(m) ? BIKE_UNRATED_PER100 : null);
   // Tint keeps the cabin cooler, and the air conditioning burns a little less (`systems/tint.ts`).
   const fuelCost = Math.round((per100 !== null ? inSave(sim, Math.round((km * per100 * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD')) * tintFuelFactor(v));
-  return fuelCost + inSave(sim, Math.round(km * UPKEEP_USD_PER_KM), 'USD');
+  // Upkeep less the repairs drawn as faults (`systems/repairs.ts`); until 2026-10-01 all of AAA's.
+  return fuelCost + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
 }
 
 /** A month of everyday driving, in kilometers: the place's published year, over twelve. */
@@ -395,9 +400,9 @@ export function tradeInFor(sim: Simulation, cityId: string, v: OwnedVehicle): { 
   return { value: toJ(tradeInValue(sim, v)), payoff: toJ(v.loan?.owed ?? 0), label: `${m.make} ${m.model}` };
 }
 
-/** A car's value now, in its money: its price new less what the curve says it's lost. */
+/** A car's value now, in its money: its price new less what the curve says it's lost, and less a repair it needs (`systems/repairs.ts`). */
 export function valueOf(v: OwnedVehicle, at: Instant): Money {
-  return Math.round(v.listPrice * kept(v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS));
+  return Math.max(0, Math.round(v.listPrice * kept(v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS)) - faultCost(v, modelById(v.modelId)!.currency));
 }
 
 /** A renewal's fee in the jurisdiction's money, cents, and when the next is due. */
@@ -576,6 +581,7 @@ export function registerVehicles(sim: Simulation): void {
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerRepairs(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
@@ -624,7 +630,8 @@ export function registerVehicles(sim: Simulation): void {
     // A month's everyday driving, for someone who may drive: fuel and upkeep, and what the road brings (`systems/driving.ts`).
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
     let driven = 0;
-    if (!v.repossessed && !missing && !forOutings(m) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
+    // Broken down, or at the garage, it stays put (`systems/repairs.ts`).
+    if (!v.repossessed && !missing && !forOutings(m) && !v.fault?.severe && !inShopNow(v, s.now) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
       const km = monthKm(v);
       const run = runningCost(s, v, km, homeShareOf(person));
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
@@ -636,6 +643,8 @@ export function registerVehicles(sim: Simulation): void {
         v.km = (v.km ?? 0) + km;
         drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`, kindOf(m), tireFactor(v, item.at));
         driven = km;
+        // And may need a repair for it.
+        mayBreak(s, person, v, m, item.at);
         // Tint darker than the law allows, on the road (`systems/tint.ts`).
         tintOnTheRoad(s, person, v, item.at);
       }

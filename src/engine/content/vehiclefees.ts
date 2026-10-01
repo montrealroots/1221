@@ -183,7 +183,9 @@ export const FUEL: Readonly<Record<Jurisdiction, { petrol: number; diesel: numbe
 /**
  * Upkeep: AAA's maintenance, repair and tires, 11.7 US cents a mile (2026),
  * a US figure SLATE carries everywhere at the exchange; and, for a car not
- * yet rated for economy, AAA's fuel at 17.3 cents a mile.
+ * yet rated for economy, AAA's fuel at 17.3 cents a mile. From 2026-10-01
+ * the repairs a car is expected to need come out of it, drawn as faults
+ * instead (`systems/repairs.ts`).
  */
 export const UPKEEP_USD_PER_KM = 11.7 / 1.609344;
 export const UNRATED_FUEL_USD_PER_KM = 17.3 / 1.609344;

@@ -13,12 +13,12 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { salesTaxRate } from '@/engine/content/tax';
 import { CARAVANS, LB } from '@/engine/content/caravans';
-import { UPKEEP_USD_PER_KM } from '@/engine/content/vehiclefees';
+import { upkeepPerKm } from '@/engine/systems/repairs';
 import { buyCaravanRefusal, caravanQuote, caravansOf, caravanValue, carryCaravans, hitchRefusal, towFor, towedLegs } from '@/engine/systems/caravans';
 import { documentsOf } from '@/engine/systems/documents';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { journeysOf, planDrive } from '@/engine/systems/journey';
-import { runningCost, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
+import { modelById, runningCost, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { roadKm } from '@/engine/systems/driving';
 
 const YEAR = 365.25 * MS_DAY;
@@ -129,7 +129,7 @@ describe('towing it', () => {
     const legs = planDrive(sim, sim.player, f150.id, 'us-ca-losangeles', 'us-ca-sanfrancisco', saturday(sim, 7), 2) as never as Parameters<typeof towedLegs>[3];
     const towed = towedLegs(sim, f150, caravansOf(sim.player)[0]!, legs);
     const km = roadKm('us-ca-losangeles', 'us-ca-sanfrancisco');
-    const fuel = runningCost(sim, f150, km) - inSave(sim, Math.round(km * UPKEEP_USD_PER_KM), 'USD');
+    const fuel = runningCost(sim, f150, km) - inSave(sim, Math.round(km * upkeepPerKm(modelById(f150.modelId)!, f150.jurisdiction)), 'USD');
     expect(towed[0]!.fare - legs[0]!.fare).toBe(Math.round(fuel * (CARAVANS.US.maxKg / LB / 100) * 0.01));
     expect(towed[0]!.arriveAt - towed[0]!.departAt).toBe(Math.round((legs[0]!.arriveAt - legs[0]!.departAt) * 65 / 55));
     // In New York no lower limit towing is set: the same time.
