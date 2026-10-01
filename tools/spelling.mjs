@@ -160,8 +160,9 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
 // spellings among them (src/engine/content/clothingcatalog.ts, tools/build-clothing.mjs), and the restaurants and their
 // dishes are each named the restaurant's way (src/engine/content/restaurants.ts, tools/build-restaurants.mjs), as are the
 // groceries and the recipes their sources' way (src/engine/content/groceries.ts, tools/build-groceries.mjs), and the
-// toiletries and salons theirs (src/engine/content/hygiene.ts, tools/build-hygiene.mjs).
-const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts', 'src/engine/content/clothingcatalog.ts', 'src/engine/content/restaurants.ts', 'src/engine/content/groceries.ts', 'src/engine/content/hygiene.ts'];
+// toiletries and salons theirs (src/engine/content/hygiene.ts, tools/build-hygiene.mjs), and the clinics and hospitals
+// theirs (src/engine/content/clinics.ts, tools/build-clinics.mjs).
+const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts', 'src/engine/content/clothingcatalog.ts', 'src/engine/content/restaurants.ts', 'src/engine/content/groceries.ts', 'src/engine/content/hygiene.ts', 'src/engine/content/clinics.ts'];
 const oursToFix = (path) => !NOT_OURS.some((dir) => path.startsWith(dir));
 
 function walk(dir) {

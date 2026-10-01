@@ -10,7 +10,8 @@
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { Gated } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
+import { DOCTOR_KINDS, clinicFor, clinicsIn } from '@/engine/systems/clinics';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -197,6 +198,7 @@ function HealthPane() {
   const until = (r?: { from: number; until: number }) => (r && r.until > sim.now ? `${formatDate(r.from, sim.zone)} to ${formatDate(r.until, sim.zone)}` : 'None');
   return (
     <div className="col gap-5">
+      <YourDoctor />
       <Panel title="Your Cover">
         <div className="grid grid-3">
           <Stat label="This Month" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
@@ -499,5 +501,34 @@ function BenefitsPane() {
         </Panel>
       )}
     </div>
+  );
+}
+
+/** Their own doctor, from the practices in the town they live in, and where urgent and emergency care is had here. */
+function YourDoctor() {
+  const { run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const choose = useFeature('health.choose_clinic');
+  const practices = clinicsIn(person.home?.cityId ?? '').filter((c) => DOCTOR_KINDS.includes(c.kind));
+  if (practices.length === 0) return null;
+  const doctor = clinicFor(person, 'visit');
+  const urgent = clinicFor(person, 'urgent');
+  const emergency = clinicFor(person, 'emergency');
+  return (
+    <Panel title="Your Doctor" subtitle="Where a doctor’s visit, urgent care and an emergency are had where you live">
+      <div className="col gap-3">
+        <div className="field-row field-row-tight">
+          <div className="field">
+            <label htmlFor="own-doctor">Your Doctor</label>
+            <select id="own-doctor" value={person.health?.clinicId ?? ''} disabled={!choose.open} title={choose.reason} onChange={(e) => { if (e.target.value && run('health.choose_clinic', { clinicId: e.target.value }).ok) toast('Your doctor, chosen.', 'positive'); }}>
+              <option value="">The Town’s First Practice</option>
+              {practices.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            </select>
+          </div>
+        </div>
+        <div className="small">{[doctor && `A doctor’s visit: ${doctor.name}`, urgent && `Urgent care: ${urgent.name}`, emergency && `An emergency: ${emergency.name}`].filter(Boolean).join(' · ')}</div>
+        <Fine>The practices, clinics and hospitals are real. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215.</Fine>
+      </div>
+    </Panel>
   );
 }

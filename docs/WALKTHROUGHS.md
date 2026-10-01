@@ -131,7 +131,7 @@ corrected in the same commit, as the backlog's progress table is.
 
 | Step | Status | How |
 |---|---|---|
-| A provider | Missing | Care is the system's, not a named provider (Stage 9). |
+| A provider | Part | Each visit is at a named practice, urgent care centre or emergency department in the town, their own doctor where chosen (`health.choose_clinic`); it isn't searched or booked. |
 | Eligibility, coverage, payment | Works | Plans, Medicaid, the NHS, COBRA, aid (`health.enroll`, `health.apply_aid`, `health.elect_cobra`). |
 | Book and prepare | Missing | Stage 9. |
 | Travel and check in | Missing | Stage 9. |

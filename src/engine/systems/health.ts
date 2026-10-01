@@ -58,6 +58,7 @@ import { citizenOf, citizenshipsOf } from './documents';
 import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
 import { eiWeek } from './eiself';
 import { laidUp } from './injury';
+import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
@@ -78,6 +79,8 @@ export interface MedicalBill {
 }
 
 export interface HealthRecord {
+  /** Their own doctor, a practice in the town they live in (`systems/clinics.ts`, from 2026-10-01). */
+  clinicId?: string;
   marketplace?: { from: Instant; until?: Instant; state: BenefitState };
   sag?: { from: Instant; until: Instant };
   equity?: { from: Instant; until: Instant };
@@ -552,6 +555,9 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
     return r <= ct.freeTo ? 0 : r <= ct.discountTo ? Math.round(owed * (1 - ct.discount)) : owed;
   };
   if (!plan) {
+    // Uninsured, a provider's own self-pay price where it publishes one (`systems/clinics.ts`).
+    const own = hospital ? undefined : selfPayAt(clinicFor(person, care as 'visit' | 'urgent'), into);
+    if (own !== undefined) return own;
     if (!hospital) return Math.round(price * CARE.uninsuredMarkup);
     if (state === 'us-ny' && ratio() < CHARITY.newYorkFreeBelow) return 0;
     if (state === 'us-ca' && ratio() < CHARITY.californiaDiscountBelow) return price;
@@ -892,6 +898,9 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
     return bill;
   }
+  // Where it was had: a named practice, clinic or hospital in the town they're in (`systems/clinics.ts`).
+  const clinic = MEDICAL.includes(event.care) ? clinicFor(person, event.care as 'visit' | 'urgent' | 'emergency' | 'stay') : undefined;
+  if (clinic) event = { ...event, what: `${event.what}, ${clinic.name}` };
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
     sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
@@ -1017,6 +1026,13 @@ export function registerHealth(sim: Simulation): void {
     h.cobra = { plan: offer.plan, from: offer.lostAt, until: firstOf(end.year, end.month + COBRA.months), subsidized };
     delete h.cobraOffer;
     return { from: offer.lostAt, months };
+  });
+
+  sim.onCommand<{ clinicId: string }, { clinicId: string }>('health.choose_clinic', (p, { sim: s }) => {
+    const no = clinicRefusal(s.player, String(p?.clinicId));
+    if (no) throw new CommandError(no);
+    healthOf(s.player).clinicId = String(p.clinicId);
+    return { clinicId: String(p.clinicId) };
   });
 
   sim.onCommand<{ condition: Condition; on: boolean }, { treated: boolean }>('health.treat', (p, { sim: s }) => {
