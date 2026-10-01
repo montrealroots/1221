@@ -18,6 +18,8 @@ import {
 } from '@/engine/systems/mortality';
 import { BIRTHDAY_KIND, END_BAND, ageOn, redrawIfChanged } from '@/engine/systems/birthdays';
 import { healthOf } from '@/engine/systems/health';
+import { bmiHazard } from '@/engine/content/body';
+import { bmiOf } from '@/engine/systems/body';
 import { checkConflicts, entriesBetween, skipTargets, upcoming } from '@/engine/world/calendar';
 
 const MS_YEAR = 365.2425 * MS_DAY;
@@ -82,7 +84,8 @@ describe('the chance of the end', () => {
       if (endBetween(sim, person, from, from + MS_YEAR) !== undefined) ended += 1;
     }
     const want = 2000 * chanceOfEndingYear({ ...sim.player, wellbeing: { ...sim.player.wellbeing, condition: 100 } }, 70, 'us');
-    expect(want).toBeCloseTo(2000 * 0.018110 * 0.8 / (1 + 0.32 * 38.5 / 262), 0);
+    // And the weight's own hazard: a life has its body from the first day since 2026-10-01 (`bmiHazard`).
+    expect(want).toBeCloseTo(2000 * 0.018110 * 0.8 / (1 + 0.32 * 38.5 / 262) * bmiHazard(bmiOf(sim.player.body!)), 0);
     // Three standard deviations of a binomial count.
     expect(Math.abs(ended - want)).toBeLessThan(3 * Math.sqrt(want));
   });

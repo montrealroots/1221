@@ -20,6 +20,7 @@ import { arrange } from '@/engine/systems/catalog';
 import { reachable, type Item } from '@/engine/systems/items';
 import { cleanOutfits, dryCleanDirty, garmentsOf, outfitFor, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
+import { alterCost, alterRefusal, fitOf, tailorsIn } from '@/engine/systems/tailoring';
 import { buyRefusal, clothingCatalog, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
@@ -74,6 +75,7 @@ export function ClothesWorkspace() {
           </div>
         </Panel>
         <WhatToWear />
+        <Fit />
         <Bathroom />
         <Salons />
         <Shop />
@@ -385,6 +387,39 @@ function Salons() {
         </table>
       </div>
       <Fine>Each place is real and each price its own list’s, read on the date it was; one not found is never shown as nothing. The tip is the custom’s middle: 15 to 20% in America and Canada (Emily Post), 10% in Britain (Debrett’s), 5 to 10% in Ireland, 10 to 20% in Mexico. A service with no time on its list takes 45 minutes, SLATE’s estimate.</Fine>
+    </Panel>
+  );
+}
+
+/** Clothes that no longer fit, and a tailor to take one in (`systems/tailoring.ts`). */
+function Fit() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const alter = useFeature('clothes.alter');
+  const off = garmentsOf(person).filter((g) => g.at.kind !== 'service' && fitOf(person, g.garment) !== 'fits');
+  const tailors = tailorsIn(person.currentLocationId).sort((a, b) => alterCost(sim, a) - alterCost(sim, b));
+  const [tailorId, setTailorId] = useState('');
+  if (!off.length) return null;
+  const t = tailors.find((x) => x.id === tailorId) ?? tailors[0];
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe), { cents: false });
+  return (
+    <Panel title="Clothes That Don’t Fit" subtitle="More than a size off the weight they were bought for; not worn until they’re taken in or replaced">
+      <div className="col gap-2">
+        {tailors.length > 1 && (
+          <select aria-label="Tailor" value={t?.id ?? ''} onChange={(e) => setTailorId(e.target.value)} style={{ width: 'auto' }}>
+            {tailors.map((x) => <option key={x.id} value={x.id}>{`${x.name}, ${x.from ? 'From ' : ''}${money(alterCost(sim, x))}`}</option>)}
+          </select>
+        )}
+        {off.map((g) => {
+          const no = t ? alterRefusal(person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
+          return (
+            <div key={g.id} className="row-between small">
+              <span>{g.label}<span className="xs dim">{fitOf(person, g.garment) === 'big' ? ' · Too Big' : ' · Grown Out Of'}</span></span>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={!alter.open || Boolean(no)} title={no ?? alter.reason} onClick={() => { const a = run<{ readyAt: number }>('clothes.alter', { itemId: g.id, tailorId: t!.id }); if (a.ok) toast(`At ${t!.name}, ready ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{t ? `Take It In, ${money(alterCost(sim, t))}` : 'Take It In'}</button>
+            </div>
+          );
+        })}
+      </div>
     </Panel>
   );
 }

@@ -22,6 +22,7 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import { careFor, type Care, type Slot } from '../content/garmentcare';
+import { fitOf } from './tailoring';
 import { itemsOf, reachable, type Item } from './items';
 
 /** What makes an item a garment: its kind (a care rule's), where it goes on, how it's cleaned, and its wear. */
@@ -35,6 +36,8 @@ export interface Garment {
   dirty?: boolean;
   /** Washed, and drying until then. */
   dryUntil?: Instant;
+  /** The weight it was bought or last altered for (`systems/tailoring.ts`, from 2026-10-01); an older save's fits as it is. */
+  fitKg?: number;
 }
 
 /**
@@ -49,7 +52,8 @@ export const garmentsOf = (person: Person): (Item & { garment: Garment })[] => i
 /** Whether a garment can be put on now: to hand, clean, dry and not worn out. */
 export function wearable(sim: Simulation, person: Person, item: Item & { garment: Garment }, at: Instant = sim.now): boolean {
   const g = item.garment;
-  return !g.dirty && !(g.dryUntil !== undefined && g.dryUntil > at) && item.condition > 0 && reachable(sim, person, item.at);
+  // And one that fits the body as it is now (`systems/tailoring.ts`).
+  return !g.dirty && !(g.dryUntil !== undefined && g.dryUntil > at) && item.condition > 0 && fitOf(person, g) === 'fits' && reachable(sim, person, item.at);
 }
 
 /**

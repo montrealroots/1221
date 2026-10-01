@@ -40,6 +40,8 @@ import { atTown } from './homes';
 import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { ordersOf, placeOrder } from './orders';
+import { fitOf } from './tailoring';
+import { bodyOf } from './body';
 import { dryCleanDirty, garmentsOf, wearTheDay, type Garment } from './wardrobe';
 
 /** A purchase of clothes: what, from whom, how, and what the goods cost; and whether it went back. */
@@ -177,7 +179,8 @@ export function buyClothes(sim: Simulation, person: Person, o: BuyOptions): Clot
   const count = (o.quantity ?? 1) * p.pack;
   const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how: o.how, at: sim.now, goods: q.goods, count };
   const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
-  const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods / count), spec, garment: garmentOf(p) };
+  // Bought for the body they have now (`systems/tailoring.ts`).
+  const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods / count), spec, garment: { ...garmentOf(p), fitKg: bodyOf(sim, person).weightKg } };
   if (o.how === 'online') {
     const order = placeOrder(sim, person, { from: r.name, arrivesAt: q.arrivesAt!, to: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'wardrobe' }, paid: q.total }, Array.from({ length: count }, () => ({ ...line, garment: { ...line.garment } })));
     purchase.orderId = order.id;
@@ -289,9 +292,9 @@ export function dryClean(sim: Simulation, person: Person): { count: number; paid
   return { count: dirty.length, paid, readyAt };
 }
 
-/** What's ready at the dry cleaner in the town they're in. */
+/** What's ready at the dry cleaner, or a tailor (`systems/tailoring.ts`), in the town they're in. */
 export const readyToCollect = (sim: Simulation, person: Person): Item[] =>
-  itemsOf(person).filter((i) => i.at.kind === 'service' && i.at.serviceId === serviceId(person.currentLocationId) && i.at.readyAt <= sim.now);
+  itemsOf(person).filter((i) => i.at.kind === 'service' && (i.at.serviceId === serviceId(person.currentLocationId) || i.at.serviceId.startsWith(`tailor:${person.currentLocationId}:`)) && i.at.readyAt <= sim.now);
 
 /** Collects what's ready: home to the wardrobe where home is here, on them otherwise. */
 export function collectCleaning(sim: Simulation, person: Person): number {
@@ -367,7 +370,7 @@ export function starterWardrobe(sim: Simulation, person: Person): boolean {
   if (!home) return false;
   for (const s of STARTER) {
     for (let i = 0; i < s.count; i += 1) {
-      addItem(sim, person, { kind: `starter:${s.kind}`, label: s.label, quantity: 1, condition: 1, at: { kind: 'home', home, spot: s.slot === 'shoes' || s.slot === 'outer' ? 'wardrobe' : 'drawers' }, acquiredAt: sim.now, garment: { kind: s.kind, slot: s.slot, care: careFor(s.kind).lifetimeWashes === null ? 'hand' : 'wash', wears: 0, washes: 0 } });
+      addItem(sim, person, { kind: `starter:${s.kind}`, label: s.label, quantity: 1, condition: 1, at: { kind: 'home', home, spot: s.slot === 'shoes' || s.slot === 'outer' ? 'wardrobe' : 'drawers' }, acquiredAt: sim.now, garment: { kind: s.kind, slot: s.slot, care: careFor(s.kind).lifetimeWashes === null ? 'hand' : 'wash', wears: 0, washes: 0, fitKg: bodyOf(sim, person).weightKg } });
     }
   }
   person.clothesSince = sim.now;
@@ -408,7 +411,8 @@ export function cheapestOf(sim: Simulation, person: Person, kind: string, slot: 
  * What the bank can't pay for isn't bought, and the worn ones stay.
  */
 export function replaceWornOut(sim: Simulation, person: Person): number {
-  const worn = garmentsOf(person).filter((g) => g.condition <= 0);
+  // Worn out, or no longer fitting the body (`systems/tailoring.ts`); not one away being altered.
+  const worn = garmentsOf(person).filter((g) => g.condition <= 0 || (fitOf(person, g.garment) !== 'fits' && g.at.kind !== 'service'));
   if (worn.length === 0) return 0;
   const groups = new Map<string, (Item & { garment: Garment })[]>();
   for (const g of worn) groups.set(`${g.garment.slot}:${g.garment.kind}`, [...(groups.get(`${g.garment.slot}:${g.garment.kind}`) ?? []), g]);
@@ -431,7 +435,7 @@ export function replaceWornOut(sim: Simulation, person: Person): number {
       if (us !== undefined && home) {
         const each = atTown(sim, person.home!.cityId, us);
         if (spend(sim, person, each * list.length, `Clothes: ${list[0]!.label}`, 'clothing')) {
-          for (const g of list) addItem(sim, person, { kind: g.kind, label: g.label, quantity: 1, condition: 1, at: { kind: 'home', home, spot: g.at.kind === 'home' ? g.at.spot ?? 'wardrobe' : 'wardrobe' }, acquiredAt: sim.now, paid: each, garment: { kind, slot, care: g.garment.care, wears: 0, washes: 0 } });
+          for (const g of list) addItem(sim, person, { kind: g.kind, label: g.label, quantity: 1, condition: 1, at: { kind: 'home', home, spot: g.at.kind === 'home' ? g.at.spot ?? 'wardrobe' : 'wardrobe' }, acquiredAt: sim.now, paid: each, garment: { kind, slot, care: g.garment.care, wears: 0, washes: 0, fitKg: bodyOf(sim, person).weightKg } });
           got = list.length;
         }
       }
