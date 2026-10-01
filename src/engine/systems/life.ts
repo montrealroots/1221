@@ -34,6 +34,7 @@ import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import { cleanOutfits, washableDirty } from './wardrobe';
+import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit,
@@ -386,6 +387,25 @@ export function registerLife(sim: Simulation): void {
       return { wokeAt: s.now, quality, recovered };
     },
   );
+
+  // --- Eating out at a real restaurant (`systems/dining.ts`, from 2026-10-01) ---
+  // At a table, taken away or delivered: the time it takes, paid at the menu's
+  // prices with tax, tip and a delivery's fees, and eaten as an ordered meal is.
+  sim.onCommand<{ restaurantId: string; items: string[]; how: DineHow }, { doneAt: number; paid: number }>('food.dine', (p, { sim: s }) => {
+    const person = s.player;
+    const how: DineHow = p?.how === 'takeout' || p?.how === 'delivery' ? p.how : 'in';
+    const items = Array.isArray(p?.items) ? p.items.map(String) : [];
+    const no = diningRefusal(s, person, String(p?.restaurantId), items, how) ?? (person.wellbeing.nourishment >= FULL ? 'You aren’t hungry.' : undefined);
+    if (no) throw new CommandError(no);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    const r = restaurantById(String(p.restaurantId))!;
+    const quote = diningQuote(s, r, items, how)!;
+    if (!spend(s, person, quote.total, how === 'delivery' ? `${r.name}, delivered` : r.name, 'food')) throw new CommandError('The payment didn’t go through.');
+    s.advanceTo(s.now + quote.minutes * 60_000);
+    applyLookingAfter(person, 'order', s.now);
+    return { doneAt: s.now, paid: quote.total };
+  });
 
   // --- Looking after yourself ---------------------------------------------
 

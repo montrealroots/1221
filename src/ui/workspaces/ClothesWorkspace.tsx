@@ -186,7 +186,7 @@ function Shop() {
             </tbody>
           </table>
         </div>
-        {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{`Show ${Math.min(PAGE, shown.length - count)} More Of ${shown.length - count}`}</button>}
+        {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
         {chosen && <Choose key={chosen} productId={chosen} />}
         {chosen === undefined && <div className="xs dim">{`${Math.min(count, shown.length)} of ${shown.length} shown.`}</div>}
       </div>

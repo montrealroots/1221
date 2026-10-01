@@ -54,6 +54,7 @@ import { mayHurt } from './systems/injury';
 import { drawRental } from './systems/dwelling';
 import { inspectionFails } from './systems/inspections';
 import { letDamaged } from './systems/journey';
+import { impairedDrive } from './systems/alcohol';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -288,6 +289,22 @@ defineDecider<{ sim: Simulation; km: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), km: 200_000 + seed * 997 }),
   decide: ({ sim, km }) => { const r = drive(sim, sim.player, 'US-NY', km, sim.now, `d-${km}`); return r.ticket ? 'a ticket' : 'none'; },
+});
+
+defineDecider<{ sim: Simulation; drive: number }, string>({
+  id: 'alcohol.arrest',
+  decides: 'A drive over the jurisdiction’s line ending in an arrest or not, at the CDC’s arrests per self-reported impaired drive (ARREST_PER_DRIVE); swept at even odds, the real ones being too small to see.',
+  drawnIn: 'src/engine/systems/alcohol.ts',
+  reads: {
+    // Each drive is drawn on its own.
+    drive: (o, t) => ({ ...o, drive: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), drive: seed }),
+  decide: ({ sim, drive }) => {
+    sim.player.alcohol = { bac: 0.1, at: sim.now, peak: 0.1, peakAt: sim.now };
+    return impairedDrive(sim, sim.player, 'US-NY', sim.now, `drive-${drive}`, 0.5) ? 'arrested' : 'not';
+  },
 });
 
 defineDecider<{ sim: Simulation; km: number }, string>({

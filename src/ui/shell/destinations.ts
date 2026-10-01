@@ -42,6 +42,8 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       { route: '/workspace/belongings', label: 'Belongings', detail: 'What you own, and where each thing is', homeOnly: true },
       // Opened from the Home panel on Home.
       { route: '/workspace/clothes', label: 'Clothes', detail: 'What you wear, the wash and the shops', homeOnly: true },
+      // Opened from the Home panel on Home.
+      { route: '/workspace/food', label: 'Food', detail: 'The town’s restaurants, and a meal from one', homeOnly: true },
       // Opened from the Land panel on Home.
       { route: '/workspace/land', label: 'Land', detail: 'A parcel of your own, to buy, split, combine and sell', homeOnly: true },
     ],

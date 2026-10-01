@@ -1,0 +1,5155 @@
+{
+  "meta": {
+    "title": "SLATE restaurant, delivery and tipping research",
+    "dateRead": "2026-10-01",
+    "rules": "No invented numbers. price null with a note where not read. confirmed=true only when prices were read on the cited page itself. Delivery-platform prices are often higher than in-store; priceSource says which. US/CA prices exclude sales tax; UK/IE/MX include VAT/IVA.",
+    "counts": {
+      "restaurants": 107,
+      "menuItems": 451,
+      "pricedItems": 432,
+      "byCity": {
+        "us-ny-newyork": {
+          "n": 11,
+          "conf": 11,
+          "tiers": {
+            "casual": 4,
+            "fast": 5,
+            "upscale": 2
+          }
+        },
+        "us-ct-newhaven": {
+          "n": 12,
+          "conf": 8,
+          "tiers": {
+            "casual": 7,
+            "upscale": 1,
+            "mid": 1,
+            "fast": 3
+          }
+        },
+        "us-ca-losangeles": {
+          "n": 15,
+          "conf": 11,
+          "tiers": {
+            "fast": 3,
+            "casual": 6,
+            "mid": 3,
+            "upscale": 3
+          }
+        },
+        "uk-eng-london": {
+          "n": 14,
+          "conf": 14,
+          "tiers": {
+            "fast": 5,
+            "casual": 5,
+            "mid": 1,
+            "upscale": 3
+          }
+        },
+        "ie-lei-dublin": {
+          "n": 11,
+          "conf": 11,
+          "tiers": {
+            "fast": 4,
+            "casual": 5,
+            "mid": 1,
+            "upscale": 1
+          }
+        },
+        "ca-on-toronto": {
+          "n": 12,
+          "conf": 11,
+          "tiers": {
+            "fast": 4,
+            "casual": 4,
+            "mid": 2,
+            "upscale": 2
+          }
+        },
+        "ca-bc-vancouver": {
+          "n": 12,
+          "conf": 12,
+          "tiers": {
+            "fast": 2,
+            "casual": 5,
+            "mid": 2,
+            "upscale": 3
+          }
+        },
+        "mx-cmx-mexicocity": {
+          "n": 20,
+          "conf": 14,
+          "tiers": {
+            "fast": 7,
+            "casual": 8,
+            "mid": 3,
+            "upscale": 2
+          }
+        }
+      }
+    },
+    "duplicateIds": []
+  },
+  "restaurants": [
+    {
+      "id": "katzs-delicatessen-newyork",
+      "name": "Katz's Delicatessen",
+      "cityId": "us-ny-newyork",
+      "address": "205 East Houston Street (corner of Ludlow St), New York, NY 10002",
+      "neighborhood": "Lower East Side",
+      "cuisine": "Jewish deli",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Katz's Pastrami",
+          "price": 30.95,
+          "note": "sandwich"
+        },
+        {
+          "item": "Corned Beef",
+          "price": 29.95,
+          "note": "sandwich"
+        },
+        {
+          "item": "Frankfurter",
+          "price": 5.95,
+          "note": null
+        },
+        {
+          "item": "Matzo Ball Soup",
+          "price": 10.95,
+          "note": null
+        },
+        {
+          "item": "Knish (Square Potato)",
+          "price": 7.95,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site (in-store menu)",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://katzsdelicatessen.com/store-menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "In-store menu prices as published on the restaurant's own site."
+    },
+    {
+      "id": "russ-and-daughters-newyork",
+      "name": "Russ & Daughters",
+      "cityId": "us-ny-newyork",
+      "address": "179 E. Houston St, New York, NY 10002",
+      "neighborhood": "Lower East Side",
+      "cuisine": "appetizing shop (smoked fish, bagels)",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "CLASSIC BAGEL & LOX SANDWICH",
+          "price": 17,
+          "note": null
+        },
+        {
+          "item": "Bagels",
+          "price": 2,
+          "note": "each"
+        },
+        {
+          "item": "Black & White Cookies",
+          "price": 3.5,
+          "note": null
+        },
+        {
+          "item": "SCHMEAR",
+          "price": 5.5,
+          "note": null
+        },
+        {
+          "item": "MENSCH",
+          "price": 22,
+          "note": "sandwich"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://shop.russanddaughters.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "ZIP 10002 added from the shop's known Lower East Side location; menu page gave '179 E. Houston St'."
+    },
+    {
+      "id": "los-tacos-no-1-chelsea-market-newyork",
+      "name": "Los Tacos No. 1 (Chelsea Market)",
+      "cityId": "us-ny-newyork",
+      "address": "75 9th Avenue, New York, NY 10011",
+      "neighborhood": "Chelsea",
+      "cuisine": "Mexican taqueria",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Quesataco (Carne Asada)",
+          "price": 8.25,
+          "note": "hidden menu"
+        },
+        {
+          "item": "Vampiro (Carne Asada)",
+          "price": 7.25,
+          "note": "hidden menu"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.lostacos1.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Prices from the chain's own menu page (hidden-menu section), not specific to one location. Address from the structured data on https://www.lostacos1.com/locations. Street-style counter, no seating."
+    },
+    {
+      "id": "joes-pizza-carmine-newyork",
+      "name": "Joe's Pizza",
+      "cityId": "us-ny-newyork",
+      "address": "7 Carmine St, New York, NY 10014",
+      "neighborhood": "Greenwich Village",
+      "cuisine": "New York slice pizza",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Cheese Pizza",
+          "price": 28,
+          "note": "whole pie"
+        },
+        {
+          "item": "Fresh Mozzarella Pizza",
+          "price": 32,
+          "note": "whole pie"
+        },
+        {
+          "item": "Sicilian Square Cheese Pizza",
+          "price": 32,
+          "note": "whole pie"
+        },
+        {
+          "item": "Marinara (cheese-less)",
+          "price": 26,
+          "note": "whole pie"
+        },
+        {
+          "item": "Soda",
+          "price": 3,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Slice (ordering platform)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://slicelife.com/restaurants/ny/new-york/10014/joe-s-pizza-7-carmine-st-7-new-york/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Slice lists whole pies only; no by-the-slice price was on the page read. Joe's own site menu URL returned 404."
+    },
+    {
+      "id": "xian-famous-foods-upper-east-side-newyork",
+      "name": "Xi'an Famous Foods",
+      "cityId": "us-ny-newyork",
+      "address": "328 E 78th St, New York, NY 10075",
+      "neighborhood": "Upper East Side",
+      "cuisine": "Xi'an Chinese (hand-ripped noodles)",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "[N1] Spicy Cumin Lamb Hand-Ripped Noodles",
+          "price": 15.95,
+          "note": null
+        },
+        {
+          "item": "[NS1] Spicy Cumin Lamb Hand-Ripped Noodles in Soup",
+          "price": 17.45,
+          "note": null
+        },
+        {
+          "item": "[B2] Spicy Cumin Lamb Burger",
+          "price": 7.95,
+          "note": null
+        },
+        {
+          "item": "[F4] Spicy & Sour Lamb Dumplings (8)",
+          "price": 10.35,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/xi-an-famous-foods-new-york-48746/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "The chain's own menu (xianfoods.com/menu) shows no prices. DoorDash prices may run above in-store prices."
+    },
+    {
+      "id": "halal-guys-53rd-6th-newyork",
+      "name": "The Halal Guys (53rd & 6th cart)",
+      "cityId": "us-ny-newyork",
+      "address": "W 53rd St & 6th Ave, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "cuisine": "halal street food (platters, gyro)",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Regular Platter",
+          "price": 15.99,
+          "note": "choice of protein"
+        },
+        {
+          "item": "Small Platter",
+          "price": 12.99,
+          "note": null
+        },
+        {
+          "item": "Sandwich",
+          "price": 10.99,
+          "note": null
+        },
+        {
+          "item": "French Fries",
+          "price": 4.79,
+          "note": null
+        },
+        {
+          "item": "Hummus",
+          "price": 5.79,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/the-halal-guys-new-york-941431/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Street cart. DoorDash prices may run above cart prices."
+    },
+    {
+      "id": "shake-shack-madison-ave-newyork",
+      "name": "Shake Shack",
+      "cityId": "us-ny-newyork",
+      "address": "26 Madison Avenue, New York, NY",
+      "neighborhood": "Flatiron / Madison Square",
+      "cuisine": "burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "ShackBurger",
+          "price": 10.39,
+          "note": "listed as from $10.39 (single)"
+        },
+        {
+          "item": "SmokeShack",
+          "price": 12.49,
+          "note": "listed as from $12.49"
+        },
+        {
+          "item": "Fries",
+          "price": 6.29,
+          "note": null
+        },
+        {
+          "item": "Vanilla Shake",
+          "price": 8.19,
+          "note": "listed as from $8.19"
+        },
+        {
+          "item": "Hot Dog",
+          "price": 6.29,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/shake-shack-new-york-17006/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Street address is the one on the DoorDash listing; it is at Madison Square Park, but whether it is the original park kiosk (shakeshack.com lists that as 23rd St & Madison Ave, page returned 403) was not confirmed. DoorDash prices may run above in-store prices."
+    },
+    {
+      "id": "chipotle-404-broadway-newyork",
+      "name": "Chipotle Mexican Grill",
+      "cityId": "us-ny-newyork",
+      "address": "404 Broadway, New York, NY",
+      "neighborhood": "SoHo / Canal Street",
+      "cuisine": "Mexican fast casual",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Burrito",
+          "price": 14.95,
+          "note": "base listed price; varies by protein"
+        },
+        {
+          "item": "Burrito Bowl",
+          "price": 14.95,
+          "note": "base listed price; varies by protein"
+        },
+        {
+          "item": "Three Tacos",
+          "price": 14.95,
+          "note": null
+        },
+        {
+          "item": "Quesadilla",
+          "price": 15.65,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/chipotle-mexican-grill-new-york-272585/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "DoorDash prices for Chipotle are typically higher than in-store/app prices; treat as delivery prices."
+    },
+    {
+      "id": "juniors-restaurant-brooklyn-newyork",
+      "name": "Junior's Restaurant",
+      "cityId": "us-ny-newyork",
+      "address": "386 Flatbush Avenue Extension, Brooklyn, NY 11201",
+      "neighborhood": "Downtown Brooklyn",
+      "cuisine": "diner and cheesecake bakery",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Plain",
+          "price": 9.25,
+          "note": "cheesecake slice"
+        },
+        {
+          "item": "Strawberry",
+          "price": 9.95,
+          "note": "cheesecake slice"
+        },
+        {
+          "item": "Two Eggs",
+          "price": 10.5,
+          "note": "with home fries, grits or tomato, and toast"
+        },
+        {
+          "item": "Corned Beef Hash",
+          "price": 18.95,
+          "note": null
+        },
+        {
+          "item": "Brooklyn Egg Cream",
+          "price": 5.75,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/juniors-restaurant-brooklyn-44956/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "The ZIP 11201 was not on the page read. DoorDash prices may run above dine-in prices."
+    },
+    {
+      "id": "peter-luger-brooklyn-newyork",
+      "name": "Peter Luger Steak House",
+      "cityId": "us-ny-newyork",
+      "address": "178 Broadway, Brooklyn, NY 11211",
+      "neighborhood": "Williamsburg",
+      "cuisine": "steakhouse",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Steak for 2",
+          "price": 155.9,
+          "note": "USDA Prime porterhouse, dry-aged in-house"
+        },
+        {
+          "item": "Single Steak",
+          "price": 77.95,
+          "note": null
+        },
+        {
+          "item": "Luger Burger",
+          "price": 22.95,
+          "note": null
+        },
+        {
+          "item": "Creamed Spinach (for 2)",
+          "price": 18.95,
+          "note": null
+        },
+        {
+          "item": "Luger Bacon",
+          "price": 8.95,
+          "note": "by the slice"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/peter-luger-brooklyn-992117/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Own Brooklyn menu (peterluger.com/pages/brooklyn-menu) lists dishes without prices. DoorDash lists the street address as 852 Driggs Ave; 178 Broadway is the restaurant's published address (Yelp), not read on the DoorDash page. Does not take credit cards (cash, US debit, checks, Peter Luger Card), per peterluger.com."
+    },
+    {
+      "id": "le-bernardin-newyork",
+      "name": "Le Bernardin",
+      "cityId": "us-ny-newyork",
+      "address": "155 W 51st St, New York, NY 10019",
+      "neighborhood": "Midtown West",
+      "cuisine": "French seafood (fine dining)",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Chef's Tasting Menu",
+          "price": 350,
+          "note": "per person; $530 with wine pairing"
+        },
+        {
+          "item": "Vegetarian Tasting",
+          "price": 270,
+          "note": "per person; $450 with wine pairing"
+        },
+        {
+          "item": "Dinner Prix Fixe (4 Courses)",
+          "price": 225,
+          "note": "per person"
+        },
+        {
+          "item": "Lunch Prix Fixe (3 Courses)",
+          "price": 139,
+          "note": "per person; lunch service"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://www.le-bernardin.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Prices read from the site's menu page headings. Street address not on the page read (well-documented location). $150 per person late-cancellation fee per site. lebernardin.com (no hyphen) is a parked domain."
+    },
+    {
+      "id": "frank-pepe-pizzeria-wooster-newhaven",
+      "name": "Frank Pepe Pizzeria Napoletana",
+      "cityId": "us-ct-newhaven",
+      "address": "157 Wooster Street, New Haven, CT 06511",
+      "neighborhood": "Wooster Square",
+      "cuisine": "New Haven apizza (coal-fired)",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "White Clam Pizza",
+          "price": 21.25,
+          "note": "Small 12\" (8 slices); Medium 16\" $32.00; Large 18\" $39.50. Dine-in and takeout only"
+        },
+        {
+          "item": "Original Tomato Pie",
+          "price": 12.25,
+          "note": "from (smallest size)"
+        },
+        {
+          "item": "Original Tomato Pie with Mozzarella",
+          "price": 14.75,
+          "note": "from (smallest size)"
+        },
+        {
+          "item": "Margherita",
+          "price": 16.75,
+          "note": "from (smallest size)"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site (own online ordering)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://pepespizzeria.com/store/frank-pepes-new-haven",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Size prices for the clam pie from https://pepespizzeria.com/store/frank-pepes-new-haven/144745/white-clam-pizza. White clam is excluded from delivery."
+    },
+    {
+      "id": "sallys-apizza-newhaven",
+      "name": "Sally's Apizza",
+      "cityId": "us-ct-newhaven",
+      "address": "237 Wooster St, New Haven, CT 06511",
+      "neighborhood": "Wooster Square",
+      "cuisine": "New Haven apizza",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "SM Sauce",
+          "price": 17.5,
+          "note": "tomato sauce and parmesan, no mozzarella; LG Sauce Pie $24.50"
+        },
+        {
+          "item": "SM Mootz Sauce",
+          "price": 18.5,
+          "note": "tomato sauce and mozzarella; LG Mozz & Sauce Pie $25.50"
+        },
+        {
+          "item": "SM Clam",
+          "price": 21.5,
+          "note": "LG NH Original Clam $29.75"
+        },
+        {
+          "item": "Caesar Salad",
+          "price": 14.75,
+          "note": null
+        },
+        {
+          "item": "Tiramisu",
+          "price": 10,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/sallys-apizza-34226921/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Sally's own menu page (sallysapizza.com/menu) lists items without prices. DoorDash prices may run above dine-in prices. ZIP not on page read."
+    },
+    {
+      "id": "modern-apizza-newhaven",
+      "name": "Modern Apizza",
+      "cityId": "us-ct-newhaven",
+      "address": "874 State St, New Haven, CT 06511",
+      "neighborhood": "East Rock",
+      "cuisine": "New Haven apizza (brick oven)",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Plain",
+          "price": 14,
+          "note": "Small; Medium $17.50; Large $19.25"
+        },
+        {
+          "item": "Mozzarella",
+          "price": 14.5,
+          "note": "Small; Medium $18.75"
+        },
+        {
+          "item": "Clam",
+          "price": 19,
+          "note": "Small; Medium $24.00; Large $29.25"
+        },
+        {
+          "item": "Italian Bomb",
+          "price": 23.75,
+          "note": "Small; Medium $28.75; Large $33.25"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.modernapizza.com/menus?menu=modern-apizza-menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Prices read from the menu data embedded in the restaurant's own (Wix) menu page."
+    },
+    {
+      "id": "louis-lunch-newhaven",
+      "name": "Louis' Lunch",
+      "cityId": "us-ct-newhaven",
+      "address": "261 Crown Street, New Haven, CT 06511",
+      "neighborhood": "Downtown",
+      "cuisine": "hamburgers (on toast)",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "The Original Burger",
+          "price": null,
+          "note": "Own menu page names the burger but shows no price ('Prices are subject to change'); third-party figures ($8-$9) were not read on a primary page"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://louislunch.com/menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Address read on louislunch.com. Served on white toast with cheese, tomato and onion only. No price found on any page actually read."
+    },
+    {
+      "id": "union-league-newhaven",
+      "name": "Union League",
+      "cityId": "us-ct-newhaven",
+      "address": "1032 Chapel Street, New Haven, CT 06510",
+      "neighborhood": "Downtown / Yale",
+      "cuisine": "French brasserie",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Onion Soup Gratinée",
+          "price": 16,
+          "note": "dinner"
+        },
+        {
+          "item": "Escargots en Croûte",
+          "price": 21,
+          "note": "dinner"
+        },
+        {
+          "item": "Faroe Island Salmon",
+          "price": 38,
+          "note": "dinner main"
+        },
+        {
+          "item": "Bone Marrow Encrusted Filet",
+          "price": 68,
+          "note": "dinner main"
+        },
+        {
+          "item": "Plateau Royale",
+          "price": 95,
+          "note": "raw bar tower"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://unionleague.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Formerly 'Union League Cafe'. Dinner Tue-Sat 5-9pm; lunch Fri-Sat. ZIP not on page read."
+    },
+    {
+      "id": "zinc-newhaven",
+      "name": "ZINC",
+      "cityId": "us-ct-newhaven",
+      "address": "964 Chapel St, New Haven, CT 06510",
+      "neighborhood": "Downtown / New Haven Green",
+      "cuisine": "contemporary American",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Prix Fixe Menu",
+          "price": 45,
+          "note": "Tuesday and Wednesday evenings"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://zincnewhaven.com/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Only the prix fixe price is in page text; the a-la-carte menus are published as images (e.g. /s/Prix-fixe-menu-9-29-26.png) and were not read."
+    },
+    {
+      "id": "mecha-noodle-bar-newhaven",
+      "name": "Mecha Noodle Bar",
+      "cityId": "us-ct-newhaven",
+      "address": "201 Crown Street, New Haven, CT 06510",
+      "neighborhood": "Downtown",
+      "cuisine": "ramen and pho",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Tonkotsu Ramen",
+          "price": 15.7,
+          "note": "own site now lists 'TONKOTSU 3.0' (no price shown)"
+        },
+        {
+          "item": "Paitan Chicken Ramen",
+          "price": 14.6,
+          "note": null
+        },
+        {
+          "item": "Pho Ga",
+          "price": 11.9,
+          "note": null
+        },
+        {
+          "item": "Wings",
+          "price": 9.75,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.doordash.com/store/mecha-noodle-bar-new-haven-149024/",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Prices were read on the DoorDash page, but search reports the store as not active on DoorDash, so the listing may be stale. Own site (mechanoodlebar.com/menu) shows dishes without prices. Use with caution."
+    },
+    {
+      "id": "shake-shack-chapel-newhaven",
+      "name": "Shake Shack",
+      "cityId": "us-ct-newhaven",
+      "address": "986 Chapel Street, New Haven, CT 06510",
+      "neighborhood": "Downtown / Yale",
+      "cuisine": "burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "ShackBurger",
+          "price": 9.99,
+          "note": "listed as from $9.99 (single)"
+        },
+        {
+          "item": "SmokeShack",
+          "price": 12.29,
+          "note": "listed as from $12.29"
+        },
+        {
+          "item": "Fries",
+          "price": 6.29,
+          "note": null
+        },
+        {
+          "item": "Vanilla Shake",
+          "price": 8.19,
+          "note": "listed as from $8.19"
+        },
+        {
+          "item": "Hot Dog",
+          "price": 5.69,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/shake-shack-new-haven-338918/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "DoorDash prices may run above in-store prices. ZIP not on page read."
+    },
+    {
+      "id": "chipotle-chapel-newhaven",
+      "name": "Chipotle Mexican Grill",
+      "cityId": "us-ct-newhaven",
+      "address": "910 Chapel Street, New Haven, CT 06510",
+      "neighborhood": "Downtown",
+      "cuisine": "Mexican fast casual",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Burrito",
+          "price": 13.2,
+          "note": "base listed price; varies by protein"
+        },
+        {
+          "item": "Burrito Bowl",
+          "price": 13.2,
+          "note": "base listed price; varies by protein"
+        },
+        {
+          "item": "Three Tacos",
+          "price": 13.2,
+          "note": null
+        },
+        {
+          "item": "Quesadilla",
+          "price": 13.9,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.doordash.com/store/chipotle-mexican-grill-new-haven-350577/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Search reported the store as not currently active on DoorDash; listing may be stale. DoorDash prices for Chipotle typically exceed in-store prices. ZIP not on page read."
+    },
+    {
+      "id": "dunkin-chapel-newhaven",
+      "name": "Dunkin'",
+      "cityId": "us-ct-newhaven",
+      "address": "1179 Chapel Street, New Haven, CT 06511",
+      "neighborhood": "Dwight / Upper Chapel",
+      "cuisine": "coffee and donuts",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Original Blend",
+          "price": 3.56,
+          "note": "hot coffee, base size"
+        },
+        {
+          "item": "Original Blend Iced Coffee",
+          "price": 4.31,
+          "note": "base size"
+        },
+        {
+          "item": "Latte",
+          "price": 5.43,
+          "note": "base size"
+        },
+        {
+          "item": "MUNCHKINS® Donut Hole Treats",
+          "price": 2.98,
+          "note": "smallest count"
+        },
+        {
+          "item": "Dozen Donuts",
+          "price": 22.48,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.doordash.com/store/dunkin-new-haven-2604372/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "DoorDash prices typically exceed in-store prices for Dunkin'. ZIP from the Dunkin' locator search result."
+    },
+    {
+      "id": "claires-corner-copia-newhaven",
+      "name": "Claire's Corner Copia",
+      "cityId": "us-ct-newhaven",
+      "address": "1000 Chapel Street, New Haven, CT 06510",
+      "neighborhood": "Downtown / New Haven Green",
+      "cuisine": "vegetarian (kosher)",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Corner Copia Grande Burrito",
+          "price": null,
+          "note": "Own menu page shows no prices in page text; third-party figures not read on a primary page"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "restaurant site",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.clairescornercopia.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Address read from the restaurant's site. No priced menu found on any page actually read."
+    },
+    {
+      "id": "atticus-bookstore-cafe-newhaven",
+      "name": "Atticus Bookstore Cafe",
+      "cityId": "us-ct-newhaven",
+      "address": "1082 Chapel St, New Haven, CT 06510",
+      "neighborhood": "Downtown / Yale",
+      "cuisine": "cafe (sandwiches, soups, bakery)",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Soup",
+          "price": null,
+          "note": "Toast ordering page returned 403; no priced page read"
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Toast (ordering platform)",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://order.toasttab.com/online/atticus-bookstore-cafe-1082-chapel-st",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Address from search results (Yelp/Visit New Haven), not a page read directly. atticusnhv.com links only to Toast."
+    },
+    {
+      "id": "in-n-out-burger-la",
+      "name": "In-N-Out Burger",
+      "cityId": "us-ca-losangeles",
+      "address": null,
+      "neighborhood": null,
+      "cuisine": "Burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Double-Double",
+          "price": null,
+          "note": "In-N-Out does not publish prices on its own site; only unofficial aggregator sites (conflicting $3.95-$6.75) were found, none verifiable."
+        },
+        {
+          "item": "Cheeseburger",
+          "price": null,
+          "note": "Not found on any page read."
+        },
+        {
+          "item": "French Fries",
+          "price": null,
+          "note": "Not found on any page read."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "none",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.in-n-out.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "No location-specific listing could be read. Prices left null rather than taken from unofficial menu-price sites."
+    },
+    {
+      "id": "taco-bell-la",
+      "name": "Taco Bell",
+      "cityId": "us-ca-losangeles",
+      "address": null,
+      "neighborhood": null,
+      "cuisine": "Mexican-inspired fast food",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Crunchy Taco",
+          "price": 1.99,
+          "note": null
+        },
+        {
+          "item": "Soft Taco",
+          "price": 1.99,
+          "note": null
+        },
+        {
+          "item": "Nacho Cheese Doritos Locos Tacos",
+          "price": 2.89,
+          "note": null
+        },
+        {
+          "item": "Bean Burrito",
+          "price": 1.99,
+          "note": null
+        },
+        {
+          "item": "Burrito Supreme",
+          "price": 5.69,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "tacobell.com national menu pages (/food/tacos, /food/burritos); no store selected",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.tacobell.com/food/tacos",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Prices read on Taco Bell's own site, but the page shows its default pricing with no store chosen and says prices vary by location. Not confirmed as an LA store's price."
+    },
+    {
+      "id": "chipotle-bunker-hill-la",
+      "name": "Chipotle Mexican Grill (Bunker Hill)",
+      "cityId": "us-ca-losangeles",
+      "address": "255 S Grand Ave, Los Angeles, CA (Bunker Hill; address inferred from Chipotle's LA location list)",
+      "neighborhood": "Bunker Hill / Downtown",
+      "cuisine": "Mexican fast casual",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Chicken Burrito",
+          "price": 10.5,
+          "note": "Pickup price; delivery was $13.65."
+        },
+        {
+          "item": "Steak Burrito",
+          "price": 12.5,
+          "note": "Pickup price; delivery was $16.25."
+        },
+        {
+          "item": "Chips & Guacamole",
+          "price": 5.15,
+          "note": "Pickup price; delivery was $6.70."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Third-party article (livinginguatemala.com) quoting Chipotle's Bunker Hill restaurant #3982 on 2026-09-17",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://livinginguatemala.com/chipotle-menu-prices-usa",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Chipotle's own location page (locations.chipotle.com) shows no prices; ordering requires its app. The article names the store number but not its street address; 255 S Grand Ave is the Bunker Hill entry in Chipotle's LA list."
+    },
+    {
+      "id": "pinks-hot-dogs-la",
+      "name": "Pink's Hot Dogs",
+      "cityId": "us-ca-losangeles",
+      "address": "709 N La Brea Ave, Los Angeles, CA 90038",
+      "neighborhood": "Hollywood / Fairfax",
+      "cuisine": "Hot dogs",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Pink's Famous Chili Dog",
+          "price": 8.5,
+          "note": null
+        },
+        {
+          "item": "Chili Cheese Dog",
+          "price": 9.5,
+          "note": null
+        },
+        {
+          "item": "9\" Stretch Chili Dog",
+          "price": 9.5,
+          "note": null
+        },
+        {
+          "item": "Pink's Chili Burger",
+          "price": 8.95,
+          "note": null
+        },
+        {
+          "item": "Chili Fries",
+          "price": 6.95,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own menu page",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.pinkshollywood.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": null
+    },
+    {
+      "id": "philippe-the-original-la",
+      "name": "Philippe The Original",
+      "cityId": "us-ca-losangeles",
+      "address": "1001 N Alameda St, Los Angeles, CA 90012",
+      "neighborhood": "Chinatown / Downtown",
+      "cuisine": "French dip sandwiches",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Beef Dip",
+          "price": 14.95,
+          "note": null
+        },
+        {
+          "item": "Pork Dip",
+          "price": 14.95,
+          "note": null
+        },
+        {
+          "item": "Lamb Dip",
+          "price": 16.5,
+          "note": null
+        },
+        {
+          "item": "Coffee",
+          "price": null,
+          "note": "Listed on the menu page without a price."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own menu page",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.philippes.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": null
+    },
+    {
+      "id": "langers-deli-la",
+      "name": "Langer's Delicatessen-Restaurant",
+      "cityId": "us-ca-losangeles",
+      "address": "704 S Alvarado St, Los Angeles, CA 90057",
+      "neighborhood": "Westlake / MacArthur Park",
+      "cuisine": "Jewish deli",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "#19 on Rye (Full Sandwich)",
+          "price": 28,
+          "note": "Hot pastrami, coleslaw, Swiss, Russian dressing."
+        },
+        {
+          "item": "#1 Hot Pastrami (Full Sandwich)",
+          "price": 26.5,
+          "note": null
+        },
+        {
+          "item": "#88 Hot Corned Beef (Full Sandwich)",
+          "price": 28,
+          "note": null
+        },
+        {
+          "item": "Bowl of Soup",
+          "price": 6,
+          "note": null
+        },
+        {
+          "item": "Pastrami Chili Cheese Fries",
+          "price": 19.5,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Ritual ordering listing (the curbside-ordering service Langer's own site links to)",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://ritual.co/order/langers-delicatessen-restaurant-704-s-alvarado-st-los-angeles-ca-90057-usa-los-angeles/9d9a",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Langer's own site shows no prices. Ordering-platform prices can differ from dine-in."
+    },
+    {
+      "id": "guisados-boyle-heights-la",
+      "name": "Guisados (Boyle Heights)",
+      "cityId": "us-ca-losangeles",
+      "address": "2100 E Cesar E Chavez Ave, Los Angeles, CA",
+      "neighborhood": "Boyle Heights",
+      "cuisine": "Mexican tacos (guisados)",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Taco (Tinga de Pollo, Mole Poblano, Chicharron, etc.)",
+          "price": 4.5,
+          "note": "Most tacos are $4.50."
+        },
+        {
+          "item": "Taco (Camarones or Pescado)",
+          "price": 4.95,
+          "note": null
+        },
+        {
+          "item": "Quesadilla",
+          "price": 4.5,
+          "note": null
+        },
+        {
+          "item": "Quesadilla con Chorizo",
+          "price": 6.95,
+          "note": null
+        },
+        {
+          "item": "Horchata",
+          "price": null,
+          "note": "Listed without a price."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own menu page",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://guisados.la/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Menu page is chain-wide (10 LA-area locations), not location-specific. Site says delivery is via Uber Eats/Postmates only."
+    },
+    {
+      "id": "daikokuya-little-tokyo-la",
+      "name": "Daikokuya Little Tokyo",
+      "cityId": "us-ca-losangeles",
+      "address": "327 E 1st St, Los Angeles, CA 90012",
+      "neighborhood": "Little Tokyo",
+      "cuisine": "Japanese ramen",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Daikoku Ramen",
+          "price": 17,
+          "note": null
+        },
+        {
+          "item": "Spicy Miso Ramen",
+          "price": 18,
+          "note": null
+        },
+        {
+          "item": "Tsukemen",
+          "price": 18,
+          "note": null
+        },
+        {
+          "item": "Homemade Gyoza",
+          "price": 10.5,
+          "note": null
+        },
+        {
+          "item": "Chashu Pork Bowl",
+          "price": 15.5,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Operator's own menu page (Bishamon-ten group, which runs Daikokuya)",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://group.bishamon-ten.com/menu_daikokuya_littletokyo/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Address from search listings, not the menu page. Delivery apps list Daikoku Ramen higher ($20.95-$21.95), so these read as dine-in prices."
+    },
+    {
+      "id": "leos-tacos-truck-la",
+      "name": "Leo's Tacos Truck",
+      "cityId": "us-ca-losangeles",
+      "address": null,
+      "neighborhood": null,
+      "cuisine": "Mexican taco truck",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Al Pastor Taco",
+          "price": null,
+          "note": "Own menu page shows the menu only as an image; search snippets quoted $2.00-$2.50 but no page read confirmed it."
+        },
+        {
+          "item": "Mulita",
+          "price": null,
+          "note": "Not found on any page read."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "none",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.leostacostruck.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Operates about 15 trucks in greater LA; the flagship is widely known at La Brea & Venice Blvd, but no address was read on its site."
+    },
+    {
+      "id": "night-market-song-la",
+      "name": "Night + Market Song",
+      "cityId": "us-ca-losangeles",
+      "address": "3322 W Sunset Blvd, Los Angeles, CA 90026",
+      "neighborhood": "Silver Lake",
+      "cuisine": "Thai",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Pad Thai",
+          "price": null,
+          "note": "Search snippet (DoorDash/Caviar) gave $19.00; the page itself returned 403."
+        },
+        {
+          "item": "Short Rib Pad See Ew",
+          "price": null,
+          "note": "Search snippet gave $27.00; not read on a page."
+        },
+        {
+          "item": "Nam Khao Tod",
+          "price": null,
+          "note": "Search snippet gave $19.00; not read on a page."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "none (own site has no prices; DoorDash/Caviar/Tock pages return 403)",
+      "takeout": true,
+      "delivery": null,
+      "url": "http://www.nightmarketsong.com/nm-song",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Own site confirms address and a limited takeout menu. The WeHo branch is in West Hollywood, a separate city, so Song was used."
+    },
+    {
+      "id": "bestia-la",
+      "name": "Bestia",
+      "cityId": "us-ca-losangeles",
+      "address": "2121 E 7th Pl, Los Angeles, CA 90021",
+      "neighborhood": "Arts District",
+      "cuisine": "Italian",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Margherita Pizza",
+          "price": 26,
+          "note": null
+        },
+        {
+          "item": "Ricotta Gnocchi",
+          "price": 28,
+          "note": null
+        },
+        {
+          "item": "Squid Ink Spaghetti",
+          "price": 44,
+          "note": null
+        },
+        {
+          "item": "Cavatelli alla Norcina",
+          "price": 52,
+          "note": "With shaved truffles."
+        },
+        {
+          "item": "Grilled Branzino",
+          "price": 54,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "SinglePlatform menu listing (undated); own menu page showed no text prices",
+      "takeout": null,
+      "delivery": null,
+      "url": "http://places.singleplatform.com/bestia/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Own site adds a 4 percent charge on each check for staff health coverage. SinglePlatform listing has no date."
+    },
+    {
+      "id": "republique-la",
+      "name": "République",
+      "cityId": "us-ca-losangeles",
+      "address": "624 S La Brea Ave, Los Angeles, CA 90036",
+      "neighborhood": "Mid-Wilshire / Hancock Park",
+      "cuisine": "French",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Brioche French Toast (café)",
+          "price": 24,
+          "note": null
+        },
+        {
+          "item": "Dry-Aged Beef Burger (café)",
+          "price": 24,
+          "note": null
+        },
+        {
+          "item": "Butternut Squash Agnolotti (dinner)",
+          "price": 38,
+          "note": null
+        },
+        {
+          "item": "Wild California King Salmon (dinner)",
+          "price": 52,
+          "note": null
+        },
+        {
+          "item": "Latte",
+          "price": 6,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own menu pages (café and Fall 2026 dinner)",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://republiquela.com/restaurant/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Café 8am-2pm daily; dinner Tue-Sat. Café to-go ordering offered. Café items read at https://republiquela.com/cafe-menu/."
+    },
+    {
+      "id": "osteria-mozza-la",
+      "name": "Osteria Mozza",
+      "cityId": "us-ca-losangeles",
+      "address": "6602 Melrose Ave, Los Angeles, CA 90038",
+      "neighborhood": "Hancock Park / Melrose",
+      "cuisine": "Italian",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Nancy's Favorite Trio",
+          "price": 44,
+          "note": null
+        },
+        {
+          "item": "Pappardelle (rabbit ragù)",
+          "price": 32,
+          "note": null
+        },
+        {
+          "item": "Grilled 8 oz. Beef Tagliata",
+          "price": 58,
+          "note": null
+        },
+        {
+          "item": "Crispy Duck Confit",
+          "price": 64,
+          "note": null
+        },
+        {
+          "item": "Pasta Tasting Menu (per person)",
+          "price": 80,
+          "note": "Optional wine pairing $65; Mon-Thu at the Amaro Bar."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own menus page",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.osteriamozza.com/menus/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Michelin-starred. Family-style menu for 8-9 guests is $110 per person."
+    },
+    {
+      "id": "providence-la",
+      "name": "Providence",
+      "cityId": "us-ca-losangeles",
+      "address": "5955 Melrose Ave, Los Angeles, CA 90038",
+      "neighborhood": "Hollywood / Melrose",
+      "cuisine": "Seafood tasting menu",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Classic Tasting Menu (per person)",
+          "price": 375,
+          "note": null
+        },
+        {
+          "item": "Chef's Tasting Menu (per person)",
+          "price": 495,
+          "note": null
+        },
+        {
+          "item": "A5 Wagyu supplement (classic menu)",
+          "price": 45,
+          "note": null
+        },
+        {
+          "item": "Wine pairing",
+          "price": null,
+          "note": "Offered; price not shown on the menu page."
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own dinner menu page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://providencela.com/dinner/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Prices exclude tax and gratuity. Takeout/delivery false is inferred from it being a dine-in tasting menu only."
+    },
+    {
+      "id": "n-naka-la",
+      "name": "n/naka",
+      "cityId": "us-ca-losangeles",
+      "address": "3455 Overland Ave, Los Angeles, CA 90034",
+      "neighborhood": "Palms",
+      "cuisine": "Japanese kaiseki",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "13-Course Kaiseki Tasting Menu (per person)",
+          "price": 395,
+          "note": null
+        },
+        {
+          "item": "Curated Wine & Sake Pairing",
+          "price": 195,
+          "note": null
+        },
+        {
+          "item": "Premium Wine & Sake Pairing",
+          "price": 395,
+          "note": null
+        },
+        {
+          "item": "Corkage (per 750ml)",
+          "price": 85,
+          "note": null
+        }
+      ],
+      "currency": "USD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own information page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://n-naka.com/more-information/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Price excludes tax and gratuity. Address was not on the page read; it is the restaurant's long-known address. Dinner Wed-Sat only."
+    },
+    {
+      "id": "greggs-eastcheap-london",
+      "name": "Greggs (Eastcheap)",
+      "cityId": "uk-eng-london",
+      "address": "Eastcheap, City of London (street number not read)",
+      "neighborhood": "The City",
+      "cuisine": "Bakery / sandwiches",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Sausage Roll",
+          "price": 1.7,
+          "note": null
+        },
+        {
+          "item": "Steak Bake",
+          "price": 2.9,
+          "note": null
+        },
+        {
+          "item": "Chicken Bake",
+          "price": 2.85,
+          "note": null
+        },
+        {
+          "item": "Regular Latte",
+          "price": 2.75,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Deliveroo delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://deliveroo.co.uk/menu/London/the-city/5677-greggs-london-3-eastcheap",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Greggs' own site shows no prices. Vegan sausage roll was sold out on the listing, so no price shown."
+    },
+    {
+      "id": "mcdonalds-strand-london",
+      "name": "McDonald's (34/35 Strand)",
+      "cityId": "uk-eng-london",
+      "address": "34/35 Strand, London WC2N 5",
+      "neighborhood": "Charing Cross / Strand",
+      "cuisine": "Burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Sausage and Egg McMuffin",
+          "price": 5.19,
+          "note": null
+        },
+        {
+          "item": "Bacon and Egg McMuffin",
+          "price": 5.19,
+          "note": null
+        },
+        {
+          "item": "Hash Brown",
+          "price": 2.39,
+          "note": null
+        },
+        {
+          "item": "Regular Latte",
+          "price": 2.59,
+          "note": null
+        },
+        {
+          "item": "Regular White Coffee",
+          "price": 2.39,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/gb/store/mcdonalds-34-35-strand/L9FgkvxxRLKzv_GWShip-A",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Listing was read during UK breakfast hours, so only breakfast items were shown; Big Mac etc. not captured. McDonald's own UK site shows no prices."
+    },
+    {
+      "id": "pret-a-manger-strand-london",
+      "name": "Pret A Manger (Strand)",
+      "cityId": "uk-eng-london",
+      "address": "120-125 Strand, London WC2R 0",
+      "neighborhood": "Strand / Covent Garden",
+      "cuisine": "Sandwiches / coffee",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Classic Super Club",
+          "price": 6,
+          "note": null
+        },
+        {
+          "item": "Free-Range Egg Mayo",
+          "price": 3.7,
+          "note": null
+        },
+        {
+          "item": "All Butter Croissant",
+          "price": 2.7,
+          "note": null
+        },
+        {
+          "item": "Filter Coffee",
+          "price": 1.5,
+          "note": null
+        },
+        {
+          "item": "Latte",
+          "price": 4,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/gb/store/pret-a-manger-strand/JCnZmS7bSXqtlE_GQmGF6w",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Pret's own site shows no prices."
+    },
+    {
+      "id": "leon-strand-london",
+      "name": "LEON (Strand)",
+      "cityId": "uk-eng-london",
+      "address": "73-75 Strand, London WC2R 0DE",
+      "neighborhood": "Strand / Covent Garden",
+      "cuisine": "Fast casual / Mediterranean",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Smashed Avocado & Halloumi Muffin",
+          "price": 5.29,
+          "note": null
+        },
+        {
+          "item": "Halloumi, Egg & Avo Sando",
+          "price": 6.99,
+          "note": null
+        },
+        {
+          "item": "Salmon Smörgås-Box",
+          "price": 8.99,
+          "note": null
+        },
+        {
+          "item": "The Big Breakfast Box",
+          "price": 6.99,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/gb/store/leon-strand/KM-Y3IASQda2ZXPINkFs7g",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Read during breakfast hours; all-day (11am+) items not captured. LEON's own site shows no prices."
+    },
+    {
+      "id": "wasabi-borough-high-street-london",
+      "name": "Wasabi (Borough High Street)",
+      "cityId": "uk-eng-london",
+      "address": "Borough High Street, London SE1 1NE (street number not read)",
+      "neighborhood": "London Bridge / Borough",
+      "cuisine": "Japanese sushi & bento",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Chicken Katsu Curry Bento",
+          "price": 9.95,
+          "note": null
+        },
+        {
+          "item": "Chicken Katsu Curry Yakisoba",
+          "price": 9.95,
+          "note": null
+        },
+        {
+          "item": "Chicken Gyoza",
+          "price": 5.45,
+          "note": "hot side"
+        },
+        {
+          "item": "Vegetable Gyoza (Cold)",
+          "price": 5.25,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/gb/store/wasabi-borough-high-street/rKcEkOK8RZWaTqiot3beLw",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Wasabi's own menu page shows no prices."
+    },
+    {
+      "id": "poppies-spitalfields-london",
+      "name": "Poppies Fish & Chips (Spitalfields)",
+      "cityId": "uk-eng-london",
+      "address": "6-8 Hanbury Street, London E1 6QR",
+      "neighborhood": "Spitalfields",
+      "cuisine": "Fish & chips",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Cod (regular)",
+          "price": 21.99,
+          "note": "Large £25.50"
+        },
+        {
+          "item": "Haddock (regular)",
+          "price": 20.99,
+          "note": "Large £24.00"
+        },
+        {
+          "item": "Chips (regular)",
+          "price": 4.95,
+          "note": "Large £5.95"
+        },
+        {
+          "item": "Homemade Mushy Peas",
+          "price": 3.5,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu page",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.poppiesfishandchips.co.uk/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "One menu page covers all four branches (Camden, Soho, Spitalfields, Portobello); no service charge text on it."
+    },
+    {
+      "id": "pizza-pilgrims-dean-street-london",
+      "name": "Pizza Pilgrims (Soho, Dean St)",
+      "cityId": "uk-eng-london",
+      "address": "11 Dean St, London W1D 3RP",
+      "neighborhood": "Soho",
+      "cuisine": "Neapolitan pizza",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Margherita",
+          "price": 13,
+          "note": null
+        },
+        {
+          "item": "Marinara Extra",
+          "price": 11,
+          "note": null
+        },
+        {
+          "item": "Nduja",
+          "price": 15.75,
+          "note": null
+        },
+        {
+          "item": "Bufala di Margherita",
+          "price": 15,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": "12.5% discretionary service charge (printed on the restaurant's own core menu PDF)",
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store); service-charge line from the restaurant's own core menu PDF, whose prices did not extract as text",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/gb/store/pizza-pilgrims-soho/n_IcAgPCUQyykQRymsszCw",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Own menu PDF: https://www.datocms-assets.com/94903/1775045484-core-menu-april_26.pdf"
+    },
+    {
+      "id": "the-wellington-strand-london",
+      "name": "The Wellington (Nicholson's pub)",
+      "cityId": "uk-eng-london",
+      "address": "351 Strand, London WC2R 0HS",
+      "neighborhood": "Strand / Covent Garden",
+      "cuisine": "British pub",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Nicholson's Fish & Chips",
+          "price": 21.5,
+          "note": "Large £23.50"
+        },
+        {
+          "item": "British Steak & Nicholson's Pale Ale Pie",
+          "price": 20.5,
+          "note": null
+        },
+        {
+          "item": "Sausage & Mash",
+          "price": 18,
+          "note": null
+        },
+        {
+          "item": "Classic Cheese & Bacon Burger",
+          "price": 19.5,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/gb/store/the-wellington-pub-strand/tS8z_cNDRDaIBsHl1bzbog",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Nicholson's own site returned 403. In-pub prices may differ from the delivery listing."
+    },
+    {
+      "id": "kanada-ya-covent-garden-london",
+      "name": "Kanada-Ya (Covent Garden / St Giles)",
+      "cityId": "uk-eng-london",
+      "address": "64 St Giles High Street, London WC2H 8LE",
+      "neighborhood": "Covent Garden / St Giles",
+      "cuisine": "Japanese ramen",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Origin Tonkotsu",
+          "price": 16.6,
+          "note": null
+        },
+        {
+          "item": "Tonkotsu X",
+          "price": 16.5,
+          "note": null
+        },
+        {
+          "item": "Chashu-men",
+          "price": 19.5,
+          "note": null
+        },
+        {
+          "item": "Chicken Karaage",
+          "price": 8.95,
+          "note": null
+        },
+        {
+          "item": "Yaki Gyoza",
+          "price": 8.95,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": "Menu prints \"*service is not included\" (no percentage printed)",
+      "priceSource": "restaurant's own PDF menu",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.kanada-ya.com/menu/KY%20Menu_St%20Giles.pdf",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": null
+    },
+    {
+      "id": "flat-iron-covent-garden-london",
+      "name": "Flat Iron (Covent Garden)",
+      "cityId": "uk-eng-london",
+      "address": "17-18 Henrietta Street, London WC2E 8QH",
+      "neighborhood": "Covent Garden",
+      "cuisine": "Steak",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Flat Iron Steak",
+          "price": 15,
+          "note": null
+        },
+        {
+          "item": "35 Day Aged Ribeye",
+          "price": 20,
+          "note": "beef special"
+        },
+        {
+          "item": "Smashed Onion Double Cheeseburger",
+          "price": 14,
+          "note": "beef special"
+        },
+        {
+          "item": "Homemade Beef Dripping Chips",
+          "price": 4.5,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu page",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://flatironsteak.co.uk/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Group-wide menu page; no service charge text on it."
+    },
+    {
+      "id": "dishoom-covent-garden-london",
+      "name": "Dishoom Covent Garden",
+      "cityId": "uk-eng-london",
+      "address": "12 Upper St. Martin's Lane, London WC2H 9FB",
+      "neighborhood": "Covent Garden",
+      "cuisine": "Bombay café / Indian",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "House Black Daal",
+          "price": 11.7,
+          "note": null
+        },
+        {
+          "item": "Chicken Ruby",
+          "price": 18.9,
+          "note": null
+        },
+        {
+          "item": "Gunpowder Potatoes",
+          "price": 10.9,
+          "note": null
+        },
+        {
+          "item": "Lamb Biryani",
+          "price": 21.9,
+          "note": null
+        },
+        {
+          "item": "Garlic Naan",
+          "price": 5.6,
+          "note": null
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": "An optional service charge of 12.5% will be added to your bill (removable on request)",
+      "priceSource": "restaurant's own menu page",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.dishoom.com/menu/covent-garden-all-day/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "A collection menu exists (dishoom.com/menu/collection-covent-garden/)."
+    },
+    {
+      "id": "the-ivy-west-street-london",
+      "name": "The Ivy (West Street)",
+      "cityId": "uk-eng-london",
+      "address": "1-5 West St, London WC2H 9NQ",
+      "neighborhood": "Covent Garden / West End",
+      "cuisine": "Modern British",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "The Ivy Shepherd's Pie",
+          "price": 22.95,
+          "note": null
+        },
+        {
+          "item": "Deep-fried haddock and chips",
+          "price": 24.25,
+          "note": null
+        },
+        {
+          "item": "Rib-eye on the bone 12oz / 340g",
+          "price": 41.5,
+          "note": null
+        },
+        {
+          "item": "Smoked Mozzarella",
+          "price": 14.5,
+          "note": "starter"
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu page",
+      "takeout": false,
+      "delivery": null,
+      "url": "https://ivycollection.com/restaurants-near-me/the-ivy-london/the-ivy-west-street-covent-garden/a-la-carte-menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "No service charge text found on the à la carte page; whether one is added was not confirmed."
+    },
+    {
+      "id": "hawksmoor-air-street-london",
+      "name": "Hawksmoor Air Street",
+      "cityId": "uk-eng-london",
+      "address": "5a Air Street, London (postcode not read)",
+      "neighborhood": "Piccadilly",
+      "cuisine": "Steakhouse",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Sirloin (350g)",
+          "price": 44,
+          "note": null
+        },
+        {
+          "item": "Rump (275g)",
+          "price": 29,
+          "note": null
+        },
+        {
+          "item": "Rib-eye (400g)",
+          "price": 56,
+          "note": null
+        },
+        {
+          "item": "Beef dripping chips",
+          "price": 7,
+          "note": null
+        },
+        {
+          "item": "Potted beef & bacon",
+          "price": 12,
+          "note": "starter"
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu page",
+      "takeout": false,
+      "delivery": null,
+      "url": "https://thehawksmoor.com/locations/airstreet/food/menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "No service charge text found on the menu page."
+    },
+    {
+      "id": "rules-covent-garden-london",
+      "name": "Rules",
+      "cityId": "uk-eng-london",
+      "address": "35 Maiden Lane, Covent Garden, London WC2E 7LB",
+      "neighborhood": "Covent Garden",
+      "cuisine": "Traditional British / game",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Steak & Kidney Pudding",
+          "price": 26.25,
+          "note": "with oyster £27.95"
+        },
+        {
+          "item": "Steak & Kidney Pie",
+          "price": 26.25,
+          "note": null
+        },
+        {
+          "item": "Rump Steak",
+          "price": 37.25,
+          "note": null
+        },
+        {
+          "item": "Rules Sticky Toffee Pudding",
+          "price": 11.5,
+          "note": null
+        },
+        {
+          "item": "Poole Rock Oysters",
+          "price": 5.75,
+          "note": "each"
+        }
+      ],
+      "currency": "GBP",
+      "taxIncluded": true,
+      "serviceCharge": "A discretionary 12.5% service charge, distributed in its entirety to staff, will be added to your bill",
+      "priceSource": "restaurant's own menu page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://rules.co.uk/our-menus/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Food menu PDF: https://rules.co.uk/wp-content/uploads/2026/07/MENU-JUNE-2026-front.pdf"
+    },
+    {
+      "id": "supermacs-oconnell-street-dublin",
+      "name": "Supermac's (O'Connell Street)",
+      "cityId": "ie-lei-dublin",
+      "address": "45-46 O'Connell St Lower, Dublin 1, D01 KV21",
+      "neighborhood": "North City",
+      "cuisine": "Burgers / chipper",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Chicken Snack Box",
+          "price": 10.5,
+          "note": null
+        },
+        {
+          "item": "Cheeseburger",
+          "price": 3.5,
+          "note": null
+        },
+        {
+          "item": "Fresh Beef Burger (5oz)",
+          "price": 8.95,
+          "note": null
+        },
+        {
+          "item": "Fries",
+          "price": 4.5,
+          "note": null
+        },
+        {
+          "item": "Curry Fries",
+          "price": 6.5,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ie/store/supermacs-oconnell-street/otRvPyHIW06keb-mf-nWPQ",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Supermac's own ordering site needs a store selected; no prices read there."
+    },
+    {
+      "id": "abrakebabra-temple-bar-dublin",
+      "name": "Abrakebabra (Temple Bar)",
+      "cityId": "ie-lei-dublin",
+      "address": "Temple Bar Square, Dublin 2",
+      "neighborhood": "Temple Bar",
+      "cuisine": "Kebabs / fast food",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Original Doner Kebab",
+          "price": 9.95,
+          "note": null
+        },
+        {
+          "item": "Regular Kebab Meal Combo (Original Doner Kebab)",
+          "price": 15.2,
+          "note": null
+        },
+        {
+          "item": "Seasoned Fries",
+          "price": 4.3,
+          "note": "regular"
+        },
+        {
+          "item": "Curry Fries",
+          "price": 6,
+          "note": "regular"
+        },
+        {
+          "item": "Abra Spice Box",
+          "price": 8.5,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Just Eat delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.just-eat.ie/restaurants-abrakebabra-temple-bar-dublin/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Abrakebabra's own menu page shows no prices."
+    },
+    {
+      "id": "insomnia-artane-dublin",
+      "name": "Insomnia Coffee (Artane)",
+      "cityId": "ie-lei-dublin",
+      "address": "5 Kilmore Road, Artane, Dublin",
+      "neighborhood": "Artane",
+      "cuisine": "Coffee / café",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Latte 455ml",
+          "price": 4.2,
+          "note": null
+        },
+        {
+          "item": "Americano 445ml",
+          "price": 3.9,
+          "note": null
+        },
+        {
+          "item": "Flat White 340ml",
+          "price": 3.9,
+          "note": null
+        },
+        {
+          "item": "Plain Croissant",
+          "price": 3.75,
+          "note": null
+        },
+        {
+          "item": "New York Deli Toastie",
+          "price": 7.5,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Just Eat delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.just-eat.ie/restaurants-insomnia-artane-dublin/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Suburban branch; no city-centre Insomnia listing with prices was found. Insomnia's own menu page shows no prices."
+    },
+    {
+      "id": "boojum-abbey-street-dublin",
+      "name": "Boojum (Abbey Street)",
+      "cityId": "ie-lei-dublin",
+      "address": "3 Abbey Street Lower, Dublin 1, D01 K6R2",
+      "neighborhood": "North City",
+      "cuisine": "Mexican burritos",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Burrito",
+          "price": 10.55,
+          "note": "base price before filling choice"
+        },
+        {
+          "item": "Bowl",
+          "price": 10.55,
+          "note": "base price before filling choice"
+        },
+        {
+          "item": "Boojum OG Chicken",
+          "price": 15.3,
+          "note": "signature"
+        },
+        {
+          "item": "Cholula Hot Honey Chicken Burrito",
+          "price": 13.8,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ie/store/boojum-abbey-street/q4YKJDlpQd-yKF2reVHieA",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Boojum's own menu pages show no prices."
+    },
+    {
+      "id": "bunsen-wexford-street-dublin",
+      "name": "Bunsen (Wexford Street)",
+      "cityId": "ie-lei-dublin",
+      "address": "Wexford Street, Dublin 2 (street number not read)",
+      "neighborhood": "Wexford Street",
+      "cuisine": "Burgers",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Hamburger",
+          "price": 9.65,
+          "note": null
+        },
+        {
+          "item": "Cheeseburger",
+          "price": 10.95,
+          "note": null
+        },
+        {
+          "item": "Double Cheeseburger",
+          "price": 14.75,
+          "note": null
+        },
+        {
+          "item": "Hand Cut Fries",
+          "price": 4.75,
+          "note": null
+        },
+        {
+          "item": "Milkshake",
+          "price": 6.75,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu image (EUR food menu) on bunsen.ie",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.bunsen.ie/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "One euro menu covers the Irish branches (Dame St, Wexford St, South Anne St, Temple Bar and others). Delivery via Deliveroo; collection on site."
+    },
+    {
+      "id": "leo-burdock-christchurch-dublin",
+      "name": "Leo Burdock (Christchurch)",
+      "cityId": "ie-lei-dublin",
+      "address": "2 Werburgh Street, Dublin 8, D08 HC82",
+      "neighborhood": "Christchurch",
+      "cuisine": "Fish & chips",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Fresh Cod with Chips",
+          "price": 17.95,
+          "note": null
+        },
+        {
+          "item": "Smoked Cod with Chips",
+          "price": 17.95,
+          "note": null
+        },
+        {
+          "item": "Chips",
+          "price": 6,
+          "note": null
+        },
+        {
+          "item": "Battered Burger",
+          "price": 5.75,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "Uber Eats delivery listing (delivery prices may be higher than in-store)",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ie/store/leo-burdocks-christchurch/t3qWOFyTRrybxq_FvIufBw",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Takeaway only, per leoburdock.com/locations. The own menu page shows no prices."
+    },
+    {
+      "id": "beshoff-oconnell-street-dublin",
+      "name": "Beshoff Restaurant (O'Connell Street)",
+      "cityId": "ie-lei-dublin",
+      "address": "6 Upper O'Connell Street, Dublin 1",
+      "neighborhood": "North City",
+      "cuisine": "Fish & chips",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Fresh Cod & Chips",
+          "price": 16.95,
+          "note": null
+        },
+        {
+          "item": "Fresh Haddock & Chips",
+          "price": 16.5,
+          "note": null
+        },
+        {
+          "item": "Calamari",
+          "price": 14.95,
+          "note": null
+        },
+        {
+          "item": "Fresh Handcut Chips",
+          "price": 5.5,
+          "note": null
+        },
+        {
+          "item": "Full Breakfast",
+          "price": 12.95,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu page",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.beshoffrestaurant.ie/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Separate from the Beshoff Bros chippers; for comparison, Beshoff Bros Clontarf on Just Eat listed North Atlantic Cod Meal at €20.35."
+    },
+    {
+      "id": "the-brazen-head-dublin",
+      "name": "The Brazen Head",
+      "cityId": "ie-lei-dublin",
+      "address": "20 Lower Bridge St., Usher's Quay, Dublin D08 WC64",
+      "neighborhood": "Usher's Quay",
+      "cuisine": "Irish pub",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Fish and Chips",
+          "price": 23.9,
+          "note": null
+        },
+        {
+          "item": "Traditional Brazen Beef Stew",
+          "price": 23.9,
+          "note": null
+        },
+        {
+          "item": "Bacon and Cabbage",
+          "price": 22.9,
+          "note": null
+        },
+        {
+          "item": "Brazen Beef Burger",
+          "price": 22.9,
+          "note": null
+        },
+        {
+          "item": "Soup of the day",
+          "price": 8.9,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu image on brazenhead.com/all-day-menu",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://brazenhead.com/all-day-menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Food served 12pm to 9pm. No service charge printed on the menu."
+    },
+    {
+      "id": "gotham-cafe-dublin",
+      "name": "Gotham Cafe",
+      "cityId": "ie-lei-dublin",
+      "address": "8 South Anne St, Dublin 2",
+      "neighborhood": "Grafton Street area",
+      "cuisine": "Pizza / American café",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "The Gotham Hamburger",
+          "price": 16.5,
+          "note": null
+        },
+        {
+          "item": "Bronx Pizza",
+          "price": 15.5,
+          "note": "large €20.95"
+        },
+        {
+          "item": "Chargrilled Irish Striploin Steak",
+          "price": 29.95,
+          "note": null
+        },
+        {
+          "item": "Garlic Ciabatta Bread",
+          "price": 4.75,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu page",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://gothamcafe.ie/evening-menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "All-day menu page; no service charge text found."
+    },
+    {
+      "id": "the-winding-stair-dublin",
+      "name": "The Winding Stair",
+      "cityId": "ie-lei-dublin",
+      "address": "40 Lower Ormond Quay, Dublin 1",
+      "neighborhood": "Ormond Quay",
+      "cuisine": "Modern Irish",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Doyle's hand-smoked haddock, poached in milk with onions and white cheddar mash",
+          "price": 32,
+          "note": null
+        },
+        {
+          "item": "Young's 9 oz Black Angus Irish striploin",
+          "price": 42,
+          "note": null
+        },
+        {
+          "item": "Irish Water's Cod",
+          "price": 30,
+          "note": null
+        },
+        {
+          "item": "Scotch Egg with bacon dust mayo",
+          "price": 13,
+          "note": null
+        },
+        {
+          "item": "Soup of the season",
+          "price": 9,
+          "note": null
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": "12.5% service charge added to parties of five or more",
+      "priceSource": "restaurant's own menu page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://www.winding-stair.com/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": null
+    },
+    {
+      "id": "chapter-one-dublin",
+      "name": "Chapter One by Mickael Viljanen",
+      "cityId": "ie-lei-dublin",
+      "address": "18-19 Parnell Sq, Dublin 1",
+      "neighborhood": "Parnell Square",
+      "cuisine": "Fine dining",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Lunch Three Course Menu",
+          "price": 95,
+          "note": "per person"
+        },
+        {
+          "item": "Dinner tasting menu (six courses)",
+          "price": 235,
+          "note": "per person"
+        },
+        {
+          "item": "Wine pairing (dinner)",
+          "price": 110,
+          "note": "per person"
+        },
+        {
+          "item": "Artisan Cheese Selection",
+          "price": 29,
+          "note": "supplement"
+        }
+      ],
+      "currency": "EUR",
+      "taxIncluded": true,
+      "serviceCharge": null,
+      "priceSource": "restaurant's own menu page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://chapteronerestaurant.com/tasting-menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Lunch prices from chapteronerestaurant.com/lunch-menu/. No service charge text on either menu page. Shanahan's on the Green was not used: its domain appears parked."
+    },
+    {
+      "id": "tim-hortons-555-yonge-toronto",
+      "name": "Tim Hortons (555 Yonge Street)",
+      "cityId": "ca-on-toronto",
+      "address": "555 Yonge Street, Toronto, ON",
+      "neighborhood": "Church-Wellesley / Yonge & Wellesley",
+      "cuisine": "Coffee & Donuts",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Original Blend Coffee",
+          "price": 1.99,
+          "note": "size not stated in listing (base size)"
+        },
+        {
+          "item": "Original Iced Capp",
+          "price": 4.19,
+          "note": null
+        },
+        {
+          "item": "10 Timbits Multi-Pack",
+          "price": 4.19,
+          "note": null
+        },
+        {
+          "item": "Boston Cream Donuts",
+          "price": 2.19,
+          "note": "single donut"
+        },
+        {
+          "item": "Sausage Breakfast Sandwich",
+          "price": 5.79,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Uber Eats store listing (schema.org menu data on page); delivery-app prices are often higher than in-store",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ca/store/tim-hortons-555-yonge-street/UPyiYe2BQbyUhlc3F_2DIQ",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "timhortons.ca menu shows no prices."
+    },
+    {
+      "id": "mcdonalds-yonge-elm-toronto",
+      "name": "McDonald's (Yonge & Elm)",
+      "cityId": "ca-on-toronto",
+      "address": "356 Yonge St, Toronto, ON M5B 1S5",
+      "neighborhood": "Downtown Yonge",
+      "cuisine": "Burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Big Mac",
+          "price": 10.29,
+          "note": null
+        },
+        {
+          "item": "Big Mac Extra Value Meal",
+          "price": 16.49,
+          "note": null
+        },
+        {
+          "item": "Egg McMuffin",
+          "price": 7.19,
+          "note": null
+        },
+        {
+          "item": "10 Chicken McNuggets",
+          "price": 13.39,
+          "note": null
+        },
+        {
+          "item": "Small Fries",
+          "price": 3.99,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Uber Eats store listing (schema.org menu data on page); delivery-app prices are often higher than in-store",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ca/store/mcdonalds-yonge-&-elm/pprgsJgLR5WfQtzZ9GAnug",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": null
+    },
+    {
+      "id": "harveys-10-dundas-east-toronto",
+      "name": "Harvey's (10 Dundas Street East)",
+      "cityId": "ca-on-toronto",
+      "address": "10 Dundas Street East, Toronto, ON M5B 2L6",
+      "neighborhood": "Downtown Yonge / Yonge-Dundas",
+      "cuisine": "Burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Original Burger",
+          "price": 9.09,
+          "note": null
+        },
+        {
+          "item": "Original Burger Combo",
+          "price": 15.29,
+          "note": "with regular fries or onion rings and 20oz drink"
+        },
+        {
+          "item": "Angus Burger",
+          "price": 10.19,
+          "note": null
+        },
+        {
+          "item": "Crispy Chicken Sandwich",
+          "price": 9.99,
+          "note": null
+        },
+        {
+          "item": "Regular Classic Poutine",
+          "price": 7.69,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Uber Eats store listing (schema.org menu data on page); delivery-app prices are often higher than in-store",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ca/store/harveys-10-dundas-street-east/4uYyT2lHQJ2EwR0yMhh31Q",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "harveys.ca returned 403."
+    },
+    {
+      "id": "freshii-john-richmond-toronto",
+      "name": "Freshii (John/Richmond)",
+      "cityId": "ca-on-toronto",
+      "address": "310 Richmond Street West, Toronto, ON M5V 1X2",
+      "neighborhood": "Entertainment District",
+      "cuisine": "Bowls, Salads & Wraps",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Oaxaca Bowl",
+          "price": 11.99,
+          "note": null
+        },
+        {
+          "item": "Tex Mex Burrito",
+          "price": 10.99,
+          "note": null
+        },
+        {
+          "item": "Kids meal",
+          "price": 4.99,
+          "note": "category price as shown"
+        },
+        {
+          "item": "Canned Diet Coke",
+          "price": 1.79,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Ritual ordering listing; may lag the in-store board",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://ritual.co/order/freshii-john-richmond-toronto/0291",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Ritual listing; service fees apply on Ritual orders."
+    },
+    {
+      "id": "banh-mi-boys-queen-toronto",
+      "name": "Banh Mi Boys (Queen St W)",
+      "cityId": "ca-on-toronto",
+      "address": "392 Queen St W, Toronto, ON M5V 2A6",
+      "neighborhood": "Queen West",
+      "cuisine": "Vietnamese-Asian sandwiches",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Grilled Pork Banh Mi",
+          "price": 12,
+          "note": null
+        },
+        {
+          "item": "Five Spice Pork Belly Banh Mi",
+          "price": 12.75,
+          "note": null
+        },
+        {
+          "item": "Fried Chicken Steamed Bao",
+          "price": 7,
+          "note": null
+        },
+        {
+          "item": "Kalbi Beef Taco",
+          "price": 6.75,
+          "note": null
+        },
+        {
+          "item": "Kimchi Fries",
+          "price": 13,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash Storefront (order.online) listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://order.online/en/store/banh-mi-boys-queen-st-w-25073274",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "A Ritual listing for the same store showed older, lower prices (e.g. Grilled Pork Banh Mi $9.00); the DoorDash figures were used. banhmiboys.com returned 404/500."
+    },
+    {
+      "id": "sansotei-ramen-dundas-toronto",
+      "name": "Sansotei Ramen (Dundas)",
+      "cityId": "ca-on-toronto",
+      "address": "179 Dundas St W, Toronto, ON",
+      "neighborhood": "Discovery District / Downtown",
+      "cuisine": "Japanese ramen",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Tonkotsu Ramen",
+          "price": 22,
+          "note": null
+        },
+        {
+          "item": "Shoyu Ramen",
+          "price": 20,
+          "note": null
+        },
+        {
+          "item": "Miso Black Ramen",
+          "price": 24.5,
+          "note": null
+        },
+        {
+          "item": "Vegetarian Miso Ramen",
+          "price": 18,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Uber Eats store listing (schema.org menu data on page); delivery-app prices are often higher than in-store",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ca/store/sansotei-ramen-dundas/GqNedVKkTkSoFtdVswpURg",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Kinton Ramen's own Ontario menu page (kintonramen.com/menu/ontario/) lists Pork Original Ramen $16.99, Pork Miso $17.99 province-wide, if a second ramen shop is wanted."
+    },
+    {
+      "id": "the-senator-toronto",
+      "name": "The Senator Restaurant",
+      "cityId": "ca-on-toronto",
+      "address": "249 Victoria Street, Toronto, ON M5B 1T8",
+      "neighborhood": "Downtown Yonge / Garden District",
+      "cuisine": "Diner / Canadian",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "The Senator Fry Up",
+          "price": 26,
+          "note": "brunch"
+        },
+        {
+          "item": "Eggs Benedict",
+          "price": 28,
+          "note": "brunch"
+        },
+        {
+          "item": "Senator burger",
+          "price": 26,
+          "note": "dinner"
+        },
+        {
+          "item": "Chicken pot pie",
+          "price": 30,
+          "note": "dinner"
+        },
+        {
+          "item": "Butcher's cut (10 oz New York Striploin)",
+          "price": 46,
+          "note": "dinner"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own dinner and brunch PDF menus dated July 5, 2026",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.thesenator.com/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Dinner Tue-Sat 5-8pm; brunch Sat-Sun 9:30am-2pm. $20 minimum spend per person 11:30am-1:30pm at brunch."
+    },
+    {
+      "id": "carousel-bakery-toronto",
+      "name": "Carousel Bakery",
+      "cityId": "ca-on-toronto",
+      "address": "93 Front Street E (St. Lawrence Market), Toronto, ON",
+      "neighborhood": "St. Lawrence Market",
+      "cuisine": "Sandwiches / Bakery",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Peameal style bacon",
+          "price": 8.4,
+          "note": "hot sandwich"
+        },
+        {
+          "item": "Veal Parmigiana",
+          "price": 11,
+          "note": null
+        },
+        {
+          "item": "Hot Sausage",
+          "price": 7.95,
+          "note": null
+        },
+        {
+          "item": "Sausage Roll",
+          "price": 2.5,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Bakery's online menu page (hosted by Calibre)",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://carouselbakery.bycalibre.ca/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Address from Yelp search result, not the menu page."
+    },
+    {
+      "id": "pai-northern-thai-toronto",
+      "name": "PAI Northern Thai Kitchen (Downtown)",
+      "cityId": "ca-on-toronto",
+      "address": "18 Duncan Street, Toronto, ON M5H 3G8",
+      "neighborhood": "Entertainment District",
+      "cuisine": "Northern Thai",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Chef Nuit's Pad Thai",
+          "price": 23.75,
+          "note": "range $23.75-$25.75 by protein"
+        },
+        {
+          "item": "Khao Soi",
+          "price": 23.75,
+          "note": "range $23.75-$25.75 by protein"
+        },
+        {
+          "item": "Gaeng Massaman",
+          "price": 23,
+          "note": "range $23.00-$25.00"
+        },
+        {
+          "item": "Spring Rolls",
+          "price": 14,
+          "note": "1 order"
+        },
+        {
+          "item": "Thai Chicken Wings",
+          "price": 13.5,
+          "note": "5 wings; 10 wings $24.00"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own downtown menu page",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://paitoronto.com/menu/pai-menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": null
+    },
+    {
+      "id": "richmond-station-toronto",
+      "name": "Richmond Station",
+      "cityId": "ca-on-toronto",
+      "address": "1 Richmond St W, Toronto, ON M5H 3W4",
+      "neighborhood": "Financial District",
+      "cuisine": "Contemporary Canadian",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "STN. Burger",
+          "price": 35,
+          "note": "chickpea-patty substitute $33"
+        },
+        {
+          "item": "Pastured Beef Tartare",
+          "price": 25,
+          "note": null
+        },
+        {
+          "item": "Mushroom & Sausage Spaghetti",
+          "price": 44,
+          "note": null
+        },
+        {
+          "item": "Duck Liver Pâté",
+          "price": 23,
+          "note": null
+        },
+        {
+          "item": "Queen of Toronto cocktail (2oz)",
+          "price": 23,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own dinner PDF menu, Edition 197 (Sept 2026)",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://richmondstation.ca/wp-content/uploads/2026/09/RS-Menu-Edition-197.pdf",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Hospitality Included: menu prices include the cost of service and tipping is discouraged. Tax still excluded."
+    },
+    {
+      "id": "canoe-toronto",
+      "name": "Canoe",
+      "cityId": "ca-on-toronto",
+      "address": "66 Wellington St. W, TD Bank Tower, 54th Floor, Toronto, ON M5K 1H6",
+      "neighborhood": "Financial District",
+      "cuisine": "Contemporary Canadian",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Tasting Menu (per person)",
+          "price": 170,
+          "note": "$295 with wine pairings; Mon-Fri 5-9:30pm"
+        },
+        {
+          "item": "Lunch Prix Fixe, three courses (per person)",
+          "price": 65,
+          "note": null
+        },
+        {
+          "item": "Cocktails",
+          "price": 24,
+          "note": "as printed"
+        },
+        {
+          "item": "À la carte dinner mains",
+          "price": null,
+          "note": "page gives only a range, $58-$89"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own menus page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://www.canoerestaurant.com/menus/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Closed Saturdays and Sundays."
+    },
+    {
+      "id": "alo-toronto",
+      "name": "Alo",
+      "cityId": "ca-on-toronto",
+      "address": "163 Spadina Avenue, 3rd Floor, Toronto, ON M5V 2L6",
+      "neighborhood": "Queen West / Chinatown edge",
+      "cuisine": "Contemporary French tasting menu",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "10-Course Tasting Menu (per person)",
+          "price": 245,
+          "note": "third-party figure"
+        },
+        {
+          "item": "6-Course Tasting Menu (per person)",
+          "price": 185,
+          "note": "third-party figure"
+        },
+        {
+          "item": "The Bar at Alo 6-Course Tasting (per person)",
+          "price": 120,
+          "note": "third-party figure"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "tastingmenu.ca (independent tasting-menu guide), not the restaurant's site",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://tastingmenu.ca/restaurants/toronto/chinatown/alo",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "alorestaurant.com shows address but no prices. A search snippet citing another source gave the same $245/$185 and a 4-course $115. Michelin one-star."
+    },
+    {
+      "id": "aw-granville-nelson-vancouver",
+      "name": "A&W (Granville & Nelson)",
+      "cityId": "ca-bc-vancouver",
+      "address": "1028 Granville St, Vancouver, BC V6Z 1L5",
+      "neighborhood": "Downtown / Granville Entertainment District",
+      "cuisine": "Burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Mama Burger",
+          "price": 8.29,
+          "note": null
+        },
+        {
+          "item": "Papa Burger",
+          "price": 9.79,
+          "note": null
+        },
+        {
+          "item": "Papa Burger Combo",
+          "price": 15.49,
+          "note": null
+        },
+        {
+          "item": "Sweet Potato Fries",
+          "price": 6.09,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Uber Eats store listing (schema.org menu data on page); delivery-app prices are often higher than in-store",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ca/store/a&w-granville-&-nelson/2uzIoYReQMWc5LWYOoXvNw",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Listing is internally odd: Teen Burger alone $14.99 and Mama Burger Combo $17.99 (above Papa combo) - excluded as likely listing errors. aw.ca refused connection."
+    },
+    {
+      "id": "japadog-robson-vancouver",
+      "name": "JAPADOG (Robson Street)",
+      "cityId": "ca-bc-vancouver",
+      "address": "530 Robson St, Vancouver, BC V6B 2B7",
+      "neighborhood": "Downtown",
+      "cuisine": "Japanese-style hot dogs",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "All Beef Terimayo",
+          "price": 9.66,
+          "note": null
+        },
+        {
+          "item": "Kurobuta Terimayo Hot Dog",
+          "price": 10.53,
+          "note": null
+        },
+        {
+          "item": "Spicy Cheese Terimayo Hot Dog",
+          "price": 9.98,
+          "note": null
+        },
+        {
+          "item": "Shaked Fries",
+          "price": 4.98,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "DoorDash Storefront (order.online) listing; odd-cent figures suggest platform markup",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://order.online/store/JAPADOG-24482810",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "japadog.com menu lists items without prices."
+    },
+    {
+      "id": "phnom-penh-vancouver",
+      "name": "Phnom Penh Restaurant",
+      "cityId": "ca-bc-vancouver",
+      "address": "244 East Georgia Street, Vancouver, BC V6A 1Z7",
+      "neighborhood": "Chinatown",
+      "cuisine": "Cambodian-Vietnamese",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Marinated Butter Beef",
+          "price": 24.95,
+          "note": null
+        },
+        {
+          "item": "Phnom Penh Chicken Wings (Large)",
+          "price": 23,
+          "note": null
+        },
+        {
+          "item": "Beef Luc Lac on Rice",
+          "price": 19.5,
+          "note": null
+        },
+        {
+          "item": "Phnom Penh Rice Noodle Soup",
+          "price": 16,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Uber Eats store listing (schema.org menu data on page); delivery-app prices are often higher than in-store",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ca/store/phnom-penh-restaurant/vEoJ-CAkV2-9vrOYsAfqbQ",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "An unofficial fan menu page (phnom-penh.matsuba.ca) shows older, lower prices (Butter Beef $17.50) and was not used."
+    },
+    {
+      "id": "hokkaido-ramen-santouka-robson-vancouver",
+      "name": "Hokkaido Ramen Santouka (Robson St)",
+      "cityId": "ca-bc-vancouver",
+      "address": "1690 Robson St, Vancouver, BC V6G 1C7",
+      "neighborhood": "West End",
+      "cuisine": "Japanese ramen",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Shio Ramen",
+          "price": 19.4,
+          "note": null
+        },
+        {
+          "item": "Miso Ramen",
+          "price": 19.4,
+          "note": null
+        },
+        {
+          "item": "Kara-Miso Ramen",
+          "price": 20.1,
+          "note": null
+        },
+        {
+          "item": "Shio Cha-Shu Ramen",
+          "price": 21.95,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Uber Eats store listing (schema.org menu data on page); delivery-app prices are often higher than in-store",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.ubereats.com/ca/store/hokkaido-ramen-santouka-robson-st/tj6K50UYTUCMx15AUbtRjQ",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Marutama at 780 Bidwell now trades as Maruhachi Ra-men; its menu page (maruhachi.ca/westend-menu/) returned 404, so Santouka was used."
+    },
+    {
+      "id": "meat-and-bread-cambie-vancouver",
+      "name": "Meat & Bread (Cambie/Hastings)",
+      "cityId": "ca-bc-vancouver",
+      "address": "370 Cambie Street, Vancouver, BC V6B 1H7",
+      "neighborhood": "Gastown",
+      "cuisine": "Sandwiches",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Porchetta Sandwich",
+          "price": 14,
+          "note": null
+        },
+        {
+          "item": "Meatball Sandwich",
+          "price": 14.5,
+          "note": null
+        },
+        {
+          "item": "Buffalo Chicken Sandwich",
+          "price": 14.5,
+          "note": null
+        },
+        {
+          "item": "Porchetta Meal",
+          "price": 19.5,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Ritual ordering listing; may lag the in-store board",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://ritual.co/order/meat-bread-cambie-hastings-vancouver/789f",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "meatandbread.ca refused connection. Search snippets cite $15.50 for the porchetta sandwich on another listing, so the Ritual figure may be stale."
+    },
+    {
+      "id": "the-naam-vancouver",
+      "name": "The Naam",
+      "cityId": "ca-bc-vancouver",
+      "address": "2724 West 4th Avenue, Vancouver, BC V6K 1R1",
+      "neighborhood": "Kitsilano",
+      "cuisine": "Vegetarian",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Sesame Fries & Miso Gravy",
+          "price": 7.25,
+          "note": "small; large $13.50 (printed as 725 / 1350)"
+        },
+        {
+          "item": "Superfries",
+          "price": 16.75,
+          "note": null
+        },
+        {
+          "item": "House Nachos",
+          "price": 18.75,
+          "note": null
+        },
+        {
+          "item": "Peanut Supreme Wrap",
+          "price": 15.5,
+          "note": null
+        },
+        {
+          "item": "Grilled Cheese",
+          "price": 11.5,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own PDF menu linked from its menu page (file named 'MENU UPDATE JUNE 2025')",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.thenaam.com/menu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Menu PDF is still the one linked in Oct 2026 but is labeled June 2025."
+    },
+    {
+      "id": "earls-robson-vancouver",
+      "name": "Earls Kitchen + Bar (Robson)",
+      "cityId": "ca-bc-vancouver",
+      "address": "1185 Robson Street, Vancouver, BC V6E 1B5",
+      "neighborhood": "West End / Downtown",
+      "cuisine": "Casual premium / Canadian",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Bigger Better Burger",
+          "price": 22.75,
+          "note": null
+        },
+        {
+          "item": "Earls Wings",
+          "price": 20.75,
+          "note": null
+        },
+        {
+          "item": "Ahi Tuna Poke Bowl",
+          "price": 26.75,
+          "note": null
+        },
+        {
+          "item": "6 oz Prime Sirloin",
+          "price": 42.75,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own location menu page",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://earls.ca/locations/robson/menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Uber Eats listing showed the same burger/wings/poke prices. Cactus Club's site loads prices by script and none were readable."
+    },
+    {
+      "id": "miku-vancouver",
+      "name": "Miku Vancouver",
+      "cityId": "ca-bc-vancouver",
+      "address": "200 Granville St Suite 70, Vancouver, BC V6C 1S4",
+      "neighborhood": "Waterfront / Coal Harbour",
+      "cuisine": "Japanese (aburi sushi)",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Aburi Salmon Oshi Sushi",
+          "price": 22,
+          "note": null
+        },
+        {
+          "item": "Miku Kaiseki (per guest, six courses)",
+          "price": 150,
+          "note": "beverage pairing +70"
+        },
+        {
+          "item": "Tofu Salad",
+          "price": 21,
+          "note": null
+        },
+        {
+          "item": "Bluefin tuna sashimi (6pc)",
+          "price": 48,
+          "note": null
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own menu page",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://mikurestaurant.com/vancouver/menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Address from search results (Yelp/Tock), not the menu page."
+    },
+    {
+      "id": "joe-fortes-vancouver",
+      "name": "Joe Fortes Seafood & Chop House",
+      "cityId": "ca-bc-vancouver",
+      "address": "777 Thurlow Street, Vancouver, BC",
+      "neighborhood": "Downtown / West End",
+      "cuisine": "Seafood & steakhouse",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "New England Clam Chowder",
+          "price": 16,
+          "note": null
+        },
+        {
+          "item": "Fish & Chips",
+          "price": 32,
+          "note": "ling cod"
+        },
+        {
+          "item": "Fresh Oysters",
+          "price": 4.35,
+          "note": "each"
+        },
+        {
+          "item": "Miso Marinated Sablefish",
+          "price": 56,
+          "note": null
+        },
+        {
+          "item": "Filet Mignon 7oz",
+          "price": 64,
+          "note": "12oz $98"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own dinner PDF menu (May 2026)",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.joefortes.ca/wp-content/uploads/2026/05/156939-CFWC-Joe-Fortes-Dinner-4-May2026-V2-P6.pdf",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Dinner served 4:00-11:00."
+    },
+    {
+      "id": "hawksworth-vancouver",
+      "name": "Hawksworth Restaurant",
+      "cityId": "ca-bc-vancouver",
+      "address": "801 West Georgia Street, Vancouver, BC V6C 1P7",
+      "neighborhood": "Downtown",
+      "cuisine": "Contemporary Canadian",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Hawksworth classic burger",
+          "price": 29,
+          "note": null
+        },
+        {
+          "item": "Bradner Farms organic beef tenderloin",
+          "price": 69,
+          "note": null
+        },
+        {
+          "item": "Miso marinated Haida Gwaii sablefish",
+          "price": 56,
+          "note": null
+        },
+        {
+          "item": "Steak tartare",
+          "price": 29,
+          "note": null
+        },
+        {
+          "item": "The Business Lunch, three-course menu",
+          "price": 36,
+          "note": "lunch menu dated Sept 28, 2026"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own à la carte PDF dated Sept 25, 2026 ('prices do not include taxes') and Business Lunch PDF",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://hawksworthrestaurant.com/wp-content/uploads/2026/09/Food.25.09.26.pdf",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "In the Rosewood Hotel Georgia."
+    },
+    {
+      "id": "st-lawrence-vancouver",
+      "name": "St. Lawrence",
+      "cityId": "ca-bc-vancouver",
+      "address": "269 Powell Street, Vancouver, BC V6A 1G3",
+      "neighborhood": "Railtown / Gastown",
+      "cuisine": "French-Québécois",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "4-Course Table d'Hôte (per guest)",
+          "price": 118,
+          "note": "plus taxes and gratuity"
+        },
+        {
+          "item": "Beverage pairing, Le Classique",
+          "price": 105,
+          "note": null
+        },
+        {
+          "item": "Beverage pairing, Sans Alcool",
+          "price": 75,
+          "note": null
+        },
+        {
+          "item": "12oz Steak pour Deux supplement",
+          "price": 20,
+          "note": "supplement"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own tasting-menu page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://www.stlawrencerestaurant.com/stlmenu",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Michelin one-star. Open Wed-Sun 5-10:30pm. Menus finalized 48 hours before booking."
+    },
+    {
+      "id": "published-on-main-vancouver",
+      "name": "Published on Main",
+      "cityId": "ca-bc-vancouver",
+      "address": "3593 Main Street, Vancouver, BC V5V 3N4",
+      "neighborhood": "Main Street / Riley Park",
+      "cuisine": "Contemporary Pacific Northwest",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Harvest Tasting Menu (twelve courses, per person)",
+          "price": null,
+          "note": "price not shown on the tasting page; it points to the booking page"
+        },
+        {
+          "item": "BBQ Beef Striploin",
+          "price": 69,
+          "note": "à la carte"
+        },
+        {
+          "item": "Chinook Salmon",
+          "price": 52,
+          "note": "à la carte"
+        },
+        {
+          "item": "Kentucky Fried Maitake",
+          "price": 19,
+          "note": "à la carte"
+        }
+      ],
+      "currency": "CAD",
+      "taxIncluded": false,
+      "priceSource": "Restaurant's own à la carte menu page",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://publishedonmain.com/menu/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Tasting price would need the OpenTable booking page (timed out). Michelin one-star."
+    },
+    {
+      "id": "oxxo-andatti-cdmx",
+      "name": "OXXO (Andatti coffee and prepared food)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Chain convenience store; thousands of branches across CDMX",
+      "neighborhood": null,
+      "cuisine": "Convenience store coffee and hot food",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Café Andatti americano o capuchino (mediano)",
+          "price": 25,
+          "note": "Regular price as reported by El Imparcial, 2026-03-09; not read on an OXXO page. On 2026-10-01 (Día del Café) americano is 1 peso 06:00-13:00 with your own thermos up to 473 ml."
+        },
+        {
+          "item": "Hot dog",
+          "price": null,
+          "note": "No current price found on any page read."
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Press (El Imparcial, 2026-03-09), not an OXXO page",
+      "takeout": true,
+      "delivery": null,
+      "url": "https://www.elimparcial.com/mexico/2026/03/09/femsa-analiza-bajar-precio-del-cafe-andatti-y-modernizar-maquinas-en-oxxo-para-triplicar-ventas-en-mexico-donde-hoy-se-venden-28-tazas-diarias-por-tienda/",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Press-reported price only."
+    },
+    {
+      "id": "mcdonalds-av-juarez-cdmx",
+      "name": "McDonald's Centro (Av. Juárez)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Av. Juárez 76, Colonia Centro, 06010 Ciudad de México",
+      "neighborhood": "Centro",
+      "cuisine": "Burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Big Mac",
+          "price": 80,
+          "note": "Sandwich only"
+        },
+        {
+          "item": "Hamburguesa con Queso",
+          "price": 39,
+          "note": null
+        },
+        {
+          "item": "McTrío Big Mac Tocino",
+          "price": 125,
+          "note": "With fries and 21 oz soda"
+        },
+        {
+          "item": "McTrío McNuggets de 10",
+          "price": 115,
+          "note": null
+        },
+        {
+          "item": "McFlurry Oreo",
+          "price": 39,
+          "note": "May be a promo price on the listing"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1923816278-mcdonalds",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Delivery-app prices can run above counter prices."
+    },
+    {
+      "id": "burger-king-av-juarez-cdmx",
+      "name": "Burger King Centro (Av. Juárez)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Av. Juárez 30, Centro Histórico, Cuauhtémoc, CDMX",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Burgers",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Combo Whopper",
+          "price": 209,
+          "note": "With fries and drink"
+        },
+        {
+          "item": "Combo Whopper Doble con Queso",
+          "price": 269,
+          "note": null
+        },
+        {
+          "item": "Combo King de Pollo",
+          "price": 174,
+          "note": null
+        },
+        {
+          "item": "Combo 10 Nuggets",
+          "price": 184,
+          "note": null
+        },
+        {
+          "item": "Hamburguesa con queso",
+          "price": 59,
+          "note": "A la carte"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1306706698-burgerking-ciudad-de-mexico",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Delivery-app prices."
+    },
+    {
+      "id": "kfc-av-juarez-cdmx",
+      "name": "KFC Centro (Av. Juárez)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Av. Juárez 76, Centro, CDMX",
+      "neighborhood": "Centro",
+      "cuisine": "Fried chicken",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Combito 3 piezas",
+          "price": 169,
+          "note": "List price; shown at 99 on a 41% promo"
+        },
+        {
+          "item": "Wow Bucket 2",
+          "price": 259,
+          "note": "List price; shown at 149 on promo"
+        },
+        {
+          "item": "12 Piezas",
+          "price": 529,
+          "note": "List price; shown at 423.20 on 20% promo"
+        },
+        {
+          "item": "Combo Egg Muffin",
+          "price": 89,
+          "note": "Breakfast"
+        },
+        {
+          "item": "Duo Café & Pay",
+          "price": 59,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1930112102-kfc",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Prices are the struck-through list prices where a promo applied."
+    },
+    {
+      "id": "dominos-tacuba-cdmx",
+      "name": "Domino's Pizza Centro (Tacuba)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Calle de Tacuba 74-A, Centro Histórico, Cuauhtémoc, 06010 Ciudad de México",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Pizza",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Pizza mediana Croissant 1-4 ingredientes",
+          "price": 239,
+          "note": null
+        },
+        {
+          "item": "Pizza Sartén 1-4 ingredientes",
+          "price": 229,
+          "note": "Size not stated on listing"
+        },
+        {
+          "item": "Triple Pepperoni",
+          "price": 239,
+          "note": "Size not stated on listing"
+        },
+        {
+          "item": "2 Pizzas Grandes",
+          "price": 319,
+          "note": "Promo bundle"
+        },
+        {
+          "item": "Croissant Rolls (8 piezas)",
+          "price": 69,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1923225127-dominos-pizza",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "dominos.com.mx showed no prices without a store session."
+    },
+    {
+      "id": "starbucks-5-de-mayo-cdmx",
+      "name": "Starbucks Centro (5 de Mayo)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Av. 5 de Mayo 19, Centro Histórico, 06000 Ciudad de México",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Coffee",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Espresso Americano",
+          "price": 69,
+          "note": "Lowest listed size; listing offers Grande and Venti"
+        },
+        {
+          "item": "Latte",
+          "price": 84,
+          "note": "Lowest listed size"
+        },
+        {
+          "item": "Caramel Macchiato",
+          "price": 99,
+          "note": "Lowest listed size"
+        },
+        {
+          "item": "Café Frappuccino",
+          "price": 99,
+          "note": "Lowest listed size"
+        },
+        {
+          "item": "Croissant de Mantequilla",
+          "price": 62,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1923213471-starbucks",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Size for each price not stated explicitly on the page."
+    },
+    {
+      "id": "el-globo-del-valle-cdmx",
+      "name": "El Globo Del Valle",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "C. Gabriel Mancera 1063, Col. del Valle Centro, Benito Juárez, 03100 Ciudad de México",
+      "neighborhood": "Del Valle",
+      "cuisine": "Bakery",
+      "tier": "fast",
+      "menu": [
+        {
+          "item": "Croissant",
+          "price": 44,
+          "note": null
+        },
+        {
+          "item": "Dona Chocolate",
+          "price": 45,
+          "note": null
+        },
+        {
+          "item": "Pan de Muerto Relleno de Nata Individual",
+          "price": 101,
+          "note": "Seasonal"
+        },
+        {
+          "item": "Latte 16 oz",
+          "price": 83,
+          "note": null
+        },
+        {
+          "item": "Pastel Salón (familiar)",
+          "price": 852,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1930065166-el-globo",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Concha prices (about 40) appeared only in a search summary across branches, not on this page; omitted."
+    },
+    {
+      "id": "churreria-el-moro-centro-cdmx",
+      "name": "Churrería El Moro (Centro)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Eje Central Lázaro Cárdenas 42, Centro Histórico, 06000 Ciudad de México",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Churros and chocolate",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Orden de 4 Churros",
+          "price": 65,
+          "note": "Rappi"
+        },
+        {
+          "item": "Orden de 12 Churros",
+          "price": 190,
+          "note": "DiDi and Rappi list price (Rappi promo 133)"
+        },
+        {
+          "item": "Chocolate Mexicano Regular",
+          "price": 105,
+          "note": "DiDi and Rappi list price (Rappi promo 84)"
+        },
+        {
+          "item": "Moritos",
+          "price": 85,
+          "note": "DiDi"
+        },
+        {
+          "item": "Malteada Regular",
+          "price": 125,
+          "note": "Rappi"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi and DiDi Food listings",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/990003932-churros-el-moro",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Open 24 hours, at this address since 1935. elmoro.mx menu is an image/PDF and was not readable. DiDi: https://web.didiglobal.com/mx/food/ciudad-de-mexico-cdmx/churreria-el-moro-centro/5764607584297029631/"
+    },
+    {
+      "id": "el-huequito-bolivar-cdmx",
+      "name": "El Huequito (Centro)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Calle de Bolívar 58, Centro Histórico, 06000 Cuauhtémoc, CDMX",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Tacos al pastor",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Taco de Pastor",
+          "price": 34,
+          "note": "One taco"
+        },
+        {
+          "item": "Pastor Especial",
+          "price": 229,
+          "note": "With 8 tortillas"
+        },
+        {
+          "item": "Alambre El Huequito",
+          "price": 276,
+          "note": null
+        },
+        {
+          "item": "Sopa Azteca",
+          "price": 96,
+          "note": null
+        },
+        {
+          "item": "Queso Fundido Pastor",
+          "price": 166,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1923205912-el-huequito",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": null
+    },
+    {
+      "id": "taqueria-orinoco-juarez-cdmx",
+      "name": "Taquería Orinoco (Juárez)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Florencia 18, Juárez, Cuauhtémoc, 06600 Ciudad de México",
+      "neighborhood": "Juárez",
+      "cuisine": "Northern-style tacos",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Taco Chicharrón Harina",
+          "price": 63,
+          "note": null
+        },
+        {
+          "item": "Taco Res Maíz",
+          "price": 64,
+          "note": null
+        },
+        {
+          "item": "Costra Orinoco Maíz",
+          "price": 99,
+          "note": null
+        },
+        {
+          "item": "Campechana",
+          "price": 162,
+          "note": null
+        },
+        {
+          "item": "Oblea Reyna",
+          "price": 53,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1923266652-taqueria-orinoco",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Delivery prices appear well above in-store (secondary sites cite trompo at 28-35 in store; not verified)."
+    },
+    {
+      "id": "cafe-de-tacuba-cdmx",
+      "name": "Café de Tacuba",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Calle de Tacuba 28, Centro Histórico, Ciudad de México",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Traditional Mexican",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Tortilla soup",
+          "price": 114,
+          "note": null
+        },
+        {
+          "item": "Pozole (450 g)",
+          "price": 263,
+          "note": null
+        },
+        {
+          "item": "Special Tacuba-style tacos, ham & potato (3 pcs)",
+          "price": 290,
+          "note": null
+        },
+        {
+          "item": "Café americano o de olla (210 ml)",
+          "price": 70,
+          "note": null
+        },
+        {
+          "item": "Tacuba-style hot chocolate (300 ml)",
+          "price": 95,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Restaurant's own website menu pages (English version)",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://cafedetacuba.mx/en/menu-eng/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Site states prices in pesos including 16% VAT. Item names are the site's English names. Open since 1912, 8:00-22:30."
+    },
+    {
+      "id": "sanborns-humboldt-cdmx",
+      "name": "Sanborns Centro (Humboldt)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Humboldt 26, Centro, 06040 Ciudad de México",
+      "neighborhood": "Centro",
+      "cuisine": "Mexican cafeteria",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Enchiladas Suizas (3 pzas)",
+          "price": 205,
+          "note": null
+        },
+        {
+          "item": "Molletes Sanborns (4 pzas)",
+          "price": 140,
+          "note": null
+        },
+        {
+          "item": "Chilaquiles a la Sanborns (300 g)",
+          "price": 180,
+          "note": null
+        },
+        {
+          "item": "Sopa Especial Grande (450 g)",
+          "price": 130,
+          "note": null
+        },
+        {
+          "item": "Café Sanborns (280 ml)",
+          "price": 55,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Rappi listing",
+      "takeout": true,
+      "delivery": true,
+      "url": "https://www.rappi.com.mx/restaurantes/1923221699-sanborns",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "A search summary cited enchiladas suizas at 215 during an enchilada festival; the page read showed 205."
+    },
+    {
+      "id": "el-cardenal-palma-cdmx",
+      "name": "El Cardenal (Palma)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Palma 23, Centro Histórico, Ciudad de México",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Traditional Mexican",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Chile en nogada",
+          "price": 475,
+          "note": "Seasonal (Aug-Sep); El Universal, 2024-08-18, two years old"
+        },
+        {
+          "item": "Paquete chile en nogada (mezcal, enchilada de huitlacoche, chile en nogada, nieve)",
+          "price": 580,
+          "note": "Same 2024 article"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Press (El Universal, 2024-08-18); the restaurant site shows no prices",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.eluniversal.com.mx/menu/esto-cuestan-los-chiles-en-nogada-en-el-cardenal-restaurante-de-la-cdmx/",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Six branches per restauranteelcardenal.com. No current regular-menu price found; prices are stale."
+    },
+    {
+      "id": "taqueria-los-cocuyos-cdmx",
+      "name": "Taquería Los Cocuyos",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Bolívar 56, Centro, Ciudad de México",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Suadero and offal tacos",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Taco de suadero",
+          "price": null,
+          "note": "No menu page found; only review-site hearsay"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": null,
+      "takeout": true,
+      "delivery": null,
+      "url": null,
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Michelin-listed street stand; publishes no prices."
+    },
+    {
+      "id": "taqueria-el-califa-condesa-cdmx",
+      "name": "Taquería El Califa (Condesa)",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Alfonso Reyes 273, Hipódromo Condesa, 06100 Ciudad de México",
+      "neighborhood": "Condesa",
+      "cuisine": "Tacos",
+      "tier": "casual",
+      "menu": [
+        {
+          "item": "Taco de pastor",
+          "price": null,
+          "note": "Only a Rappi listing for the Metepec (Edomex) branch could be read (27 there); CDMX listings on Uber Eats returned 403"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": null,
+      "takeout": true,
+      "delivery": true,
+      "url": "https://elcalifa.com.mx/Branch",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Chain of 16 branches; its own site lists branches but no prices."
+    },
+    {
+      "id": "contramar-cdmx",
+      "name": "Contramar",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Durango 200, Roma Norte, Cuauhtémoc, 06700 Ciudad de México",
+      "neighborhood": "Roma Norte",
+      "cuisine": "Seafood",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Tiradito de pescado (80 g)",
+          "price": 335,
+          "note": null
+        },
+        {
+          "item": "Quesadillas de queso (4 pzas)",
+          "price": 160,
+          "note": null
+        },
+        {
+          "item": "Filete de atún sellado (220 g)",
+          "price": 595,
+          "note": null
+        },
+        {
+          "item": "Pescado a la talla (500 g)",
+          "price": 810,
+          "note": null
+        },
+        {
+          "item": "Nieves y helados (160 g)",
+          "price": 145,
+          "note": null
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Restaurant's own website menu",
+      "takeout": null,
+      "delivery": null,
+      "url": "https://www.contramar.com.mx/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Seasonal fish subject to availability. No explicit IVA note on page; Mexican consumer law requires displayed prices to include tax."
+    },
+    {
+      "id": "azul-historico-cdmx",
+      "name": "Azul Histórico",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Isabel la Católica 30, Centro Histórico, Ciudad de México",
+      "neighborhood": "Centro Histórico",
+      "cuisine": "Regional Mexican",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Sopa de tortilla",
+          "price": 233,
+          "note": null
+        },
+        {
+          "item": "Enchiladas de mole negro oaxaqueño",
+          "price": 345,
+          "note": null
+        },
+        {
+          "item": "Mole poblano",
+          "price": 504,
+          "note": null
+        },
+        {
+          "item": "Pescado Tikin Xic",
+          "price": 525,
+          "note": null
+        },
+        {
+          "item": "Chilaquiles verdes o rojos",
+          "price": 210,
+          "note": "Breakfast"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Restaurant's own website menu (azul.rest)",
+      "takeout": null,
+      "delivery": true,
+      "url": "https://www.azul.rest/en/menu-azul-historico",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "No explicit IVA note on the page; azul.rest also runs its own delivery shop."
+    },
+    {
+      "id": "rosetta-roma-cdmx",
+      "name": "Rosetta",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Colima 166, Roma Norte, 06700 Ciudad de México",
+      "neighborhood": "Roma Norte",
+      "cuisine": "Mexican-Italian",
+      "tier": "mid",
+      "menu": [
+        {
+          "item": "Pan de centeno con mantequilla de chicatana",
+          "price": 220,
+          "note": "From a search summary of El Universal/El Financiero press; menu is seasonal, article possibly 2023"
+        },
+        {
+          "item": "Tartar de betabel",
+          "price": 285,
+          "note": "Same press source"
+        },
+        {
+          "item": "Sorbete de aguacate",
+          "price": 225,
+          "note": "Same press source"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Press summary (El Universal / El Financiero); rosetta.com.mx/menu shows dishes without prices",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://www.eluniversal.com.mx/menu/cuanto-cuesta-comer-en-rosetta-restaurante-de-la-mejor-chef-del-mundo/",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Michelin one star; press puts the average check at 1,000-1,500 per person. Prices not read on a page directly."
+    },
+    {
+      "id": "pujol-polanco-cdmx",
+      "name": "Pujol",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Tennyson 133, Polanco IV Sección, Miguel Hidalgo, Ciudad de México",
+      "neighborhood": "Polanco",
+      "cuisine": "Contemporary Mexican tasting menu",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Tasting Room (menú degustación)",
+          "price": 3795,
+          "note": "VAT included, per a search snippet of pujol.com.mx/en/menus; the page returned 403 when fetched. El Financiero (2026-01-30) said about 3,495."
+        },
+        {
+          "item": "Taco Bar (omakase de tacos)",
+          "price": 4500,
+          "note": "16% taxes included, per the same snippet; El Financiero said about 3,995"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Pujol's own menus page as indexed by search (page itself returned 403)",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://www.pujol.com.mx/en/menus",
+      "dateRead": "2026-10-01",
+      "confirmed": false,
+      "notes": "Drinks and tip excluded. Two Michelin stars."
+    },
+    {
+      "id": "quintonil-polanco-cdmx",
+      "name": "Quintonil",
+      "cityId": "mx-cmx-mexicocity",
+      "address": "Newton 55, Polanco, Ciudad de México",
+      "neighborhood": "Polanco",
+      "cuisine": "Contemporary Mexican tasting menu",
+      "tier": "upscale",
+      "menu": [
+        {
+          "item": "Menú degustación",
+          "price": 6090,
+          "note": "Individual, not shareable"
+        },
+        {
+          "item": "Maridaje sin alcohol",
+          "price": 2175,
+          "note": "Add-on"
+        },
+        {
+          "item": "Maridaje vinos mexicanos",
+          "price": 3140,
+          "note": "Add-on"
+        },
+        {
+          "item": "Maridaje Horizontes Líquidos",
+          "price": 3380,
+          "note": "Add-on"
+        },
+        {
+          "item": "Maridaje Terroir & Rarezas",
+          "price": 8450,
+          "note": "Add-on"
+        }
+      ],
+      "currency": "MXN",
+      "taxIncluded": true,
+      "priceSource": "Restaurant's own website",
+      "takeout": false,
+      "delivery": false,
+      "url": "https://quintonil.com/",
+      "dateRead": "2026-10-01",
+      "confirmed": true,
+      "notes": "Page does not state IVA or service explicitly; taxIncluded assumed per Mexican consumer law. 2025 press cited 4,950, so the price has risen."
+    }
+  ],
+  "delivery": {
+    "_note": "sourceQuality: 'official' = read on the platform's own help/blog page; 'secondary' = third-party article or search summary, not confirmed on the platform's page. Platforms set fees per order at checkout; where no published figure was found the field is null.",
+    "US": {
+      "currency": "USD",
+      "apps": [
+        {
+          "name": "DoorDash",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "A fixed fee per order that varies by merchant.",
+            "sourceQuality": "official"
+          },
+          "serviceFeePct": {
+            "value": 15,
+            "text": "In regulated markets: 15% of your subtotal for most orders (5% for most eligible DashPass restaurant orders). In other markets a variable fee that varies with distance and order size.",
+            "sourceQuality": "official"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "A fee may be charged if your order subtotal is below a certain amount. Third-party guides report about $2-$2.50 under about $10; not confirmed on DoorDash's page.",
+            "sourceQuality": "official (amount null)"
+          },
+          "otherFees": [
+            "Long Distance Fee for longer-distance orders"
+          ],
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Third-party timing studies disagree (one 2025 comparison: DoorDash ~26 min; a 2026 one: ~38 min). Not an official figure."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "DoorDash's fee article does not address menu markup; restaurants set their own app prices."
+          },
+          "sources": [
+            "https://help.doordash.com/consumers/s/article/What-fees-do-I-pay"
+          ]
+        },
+        {
+          "name": "Uber Eats",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Varies by store based on your location and availability of nearby delivery people.",
+            "sourceQuality": "official"
+          },
+          "serviceFeePct": {
+            "value": 15,
+            "text": "The service fee will equal 15% of an order's subtotal (subject to a minimum and maximum).",
+            "sourceQuality": "official"
+          },
+          "smallOrderFee": {
+            "amount": 2,
+            "threshold": 10,
+            "text": "A small order fee of $2 will apply to orders with subtotals under $10.",
+            "sourceQuality": "official (merchant help page; varies by city)"
+          },
+          "otherFees": [
+            "CA Driver Benefits fee (California, funds Prop 22 driver benefits)",
+            "Delivery Adjustment Fee if order changed after placing"
+          ],
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Third-party studies range ~33-38 min; not official."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented by Uber."
+          },
+          "sources": [
+            "https://help.uber.com/en/merchants-and-restaurants/article/how-do-customer-delivery-fees-work?nodeId=56eeed53-c24e-4216-a30b-1f5ef879d0f9",
+            "https://help.uber.com/en/ubereats/restaurants/article/what-fees-might-my-order-include?nodeId=2d43ee3b-6c5f-4501-a28d-6cc229428efb"
+          ]
+        },
+        {
+          "name": "Grubhub (Seamless in NYC)",
+          "deliveryFee": {
+            "min": 0.99,
+            "max": 12,
+            "text": "Third-party reported range $0.99-$12.",
+            "sourceQuality": "secondary"
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "A percentage of basket value disclosed at checkout; exact % not found on an official page.",
+            "sourceQuality": "secondary"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Third-party reported $2-$4 under a minimum; not confirmed.",
+            "sourceQuality": "secondary"
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Third-party studies ~36-40 min; not official."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://www.ridester.com/grubhub-cost/",
+            "https://developer.grubhub.com/docs/77AbnxLUjTgmuncTpNHPAl/fees"
+          ]
+        }
+      ],
+      "regulation": [
+        {
+          "jurisdiction": "New York City",
+          "text": "Restaurant-side caps enforced by DCWP: delivery fees 15%, transaction fees 3%, basic service fees 5%, enhanced service fees 20% of each order's purchase price. Delivery worker minimum pay $22.13/hour before tips, rising each April 1. Since 26 Jan 2026 (Local Laws 107 and 108) apps must offer a tip at or before checkout, including a selectable option of at least 10% and a custom amount.",
+          "sources": [
+            "https://www.nyc.gov/site/dca/businesses/Delivery-Apps-Requirements.page",
+            "https://www.nyc.gov/site/dca/news/009-26/major-victory-nyc-delivery-workers-landmark-protections-take-effect-today"
+          ]
+        }
+      ]
+    },
+    "UK": {
+      "currency": "GBP",
+      "apps": [
+        {
+          "name": "Uber Eats",
+          "deliveryFee": {
+            "min": 0.29,
+            "max": 14.99,
+            "text": "Varies based on location, restaurant and courier availability but always between £0.29 and £14.99.",
+            "sourceQuality": "official"
+          },
+          "serviceFeePct": {
+            "value": 12,
+            "min": 0.99,
+            "max": 3.29,
+            "text": "For restaurant orders delivered by Uber, 12% of your subtotal but always between £0.99 and £3.29.",
+            "sourceQuality": "official"
+          },
+          "smallOrderFee": {
+            "amount": 0.99,
+            "threshold": 10,
+            "text": "Plus a small order service fee of £0.99 if your subtotal is under £10.",
+            "sourceQuality": "official"
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not stated."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://www.uber.com/en-GB/blog/understanding-fees-and-arrival-time"
+          ]
+        },
+        {
+          "name": "Deliveroo",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Based on your location and varies with distance from the restaurant; extended delivery fee for partners further away.",
+            "sourceQuality": "official"
+          },
+          "serviceFeePct": {
+            "value": 10,
+            "min": 0.99,
+            "max": 2.49,
+            "text": "From 31 Jan 2024: 10% of the order, minimum 99p, capped at £2.49 (was 5% capped at £1.49). Deliveroo's FAQ gives no figures; numbers from consumer press.",
+            "sourceQuality": "secondary"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Applied only if basket total is below the restaurant's minimum spend.",
+            "sourceQuality": "official"
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not stated."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://deliveroo.co.uk/faq",
+            "https://becleverwithyourcash.com/deliveroo-service-fee-hike-how-much-more-youll-pay/"
+          ]
+        },
+        {
+          "name": "Just Eat",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Varies with distance, store, order value and sometimes time of day. Third-party guides report roughly £0-£5.",
+            "sourceQuality": "official (amounts secondary)"
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Service charge exists; no amount or % published on the help page.",
+            "sourceQuality": "official"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Covers cost of small orders; avoid by adding items. Third-party guides report ~£1-£3.",
+            "sourceQuality": "official (amounts secondary)"
+          },
+          "otherFees": [
+            "Bag fee (legal carrier-bag charge)"
+          ],
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not stated."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://justeatukpoc.zendesk.com/hc/en-us/articles/33280864605341-Understanding-Fees"
+          ]
+        }
+      ]
+    },
+    "IE": {
+      "currency": "EUR",
+      "apps": [
+        {
+          "name": "Deliveroo",
+          "deliveryFee": {
+            "min": 2.5,
+            "max": 5,
+            "text": "Third-party comparison reports €2.50-€5.00.",
+            "sourceQuality": "secondary"
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Not found for Ireland.",
+            "sourceQuality": null
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Charged below restaurant minimum (same model as UK).",
+            "sourceQuality": "secondary"
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://insightbritain.co.uk/business/food-delivery-apps-ireland-compare/"
+          ]
+        },
+        {
+          "name": "Just Eat",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Set per restaurant; Irish amounts not found.",
+            "sourceQuality": null
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Not found for Ireland.",
+            "sourceQuality": null
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Not found for Ireland.",
+            "sourceQuality": null
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": []
+        },
+        {
+          "name": "Uber Eats",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Operates in Dublin; Irish fee page not found (en-IE fee blog returns 404).",
+            "sourceQuality": null
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Not found for Ireland.",
+            "sourceQuality": null
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Not found for Ireland.",
+            "sourceQuality": null
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": []
+        }
+      ]
+    },
+    "CA": {
+      "currency": "CAD",
+      "apps": [
+        {
+          "name": "Uber Eats",
+          "deliveryFee": {
+            "min": 0.49,
+            "max": 10.99,
+            "text": "Third-party reported $0.49-$10.99; Uber's page says it varies by location and courier availability.",
+            "sourceQuality": "secondary"
+          },
+          "serviceFeePct": {
+            "value": 15,
+            "text": "Uber's merchant help page states 15% of subtotal (page not Canada-specific).",
+            "sourceQuality": "official (not CA-specific)"
+          },
+          "smallOrderFee": {
+            "amount": 2,
+            "threshold": 10,
+            "text": "$2 under $10 subtotal per Uber's merchant help page (not Canada-specific).",
+            "sourceQuality": "official (not CA-specific)"
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://help.uber.com/en/merchants-and-restaurants/article/how-do-customer-delivery-fees-work?nodeId=56eeed53-c24e-4216-a30b-1f5ef879d0f9"
+          ]
+        },
+        {
+          "name": "SkipTheDishes",
+          "deliveryFee": {
+            "min": 1.99,
+            "max": 5.99,
+            "text": "Third-party reported $1.99-$5.99, most $2.99-$4.49, varying with distance and demand.",
+            "sourceQuality": "secondary"
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Percentage-based service fee on subtotal; % not published.",
+            "sourceQuality": "secondary"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Not found.",
+            "sourceQuality": null
+          },
+          "otherFees": [
+            "Skip+ membership: $0 delivery on eligible orders over $15 and reduced service fees"
+          ],
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://creditcardgenius.ca/blog/skip-the-dishes-vs-uber-eats"
+          ]
+        },
+        {
+          "name": "DoorDash",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Fixed fee per order that varies by merchant (DoorDash global help page).",
+            "sourceQuality": "official (not CA-specific)"
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Variable with distance and order size outside regulated markets.",
+            "sourceQuality": "official (not CA-specific)"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "May apply below a subtotal threshold.",
+            "sourceQuality": "official"
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Not documented."
+          },
+          "sources": [
+            "https://help.doordash.com/consumers/s/article/What-fees-do-I-pay"
+          ]
+        }
+      ],
+      "regulation": [
+        {
+          "jurisdiction": "British Columbia (Vancouver)",
+          "text": "Food Delivery Service Fee Act, in force 1 Jan 2023: fees charged to restaurants for core services capped at 20% of the order (excluding tax and tip) - 15% delivery plus 5% other; applies to platforms serving 500+ restaurants; platforms may not cut driver pay to compensate. Restaurant-side, not a customer fee.",
+          "sources": [
+            "https://www2.gov.bc.ca/gov/content/employment-business/business/managing-a-business/starting-a-business/starting-a-restaurant-in-bc/food-delivery-service-fee"
+          ]
+        },
+        {
+          "jurisdiction": "Ontario (Toronto)",
+          "text": "Employers and platform operators may not withhold or deduct from tips except as required by law (taxes, EI, CPP).",
+          "sources": [
+            "https://www.ontario.ca/document/your-guide-employment-standards-act-0/tips-or-other-gratuities"
+          ]
+        }
+      ]
+    },
+    "MX": {
+      "currency": "MXN",
+      "apps": [
+        {
+          "name": "Rappi",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Varies with distance, demand and service type; RappiPro/RappiPro Black give unlimited free delivery. Secondary sources cite MXN 15-50 or 20-60; not official.",
+            "sourceQuality": "secondary"
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Tarifa de servicio exists; % not published. Secondary estimate 10-15%.",
+            "sourceQuality": "secondary"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Not found.",
+            "sourceQuality": null
+          },
+          "observedSample": {
+            "city": "Monterrey",
+            "date": "2025-09-29",
+            "deliveryFee": 30.9,
+            "serviceFee": 28.9,
+            "note": "El Horizonte test: 4 Burger King combos at MXN 109 each in store (436 total); total via Rappi 110% higher."
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "Only the observed total-cost markup above (includes fees and menu price differences); no general figure."
+          },
+          "sources": [
+            "https://www.periodicoenfoque.com.mx/mas/articulos/rappi-explica-tarifas-y-beneficios-de-rappipro-y-rappipro-black-en-mexico",
+            "https://www.elhorizonte.mx/nuevoleon/apps-de-reparto-encarecen-la-comida-hasta-en-un-100/9244780505"
+          ]
+        },
+        {
+          "name": "DiDi Food",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Launched in CDMX in 2019 at MXN 15-18, then cut to MXN 10 (Forbes México, Dec 2019) - historical, not current.",
+            "sourceQuality": "secondary"
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Not published. Secondary estimate ~10%.",
+            "sourceQuality": "secondary"
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Not found.",
+            "sourceQuality": null
+          },
+          "observedSample": {
+            "city": "Monterrey",
+            "date": "2025-09-29",
+            "deliveryFee": 18,
+            "serviceFee": 35,
+            "note": "Same El Horizonte test; total 64% above in-store."
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Launch promise was under 30 minutes (2019)."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "See observed sample."
+          },
+          "sources": [
+            "https://forbes.com.mx/sigue-siendo-un-lujo-la-entrega-de-comida-por-apps-didi-food/",
+            "https://www.elhorizonte.mx/nuevoleon/apps-de-reparto-encarecen-la-comida-hasta-en-un-100/9244780505"
+          ]
+        },
+        {
+          "name": "Uber Eats",
+          "deliveryFee": {
+            "min": null,
+            "max": null,
+            "text": "Not published for Mexico.",
+            "sourceQuality": null
+          },
+          "serviceFeePct": {
+            "value": null,
+            "text": "Not published for Mexico.",
+            "sourceQuality": null
+          },
+          "smallOrderFee": {
+            "amount": null,
+            "threshold": null,
+            "text": "Not found.",
+            "sourceQuality": null
+          },
+          "observedSample": {
+            "city": "Monterrey",
+            "date": "2025-09-29",
+            "deliveryFee": 23,
+            "serviceFee": 34.56,
+            "note": "Same El Horizonte test; total 68% above in-store."
+          },
+          "typicalDeliveryMinutes": {
+            "value": null,
+            "note": "Not found."
+          },
+          "menuMarkup": {
+            "value": null,
+            "note": "See observed sample."
+          },
+          "sources": [
+            "https://www.elhorizonte.mx/nuevoleon/apps-de-reparto-encarecen-la-comida-hasta-en-un-100/9244780505"
+          ]
+        }
+      ]
+    }
+  },
+  "tipping": {
+    "US": {
+      "sitDownPct": [
+        15,
+        20
+      ],
+      "basis": "pre-tax bill",
+      "deliveryPct": [
+        10,
+        15
+      ],
+      "deliveryNote": "Emily Post: 10-15% of the bill, or $2-5 for pizza delivery. NYC since 26 Jan 2026: apps must offer a tip of at least 10% at or before checkout.",
+      "counterServiceNote": null,
+      "legal": "Tips are customary, not legally required; NYC delivery workers have a $22.13/h minimum before tips.",
+      "sources": [
+        "https://emilypost.com/advice/general-tipping-guide",
+        "https://www.nyc.gov/site/dca/news/009-26/major-victory-nyc-delivery-workers-landmark-protections-take-effect-today"
+      ]
+    },
+    "CA": {
+      "sitDownPct": [
+        15,
+        20
+      ],
+      "basis": "pre-tax bill",
+      "deliveryPct": null,
+      "deliveryNote": "No authoritative delivery percentage found.",
+      "trend": "Angus Reid (Feb 2023): 21% of Canadians tipped 20%+ at their last restaurant meal vs 8% in 2016; 23% tipped under 15% vs 43% in 2016. POS prompts reach 30%.",
+      "legal": "Ontario ESA: tips may not be withheld or deducted except for statutory withholdings.",
+      "sources": [
+        "https://angusreid.org/wp-content/uploads/2023/02/2023.02.16_Tipping.pdf",
+        "https://www.bnnbloomberg.ca/investing/personal-finance/2026/04/16/tipping-in-tough-times-what-to-do-when-rising-requests-strain-tight-budgets/",
+        "https://www.ontario.ca/document/your-guide-employment-standards-act-0/tips-or-other-gratuities"
+      ]
+    },
+    "UK": {
+      "sitDownPct": [
+        10,
+        12.5
+      ],
+      "basis": "Often added to the bill as a discretionary service charge (12.5% is common in London); if added, no further tip is expected.",
+      "serviceChargeOptional": true,
+      "deliveryPct": null,
+      "deliveryNote": "No authoritative norm found; Uber Eats/Deliveroo allow optional in-app tips.",
+      "legal": "Employment (Allocation of Tips) Act 2023, in force 1 Oct 2024: tips, gratuities and service charges must be passed to workers in full and allocated fairly; a discretionary service charge can be removed at the customer's request.",
+      "sources": [
+        "https://www.legislation.gov.uk/ukpga/2023/13",
+        "https://www.acas.org.uk/tips-and-service-charges",
+        "https://assets.publishing.service.gov.uk/media/66a76a35ab418ab055592e86/statutory-code-of-practice-on-fair-and-transparent-distribution-of-tips.pdf"
+      ]
+    },
+    "IE": {
+      "sitDownPct": [
+        10,
+        12.5
+      ],
+      "basis": "Bill; groups (often 6+) frequently get a 10-12.5% service charge added, in which case no extra tip is expected.",
+      "deliveryPct": null,
+      "deliveryNote": "No authoritative norm found.",
+      "legal": "Payment of Wages (Amendment) (Tips and Gratuities) Act 2022, from 1 Dec 2022: electronic tips and any 'service charge' must go to staff, cannot make up basic wages, and the distribution policy must be displayed.",
+      "sources": [
+        "https://www.irishtimes.com/food/restaurants/2022/11/12/how-much-should-you-tip-in-restaurants-irelands-tipping-culture-decoded/",
+        "https://www.workplacerelations.ie/en/what_you_should_know/hours-and-wages/tips-and-gratuities/"
+      ]
+    },
+    "MX": {
+      "sitDownPct": [
+        10,
+        15
+      ],
+      "basis": "Bill total; 10% is the customary minimum.",
+      "deliveryPct": null,
+      "deliveryNote": "Rappi: tips are 100% voluntary and passed in full to couriers.",
+      "legal": "Profeco: a tip (propina) is voluntary; a business cannot add it to the bill without consent and may be fined for forcing it.",
+      "sources": [
+        "https://vanguardia.com.mx/informacion/profeco-aclara-que-la-propina-es-voluntaria-y-no-obligatoria-10-que-se-deja-es-por-costumbre-JD21003846",
+        "https://www.eluniversal.com.mx/menu/la-profeco-aclara-si-es-obligatorio-dejar-propina-en-un-restaurante/",
+        "https://www.periodicoenfoque.com.mx/mas/articulos/rappi-explica-tarifas-y-beneficios-de-rappipro-y-rappipro-black-en-mexico"
+      ]
+    }
+  }
+}

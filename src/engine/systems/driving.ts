@@ -40,6 +40,7 @@ import { mayHurt } from './injury';
 import { END_KIND } from './mortality';
 import { documentsOf, licenseOf } from './documents';
 import { owe, payFromBank } from './household';
+import { bacAt, crashRiskAt, impairedDrive } from './alcohol';
 
 const MILE = 1.609344;
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -126,15 +127,19 @@ export function crashChance(person: Person, km: number, at: Instant, kind: Vehic
   return 1 - Math.exp(-((km / MILE) * ROAD.injuredPer100MMiles * rider * factor * ageFactor(ageAt(person, at))) / 1e8);
 }
 
+/** A drive's chance of injury: the road's, and what the driver has drunk, NHTSA's relative risk at their blood alcohol (`systems/alcohol.ts`). */
+export const driveInjuryChance = (person: Person, km: number, at: Instant, kind: VehicleKind = 'car', factor = 1): number => crashChance(person, km, at, kind, factor * crashRiskAt(bacAt(person, at)));
+
 export function drive(sim: Simulation, person: Person, j: Jurisdiction, km: number, at: Instant, key: string, kind: VehicleKind = 'car', factor = 1): { hurt: boolean; ticket: boolean } {
   // A factor for what the car is on: winter tires in their season (`systems/tires.ts`).
-  const injuryChance = crashChance(person, km, at, kind, factor);
+  const injuryChance = driveInjuryChance(person, km, at, kind, factor);
   const hurt = mayHurt(sim, person, 'crash', injuryChance, at) !== undefined;
   const rule = TICKETS[j];
   const rng = sim.rng('driving.ticket', person.id, key);
   const ticketChance = 1 - Math.exp(-(rule.perYear * km) / KM_A_YEAR[j]);
   const ticket = rng.next() < ticketChance;
   if (ticket) ticketed(sim, person, j, at);
+  impairedDrive(sim, person, j, at, key);
   if (kind === 'motorcycle' || kind === 'scooter') riderDeath(sim, person, j, km, at, key);
   return { hurt, ticket };
 }
