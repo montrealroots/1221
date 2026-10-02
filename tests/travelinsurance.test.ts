@@ -165,9 +165,9 @@ describe('care away from home', () => {
     const tor = life('ca-on-toronto', 'ti-england-ca');
     tor.player.currentLocationId = 'uk-eng-london';
     expect(careAway(tor, tor.player, 'stay', 0, 3_000_000, 3, true, tor.now)).toBe(inSave(tor, 4_852 * 1.5, 'GBP') - inSave(tor, 600, 'CAD'));
-    // Scotland keeps its own rules, not kept: the home share holds.
+    // Scotland charges a stay at its cost, not England's 150% (from later on 2026-10-02).
     ny.player.currentLocationId = 'uk-sct-edinburgh';
-    expect(careAway(ny, ny.player, 'stay', 100_000, 3_000_000, 3, false, ny.now)).toBe(100_000);
+    expect(careAway(ny, ny.player, 'stay', 100_000, 3_000_000, 3, false, ny.now)).toBe(inSave(ny, (4_587.75 / 4.55) * 3, 'GBP'));
   });
 
   it('beyond the policy’s medical limit is the traveler’s again', () => {
@@ -186,8 +186,12 @@ describe('a visitor’s care in Canada, Ireland and Mexico', () => {
     ny.player.currentLocationId = 'ca-on-toronto';
     expect(careAway(ny, ny.player, 'emergency', 0, 300_000, 3, false, ny.now)).toBe(cad(ny, 1_025));
     expect(careAway(ny, ny.player, 'stay', 0, 3_000_000, 3, false, ny.now)).toBe(cad(ny, 3_100 * 3));
-    // An Ontario doctor's visit has no published price for somebody uninsured: the home share holds.
-    expect(careAway(ny, ny.player, 'visit', 12_345, 30_000, 3, false, ny.now)).toBe(12_345);
+    // A walk-in visit at Appletree's price for somebody without OHIP.
+    expect(careAway(ny, ny.player, 'visit', 12_345, 30_000, 3, false, ny.now)).toBe(cad(ny, 110.1));
+    // Scotland: A&E free, a stay at its cost.
+    ny.player.currentLocationId = 'uk-sct-edinburgh';
+    expect(careAway(ny, ny.player, 'emergency', 12_345, 300_000, 3, false, ny.now)).toBe(0);
+    expect(careAway(ny, ny.player, 'stay', 0, 3_000_000, 3, false, ny.now)).toBe(inSave(ny, (4_587.75 / 4.55) * 3, 'GBP'));
     ny.player.currentLocationId = 'ca-bc-vancouver';
     expect(careAway(ny, ny.player, 'stay', 0, 3_000_000, 2, false, ny.now)).toBe(cad(ny, 8_359 * 2));
     expect(careAway(ny, ny.player, 'visit', 0, 30_000, 3, false, ny.now)).toBe(cad(ny, 167));
@@ -210,5 +214,16 @@ describe('a visitor’s care in Canada, Ireland and Mexico', () => {
     const tor = life('ca-on-toronto', 'ti-province');
     tor.player.currentLocationId = 'ca-bc-vancouver';
     expect(careAway(tor, tor.player, 'stay', 0, 3_000_000, 3, true, tor.now)).toBe(0);
+  });
+});
+
+describe('the emergency department’s share of what a doctor could see', () => {
+  it('makes emergencies fewer where less of it goes there, by the Commonwealth Fund’s shares', async () => {
+    const { emergencyScale } = await import('@/engine/content/carevisits');
+    expect(emergencyScale('us-ny-newyork')).toBe(1);
+    expect(emergencyScale('uk-eng-london')).toBeCloseTo((1 - 0.407) / (1 - 0.312), 9);
+    expect(emergencyScale('ca-on-toronto')).toBeCloseTo((1 - 0.407) / (1 - 0.354), 9);
+    expect(emergencyScale('ca-bc-vancouver')).toBeCloseTo((1 - 0.407) / (1 - 0.417), 9);
+    expect(emergencyScale('ie-lei-dublin')).toBe(1);
   });
 });

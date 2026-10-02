@@ -59,7 +59,7 @@ import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
 import { eiWeek } from './eiself';
 import { laidUp } from './injury';
 import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
-import { US_PHARMACIES, edMinutes } from '../content/carevisits';
+import { US_PHARMACIES, edMinutes, emergencyScale } from '../content/carevisits';
 import { careAway } from './travelinsurance';
 import { markRecord } from './credit';
 
@@ -842,7 +842,8 @@ export function illnessWeek(sim: Simulation, person: Person, at: Instant): { car
   const asthma = person.health?.chronic?.asthma;
   const diabetes = person.health?.chronic?.diabetes;
   // Type 1 diabetes without insulin brings the emergency room four times as often.
-  const emergencies = CARE.perYear.emergency * (asthma && (!asthma.treated || asthma.lapsed) ? CHRONIC.untreated.asthmaEmergencies : 1)
+  // Where an emergency department sees less of what a family doctor could, fewer visits (`emergencyScale`, from 2026-10-02).
+  const emergencies = CARE.perYear.emergency * emergencyScale(homeOf(person)) * (asthma && (!asthma.treated || asthma.lapsed) ? CHRONIC.untreated.asthmaEmergencies : 1)
     * (diabetes?.typeOne && (!diabetes.treated || diabetes.lapsed) ? CHRONIC.untreated.diabetesEmergencies : 1);
   if (rng.next() < weekly(emergencies)) out.push({ care: 'emergency', what: 'The emergency room' });
   if (rng.next() < weekly(CARE.perYear.visit)) out.push({ care: 'visit', what: 'A doctor’s visit' });

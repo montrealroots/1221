@@ -20,6 +20,26 @@
  * $40 (`PHARMACY` in `content/safetynet.ts`).
  */
 
+/**
+ * How often an emergency department is used for what a family doctor could
+ * have seen, from 2026-10-02 (`research-gaps-hotels-health.json`): the
+ * Commonwealth Fund's 2023 survey, the share of adults whose last visit could
+ * have been handled by their own doctor had one been available, America's
+ * 40.7%, Canada's 38.0% (Ontario's 35.4%, British Columbia's 41.7%), the UK's
+ * 31.2% (read from CIHI's own page and workbook). SLATE's emergencies a year
+ * are America's (NHAMCS); elsewhere they're the same true emergencies over
+ * the place's own share, SLATE's reading, none being published for Ireland
+ * or Mexico, which keep America's.
+ */
+export const ED_AVOIDABLE: Readonly<Record<string, number>> = { us: 0.407, ca: 0.38, 'ca-08': 0.354, 'ca-02': 0.417, uk: 0.312 };
+
+/** A place's emergencies against America's: its avoidable share's room for them. */
+export function emergencyScale(cityId: string): number {
+  const [country, region] = cityId.split('-');
+  const share = ED_AVOIDABLE[`${country}-${region === 'on' ? '08' : region === 'bc' ? '02' : region}`] ?? ED_AVOIDABLE[country ?? ''] ?? ED_AVOIDABLE.us!;
+  return (1 - ED_AVOIDABLE.us!) / (1 - share);
+}
+
 /** Minutes in an emergency department, by the place's key: a US state, or a country. */
 export const ED_MINUTES: Readonly<Record<string, number>> = {
   'us-ny': 204, 'us-ca': 186, 'us-ct': 189, us: 162, ie: 5.76 * 60, ca: 4 * 60, uk: 4 * 60, mx: 4 * 60,
