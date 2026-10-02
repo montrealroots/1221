@@ -227,7 +227,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 50.3–7 | Book, prepare, attend, outcome, referral | Partial, 2026-10-02 | `systems/appointments.ts`: a doctor's visit booked for the place's published wait (England's distribution, AMN's days, IMSS's 29, Canada's next-day share), on the calendar, kept and billed or missed and owed, booked again or called off; tests/appointments.test.ts | Referrals (the specialist waits are now researched); outcomes beyond the bill; Ireland's wait unpublished |
 | 50.8 | Payment and coverage | Complete | bills, aid; tests | — |
 | 50.9–11 | Prescriptions, recovery, commitments | Partial | — | §51; follow-ups |
-| 51.1 | Prescriptions | Partial | paid at the counter | A prescription, supply, refills, collection |
+| 51.1 | Prescriptions | Partial | paid at the counter; England's prepayment certificate, three months or a year (`health.prepay`, 2026-10-02) | A prescription, supply, refills, collection |
 | 51.2 | Insurance | Partial | deep cover engine | Claims and denials; private cover abroad |
 | 51.3 | Travel insurance | Complete | tests/travelinsurance | — |
 | 51.4 | Accessibility | Not implemented | — | A needs model and venue attributes |

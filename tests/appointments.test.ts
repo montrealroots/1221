@@ -8,7 +8,7 @@ import { quickSave } from '@/engine';
 import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { ENGLAND_BANDS, IMSS_DAYS, US_METRO_AVERAGE_DAYS } from '@/engine/content/appointments';
 import { APPOINTMENT_KIND, appointmentsOf, book, waitDays } from '@/engine/systems/appointments';
-import { armHealth, healthOf } from '@/engine/systems/health';
+import { armHealth, healthOf, rxShareOf } from '@/engine/systems/health';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 
@@ -89,5 +89,20 @@ describe('an appointment', () => {
   it('isn’t booked where no wait is published', () => {
     const sim = life('ie-lei-dublin', 'appt-ie');
     expect(book(sim, sim.player, 'A doctor’s visit')).toBeUndefined();
+  });
+});
+
+describe('England’s prescription prepayment certificate', () => {
+  it('costs £114.50 for a year and makes each prescription free while it runs, and isn’t sold outside England', () => {
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, 'ppc');
+    const before = rxShareOf(sim.player, false, sim.now, 'GBP');
+    expect(before).toBe(990);
+    const r = sim.execute<{ paid: number; until: number }>({ kind: 'health.prepay', payload: { months: 12 } });
+    expect(r.ok, r.error).toBe(true);
+    expect(rxShareOf(sim.player, false, sim.now, 'GBP')).toBe(0);
+    expect(rxShareOf(sim.player, false, r.value!.until + MS_DAY, 'GBP')).toBe(990);
+    expect(sim.execute({ kind: 'health.prepay', payload: { months: 3 } }).error).toBe('Yours runs more than another month.');
+    const ny = life('us-ny-newyork', 'ppc-ny');
+    expect(ny.execute({ kind: 'health.prepay', payload: { months: 12 } }).error).toBe('It’s England’s, for its prescription charge.');
   });
 });

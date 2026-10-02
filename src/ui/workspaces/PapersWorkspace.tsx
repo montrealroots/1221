@@ -19,7 +19,7 @@ import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
-import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, planOf, type Condition } from '@/engine/systems/health';
+import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, planOf, prepayRefusal, type Condition } from '@/engine/systems/health';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
@@ -516,6 +516,7 @@ function YourDoctor() {
   const choose = useFeature('health.choose_clinic');
   const pharmacy = useFeature('health.choose_pharmacy');
   const bookAgain = useFeature('health.book');
+  const prepay = useFeature('health.prepay');
   const cancelAppt = useFeature('health.cancel_appointment');
   const american = (person.home?.cityId ?? '').startsWith('us-');
   const practices = clinicsIn(person.home?.cityId ?? '').filter((c) => DOCTOR_KINDS.includes(c.kind));
@@ -551,6 +552,12 @@ function YourDoctor() {
             <button type="button" className="btn btn-sm btn-ghost" disabled={!cancelAppt.open} title={cancelAppt.reason} onClick={() => run('health.cancel_appointment', { appointmentId: ap.id })}>Call It Off</button>
           </div>
         ))}
+        {!prepayRefusal(sim, person) || person.health?.prepaidUntil ? (
+          <div className="row gap-2" style={{ alignItems: 'baseline', flexWrap: 'wrap' }}>
+            <span className="small">{(person.health?.prepaidUntil ?? 0) > sim.now ? `Prescriptions are prepaid to ${formatDate(person.health!.prepaidUntil!, sim.zone)}` : 'Prescriptions: £9.90 an item'}</span>
+            {([3, 12] as const).map((m) => <button key={m} type="button" className="btn btn-sm btn-ghost" disabled={!prepay.open || Boolean(prepayRefusal(sim, person))} title={prepayRefusal(sim, person) ?? prepay.reason} onClick={() => { if (run('health.prepay', { months: m }).ok) toast('Prepaid: prescriptions are free while it runs.', 'positive'); }}>{m === 3 ? 'Prepay Three Months, £32.05' : 'Prepay A Year, £114.50'}</button>)}
+          </div>
+        ) : null}
         {person.health?.owedVisit && (
           <div className="row gap-2" style={{ alignItems: 'baseline' }}>
             <span className="small">{`${person.health.owedVisit}: not yet seen`}</span>
