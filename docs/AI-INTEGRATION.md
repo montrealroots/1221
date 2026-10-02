@@ -61,3 +61,29 @@ Command. Recheck everything here at activation; model ids and prices change.
 3. Store the key as a Base44 secret.
 
 Nothing is sent to Anthropic until all three are done.
+
+## Built, 2026-10-02: off until the key is set
+
+- **The engine's side** (`src/engine/systems/assistant.ts`): `assistantState` is
+  the summary sent (where you are, money, wellbeing, what's on the calendar,
+  your garments, outfits, vehicles, homes and contacts), and
+  `ASSISTANT_COMMANDS` is the list of commands it may propose, each with its
+  payload. `checkProposal` tries each proposal with `Simulation.preview` and
+  puts the world back, so the player sees what it would cost, what it would
+  say, or the engine's own refusal, before taking it.
+- **The server's side** (`base44/functions/askAssistant/entry.js`): signed-in
+  players only; sends nothing without `ANTHROPIC_API_KEY`; a daily cap per
+  player (`SLATE_ASSISTANT_DAILY`, 40 unless set) counted in the
+  `SlateAssistantUsage` entity; the model is `SLATE_ASSISTANT_MODEL`, Claude
+  Haiku 4.5 by default; the system prompt is cached; the answer comes back
+  through one forced tool, `propose_actions`, and only proposals whose command
+  is in the list are returned.
+- **The screen** (`src/ui/assistant/Assistant.tsx`): Ask, in the top bar,
+  opened by the guide's chapter "The Assistant". Without the server it says
+  it isn't available, and nothing else changes.
+- **Tests** (`tests/assistant.test.ts`): a proposal leaves the world as it
+  was; refusals and the allowlist hold; the function sends nothing without
+  the key, returns only listed commands, and stops a player at the cap.
+
+Not built yet: the customization builder and the development assistant
+roles. They need the customization system and a review workflow first.

@@ -1,0 +1,15 @@
+{
+  "name": "SlateAssistantUsage",
+  "type": "object",
+  "description": "How many questions a player has asked the built-in assistant on a day, so the owner's Claude API spend has a per-player ceiling. Written only by the askAssistant function.",
+  "properties": {
+    "user_id": { "type": "string", "description": "The signed-in player." },
+    "day": { "type": "string", "description": "The UTC date, YYYY-MM-DD." },
+    "requests": { "type": "number", "description": "Questions asked that day." }
+  },
+  "required": ["user_id", "day", "requests"],
+  "rls": {
+    "read": { "created_by": "{{user.email}}" },
+    "write": false
+  }
+}

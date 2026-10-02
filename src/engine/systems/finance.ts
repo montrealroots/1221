@@ -16,7 +16,7 @@ import { homesValue, owedOnHomes } from './homes';
 import { saveCurrency } from '../core/money';
 import { exchange } from '../content/currency';
 import { LAND_MARKETS } from '../content/land';
-import { landValue, parcelsOf } from './land';
+import { landValue } from './land';
 import { valueOf, vehiclesOf, modelById } from './vehicles';
 import { boatsOf } from './boats';
 import { stolenNow } from './theft';
@@ -88,7 +88,7 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
   for (const plane of person ? planesOf(person) : []) { vehicles += plane.price; liabilities += plane.loan?.owed ?? 0; }
   // And a boat, the same way (`systems/boats.ts`).
   for (const boat of person ? boatsOf(person) : []) { vehicles += boat.price; liabilities += boat.loan?.owed ?? 0; }
-  for (const p of person ? parcelsOf(person) : []) {
+  for (const p of person?.land ?? []) {
     if (p.soldAt !== undefined) continue;
     const m = LAND_MARKETS[p.market]!;
     land += inSave(landValue(m, p.acres, sim.now), m.currency);

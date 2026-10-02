@@ -21,6 +21,7 @@ import { RAIL_DESTINATIONS } from './destinations';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
 import { GuideButton, GuideProvider, GuideStrip } from '@/ui/guide/Guide';
+import { AssistantButton } from '@/ui/assistant/Assistant';
 import { Home } from '@/ui/screens/Home';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
@@ -117,6 +118,7 @@ export function GameShell() {
         <span className="topbar-divider" aria-hidden="true" />
 
         <div className="topbar-group" role="group" aria-label="Your Save">
+          <AssistantButton />
           <GuideButton />
           <SaveIndicator />
 

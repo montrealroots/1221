@@ -389,6 +389,18 @@ export const CHAPTERS: readonly Chapter[] = [
     names: ['People', 'Ask Them', 'Ask Them Out', 'Move In Together', 'Break Up', 'Marry', 'Ask For A Divorce', 'Try For A Child', 'Adopt', 'A Surrogacy', 'Pay For It', 'Care For Them', 'Leave It To The State', 'Join A Dating App'],
     opens: ['ui.people', 'social.invite', 'social.ask_out', 'social.move_in', 'social.break_up', 'social.split', 'social.marry', 'social.divorce', 'social.try_for_child', 'social.adopt', 'family.care', 'dating.app', 'look.contact', 'look.child', 'look.parent'],
   },
+  {
+    id: 'assistant',
+    title: 'The Assistant',
+    lead: 'Asking for help in plain words, and what it can and can’t do.',
+    body: [
+      'Ask, at the top, opens the assistant. Ask It something in plain words: plan tomorrow around the call, find an outfit within a budget, explain what a passport application needs. It reads your life as it stands and answers, and it proposes things to do.',
+      'Each proposal has been tried by the game and put back before you see it, so it shows what it would cost or why the world would refuse it. Do It runs it as the same button would, with the same checks. It can’t make money, ownership, a qualification or finished work: it only proposes what you could do yourself.',
+      'It runs on Claude, through the owner’s own Claude Console account, and is off until they switch it on. The rest of the game never needs it.',
+    ],
+    names: ['Ask', 'Ask It', 'Do It'],
+    opens: ['ui.assistant'],
+  },
 ];
 
 export const CHAPTER_BY_ID: Readonly<Record<string, Chapter>> = Object.fromEntries(CHAPTERS.map((c) => [c.id, c]));
