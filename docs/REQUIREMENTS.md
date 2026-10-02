@@ -106,7 +106,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |
 | 31h | Grooming at home | Partial | salon, teeth, deodorant | Shave, hair, makeup at home; preferences |
 | 32a | Browse wardrobe, drawers, luggage | Partial | `reachable`, WhatToWear | Browse by location |
-| 32b | Filter by occasion, type, size, color, condition | Not implemented | `spec`, `condition` exist | Filters; occasion tags |
+| 32b | Filter by occasion, type, size, color, condition | Partial, 2026-10-02 | Belongings filters by kind, clean or not, condition, color and size, and finds by name (`systems/itemfacets.ts`) | Occasion tags (no source tags garments by occasion) |
 | 32c | Pieces and layers | Partial | one per slot | Layering |
 | 32d | Change, with time and a worn state | Done, 2026-10-02 | `clothes.change`: `CHANGE_MINUTES` (SLATE's estimate), each piece a wear, `wornNow`; tests/wardrobe.test.ts | — |
 | 32e | Removed items stored or to the hamper | Not implemented | — | Hamper spot; take-off choice |

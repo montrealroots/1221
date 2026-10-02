@@ -15,6 +15,7 @@ import { luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
+import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -43,12 +44,16 @@ export function BelongingsWorkspace() {
   const items = itemsOf(person);
   const move = useFeature('items.move');
   const [target, setTarget] = useState<Record<string, string>>({});
+  const [filter, setFilter] = useState<FacetFilter>({});
   const places = placesNow(sim, person, items);
   const toHandCount = items.filter((i) => reachable(sim, person, i.at)).length;
   const coming = ordersOf(person).filter((o) => o.status === 'placed');
   // Grouped by where each thing is, in the order a person thinks of them.
   const groups = new Map<string, Item[]>();
+  // What's shown, by the filter chosen (`systems/itemfacets.ts`).
+  const values = (key: 'kind' | 'color' | 'size' | 'condition' | 'state') => [...new Set(items.map((i) => facetsOf(i, sim.now)[key]).filter((v): v is string => Boolean(v)))].sort();
   for (const item of items) {
+    if (!passes(item, filter, sim.now)) continue;
     const key = whereWords(person, item.at);
     groups.set(key, [...(groups.get(key) ?? []), item]);
   }
@@ -72,6 +77,27 @@ export function BelongingsWorkspace() {
         <WatchingAndPlaying />
         {items.length > 0 && (
           <Panel title="Each Thing">
+            <div className="field-row" style={{ marginBottom: '0.75rem' }}>
+              <div className="field">
+                <label htmlFor="things-words">Find</label>
+                <input id="things-words" value={filter.words ?? ''} onChange={(e) => setFilter({ ...filter, words: e.target.value })} />
+              </div>
+              {(['kind', 'state', 'condition', 'color', 'size'] as const).map((key) => {
+                const list = values(key);
+                if (list.length < 2) return null;
+                const label = { kind: 'Kind', state: 'Clean Or Not', condition: 'Condition', color: 'Color', size: 'Size' }[key];
+                return (
+                  <div className="field" key={key}>
+                    <label htmlFor={`things-${key}`}>{label}</label>
+                    <select id={`things-${key}`} value={filter[key] ?? ''} onChange={(e) => setFilter({ ...filter, [key]: e.target.value || undefined })}>
+                      <option value="">Any</option>
+                      {list.map((v) => <option key={v} value={v}>{v}</option>)}
+                    </select>
+                  </div>
+                );
+              })}
+            </div>
+            {groups.size === 0 && <p className="small muted" style={{ margin: 0 }}>Nothing you own matches.</p>}
             <LookRegion>
             <div className="table-scroll">
               <table>
