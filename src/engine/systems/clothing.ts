@@ -59,6 +59,8 @@ export interface ClothesPurchase {
   goods: Money;
   /** How many garments it brought: a pack's each. */
   count: number;
+  /** What paid for it, each account's share, from 2026-10-02: what a return refunds to. */
+  paidFrom?: { accountId: string; share: number }[];
   returnedAt?: Instant;
   /** Called off before it was delivered (from 2026-10-02). */
   canceledAt?: Instant;
@@ -213,11 +215,14 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
   const how = lines[0]!.how;
   const q = checkoutQuote(sim, person, lines)!;
   const memo = lines.length === 1 ? `${r.name}: ${productById(lines[0]!.productId)!.name}` : `${r.name}: ${lines.length} items`;
+  const before = sim.universe.transactions.length;
   if (!spend(sim, person, q.total, memo, 'clothing')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
+  // What paid, the card, the bank or the cash, each account's share: a return goes back there (from 2026-10-02).
+  const paidFrom = paidFromSince(sim, before);
   const made = lines.map((o, i) => {
     const p = productById(o.productId)!;
     const count = (o.quantity ?? 1) * p.pack;
-    const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how, at: sim.now, goods: q.goods[i]!, count };
+    const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how, at: sim.now, goods: q.goods[i]!, count, ...(paidFrom.length ? { paidFrom } : {}) };
     const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
     // Bought for the body they have now, in the size chosen: a size off is made for a body a step heavier or lighter (`fitKgFor`, `systems/tailoring.ts`).
     const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size, p), ...((): { footCm?: number } => { const row = o.size ? shoeRow(person, p, o.size) : undefined; return row ? { footCm: row.footCm } : {}; })() } };
@@ -234,6 +239,17 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
   }
   (person.clothesBought ??= []).push(...made.map((m) => m.purchase));
   return made.map((m) => m.purchase);
+}
+
+/** The accounts that paid in the transactions posted since a count, each one's share of what they paid: a spend's are the buyer's own. */
+function paidFromSince(sim: Simulation, since: number): { accountId: string; share: number }[] {
+  const out = new Map<string, number>();
+  for (const t of sim.universe.transactions.slice(since)) for (const q of t.postings) {
+    const a = sim.universe.accounts[q.accountId];
+    if (a && !a.nominal && q.amount < 0) out.set(q.accountId, (out.get(q.accountId) ?? 0) - q.amount);
+  }
+  const total = [...out.values()].reduce((x, y) => x + y, 0);
+  return total > 0 ? [...out.entries()].map(([accountId, v]) => ({ accountId, share: v / total })) : [];
 }
 
 /** Buys one product: a checkout of one line. */
@@ -292,9 +308,13 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
   const fee = returnFee(sim, purchase, how)!;
   const back = purchase.goods - fee;
   const account = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking');
-  if (!account) throw new CommandError('There’s no account to refund to.');
+  // Back to what paid, in its shares, an account since closed to checking; checking where nothing was kept (from 2026-10-02; until then always checking).
+  const to = (purchase.paidFrom ?? []).map((x) => ({ accountId: sim.universe.accounts[x.accountId] && !sim.universe.accounts[x.accountId]!.closedAt ? x.accountId : account?.id, share: x.share })).filter((x): x is { accountId: string; share: number } => Boolean(x.accountId));
+  const shares = to.length ? to : account ? [{ accountId: account.id, share: 1 }] : [];
+  if (shares.length === 0) throw new CommandError('There’s no account to refund to.');
   const r = retailerById(purchase.retailerId)!;
-  sim.post({ memo: `${r.name}: a return, refunded`, category: 'clothing', postings: [{ accountId: account.id, amount: back }, { accountId: sim.nominalAccount('expense', expenseFor('clothing')).id, amount: -back }] });
+  const parts = shares.map((x, n) => ({ accountId: x.accountId, amount: n === shares.length - 1 ? back - shares.slice(0, -1).reduce((t, y) => t + Math.round(back * y.share), 0) : Math.round(back * x.share) }));
+  sim.post({ memo: `${r.name}: a return, refunded`, category: 'clothing', postings: [...parts, { accountId: sim.nominalAccount('expense', expenseFor('clothing')).id, amount: -back }] });
   const gone = new Set(purchaseItems(person, purchaseId).map((i) => i.id));
   person.items = itemsOf(person).filter((i) => !gone.has(i.id));
   forget(person, gone);

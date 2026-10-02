@@ -452,7 +452,7 @@ function Bought() {
       <LookRegion>
       <div className="table-scroll">
         <table>
-          <thead><tr><th scope="col">Purchase</th><th scope="col">From</th><th scope="col" className="num">Paid</th><th scope="col">Bought</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+          <thead><tr><th scope="col">Purchase</th><th scope="col">From</th><th scope="col" className="num">Paid</th><th scope="col">Paid With</th><th scope="col">Bought</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
           <tbody>
             {bought.map((b) => {
               const p = productById(b.productId);
@@ -465,6 +465,7 @@ function Bought() {
                   <td>{(() => { const first = purchaseItems(person, b.id).find((i) => i.garment); return first ? <Open subject={at('garment', first.id)}>{p?.name ?? 'Clothes'}</Open> : (p?.name ?? 'Clothes'); })()}{b.count > 1 ? <span className="xs dim"> · {b.count}</span> : null}</td>
                   <td className="small">{r?.name}</td>
                   <td className="num mono">{money(b.goods)}</td>
+                  <td className="small">{(b.paidFrom ?? []).map((x) => sim.universe.accounts[x.accountId]?.name ?? 'An Account').join(', ') || '—'}</td>
                   <td className="small">{formatDate(b.at, sim.zone)}{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : ''}</td>
                   <td>
                     {b.returnedAt === undefined && b.canceledAt === undefined && (
