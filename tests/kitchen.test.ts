@@ -9,9 +9,9 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { amountIn, cookRefusal, groceryCatalog, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
+import { amountIn, cookRefusal, groceryCatalog, kitchenMeal, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
 import { foodOf, mealsFromStock, mealsReady, throwOutSpoiled } from '@/engine/systems/pantry';
-import { buyTheDaysFood, foodOf as daysFoodCost } from '@/engine/systems/household';
+import { buyTheDaysFood, canPay, foodOf as daysFoodCost, mealOf } from '@/engine/systems/household';
 import { bacAt } from '@/engine/systems/alcohol';
 import { arrange } from '@/engine/systems/catalog';
 
@@ -137,6 +137,65 @@ describe('the day’s meals', () => {
     sim.must({ kind: 'food.eat_ready', payload: {} });
     expect(mealsReady(sim, sim.player)).toHaveLength(0);
     expect(sim.player.wellbeing.nourishment).toBeGreaterThan(30);
+  });
+});
+
+describe('Look After Yourself’s meal', () => {
+  const ate = (sim: Simulation) => sim.universe.transactions.filter((t) => t.memo === 'A meal').length;
+  it('is what’s ready in the kitchen first, unpaid', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'nothing' }, 'eat-ready');
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance += 50_00;
+    buy(sim, P.pizza);
+    sim.player.wellbeing.nourishment = 30;
+    // With nothing in the bank to buy a meal: the pizza needs none.
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && (a.kind === 'checking' || a.kind === 'savings')) a.balance = 0;
+    // And the overdraft run to its end.
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance -= canPay(sim, sim.player);
+    const cash = bank(sim);
+    expect(canPay(sim, sim.player)).toBeLessThan(mealOf(sim, sim.player));
+    sim.must({ kind: 'life.look_after', payload: { action: 'eat' } });
+    expect(mealsReady(sim, sim.player)).toHaveLength(0);
+    expect(ate(sim)).toBe(0);
+    expect(bank(sim)).toBe(cash);
+    expect(sim.player.wellbeing.nourishment).toBeGreaterThan(30);
+  });
+
+  it('cooks what the stock makes when nothing’s ready, and keeps its servings', () => {
+    const sim = life('us-ny-newyork', 'eat-cook');
+    stockUp(sim);
+    sim.player.wellbeing.nourishment = 30;
+    const cash = bank(sim);
+    expect(kitchenMeal(sim, sim.player)).toEqual({ recipeId: expect.any(String) });
+    sim.must({ kind: 'life.look_after', payload: { action: 'eat' } });
+    expect(ate(sim)).toBe(0);
+    expect(bank(sim)).toBe(cash);
+    expect(mealsReady(sim, sim.player)[0]!.food.key).toBe('dish');
+  });
+
+  it('isn’t cooked while they’re busy at something on the calendar', () => {
+    const sim = life('us-ny-newyork', 'eat-busy');
+    stockUp(sim);
+    sim.player.wellbeing.nourishment = 30;
+    sim.universe.scheduled.push({ id: 'busy', at: sim.now - 60_000, kind: 'test.busy', label: 'A Meeting', category: 'personal', priority: 1, status: 'done', requiresPlayer: true, durationMinutes: 120, payload: {} } as never);
+    expect(kitchenMeal(sim, sim.player)).toBeUndefined();
+    sim.must({ kind: 'life.look_after', payload: { action: 'eat' } });
+    expect(ate(sim)).toBe(1);
+  });
+
+  it('is bought as it’s cooked only when the kitchen has nothing to make it with', () => {
+    const sim = life('us-ny-newyork', 'eat-buy');
+    for (const i of foodOf(sim.player)) i.food.left = 0;
+    sim.player.items = (sim.player.items ?? []).filter((i) => !i.food);
+    sim.player.wellbeing.nourishment = 30;
+    expect(kitchenMeal(sim, sim.player)).toBeUndefined();
+    sim.must({ kind: 'life.look_after', payload: { action: 'eat' } });
+    expect(ate(sim)).toBe(1);
+    // A pizza carried to another town, with no kitchen to heat it: not a meal from the kitchen.
+    buy(sim, P.pizza);
+    for (const i of foodOf(sim.player)) i.at = { kind: 'person' };
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    expect(mealsReady(sim, sim.player)).toHaveLength(1);
+    expect(kitchenMeal(sim, sim.player)).toBeUndefined();
   });
 });
 

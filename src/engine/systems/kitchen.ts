@@ -188,6 +188,22 @@ export function cook(sim: Simulation, person: Person, recipeId: string): number 
   return left;
 }
 
+/**
+ * What the kitchen can feed them with now, before any money is spent: a meal
+ * that's ready, the soonest to spoil first; else a recipe the stock makes,
+ * the quickest, when they're free to cook it. Read by Look After Yourself's
+ * eat (from 2026-10-02; until then it paid a meal's money however full the
+ * fridge was).
+ */
+export function kitchenMeal(sim: Simulation, person: Person): { ready: Stocked } | { recipeId: string } | undefined {
+  if (!placeOf(sim, person)?.cooks) return undefined;
+  const ready = mealsReady(sim, person)[0];
+  if (ready) return { ready };
+  if (occupiedAt(sim, sim.now)) return undefined;
+  const quickest = RECIPES.filter((r) => !cookRefusal(sim, person, r.id)).sort((a, b) => (a.minutes ?? KITCHEN.minutes) - (b.minutes ?? KITCHEN.minutes) || a.id.localeCompare(b.id))[0];
+  return quickest ? { recipeId: quickest.id } : undefined;
+}
+
 /** Eats a portion of what's ready: a dish, a ready meal or a pizza, heated. */
 export function eatReady(sim: Simulation, person: Person, itemId: string): void {
   const item = itemById(person, itemId) as Stocked | undefined;

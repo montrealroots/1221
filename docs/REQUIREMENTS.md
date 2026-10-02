@@ -25,15 +25,16 @@ replace.
 Correctness first, then the connected day the plan asks to be shown working
 (§62), then each domain by player impact.
 
-1. **What breaks a rule today.** A hotel or rental deposit that failed
+1. **What broke a rule, fixed 2026-10-02.** A hotel or rental deposit that failed
    granted the stay until 2026-10-02 (§48i; now held until paid or the day
    ends). A saved outfit was worn though a piece was out of
    reach, and a piece that couldn't be worn was silently swapped, until
    2026-10-02 (§32g, §27b; now refused, and a swap on the day is told). An
    order's "returned" state was declared and never set until 2026-10-02
-   (§30; now set, and an order can be canceled where the law gives it). A fitting is
-   paid without the actor there (§53.5). Look After Yourself's "eat" pays
-   money and never touches the kitchen (§33g).
+   (§30; now set, and an order can be canceled where the law gives it). A fitting was
+   paid without the actor there (§53.5), and Look After Yourself's "eat" paid
+   money and never touched the kitchen (§33g), until 2026-10-02. All five are
+   fixed.
 2. **The connected day (§62).** A fuel tank and refuelling at a station
    (§39). Dressing as a timed change into a worn state, with the hamper
    (§32d–e). The shower with a towel, products and duration (§31). Cooking by
@@ -117,7 +118,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 33d | Obtain or substitute missing | Partial | groceries in store | Buy what's short; substitutes |
 | 33e | Cook; interruptions | Partial | refused if busy | Clash check; outcome; energy |
 | 33f | Serve self or others | Partial | self only | Guests and household |
-| 33g | Eat | Partial, violated | `food.eat_ready` complete; `look_after eat` pays money | Eat from the kitchen first |
+| 33g | Eat | Done, 2026-10-02 | `food.eat_ready`; `look_after eat` reads `kitchenMeal`: what's ready, else a recipe the stock makes, before money; tests/kitchen.test.ts | — |
 | 33h | Leftovers, freshness | Complete | tests/kitchen | Freezing |
 | 33i | Wash up | Not implemented | — | Dirty dishes, washing, dishwasher |
 | 33j | Restaurants, takeout, delivery, drinks | Complete | `food.dine`, `food.drink`; tests | — |
@@ -235,7 +236,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 52.7–9 | Lives of their own; shared activities; household | Partial | `declines()` | Availability, interests, memory read; activities; chores |
 | 53.1–2, 4, 6–9 | Representation, auditions, contracts, work, travel, press, awards | Complete | career.ts; tests | Breakdowns; attending a ceremony |
 | 53.3, 10–11 | Preparation, professional contacts, dressing for the room | Partial | coaching | Prep time; casting contacts; a dress check |
-| 53.5 | Fittings | Complete with a fault | paid without presence | Fix |
+| 53.5 | Fittings | Done, 2026-10-02 | paid only when `present`, missed otherwise; tests/fittings.test.ts | — |
 | 53.12 | Products never confer ability | Complete | `bookingChance` | Self-tape kit documented as recording quality |
 | 54.1–5 | Staff, lessons, sports, memberships, community | Partial or not implemented | cleaner, gardener, trainer, gym | Lessons, clubs, leagues, community |
 | 54.7, 10 | Electricity, internet and phone | Complete | electricity.ts, telecom.ts; tests | Supplier choice; internet outages |
