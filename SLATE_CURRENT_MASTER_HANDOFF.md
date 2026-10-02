@@ -213,7 +213,19 @@ Done and gated so far:
     - Each named hotel's own gym, pool and cancellation deadline (`5647f3dd`, `research-hotel-amenities.json`).
     - IKEA's seats, tables and storage, and friends asked over together for dinner or drinks (`e111dd0f`, `research-furniture-catalog.json`).
     - Gate at `e111dd0f`: 2,614 tests, exit 0.
-    - Research running when this was written, each to one file in `docs/research/world/`: appliance faults and repairs, retailers' size charts, specialist referrals and a child's day, airport ground transport and rebooking rights. A later session should look for those files before researching again.
+    - That research arrived and was committed (`research-appliance-faults.json`, `research-size-charts.json`, `research-referrals-childday.json`, `research-airport-ground.json`, `research-access-availability.json`), and built on:
+      - Belongings filtered by kind, clean or not, condition, color and size (`7fdebec5`).
+      - Breakfast at a named hotel, with the room or at its published price (`93ab525a`).
+      - A washer, dishwasher or fridge that breaks at Consumer Reports' and Which?'s rates, mended by the landlord or booked at each market's price (`b138d544`, decider `home.appliance_fault`).
+      - To the airport By Transit at each town's read fare; a canceled flight's fare taken back instead of the next one (`551d2425`).
+      - A kept doctor's visit ending in a referral at NAMCS's and England's shares, the specialist after each place's published wait (`05d65a5b`, decider `health.referral`).
+      - The people you know have jobs at their country's employment rate and are at work nine to five on the days ATUS says (`6e17294f`, decider `social.availability`). Tests that invite friends on a weekday afternoon must pick a free friend or an evening.
+      - A wheelchair said on Papers: hotels whose pages say they can't take one refused; a disability permit at each place's fee, meters free where the town allows (`8fe44243`).
+      - A named hotel's room at its own check-in hour, early check-in free only where the hotel gives it (`b0d64cf7`).
+      - Your size by the retailer's own chart from measurements you give, women's or men's charts by your choice (`4b65d253`, 130 charts in `content/sizecharts.ts`).
+    - Gate at `4b65d253`: 2,651 tests, exit 0.
+    - **A trap:** `npx tsc --noEmit -p .` checks nothing, because the root `tsconfig.json` has only references. Typecheck with `npx tsc -b --noEmit`, which is what the gate runs.
+    - Held back on purpose: a child's day. The published costs of raising a child already count childcare and babysitting, so charging a sitter or a nursery would count them twice. It needs a reader that isn't money: school hours and terms are read (`research-referrals-childday.json`) but nothing yet uses them.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.
 - **Stage 15, in part** (`71e9dbb5`, `dbfe58bd`): `docs/DEVMAP.md`, built and checked by `tools/devmap.mjs` in the gate; `docs/WALKTHROUGHS.md`; the rail's search; panel actions wrap inside their card.
