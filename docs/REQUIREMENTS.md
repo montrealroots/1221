@@ -233,7 +233,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 51.4 | Accessibility | Not implemented | — | A needs model and venue attributes |
 | 52.1–4 | Friends, dating, partners, marriage | Complete | people, dating, marriage; tests | More activities |
 | 52.5–6 | Parenting, caregiving | Partial | costs and benefits | A child's day; care given as time |
-| 52.7–9 | Lives of their own; shared activities; household | Partial | `declines()` | Availability, interests, memory read; activities; chores |
+| 52.7–9 | Lives of their own; shared activities; household | Partial | `declines()`; from 2026-10-02 a job of their own at the country's employment rate for their age, at work nine to five on the days ATUS says the employed work (`systems/availability.ts`, decider `social.availability`) | Interests, memory read; activities; chores |
 | 53.1–2, 4, 6–9 | Representation, auditions, contracts, work, travel, press, awards | Complete | career.ts; tests | Breakdowns; attending a ceremony |
 | 53.3, 10–11 | Preparation, professional contacts, dressing for the room | Partial | coaching | Prep time; casting contacts; a dress check |
 | 53.5 | Fittings | Done, 2026-10-02 | paid only when `present`, missed otherwise; tests/fittings.test.ts | — |

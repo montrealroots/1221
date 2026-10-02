@@ -15,6 +15,7 @@ import { sunTimes } from '@/engine/core/sun';
 import { moveIntoOwned, ownBuilt, projectRefusal, type HomeFacts } from '@/engine/systems/homes';
 import { courtAt, courtRefusal, homeCourts, weatherNow } from '@/engine/systems/dwelling';
 import { contactsOf, newContact } from '@/engine/systems/people';
+import { atWork } from '@/engine/systems/availability';
 import { billsOf } from '@/engine/systems/household';
 import { lookAfterRefusal } from '@/engine/systems/life';
 
@@ -124,6 +125,8 @@ describe('a football pitch, and friends over to play', () => {
     let fine = nextHour(sim, true);
     while (zonedParts(fine, 'America/Los_Angeles').hour < 12 || zonedParts(fine, 'America/Los_Angeles').hour > 15) { sim.advanceTo(fine + MS_HOUR); fine = nextHour(sim, true); }
     const at = fine + 30 * 60_000;
+    // A friend who isn't at work then (`systems/availability.ts`, from 2026-10-02).
+    for (let i = 0; atWork(sim, friend, at, 90); i += 1) friend.id = `pitch-friend-${i}`;
     sim.player.body = { weightKg: 70, extra: 0 } as unknown as NonNullable<typeof sim.player.body>;
     const r = sim.execute<{ accepted: boolean; reason?: string }>({ kind: 'social.invite', payload: { contactId: friend.id, at, what: 'play', court: 'football' } });
     expect(r.ok, r.error).toBe(true);

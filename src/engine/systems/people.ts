@@ -61,6 +61,7 @@ import { personalityOf } from './personality';
 import { homeById } from './homes';
 import { bedSleepsOne } from './furniture';
 import { incomeOf } from './marriage';
+import { atWork, atWorkReason } from './availability';
 import { childrenStay } from './support';
 import { applyLookingAfter } from './life';
 import { COURT_MET, TRAINING, courtRefusal, homeCourts, type Court } from './dwelling';
@@ -201,7 +202,8 @@ export function registerPeople(sim: Simulation): void {
     const no = inviteRefusal(s, person, inv);
     if (no) throw new CommandError(no);
     const c = contactsOf(person).find((x) => x.id === inv.contactId)!;
-    const reason = declines(person, c, inv);
+    // At work then, a job of their own (`systems/availability.ts`, from 2026-10-02).
+    const reason = declines(person, c, inv) ?? (atWork(s, c, inv.at, minutesOf(inv)) ? atWorkReason(c) : undefined);
     const r = inv.restaurantId ? restaurantById(inv.restaurantId) : undefined;
     const what = r ? `a meal at ${r.name}` : inv.what === 'play' ? `a game of ${COURT_WORD[inv.court!]} at yours` : 'a visit to your home';
     c.memory.unshift({ at: s.now, what: reason ? `Said no to ${what}: ${reason}` : `Said yes to ${what}` });

@@ -44,6 +44,8 @@ import { mayBreak } from './systems/repairs';
 import { onTheRoad } from './systems/roadside';
 import { machinesDay } from './systems/appliancefaults';
 import { mayRefer } from './systems/appointments';
+import { atWork, works } from './systems/availability';
+import type { Contact } from './systems/people';
 import type { Journey } from './systems/journey';
 import { mayCollide } from './systems/carcare';
 import { buildInspectionFails, weatherDelay } from './systems/construction';
@@ -487,6 +489,22 @@ defineDecider<{ sim: Simulation; visit: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), visit: seed }),
   decide: ({ sim, visit }) => (mayRefer(sim, sim.player, { id: `v${visit}`, at: sim.now, what: 'A checkup' }, 0.5) ? 'referred' : 'not'),
+});
+
+defineDecider<{ sim: Simulation; who: number }, string>({
+  id: 'social.availability',
+  decides: 'Whether a person you know has a job, by day or not, at their country’s employment rate for their age, and whether they work on a given day, at ATUS’s 81% of weekdays and 30% of weekend days (EMPLOYED, WORKS_ON); the real ones, as most work.',
+  drawnIn: 'src/engine/systems/availability.ts',
+  reads: {
+    who: (o, t) => ({ ...o, who: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), who: seed }),
+  decide: ({ sim, who }) => {
+    const c = { id: `c${who}`, name: 'A Friend', cityId: 'us-ny-newyork', born: sim.now - 35 * 365.2425 * 86_400_000 } as Contact;
+    const w = works(sim, c, sim.now);
+    return !w.employed ? 'not working' : !w.daytime ? 'works other hours' : atWork(sim, c, sim.now - (sim.now % 86_400_000) + 15 * 3_600_000, 60) ? 'at work' : 'off today';
+  },
 });
 
 defineDecider<{ sim: Simulation; booking: number }, string>({
