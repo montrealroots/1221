@@ -15,6 +15,8 @@ import { luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
+import { giveRefusal } from '@/engine/systems/gifts';
+import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -125,6 +127,7 @@ export function BelongingsWorkspace() {
                                     {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
                                   </select>
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
+                                  <GiveTo itemId={item.id} label={item.label} />
                                 </div>
                               ) : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
                             </td>
@@ -142,6 +145,25 @@ export function BelongingsWorkspace() {
         {items.length === 0 && <Panel title="Your Belongings"><p className="small muted" style={{ margin: 0 }}>You own nothing here yet beyond your home and vehicles. What you buy appears here, where it’s put.</p></Panel>}
         <Fine>A thing at home is to hand only at home; one in a car, only where the car is; one in a bag, wherever the bag is. An order’s things are yours from when you pay, and to hand when they’re delivered. A move brings your belongings with it.</Fine>
       </div>
+    </>
+  );
+}
+
+/** Giving a thing to a friend here (`items.give`): theirs from then, and remembered. */
+function GiveTo({ itemId, label }: { itemId: string; label: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const give = useFeature('items.give');
+  const here = contactsOf(person).filter((c) => !giveRefusal(sim, person, itemId, c.id));
+  const [to, setTo] = useState('');
+  if (here.length === 0) return null;
+  const chosen = here.find((c) => c.id === to) ?? here[0]!;
+  return (
+    <>
+      <select aria-label={`Give the ${label} to`} value={chosen.id} disabled={!give.open} onChange={(e) => setTo(e.target.value)}>
+        {here.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+      </select>
+      <button type="button" className="btn btn-sm btn-ghost" disabled={!give.open} title={give.reason} onClick={() => { if (run('items.give', { itemId, contactId: chosen.id }).ok) toast(`The ${label}, given to ${chosen.name.split(' ')[0]}.`, 'positive'); }}>Give It</button>
     </>
   );
 }
