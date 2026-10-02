@@ -59,6 +59,7 @@ import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
 import { eiWeek } from './eiself';
 import { laidUp } from './injury';
 import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
+import { appointmentsOf, book } from './appointments';
 import { US_PHARMACIES, edMinutes, emergencyScale } from '../content/carevisits';
 import { careAway } from './travelinsurance';
 import { markRecord } from './credit';
@@ -120,6 +121,9 @@ export interface HealthRecord {
   debtSince?: Instant;
   seq?: number;
   /** Conditions carried, and whether they're kept up; whether they wear lenses, and the year of their last glasses. */
+  /** Doctor's appointments booked, and a visit owed after one was missed or called off (`systems/appointments.ts`, from 2026-10-02). */
+  appointments?: import('./appointments').Appointment[];
+  owedVisit?: string;
   chronic?: Partial<Record<Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }>>;
   /** A stand-alone dental plan: which, from and until, and this year's deductible and what it's paid. */
   dental?: { plan: DentalPlan; from: Instant; until?: Instant; deductible: Record<string, Money>; paid: Record<string, Money> };
@@ -970,7 +974,14 @@ export function registerHealth(sim: Simulation): void {
   sim.onSchedule(HEALTH_WEEK_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
-    for (const event of illnessWeek(s, person, item.at)) careFor(s, person, event, item.at);
+    for (const event of illnessWeek(s, person, item.at)) {
+      // The player's doctor's visit is booked for the place's wait, where one is published (`systems/appointments.ts`); one already booked or owed covers it.
+      if (person.id === s.universe.playerId && event.care === 'visit' && !event.flu) {
+        if (appointmentsOf(person).length || healthOf(person).owedVisit) continue;
+        if (book(s, person, event.what)) continue;
+      }
+      careFor(s, person, event, item.at);
+    }
     // A self-employed Canadian's EI sickness benefit, for a week too sick to work (`systems/eiself.ts`).
     eiWeek(s, person, item.at, laidUp(person, item.at + 3 * MS_DAY) || (person.health?.inHospitalUntil ?? 0) > item.at - 4 * MS_DAY);
     // Depression left alone weighs on morale.

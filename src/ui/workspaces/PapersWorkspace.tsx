@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
-import { DOCTOR_KINDS, clinicFor, clinicsIn } from '@/engine/systems/clinics';
+import { DOCTOR_KINDS, clinicById, clinicFor, clinicsIn } from '@/engine/systems/clinics';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -511,10 +511,12 @@ function BenefitsPane() {
 
 /** Their own doctor, from the practices in the town they live in, and where urgent and emergency care is had here. */
 function YourDoctor() {
-  const { run, toast } = useGame();
+  const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const choose = useFeature('health.choose_clinic');
   const pharmacy = useFeature('health.choose_pharmacy');
+  const bookAgain = useFeature('health.book');
+  const cancelAppt = useFeature('health.cancel_appointment');
   const american = (person.home?.cityId ?? '').startsWith('us-');
   const practices = clinicsIn(person.home?.cityId ?? '').filter((c) => DOCTOR_KINDS.includes(c.kind));
   if (practices.length === 0) return null;
@@ -543,6 +545,18 @@ function YourDoctor() {
           )}
         </div>
         <div className="small">{[doctor && `A doctor’s visit: ${doctor.name}`, urgent && `Urgent care: ${urgent.name}`, emergency && `An emergency: ${emergency.name}`].filter(Boolean).join(' · ')}</div>
+        {(person.health?.appointments ?? []).map((ap) => (
+          <div key={ap.id} className="row gap-2" style={{ alignItems: 'baseline' }}>
+            <span className="small">{`${ap.what}: an appointment ${formatDate(ap.at, sim.zone)}${ap.clinicId ? `, ${clinicById(ap.clinicId)?.name ?? ''}` : ''}`}</span>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!cancelAppt.open} title={cancelAppt.reason} onClick={() => run('health.cancel_appointment', { appointmentId: ap.id })}>Call It Off</button>
+          </div>
+        ))}
+        {person.health?.owedVisit && (
+          <div className="row gap-2" style={{ alignItems: 'baseline' }}>
+            <span className="small">{`${person.health.owedVisit}: not yet seen`}</span>
+            <button type="button" className="btn btn-sm" disabled={!bookAgain.open} title={bookAgain.reason} onClick={() => { const r = run<{ at: number }>('health.book', {}); if (r.ok) toast(`Booked for ${formatDate(r.value!.at, sim.zone)}.`, 'positive'); }}>Book An Appointment</button>
+          </div>
+        )}
         <Fine>The practices, clinics and hospitals are real. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you the department’s median time, missing what that time held. In America, a generic is filled at your pharmacy’s own cash price, a plan’s copay never more.</Fine>
       </div>
     </Panel>
