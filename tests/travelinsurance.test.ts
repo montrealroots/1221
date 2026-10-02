@@ -153,6 +153,23 @@ describe('care away from home', () => {
     expect(careFor(ldn, ldn.player, { care: 'emergency', what: 'The emergency room' }, ldn.now)!.amount).toBeGreaterThan(inSave(ldn, 1_000, 'USD'));
   });
 
+  it('in England is free at A&E and a GP, and a stay 150% of the tariff, an Irish resident’s free', () => {
+    const ny = life('us-ny-newyork', 'ti-england');
+    ny.player.currentLocationId = 'uk-eng-london';
+    expect(careAway(ny, ny.player, 'emergency', 50_000, 300_000, 3, false, ny.now)).toBe(0);
+    expect(careAway(ny, ny.player, 'visit', 20_000, 30_000, 3, false, ny.now)).toBe(0);
+    expect(careAway(ny, ny.player, 'stay', 100_000, 3_000_000, 3, false, ny.now)).toBe(inSave(ny, 4_852 * 1.5, 'GBP'));
+    const dub = life('ie-lei-dublin', 'ti-england-ie');
+    dub.player.currentLocationId = 'uk-eng-london';
+    expect(careAway(dub, dub.player, 'stay', 0, 3_000_000, 3, false, dub.now)).toBe(0);
+    const tor = life('ca-on-toronto', 'ti-england-ca');
+    tor.player.currentLocationId = 'uk-eng-london';
+    expect(careAway(tor, tor.player, 'stay', 0, 3_000_000, 3, true, tor.now)).toBe(inSave(tor, 4_852 * 1.5, 'GBP') - inSave(tor, 600, 'CAD'));
+    // Scotland keeps its own rules, not kept: the home share holds.
+    ny.player.currentLocationId = 'uk-sct-edinburgh';
+    expect(careAway(ny, ny.player, 'stay', 100_000, 3_000_000, 3, false, ny.now)).toBe(100_000);
+  });
+
   it('beyond the policy’s medical limit is the traveler’s again', () => {
     const mex = life('mx-cmx-mexicocity', 'ti-limit');
     mex.player.currentLocationId = 'us-ny-newyork';

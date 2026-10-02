@@ -67,5 +67,16 @@ export const IE_PREMIUM = { europe: 19.63, elsewhere: 70.16 } as const;
 export const CA_PREMIUM_WEEK = 60;
 export const MX_PREMIUM = 400;
 
+/**
+ * A visitor's care in England, from 2026-10-02 (`docs/DATA-GAPS.md`): the
+ * Charges to Overseas Visitors Regulations 2015 leave A&E and a GP free to
+ * everyone, and charge a hospital stay at 150% of the NHS's tariff; an Irish
+ * resident is treated as resident, under the Common Travel Area. The stay's
+ * price is the National Cost Collection's average non-elective long stay,
+ * £4,852 (2022/23, HFMA, published 15 July 2024, read by hand: NHS England
+ * and HFMA turn a script away), taken for the tariff it sets.
+ */
+export const ENGLAND_VISITOR = { stayGbp: 4_852, markup: 1.5 } as const;
+
 /** OHIP's out-of-country payments, Canadian dollars a day. */
 export const OHIP_ABROAD = { outpatient: 50, inpatient: 200 } as const;

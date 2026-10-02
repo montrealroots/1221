@@ -11,7 +11,8 @@ exists, this file says so, and the item stays out.
 |---|---|---|---|
 | Weather days a building contract counts | 12 | NOAA GHCN-Daily, each town's station, days over 0.10 inch, 1996 to 2025: `tools/data/wetdays.mjs` | Got. A build's outdoor stage is held up by a wetter stretch than usual (`weatherDelay`). |
 | Electricity, gas and water by tariff | 11 | A home's use: EIA's average residential kWh by state, Ofgem's typical consumption values, and the utilities' own averages, against the researched tariffs | To build |
-| A visitor's price for care outside America | 9 | The NHS Payment Scheme's published prices, charged to overseas visitors at 150%; the HSE's and the provinces' published non-resident charges | To build |
+| A visitor's price for care in England | 9 | The Charges to Overseas Visitors Regulations 2015 (A&E and a GP free, a stay at 150% of tariff) and the National Cost Collection's average non-elective stay, £4,852 (2022/23), read by hand from HFMA: NHS England and HFMA turn scripts away | Got. A visitor's stay in England is billed so (`ENGLAND_VISITOR`). |
+| A visitor's price for care in Ireland, Canada, Mexico and Scotland | 9 | The HSE's and the provinces' published non-resident charges | To research |
 | A failed building inspection | 12 | Inspection results in NYC Open Data and Toronto's open data, counted to a first-time failure rate | To build |
 | A GP appointment's wait in Ireland, Canada and Mexico City | 9 | National surveys' published shares (Commonwealth Fund, CIHI, ENSANUT), where their microdata or tables give one | To research |
 | Pickleball's energy | 12 | Measured METs in published studies of pickleball play | To research |

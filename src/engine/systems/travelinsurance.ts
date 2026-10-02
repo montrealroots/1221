@@ -14,8 +14,10 @@
  *
  * **Care away**: care had in another country is the insurer's, to its
  * medical limit, the traveler paying its excess. Without it, a visitor in
- * America pays America's own uninsured price, less what OHIP pays an
- * Ontarian out of the country; elsewhere SLATE keeps no visitor's price and
+ * America pays America's own uninsured price, and from 2026-10-02 one in
+ * England nothing for A&E or a GP and 150% of the tariff for a stay, less
+ * what OHIP pays an Ontarian out of the country; elsewhere SLATE keeps no
+ * visitor's price and
  * the traveler's own cover's share holds (`careAway`, read by
  * `careFor` in `systems/health.ts`).
  */
@@ -27,7 +29,7 @@ import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, COUNTRIES } from '../content/geography';
-import { CA_PREMIUM_WEEK, IE_PREMIUM, MX_PREMIUM, OHIP_ABROAD, TRAVEL_POLICY, UK_PREMIUM, US_PREMIUM_SHARE, type TravelMarket, type TravelPolicyTerms } from '../content/travelinsurance';
+import { CA_PREMIUM_WEEK, ENGLAND_VISITOR, IE_PREMIUM, MX_PREMIUM, OHIP_ABROAD, TRAVEL_POLICY, UK_PREMIUM, US_PREMIUM_SHARE, type TravelMarket, type TravelPolicyTerms } from '../content/travelinsurance';
 import { homeOf } from './earnings';
 import { payFromBank } from './household';
 import { inHospital } from './health';
@@ -111,11 +113,16 @@ export function careAway(sim: Simulation, person: Person, care: 'visit' | 'urgen
   const here = CITIES.get(person.currentLocationId)?.countryId;
   const home = CITIES.get(homeOf(person))?.countryId;
   if (!here || !home || here === home) return homeShare;
+  // The price a visitor is charged where they are, where SLATE keeps one: America's, or England's (`ENGLAND_VISITOR`).
+  const england = here === 'uk' && CITIES.get(person.currentLocationId)?.parentId === 'uk-eng';
+  const local = here === 'us' ? usUninsured
+    : england ? (home === 'ie' || care !== 'stay' ? 0 : inSave(sim, ENGLAND_VISITOR.stayGbp * ENGLAND_VISITOR.markup, 'GBP'))
+    : undefined;
   let owed = homeShare;
-  if (here === 'us') {
+  if (local !== undefined) {
     const days = care === 'stay' ? stayDays : 1;
     const back = ohip && CITIES.get(homeOf(person))?.parentId === 'ca-08' ? inSave(sim, (care === 'stay' ? OHIP_ABROAD.inpatient : OHIP_ABROAD.outpatient) * days, 'CAD') : 0;
-    owed = Math.max(0, usUninsured - back);
+    owed = Math.max(0, local - back);
   }
   const policy = policyNow(person, at);
   if (!policy) return owed;
