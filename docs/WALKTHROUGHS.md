@@ -1,7 +1,7 @@
 # Walkthroughs
 
 The ten end-to-end scenarios of the owner's Final Master Build Command (items
-34 to 43), each step against what the build does as of 2026-10-01. **Works**
+34 to 43), each step against what the build does as of 2026-10-02. **Works**
 means a command or screen does it, with its checks and its effects
 downstream; **Part** says what's there and what isn't; **Missing** isn't
 built. The commands are in `docs/DEVMAP.md`, with their code and tests, and
@@ -36,15 +36,15 @@ corrected in the same commit, as the backlog's progress table is.
 | Step | Status | How |
 |---|---|---|
 | A store or online | Works | Clothes screen: 1,198 real products from 74 retailers in five countries (`systems/clothing.ts`). |
-| Filters | Part | Kind, retailer and where it's sold, and a search over brand, category, material and color; no size or budget filter. |
+| Filters | Part | Kind, department, the retailer’s own type of garment, retailer and where it’s sold, and a search over brand, category, material and color; no size or budget filter. |
 | Ascending prices | Works | Cheapest first, tax in. |
 | An actual variant | Works | A size and a color the product comes in, checked. |
-| Purchase or order | Works | `clothes.buy`, in a store here or online at the retailer's fee and working days. |
+| Purchase or order | Works | `clothes.buy`, or a basket checked out a retailer at a time, one payment and one delivery, the free threshold on the order (`clothes.basket_add`, `clothes.checkout`); canceled before delivery where British or Irish law gives the right (`clothes.cancel`). |
 | Received at the right place | Works | Carried home, or delivered to the home they live in (`systems/orders.ts`). |
 | Storage or worn | Works | The wardrobe; Belongings moves it (`items.move`). |
-| An outfit | Works | `clothes.save_outfit`, from what's to hand. |
-| Packed, cleaned, altered | Works | Packed for going away, washed at home or the laundromat and dry-cleaned at real shops' prices; a garment fits the weight it was bought for, and one too big is taken in at one of 11 named tailors (`clothes.alter`). |
-| Return, repair, resell | Part | Returns inside the window, unworn (`clothes.return`). Not kept: repair, SLATE keeping no tear to mend, and resale, no platform publishing what used clothes fetch. |
+| An outfit | Works | `clothes.save_outfit`, from what’s to hand, jewelry and accessories with it; Change Into These Now changes there and then (`clothes.change`), and what’s on now is kept (`wornNow`). A piece that can’t go on is refused, and one swapped on the day is told. |
+| Packed, cleaned, altered | Works | Packed by hand into the suitcase, each garment its folded liters, or Pack For Me (`luggage.pack`); washed at home or the laundromat and dry-cleaned at real shops’ prices; a garment fits the weight it was bought for, and one too big is taken in at one of 11 named tailors (`clothes.alter`). |
+| Return, repair, resell | Part | Returns inside the window, unworn (`clothes.return`); sold on Vinted, ThredUp or Kijiji (`clothes.sell`); Air Jordans sold on GOAT at its fees (`sneakers.sell`). Not kept: repair, SLATE keeping no tear to mend. |
 | Unavailable sizes, delays, returns, location | Works | Each is refused or said in words; tests in `tests/clothing.test.ts`. |
 
 ## 36. Vehicle Purchase, Modification And Use
@@ -53,15 +53,15 @@ corrected in the same commit, as the backlog's progress table is.
 |---|---|---|
 | Real models and listings | Works | Cars: each market's best-sellers at the makers' prices, new or used (`systems/vehicles.ts`). |
 | Compare | Works | A catalog, cheapest first, taxed and registered. |
-| Inspect or test | Missing | Not kept: a test drive or a pre-purchase inspection would change nothing SLATE reads, every model being sold at its published condition. |
+| Inspect or test | Part | A used car is inspected before buying at the place’s named pre-purchase inspection (`vehicle.inspect_used`); no test drive. |
 | Payment or financing | Works | Cash, a loan, or a lease (`vehicle.lease`). |
 | Registration and insurance | Works | Each jurisdiction's fees and insurance. |
-| Collect | Works | It's theirs where they bought it. |
-| Compatible modifications | Part | `vehicle.modify`, `vehicle.tint`, `vehicle.winter_tires`, and a wrap in ten colors and three finishes at three named shops (`vehicle.wrap`). Not kept: upholstery and audio, no named shop or effect being published in the towns, and wheel fitment, alloys being sold fitted to the car they're bought for. |
-| Itemized quote | Part | Each mod's price; no named shop's quote. |
+| Collect | Works | From stock it’s theirs at once; a factory order, with options that cost extra, isn’t driven until it comes after its dealers’ published weeks (`systems/caroptions.ts`). |
+| Compatible modifications | Part | Factory options when new (`content/caroptions.ts`); `vehicle.modify`, `vehicle.tint`, `vehicle.winter_tires`, a CarPlay stereo (`vehicle.stereo`), a wrap at three named shops (`vehicle.wrap`), and the interior to your own design, leopard print included, at four named upholsterers in New York and Los Angeles or as a Katzkin kit (`vehicle.interior`). Wheel fitment isn’t kept, alloys being sold fitted to their car. |
+| Itemized quote | Works | The interior’s estimate line by line: each material at its supplier’s price, each part’s hours at the trade’s rate. |
 | Book work, transport meanwhile | Works | A repair or a service is booked at a named garage in its hours, and the car is in until it's done (`vehicle.repair`, `vehicle.service`); meanwhile the dealer's loaner where one is published, or a rental (`vehicle.stand_in`). |
 | Collect the work | Part | A wrap, a repair or a service keeps the car at the shop its days, a loaner or a rental standing in (`vehicle.stand_in`); a mod is fitted at once, no tuner publishing its time. |
-| Drive, park, fuel, maintain | Part | Driven every day at published mileage and fuel prices, parking permits, inspections; faults at RepairPal's rates, mended at a garage, free under the maker's warranty (`systems/repairs.ts`); fuel stops on errands (`errand.fuel`); servicing by the maker's interval and its history, and collisions claimed on full cover (`systems/carcare.ts`). |
+| Drive, park, fuel, maintain | Works | Driven every day at published mileage, on what’s in its tank at its maker’s capacity (`systems/fueltank.ts`), filled at a named station or charged; parking permits, inspections; faults mended at a garage, free under warranty; servicing by the maker’s interval; collisions claimed on full cover. |
 | Change mods or sell | Works | `vehicle.sell`; mods stay on the car. |
 
 ## 37. Land Purchase And Backyard Construction
@@ -71,14 +71,14 @@ corrected in the same commit, as the backlog's progress table is.
 | Find and compare parcels | Works | Land: listings by market, cheapest first (`systems/land.ts`). |
 | Access, utilities, constraints | Part | Each market's kind and acreage; easements are missing (WORLD.md). |
 | Purchase | Works | `land.offer`. |
-| A project such as a field or a pool | Part | A house built on land (`build.start`), and on a home a pool, deck, patio, garage, suite or ADU, a tennis court in seven surfaces, a half basketball court, and lights for either (`home.renovate`); fields aren't kept, changing nothing SLATE reads. |
+| A project such as a field or a pool | Works | A house built on land (`build.start`), and on a home a pool, deck, patio, garage, suite or ADU, a tennis court in seven surfaces, a half basketball court, a pickleball court, a football pitch in three sizes, and lights for the courts (`home.renovate`). |
 | Feasibility and alternatives | Part | Whether the place allows a house; England doesn't. |
 | Dimensions, materials, equipment | Part | A court's surface and its lot, Fixr's singles area for tennis and half an NBA court for basketball; a spare bedroom made a home gym. New hardwood floors or a refinish, recouped on a worn floor as NAR finds; counters and cabinets go in with a kitchen remodel. |
 | Quotes and approvals | Part | The permit and the place's fees, paid at the start; one cost, not bids, no source publishing how far a home's bids spread. |
 | Schedule and payments | Works | Staged payments on a build (`build.pay`). |
 | Follow construction | Works | Stages, inspections, a failed one possible. |
 | Inspection and acceptance | Works | |
-| Use it | Part | A pool or a home's rooms add to its value; a pool to swim in (`life.look_after` swim), a court to play on in daylight or under its lights (`life.look_after` court). |
+| Use it | Works | A pool to swim in, a court to play on in daylight or under its lights, and friends over to play on any court or the pitch (`social.invite`, play). |
 | Maintain, repair, remove | Works | Parts wear and are renewed (`pool-renew`, `deck-renew`); a pool, a deck or a garage taken out, the pool's upkeep with it (`pool-removal`, `deck-removal`, `garage-demolition`). |
 
 ## 38. A Day At Home
@@ -86,11 +86,11 @@ corrected in the same commit, as the backlog's progress table is.
 | Step | Status | How |
 |---|---|---|
 | Wake at the right time and place | Works | `life.sleep`, the night where they are. |
-| Bathroom facilities | Works | A shower, a bath where the home has one (`life.look_after`), using the bathroom's soap and shampoo; without them it leaves you less clean (`systems/hygiene.ts`). |
-| Accessible clothes | Works | The day's outfit from what's to hand and clean (`systems/wardrobe.ts`). |
-| Food from supplies and equipment | Works | Groceries in the fridge, freezer and pantry, a recipe cooked in a kitchen that has what it needs (`food.cook`). |
+| Bathroom facilities | Works | A shower, a bath where the home has one (`life.look_after`), using the bathroom’s soap and shampoo, and dried on one of the home’s towels, three uses to its wash. |
+| Accessible clothes | Works | The day’s outfit from what’s to hand and clean, what’s on now kept, and a change by hand (`clothes.change`); pajamas at night. |
+| Food from supplies and equipment | Works | Groceries in the fridge, freezer and pantry, a recipe cooked for the servings chosen (`food.cook`); what’s short bought in place (`food.buy_short`); eating at home takes what’s ready first, then cooks, before spending. |
 | Leftovers and cleanup | Part | Leftovers kept and eaten first; washing up isn't separate from the recipe's minutes. |
-| Household activities or relaxing | Works | Laundry, tidying, unwinding, a cleaner. |
+| Household activities or relaxing | Works | Laundry, tidying, a cleaner, and unwinding in front of live TV, a service you pay for or a game, with Britain’s and Ireland’s TV licences as their laws ask (`systems/homelife.ts`). |
 | Invite someone, or leave for an appointment | Works | The calendar's commitments; a friend invited to a meal or home, answered for a stated reason (`social.invite`). |
 | The same home state on return | Works | Everything persists in the save. |
 | Evening routine and sleep | Works | A saved routine (`systems/routines.ts`), then sleep. |
@@ -101,13 +101,13 @@ corrected in the same commit, as the backlog's progress table is.
 | Step | Status | How |
 |---|---|---|
 | A vehicle they may drive | Works | A license checked per class (`mayDrive`). |
-| Load belongings | Works | Into a car (`items.move`). |
+| Load belongings | Works | Into a car (`items.move`), and shopping bought on a trip rides in it within the maker’s cargo liters. |
 | Several destinations | Works | Run Errands: up to eight stops in the town, each the screen's own command (`runErrands` in `systems/trips.ts`). |
-| Time and resources | Works | Each leg the published average trip at the town's TomTom traffic or at a walk, with its fuel; errand kilometers come off the month's driving. |
-| Fuel or charging stops | Works | A stop at a named station pays the trip's fuel (`errand.fuel`). Public charging isn't a stop: an electric car charges at home. |
-| Pay and update | Works | The trip's fuel at its station, the month's with the everyday driving. |
+| Time and resources | Works | Each leg the published average trip at the town’s TomTom traffic or at a walk, burning its fuel from the tank; a leg the tank can’t make is refused. |
+| Fuel or charging stops | Works | A stop at a named station fills the tank at the pump price (`errand.fuel`); Fill Up and Charge It on Vehicles (`vehicle.refuel`), a public charge over a 50 kW charger’s time. |
+| Pay and update | Works | Fuel is paid when it goes in; the month’s driving fills up at a quarter of a tank. |
 | Park and complete errands | Works | The meter for each stop's minutes at the town's rate (`errand.park`); a shop shut on arrival ends the trip home. Tickets aren't drawn: how often meters are checked isn't published. |
-| Load purchases | Works | Purchases go home with the trip; they aren't held in the car between stops, which nothing would read. |
+| Load purchases | Works | Purchases ride in the car, or are carried on foot, until the trip is home, then put away; chilled food out past USDA’s two hours goes in the bin. |
 | Put things away | Works | Belongings. |
 
 ## 40. International Travel
@@ -118,7 +118,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Documents and permissions | Works | Passports, visas for the pairs that need one, ETAs and permission to work (`systems/permission.ts`). |
 | Transport and accommodation | Works | Flights, trains, coaches or a car, and a hotel. |
 | Seats, baggage, extras | Part | Cabin class and bags at the carriers' fees; seats are missing. |
-| Pack items | Part | A week's clothes and the toiletries packed on leaving home, the cleanest first; not chosen by hand. |
+| Pack items | Works | By hand into the suitcase within its 45 liters, or a week packed for you; leaving home takes it as packed. |
 | Home and vehicle responsibilities | Part | Rent and bills run while away; a car stays where it is. |
 | Travel insurance | Works | Bought with the trip at the home market's price; a trip lost to illness or injury paid back, care away the insurer's (`travel.insure`). |
 | Departure, terminal, connections | Works | Check-in, the flights, delays and cancellations at BTS's rates, compensation where due. |
