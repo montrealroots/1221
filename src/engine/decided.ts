@@ -42,7 +42,7 @@ import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { mayCollide } from './systems/carcare';
-import { weatherDelay } from './systems/construction';
+import { buildInspectionFails, weatherDelay } from './systems/construction';
 import { metAtWork } from './systems/people';
 import { mayDivorce } from './systems/marriage';
 import { mayConceive } from './systems/children';
@@ -435,6 +435,19 @@ defineDecider<{ sim: Simulation; car: number }, string>({
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
   },
+});
+
+defineDecider<{ sim: Simulation; build: number; stage: number }, string>({
+  id: 'build.inspection',
+  decides: 'How many times a house’s inspection fails before it passes, each visit at the odds Los Angeles’s own records give its kind (INSPECTION_FAILS).',
+  drawnIn: 'src/engine/systems/construction.ts',
+  reads: {
+    build: (o, t) => ({ ...o, build: Math.round(t * 400) }),
+    stage: (o, t) => ({ ...o, stage: [1, 2, 4, 6][Math.min(3, Math.floor(t * 4))]! }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), build: seed, stage: [1, 2, 4, 6][seed % 4]! }),
+  decide: ({ sim, build, stage }) => String(buildInspectionFails(sim, `b${build}`, 'nyc', stage)),
 });
 
 defineDecider<{ sim: Simulation; build: number; month: number }, string>({

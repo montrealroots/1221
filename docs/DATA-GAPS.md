@@ -13,7 +13,7 @@ exists, this file says so, and the item stays out.
 | Electricity, gas and water by tariff | 11 | A home's use: EIA's average residential kWh by state, Ofgem's typical consumption values, and the utilities' own averages, against the researched tariffs | To build |
 | A visitor's price for care in England | 9 | The Charges to Overseas Visitors Regulations 2015 (A&E and a GP free, a stay at 150% of tariff) and the National Cost Collection's average non-elective stay, £4,852 (2022/23), read by hand from HFMA: NHS England and HFMA turn scripts away | Got. A visitor's stay in England is billed so (`ENGLAND_VISITOR`). |
 | A visitor's price for care in Ireland, Canada, Mexico and Scotland | 9 | The HSE's and the provinces' published non-resident charges | To research |
-| A failed building inspection | 12 | Inspection results in NYC Open Data and Toronto's open data, counted to a first-time failure rate | To build |
+| A failed building inspection | 12 | Los Angeles's LADBS inspection records since 2023 (data.lacity.org), counted to each kind's share of visits failed: foundation 38%, framing 38%, rough 48%, final 37%: `tools/data/inspections.mjs`. NYC Open Data and Toronto publish requests, not results | Got. A house's inspection fails at those odds, waiting a reinspection's days and paying its fee (`buildInspectionFails`). |
 | A GP appointment's wait in Ireland, Canada and Mexico City | 9 | National surveys' published shares (Commonwealth Fund, CIHI, ENSANUT), where their microdata or tables give one | To research |
 | Pickleball's energy | 12 | Measured METs in published studies of pickleball play | To research |
 | An architect's fee | 12 | No open dataset: fees are private contracts, and the bodies withdrew their scales | Out |

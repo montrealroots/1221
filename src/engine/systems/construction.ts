@@ -32,6 +32,15 @@
  * ordinary season's rain already; a wetter stretch than usual adds its extra
  * days, and no money, a weather delay being excusable but not compensable
  * (research-construction-process.json). A drier one doesn't finish early.
+ *
+ * From later on 2026-10-02, an inspection can fail (`buildInspectionFails`): each
+ * visit at the odds Los Angeles's own records give its kind of inspection
+ * (`content/inspectionodds.ts`), taken everywhere, no other place publishing
+ * its results. Failed, the work waits for corrections and another visit, at
+ * New York's measured days from asking to an inspector's visit (4.6 for
+ * building work, 8.7 for electrical; Ontario's Building Code two working
+ * days), and the reinspection's fee where one is published: New York City's
+ * $225, Toronto's C$92.79 hour (research-construction-process.json).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -46,11 +55,37 @@ import { parcelsOf, type Parcel } from './land';
 import { HOME, ownBuilt, paymentFor } from './homes';
 import { expenseFor, inTheBank, owe, payFromBank } from './household';
 import { WET_DAYS } from '../content/wetdays';
+import { INSPECTION_FAILS } from '../content/inspectionodds';
 import { CITIES } from '../content/geography';
 
 export const BUILD_STAGE_KIND = 'build.stage';
 export const BUILD_LOAN_KIND = 'build.loan_month';
 export const RETENTION_KIND = 'build.retention';
+export const REINSPECT_KIND = 'build.reinspect';
+
+/** Which of Los Angeles's kinds of inspection a stage's is, by the stage's index. */
+const INSPECTION_KIND: Readonly<Record<number, keyof typeof INSPECTION_FAILS>> = { 1: 'foundation', 2: 'framing', 4: 'rough', 6: 'final' };
+/** A reinspection: the days to the inspector's visit, and its fee and money where one is published. */
+export function reinspection(place: BuildPlace, stage: number): { days: number; fee?: { amount: number; currency: string } } {
+  if (place === 'ontario') return { days: 2, fee: { amount: 92.79, currency: 'CAD' } };
+  return { days: stage === 4 ? 8.7 : 4.6, ...(place === 'nyc' ? { fee: { amount: 225, currency: 'USD' } } : {}) };
+}
+
+/** The fees for a stage's reinspections, in the save's money: none where none is published. */
+export function reinspectionFee(sim: Simulation, place: BuildPlace, stage: number, fails: number): Money {
+  const fee = reinspection(place, stage).fee;
+  return fee ? inSave(sim, Math.round(fee.amount * 100) * fails, fee.currency) : 0;
+}
+
+/** How many times a stage's inspection fails before it passes, each visit at its kind's odds; none where it has none. */
+export function buildInspectionFails(sim: Simulation, key: string, place: BuildPlace, stage: number): number {
+  const kind = INSPECTION_KIND[stage];
+  if (!kind || !INSPECTIONS[place][stage]) return 0;
+  const rng = sim.rng('build.inspection', key, String(stage));
+  let fails = 0;
+  while (fails < 10 && rng.next() < INSPECTION_FAILS[kind]) fails += 1;
+  return fails;
+}
 /** A built house's one feature kept: its yard, the lot around it (`homes.ts`'s ids, not words on a screen). */
 const YARD = ['yard'] as const;
 const MONTH_DAYS = 30.436875;
@@ -82,6 +117,8 @@ export interface Build {
   log: { at: Instant; line: string }[];
   /** Days the weather has added, from 2026-10-02 (`weatherDelay`). */
   weatherDays?: number;
+  /** Inspections failed and seen again (`buildInspectionFails`). */
+  inspectionFails?: number;
 }
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -245,8 +282,20 @@ function next(sim: Simulation, person: Person, b: Build): void {
 }
 
 /** A stage's bill paid: its inspection, then the next stage, or the house finished. */
-function advance(sim: Simulation, person: Person, b: Build): void {
+function advance(sim: Simulation, person: Person, b: Build, reinspected = false): void {
   const inspection = INSPECTIONS[b.place][b.stage];
+  // Failed, corrected and seen again before the next stage begins.
+  const fails = inspection && !reinspected ? buildInspectionFails(sim, `${person.id}-${b.parcelId}`, b.place, b.stage) : 0;
+  if (fails > 0) {
+    const r = reinspection(b.place, b.stage);
+    const fee = reinspectionFee(sim, b.place, b.stage, fails);
+    if (fee > 0 && !payFromBank(sim, person, fee, `${inspection!}, ${fails === 1 ? 'a reinspection' : `${fails} reinspections`}`, 'construction')) owe(sim, person, fee, 'A reinspection fee', 'construction');
+    b.inspectionFails = (b.inspectionFails ?? 0) + fails;
+    b.log.push({ at: sim.now, line: `${inspection!}, failed ${fails === 1 ? 'once' : `${fails} times`}; corrected and seen again` });
+    say(sim, person, 'An Inspection Failed', `The ${inspection!.toLowerCase()} found corrections to make${fails > 1 ? `, ${fails} times over` : ''}. The work waits about ${Math.round(r.days * fails)} days for them and the inspector${fee > 0 ? `, and the reinspection costs ${formatMoney(fee, saveCurrency(sim.universe), { cents: false })}` : ''}.`, 55);
+    sim.schedule({ at: sim.now + Math.round(r.days * fails * MS_DAY), kind: REINSPECT_KIND, label: `${inspection!}, Again`, category: 'home', priority: 30, payload: { personId: person.id } });
+    return;
+  }
   if (inspection) b.log.push({ at: sim.now, line: `${inspection}, passed` });
   if (b.stage === STAGES.length - 1) { finish(sim, person, b); return; }
   b.stage += 1;
@@ -359,6 +408,13 @@ export function registerConstruction(sim: Simulation): void {
     const interest = Math.round((Math.max(0, -(account?.balance ?? 0)) * b.loan.rate) / 12);
     if (interest > 0 && !payFromBank(s, person, interest, 'The construction loan’s interest, a month', 'construction')) owe(s, person, interest, 'The construction loan’s interest', 'construction');
     s.schedule({ at: s.now + 30 * MS_DAY, kind: BUILD_LOAN_KIND, label: 'Construction Loan Interest', category: 'home', priority: 30, payload: { personId: person.id } });
+  });
+
+  sim.onSchedule(REINSPECT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const b = person?.building;
+    if (!person || !b) return;
+    advance(s, person, b, true);
   });
 
   sim.onSchedule(BUILD_STAGE_KIND, (item, s) => {

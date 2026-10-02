@@ -12,7 +12,8 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { LAND_MARKETS } from '@/engine/content/land';
 import { SQFT_PER_M2, STAGES } from '@/engine/content/construction';
-import { buildFees, buildQuote, buildRefusal, mostFloor, type BuildQuote, weatherDelay } from '@/engine/systems/construction';
+import { buildFees, buildInspectionFails, buildQuote, buildRefusal, mostFloor, reinspection, reinspectionFee, type BuildQuote, weatherDelay } from '@/engine/systems/construction';
+import { INSPECTION_FAILS } from '@/engine/content/inspectionodds';
 import { parcelsOf, type Parcel } from '@/engine/systems/land';
 import { homesOf, paymentFor } from '@/engine/systems/homes';
 
@@ -384,5 +385,41 @@ describe('a wet build', () => {
     expect(added).toBeGreaterThan(0);
     // Finished no sooner than the quote and the weather's days together.
     expect(sim.now).toBeGreaterThanOrEqual(r.value!.finishesBy + (added - 1) * MS_DAY);
+  }, 120_000);
+});
+
+describe('an inspection', () => {
+  it('fails as often as Los Angeles’s own records find, the stage waiting for corrections and another visit', () => {
+    const sim = save('us-ny-newyork', 'build-inspect');
+    const mean = (stage: number) => { let n = 0; for (let k = 0; k < 2_000; k += 1) n += buildInspectionFails(sim, `k${k}`, 'nyc', stage); return n / 2_000; };
+    // Failing a share p of visits, a stage fails p / (1 − p) times on average before it passes.
+    expect(mean(4)).toBeCloseTo(INSPECTION_FAILS.rough / (1 - INSPECTION_FAILS.rough), 1);
+    expect(mean(1)).toBeCloseTo(INSPECTION_FAILS.foundation / (1 - INSPECTION_FAILS.foundation), 1);
+    // A stage without an inspection, or a place that names none for it, never fails one.
+    expect(mean(3)).toBe(0);
+    expect(mean(0)).toBe(0);
+    let haven = 0;
+    for (let k = 0; k < 200; k += 1) haven += buildInspectionFails(sim, `k${k}`, 'new-haven', 2);
+    expect(haven).toBe(0);
+    expect(reinspectionFee(sim, 'nyc', 2, 2)).toBe(inSave(sim, 450_00, 'USD'));
+    expect(reinspectionFee(sim, 'los-angeles', 2, 2)).toBe(0);
+    expect(reinspection('nyc', 4)).toEqual({ days: 8.7, fee: { amount: 225, currency: 'USD' } });
+    expect(reinspection('los-angeles', 2)).toEqual({ days: 4.6 });
+    expect(reinspection('ontario', 2)).toEqual({ days: 2, fee: { amount: 92.79, currency: 'CAD' } });
+  });
+
+  it('failed in New York costs $225 a visit and holds the house up', () => {
+    const sim = save('us-ny-newyork', 'build-inspect-ny');
+    const p = own(sim, /Queens/, 2_850 / 43_560, 380_000_00);
+    const q = buildQuote(p, 'ne-owner', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total * 2, 'USD'));
+    const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } });
+    expect(r.ok, r.error).toBe(true);
+    let failed = 0;
+    for (let d = 0; d < 900 && sim.player.building; d += 1) { failed = sim.player.building.inspectionFails ?? 0; sim.advanceBy(MS_DAY); }
+    expect(failed).toBeGreaterThan(0);
+    const fees = memoed(sim, /reinspection/).reduce((a, t) => a + t.postings.find((x) => x.amount > 0)!.amount, 0);
+    expect(fees).toBe(inSave(sim, 225_00 * failed, 'USD'));
+    expect(sim.now).toBeGreaterThan(r.value!.finishesBy + Math.floor(4.6 * failed) * MS_DAY - MS_DAY);
   }, 120_000);
 });

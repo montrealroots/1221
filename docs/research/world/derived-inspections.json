@@ -1,0 +1,59 @@
+{
+ "source": "LADBS, Building and Safety Inspections, https://data.lacity.org/resource/9w5z-rg2h.json, inspections from 2023-01-01",
+ "read": "2026-10-02",
+ "failed": [
+  "Corrections Issued",
+  "Not Ready for Inspection",
+  "No Access for Inspection"
+ ],
+ "passed": [
+  "Approved",
+  "Conditional Approval",
+  "Permit Finaled",
+  "OK to Issue CofO",
+  "OK for CofC",
+  "OK for TCO"
+ ],
+ "kinds": {
+  "foundation": {
+   "inspections": [
+    "Footing/Foundation/Slab",
+    "Excavation/Setback/Form/Re-Bar"
+   ],
+   "failed": 27523,
+   "passed": 44159,
+   "failShare": 0.384
+  },
+  "framing": {
+   "inspections": [
+    "Wood Frame",
+    "BUILDING-Rough-Frame",
+    "Floor/Roof Diaphrgm/Shear Wall"
+   ],
+   "failed": 51356,
+   "passed": 83357,
+   "failShare": 0.3812
+  },
+  "rough": {
+   "inspections": [
+    "Rough",
+    "ELECTRICAL-Rough",
+    "PLUMBING-Rough",
+    "HVAC-Rough",
+    "Insulation"
+   ],
+   "failed": 122274,
+   "passed": 132850,
+   "failShare": 0.4793
+  },
+  "final": {
+   "inspections": [
+    "Final",
+    "ELECTRICAL-Final"
+   ],
+   "failed": 236157,
+   "passed": 400908,
+   "failShare": 0.3707
+  }
+ }
+}
