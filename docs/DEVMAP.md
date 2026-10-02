@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-245 commands; 239 named by a test, 6 not.
+249 commands; 243 named by a test, 6 not.
 
 ## aircraft
 
@@ -328,6 +328,15 @@ Each command the player can run: the engine file that handles it, the screens th
 | `pension.social_security` | `src/engine/systems/socialsecurity.ts` | `CareerWorkspace.tsx` | `socialsecurity.test.ts` | The Business |
 | `pension.start` | `src/engine/systems/pension.ts` | `CareerWorkspace.tsx` | `pension.test.ts` | The Business |
 | `pension.state` | `src/engine/systems/statepension.ts` | `CareerWorkspace.tsx` | `statepension.test.ts` | The Business |
+
+## phone
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `phone.activate` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.battery` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.protect` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
 
 ## pilot
 

@@ -69,6 +69,8 @@ export interface Item {
   bulky?: boolean;
   /** A garment's kind, care and wear (`systems/wardrobe.ts`). */
   garment?: import('./wardrobe').Garment;
+  /** A phone: which, its color, its line, its battery and what's paid on it (`systems/phones.ts`, from 2026-10-02). */
+  device?: import('./phones').Device;
   /** Food: what it is, how much is left, and when it goes off (`systems/pantry.ts`). */
   food?: import('./pantry').Food;
   /** A toiletry: its kind and how much is left (`systems/hygiene.ts`). */

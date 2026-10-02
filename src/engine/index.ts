@@ -37,6 +37,7 @@ import { itemsOf, registerItems } from './systems/items';
 import { registerOrders } from './systems/orders';
 import { registerLuggage } from './systems/luggage';
 import { registerSneakers } from './systems/sneakers';
+import { registerPhones } from './systems/phones';
 import { registerClothing, starterWardrobe } from './systems/clothing';
 import { registerAlcohol } from './systems/alcohol';
 import { registerKitchen } from './systems/kitchen';
@@ -207,6 +208,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerOrders(sim);
   registerLuggage(sim);
   registerSneakers(sim);
+  registerPhones(sim);
   registerClothing(sim);
   registerAlcohol(sim);
   registerKitchen(sim);

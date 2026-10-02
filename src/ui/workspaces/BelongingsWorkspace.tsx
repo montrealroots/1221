@@ -5,12 +5,14 @@
  * hand, to a place they can reach, into room enough.
  */
 import { Fragment, useState } from 'react';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -65,6 +67,7 @@ export function BelongingsWorkspace() {
           </div>
         </Panel>
         <Suitcase />
+        <Phones />
         {items.length > 0 && (
           <Panel title="Each Thing">
             <LookRegion>
@@ -134,6 +137,93 @@ function Suitcase() {
           <button type="button" className="btn btn-sm" disabled={!pack.open || Boolean(no)} title={no ?? pack.reason} onClick={() => { const a = run<{ packed: number }>('luggage.pack', {}); if (a.ok) toast(`${a.value!.packed} packed.`, 'positive'); }}>Pack For Me</button>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!empty.open || Boolean(no) || inIt.length === 0} title={no ?? empty.reason} onClick={() => { const a = run<{ unpacked: number }>('luggage.unpack', {}); if (a.ok) toast(`${a.value!.unpacked} put away.`, 'positive'); }}>Unpack</button>
         </div>
+      </div>
+    </Panel>
+  );
+}
+
+/** Phones: the makers' own where you live, cheapest first, bought outright or on a 0% plan, an old one traded in; and the phones you own, on your line, their batteries and cover (`systems/phones.ts`). */
+function Phones() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe), { cents: false });
+  const buy = useFeature('phone.buy');
+  const activate = useFeature('phone.activate');
+  const battery = useFeature('phone.battery');
+  const protect = useFeature('phone.protect');
+  const list = phonesOnSale(sim, person);
+  const owned = phonesOf(person);
+  const [phoneId, setPhoneId] = useState('');
+  const [color, setColor] = useState('');
+  const [how, setHow] = useState('');
+  const [tradeIn, setTradeIn] = useState('');
+  const chosen = phoneById(phoneId) ?? list[0];
+  if (!chosen && owned.length === 0) return null;
+  const plans = chosen ? plansFor(chosen).flatMap((x) => x.months.map((m) => ({ key: `${x.plan.name}|${m}`, name: x.plan.name, months: m }))) : [];
+  const plan = plans.find((x) => x.key === how);
+  const order = chosen ? { phoneId: chosen.id, color: chosen.colors.includes(color) ? color : chosen.colors[0] ?? '', ...(tradeIn ? { tradeInItemId: tradeIn } : {}), ...(plan ? { plan: plan.name, months: plan.months } : {}) } : undefined;
+  const q = order ? phoneQuote(sim, person, order) : undefined;
+  const no = order ? phoneRefusal(sim, person, order) : 'Choose a phone.';
+  const line = activationCost(sim, person);
+  const size = (gb: number) => (gb >= 1024 ? `${gb / 1024} TB` : `${gb} GB`);
+  return (
+    <Panel title="Phones" subtitle={chosen ? `${list.length} on their makers’ own stores where you live, unlocked, cheapest first` : undefined}>
+      <div className="col gap-3">
+        {owned.map((o) => {
+          const p = phoneById(o.device.phoneId);
+          const cost = batteryQuote(sim, person, o);
+          const covers = p ? protectionFor(p) : [];
+          return (
+            <div key={o.id} className="col gap-1">
+              <div className="small"><strong>{o.label}</strong>, {o.device.color}{o.device.activated ? `, on your ${line?.carrier ?? ''} line` : ''}{o.at.kind === 'order' ? ', on its way' : ''}</div>
+              <div className="xs dim">{`Battery ${Math.round(o.device.battery * 100)}%`}{o.device.finance ? ` · ${o.device.finance.plan}: ${money(o.device.finance.monthly)} a month, ${o.device.finance.monthsLeft} left` : ''}{o.device.protection ? ` · ${o.device.protection.plan}, ${money(o.device.protection.monthly)} a month` : ''}</div>
+              <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                {!o.device.activated && <button type="button" className="btn btn-sm btn-ghost" disabled={!activate.open || o.at.kind === 'order'} title={activate.reason} onClick={() => { const a = run<{ paid: number }>('phone.activate', { itemId: o.id }); if (a.ok) toast(`On your line, for ${money(a.value!.paid)}.`, 'positive'); }}>{line ? `Put It On Your Line, ${money(line.cost)}` : 'Put It On Your Line'}</button>}
+                {o.device.battery < 0.999 && cost !== undefined && <button type="button" className="btn btn-sm btn-ghost" disabled={!battery.open} title={battery.reason} onClick={() => { if (run('phone.battery', { itemId: o.id }).ok) toast('A new battery.', 'positive'); }}>{`Replace The Battery, ${money(cost)}`}</button>}
+                {covers.filter((c) => o.device.protection?.plan !== c.plan).map((c) => <button key={c.plan} type="button" className="btn btn-sm btn-ghost" disabled={!protect.open} title={protect.reason} onClick={() => { if (run('phone.protect', { itemId: o.id, plan: c.plan }).ok) toast(`${c.plan}, from now.`, 'positive'); }}>{`${c.plan}, ${formatMoney(Math.round(c.monthly * 100), c.currency, { cents: false })} A Month`}</button>)}
+                {o.device.protection && <button type="button" className="btn btn-sm btn-ghost" disabled={!protect.open} onClick={() => run('phone.protect', { itemId: o.id })}>End The Cover</button>}
+              </div>
+            </div>
+          );
+        })}
+        {chosen && order && (
+          <div className="field-row field-row-tight">
+            <div className="field">
+              <label htmlFor="phone-pick">Phone</label>
+              <select id="phone-pick" value={chosen.id} onChange={(e) => { setPhoneId(e.target.value); setHow(''); }}>
+                {list.map((p) => <option key={p.id} value={p.id}>{`${p.maker} ${p.model}, ${size(p.storageGB)}, ${money(phonePrice(sim, person, p))}${p.press ? ', A Press Price' : ''}`}</option>)}
+              </select>
+            </div>
+            {chosen.colors.length > 1 && (
+              <div className="field">
+                <label htmlFor="phone-color">Color</label>
+                <select id="phone-color" value={order.color} onChange={(e) => setColor(e.target.value)}>{chosen.colors.map((c) => <option key={c} value={c}>{c}</option>)}</select>
+              </div>
+            )}
+            <div className="field">
+              <label htmlFor="phone-how">Paying</label>
+              <select id="phone-how" value={how} onChange={(e) => setHow(e.target.value)}>
+                <option value="">Outright</option>
+                {plans.map((x) => <option key={x.key} value={x.key}>{`${x.name}, ${x.months} Months At 0%`}</option>)}
+              </select>
+            </div>
+            {owned.length > 0 && (
+              <div className="field">
+                <label htmlFor="phone-trade">Trade In</label>
+                <select id="phone-trade" value={tradeIn} onChange={(e) => setTradeIn(e.target.value)}>
+                  <option value="">Nothing</option>
+                  {owned.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
+                </select>
+              </div>
+            )}
+          </div>
+        )}
+        {chosen && order && q && (
+          <div className="row gap-2" style={{ alignItems: 'baseline', flexWrap: 'wrap' }}>
+            <button type="button" className="btn btn-sm btn-primary" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('phone.buy', order).ok) toast(`${chosen.maker} ${chosen.model}, on its way.`, 'positive'); }}>{q.monthly ? `Buy It, ${money(q.monthly)} A Month` : `Buy It, ${money(q.total)}`}</button>
+            <span className="xs dim">{q.tradeIn > 0 ? `${money(q.tradeIn)} off for the trade-in, the maker's published most. ` : ''}{no ?? ''}</span>
+          </div>
+        )}
       </div>
     </Panel>
   );
