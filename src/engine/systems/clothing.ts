@@ -27,7 +27,8 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, formatTime, type Instant } from '../core/time';
+import { occupiedAt } from './life';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
@@ -42,7 +43,7 @@ import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place
 import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { fitOf, fitKgFor, sizeFor } from './tailoring';
 import { bodyOf } from './body';
-import { dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
+import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
 
 /** A purchase of clothes: what, from whom, how, and what the goods cost; and whether it went back. */
 export interface ClothesPurchase {
@@ -525,6 +526,20 @@ export function registerClothing(sim: Simulation): void {
     if (no) throw new CommandError(no);
     s.player.dressed = ids;
     return { dressed: ids };
+  });
+  // Changed into, now: the time it takes, each piece a wear, and what they have on (from 2026-10-02).
+  sim.onCommand<{ itemIds: string[] }, { wearing: string[] }>('clothes.change', (p, { sim: s }) => {
+    const person = s.player;
+    const ids = Array.isArray(p?.itemIds) ? p.itemIds.map(String) : [];
+    if (ids.length === 0) throw new CommandError('Choose what to put on.');
+    const no = dressRefusal(s, person, ids);
+    if (no) throw new CommandError(no);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    s.advanceTo(s.now + CHANGE_MINUTES * 60_000);
+    changeInto(s, person, ids.map((id) => itemById(person, id) as Item & { garment: Garment }));
+    person.dressed = ids;
+    return { wearing: ids };
   });
   sim.onCommand<{ name: string; itemIds: string[] }, { outfitId: string }>('clothes.save_outfit', (p, { sim: s }) => ({ outfitId: saveOutfit(s, s.player, String(p?.name ?? ''), Array.isArray(p?.itemIds) ? p.itemIds.map(String) : []).id }));
   sim.onCommand<{ outfitId: string }, { dressed: string[] }>('clothes.wear_outfit', (p, { sim: s }) => {

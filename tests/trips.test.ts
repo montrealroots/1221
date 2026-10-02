@@ -13,7 +13,8 @@ import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
-import { monthKm, runningCost, vehiclesOf } from '@/engine/systems/vehicles';
+import { modelById, monthKm, vehiclesOf } from '@/engine/systems/vehicles';
+import { burnOf, capacityOf, levelOf } from '@/engine/systems/fueltank';
 import { driverCost, driverIn, leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
 import { metAtWork } from '@/engine/systems/people';
 import { salonsIn } from '@/engine/systems/hygiene';
@@ -72,7 +73,9 @@ describe('a trip', () => {
     const out = (memo: string) => sim.universe.transactions.filter((t) => t.memo === memo).map((t) => t.postings.filter((q) => { const acc = sim.universe.accounts[q.accountId]; return acc?.ownerId === sim.player.id && !acc.nominal; }).reduce((a, q) => a - q.amount, 0));
     expect(out('Parking, Manhattan south of 96th Street')).toEqual([meterCost(sim, 'us-ny-newyork', stop.minutes)]);
     const km = leg('us-ny-newyork', 'car', 'errand').km + leg('us-ny-newyork', 'car', 'shopping').km;
-    expect(out('Fuel at BP, 255 E 125th St')).toEqual([runningCost(sim, v, leg('us-ny-newyork', 'car', 'errand').km) + runningCost(sim, v, leg('us-ny-newyork', 'car', 'shopping').km)]);
+    // The fuel came out of the tank (`systems/fueltank.ts`, from 2026-10-02): nothing paid at a station, the tank down by the legs.
+    expect(out('Fuel at BP, 255 E 125th St')).toEqual([]);
+    expect(levelOf(v)).toBeCloseTo(1 - burnOf(modelById(v.modelId)!, leg('us-ny-newyork', 'car', 'errand').km + leg('us-ny-newyork', 'car', 'shopping').km, v)! / capacityOf(modelById(v.modelId)!)!.size, 9);
     expect(v.errandKm).toBeCloseTo(km, 9);
     // The month's driving is the rest of the place's average: the errands' and its together make the month.
     const kmBefore = v.km!;

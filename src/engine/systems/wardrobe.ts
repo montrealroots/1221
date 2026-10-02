@@ -102,6 +102,25 @@ export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now
   return [suit, dress, top, bottom, under, socks, shoes, ...(chosen.some((g) => g.garment.slot === 'outer') && outer ? [outer] : [])].filter((g): g is Item & { garment: Garment } => Boolean(g));
 }
 
+/**
+ * Getting changed: ten minutes, SLATE's estimate. No time-use survey keeps
+ * dressing apart from washing and grooming, which the American Time Use
+ * Survey counts together.
+ */
+export const CHANGE_MINUTES = 10;
+
+/** What they have on now, as garments they still own. */
+export const wornNow = (person: Person): (Item & { garment: Garment })[] => {
+  const mine = garmentsOf(person);
+  return (person.wornNow?.itemIds ?? []).map((id) => mine.find((g) => g.id === id)).filter((g): g is Item & { garment: Garment } => Boolean(g));
+};
+
+/** Changed into these, now: each a wear toward its wash, and what they have on. The caller has checked them and taken the time. */
+export function changeInto(sim: Simulation, person: Person, items: readonly (Item & { garment: Garment })[]): void {
+  for (const g of items) wearOnce(g);
+  person.wornNow = { itemIds: items.map((g) => g.id), since: sim.now };
+}
+
 /** A wear: counted toward its wash, and in the wash at its kind's count. */
 function wearOnce(item: Item & { garment: Garment }): void {
   item.garment.wears += 1;
@@ -118,6 +137,7 @@ export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.no
   if (!outfit) return false;
   const missing = tell && person.id === sim.universe.playerId ? chosenMissing(sim, person, at) : [];
   for (const g of outfit) wearOnce(g);
+  person.wornNow = { itemIds: outfit.map((g) => g.id), since: at };
   if (missing.length) {
     // A dress or a suit is stood in for by a top and a bottom, and they by either.
     const BODY: readonly Slot[] = ['suit', 'dress', 'top', 'bottom'];

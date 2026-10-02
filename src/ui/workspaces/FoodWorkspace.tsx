@@ -15,7 +15,7 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { cookRefusal, groceryCatalog, groceryRefusal, kitchenStock, unitPrice } from '@/engine/systems/kitchen';
+import { cookRefusal, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, unitPrice } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -207,7 +207,8 @@ function Recipes() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cookable = useFeature('food.cook');
-  const rows = RECIPES.map((r) => ({ r, no: cookRefusal(sim, person, r.id) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
+  const [serves, setServes] = useState<Record<string, number>>({});
+  const rows = RECIPES.map((r) => ({ r, n: serves[r.id] ?? r.servings, no: cookRefusal(sim, person, r.id, serves[r.id] ?? r.servings) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
   const ready = rows.filter((x) => !x.no).length;
   return (
     <Panel title="Recipes" subtitle={`${ready} of ${RECIPES.length} can be cooked with what’s in the kitchen`}>
@@ -215,19 +216,24 @@ function Recipes() {
         <table>
           <thead><tr><th scope="col">Recipe</th><th scope="col" className="num">Serves</th><th scope="col" className="num">Minutes</th><th scope="col">Source</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
           <tbody>
-            {rows.slice(0, 12).map(({ r, no }) => (
+            {rows.slice(0, 12).map(({ r, n, no }) => (
               <tr key={r.id}>
                 <td>{r.name}{no ? <div className="xs dim">{no}</div> : null}</td>
-                <td className="num mono">{r.servings}</td>
+                <td className="num mono">
+                  <label className="sr-only" htmlFor={`serves-${r.id}`}>Servings</label>
+                  <select id={`serves-${r.id}`} value={n} onChange={(e) => setServes({ ...serves, [r.id]: Number(e.target.value) })}>
+                    {Array.from({ length: servingsRange(r).most }, (_, i) => i + 1).map((k) => <option key={k} value={k}>{k}</option>)}
+                  </select>
+                </td>
                 <td className="num mono">{r.minutes ?? '30*'}</td>
                 <td className="small">{r.source}</td>
-                <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!cookable.open || Boolean(no)} title={no ?? cookable.reason} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id }); if (res.ok) toast(`${r.name}: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It</button></td>
+                <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!cookable.open || Boolean(no)} title={no ?? cookable.reason} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id, servings: n }); if (res.ok) toast(`${r.name}: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It</button></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Fine>The recipes are their sources’ own. A recipe makes all its servings: one eaten, the rest in the fridge for its own days or FoodSafety.gov’s three. Seasonings, spices, stock and water are taken as in the cupboard; a count is weighed by USDA’s medium portion. A starred time is SLATE’s 30 minutes where the source gave none. A home’s kitchen has a stove, an oven, a grill, a fridge-freezer and a microwave; a blender or a slow cooker isn’t kept yet.</Fine>
+      <Fine>The recipes are their sources’ own. A recipe is cooked for the servings chosen, its ingredients scaled to them, from one to three times what it makes: one eaten, the rest in the fridge for its own days or FoodSafety.gov’s three. Seasonings, spices, stock and water are taken as in the cupboard; a count is weighed by USDA’s medium portion. A starred time is SLATE’s 30 minutes where the source gave none. A home’s kitchen has a stove, an oven, a grill, a fridge-freezer and a microwave; a blender or a slow cooker isn’t kept yet.</Fine>
     </Panel>
   );
 }

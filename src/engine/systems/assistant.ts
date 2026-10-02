@@ -22,6 +22,7 @@ import { saveCurrency } from '../core/money';
 import { formatDate } from '../core/time';
 import { CITIES } from '../content/geography';
 import { netWorth } from './finance';
+import { levelOf, rangeKm } from './fueltank';
 
 /** What the assistant may propose, and the payload each takes, as the engine reads it. */
 export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload: string }>> = {
@@ -30,13 +31,15 @@ export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload
   'calendar.schedule': { does: 'Put a plan of your own on the calendar', payload: '{ title: string, at: epoch ms, durationMinutes?: number, locationId?: city id }' },
   'clothes.buy': { does: 'Buy a clothing product in a store or online', payload: '{ productId: string, how: "store" | "online", size?: string, color?: string, quantity?: number }' },
   'clothes.dress': { does: 'Put on garments you own and have to hand', payload: '{ itemIds: string[] }' },
+  'clothes.change': { does: 'Change into garments you own and have to hand, now', payload: '{ itemIds: string[] }' },
   'clothes.save_outfit': { does: 'Save garments you own as an outfit', payload: '{ name: string, itemIds: string[] }' },
   'clothes.wear_outfit': { does: 'Put on a saved outfit', payload: '{ outfitId: string }' },
   'clothes.sell': { does: 'Sell clean garments you own', payload: '{ itemIds: string[] }' },
-  'food.cook': { does: 'Cook a recipe from what is in your kitchen', payload: '{ recipeId: string }' },
+  'food.cook': { does: 'Cook a recipe from what is in your kitchen, for so many servings', payload: '{ recipeId: string, servings?: number }' },
   'food.eat_ready': { does: 'Eat something ready in your kitchen', payload: '{ itemId?: string }' },
   'travel.book': { does: 'Book a journey to another town, with somewhere to stay', payload: '{ toCity: city id, day: epoch ms, slot?: number, nights?: number, returnDay?: epoch ms, hotelId?: string, room?: string, bags?: number }' },
   'vehicle.buy': { does: 'Buy a vehicle where you live', payload: '{ modelId: string, age?: years, financed?: boolean, months?: number, coverage?: "full" | "liability" }' },
+  'vehicle.refuel': { does: 'Fill a vehicle at a station in its town, or charge an electric one, publicly or at home', payload: '{ vehicleId: string, home?: boolean }' },
   'vehicle.wrap': { does: 'Wrap a car you own at a wrap shop', payload: '{ vehicleId: string, shopId: string, color: string, finish: string }' },
   'vehicle.stereo': { does: 'Fit a stereo to a car you own', payload: '{ vehicleId: string }' },
   'home.renovate': { does: 'Start a project on a home you own', payload: '{ homeId: string, projectId: string }' },
@@ -67,7 +70,7 @@ export function assistantState(sim: Simulation) {
     upcoming: sim.universe.scheduled.filter((s) => s.status === 'pending' && s.requiresPlayer).slice(0, 12).map((s) => ({ at: s.at, label: s.label })),
     garments: (p.items ?? []).filter((i) => i.garment).slice(0, 80).map((i) => ({ id: i.id, label: i.label, slot: i.garment!.slot, dirty: i.garment!.dirty === true, size: i.spec?.size, color: i.spec?.color })),
     outfits: (p.outfits ?? []).map((o) => ({ id: o.id, name: o.name })),
-    vehicles: (p.vehicles ?? []).filter((v) => v.soldAt === undefined).map((v) => ({ id: v.id, modelId: v.modelId, cityId: v.cityId })),
+    vehicles: (p.vehicles ?? []).filter((v) => v.soldAt === undefined).map((v) => ({ id: v.id, modelId: v.modelId, cityId: v.cityId, full: Math.round(levelOf(v) * 100) / 100, rangeKm: rangeKm(v) })),
     homes: (p.homes ?? []).map((h) => ({ id: h.id, cityId: h.cityId, address: h.facts.address })),
     contacts: (p.contacts ?? []).slice(0, 40).map((c) => ({ id: c.id, name: c.name, cityId: c.cityId })),
     commands: ASSISTANT_COMMANDS,

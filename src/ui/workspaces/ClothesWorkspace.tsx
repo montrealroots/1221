@@ -18,7 +18,7 @@ import type { Slot } from '@/engine/content/garmentcare';
 import type { ClothingProduct } from '@/engine/content/clothingcatalog';
 import { arrange } from '@/engine/systems/catalog';
 import type { Item } from '@/engine/systems/items';
-import { chosenMissing, cleanOutfits, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
+import { CHANGE_MINUTES, chosenMissing, cleanOutfits, wornNow, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
 import { alterCost, alterRefusal, fitOf, tailorsIn } from '@/engine/systems/tailoring';
 import { resaleOf, sellRefusal } from '@/engine/systems/resale';
@@ -127,6 +127,8 @@ function WhatToWear() {
   const today = useWorld((s) => (outfitFor(s, s.player) ?? []).map((g) => g.id));
   const outfits = useWorld((s) => s.player.outfits ?? []);
   const missing = useWorld((s) => chosenMissing(s, s.player));
+  const onNow = useWorld((s) => wornNow(s.player));
+  const change = useFeature('clothes.change');
   const [picked, setPicked] = useState<Partial<Record<Slot, string>>>({});
   const [name, setName] = useState('');
   const dress = useFeature('clothes.dress');
@@ -140,6 +142,7 @@ function WhatToWear() {
   return (
     <Panel title="What To Wear" subtitle="Your choice is worn while it’s clean and to hand; whatever it leaves out, what’s already on the go, then the least washed">
       <LookRegion className="col gap-3">
+        {onNow.length > 0 && <p className="small" style={{ margin: 0 }}><span className="muted">Wearing Now: </span>{onNow.map((g, n) => <span key={g.id}>{n > 0 ? ', ' : ''}<Open subject={at('garment', g.id)}>{g.label}</Open></span>)}</p>}
         {missing.length > 0 && <div className="callout callout-warning small">{missing.map(({ item, why }, n) => <span key={item.id}>{n > 0 ? '; ' : ''}<Open subject={at('garment', item.id)}>{item.label}</Open> is {why}</span>)}: the day puts on something else in its place.</div>}
         {slots.length === 0 ? <p className="small muted" style={{ margin: 0 }}>Nothing clean is to hand.</p> : (
           <div className="field-row field-row-tight">
@@ -160,6 +163,7 @@ function WhatToWear() {
         )}
         <div className="row gap-1">
           <button type="button" className="btn btn-sm" disabled={!dress.open || slots.length === 0} title={dress.reason} onClick={() => { if (run('clothes.dress', { itemIds: ids }).ok) toast('Chosen to wear.', 'positive'); }}>Wear These</button>
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!change.open || ids.length === 0} title={change.reason ?? `Takes ${CHANGE_MINUTES} minutes, SLATE’s estimate`} onClick={() => { if (run('clothes.change', { itemIds: ids }).ok) toast('Changed.', 'positive'); }}>Change Into These Now</button>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!save.open || ids.length === 0 || !name.trim()} title={save.reason} onClick={() => { if (run('clothes.save_outfit', { name, itemIds: ids }).ok) { toast(`${name.trim()}, saved.`, 'positive'); setName(''); } }}>Save As An Outfit</button>
         </div>
         {outfits.length > 0 && (

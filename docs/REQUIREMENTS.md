@@ -88,7 +88,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
 | 27e | Pack, unpack | Partial (automatic) | luggage.ts | Manual packing (§46) |
 | 27f | Gift, return, resell, replace | Partial | return, resell, replace | Gift |
-| 27g | Outfits from owned, reachable items; worn outfit persists | Partial | `outfitRefusal`, `reachable` | The worn outfit itself (`wearing`, deleted 2026-10-02, to come back as a real worn state) |
+| 27g | Outfits from owned, reachable items; worn outfit persists | Done, 2026-10-02 | `outfitRefusal`, `reachable`; `Person.wornNow`, set as the day dresses them or they change; read by the sale refusal and Clothes | — |
 | 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Not implemented (device), partial (plan) | `MOBILE` plan billed | Device catalog and item, activation, plan choice, finance, trade-in, repair; messages and contacts |
 | 29 | Jewelry and watches as pieces, commissions, servicing, insurance, resale | Partial (catalog only) | about 121 pieces as garments | A `jewel` record, worn, a safe, servicing, insurance rider, fair resale, commissions |
 | 30 | Orders: states, destination, failed delivery, cancellation, return, refund once | Partial | `Order`, `deliver` once; `returned` set and `clothes.cancel` where the law gives it, GB and IE (2026-10-02) | Shipped and out-for-delivery, failed delivery, partial returns, refund to the payment |
@@ -108,12 +108,12 @@ Correctness first, then the connected day the plan asks to be shown working
 | 32a | Browse wardrobe, drawers, luggage | Partial | `reachable`, WhatToWear | Browse by location |
 | 32b | Filter by occasion, type, size, color, condition | Not implemented | `spec`, `condition` exist | Filters; occasion tags |
 | 32c | Pieces and layers | Partial | one per slot | Layering |
-| 32d | Change, with time and a worn state | Not implemented | `clothes.dress` sets a preference | Worn state; a timed change |
+| 32d | Change, with time and a worn state | Done, 2026-10-02 | `clothes.change`: `CHANGE_MINUTES` (SLATE's estimate), each piece a wear, `wornNow`; tests/wardrobe.test.ts | — |
 | 32e | Removed items stored or to the hamper | Not implemented | — | Hamper spot; take-off choice |
 | 32f | Save an outfit | Complete | tests/clothing, wardrobe | — |
 | 32g | Never silently replace a garment | Done, 2026-10-02 | `chosenMissing`; `wearTheDay` tells what stood in and why; tests/wardrobe.test.ts | — |
 | 33a | Inspect supplies and equipment | Partial | Kitchen panel | Equipment from installed appliances |
-| 33b | Meal and portions | Partial | always full servings | Servings scale |
+| 33b | Meal and portions | Done, 2026-10-02 | `food.cook` takes servings, one to three times the recipe's, its ingredients scaled (`servingsRange`); tests/kitchen.test.ts | — |
 | 33c | Ingredients and time | Complete | `cookRefusal`; tests/kitchen | — |
 | 33d | Obtain or substitute missing | Partial | groceries in store | Buy what's short; substitutes |
 | 33e | Cook; interruptions | Partial | refused if busy | Clash check; outcome; energy |
@@ -160,11 +160,11 @@ Correctness first, then the connected day the plan asks to be shown working
 | 38e | Audio | Partial | one head unit | Speakers, amplifiers |
 | 38f | Storage, mechanical upgrades | Partial | GB only | Racks, boxes; beyond GB |
 | 38i | Alternative transport | Complete (repairs) | `vehicle.stand_in`; tests | Wrap and interior work too |
-| 39a–b | Tank or charge, range | Partial | consumption only | Tank and charge level; range |
+| 39a–b | Tank or charge, range | Done, 2026-10-02 | `systems/fueltank.ts`: 117 makers' capacities (`content/tanks.ts`), level, range, gauge on Vehicles; tests/fueltank.test.ts | 14 models without a published figure take SLATE's estimate, labeled |
 | 39c–d | Stops, belongings, passengers | Partial | errands; one passenger | Cargo and seats checked |
 | 39e | Route and time | Complete | tests/driving, trips, journey | — |
-| 39f | Refuel at a station | Partial, substitutes an expense | `errand.fuel` pays accrued cost | A real refuel against the tank |
-| 39g | Charging | Partial | home and public price | Charge level, sessions |
+| 39f | Refuel at a station | Done, 2026-10-02 | `vehicle.refuel` at a named station to full at the pump price; `errand.fuel` fills the tank; a leg short of fuel is refused | Choosing an amount short of full |
+| 39g | Charging | Done, 2026-10-02 | public to full over 50 kW's time, at home to 80% with a charger; the month charges at a fifth | — |
 | 40a | Several destinations | Complete | `runErrands`; tests/trips | More stop kinds |
 | 40b | Change the plan mid-trip | Partial | one-click run | Step-by-step trip |
 | 40c | Parking | Partial | meter by the minute | Lots and garages; limits |

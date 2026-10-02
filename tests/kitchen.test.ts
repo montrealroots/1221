@@ -111,6 +111,24 @@ describe('cooking', () => {
   });
 });
 
+describe('a recipe by its servings', () => {
+  it('scales what it uses, keeps what’s left over, and won’t go past three times or below one', () => {
+    const sim = life('us-ny-newyork', 'cook-serves');
+    stockUp(sim);
+    sim.player.wellbeing.nourishment = 40;
+    const yogurt = () => foodOf(sim.player).find((i) => i.kind === P.yogurt)!.food.left;
+    expect(cookRefusal(sim, sim.player, RECIPE, 0)).toBe('From 1 to 12 servings.');
+    expect(cookRefusal(sim, sim.player, RECIPE, 13)).toBe('From 1 to 12 servings.');
+    // What it makes, there's enough for; twelve wants three times the chicken there is.
+    expect(cookRefusal(sim, sim.player, RECIPE, 4)).toBeUndefined();
+    expect(cookRefusal(sim, sim.player, RECIPE, 12)).toMatch(/short of/);
+    // Two of its four: half the yogurt, one left over.
+    const r = sim.must<{ left: number }>({ kind: 'food.cook', payload: { recipeId: RECIPE, servings: 2 } });
+    expect(r.left).toBe(1);
+    expect(yogurt()).toBe(907 - 75);
+  });
+});
+
 describe('the day’s meals', () => {
   it('come out of what’s ready at home first, and the groceries are bought for the rest', () => {
     const sim = life('us-ny-newyork', 'stock');

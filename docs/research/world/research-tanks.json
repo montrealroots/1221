@@ -1,0 +1,1181 @@
+[
+  {
+    "id": "us-ford-f-series",
+    "tankL": 87.1,
+    "batteryKwh": null,
+    "published": "23.0 US gal (2.7L EcoBoost, 122.5\" WB Regular Cab; 36 gal all others)",
+    "source": "https://www.fromtheroad.ford.com/content/dam/fordmediasite/us/en/library/2026/specs/2026_Ford_F150_Specs.pdf",
+    "sourceType": "press",
+    "note": "Ford 2026 F-150 technical specifications (03/31/26 V1.1). Box length not stated in trim, so the base Regular Cab 6.5-ft box (short wheelbase) with the XL's standard 2.7L EcoBoost is used: 23.0 gal. Regular Cab 8-ft box (141.5\" WB) gets 36 gal. Catalog source is a 2027 article; Ford's 2027 spec sheet was not found, so the 2026 figure is used."
+  },
+  {
+    "id": "us-chevrolet-silverado",
+    "tankL": 106,
+    "batteryKwh": null,
+    "published": "28 US gal (approx.), Regular Cab",
+    "source": "https://news.chevrolet.com/newsroom.detail.html/Pages/news/us/en/2026/jun/0516-chevrolet-next-generation-2027-silverado.html",
+    "sourceType": "press",
+    "note": "Cab not stated; base configuration taken as Regular Cab. Chevrolet's 2027 Silverado 1500 spec table lists fuel tank capacity by cab only: Regular Cab 'Available 28-gallon (approx.)', Double/Crew Cab 'Available 34-gallon (approx.)' (34 gal only with 5.7L/6.6L V8 or Duramax). GM does not separately publish a standard tank for the 2.7L TurboMax Double/Crew Cab WT. The 28 gal Regular Cab figure is GM's approximate value and is labelled 'Available' in the table. CarsDirect lists 28.3 gal for the base 2.7L RWD."
+  },
+  {
+    "id": "us-toyota-rav4",
+    "tankL": 54.9,
+    "batteryKwh": null,
+    "published": "14.5 US gal",
+    "source": "https://www.toyota.com/rav4/features/",
+    "sourceType": "maker",
+    "note": "Toyota.com 2026 RAV4 specs list 'Fuel tank (gal.) 14.5' for every grade."
+  },
+  {
+    "id": "us-honda-cr-v",
+    "tankL": 53,
+    "batteryKwh": null,
+    "published": "14 US gal",
+    "source": "https://hondanews.com/en-US/releases/release-2a30447979673882e0608a518f089aa6-2027-honda-cr-v-specifications-features",
+    "sourceType": "press",
+    "note": "Honda 2027 CR-V Specifications & Features: Fuel Tank Capacity (U.S. gal) 14, same for all trims."
+  },
+  {
+    "id": "us-ram-pickup-1500-heavy-duty",
+    "tankL": 98.4,
+    "batteryKwh": null,
+    "published": "26 US gal (33 gal optional / standard on Crew Cab 6'4\" box)",
+    "source": "https://www.stellantisfleet.com/content/dam/fca-fleet/na/fleet/en_us/shopping-tools/brochures-literature/docs/buyers-guide/2026/26DOMMOP_FBG_Ram1500.pdf",
+    "sourceType": "maker",
+    "note": "Cab/drive not stated; base Tradesman (Quad Cab, 3.6L Pentastar eTorque) standard tank used: 26-gallon (NFW); 33-gallon standard on Crew Cab 6'4\" box and with 5.7L HEMI. Figure is from Ram's 2026 fleet buyer's guide; the 2027 guide was not published at the same path (404). Work Truck Online's 2027 Ram 1500 fleet guide gives the same: 26 gal, 33 gal available or standard on select models."
+  },
+  {
+    "id": "us-gmc-sierra",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": "Crew Cab: 'Available 34-gallon (approx.)' only; standard tank not published",
+    "source": "https://news.gmc.com/newsroom.detail.html/Pages/news/us/en/2026/sep/0922-next-generation-2027-Sierra-1500.html",
+    "sourceType": "press",
+    "note": "Null: GMC's 2027 Sierra 1500 spec table gives only the optional ~34 gal tank for Crew Cab, which is limited to the V8s and Duramax. The Pro 4WD Crew Cab comes with the 2.7L TurboMax, whose standard tank capacity GMC has not published. Secondary sites conflict (CarBuzz 24.0 gal, from an entry whose other data is visibly wrong) and none is authoritative."
+  },
+  {
+    "id": "us-chevrolet-equinox",
+    "tankL": 56,
+    "batteryKwh": null,
+    "published": "14.8 US gal / 56 liters (FWD) (approx.)",
+    "source": "https://news.chevrolet.com/newsroom.detail.html/Pages/news/us/en/2024/jan/0123-equinox.html",
+    "sourceType": "press",
+    "note": "From Chevrolet's 2025 Equinox press specs for the current generation (FWD 14.8 gal, AWD 15.6 gal). No separate 2026 spec release was found."
+  },
+  {
+    "id": "us-toyota-camry",
+    "tankL": 49.2,
+    "batteryKwh": null,
+    "published": "13 US gal",
+    "source": "https://www.toyota.com/camry/features/",
+    "sourceType": "maker",
+    "note": "Toyota.com 2026 Camry specs list 'Fuel tank (gal.) 13' for every grade (all Camrys are hybrid)."
+  },
+  {
+    "id": "ca-ford-f-series",
+    "tankL": 136.3,
+    "batteryKwh": null,
+    "published": "36 US gal (all except 122.5\" WB Regular Cab)",
+    "source": "https://www.fromtheroad.ford.com/content/dam/fordmediasite/us/en/library/2026/specs/2026_Ford_F150_Specs.pdf",
+    "sourceType": "press",
+    "note": "Regular Cab 8-ft box is the 141.5\" WB, which gets the 36 gal tank with the 2.7L EcoBoost. Ford Canada's spec page could not be read; this uses Ford's 2026 US press spec sheet. Sherwood Ford, a Canadian dealer, gives 136 L for Regular Cab 8-ft box models. The 2027 spec sheet was not found."
+  },
+  {
+    "id": "ca-toyota-rav4",
+    "tankL": 54.9,
+    "batteryKwh": null,
+    "published": "14.5 US gal",
+    "source": "https://www.toyota.com/rav4/features/",
+    "sourceType": "maker",
+    "note": "Toyota Canada's spec page needs JavaScript and could not be read, so this uses Toyota USA's 2026 RAV4 spec, which lists 14.5 gal for every grade including AWD hybrids. The Car Guide (guideautoweb.com) lists 55 L for the Canadian 2026 RAV4 Hybrid LE."
+  },
+  {
+    "id": "ca-gmc-sierra",
+    "tankL": 106,
+    "batteryKwh": null,
+    "published": "28 US gal (approx.), Regular Cab",
+    "source": "https://news.gmc.com/newsroom.detail.html/Pages/news/us/en/2026/sep/0922-next-generation-2027-Sierra-1500.html",
+    "sourceType": "press",
+    "note": "Cab not stated; base configuration taken as Regular Cab. GMC's 2027 table lists Regular Cab 'Available 28-gallon (approx.)'; Double/Crew Cab list only the optional ~34 gal (V8/Duramax). From GMC's US press release; no Canadian spec sheet was found. If this is a Crew Cab Pro (2.7L), the standard tank is unpublished (see us-gmc-sierra)."
+  },
+  {
+    "id": "ca-honda-cr-v",
+    "tankL": 53,
+    "batteryKwh": null,
+    "published": "14 US gal",
+    "source": "https://hondanews.com/en-US/releases/release-2a30447979673882e0608a518f089aa6-2027-honda-cr-v-specifications-features",
+    "sourceType": "press",
+    "note": "From Honda's US 2027 CR-V spec (14 US gal, all trims). The Canadian dealer catalog source (vaudreuilhonda.com) lists 53 L for the 2027 CR-V LX 2WD, which agrees."
+  },
+  {
+    "id": "ca-chevrolet-silverado",
+    "tankL": 106,
+    "batteryKwh": null,
+    "published": "28 US gal (approx.), Regular Cab",
+    "source": "https://news.chevrolet.com/newsroom.detail.html/Pages/news/us/en/2026/jun/0516-chevrolet-next-generation-2027-silverado.html",
+    "sourceType": "press",
+    "note": "Cab not stated; base configuration taken as Regular Cab. This is the same caveat as us-chevrolet-silverado: GM's figure is approximate, the table labels it 'Available', and no standard tank for the 2.7L Double/Crew Cab is published. From Chevrolet's US press release; no Canadian spec sheet was found."
+  },
+  {
+    "id": "ca-ram-pickup-1500-heavy-duty",
+    "tankL": 98.4,
+    "batteryKwh": null,
+    "published": "26 US gal (33 gal optional)",
+    "source": "https://www.stellantisfleet.com/content/dam/fca-fleet/na/fleet/en_us/shopping-tools/brochures-literature/docs/buyers-guide/2026/26DOMMOP_FBG_Ram1500.pdf",
+    "sourceType": "maker",
+    "note": "Quad Cab 6'4\" box Tradesman: 26-gallon (NFW) standard. The 33 gal tank is standard only on Crew Cab 6'4\" box and with the HEMI, and is optional on Crew Cab only, so a Quad Cab stays at 26 gal. From Ram's 2026 US fleet buyer's guide; no 2027 or Canadian spec sheet was found. Work Truck Online's 2027 guide also gives 26/33."
+  },
+  {
+    "id": "ca-hyundai-tucson",
+    "tankL": 54.1,
+    "batteryKwh": null,
+    "published": "14.3 US gal",
+    "source": "https://www.hyundaiusa.com/us/en/vehicles/tucson/compare-specs",
+    "sourceType": "maker",
+    "note": "Hyundai USA 2026 Tucson specs: 14.3 gal for all gasoline 2.5L trims. Hyundai Canada's spec page is JavaScript-only and could not be read. CarCostCanada lists 54 L for the 2026 Tucson Preferred AWD."
+  },
+  {
+    "id": "ca-nissan-rogue",
+    "tankL": 55,
+    "batteryKwh": null,
+    "published": "55 L",
+    "source": "https://www.nissan.ca/vehicles/crossovers-suvs/rogue/specs.html",
+    "sourceType": "maker",
+    "note": "Nissan Canada Rogue specs: 'Fuel tank - L (Imp gal)' given as '55 (14.5)', the same for every grade. The 14.5 matches US gallons, not imperial, so the litre figure is used. The page covers 2026/2027 Rogue."
+  },
+  {
+    "id": "mx-nissan-versa",
+    "tankL": 41,
+    "batteryKwh": null,
+    "published": "Capacidad de tanque de combustible (L) 41",
+    "source": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/versa/my26/vlp/catalogos/nissan-2026-versa-catalogo.pdf",
+    "sourceType": "maker",
+    "note": "Nissan Mexico 2026 Versa catalogue spec table; one value for all versions. Nissan Mexico press kit (mexico.nissannews.com/es-MX/releases/nissan-versa-2026-kit-de-prensa) also gives 41 L for Sense/Advance/Exclusive, manual and CVT."
+  },
+  {
+    "id": "mx-chevrolet-aveo",
+    "tankL": 45,
+    "batteryKwh": null,
+    "published": "Tanque de combustible 45 l",
+    "source": "https://www.autocosmos.com.mx/catalogo/2026/chevrolet/aveo/ls/172979",
+    "sourceType": "secondary",
+    "note": "Autocosmos Mexico, Aveo LS 2026, Sedán, manual 6 velocidades. Chevrolet Mexico's own Ficha-Tecnica-Aveo-Sedan-2026.pdf and catalogue PDF don't state the tank capacity (checked)."
+  },
+  {
+    "id": "mx-nissan-np300",
+    "tankL": 80,
+    "batteryKwh": null,
+    "published": "Tanque de gasolina (L) 80",
+    "source": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/np300/my26/vlp/catalogos/nissan-2026-np300-catalogo.pdf",
+    "sourceType": "maker",
+    "note": "Nissan Mexico 2026 NP300 catalogue: 80 L for NP300 Chassis, Pick Up and Chassis Diesel alike."
+  },
+  {
+    "id": "mx-kia-k3-sedan",
+    "tankL": 45,
+    "batteryKwh": null,
+    "published": "Tanque de combustible (L) 45",
+    "source": "https://www.kia.com/mx/showroom/k3-sedan/specification.html",
+    "sourceType": "maker",
+    "note": "Kia Mexico spec page (now titled K3 Sedán 2027): one value for all versions, L TM included."
+  },
+  {
+    "id": "mx-nissan-march",
+    "tankL": 41,
+    "batteryKwh": null,
+    "published": "Tanque de combustible 41 (Capacidades (L))",
+    "source": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/march/my26/vlp/catalogos/nissan-2026-march-catalogo.pdf",
+    "sourceType": "maker",
+    "note": "Nissan Mexico 2026 March catalogue (Sense and Advance)."
+  },
+  {
+    "id": "mx-mazda-cx-30",
+    "tankL": 51,
+    "batteryKwh": null,
+    "published": "Tanque de combustible 51 (i grades); 48 (Signature)",
+    "source": "https://www.mazda.mx/siteassets/descargables-2026/mazda-cx-30/ficha-tecnica/ficha-tecnica-mazda-cx-30-2026-v05.pdf",
+    "sourceType": "maker",
+    "note": "Mazda Mexico 2026 CX-30 ficha técnica. The 51 L column covers the 2.0 L i grades (i, i Sport, i Grand Touring). The 48 L is the Signature only (different oil capacity, so a different powertrain)."
+  },
+  {
+    "id": "mx-nissan-kicks",
+    "tankL": 45,
+    "batteryKwh": null,
+    "published": "Capacidad de tanque de combustible (L) 45",
+    "source": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/kicks/my26/vlp/catalogos/nissan-2026-kicks-catalogo.pdf",
+    "sourceType": "maker",
+    "note": "Nissan Mexico 2026 Kicks catalogue spec table (Advance, Advance CVT)."
+  },
+  {
+    "id": "mx-volkswagen-virtus",
+    "tankL": 50,
+    "batteryKwh": null,
+    "published": "Tanque de combustible (l) 50",
+    "source": "https://www.vw.com.mx/idhub/content/dam/onehub_pkw/importers/mx/fichas-tecnicas/producto/2026/volkswagen-virtus-2026-ficha-tecnica.pdf",
+    "sourceType": "maker",
+    "note": "VW Mexico Virtus 2026 ficha técnica: 50 L in every column, Trendline Manual 5 (D223SV) included."
+  },
+  {
+    "id": "gb-ford-puma",
+    "tankL": 42,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity 42 litres",
+    "source": "https://www.autoexpress.co.uk/ford/puma/prices-specs/90761/1.0-ecoboost-hybrid-mhev-titanium-5dr",
+    "sourceType": "secondary",
+    "note": "Auto Express UK, Puma 1.0 EcoBoost Hybrid mHEV Titanium 5dr, 125bhp, 6-speed manual. Ford UK's October 2025 Puma price list (the catalogSource) has no tank figure. auto-data.net gives the same 42 L for the 2024 facelift 125 hp manual."
+  },
+  {
+    "id": "gb-kia-sportage",
+    "tankL": 54,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity (L): 54",
+    "source": "https://www.kiapressoffice.com/assets/documents/original/19313-KiaSportage16TGDi3MTFWD.pdf",
+    "sourceType": "press",
+    "note": "Kia UK press-office spec sheet for the 5th-gen Sportage 1.6 T-GDi '3' MT FWD (148bhp/150PS). It is the pre-facelift trim name; the 2025 facelift 'Pure' 1.6 T-GDi 150 MT 2WD uses the same engine and body. Kia UK's current spec page loads its data by script and shows no tank figure."
+  },
+  {
+    "id": "gb-nissan-qashqai",
+    "tankL": 55,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity (l) 55",
+    "source": "https://www-europe.nissan-cdn.net/content/dam/Nissan/gb/brochures/Vehicles/Nissan_Qashqai_UK.pdf",
+    "sourceType": "maker",
+    "note": "Nissan UK Qashqai brochure, mild-hybrid technical table (6-speed manual and Xtronic columns, 2WD)."
+  },
+  {
+    "id": "gb-vauxhall-corsa",
+    "tankL": 45,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity 45 litres",
+    "source": "https://www.autoexpress.co.uk/vauxhall/corsa/prices-specs/105178/1.2-turbo-yes-5dr",
+    "sourceType": "secondary",
+    "note": "Auto Express UK, Corsa 1.2 Turbo Yes 5dr, 100bhp, 6-speed manual. No Vauxhall-published figure was reachable (Stellantis UK media returned 403)."
+  },
+  {
+    "id": "gb-nissan-juke",
+    "tankL": 46,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity (L) 46",
+    "source": "https://www-europe.nissan-cdn.net/content/dam/Nissan/gb/brochures/Vehicles/Nissan_Juke_UK.pdf",
+    "sourceType": "maker",
+    "note": "Nissan UK Juke brochure, DIG-T petrol technical table (6-speed manual and 7-speed DCT); the Hybrid 143 is also 46 L."
+  },
+  {
+    "id": "gb-volkswagen-golf",
+    "tankL": 45,
+    "batteryKwh": null,
+    "published": "Tankgröße 45,0 l (ADAC, 1.5 TSI 85 kW/116 PS manual, ab 07/24); Auto Express UK 45 litres",
+    "source": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/golf/viii-facelift/332971/",
+    "sourceType": "secondary",
+    "note": "ADAC: Golf 8 facelift 1.5 TSI Life 85 kW (116 PS) 6-speed manual = 45.0 L. Auto Express UK's 1.5 TSI Life 5dr manual also lists 45 L. Conflict: Motability's Motaclarity page for the Golf 1.5 TSI Life 115PS shows 50 L. 45 L was taken because two independent sources agree and the Dutch VW price list reportedly gives 45 L for 85 kW and 50 L from 110 kW. No VW UK document with a tank figure was found."
+  },
+  {
+    "id": "gb-volvo-xc40",
+    "tankL": 54,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity 54 litres",
+    "source": "https://www.autoexpress.co.uk/volvo/xc40/prices-specs/99514/2.0-b3p-core-5dr-auto",
+    "sourceType": "secondary",
+    "note": "Auto Express UK, XC40 2.0 B3P Core 5dr Auto (163bhp, 7-speed). volvocars.com UK spec and support pages returned 403 to fetch. A search snippet of the Volvo UK spec page also shows 54 L, but it could not be opened to confirm."
+  },
+  {
+    "id": "gb-mg-hs",
+    "tankL": 55,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity 55 litres",
+    "source": "https://www.autoexpress.co.uk/mg/hs/prices-specs/103078/1.5-t-gdi-se-5dr",
+    "sourceType": "secondary",
+    "note": "Auto Express UK, MG HS 1.5 T-GDI SE 5dr manual 6-speed. It lists 162bhp where MG UK quotes 169PS (about 167bhp), so it is not certain this entry is the current-generation car. MG UK's July 2025 HS range brochure gives no tank figure (checked)."
+  },
+  {
+    "id": "ie-hyundai-tucson",
+    "tankL": 54,
+    "batteryKwh": null,
+    "published": "Fuel tank 54 l (14.27 US gal | 11.88 UK gal)",
+    "source": "https://www.auto-data.net/en/hyundai-tucson-iv-facelift-2024-1.6-crdi-136hp-mild-hybrid-dct-51904",
+    "sourceType": "secondary",
+    "note": "auto-data.net, Tucson IV facelift 1.6 CRDi 136 MHEV FWD (DCT). Irish dealers list the Comfort Plus diesel as '1.6 Manual', and its exact power and gearbox couldn't be confirmed. Hyundai's own UK MY25 tech-spec PDF (no diesel in UK) gives 54 L for every 2WD ICE/HEV Tucson. The Hyundai Ireland brochure has no diesel spec."
+  },
+  {
+    "id": "ie-skoda-octavia",
+    "tankL": 45,
+    "batteryKwh": null,
+    "published": "Fuel Tank (l) 45",
+    "source": "https://www.skoda.ie/_doc/84f89261-ee2b-4e9d-8e34-519ef6ed35ea",
+    "sourceType": "maker",
+    "note": "Skoda Ireland Octavia technical data, hatch (liftback) 1.5TSI 115hp manual 6-speed column. Same 45 L on the Combi."
+  },
+  {
+    "id": "ie-toyota-yaris-cross",
+    "tankL": 36,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity (l) 36",
+    "source": "https://media.toyota.co.uk/wp-content/uploads/sites/5/pdf/240704-Yaris-Cross-Tech-Specs.pdf",
+    "sourceType": "press",
+    "note": "Toyota UK media tech specs, July 2024 Yaris Cross: one figure for the 114bhp (Hybrid 115) and 129bhp (Hybrid 130), 2WD and AWD-i. UK press document, used for the identical Irish car; toyota.ie spec content is not in the page HTML."
+  },
+  {
+    "id": "ie-kia-sportage",
+    "tankL": 54,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity, litres 54 (1.6 CRDi MHEV Diesel 2WD)",
+    "source": "https://www.kia.com/content/dam/kwcms/kme/ie/en/assets/contents/utilty/brochure/spechsheet/The-all-new-Sportage-Specifications.pdf",
+    "sourceType": "maker",
+    "note": "Kia Ireland specification sheet for the 5th-gen Sportage (launch edition, K2/K3/K4/GT-line): 1.6 CRDi MHEV Diesel 2WD 6-speed manual (136ps) = 54 L. The current Kia.ie spec page has no tank figure. The 2025 facelift keeps this engine and body; auto-data/automobile-catalog also give 54 L."
+  },
+  {
+    "id": "ie-toyota-rav4",
+    "tankL": 55,
+    "batteryKwh": 22.7,
+    "published": "Fuel tank capacity (l) 55; traction battery Capacity (kWh) 22.7 (Li-ion, 104 cells)",
+    "source": "https://media.toyota.co.uk/wp-content/uploads/sites/5/pdf/260413-RAV4-Press-Pack.pdf",
+    "sourceType": "press",
+    "note": "Toyota UK April 2026 press pack, all-new (6th-gen) RAV4 Plug-in Hybrid. One tank figure covers FWD and AWD. Toyota gives 22.7 kWh without saying gross or usable. It reads as the pack's rated (gross) capacity, and no usable figure is published. UK press document, used for the same car sold in Ireland."
+  },
+  {
+    "id": "ie-toyota-corolla",
+    "tankL": 43,
+    "batteryKwh": null,
+    "published": "Fuel tank capacity (l) 43",
+    "source": "https://media.toyota.co.uk/wp-content/uploads/sites/5/pdf/240429-Corolla-Tech-Specs.pdf",
+    "sourceType": "press",
+    "note": "Toyota UK media tech specs, April 2024 Corolla (1.8 hybrid 138bhp/140 DIN hp). 43 L for Hatchback and Touring Sports. UK press document, used for the Irish car."
+  },
+  {
+    "id": "ie-skoda-kodiaq",
+    "tankL": 45,
+    "batteryKwh": 19.7,
+    "published": "Fuel Tank Capacity (litres) 45; Battery size (kWh) 19.7",
+    "source": "https://www.skoda.ie/_doc/43f4f086-3207-4b73-b662-08e53b774816",
+    "sourceType": "maker",
+    "note": "Skoda Ireland Kodiaq technical data, 1.5TSI 202hp PHEV DSG column (Ireland quotes 202hp for the 150 kW iV). 19.7 kWh is net (usable). The same document says the car is fitted with a 25 kWh battery (gross, 25.7 kWh in VW Group press material)."
+  },
+  {
+    "id": "ie-volkswagen-tiguan",
+    "tankL": 45,
+    "batteryKwh": 19.7,
+    "published": "Fuel tank capacity 45 Litres; Battery Energy Capacity 19.7 kWh",
+    "source": "https://www.volkswagen.ie/idhub/content/dam/onehub_pkw/importers/ie/models/product-guides/my27/Tiguan_MY27.pdf",
+    "sourceType": "maker",
+    "note": "VW Ireland Tiguan MY27 product guide, 1.5 eHybrid 204HP DSG column. 19.7 kWh is net (usable). The VW Newsroom Tiguan eHybrid release gives 25.7 kWh gross and 19.7 kWh net."
+  },
+  {
+    "id": "us-kawasaki-ninja-500",
+    "tankL": 14.01,
+    "batteryKwh": null,
+    "published": "3.7 US gal",
+    "source": "https://www.kawasaki.com/en-us/motorcycle/ninja/sport/ninja-500/2026-ninja-500",
+    "sourceType": "maker",
+    "note": "2026 Ninja 500, Kawasaki USA spec. Canada/UK list 14 L."
+  },
+  {
+    "id": "us-honda-rebel-500",
+    "tankL": 11.36,
+    "batteryKwh": null,
+    "published": "3 US gal",
+    "source": "https://www.motorcycle.com/specs/honda/cruiser/2026/rebel-500/base/detail.html",
+    "sourceType": "secondary",
+    "note": "motorcycle.com lists 3 gal / 11.2 L for 2026. powersports.honda.com refused automated access (HTTP 403)."
+  },
+  {
+    "id": "us-honda-metropolitan",
+    "tankL": 4.54,
+    "batteryKwh": null,
+    "published": "1.2 US gal",
+    "source": "https://www.motorcycle.com/specs/honda/scooter/2026/metropolitan/base/detail.html",
+    "sourceType": "secondary",
+    "note": "motorcycle.com lists 1.2 gal / 4.5 L for 2026. powersports.honda.com refused automated access (HTTP 403)."
+  },
+  {
+    "id": "us-genuine-buddy-125",
+    "tankL": 6.28,
+    "batteryKwh": null,
+    "published": "1.66 US gal",
+    "source": "https://www.genuinescooters.com/products/buddy-125",
+    "sourceType": "maker",
+    "note": "Genuine spec \"Fuel Capacity 1.66 gal\"; motorcycle.com 2026 agrees (1.66 gal / 6.3 L)."
+  },
+  {
+    "id": "us-vespa-primavera-150",
+    "tankL": 7.95,
+    "batteryKwh": null,
+    "published": "2.1 US gal",
+    "source": "https://wlassets.vespa.com/wlassets/vespa/us/tech_spec/2024/Vespa_Primavera150_technical_sheet_EN/original/Vespa_Primavera150_technical_sheet_EN.pdf",
+    "sourceType": "maker",
+    "note": "Vespa US technical sheet (2024 generation, current). motorcycle.com 2026 lists 2 gal / 7.5 L instead; maker sheet preferred."
+  },
+  {
+    "id": "ca-royal-enfield-hunter-350",
+    "tankL": 13,
+    "batteryKwh": null,
+    "published": "13 L",
+    "source": "https://www.royalenfield.com/ca/en/motorcycles/hunter-350/",
+    "sourceType": "maker",
+    "note": "Royal Enfield Canada spec: Fuel Capacity 13 Litres."
+  },
+  {
+    "id": "ca-kawasaki-ninja-500",
+    "tankL": 14,
+    "batteryKwh": null,
+    "published": "14 L",
+    "source": "https://www.kawasaki.ca/en-ca/motorcycle/ninja/sport/ninja-500/2026-ninja-500",
+    "sourceType": "maker",
+    "note": "2026, Kawasaki Canada: \"Fuel Capacity 14 litres\". US spec 3.7 gal is the same tank."
+  },
+  {
+    "id": "ca-honda-rebel-500",
+    "tankL": 11.2,
+    "batteryKwh": null,
+    "published": "11.2 L",
+    "source": "https://www.totalmotorcycle.com/motorcycles/2026/2026-honda-rebel-500",
+    "sourceType": "secondary",
+    "note": "Canadian spec block reproduced by Total Motorcycle: \"11.2 litres (3.0 US gal)\". powersports.honda.ca spec content would not load for automated access."
+  },
+  {
+    "id": "ca-yamaha-mt-07",
+    "tankL": 14,
+    "batteryKwh": null,
+    "published": "14 L",
+    "source": "https://www.totalmotorcycle.com/motorcycles/2026/2026-yamaha-mt07",
+    "sourceType": "secondary",
+    "note": "Canadian spec block reproduced by Total Motorcycle: \"14 litres (3.1 imp. gallons)\"; US maker spec 3.7 gal agrees. yamaha-motor.ca loads specs client-side, not retrievable."
+  },
+  {
+    "id": "ca-harley-davidson-street-glide",
+    "tankL": 22.7,
+    "batteryKwh": null,
+    "published": "22.7 L",
+    "source": "https://www.harley-davidson.com/ca/en/motorcycles/street-glide.html",
+    "sourceType": "maker",
+    "note": "2026 Street Glide, H-D Canada spec."
+  },
+  {
+    "id": "ca-honda-giorno",
+    "tankL": 4.5,
+    "batteryKwh": null,
+    "published": "4.5 L",
+    "source": "https://www.meidlpowerhouse.ca/inventory/v1/Current/Honda/Scooter/Scooters/Giorno",
+    "sourceType": "secondary",
+    "note": "2025 Giorno (current model year offered by Honda Canada); Canadian Honda dealer spec \"Fuel Capacity 4.5 litres\". powersports.honda.ca spec content not retrievable. Same NCW50 as the US Metropolitan (1.2 gal)."
+  },
+  {
+    "id": "ca-yamaha-bws-125",
+    "tankL": 7.3,
+    "batteryKwh": null,
+    "published": "7.3 L",
+    "source": "https://www.totalmotorcycle.com/motorcycles/2025/2025-yamaha-bws-125",
+    "sourceType": "secondary",
+    "note": "2025 BWs 125, Canadian spec block reproduced by Total Motorcycle: \"Fuel Capacity 7.3 litres\". The same page's US copy says \"1.6 gallon fuel tank\" (6.06 L) for the equivalent Zuma 125; figures disagree, Canadian figure kept as published for CA."
+  },
+  {
+    "id": "mx-italika-ft150",
+    "tankL": 12.5,
+    "batteryKwh": null,
+    "published": "12.5 L",
+    "source": "https://refaccionesitalika.com.mx/medias/FT150.pdf?context=bWFzdGVyfHJvb3R8ODQ4MTQ4MXxhcHBsaWNhdGlvbi9wZGZ8YURNeUwyZ3pOaTh4TURBek1EYzBOREEzTmpNeE9DOUdWREUxTUM1d1pHWXxjZjg4ZGVhMjQ4MjI4YTIxMTBhNzI3ZmUzOWYyY2JiNjJlMTRiMGY0Y2ZmMmFhYjZlYzMzZjE5NWY5NGJjMmQx",
+    "sourceType": "maker",
+    "note": "Italika owner's manual for FT150 (linked as \"FT 150 ROJA 2026\" from italika.mx/manuales-de-usuario): \"CAPACIDAD DE 12.5 LITROS\". italika.mx product pages redirect to home for automated access. Variants differ (FT150 TS, G, GTS have other tanks)."
+  },
+  {
+    "id": "mx-honda-cgl125-tool",
+    "tankL": 10.5,
+    "batteryKwh": null,
+    "published": "10.5 L (incl. 2.7 L reserve)",
+    "source": "https://www.hondamotodel.mx/modelos/trabajo/cgl-125-tool",
+    "sourceType": "secondary",
+    "note": "Authorised Honda Mexico dealer site using Honda Motos México spec template: \"CAPACIDAD DE TANQUE: 10.5 litros (incluye 2.7 lt. de reserva)\". honda.mx/motos has no CGL125 Tool spec page."
+  },
+  {
+    "id": "mx-yamaha-fz-s",
+    "tankL": 12,
+    "batteryKwh": null,
+    "published": "12 L",
+    "source": "https://www.yamaha-motor.com.mx/motos/street/fz-s-fi-20-2026",
+    "sourceType": "maker",
+    "note": "2026 FZ-S FI 2.0, Yamaha México: \"Capacidad de combustible: 12 L\"."
+  },
+  {
+    "id": "mx-harley-davidson-street-bob",
+    "tankL": 13.2,
+    "batteryKwh": null,
+    "published": "13,2 l",
+    "source": "https://www.harley-davidson.com/mx/es/motorcycles/street-bob.html",
+    "sourceType": "maker",
+    "note": "2026 Street Bob, H-D México: \"Capacidad de combustible 13,2 l\"."
+  },
+  {
+    "id": "mx-italika-d125",
+    "tankL": 4.5,
+    "batteryKwh": null,
+    "published": "4.5 L",
+    "source": "https://webportaltiendamexicoitk.s3.amazonaws.com/commerce-2011/manuales-de-usuario/2-motoneta/D125.pdf",
+    "sourceType": "maker",
+    "note": "Italika D125 owner's manual linked from italika.mx/manuales-de-usuario: \"CAPACIDAD DE 4.5 LITROS\". Manual edition dates to c.2022; no 2026-specific spec page retrievable. D125 LT variant differs (5.5 L per secondary sources)."
+  },
+  {
+    "id": "mx-honda-navi-110",
+    "tankL": 3.8,
+    "batteryKwh": null,
+    "published": "3.8 L (incl. 0.9 L reserve)",
+    "source": "https://www.hondamotosdy.com/modelos/navi/navi",
+    "sourceType": "secondary",
+    "note": "Authorised Honda Mexico dealer site using Honda Motos México spec template: \"Capacidad de tanque: 3.8 litros (inc. 0.9 lt de reserva)\". honda.mx/motos/navi (2026) shows no tank figure."
+  },
+  {
+    "id": "mx-yamaha-ray-zr-115",
+    "tankL": 5.2,
+    "batteryKwh": null,
+    "published": "5.2 L",
+    "source": "https://www.yamaha-motor.com.mx/motos/scooters/ray-zr-2026",
+    "sourceType": "maker",
+    "note": "2026 Ray ZR (113 cc), Yamaha México: \"Capacidad de combustible: 5.2 L\"."
+  },
+  {
+    "id": "gb-honda-cb125f",
+    "tankL": 11,
+    "batteryKwh": null,
+    "published": "11 L",
+    "source": "https://www.honda.co.uk/motorcycles/range/125cc/cb125f/specifications.html",
+    "sourceType": "maker",
+    "note": "Honda UK spec."
+  },
+  {
+    "id": "gb-royal-enfield-hunter-350",
+    "tankL": 13,
+    "batteryKwh": null,
+    "published": "13 ltr",
+    "source": "https://www.royalenfield.com/uk/en/motorcycles/hntr-350/",
+    "sourceType": "maker",
+    "note": "Royal Enfield UK spec."
+  },
+  {
+    "id": "gb-kawasaki-ninja-500",
+    "tankL": 14,
+    "batteryKwh": null,
+    "published": "14.0 liter",
+    "source": "https://www.kawasaki.co.uk/en/Motorcycles/A2_Bikes/Ninja_500_2026.html",
+    "sourceType": "maker",
+    "note": "2026, Kawasaki UK spec."
+  },
+  {
+    "id": "gb-yamaha-mt-07",
+    "tankL": 14,
+    "batteryKwh": null,
+    "published": "14 L",
+    "source": "https://www.motorcyclenews.com/bike-reviews/yamaha/mt-07/2025/",
+    "sourceType": "secondary",
+    "note": "MCN spec for the current (2025-on) generation: \"Fuel capacity 14 litres\"; Bennetts agrees. yamaha-motor.eu renders specs client-side, not retrievable."
+  },
+  {
+    "id": "gb-honda-nt1100",
+    "tankL": 20.4,
+    "batteryKwh": null,
+    "published": "20.4 L",
+    "source": "https://www.honda.co.uk/motorcycles/range/touring/nt1100/specifications-and-price.html",
+    "sourceType": "maker",
+    "note": "Honda UK spec (all variants)."
+  },
+  {
+    "id": "gb-peugeot-kisbee-50",
+    "tankL": 6.5,
+    "batteryKwh": null,
+    "published": "6.5 L",
+    "source": "https://peugeot-motocycles.co.uk/kisbee-50-active/",
+    "sourceType": "maker",
+    "note": "Peugeot Motocycles UK: \"Tank (L) : 6.5\"."
+  },
+  {
+    "id": "gb-honda-vision-110",
+    "tankL": 4.9,
+    "batteryKwh": null,
+    "published": "4.9 L",
+    "source": "https://www.honda.co.uk/motorcycles/range/scooter/vision-110/specifications.html",
+    "sourceType": "maker",
+    "note": "Honda UK spec."
+  },
+  {
+    "id": "gb-honda-pcx125",
+    "tankL": 8.1,
+    "batteryKwh": null,
+    "published": "8.1 L",
+    "source": "https://www.honda.co.uk/motorcycles/range/scooter/pcx-125/specifications.html",
+    "sourceType": "maker",
+    "note": "Honda UK spec."
+  },
+  {
+    "id": "ie-honda-cb125f",
+    "tankL": 11,
+    "batteryKwh": null,
+    "published": "11 L",
+    "source": "https://www.hondaireland.ie/product/26ym-honda-cb125f/",
+    "sourceType": "maker",
+    "note": "Honda Ireland, 2026 model year."
+  },
+  {
+    "id": "ie-royal-enfield-hunter-350",
+    "tankL": 13,
+    "batteryKwh": null,
+    "published": "13 ltr",
+    "source": "https://www.royalenfield.com/uk/en/motorcycles/hntr-350/",
+    "sourceType": "maker",
+    "note": "royalenfield.ie (Irish importer) lists no tank figure and royalenfield.com has no Ireland locale; Royal Enfield UK spec used."
+  },
+  {
+    "id": "ie-kawasaki-ninja-500",
+    "tankL": 14,
+    "batteryKwh": null,
+    "published": "14.0 liter",
+    "source": "https://www.kawasaki.co.uk/en/Motorcycles/A2_Bikes/Ninja_500_2026.html",
+    "sourceType": "maker",
+    "note": "No Kawasaki Ireland maker site (kawasaki.ie is a dealer); Kawasaki UK spec used, 2026."
+  },
+  {
+    "id": "ie-honda-cb500-hornet",
+    "tankL": 17.1,
+    "batteryKwh": null,
+    "published": "17.1 L (inc reserve)",
+    "source": "https://www.hondaireland.ie/product/cb500-hornet-24ym/",
+    "sourceType": "maker",
+    "note": "Honda Ireland page is 24YM; Honda UK current spec also lists 17.1 L."
+  },
+  {
+    "id": "ie-yamaha-mt-07",
+    "tankL": 14,
+    "batteryKwh": null,
+    "published": "14 L",
+    "source": "https://www.motorcyclenews.com/bike-reviews/yamaha/mt-07/2025/",
+    "sourceType": "secondary",
+    "note": "MCN spec for the current (2025-on) generation; Bennetts agrees. yamaha-motor.eu/ie renders specs client-side, not retrievable."
+  },
+  {
+    "id": "ie-harley-davidson-nightster",
+    "tankL": 11.7,
+    "batteryKwh": null,
+    "published": "11.7 l",
+    "source": "https://www.harley-davidson.com/ie/en/motorcycles/nightster.html",
+    "sourceType": "maker",
+    "note": "2026 Nightster, H-D Ireland spec."
+  },
+  {
+    "id": "ie-honda-vision-110",
+    "tankL": 4.9,
+    "batteryKwh": null,
+    "published": "4.9 L",
+    "source": "https://www.hondaireland.ie/product/nsc110vision/",
+    "sourceType": "maker",
+    "note": "Honda Ireland spec."
+  },
+  {
+    "id": "ie-honda-pcx125",
+    "tankL": 8.1,
+    "batteryKwh": null,
+    "published": "8.1 L",
+    "source": "https://www.hondaireland.ie/product/pcx125-25ym/",
+    "sourceType": "maker",
+    "note": "Honda Ireland, 25YM."
+  },
+  {
+    "id": "ie-vespa-primavera-50",
+    "tankL": 7.5,
+    "batteryKwh": null,
+    "published": "7,5 litres",
+    "source": "https://wlassets.vespa.com/wlassets/vespa/master/tech_spec/2024/Vespa_Primavera50_technical_sheet_EN/original/Vespa_Primavera50_technical_sheet_EN.pdf",
+    "sourceType": "maker",
+    "note": "Vespa (Piaggio) master EU technical sheet, 2024 generation (current)."
+  },
+  {
+    "id": "us-thor-four-winds",
+    "tankL": 208.2,
+    "batteryKwh": null,
+    "published": "55 gal",
+    "source": "https://www.thormotorcoach.com/four-winds/floor-plans/22z",
+    "sourceType": "maker",
+    "note": "Thor Motor Coach Four Winds 22Z floorplan spec (Ford E-Series chassis, 7.3L V8): 'Fuel Capacity 55 gal'. Most Four Winds Ford E-Series floorplans list 55 gal; the short 19Z lists 40 gal. Spec page shows no model year; the Four Winds line page is the 2026 lineup."
+  },
+  {
+    "id": "us-winnebago-view-24d",
+    "tankL": 92.7,
+    "batteryKwh": null,
+    "published": "24.5 US gal",
+    "source": "https://winnebago.com/models/product/motorhomes/class-c/view/2026-24d",
+    "sourceType": "maker",
+    "note": "Winnebago 2026 View 24D spec 'Fuel Capacity 24.5' gallons; Mercedes-Benz RWD Sprinter chassis, 2.0L turbo-diesel."
+  },
+  {
+    "id": "us-winnebago-solis",
+    "tankL": 90.8,
+    "batteryKwh": null,
+    "published": "24 US gal",
+    "source": "https://www.winnebago.com/models/product/specifications/motorhomes/camper-van/solis",
+    "sourceType": "maker",
+    "note": "Winnebago Solis specifications table: 'Fuel Capacity (gal.): 24' for both 59P and 59PX (Ram ProMaster chassis). Table shows no model year; 2026 Solis is the current line."
+  },
+  {
+    "id": "us-winnebago-travato",
+    "tankL": 90.8,
+    "batteryKwh": null,
+    "published": "24 US gal",
+    "source": "https://www.winnebago.com/models/product/motorhomes/camper-van/travato/2026-59kl",
+    "sourceType": "maker",
+    "note": "Winnebago 2026 Travato 59KL spec: 24 gal fuel capacity, Ram ProMaster chassis, 3.6L V6. 59K also listed at 24 gal by dealers."
+  },
+  {
+    "id": "us-ram-promaster",
+    "tankL": 90.8,
+    "batteryKwh": null,
+    "published": "24-gallon",
+    "source": "https://www.stellantisfleet.com/content/dam/fca-fleet/na/fleet/en_us/shopping-tools/brochures-literature/docs/buyers-guide/2026/26DOMMOP_FBG_ProMaster.pdf",
+    "sourceType": "maker",
+    "note": "Stellantis Fleet 2026 Ram ProMaster buyer's guide: 'Fuel Tank -- 24-gallon' standard. Ram Canada lists the same 90.1 L tank across all wheelbases/roofs."
+  },
+  {
+    "id": "us-mercedes-benz-sprinter",
+    "tankL": 92.7,
+    "batteryKwh": null,
+    "published": "24.5 gal",
+    "source": "https://www.mbvans.com/en/sprinter/cargo-van",
+    "sourceType": "maker",
+    "note": "Mercedes-Benz Vans USA 2026 Sprinter Cargo Van specs: 'Fuel Tank Capacity: 24.5 gal' on every listed wheelbase/roof/engine; no optional larger tank shown."
+  },
+  {
+    "id": "us-ford-transit",
+    "tankL": 94.6,
+    "batteryKwh": null,
+    "published": "25 U.S. gallons",
+    "source": "https://www.fromtheroad.ford.com/content/dam/fordmediasite/us/en/library/2026/order-guides/2026_Ford_Transit_Order_Guide.pdf",
+    "sourceType": "press",
+    "note": "Ford 2026 Transit order guide (Ford media site): standard 'Fuel Tank - Capless Fuel Fill, 25 U.S. gallons (midship)'. Optional Extended Range tank 31 U.S. gal on Long/Extended WB with EcoBoost only; not on Regular Length."
+  },
+  {
+    "id": "ca-thor-four-winds-19z",
+    "tankL": 151.4,
+    "batteryKwh": null,
+    "published": "40 gal",
+    "source": "https://www.thormotorcoach.com/four-winds/floor-plans/19z",
+    "sourceType": "maker",
+    "note": "Thor Motor Coach Four Winds 19Z floorplan spec, Ford E-Series chassis 7.3L V8: 'Fuel Capacity 40 gal' (US gal, US maker). Dealer listings show a Chevrolet-chassis 19Z variant at 32 gal; the Ford figure on Thor's own page is used."
+  },
+  {
+    "id": "ca-ram-promaster",
+    "tankL": 90.1,
+    "batteryKwh": null,
+    "published": "90.1 L",
+    "source": "https://www.ramtruck.ca/en/promaster/models",
+    "sourceType": "maker",
+    "note": "Ram Canada 2026 ProMaster models specs: 'Fuel Tank: 90.1' litres on all six wheelbase/roof variants."
+  },
+  {
+    "id": "ca-ford-transit",
+    "tankL": 95,
+    "batteryKwh": null,
+    "published": "95-litre",
+    "source": "https://www.ford.ca/trucks/transit-passenger-van-wagon/",
+    "sourceType": "maker",
+    "note": "Ford.ca Transit page (now showing 2027 MY): standard '95-litre' tank, available 117-litre extended range. Same tank as the 2026 US 25 US gal spec; Canadian dealer 2026 listings also show 95 L."
+  },
+  {
+    "id": "ca-mercedes-benz-sprinter",
+    "tankL": 92.7,
+    "batteryKwh": null,
+    "published": "24.5 gal",
+    "source": "https://www.mercedes-benz-vans.ca/en/sprinter/cargo-van",
+    "sourceType": "maker",
+    "note": "Mercedes-Benz Vans Canada Sprinter Cargo Van specs: 24.5 gal standard on all wheelbases/roofs/engines (site publishes in US gal)."
+  },
+  {
+    "id": "mx-nissan-urvan",
+    "tankL": 65,
+    "batteryKwh": null,
+    "published": "65 L",
+    "source": "https://www.nissan.com.mx/vehiculos/todos/urvan.html",
+    "sourceType": "maker",
+    "note": "Nissan Mexico Urvan 2026 page: 'Tanque de combustible 65 L' for all versions incl. Panel."
+  },
+  {
+    "id": "mx-mercedes-benz-sprinter",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": "",
+    "source": "https://www.mercedes-benz.com.mx/content/dam/mexico/vans/brochures/2025/sprinter/Cat%C3%A1logo_2025_Sprinter_Cargo_Van.pdf",
+    "sourceType": "maker",
+    "note": "Not verified. Mercedes-Benz Mexico's site and its Sprinter Cargo Van catalogue timed out on every fetch. Search-index excerpts of that catalogue conflict (71 L for 311 Corta vs 93 L for 311 Mediana, or 93 L generally); Mexican secondary sites (autocosmos, my-car.mx, hey) do not list the tank. The Sprinter is offered with 71 L and 93 L main tanks, so neither could be assigned without the maker document."
+  },
+  {
+    "id": "mx-toyota-hiace",
+    "tankL": 70,
+    "batteryKwh": null,
+    "published": "70 l",
+    "source": "https://www.autocosmos.com.mx/catalogo/2026/toyota/hiace/12-pasajeros/173349",
+    "sourceType": "secondary",
+    "note": "toyota.mx blocked (403). Autocosmos Mexico 2026 Hiace 12 Pasajeros (3.5L V6 gasolina): tanque 70 l; 2026 Hiace Panel (2.8L diesel) also 70 l. The MX Panel is diesel; the petrol Hiace in MX is the Ventanas/12 Pasajeros."
+  },
+  {
+    "id": "gb-elddis-autoquest",
+    "tankL": 90,
+    "batteryKwh": null,
+    "published": "Diesel tank 90 litre incl. 19L AdBlue tank",
+    "source": "https://www.elddis.co.uk/en/motorhomes/autoquest-gt/aq-gt-70ds",
+    "sourceType": "maker",
+    "note": "Elddis 2026 Autoquest GT 70DS standard equipment (Fiat Ducato Light Low Platform, MultiJet 140). 'incl. 19L AdBlue tank' read as the separate AdBlue tank also being fitted; 90 L taken as the diesel tank."
+  },
+  {
+    "id": "gb-swift-escape",
+    "tankL": 60,
+    "batteryKwh": null,
+    "published": "60L fuel tank",
+    "source": "https://www.swiftgroup.co.uk/motorhomes/product/42105/swift-escape/",
+    "sourceType": "maker",
+    "note": "Swift Escape (2027 model year page, Fiat Ducato 2.2 140bhp 8-speed auto): '60L fuel tank and AdBlue based after treatment system with 19L tank'. Swift specifies a 60 L tank, smaller than the 90 L Elddis/Auto-Trail fit on the same chassis."
+  },
+  {
+    "id": "gb-auto-trail-v-line-610",
+    "tankL": 90,
+    "batteryKwh": null,
+    "published": "90L",
+    "source": "https://www.auto-trail.co.uk/wp-content/uploads/Auto-Trail-Website-Tech-Spec-V-Line-Sport-2.pdf",
+    "sourceType": "maker",
+    "note": "Auto-Trail V-Line Sport technical specification, V-Line 610 Sport page: 'Fuel tank capacity 90L' (Fiat Ducato 140bhp). 2027 price list confirms Fiat Ducato 140bhp chassis."
+  },
+  {
+    "id": "gb-ford-transit-custom",
+    "tankL": 55,
+    "batteryKwh": null,
+    "published": "Diesel 55L",
+    "source": "https://www.ford.co.uk/content/dam/guxeu/uk/documents/price-list/commercial-vehicles/PL-New_Transit_Custom.pdf",
+    "sourceType": "maker",
+    "note": "Ford UK Transit Custom price list effective 01/06/2026: 'Standard Fuel tank: Diesel 55L, pHEV 63L'."
+  },
+  {
+    "id": "gb-mercedes-benz-sprinter",
+    "tankL": 93,
+    "batteryKwh": null,
+    "published": "93 litres",
+    "source": "https://6656052.fs1.hubspotusercontent-na1.net/hubfs/6656052/2026%20Brochures/sprinter-panel-van.pdf",
+    "sourceType": "maker",
+    "note": "Mercedes-Benz UK Sprinter panel van price list (prices effective September 2025): technical data gives 'Fuel tank capacity 93 litres' (+22 L AdBlue) for the 2.0 diesel. Option list also offers 'Main tank 71 litres' and 'Main tank, 93 litres'; the extracted text did not let option codes/prices be paired unambiguously, so the technical-data figure is used."
+  },
+  {
+    "id": "ie-swift-escape-640",
+    "tankL": 60,
+    "batteryKwh": null,
+    "published": "60L fuel tank",
+    "source": "https://www.swiftgroup.co.uk/motorhomes/product/42105/swift-escape/",
+    "sourceType": "maker",
+    "note": "Swift Escape series spec (Escape 640 is one of its floorplans; 2027 MY, Fiat Ducato 2.2 140bhp): '60L fuel tank'. Swift's UK page; Irish dealers sell the same build."
+  },
+  {
+    "id": "ie-ford-transit",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": "",
+    "source": "https://www.ford.ie/content/dam/guxeu/ie/Documents/Pricelists/CVs/PL-transit_van_dciv.pdf",
+    "sourceType": "maker",
+    "note": "Ford Ireland Transit 27MY price list (effective 28 Aug 2026) lists 'Single Fuel Tank' as standard with no litre figure; the UK Transit price list gives only the optional Extended Range tank ('Fuel Tank Capacity - 95L'). Standard tank capacity not published in what Ford documents were found; secondary dealer/spec sites conflict (70, 75, 80 L, mostly older model years), so left null."
+  },
+  {
+    "id": "us-trek-fx-1",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "us-trek-marlin-5",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "us-trek-fx-plus-1",
+    "tankL": null,
+    "batteryKwh": 0.54,
+    "published": "540 Wh",
+    "source": "https://www.trekbikes.com/us/en_US/FAQ/fx-plus-one/",
+    "sourceType": "maker",
+    "note": "Trek FX+ 1 FAQ: 'the FX+ 1 frame was designed to fit the included 540Wh battery.' Some press quotes 520 Wh; maker figure used."
+  },
+  {
+    "id": "us-trek-verve-plus-1",
+    "tankL": null,
+    "batteryKwh": 0.25,
+    "published": "250 Wh",
+    "source": "https://www.trekbikes.com/us/en_US/verve-plus/",
+    "sourceType": "maker",
+    "note": "Trek's current US Verve+ catalog lists only the Verve+ 1 Lowstep LT (no non-LT Verve+ 1 Lowstep); Trek's Verve+ page gives Verve+ 1 'Battery: 250Wh'. Earlier Bosch-powered Verve+ 1 Lowstep (2024) had 400 Wh, not the current model."
+  },
+  {
+    "id": "us-honda-fourtrax-rancher",
+    "tankL": 14.76,
+    "batteryKwh": null,
+    "published": "3.9 US gal, incl. 1.3 gal reserve",
+    "source": "https://hondanews.com/en-US/powersports/releases/release-0d29cf91ab5515b985a1c28691090e6a-2026-honda-fourtrax-rancher-specifications",
+    "sourceType": "maker",
+    "note": "American Honda 2026 FourTrax Rancher spec release; same 3.9 gal across all four 2026 Rancher variants. 3.9 x 3.785411784 = 14.763 L."
+  },
+  {
+    "id": "us-can-am-outlander-500",
+    "tankL": 19.5,
+    "batteryKwh": null,
+    "published": "5.1 gal (19.5 L)",
+    "source": "https://can-am.brp.com/off-road/us/en/models/atv/recreational/outlander-500-700.html",
+    "sourceType": "maker",
+    "note": "BRP US page shows the 2027 Outlander 500/700 at 5.1 gal (19.5 L); the 2026 previous-models page omitted fuel capacity, but BRP's 2026 Mexico spec sheet gives the same 19,5 L (5,1 gal). Maker's own litre figure used."
+  },
+  {
+    "id": "us-polaris-sportsman-570",
+    "tankL": 17,
+    "batteryKwh": null,
+    "published": "4.5 gal / 17 l",
+    "source": "https://www.atv.com/specs/polaris/utility/2026/sportsman-570/base/detail.html",
+    "sourceType": "secondary",
+    "note": "2026 Sportsman 570 Base. Polaris's own spec page (polaris.com) returned HTTP 403; search index of it also shows 4.5 gal (17.0 L). Published litre figure used (4.5 US gal = 17.03 L)."
+  },
+  {
+    "id": "ca-trek-fx-1",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "ca-trek-fx-2",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "ca-mec-skyway",
+    "tankL": null,
+    "batteryKwh": 0.504,
+    "published": "504 Wh",
+    "source": "https://www.mec.ca/en/product/6038-402/mec-skyway-hybrid-e-bicycle-unisex",
+    "sourceType": "maker",
+    "note": "MEC product page lists a 504Wh 36 V Bafang F023 lithium-ion removable battery. Direct fetch was blocked (403); figure taken from the search-indexed text of MEC's own page, consistent for both Skyway and Skyway Step-Through."
+  },
+  {
+    "id": "ca-can-am-outlander",
+    "tankL": 19.5,
+    "batteryKwh": null,
+    "published": "5.1 gal (19.5 L)",
+    "source": "https://can-am.brp.com/off-road/ca/en/models/all-terrain-vehicles/outlander-500-700.html",
+    "sourceType": "maker",
+    "note": "BRP Canada page shows the 2027 Outlander 500 at 5.1 gal (19.5 L); unchanged from 2026 (BRP 2026 MX spec sheet: 19,5 L)."
+  },
+  {
+    "id": "ca-honda-fourtrax-rancher",
+    "tankL": 14.7,
+    "batteryKwh": null,
+    "published": "14.7 L, incl. 4.9 L reserve",
+    "source": "https://atvsxs.honda.ca/atv/rancher/rancher-420/",
+    "sourceType": "maker",
+    "note": "Honda Canada TRX420 Rancher spec. Page returned HTTP 500 on direct fetch; figure from search-indexed text of Honda Canada's page. Honda Ireland publishes the same 14.7 L; American Honda's 3.9 US gal = 14.76 L."
+  },
+  {
+    "id": "mx-benotto-city-e-267",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "mx-benotto-black-eagle",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "mx-italika-atv200",
+    "tankL": 7.5,
+    "batteryKwh": null,
+    "published": "7,5 L",
+    "source": "https://assets.ctfassets.net/8zlbnewncp6f/6SsNY1VELldtKIX7y3Piwn/bcbc4ce3cbd3798dcc184f9e4444eb7d/Ficha_T_cnica_Italika_ATV_200_Galgo_M_xico.pdf",
+    "sourceType": "secondary",
+    "note": "Galgo Mexico ficha técnica PDF: 'Capacidad de tanque 7,5 L'. Italika's own product pages would not render specs; search index attributes 7.5 L to italika.mx and motofichas.com.mx also lists 7.5 l. Conflict: Galgo's 2026 web listing (galgo.com/mx/motos/MX2771-italika-atv-200) shows 8 L; the 7.5 L figure is the one with multiple agreeing sources."
+  },
+  {
+    "id": "mx-can-am-outlander-500",
+    "tankL": 19.5,
+    "batteryKwh": null,
+    "published": "19,5 L (5,1 gal)",
+    "source": "https://can-am.brp.com/content/dam/global/en/can-am-off-road/my26/spec-sheets/latam/mx/atv/ORV_ATV_MY26_SPEC_OUT_500_700_SPMX.pdf",
+    "sourceType": "maker",
+    "note": "BRP 2026 Outlander 500/700 Mexico spec sheet, 'Capacidad de combustible 19,5 L (5,1 gal)'."
+  },
+  {
+    "id": "mx-honda-trx-420",
+    "tankL": 13.3,
+    "batteryKwh": null,
+    "published": "13.3 l (incluye 2.6 l reserva)",
+    "source": "https://www.hondamotosdy.com/modelos/atv/trx420fm",
+    "sourceType": "secondary",
+    "note": "Authorized Honda Mexico dealer page for the 2026 TRX420FM; Honda Mexico distributor site comotohonda.mx gives the same 13.3 l for 2024. Differs from the US/CA/EU figure (14.7-14.9 L) but is what Honda's Mexican channel publishes; kept as published."
+  },
+  {
+    "id": "gb-decathlon-riverside-120",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "gb-carrera-vengeance",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "gb-carrera-crossfuse",
+    "tankL": null,
+    "batteryKwh": 0.418,
+    "published": "Shimano 36v, 11.6Ah, 418Wh",
+    "source": "https://www.halfords.com/bikes/electric-bikes/carrera-crossfuse-mens-electric-hybrid-bike---s-m-l-frames-454155.html",
+    "sourceType": "maker",
+    "note": "Halfords (Carrera's owner) page for the current Shimano EP6 Crossfuse: 'Shimano 36v, 11.6Ah, 418Wh removable battery'. Direct fetch blocked by bot protection; figure from search-indexed text of the Halfords page. Older Bosch-powered Crossfuse had 400 Wh."
+  },
+  {
+    "id": "gb-honda-trx420",
+    "tankL": 14.9,
+    "batteryKwh": null,
+    "published": "14.9L, incl. 4.9L reserve",
+    "source": "https://www.honda.co.uk/atv/models/trx420-fourtrax-2020/specifications.html",
+    "sourceType": "maker",
+    "note": "Honda UK's current TRX420 Fourtrax spec page (URL still labelled 2020, the model listed on honda.co.uk/atv.html); same figure for all variants."
+  },
+  {
+    "id": "gb-polaris-sportsman-600",
+    "tankL": 17.03,
+    "batteryKwh": null,
+    "published": "4.5 gal",
+    "source": "https://www.polarisbritain.com/sportsman/sportsman-600/",
+    "sourceType": "maker",
+    "note": "Polaris Britain lists 'Fuel Capacity 4.5 gal' for all MY2027 Sportsman 600 trims without saying which gallon; treated as US gal because it matches Polaris's US-market figure for the same platform (4.5 gal / 17 L). 4.5 x 3.785411784 = 17.034 L. If it were imperial it would be 20.46 L."
+  },
+  {
+    "id": "ie-carrera-vengeance",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "ie-carrera-crossfire-2",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": null,
+    "source": null,
+    "sourceType": null,
+    "note": "A pedal bicycle: it has no fuel tank or battery, so nothing applies."
+  },
+  {
+    "id": "ie-carrera-crossfire-e",
+    "tankL": null,
+    "batteryKwh": 0.417,
+    "published": "417Wh",
+    "source": "https://www.halfords.ie/bikes/electric-bikes/carrera-crossfire-e-mens-electric-hybrid-bike-2.0---17in-19in-21in-frames-445998.html",
+    "sourceType": "maker",
+    "note": "Halfords Ireland Crossfire E 2.0: Suntour STL removable 417Wh battery. Input catalogSource pointed at a Crossfuse URL; the Crossfire E page was used instead. Halfords UK also sells a newer 'Crossfire-E 2026' with a 378 Wh Bafang battery (halfords.com 467827), not found on halfords.ie."
+  },
+  {
+    "id": "ie-honda-trx420",
+    "tankL": 14.7,
+    "batteryKwh": null,
+    "published": "14.7L, incl. 4.9L reserve",
+    "source": "https://www.hondaireland.ie/product/trx420fm2/",
+    "sourceType": "maker",
+    "note": "Honda Ireland TRX420FM2 spec page."
+  },
+  {
+    "id": "us-tesla-model-y",
+    "tankL": null,
+    "batteryKwh": 69.5,
+    "published": "69.5 kWh (US build, NCA cells)",
+    "source": "https://electrek.co/2026/08/03/2026-tesla-model-y-rwd-review/",
+    "sourceType": "secondary",
+    "note": "Tesla does not publish battery capacity. Electrek says US-built (Fremont/Austin) Model Y Standard has a 69.5 kWh pack, 'trimmed to 69 kWh', and does not say whether that is gross or usable. EV Database lists only the European LFP Model Y RWD, which is a different pack, so it does not apply to the US car."
+  },
+  {
+    "id": "us-chevrolet-equinox-ev",
+    "tankL": null,
+    "batteryKwh": 85,
+    "published": "85 kWh battery pack",
+    "source": "https://www.chevrolet.com/electric/previous-year/equinox-ev",
+    "sourceType": "maker",
+    "note": "Chevrolet.com: 'The 2026 Chevy Equinox EV is equipped with an 85 kWh battery pack'. GM does not say gross or usable; GM Authority describes the 85 kWh as usable (FWD LT/RS, 319 mi EPA)."
+  },
+  {
+    "id": "ca-tesla-model-y",
+    "tankL": null,
+    "batteryKwh": 60,
+    "published": "60.0 kWh usable (64.0 kWh nominal), LFP",
+    "source": "https://ev-database.org/car/3362/Tesla-Model-Y-RWD",
+    "sourceType": "secondary",
+    "note": "Tesla does not publish battery capacity. Canadian Model Y Standard RWD is the non-US LFP build (Electrek: Canada gets an LFP pack of 'about 63 kWh', rated 463 km). The figure is EV Database's European Model Y RWD (Juniper, Oct 2025 onward): 64.0 kWh nominal, 60.0 kWh usable. EV Database marks the usable figure as its own estimate."
+  },
+  {
+    "id": "ca-chevrolet-equinox-ev",
+    "tankL": null,
+    "batteryKwh": 85,
+    "published": "85 kWh battery pack",
+    "source": "https://www.chevrolet.com/electric/previous-year/equinox-ev",
+    "sourceType": "maker",
+    "note": "From Chevrolet USA's 2026 Equinox EV page; Chevrolet Canada's page could not be read. The Car Guide (guideautoweb.com) lists 85.0 kWh for the Canadian 2026 Equinox EV LT FWD. GM does not say gross or usable; GM Authority calls it usable."
+  },
+  {
+    "id": "mx-tesla-model-y",
+    "tankL": null,
+    "batteryKwh": null,
+    "published": "",
+    "source": "",
+    "sourceType": "secondary",
+    "note": "Null because Tesla doesn't publish battery kWh and no source states the Mexican-market Model Y Standard RWD's pack or the factory supplying Mexico. ev-database covers only European-spec cars: 60.0 kWh usable, 64.0 kWh nominal, CATL LFP, both marked estimates. That figure applies only if Mexico gets the Shanghai/Berlin LFP car, and a US-built Standard would carry a different pack. Using it would be a guess."
+  },
+  {
+    "id": "gb-tesla-model-y",
+    "tankL": null,
+    "batteryKwh": 60,
+    "published": "Useable capacity 60.0 kWh; nominal 64.0 kWh (both marked estimated)",
+    "source": "https://ev-database.org/uk/car/3741/Tesla-Model-Y-RWD",
+    "sourceType": "secondary",
+    "note": "EV Database, Tesla Model Y RWD (Juniper), the Standard variant, UK, available since August 2026 (succeeding entry 3362, Dec 2025-Aug 2026, same 60.0/64.0 kWh). CATL LFP. Tesla doesn't publish kWh; EV Database marks both figures as estimates. 60.0 is usable; 64.0 is gross/nominal."
+  },
+  {
+    "id": "gb-ford-puma-gen-e",
+    "tankL": null,
+    "batteryKwh": 43,
+    "published": "Usable capacity (kWh) 43 (Lithium-ion NMC)",
+    "source": "https://www.fromtheroad.ford.com/content/dam/fordmediasite/eur/en/library/2025/tech-specs/2025%20Go%20Electric%20Puma%20Gen-E%20factsheet%20ENG.pdf",
+    "sourceType": "press",
+    "note": "Ford Europe media factsheet for the Puma Gen-E and Gen-E Premium: 43 kWh usable. Ford doesn't state gross in this sheet. Secondary sources give 46-53 kWh gross, but they disagree."
+  },
+  {
+    "id": "ie-tesla-model-y",
+    "tankL": null,
+    "batteryKwh": 60,
+    "published": "Useable capacity 60.0 kWh; nominal 64.0 kWh (both marked estimated)",
+    "source": "https://ev-database.org/uk/car/3741/Tesla-Model-Y-RWD",
+    "sourceType": "secondary",
+    "note": "EV Database European-spec Model Y RWD (Juniper), Standard variant, CATL LFP. Ireland is supplied with the same European-spec car as the UK (right-hand drive). Tesla doesn't publish kWh; EV Database marks both figures as estimates. 60.0 is usable; 64.0 is gross/nominal."
+  }
+]

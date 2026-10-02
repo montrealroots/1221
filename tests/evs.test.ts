@@ -17,7 +17,8 @@ import { documentsOf } from '@/engine/systems/documents';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { chargerQuote, chargingRewards, homeShareOf } from '@/engine/systems/charging';
 import { yearOf } from '@/engine/systems/earnings';
-import { modelById, monthKm, quote, runningCost, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
+import { modelById, monthKm, quote, runningCost, upkeepCost, vehiclesOf, type Quote } from '@/engine/systems/vehicles';
+import { everydayFuel } from '@/engine/systems/fueltank';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -99,7 +100,8 @@ describe('charging it', () => {
     const v = vehiclesOf(sim.player)[0]!;
     const fuel = sim.universe.transactions.find((t) => t.memo === 'Fuel and upkeep, the Tesla Model Y')!;
     const paid = fuel.postings.filter((p) => p.amount > 0).reduce((a, p) => a + p.amount, 0);
-    expect(paid).toBe(runningCost(sim, v, monthKm(v), HOME_CHARGING_SHARE));
+    // What its charges came to through the month from a full battery (`systems/fueltank.ts`), and the month's upkeep.
+    expect(paid).toBe(everydayFuel(sim, { ...v, fuelLevel: 1 }, monthKm(v), HOME_CHARGING_SHARE)!.cost + upkeepCost(sim, v, monthKm(v)));
   });
 
 
