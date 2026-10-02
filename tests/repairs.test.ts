@@ -17,6 +17,8 @@ import { expectedRepairsUsd, laidUp, mayBreak, readyAt, reliabilityOf, repairRef
 import { inspectIfDue, inspectionFails } from '@/engine/systems/inspections';
 import { planDrive } from '@/engine/systems/journey';
 import { documentsOf } from '@/engine/systems/documents';
+import { towPrice } from '@/engine/systems/roadside';
+import { LEG_KM } from '@/engine/content/errandtrips';
 
 const NY = 'America/New_York';
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -113,7 +115,8 @@ describe('the shop', () => {
     const before = bank();
     const r = sim.execute<{ readyAt: number; paid: number }>({ kind: 'vehicle.repair', payload: { vehicleId: v.id, shopId: 'midas-w53' } });
     expect(r.ok, r.error).toBe(true);
-    expect(r.value!.paid).toBe(usd(sim, 3 * 649 * 100));
+    // And from 2026-10-02 the tow to the garage, at the market's price without cover (tests/roadside.test.ts).
+    expect(r.value!.paid).toBe(usd(sim, 3 * 649 * 100) + towPrice(sim, 'US-NY', 'us-ny-newyork', LEG_KM.na.errand, false));
     expect(bank()).toBe(before - r.value!.paid);
     expect(v.fault).toBeUndefined();
     expect(v.inShop).toEqual({ shopId: 'midas-w53', until: sim.now + 3 * MS_DAY });

@@ -40,6 +40,7 @@ import { nightRateFor, ownPlaceIn, stayPrice, streetRefusal } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
+import { onTheRoad } from './roadside';
 import { atTheCheckpoint, boardingIdRefusal } from './identity';
 import { caravansOf, towFor, towedLegs } from './caravans';
 import { claimDelay } from './compensation';
@@ -698,6 +699,8 @@ export function registerJourneys(sim: Simulation): void {
     const car = driven ? vehiclesOf(person).find((x) => `car:${x.id}` === driven.routeId) : undefined;
     if (driven && car) {
       const km = roadKm(j.fromCity, j.toCity);
+      // What the road did to the car on the way (`systems/roadside.ts`, from 2026-10-02).
+      onTheRoad(s, person, car, j, km);
       car.at = j.toCity;
       const towed = j.towing ? caravansOf(person).find((c) => c.id === j.towing) : undefined;
       if (towed) towed.at = j.toCity === towed.cityId ? undefined : j.toCity;
