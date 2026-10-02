@@ -42,7 +42,7 @@ import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place
 import { ordersOf, placeOrder } from './orders';
 import { fitOf, fitKgFor, sizeFor } from './tailoring';
 import { bodyOf } from './body';
-import { dryCleanDirty, garmentsOf, wearTheDay, type Garment } from './wardrobe';
+import { dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
 
 /** A purchase of clothes: what, from whom, how, and what the goods cost; and whether it went back. */
 export interface ClothesPurchase {
@@ -327,6 +327,18 @@ export function outfitRefusal(sim: Simulation, person: Person, itemIds: readonly
   return undefined;
 }
 
+/** Why these garments can't be put on now, or nothing: an outfit, each piece of it clean, dry, fitting and to hand (from 2026-10-02; until then a dirty piece was taken and silently swapped on the day). */
+export function dressRefusal(sim: Simulation, person: Person, itemIds: readonly string[]): string | undefined {
+  const no = outfitRefusal(sim, person, itemIds);
+  if (no) return no;
+  for (const id of itemIds) {
+    const item = itemById(person, id) as Item & { garment: Garment };
+    const why = unwearable(sim, person, item);
+    if (why) return `${item.label} is ${why}.`;
+  }
+  return undefined;
+}
+
 /** Puts together an outfit and names it. */
 export function saveOutfit(sim: Simulation, person: Person, name: string, itemIds: readonly string[]): Outfit {
   const title = name.trim();
@@ -377,7 +389,7 @@ export function starterWardrobe(sim: Simulation, person: Person): boolean {
   person.clothesSince = sim.now;
   const l = person.living;
   if (l && l.dirty !== undefined) {
-    for (let i = 0; i < Math.min(l.dirty, 13); i += 1) wearTheDay(sim, person);
+    for (let i = 0; i < Math.min(l.dirty, 13); i += 1) wearTheDay(sim, person, sim.now, false);
     delete l.clean;
     delete l.dirty;
     delete l.drying;
@@ -465,7 +477,7 @@ export function registerClothing(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { count: number }>('clothes.collect', (_p, { sim: s }) => ({ count: collectCleaning(s, s.player) }));
   sim.onCommand<{ itemIds: string[] }, { dressed: string[] }>('clothes.dress', (p, { sim: s }) => {
     const ids = Array.isArray(p?.itemIds) ? p.itemIds.map(String) : [];
-    const no = outfitRefusal(s, s.player, ids);
+    const no = dressRefusal(s, s.player, ids);
     if (no) throw new CommandError(no);
     s.player.dressed = ids;
     return { dressed: ids };
@@ -475,6 +487,8 @@ export function registerClothing(sim: Simulation): void {
     const outfit = (s.player.outfits ?? []).find((o) => o.id === p?.outfitId);
     if (!outfit) throw new CommandError('No such outfit.');
     if (outfit.itemIds.length === 0) throw new CommandError('None of it is yours any more.');
+    const no = dressRefusal(s, s.player, outfit.itemIds);
+    if (no) throw new CommandError(no);
     s.player.dressed = [...outfit.itemIds];
     return { dressed: s.player.dressed };
   });

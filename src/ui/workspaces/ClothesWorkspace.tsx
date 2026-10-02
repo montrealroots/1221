@@ -17,15 +17,15 @@ import { CITIES } from '@/engine/content/geography';
 import type { Slot } from '@/engine/content/garmentcare';
 import type { ClothingProduct } from '@/engine/content/clothingcatalog';
 import { arrange } from '@/engine/systems/catalog';
-import { reachable, type Item } from '@/engine/systems/items';
-import { cleanOutfits, dryCleanDirty, garmentsOf, outfitFor, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
+import type { Item } from '@/engine/systems/items';
+import { chosenMissing, cleanOutfits, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
 import { alterCost, alterRefusal, fitOf, tailorsIn } from '@/engine/systems/tailoring';
 import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { buyRefusal, clothingCatalog, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
+import { buyRefusal, clothingCatalog, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -126,6 +126,7 @@ function WhatToWear() {
   const ready = useWorld((s) => garmentsOf(s.player).filter((g) => wearable(s, s.player, g)));
   const today = useWorld((s) => (outfitFor(s, s.player) ?? []).map((g) => g.id));
   const outfits = useWorld((s) => s.player.outfits ?? []);
+  const missing = useWorld((s) => chosenMissing(s, s.player));
   const [picked, setPicked] = useState<Partial<Record<Slot, string>>>({});
   const [name, setName] = useState('');
   const dress = useFeature('clothes.dress');
@@ -139,6 +140,7 @@ function WhatToWear() {
   return (
     <Panel title="What To Wear" subtitle="Your choice is worn while it’s clean and to hand; whatever it leaves out, what’s already on the go, then the least washed">
       <LookRegion className="col gap-3">
+        {missing.length > 0 && <div className="callout callout-warning small">{missing.map(({ item, why }, n) => <span key={item.id}>{n > 0 ? '; ' : ''}<Open subject={at('garment', item.id)}>{item.label}</Open> is {why}</span>)}: the day puts on something else in its place.</div>}
         {slots.length === 0 ? <p className="small muted" style={{ margin: 0 }}>Nothing clean is to hand.</p> : (
           <div className="field-row field-row-tight">
             {slots.map((slot) => (
@@ -171,11 +173,11 @@ function WhatToWear() {
                     <td className="small">{(() => {
                       const inIt = o.itemIds.map((id) => garmentsOf(person).find((g) => g.id === id)).filter((g): g is Worn => Boolean(g));
                       if (inIt.length === 0) return 'None of it is yours any more';
-                      return inIt.map((g, n) => <span key={g.id}>{n > 0 ? ', ' : ''}<Open subject={at('garment', g.id)}>{g.label}</Open>{reachable(sim, person, g.at) ? '' : ' (not to hand)'}</span>);
+                      return inIt.map((g, n) => <span key={g.id}>{n > 0 ? ', ' : ''}<Open subject={at('garment', g.id)}>{g.label}</Open>{(() => { const why = unwearable(sim, person, g); return why ? ` (${why})` : ''; })()}</span>);
                     })()}</td>
                     <td>
                       <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
-                        <button type="button" className="btn btn-sm btn-ghost" disabled={!wear.open} title={wear.reason} onClick={() => { if (run('clothes.wear_outfit', { outfitId: o.id }).ok) toast(`${o.name}, chosen.`, 'positive'); }}>Wear It</button>
+                        <button type="button" className="btn btn-sm btn-ghost" disabled={!wear.open} title={wear.reason ?? dressRefusal(sim, person, o.itemIds)} onClick={() => { if (run('clothes.wear_outfit', { outfitId: o.id }).ok) toast(`${o.name}, chosen.`, 'positive'); }}>Wear It</button>
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!drop.open} title={drop.reason} onClick={() => run('clothes.delete_outfit', { outfitId: o.id })}>Delete</button>
                       </div>
                     </td>

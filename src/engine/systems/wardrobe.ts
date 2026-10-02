@@ -6,7 +6,8 @@
  * A day's outfit is real garments to hand: a top and a bottom, or a dress,
  * or a suit, and underwear, socks and shoes. It's the outfit they chose
  * where it's still to hand and clean; otherwise what's already on the go,
- * then the least washed of what's clean. Each wear counts toward the kind's wears between washes
+ * then the least washed of what's clean, and the player told what stood in
+ * (silent until 2026-10-02). Each wear counts toward the kind's wears between washes
  * (`content/garmentcare.ts`), and at that count it goes in the wash. A wash
  * takes each garment's share of the washes its kind lasts off its
  * condition, and it's wearable once dry. A dry-clean-only garment goes to a
@@ -49,11 +50,29 @@ export const GARMENTS_PER_LOAD = 23;
 
 export const garmentsOf = (person: Person): (Item & { garment: Garment })[] => itemsOf(person).filter((i): i is Item & { garment: Garment } => i.garment !== undefined);
 
-/** Whether a garment can be put on now: to hand, clean, dry and not worn out. */
-export function wearable(sim: Simulation, person: Person, item: Item & { garment: Garment }, at: Instant = sim.now): boolean {
+/** Why a garment can't be put on now, or nothing: it must be to hand, clean, dry, not worn out, and fit the body as it is (`systems/tailoring.ts`). */
+export function unwearable(sim: Simulation, person: Person, item: Item & { garment: Garment }, at: Instant = sim.now): string | undefined {
   const g = item.garment;
-  // And one that fits the body as it is now (`systems/tailoring.ts`).
-  return !g.dirty && !(g.dryUntil !== undefined && g.dryUntil > at) && item.condition > 0 && fitOf(person, g) === 'fits' && reachable(sim, person, item.at);
+  if (g.dirty) return 'in the wash';
+  if (g.dryUntil !== undefined && g.dryUntil > at) return 'still drying';
+  if (item.condition <= 0) return 'worn out';
+  const fit = fitOf(person, g);
+  if (fit !== 'fits') return fit === 'small' ? 'too small now' : 'too big now';
+  if (!reachable(sim, person, item.at)) return 'not to hand';
+  return undefined;
+}
+
+/** Whether a garment can be put on now. */
+export const wearable = (sim: Simulation, person: Person, item: Item & { garment: Garment }, at: Instant = sim.now): boolean => unwearable(sim, person, item, at) === undefined;
+
+/** The pieces they chose that the day can't put on, each with why: what `outfitFor` stands in for, said rather than swapped silently (from 2026-10-02). */
+export function chosenMissing(sim: Simulation, person: Person, at: Instant = sim.now): { item: Item & { garment: Garment }; why: string }[] {
+  const mine = garmentsOf(person);
+  return (person.dressed ?? []).flatMap((id) => {
+    const item = mine.find((g) => g.id === id);
+    const why = item ? unwearable(sim, person, item, at) : undefined;
+    return item && why ? [{ item, why }] : [];
+  });
 }
 
 /**
@@ -89,11 +108,24 @@ function wearOnce(item: Item & { garment: Garment }): void {
   if (item.garment.wears >= careFor(item.garment.kind).wearsBetween) item.garment.dirty = true;
 }
 
-/** A day dressed: the outfit worn, and true; or false where there's none whole and clean. */
-export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
+/**
+ * A day dressed: the outfit worn, and true; or false where there's none whole
+ * and clean. A chosen piece the day couldn't put on is told to the player,
+ * with what stood in for it. Until 2026-10-02 the swap was silent.
+ */
+export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.now, tell = true): boolean {
   const outfit = outfitFor(sim, person, at);
   if (!outfit) return false;
+  const missing = tell && person.id === sim.universe.playerId ? chosenMissing(sim, person, at) : [];
   for (const g of outfit) wearOnce(g);
+  if (missing.length) {
+    // A dress or a suit is stood in for by a top and a bottom, and they by either.
+    const BODY: readonly Slot[] = ['suit', 'dress', 'top', 'bottom'];
+    const chosen = new Set(person.dressed ?? []);
+    const stood = (slot: Slot) => outfit.filter((g) => !chosen.has(g.id) && (BODY.includes(slot) ? BODY.includes(g.garment.slot) : g.garment.slot === slot)).map((g) => g.label).join(' and ') || undefined;
+    const lines = missing.map(({ item, why }) => { const instead = stood(item.garment.slot); return `${item.label} was ${why}${instead ? `, so ${instead} instead` : ''}`; });
+    sim.notify({ category: 'home', title: 'Not Quite What You Chose', body: `${lines.join('; ')}.`, importance: 30, route: '/workspace/clothes' });
+  }
   return true;
 }
 

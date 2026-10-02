@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { addItem, homeKeyOf, type Item } from '@/engine/systems/items';
-import { cleanOutfits, garmentsOf, outfitFor, wearTheDay, washableDirty, dryCleanDirty, type Garment } from '@/engine/systems/wardrobe';
+import { chosenMissing, cleanOutfits, garmentsOf, outfitFor, wearTheDay, washableDirty, dryCleanDirty, type Garment } from '@/engine/systems/wardrobe';
 import { doLaundry, wearOutfit } from '@/engine/systems/dwelling';
 import type { Slot, Care } from '@/engine/content/garmentcare';
 
@@ -67,6 +67,44 @@ describe('a day’s outfit', () => {
     expect(outfitFor(sim, sim.player)!.some((g) => g.garment.slot === 'top')).toBe(false);
     dress.garment!.dirty = true;
     expect(outfitFor(sim, sim.player)!.some((g) => g.id === b.jeans.id)).toBe(true);
+    // The day stands something in for it, and says so, with what and why.
+    expect(chosenMissing(sim, sim.player).map((m) => m.why)).toEqual(['in the wash']);
+    expect(wearTheDay(sim, sim.player)).toBe(true);
+    const told = sim.universe.notifications.at(-1)!;
+    expect(told.title).toBe('Not Quite What You Chose');
+    expect(told.body).toBe('Dress was in the wash, so T-Shirt and Jeans instead.');
+  });
+
+  it('won’t be chosen dirty, drying, outgrown or out of reach, and a saved outfit with such a piece isn’t put on', () => {
+    const sim = life('ward-refuse');
+    const b = basics(sim);
+    const ids = [b.tees[0]!.id, b.jeans.id, b.under[0]!.id, b.socks[0]!.id, b.shoes.id];
+    const saved = sim.execute<{ outfitId: string }>({ kind: 'clothes.save_outfit', payload: { name: 'Everyday', itemIds: ids } });
+    expect(saved.ok, saved.error).toBe(true);
+    b.jeans.garment!.dirty = true;
+    expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: ids } }).error).toBe('Jeans is in the wash.');
+    expect(sim.execute({ kind: 'clothes.wear_outfit', payload: { outfitId: saved.value!.outfitId } }).error).toBe('Jeans is in the wash.');
+    expect(sim.player.dressed ?? []).toEqual([]);
+    b.jeans.garment!.dirty = false;
+    b.jeans.garment!.dryUntil = sim.now + HOUR;
+    expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: ids } }).error).toBe('Jeans is still drying.');
+    delete b.jeans.garment!.dryUntil;
+    sim.player.body = { ...(sim.player.body ?? {}), weightKg: 70 } as never;
+    b.jeans.garment!.fitKg = 90;
+    expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: ids } }).error).toBe('Jeans is too big now.');
+    b.jeans.garment!.fitKg = 50;
+    expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: ids } }).error).toBe('Jeans is too small now.');
+    delete b.jeans.garment!.fitKg;
+    b.jeans.condition = 0;
+    expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: ids } }).error).toBe('Jeans is worn out.');
+    b.jeans.condition = 1;
+    expect(sim.execute({ kind: 'clothes.wear_outfit', payload: { outfitId: saved.value!.outfitId } }).ok).toBe(true);
+    expect(sim.player.dressed).toEqual(ids);
+    // Only the piece that couldn't go on is named, and only what stood in for it.
+    wear(sim, 'Chinos', 'chinos', 'bottom');
+    b.jeans.garment!.dirty = true;
+    expect(wearTheDay(sim, sim.player)).toBe(true);
+    expect(sim.universe.notifications.at(-1)!.body).toBe('Jeans was in the wash, so Chinos instead.');
   });
 });
 

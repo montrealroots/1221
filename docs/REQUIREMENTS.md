@@ -27,8 +27,9 @@ Correctness first, then the connected day the plan asks to be shown working
 
 1. **What breaks a rule today.** A hotel or rental deposit that failed
    granted the stay until 2026-10-02 (§48i; now held until paid or the day
-   ends). A saved outfit is worn though a piece is out of
-   reach, and a piece that can't be worn is silently swapped (§32g, §27b). An
+   ends). A saved outfit was worn though a piece was out of
+   reach, and a piece that couldn't be worn was silently swapped, until
+   2026-10-02 (§32g, §27b; now refused, and a swap on the day is told). An
    order's "returned" state is declared and never set (§30). A fitting is
    paid without the actor there (§53.5). Look After Yourself's "eat" pays
    money and never touches the kitchen (§33g).
@@ -80,7 +81,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 25 | Fit by real measures and size charts | Partial | Size from BMI share (`sizeFor`) | Body measurements; charts per retailer; shoe and ring fit; waist-by-inseam |
 | 26 | Jordans and designer products, retail vs resale | Not implemented (Jordans), partial (designer) | 8 luxury retailers | Sneaker catalog with style codes and colorways; resale sellers and condition |
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
-| 27b | Wear, layer, remove | Partial | one garment per slot | Layers, undress, sleepwear, accessories worn; `wear_outfit` validated |
+| 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit` (2026-10-02) | Layers, undress, sleepwear, accessories worn |
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
 | 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
 | 27e | Pack, unpack | Partial (automatic) | luggage.ts | Manual packing (§46) |
@@ -108,7 +109,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 32d | Change, with time and a worn state | Not implemented | `clothes.dress` sets a preference | Worn state; a timed change |
 | 32e | Removed items stored or to the hamper | Not implemented | — | Hamper spot; take-off choice |
 | 32f | Save an outfit | Complete | tests/clothing, wardrobe | — |
-| 32g | Never silently replace a garment | Partial, violated | `outfitFor` substitutes | Refuse or report |
+| 32g | Never silently replace a garment | Done, 2026-10-02 | `chosenMissing`; `wearTheDay` tells what stood in and why; tests/wardrobe.test.ts | — |
 | 33a | Inspect supplies and equipment | Partial | Kitchen panel | Equipment from installed appliances |
 | 33b | Meal and portions | Partial | always full servings | Servings scale |
 | 33c | Ingredients and time | Complete | `cookRefusal`; tests/kitchen | — |
