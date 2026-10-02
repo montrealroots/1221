@@ -81,7 +81,11 @@ export interface Place {
 }
 
 /** Where somebody stays away from home on a job. */
-export interface Stay { kind: 'hotel' | 'sublet' | 'sofa' | 'own' | 'let'; cityId: string; unit?: RentedUnit }
+export interface Stay {
+  kind: 'hotel' | 'sublet' | 'sofa' | 'own' | 'let'; cityId: string; unit?: RentedUnit;
+  /** Checked out of a hotel or a let, leaving town that day (`roomGone`, from 2026-10-02). */
+  out?: boolean;
+}
 
 /** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */
 const HOTEL_FIXTURES: Fixtures = { bathtub: true, dishwasher: false, laundry: 'none', cooling: 'central', outdoor: 'none', gym: 'building' };

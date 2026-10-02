@@ -14,7 +14,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { MS_DAY, formatDateTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
+import { MS_DAY, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
@@ -32,6 +32,7 @@ import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
 import { hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
+import { lateQuote } from '@/engine/systems/latecheckout';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
@@ -295,7 +296,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}</div></td>
+                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <CheckOutLate j={j} />}</div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -493,6 +494,19 @@ function StayLonger({ j }: { j: Journey }) {
         if (run('travel.extend', { journeyId: j.id, day: j.leaveAt + days * MS_DAY, slot: slotOf(j) }).ok) toast(`Staying ${days} ${days === 1 ? 'day' : 'days'} longer.`, 'positive');
       }}>{typeof q === 'string' ? 'Stay Longer' : `Stay Longer (${formatMoney(q.total, cur, { cents: false })})`}</Gated>
     </div>
+  );
+}
+
+/** A later check-out, the morning of it, at a hotel that publishes its price (`travel.late_checkout`). */
+function CheckOutLate({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  if (!j.hotel?.named || j.hotel.lateUntil || person.currentLocationId !== j.toCity) return null;
+  const q = lateQuote(sim, person, j.id);
+  if (typeof q === 'string') return null;
+  const cur = saveCurrency(sim.universe);
+  return (
+    <Gated feature="travel.late_checkout" className="btn btn-sm btn-ghost" title={q.basis} onClick={() => { if (run('travel.late_checkout', { journeyId: j.id }).ok) toast(`Check-out at ${formatTime(q.until, CITIES.require(j.toCity).timeZone)}.`, 'positive'); }}>{q.price ? `Check Out Late, ${formatMoney(q.price, cur, { cents: false })}` : 'Check Out Late, Free'}</Gated>
   );
 }
 

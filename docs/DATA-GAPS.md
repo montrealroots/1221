@@ -22,7 +22,7 @@ exists, this file says so, and the item stays out.
 | Bids, change orders, overruns, lateness | 12 | No open dataset for homes; public works' contract data doesn't describe a house | Out |
 | A counteroffer over scale | 13 | No actors' data; the nearest measured is a 2025 NBER field study of job offers (85% met, 12.45% raised); Variety on scale offers below series regular | Got (`counterOffer`), the stand-in labeled. |
 | The Oscars', Tonys', Oliviers' and Ariels' fields of performances | 13 | The Academy's 98th Reminder List, counted from its PDF: 1,075 actors and 790 actresses. The others publish only eligible productions: the Tonys' 19 plays, the Oliviers' 110 Theater productions, the Ariels' 43 features, each at a published cast size (AAPAC's 19.6 a Broadway production, the Academy list's 7.17 a film) and split by the Academy list's share of actors (research-gaps-awards-negotiation.json) | Got (`OTHER_FIELDS`), the derived three labeled as proxies. IMDb's datasets would count casts more closely. |
-| Hotel requests granted | 6 | No open dataset | Out |
+| Hotel requests granted | 6 | No open dataset counts how often a hotel grants one; five of SLATE's hotels publish a late check-out's price (research-gaps-hotels-health.json) | Got for those five (`LATE_CHECKOUT`), granted when asked, SLATE's reading; the other 23 publish none and sell none. |
 | Used clothes' resale prices | 3 | Resale platforms' sold listings aren't open data | Out |
 | Labor rates by shop, upholstery, audio, wheel fitment | 8 | Shops' rate cards where posted; no open dataset | Out |
 | A personal trainer | 11 | Randomized trials of supervised training (Gavanda 2025: 37% more squat gained); named studios' session prices | Got (`systems/trainers.ts`). |

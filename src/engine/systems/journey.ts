@@ -90,7 +90,7 @@ export interface Journey {
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
-  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money };
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
   /** A holiday let there instead (`content/lets.ts`, from 2026-09-29): its nights, price and the service fee in it. */
   let?: { nights: number; price: Money; fee: Money; basis: string; checkOutAt: Instant };
   /** Business or first, where not economy (from 2026-09-29). */
@@ -730,7 +730,8 @@ function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: st
   const zone = CITIES.require(cityId).timeZone;
   const today = zonedParts(sim.now, zone);
   const leavesToday = journeysOf(person).some((j) => (j.status === 'booked' || j.status === 'underway') && j.fromCity === cityId && (() => { const p = zonedParts(j.leaveAt, zone); return p.year === today.year && p.month === today.month && p.day === today.day; })());
-  if (leavesToday) return;
+  // The room is gone until they leave (`roomGone`, from 2026-10-02).
+  if (leavesToday) { person.stay.out = true; return; }
   // A let's last morning with no way out yet: a hotel from here, as a hotel's guest stays on.
   if (person.stay.kind === 'let') person.stay = { kind: 'hotel', cityId };
   // Another journey out before the next check-out takes them; the night before it is still the hotel's.
