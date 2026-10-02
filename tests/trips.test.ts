@@ -15,6 +15,8 @@ import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
 import { modelById, monthKm, vehiclesOf } from '@/engine/systems/vehicles';
 import { burnOf, capacityOf, levelOf } from '@/engine/systems/fueltank';
+import { specOf } from '@/engine/systems/caroptions';
+import { addItem } from '@/engine/systems/items';
 import { COLD_CHAIN_HOURS, driverCost, driverIn, leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
 import { metAtWork } from '@/engine/systems/people';
 import { salonsIn } from '@/engine/systems/hygiene';
@@ -62,6 +64,20 @@ describe('the shopping on a trip', () => {
     expect(item.at).toEqual({ kind: 'vehicle', vehicleId: v.id });
     expect(sim.execute({ kind: 'errand.go', payload: { to: 'home' } }).ok).toBe(true);
     expect(item.at).toMatchObject({ kind: 'home', spot: 'fridge' });
+  });
+
+  it('fits in the car’s cargo space, the maker’s liters, or isn’t bought', () => {
+    const sim = life('us-ny-newyork', 'tr-trunk');
+    const v = withCar(sim);
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 11));
+    const holds = specOf(v.modelId)!.cargoL!;
+    expect(holds).toBeGreaterThan(100);
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'shopping', by: 'car', vehicleId: v.id } }).ok).toBe(true);
+    // A box already in it, all but a liter.
+    addItem(sim, sim.player, { kind: 'test:box', label: 'Box', quantity: 1, condition: 1, at: { kind: 'vehicle', vehicleId: v.id }, acquiredAt: sim.now, volumeL: holds - 1 });
+    const cash = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    expect(sim.execute({ kind: 'food.buy_groceries', payload: { productId: potatoes, quantity: 1 } }).error).toBe(`It won’t fit in the car: 1 liters of its ${holds} are left.`);
+    expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(cash);
   });
 
   it('carried on foot; chilled food out past USDA’s two hours is thrown out at home, the cupboard’s isn’t', () => {

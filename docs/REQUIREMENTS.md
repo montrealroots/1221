@@ -161,7 +161,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 38f | Storage, mechanical upgrades | Partial | GB only | Racks, boxes; beyond GB |
 | 38i | Alternative transport | Complete (repairs) | `vehicle.stand_in`; tests | Wrap and interior work too |
 | 39a–b | Tank or charge, range | Done, 2026-10-02 | `systems/fueltank.ts`: 117 makers' capacities (`content/tanks.ts`), level, range, gauge on Vehicles; tests/fueltank.test.ts | 14 models without a published figure take SLATE's estimate, labeled |
-| 39c–d | Stops, belongings, passengers | Partial | errands; one passenger | Cargo and seats checked |
+| 39c–d | Stops, belongings, passengers | Partial | errands; one passenger; shopping held to the maker's cargo liters (2026-10-02) | Several passengers by the seats |
 | 39e | Route and time | Complete | tests/driving, trips, journey | — |
 | 39f | Refuel at a station | Done, 2026-10-02 | `vehicle.refuel` at a named station to full at the pump price; `errand.fuel` fills the tank; a leg short of fuel is refused | Choosing an amount short of full |
 | 39g | Charging | Done, 2026-10-02 | public to full over 50 kW's time, at home to 80% with a charger; the month charges at a fifth | — |
@@ -169,7 +169,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 40b | Change the plan mid-trip | Partial | one-click run | Step-by-step trip |
 | 40c | Parking | Partial | meter by the minute | Lots and garages; limits |
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
-| 40e | Purchases carried or in the car until moved | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
+| 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
 | 40g | Out of fuel | Not implemented | — | With the tank |
 | 40h | Breakdowns, delays | Partial | severe fault refuses | Mid-trip breakdown; tow |
 | 40i | Where it's parked | Partial | town only | Spot level |
