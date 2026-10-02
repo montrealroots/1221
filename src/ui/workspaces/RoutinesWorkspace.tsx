@@ -21,6 +21,8 @@ import { contactsOf } from '@/engine/systems/people';
 import { leg, runErrands, tripRefusal, type Stop, driverIn } from '@/engine/systems/trips';
 import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
+import { groupLabelOf } from '@/ui/shell/destinations';
+import { LookRegion, Open, at } from '@/ui/looks';
 
 export function RoutinesWorkspace() {
   const { sim, run, toast } = useGame();
@@ -49,20 +51,20 @@ export function RoutinesWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/routines')}</div>
         <h1>Routines</h1>
         <p className="muted">The things you do in order, saved and done again: each step as you’d do it, stopping where one can’t be done.</p>
       </div>
       <div className="col gap-5">
         <Panel title="Your Routines">
           {routines.length === 0 ? <p className="small muted" style={{ margin: 0 }}>You haven’t put a routine together yet.</p> : (
-            <div className="table-scroll">
+            <LookRegion className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Routine</th><th scope="col">Steps</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
                 <tbody>
                   {routines.map((r) => (
                     <tr key={r.id}>
-                      <td>{r.name}</td>
+                      <td><Open subject={at('routine', r.id)}>{r.name}</Open></td>
                       <td className="small">{r.steps.map((s) => stepLabel(person, s)).join(' · ')}</td>
                       <td>
                         <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
@@ -74,7 +76,7 @@ export function RoutinesWorkspace() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </LookRegion>
           )}
         </Panel>
         <Panel title="Put One Together" subtitle={`Up to ${MAX_STEPS} steps`}>
@@ -120,7 +122,7 @@ function TrainerPanel() {
   if (!trainers.length) return null;
   const booked = person.training ? trainers.find((t) => t.id === person.training!.trainerId) : undefined;
   return (
-    <Panel title="A Personal Trainer" subtitle={booked ? `${booked.name}, ${person.training!.perWeek} A Week` : 'Supervised, a workout builds 37% more (Gavanda, 2025); by the session, cheapest first'}>
+    <Panel title="A Personal Trainer" look={booked ? at('trainer', booked.id) : undefined} subtitle={booked ? `${booked.name}, ${person.training!.perWeek} A Week` : 'Supervised, a workout builds 37% more (Gavanda, 2025); by the session, cheapest first'}>
       <div className="field-row">
         <select aria-label="Sessions A Week" value={perWeek} onChange={(e) => setPerWeek(Number(e.target.value))} style={{ width: 'auto' }}>
           {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{`${n} A Week`}</option>)}
@@ -142,14 +144,14 @@ function GymPanel() {
   const mine = person.gym ? gymById(person.gym.gymId) : undefined;
   const offers = gymsIn(person.currentLocationId).flatMap((g) => g.tiers.map((t) => ({ g, t, month: taxed(sim, g, t.monthly) }))).sort((a, b) => a.month - b.month);
   return (
-    <Panel title="Your Gym" subtitle={mine ? `${mine.name}, ${person.gym!.tier}` : 'The gyms where you are, by the month, cheapest first'}>
+    <Panel title="Your Gym" look={mine ? at('gym', mine.id) : undefined} subtitle={mine ? `${mine.name}, ${person.gym!.tier}` : 'The gyms where you are, by the month, cheapest first'}>
       {mine ? (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <span className="small">{mine.address}{mine.pool ? ', with a pool' : ''}</span>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!leave.open} title={leave.reason} onClick={() => { const a = run<{ paid: number }>('gym.leave', {}); if (a.ok) toast(a.value!.paid ? `You left, paying the rest of the term, ${money(a.value!.paid)}.` : 'You left the gym.', 'neutral'); }}>{leavingCost(sim, person) ? `Leave The Gym, ${money(leavingCost(sim, person))}` : 'Leave The Gym'}</button>
         </div>
       ) : offers.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE keeps no gyms where you are.</p> : (
-        <div className="table-scroll">
+        <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Gym</th><th scope="col">Membership</th><th scope="col" className="num">A Month</th><th scope="col" className="num">To Join</th><th scope="col">Term</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
             <tbody>
@@ -157,7 +159,7 @@ function GymPanel() {
                 const no = joinRefusal(sim, person, g.id, t.name);
                 return (
                   <tr key={`${g.id}-${t.name}`}>
-                    <td>{g.name}{g.pool ? <div className="xs dim">A Pool</div> : null}</td>
+                    <td><Open subject={at('gym', g.id)}>{g.name}</Open>{g.pool ? <div className="xs dim">A Pool</div> : null}</td>
                     <td>{t.name}{t.annual === null ? <div className="xs dim">Annual Fee Not Published</div> : t.annual ? <div className="xs dim">{`And ${money(taxed(sim, g, t.annual))} A Year`}</div> : null}</td>
                     <td className="num mono">{money(month)}</td>
                     <td className="num mono">{t.joining === null ? 'Not Published' : money(joiningCost(sim, g, t))}</td>
@@ -168,7 +170,7 @@ function GymPanel() {
               })}
             </tbody>
           </table>
-        </div>
+        </LookRegion>
       )}
     </Panel>
   );

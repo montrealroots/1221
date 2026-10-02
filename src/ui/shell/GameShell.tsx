@@ -31,7 +31,6 @@ export function GameShell() {
   const game = useGame();
   const { sim, route, navigate, breadcrumbs, toasts, recent, favourites, toggleFavourite } = game;
   // Places kept from 2026-10-01: pinned ones, and the last few visited. Each was opened from its own gated button first.
-  const recentShown = recent.filter((r) => r.route !== route && r.route !== '/home' && !favourites.some((f) => f.route === r.route)).slice(0, 5);
   const here = breadcrumbs[breadcrumbs.length - 1];
   const pinned = favourites.some((f) => f.route === route);
   const [railOpen, setRailOpen] = useState(false);
@@ -39,6 +38,7 @@ export function GameShell() {
   const [find, setFind] = useState('');
   const query = find.trim().toLowerCase();
   const known: { route: string; label: string; detail?: string }[] = [...RAIL_DESTINATIONS.flatMap((g) => g.items), ...favourites, ...recent];
+  const recentShown = recent.filter((r) => r.route !== route && r.route !== '/home' && !favourites.some((f) => f.route === r.route)).slice(0, 5);
   const found = query ? [...new Map(known.filter((d) => d.route !== '/home').map((d) => [d.route, d])).values()]
     .filter((d) => `${d.label} ${d.detail ?? ''}`.toLowerCase().includes(query)) : [];
   const waiting = useWorld((s) => openDecisions(s).length);
@@ -53,6 +53,20 @@ export function GameShell() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [railOpen]);
+
+  // "/" anywhere outside a field opens the rail at its search, to go back to a place by name (from 2026-10-02).
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const t = event.target as HTMLElement | null;
+      if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+      event.preventDefault();
+      setRailOpen(true);
+      window.setTimeout(() => document.getElementById('rail-find')?.focus(), 0);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   // A life that has ended opens onto how it ended, and nothing else.
   const ended = useWorld((s) => s.universe.meta.endedAt !== undefined);
@@ -131,7 +145,7 @@ export function GameShell() {
 
           <div className="rail-group">
             <label htmlFor="rail-find" className="sr-only">Find A Place</label>
-            <input id="rail-find" className="rail-find" value={find} placeholder="Find A Place" onChange={(e) => setFind(e.target.value)} />
+            <input id="rail-find" className="rail-find" value={find} placeholder="Find A Place ( / )" onChange={(e) => setFind(e.target.value)} />
           </div>
           {query && (
             <div className="rail-group">

@@ -13,7 +13,8 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { DOCTOR_KINDS, clinicFor, clinicsIn } from '@/engine/systems/clinics';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { dateKey, formatDate } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
@@ -32,6 +33,7 @@ import { rentOf } from '@/engine/systems/household';
 import { BC_ASSISTANCE, ONTARIO_WORKS, SNAP, assistanceRefusal, ebtBalance, schemeFor } from '@/engine/systems/assistance';
 import { eiRefusal, eiWeekly } from '@/engine/systems/eiself';
 import { US_PHARMACIES } from '@/engine/content/carevisits';
+import { EI_SELF_EMPLOYED } from '@/engine/content/cabenefits';
 import { exchange } from '@/engine/content/currency';
 
 type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work' | 'driving';
@@ -97,9 +99,11 @@ function ReturnsPane() {
     <div className="col gap-5">
       {returns.length === 0 && (
         <Panel title="No Returns Yet">
-          <p className="small" style={{ margin: 0 }}>
-            Each February, a year with any income, or anything owed or due back, has its return ready. {thisYear}’s is due {formatDate(deadline(thisYear), sim.zone)}.
-          </p>
+          <LookRegion>
+            <p className="small" style={{ margin: 0 }}>
+              Each February, a year with any income, or anything owed or due back, has its return ready. {thisYear}’s is due <Open subject={at('day', dateKey(deadline(thisYear), sim.homeZone))}>{formatDate(deadline(thisYear), sim.zone)}</Open>.
+            </p>
+          </LookRegion>
         </Panel>
       )}
       {returns.map((r) => {
@@ -139,7 +143,7 @@ function ReturnsPane() {
               ? <Gated feature="tax.file" onClick={() => { const a = run<{ balance: number; penalty: number; paid: boolean }>('tax.file', { year: r.year }); if (a.ok) toast(a.value!.balance < 0 ? `Filed. ${money(-a.value!.balance)} comes back in ${RETURN.refundDays} days.` : a.value!.paid ? 'Filed and paid.' : 'Filed. The bank couldn’t pay it: it’s owed.', 'positive'); }}>File It</Gated>
               : r.owed ? <Gated feature="tax.pay" onClick={() => { if (run('tax.pay', { year: r.year }).ok) toast('Paid.', 'positive'); }}>Pay What’s Owed</Gated> : undefined}
           >
-            <div className="col gap-3">
+            <LookRegion className="col gap-3">
               <div className="table-scroll">
                 <table>
                   <tbody>
@@ -147,12 +151,12 @@ function ReturnsPane() {
                     <tr className="strong"><td>{f.balance > 0 ? 'You Owe' : 'Comes Back To You'}</td><td className="num mono">{money(Math.abs(f.balance))}</td></tr>
                     {r.penalty ? <tr><td>Late Penalties</td><td className="num mono">{money(r.penalty)}</td></tr> : null}
                     {r.owed ? <tr><td>Still Owed, With Interest And Penalty To Date</td><td className="num mono">{money(owedOn(r, sim.now))}</td></tr> : null}
-                    {r.refundAt !== undefined ? <tr><td>Refund Arrives</td><td className="num mono">{formatDate(r.refundAt, sim.zone)}</td></tr> : null}
+                    {r.refundAt !== undefined ? <tr><td>Refund Arrives</td><td className="num mono"><Open subject={at('day', dateKey(r.refundAt, sim.homeZone))}>{formatDate(r.refundAt, sim.zone)}</Open></td></tr> : null}
                   </tbody>
                 </table>
               </div>
-              <p className="xs dim" style={{ margin: 0 }}>Filed from {CITIES.require(f.cityId).name}, where you last lived that year.</p>
-            </div>
+              <p className="xs dim" style={{ margin: 0 }}>Filed from <Open subject={at('place', f.cityId)}>{CITIES.require(f.cityId).name}</Open>, where you last lived that year.</p>
+            </LookRegion>
           </Panel>
         );
       })}
@@ -441,11 +445,11 @@ function EiPanel() {
     <Panel title="EI Special Benefits" subtitle="Canada’s, for the self-employed who register">
       <div className="col gap-3">
         <div className="grid grid-2">
-          <Stat label="Registered" value={person.ei ? formatDate(person.ei.registeredAt, sim.zone) : 'Not Yet'} note={person.ei ? 'Premiums come from each check, 1.63% to $1,123.07 a year' : 'Then 1.63% of your earnings, to $1,123.07 a year'} />
-          <Stat label="A Sick Week" value={weekly > 0 ? formatMoney(inSaveMoney(sim, Math.round(weekly * 100), 'CAD'), cur) : '—'} note={person.ei ? 'After twelve months registered, with $9,254 earned last year' : 'Once registered for a year'} />
+          <Stat label="Registered" value={person.ei ? formatDate(person.ei.registeredAt, sim.zone) : 'Not Yet'} note={person.ei ? `Premiums come from each check, ${(EI_SELF_EMPLOYED.premium * 100).toFixed(2)}% to $${EI_SELF_EMPLOYED.premiumMax.toLocaleString('en-US', { minimumFractionDigits: 2 })} a year` : `Then ${(EI_SELF_EMPLOYED.premium * 100).toFixed(2)}% of your earnings, to $${EI_SELF_EMPLOYED.premiumMax.toLocaleString('en-US', { minimumFractionDigits: 2 })} a year`} />
+          <Stat label="A Sick Week" value={weekly > 0 ? formatMoney(inSaveMoney(sim, Math.round(weekly * 100), 'CAD'), cur) : '—'} note={person.ei ? `After ${EI_SELF_EMPLOYED.registeredMonths} months registered, with $${EI_SELF_EMPLOYED.minEarnings.toLocaleString('en-US')} earned last year` : 'Once registered for a year'} />
         </div>
         {!person.ei && <div className="row gap-2"><Gated feature="benefits.ei_register" className="btn btn-sm" onClick={() => { if (run('benefits.ei_register', {}).ok) toast('Registered for EI’s special benefits.', 'positive'); }}>Register</Gated></div>}
-        <Fine>A week too sick to work, in hospital or laid up, pays 55% of last year’s weekly earnings to $729, after one unpaid week, for 26 weeks a claim. Once paid, the premiums run for as long as you’re self-employed. Source: canada.ca, 2026.</Fine>
+        <Fine>A week too sick to work, in hospital or laid up, pays {Math.round(EI_SELF_EMPLOYED.rate * 100)}% of last year’s weekly earnings to ${EI_SELF_EMPLOYED.maxWeekly}, after {EI_SELF_EMPLOYED.waitWeeks === 1 ? 'one unpaid week' : `${EI_SELF_EMPLOYED.waitWeeks} unpaid weeks`}, for {EI_SELF_EMPLOYED.weeks} weeks a claim. Once paid, the premiums run for as long as you’re self-employed. Source: canada.ca, 2026.</Fine>
       </div>
     </Panel>
   );

@@ -45,6 +45,8 @@ const ALLOWED = {
   // row in the gazetteer can print "1 people". Two cities and four countries
   // sit at 0, which agrees with a plural anyway.
   'src/ui/looks/place.tsx': ['${people} people', 'formatPeople('],
+  // An ordinal before "year": "your first year", not a count of years.
+  'src/ui/looks/school.tsx': ["?.toLowerCase() ?? 'last'} year", '.toLowerCase()} year', '${YEAR_WORD[c.year]} year'],
 };
 
 /** Whether this exact line has already been decided about. */

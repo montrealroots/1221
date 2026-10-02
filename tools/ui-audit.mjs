@@ -85,7 +85,9 @@ const OVERFLOW_PROBE = `(() => {
     for (const inner of el.querySelectorAll('*')) {
       const is = getComputedStyle(inner);
       if (is.position !== 'absolute' && is.position !== 'fixed') continue;
-      if (inner.getBoundingClientRect().width > rect.width) { popover = true; break; }
+      // Or one that hangs past the anchor's edge, as the Advance menu does off the last button in the top bar.
+      const box = inner.getBoundingClientRect();
+      if (box.width > rect.width || box.right > rect.right + 1) { popover = true; break; }
     }
     const overflowsX = !popover && el.scrollWidth - el.clientWidth > 1;
     const overflowsY = style.overflowY === 'hidden' && el.scrollHeight - el.clientHeight > 1;
@@ -304,6 +306,18 @@ for (const size of WIDTHS) {
     await race.getByRole('button', { name: 'Black Or African' }).click().catch(() => {});
     await page.waitForTimeout(200);
   }
+  // Where you were born: Identity won't advance without it. Until 2026-10-02
+  // the walk didn't answer it, so it never got past creation and measured
+  // nothing in the game itself.
+  const town = page.getByPlaceholder(/start typing a town name/i).first();
+  if (await town.count()) {
+    await town.fill('New York').catch(() => {});
+    const match = page.locator('.picker-results [role="option"]').first();
+    await match.waitFor({ timeout: 5000 }).catch(() => {});
+    await match.scrollIntoViewIfNeeded().catch(() => {});
+    await match.click({ timeout: 3000 }).catch(() => {});
+    await page.waitForTimeout(400);
+  }
   await shoot('02-creation-identity');
   scrollsSideways = (await probe('creation, identity')) || scrollsSideways;
 
@@ -317,8 +331,40 @@ for (const size of WIDTHS) {
 
   if (await click(/^Begin$/)) {
     await page.waitForTimeout(4000);
+    // Every chapter of the guide read, so every panel and screen is open to be measured.
+    for (let i = 0; i < 80; i += 1) {
+      if (await click(/^i’ve read it$/i)) { await page.waitForTimeout(200); continue; }
+      if (await click(/^next: /i)) { await page.waitForTimeout(200); continue; }
+      if (!(await click(/^read$/i))) break;
+      await page.waitForTimeout(250);
+    }
+    await page.keyboard.press('Escape').catch(() => {});
+    await page.waitForTimeout(500);
     await shoot('04-home');
     scrollsSideways = (await probe('home')) || scrollsSideways;
+
+    // Every screen Home opens, each from its own panel's button (from 2026-10-02).
+    const home = async () => {
+      const toggle = page.getByRole('button', { name: /toggle navigation/i }).first();
+      if (await toggle.isVisible().catch(() => false)) { await toggle.click().catch(() => {}); await page.waitForTimeout(300); }
+      await page.locator('nav.rail .rail-item').first().click({ timeout: 3000 }).catch(() => {});
+      await page.waitForTimeout(800);
+    };
+    const SCREENS = ['Homes', 'People', 'Food', 'Clothes', 'Routines', 'Belongings', 'Yale', 'Career', 'Travel', 'Cars', 'Land', 'Papers'];
+    for (const label of SCREENS) {
+      await home();
+      if (!(await click(new RegExp('^' + label + '$')))) continue;
+      await page.waitForTimeout(1200);
+      scrollsSideways = (await probe(label)) || scrollsSideways;
+    }
+    await home();
+    const bank = page.locator('section[aria-label="Your Money"] .panel-head button').first();
+    if (await bank.count()) {
+      await bank.click({ timeout: 3000 }).catch(() => {});
+      await page.waitForTimeout(1200);
+      scrollsSideways = (await probe('the bank')) || scrollsSideways;
+    }
+    await home();
 
     if (await click(/^Open Calendar$/)) {
       await page.waitForTimeout(1500);

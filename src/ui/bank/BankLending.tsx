@@ -17,7 +17,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { dateKey, formatDate } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import type { Bank } from '@/engine/content/banks';
 import { countryOfIso } from '@/engine/content/bankdays';
 import { SWITCHING } from '@/engine/content/banks-lending';
@@ -204,11 +205,15 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
               {lending.term.minAmount !== undefined ? ` It takes ${formatMoney(inSaveMoney(sim, lending.term.minAmount, bank.currency), cur, { cents: false })} or more.` : ''}
               {lending.term.market ? ' The rate is the market’s average: the bank publishes none of its own.' : ''}
             </p>
-            {terms.map((t) => (
-              <p key={t.id} className="small strong" style={{ margin: 0 }}>
-                {money(t.balance)} at {pct(t.fixedRate ?? 0)}, ends {formatDate(t.maturesAt ?? sim.now, sim.zone)}.
-              </p>
-            ))}
+            {terms.length > 0 && (
+              <LookRegion className="col gap-1">
+                {terms.map((t) => (
+                  <p key={t.id} className="small strong" style={{ margin: 0 }}>
+                    <Open subject={at('account', t.id)}>{money(t.balance)}</Open> at {pct(t.fixedRate ?? 0)}, ends <Open subject={at('day', dateKey(t.maturesAt ?? sim.now, sim.homeZone))}>{formatDate(t.maturesAt ?? sim.now, sim.zone)}</Open>.
+                  </p>
+                ))}
+              </LookRegion>
+            )}
             <div className="field-act">
               <div className="field"><label htmlFor="term-amount">{`Term Deposit Amount (${cur})`}</label><input id="term-amount" type="text" inputMode="decimal" value={deposit} onChange={(e) => setDeposit(e.target.value)} /></div>
               <Gated feature="bank.open_term" className="btn btn-sm" disabled={!deposit}
@@ -223,7 +228,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
       )}
 
       {show.includes('borrowing') && debt && (
-        <Panel title="In Collections" subtitle={`${money(-debt.balance)} owed`}>
+        <Panel title="In Collections" subtitle={<Open subject={at('account', debt.id)}>{`${money(-debt.balance)} owed`}</Open>} look={at('account', debt.id)}>
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
               {debt.institution} closed your account after it was overdrawn {bank.id.startsWith('fr-') ? `past its limit, on ${FRANCE.closingNoticeDays} days’ notice as French law asks` : `for ${ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run`}, and charged off what it couldn’t recover. It’s on your record until it’s paid.
@@ -247,13 +252,13 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
       )}
 
       {show.includes('borrowing') && (
-      <Panel title="Personal Loan" subtitle={loan ? `${money(-loan.balance)} owed` : lending.loan ? undefined : 'None on record'}>
+      <Panel title="Personal Loan" subtitle={loan ? <Open subject={at('account', loan.id)}>{`${money(-loan.balance)} owed`}</Open> : lending.loan ? undefined : 'None on record'} look={loan ? at('account', loan.id) : undefined}>
         {!lending.loan && !loan && <p className="small">{bank.name} publishes no personal loan rate SLATE found.</p>}
         {loan && (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              {money(-loan.balance)} owed at {pct(loan.apr ?? 0)} a year, {money(loan.loanPayment ?? 0)} a month{loan.loanMonths ? ` over the ${loan.loanMonths} months it was taken for` : ''}
-              {loanDue ? `, next on ${formatDate(loanDue.at, sim.zone)}` : ''}. A payment the account can’t make goes on your record.
+              <Open subject={at('account', loan.id)}>{money(-loan.balance)}</Open> owed at {pct(loan.apr ?? 0)} a year, {money(loan.loanPayment ?? 0)} a month{loan.loanMonths ? ` over the ${loan.loanMonths} months it was taken for` : ''}
+              {loanDue ? <>, next on <Open subject={at('day', dateKey(loanDue.at, sim.homeZone))}>{formatDate(loanDue.at, sim.zone)}</Open></> : ''}. A payment the account can’t make goes on your record.
             </p>
             <div>
               <Gated feature="bank.repay_loan" className="btn btn-sm" onClick={() => { if (run('bank.repay_loan', {}).ok) toast('Paid off.', 'positive'); }}>

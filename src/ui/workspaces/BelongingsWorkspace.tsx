@@ -12,6 +12,8 @@ import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { ordersOf } from '@/engine/systems/orders';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
+import { groupLabelOf } from '@/ui/shell/destinations';
+import { LookRegion, Open, at } from '@/ui/looks';
 
 /** The places they can put a thing now: on them, a spot at home, a vehicle here, a bag to hand. */
 function placesNow(sim: Parameters<typeof reachable>[0], person: Parameters<typeof reachable>[1], items: readonly Item[]): { key: string; label: string; place: Place }[] {
@@ -49,7 +51,7 @@ export function BelongingsWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/belongings')}</div>
         <h1>Belongings</h1>
         <p className="muted">What you own, and where each thing is: only what’s to hand can be used or moved.</p>
       </div>
@@ -63,13 +65,14 @@ export function BelongingsWorkspace() {
         </Panel>
         {items.length > 0 && (
           <Panel title="Each Thing">
+            <LookRegion>
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Thing</th><th scope="col" className="num">How Many</th><th scope="col" className="num">Condition</th><th scope="col">Room</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
                 <tbody>
                   {[...groups.entries()].map(([where, list]) => (
                     <Fragment key={where}>
-                      <tr><th scope="rowgroup" colSpan={5}>{titled(where)}</th></tr>
+                      <tr><th scope="rowgroup" colSpan={5}>{list[0]!.at.kind === 'home' ? <Open subject={at('home', list[0]!.at.home)}>{titled(where)}</Open> : list[0]!.at.kind === 'vehicle' ? <Open subject={at('vehicle', list[0]!.at.vehicleId)}>{titled(where)}</Open> : titled(where)}</th></tr>
                       {list.map((item) => {
                         const here = reachable(sim, person, item.at);
                         // Only where the engine would take it: not where it is, nor anywhere it would refuse.
@@ -78,9 +81,9 @@ export function BelongingsWorkspace() {
                         const to = options.find((o) => o.key === chosen)?.place;
                         return (
                           <tr key={item.id}>
-                            <td>{item.label}</td>
+                            <td><Open subject={item.garment ? at('garment', item.id) : at('item', item.id)}>{item.label}</Open></td>
                             <td className="num mono">{item.quantity}</td>
-                            <td className="num mono">{Math.round(item.condition * 100)}%</td>
+                            <td className="num mono"><Open subject={item.garment ? at('garment', item.id) : at('item', item.id)}>{Math.round(item.condition * 100)}%</Open></td>
                             <td className="small">{item.holdsL ? `${Math.round(usedL(person, item.id))} Of ${item.holdsL} L` : '—'}</td>
                             <td>
                               {here && options.length > 0 ? (
@@ -100,6 +103,7 @@ export function BelongingsWorkspace() {
                 </tbody>
               </table>
             </div>
+            </LookRegion>
           </Panel>
         )}
         {items.length === 0 && <Panel title="Your Belongings"><p className="small muted" style={{ margin: 0 }}>You own nothing here yet beyond your home and vehicles. What you buy appears here, where it’s put.</p></Panel>}

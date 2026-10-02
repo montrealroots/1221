@@ -11,6 +11,7 @@ import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { ACCOUNT_LIFE, UNCLAIMED } from '@/engine/content/accountlife';
 import { bankById } from '@/engine/content/banks';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -42,7 +43,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
 
   return (
     <Panel title="Your Accounts Over Time" subtitle="Term deposits, round-ups, idle accounts, and changing your mind.">
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         {terms.map((term) => {
           const quote = breakQuote(sim, term);
           const life = term.bankId ? ACCOUNT_LIFE[term.bankId] : undefined;
@@ -51,7 +52,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
           const tooNear = term.maturesAt !== undefined && term.maturesAt - sim.now < notice * DAY;
           return (
             <div key={term.id}>
-              <div className="strong small">{term.name}, {money(term.balance)} at {((term.fixedRate ?? 0) * 100).toFixed(2)}%</div>
+              <div className="strong small"><Open subject={at('account', term.id)}>{term.name}</Open>, <Open subject={at('account', term.id)}>{money(term.balance)}</Open> at {((term.fixedRate ?? 0) * 100).toFixed(2)}%</div>
               <p className="small" style={{ margin: '2px 0' }}>
                 {term.maturesAt ? `On ${formatDate(term.maturesAt, sim.zone)} it ${END_WORDS[termEndOf(term)]}.` : ''}
                 {term.graceUntil && sim.now <= term.graceUntil ? ` Renewed: until ${formatDate(term.graceUntil, sim.zone)} it can be taken whole.` : ''}
@@ -91,19 +92,19 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
         )}
         {inactive.map((a) => (
           <p key={a.id} className="small" style={{ margin: 0 }}>
-            {a.name} is inactive, untouched for months{a.bankId && ACCOUNT_LIFE[a.bankId]?.dormantMonths !== undefined ? `, and goes dormant at ${ACCOUNT_LIFE[a.bankId]!.dormantMonths} months untouched` : ''}. Using it wakes it.
+            <Open subject={at('account', a.id)}>{a.name}</Open> is inactive, untouched for months{a.bankId && ACCOUNT_LIFE[a.bankId]?.dormantMonths !== undefined ? `, and goes dormant at ${ACCOUNT_LIFE[a.bankId]!.dormantMonths} months untouched` : ''}. Using it wakes it.
           </p>
         ))}
         {(inactive.length > 0 || dormant.length > 0) && rules?.dormancyWords && <p className="xs dim" style={{ margin: 0 }}>The bank’s terms: {rules.dormancyWords}</p>}
         {dormant.map((a) => (
           <div key={a.id} className="row-between small">
-            <span>{a.name} is dormant, blocked until it’s used again.</span>
+            <span><Open subject={at('account', a.id)}>{a.name}</Open> is dormant, blocked until it’s used again.</span>
             <Gated feature="bank.reactivate" className="btn btn-sm" onClick={() => run('bank.reactivate', { accountId: a.id })}>Reactivate</Gated>
           </div>
         ))}
         {cancelable.map((a) => (
           <div key={a.id} className="row-between small">
-            <span>{a.name} is new enough to cancel{country?.coolingOffDays !== undefined ? `, until ${formatDate(a.openedAt + country.coolingOffDays * DAY, sim.zone)}` : ''}, {a.kind === 'credit_card' ? 'with anything spent still to repay' : 'its money back whole'}.</span>
+            <span><Open subject={at('account', a.id)}>{a.name}</Open> is new enough to cancel{country?.coolingOffDays !== undefined ? `, until ${formatDate(a.openedAt + country.coolingOffDays * DAY, sim.zone)}` : ''}, {a.kind === 'credit_card' ? 'with anything spent still to repay' : 'its money back whole'}.</span>
             <Gated feature="bank.cancel_new" className="btn btn-sm btn-ghost" onClick={() => run('bank.cancel_new', { accountId: a.id })}>Cancel It</Gated>
           </div>
         ))}
@@ -114,7 +115,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
           </div>
         )}
         <p className="xs dim" style={{ margin: 0 }}>{rules ? `From the bank’s terms: ${rules.source}.` : 'This bank’s terms for these weren’t found.'}{country && (cancelable.length > 0 || unclaimed.length > 0 || dormant.length > 0) ? ` The country’s rules: ${country.source}.` : ''}</p>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }

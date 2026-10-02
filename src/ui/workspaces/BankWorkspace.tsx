@@ -39,6 +39,7 @@ import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { CHEX } from '@/engine/systems/lending';
 import type { Account } from '@/engine/core/ledger';
+import { LookRegion, Open, at } from '@/ui/looks';
 
 export function BankWorkspace() {
   const { sim, run, toast } = useGame();
@@ -89,11 +90,13 @@ export function BankWorkspace() {
           // As the bank counts them: until 2026-09-27 wages only, where the bank counts any electronic deposit.
           const paidIn = directDeposits(sim, account, monthStart, product?.deposits);
           return (
-            <Panel key={account.id} title={account.name} subtitle={account.number}>
+            <Panel key={account.id} title={account.name} subtitle={<Open subject={at('account', account.id)}>{account.number}</Open>} look={at('account', account.id)}>
               <div className="col gap-3">
                 <div className="stat">
-                  <span className="stat-label">Balance</span>
-                  <span className="stat-value mono">{money(account.balance)}</span>
+                  <Open subject={at('account', account.id)}>
+                    <span className="stat-label">Balance</span>
+                    <span className="stat-value mono">{money(account.balance)}</span>
+                  </Open>
                 </div>
                 <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency, account.openedAt, closesQuarterly(account), account)}</p>
                 {account.secondChance ? (
@@ -117,7 +120,7 @@ export function BankWorkspace() {
                 {account.kind === 'savings' && (
                   <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     {savingsNotice(sim, account)
-                      ? <span className="xs dim">Notice is given: it closes {formatDate(savingsNotice(sim, account)!.at, sim.zone)}, and what it holds moves to {current?.name ?? 'your current account'}.</span>
+                      ? <span className="xs dim">Notice is given: it closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {current ? <Open subject={at('account', current.id)}>{current.name}</Open> : 'your current account'}.</span>
                       : <>
                         <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ on?: number }>('bank.close_savings', { accountId: account.id }); if (a.ok && a.value?.on) toast(`Notice given: it closes ${formatDate(a.value.on, sim.zone)}.`, 'positive'); }}>
                           Close It
@@ -203,16 +206,19 @@ export function BankWorkspace() {
 
   return (
     <>
-      <div className="page-head">
+      <LookRegion className="page-head">
         <div className="eyebrow">Your Bank</div>
-        <h1>{bank.name}</h1>
+        <h1><Open subject={at('bank', bank.id)}>{bank.name}</Open></h1>
         {/* What's held here, now. Until 2026-09-26 this said what the deposit
             guarantee covers and the central bank's rate, which nothing in play
             reads: no bank fails, and no rate follows it. */}
         <p className="muted">
-          {money(accounts.reduce((sum, a) => sum + a.balance, 0))} held here, in {accounts.length === 1 ? 'one account' : `${accounts.length} accounts`}.
+          <Open subject={at('bank', bank.id)}>{money(accounts.reduce((sum, a) => sum + a.balance, 0))}</Open> held here, in{' '}
+          {accounts.length === 1 && accounts[0]
+            ? <Open subject={at('account', accounts[0].id)}>one account</Open>
+            : <Open subject={at('bank', bank.id)}>{accounts.length} accounts</Open>}.
         </p>
-      </div>
+      </LookRegion>
 
       <BankTabs tab={tab} onTab={setTab} />
       <div role="tabpanel" id={`bank-pane-${tab}`} aria-labelledby={`bank-tab-${tab}`} tabIndex={0} className="bank-pane">
@@ -352,7 +358,7 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
   if (bank.quietMonth) lines.push(`A month with fewer than ${bank.quietMonth.minTransactions} transactions costs ${money(bank.quietMonth.fee)}${bank.quietMonth.unlessWages ? ', unless wages are paid in' : ''}. Source: ${bank.quietMonth.source}.`);
   if (refund?.refund) {
     const day = `${refund.refund.day} ${MONTH_NAMES[refund.refund.month - 1]}`;
-    lines.push(`${refund.note} It is paid here on ${day}${refund.refund.estimateDate ? ', which is SLATE’s estimate of the day' : ''}.`);
+    lines.push(`${refund.note} It’s paid here on ${day}${refund.refund.estimateDate ? ', which is SLATE’s estimate of the day' : ''}.`);
   }
   if (lines.length === 0) return null;
   return (

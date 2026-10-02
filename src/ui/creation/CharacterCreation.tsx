@@ -504,10 +504,6 @@ function IdentityStep({ config, set, setConfig }: {
 
       <hr className="divider" />
 
-      <BodyFields config={config} setConfig={setConfig} />
-
-      <hr className="divider" />
-
       <div className="panel-head">
         <div>
           <h3>Place Of Birth</h3>
@@ -871,6 +867,16 @@ function StartingPointStep({ config, set, setConfig }: {
 
   return (
     <div className="col gap-5">
+      {/* The body as it is the day the life begins, with where it begins: until 2026-10-02 it was asked under Identity, beside a name. */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Your Body Today</h2>
+            <p className="muted small">Your height and weight as the life begins. From here they’re yours to change.</p>
+          </div>
+        </div>
+        <BodyFields config={config} setConfig={setConfig} />
+      </div>
       <div className="card">
         <div className="panel-head">
           <div>

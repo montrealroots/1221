@@ -12,7 +12,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { dateKey, formatDate } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
 import { LICENSES } from '@/engine/content/licenses';
@@ -29,11 +30,14 @@ import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRef
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
 import { WORK_RULES } from '@/engine/content/workrules';
 import { residenceFee, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
+import { REAL_ID } from '@/engine/content/identity';
 import { naturalizeRefusal } from '@/engine/systems/citizenship';
 
 const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work', idcard: 'State ID Card' };
 const STATUS_WORD: Record<PersonDocument['status'], string> = { pending: 'Being Decided', valid: 'In Force', lost: 'Reported Lost', cancelled: 'Canceled' };
 const countryName = (iso: string) => COUNTRIES.get(iso.toLowerCase())?.name ?? iso;
+/** The atlas's id for a country by its ISO code: Britain is "uk" there and "GB" on a document. */
+const countryIdOf = (iso: string) => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso.toUpperCase())?.id ?? iso.toLowerCase();
 
 /** Every document they hold or have held, newest first. */
 function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
@@ -42,7 +46,7 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
   const docs = documentsOf(person).filter((d) => kinds.includes(d.kind)).sort((a, b) => (b.issuedAt ?? b.appliedAt ?? 0) - (a.issuedAt ?? a.appliedAt ?? 0));
   if (!docs.length) return <p className="small muted" style={{ margin: 0 }}>None held.</p>;
   return (
-    <div className="table-scroll">
+    <LookRegion className="table-scroll">
       <table>
         <thead><tr><th scope="col">Document</th><th scope="col">Number</th><th scope="col">Issued</th><th scope="col">Runs Out</th><th scope="col">Standing</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
         <tbody>
@@ -50,11 +54,11 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
             const expired = d.status === 'valid' && d.expiresAt !== undefined && d.expiresAt <= sim.now;
             return (
               <tr key={d.id}>
-                <td>{d.name}{d.destination ? `, ${countryName(d.destination)}` : ''}</td>
-                <td className="mono">{d.number}</td>
-                <td>{d.issuedAt ? formatDate(d.issuedAt, sim.zone) : '—'}</td>
-                <td>{d.expiresAt ? formatDate(d.expiresAt, sim.zone) : d.readyAt ? `Ready ${formatDate(d.readyAt, sim.zone)}` : '—'}</td>
-                <td>{expired ? 'Run Out' : STATUS_WORD[d.status]}</td>
+                <td><Open subject={at('document', d.id)}>{d.name}</Open>{d.destination ? <>, <Open subject={at('country', countryIdOf(d.destination))}>{countryName(d.destination)}</Open></> : ''}</td>
+                <td className="mono"><Open subject={at('document', d.id)}>{d.number}</Open></td>
+                <td>{d.issuedAt ? <Open subject={at('day', dateKey(d.issuedAt, sim.homeZone))}>{formatDate(d.issuedAt, sim.zone)}</Open> : '—'}</td>
+                <td>{d.expiresAt ? <Open subject={at('day', dateKey(d.expiresAt, sim.homeZone))}>{formatDate(d.expiresAt, sim.zone)}</Open> : d.readyAt ? <>Ready <Open subject={at('day', dateKey(d.readyAt, sim.homeZone))}>{formatDate(d.readyAt, sim.zone)}</Open></> : '—'}</td>
+                <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : STATUS_WORD[d.status]}</Open></td>
                 <td>
                   {d.status === 'valid' && !expired && (
                     <Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id }).ok) toast(`${KIND_WORD[d.kind]} reported lost and canceled.`, 'positive'); }}>Report Lost</Gated>
@@ -65,7 +69,7 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
           })}
         </tbody>
       </table>
-    </div>
+    </LookRegion>
   );
 }
 
@@ -91,10 +95,10 @@ export function PassportPane() {
   };
   return (
     <div className="col gap-5">
-      <Panel title="Your Passport" subtitle={rule ? rule.issuer : undefined}>
+      <Panel title="Your Passport" subtitle={rule ? rule.issuer : undefined} look={passport ? at('document', passport.id) : undefined}>
         <div className="col gap-3">
           <div className="grid grid-3">
-            <Stat label="Passport" value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'Needed to cross a border'} />
+            <Stat label="Passport" look={passport ? at('document', passport.id) : undefined} value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'Needed to cross a border'} />
             <Stat label="A New One" value={rule && terms ? money(inSaveMoney(sim, Math.round(terms.fee * 100), rule.currency)) : '—'} note={rule ? `${rule.daysEstimated ? 'About ' : 'Up to '}${rule.days} days; good for ${terms!.years} years` : 'SLATE doesn’t have your country’s office'} />
             <Stat label="Faster" value={rule?.expedite ? money(inSaveMoney(sim, Math.round((terms!.fee + rule.expedite.extra) * 100), rule.currency)) : 'Not Offered'} note={rule?.expedite ? `${rule.expedite.days === 0 ? 'The same day' : `${rule.expedite.days} days`}${rule.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} sells no faster service`} />
           </div>
@@ -221,10 +225,10 @@ export function DrivingPane() {
   return (
     <div className="col gap-5">
       <Panel title="Driving" subtitle={rule ? rule.authority : 'Where SLATE has the rules'}>
-        <div className="col gap-3">
+        <LookRegion className="col gap-3">
           <div className="grid grid-3">
-            <Stat label="Your License" value={license ? license.name : 'None'} note={license ? `${license.number}, runs out ${formatDate(license.expiresAt!, sim.zone)}` : 'Not a passport, and not permission to work'} />
-            <Stat label="Here" value={may.ok ? 'You May Drive' : 'You May Not'} note={may.ok ? 'On the license you hold' : may.why ?? ''} />
+            <Stat label="Your License" look={license ? at('document', license.id) : undefined} value={license ? license.name : 'None'} note={license ? `${license.number}, runs out ${formatDate(license.expiresAt!, sim.zone)}` : 'Not a passport, and not permission to work'} />
+            <Stat label="Here" look={at('place', person.currentLocationId)} value={may.ok ? 'You May Drive' : 'You May Not'} note={may.ok ? 'On the license you hold' : may.why ?? ''} />
             <Stat label="A License Here" value={rule ? `${rule.minAge.full} And Over` : '—'} note={rule ? `Good for ${rule.validityYears ?? '—'} years` : 'SLATE doesn’t have this place’s rules yet'} />
           </div>
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -245,7 +249,7 @@ export function DrivingPane() {
               if (a.ok) toast(`Your license is REAL ID now, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.`, 'positive');
             }}>Make It REAL ID</Gated>}
           </div>
-          <p className="small" style={{ margin: 0 }}>At an American airport’s checkpoint: {tsa ? `your ${tsa.name}${tsa.kind === 'passport' ? '' : ', REAL ID'}.` : 'no REAL ID or passport, so TSA ConfirmID’s $45, good for ten days of travel.'}</p>
+          <p className="small" style={{ margin: 0 }}>At an American airport’s checkpoint: {tsa ? `your ${tsa.name}${tsa.kind === 'passport' ? '' : ', REAL ID'}.` : `no REAL ID or passport, so TSA ConfirmID’s $${REAL_ID.confirmIdUsd}, good for ten days of travel.`}</p>
           {!held.length ? <p className="small muted" style={{ margin: 0 }}>You hold no license or permit.</p> : <DocumentList kinds={['license', 'idcard', 'idp']} />}
           {rule && (
             <>
@@ -253,7 +257,7 @@ export function DrivingPane() {
               <Fine>{idp ? `The permit: ${idp.issuer}${idp.validity ? `, ${idp.validity}` : ', a year as SLATE has it'}. ` : ''}Sources: {rule.sources.map((x) => x.url).join('; ')}.{rule.uncertain.length ? ` Not confirmed: ${rule.uncertain.join(' ')}` : ''}</Fine>
             </>
           )}
-        </div>
+        </LookRegion>
       </Panel>
       <LicensePath />
       <LicensePath track="motorcycle" />
@@ -354,7 +358,7 @@ function ResidencePanel() {
   const act = (kind: string, iso: string, what: string) => { const a = run<{ paid: number }>(kind, { country: iso }); if (a.ok) toast(`${what}, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); };
   return (
     <Panel title="Residence Abroad" subtitle="The right to make a home in another country">
-      <div className="table-scroll">
+      <LookRegion className="table-scroll">
         <table>
           <thead><tr><th scope="col">Country</th><th scope="col">Where You Stand</th><th scope="col" /></tr></thead>
           <tbody>
@@ -366,7 +370,7 @@ function ResidencePanel() {
               const name = COUNTRIES.get(iso === 'GB' ? 'uk' : iso.toLowerCase())?.name ?? iso;
               return (
                 <tr key={iso}>
-                  <td>{name}</td>
+                  <td><Open subject={at('country', iso === 'GB' ? 'uk' : iso.toLowerCase())}>{name}</Open></td>
                   <td className="small">{held ? `${held.name}${held.expiresAt ? `, to ${formatDate(held.expiresAt, sim.zone)}` : ''}` : no ?? `Open to you: ${formatMoney(residenceFee(sim, iso as 'GB' | 'MX' | 'US'), cur)}`}{person.naturalizing?.iso === iso ? `; citizenship decided by ${formatDate(person.naturalizing.readyAt, sim.zone)}` : ''}</td>
                   <td>
                     <div className="row gap-1" style={{ justifyContent: 'flex-end', flexWrap: 'wrap' }}>
@@ -382,7 +386,7 @@ function ResidencePanel() {
             })}
           </tbody>
         </table>
-      </div>
+      </LookRegion>
       <Fine>Britain’s Global Talent visa is endorsed here on the record an O-1 asks, since Arts Council England’s criteria weren’t read; it and its health surcharge cover five years. Mexico’s temporary residence lets you live there, not work. A green card is by extraordinary ability, on the same record, and its wait depends on where you were born. Naturalizing keeps the citizenship you were born with; you travel on its passport.</Fine>
     </Panel>
   );

@@ -20,6 +20,8 @@ import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
 import { formatDate } from '@/engine/core/time';
+import { groupLabelOf } from '@/ui/shell/destinations';
+import { LookRegion, Open, at } from '@/ui/looks';
 
 const PAGE = 40;
 /** Ordered least to most: taken away, delivered, at a table. */
@@ -39,11 +41,11 @@ export function FoodWorkspace() {
   const add = (restaurantId: string, item: string) => setBasket(basket && basket.restaurantId === restaurantId ? { restaurantId, items: [...basket.items, item].slice(0, 6) } : { restaurantId, items: [item] });
   return (
     <>
-      <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+      <LookRegion className="page-head">
+        <div className="eyebrow">{groupLabelOf('/workspace/food')}</div>
         <h1>Food</h1>
-        <p className="muted">Your kitchen, the shops and restaurants of {town}, and a bar: the cheapest first.</p>
-      </div>
+        <p className="muted">Your kitchen, the shops and restaurants of <Open subject={at('place', here)}>{town}</Open>, and a bar: the cheapest first.</p>
+      </LookRegion>
       <div className="col gap-5">
         <Kitchen />
         <Recipes />
@@ -56,6 +58,7 @@ export function FoodWorkspace() {
           <Panel title={`Restaurants In ${town}`} subtitle={`${new Set(entries.map((e) => e.value.restaurant.id)).size} restaurants, ${entries.length} things on their menus`}>
             <div className="col gap-3">
               <CatalogControls id="menus-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ restaurant: 'Restaurant', tier: 'Kind' }} />
+              <LookRegion>
               <div className="table-scroll">
                 <table>
                   <thead><tr><th scope="col">Dish</th><th scope="col">Restaurant</th><th scope="col">Kind</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -63,7 +66,7 @@ export function FoodWorkspace() {
                     {shown.slice(0, count).map((e) => (
                       <tr key={e.id}>
                         <td>{e.label}</td>
-                        <td className="small">{e.value.restaurant.name}</td>
+                        <td className="small"><Open subject={at('restaurant', e.value.restaurant.id)}>{e.value.restaurant.name}</Open></td>
                         <td className="small">{e.facets?.tier}</td>
                         <td className="num mono">{catalogPrice(e, money)}</td>
                         <td><button type="button" className="btn btn-sm btn-ghost" disabled={e.price === null} onClick={() => add(e.value.restaurant.id, e.value.item)}>Add</button></td>
@@ -72,6 +75,7 @@ export function FoodWorkspace() {
                   </tbody>
                 </table>
               </div>
+              </LookRegion>
               {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
             </div>
           </Panel>
@@ -97,7 +101,7 @@ function Meal({ basket, onChange }: { basket: { restaurantId: string; items: str
   const no = diningRefusal(sim, person, r.id, basket.items, how);
   const local = (n: number) => formatMoney(Math.round(n * 100), r.currency);
   return (
-    <Panel title={r.name} subtitle={[r.cuisine, r.neighborhood ?? r.address].filter(Boolean).join(' · ')}>
+    <Panel title={r.name} look={at('restaurant', r.id)} subtitle={[r.cuisine, r.neighborhood ?? r.address].filter(Boolean).join(' · ')}>
       <div className="col gap-3">
         <div className="small">{basket.items.map((item, i) => (
           <span key={`${item}-${i}`}>{i > 0 ? ' · ' : ''}{item} <button type="button" className="btn btn-sm btn-ghost" aria-label={`Take off ${item}`} onClick={() => { const items = basket.items.filter((_, k) => k !== i); onChange(items.length ? { ...basket, items } : undefined); }}>Remove</button></span>

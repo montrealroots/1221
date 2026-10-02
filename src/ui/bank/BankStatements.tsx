@@ -13,7 +13,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { formatDate, zonedParts } from '@/engine/core/time';
+import { dateKey, formatDate, zonedParts } from '@/engine/core/time';
+import { LookRegion, Open, at, type Subject } from '@/ui/looks';
 import type { Account } from '@/engine/core/ledger';
 import { dueAt, stateOf } from '@/engine/systems/credit';
 import { pendingOn } from '@/engine/systems/pending';
@@ -71,20 +72,21 @@ function AccountStatementView({ account, period }: { account: Account; period: R
   const st = accountStatement(sim, account, period);
   const owed = account.kind === 'loan';
   const pending = pendingOn(sim, account);
+  const look = at('account', account.id);
   return (
-    <div className="col gap-3">
+    <LookRegion className="col gap-3">
       <div className="grid grid-3">
-        <Figure label={owed ? 'Owed At The Start' : 'Opening Balance'} value={money(st.opening)} />
-        <Figure label={owed ? 'Paid Off' : 'Money In'} value={money(owed ? st.moneyOut : st.moneyIn)} />
-        <Figure label={owed ? 'Added' : 'Money Out'} value={money(owed ? st.moneyIn : st.moneyOut)} />
-        {!owed && <Figure label="Interest, After Tax" value={money(st.interest)} />}
-        {!owed && <Figure label="Fees" value={money(st.fees)} />}
-        <Figure label={owed ? 'Owed At The End' : period.to > sim.now ? 'Available Now' : 'Closing Balance'} value={money(st.closing)} />
-        {!owed && period.to > sim.now && pending !== 0 && <Figure label="Posted Balance" value={money(st.closing - pending)} note="Completed items only; what’s pending is still to post" />}
+        <Figure look={look} label={owed ? 'Owed At The Start' : 'Opening Balance'} value={money(st.opening)} />
+        <Figure look={look} label={owed ? 'Paid Off' : 'Money In'} value={money(owed ? st.moneyOut : st.moneyIn)} />
+        <Figure look={look} label={owed ? 'Added' : 'Money Out'} value={money(owed ? st.moneyIn : st.moneyOut)} />
+        {!owed && <Figure look={look} label="Interest, After Tax" value={money(st.interest)} />}
+        {!owed && <Figure look={look} label="Fees" value={money(st.fees)} />}
+        <Figure look={look} label={owed ? 'Owed At The End' : period.to > sim.now ? 'Available Now' : 'Closing Balance'} value={money(st.closing)} />
+        {!owed && period.to > sim.now && pending !== 0 && <Figure look={look} label="Posted Balance" value={money(st.closing - pending)} note="Completed items only; what’s pending is still to post" />}
       </div>
       <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} />
       {!owed && account.bankId && PENDING[account.bankId] && <PendingTerms bankId={account.bankId} />}
-    </div>
+    </LookRegion>
   );
 }
 
@@ -112,16 +114,17 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
   const due = closed ? dueAt(sim.zone, period.to, st.terms.graceDays) : undefined;
   // A balance carried into it: paid in full, what built up since still comes on the next, as trailing interest.
   const carried = sim.player.credit !== undefined && stateOf(sim.player, account).carrying === true && st.previous > 0;
+  const look = at('account', account.id);
   return (
-    <div className="col gap-3">
+    <LookRegion className="col gap-3">
       <div className="grid grid-3">
-        <Figure label="Brought Forward" value={money(st.previous)} />
-        <Figure label="Payments And Credits" value={money(st.payments)} />
-        <Figure label="Spending" value={money(st.spending)} />
-        <Figure label="Fees" value={money(st.fees)} />
-        <Figure label="Interest" value={money(st.interest)} />
-        <Figure label={closed ? 'New Balance' : 'Balance Now'} value={money(st.newBalance)} note={!closed && pendingOn(sim, account) !== 0 ? `${money(-pendingOn(sim, account))} of it pending` : undefined} />
-        <Figure label="Average Daily Balance" value={money(st.averageDaily)} note="What interest is worked on" />
+        <Figure look={look} label="Brought Forward" value={money(st.previous)} />
+        <Figure look={look} label="Payments And Credits" value={money(st.payments)} />
+        <Figure look={look} label="Spending" value={money(st.spending)} />
+        <Figure look={look} label="Fees" value={money(st.fees)} />
+        <Figure look={look} label="Interest" value={money(st.interest)} />
+        <Figure look={look} label={closed ? 'New Balance' : 'Balance Now'} value={money(st.newBalance)} note={!closed && pendingOn(sim, account) !== 0 ? `${money(-pendingOn(sim, account))} of it pending` : undefined} />
+        <Figure look={look} label="Average Daily Balance" value={money(st.averageDaily)} note="What interest is worked on" />
       </div>
       {closed && st.newBalance > 0 && st.minimum !== undefined && (
         <p className="small" style={{ margin: 0 }}>
@@ -141,7 +144,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
         <p className="xs dim" style={{ margin: 0 }}>If none of it is paid, next month’s interest will be about {money(st.nextInterest)}.</p>
       )}
       <Lines lines={st.lines} sign={1} empty="The card went unused and unpaid in this period." card />
-    </div>
+    </LookRegion>
   );
 }
 
@@ -215,14 +218,15 @@ function AlertsView() {
 }
 
 /** A figure, labeled. */
-function Figure({ label, value, note }: { label: string; value: string; note?: string }) {
-  return (
-    <div className="stat">
+function Figure({ label, value, note, look }: { label: string; value: string; note?: string; look?: Subject }) {
+  const inner = (
+    <>
       <span className="stat-label">{label}</span>
       <span className="stat-value mono" style={{ fontSize: 'var(--size-md)' }}>{value}</span>
       {note && <span className="stat-note">{note}</span>}
-    </div>
+    </>
   );
+  return <div className="stat">{look ? <Open subject={look}>{inner}</Open> : inner}</div>;
 }
 
 /** The entries, newest first as a banking app shows them, each with the balance after it. */
@@ -243,10 +247,10 @@ function Lines({ lines, sign, empty, card, valueDated }: { lines: StatementLine[
         const credit = card ? shown < 0 : shown > 0;
         return (
           <div key={line.id} className="row-between small" style={{ padding: '4px 0', borderBottom: '1px solid var(--line-soft, var(--line))' }}>
-            <span className="dim" style={{ flex: '0 0 110px' }}>{formatDate(line.at, sim.zone)}</span>
-            <span style={{ flex: 1 }}>{line.memo}{line.pending ? <span className="xs dim"> · Pending, posts {formatDate(line.postsAt!, sim.zone)}</span> : valueDated && line.postsAt !== undefined ? <span className="xs dim"> · Booked {formatDate(line.postsAt, sim.zone)}, value {formatDate(line.at, sim.zone)}</span> : null}</span>
+            <span className="dim" style={{ flex: '0 0 110px' }}><Open subject={at('day', dateKey(line.at, sim.homeZone))}>{formatDate(line.at, sim.zone)}</Open></span>
+            <span style={{ flex: 1 }}><Open subject={at('transaction', line.id)}>{line.memo}</Open>{line.pending ? <span className="xs dim"> · Pending, posts {formatDate(line.postsAt!, sim.zone)}</span> : valueDated && line.postsAt !== undefined ? <span className="xs dim"> · Booked {formatDate(line.postsAt, sim.zone)}, value {formatDate(line.at, sim.zone)}</span> : null}</span>
             <span className={`mono ${credit ? 'positive' : ''}`} style={{ flex: '0 0 130px', textAlign: 'right' }}>
-              {credit ? '+' : '−'}{formatMoney(Math.abs(shown), cur)}
+              <Open subject={at('transaction', line.id)}>{credit ? '+' : '−'}{formatMoney(Math.abs(shown), cur)}</Open>
             </span>
             <span className="mono dim" style={{ flex: '0 0 130px', textAlign: 'right' }}>{formatMoney(line.balance * sign, cur)}</span>
           </div>

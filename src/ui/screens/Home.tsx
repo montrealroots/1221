@@ -17,7 +17,7 @@ import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { MS_DAY, WEEKDAY_NAMES, formatDateTime, zonedParts } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
-import { useState } from 'react';
+import { Children, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
@@ -48,6 +48,10 @@ import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
 import { deviceCost, securityRefusal, type Device } from '@/engine/systems/homesecurity';
 import { chargerQuote } from '@/engine/systems/charging';
 import { billedApart, internetIn, internetShare, leavingCost, telecomOf } from '@/engine/systems/telecom';
+import { levelOf } from '@/engine/systems/people';
+import { kitchenStock } from '@/engine/systems/kitchen';
+import { mealsReady } from '@/engine/systems/pantry';
+import { groupLabelOf } from '@/ui/shell/destinations';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
@@ -118,6 +122,11 @@ export function Home() {
     travel: useFeature('ui.travel').open,
     vehicles: useFeature('ui.vehicles').open,
     land: useFeature('ui.land').open,
+    people: useFeature('ui.people').open,
+    food: useFeature('ui.food').open,
+    clothes: useFeature('ui.clothes').open,
+    routines: useFeature('ui.routines').open,
+    belongings: useFeature('ui.belongings').open,
   };
 
   return (
@@ -498,7 +507,151 @@ export function Home() {
         </div>
       </div>
 
-      <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
+      {/*
+        Every place in the life opens from Home, under the group it belongs to,
+        the same groups the screens' eyebrows name (`ui/shell/destinations.ts`).
+        Until 2026-10-02 eight panels sat in one grid in no order, and the Home
+        panel carried five other places as buttons in its corner.
+      */}
+      <HomeGroup label={groupLabelOf('/workspace/people')} lead={!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
+        <Panel
+          title="Home"
+          tight
+          actions={(
+            <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
+              Homes
+            </Gated>
+          )}
+        >
+          <div className="grid grid-2">
+            <div><YourHome cur={cur} /></div>
+            <div><YourPlace cur={cur} /></div>
+          </div>
+        </Panel>
+        )}>
+        {!shows.people ? <LockedPanel feature="ui.people" title="People" /> : (
+        <Panel
+          title="People"
+          tight
+          actions={(
+            <Gated feature="ui.people" className="btn btn-sm" onClick={() => navigate('/workspace/people', 'People')}>
+              People
+            </Gated>
+          )}
+        >
+          <YourPeople />
+        </Panel>
+        )}
+        {!shows.food ? <LockedPanel feature="ui.food" title="Food" /> : (
+        <Panel
+          title="Food"
+          tight
+          actions={(
+            <Gated feature="ui.food" className="btn btn-sm" onClick={() => navigate('/workspace/food', 'Food')}>
+              Food
+            </Gated>
+          )}
+        >
+          <YourFood />
+        </Panel>
+        )}
+        {!shows.clothes ? <LockedPanel feature="ui.clothes" title="Clothes" /> : (
+        <Panel
+          title="Clothes"
+          tight
+          actions={(
+            <Gated feature="ui.clothes" className="btn btn-sm" onClick={() => navigate('/workspace/clothes', 'Clothes')}>
+              Clothes
+            </Gated>
+          )}
+        >
+          <YourClothes />
+        </Panel>
+        )}
+        {!shows.routines ? <LockedPanel feature="ui.routines" title="Routines" /> : (
+        <Panel
+          title="Routines"
+          tight
+          actions={(
+            <Gated feature="ui.routines" className="btn btn-sm" onClick={() => navigate('/workspace/routines', 'Routines')}>
+              Routines
+            </Gated>
+          )}
+        >
+          <YourRoutines />
+        </Panel>
+        )}
+        {!shows.belongings ? <LockedPanel feature="ui.belongings" title="Belongings" /> : (
+        <Panel
+          title="Belongings"
+          tight
+          actions={(
+            <Gated feature="ui.belongings" className="btn btn-sm" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
+              Belongings
+            </Gated>
+          )}
+        >
+          <YourBelongings />
+        </Panel>
+        )}
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/career')}>
+        {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
+        <Panel
+          title="School"
+          tight
+          actions={(
+            <Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>
+              {YALE_DRAMA.short}
+            </Gated>
+          )}
+        >
+          <YourSchool />
+        </Panel>
+        ))}
+        {player.career && (!shows.career ? <LockedPanel feature="ui.career" title="Career" /> : (
+        <Panel
+          title="Career"
+          tight
+          actions={(
+            <Gated feature="ui.career" className="btn btn-sm" onClick={() => navigate('/workspace/career', 'Your Career')}>
+              Career
+            </Gated>
+          )}
+        >
+          <YourCareer cur={cur} />
+        </Panel>
+        ))}
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/travel')}>
+        {(player.career || player.school) && (!shows.travel ? <LockedPanel feature="ui.travel" title="Travel" /> : (
+        <Panel
+          title="Travel"
+          tight
+          actions={(
+            <Gated feature="ui.travel" className="btn btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>
+              Travel
+            </Gated>
+          )}
+        >
+          <YourTravel />
+        </Panel>
+        ))}
+        {(player.career || player.school) && (!shows.vehicles ? <LockedPanel feature="ui.vehicles" title="Cars" /> : (
+        <Panel
+          title="Cars"
+          tight
+          actions={(
+            <Gated feature="ui.vehicles" className="btn btn-sm" onClick={() => navigate('/workspace/vehicles', 'Cars')}>
+              Cars
+            </Gated>
+          )}
+        >
+          <YourCars />
+        </Panel>
+        ))}
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/bank')}>
         {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
         <Panel
           title="Money"
@@ -534,63 +687,21 @@ export function Home() {
           </LookRegion>
         </Panel>
         )}
-        {!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
+        {(player.career || player.school) && (!shows.land ? <LockedPanel feature="ui.land" title="Land" /> : (
         <Panel
-          title="Home"
+          title="Land"
           tight
           actions={(
-            <div className="row gap-1">
-              <Gated feature="ui.belongings" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
-                Belongings
-              </Gated>
-              <Gated feature="ui.clothes" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/clothes', 'Clothes')}>
-                Clothes
-              </Gated>
-              <Gated feature="ui.food" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/food', 'Food')}>
-                Food
-              </Gated>
-              <Gated feature="ui.routines" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/routines', 'Routines')}>
-                Routines
-              </Gated>
-              <Gated feature="ui.people" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/people', 'People')}>
-                People
-              </Gated>
-              <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
-                Homes
-              </Gated>
-            </div>
-          )}
-        >
-          <YourHome cur={cur} />
-          <YourPlace cur={cur} />
-        </Panel>
-        )}
-        {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
-        <Panel
-          title="School"
-          tight
-          actions={(
-            <Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>
-              {YALE_DRAMA.short}
+            <Gated feature="ui.land" className="btn btn-sm" onClick={() => navigate('/workspace/land', 'Land')}>
+              Land
             </Gated>
           )}
         >
-          <YourSchool />
+          <YourLand />
         </Panel>
         ))}
-        {player.career && (!shows.career ? <LockedPanel feature="ui.career" title="Career" /> : (
-        <Panel
-          title="Career"
-          tight
-          actions={(
-            <Gated feature="ui.career" className="btn btn-sm" onClick={() => navigate('/workspace/career', 'Your Career')}>
-              Career
-            </Gated>
-          )}
-        >
-          <YourCareer cur={cur} />
-        </Panel>
-        ))}
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/papers')}>
         {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
         {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Papers" /> : (
         <Panel
@@ -605,48 +716,57 @@ export function Home() {
           <YourPapers cur={cur} />
         </Panel>
         ))}
-        {(player.career || player.school) && (!shows.travel ? <LockedPanel feature="ui.travel" title="Travel" /> : (
-        <Panel
-          title="Travel"
-          tight
-          actions={(
-            <Gated feature="ui.travel" className="btn btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>
-              Travel
-            </Gated>
-          )}
-        >
-          <YourTravel />
-        </Panel>
-        ))}
-        {(player.career || player.school) && (!shows.vehicles ? <LockedPanel feature="ui.vehicles" title="Cars" /> : (
-        <Panel
-          title="Cars"
-          tight
-          actions={(
-            <Gated feature="ui.vehicles" className="btn btn-sm" onClick={() => navigate('/workspace/vehicles', 'Cars')}>
-              Cars
-            </Gated>
-          )}
-        >
-          <YourCars />
-        </Panel>
-        ))}
-        {(player.career || player.school) && (!shows.land ? <LockedPanel feature="ui.land" title="Land" /> : (
-        <Panel
-          title="Land"
-          tight
-          actions={(
-            <Gated feature="ui.land" className="btn btn-sm" onClick={() => navigate('/workspace/land', 'Land')}>
-              Land
-            </Gated>
-          )}
-        >
-          <YourLand />
-        </Panel>
-        ))}
-      </div>
+      </HomeGroup>
     </>
   );
+}
+
+/** A heading for one part of life, a panel that takes the whole row where one is given, and the rest laid out to fill each row; nothing at all where none of them is shown. */
+function HomeGroup({ label, lead, children }: { label: string; lead?: ReactNode; children: ReactNode }) {
+  const shown = Children.toArray(children);
+  if (shown.length === 0 && !lead) return null;
+  return (
+    <section className="home-group" aria-label={label}>
+      <h2 className="home-group-label">{label}</h2>
+      {lead && <div className="home-group-lead">{lead}</div>}
+      {shown.length > 0 && <div className="grid grid-3">{children}</div>}
+    </section>
+  );
+}
+
+/** Who you know: how many, the close ones, and who you’re seeing. */
+function YourPeople() {
+  const contacts = useWorld((s) => s.player.contacts ?? []);
+  const close = contacts.filter((c) => levelOf(c) === 'Close Friend').length;
+  const partner = contacts.find((c) => c.dating);
+  return <Stat label="Who You Know" value={String(contacts.length)} note={`${close} ${close === 1 ? 'close friend' : 'close friends'}${partner ? `; seeing ${partner.name}` : ''}`} />;
+}
+
+/** What there is to eat: meals ready, and the food fresh in the kitchen. */
+function YourFood() {
+  const ready = useWorld((s) => mealsReady(s, s.player).length);
+  const stock = useWorld((s) => kitchenStock(s, s.player).length);
+  return <Stat label="Ready To Eat" value={String(ready)} note={`${stock} ${stock === 1 ? 'thing' : 'things'} fresh in the kitchen`} tone={ready === 0 ? 'warning' : undefined} />;
+}
+
+/** What there is to wear: clean outfits, and what’s in the wash. */
+function YourClothes() {
+  const outfits = useWorld((s) => cleanOutfits(s, s.player));
+  const wash = useWorld((s) => washableDirty(s, s.player).length);
+  return <Stat label="Clean Outfits" value={String(outfits)} note={wash ? `${wash} ${wash === 1 ? 'garment' : 'garments'} to wash` : 'Nothing to wash'} tone={outfits <= 2 ? 'warning' : undefined} />;
+}
+
+/** The routines saved, by name. */
+function YourRoutines() {
+  const routines = useWorld((s) => s.player.routines ?? []);
+  return <Stat label="Saved" value={String(routines.length)} note={routines.length ? routines.map((r) => r.name).slice(0, 3).join(', ') : 'None saved yet'} />;
+}
+
+/** What you own besides clothes and food, and how much of it is at home. */
+function YourBelongings() {
+  const things = useWorld((s) => (s.player.items ?? []).filter((i) => !i.garment && !i.food));
+  const atHome = things.filter((i) => i.at.kind === 'home').length;
+  return <Stat label="Things You Own" value={String(things.length)} note={`${atHome} at home`} />;
 }
 
 /**
@@ -915,12 +1035,12 @@ function YourHome({ cur }: { cur: string }) {
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         {home?.kind !== 'shared' && (
           <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.shared)} onClick={() => run('home.move', { kind: 'shared' })}>
-            Move Into A Room ({money(costs.shared)})
+            Rent A Room ({money(costs.shared)} To Move In)
           </Gated>
         )}
         {home?.kind !== 'own' && (
           <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.own)} onClick={() => run('home.move', { kind: 'own' })}>
-            Get A Place Of Your Own ({money(costs.own)})
+            Rent A One-Bedroom ({money(costs.own)} To Move In)
           </Gated>
         )}
       </div>

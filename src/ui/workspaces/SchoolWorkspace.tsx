@@ -16,7 +16,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { dateKey, formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import { SIZE_WORD } from '@/engine/content/plays';
@@ -67,11 +68,11 @@ export function SchoolWorkspace() {
 
   return (
     <>
-      <div className="page-head">
+      <LookRegion className="page-head">
         <div className="eyebrow">Your School</div>
-        <h1>{YALE_DRAMA.name}</h1>
-        <p className="muted">{YALE_DRAMA.degree} in {YALE_DRAMA.program}, class of {school.classOf}. {where}</p>
-      </div>
+        <h1><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.name}</Open></h1>
+        <p className="muted"><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.degree} in {YALE_DRAMA.program}</Open>, class of {school.classOf}. {where}</p>
+      </LookRegion>
       <SchoolTabs tab={tab} onTab={setTab} />
       <div role="tabpanel" id={`school-pane-${tab}`} aria-labelledby={`school-tab-${tab}`} tabIndex={0}>
         {panes[tab]}
@@ -174,7 +175,7 @@ function StandingPane() {
 
       <Panel title="Your Craft Against The Class" subtitle={`You and ${school.classmates.length} classmates, 0 to 100`}>
         <div className="col gap-3">
-          <div className="table-scroll">
+          <LookRegion className="table-scroll">
             <table>
               <thead>
                 <tr><th scope="col">Skill</th><th scope="col" className="num">You</th><th scope="col" className="num">You Can Reach</th><th scope="col" className="num">Class Best</th><th scope="col" className="num">Class Median</th><th scope="col" className="num">Your Place</th></tr>
@@ -182,8 +183,8 @@ function StandingPane() {
               <tbody>
                 {skills.map((row) => (
                   <tr key={row.label} className={row.id ? undefined : 'strong'}>
-                    <td>{row.label}</td>
-                    <td className="num mono">{row.mine.toFixed(1)}</td>
+                    <td>{row.id ? <Open subject={at('skill', row.id)}>{row.label}</Open> : row.label}</td>
+                    <td className="num mono">{row.id ? <Open subject={at('skill', row.id)}>{row.mine.toFixed(1)}</Open> : row.mine.toFixed(1)}</td>
                     <td className="num mono">{row.reach.toFixed(1)}</td>
                     <td className="num mono">{Math.max(...row.theirs).toFixed(1)}</td>
                     <td className="num mono">{median(row.theirs).toFixed(1)}</td>
@@ -192,7 +193,7 @@ function StandingPane() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </LookRegion>
           <Fine>
             You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals, performances and later the work grow craft, more when you come rested and less the nearer you are to what you can reach: each skill where it began and {CEILING.headroom} points more. Experience gives most in the first years and little past twelve (McDaniel, Schmidt and Hunter, 1988), and practice is a fifth of what an actor becomes in the performing arts (Macnamara, Hambrick and Oswald, 2014); the ceiling is fitted to both. The scale and the rates of a session are SLATE’s.
           </Fine>
@@ -261,7 +262,7 @@ function ClassesPane() {
           <Gated feature="school.call_in_sick" onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick: today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
         ) : undefined}
       >
-        <div className="col gap-3">
+        <LookRegion className="col gap-3">
           <div className="table-scroll">
             <table>
               <thead><tr><th scope="col">Day</th>{SLOTS.map((s) => <th key={s} scope="col">{s}</th>)}</tr></thead>
@@ -269,39 +270,39 @@ function ClassesPane() {
                 {week.map((day, i) => (
                   <tr key={WEEKDAYS[i]}>
                     <td>{WEEKDAYS[i]}</td>
-                    {SLOTS.map((s, j) => <td key={s}>{day[j]?.name ?? ''}</td>)}
+                    {SLOTS.map((s, j) => <td key={s}>{day[j] ? <Open subject={at('course', day[j]!.code)}>{day[j]!.name}</Open> : ''}</td>)}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            {next ? `Next classes: ${formatDateTime(next, zone())}.` : 'No classes ahead.'} This term’s classes run {dayOf(period.from)} to {dayOf(period.to)}, less {off} breaks for holidays, Community Days, work periods and recesses. Asleep or away from New Haven at nine is an absence; calling in sick excuses it when you’re unwell (condition under {ESTIMATE.sickBelow}) or down with the flu, and not otherwise; a day in hospital is excused of itself.
+            {next ? <>Next classes: <Open subject={at('day', dateKey(next, sim.homeZone))}>{formatDateTime(next, zone())}</Open>.</> : 'No classes ahead.'} This term’s classes run {dayOf(period.from)} to {dayOf(period.to)}, less {off} breaks for holidays, Community Days, work periods and recesses. Asleep or away from New Haven at nine is an absence; calling in sick excuses it when you’re unwell (condition under {ESTIMATE.sickBelow}) or down with the flu, and not otherwise; a day in hospital is excused of itself.
           </p>
           <Fine>
             {period.estimate ? 'This term’s dates are SLATE’s estimate by the 2026–2027 pattern. ' : 'The class days are the Yale Bulletin’s. '}The courses are the Bulletin’s; how often each meets isn’t published, and the week is SLATE’s estimate.
           </Fine>
-        </div>
+        </LookRegion>
       </Panel>
 
       <Panel title={`Year ${year} Courses`} subtitle="Required, every term they run">
-        <div className="table-scroll">
+        <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Code</th><th scope="col">Course</th><th scope="col">Taught By</th><th scope="col">Trains</th><th scope="col" className="num">A Week</th><th scope="col">Terms</th></tr></thead>
             <tbody>
               {courses.map((c) => (
                 <tr key={c.code}>
-                  <td className="mono">{c.code}</td>
-                  <td>{c.name}</td>
+                  <td className="mono"><Open subject={at('course', c.code)}>{c.code}</Open></td>
+                  <td><Open subject={at('course', c.code)}>{c.name}</Open></td>
                   <td>{c.teachers}</td>
-                  <td>{c.skills.map(skillLabel).join(', ')}</td>
+                  <td>{c.skills.map((one, k) => <span key={one}>{k > 0 ? ', ' : ''}<Open subject={at('skill', one)}>{skillLabel(one)}</Open></span>)}</td>
                   <td className="num mono">{c.perWeek}</td>
                   <td>{c.terms.length === 2 ? 'Fall And Spring' : c.terms[0] === 'fall' ? 'Fall' : 'Spring'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </LookRegion>
       </Panel>
     </div>
   );
@@ -398,14 +399,14 @@ function CastingPane() {
 
       {calls.length > 0 && (
         <Panel title="Calls Ahead">
-          <div className="col gap-2">
+          <LookRegion className="col gap-2">
             {calls.map((c) => (
               <div key={c.id} className="row-between small">
-                <span>{c.label}</span>
-                <span className="mono">{formatDateTime(c.at, zone())}</span>
+                <span><Open subject={at('entry', c.id)}>{c.label}</Open></span>
+                <span className="mono"><Open subject={at('day', dateKey(c.at, sim.homeZone))}>{formatDateTime(c.at, zone())}</Open></span>
               </div>
             ))}
-          </div>
+          </LookRegion>
         </Panel>
       )}
     </div>
@@ -499,14 +500,14 @@ function WorkPane() {
           <Stat label="Owed On Friday" value={formatMoney(Math.round(work.owedHours * rate), cur)} note={`${work.owedHours} hours at ${formatMoney(rate, cur)} an hour`} />
         </div>
         {shifts.length > 0 && (
-          <div className="col gap-2">
+          <LookRegion className="col gap-2">
             {shifts.map((s) => (
               <div key={s.id} className="row-between small">
-                <span>{s.label}</span>
-                <span className="mono">{formatDateTime(s.at, zone())}</span>
+                <span><Open subject={at('entry', s.id)}>{s.label}</Open></span>
+                <span className="mono"><Open subject={at('day', dateKey(s.at, sim.homeZone))}>{formatDateTime(s.at, zone())}</Open></span>
               </div>
             ))}
-          </div>
+          </LookRegion>
         )}
         <p className="small" style={{ margin: 0 }}>
           Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
@@ -537,19 +538,19 @@ function TermsPane() {
   return (
     <div className="grid grid-2">
       <Panel title="Your Terms" subtitle={`${school.termsBegun} of ${YALE_DRAMA.terms} begun`}>
-        <div className="col gap-2">
+        <LookRegion className="col gap-2">
           {terms.map((t) => (
             <div key={t.i} className="row-between small">
               <span>{termLabel(t.i)}</span>
               <span className={t.i < school.termsBegun ? 'dim' : ''}>
-                {t.i < school.termsBegun ? 'Began ' : 'Begins '}{dayOf(t.date)}{t.estimate ? ', SLATE’s estimate' : ''}
+                {t.i < school.termsBegun ? 'Began ' : 'Begins '}<Open subject={at('day', keyOf(t.date))}>{dayOf(t.date)}</Open>{t.estimate ? ', SLATE’s estimate' : ''}
               </span>
             </div>
           ))}
           <Fine>
             The 2026–2027 dates are the Yale Bulletin’s. Later years aren’t published yet, so they’re SLATE’s estimate by the same pattern.
           </Fine>
-        </div>
+        </LookRegion>
       </Panel>
 
       <Panel title="Your Yale Account" subtitle={termLabel(current)}>

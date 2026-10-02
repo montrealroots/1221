@@ -11,7 +11,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { dateKey, formatDate } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { bankById } from '@/engine/content/banks';
 import { FRAUD_LAW, SECURITY } from '@/engine/content/security';
 import { cardAccount, disputeRefusal, ESTIMATE_YEARS, plasticView, type Which } from '@/engine/systems/security';
@@ -45,7 +46,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
 
   return (
     <Panel title="Your Cards" subtitle="Locking, loss and theft, and payments that weren’t yours">
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         {cards.map(({ which, account }) => {
           const p = plasticView(sim, account, which);
           const own = SECURITY[account.bankId ?? bankId];
@@ -53,7 +54,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
           const fee = which === 'debit' ? own?.replaceFeeDebit : own?.replaceFeeCredit;
           return (
             <div key={account.id} className="col gap-2">
-              <div className="strong small">{which === 'debit' ? 'Debit card' : account.name} ending {p.last4}, expires {formatDate(p.expiresAt, sim.zone)}</div>
+              <div className="strong small"><Open subject={at('account', account.id)}>{which === 'debit' ? 'Debit card' : account.name} ending {p.last4}</Open>, expires <Open subject={at('day', dateKey(p.expiresAt, sim.homeZone))}>{formatDate(p.expiresAt, sim.zone)}</Open></div>
               {p.stopped && <p className="small" style={{ margin: 0 }}>{WHY_WORDS[p.stopped]}: stopped. A new one arrives {p.replacementAt ? formatDate(p.replacementAt, sim.zone) : 'soon'}.</p>}
               {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new goes on it; the bills already on it still do.</p>}
               {p.billersStale && <p className="small" style={{ margin: 0 }}>The bills on the old number are being declined until they have this one.</p>}
@@ -111,7 +112,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
         {law?.creditWords && cards.some((c) => c.which === 'credit') && <p className="xs dim" style={{ margin: 0 }}>For the credit card: {law.creditWords}</p>}
         {law?.refundWords && <p className="xs dim" style={{ margin: 0 }}>A payment reported as not yours: {law.refundWords}</p>}
         {(rules || law) && <Fine>Source: {[rules?.source, law?.source].filter(Boolean).join('; ')}.</Fine>}
-      </div>
+      </LookRegion>
     </Panel>
   );
 }

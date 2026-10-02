@@ -20,7 +20,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { dateKey, formatDate } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
 import { buyRefusal, glazed, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
@@ -36,6 +37,7 @@ import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
 import { stereoQuote } from '@/engine/systems/caraudio';
 import { PRE_PURCHASE, inspectionPrice, reportOn } from '@/engine/systems/usedcars';
+import { groupLabelOf } from '@/ui/shell/destinations';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -81,13 +83,14 @@ export function VehiclesWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/vehicles')}</div>
         <h1>Cars</h1>
         <p className="muted">A car, motorcycle, scooter, van, motorhome, bicycle or ATV of your own: what it costs to buy, to keep and to run where you live.</p>
       </div>
       <div className="col gap-5">
         <Panel title="Your Vehicles">
           {!owned.length ? <p className="small muted" style={{ margin: 0 }}>None yet.</p> : (
+            <LookRegion>
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Vehicle</th><th scope="col">Bought</th><th scope="col" className="num">Worth</th><th scope="col" className="num">Loan Or Lease</th><th scope="col">Registration Due</th><th scope="col">Next Inspection</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
@@ -96,12 +99,12 @@ export function VehiclesWorkspace() {
                     const m = modelById(v.modelId)!;
                     return (
                       <tr key={v.id}>
-                        <td>{m.make} {m.model}</td>
-                        <td>{formatDate(v.boughtAt, sim.zone)}{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
-                        <td className="num mono">{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</td>
-                        <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? money(v.loan.owed) : 'None'}</td>
-                        <td>{registers(modelById(v.modelId)!, v.jurisdiction) ? formatDate(v.registrationDue, sim.zone) : '—'}</td>
-                        <td className="small">{(() => { const due = nextInspection(v, v.inspected ?? v.boughtAt); const rule = INSPECTION_RULES[v.jurisdiction]; return due && rule ? `${rule.label}, ${formatDate(due, sim.zone)}` : '—'; })()}</td>
+                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open></td>
+                        <td><Open subject={at('day', dateKey(v.boughtAt, sim.homeZone))}>{formatDate(v.boughtAt, sim.zone)}</Open>{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
+                        <td className="num mono"><Open subject={at('vehicle', v.id)}>{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</Open></td>
+                        <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? <Open subject={at('vehicle', v.id)}>{money(v.loan.owed)}</Open> : 'None'}</td>
+                        <td>{registers(modelById(v.modelId)!, v.jurisdiction) ? <Open subject={at('day', dateKey(v.registrationDue, sim.homeZone))}>{formatDate(v.registrationDue, sim.zone)}</Open> : '—'}</td>
+                        <td className="small">{(() => { const due = nextInspection(v, v.inspected ?? v.boughtAt); const rule = INSPECTION_RULES[v.jurisdiction]; return due && rule ? <>{`${rule.label}, `}<Open subject={at('day', dateKey(due, sim.homeZone))}>{formatDate(due, sim.zone)}</Open></> : '—'; })()}</td>
                         <td>
                           {v.lease ? (
                             v.lease.maturedAt === undefined ? (
@@ -148,6 +151,7 @@ export function VehiclesWorkspace() {
                 </tbody>
               </table>
             </div>
+            </LookRegion>
           )}
         </Panel>
 
@@ -287,21 +291,23 @@ function CaravanPanel() {
             <Stat label="Towed" value={q.market === 'US' ? `Up To ${Math.round(model.maxKg / LB).toLocaleString('en-US')} lb` : `Up To ${Math.round(model.maxKg).toLocaleString('en-US')} kg`} note={`Behind a car its maker rates to tow that, with a towbar fitted, ${money(inSaveMoney(sim, HITCH_FIT[q.market].amount * 100, HITCH_FIT[q.market].currency))}`} />
           </div>
           {mine.length > 0 && (
+            <LookRegion>
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Caravan</th><th scope="col">Where</th><th scope="col" className="num">Worth</th><th scope="col">Sell</th></tr></thead>
                 <tbody>
                   {mine.map((c) => (
                     <tr key={c.id}>
-                      <td>{CARAVANS[c.market].label}</td>
-                      <td>{CITIES.get(c.at ?? c.cityId)?.name ?? c.cityId}</td>
-                      <td className="num mono">{money(caravanValue(c, sim.now))}</td>
+                      <td><Open subject={at('vehicle', c.id)}>{CARAVANS[c.market].label}</Open></td>
+                      <td><Open subject={at('place', c.at ?? c.cityId)}>{CITIES.get(c.at ?? c.cityId)?.name ?? c.cityId}</Open></td>
+                      <td className="num mono"><Open subject={at('vehicle', c.id)}>{money(caravanValue(c, sim.now))}</Open></td>
                       <td><Gated feature="caravan.sell" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ value: number }>('caravan.sell', { caravanId: c.id }); if (a.ok) toast(`Sold, for ${money(a.value!.value)}.`, 'positive'); }}>Sell</Gated></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+            </LookRegion>
           )}
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
             <Gated feature="caravan.buy" className="btn btn-sm btn-ghost" disabled={Boolean(noBuy)} title={noBuy} onClick={() => { if (run('caravan.buy', {}).ok) toast('A caravan of your own.', 'positive'); }}>{mine.length ? 'Buy Another Caravan' : 'Buy A Caravan'}</Gated>
@@ -341,22 +347,24 @@ function BoatPanel() {
             {rules.certificate ? <Stat label={rules.certificate.label} value={holds ? 'Held' : here(rules.certificate.amount)} note="Asked of whoever operates a boat here" /> : <Stat label="A License" value="None Asked" note="None is needed to take a pleasure boat to sea here" />}
           </div>
           {boats.length > 0 && (
+            <LookRegion>
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Boat</th><th scope="col">Kept In</th><th scope="col" className="num">Worth</th><th scope="col">Standing</th><th scope="col">Sell</th></tr></thead>
                 <tbody>
                   {boats.map((b) => (
                     <tr key={b.id}>
-                      <td>{BOAT_RULES[b.state].model.label}</td>
-                      <td>{CITIES.get(b.cityId)?.name ?? b.cityId}{onItsTrailer(person, b) ? ', On Its Trailer' : ''}</td>
-                      <td className="num mono">{money(b.price)}</td>
-                      <td>{b.repossessed ? 'Taken By The Lender' : b.loan ? `${money(b.loan.owed)} Owed` : 'Owned Outright'}</td>
+                      <td><Open subject={at('vehicle', b.id)}>{BOAT_RULES[b.state].model.label}</Open></td>
+                      <td><Open subject={at('place', b.cityId)}>{CITIES.get(b.cityId)?.name ?? b.cityId}</Open>{onItsTrailer(person, b) ? ', On Its Trailer' : ''}</td>
+                      <td className="num mono"><Open subject={at('vehicle', b.id)}>{money(b.price)}</Open></td>
+                      <td>{b.repossessed ? 'Taken By The Lender' : b.loan ? <Open subject={at('vehicle', b.id)}>{`${money(b.loan.owed)} Owed`}</Open> : 'Owned Outright'}</td>
                       <td><Gated feature="boat.sell" className="btn btn-sm btn-ghost" disabled={Boolean(b.repossessed)} title={b.repossessed ? 'The lender has it.' : undefined} onClick={() => { if (run('boat.sell', { boatId: b.id }).ok) toast('Sold.', 'positive'); }}>Sell</Gated></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+            </LookRegion>
           )}
           {state?.startsWith('US') && (
             <div className="field-row field-row-tight">

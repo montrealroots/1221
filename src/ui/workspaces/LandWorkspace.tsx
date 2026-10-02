@@ -20,6 +20,9 @@ import { BUILD_RULES, BUILD_SOURCE, SQFT_PER_M2, STAGES, BUILD_LOANS } from '@/e
 import { leaseRefusal, yearRent } from '@/engine/systems/landlease';
 import { LAND_LOAN, financeable } from '@/engine/systems/landloan';
 import { buildPlaceOf, buildQuote, buildRefusal } from '@/engine/systems/construction';
+import { dateKey } from '@/engine/core/time';
+import { groupLabelOf } from '@/ui/shell/destinations';
+import { LookRegion, Open, at } from '@/ui/looks';
 
 /**
  * One precision down a column of money, so its right edge lines up: whole
@@ -37,7 +40,7 @@ export function LandWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/land')}</div>
         <h1>Land</h1>
         <p className="muted">A parcel of your own: a town lot or acreage, listed where you live near the value published for land there.</p>
       </div>
@@ -56,6 +59,7 @@ function YourLand() {
   const owned = parcelsOf(person).filter((p) => p.soldAt === undefined);
   return (
     <Panel title="Your Land">
+      <LookRegion>
       {!owned.length ? <p className="small muted" style={{ margin: 0 }}>None yet.</p> : (
         <div className="table-scroll">
           <table>
@@ -69,10 +73,10 @@ function YourLand() {
                 const twin = owned.find((o) => o.id !== p.id && !o.selling && LAND_MARKETS[o.market]!.label === m.label);
                 return (
                   <tr key={p.id}>
-                    <td>{m.label}</td>
+                    <td><Open subject={at('parcel', p.id)}>{m.label}</Open></td>
                     <td>{areaWords(p.acres, m.place)}</td>
-                    <td className="num mono">{money(worth)}</td>
-                    <td className="small">{built ? 'A House Going Up' : p.selling ? `For Sale, Closing ${formatDate(p.selling.closesAt, sim.zone)}` : `Since ${formatDate(p.boughtAt, sim.zone)}`}</td>
+                    <td className="num mono"><Open subject={at('parcel', p.id)}>{money(worth)}</Open></td>
+                    <td className="small">{built ? 'A House Going Up' : p.selling ? `For Sale, Closing ${formatDate(p.selling.closesAt, sim.zone)}` : <>Since <Open subject={at('day', dateKey(p.boughtAt, sim.homeZone))}>{formatDate(p.boughtAt, sim.zone)}</Open></>}</td>
                     <td>
                       <div className="row gap-2">
                         {!p.selling && !built && <Gated feature="land.sell" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ closesAt: number }>('land.sell', { parcelId: p.id }); if (a.ok) toast(`For sale: it closes ${formatDate(a.value!.closesAt, sim.zone)}, for ${money(saleProceeds(m, worth).net)} after the seller’s taxes.`, 'positive'); }}>Put It Up For Sale</Gated>}
@@ -90,6 +94,7 @@ function YourLand() {
           </table>
         </div>
       )}
+      </LookRegion>
     </Panel>
   );
 }
@@ -107,11 +112,11 @@ function YourDeal() {
   const line = columnOf([q.price, ...q.lines.map((l) => l.amount), q.total], m.currency);
   return (
     <Panel title="Your Offer, Accepted" subtitle={`${m.label}, ${areaWords(deal.listing.acres, m.place)}`}>
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         <div className="grid grid-3">
           <Stat label="Price" value={money(deal.price)} note={`${money(q.total)} with what buying it costs`} />
-          <Stat label="Deposit" value={money(deal.deposit)} note={deal.escrowAccountId ? 'Paid, and held' : `Paid on exchange, ${formatDate(deal.diligenceUntil, sim.zone)}`} />
-          <Stat label="Closing" value={formatDate(deal.closesAt, sim.zone)} note={free ? `Free to walk away until ${formatDate(deal.diligenceUntil, sim.zone)}` : 'Bound: walking away loses the deposit'} tone={free ? undefined : 'warning'} />
+          <Stat label="Deposit" look={deal.escrowAccountId ? at('account', deal.escrowAccountId) : undefined} value={money(deal.deposit)} note={deal.escrowAccountId ? 'Paid, and held' : `Paid on exchange, ${formatDate(deal.diligenceUntil, sim.zone)}`} />
+          <Stat label="Closing" look={at('day', dateKey(deal.closesAt, sim.homeZone))} value={formatDate(deal.closesAt, sim.zone)} note={free ? `Free to walk away until ${formatDate(deal.diligenceUntil, sim.zone)}` : 'Bound: walking away loses the deposit'} tone={free ? undefined : 'warning'} />
         </div>
         <div className="table-scroll">
           <table>
@@ -127,7 +132,7 @@ function YourDeal() {
           <Gated feature="land.withdraw" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ depositBack: boolean }>('land.withdraw', {}); if (a.ok) toast(a.value!.depositBack ? 'Walked away, the deposit back.' : 'Walked away; the seller kept the deposit.', 'neutral'); }}>Walk Away</Gated>
         </div>
         <Fine>The deposit is {Math.round(rule.share * 100)}%, paid {rule.at === 'accept' ? 'when the offer was accepted' : 'when contracts are exchanged'}. The time to look into the land and the closing day are SLATE’s estimates; no authority publishes either.</Fine>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -163,7 +168,7 @@ function ForSale() {
   };
   return (
     <Panel title="For Sale" subtitle="Listed where you live this month">
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         <CatalogControls id="land-catalog" entries={landEntries} view={view} onChange={setView} facets={{ kind: 'Kind' }} />
         <div className="table-scroll">
           <table>
@@ -173,7 +178,7 @@ function ForSale() {
                 const lm = LAND_MARKETS[l.market]!;
                 return (
                   <tr key={l.id}>
-                    <td>{lm.label}</td>
+                    <td><Open subject={at('parcel', l.id)}>{lm.label}</Open></td>
                     <td>{areaWords(l.acres, lm.place)}</td>
                     <td className="num mono">{formatMoney(l.asking, lm.currency, { cents: false })}</td>
                     <td className="small">{formatDate(l.listedAt, sim.zone)}</td>
@@ -220,7 +225,7 @@ function ForSale() {
           <Gated feature="land.offer" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={offer}>Make An Offer</Gated>
         </div>
         <Fine>{q.basis} None is a real listing: an asking price is within SLATE’s spread of the value, from 5% under it to 15% over it. A seller takes less the longer land has sat. It sells in about {DAYS_TO_SELL} days, a broker’s 2025 US figure taken everywhere. A survey, title insurance, a lawyer and a Phase I environmental assessment, which no authority prices, aren’t kept. A land loan is Farm Credit’s, about 6.3% over 30 years with 35% down (secondary), and only on America’s farmland, where its terms were read. Sources: {LAND_SOURCE}.</Fine>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -243,7 +248,7 @@ function Build() {
     const rules = BUILD_RULES[b.place];
     const money = (c: number) => formatMoney(c, rules.currency, { cents: false });
     return (
-      <Panel title="Your House, Being Built" subtitle={b.stage === -1 ? (b.place === 'london' ? 'Work starts soon' : 'Waiting for the permit') : `${STAGES[b.stage]!.name}${b.unpaid !== undefined ? ', stopped' : ''}`}>
+      <Panel title="Your House, Being Built" look={at('parcel', b.parcelId)} subtitle={b.stage === -1 ? (b.place === 'london' ? 'Work starts soon' : 'Waiting for the permit') : `${STAGES[b.stage]!.name}${b.unpaid !== undefined ? ', stopped' : ''}`}>
         <div className="col gap-3">
           <div className="table-scroll">
             <table>

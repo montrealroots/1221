@@ -12,6 +12,7 @@ import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
+import { Open, at } from '@/ui/looks';
 import { bankById } from '@/engine/content/banks';
 import { cardsOf, cardTerms, stateOf } from '@/engine/systems/credit';
 import type { Account } from '@/engine/core/ledger';
@@ -66,7 +67,7 @@ function CardOffers({ card }: { card: Account }) {
   if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. ${bonus ? 'Groceries and recurring bills are what a card buys here.' : 'Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.'}` : ''}`);
 
   return (
-    <Panel title="The Card’s Offers" subtitle={terms.name}>
+    <Panel title="The Card’s Offers" subtitle={<Open subject={at('account', card.id)}>{terms.name}</Open>} look={at('account', card.id)}>
       <div className="col gap-3">
         {lines.map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
         {terms.rewardsRate && (

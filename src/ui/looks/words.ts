@@ -59,3 +59,10 @@ export function toStart(words: string): string {
 export function outOf(value: number): string {
   return `${Math.round(value)}/100`;
 }
+
+/**
+ * Whether a string can stand as a look’s name: no underscore, slash or run of
+ * four digits, no lowercase word running into a capital, and a capital
+ * (accented ones too) or a digit first. The rule in docs/DRILL-DOWN.md, once.
+ */
+export const nameable = (text: string): boolean => !/_|\/|\d{4}/.test(text) && !/\b[a-z]+[A-Z]/.test(text) && /^[\p{Lu}0-9]/u.test(text);

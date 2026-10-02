@@ -17,7 +17,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { formatDate, zonedParts } from '@/engine/core/time';
+import { dateKey, formatDate, zonedParts } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
@@ -80,7 +81,7 @@ function CardApplication({ held }: { held: Account[] }) {
   return (
     <Panel title={held.length ? 'Another Card' : 'Credit Card'} subtitle={credit.applied ? 'On its way' : held.length ? `${held.length} held` : 'None'}>
       {credit.applied
-        ? <p className="small" style={{ margin: 0 }}>{pending?.name ?? 'The bank'} approved a card with a {money(credit.applied.limit)} limit. It arrives {formatDate(credit.applied.arrivesAt, sim.zone)}.</p>
+        ? <LookRegion><p className="small" style={{ margin: 0 }}>{pending ? <Open subject={at('bank', pending.id)}>{pending.name}</Open> : 'The bank'} approved a card with a {money(credit.applied.limit)} limit. It arrives <Open subject={at('day', dateKey(credit.applied.arrivesAt, sim.homeZone))}>{formatDate(credit.applied.arrivesAt, sim.zone)}</Open>.</p></LookRegion>
         : !chosen
           ? <p className="small" style={{ margin: 0 }}>{held.length ? 'You hold a card from every bank here that issues one.' : `${home?.name ?? 'Your bank'} doesn’t issue a credit card, and no other bank here does.`}</p>
           : (
@@ -195,22 +196,28 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
       : '';
 
   return (
-    <Panel title={terms.name} subtitle={`${many && everyday ? 'The everyday card, ' : ''}···${card.last4 ?? ''}`}>
+    <Panel title={terms.name} subtitle={<Open subject={at('account', card.id)}>{`${many && everyday ? 'The everyday card, ' : ''}···${card.last4 ?? ''}`}</Open>} look={at('account', card.id)}>
       <div className="col gap-3">
         <div className="grid grid-3">
           <div className="stat">
-            <span className="stat-label">Owed</span>
-            <span className={`stat-value mono ${owed > 0 ? 'negative' : ''}`}>{money(owed)}</span>
+            <Open subject={at('account', card.id)}>
+              <span className="stat-label">Owed</span>
+              <span className={`stat-value mono ${owed > 0 ? 'negative' : ''}`}>{money(owed)}</span>
+            </Open>
           </div>
           <div className="stat">
-            <span className="stat-label">Left To Spend</span>
-            <span className="stat-value mono">{money(Math.max(0, limit - owed))}</span>
-            <span className="stat-note">Of a {money(limit)} limit</span>
+            <Open subject={at('account', card.id)}>
+              <span className="stat-label">Left To Spend</span>
+              <span className="stat-value mono">{money(Math.max(0, limit - owed))}</span>
+              <span className="stat-note">Of a {money(limit)} limit</span>
+            </Open>
           </div>
           <div className="stat">
-            <span className="stat-label">{charge ? 'Kind' : 'Rate'}</span>
-            <span className="stat-value mono">{charge ? 'Charge' : pct(terms.apr)}</span>
-            <span className="stat-note">{charge ? 'Paid in full each month' : 'A year, on what’s carried'}</span>
+            <Open subject={at('account', card.id)}>
+              <span className="stat-label">{charge ? 'Kind' : 'Rate'}</span>
+              <span className="stat-value mono">{charge ? 'Charge' : pct(terms.apr)}</span>
+              <span className="stat-note">{charge ? 'Paid in full each month' : 'A year, on what’s carried'}</span>
+            </Open>
           </div>
         </div>
         {lines.map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}

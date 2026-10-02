@@ -36,6 +36,9 @@ import { CAREER_CITIES } from '@/engine/content/career';
 import { managerIn } from '@/engine/systems/propertymanagers';
 import { LAWNS, MOWN_CM, gardenerPrice } from '@/engine/systems/lawns';
 import { inTheBank } from '@/engine/systems/household';
+import { dateKey } from '@/engine/core/time';
+import { groupLabelOf } from '@/ui/shell/destinations';
+import { LookRegion, Open, at } from '@/ui/looks';
 
 type HomesTab = 'sale' | 'yours';
 
@@ -67,7 +70,7 @@ export function HomesWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Where You Live</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/homes')}</div>
         <h1>Homes</h1>
         <p className="muted">Fifty homes for sale in a town, cheapest first, and the homes you own.</p>
       </div>
@@ -178,10 +181,12 @@ function ForSalePane() {
       {buying && <Purchase />}
       {counter && countered && (
         <Panel title="The Seller Countered">
+          <LookRegion>
           <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-            <span className="small">{countered.address}: {money(counter.price)}, until {formatDate(counter.until, CITIES.require(countered.cityId).timeZone)}. Offer it and it’s yours.</span>
+            <span className="small"><Open subject={at('listing', countered.id)}>{countered.address}</Open>: {money(counter.price)}, until {formatDate(counter.until, CITIES.require(countered.cityId).timeZone)}. Offer it and it’s yours.</span>
             <button type="button" className="btn btn-sm btn-ghost" onClick={() => { setTown(countered.cityId); setChosen(countered.id); setTyped(String(counter.price / 100)); }}>Look</button>
           </div>
+          </LookRegion>
         </Panel>
       )}
       <div className="field" style={{ margin: 0, maxWidth: 320 }}>
@@ -193,7 +198,7 @@ function ForSalePane() {
       {listing && offer && (
         <>
           <div id="home-chosen" />
-          <Panel title={listing.address} subtitle={`${money(asking)} · #${listing.rank} of ${homes.length} · ${daysListed(sim, listing)} days on the market`}>
+          <Panel title={listing.address} look={at('listing', listing.id)} subtitle={`${money(asking)} · #${listing.rank} of ${homes.length} · ${daysListed(sim, listing)} days on the market`}>
             <div className="col gap-3">
               <Facts facts={listing} countryId={city.countryId} />
               <div className="xs dim">How old each part is comes with the inspection’s report.</div>
@@ -243,8 +248,9 @@ function ForSalePane() {
           </Panel>
         </>
       )}
-      <Panel title={`For Sale In ${city.name}`} subtitle={`The typical home: ${money(typical.value)} as of ${formatDate(typical.asOf, city.timeZone)}, ${(typical.growth * 100).toFixed(1)}% a year`}>
-        <div className="col gap-3">
+      <LookRegion>
+      <Panel title={<>For Sale In <Open subject={at('place', town)}>{city.name}</Open></>} subtitle={`The typical home: ${money(typical.value)} as of ${formatDate(typical.asOf, city.timeZone)}, ${(typical.growth * 100).toFixed(1)}% a year`}>
+        <LookRegion className="col gap-3">
           <CatalogControls id="homes-catalog" entries={homeEntries} view={view} onChange={setView} facets={{ type: 'Kind', beds: 'Bedrooms' }} />
           <div className="table-scroll">
             <table>
@@ -256,7 +262,7 @@ function ForSalePane() {
                   <tr key={one.id} aria-selected={one.id === chosen}>
                     <td className="num mono">{one.rank}</td>
                     <td>{typeLabel(one.type, city.countryId)}, {bedsText(one.beds)}, {bathsText(one.baths)}</td>
-                    <td>{one.address}</td>
+                    <td><Open subject={at('listing', one.id)}>{one.address}</Open></td>
                     <td className="num mono">{sizeText(one.size, city.countryId)}</td>
                     <td className="num mono">{one.built}</td>
                     <td className="num mono">{daysListed(sim, one)}</td>
@@ -275,8 +281,9 @@ function ForSalePane() {
                 : 'The typical home here is SLATE’s estimate: the town’s rent times how dear homes run over rents in this country, measured against America’s. '}
             The fifty homes are the game’s own, drawn about it: none is a real listing, and the addresses are common street names of the country with numbers of SLATE’s. Each sells in a month to six and another comes on; one unsold two months is cut 3%, and at four 3% again. How a seller answers an offer, rates, down payments and closing costs are SLATE’s estimates of the country’s{city.countryId === 'uk' ? ', but for Britain’s taxes on buying: England’s and Northern Ireland’s Stamp Duty Land Tax, Scotland’s Land and Buildings Transaction Tax and Wales’s Land Transaction Tax, each with its own rate on a home bought beside one already owned' : ''}.{councilNation(town) ? ` Council tax is by band, from the ${COUNCIL_TAX.bandDYear} average Band D the nation’s councils set, ${formatMoney(councilNation(town)!.bandD, 'GBP', { cents: false })}.` : ''} A home not to live in is an investment: at least {Math.round(HOME.investmentDown * 100)}% down and {pct(HOME.investmentRate)} on the rate.
           </Fine>
-        </div>
+        </LookRegion>
       </Panel>
+      </LookRegion>
     </div>
   );
 }
@@ -292,13 +299,14 @@ function Purchase() {
   const walkAway = buying.inspectionUntil !== undefined && sim.now <= buying.inspectionUntil;
   const year = new Date(sim.now).getUTCFullYear();
   return (
+    <LookRegion>
     <Panel
       title="Your Purchase"
-      subtitle={`${buying.facts.address} · ${money(buying.price)} · ${buying.down >= 1 ? 'cash' : `${Math.round(buying.down * 100)}% down`}${buying.live ? '' : ' · to let'}`}
+      subtitle={<><Open subject={at('listing', buying.listingId)}>{buying.facts.address}</Open>{` · ${money(buying.price)} · ${buying.down >= 1 ? 'cash' : `${Math.round(buying.down * 100)}% down`}${buying.live ? '' : ' · to let'}`}</>}
       actions={<Gated feature="home.cancel" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cancel', {}).ok) toast(walkAway ? 'Called off. Your earnest money comes back.' : 'Called off. The seller keeps your earnest money.', 'neutral'); }}>Call It Off</Gated>}
     >
       <div className="col gap-3 small">
-        <div>{money(buying.earnest)} of earnest money is in escrow. It closes {formatDate(buying.closesAt, zone)}, when the rest has to be in the bank.</div>
+        <div>{money(buying.earnest)} of earnest money is in <Open subject={at('account', buying.escrowAccountId)}>escrow</Open>. It closes <Open subject={at('day', dateKey(buying.closesAt, sim.homeZone))}>{formatDate(buying.closesAt, zone)}</Open>, when the rest has to be in the bank.</div>
         {buying.inspect && buying.inspectedAt === undefined && <div>The inspection’s report comes {formatDate(buying.offeredAt + HOME.reportDays * 86_400_000, zone)}.</div>}
         {buying.inspectedAt !== undefined && (
           <>
@@ -311,6 +319,7 @@ function Purchase() {
         </div>
       </div>
     </Panel>
+    </LookRegion>
   );
 }
 
@@ -362,12 +371,12 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
     month.hoa ? `${money(month.hoa)} ${sharedCostsLabel(city.countryId).toLowerCase()}` : '',
   ].filter(Boolean).join(', ');
   return (
-    <Panel title={owned.facts.address} subtitle={`${city.name} · ${use} · bought ${formatDate(owned.boughtAt, city.timeZone)} for ${money(owned.price)}`}>
+    <Panel title={owned.facts.address} look={at('home', `owned:${owned.id}`)} subtitle={<><Open subject={at('place', owned.cityId)}>{city.name}</Open>{` · ${use} · bought `}<Open subject={at('day', dateKey(owned.boughtAt, sim.homeZone))}>{formatDate(owned.boughtAt, city.timeZone)}</Open>{` for ${money(owned.price)}`}</>}>
       <div className="col gap-4">
         <div className="stats">
-          <Stat label="Worth" value={money(value)} note="Its price and the work, at today’s market" />
-          {mortgage > 0 && <Stat label="Mortgage" value={money(mortgage)} note={`${pct(owned.mortgage!.rate)}${owned.mortgage!.pmi ? ', with mortgage insurance' : ''}`} />}
-          {equityLoan > 0 && <Stat label="Home Equity Loan" value={money(equityLoan)} note={pct(owned.equity!.rate)} />}
+          <Stat label="Worth" look={at('home', `owned:${owned.id}`)} value={money(value)} note="Its price and the work, at today’s market" />
+          {mortgage > 0 && <Stat label="Mortgage" look={at('account', owned.mortgage!.accountId)} value={money(mortgage)} note={`${pct(owned.mortgage!.rate)}${owned.mortgage!.pmi ? ', with mortgage insurance' : ''}`} />}
+          {equityLoan > 0 && <Stat label="Home Equity Loan" look={at('account', owned.equity!.accountId)} value={money(equityLoan)} note={pct(owned.equity!.rate)} />}
           <Stat label="Yours Of It" value={money(yours)} note="Its worth, less what’s borrowed on it" tone={yours < 0 ? 'negative' : 'positive'} />
           <Stat label="A Month" value={money(month.total)} note={parts} />
         </div>
@@ -425,7 +434,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           <div className="strong small">Work On It{owned.works.length > 0 ? ` · ${owned.works.length} under way` : ''}</div>
           {owned.works.length > 0 && (
             <ul className="small">
-              {owned.works.map((w) => <li key={w.projectId}>{projects.find((p) => p.project.id === w.projectId)?.project.label ?? w.projectId}: done {formatDate(w.doneAt, city.timeZone)}</li>)}
+              {owned.works.map((w) => <li key={w.projectId}>{projects.find((p) => p.project.id === w.projectId)?.project.label ?? w.projectId}: done <Open subject={at('day', dateKey(w.doneAt, sim.homeZone))}>{formatDate(w.doneAt, city.timeZone)}</Open></li>)}
             </ul>
           )}
           <div className="table-scroll">

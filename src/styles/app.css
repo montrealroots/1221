@@ -204,20 +204,13 @@ body {
   overscroll-behavior: none;
 }
 
-/* Respect the reader's motion preference, and SLATE's own setting. */
+/* Respect the reader's motion preference. SLATE's own setting, which nothing could change, went on 2026-10-02. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-}
-body[data-reduced-motion="true"] *,
-body[data-reduced-motion="true"] *::before,
-body[data-reduced-motion="true"] *::after {
-  animation-duration: .001ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: .001ms !important;
 }
 
 h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.01em; }
@@ -282,13 +275,20 @@ a:hover { text-decoration: underline; }
 }
 .btn-primary:hover:not(:disabled) { background: var(--accent-strong); border-color: var(--accent-strong); }
 
-.btn-ghost { background: transparent; border-color: transparent; color: var(--text-muted); }
-.btn-ghost:hover:not(:disabled) { background: var(--surface-2); color: var(--text); }
+/* A quiet button is its words, with no box and no side padding, so they start exactly where the line above starts. Until 2026-10-02 it was an invisible box, and its words sat a padding's width in from the text above: Tinder under its heading, Rent A Room under the home it was in. An outline was tried that day and lined the boxes up but not the words. */
+.btn-ghost {
+  background: transparent; border-color: transparent; color: var(--accent-strong);
+  padding-left: 0; padding-right: 0; border-left-width: 0; border-right-width: 0;
+}
+.btn-ghost:hover:not(:disabled) { background: transparent; border-color: transparent; color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+/* Words side by side need the room the box used to give them. */
+.row > .btn-ghost + .btn-ghost, .row > * + .btn-ghost { margin-left: var(--s2); }
 
 .btn-danger { color: var(--negative); border-color: var(--line-strong); }
 .btn-danger:hover:not(:disabled) { background: var(--negative-dim); border-color: var(--negative); }
 
 .btn-sm { padding: var(--s1) var(--s3); font-size: var(--size-xs); }
+.btn-sm.btn-ghost, .btn-lg.btn-ghost { padding-left: 0; padding-right: 0; }
 .btn-lg { padding: var(--s3) var(--s6); font-size: var(--size-md); }
 .btn-block { width: 100%; justify-content: center; }
 
@@ -320,6 +320,21 @@ a:hover { text-decoration: underline; }
 .eyebrow {
   font-size: var(--size-xs); font-weight: 650; letter-spacing: .1em;
   text-transform: uppercase; color: var(--text-dim);
+}
+
+/* Home's groups: one heading per part of life, the panels under it filling each row (from 2026-10-02). */
+.home-group { margin-bottom: var(--s5); }
+.home-group-lead { margin-bottom: var(--s4); }
+/* Narrower columns than a grid elsewhere, so the five small panels of a day sit in one row and none is left alone on the next. */
+.home-group > .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); }
+/* A grouped panel puts its one button under its title, every one the same way, so a row lines up whatever the titles' lengths. */
+.home-group .panel-head { flex-direction: column; align-items: flex-start; }
+/* Stacked, the title's 12rem basis would be a height, not a width. */
+.home-group .panel-head > :first-child { flex: none; }
+.home-group-label {
+  font-size: var(--size-xs); font-weight: 650; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-dim);
+  margin: 0 0 var(--s3); padding-bottom: var(--s2); border-bottom: 1px solid var(--line);
 }
 
 .muted { color: var(--text-muted); }
@@ -514,6 +529,9 @@ input[type="range"] {
 
 table { width: 100%; border-collapse: collapse; font-size: var(--size-sm); }
 th, td { padding: var(--s2) var(--s3); text-align: left; border-bottom: 1px solid var(--line); }
+/* A table's first column starts on the panel's own edge, under its title, and its last ends on the other (from 2026-10-02). */
+th:first-child, td:first-child { padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; }
 th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); font-weight: 650; white-space: nowrap; }
 .master-detail > *, .side-by-side > * { min-width: 0; }
 @media (max-width: 900px) { }
@@ -711,6 +729,8 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 .topbar-brand {
   display: flex; align-items: center; gap: var(--s2);
   font-weight: 600; letter-spacing: .18em; font-size: var(--size-sm);
+  /* The mark, not an action: it keeps the quiet color a quiet button gave up on 2026-10-02. */
+  color: var(--text-muted);
 }
 /* The clock reads across, not down. Stacking the date under the time made a
    tall, narrow column that crowded everything beside it in the bar. */

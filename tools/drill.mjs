@@ -82,6 +82,18 @@ await page.waitForTimeout(1200);
 // one is picked.
 const billed = page.getByRole('group', { name: 'Billed As' });
 if (await billed.count()) { await billed.getByRole('button', { name: 'Actress' }).click(); await page.waitForTimeout(300); }
+// Identity asks where you were born, from a town picker, and won't advance
+// without it: New York, the first match. Until 2026-10-02 the walk didn't
+// answer it, stopped at the first step, and reported nothing to press on Home.
+const town = page.getByPlaceholder(/start typing a town name/i).first();
+if (await town.count()) {
+  await town.fill('New York').catch(() => {});
+  const match = page.locator('.picker-results [role="option"]').first();
+  await match.waitFor({ timeout: 5000 }).catch(() => {});
+  await match.scrollIntoViewIfNeeded().catch(() => {});
+  await match.click({ timeout: 3000 }).catch(() => {});
+  await page.waitForTimeout(400);
+}
 
 for (let i = 0; i < 6; i++) {
   if (!(await click(/^Continue$/))) break;
@@ -97,6 +109,21 @@ if (!/^Good (Morning|Afternoon|Evening|Night),/.test(onHome?.trim() ?? '')) {
   console.log('Never reached Home — nothing below this line means anything.');
   await page.screenshot({ path: join(tmpdir(), 'drill-stuck.png') });
 }
+
+// Every chapter of the guide read first: a word opens once its chapter is,
+// and a walk of a guided life that hasn't read any finds nothing to press.
+for (let i = 0; i < 80; i += 1) {
+  const read = page.getByRole('button', { name: /^i’ve read it$/i }).first();
+  if (await read.count()) { await read.click({ timeout: 2000 }).catch(() => {}); await page.waitForTimeout(250); continue; }
+  const onward = page.getByRole('button', { name: /^next: /i }).first();
+  if (await onward.count()) { await onward.click({ timeout: 2000 }).catch(() => {}); await page.waitForTimeout(250); continue; }
+  const open = page.getByRole('button', { name: /^read$/i }).first();
+  if (!(await open.count())) break;
+  await open.click({ timeout: 2000 }).catch(() => {});
+  await page.waitForTimeout(300);
+}
+await page.keyboard.press('Escape').catch(() => {});
+await page.waitForTimeout(500);
 
 // --- how much of Home is live --------------------------------------------
 const coverage = await page.evaluate(() => {

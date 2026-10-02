@@ -7,7 +7,7 @@
  * booked and paid, the year's wages and what came off them, and the dues.
  */
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { plural } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Stat, Fine } from '@/ui/components/primitives';
@@ -39,6 +39,8 @@ import { inSaveMoney } from '@/engine/systems/banking';
 import { allowanceFor, furnishRefusal } from '@/engine/systems/fittings';
 import { categoryName, categoryOf, emmyEntry, entriesOf, entryRefusal } from '@/engine/systems/awards';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
+import { LookRegion, Open, at } from '@/ui/looks';
+import { dateKey } from '@/engine/core/time';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
 
@@ -53,6 +55,13 @@ const CAREER_TABS: readonly { id: CareerTab; label: string }[] = [
 const cityName = (id: string) => CITIES.require(id).name;
 const zoneOf = (id: string) => CITIES.require(id).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
+/** A town’s name, as the way into it. */
+const Town = ({ id }: { id: string }) => <Open subject={at('place', id)}>{cityName(id)}</Open>;
+/** A date, as the way into that day. Keyed by the home calendar’s date, which is the day the Day look opens. */
+const When = ({ at: instant, zone, children }: { at: number; zone: string; children?: ReactNode }) => {
+  const { sim } = useGame();
+  return <Open subject={at('day', dateKey(instant, sim.homeZone))}>{children ?? formatDate(instant, zone)}</Open>;
+};
 
 /**
  * The trades, and the class after Yale (`systems/rivals.ts`): what Deadline
@@ -68,28 +77,30 @@ function TradesPane() {
     <div className="col gap-5" style={{ marginTop: 'var(--s5)' }}>
       {news.length > 0 && (
         <Panel title="Trade News" subtitle="What the trades have printed about you and your class">
-          <div className="col gap-2">
+          <LookRegion className="col gap-2">
             {news.slice(0, 12).map((n) => (
               <div key={`${n.at}-${n.headline}`} className="row-between small">
                 <span><strong>{n.source}:</strong> {n.headline}</span>
-                <span className="xs dim">{formatDate(n.at, sim.zone)}</span>
+                <span className="xs dim"><When at={n.at} zone={sim.zone} /></span>
               </div>
             ))}
-          </div>
+          </LookRegion>
           <Fine>A line about you in the trades adds a little to your recognition. The outlets are the real ones; what they print about you and your class, and which work makes them, is SLATE’s.</Fine>
         </Panel>
       )}
       {mates.length > 0 && (
         <Panel title="Your Class" subtitle={`Yale’s class of ${person.school!.classOf}, after the degree`}>
+          <LookRegion>
           <table className="table">
             <thead><tr><th scope="col">Classmate</th><th scope="col">Agency</th><th scope="col" className="num">Parts Booked</th><th scope="col">Latest</th><th scope="col">To You</th></tr></thead>
             <tbody>
               {mates.map((m) => {
                 const last = m.career!.credits.at(-1);
-                return <tr key={m.name}><td>{m.name}</td><td>{m.career!.agencyId ? agencyById(m.career!.agencyId)!.name : 'None'}</td><td className="num mono">{m.career!.credits.length}</td><td>{last ? `${roleById(last.roleId).label}, ${last.year}` : ''}</td><td>{bondWord(m.bond) ?? ''}</td></tr>;
+                return <tr key={m.name}><td>{m.name}</td><td>{m.career!.agencyId ? <Open subject={at('agency', m.career!.agencyId)}>{agencyById(m.career!.agencyId)!.name}</Open> : 'None'}</td><td className="num mono">{m.career!.credits.length}</td><td>{last ? <><Open subject={at('part', last.roleId)}>{roleById(last.roleId).label}</Open>, {last.year}</> : ''}</td><td>{bondWord(m.bond) ?? ''}</td></tr>;
               })}
             </tbody>
           </table>
+          </LookRegion>
           <p className="xs dim" style={{ margin: 'var(--s3) 0 0' }}>They work as you do: an agency’s reach and their craft against each part’s bar. Now and then one is in the room for your audition, and one who reads better is likelier to get it.</p>
         </Panel>
       )}
@@ -114,7 +125,7 @@ function CommercialPane() {
         subtitle={rep ? `${CITIES.require(rep.cityId).name} office, signed ${formatDate(rep.signedAt, sim.zone)}, the contract running to ${formatDate(rep.termEnds, sim.zone)}` : 'Commercials come from your theatrical agency until you sign one'}
         actions={agency ? <Gated feature="career.commercial_leave" onClick={() => { const a = run<{ left: string }>('career.commercial_leave'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave The Commercial Agent</Gated> : undefined}
       >
-        <div className="col gap-3">
+        <LookRegion className="col gap-3">
           {rep ? (
             <p className="small" style={{ margin: 0 }}>
               It sends your commercial auditions, on camera and voice-over, and takes 10% of what they book; your theatrical agency sends none now. From commercials in the last {COMMERCIAL_LEAVING.windowDays} days: {formatMoney(commercialEarnings(sim, person, COMMERCIAL_LEAVING.windowDays), cur)}. You may leave on the union’s commercials terms: in a first contract’s first {COMMERCIAL_LEAVING.initialDays} days only after {COMMERCIAL_LEAVING.firstDays} with no commercial offer, and after them with under the floor from commercials in {COMMERCIAL_LEAVING.windowDays}. {may.why}
@@ -125,7 +136,7 @@ function CommercialPane() {
                 const no = commercialRefusal(sim, person, a.id);
                 return (
                   <div key={a.id} className="row-between small">
-                    <span>{a.name}: {a.cities.map((c) => CITIES.require(c).name).join(' and ')}{no ? `. ${no}` : ''}</span>
+                    <span>{a.name}: {a.cities.map((c, i) => <span key={c}>{i > 0 ? ' and ' : ''}<Town id={c} /></span>)}{no ? `. ${no}` : ''}</span>
                     {!no && <Gated feature="career.commercial_meet" onClick={() => run('career.commercial_meet', { agencyId: a.id })}>Meet</Gated>}
                   </div>
                 );
@@ -133,7 +144,7 @@ function CommercialPane() {
             </div>
           )}
           <Fine>Many actors have a theatrical agent and a commercial one. The agencies are real ones with commercial departments; what each needs to see (your presence, mostly, and your record), how many auditions each sends, and a first contract’s year renewed for three when it booked you a commercial are SLATE’s estimate. The rule on leaving is SAG-AFTRA’s for commercials contracts. Source: {COMMERCIAL_LEAVING.source}.</Fine>
-        </div>
+        </LookRegion>
       </Panel>
     </div>
   );
@@ -153,14 +164,14 @@ export function CareerWorkspace() {
   };
   return (
     <>
-      <div className="page-head">
+      <LookRegion className="page-head">
         <div className="eyebrow">Your Career</div>
-        <h1>{agency ? `With ${agency.name}` : 'Unrepresented'}</h1>
+        <h1>{agency ? <>With <Open subject={at('agency', agency.id)}>{agency.name}</Open></> : 'Unrepresented'}</h1>
         <p className="muted">
-          {agency && career.agencyCity ? `Represented from its ${cityName(career.agencyCity)} office. ` : ''}
+          {agency && career.agencyCity ? <>Represented from its <Town id={career.agencyCity} /> office. </> : ''}
           {career.credits.length ? `${career.credits.length} ${career.credits.length === 1 ? 'credit' : 'credits'}.` : 'No professional credits yet.'}
         </p>
-      </div>
+      </LookRegion>
       <div className="tabs" role="tablist" aria-label="Your Career">
         {CAREER_TABS.map((one, i) => (
           <button
@@ -201,7 +212,8 @@ function AgencyPane() {
     <div className="col gap-5">
       <Panel
         title={agency ? agency.name : 'No Agency'}
-        subtitle={agency && career.agencyCity ? `${cityName(career.agencyCity)} office, signed ${formatDate(career.signedAt!, zoneOf(career.agencyCity))}${career.termEnds !== undefined ? `, the contract running to ${formatDate(career.termEnds, zoneOf(career.agencyCity))}` : ''}` : undefined}
+        look={agency ? at('agency', agency.id) : undefined}
+        subtitle={agency && career.agencyCity ? <><Town id={career.agencyCity} /> office, signed <When at={career.signedAt!} zone={zoneOf(career.agencyCity)} />{career.termEnds !== undefined ? <>, the contract running to <When at={career.termEnds} zone={zoneOf(career.agencyCity)} /></> : ''}</> : undefined}
         actions={agency ? <Gated feature="career.leave" onClick={() => { const a = run<{ left: string }>('career.leave'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave The Agency</Gated> : <Gated feature="career.query_agencies" disabled={Boolean(queryNo)} title={queryNo} onClick={() => { const a = run<{ answersBy: number }>('career.query_agencies'); if (a.ok) toast(`Sent. The agencies answer by ${formatDate(a.value!.answersBy, sim.zone)}.`, 'positive'); }}>Submit To Agencies</Gated>}
       >
         <div className="col gap-3">
@@ -245,14 +257,14 @@ function AgencyPane() {
 
       {offers.length > 0 && (
         <Panel title="Offers Of Representation" subtitle="Each stands a month">
-          <div className="col gap-2">
+          <LookRegion className="col gap-2">
             {offers.map((o) => (
               <div key={`${o.agencyId}-${o.cityId}`} className="row-between small">
-                <span>{agencyById(o.agencyId)!.name}, {cityName(o.cityId)}, until {formatDate(o.until, zoneOf(o.cityId))}</span>
+                <span><Open subject={at('agency', o.agencyId)}>{agencyById(o.agencyId)!.name}</Open>, <Town id={o.cityId} />, until <When at={o.until} zone={zoneOf(o.cityId)} /></span>
                 <Gated feature="career.sign" onClick={() => { if (run('career.sign', { agencyId: o.agencyId, cityId: o.cityId }).ok) toast(`Signed with ${agencyById(o.agencyId)!.name}.`, 'positive'); }}>Sign</Gated>
               </div>
             ))}
-          </div>
+          </LookRegion>
         </Panel>
       )}
 
@@ -276,14 +288,14 @@ function AgencyPane() {
       <WorkCostsPanel />
 
       <Panel title="The Showcase" subtitle={career.showcases.length ? undefined : `New York ${formatDate(instantFromZoned({ ...SHOWCASE_2029.newYork, hour: 17 }, zoneOf(CAREER_CITIES[0])), zoneOf(CAREER_CITIES[0]))}, Los Angeles a week later`}>
-        <div className="col gap-3">
+        <LookRegion className="col gap-3">
           {career.showcases.length > 0 && (
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">City</th><th scope="col">Date</th><th scope="col" className="num">How You Read</th></tr></thead>
                 <tbody>
                   {career.showcases.map((one) => (
-                    <tr key={one.cityId}><td>{cityName(one.cityId)}</td><td>{formatDate(one.at, zoneOf(one.cityId))}</td><td className="num mono">{one.score.toFixed(1)}</td></tr>
+                    <tr key={one.cityId}><td><Town id={one.cityId} /></td><td><When at={one.at} zone={zoneOf(one.cityId)} /></td><td className="num mono">{one.score.toFixed(1)}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -294,7 +306,7 @@ function AgencyPane() {
               <thead><tr><th scope="col">Agency</th><th scope="col">Reach</th><th scope="col" className="num">Showing It Needs</th></tr></thead>
               <tbody>
                 {AGENCIES.filter((a) => (a.countryId ?? 'us') === (CITIES.get(workCity(person))?.countryId ?? 'us')).map((a) => (
-                  <tr key={a.id}><td>{a.name}</td><td>{a.tier === 1 ? 'Widest' : a.tier === 2 ? 'Wide' : 'Growing'}</td><td className="num mono">{a.bar}</td></tr>
+                  <tr key={a.id}><td><Open subject={at('agency', a.id)}>{a.name}</Open></td><td>{a.tier === 1 ? 'Widest' : a.tier === 2 ? 'Wide' : 'Growing'}</td><td className="num mono">{a.bar}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -302,7 +314,7 @@ function AgencyPane() {
           <Fine>
             Scenes for agents, managers and casting directors in New York and then Los Angeles, as Yale holds them; the class of {person.school?.classOf ?? SHOWCASE_2029.newYork.year}’s dates are SLATE’s estimate by 2025’s and 2026’s. A showing reads your acting (scene study twice, character work and emotional access) as much as the rest of your craft together, with your presence a fifth of it; nerves and tiredness take it down, and an agency reads your reputation beside it. The agencies are the ones Yale names; what each needs to see, and its reach, are SLATE’s estimate. Source: {SHOWCASE_2029.source}; {AGENCY_SOURCE}.
           </Fine>
-        </div>
+        </LookRegion>
       </Panel>
     </div>
   );
@@ -324,10 +336,10 @@ function AuditionsPane() {
     <div className="col gap-5">
       {offered.length > 0 && (
         <Panel title="Offers To Answer">
-          <div className="col gap-3">
+          <LookRegion className="col gap-3">
             {offered.map((b) => (
               <div key={b.id} className="row-between small">
-                <span>{roleById(b.roleId).label}{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}${(person.genres ?? []).includes(b.genre) ? ', a genre you love' : ''}` : ''}: {spanOf(b)} from {formatDate(b.starts, zoneOf(b.cityId))}, answer by {formatDateTime(b.dueAt, zoneOf(b.cityId))}</span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.genre ? `, ${GENRE_BY_ID[b.genre]?.label ?? b.genre}${(person.genres ?? []).includes(b.genre) ? ', a genre you love' : ''}` : ''}: {spanOf(b)} from <When at={b.starts} zone={zoneOf(b.cityId)} />, answer by <When at={b.dueAt} zone={zoneOf(b.cityId)}>{formatDateTime(b.dueAt, zoneOf(b.cityId))}</When></span>
                 <span className="row gap-2">
                   {acceptRefusal(sim, person, b)
                     ? <span className="xs dim">{acceptRefusal(sim, person, b)}</span>
@@ -337,50 +349,50 @@ function AuditionsPane() {
                 </span>
               </div>
             ))}
-          </div>
+          </LookRegion>
         </Panel>
       )}
 
       <Panel title="Auditions Ahead" subtitle={career.agencyId ? 'Sent by your agency each Monday' : undefined}>
         {ahead.length ? (
-          <div className="col gap-2">
+          <LookRegion className="col gap-2">
             {ahead.map((a) => (
               <div key={a.id} className="row-between small">
-                <span>{roleById(a.roleId).label}{a.demands?.length ? `, asks for ${a.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{a.self ? ', submitted yourself' : ''}{a.coached ? ', coached' : ''}</span>
+                <span><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open>{a.demands?.length ? `, asks for ${a.demands.map((d) => (SKILLS.find((k) => k.id === d)?.label ?? d).toLowerCase()).join(' and ')}` : ''}{a.self ? ', submitted yourself' : ''}{a.coached ? ', coached' : ''}</span>
                 <span className="row gap-2">
-                  <span className="mono">{a.mode === 'tape' ? 'Self-Tape' : `In The Room, ${cityName(a.cityId)}`}, {formatDateTime(a.at, zoneOf(a.cityId))}</span>
+                  <span className="mono">{a.mode === 'tape' ? 'Self-Tape' : <>In The Room, <Town id={a.cityId} /></>}, <When at={a.at} zone={zoneOf(a.cityId)}>{formatDateTime(a.at, zoneOf(a.cityId))}</When></span>
                   {!a.coached && <Gated feature="career.coach" onClick={() => { if (run('career.coach', { auditionId: a.id }).ok) toast('An hour with a coach on it.', 'positive'); }}>Book A Coach</Gated>}
                 </span>
               </div>
             ))}
-          </div>
+          </LookRegion>
         ) : <p className="small muted" style={{ margin: 0 }}>None this week.</p>}
       </Panel>
 
       {behind.length > 0 && (
         <Panel title="Lately">
-          <div className="table-scroll">
+          <LookRegion className="table-scroll">
             <table>
               <thead><tr><th scope="col">Part</th><th scope="col">From</th><th scope="col">When</th><th scope="col">How</th><th scope="col">Result</th></tr></thead>
               <tbody>
                 {behind.map((a) => (
-                  <tr key={a.id}><td>{roleById(a.roleId).label}</td><td>{a.self ? 'Submitted Yourself' : 'Your Agency'}</td><td>{formatDate(a.at, zoneOf(a.cityId))}</td><td>{a.mode === 'tape' ? 'Self-Tape' : 'In The Room'}</td><td>{result[a.status]}</td></tr>
+                  <tr key={a.id}><td><Open subject={at('part', a.roleId)}>{roleById(a.roleId).label}</Open></td><td>{a.self ? 'Submitted Yourself' : 'Your Agency'}</td><td><When at={a.at} zone={zoneOf(a.cityId)} /></td><td>{a.mode === 'tape' ? 'Self-Tape' : 'In The Room'}</td><td>{result[a.status]}</td></tr>
                 ))}
               </tbody>
             </table>
-          </div>
+          </LookRegion>
         </Panel>
       )}
 
       <Panel title="The Parts" subtitle="What each pays, and your chance in the room today">
-        <div className="col gap-3">
+        <LookRegion className="col gap-3">
           <div className="table-scroll">
             <table>
               <thead><tr><th scope="col">Part</th><th scope="col">Contract</th><th scope="col" className="num">Pays</th><th scope="col">Per</th><th scope="col" className="num">Your Chance</th></tr></thead>
               <tbody>
                 {ROLES.map((r) => (
                   <tr key={r.id}>
-                    <td>{r.label}</td>
+                    <td><Open subject={at('part', r.id)}>{r.label}</Open></td>
                     <td>{UNION_NAMES[r.union]}</td>
                     <td className="num mono">{formatMoney(rateOf(r, sim.now, r.cities[0]!, cur), cur)}</td>
                     <td>{r.series ? 'Episode' : r.medium === 'voice' ? 'Session' : r.medium === 'stage' ? 'Week' : 'Day'}</td>
@@ -394,7 +406,7 @@ function AuditionsPane() {
           <Fine>
             The pay is each contract’s minimum on today’s date: SAG-AFTRA’s 2026–2030 television and theatrical rates, its low budget agreements, Equity’s LORT rates and its Broadway minimum; after a contract’s last published step it holds. A guest star’s pay is the major role’s five- or eight-day price, by the day; a series regular’s is by the episode, 13 guaranteed. A shooting day runs {OVERTIME.dayHours[0]} to {OVERTIME.dayHours[1]} hours, and the hours past the contract’s are paid at its overtime rates. Your chance is SLATE’s estimate: about one in twenty at the part’s bar, as the trade reckons for a newer actor, more above it, less tired or on tape.
           </Fine>
-        </div>
+        </LookRegion>
       </Panel>
     </div>
   );
@@ -419,10 +431,10 @@ function WorkPane() {
     <div className="col gap-5">
       <Panel title="Jobs" subtitle={career.option ? `Under option to your series until ${formatDate(career.option.decidedAt, 'America/New_York')}` : jobs.length ? undefined : 'Nothing taken now'}>
         {jobs.length ? (
-          <div className="col gap-2">
+          <LookRegion className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span>{roleById(b.roleId).label}{b.season ? `, Season ${b.season}` : ''}, {cityName(workCityOf(b))}{b.location ? ' (On Location)' : ''}: {spanOf(b)}</span>
+                <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>{b.season ? `, Season ${b.season}` : ''}, <Town id={workCityOf(b)} />{b.location ? ' (On Location)' : ''}: {spanOf(b)}</span>
                 <span className="mono">
                   {b.worked} of {workDays(b).length} days worked
                   {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
@@ -436,7 +448,7 @@ function WorkPane() {
                 )}
               </div>
             ))}
-          </div>
+          </LookRegion>
         ) : <p className="small muted" style={{ margin: 0 }}>A job you take puts its days on your calendar. You must be in its city, awake, for every one: a day missed ends the job, and an agency you have lets you go. A day in hospital is no walking off: on screen the part is recast, and on stage the understudy covers.</p>}
       </Panel>
       <AwardsPanel />
@@ -457,14 +469,14 @@ function WorkPane() {
 
       <Panel title="Credits">
         {career.credits.length ? (
-          <div className="table-scroll">
+          <LookRegion className="table-scroll">
             <table>
               <thead><tr><th scope="col">Year</th><th scope="col">Part</th><th scope="col">City</th></tr></thead>
               <tbody>
-                {[...career.credits].reverse().map((c, i) => <tr key={i}><td className="mono">{c.year}</td><td>{roleById(c.roleId).label}</td><td>{cityName(c.cityId)}</td></tr>)}
+                {[...career.credits].reverse().map((c, i) => <tr key={i}><td className="mono">{c.year}</td><td><Open subject={at('part', c.roleId)}>{roleById(c.roleId).label}</Open></td><td><Town id={c.cityId} /></td></tr>)}
               </tbody>
             </table>
-          </div>
+          </LookRegion>
         ) : <p className="small muted" style={{ margin: 0 }}>None yet.</p>}
       </Panel>
     </div>
@@ -529,7 +541,7 @@ function UnionsPane() {
               <Stat label="A Week" value={money(weeklyPension(person, sim.now, cur))} note={person.statePensionFrom !== undefined ? `Claimed ${formatDate(person.statePensionFrom, sim.zone)}` : `From ${formatDate(statePensionAge(person), sim.zone)}`} />
               <Stat label="Claimed" value={person.statePensionFrom !== undefined ? 'Yes' : 'Not Yet'} note={statePensionRefusal(sim, person) ?? 'You can claim it now'} />
             </div>
-            <Fine>A tax year qualifies with UK earnings at the Lower Earnings Limit, £6,708 in 2026/27, or with the credits Universal Credit gives; each is a thirty-fifth of the full £241.30 a week (2026/27). State Pension age is 68 for anyone born after 5 April 1978, by the Pensions Act 2007. SLATE holds the limit and the rate at 2026/27’s. Source: {STATE_PENSION.source}.</Fine>
+            <Fine>A tax year qualifies with UK earnings at the Lower Earnings Limit, {formatMoney(STATE_PENSION.lowerEarningsLimit, 'GBP', { cents: false })} in 2026/27, or with the credits Universal Credit gives; each is a thirty-fifth of the full {formatMoney(STATE_PENSION.weekly[STATE_PENSION.weekly.length - 1]![1], 'GBP')} a week (2026/27). State Pension age is 68 for anyone born after 5 April 1978, by the Pensions Act 2007. SLATE holds the limit and the rate at 2026/27’s. Source: {STATE_PENSION.source}.</Fine>
           </div>
         </Panel>
       )}
@@ -632,14 +644,14 @@ function HomePane() {
   const cities = [...CAREER_CITIES, YALE_DRAMA.cityId, ...(home ? [home] : [])].filter((id) => id === (person.home?.cityId ?? person.currentLocationId) || !residenceRefusal(person, id, sim.now));
   return (
     <Panel title="Where You Live" subtitle={`${cityName(person.currentLocationId)}, ${person.home ? (person.home.kind === 'sofa' ? 'on a friend’s sofa' : person.home.kind === 'owned' ? 'in a home you own' : HOUSING[person.home.kind].label.toLowerCase()) : 'without a home'}`}>
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">City</th><th scope="col" className="num">A Room</th><th scope="col" className="num">A Place Of Your Own</th><th scope="col">Move</th></tr></thead>
             <tbody>
               {cities.map((id) => (
                 <tr key={id}>
-                  <td>{cityName(id)}</td>
+                  <td><Town id={id} /></td>
                   <td className="num mono">{formatMoney(costsAt(id, 'shared', cur, sim.now).rent, cur)}</td>
                   <td className="num mono">{formatMoney(costsAt(id, 'own', cur, sim.now).rent, cur)}</td>
                   <td>
@@ -659,7 +671,7 @@ function HomePane() {
         <p className="small" style={{ margin: 0 }}>
           An audition in the room, and every day of a job, is in the city it’s in, and you must be there. A self-tape you make wherever you are. Moving costs a deposit and the rest of the month’s rent, and the old deposit comes back, less anything owed.
         </p>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -745,13 +757,14 @@ function ManagerPanel() {
   return (
     <Panel
       title={manager ? manager.name : 'No Manager'}
-      subtitle={manager && career.managerSince !== undefined ? `Managing you since ${formatDate(career.managerSince, sim.zone)}` : 'A manager is beside an agency, not instead of one'}
+      look={manager ? at('manager', manager.id) : undefined}
+      subtitle={manager && career.managerSince !== undefined ? <>Managing you since <When at={career.managerSince} zone={sim.zone} /></> : 'A manager is beside an agency, not instead of one'}
       actions={manager ? <Gated feature="career.leave_manager" onClick={() => { const a = run<{ left: string }>('career.leave_manager'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave Your Manager</Gated> : undefined}
     >
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         {offers.map((o) => (
           <div key={o.managerId} className="row-between small">
-            <span>{managerById(o.managerId)!.name}, until {formatDate(o.until, sim.zone)}</span>
+            <span><Open subject={at('manager', o.managerId)}>{managerById(o.managerId)!.name}</Open>, until <When at={o.until} zone={sim.zone} /></span>
             <Gated feature="career.sign_manager" onClick={() => { if (run('career.sign_manager', { managerId: o.managerId }).ok) toast(`Signed with ${managerById(o.managerId)!.name}.`, 'positive'); }}>Sign</Gated>
           </div>
         ))}
@@ -761,7 +774,7 @@ function ManagerPanel() {
         <Fine>
           The firms are ones signing actors in 2026: {MANAGERS.map((m) => m.name).join(', ')}. Nothing caps a manager’s commission; the rates are what the trade reckons, and the rest is SLATE’s estimate. Source: {MANAGEMENT.source}.
         </Fine>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -775,7 +788,7 @@ function ResidualsPanel() {
   const size = { small: 'A Small Service', middle: 'A Middling Service', large: 'A Big Service' } as const;
   return (
     <Panel title="Residuals" subtitle={career.residuals.length ? undefined : 'Television and film work pays after it’s made'}>
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         {career.residuals.length > 0 && (
           <div className="table-scroll">
             <table>
@@ -783,10 +796,10 @@ function ResidualsPanel() {
               <tbody>
                 {[...career.residuals].reverse().map((r) => (
                   <tr key={r.id}>
-                    <td>{roleById(r.roleId).label}</td>
+                    <td><Open subject={at('job', r.bookingId)}>{roleById(r.roleId).label}</Open></td>
                     <td>{seen[r.kind]}{r.size ? `, ${size[r.size]}` : ''}{r.rerun ? ', Rerun' : ''}{r.syndicated ? ', Syndicated' : ''}{r.hit ? ', A Hit' : ''}</td>
-                    <td>{formatDate(r.airsAt, sim.zone)}</td>
-                    <td>{(() => { const next = sim.universe.scheduled.filter((one) => one.status === 'pending' && one.payload.residualId === r.id).sort((a, b) => a.at - b.at)[0]; return next ? formatDate(next.at, sim.zone) : 'None to come'; })()}</td>
+                    <td><When at={r.airsAt} zone={sim.zone} /></td>
+                    <td>{(() => { const next = sim.universe.scheduled.filter((one) => one.status === 'pending' && one.payload.residualId === r.id).sort((a, b) => a.at - b.at)[0]; return next ? <Open subject={at('entry', next.id)}>{formatDate(next.at, sim.zone)}</Open> : 'None to come'; })()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -796,7 +809,7 @@ function ResidualsPanel() {
         <Fine>
           A network’s prime-time rerun pays what you were paid, to its ceiling, within 30 days; syndication a share of the part’s minimum by the run; streaming, after its first 90 days, a share each year by the service’s size, and a hit a bonus; a film’s cast shares {(RESIDUALS.filmPool * 100).toFixed(1)}% of its television and streaming money. The formulas are the agreements’. Where a job is seen, how it does, and what a film earns are SLATE’s estimate. Source: {RESIDUALS.source}.
         </Fine>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -837,21 +850,21 @@ function AwardsPanel() {
   const fee = formatMoney(emmyEntry(sim), saveCurrency(sim.universe));
   return (
     <Panel title="Awards" subtitle="The Emmys, BAFTA Film, The Academy Awards, The Tonys, The Oliviers And The Ariels: a network, a film or a production enters its own; a guest performer enters themselves">
-      <div className="col gap-2">
+      <LookRegion className="col gap-2">
         {open.map((b) => (
           <div key={b.id} className="row-between small">
-            <span>{roleById(b.roleId).label}: {categoryName(person, categoryOf(b)!)}</span>
+            <span><Open subject={at('job', b.id)}>{roleById(b.roleId).label}</Open>: {categoryName(person, categoryOf(b)!)}</span>
             <button type="button" className="btn btn-sm btn-ghost" disabled={!enter.open} title={enter.reason} onClick={() => { if (run('career.enter_award', { bookingId: b.id }).ok) toast('Entered for the Emmys.', 'positive'); }}>{`Enter It, ${fee}`}</button>
           </div>
         ))}
         {[...entries].reverse().map((e) => (
           <div key={`${e.bookingId}-${e.body}`} className="row-between small">
-            <span>{e.year} · {categoryName(person, e)}</span>
+            <span>{e.year} · <Open subject={at('award', `${e.bookingId}/${e.body}`)}>{categoryName(person, e)}</Open></span>
             <span className="mono">{e.won ? 'Won' : e.won === false ? 'Nominated' : e.nominated ? 'Nominated, The Ceremony To Come' : e.nominated === false ? 'Not Nominated' : 'Entered'}</span>
           </div>
         ))}
         <Fine>A performance’s chance at a nomination is its category’s slots over the performances submitted the last year counted, weighed by how far above the part you stood, SLATE’s estimate; a nomination and a win lift your recognition, which sets what you’re paid over scale. The Academy Awards’ field is counted from its Reminder List; the Tonys’, the Oliviers’ and the Ariels’ publish only how many productions or films are eligible, so their fields are those counts at a published cast size, SLATE’s estimate.</Fine>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }

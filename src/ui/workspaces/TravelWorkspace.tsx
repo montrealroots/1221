@@ -14,7 +14,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { MS_DAY, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
+import { MS_DAY, dateKey, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
@@ -24,7 +25,7 @@ import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { arrange } from '@/engine/systems/catalog';
 import { rentalCatalog, stayCatalog } from '@/engine/systems/catalogs';
 import { catalogPrice } from '@/ui/components/Catalog';
-import { OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
+import { HIRED_PILOT_USD, OWN_172, PILOT_SCHOOLS, PILOT_TRAINING, PLANE_LOAN, buyAircraftRefusal, licensedIn, ownHourCost, trainRefusal, trainingCosts, trainingCountry, planesOf } from '@/engine/systems/aviation';
 import { departureHours, railRouteById, railRoutes } from '@/engine/systems/rail';
 import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
@@ -33,6 +34,7 @@ import { byRoad } from '@/engine/systems/driving';
 import { hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { lateQuote } from '@/engine/systems/latecheckout';
+import { groupLabelOf } from '@/ui/shell/destinations';
 import { airportByCode } from '@/engine/systems/airports';
 
 const STATUS_WORD: Record<Journey['status'], string> = { booked: 'Booked', underway: 'Underway', arrived: 'Arrived', missed: 'Missed', canceled: 'Canceled' };
@@ -123,14 +125,14 @@ export function TravelWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/travel')}</div>
         <h1>Travel</h1>
         <p className="muted">A journey by air or by train, somewhere to stay at the far end, and the way home.</p>
       </div>
       <div className="col gap-5">
         <Panel title="Where You Are">
           <div className="grid grid-4">
-            <Stat label="Town" value={here?.name ?? person.currentLocationId} note={sim.zone} />
+            <Stat label="Town" value={here?.name ?? person.currentLocationId} note={sim.zone} look={at('place', person.currentLocationId)} />
             <Stat label="Sleeping" value={person.home?.cityId === person.currentLocationId ? 'At Home' : stay?.kind === 'hotel' ? 'A Hotel' : stay?.kind === 'own' ? 'Your Own Place' : stay?.kind === 'sofa' ? 'A Friend’s Sofa' : 'Away'} />
             <Stat label="Journeys Booked" value={String(journeys.filter((j) => j.status === 'booked').length)} />
             <Stat label="Body Clock" value={Math.abs(lag) < 0.5 ? 'On Local Time' : `${Math.round(Math.abs(lag) * 10) / 10} Hours ${lag > 0 ? 'Behind' : 'Ahead'}`} note={Math.abs(lag) < 0.5 ? undefined : `Catching up ${lag > 0 ? 'an hour' : 'an hour and a half'} a day; nights sleep worse until then`} />
@@ -229,6 +231,7 @@ export function TravelWorkspace() {
               </div>
             )}
             {plan && (
+              <LookRegion>
               <div className="table-scroll">
                 <table>
                   <thead><tr><th scope="col">Leg</th><th scope="col">From</th><th scope="col">To</th><th scope="col">Leaves</th><th scope="col">Arrives</th><th scope="col">Fare</th></tr></thead>
@@ -245,10 +248,10 @@ export function TravelWorkspace() {
                           {outPlan && i === outPlan.length && <tr><th scope="rowgroup" colSpan={6}>The Way Home</th></tr>}
                           <tr>
                             <td>{flownWord(l, person.pilot !== undefined) ?? ((mode && RAIL_WORD[l.mode]) || MODE_WORD[l.mode])}</td>
-                            <td>{place(l.from)}</td>
-                            <td>{place(l.to)}</td>
-                            <td>{formatDateTime(l.departAt, departsFar ? end : start)}</td>
-                            <td>{formatDateTime(l.arriveAt, arrivesNear ? start : end)}</td>
+                            <td><Open subject={at('place', l.from)}>{place(l.from)}</Open></td>
+                            <td><Open subject={at('place', l.to)}>{place(l.to)}</Open></td>
+                            <td><Open subject={at('day', dateKey(l.departAt, sim.homeZone))}>{formatDateTime(l.departAt, departsFar ? end : start)}</Open></td>
+                            <td><Open subject={at('day', dateKey(l.arriveAt, sim.homeZone))}>{formatDateTime(l.arriveAt, arrivesNear ? start : end)}</Open></td>
                             <td className="mono">{l.fare > 0 ? money(l.fare) : 'None'}</td>
                           </tr>
                         </Fragment>
@@ -257,6 +260,7 @@ export function TravelWorkspace() {
                   </tbody>
                 </table>
               </div>
+              </LookRegion>
             )}
             <div className="grid grid-3">
               <Stat label="Fares" value={plan ? money(fares) : '—'} />
@@ -280,17 +284,18 @@ export function TravelWorkspace() {
 
         <Panel title="Your Journeys">
           {!journeys.length ? <p className="small muted" style={{ margin: 0 }}>None yet.</p> : (
+            <LookRegion>
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">To</th><th scope="col">Leave</th><th scope="col">Arrive</th><th scope="col">Paid</th><th scope="col">Standing</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
                 <tbody>
                   {journeys.map((j) => (
                     <tr key={j.id}>
-                      <td>{place(j.toCity)}{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, ${byWord(j)}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}{j.let ? `, ${j.let.nights} ${j.let.nights === 1 ? 'night' : 'nights'} In A Let` : ''}{j.hotel ? <Folio hotel={j.hotel} /> : null}</td>
-                      <td>{formatDateTime(j.leaveAt, CITIES.require(j.fromCity).timeZone)}</td>
-                      <td>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</td>
-                      <td className="mono">{money(j.total)}</td>
-                      <td className="small">{STATUS_WORD[j.status]}{j.why ? `: ${j.why}` : j.rebooked ? ', Rebooked' : j.lateMinutes ? `, ${j.lateMinutes} Minutes Late` : ''}</td>
+                      <td><Open subject={at('journey', j.id)}>{place(j.toCity)}</Open>{j.cabin === 'premium' ? ', Business Or First' : ''}{j.by ? `, ${byWord(j)}` : ''}{j.hotel ? `, ${j.hotel.nights} ${j.hotel.nights === 1 ? 'night' : 'nights'}` : ''}{j.let ? `, ${j.let.nights} ${j.let.nights === 1 ? 'night' : 'nights'} In A Let` : ''}{j.hotel ? <Folio hotel={j.hotel} /> : null}</td>
+                      <td><Open subject={at('day', dateKey(j.leaveAt, sim.homeZone))}>{formatDateTime(j.leaveAt, CITIES.require(j.fromCity).timeZone)}</Open></td>
+                      <td><Open subject={at('day', dateKey(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, sim.homeZone))}>{formatDateTime(j.arriveAt + (j.lateMinutes ?? 0) * 60_000, CITIES.require(j.toCity).timeZone)}</Open></td>
+                      <td className="mono"><Open subject={at('journey', j.id)}>{money(j.total)}</Open></td>
+                      <td className="small"><Open subject={at('journey', j.id)}>{STATUS_WORD[j.status]}</Open>{j.why ? `: ${j.why}` : j.rebooked ? ', Rebooked' : j.lateMinutes ? `, ${j.lateMinutes} Minutes Late` : ''}</td>
                       <td><div className="col gap-1" style={{ alignItems: 'flex-start' }}>{j.status === 'booked' && (
                         <Gated feature="travel.cancel" className="btn btn-sm btn-ghost" onClick={() => {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
@@ -302,6 +307,7 @@ export function TravelWorkspace() {
                 </tbody>
               </table>
             </div>
+            </LookRegion>
           )}
         </Panel>
       </div>
@@ -428,22 +434,24 @@ function OwnPlane() {
         <Stat label="Kept" value={`${formatMoney(Math.round((OWN_172.tiedownDefault + OWN_172.insuranceYear / 12) * 100), 'USD', { cents: false })} A Month`} note="A tiedown and insurance; the annual, and an overhaul in time" />
       </div>
       {planes.length > 0 && (
+        <LookRegion>
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Plane</th><th scope="col">At</th><th scope="col" className="num">Hours</th><th scope="col">Standing</th><th scope="col">Sell</th></tr></thead>
             <tbody>
               {planes.map((p) => (
                 <tr key={p.id}>
-                  <td>Cessna 172</td>
-                  <td>{CITIES.get(p.at)?.name ?? p.at}</td>
-                  <td className="num mono">{Math.round(p.hours)}</td>
-                  <td>{p.repossessed ? 'Taken By The Lender' : p.loan ? `${formatMoney(p.loan.owed, cur, { cents: false })} Owed` : 'Owned Outright'}</td>
+                  <td><Open subject={at('vehicle', p.id)}>Cessna 172</Open></td>
+                  <td><Open subject={at('place', p.at)}>{CITIES.get(p.at)?.name ?? p.at}</Open></td>
+                  <td className="num mono"><Open subject={at('vehicle', p.id)}>{Math.round(p.hours)}</Open></td>
+                  <td>{p.repossessed ? 'Taken By The Lender' : p.loan ? <Open subject={at('vehicle', p.id)}>{`${formatMoney(p.loan.owed, cur, { cents: false })} Owed`}</Open> : 'Owned Outright'}</td>
                   <td><Gated feature="aircraft.sell" className="btn btn-sm btn-ghost" disabled={Boolean(p.repossessed)} title={p.repossessed ? 'The lender has it.' : undefined} onClick={() => { if (run('aircraft.sell', { planeId: p.id }).ok) toast('Sold.', 'positive'); }}>Sell</Gated></td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        </LookRegion>
       )}
       {(
         <div className="field-row field-row-tight">
@@ -459,7 +467,7 @@ function OwnPlane() {
       <div className="row gap-2">
         <Gated feature="aircraft.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('aircraft.buy', { financed }).ok) toast(person.pilot ? 'A 172 of your own.' : 'A 172 of your own: flying it asks a pilot certificate.', 'positive'); }}>{planes.length ? 'Buy Another Plane' : 'Buy A Plane'}</Gated>
       </div>
-      {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it yourself does. Until you’re a pilot, By offers it flown by a hired commercial pilot, at $450 a half day and $900 a full one.</p> : null}
+      {a && !person.pilot ? <p className="small" style={{ margin: 0 }}>Owning it asks no certificate; flying it yourself does. Until you’re a pilot, By offers it flown by a hired commercial pilot, at ${HIRED_PILOT_USD.half} a half day and ${HIRED_PILOT_USD.full} a full one.</p> : null}
     </div>
   );
 }
@@ -517,11 +525,12 @@ function Folio({ hotel }: { hotel: NonNullable<Journey['hotel']> }) {
   const money = (c: number) => formatMoney(c, cur, { cents: false });
   const named = hotel.named ? hotelById(hotel.named.hotelId) : undefined;
   const lines = [
-    `${named ? `${named.name}, ${hotel.named!.room}` : 'The Room'}, ${money(hotel.price - (hotel.parking ?? 0))}`,
+    `${named ? `, ${hotel.named!.room}` : 'The Room'}, ${money(hotel.price - (hotel.parking ?? 0))}`,
     ...(hotel.parking ? [`Parking, ${money(hotel.parking)}`] : []),
     ...(hotel.deposit ? [`Deposit Held, ${money(hotel.deposit)}`] : []),
     ...(hotel.returned ? [`Deposit Returned, ${money(hotel.returned)}`] : []),
     ...(named?.checkOut ? [`Check-Out ${named.checkOut}`] : []),
   ];
-  return <div className="xs dim">{lines.join(' · ')}</div>;
+  // The hotel's name is the way into its terms; the rest of the folio is figures of this stay.
+  return <div className="xs dim">{named && <Open subject={at('hotel', named.id)}>{named.name}</Open>}{lines.join(' · ')}</div>;
 }

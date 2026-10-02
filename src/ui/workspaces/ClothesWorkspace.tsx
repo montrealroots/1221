@@ -22,6 +22,9 @@ import { cleanOutfits, dryCleanDirty, garmentsOf, outfitFor, wearable, washableD
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
 import { alterCost, alterRefusal, fitOf, tailorsIn } from '@/engine/systems/tailoring';
 import { resaleOf, sellRefusal } from '@/engine/systems/resale';
+import { LookRegion, Open, at } from '@/ui/looks';
+import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
+import { groupLabelOf } from '@/ui/shell/destinations';
 import { buyRefusal, clothingCatalog, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
@@ -53,7 +56,7 @@ export function ClothesWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/clothes')}</div>
         <h1>Clothes</h1>
         <p className="muted">What you have to wear, what’s in the wash, and the shops of {town}: the cheapest first.</p>
       </div>
@@ -102,16 +105,16 @@ function SellThem() {
   const q = chosen.length ? resaleOf(sim, person, chosen) : undefined;
   return (
     <Panel title="Sell Clothes" subtitle={q ? q.basis : 'Choose what to sell'}>
-      <div className="col gap-2">
+      <LookRegion className="col gap-2">
         <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
           {sellable.map((g) => (
-            <label key={g.id} className="row gap-1 small" style={{ alignItems: 'center' }}>
-              <input type="checkbox" checked={picked.includes(g.id)} onChange={(e) => setPicked(e.target.checked ? [...picked, g.id] : picked.filter((x) => x !== g.id))} /> {named(g)}
-            </label>
+            <span key={g.id} className="row gap-1 small" style={{ alignItems: 'center' }}>
+              <input type="checkbox" aria-label={`Sell the ${named(g)}`} checked={picked.includes(g.id)} onChange={(e) => setPicked(e.target.checked ? [...picked, g.id] : picked.filter((x) => x !== g.id))} /> <Open subject={at('garment', g.id)}>{named(g)}</Open>
+            </span>
           ))}
         </div>
         <div><button type="button" className="btn btn-sm btn-ghost" disabled={!sell.open || chosen.length === 0} title={sell.reason} onClick={() => { const a = run<{ paid: number }>('clothes.sell', { itemIds: picked }); if (a.ok) { setPicked([]); toast(`Sold, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}.`, 'positive'); } }}>{q ? `Sell Them, ${formatMoney(q.paid, saveCurrency(sim.universe))}` : 'Sell Them'}</button></div>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -135,7 +138,7 @@ function WhatToWear() {
   const ids = slots.map(choice).filter(Boolean);
   return (
     <Panel title="What To Wear" subtitle="Your choice is worn while it’s clean and to hand; whatever it leaves out, what’s already on the go, then the least washed">
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         {slots.length === 0 ? <p className="small muted" style={{ margin: 0 }}>Nothing clean is to hand.</p> : (
           <div className="field-row field-row-tight">
             {slots.map((slot) => (
@@ -165,7 +168,11 @@ function WhatToWear() {
                 {outfits.map((o) => (
                   <tr key={o.id}>
                     <td>{o.name}</td>
-                    <td className="small">{o.itemIds.map((id) => garmentsOf(person).find((g) => g.id === id)).filter((g): g is Worn => Boolean(g)).map((g) => `${g.label}${reachable(sim, person, g.at) ? '' : ' (not to hand)'}`).join(', ') || 'None of it is yours any more'}</td>
+                    <td className="small">{(() => {
+                      const inIt = o.itemIds.map((id) => garmentsOf(person).find((g) => g.id === id)).filter((g): g is Worn => Boolean(g));
+                      if (inIt.length === 0) return 'None of it is yours any more';
+                      return inIt.map((g, n) => <span key={g.id}>{n > 0 ? ', ' : ''}<Open subject={at('garment', g.id)}>{g.label}</Open>{reachable(sim, person, g.at) ? '' : ' (not to hand)'}</span>);
+                    })()}</td>
                     <td>
                       <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!wear.open} title={wear.reason} onClick={() => { if (run('clothes.wear_outfit', { outfitId: o.id }).ok) toast(`${o.name}, chosen.`, 'positive'); }}>Wear It</button>
@@ -178,7 +185,7 @@ function WhatToWear() {
             </table>
           </div>
         )}
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -237,7 +244,10 @@ function Choose({ productId }: { productId: string }) {
   const person = useWorld((s) => s.player);
   const p = productById(productId)!;
   const r = retailerById(p.retailer)!;
-  const [size, setSize] = useState(p.sizes[0] ?? '');
+  // Your own size first: a size off doesn't fit (`sizeFor`, from 2026-10-02).
+  const mine = sizeFor(sim, person, p.sizes);
+  const sizes = sizeRun(p.sizes);
+  const [size, setSize] = useState(mine ?? p.sizes[0] ?? '');
   const [color, setColor] = useState(p.colors[0] ?? '');
   const [quantity, setQuantity] = useState(1);
   const buy = useFeature('clothes.buy');
@@ -258,7 +268,7 @@ function Choose({ productId }: { productId: string }) {
         {p.sizes.length > 0 && (
           <div className="field">
             <label htmlFor="buy-size">Size</label>
-            <select id="buy-size" value={size} onChange={(e) => setSize(e.target.value)}>{p.sizes.map((s) => <option key={s} value={s}>{s}</option>)}</select>
+            <select id="buy-size" value={size} onChange={(e) => setSize(e.target.value)}>{(sizes.length ? sizes : p.sizes).map((s) => <option key={s} value={s}>{s === mine ? `${s} (Your Size)` : s}</option>)}</select>
           </div>
         )}
         {p.colors.length > 1 && (
@@ -298,6 +308,7 @@ function Bought() {
   if (bought.length === 0) return null;
   return (
     <Panel title="Bought">
+      <LookRegion>
       <div className="table-scroll">
         <table>
           <thead><tr><th scope="col">Purchase</th><th scope="col">From</th><th scope="col" className="num">Paid</th><th scope="col">Bought</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -310,7 +321,7 @@ function Bought() {
               const fee = returnFee(sim, b, 'mail');
               return (
                 <tr key={b.id}>
-                  <td>{p?.name ?? 'Clothes'}{b.count > 1 ? <span className="xs dim"> · {b.count}</span> : null}</td>
+                  <td>{(() => { const first = purchaseItems(person, b.id).find((i) => i.garment); return first ? <Open subject={at('garment', first.id)}>{p?.name ?? 'Clothes'}</Open> : (p?.name ?? 'Clothes'); })()}{b.count > 1 ? <span className="xs dim"> · {b.count}</span> : null}</td>
                   <td className="small">{r?.name}</td>
                   <td className="num mono">{money(b.goods)}</td>
                   <td className="small">{formatDate(b.at, sim.zone)}{b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : ''}</td>
@@ -328,6 +339,7 @@ function Bought() {
           </tbody>
         </table>
       </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -349,9 +361,9 @@ function Bathroom() {
   const buy = useFeature('hygiene.buy');
   return (
     <Panel title="Your Bathroom" subtitle="Each shower uses its soap and shampoo, each day its toothpaste and deodorant; what runs out is bought again on a free day">
-      <div className="col gap-3">
+      <LookRegion className="col gap-3">
         {kept.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE doesn’t count toiletries where you live.</p> : (
-          <div className="small">{kept.map((i) => `${i.label}: ${supplyLeft(i.supply.left, i.supply.unit)}`).join(' · ')}</div>
+          <div className="small">{kept.map((i, n) => <span key={i.id}>{n > 0 ? ' · ' : ''}<Open subject={at('item', i.id)}>{i.label}</Open>{`: ${supplyLeft(i.supply.left, i.supply.unit)}`}</span>)}</div>
         )}
         {entries.length > 0 && (
           <>
@@ -377,7 +389,7 @@ function Bathroom() {
           </>
         )}
         <Fine>What a shower and a day use is weighed use: 11.3 g of body wash and 11.76 g of shampoo a shower (Loretz et al., via the EPA), two pea-sized brushings of 0.25 g a day (the CDC), 0.898 g of deodorant a day, a toothbrush every three months (the ADA). Without soap a shower leaves you at most 85 clean, without shampoo 90, and a morning without toothpaste or deodorant starts five points down for each, SLATE’s estimates.</Fine>
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
@@ -432,7 +444,7 @@ function Fit() {
   const money = (c: number) => formatMoney(c, saveCurrency(sim.universe), { cents: false });
   return (
     <Panel title="Clothes That Don’t Fit" subtitle="More than a size off the weight they were bought for; not worn until they’re taken in or replaced">
-      <div className="col gap-2">
+      <LookRegion className="col gap-2">
         {tailors.length > 1 && (
           <select aria-label="Tailor" value={t?.id ?? ''} onChange={(e) => setTailorId(e.target.value)} style={{ width: 'auto' }}>
             {tailors.map((x) => <option key={x.id} value={x.id}>{`${x.name}, ${x.from ? 'From ' : ''}${money(alterCost(sim, x))}`}</option>)}
@@ -442,12 +454,12 @@ function Fit() {
           const no = t ? alterRefusal(person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
           return (
             <div key={g.id} className="row-between small">
-              <span>{g.label}<span className="xs dim">{fitOf(person, g.garment) === 'big' ? ' · Too Big' : ' · Grown Out Of'}</span></span>
+              <span><Open subject={at('garment', g.id)}>{g.label}</Open><span className="xs dim">{fitOf(person, g.garment) === 'big' ? ' · Too Big' : ' · Grown Out Of'}</span></span>
               <button type="button" className="btn btn-sm btn-ghost" disabled={!alter.open || Boolean(no)} title={no ?? alter.reason} onClick={() => { const a = run<{ readyAt: number }>('clothes.alter', { itemId: g.id, tailorId: t!.id }); if (a.ok) toast(`At ${t!.name}, ready ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{t ? `Take It In, ${money(alterCost(sim, t))}` : 'Take It In'}</button>
             </div>
           );
         })}
-      </div>
+      </LookRegion>
     </Panel>
   );
 }

@@ -21,11 +21,16 @@ import { Gated } from '@/ui/guide/Guide';
 import { supportLines } from '@/engine/systems/support';
 import { careHours, careRefusal, formatCare, needsCare, parentsOf, type Parent } from '@/engine/systems/parents';
 import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, type Contact, type Invitation } from '@/engine/systems/people';
+import { LookRegion, Open, at } from '@/ui/looks';
+import { dateKey } from '@/engine/core/time';
+import { groupLabelOf } from '@/ui/shell/destinations';
+import { HALL } from '@/engine/content/people';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
 const standing = (c: Contact, spouse?: string): string => (c.id === spouse ? 'Your Spouse' : c.livesWith !== undefined ? 'Your Partner, Living With You' : c.dating?.couple !== undefined ? 'Your Partner' : c.dating ? `Seeing Each Other, ${c.dating.dates} ${c.dating.dates === 1 ? 'Date' : 'Dates'}` : levelOf(c));
 
 export function PeopleWorkspace() {
+  const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const contacts = useWorld((s) => [...contactsOf(s.player)]);
   const [chosen, setChosen] = useState('');
@@ -33,30 +38,30 @@ export function PeopleWorkspace() {
   return (
     <>
       <div className="page-head">
-        <div className="eyebrow">Your Life</div>
+        <div className="eyebrow">{groupLabelOf('/workspace/people')}</div>
         <h1>People</h1>
-        <p className="muted">Who you know, from school and from work. Time together is what makes a friend: about fifty hours a casual one, ninety a friend, two hundred a close one.</p>
+        <p className="muted">Who you know, from school and from work. Time together is what makes a friend: about {HALL.casual} hours a casual one, {HALL.friend} a friend, {HALL.close} a close one.</p>
       </div>
       <div className="col gap-5">
         <Panel title="Who You Know">
           {contacts.length === 0 ? <p className="small muted" style={{ margin: 0 }}>You don’t know anybody here yet: the class is known at the degree, and each job leaves you a castmate.</p> : (
-            <div className="table-scroll">
+            <LookRegion className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Name</th><th scope="col">Lives In</th><th scope="col">Met</th><th scope="col">Who They Are To You</th><th scope="col" className="num">Hours Together</th><th scope="col">Last Seen</th></tr></thead>
                 <tbody>
                   {contacts.map((c) => (
                     <tr key={c.id} onClick={() => setChosen(c.id)} style={{ cursor: 'pointer' }} aria-selected={picked?.id === c.id}>
-                      <td>{c.name}</td>
-                      <td>{CITIES.get(c.cityId)?.name}</td>
+                      <td><Open subject={at('contact', c.id)}>{c.name}</Open></td>
+                      <td><Open subject={at('place', c.cityId)}>{CITIES.get(c.cityId)?.name}</Open></td>
                       <td className="small">{c.met.how === 'school' ? 'At School' : c.met.how === 'online' ? `Online: ${c.met.what ?? 'An App'}` : `At Work${c.met.what ? `: ${c.met.what}` : ''}`}</td>
                       <td>{standing(c, person.marriage?.contactId)}</td>
                       <td className="num">{Math.round(c.hours)}</td>
-                      <td className="small">{c.lastSeen !== undefined ? formatDate(c.lastSeen, CITIES.require(c.cityId).timeZone) : '—'}</td>
+                      <td className="small">{c.lastSeen !== undefined ? <Open subject={at('day', dateKey(c.lastSeen, sim.homeZone))}>{formatDate(c.lastSeen, CITIES.require(c.cityId).timeZone)}</Open> : '—'}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
+            </LookRegion>
           )}
         </Panel>
         {picked && <Invite contact={picked} key={picked.id} homeCity={person.home?.cityId} />}
@@ -225,12 +230,12 @@ function Family() {
   const age = (born: number) => Math.floor((sim.now - born) / (365.2425 * MS_DAY));
   return (
     <Panel title="Your Family" subtitle={`Raising them, your share: ${money(raisingMonth(sim, person, sim.now))} A Month; the State’s Child Benefit: ${money(childBenefit(sim, person, sim.now))} A Month`}>
-      <div className="col gap-1 small">
-        {person.pregnancy && <div>{`A Baby Due ${formatDate(person.pregnancy.due, sim.zone)}`}</div>}
-        {kids.map((k) => <div key={k.id}>{`${k.name}, ${age(k.born)}${k.livesWith === 'them' ? ', Living With Their Other Parent' : ''}`}</div>)}
-        {supportLines(sim, person, sim.now).map((l) => <div key={l.contact.id}>{l.amount < 0 ? `Child Support To ${l.contact.name}: ${money(-l.amount)} A Month` : `Child Support From ${l.contact.name}: ${money(l.amount)} A Month`}</div>)}
-        {person.familyPath && <div>{`${person.familyPath.kind === 'adoption' ? 'Adopting: A Child Expected' : 'A Surrogacy: The Baby Due'} ${formatDate(person.familyPath.arrives, sim.zone)}`}</div>}
-      </div>
+      <LookRegion className="col gap-1 small">
+        {person.pregnancy && <div>A Baby Due <Open subject={at('day', dateKey(person.pregnancy.due, sim.homeZone))}>{formatDate(person.pregnancy.due, sim.zone)}</Open></div>}
+        {kids.map((k) => <div key={k.id}><Open subject={at('child', k.id)}>{k.name}</Open>{`, ${age(k.born)}${k.livesWith === 'them' ? ', Living With Their Other Parent' : ''}`}</div>)}
+        {supportLines(sim, person, sim.now).map((l) => <div key={l.contact.id}>{l.amount < 0 ? 'Child Support To ' : 'Child Support From '}<Open subject={at('contact', l.contact.id)}>{l.contact.name}</Open>{`: ${money(Math.abs(l.amount))} A Month`}</div>)}
+        {person.familyPath && <div>{`${person.familyPath.kind === 'adoption' ? 'Adopting: A Child Expected' : 'A Surrogacy: The Baby Due'} `}<Open subject={at('day', dateKey(person.familyPath.arrives, sim.homeZone))}>{formatDate(person.familyPath.arrives, sim.zone)}</Open></div>}
+      </LookRegion>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="social.adopt" className="btn btn-sm btn-ghost" disabled={Boolean(noAdopt)} title={noAdopt ?? (route ? `${route.agency}, ${route.place}` : adopt.reason)} onClick={() => { if (run('social.adopt', { kind: 'adoption' }).ok) toast('Adoption started.', 'positive'); }}>{noAdopt ? 'Adopt' : `Adopt, ${money(pathCost(sim, person, 'adoption'))}`}</Gated>
         <Gated feature="social.adopt" className="btn btn-sm btn-ghost" disabled={Boolean(noSurrogate)} title={noSurrogate ?? 'Its costs paid at the start, the child born a pregnancy later.'} onClick={() => { if (run('social.adopt', { kind: 'surrogacy' }).ok) toast('A surrogacy, under way.', 'positive'); }}>{noSurrogate ? 'A Surrogacy' : `A Surrogacy, ${money(pathCost(sim, person, 'surrogacy'))}`}</Gated>
@@ -249,10 +254,10 @@ function Parents() {
   const age = (p: Parent) => Math.floor((Math.min(sim.now, p.dies) - p.born) / (365.2425 * MS_DAY));
   return (
     <Panel title="Your Parents" subtitle={CITIES.require(parents[0]!.cityId).name}>
-      <div className="col gap-2 small">
+      <LookRegion className="col gap-2 small">
         {parents.map((p) => (
           <div key={p.role} className="field-row">
-            <span>{`${p.role === 'mother' ? 'Your Mother' : 'Your Father'}, ${age(p)}${p.died ? ', Died' : needsCare(p, sim.now) ? `, Needs ${p.care!.kind === 'facility' ? 'A Care Home' : 'Care At Home'}` : ''}`}</span>
+            <span><Open subject={at('parent', p.role)}>{p.role === 'mother' ? 'Your Mother' : 'Your Father'}</Open>{`, ${age(p)}${p.died ? ', Died' : needsCare(p, sim.now) ? `, Needs ${p.care!.kind === 'facility' ? 'A Care Home' : 'Care At Home'}` : ''}`}</span>
             {needsCare(p, sim.now) && (['pay', 'give', 'none'] as const).map((how) => {
               const no = careRefusal(person, p, how, sim.now);
               const label = how === 'pay' ? `Pay For It, ${formatCare(sim, p)} A Month` : how === 'give' ? `Care For Them, ${Math.round(careHours(person))} Hours A Week` : 'Leave It To The State';
@@ -260,7 +265,7 @@ function Parents() {
             })}
           </div>
         ))}
-      </div>
+      </LookRegion>
     </Panel>
   );
 }
