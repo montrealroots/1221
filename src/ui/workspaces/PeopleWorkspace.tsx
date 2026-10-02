@@ -18,6 +18,7 @@ import { childBenefit, childrenOf, raisingMonth, tryRefusal } from '@/engine/sys
 import { APPS, MATCHES, appPrice } from '@/engine/systems/dating';
 import { adoptRefusal, adoptionRoute, pathCost } from '@/engine/systems/adoption';
 import { Gated } from '@/ui/guide/Guide';
+import { supportLines } from '@/engine/systems/support';
 import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, type Contact, type Invitation } from '@/engine/systems/people';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
@@ -224,7 +225,8 @@ function Family() {
     <Panel title="Your Family" subtitle={`Raising them, your share: ${money(raisingMonth(sim, person, sim.now))} A Month; the State’s Child Benefit: ${money(childBenefit(sim, person, sim.now))} A Month`}>
       <div className="col gap-1 small">
         {person.pregnancy && <div>{`A Baby Due ${formatDate(person.pregnancy.due, sim.zone)}`}</div>}
-        {kids.map((k) => <div key={k.id}>{`${k.name}, ${age(k.born)}`}</div>)}
+        {kids.map((k) => <div key={k.id}>{`${k.name}, ${age(k.born)}${k.livesWith === 'them' ? ', Living With Their Other Parent' : ''}`}</div>)}
+        {supportLines(sim, person, sim.now).map((l) => <div key={l.contact.id}>{l.amount < 0 ? `Child Support To ${l.contact.name}: ${money(-l.amount)} A Month` : `Child Support From ${l.contact.name}: ${money(l.amount)} A Month`}</div>)}
         {person.familyPath && <div>{`${person.familyPath.kind === 'adoption' ? 'Adopting: A Child Expected' : 'A Surrogacy: The Baby Due'} ${formatDate(person.familyPath.arrives, sim.zone)}`}</div>}
       </div>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>

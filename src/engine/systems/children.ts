@@ -18,7 +18,9 @@
  *
  * A child may come by adoption or a surrogacy too (`systems/adoption.ts`,
  * from 2026-10-02). Not kept: a child's own day, and childcare beside the
- * cost of raising (which counts it, where the estimate does).
+ * cost of raising (which counts it, where the estimate does). After a
+ * separation the children live with one of you, and the other pays support
+ * (`systems/support.ts`, from 2026-10-02).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -35,6 +37,7 @@ import { contactsOf, type Contact } from './people';
 import { billShare, earnedIn, incomeOf, livesWithPartner } from './marriage';
 import { owe, payFromBank, spend } from './household';
 import { billCare, coverOn } from './health';
+import { supportMonth, supportRuns } from './support';
 import { personalityOf } from './personality';
 
 export const CHILD_MONTH_KIND = 'child.month';
@@ -42,7 +45,10 @@ export const BIRTH_KIND = 'child.birth';
 const YEAR_MS = 365.2425 * MS_DAY;
 const MONTH_MS = YEAR_MS / 12;
 
-export interface Child { id: string; name: string; born: Instant; otherParentId?: string }
+export interface Child { id: string; name: string; born: Instant; otherParentId?: string; /** Living with their other parent, after a separation (`systems/support.ts`, from 2026-10-02). */ livesWith?: 'them' }
+
+/** A child lives with you unless they stayed with their other parent. */
+export const livesWithYou = (k: Child): boolean => k.livesWith !== 'them';
 export interface Pregnancy { carrier: 'you' | 'them'; contactId: string; due: Instant }
 
 export const childrenOf = (person: Person): Child[] => (person.children ??= []);
@@ -92,7 +98,8 @@ export function birthCost(sim: Simulation, person: Person, carrier: 'you' | 'the
 
 /** A month's state child benefit, in the save's money, for the children under 18. */
 export function childBenefit(sim: Simulation, person: Person, at: Instant): Money {
-  const kids = childrenOf(person).filter((k) => ageAt(k.born, at) < 18).sort((a, b) => a.born - b.born);
+  // The state pays the parent the children live with (from 2026-10-02).
+  const kids = childrenOf(person).filter((k) => livesWithYou(k) && ageAt(k.born, at) < 18).sort((a, b) => a.born - b.born);
   if (!kids.length) return 0;
   const country = countryOf(person.home?.cityId ?? person.currentLocationId);
   const year = new Date(at).getUTCFullYear() - 1;
@@ -128,7 +135,8 @@ export function childBenefit(sim: Simulation, person: Person, at: Instant): Mone
 /** A month of raising the children, your share, in the save's money. */
 export function raisingMonth(sim: Simulation, person: Person, at: Instant): Money {
   const country = countryOf(person.home?.cityId ?? person.currentLocationId);
-  const total = childrenOf(person).reduce((s, k) => { const c = raisingCost(country, ageAt(k.born, at)); return s + (c ? inSave(sim, c.amount / 12, c.currency) : 0); }, 0);
+  // The children who live with you; the others' raising is their other parent's, and support (`systems/support.ts`).
+  const total = childrenOf(person).filter(livesWithYou).reduce((s, k) => { const c = raisingCost(country, ageAt(k.born, at)); return s + (c ? inSave(sim, c.amount / 12, c.currency) : 0); }, 0);
   return Math.round(total * billShare(sim, person));
 }
 
@@ -194,7 +202,9 @@ export function registerChildren(sim: Simulation): void {
     if (benefit > 0 && person.primaryAccountId) {
       s.post({ memo: 'Child benefit', category: 'benefits', postings: [{ accountId: person.primaryAccountId, amount: benefit }, { accountId: s.nominalAccount('income', 'Child Benefit').id, amount: -benefit }] });
     }
-    const growing = childrenOf(person).some((k) => ageAt(k.born, item.at) < 18);
+    // Child support to or from a former partner (`systems/support.ts`, from 2026-10-02).
+    supportMonth(s, person, item.at);
+    const growing = childrenOf(person).some((k) => ageAt(k.born, item.at) < 18) || supportRuns(s, person, item.at);
     if (growing || person.trying || person.pregnancy) s.schedule({ at: item.at + MONTH_MS, kind: CHILD_MONTH_KIND, label: 'The Family’s Month', category: 'relationship', priority: 30, payload: { personId: person.id } });
   });
 }

@@ -61,6 +61,7 @@ import { personalityOf } from './personality';
 import { homeById } from './homes';
 import { bedSleepsOne } from './furniture';
 import { incomeOf } from './marriage';
+import { childrenStay } from './support';
 import { applyLookingAfter } from './life';
 
 export const MEET_KIND = 'social.meet';
@@ -331,6 +332,8 @@ export function partnerStays(sim: Simulation, person: Person): void {
   if (!c || c.cityId === person.home?.cityId) return;
   // Married, they stay where they live, and the marriage goes on apart (`systems/marriage.ts`).
   if (person.marriage?.contactId === c.id) { delete c.livesWith; c.memory.unshift({ at: sim.now, what: `Stayed in ${CITIES.require(c.cityId).name} when you moved` }); return; }
+  // Your children together stay with them, in the home they had (`systems/support.ts`).
+  childrenStay(person, c);
   partWays(sim, person, c, `Stayed in ${CITIES.require(c.cityId).name} when you moved`);
   if (person.id === sim.universe.playerId) sim.notify({ category: 'relationship', title: `${c.name.split(' ')[0]} Stayed`, body: `${c.name} stayed in ${CITIES.require(c.cityId).name}, and it’s over.`, importance: 60, route: '/workspace/people' });
 }
