@@ -16,7 +16,7 @@ exists, this file says so, and the item stays out.
 | A visitor's price for care in Ireland, Canada, Mexico and Scotland | 9 | The HSE's and the provinces' published non-resident charges | To research |
 | A failed building inspection | 12 | Los Angeles's LADBS inspection records since 2023 (data.lacity.org), counted to each kind's share of visits failed: foundation 38%, framing 38%, rough 48%, final 37%: `tools/data/inspections.mjs`. NYC Open Data and Toronto publish requests, not results | Got. A house's inspection fails at those odds, waiting a reinspection's days and paying its fee (`buildInspectionFails`). |
 | A GP appointment's wait in Ireland, Canada and Mexico City | 9 | National surveys' published shares (Commonwealth Fund, CIHI, ENSANUT), where their microdata or tables give one | To research |
-| Pickleball's energy | 12 | Measured METs in published studies of pickleball play | To research |
+| Pickleball's energy | 12 | Doubles measured by portable calorimetry at 4.1 METs (15 adults, mean age 65); the singles figures read are a summary's | Got. A pickleball court is built and played on (`COURT_MET`). |
 | An architect's fee | 12 | No open dataset: fees are private contracts, and the bodies withdrew their scales | Out |
 | Bids, change orders, overruns, lateness | 12 | No open dataset for homes; public works' contract data doesn't describe a house | Out |
 | A counteroffer over scale, an agent's increment | 13 | No open dataset: deals are private | Out |

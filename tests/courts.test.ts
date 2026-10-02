@@ -71,7 +71,8 @@ describe('a court', () => {
 
   it('builds fitness as a run does, at its own METs: tennis harder than shooting baskets', () => {
     const play = (court: Feature) => {
-      const sim = home([court, court === 'tennisCourt' ? 'tennisLights' : 'basketballLights'], 'courts-play');
+      const lights: Feature[] = court === 'tennisCourt' ? ['tennisLights'] : court === 'basketballCourt' ? ['basketballLights'] : [];
+      const sim = home([court, ...lights], 'courts-play');
       nextHour(sim, true);
       Object.assign(sim.player.wellbeing, { fitness: 40, energy: 80, stress: 50 });
       expect(lookAfterRefusal(sim, 'court')).toBeUndefined();
@@ -87,6 +88,10 @@ describe('a court', () => {
     expect(tennis.stress).toBeLessThan(50);
     // The hour's energy over sitting, at each one's METs: (6.8 − 5.0) × 70 kg more for tennis.
     expect(tennis.kcal - hoops.kcal).toBeCloseTo((6.8 - 5.0) * 70, 6);
+    // Pickleball's doubles, measured at 4.1, lighter than shooting baskets (from 2026-10-02).
+    const pickle = play('pickleballCourt');
+    expect(hoops.kcal - pickle.kcal).toBeCloseTo((5.0 - 4.1) * 70, 6);
+    expect(courtAt(home(['pickleballCourt']).player)).toEqual({ court: 'pickleball', lit: false });
   });
 
   it('a tennis court’s upkeep, Fixr’s $1,800 a year, comes with the month’s bills', () => {

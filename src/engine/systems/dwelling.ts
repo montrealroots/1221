@@ -440,11 +440,14 @@ export function swimRefusal(sim: Simulation, person: Person): string | undefined
  * Adult Compendium's 6.8 METs for a moderate game, a half basketball court
  * at its 5.0 for shooting baskets.
  */
-export const COURT_MET = { tennis: 6.8, basketball: 5.0 } as const;
-export function courtAt(person: Person): { court: 'tennis' | 'basketball'; lit: boolean } | undefined {
+// Pickleball's, from 2026-10-02: doubles measured by portable calorimetry at 4.1 METs (15 adults, mean age 65; the
+// Compendium gives it none), the singles figures read being a summary's, not a measurement.
+export const COURT_MET = { tennis: 6.8, basketball: 5.0, pickleball: 4.1 } as const;
+export function courtAt(person: Person): { court: 'tennis' | 'basketball' | 'pickleball'; lit: boolean } | undefined {
   const f = atHome(person) ? livingIn(person)?.facts.features : undefined;
   if (f?.includes('tennisCourt')) return { court: 'tennis', lit: f.includes('tennisLights') };
   if (f?.includes('basketballCourt')) return { court: 'basketball', lit: f.includes('basketballLights') };
+  if (f?.includes('pickleballCourt')) return { court: 'pickleball', lit: false };
   return undefined;
 }
 

@@ -230,13 +230,13 @@ export function conditionWord(age: number, life: number): 'New' | 'Good' | 'Date
 }
 
 export type Feature = 'garage' | 'yard' | 'basement' | 'finishedBasement' | 'attic' | 'furnace' | 'heatPump' | 'metalRoof'
-  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights';
+  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights' | 'pickleballCourt';
 
 export const FEATURE_LABEL: Readonly<Record<Feature, string>> = {
   garage: 'Garage', yard: 'Yard', basement: 'Unfinished Basement', finishedBasement: 'Finished Basement', attic: 'Attic',
   furnace: 'Gas Furnace', heatPump: 'Heat Pump', metalRoof: 'Metal Roof', deck: 'Deck', patio: 'Patio', pool: 'Pool',
   solar: 'Solar Panels', generator: 'Backup Generator', adu: 'Backyard Cottage', stone: 'Stone Front',
-  tennisCourt: 'Tennis Court', basketballCourt: 'Half Basketball Court', tennisLights: 'Lights On The Tennis Court', basketballLights: 'Lights On The Basketball Court',
+  tennisCourt: 'Tennis Court', basketballCourt: 'Half Basketball Court', tennisLights: 'Lights On The Tennis Court', basketballLights: 'Lights On The Basketball Court', pickleballCourt: 'Pickleball Court',
 };
 
 // ---------------------------------------------------------------------------
@@ -330,6 +330,10 @@ export const PROJECTS: readonly Project[] = [
   { id: 'tennis-rubber', label: 'Build A Cushioned Rubber Tennis Court', usd: 87_500, recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['tennisCourt'], lot: 7_150, adds: { gains: ['tennisCourt'] } },
   { id: 'tennis-lights', label: 'Light The Tennis Court', usd: 3_500, recoup: 0.3, days: 3, on: DETACHED, needs: ['tennisCourt'], lacks: ['tennisLights'], adds: { gains: ['tennisLights'] } },
   { id: 'basketball-half', label: 'Build A Half Basketball Court', usd: 27_750, recoup: 0.3, days: 14, on: HOUSES, needs: ['yard'], lacks: ['basketballCourt'], lot: 2_350, adds: { gains: ['basketballCourt'] } },
+  // From 2026-10-02: a pickleball court, concrete topped with acrylic, at Angi's $34,000 average (search summary), on USA
+  // Pickleball's 30 by 60 foot play area; its month and its return are the tennis court's, SLATE's, none being published, and
+  // no price for lighting one was found, so it's played by day.
+  { id: 'pickleball', label: 'Build A Pickleball Court', usd: 34_000, recoup: 0.3, days: 30, on: HOUSES, needs: ['yard'], lacks: ['pickleballCourt'], lot: 30 * 60, adds: { gains: ['pickleballCourt'] } },
   { id: 'basketball-lights', label: 'Light The Basketball Court', usd: 3_000, recoup: 0.3, days: 3, on: HOUSES, needs: ['basketballCourt'], lacks: ['basketballLights'], adds: { gains: ['basketballLights'] } },
   { id: 'pool-renew', label: 'Resurface And Re-Equip The Pool', usd: 20_000, recoup: 0.5, days: 14, renews: 'pool', on: DETACHED, needs: ['pool'] },
   // Room.
