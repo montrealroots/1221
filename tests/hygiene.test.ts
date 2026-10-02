@@ -147,3 +147,18 @@ describe('a barber or a salon', () => {
     expect(groomingQuote(sim, salonById('artisan-barbershop-new-york')!, 'mens-cut')!.minutes).toBe(45);
   });
 });
+
+describe('conditioner', () => {
+  it('is used after the shampoo where it’s been bought, Loretz’s 13.13 g a shower', () => {
+    const sim = life('us-ny-newyork', 'hyg-cond');
+    const t = TOILETRIES.find((x) => x.kind === 'conditioner' && x.market === 'US')!;
+    const home = suppliesOf(sim.player).find((i) => i.supply.kind === 'shampoo')!.at;
+    sim.player.items = [...(sim.player.items ?? []), { id: 'cond', kind: t.id, label: t.name, quantity: 1, condition: 1, at: home, acquiredAt: sim.now, supply: { kind: 'conditioner', unit: 'g', left: 300 } }];
+    showerUses(sim, sim.player);
+    expect(left(sim, 'conditioner')).toBeCloseTo(300 - USE.conditionerG, 6);
+    // No shampoo, no conditioner after it.
+    without(sim, 'shampoo');
+    showerUses(sim, sim.player);
+    expect(left(sim, 'conditioner')).toBeCloseTo(300 - USE.conditionerG, 6);
+  });
+});

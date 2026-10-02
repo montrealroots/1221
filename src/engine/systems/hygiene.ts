@@ -45,7 +45,8 @@ import { stow } from './trips';
 export interface Supply { kind: string; unit: 'g' | 'ml' | 'ct'; left: number }
 export type Supplied = Item & { supply: Supply };
 
-export const USE = { bodyWashG: 11.3, soapG: 2.6, shampooG: 11.76, toothpasteG: 0.25, brushings: 2, deodorantG: 0.898, toothbrushDays: 90 } as const;
+/** Conditioner from 2026-10-02: Loretz et al. 2008's 13.13 g a use (the EPA's Exposure Factors Handbook, ch. 17), used where there is some; nobody is given it to start, and it isn't bought again unasked. */
+export const USE = { bodyWashG: 11.3, soapG: 2.6, shampooG: 11.76, conditionerG: 13.13, toothpasteG: 0.25, brushings: 2, deodorantG: 0.898, toothbrushDays: 90 } as const;
 /** What going without does: a shower's ceiling without a cleanser and without shampoo, and a morning's points for each daily thing missing. SLATE's estimates. */
 export const WITHOUT = { cleanser: 85, shampoo: 90, daily: 5 } as const;
 /** The kinds a life keeps and uses up. */
@@ -122,6 +123,8 @@ export function showerUses(sim: Simulation, person: Person): number {
   if (!keepsSupplies(person)) return 100;
   const cleansed = take(sim, person, ['body-wash', 'soap'], USE.bodyWashG);
   const shampooed = take(sim, person, ['shampoo'], USE.shampooG);
+  // Conditioner after the shampoo, where it's been bought.
+  if (shampooed) take(sim, person, ['conditioner'], USE.conditionerG);
   return Math.min(cleansed ? 100 : WITHOUT.cleanser, shampooed ? 100 : WITHOUT.shampoo);
 }
 
