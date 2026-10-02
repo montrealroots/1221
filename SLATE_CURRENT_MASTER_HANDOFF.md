@@ -180,11 +180,15 @@ Done and gated so far:
     - An order goes back as "returned", and is canceled before delivery where British or Irish law gives the right (`40e4c5bb`).
     - A fitting is paid only when the actor is there (`354e578d`).
     - Look After Yourself eats from the kitchen before it spends (`0011bc17`).
-  - **Build step 2, the connected day, under way:**
-    - A fuel tank or battery on every rated vehicle (`systems/fueltank.ts`). The month's driving fills up at a quarter of a tank; errands burn from the tank and are refused when it runs short; there are Fill Up and Charge buttons. Capacities come from `docs/research/world/research-tanks.json` through `tools/build-tanks.mjs` into `content/tanks.ts`.
+  - **Build step 2, the connected day** (`1e7e7cab`, `a3b34b6f`, `cd08a1bc`):
+    - A fuel tank or battery on every rated vehicle (`systems/fueltank.ts`). Capacities for 117 of 131 models come from `docs/research/world/research-tanks.json` through `tools/build-tanks.mjs` into `content/tanks.ts`; that file's rows marked secondary are worth a second look. The month's driving fills up at a quarter of a tank. Errands burn from the tank and are refused when it runs short. Fill Up and Charge buttons are on Vehicles.
     - What's worn now (`Person.wornNow`), with Change Into These Now taking `CHANGE_MINUTES`.
     - Cooking by servings.
-    - Still to come in step 2: the shower walkthrough, washing up, purchases carried until unloaded, the dress check for acting, and the connected-day test with save and load.
+    - Shopping rides in the car or in the player's arms until the trip is home. Chilled food out past USDA's two hours is thrown out.
+    - Bath towels at home, three uses to the wash.
+    - `tests/connected-day.test.ts`: one day through the commands, with a save and load.
+    - Left open, with reasons in `docs/REQUIREMENTS.md`: washing up (no published clean-up time apart from food preparation) and a dress check for auditions (no published effect, and invented bonuses are ruled out).
+  - **Build step 3, shopping, begun** (`f62f1c4b`): a basket for clothes, checked out a retailer at a time with one payment and one delivery, the threshold read on the order.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.
 - **Stage 15, in part** (`71e9dbb5`, `dbfe58bd`): `docs/DEVMAP.md`, built and checked by `tools/devmap.mjs` in the gate; `docs/WALKTHROUGHS.md`; the rail's search; panel actions wrap inside their card.

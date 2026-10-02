@@ -37,9 +37,10 @@ import { standInFor } from './standin';
 import { DRIVERS, type DriverService } from '../content/drivers';
 import type { Instant } from '../core/time';
 import { tireFactor } from './tires';
+import { homeKeyOf, itemById, type Item, type Spot } from './items';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 
-export interface Trip { by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
+export interface Trip { /** What was bought on the way, carried or in the car until the trip is home (from 2026-10-02). */ shopping?: { itemId: string; spot?: Spot; at: Instant }[]; by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
 export interface Stop { kind: string; payload: Record<string, unknown>; leg: LegKind }
 
 const market = (cityId: string): 'na' | 'eu' => (['us', 'ca'].includes(CITIES.get(cityId)?.countryId ?? '') ? 'na' : 'eu');
@@ -102,6 +103,43 @@ export function tripRefusal(sim: Simulation, person: Person, by: 'car' | 'foot',
   return undefined;
 }
 
+/**
+ * USDA's two-hour rule: food that keeps cold isn't safe after two hours out
+ * of the fridge, so chilled or frozen shopping out longer than that on a trip
+ * is thrown away when it's home. The one-hour rule over 90°F isn't kept.
+ */
+export const COLD_CHAIN_HOURS = 2;
+
+/**
+ * Something bought while out: in your own car on a car trip, or carried, until
+ * the trip is home, then put away where it keeps (from 2026-10-02; until then
+ * it was home the moment it was paid for). Bought with no trip, it's home now.
+ */
+export function stow(person: Person, item: Item, at: Instant): void {
+  const trip = person.trip;
+  if (!trip || item.at.kind !== 'home') return;
+  (trip.shopping ??= []).push({ itemId: item.id, ...(item.at.spot ? { spot: item.at.spot } : {}), at });
+  item.at = trip.by === 'car' && trip.vehicleId && !trip.standInId ? { kind: 'vehicle', vehicleId: trip.vehicleId } : { kind: 'person' };
+}
+
+/** The trip's shopping put away at home; chilled food out past the two hours thrown out. How many were thrown out. */
+function unload(sim: Simulation, person: Person, trip: Trip): number {
+  const home = homeKeyOf(person.home);
+  let spoiled = 0;
+  for (const s of trip.shopping ?? []) {
+    const item = itemById(person, s.itemId);
+    if (!item || !home) continue;
+    if ((s.spot === 'fridge' || s.spot === 'freezer') && sim.now - s.at > COLD_CHAIN_HOURS * 3_600_000) {
+      person.items = (person.items ?? []).filter((i) => i.id !== item.id);
+      spoiled += 1;
+      continue;
+    }
+    item.at = { kind: 'home', home, ...(s.spot ? { spot: s.spot } : {}) };
+  }
+  if (spoiled && person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Shopping Left Out Too Long', body: `${spoiled} of what needed the fridge was out more than ${COLD_CHAIN_HOURS} hours, USDA's limit, and went in the bin.`, importance: 40, route: '/workspace/food' });
+  return spoiled;
+}
+
 const carOf = (person: Person, trip: Trip): OwnedVehicle | undefined => (trip.vehicleId ? vehiclesOf(person).find((v) => v.id === trip.vehicleId) : undefined);
 
 function payFuel(sim: Simulation, person: Person, trip: Trip, station: string): Money {
@@ -160,6 +198,7 @@ export function registerTrips(sim: Simulation): void {
     const c = trip.passengerId ? contactsOf(person).find((x) => x.id === trip!.passengerId) : undefined;
     if (c) { c.hours += l.minutes / 60; c.lastSeen = s.now; }
     if (p?.to === 'home') {
+      unload(s, person, trip);
       if (trip.fuel > 0) payFuel(s, person, trip, (STATIONS[here] ?? ['a station'])[0]!);
       if (trip.driver) {
         const d = DRIVERS.find((x) => x.id === trip!.driver!.id)!;

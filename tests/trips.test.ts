@@ -15,7 +15,7 @@ import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
 import { modelById, monthKm, vehiclesOf } from '@/engine/systems/vehicles';
 import { burnOf, capacityOf, levelOf } from '@/engine/systems/fueltank';
-import { driverCost, driverIn, leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
+import { COLD_CHAIN_HOURS, driverCost, driverIn, leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
 import { metAtWork } from '@/engine/systems/people';
 import { salonsIn } from '@/engine/systems/hygiene';
 import { arrange } from '@/engine/systems/catalog';
@@ -46,6 +46,35 @@ describe('a leg', () => {
     const sim = life('us-ny-newyork', 'tr-meter');
     expect(meterCost(sim, 'us-ny-newyork', 45)).toBe(usd(sim, Math.round(5 * 45 / 60 * 100)));
     expect(meterCost(sim, 'ca-bc-vancouver', 45)).toBe(0);
+  });
+});
+
+describe('the shopping on a trip', () => {
+  const chicken = 'thefreshgrocer-perdue-99-fat-free-boneless-skinless-chicken-breasts';
+  const potatoes = 'thefreshgrocer-bowl-basket-russet-potatoes-5-lb-bag';
+  it('rides in the car until the trip is home, then goes where it keeps', () => {
+    const sim = life('us-ny-newyork', 'tr-carry');
+    const v = withCar(sim);
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 11));
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'shopping', by: 'car', vehicleId: v.id } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'food.buy_groceries', payload: { productId: chicken, quantity: 1 } }).ok).toBe(true);
+    const item = sim.player.items!.find((i) => i.kind === chicken)!;
+    expect(item.at).toEqual({ kind: 'vehicle', vehicleId: v.id });
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'home' } }).ok).toBe(true);
+    expect(item.at).toMatchObject({ kind: 'home', spot: 'fridge' });
+  });
+
+  it('carried on foot; chilled food out past USDA’s two hours is thrown out at home, the cupboard’s isn’t', () => {
+    const sim = life('us-ny-newyork', 'tr-spoil');
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 11));
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'shopping', by: 'foot' } }).ok).toBe(true);
+    for (const productId of [chicken, potatoes]) expect(sim.execute({ kind: 'food.buy_groceries', payload: { productId, quantity: 1 } }).ok).toBe(true);
+    expect(sim.player.items!.find((i) => i.kind === chicken)!.at).toEqual({ kind: 'person' });
+    sim.advanceBy(COLD_CHAIN_HOURS * 3_600_000);
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'home' } }).ok).toBe(true);
+    expect(sim.player.items!.some((i) => i.kind === chicken)).toBe(false);
+    expect(sim.player.items!.find((i) => i.kind === potatoes)!.at).toMatchObject({ kind: 'home', spot: 'pantry' });
+    expect(sim.universe.notifications.at(-1)!.title).toBe('Shopping Left Out Too Long');
   });
 });
 

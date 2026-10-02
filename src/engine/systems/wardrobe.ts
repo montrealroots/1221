@@ -149,6 +149,14 @@ export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.no
   return true;
 }
 
+/** A towel after a shower: a clean, dry one to hand, the most used first, a use toward its wash; false where there's none. */
+export function useTowel(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
+  const towel = garmentsOf(person).filter((g) => g.garment.slot === 'towel' && wearable(sim, person, g, at)).sort(freshest)[0];
+  if (!towel) return false;
+  wearOnce(towel);
+  return true;
+}
+
 /** A workout's clothes: activewear where there's some clean, else a top, with underwear and socks. */
 export function wearForExercise(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
   const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at)).sort(freshest);

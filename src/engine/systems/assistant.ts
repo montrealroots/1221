@@ -31,6 +31,8 @@ export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload
   'calendar.schedule': { does: 'Put a plan of your own on the calendar', payload: '{ title: string, at: epoch ms, durationMinutes?: number, locationId?: city id }' },
   'clothes.buy': { does: 'Buy a clothing product in a store or online', payload: '{ productId: string, how: "store" | "online", size?: string, color?: string, quantity?: number }' },
   'clothes.dress': { does: 'Put on garments you own and have to hand', payload: '{ itemIds: string[] }' },
+  'clothes.basket_add': { does: 'Put a clothing product in the basket, to check out with the rest from its retailer', payload: '{ productId: string, how: "store" | "online", size?: string, color?: string, quantity?: number }' },
+  'clothes.checkout': { does: 'Check out the basket at one retailer: one payment, one delivery', payload: '{ retailerId: string, how: "store" | "online" }' },
   'clothes.change': { does: 'Change into garments you own and have to hand, now', payload: '{ itemIds: string[] }' },
   'clothes.save_outfit': { does: 'Save garments you own as an outfit', payload: '{ name: string, itemIds: string[] }' },
   'clothes.wear_outfit': { does: 'Put on a saved outfit', payload: '{ outfitId: string }' },

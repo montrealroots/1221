@@ -38,6 +38,7 @@ import { inSaveMoney } from './banking';
 import { spend } from './household';
 import { closedNow } from './errands';
 import { addItem, homeKeyOf, itemsOf, reachable, type Item } from './items';
+import { stow } from './trips';
 
 /** What makes an item a supply: its kind, its unit and how much is left. */
 export interface Supply { kind: string; unit: 'g' | 'ml' | 'ct'; left: number }
@@ -146,7 +147,8 @@ export function buyToiletries(sim: Simulation, person: Person, id: string, quant
 
 function giveToiletry(sim: Simulation, person: Person, t: Toiletry, paid?: Money): void {
   // A toothbrush is one brush a count; anything else is its size.
-  addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'bathroom' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } });
+  // Carried, or in the car, until a trip out is home (`stow`).
+  stow(person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'bathroom' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
 }
 
 /** The cheapest of a kind, a gram or a brush: in a store in reach of the town, or anywhere in its market. Nothing where SLATE keeps none. */

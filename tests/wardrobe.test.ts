@@ -12,6 +12,7 @@ import { CHANGE_MINUTES, chosenMissing, cleanOutfits, garmentsOf, outfitFor, wea
 import { doLaundry, wearOutfit } from '@/engine/systems/dwelling';
 import type { Slot, Care } from '@/engine/content/garmentcare';
 import { sellRefusal } from '@/engine/systems/resale';
+import { STARTER_TOWELS, starterTowels } from '@/engine/systems/clothing';
 
 const HOUR = 3_600_000;
 /** A life with its starter wardrobe put away, for the tests' own garments. */
@@ -98,6 +99,26 @@ describe('a day’s outfit', () => {
     expect(sim.execute({ kind: 'clothes.change', payload: { itemIds: [shirt.id, b.jeans.id, b.under[2]!.id] } }).error).toBe('Boxers is in the wash.');
     shirt.paid = 30_00;
     expect(sellRefusal(sim, sim.player, shirt as never)).toBe('You’re wearing it.');
+  });
+
+  it('dries a shower at home on a towel, three uses to its wash, and says when none is clean', () => {
+    const sim = life('ward-towel');
+    expect(starterTowels(sim, sim.player)).toBe(true);
+    expect(starterTowels(sim, sim.player)).toBe(false);
+    const towels = garmentsOf(sim.player).filter((g) => g.garment.slot === 'towel');
+    expect(towels).toHaveLength(STARTER_TOWELS);
+    expect(towels.every((t) => t.at.kind === 'home' && t.at.spot === 'bathroom')).toBe(true);
+    const shower = () => { sim.player.wellbeing.hygiene = 40; sim.advanceBy(HOUR); const r = sim.execute({ kind: 'life.look_after', payload: { action: 'wash' } }); expect(r.ok, r.error).toBe(true); };
+    for (let i = 0; i < 3; i += 1) shower();
+    // The one in use, three times, and in the wash; the rest untouched.
+    expect(towels.filter((t) => t.garment.dirty)).toHaveLength(1);
+    expect(towels.filter((t) => t.garment.wears === 0)).toHaveLength(STARTER_TOWELS - 1);
+    expect(washableDirty(sim, sim.player).some((g) => g.garment.slot === 'towel')).toBe(true);
+    // Never a towel in an outfit.
+    expect(outfitFor(sim, sim.player)?.some((g) => g.garment.slot === 'towel') ?? false).toBe(false);
+    for (const t of towels) t.garment.dirty = true;
+    shower();
+    expect(sim.universe.notifications.at(-1)!.title).toBe('No Clean Towel');
   });
 
   it('won’t be chosen dirty, drying, outgrown or out of reach, and a saved outfit with such a piece isn’t put on', () => {

@@ -74,8 +74,8 @@ Correctness first, then the connected day the plan asks to be shown working
 | 21 | Stores with hours and stock; websites with destinations, shipping, tracking | Partial | `storesIn` city list; `purchaseQuote` fee, threshold, days | Branch records (address, hours, services, stock); destinations, shipping tiers, click-and-collect, payment choice, tracking stages |
 | 22a | Find, browse, search, filter | Complete | `clothingCatalog`, `arrange`; tests/catalog, clothing | Facets for size, color, material, price band |
 | 22b | Product page, variant, compare offers | Partial | `Choose` in ClothesWorkspace | Product page with size chart and source; compare sellers |
-| 22c | Cart, collection or delivery, review, pay | Not implemented | `clothes.buy` is one line | Cart, checkout, basket-level delivery threshold, payment choice |
-| 22d | Receipt and order record | Partial | `ClothesPurchase`, `Order` | Receipt lines; `Order` "returned" never set |
+| 22c | Cart, collection or delivery, review, pay | Done for clothes, 2026-10-02 | `clothes.basket_add`, `basket_remove`, `checkout`: one payment and one order per retailer, the threshold on the order | Groceries and toiletries in the basket; choosing the card |
+| 22d | Receipt and order record | Partial | `ClothesPurchase`, `Order`; `returned` set once all of an order is back (2026-10-02); the checkout's ledger entry names the retailer and count | Receipt lines as a document |
 | 22e | An unfulfilled order isn't usable | Complete | `at:{kind:'order'}` unreachable; tests/items | In-store pickup of an online order |
 | 22f | Store, use, return, repair, gift, resell | Partial | moves, laundry, return, resale; tests | Repair, gift, refund to the original payment |
 | 23 | Departments; petite, tall, extended, maternity, adaptive; nothing blocked by gender | Partial | No gender gate | `department`, fit range, browsing preference; adaptive and more maternity |
@@ -99,11 +99,11 @@ Correctness first, then the connected day the plan asks to be shown working
 |---|---|---|---|---|
 | 31a | Reach an accessible bathroom | Partial | `lookAfterRefusal` | Rooms; a shared or busy bathroom |
 | 31b | Shower or bath | Complete | `wash`/`bathe`; tests/looking-after | — |
-| 31c | Supplies and towel | Partial | `showerUses` by grams | Towels as items; a prepare step |
+| 31c | Supplies and towel | Done, 2026-10-02 | `showerUses` by grams; bath towels as items (`starterTowels`, `useTowel`) | Buying towels |
 | 31d | Products, duration, routine | Not implemented | `take()` picks the first | Choose product, minutes, conditioner |
 | 31e | Perform; time; hygiene | Complete | life.ts | — |
 | 31f | Water and energy | Not implemented | `powerDay` spoils food only | Hot water by heater and outage; water and energy billed |
-| 31g | Dry off, change, used towel to laundry | Not implemented | — | Towel wear, a change after |
+| 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |
 | 31h | Grooming at home | Partial | salon, teeth, deodorant | Shave, hair, makeup at home; preferences |
 | 32a | Browse wardrobe, drawers, luggage | Partial | `reachable`, WhatToWear | Browse by location |
 | 32b | Filter by occasion, type, size, color, condition | Not implemented | `spec`, `condition` exist | Filters; occasion tags |
@@ -169,7 +169,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 40b | Change the plan mid-trip | Partial | one-click run | Step-by-step trip |
 | 40c | Parking | Partial | meter by the minute | Lots and garages; limits |
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
-| 40e | Purchases carried or in the car until moved | Not implemented | groceries go home at once | Carried and in-car places; unload |
+| 40e | Purchases carried or in the car until moved | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
 | 40g | Out of fuel | Not implemented | — | With the tank |
 | 40h | Breakdowns, delays | Partial | severe fault refuses | Mid-trip breakdown; tow |
 | 40i | Where it's parked | Partial | town only | Spot level |
@@ -252,4 +252,4 @@ Correctness first, then the connected day the plan asks to be shown working
 | 57 | New mechanics reviewed, never run against saves | Partial | proposals only | A development-proposal role |
 | 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search | From a missing ingredient to the shop and back to the meal |
 | 59 | Activity states, recovery, no duplicates | Partial | orders, journeys, works | A common state model across activities |
-| 62 | The connected day, shown working | Not yet shown | — | After order step 2 |
+| 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | No washing up (§33i) |
