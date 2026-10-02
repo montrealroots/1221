@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
-import { useFeature } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 import { LOOKING_AFTER, type LookAfter } from '@/engine/systems/life';
 import { RECIPES } from '@/engine/content/groceries';
 import { MAX_STEPS, routineRefusal, runRoutine, stepLabel, type RoutineStep } from '@/engine/systems/routines';
@@ -19,6 +19,7 @@ import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
 import { leg, runErrands, tripRefusal, type Stop, driverIn } from '@/engine/systems/trips';
+import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
 
 export function RoutinesWorkspace() {
@@ -100,6 +101,7 @@ export function RoutinesWorkspace() {
         </Panel>
         <ErrandsPanel />
         <GymPanel />
+          <TrainerPanel />
         <Fine>A routine runs each step as you would, with its own time and checks: a shower when you aren’t clean, a meal when you’re hungry and can pay, a recipe when the kitchen has what it takes. It stops at the first that can’t be done and says why; what was done before it stays done.</Fine>
       </div>
     </>
@@ -107,6 +109,29 @@ export function RoutinesWorkspace() {
 }
 
 /** A gym of your own (`systems/gyms.ts`): the town's gyms and their memberships, cheapest first, and leaving one. */
+/** A personal trainer by the session (`systems/trainers.ts`). */
+function TrainerPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const book = useFeature('gym.trainer');
+  const [perWeek, setPerWeek] = useState(2);
+  const cur = saveCurrency(sim.universe);
+  const trainers = trainersIn(person.currentLocationId);
+  if (!trainers.length) return null;
+  const booked = person.training ? trainers.find((t) => t.id === person.training!.trainerId) : undefined;
+  return (
+    <Panel title="A Personal Trainer" subtitle={booked ? `${booked.name}, ${person.training!.perWeek} A Week` : 'Supervised, a workout builds 37% more (Gavanda, 2025); by the session, cheapest first'}>
+      <div className="field-row">
+        <select aria-label="Sessions A Week" value={perWeek} onChange={(e) => setPerWeek(Number(e.target.value))} style={{ width: 'auto' }}>
+          {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{`${n} A Week`}</option>)}
+        </select>
+        {trainers.map((t) => <Gated key={t.id} feature="gym.trainer" className="btn btn-sm btn-ghost" disabled={booked?.id === t.id && person.training!.perWeek === perWeek} title={book.reason} onClick={() => { if (run('gym.trainer', { trainerId: t.id, perWeek }).ok) toast(`${t.name}, ${perWeek} a week.`, 'positive'); }}>{`${t.name}, ${formatMoney(sessionPrice(sim, t), cur, { cents: false })} A Session`}</Gated>)}
+        {booked && <Gated feature="gym.trainer" className="btn btn-sm btn-ghost" onClick={() => { if (run('gym.trainer', {}).ok) toast('No trainer now.', 'neutral'); }}>Stop The Sessions</Gated>}
+      </div>
+    </Panel>
+  );
+}
+
 function GymPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

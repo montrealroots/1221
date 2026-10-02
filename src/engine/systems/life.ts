@@ -36,6 +36,7 @@ import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import { cleanOutfits, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { GROOMING, dailyCare, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
+import { trainedSession } from './trainers';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET,
@@ -451,7 +452,10 @@ export function registerLife(sim: Simulation): void {
       const before = { ...person.wellbeing };
       // Eaten out where there's no kitchen: a restaurant's meal too.
       if (action === 'eat' && !cooks(s, person)) eatsOut(person);
-      const where = action === 'exercise' ? trainingAt(s, person) : undefined;
+      const placed = action === 'exercise' ? trainingAt(s, person) : undefined;
+      // With a trainer booked and a session left this week: their studio's workout, the more built (`systems/trainers.ts`, from 2026-10-02).
+      const coached = placed ? trainedSession(s, person, s.now) : 1;
+      const where = placed && coached > 1 ? { where: 'gym' as const, builds: TRAINING.gym * coached } : placed;
       // A bike's ride builds as a run does, the same hour's work outdoors (`content/rides.ts`).
       const bike = action === 'ride' ? bikeHere(person) : undefined;
       applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
