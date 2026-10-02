@@ -12,7 +12,7 @@ import { Fragment, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
-import { useFeature } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
@@ -83,6 +83,7 @@ export function ClothesWorkspace() {
         <WhatToWear />
         <SellThem />
         <Fit />
+        <YourMeasurements />
         <Bathroom />
         <Salons />
         <Shop />
@@ -270,7 +271,7 @@ function Choose({ productId }: { productId: string }) {
   const p = productById(productId)!;
   const r = retailerById(p.retailer)!;
   // Your own size first: a size off doesn't fit (`sizeFor`, from 2026-10-02).
-  const mine = sizeFor(sim, person, p.sizes);
+  const mine = sizeFor(sim, person, p.sizes, p);
   const sizes = sizeRun(p.sizes);
   const [size, setSize] = useState(mine ?? p.sizes[0] ?? '');
   const [color, setColor] = useState(p.colors[0] ?? '');
@@ -573,6 +574,40 @@ function Salons() {
 }
 
 /** Clothes that no longer fit, and a tailor to take one in (`systems/tailoring.ts`). */
+/** Your measurements, and whose charts you size by: a retailer's own chart picks your size where SLATE keeps one (`chartSize`). */
+function YourMeasurements() {
+  const { run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const m = person.measures;
+  const [department, setDepartment] = useState<'women' | 'men'>(m?.department ?? 'women');
+  const [chest, setChest] = useState(m?.chestCm ? String(m.chestCm) : '');
+  const [waist, setWaist] = useState(m?.waistCm ? String(m.waistCm) : '');
+  const [hip, setHip] = useState(m?.hipCm ? String(m.hipCm) : '');
+  const num = (v: string) => (v.trim() === '' ? undefined : Number(v));
+  const save = () => { if (run('clothes.measures', { department, chestCm: num(chest), waistCm: num(waist), hipCm: num(hip) }).ok) toast('Your sizes now come from each retailer’s chart where it has one.', 'positive'); };
+  return (
+    <Panel title="Your Measurements" subtitle={m ? `Sized By The ${m.department === 'women' ? 'Women’s' : 'Men’s'} Charts` : 'By Body Mass Index Until Given'}>
+      <div className="col gap-2">
+        <div className="field-row">
+          <div className="field">
+            <label htmlFor="measure-dept">Charts</label>
+            <select id="measure-dept" value={department} onChange={(e) => setDepartment(e.target.value === 'men' ? 'men' : 'women')}>
+              <option value="men">Men’s</option>
+              <option value="women">Women’s</option>
+            </select>
+          </div>
+          <div className="field"><label htmlFor="measure-chest">Chest Or Bust, Centimeters</label><input id="measure-chest" inputMode="decimal" value={chest} onChange={(e) => setChest(e.target.value)} /></div>
+          <div className="field"><label htmlFor="measure-waist">Waist, Centimeters</label><input id="measure-waist" inputMode="decimal" value={waist} onChange={(e) => setWaist(e.target.value)} /></div>
+          <div className="field"><label htmlFor="measure-hip">Hips, Centimeters</label><input id="measure-hip" inputMode="decimal" value={hip} onChange={(e) => setHip(e.target.value)} /></div>
+          <Gated feature="clothes.measures" className="btn btn-sm" onClick={save}>Keep These</Gated>
+          {m && <Gated feature="clothes.measures" className="btn btn-sm btn-ghost" onClick={() => { if (run('clothes.measures', { clear: true }).ok) toast('Sized by body mass index again.', 'positive'); }}>Forget Them</Gated>}
+        </div>
+        <div className="xs dim">A top is sized by chest or bust and a bottom by waist, against the retailer’s own chart for its market, where SLATE keeps one (H&M, Uniqlo, Zara, Gap, Old Navy, Levi’s, Marks & Spencer, Next and more). Elsewhere, and until you give them, your size is read from your body mass index.</div>
+      </div>
+    </Panel>
+  );
+}
+
 function Fit() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

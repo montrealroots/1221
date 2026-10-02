@@ -27,6 +27,7 @@ import { CITIES } from '../content/geography';
 import { FUEL_STOP_MINUTES, LEG_KM, METER, MIN_PER_KM, STATIONS, WALK_KM, WALK_KMH, type LegKind } from '../content/errandtrips';
 import { UNRATED_FUEL_USD_PER_KM } from '../content/vehiclefees';
 import { spend } from './household';
+import { meterFree } from './access';
 import { contactsOf } from './people';
 import { laidUp } from './repairs';
 import { stolenNow } from './theft';
@@ -54,9 +55,11 @@ export function leg(cityId: string, by: 'car' | 'foot', kind: LegKind): { km: nu
 }
 
 /** What parking a stop costs in the save's money, or nothing where no rate is published. */
-export function meterCost(sim: Simulation, cityId: string, minutes: number): Money {
+export function meterCost(sim: Simulation, cityId: string, minutes: number, person?: Person): Money {
   const m = METER[cityId];
   if (!m || minutes <= 0) return 0;
+  // Free with a disability permit where the town lets holders park free (`systems/access.ts`, from 2026-10-02).
+  if (person && meterFree(person, cityId)) return 0;
   const cents = Math.round((m.perHour * minutes / 60) * 100);
   const cur = saveCurrency(sim.universe);
   return cur === m.currency ? cents : exchange(cents, m.currency, cur) ?? cents;
@@ -229,7 +232,7 @@ export function registerTrips(sim: Simulation): void {
     const person = s.player;
     if (!person.trip || person.trip.by !== 'car') throw new CommandError('You aren’t out in the car.');
     const minutes = Math.max(0, Number(p?.minutes) || 0);
-    const paid = meterCost(s, person.currentLocationId, minutes);
+    const paid = meterCost(s, person.currentLocationId, minutes, person);
     if (paid > 0 && !spend(s, person, paid, `Parking, ${METER[person.currentLocationId]!.zone}`, 'vehicle')) throw new CommandError('The meter didn’t take the payment.');
     return { paid };
   });

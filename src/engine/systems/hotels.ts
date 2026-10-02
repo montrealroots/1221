@@ -43,6 +43,25 @@ export function amenityLine(hotelId: string): string {
   return bits.length ? `${bits.join(', ')}.`.replace(/^./, (c) => c.toUpperCase()) : '';
 }
 
+/**
+ * When the room is theirs on arriving (from 2026-10-02): at once, arriving
+ * after the hotel's own check-in hour, or in the small hours, the night
+ * before's; arriving in the day before it, at that hour, unless the hotel
+ * gives early check-in for nothing (Pod Times Square, in its facility fee;
+ * the Hoxton, booked direct). No hotel publishes what early check-in costs
+ * otherwise, so it isn't sold.
+ */
+export function roomReadyAt(hotelId: string, arriveAt: Instant): Instant {
+  const h = hotelById(hotelId);
+  const by = h?.checkIn?.match(/^(\d{1,2}):(\d{2})/);
+  const early = amenitiesOf(hotelId)?.earlyCheckIn;
+  if (!h || !by || (early?.offered === true && early.fee === 0)) return arriveAt;
+  const zone = CITIES.require(h.cityId).timeZone;
+  const p = zonedParts(arriveAt, zone);
+  const ready = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: Number(by[1]), minute: Number(by[2]) }, zone);
+  return p.hour < 6 || arriveAt >= ready ? arriveAt : ready;
+}
+
 /** A flexible rate's refund, until a day before arrival where a hotel's own terms aren't known: SLATE's reading of the usual terms. */
 export const FREE_CANCEL_HOURS = 24;
 
@@ -83,6 +102,8 @@ export function namedStayRefusal(person: Person, hotelId: string, roomName: stri
   if (!roomRate(h, room, plan, from)) return plan === 'prepaid' ? 'It offers that room only on a refundable rate.' : 'It offers that room only paid ahead.';
   const age = (from - person.birthInstant) / (365.2425 * MS_DAY);
   if (h.minAge !== null && age < h.minAge) return `${h.name} checks in guests of ${h.minAge} or older.`;
+  // A wheelchair, where the hotel's own pages say it can't take one (`systems/access.ts`, from 2026-10-02).
+  if (person.mobility === 'wheelchair' && amenitiesOf(hotelId)?.accessible === false) return `${h.name} has no wheelchair access.`;
   return undefined;
 }
 

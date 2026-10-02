@@ -50,7 +50,7 @@ import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { moveTo } from './luggage';
-import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil } from './hotels';
+import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
@@ -113,6 +113,7 @@ export interface Journey {
 
 export const LEAVE_KIND = 'travel.leave';
 export const ARRIVE_KIND = 'travel.arrive';
+export const ROOM_READY_KIND = 'travel.room_ready';
 export const CHECKOUT_KIND = 'travel.checkout';
 
 /** A hotel's check-out, eleven in the morning, SLATE's reading of the usual hour. */
@@ -696,7 +697,7 @@ export function registerJourneys(sim: Simulation): void {
     delete j.hotel!.depositDue;
     delete j.hotel!.heldUntil;
     // The key, and the room.
-    if (person.stay?.kind === 'hotel' && person.stay.cityId === j.toCity) delete person.stay.out;
+    if (person.stay?.kind === 'hotel' && person.stay.cityId === j.toCity && person.stay.readyAt === undefined) delete person.stay.out;
     for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === DEPOSIT_DUE_KIND && one.payload.journeyId === j.id) s.timeline.cancel(one.id, s.now);
     return { paid: due };
   });
@@ -714,6 +715,15 @@ export function registerJourneys(sim: Simulation): void {
     for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === CHECKOUT_KIND && one.payload.journeyId === j.id) s.timeline.cancel(one.id, s.now);
     if (person.stay?.kind === 'hotel' && person.stay.cityId === j.toCity) person.stay = { kind: 'sofa', cityId: j.toCity };
     if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'Hotel Stay Given Up', body: `Unpaid, the deposit cost you the room: it went to another guest${back > 0 ? `, and ${formatMoney(back, saveCurrency(s.universe))} came back` : ''}. A friend’s sofa until you leave.`, importance: 85, route: '/workspace/travel' });
+  });
+
+  // The room ready at the hotel's check-in hour, unless a deposit's still held for it.
+  sim.onSchedule(ROOM_READY_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const j = person ? journeysOf(person).find((x) => x.id === item.payload.journeyId) : undefined;
+    if (!person || !j || person.stay?.kind !== 'hotel' || person.stay.readyAt === undefined) return;
+    delete person.stay.readyAt;
+    if (!j.hotel?.depositDue) delete person.stay.out;
   });
 
   sim.onSchedule(CHECKOUT_KIND, (item, s) => {
@@ -757,6 +767,13 @@ export function registerJourneys(sim: Simulation): void {
     } else if (j.hotel) {
       // A named hotel's own gym and pool, where it's named (`stayPlace`, from 2026-10-02).
       person.stay = { kind: 'hotel', cityId: j.toCity, ...(j.hotel.named ? { hotelId: j.hotel.named.hotelId } : {}) };
+      // Its room at its own check-in hour, arriving before it (`roomReadyAt`, from 2026-10-02).
+      const ready = j.hotel.named ? roomReadyAt(j.hotel.named.hotelId, s.now) : s.now;
+      if (ready > s.now) {
+        person.stay.out = true;
+        person.stay.readyAt = ready;
+        s.schedule({ at: ready, kind: ROOM_READY_KIND, label: 'Hotel Check-In', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id } });
+      }
       // A named hotel's deposit, held at arrival and returned at check-out (`depositFor`, from 2026-10-01).
       const deposit = j.hotel.named ? depositFor(s, j.hotel.named.hotelId, j.hotel.nights) : 0;
       if (deposit > 0 && payFromBank(s, person, deposit, `${hotelById(j.hotel.named!.hotelId)!.name}, the deposit held`, 'travel')) j.hotel.deposit = deposit;

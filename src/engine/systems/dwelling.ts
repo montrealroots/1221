@@ -89,6 +89,8 @@ export interface Stay {
   out?: boolean;
   /** A named hotel's, for its own gym and pool (`content/hotelamenities.ts`, from 2026-10-02). */
   hotelId?: string;
+  /** Arrived before the hotel's check-in hour: when the room is theirs (`roomReadyAt`, from 2026-10-02). */
+  readyAt?: number;
   /** The day breakfast was had at the hotel (`systems/hotelbreakfast.ts`, from 2026-10-02). */
   breakfastOn?: string;
 }

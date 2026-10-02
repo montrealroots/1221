@@ -31,6 +31,7 @@ import { DINING_MINUTES } from '../content/dining';
 import { PINT, WIDMARK, drinkingAge } from '../content/alcohol';
 import { clamp } from '../core/rng';
 import { contactsOf, declines } from './people';
+import { atWork, atWorkReason } from './availability';
 import { seatsAtHome } from './furnishings';
 import { mealOf, spend } from './household';
 import { TIDY, livingOf } from './dwelling';
@@ -84,7 +85,7 @@ export function registerHosting(sim: Simulation): void {
     const declined: { contactId: string; reason: string }[] = [];
     for (const id of ids) {
       const c = contactsOf(person).find((x) => x.id === id)!;
-      const reason = declines(person, c, { contactId: id, at, what: 'visit' });
+      const reason = declines(person, c, { contactId: id, at, what: 'visit' }) ?? (atWork(s, c, at, gatheringMinutes(what)) ? atWorkReason(c) : undefined);
       c.memory.unshift({ at: s.now, what: reason ? `Said no to ${what} at yours: ${reason}` : `Said yes to ${what} at yours` });
       if (reason) declined.push({ contactId: id, reason });
       else coming.push(id);

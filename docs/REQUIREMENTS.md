@@ -80,7 +80,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 22f | Store, use, return, repair, gift, resell | Partial | moves, laundry, return, resale; tests | Repair, gift, refund to the original payment |
 | 23 | Departments; petite, tall, extended, maternity, adaptive; nothing blocked by gender | Partial | No gender gate | `department`, fit range, browsing preference; adaptive and more maternity |
 | 24 | Subcategories (underwear styles, lingerie, hosiery, swimwear, thermals, cultural…) | Partial | 16 kinds, 11 slots | `subtype`; swimwear, shapewear, hosiery, slips, cultural clothing |
-| 25 | Fit by real measures and size charts | Partial | Size from BMI share (`sizeFor`) | Body measurements; charts per retailer; shoe and ring fit; waist-by-inseam |
+| 25 | Fit by real measures and size charts | Partial, 2026-10-02 | measurements given and the charts sized by (`clothes.measures`); 130 retailers' own charts (`content/sizecharts.ts`): a top by chest or bust, a bottom by waist (`chartSize`); body mass index otherwise | Shoe and ring fit; waist-by-inseam; hips read |
 | 26 | Jordans and designer products, retail vs resale | Partial, 2026-10-02 | 30 Air Jordans by style code (`content/sneakers.ts`): retail offers in five markets with tax, GOAT new and used asks with shipping in America, sold on GOAT at its fees; tests/sneakers.test.ts | StockX (refused the reads); GOAT outside America; designer resale (Vestiaire and The RealReal schedules are in the research, not built) |
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
 | 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
@@ -214,7 +214,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
 | 48h | Check-in requirements | Partial | age at booking | Check-in step |
 | 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
-| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`) | Incidentals; the room's belongings |
+| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`); its breakfast; the room given at its own check-in hour, or at once where early check-in is free (`roomReadyAt`) | Incidentals; the room's belongings; early check-in bought (no hotel publishes its price) |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
 | 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
 | 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |
@@ -230,10 +230,10 @@ Correctness first, then the connected day the plan asks to be shown working
 | 51.1 | Prescriptions | Partial | paid at the counter; England's prepayment certificate, three months or a year (`health.prepay`, 2026-10-02) | A prescription, supply, refills, collection |
 | 51.2 | Insurance | Partial | deep cover engine | Claims and denials; private cover abroad |
 | 51.3 | Travel insurance | Complete | tests/travelinsurance | — |
-| 51.4 | Accessibility | Not implemented | — | A needs model and venue attributes |
+| 51.4 | Accessibility | Partial, 2026-10-02 | `systems/access.ts`: a wheelchair said on Papers; a hotel its own pages say can’t take one refused; a disability permit at each place’s fee, meters free where the town allows | Stations without step-free access, paratransit, accessible taxis, accessible homes |
 | 52.1–4 | Friends, dating, partners, marriage | Complete | people, dating, marriage; tests | More activities |
 | 52.5–6 | Parenting, caregiving | Partial | costs and benefits | A child's day; care given as time |
-| 52.7–9 | Lives of their own; shared activities; household | Partial | `declines()` | Availability, interests, memory read; activities; chores |
+| 52.7–9 | Lives of their own; shared activities; household | Partial | `declines()`; from 2026-10-02 a job of their own at the country's employment rate for their age, at work nine to five on the days ATUS says the employed work (`systems/availability.ts`, decider `social.availability`) | Interests, memory read; activities; chores |
 | 53.1–2, 4, 6–9 | Representation, auditions, contracts, work, travel, press, awards | Complete | career.ts; tests | Breakdowns; attending a ceremony |
 | 53.3, 10–11 | Preparation, professional contacts, dressing for the room | Partial | coaching | Prep time; casting contacts; a dress check |
 | 53.5 | Fittings | Done, 2026-10-02 | paid only when `present`, missed otherwise; tests/fittings.test.ts | — |

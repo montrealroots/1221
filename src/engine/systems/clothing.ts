@@ -42,7 +42,7 @@ import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { stow } from './trips';
-import { fitOf, fitKgFor, sizeFor } from './tailoring';
+import { fitOf, fitKgFor, measuresRefusal, sizeFor, type Measures } from './tailoring';
 import { bodyOf } from './body';
 import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
 
@@ -220,7 +220,7 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
     const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how, at: sim.now, goods: q.goods[i]!, count };
     const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
     // Bought for the body they have now, in the size chosen: a size off is made for a body a step heavier or lighter (`fitKgFor`, `systems/tailoring.ts`).
-    const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size) } };
+    const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size, p) } };
     return { purchase, count, line };
   });
   if (how === 'online') {
@@ -509,7 +509,7 @@ export function cheapestOf(sim: Simulation, person: Person, kind: string, slot: 
   const market = marketOf(person.home?.cityId ?? person.currentLocationId);
   const ways = CLOTHING_PRODUCTS.filter((p) => p.market === market && p.kind === kind && p.slot === slot).flatMap((p) => {
     // Your own size, where the run can be ordered; the middle one where it can't (`sizeFor`).
-    const size = p.sizes.length ? sizeFor(sim, person, p.sizes) ?? p.sizes[Math.floor(p.sizes.length / 2)] : undefined;
+    const size = p.sizes.length ? sizeFor(sim, person, p.sizes, p) ?? p.sizes[Math.floor(p.sizes.length / 2)] : undefined;
     const color = p.colors.length > 1 ? p.colors[0] : undefined;
     const how = (['store', 'online'] as const).find((h) => !buyRefusal(person, { productId: p.id, how: h, size, color }));
     return how ? [{ product: p, how, size, color, each: productPrice(sim, person.currentLocationId, p) / p.pack }] : [];
@@ -565,6 +565,17 @@ export function replaceWornOut(sim: Simulation, person: Person): number {
 }
 
 export function registerClothing(sim: Simulation): void {
+  // Your measurements, for the retailers' own charts (`chartSize` in `systems/tailoring.ts`, from 2026-10-02).
+  sim.onCommand<Partial<Measures> & { clear?: boolean }, { kept: boolean }>('clothes.measures', (p, { sim: s }) => {
+    const person = s.player;
+    if (p?.clear) { delete person.measures; return { kept: false }; }
+    const m: Partial<Measures> = { department: p?.department, ...(p?.chestCm !== undefined ? { chestCm: Number(p.chestCm) } : {}), ...(p?.waistCm !== undefined ? { waistCm: Number(p.waistCm) } : {}), ...(p?.hipCm !== undefined ? { hipCm: Number(p.hipCm) } : {}) };
+    const no = measuresRefusal(m);
+    if (no) throw new CommandError(no);
+    person.measures = m as Measures;
+    return { kept: true };
+  });
+
   sim.onSchedule(READY_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (person?.id === s.universe.playerId) s.notify({ category: 'home', title: 'Dry Cleaning Ready', body: `Your dry cleaning is ready to collect in ${CITIES.get(String(item.payload.cityId))?.name ?? 'town'}.`, importance: 25, route: '/workspace/clothes' });

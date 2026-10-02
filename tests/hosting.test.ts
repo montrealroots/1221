@@ -7,7 +7,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { HALL } from '@/engine/content/people';
 import { FURNITURE_CATALOG } from '@/engine/content/furniturecatalog';
@@ -25,7 +25,7 @@ import { mealOf } from '@/engine/systems/household';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const friend = (sim: Simulation, seed: string, hours: number = HALL.friend) => { const c = newContact(sim, sim.player, sim.player.home!.cityId, seed, { at: sim.now, how: 'school' }); c.hours = hours; contactsOf(sim.player).push(c); return c; };
-const evening = (sim: Simulation, days = 2, hour = 19) => { const d = new Date(sim.now + days * MS_DAY); return sim.now + days * MS_DAY + ((hour - d.getUTCHours() + 24) % 24) * 3_600_000; };
+const evening = (sim: Simulation, days = 2, hour = 19) => { const p = zonedParts(sim.now + days * MS_DAY, 'America/New_York'); return instantFromZoned({ year: p.year, month: p.month, day: p.day, hour, minute: 0 }, 'America/New_York'); };
 
 describe('IKEA’s pieces', () => {
   it('are where you live, cheapest first, at IKEA’s price taxed and delivered', () => {
