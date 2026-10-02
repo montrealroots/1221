@@ -44,6 +44,7 @@ import { placeOf } from './dwelling';
 import { applyLookingAfter, occupiedAt } from './life';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
 import { closedNow } from './errands';
+import { stow } from './trips';
 import { foodOf, fresh, mealsReady, stockOf, takePortion, throwOutSpoiled, type Stocked } from './pantry';
 
 const MARKET: Readonly<Record<string, string>> = { us: 'US', uk: 'GB', ie: 'IE', ca: 'CA', mx: 'MX' };
@@ -120,10 +121,11 @@ export function buyGroceries(sim: Simulation, person: Person, productId: string,
   if (!spend(sim, person, paid, chain.name, 'food')) throw new CommandError('The payment didn’t go through.');
   const home = homeKeyOf(person.home)!;
   for (let i = 0; i < quantity; i += 1) {
-    addItem(sim, person, {
+    // Carried, or in the car, until a trip out is home (`stow`).
+    stow(person, addItem(sim, person, {
       kind: p.id, label: p.name, quantity: 1, condition: 1, at: { kind: 'home', home, spot: SPOT[p.storage] }, acquiredAt: sim.now, paid: Math.round(paid / quantity),
       food: { key: p.food, unit: p.sizeUnit, left: p.sizeQty, ...(p.keepsDays === null ? {} : { expiresAt: sim.now + p.keepsDays * MS_DAY }) },
-    });
+    }), sim.now);
   }
   return paid;
 }

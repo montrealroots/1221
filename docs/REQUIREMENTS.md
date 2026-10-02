@@ -169,7 +169,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 40b | Change the plan mid-trip | Partial | one-click run | Step-by-step trip |
 | 40c | Parking | Partial | meter by the minute | Lots and garages; limits |
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
-| 40e | Purchases carried or in the car until moved | Not implemented | groceries go home at once | Carried and in-car places; unload |
+| 40e | Purchases carried or in the car until moved | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
 | 40g | Out of fuel | Not implemented | — | With the tank |
 | 40h | Breakdowns, delays | Partial | severe fault refuses | Mid-trip breakdown; tow |
 | 40i | Where it's parked | Partial | town only | Spot level |
@@ -252,4 +252,4 @@ Correctness first, then the connected day the plan asks to be shown working
 | 57 | New mechanics reviewed, never run against saves | Partial | proposals only | A development-proposal role |
 | 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search | From a missing ingredient to the shop and back to the meal |
 | 59 | Activity states, recovery, no duplicates | Partial | orders, journeys, works | A common state model across activities |
-| 62 | The connected day, shown working | Not yet shown | — | After order step 2 |
+| 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | The shower takes no towel (§31c, §31g); no washing up (§33i) |

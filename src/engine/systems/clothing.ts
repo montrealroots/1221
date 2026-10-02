@@ -41,6 +41,7 @@ import { atTown } from './homes';
 import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { cancelOrder, ordersOf, placeOrder } from './orders';
+import { stow } from './trips';
 import { fitOf, fitKgFor, sizeFor } from './tailoring';
 import { bodyOf } from './body';
 import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
@@ -192,7 +193,7 @@ export function buyClothes(sim: Simulation, person: Person, o: BuyOptions): Clot
     // Carried home where home is in this town; on them otherwise.
     const home = homeKeyOf(person.home);
     const at: Place = home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' };
-    for (let i = 0; i < count; i += 1) addItem(sim, person, { ...line, garment: { ...line.garment }, at, acquiredAt: sim.now });
+    for (let i = 0; i < count; i += 1) stow(person, addItem(sim, person, { ...line, garment: { ...line.garment }, at, acquiredAt: sim.now }), sim.now);
   }
   (person.clothesBought ??= []).push(purchase);
   return purchase;
