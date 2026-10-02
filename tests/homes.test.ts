@@ -25,7 +25,7 @@ import { fixturesOf, trainingAt } from '@/engine/systems/dwelling';
 import { billsOf } from '@/engine/systems/household';
 import {
   HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
-  lifeOf, livingIn, loanBalance, marketRent, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
+  lifeOf, livingIn, loanBalance, marketRent, projectCost, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
   type Listing, type OwnedHome, renewTenancy } from '@/engine/systems/homes';
 
 function save(seed: string, city = 'us-ct-newhaven'): Simulation {
@@ -317,6 +317,16 @@ describe('renovating', () => {
     sim.advanceBy((roof.days + 1) * MS_DAY);
     expect(owned.facts.parts.roof).toBeGreaterThanOrEqual(year);
     expect(homeValue(sim, owned) - value).toBeGreaterThanOrEqual(worn * 0.99);
+  });
+
+  it('refinishes worn hardwood for more than it costs, as NAR finds, and new floors for next to nothing', () => {
+    const { sim, owned } = bought('homes-refinish', 1);
+    const refinish = PROJECTS.find((p) => p.id === 'floors-refinish')!;
+    const year = new Date(sim.now).getUTCFullYear();
+    owned.facts.parts.floors = year - 40;
+    expect(projectAdds(sim, owned, refinish)).toBeGreaterThan(projectCost(sim, owned, refinish));
+    owned.facts.parts.floors = year;
+    expect(projectAdds(sim, owned, refinish)).toBe(0);
   });
 
   it('opens and closes work by what the home has', () => {

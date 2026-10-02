@@ -278,7 +278,11 @@ const DETACHED: readonly HomeType[] = ['house', 'estate'];
 export const PROJECTS: readonly Project[] = [
   // Inside, any home.
   { id: 'paint', label: 'Repaint Inside', usd: 5_000, perSize: 1_500, recoup: 0.5, days: 5, renews: 'paint', on: ALL },
-  { id: 'floors', label: 'New Hardwood Floors', usd: 14_000, perSize: 1_500, recoup: 0.75, days: 10, renews: 'floors', on: ALL },
+  // From 2026-10-01: hardwood at the middle of Fixr's $14 to $32 a square foot installed (research-facilities.json), where it was
+  // $14,000 for 1,500 square feet, under Fixr's least; what a buyer pays for it, NAR's 2022 Remodeling Impact Report (a search's
+  // summary): new wood flooring 118% of its cost, a refinish 147% ($3,400 for $5,000), where SLATE had taken 75%.
+  { id: 'floors', label: 'New Hardwood Floors', usd: 34_500, perSize: 1_500, recoup: 1.18, days: 10, renews: 'floors', on: ALL },
+  { id: 'floors-refinish', label: 'Refinish The Hardwood Floors', usd: 3_400, recoup: 1.47, days: 3, renews: 'floors', on: ALL },
   { id: 'kitchen-minor', label: 'Minor Kitchen Remodel', usd: 27_000, recoup: 0.95, days: 21, renews: 'kitchen', on: ALL },
   { id: 'kitchen-major', label: 'Major Kitchen Remodel', usd: 80_000, recoup: 0.5, days: 60, renews: 'kitchen', on: ALL },
   { id: 'kitchen-upscale', label: 'Upscale Kitchen Remodel', usd: 160_000, recoup: 0.35, days: 90, renews: 'kitchen', on: ['condo', 'penthouse', ...HOUSES] },

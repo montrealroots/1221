@@ -73,7 +73,7 @@ corrected in the same commit, as the backlog's progress table is.
 | Purchase | Works | `land.offer`. |
 | A project such as a field or a pool | Part | A house built on land (`build.start`), and on a home a pool, deck, patio, garage, suite or ADU, a tennis court in seven surfaces, a half basketball court, and lights for either (`home.renovate`); fields aren't kept, changing nothing SLATE reads. |
 | Feasibility and alternatives | Part | Whether the place allows a house; England doesn't. |
-| Dimensions, materials, equipment | Part | A court's surface and its lot, Fixr's singles area for tennis and half an NBA court for basketball; a spare bedroom made a home gym. Floors, counters and cabinets aren't kept: they change nothing SLATE reads. |
+| Dimensions, materials, equipment | Part | A court's surface and its lot, Fixr's singles area for tennis and half an NBA court for basketball; a spare bedroom made a home gym. New hardwood floors or a refinish, recouped on a worn floor as NAR finds; counters and cabinets go in with a kitchen remodel. |
 | Quotes and approvals | Part | The permit and the place's fees, paid at the start; one cost, not bids, no source publishing how far a home's bids spread. |
 | Schedule and payments | Works | Staged payments on a build (`build.pay`). |
 | Follow construction | Works | Stages, inspections, a failed one possible. |
