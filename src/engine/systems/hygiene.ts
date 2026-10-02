@@ -207,6 +207,18 @@ export function starterSupplies(sim: Simulation, person: Person): boolean {
   return true;
 }
 
+/**
+ * What a shortfall buys in place (the master plan's §58, from 2026-10-02):
+ * the cheapest of a kind in a store here, by the same rules as buying it on
+ * its own (`toiletryRefusal`, open now), with its price; nothing where
+ * none can be bought now.
+ */
+export function shortfallBuy(sim: Simulation, person: Person, kind: string): { toiletry: Toiletry; price: Money } | undefined {
+  const t = cheapestToiletry(sim, person.currentLocationId, kind);
+  if (!t || toiletryRefusal(person, t.id, 1, sim.now)) return undefined;
+  return { toiletry: t, price: toiletryPrice(sim, person.currentLocationId, t) };
+}
+
 /** The detergents a home begins with, once, beside its toiletries: laundry detergent, and the dishwasher's where it has one. */
 export function starterCleaning(sim: Simulation, person: Person, dishwasher: boolean): boolean {
   if (keepsCleaning(person) || !keepsSupplies(person) || !person.home) return false;
