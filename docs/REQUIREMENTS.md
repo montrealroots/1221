@@ -224,7 +224,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
 | 50.1–2 | Find a provider; access and coverage | Partial | 35 providers in 8 towns | Dentists, opticians, therapists, specialists; a quote before care |
-| 50.3–7 | Book, prepare, attend, outcome, referral | Partial, 2026-10-02 | `systems/appointments.ts`: a doctor's visit booked for the place's published wait (England's distribution, AMN's days, IMSS's 29, Canada's next-day share), on the calendar, kept and billed or missed and owed, booked again or called off; tests/appointments.test.ts | Referrals (the specialist waits are now researched); outcomes beyond the bill; Ireland's wait unpublished |
+| 50.3–7 | Book, prepare, attend, outcome, referral | Partial, 2026-10-02 | `systems/appointments.ts`: a doctor's visit booked for the place's published wait (England's distribution, AMN's days, IMSS's 29, Canada's next-day share), on the calendar, kept and billed or missed and owed, booked again or called off; tests/appointments.test.ts; from 2026-10-02 a kept visit ends in a referral at the place's share (NAMCS 9.1%, England 8.1%, England's for Canada), the specialist booked after its published wait (`mayRefer`, decider `health.referral`) | What the specialist finds (no SLATE condition names one); Ireland and Mexico (no wait published) |
 | 50.8 | Payment and coverage | Complete | bills, aid; tests | — |
 | 50.9–11 | Prescriptions, recovery, commitments | Partial | — | §51; follow-ups |
 | 51.1 | Prescriptions | Partial | paid at the counter; England's prepayment certificate, three months or a year (`health.prepay`, 2026-10-02) | A prescription, supply, refills, collection |

@@ -237,8 +237,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `health.apply_aid` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `safetynet.test.ts` | Between Jobs |
-| `health.book` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` | Between Jobs |
-| `health.cancel_appointment` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` | Between Jobs |
+| `health.book` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `referrals.test.ts` | Between Jobs |
+| `health.cancel_appointment` | `src/engine/systems/appointments.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` `referrals.test.ts` | Between Jobs |
 | `health.choose_clinic` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `clinics.test.ts` | Between Jobs |
 | `health.choose_pharmacy` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carevisits.test.ts` | Between Jobs |
 | `health.dental` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `costs.test.ts` | Between Jobs |
