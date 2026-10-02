@@ -230,13 +230,13 @@ export function conditionWord(age: number, life: number): 'New' | 'Good' | 'Date
 }
 
 export type Feature = 'garage' | 'yard' | 'basement' | 'finishedBasement' | 'attic' | 'furnace' | 'heatPump' | 'metalRoof'
-  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights' | 'pickleballCourt';
+  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights' | 'pickleballCourt' | 'footballPitch';
 
 export const FEATURE_LABEL: Readonly<Record<Feature, string>> = {
   garage: 'Garage', yard: 'Yard', basement: 'Unfinished Basement', finishedBasement: 'Finished Basement', attic: 'Attic',
   furnace: 'Gas Furnace', heatPump: 'Heat Pump', metalRoof: 'Metal Roof', deck: 'Deck', patio: 'Patio', pool: 'Pool',
   solar: 'Solar Panels', generator: 'Backup Generator', adu: 'Backyard Cottage', stone: 'Stone Front',
-  tennisCourt: 'Tennis Court', basketballCourt: 'Half Basketball Court', tennisLights: 'Lights On The Tennis Court', basketballLights: 'Lights On The Basketball Court', pickleballCourt: 'Pickleball Court',
+  tennisCourt: 'Tennis Court', basketballCourt: 'Half Basketball Court', tennisLights: 'Lights On The Tennis Court', basketballLights: 'Lights On The Basketball Court', pickleballCourt: 'Pickleball Court', footballPitch: 'Football Pitch',
 };
 
 // ---------------------------------------------------------------------------
@@ -334,6 +334,13 @@ export const PROJECTS: readonly Project[] = [
   // Pickleball's 30 by 60 foot play area; its month and its return are the tennis court's, SLATE's, none being published, and
   // no price for lighting one was found, so it's played by day.
   { id: 'pickleball', label: 'Build A Pickleball Court', usd: 34_000, recoup: 0.3, days: 30, on: HOUSES, needs: ['yard'], lacks: ['pickleballCourt'], lot: 30 * 60, adds: { gains: ['pickleballCourt'] } },
+  // From 2026-10-02: a football pitch in artificial turf with sand and rubber infill, at a residential backyard's $10 to $15
+  // a square foot, its middle, and a drainage base's $4 (turf installers' published ranges, research-facilities.json); a
+  // natural grass pitch's price wasn't read. Three sizes: the common five-a-side cage's 40 by 20 meters, the FA's 5v5 youth
+  // pitch at 40 by 30 yards, and FIFA's recommended 105 by 68. Its month and its return are the tennis court's, SLATE's.
+  { id: 'pitch-five', label: 'Build A Five-A-Side Football Pitch', usd: Math.round(40 * 20 * 10.7639 * 16.5), recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['footballPitch'], lot: Math.round(40 * 20 * 10.7639), adds: { gains: ['footballPitch'] } },
+  { id: 'pitch-youth', label: 'Build A Youth Football Pitch', usd: Math.round(40 * 30 * 9 * 16.5), recoup: 0.3, days: 30, on: DETACHED, needs: ['yard'], lacks: ['footballPitch'], lot: 40 * 30 * 9, adds: { gains: ['footballPitch'] } },
+  { id: 'pitch-full', label: 'Build A Full-Size Football Pitch', usd: Math.round(105 * 68 * 10.7639 * 16.5), recoup: 0.3, days: 60, on: DETACHED, needs: ['yard'], lacks: ['footballPitch'], lot: Math.round(105 * 68 * 10.7639), adds: { gains: ['footballPitch'] } },
   { id: 'basketball-lights', label: 'Light The Basketball Court', usd: 3_000, recoup: 0.3, days: 3, on: HOUSES, needs: ['basketballCourt'], lacks: ['basketballLights'], adds: { gains: ['basketballLights'] } },
   { id: 'pool-renew', label: 'Resurface And Re-Equip The Pool', usd: 20_000, recoup: 0.5, days: 14, renews: 'pool', on: DETACHED, needs: ['pool'] },
   // Room.

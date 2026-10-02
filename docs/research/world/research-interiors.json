@@ -1,0 +1,668 @@
+{
+  "_meta": {
+    "title": "Custom car interiors: upholstery shops by town, Katzkin, materials and labour",
+    "researchedOn": "2026-10-02",
+    "purpose": "Real-world basis for re-doing a car's interior to the player's own design (seats, door cards, headliner, carpets, steering wheel, stitching, piping) in a chosen material and colour, e.g. a leopard-print interior.",
+    "fieldKey": {
+      "cityId": "SLATE's city id, as in src/engine/content/carshops.ts. null on an entry that is a reference point outside SLATE's eight towns.",
+      "inTown": "true when the shop is inside the town (or its city limits / Greater London / CDMX); false when it is a metro-area or national reference point, kept because it publishes a figure.",
+      "prices": "Numbers in the local currency's major unit. 'from' is a published starting price; low/high a published range. vat says whether a UK/IE price includes VAT where the page says.",
+      "confidence": "page-read = the figure or fact was read on the fetched page itself on the date given; search-summary = seen only in a search engine's summary or a directory listing, because the page could not be opened (403, expired certificate, truncated). Re-check search-summary figures before treating them as firm.",
+      "read": "Date the source was read."
+    },
+    "method": "Shops' own sites first, then directories (Yelp, YellowPages, Golden Pages, yellowpages.ca) for addresses. Most auto upholstery shops in all eight towns publish no prices and quote only after seeing the car; where so, prices is empty and the note says so. Nothing was invented. Builds on research-gaps-cars-clothes.json (2026-10-02), research-customization.json (2026-09-30) and research-vehicle-shops.json (2026-10-01), whose upholstery figures are re-cited here where they were re-read."
+  },
+
+  "shops": [
+    {
+      "id": "best-yet-auto-tops-brooklyn",
+      "name": "Best Yet Auto Tops & Upholstery",
+      "cityId": "us-ny-newyork", "town": "New York", "inTown": true,
+      "address": "680 65th St, Brooklyn, NY 11220",
+      "phone": "(718) 833-1894",
+      "hours": "Mon-Fri 7:30-17:30; Sat-Sun closed",
+      "services": ["seat upholstery", "headliner", "convertible and vinyl tops", "seat covers"],
+      "materials": [], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://www.yelp.com/biz/best-yet-auto-tops-and-upholstery-brooklyn",
+      "read": "2026-10-02",
+      "notes": "No website found; publishes no prices. Address and hours from Yelp/YellowPages listings."
+    },
+    {
+      "id": "city-seat-covers-lic",
+      "name": "City Seat Covers, Inc.",
+      "cityId": "us-ny-newyork", "town": "New York", "inTown": true,
+      "address": "41-24 38th Street, Long Island City, NY 11101",
+      "phone": "718-585-5473",
+      "hours": "Mon-Fri 8:00-17:00",
+      "services": ["vinyl and leather seat covers", "custom flooring", "ceiling (headliner) repair", "Katzkin leather seat systems (authorized dealer)"],
+      "materials": ["vinyl", "leather"], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.cityseatcovers.com/",
+      "read": "2026-10-02",
+      "notes": "Over 40 years serving NYC's taxi trade. Publishes no prices or lead times."
+    },
+    {
+      "id": "ivan-car-upholstery-bronx",
+      "name": "Ivan Car Upholstery LLC",
+      "cityId": "us-ny-newyork", "town": "New York", "inTown": true,
+      "address": "The Bronx, NY 10461 (street address not published on the site; a directory lists 2419 Poplar St)",
+      "phone": "(551) 294-8112",
+      "hours": "Mon-Fri 9:00-17:30; Sat 9:00-16:00; Sun closed",
+      "services": ["seat repair", "leather seat repair", "headliner", "door panels", "dashboard", "carpet replacement", "seat belt replacement"],
+      "materials": [], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.ivancarupholsteryllc.com/",
+      "read": "2026-10-02",
+      "notes": "Free estimates only; no prices. Serves the Bronx, Manhattan and Queens. Street address from search summary."
+    },
+    {
+      "id": "mccoys-upholstery-woodside",
+      "name": "McCoys Upholstery",
+      "cityId": "us-ny-newyork", "town": "New York", "inTown": true,
+      "address": "Woodside, Queens, NY (street address not confirmed)",
+      "services": ["headliner", "seat repair"],
+      "materials": [], "customPatterns": null,
+      "prices": [
+        {"item": "headliner", "value": 475, "currency": "USD", "basis": "flat, as quoted in a Yelp project-cost summary", "confidence": "search-summary"},
+        {"item": "seat repair", "value": 375, "currency": "USD", "basis": "flat, as quoted in a Yelp project-cost summary", "confidence": "search-summary"}
+      ],
+      "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://www.yelp.com/biz/mccoys-upholstery-woodside",
+      "read": "2026-10-02",
+      "notes": "Both figures appeared twice in search summaries of Yelp's NYC headliner listings; research-gaps-cars-clothes.json (same day) could not find them on a page and also saw a $1,100 headliner quote in a Yelp review. Treat as unconfirmed."
+    },
+    {
+      "id": "mastercrafts-lynbrook",
+      "name": "Mastercrafts Custom Upholstery",
+      "cityId": "us-ny-newyork", "town": "New York", "inTown": false,
+      "address": "393 Sunrise Hwy, Lynbrook, NY 11563",
+      "phone": "(646) 262-8200",
+      "services": ["seats (fabric, vinyl, leather)", "headliner", "carpets", "door panels", "dashboards", "convertible tops", "vinyl roof covers"],
+      "materials": ["fabric", "vinyl", "leather"], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.mastercraftsupholstery.com/auto-upholstery-nyc/",
+      "read": "2026-10-02",
+      "notes": "Nassau County, just outside the city line; serves NYC and Brooklyn. Free quotation only."
+    },
+
+    {
+      "id": "los-angeles-upholstery-pico",
+      "name": "Los Angeles Upholstery (Car Upholstery Los Angeles)",
+      "cityId": "us-ca-losangeles", "town": "Los Angeles", "inTown": true,
+      "address": "3268 W Pico Blvd, Los Angeles, CA 90019",
+      "phone": "(213) 536-9916",
+      "services": ["headliner repair and replacement", "seat reupholstery", "leather seat repair", "seat foam and frame repair", "carpet and floor mats", "door panels and armrests", "custom car interior design"],
+      "materials": ["fabric", "leather"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://losangelesupholstery.com/headliner-repair/",
+      "read": "2026-10-02",
+      "notes": "Founded 1985 per search summary. Advertises a 'Guaranteed Lowest Price' but lists no prices."
+    },
+    {
+      "id": "advance-auto-upholstery-van-nuys",
+      "name": "Advance Auto Upholstery",
+      "cityId": "us-ca-losangeles", "town": "Los Angeles", "inTown": true,
+      "address": "7008 Van Nuys Boulevard, Van Nuys, CA 91405",
+      "phone": "(747) 777-9682",
+      "hours": "Mon-Fri 8:00-18:00; Sat 9:00-16:00; Sun closed",
+      "services": ["seat repair and reupholstery (leather, vinyl, fabric)", "headliner replacement", "dashboard", "door panels", "carpet replacement", "steering wheel repair", "full interior restoration", "custom upholstery"],
+      "materials": ["leather", "vinyl", "fabric"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://aaupholstery.net/",
+      "read": "2026-10-02",
+      "notes": "Van Nuys is within the City of Los Angeles. Free estimates; no prices."
+    },
+    {
+      "id": "best-way-auto-upholstery",
+      "name": "Best Way Auto Upholstery",
+      "cityId": "us-ca-losangeles", "town": "Los Angeles", "inTown": true,
+      "address": "Los Angeles, CA 90232 (street address not read)",
+      "services": ["headliner", "seat reupholstery and repair (leather, vinyl, cloth)", "steering wheel upholstery", "custom car interior"],
+      "materials": ["leather", "vinyl", "cloth"], "customPatterns": true,
+      "prices": [
+        {"item": "headliner", "value": 150, "currency": "USD", "basis": "from, simplest headliners", "confidence": "search-summary"}
+      ],
+      "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://bestwayautoupholstery.com/car-headliner-repair/",
+      "read": "2026-10-02",
+      "notes": "The site's TLS certificate had expired, so no page could be opened; the $150 'starts at' figure is from search summaries (twice). 90232 is the Palms/Culver City border."
+    },
+    {
+      "id": "car-classic-interiors-van-nuys",
+      "name": "Car Classic Interiors",
+      "cityId": "us-ca-losangeles", "town": "Los Angeles", "inTown": true,
+      "address": "15735 Strathern St, Van Nuys, CA",
+      "services": ["upholstery repair and replacement", "headliner"],
+      "materials": [], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://www.yelp.com/biz/car-classic-interiors-van-nuys-2",
+      "read": "2026-10-02",
+      "notes": "Directory listing only."
+    },
+
+    {
+      "id": "hudat-upholstery-west-haven",
+      "name": "HuDat Upholstery",
+      "cityId": "us-ct-newhaven", "town": "New Haven", "inTown": false,
+      "address": "445 Front Ave, West Haven, CT 06516",
+      "phone": "(203) 932-1112",
+      "hours": "Mon-Fri 9:00-17:00",
+      "services": ["seats", "convertible tops", "door panels", "dash", "headliner", "carpet", "trunk"],
+      "materials": [], "customPatterns": null,
+      "prices": [], "leadTime": {"value": 24, "unit": "hours", "note": "Only for police-cruiser seat repairs, by appointment; no lead time for private cars."},
+      "confidence": "page-read",
+      "source": "https://hudatupholstery.com/",
+      "read": "2026-10-02",
+      "notes": "West Haven borders New Haven. Estimates by in-person inspection only. Fairfield Auto Upholstery is listed at the same address and phone in directories."
+    },
+    {
+      "id": "new-haven-auto-interiors-hamden",
+      "name": "New Haven Auto Interiors Inc",
+      "cityId": "us-ct-newhaven", "town": "New Haven", "inTown": false,
+      "address": "2850 State St, Hamden, CT 06517",
+      "phone": "(203) 248-7486",
+      "hours": "Mon-Fri 9:00-17:00",
+      "services": ["seat covers", "tops", "upholstery and trim"],
+      "materials": [], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://www.superpages.com/hamden-ct/bpp/new-haven-auto-interiors-4163355",
+      "read": "2026-10-02",
+      "notes": "Hamden borders New Haven. Directory says cash only, 49 years in business. No website."
+    },
+    {
+      "id": "hamden-auto-interiors",
+      "name": "Hamden Auto Interiors",
+      "cityId": "us-ct-newhaven", "town": "New Haven", "inTown": false,
+      "address": "923 Dixwell Ave, Hamden, CT 06514",
+      "phone": "(203) 562-7236",
+      "services": ["seat covers", "tops", "upholstery"],
+      "materials": [], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://www.yellowpages.com/new-haven-ct/auto-upholstery-shops",
+      "read": "2026-10-02",
+      "notes": "Directory listing only (page returned 403; seen in search summary)."
+    },
+
+    {
+      "id": "toronto-auto-upholstery",
+      "name": "Toronto Auto Upholstery",
+      "cityId": "ca-on-toronto", "town": "Toronto", "inTown": false,
+      "address": "161 North Rivermede Road #2, Vaughan, ON L4K 1K9",
+      "phone": "(647) 773-5645",
+      "hours": "Mon-Fri 10:00-18:00; Sat 11:00-17:00",
+      "services": ["custom leather seat wrapping", "seat repair", "dashboard and console", "headliner (suede, Alcantara, microfibre)", "carpet", "floor mats", "door panels", "custom steering wheels", "custom seat covers"],
+      "materials": ["leather", "vinyl", "Alcantara", "suede", "microfibre"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://torontoupholsteryinc.com/services",
+      "read": "2026-10-02",
+      "notes": "Stocks 'more than 500 colors and textures in leather and automotive vinyls'. Address from thebesttoronto.com (https://www.thebesttoronto.com/top-auto-upholstery-toronto/, read 2026-10-02). Vaughan is just north of the Toronto city line. No prices."
+    },
+    {
+      "id": "tm-custom-auto-trim",
+      "name": "TM Custom Auto Trim and Glass Ltd.",
+      "cityId": "ca-on-toronto", "town": "Toronto", "inTown": true,
+      "address": "4271 Steeles Avenue West, North York, ON M3N 1V7",
+      "phone": "(416) 249-7137",
+      "hours": "Mon-Fri 8:00-16:30",
+      "services": ["custom leather and vinyl upholstery", "Katzkin installation", "heated seat installation", "sunroof and convertible repairs", "vintage and muscle cars"],
+      "materials": ["leather", "vinyl"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.thebesttoronto.com/top-auto-upholstery-toronto/",
+      "read": "2026-10-02",
+      "notes": "The shop's own Katzkin page (tmcustomauto.com/services/leather-interior) returned 404."
+    },
+    {
+      "id": "marlee-upholstery",
+      "name": "Marlee Upholstery",
+      "cityId": "ca-on-toronto", "town": "Toronto", "inTown": true,
+      "address": "230 Milvan Drive, North York, ON M9L 2A5",
+      "phone": "(416) 789-1542",
+      "hours": "Mon-Fri 8:30-17:30",
+      "services": ["carpet replacement", "headlining", "seat customization", "foam reshaping", "lumbar repair", "convertibles"],
+      "materials": [], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.thebesttoronto.com/top-auto-upholstery-toronto/",
+      "read": "2026-10-02",
+      "notes": "From a local listicle; no prices."
+    },
+    {
+      "id": "colorglo-gta",
+      "name": "ColorGlo GTA",
+      "cityId": "ca-on-toronto", "town": "Toronto", "inTown": false,
+      "address": "112 Basaltic Road, Unit 10, Vaughan, ON L4K 1G6",
+      "phone": "(647) 479-6160",
+      "services": ["leather and vinyl upholstery repair and installation", "colour matching", "seat restoration", "door trim", "roof lining", "carpet", "Katzkin (authorized dealer, per search summary)"],
+      "materials": ["leather", "vinyl"], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.thebesttoronto.com/top-auto-upholstery-toronto/",
+      "read": "2026-10-02",
+      "notes": "Same listicle quotes 'Installing new leather upholstery for all seats in a vehicle can cost anywhere between $1,250 to $3,500' (CAD), unattributed to any shop; kept under notes, not as a shop price."
+    },
+
+    {
+      "id": "pacific-restyling-vancouver",
+      "name": "Pacific Restyling Products Ltd",
+      "cityId": "ca-bc-vancouver", "town": "Vancouver", "inTown": true,
+      "address": "1280 Clark Drive, Vancouver, BC",
+      "phone": "(888) 821-1066",
+      "hours": "Mon-Fri 8:00-17:00",
+      "services": ["Katzkin leather interiors (authorized installation partner)", "Roadwire leather", "seat heaters", "lumbar support", "seat covers", "fabric by the yard"],
+      "materials": ["leather"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://pacificrestyling.com/pages/katzkin-leather-seats",
+      "read": "2026-10-02",
+      "notes": "Offers single-colour and two-tone, contrast stitching and piping, perforation and embroidery. Free quote in person; no CAD prices published."
+    },
+    {
+      "id": "wraptors-richmond",
+      "name": "Wraptors Inc.",
+      "cityId": "ca-bc-vancouver", "town": "Vancouver", "inTown": false,
+      "address": "150-21900 Westminster Highway, Richmond, BC V6V 0A5",
+      "phone": "778-986-9727",
+      "services": ["interior colour change in custom leather or leather-feel vinyl", "custom floor mats", "design consultation and artwork"],
+      "materials": ["leather", "vinyl"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.wraptorsvancouver.com/services/custom-interior/",
+      "read": "2026-10-02",
+      "notes": "Fixed-price offer after an in-person visit; pay on completion. No published prices."
+    },
+    {
+      "id": "rags-to-riches-surrey",
+      "name": "Rags To Riches Top Shop",
+      "cityId": "ca-bc-vancouver", "town": "Vancouver", "inTown": false,
+      "address": "9556 - 195 Street, Surrey, BC",
+      "phone": "(604) 888-6652",
+      "services": ["cloth-to-leather seat conversions", "custom seating", "seat repairs", "headliner replacement", "carpet kits", "interior refurbishment", "convertible tops"],
+      "materials": ["vinyl", "leather", "exotic leather"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://r2rtopshop.ca/upholstery.html",
+      "read": "2026-10-02",
+      "notes": "Metro Vancouver. Over 35 years in custom upholstery. No prices."
+    },
+    {
+      "id": "northwest-seat-covers-vancouver",
+      "name": "Northwest Seat Covers",
+      "cityId": "ca-bc-vancouver", "town": "Vancouver", "inTown": true,
+      "address": "1330 William St, Vancouver, BC V5L 2P5",
+      "phone": "604-216-1106",
+      "services": ["seat covers", "auto upholstery"],
+      "materials": [], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://www.yellowpages.ca/search/si/1/Auto-Upholstery/British+Columbia+BC",
+      "read": "2026-10-02",
+      "notes": "Directory listing only."
+    },
+
+    {
+      "id": "verst-cars-iztacalco",
+      "name": "Verst Cars (Vestiduras Automotrices)",
+      "cityId": "mx-cmx-mexicocity", "town": "Mexico City", "inTown": true,
+      "address": "Sur 107 No. 2006 PB, esq. Eje 3 Oriente, Iztacalco, 08700 Ciudad de México",
+      "phone": "55 5087-9929",
+      "services": ["asientos (seats)", "cielo (headliner)", "volantes (steering wheels)", "alfombras (carpets)", "paneles de puerta (door panels)", "cajuela (trunk lining)", "tablero (dashboard)", "diseños personalizados (custom designs)"],
+      "materials": ["piel (leather)", "tela (fabric)", "tacto-piel / vinipiel (vinyl)"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://vestidurasautomotrices.com.mx/tapiceria_automotriz_ciudad_de_mexico_cdmx",
+      "read": "2026-10-02",
+      "notes": "No MXN prices or delivery times published."
+    },
+    {
+      "id": "tapiceria-automotriz-cdmx-web",
+      "name": "Tapicería Automotriz CDMX (tapiceriaautomotrizcdmx.com)",
+      "cityId": "mx-cmx-mexicocity", "town": "Mexico City", "inTown": true,
+      "address": null,
+      "services": ["tapizado de cielo (headliner)", "tapizado de asientos (seats)", "personalización de color y material"],
+      "materials": ["tela", "vinil", "piel sintética", "microfibra", "Alcántara"], "customPatterns": true,
+      "prices": [
+        {"item": "headliner, compact car", "value": 1200, "currency": "MXN", "basis": "approximate, per car", "confidence": "page-read"},
+        {"item": "headliner, sedan", "value": 1500, "currency": "MXN", "basis": "approximate, per car", "confidence": "page-read"},
+        {"item": "headliner, SUV", "value": 1800, "currency": "MXN", "basis": "approximate, per car", "confidence": "page-read"},
+        {"item": "headliner, premium", "value": 2500, "currency": "MXN", "basis": "approximate, per car", "confidence": "page-read"}
+      ],
+      "leadTime": {"value": [4, 24], "unit": "hours", "note": "Headliner: 'Entre 4 y 24 horas'."},
+      "confidence": "page-read",
+      "source": "https://tapiceriaautomotrizcdmx.com/tapizado-de-cielo-de-autos-cdmx/",
+      "read": "2026-10-02",
+      "notes": "LOW CONFIDENCE BUSINESS: no address, and the listed phone is a placeholder (+1-800-123-4567); quotes by WhatsApp. Its seat page gave no figures when read; an earlier search summary (research-gaps-cars-clothes.json) had MXN 3,000-10,000 per leather seat and 5,000-20,000 whole car, not re-confirmed."
+    },
+    {
+      "id": "vestidura-tap-iztapalapa",
+      "name": "Vestiduras Tap",
+      "cityId": "mx-cmx-mexicocity", "town": "Mexico City", "inTown": true,
+      "address": "Eje 5 La Purísima 18, esq. Antropólogos, 09430 Ciudad de México",
+      "services": ["vestiduras (seat upholstery)", "diseño de interiores", "restauración"],
+      "materials": [], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "search-summary",
+      "source": "https://vestiduras-tap.ueniweb.com/",
+      "read": "2026-10-02",
+      "notes": "Page content came back truncated; address and services from search summary."
+    },
+    {
+      "id": "vestiauto-cdmx",
+      "name": "Vestiauto",
+      "cityId": "mx-cmx-mexicocity", "town": "Mexico City", "inTown": true,
+      "address": "Eje Central Lázaro Cárdenas 1126, San Simón, Ciudad de México (second branch in Del Valle)",
+      "services": ["vestiduras de piel (leather upholstery)"],
+      "materials": ["piel"], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "search-summary",
+      "source": "http://www.vestiauto.mx/",
+      "read": "2026-10-02",
+      "notes": "Site's domain did not resolve on 2026-10-02; details from search summary only."
+    },
+
+    {
+      "id": "m-trim-uxbridge",
+      "name": "M Trim Ltd",
+      "cityId": "uk-eng-london", "town": "London", "inTown": true,
+      "address": "Unit 9, Trade City Business Park, Cowley Mill Rd, Uxbridge UB8 2DB",
+      "phone": "020 3730 6663",
+      "hours": "Mon-Fri 9:00-18:00; Sat 9:00-14:00",
+      "services": ["seat retrim and repair", "dashboards", "door cards", "headliners", "gear gaiters", "centre consoles", "steering wheel restoration", "CNC stitching and perforation"],
+      "materials": ["leather", "Alcantara", "suede", "premium fabrics"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://mtrim.co.uk/car-interior-trimming/",
+      "read": "2026-10-02",
+      "notes": "Uxbridge is in the London Borough of Hillingdon. Offers bespoke trims, colour matching and 'custom patterns'. Free quotation; no prices."
+    },
+    {
+      "id": "j-cooper-welling",
+      "name": "J Cooper Car Trimmers",
+      "cityId": "uk-eng-london", "town": "London", "inTown": true,
+      "address": "Bull Alley, Welling, Kent DA16 1TR",
+      "phone": "020 8303 8497",
+      "hours": "Mon-Fri 8:30-17:00; Sat 9:00-12:00",
+      "services": ["seat repairs", "full retrims", "door panels", "carpets", "headlining", "convertible roofs", "custom interior design"],
+      "materials": ["vinyl", "leather", "cloth"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://jcoopertrim.co.uk/our-services/retrims/",
+      "read": "2026-10-02",
+      "notes": "Welling is in the London Borough of Bexley (Kent postal address). Custom quotes only."
+    },
+    {
+      "id": "trim-n-stitch-nazeing",
+      "name": "Trim 'N' Stitch",
+      "cityId": "uk-eng-london", "town": "London", "inTown": false,
+      "address": "Unit 13 Sedge Green Business Centre, Nursery Road, Nazeing, Essex EN9 2JQ",
+      "phone": "07879 630 486",
+      "services": ["seat repairs and repadding", "door cards", "steering wheel stitching", "headlinings", "custom interiors with twin stitching and contrasting piping", "full restorations"],
+      "materials": ["leather", "Alcantara", "vinyl", "cloth", "carpet"], "customPatterns": true,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://trimnstitch.co.uk/",
+      "read": "2026-10-02",
+      "notes": "Just outside Greater London (Essex). Makes its own covers rather than fitting factory ones."
+    },
+    {
+      "id": "hide-n-seat-shildon",
+      "name": "Hide N Seat Auto Interiors",
+      "cityId": null, "town": "Shildon, County Durham (UK reference)", "inTown": false,
+      "address": "Unit 25, Furnace Industrial Estate, Byerley Road, Shildon, County Durham DL4 1QB",
+      "services": ["full and part leather retrims", "door cards", "steering wheels", "dashboards", "gaiters", "sun visors"],
+      "materials": ["leather", "leatherette", "Alcantara", "fabric"], "customPatterns": true,
+      "prices": [
+        {"item": "front seats, pair", "value": 750, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "rear seats", "value": 650, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "four seats", "value": 1350, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "door cards, pair", "value": 100, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "steering wheel, recovered", "value": 165, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "steering wheel, restitched", "value": 90, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "dashboard", "value": 600, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "sun visors, pair", "value": 75, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "gear knob, recovered", "value": 60, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "armrest cover", "value": 40, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "complete interior", "value": 2000, "currency": "GBP", "basis": "from", "confidence": "page-read"}
+      ],
+      "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://hidenseat.co.uk/uncategorized/price-list-car-retrims/",
+      "read": "2026-10-02",
+      "notes": "The most complete published UK retrim price list found; not in London. No headlining or carpet prices. VAT status not stated."
+    },
+    {
+      "id": "benema-cleckheaton",
+      "name": "Benema Automotive Upholstery",
+      "cityId": null, "town": "Cleckheaton, West Yorkshire (UK reference)", "inTown": false,
+      "address": "14 Old Popplewell Lane, Scholes, Cleckheaton, West Yorkshire BD19 6DN",
+      "services": ["seat panel replacement", "burn repair", "armrest retrim", "steering wheel trim", "seat belts", "mobile trim service", "full interior retrims"],
+      "materials": ["vinyl", "perforated vinyl", "seating fabric", "leather", "Alcantara"], "customPatterns": null,
+      "prices": [
+        {"item": "seat, one panel replaced", "value": 140, "currency": "GBP", "basis": "flat", "confidence": "page-read"},
+        {"item": "seat, two adjacent panels", "value": 210, "currency": "GBP", "basis": "flat", "confidence": "page-read"},
+        {"item": "seat, three adjacent panels", "value": 260, "currency": "GBP", "basis": "flat", "confidence": "page-read"},
+        {"item": "centre armrest, complete retrim", "value": 180, "currency": "GBP", "basis": "flat", "confidence": "page-read"},
+        {"item": "steering wheel trim", "value": 280, "currency": "GBP", "basis": "from", "confidence": "page-read"},
+        {"item": "seat belt repair or upgrade", "value": 80, "currency": "GBP", "basis": "per belt", "confidence": "page-read"}
+      ],
+      "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://benema.co.uk/price-list",
+      "read": "2026-10-02",
+      "notes": "Full interior retrims are POA. Address from Companies House-linked directory (https://directory.coventrytelegraph.net/company/a82f25a4f1f7a162b5682a76d6f4fed5)."
+    },
+    {
+      "id": "brothers-custom-steering-wheels",
+      "name": "Brothers Custom Steering Wheels",
+      "cityId": null, "town": "UK (postal service; location not published)", "inTown": false,
+      "address": null,
+      "services": ["steering wheel retrim (leather, half or full Alcantara)", "12 o'clock marker"],
+      "materials": ["leather", "Alcantara"], "customPatterns": true,
+      "prices": [
+        {"item": "steering wheel retrim, leather", "value": 145, "currency": "GBP", "basis": "flat, incl. return post or installation", "confidence": "page-read"},
+        {"item": "half Alcantara supplement", "value": 30, "currency": "GBP", "basis": "add-on", "confidence": "page-read"},
+        {"item": "full Alcantara supplement", "value": 40, "currency": "GBP", "basis": "add-on", "confidence": "page-read"}
+      ],
+      "leadTime": {"value": 10, "unit": "working days", "note": "'approximately 10 working days'"},
+      "confidence": "page-read",
+      "source": "https://brotherscustomsteeringwheels.co.uk/about",
+      "read": "2026-10-02",
+      "notes": "Stitch and leather colour chosen by customer."
+    },
+    {
+      "id": "edge-automotive-rugby",
+      "name": "EDGE Automotive",
+      "cityId": null, "town": "Rugby, Warwickshire (UK reference, postal)", "inTown": false,
+      "address": "Rugby, Warwickshire (street address not published)",
+      "services": ["steering wheel retrim in leather, Alcantara or Dinamica", "12 o'clock band", "added rim thickness", "airbag cover trimming"],
+      "materials": ["leather", "perforated leather", "Alcantara", "Dinamica"], "customPatterns": true,
+      "prices": [
+        {"item": "steering wheel full retrim", "value": 220, "currency": "GBP", "basis": "from, no VAT charged", "confidence": "page-read"},
+        {"item": "12 o'clock band", "value": 30, "currency": "GBP", "basis": "add-on", "confidence": "page-read"}
+      ],
+      "leadTime": {"value": [1, 5], "unit": "working days", "note": "'I have wheels Monday to Friday and aim to get yours back before the Friday.'"},
+      "confidence": "page-read",
+      "source": "https://www.edgeautomotive.co.uk/general-news/steering-wheel-retrim-leatheralcantara",
+      "read": "2026-10-02",
+      "notes": "Special-order colours priced separately."
+    },
+    {
+      "id": "total-trim-solutions-thatcham",
+      "name": "Total Trim Solutions",
+      "cityId": null, "town": "Thatcham, Berkshire (UK reference)", "inTown": false,
+      "address": "Unit 5 Berkshire Business Centre, Berkshire Drive, Thatcham RG19 4EW",
+      "services": ["headlining replacement and retrim"],
+      "materials": [], "customPatterns": null,
+      "prices": [
+        {"item": "headlining, Jaguar (most models)", "value": 400, "currency": "GBP", "basis": "from, plus VAT", "vat": false, "confidence": "page-read"},
+        {"item": "headlining, VW Golf Mk5/6 no sunroof", "value": 600, "currency": "GBP", "basis": "from, plus VAT", "vat": false, "confidence": "page-read"},
+        {"item": "headlining, standard saloon/MPV/hatchback, full strip and hand retrim", "value": 750, "currency": "GBP", "basis": "from, plus VAT", "vat": false, "confidence": "page-read"}
+      ],
+      "leadTime": {"value": 1, "unit": "days", "note": "Golf Mk5/6: 1 day; Jaguar fitting 2-4 hours; booking depends on material arrival."},
+      "confidence": "page-read",
+      "source": "https://www.totaltrimsolutions.co.uk/vehicle-headlinings/",
+      "read": "2026-10-02",
+      "notes": "Only published UK headlining price list found."
+    },
+
+    {
+      "id": "derek-nolan-trimming",
+      "name": "Derek Nolan Trimming (Nolan Auto Care)",
+      "cityId": "ie-lei-dublin", "town": "Dublin", "inTown": true,
+      "address": "Unit 2, Bluebell Business Park, Old Naas Road, Dublin 12",
+      "phone": "01 4569464",
+      "services": ["car, van and truck seat repairs", "leather interiors", "soft tops", "supply of automotive fabrics, leather and vinyl"],
+      "materials": ["fabric", "leather", "vinyl"], "customPatterns": null,
+      "prices": [], "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.nolanautocare.ie/",
+      "read": "2026-10-02",
+      "notes": "By appointment. Site under rebuild; no prices."
+    },
+    {
+      "id": "umd-upholstery-dublin",
+      "name": "U.M.D Upholstery Midlands-Dublin",
+      "cityId": "ie-lei-dublin", "town": "Dublin", "inTown": true,
+      "address": "Phase 4 Kilshane Avenue, Dublin D15 PE81",
+      "phone": "087 992 6028",
+      "services": ["seat repair and retrim", "foam repair", "door panels", "headliner restoration", "steering wheel retrim (Blanchardstown)"],
+      "materials": ["leather"], "customPatterns": null,
+      "prices": [
+        {"item": "seat repair / full-set retrim", "value": 90, "currency": "EUR", "basis": "from, DoneDeal classified ad", "confidence": "search-summary", "source": "https://www.donedeal.ie/damagedcars-for-sale/seat-repair-reupholstery-foam-refoam/39411827"},
+        {"item": "steering wheel retrim (Blanchardstown)", "value": 150, "currency": "EUR", "basis": "flat, classified ad", "confidence": "search-summary", "source": "https://www.1000sads.com/irl-en/car_polishing_steering_wheel_retrimming_blanchardstown_co_dublin-ads91215.html"}
+      ],
+      "leadTime": null,
+      "confidence": "page-read",
+      "source": "https://www.upholsterymidlands.com/",
+      "read": "2026-10-02",
+      "notes": "Own site says it is 'difficult to give prices on leather work'. The two prices are from classified ads seen only in search summaries; the steering-wheel ad is attributed to UMD by location (Blanchardstown, Athlone + Dublin), not by name — verify."
+    },
+    {
+      "id": "steering-wheels-dublin",
+      "name": "Steering Wheels Dublin",
+      "cityId": "ie-lei-dublin", "town": "Dublin", "inTown": true,
+      "address": null,
+      "services": ["steering wheel reupholstery in leather and Alcantara"],
+      "materials": ["leather", "Alcantara"], "customPatterns": null,
+      "prices": [
+        {"item": "steering wheel retrim", "value": 130, "currency": "EUR", "basis": "from", "confidence": "search-summary"}
+      ],
+      "leadTime": {"value": 0, "unit": "days", "note": "'same day turnaround' per search summary"},
+      "confidence": "search-summary",
+      "source": "https://www.facebook.com/SteeringwheelsDublin/",
+      "read": "2026-10-02",
+      "notes": "Facebook page could not be read; figure and turnaround from search summary only."
+    }
+  ],
+
+  "katzkin": {
+    "maker": "Katzkin Leather, Inc.",
+    "headquarters": "6868 W. Acco St, Montebello, CA 90640",
+    "soldThrough": "Authorized installers only (dealers and restyling shops) in the US and Canada; kits are cut per make and model.",
+    "installedPrice": [
+      {"item": "professionally installed Katzkin leather interior", "value": 2195, "currency": "USD", "basis": "starts at; 'depending on your vehicle and the options you select'", "confidence": "page-read", "source": "https://katzkin.com/faq/general-faqs/how-much-does-it-cost-to-upgrade-my-vehicle-to-a-katzkin-interior/", "read": "2026-10-02"},
+      {"item": "two-row, factory-match single colour, installed, 3-yr warranty", "value": 1895, "currency": "USD", "basis": "quote an owner says came direct from Katzkin, January 2025", "confidence": "page-read (owner forum post)", "source": "https://www.broncosportforum.com/katzkin-leather-interior-installed/", "read": "2026-10-02"},
+      {"item": "two-row custom (two colours, perforation etc.), installed, 3-yr warranty", "value": 2195, "currency": "USD", "basis": "same owner quote", "confidence": "page-read (owner forum post)", "source": "https://www.broncosportforum.com/katzkin-leather-interior-installed/", "read": "2026-10-02"},
+      {"item": "Ram DT standard kit (perforated, contrast stitch), installed", "value": 1800, "currency": "CAD", "basis": "plus HST", "confidence": "page-read", "source": "https://www.autostartx.com/ram-dt-katzkin-leather-canada-354570.html", "read": "2026-10-02", "installer": "Autostar TX Inc, 1621 McEwen Drive Unit 12, Whitby, ON L1N 9A5 (Durham Region, east of Toronto)"},
+      {"item": "Ram DT custom-design kit, installed", "value": 2495, "currency": "CAD", "basis": "plus HST", "confidence": "page-read", "source": "https://www.autostartx.com/ram-dt-katzkin-leather-canada-354570.html", "read": "2026-10-02", "installer": "Autostar TX Inc, Whitby, ON"},
+      {"item": "Katzkin leather, installed retail guide price", "value": 2000, "currency": "CAD", "basis": "guide price; 50% deposit on order", "confidence": "page-read", "source": "https://www.roadgear.ca/roadgear-katzkin-leather.html", "read": "2026-10-02", "installer": "Roadgear Inc., 1621 McEwen Drive Unit 12, Whitby, ON"}
+    ],
+    "optionSurcharge": {"value": [150, 250], "currency": "USD", "basis": "per option (perforated inserts, contrasting top stitch, two-tone)", "confidence": "search-summary", "source": "https://www.aiautoworks.com/product/katzkin-leather-interior-upgrade/", "read": "2026-10-02", "note": "Seen only in a search summary whose source page was not identified; the URL is the likeliest of the result pages, not confirmed. Treat as unverified."},
+    "leadTime": [
+      {"value": [1, 2], "unit": "weeks", "note": "Kit manufacture, 'typically 1-2 weeks'", "source": "https://www.coachautopdx.com/katzkin.html", "read": "2026-10-02", "installer": "Coach Automotive Accessories, Beaverton, OR (outside SLATE's towns)"},
+      {"value": [2, 3], "unit": "weeks", "note": "Order to finished install, including installation", "source": "https://www.roadgear.ca/roadgear-katzkin-leather.html", "read": "2026-10-02"}
+    ],
+    "installTime": [
+      {"value": 1, "unit": "business days", "note": "'Most installs are completed in one business day'", "source": "https://www.coachautopdx.com/katzkin.html", "read": "2026-10-02"},
+      {"value": 2, "unit": "days", "note": "'2 days with the vehicle in shop' (Ram DT)", "source": "https://www.autostartx.com/ram-dt-katzkin-leather-canada-354570.html", "read": "2026-10-02"}
+    ],
+    "warranty": "3 years / 36,000 miles, honoured at any authorized installer (Katzkin LA page and Coach Automotive); Roadgear's own page says one year parts and labour.",
+    "options": {
+      "colorsAndMaterials": "Over 300 colours and materials: Katzkin premium leather (60 colours), Katzkin XT (thicker), Tuscany (soft), Barracuda (perforated duo-tone, 9 colours), Outlaw (tooled accents), AutoExotics (synthetic and embossed leather: simulated ostrich and crocodile, carbon fibre, machined metal), Suedezkin (synthetic suede, 10 accent colours).",
+      "twoTone": true,
+      "twoToneLayouts": ["Single-tone", "2-Tone Insert", "2-Tone Combo", "2-Tone Body", "2-Tone Center", "2-Tone Face"],
+      "perforation": true,
+      "perforationPatterns_TekPerf": ["Hex", "Bloom", "Cube", "Zigzag", "Groovy", "Moth", "Paws", "Ribbon", "Skulls", "Texas", "US Flag"],
+      "stitching": true,
+      "stitchPatterns_TekStitch": ["Plaid", "Diamond", "Double Diamond", "Valleys", "Arrowhead", "Quadstar", "Double Hex", "Elektritek", "Hourglass", "Jigsaw", "Scales", "Wedge"],
+      "stitchPlusPerf_TekFusion": "11 patterns, incl. Lightning, Diamond, Stairs, DuoHex, Vectronyx, Antlers, Bracelet",
+      "TekArt": ["Hockey Stick", "Snake", "Splash", "Trapezoid", "Waves", "Wolfstooth"],
+      "piping": true,
+      "embroidery": true,
+      "embossing": true,
+      "heatedSeats": "Heat-only (high/low) or heat and cool (3 heat + 3 cool levels)",
+      "animalPrint": "No leopard or other fur-pattern print found in the line. The exotic colour list read (Admiral, Aussie Black, Bahama, Bayou, Bermuda, Blush, Carbon Bullet, Carbon Crimson, Carbon Nickel, Carbon Shadow, Chrome, Electric Lime, Everglades, Lavender, Machined Silver, Screaming Green) has none; the animal patterns are embossed ostrich and crocodile. A leopard-print interior is therefore a custom-upholstery job, not a Katzkin kit.",
+      "scope": "Katzkin kits cover seats (and often armrests/console lids); headliner, carpet and steering wheel are not part of a kit."
+    },
+    "source": "https://katzkin.com/product-options/",
+    "read": "2026-10-02",
+    "notes": [
+      "Exotic colour list from https://www.autoseatskins.com/katzkin-exotic-colors-s/714.htm (a Katzkin reseller), read 2026-10-02.",
+      "Katzkin's NYC/Queens and LA location pages name no individual installer or price; the Queens page says the car 'should be done within a day'.",
+      "Vancouver's authorized installer is Pacific Restyling (1280 Clark Drive); Toronto installers include TM Custom Auto Trim (North York) and ColorGlo GTA (Vaughan). None publishes a price.",
+      "research-customization.json (2026-09-30) carries a secondary, unconfirmed 2-row $1,700-2,500 and heated seats ~+$400; not re-confirmed here."
+    ]
+  },
+
+  "materials": [
+    {"material": "automotive leather", "supplier": "Lseat.com", "product": "Charcoal Black Genuine Leather Upholstery Cow Hide (auto leather), cut to order", "price": 4.50, "currency": "USD", "unit": "per square foot", "market": "US", "confidence": "page-read", "source": "https://www.lseat.com/products/charcoal-black-genuine-leather-upholstery-cow-hide-per-sq-ft.html", "read": "2026-10-02"},
+    {"material": "automotive leather", "supplier": "TanneryNYC (New York; LWG certified)", "product": "Black Classic Cowhide, whole hide, home and auto upholstery", "price": 219.99, "currency": "USD", "unit": "per hide (~45 sq ft)", "market": "US", "confidence": "page-read", "source": "https://tannerynyc.com/collections/home-auto-upholstery", "read": "2026-10-02", "note": "Same price for cognac, white, chocolate, navy and taupe classic hides."},
+    {"material": "automotive leather", "supplier": "TanneryNYC", "product": "Black Premium Upholstery Cowhide, whole hide", "price": 299.99, "currency": "USD", "unit": "per hide (~50 sq ft)", "market": "US", "confidence": "page-read", "source": "https://tannerynyc.com/collections/home-auto-upholstery", "read": "2026-10-02"},
+    {"material": "automotive leather", "supplier": "Martrim Ltd (Sandbach, Cheshire)", "product": "Grain Auto Hide, 1.2 mm, 40+ colours", "price": 152.50, "currency": "GBP", "unit": "per hide (~50 sq ft)", "market": "UK", "confidence": "page-read", "source": "https://www.martrim.co.uk/car-trimming-supplies/grain-auto-hides.php", "read": "2026-10-02", "note": "VAT status not stated. Search summary also gave High Gloss Auto Hide £225 and Premier Auto Hide £185 per hide (not read on page)."},
+    {"material": "automotive leather", "supplier": "Maxipiel (León, Guanajuato; ships nationally)", "product": "Cuero Top Grain Negro Semi-liso, automotive", "price": 1675, "currency": "MXN", "unit": "per half hide (media hoja, 250 dm² ≈ 2.5 m²)", "market": "MX", "confidence": "page-read", "source": "https://www.maxipiel.com/collections/piel-automotiz", "read": "2026-10-02", "note": "Regular price; MXN 1,340 during a 20% sale. The shop's guide: one car seat uses 80-120 dm², a full vehicle interior 400-600 dm²."},
+
+    {"material": "automotive vinyl", "supplier": "Your Auto Trim Store (FSC Inc., Columbus, MS)", "product": "SoftSeat expanded vinyl on knit, OEM colours, solid", "price": 14.60, "currency": "USD", "unit": "per running yard", "market": "US", "confidence": "page-read", "source": "https://www.yourautotrim.com/sosoandpeviu.html", "read": "2026-10-02"},
+    {"material": "automotive vinyl, perforated", "supplier": "Your Auto Trim Store (FSC Inc., Columbus, MS)", "product": "SoftSeat perforated vinyl, OEM colours", "price": 19.95, "currency": "USD", "unit": "per running yard", "market": "US", "confidence": "page-read", "source": "https://www.yourautotrim.com/sosoandpeviu.html", "read": "2026-10-02"},
+    {"material": "automotive vinyl", "supplier": "A·1 Foam & Fabrics", "product": "Allante Morbern Mellohide vinyl", "price": 24.95, "currency": "USD", "unit": "per yard", "market": "US", "confidence": "page-read", "source": "https://a1foamandfabrics.com/collections/automotive-vinyl", "read": "2026-10-02", "note": "Same page: Apex Softside $12.95/yd, Allsport Morbern $32.70/yd. Currency taken as USD from page format."},
+    {"material": "automotive vinyl", "supplier": "Martrim Ltd (Sandbach, Cheshire)", "product": "Auto Seat Vinyl, 1.2 mm, 1.4 m wide, standard colours", "price": 14.00, "currency": "GBP", "unit": "per metre", "market": "UK", "confidence": "page-read", "source": "https://www.martrim.co.uk/car-trimming-supplies/auto-seat-vinyl.php", "read": "2026-10-02", "note": "Metallic silver/gold £28.00/m. VAT status not stated."},
+    {"material": "automotive vinyl", "supplier": "Mercado Libre México (various sellers)", "product": "Vinipiel automotriz por metro", "price": null, "priceRange": [160, 430], "currency": "MXN", "unit": "per metre", "market": "MX", "confidence": "search-summary", "source": "https://listado.mercadolibre.com.mx/vinipiel-para-tapiceria-automotriz", "read": "2026-10-02", "note": "Marketplace listings seen only in summary (page 403). Maclin-brand premium automotive vinyl reported at MXN 429/m. No single named supplier price confirmed."},
+
+    {"material": "Alcantara (genuine), backed for seats", "supplier": "Upholstery Supply USA", "product": "Alcantara for Seats, knit-backed, 1.0 mm, 56 in wide, made in Italy", "price": 132.00, "currency": "USD", "unit": "per yard (1-9 yd); $121 for 10-24 yd; $115 for 25+ yd", "market": "US", "confidence": "page-read", "source": "https://www.upholsterysupplyusa.com/products/alcantara-backed", "read": "2026-10-02"},
+    {"material": "Alcantara (genuine), unbacked for panels", "supplier": "Upholstery Supply USA", "product": "Alcantara for Panels (Unbacked)", "price": 145.00, "currency": "USD", "unit": "per yard", "market": "US", "confidence": "search-summary", "source": "https://www.upholsterysupplyusa.com/products/alcantara-unbacked", "read": "2026-10-02"},
+    {"material": "Alcantara (genuine)", "supplier": "Martrim Ltd (Sandbach, Cheshire)", "product": "Unbacked Alcantara, 1.0 mm, 1.5 m wide, 30+ colours; foam-backed and textured also £70", "price": 70.00, "currency": "GBP", "unit": "per metre", "market": "UK", "confidence": "page-read", "source": "https://www.martrim.co.uk/car-trimming-supplies/alcantara.php", "read": "2026-10-02", "note": "VAT status not stated."},
+    {"material": "Alcantara (genuine)", "supplier": "Hydes Leather (Vancouver area; official North American Alcantara distributor)", "product": "Alcantara Auto Cover, poly-cotton scrim backed, 36 x 54 in yard", "price": null, "currency": "CAD", "unit": "per yard", "market": "CA", "confidence": "page-read", "source": "https://hydesleather.com/collections/alcantara-auto-cover", "read": "2026-10-02", "note": "Prices shown to registered trade customers only; retail buys through a local dealer."},
+    {"material": "'Alcantara' (brand not confirmed)", "supplier": "Maxipiel (León, Guanajuato)", "product": "Alcantara Negro", "price": 1500, "currency": "MXN", "unit": "per half sheet (250 dm²)", "market": "MX", "confidence": "page-read", "source": "https://www.maxipiel.com/collections/piel-automotiz", "read": "2026-10-02", "note": "Regular price (MXN 1,200 on sale). The page does not say whether this is genuine Alcantara or a microfibre; treat as microsuede until confirmed."},
+
+    {"material": "headliner fabric, foam-backed", "supplier": "Automotive Interiors & Accessories, Inc. (Belchertown, MA)", "product": "Foam Backed Headliner Cloth, nylon face, 3/16 in foam, 60 in wide", "price": 17.55, "currency": "USD", "unit": "per yard (36 x 60 in)", "market": "US", "confidence": "page-read", "source": "https://www.automotiveinteriors.com/foam-backed-headliner-fabric-1-yard-p/yph-hl-1.htm", "read": "2026-10-02", "note": "Headliner spray adhesive $19.55 per can on the same page."},
+
+    {"material": "leopard-print vinyl (upholstery/marine grade)", "supplier": "Great Lakes Fabrics, Inc. (1904 S Wenona St, Bay City, MI)", "product": "Upholstery Vinyl Pattern Leopard Print, ivory and black, textured, 54 in, 31 oz/linear yd, UV stabilized, cold crack -20°F, 30,000 rubs", "price": 17.00, "currency": "USD", "unit": "per yard", "market": "US", "confidence": "page-read", "source": "https://glfi.com/product/upholstery-vinyl-pattern-leopard-print", "read": "2026-10-02", "note": "Marketed for marine, snowmobile and upholstery use, automotive among its categories. The best-specified leopard material found for a car seat."},
+    {"material": "leopard-print vinyl (faux leather)", "supplier": "Fabric Empire", "product": "Vinyl Upholstery LEOPARD TOBACCO Fabric Fake Leather, 54 in", "price": 17.50, "currency": "USD", "unit": "per yard", "market": "US", "confidence": "page-read", "source": "https://www.fabricempire.com/vinyl-animal-upholstery-leopard-fabric.aspx", "read": "2026-10-02", "note": "MSRP $27.51; no automotive rating stated."},
+    {"material": "leopard-print faux fur", "supplier": "Ice Fabrics (US)", "product": "Leopard Fake Faux Fur Fabric, 60 in, brown/denim/pink/coffee", "price": 26.99, "currency": "USD", "unit": "per yard", "market": "US", "confidence": "page-read", "source": "https://icefabrics.com/products/leopard-fake-faux-fur-fabric-by-the-yard", "read": "2026-10-02", "note": "Sale price. Apparel/decor fabric (acrylic/modacrylic/polyester); no automotive flammability or abrasion rating stated."}
+  ],
+
+  "labor": [
+    {"kind": "shop rate (what customers pay)", "market": "US", "value": [50, 150], "currency": "USD", "unit": "per hour", "detail": "Basic jobs (seat covers, carpets, headliners) $50-85/h; custom and restoration $100-150/h; 'most shops we encounter hover around the median point of $75 per hour'.", "confidence": "page-read (trade publication citing a ChatGPT answer plus the editor's own experience)", "source": "https://thehogring.com/2024/10/20/how-much-do-other-auto-upholstery-shops-charge/", "read": "2026-10-02"},
+    {"kind": "shop rate, survey", "market": "US", "value": 55, "currency": "USD", "unit": "per hour", "detail": "National average for upholstery/trim/interior shops from a Hotrod & Restoration survey; dated February 2012, so old. Shop owners in comments reported $65, $75 and $100-300.", "confidence": "page-read", "source": "https://thehogring.com/2012/02/29/how-much-does-your-trim-shop-charge-per-hour/", "read": "2026-10-02"},
+    {"kind": "shop rate, NYC aggregator", "market": "US-NY", "value": [70, 120], "currency": "USD", "unit": "per hour", "detail": "HomeYou cost guide for leather seat repair in New York: upholsterers $70-120/hour; per-seat repair $93-634.", "confidence": "page-read (per research-gaps-cars-clothes.json, 2026-10-02)", "source": "https://www.homeyou.com/ny/leather-seat-repair-new-york-costs", "read": "2026-10-02"},
+    {"kind": "wage (what upholsterers are paid, not a shop rate)", "market": "US national", "value": 21.55, "currency": "USD", "unit": "mean hourly wage", "detail": "BLS OEWS May 2023, SOC 51-6093 Upholsterers (all industries); employment 25,740. Automotive Repair and Maintenance industry mean $20.26/h.", "confidence": "page-read", "source": "https://www.bls.gov/oes/2023/may/oes516093.htm", "read": "2026-10-02"},
+    {"kind": "wage", "market": "US-NY (New York-Newark-Jersey City MSA)", "value": 26.23, "currency": "USD", "unit": "mean hourly wage", "detail": "BLS OEWS May 2023, upholsterers; employment 510.", "confidence": "page-read", "source": "https://www.bls.gov/oes/2023/may/oes516093.htm", "read": "2026-10-02"},
+    {"kind": "wage", "market": "US-CA (Los Angeles-Long Beach-Anaheim MSA)", "value": 22.68, "currency": "USD", "unit": "mean hourly wage", "detail": "BLS OEWS May 2023, upholsterers; employment 1,470.", "confidence": "page-read", "source": "https://www.bls.gov/oes/2023/may/oes516093.htm", "read": "2026-10-02"},
+    {"kind": "typical hours: two-row seat reupholstery", "market": "US (guide)", "value": [12, 20], "unit": "hours", "detail": "'A proper job on a modern car with heated elements, contoured bolsters, and side-mounted airbags takes 12 to 20 hours.' Another guide: front buckets 4-8 h cloth / 6-12 h vinyl or leather; rear bench 5-10 h.", "confidence": "search-summary", "source": "https://midwestfabrics.com/blogs/recent-posts-on-our-blog/cost-to-reupholster-car-seats", "read": "2026-10-02", "note": "Retailer cost guides, not a labour-time manual; which guide said which figure was not confirmed on the page."},
+    {"kind": "typical hours: headliner", "market": "US (guide) / UK (shop)", "value": [2, 6], "unit": "hours", "detail": "Guide: most 2-4 h; sunroof, large vehicle or brittle trim 4-6 h. UK shop (Total Trim Solutions): Jaguar fitting 2-4 h; VW Golf Mk5/6 1-day turnaround.", "confidence": "search-summary (guide); page-read (Total Trim Solutions)", "source": "https://midwestfabrics.com/blogs/recent-posts-on-our-blog/headliner-replacement-cost-guide", "read": "2026-10-02"},
+    {"kind": "typical hours: steering wheel wrap/retrim", "market": "US (guide)", "value": [1.5, 4], "unit": "hours", "detail": "Guides say 90-120 minutes for a proper wrap, 2-4 hours at many shops. Postal UK retrimmers quote turnaround, not hours: EDGE Automotive within the week, Brothers ~10 working days.", "confidence": "search-summary", "source": "https://www.redlinegoods.com/SteeringWheelInstaller.php", "read": "2026-10-02", "note": "Source attribution between the two figures not confirmed on a page."}
+  ],
+
+  "notes": [
+    "Coverage by town — New York: 5 shops (Best Yet, City Seat Covers, Ivan, McCoys, Mastercrafts in Lynbrook); the only NYC job prices are McCoys' $475 headliner / $375 seat, search-summary only. Los Angeles: 4 shops; only price is Best Way's headliner from $150, search-summary (site certificate expired). New Haven: 3 shops (HuDat West Haven, New Haven Auto Interiors and Hamden Auto Interiors, both Hamden), no prices. Toronto: 4 shops plus Katzkin installers in Whitby with page-read CAD prices. Vancouver: 4 shops, no prices. Mexico City: 4 shops; only prices are the headliner table from a low-confidence website. London: 3 shops in or near London (M Trim, J Cooper, Trim 'N' Stitch), none publishing prices; five UK shops elsewhere that do publish prices (Hide N Seat, Benema, Brothers, EDGE, Total Trim Solutions) are kept as UK reference points with cityId null. Dublin: 3 shops, prices only from classified ads and a Facebook page, search-summary.",
+    "The pattern holds in every town: custom auto upholsterers quote only after seeing the car. A per-town price for a full custom interior from a named in-town shop was not found anywhere; the best real figures are UK national price lists (Hide N Seat: complete interior from £2,000) and Katzkin's installed kit prices.",
+    "No shop anywhere publishes a lead time for a full custom interior. Lead times found: Katzkin kit 1-2 weeks, order-to-install 2-3 weeks, install 1-2 days; steering wheel by post 1 week (EDGE) to ~10 working days (Brothers); headliner 4-24 hours (CDMX site) or 1 day (Total Trim, Golf).",
+    "Leopard print: no shop in the eight towns advertises it by name, but all the custom shops (M Trim 'custom patterns', Trim 'N' Stitch, Toronto Auto Upholstery, Wraptors, Verst Cars and others) build covers from the customer's chosen material, so the realistic route is customer-chosen leopard vinyl or faux fur sewn by a trimmer. Katzkin does not offer a leopard print.",
+    "Faux fur: no automotive-rated faux fur was found; the faux fur listed is apparel/decor grade. Real seat use would need flame-retardancy (FMVSS 302 in the US/Canada) that these products do not claim.",
+    "Not found, and why: (1) Canadian per-yard retail prices for vinyl/Alcantara from a named Canadian supplier (Hydes Leather is trade-only; other results were US shops or Kijiji). (2) Irish material prices (Derek Nolan supplies fabrics but publishes no prices; UK suppliers such as Martrim are the nearest published source). (3) UK, Canadian, Mexican and Irish upholstery shop hourly rates: no published figure. (4) BLS 2024 data for upholsterers could not be fetched (bls.gov blocked the fetch); May 2023 used. New Haven has no upholsterers row in BLS's metro table. (5) A labour-time manual (Mitchell/ALLDATA) figure for seat reupholstery: not public; hours come from retailer guides.",
+    "Prices in GBP and EUR: VAT status is stated only where noted (Total Trim Solutions plus VAT; EDGE charges no VAT). Others do not say.",
+    "Figures already in earlier SLATE research and re-confirmed here: Katzkin from $2,195 (research-customization.json), Hide N Seat UK list (research-vehicle-shops.json), CDMX headliner table (research-gaps-cars-clothes.json)."
+  ]
+}

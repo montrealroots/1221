@@ -7,13 +7,14 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_HOUR } from '@/engine/core/time';
+import { MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import type { Feature, Fixtures } from '@/engine/content/homes';
 import { PROJECTS } from '@/engine/content/homes';
 import { CITIES } from '@/engine/content/geography';
 import { sunTimes } from '@/engine/core/sun';
 import { moveIntoOwned, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
-import { courtAt, courtRefusal, weatherNow } from '@/engine/systems/dwelling';
+import { courtAt, courtRefusal, homeCourts, weatherNow } from '@/engine/systems/dwelling';
+import { contactsOf, newContact } from '@/engine/systems/people';
 import { billsOf } from '@/engine/systems/household';
 import { lookAfterRefusal } from '@/engine/systems/life';
 
@@ -100,5 +101,53 @@ describe('a court', () => {
     const diff = billsOf(withCourt, withCourt.player) - billsOf(without, without.player);
     expect(diff).toBeGreaterThan(0);
     expect(diff).toBeLessThan(1_800 * 100);
+  });
+});
+
+describe('a football pitch, and friends over to play', () => {
+  it('is built in three sizes at turf’s middle price and a drainage base, on a lot big enough for it', () => {
+    const five = PROJECTS.find((p) => p.id === 'pitch-five')!;
+    expect(five.lot).toBe(Math.round(40 * 20 * 10.7639));
+    expect(five.usd).toBe(Math.round(40 * 20 * 10.7639 * (12.5 + 4)));
+    expect(PROJECTS.find((p) => p.id === 'pitch-full')!.lot).toBeGreaterThan(70_000);
+    expect(five.adds?.gains).toEqual(['footballPitch']);
+  });
+
+  it('isn’t played alone, and is played with a friend over, at football’s METs, unless the weather stops it', () => {
+    const sim = home(['footballPitch'], 'pitch-play');
+    expect(courtRefusal(sim, sim.player)).toBe('A football pitch needs players: invite friends to play.');
+    expect(homeCourts(sim.player)).toEqual([{ court: 'football', lit: false }]);
+    const friend = newContact(sim, sim.player, LA, 'pitch-friend', { at: sim.now, how: 'school' });
+    friend.hours = 100;
+    contactsOf(sim.player).push(friend);
+    // Half an hour into a fine afternoon hour of daylight, the same day's weather.
+    let fine = nextHour(sim, true);
+    while (zonedParts(fine, 'America/Los_Angeles').hour < 12 || zonedParts(fine, 'America/Los_Angeles').hour > 15) { sim.advanceTo(fine + MS_HOUR); fine = nextHour(sim, true); }
+    const at = fine + 30 * 60_000;
+    sim.player.body = { weightKg: 70, extra: 0 } as unknown as NonNullable<typeof sim.player.body>;
+    const r = sim.execute<{ accepted: boolean; reason?: string }>({ kind: 'social.invite', payload: { contactId: friend.id, at, what: 'play', court: 'football' } });
+    expect(r.ok, r.error).toBe(true);
+    expect(r.value, JSON.stringify(r.value)).toEqual({ accepted: true });
+    expect(sim.execute({ kind: 'social.invite', payload: { contactId: friend.id, at: at + 30 * MS_HOUR, what: 'play', court: 'tennis' } }).error).toBe('You have no such court or pitch to play on.');
+    sim.advanceTo(at + 2 * MS_HOUR);
+    expect(friend.memory.some((m) => m.what === 'Played football at yours')).toBe(true);
+    // Ninety minutes at football's 7.0 METs over sitting, for 70 kg, less what the day's rest burned anyway: more than nothing.
+    expect(sim.player.body!.extra).toBeGreaterThan(0);
+  });
+});
+
+describe('a game after dark', () => {
+  it('on an unlit pitch is a visit: they come, and nobody plays', () => {
+    const sim = home(['footballPitch'], 'pitch-dark');
+    const friend = newContact(sim, sim.player, LA, 'pitch-dark-friend', { at: sim.now, how: 'school' });
+    friend.hours = 100;
+    contactsOf(sim.player).push(friend);
+    // Nine at night, dark in Los Angeles all year.
+    const p = zonedParts(sim.now + 2 * 24 * MS_HOUR, 'America/Los_Angeles');
+    const at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 21, minute: 0 }, 'America/Los_Angeles');
+    const r = sim.execute<{ accepted: boolean }>({ kind: 'social.invite', payload: { contactId: friend.id, at, what: 'play', court: 'football' } });
+    expect(r.value).toEqual({ accepted: true });
+    for (let i = 0; i < 400 && sim.now < at + 2 * MS_HOUR; i += 1) sim.advanceTo(Math.min(at + 2 * MS_HOUR, sim.now + MS_HOUR));
+    expect(friend.memory.map((m) => m.what), JSON.stringify(sim.universe.scheduled.filter((x) => x.kind.startsWith('social')).map((x) => [x.kind, x.status, x.at - at]))).toContain('Came over to play; the weather or the dark stopped it');
   });
 });

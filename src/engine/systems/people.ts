@@ -63,6 +63,8 @@ import { bedSleepsOne } from './furniture';
 import { incomeOf } from './marriage';
 import { childrenStay } from './support';
 import { applyLookingAfter } from './life';
+import { COURT_MET, TRAINING, courtRefusal, homeCourts, type Court } from './dwelling';
+import { exerts } from './body';
 
 export const MEET_KIND = 'social.meet';
 
@@ -99,7 +101,8 @@ export interface Contact {
   carries?: boolean;
 }
 
-export interface Invitation { contactId: string; at: Instant; what: 'meal' | 'visit'; restaurantId?: string; item?: string }
+/** A meal out, a visit home, or a game on your own court or pitch (`play`, from 2026-10-02). */
+export interface Invitation { contactId: string; at: Instant; what: 'meal' | 'visit' | 'play'; restaurantId?: string; item?: string; court?: Court }
 
 export const contactsOf = (person: Person): Contact[] => (person.contacts ??= []);
 
@@ -152,7 +155,7 @@ export function declines(person: Person, c: Contact, inv: Invitation): string | 
   if (c.rival) return `${first} would rather not.`;
   const where = inv.what === 'meal' ? restaurantById(inv.restaurantId ?? '')?.cityId : person.home?.cityId;
   if (where !== c.cityId) return `${first} lives in ${CITIES.require(c.cityId).name}.`;
-  if (inv.what === 'visit' && c.hours < HALL.casual) return `${first} doesn’t know you well enough yet to come to your home.`;
+  if ((inv.what === 'visit' || inv.what === 'play') && c.hours < HALL.casual) return `${first} doesn’t know you well enough yet to come to your home.`;
   const hour = zonedParts(inv.at, CITIES.require(c.cityId).timeZone).hour;
   if (hour < SOCIAL.notBefore) return `That’s too early for ${first}.`;
   if (hour >= SOCIAL.notAfter) return `That’s too late for ${first}.`;
@@ -173,6 +176,7 @@ export function inviteRefusal(sim: Simulation, person: Person, inv: Invitation):
     if (!r) return 'Choose a restaurant.';
     if (!inv.item || !diningQuote(sim, r, [inv.item], 'in')) return 'Choose what you’ll have, from what SLATE has a price for.';
   } else if (!person.home || person.home.kind === 'sofa') return 'You have no home of your own to ask them to.';
+  else if (inv.what === 'play' && !homeCourts(person).some((x) => x.court === inv.court)) return 'You have no such court or pitch to play on.';
   const ends = inv.at + minutesOf(inv) * 60_000;
   const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < ends && x.at + x.durationMinutes * 60_000 > inv.at);
   if (clash) return `You have ${clash.label} then.`;
@@ -180,7 +184,12 @@ export function inviteRefusal(sim: Simulation, person: Person, inv: Invitation):
 }
 
 /** How long it lasts: a meal as long as a meal at that kind of place, a visit two hours. */
+/** A game with friends: an hour and a half, SLATE's estimate. */
+export const PLAY_HOURS = 1.5;
+const COURT_WORD: Readonly<Record<Court, string>> = { tennis: 'tennis', basketball: 'basketball', pickleball: 'pickleball', football: 'football' };
+
 const minutesOf = (inv: Invitation): number => {
+  if (inv.what === 'play') return PLAY_HOURS * 60;
   const r = inv.what === 'meal' ? restaurantById(inv.restaurantId ?? '') : undefined;
   return r ? DINING_MINUTES[r.tier] : SOCIAL.visitMinutes;
 };
@@ -188,17 +197,17 @@ const minutesOf = (inv: Invitation): number => {
 export function registerPeople(sim: Simulation): void {
   sim.onCommand<Invitation, { accepted: boolean; reason?: string }>('social.invite', (p, { sim: s }) => {
     const person = s.player;
-    const inv: Invitation = { contactId: String(p?.contactId), at: Number(p?.at), what: p?.what === 'visit' ? 'visit' : 'meal', ...(p?.restaurantId ? { restaurantId: String(p.restaurantId) } : {}), ...(p?.item ? { item: String(p.item) } : {}) };
+    const inv: Invitation = { contactId: String(p?.contactId), at: Number(p?.at), what: p?.what === 'visit' || p?.what === 'play' ? p.what : 'meal', ...(p?.restaurantId ? { restaurantId: String(p.restaurantId) } : {}), ...(p?.item ? { item: String(p.item) } : {}), ...(p?.court ? { court: p.court } : {}) };
     const no = inviteRefusal(s, person, inv);
     if (no) throw new CommandError(no);
     const c = contactsOf(person).find((x) => x.id === inv.contactId)!;
     const reason = declines(person, c, inv);
     const r = inv.restaurantId ? restaurantById(inv.restaurantId) : undefined;
-    const what = r ? `a meal at ${r.name}` : 'a visit to your home';
+    const what = r ? `a meal at ${r.name}` : inv.what === 'play' ? `a game of ${COURT_WORD[inv.court!]} at yours` : 'a visit to your home';
     c.memory.unshift({ at: s.now, what: reason ? `Said no to ${what}: ${reason}` : `Said yes to ${what}` });
     if (reason) return { accepted: false, reason };
     const first = c.name.split(' ')[0];
-    s.schedule({ at: inv.at, kind: MEET_KIND, label: r ? `${r.name} With ${first}` : `${first} Comes Over`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: minutesOf(inv), locationId: c.cityId, payload: { personId: person.id, ...inv } });
+    s.schedule({ at: inv.at, kind: MEET_KIND, label: r ? `${r.name} With ${first}` : inv.what === 'play' ? `${first} Comes Over To Play` : `${first} Comes Over`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: minutesOf(inv), locationId: c.cityId, payload: { personId: person.id, ...inv } });
     return { accepted: true };
   });
 
@@ -235,7 +244,11 @@ export function registerPeople(sim: Simulation): void {
         if (person.id === s.universe.playerId) s.notify({ category: 'relationship', title: `You And ${first} Are A Couple`, body: `Nine dates on, ${c.name} and you are together.`, importance: 60, route: '/workspace/people' });
       }
     }
-    c.memory.unshift({ at: item.at, what: r ? `A meal at ${r.name}, ${formatTime(item.at, CITIES.require(r.cityId).timeZone)}` : 'Came over' });
+    // A game, where the weather and the light let it be played: an hour and a half of it, at its METs, trained as a run trains.
+    const court = item.payload.what === 'play' ? homeCourts(person).find((x) => x.court === item.payload.court) : undefined;
+    const played = court && !courtRefusal(s, person, court);
+    if (played) { exerts(person, COURT_MET[court.court], PLAY_HOURS); applyLookingAfter(person, 'court', item.at, TRAINING.run); }
+    c.memory.unshift({ at: item.at, what: r ? `A meal at ${r.name}, ${formatTime(item.at, CITIES.require(r.cityId).timeZone)}` : court ? (played ? `Played ${COURT_WORD[court.court]} at yours` : 'Came over to play; the weather or the dark stopped it') : 'Came over' });
     const w = person.wellbeing;
     w.morale = clamp(w.morale + SOCIAL.morale * personalityOf(person, 'company') * personalityOf(person, 'moraleSwing'), 0, 100);
     w.stress = clamp(w.stress - SOCIAL.stress, 0, 100);

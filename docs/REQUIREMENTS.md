@@ -192,7 +192,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 43d–h | Appliances, lighting, storage, security, utilities | Partial | fixtures; security | Fixture choice, lighting, capacity |
 | 43i | Special rooms | Partial | home gym | Theater, studio, library, workshop, dressing room, game room |
 | 43j–l | Pools, gardens, outdoor kitchen, guesthouse, courts, track | Partial | pool, courts, ADU | Gardens, greenhouse, outdoor kitchen use, guests in the ADU, track |
-| 43m | Football field, solo and with friends | Not implemented | — | Field project; drills; play with friends |
+| 43m | Football field, solo and with friends | Partial, 2026-10-02 | three pitch sizes on the lot, turf at the published middle and a drainage base; Come Over To Play for any court or the pitch, at the game's METs, stopped by weather or dark; tests/courts.test.ts | Solo drills (no published MET for them); lights for a pitch; natural grass |
 | 44a–b | Space, ownership | Complete | `projectRefusal`, `mostFloor` | — |
 | 44c–d | Permission, structure, access | Partial / not implemented | permits | Refusal outcome; structural checks |
 | 44e–f | Explain and offer alternatives | Partial | projects hidden by type | Show them refused, with alternatives |
