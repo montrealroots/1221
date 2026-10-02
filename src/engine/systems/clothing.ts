@@ -44,7 +44,7 @@ import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { stow } from './trips';
 import { fitOf, fitKgFor, measuresRefusal, shoeRow, sizeFor, type Measures } from './tailoring';
 import { bodyOf } from './body';
-import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
+import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment, toBasket, toBasketRefusal } from './wardrobe';
 
 /** A purchase of clothes: what, from whom, how, and what the goods cost; and whether it went back. */
 export interface ClothesPurchase {
@@ -565,6 +565,15 @@ export function replaceWornOut(sim: Simulation, person: Person): number {
 }
 
 export function registerClothing(sim: Simulation): void {
+  // Taken off into the laundry basket, to be washed now (`toBasket` in `systems/wardrobe.ts`, from 2026-10-02).
+  sim.onCommand<{ itemIds: string[] }, { moved: number }>('clothes.to_basket', (p, { sim: s }) => {
+    const person = s.player;
+    const ids = Array.isArray(p?.itemIds) ? p.itemIds.map(String) : [];
+    if (ids.length === 0) throw new CommandError('Choose what goes in.');
+    for (const id of ids) { const no = toBasketRefusal(s, person, itemById(person, id) as never); if (no) throw new CommandError(no); }
+    for (const id of ids) toBasket(person, itemById(person, id) as never);
+    return { moved: ids.length };
+  });
   // Your measurements, for the retailers' own charts (`chartSize` in `systems/tailoring.ts`, from 2026-10-02).
   sim.onCommand<Partial<Measures> & { clear?: boolean }, { kept: boolean }>('clothes.measures', (p, { sim: s }) => {
     const person = s.player;

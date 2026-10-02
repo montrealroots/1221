@@ -109,7 +109,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 32b | Filter by occasion, type, size, color, condition | Partial, 2026-10-02 | Belongings filters by kind, clean or not, condition, color and size, and finds by name (`systems/itemfacets.ts`) | Occasion tags (no source tags garments by occasion) |
 | 32c | Pieces and layers | Partial | one per slot | Layering |
 | 32d | Change, with time and a worn state | Done, 2026-10-02 | `clothes.change`: `CHANGE_MINUTES` (SLATE's estimate), each piece a wear, `wornNow`; tests/wardrobe.test.ts | — |
-| 32e | Removed items stored or to the hamper | Not implemented | — | Hamper spot; take-off choice |
+| 32e | Removed items stored or to the hamper | Done, 2026-10-02 | the laundry basket, a spot at home: what you have on goes Into The Laundry Basket to be washed with the next load, put back where its kind is kept; left out, it's worn again until its count (`toBasket`) | — |
 | 32f | Save an outfit | Complete | tests/clothing, wardrobe | — |
 | 32g | Never silently replace a garment | Done, 2026-10-02 | `chosenMissing`; `wearTheDay` tells what stood in and why; tests/wardrobe.test.ts | — |
 | 33a | Inspect supplies and equipment | Partial | Kitchen panel | Equipment from installed appliances |

@@ -20,7 +20,7 @@ import type { Slot } from '@/engine/content/garmentcare';
 import type { ClothingProduct } from '@/engine/content/clothingcatalog';
 import { arrange } from '@/engine/systems/catalog';
 import type { Item } from '@/engine/systems/items';
-import { CHANGE_MINUTES, chosenMissing, cleanOutfits, wornNow, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
+import { CHANGE_MINUTES, chosenMissing, cleanOutfits, wornNow, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment, toBasketRefusal } from '@/engine/systems/wardrobe';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
 import { alterCost, alterRefusal, fitOf, tailorsIn } from '@/engine/systems/tailoring';
 import { resaleOf, sellRefusal } from '@/engine/systems/resale';
@@ -149,7 +149,7 @@ function WhatToWear() {
   return (
     <Panel title="What To Wear" subtitle="Your choice is worn while it’s clean and to hand; whatever it leaves out, what’s already on the go, then the least washed">
       <LookRegion className="col gap-3">
-        {onNow.length > 0 && <p className="small" style={{ margin: 0 }}><span className="muted">Wearing Now: </span>{onNow.map((g, n) => <span key={g.id}>{n > 0 ? ', ' : ''}<Open subject={at('garment', g.id)}>{g.label}</Open></span>)}</p>}
+        {onNow.length > 0 && <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}><p className="small" style={{ margin: 0 }}><span className="muted">Wearing Now: </span>{onNow.map((g, n) => <span key={g.id}>{n > 0 ? ', ' : ''}<Open subject={at('garment', g.id)}>{g.label}</Open></span>)}</p>{(() => { const fit = onNow.filter((g) => !toBasketRefusal(sim, person, g)); return fit.length > 0 ? <Gated feature="clothes.to_basket" className="btn btn-sm btn-ghost" title="Washed with the next load, whatever its count of wears says" onClick={() => { if (run('clothes.to_basket', { itemIds: fit.map((g) => g.id) }).ok) toast('In the laundry basket.', 'positive'); }}>Into The Laundry Basket</Gated> : null; })()}</div>}
         {missing.length > 0 && <div className="callout callout-warning small">{missing.map(({ item, why }, n) => <span key={item.id}>{n > 0 ? '; ' : ''}<Open subject={at('garment', item.id)}>{item.label}</Open> is {why}</span>)}: the day puts on something else in its place.</div>}
         {slots.length === 0 ? <p className="small muted" style={{ margin: 0 }}>Nothing clean is to hand.</p> : (
           <div className="field-row field-row-tight">
