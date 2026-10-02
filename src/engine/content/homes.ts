@@ -230,13 +230,15 @@ export function conditionWord(age: number, life: number): 'New' | 'Good' | 'Date
 }
 
 export type Feature = 'garage' | 'yard' | 'basement' | 'finishedBasement' | 'attic' | 'furnace' | 'heatPump' | 'metalRoof'
-  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights' | 'pickleballCourt' | 'footballPitch';
+  | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights' | 'pickleballCourt' | 'footballPitch'
+  | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'walkInCloset' | 'sauna' | 'hotTub' | 'puttingGreen' | 'irrigation';
 
 export const FEATURE_LABEL: Readonly<Record<Feature, string>> = {
   garage: 'Garage', yard: 'Yard', basement: 'Unfinished Basement', finishedBasement: 'Finished Basement', attic: 'Attic',
   furnace: 'Gas Furnace', heatPump: 'Heat Pump', metalRoof: 'Metal Roof', deck: 'Deck', patio: 'Patio', pool: 'Pool',
   solar: 'Solar Panels', generator: 'Backup Generator', adu: 'Backyard Cottage', stone: 'Stone Front',
   tennisCourt: 'Tennis Court', basketballCourt: 'Half Basketball Court', tennisLights: 'Lights On The Tennis Court', basketballLights: 'Lights On The Basketball Court', pickleballCourt: 'Pickleball Court', footballPitch: 'Football Pitch',
+  homeTheater: 'Home Theater', danceStudio: 'Dance Studio', soundproofRoom: 'Soundproofed Room', library: 'Library', walkInCloset: 'Walk-In Closet', sauna: 'Sauna', hotTub: 'Hot Tub', puttingGreen: 'Putting Green', irrigation: 'Sprinklers',
 };
 
 // ---------------------------------------------------------------------------
@@ -356,6 +358,23 @@ export const PROJECTS: readonly Project[] = [
   { id: 'adu', label: 'Build A Backyard Cottage', usd: 162_000, recoup: 0.44, days: 150, on: DETACHED, needs: ['yard'], lacks: ['adu'], lot: 6_000, adds: { gains: ['adu'] } },
   // From 2026-10-01 (research-construction-process.json, cost guides, US): a spare bedroom made a home gym, the middle of Fixr's
   // $2,000 to $10,000 (January 2025), its equipment in it; a week, SLATE's, Fixr giving no time. A buyer's return isn't published.
+  // From 2026-10-02, the special rooms and outdoor additions the facilities research priced (research-facilities.json, cost
+  // guides' figures, mostly read through search summaries, as each row says): a spare bedroom made a home theater at Angi's
+  // $25,000 average, a dance studio on a sprung floor at the middle of $8 to $15 a square foot over 200 square feet, or
+  // soundproofed at the middle of HomeGuide's $1,400 to $4,300; a library's built-in shelves at Angi's $3,069 average; a
+  // walk-in closet at the middle of Fixr's $5,000 to $10,000; an indoor sauna at the middle of $3,000 to $9,000; a hot tub at
+  // HomeGuide's $8,500 national average; a putting green of 400 square feet at the middle of $25 to $40; sprinklers on a
+  // quarter-acre at the middle of $3,000 to $10,000. None has a published return, so none adds to the home's worth. A room
+  // given over is a spare bedroom no longer, one to each.
+  { id: 'home-theater', label: 'Make A Spare Bedroom A Home Theater', usd: 25_000, recoup: 0, days: 30, on: ALL, spareBedroom: true, lacks: ['homeTheater'], adds: { gains: ['homeTheater'] } },
+  { id: 'dance-studio', label: 'Make A Spare Bedroom A Dance Studio', usd: Math.round(200 * 11.5), recoup: 0, days: 7, on: ALL, spareBedroom: true, lacks: ['danceStudio'], adds: { gains: ['danceStudio'] } },
+  { id: 'soundproofing', label: 'Soundproof A Spare Bedroom', usd: 2_850, recoup: 0, days: 5, on: ALL, spareBedroom: true, lacks: ['soundproofRoom'], adds: { gains: ['soundproofRoom'] } },
+  { id: 'library', label: 'Make A Spare Bedroom A Library', usd: 3_069, recoup: 0, days: 7, on: ALL, spareBedroom: true, lacks: ['library'], adds: { gains: ['library'] } },
+  { id: 'walk-in-closet', label: 'Build A Walk-In Closet', usd: 7_500, recoup: 0, days: 7, on: HOUSES, lacks: ['walkInCloset'], adds: { gains: ['walkInCloset'] } },
+  { id: 'sauna', label: 'Put In A Sauna', usd: 6_000, recoup: 0, days: 14, on: HOUSES, lacks: ['sauna'], adds: { gains: ['sauna'] } },
+  { id: 'hot-tub', label: 'Put In A Hot Tub', usd: 8_500, recoup: 0, days: 7, on: DETACHED, needs: ['yard'], lacks: ['hotTub'], adds: { gains: ['hotTub'] } },
+  { id: 'putting-green', label: 'Put In A Putting Green', usd: Math.round(400 * 32.5), recoup: 0, days: 7, on: DETACHED, needs: ['yard'], lacks: ['puttingGreen'], lot: 400, adds: { gains: ['puttingGreen'] } },
+  { id: 'sprinklers', label: 'Put In Sprinklers', usd: 6_500, recoup: 0, days: 5, on: DETACHED, needs: ['yard'], lacks: ['irrigation'], adds: { gains: ['irrigation'] } },
   { id: 'home-gym', label: 'Make A Spare Bedroom A Home Gym', usd: 6_000, recoup: 0, days: 7, on: ALL, spareBedroom: true, adds: { gym: 'home' } },
   // Taking things out: an in-ground pool removed and filled, the middle of Angi's $7,000 to $16,000 and its 5 to 10 days; a deck,
   // the middle of Fixr's $300 to $3,000; a detached two-car garage, Fixr's $3,500 average for 24 by 24 feet. The deck's and the
