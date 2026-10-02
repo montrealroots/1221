@@ -62,6 +62,23 @@ export function roomReadyAt(hotelId: string, arriveAt: Instant): Instant {
   return p.hour < 6 || arriveAt >= ready ? arriveAt : ready;
 }
 
+/** What a named hotel can be filtered by (the master plan's §48a–b, from 2026-10-02): what its own pages state it has. */
+export type HotelWant = 'gym' | 'pool' | 'breakfast' | 'wheelchair' | 'pets';
+export const HOTEL_WANT_LABEL: Readonly<Record<HotelWant, string>> = { gym: 'A Gym', pool: 'A Pool', breakfast: 'Breakfast Included', wheelchair: 'Wheelchair Access', pets: 'Pets Welcome' };
+
+/** Whether a hotel has everything wanted, as its pages state; one whose pages don't say isn't counted as having it. */
+export function hotelHas(hotelId: string, wants: readonly HotelWant[]): boolean {
+  const a = amenitiesOf(hotelId);
+  return wants.every((w) => {
+    if (!a) return false;
+    if (w === 'gym') return a.gym === true;
+    if (w === 'pool') return a.pool === 'indoor' || a.pool === 'outdoor';
+    if (w === 'breakfast') return a.breakfast?.included === true;
+    if (w === 'wheelchair') return a.accessible === true;
+    return a.pets?.allowed === true;
+  });
+}
+
 /** A flexible rate's refund, until a day before arrival where a hotel's own terms aren't known: SLATE's reading of the usual terms. */
 export const FREE_CANCEL_HOURS = 24;
 

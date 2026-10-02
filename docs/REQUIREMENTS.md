@@ -208,7 +208,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | from 2026-10-02: to and from the airport By Taxi or By Transit at each town's read fare (`systems/airportground.ts`); a canceled flight's fare taken back instead of the next one, the way home with it (`travel.take_refund`) | Missed connections; change the outbound; rideshare; airport parking |
 | 47m | Companions | Partial, 2026-10-02 | `travel.companion`: a friend or partner from where you set out, own fares, a room split evenly, the waking hours together; tests/companions.test.ts | Several companions; a child along |
 | 47o | Home while away | Partial | bills run | House-sitter, mail, spoilage checked |
-| 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns | Guests, rooms, filters |
+| 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns; from 2026-10-02 filtered by what their own pages state (a gym, a pool, breakfast included, wheelchair access, pets) and by most for the stay (`hotelHas`) | Guests; several rooms |
 | 48c | Compare total stay | Complete | `namedStayQuote`; tests/hotels | — |
 | 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking; from 2026-10-02 each hotel's gym, pool, spa, breakfast, Wi-Fi, accessibility and pets shown, and its own cancellation deadline deciding the refund (`content/hotelamenities.ts`) | Extras bought (breakfast, early check-in, a pet's fee) |
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |

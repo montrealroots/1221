@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { HOTEL_AMENITIES } from '@/engine/content/hotelamenities';
-import { FREE_CANCEL_HOURS, amenitiesOf, amenityLine, freeCancelUntil, hotelById } from '@/engine/systems/hotels';
+import { FREE_CANCEL_HOURS, amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelHas } from '@/engine/systems/hotels';
 import { hotelRefund, type Journey } from '@/engine/systems/journey';
 import { stayPlace, swimRefusal } from '@/engine/systems/dwelling';
 
@@ -84,5 +84,19 @@ describe('a hotel’s gym and pool', () => {
     // Checked out, it isn't yours.
     p.stay = { kind: 'hotel', cityId: city, hotelId: indoor.id, out: true };
     expect(swimRefusal(sim, p)).toBe('You have no pool.');
+  });
+});
+
+describe('a hotel search', () => {
+  it('keeps the hotels whose own pages state what’s wanted, and only those', () => {
+    expect(hotelHas('the-savoy-london', ['gym', 'pool'])).toBe(true);
+    expect(hotelHas('travelodge-london-kings-cross-royal-scot', ['gym'])).toBe(false);
+    expect(hotelHas('travelodge-london-kings-cross-royal-scot', ['wheelchair'])).toBe(false);
+    expect(hotelHas('la-quinta-new-haven', ['breakfast'])).toBe(true);
+    expect(hotelHas('pod-times-square', ['pets'])).toBe(true);
+    // A hotel whose pages don't say isn't counted as having it.
+    expect(hotelHas('premier-inn-london-county-hall', ['gym'])).toBe(false);
+    expect(hotelHas('the-plaza-nyc', [])).toBe(true);
+    expect(hotelHas('nowhere', ['gym'])).toBe(false);
   });
 });
