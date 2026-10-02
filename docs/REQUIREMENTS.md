@@ -99,11 +99,11 @@ Correctness first, then the connected day the plan asks to be shown working
 |---|---|---|---|---|
 | 31a | Reach an accessible bathroom | Partial | `lookAfterRefusal` | Rooms; a shared or busy bathroom |
 | 31b | Shower or bath | Complete | `wash`/`bathe`; tests/looking-after | — |
-| 31c | Supplies and towel | Partial | `showerUses` by grams | Towels as items; a prepare step |
+| 31c | Supplies and towel | Done, 2026-10-02 | `showerUses` by grams; bath towels as items (`starterTowels`, `useTowel`) | Buying towels |
 | 31d | Products, duration, routine | Not implemented | `take()` picks the first | Choose product, minutes, conditioner |
 | 31e | Perform; time; hygiene | Complete | life.ts | — |
 | 31f | Water and energy | Not implemented | `powerDay` spoils food only | Hot water by heater and outage; water and energy billed |
-| 31g | Dry off, change, used towel to laundry | Not implemented | — | Towel wear, a change after |
+| 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |
 | 31h | Grooming at home | Partial | salon, teeth, deodorant | Shave, hair, makeup at home; preferences |
 | 32a | Browse wardrobe, drawers, luggage | Partial | `reachable`, WhatToWear | Browse by location |
 | 32b | Filter by occasion, type, size, color, condition | Not implemented | `spec`, `condition` exist | Filters; occasion tags |
@@ -252,4 +252,4 @@ Correctness first, then the connected day the plan asks to be shown working
 | 57 | New mechanics reviewed, never run against saves | Partial | proposals only | A development-proposal role |
 | 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search | From a missing ingredient to the shop and back to the meal |
 | 59 | Activity states, recovery, no duplicates | Partial | orders, journeys, works | A common state model across activities |
-| 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | The shower takes no towel (§31c, §31g); no washing up (§33i) |
+| 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | No washing up (§33i) |

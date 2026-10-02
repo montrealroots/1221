@@ -18,10 +18,10 @@
  * stand-ins SLATE gives everybody (`STARTER`), since what somebody already
  * owns needn't be any one shop's.
  *
- * Not yet: alterations and selling clothes on. A hem changes how something
- * fits, and SLATE doesn't keep a body's measurements for a fit to be read
- * against; nor does it keep what a worn garment fetches. Both are in
- * `docs/UNBITTEN.md`.
+ * Alterations and selling clothes on were left out at first, for want of a
+ * body to fit and a resale price. Both came later: fit by weight and size
+ * (`systems/tailoring.ts`) and resale (`systems/resale.ts`). A home's bath
+ * towels are kept here too, from 2026-10-02 (`starterTowels`).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -415,6 +415,17 @@ export const STARTER: readonly { label: string; kind: string; slot: Slot; count:
   { label: 'Dress Shoes', kind: 'shoes', slot: 'shoes', count: 1 },
   { label: 'Coat', kind: 'coat', slot: 'outer', count: 1 },
 ];
+
+/** The bath towels a household begins with: three, SLATE's estimate, one in use, one in the wash and one spare. */
+export const STARTER_TOWELS = 3;
+
+/** Gives a home its towels where they own none, as a household has: an older save's too (from 2026-10-02). */
+export function starterTowels(sim: Simulation, person: Person): boolean {
+  const home = homeKeyOf(person.home);
+  if (!home || garmentsOf(person).some((g) => g.garment.slot === 'towel')) return false;
+  for (let i = 0; i < STARTER_TOWELS; i += 1) addItem(sim, person, { kind: 'starter:towel', label: 'Bath Towel', quantity: 1, condition: 1, at: { kind: 'home', home, spot: 'bathroom' }, acquiredAt: sim.now, garment: { kind: 'towel', slot: 'towel', care: 'wash', wears: 0, washes: 0 } });
+  return true;
+}
 
 /**
  * Gives somebody the clothes a life begins with, once, at home, if they

@@ -24,7 +24,7 @@
  */
 
 /** Where a garment goes on the body, which decides what an outfit needs. */
-export type Slot = 'top' | 'bottom' | 'dress' | 'suit' | 'outer' | 'underwear' | 'socks' | 'shoes' | 'sleep' | 'active' | 'accessory';
+export type Slot = 'top' | 'bottom' | 'dress' | 'suit' | 'outer' | 'underwear' | 'socks' | 'shoes' | 'sleep' | 'active' | 'accessory' | 'towel';
 
 /** How it's cleaned: in a machine, by hand, or only by a dry cleaner (the FTC's Care Labeling Rule). */
 export type Care = 'wash' | 'hand' | 'dry-clean';
@@ -48,6 +48,8 @@ export const CARE_BY_KIND: Readonly<Record<string, CareRule>> = {
   active: { wearsBetween: 1, lifetimeWashes: 17.3, source: 'ACI: leggings after every wear; Which?: workout gear 1 wear' },
   shoes: { wearsBetween: Infinity, lifetimeWashes: null, source: 'Not washed' },
   accessory: { wearsBetween: Infinity, lifetimeWashes: null, source: 'Not washed' },
+  // From 2026-10-02: a bath towel is used after a shower and washed with the clothes. How many washes one lasts isn't published.
+  towel: { wearsBetween: 3, lifetimeWashes: null, source: 'Cleveland Clinic: wash a bath towel after three uses' },
 };
 
 /** The care rule for a kind of garment, or a T-shirt's where none is named. */

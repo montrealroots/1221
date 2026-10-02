@@ -35,7 +35,7 @@ import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import { cook, kitchenMeal } from './kitchen';
 import { takePortion } from './pantry';
-import { cleanOutfits, washableDirty } from './wardrobe';
+import { cleanOutfits, useTowel, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { GROOMING, dailyCare, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -474,6 +474,8 @@ export function registerLife(sim: Simulation): void {
       applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
       // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
       if (action === 'wash' || action === 'bathe') person.wellbeing.hygiene = Math.min(person.wellbeing.hygiene ?? 100, showerUses(s, person));
+      // Dried on one of their own towels at home, a use toward its wash; a hotel, a let or a gym gives its own (`useTowel`, from 2026-10-02).
+      if ((action === 'wash' || action === 'bathe') && atHome(person) && !useTowel(s, person) && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'No Clean Towel', body: 'Every towel to hand is in the wash or still drying: put a load on.', importance: 25, route: '/workspace/clothes' });
       // An hour of it, at its injury rate (`content/injury.ts`).
       if (action === 'exercise' || action === 'swim') {
         const source = action === 'swim' ? 'swim' : where!.where === 'run' ? 'run' : 'gym';
