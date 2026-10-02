@@ -31,6 +31,8 @@ import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
 import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
 import { everydayFuel } from './fueltank';
+import { registerInteriors } from './interiors';
+import { optionsQuote, optionsRefusal, orderWeeksOf } from './caroptions';
 import { modLoading, registerMods } from './mods';
 import { ATV_FEES, ATV_INSURANCE } from '../content/rides';
 import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
@@ -102,6 +104,12 @@ export interface OwnedVehicle {
   inShop?: import('./repairs').InShop;
   /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
   errandKm?: number;
+  /** Its interior as commissioned, and one ordered and not yet fitted (`systems/interiors.ts`, from 2026-10-02). */
+  interior?: import('./interiors').Interior;
+  interiorOrdered?: import('./interiors').Interior;
+  /** The factory options it was built with, and when a factory order comes; until then it isn't the buyer's to drive (`systems/caroptions.ts`, from 2026-10-02). */
+  options?: string[];
+  deliveredAt?: Instant;
   /** How full its tank or battery is, 0 to 1 (`systems/fueltank.ts`, from 2026-10-02); an older save's is full. */
   fuelLevel?: number;
   /** A wrap in film over the paint (`systems/wraps.ts`, from 2026-10-01). */
@@ -214,13 +222,15 @@ const lbOf = (m: CarModel) => (m.kerbKg ? m.kerbKg * 2.20462 : NY.assumedLb);
 export interface Quote { currency: string; price: Money; lines: { label: string; amount: Money }[]; total: Money; basis: string }
 
 /** What buying a car costs where one lives, in the jurisdiction's money, cents: its price and every tax and fee. */
-export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean; person?: Person; tradeIn?: { value: Money; payoff: Money; label: string } } = {}): Quote | string {
+export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean; person?: Person; tradeIn?: { value: Money; payoff: Money; label: string }; options?: readonly string[] } = {}): Quote | string {
   const j = jurisdictionOf(cityId);
   if (!j) return 'SLATE doesn’t have that place’s car taxes and fees yet: it keeps New York, Connecticut, California, Great Britain, Ireland, Ontario, British Columbia and Mexico City.';
   if (model.market !== MARKET[j]) return 'That car is sold in another market.';
   const age = opts.age ?? 0;
   const used = age > 0;
-  const price = Math.round((model.price + (used ? 0 : model.delivery)) * kept(age));
+  // A new car's factory options join its price before the taxes (`systems/caroptions.ts`, from 2026-10-02).
+  const extras = !used && opts.options?.length ? optionsQuote(model, opts.options).cents : 0;
+  const price = Math.round((model.price + (used ? 0 : model.delivery) + extras) * kept(age));
   const lines: { label: string; amount: Money }[] = [];
   const c = (x: number) => Math.round(x * 100);
   // A new car in America sells below its sticker by what buyers paid on average (KBB, from 2026-09-30).
@@ -537,9 +547,11 @@ export const vehiclesOf = (person: Person) => (person.vehicles ??= []);
 /** Whether it has side windows a shop could tint: not a motorcycle, a scooter, a bicycle or an ATV. */
 export const glazed = (v: OwnedVehicle): boolean => { const m = modelById(v.modelId); return !!m && !onTwoWheels(m) && !forOutings(m); };
 
-export function buyRefusal(sim: Simulation, person: Person, modelId: string, opts: { age?: number; financed?: boolean; coverage?: OwnedVehicle['coverage'] }): string | undefined {
+export function buyRefusal(sim: Simulation, person: Person, modelId: string, opts: { age?: number; financed?: boolean; coverage?: OwnedVehicle['coverage']; options?: readonly string[] }): string | undefined {
   const model = modelById(modelId);
   if (!model) return 'SLATE doesn’t sell that car.';
+  const bad = optionsRefusal(model, opts.options ?? [], opts.age ?? 0);
+  if (bad) return bad;
   const q = quote(model, homeOf(person), sim.now, { ...opts, person });
   if (typeof q === 'string') return q;
   const j = jurisdictionOf(homeOf(person))!;
@@ -554,12 +566,13 @@ export function buyRefusal(sim: Simulation, person: Person, modelId: string, opt
 }
 
 export function registerVehicles(sim: Simulation): void {
-  sim.onCommand<{ modelId: string; age?: number; financed?: boolean; months?: number; coverage?: OwnedVehicle['coverage']; tradeIn?: string }, { vehicleId: string; paid: Money; monthly?: Money }>('vehicle.buy', (p, { sim: s }) => {
+  sim.onCommand<{ modelId: string; age?: number; financed?: boolean; months?: number; coverage?: OwnedVehicle['coverage']; tradeIn?: string; options?: string[] }, { vehicleId: string; paid: Money; monthly?: Money; deliveredAt?: Instant }>('vehicle.buy', (p, { sim: s }) => {
     const person = s.player;
     const age = Math.max(0, Math.round(Number(p?.age ?? 0)));
     const financed = p?.financed === true;
     const coverage = p?.coverage === 'liability' ? 'liability' : 'full';
-    const no = buyRefusal(s, person, String(p?.modelId), { age, financed, coverage });
+    const options = Array.isArray(p?.options) ? p.options.map(String) : [];
+    const no = buyRefusal(s, person, String(p?.modelId), { age, financed, coverage, options });
     if (no) throw new CommandError(no);
     const model = modelById(String(p.modelId))!;
     const cityId = homeOf(person);
@@ -570,7 +583,7 @@ export function registerVehicles(sim: Simulation): void {
     if (old?.repossessed) throw new CommandError('The lender has that car.');
     if (old?.lease) throw new CommandError('A leased car is the lessor’s: it’s returned or bought out at the lease’s end, not traded.');
     const trade = old ? tradeInFor(s, cityId, old) : undefined;
-    const q = quote(model, cityId, s.now, { age, financed, person, ...(trade ? { tradeIn: trade } : {}) }) as Quote;
+    const q = quote(model, cityId, s.now, { age, financed, person, options, ...(trade ? { tradeIn: trade } : {}) }) as Quote;
     const total = inSave(s, q.total, q.currency);
     const cur = saveCurrency(s.universe);
     // Financed, the price is lent and the taxes and fees paid down, as a dealer arranges it.
@@ -580,6 +593,9 @@ export function registerVehicles(sim: Simulation): void {
     if (!payFromBank(s, person, down, `${model.make} ${model.model}${age ? `, ${age} years old` : ', new'}${financed ? ', the taxes and fees' : ''}`, 'vehicle')) throw new CommandError(`${formatMoney(down, cur)} is more than the bank can cover.`);
     const id = s.nextId('vehicle');
     const v: OwnedVehicle = { id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
+    // Built to order: its options kept, and the car the buyer's once it comes.
+    if (options.length) v.options = options;
+    if (optionsQuote(model, options).factory) v.deliveredAt = s.now + orderWeeksOf(model)!.weeks * 7 * MS_DAY;
     if (financed) {
       const months = Math.max(12, Math.min(84, Math.round(Number(p?.months ?? 60))));
       const apr = loanRate(j, person.credit?.score ?? 0, age > 0)!;
@@ -601,7 +617,7 @@ export function registerVehicles(sim: Simulation): void {
     vehiclesOf(person).push(v);
     s.schedule({ at: s.now + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
     if (registers(model, j)) s.schedule({ at: v.registrationDue, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
-    return { vehicleId: id, paid: down, ...(v.loan ? { monthly: v.loan.monthly } : {}) };
+    return { vehicleId: id, paid: down, ...(v.loan ? { monthly: v.loan.monthly } : {}), ...(v.deliveredAt ? { deliveredAt: v.deliveredAt } : {}) };
   });
 
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
@@ -611,6 +627,7 @@ export function registerVehicles(sim: Simulation): void {
   registerUsedCars(sim, jurisdictionOf, homeOf);
   registerStandIn(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerCarCare(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
+  registerInteriors(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)));
   registerWraps(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!, (v) => liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
   registerRepairs(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
@@ -662,7 +679,7 @@ export function registerVehicles(sim: Simulation): void {
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
     let driven = 0;
     // Broken down, or at the garage, it stays put (`systems/repairs.ts`).
-    if (!v.repossessed && !missing && !forOutings(m) && !v.fault?.severe && !inShopNow(v, s.now) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
+    if (!v.repossessed && !missing && !forOutings(m) && !v.fault?.severe && !inShopNow(v, s.now) && !(v.deliveredAt !== undefined && v.deliveredAt > item.at) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
       // The month's everyday driving, less what errands have already driven and paid for (`systems/trips.ts`).
       const km = Math.max(0, monthKm(v) - (v.errandKm ?? 0));
       const errandKm = v.errandKm ?? 0;

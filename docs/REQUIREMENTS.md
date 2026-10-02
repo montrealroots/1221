@@ -123,8 +123,8 @@ Correctness first, then the connected day the plan asks to be shown working
 | 33i | Wash up | Not implemented | — | Dirty dishes, washing, dishwasher |
 | 33j | Restaurants, takeout, delivery, drinks | Complete | `food.dine`, `food.drink`; tests | — |
 | 33k | Reservations | Not implemented | — | Book a table ahead |
-| 34a | Television | Not implemented | TV is furniture | Watch: a service, a programme, stop and resume |
-| 34b | Reading, music, gaming, hobbies | Not implemented | all are "unwind" | Actions per activity |
+| 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |
+| 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one | Reading; hobbies; games owned |
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
 | 35a | Cleaning | Partial | `tidy` scalar | Rooms, cleaning supplies |
 | 35b | Laundry | Complete | `doLaundry`; tests/wardrobe | Detergent; towels and bedding |
@@ -144,19 +144,19 @@ Correctness first, then the connected day the plan asks to be shown working
 | 36b | Kinds incl. trucks, boats, aircraft | Partial | 9 kinds; one boat, one plane | Pickup kind; boat and aircraft catalogs |
 | 36c | Market and seller, verified offerings | Partial | home market only | Seller entity; another market |
 | 36d | Condition, mileage, used listings | Partial | age and hidden fault | Individual listings: mileage, condition, history, seller |
-| 36e | Factory options vs aftermarket | Not implemented (factory) | mods, wraps, tint, stereo | Option packs, paint, wheels |
+| 36e | Factory options vs aftermarket | Done, 2026-10-02 | 643 priced factory options for the 48 new cars (`content/caroptions.ts`): paint, wheels, interior, packages; mods, wraps, tint, stereo after | — |
 | 36f | Pricing | Complete | `quote`; tests/vehicles | — |
 | 37a–d | Market and seller, filter, compare, specs and history | Partial or not implemented | catalog facets | Listings, comparison, spec and history |
 | 37e | Inspection, test drive | Partial | `vehicle.inspect_used` | Test drive |
-| 37f | Configure options | Not implemented | — | Options in the quote |
+| 37f | Configure options | Done, 2026-10-02 | options in the quote before the taxes; one paint, wheels and interior; kept with the car; tests/caroptions.test.ts | — |
 | 37g | Cost, trade-in, funding | Complete | tests/vehicles, leasing | — |
 | 37h | Ownership requirements | Partial | checked when driving | Title and registration step |
-| 37i | Not drivable until delivered | Not implemented | bought cars drive at once | Delivery and collection |
+| 37i | Not drivable until delivered | Partial, 2026-10-02 | a factory order isn't driven until it comes, its weeks the dealers' or a leasing company's published figures; stock is driven away | A stock car's collection day (no published figure); home delivery fees |
 | 37j | Use and maintain | Complete | carcare, repairs; tests | — |
 | 37k | Sell or trade | Partial | instant sale | Listing, buyer, time |
 | 38a | Wraps and finishes | Partial | two cities | More shops; removal; partial wraps |
 | 38b–c | Trim, lighting, body, rims, tires | Not implemented / partial | winter tires; alloys (GB) | Catalogs |
-| 38d, g–l | Seats, upholstery, materials, stitching; the leopard interior | Not implemented | — | Interior configuration, compatibility, upholsterers, itemized estimate, booking, collection, revision, removed parts |
+| 38d, g–l | Seats, upholstery, materials, stitching; the leopard interior | Partial, 2026-10-02 | `systems/interiors.ts`: seats, headliner and wheel in leather, vinyl, Alcantara, leopard vinyl or faux fur, colors and stitching chosen; an itemized estimate (suppliers' prices, the trade's hours at $75); a Katzkin kit at its own price; four named shops in New York and Los Angeles; the design kept with the car; tests/interiors.test.ts | Door panels and carpets; other towns (no shop publishes a price); original covers returned; revisions |
 | 38e | Audio | Partial | one head unit | Speakers, amplifiers |
 | 38f | Storage, mechanical upgrades | Partial | GB only | Racks, boxes; beyond GB |
 | 38i | Alternative transport | Complete (repairs) | `vehicle.stand_in`; tests | Wrap and interior work too |
@@ -192,7 +192,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 43d–h | Appliances, lighting, storage, security, utilities | Partial | fixtures; security | Fixture choice, lighting, capacity |
 | 43i | Special rooms | Partial | home gym | Theater, studio, library, workshop, dressing room, game room |
 | 43j–l | Pools, gardens, outdoor kitchen, guesthouse, courts, track | Partial | pool, courts, ADU | Gardens, greenhouse, outdoor kitchen use, guests in the ADU, track |
-| 43m | Football field, solo and with friends | Not implemented | — | Field project; drills; play with friends |
+| 43m | Football field, solo and with friends | Partial, 2026-10-02 | three pitch sizes on the lot, turf at the published middle and a drainage base; Come Over To Play for any court or the pitch, at the game's METs, stopped by weather or dark; tests/courts.test.ts | Solo drills (no published MET for them); lights for a pitch; natural grass |
 | 44a–b | Space, ownership | Complete | `projectRefusal`, `mostFloor` | — |
 | 44c–d | Permission, structure, access | Partial / not implemented | permits | Refusal outcome; structural checks |
 | 44e–f | Explain and offer alternatives | Partial | projects hidden by type | Show them refused, with alternatives |

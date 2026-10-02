@@ -1,0 +1,81 @@
+/**
+ * What a home watches, listens to and plays (`systems/homelife.ts`, from
+ * 2026-10-02): services where you live at their own prices billed monthly,
+ * Canada's tax on them, Britain's and Ireland's TV licenses and what each is
+ * needed for, consoles, and unwinding in front of what you have.
+ */
+import { describe, expect, it } from 'vitest';
+import { quickSave } from '@/engine';
+import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY } from '@/engine/core/time';
+import { saveCurrency } from '@/engine/core/money';
+import { exchange } from '@/engine/content/currency';
+import { salesTaxRate } from '@/engine/content/tax';
+import { SERVICES } from '@/engine/content/homelife';
+import { consolesHere, licensed, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
+
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const into = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
+
+describe('a service', () => {
+  it('is its own price where you live, with Canada’s tax and none in New York, billed monthly until it’s canceled', () => {
+    const ny = life('us-ny-newyork', 'stream-ny');
+    const netflix = plansHere(ny.player).find((p) => /Netflix/.test(p.label))!;
+    expect(planPrice(ny, ny.player, netflix)).toBe(into(ny, Math.round(netflix.monthly * 100), 'USD'));
+    const to = life('ca-on-toronto', 'stream-to');
+    const crave = plansHere(to.player).find((p) => /Crave/.test(p.label) && p.monthly > 0)!;
+    expect(planPrice(to, to.player, crave)).toBe(into(to, Math.round(crave.monthly * (1 + salesTaxRate('ca-on-toronto', to.now, 'general')) * 100), 'CAD'));
+    expect(ny.execute({ kind: 'home.subscribe', payload: { id: netflix.id } }).ok).toBe(true);
+    expect(ny.execute({ kind: 'home.subscribe', payload: { id: netflix.id } }).error).toBe('You subscribe to it already.');
+    ny.advanceBy(61 * MS_DAY);
+    expect(ny.universe.transactions.filter((t) => t.memo === netflix.label)).toHaveLength(3);
+    expect(ny.execute({ kind: 'home.unsubscribe', payload: { id: netflix.id } }).ok).toBe(true);
+    ny.advanceBy(31 * MS_DAY);
+    expect(ny.universe.transactions.filter((t) => t.memo === netflix.label)).toHaveLength(3);
+    // Not one another market's.
+    expect(ny.execute({ kind: 'home.subscribe', payload: { id: SERVICES.find((s) => s.market === 'uk')!.id } }).error).toBe('That isn’t offered where you live.');
+  });
+});
+
+describe('the TV license', () => {
+  it('in Britain is £180 a year for live TV, not for a service you stream', () => {
+    const sim = life('uk-eng-london', 'licence-gb');
+    expect(watchRefusal(sim, sim.player, 'live')).toBe('You need a TV license for that.');
+    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'unwind', how: 'live' } }).error).toBe('You need a TV license for that.');
+    const netflix = plansHere(sim.player).find((p) => /Netflix/.test(p.label))!;
+    sim.must({ kind: 'home.subscribe', payload: { id: netflix.id } });
+    expect(watchRefusal(sim, sim.player, netflix.id)).toBeUndefined();
+    const r = sim.execute<{ paid: number }>({ kind: 'home.tv_licence', payload: {} });
+    expect(r.value!.paid).toBe(into(sim, 180_00, 'GBP'));
+    expect(licensed(sim.player, sim.now + 364 * MS_DAY)).toBe(true);
+    expect(licensed(sim.player, sim.now + 366 * MS_DAY)).toBe(false);
+    expect(watchRefusal(sim, sim.player, 'live')).toBeUndefined();
+    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'unwind', how: 'live' } }).ok).toBe(true);
+  });
+
+  it('in Ireland is €160 for any TV at home, streaming too; America asks none', () => {
+    const sim = life('ie-lei-dublin', 'licence-ie');
+    const netflix = plansHere(sim.player).find((p) => /Netflix/.test(p.label))!;
+    sim.must({ kind: 'home.subscribe', payload: { id: netflix.id } });
+    expect(watchRefusal(sim, sim.player, netflix.id)).toMatch(/any TV at home needs one in Ireland/);
+    expect(sim.execute<{ paid: number }>({ kind: 'home.tv_licence', payload: {} }).value!.paid).toBe(into(sim, 160_00, 'EUR'));
+    expect(watchRefusal(sim, sim.player, netflix.id)).toBeUndefined();
+    const ny = life('us-ny-newyork', 'licence-us');
+    expect(watchRefusal(ny, ny.player, plansHere(ny.player)[0]!.id)).toBe('You don’t subscribe to it.');
+    expect(ny.execute({ kind: 'home.tv_licence', payload: {} }).error).toBe('No TV license is needed where you live.');
+    expect(watchRefusal(ny, ny.player, 'live')).toBeUndefined();
+  });
+});
+
+describe('a console', () => {
+  it('is bought at its maker’s price, and playing at home needs one', () => {
+    const sim = life('us-ny-newyork', 'console');
+    expect(watchRefusal(sim, sim.player, 'games')).toBe('You have no console.');
+    const c = consolesHere(sim.player)[0]!;
+    const r = sim.execute<{ paid: number }>({ kind: 'home.console', payload: { consoleId: c.id } });
+    expect(r.ok, r.error).toBe(true);
+    expect(r.value!.paid).toBe(into(sim, Math.round(c.price * (1 + salesTaxRate('us-ny-newyork', sim.now, 'general')) * 100), 'USD'));
+    expect(watchRefusal(sim, sim.player, 'games')).toBeUndefined();
+    expect(subscriptionsOf(sim.player)).toEqual([]);
+  });
+});

@@ -452,7 +452,22 @@ export function swimRefusal(sim: Simulation, person: Person): string | undefined
  */
 // Pickleball's, from 2026-10-02: doubles measured by portable calorimetry at 4.1 METs (15 adults, mean age 65; the
 // Compendium gives it none), the singles figures read being a summary's, not a measurement.
-export const COURT_MET = { tennis: 6.8, basketball: 5.0, pickleball: 4.1 } as const;
+// Football's, from 2026-10-02: the 2024 Adult Compendium's 7.0 METs for a casual game, played with others (`social.invite`'s play).
+export const COURT_MET = { tennis: 6.8, basketball: 5.0, pickleball: 4.1, football: 7.0 } as const;
+export type Court = keyof typeof COURT_MET;
+
+/** The courts and pitch the home they live in has, whether or not they're there now. */
+export function homeCourts(person: Person): { court: Court; lit: boolean }[] {
+  const f = livingIn(person)?.facts.features ?? [];
+  return [
+    ...(f.includes('tennisCourt') ? [{ court: 'tennis' as const, lit: f.includes('tennisLights') }] : []),
+    ...(f.includes('basketballCourt') ? [{ court: 'basketball' as const, lit: f.includes('basketballLights') }] : []),
+    ...(f.includes('pickleballCourt') ? [{ court: 'pickleball' as const, lit: false }] : []),
+    ...(f.includes('footballPitch') ? [{ court: 'football' as const, lit: false }] : []),
+  ];
+}
+
+/** The court to play on alone at home now: football isn't one, it needs players. */
 export function courtAt(person: Person): { court: 'tennis' | 'basketball' | 'pickleball'; lit: boolean } | undefined {
   const f = atHome(person) ? livingIn(person)?.facts.features : undefined;
   if (f?.includes('tennisCourt')) return { court: 'tennis', lit: f.includes('tennisLights') };
@@ -462,9 +477,8 @@ export function courtAt(person: Person): { court: 'tennis' | 'basketball' | 'pic
 }
 
 /** Why the court can't be played on now: none, the weather a run would stop for, or the dark on an unlit court. */
-export function courtRefusal(sim: Simulation, person: Person): string | undefined {
-  const court = courtAt(person);
-  if (!court) return 'You have no court.';
+export function courtRefusal(sim: Simulation, person: Person, court: { court: string; lit: boolean } | undefined = courtAt(person)): string | undefined {
+  if (!court) return homeCourts(person).some((c) => c.court === 'football') ? 'A football pitch needs players: invite friends to play.' : 'You have no court.';
   const w = weatherNow(sim, person);
   if (w && (wet(w.condition) || heatIndexC(w.highC, w.humidity) > FINE.highC || w.highC < FINE.runLowC)) return 'It isn’t a day for the court.';
   if (!court.lit) {

@@ -194,7 +194,12 @@ Done and gated so far:
     - Air Jordans by style code: retail offers in five markets, GOAT's new and used asks in America, sold back on GOAT (`research-sneakers.json`).
     - Phones from the makers' stores, outright or on a 0% plan, traded in, activated on the line, with battery wear and cover (`research-phones.json`).
     - Still open in step 3: the offer layer for the rest of clothing, body measurements and size charts, designer resale, receipts as documents.
+  - **Build step 4, vehicles** (`4b9a3f6c`, `c25fe010`):
+    - The interior to your own design, leopard print included: an itemized estimate at four named shops in New York and Los Angeles, or a Katzkin kit (`research-interiors.json`).
+    - Factory options in the quote, and a factory order not driven until it comes (`research-car-options.json`, which also holds seats and cargo, not yet read by anything).
   - **Build step 5, travel, begun** (`f8a5fbcb`): packing by hand, with garment volumes and a suitcase that fills.
+  - **Build step 7, property, begun** (`46bb63b9`): a football pitch in three sizes, and friends over to play on any court or the pitch.
+  - **Build step 8, home life, begun** (`f3c65c52`): streaming, music and game services billed monthly, Britain's and Ireland's TV licences as their laws ask, consoles (`research-homelife.json`).
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.
 - **Stage 15, in part** (`71e9dbb5`, `dbfe58bd`): `docs/DEVMAP.md`, built and checked by `tools/devmap.mjs` in the gate; `docs/WALKTHROUGHS.md`; the rail's search; panel actions wrap inside their card.

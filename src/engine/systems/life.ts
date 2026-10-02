@@ -34,6 +34,7 @@ import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import { cook, kitchenMeal } from './kitchen';
+import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
 import { cleanOutfits, useTowel, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
@@ -425,13 +426,19 @@ export function registerLife(sim: Simulation): void {
 
   // --- Looking after yourself ---------------------------------------------
 
-  sim.onCommand<{ action: LookAfter }, { doneAt: number; changed: Partial<Wellbeing> }>(
+  sim.onCommand<{ action: LookAfter; how?: string }, { doneAt: number; changed: Partial<Wellbeing> }>(
     'life.look_after',
     (p, { sim: s }) => {
       const action = LOOKING_AFTER[p.action] ? p.action : undefined;
       if (!action) throw new CommandError('That isn’t something you can do for yourself here.');
       const refused = lookAfterRefusal(s, action);
       if (refused) throw new CommandError(refused);
+      // Unwinding in front of the TV or a game, at home, by what the place's law and what you pay for allow (`systems/homelife.ts`).
+      if (action === 'unwind' && p.how) {
+        if (!atHome(s.player)) throw new CommandError('That’s at home.');
+        const no = watchRefusal(s, s.player, String(p.how));
+        if (no) throw new CommandError(no);
+      }
 
       // The hour is lived first, and charged as waking like any other, so
       // what it does is on top of what the hour already cost.
