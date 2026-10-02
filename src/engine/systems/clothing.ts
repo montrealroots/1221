@@ -254,7 +254,7 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
 }
 
 /** Garments gone from what they chose to wear and their outfits. */
-function forget(person: Person, gone: ReadonlySet<string>): void {
+export function forget(person: Person, gone: ReadonlySet<string>): void {
   if (person.dressed) person.dressed = person.dressed.filter((id) => !gone.has(id));
   for (const o of person.outfits ?? []) o.itemIds = o.itemIds.filter((id) => !gone.has(id));
 }

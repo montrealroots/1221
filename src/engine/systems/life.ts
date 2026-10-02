@@ -38,6 +38,7 @@ import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dini
 import { GROOMING, dailyCare, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
+import { runInShoes } from './resale';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET,
@@ -467,6 +468,8 @@ export function registerLife(sim: Simulation): void {
         const source = action === 'swim' ? 'swim' : where!.where === 'run' ? 'run' : 'gym';
         // An hour of it at its MET value (`content/body.ts`), and its injury rate.
         exerts(person, source === 'swim' ? BODY.met.swim : source === 'run' ? BODY.met.run : BODY.met.workout, 1);
+        // A run wears the sneakers down (`runInShoes`, from 2026-10-02).
+        if (source === 'run') runInShoes(s, person);
         mayHurt(s, person, source, chanceOver(INJURY.perThousandHours[source], 1), s.now);
       }
       // An hour on your own court at its MET value; no injury rate for a home court is kept (`courtAt`, from 2026-10-01).

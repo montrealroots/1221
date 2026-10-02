@@ -21,6 +21,7 @@ import { reachable, type Item } from '@/engine/systems/items';
 import { cleanOutfits, dryCleanDirty, garmentsOf, outfitFor, wearable, washableDirty, type Garment } from '@/engine/systems/wardrobe';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
 import { alterCost, alterRefusal, fitOf, tailorsIn } from '@/engine/systems/tailoring';
+import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { buyRefusal, clothingCatalog, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
@@ -75,6 +76,7 @@ export function ClothesWorkspace() {
           </div>
         </Panel>
         <WhatToWear />
+        <SellThem />
         <Fit />
         <Bathroom />
         <Salons />
@@ -85,6 +87,32 @@ export function ClothesWorkspace() {
         </Fine>
       </div>
     </>
+  );
+}
+
+/** Clean clothes sold on, by the market's own way of selling (`clothes.sell`). */
+function SellThem() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const sellable = useWorld((s) => garmentsOf(s.player).filter((g) => !sellRefusal(s, s.player, g)));
+  const [picked, setPicked] = useState<string[]>([]);
+  const sell = useFeature('clothes.sell');
+  if (sellable.length === 0) return null;
+  const chosen = sellable.filter((g) => picked.includes(g.id));
+  const q = chosen.length ? resaleOf(sim, person, chosen) : undefined;
+  return (
+    <Panel title="Sell Clothes" subtitle={q ? q.basis : 'Choose what to sell'}>
+      <div className="col gap-2">
+        <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+          {sellable.map((g) => (
+            <label key={g.id} className="row gap-1 small" style={{ alignItems: 'center' }}>
+              <input type="checkbox" checked={picked.includes(g.id)} onChange={(e) => setPicked(e.target.checked ? [...picked, g.id] : picked.filter((x) => x !== g.id))} /> {named(g)}
+            </label>
+          ))}
+        </div>
+        <div><button type="button" className="btn btn-sm btn-ghost" disabled={!sell.open || chosen.length === 0} title={sell.reason} onClick={() => { const a = run<{ paid: number }>('clothes.sell', { itemIds: picked }); if (a.ok) { setPicked([]); toast(`Sold, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}.`, 'positive'); } }}>{q ? `Sell Them, ${formatMoney(q.paid, saveCurrency(sim.universe))}` : 'Sell Them'}</button></div>
+      </div>
+    </Panel>
   );
 }
 
