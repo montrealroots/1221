@@ -131,12 +131,14 @@ export const OWNED = { label: 'A Home You Own', billsUsd: 250 };
  * SLATE's estimates.
  */
 // A tennis court's upkeep, Fixr's $1,800 a year (research-facilities.json, from 2026-10-01), a month's share with the pool's.
-const OWNED_BILLS = { size: 1_500, power: 0.7, solar: 0.5, poolUsd: 120, tennisUsd: 1_800 / 12 };
+// A hot tub's running, HomeGuide's middles: energy $480 and chemicals $175 a year, and a $70 filter every year and a half; a putting
+// green's upkeep, the middle of $250 to $550 a year (research-facilities.json, from 2026-10-02).
+const OWNED_BILLS = { size: 1_500, power: 0.7, solar: 0.5, poolUsd: 120, tennisUsd: 1_800 / 12, hotTubUsd: (480 + 175 + 70 / 1.5) / 12, greenUsd: 400 / 12 };
 function ownedBillsFactor(person: Person): { factor: number; poolUsd: number } {
   const facts = person.homes?.find((h) => h.id === person.home?.homeId)?.facts;
   if (!facts) return { factor: 1, poolUsd: 0 };
   const factor = Math.pow(facts.size / OWNED_BILLS.size, OWNED_BILLS.power) * (facts.features.includes('solar') ? OWNED_BILLS.solar : 1);
-  return { factor, poolUsd: (facts.features.includes('pool') ? OWNED_BILLS.poolUsd : 0) + (facts.features.includes('tennisCourt') ? OWNED_BILLS.tennisUsd : 0) };
+  return { factor, poolUsd: (facts.features.includes('pool') ? OWNED_BILLS.poolUsd : 0) + (facts.features.includes('tennisCourt') ? OWNED_BILLS.tennisUsd : 0) + (facts.features.includes('hotTub') ? OWNED_BILLS.hotTubUsd : 0) + (facts.features.includes('puttingGreen') ? OWNED_BILLS.greenUsd : 0) };
 }
 
 /**

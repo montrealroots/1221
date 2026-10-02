@@ -12,7 +12,7 @@ import { Fragment, useState } from 'react';
 import { PREPAID_OFF, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '@/engine/content/staytypes';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { Gated } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { MS_DAY, dateKey, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -22,6 +22,8 @@ import { AIR } from '@/engine/content/air';
 import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
+import { companionRefusal } from '@/engine/systems/companions';
+import { contactsOf } from '@/engine/systems/people';
 import { arrange } from '@/engine/systems/catalog';
 import { rentalCatalog, stayCatalog } from '@/engine/systems/catalogs';
 import { catalogPrice } from '@/ui/components/Catalog';
@@ -301,7 +303,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <CheckOutLate j={j} />}<PayDeposits j={j} /></div></td>
+                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <AskAlong j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <CheckOutLate j={j} />}<PayDeposits j={j} /></div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -548,4 +550,23 @@ function Folio({ hotel }: { hotel: NonNullable<Journey['hotel']> }) {
   ];
   // The hotel's name is the way into its terms; the rest of the folio is figures of this stay.
   return <div className="xs dim">{named && <Open subject={at('hotel', named.id)}>{named.name}</Open>}{lines.join(' · ')}</div>;
+}
+
+/** A friend or partner asked along on a journey from where they live: each pays their own fare, a room shared and split (`travel.companion`). */
+function AskAlong({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [contactId, setContactId] = useState('');
+  const ask = useFeature('travel.companion');
+  const who = contactsOf(person).filter((c) => c.cityId === j.fromCity && !c.rival);
+  if (j.companionId) { const c = contactsOf(person).find((x) => x.id === j.companionId); return c ? <span className="xs dim">{`With ${c.name}`}</span> : null; }
+  if (who.length === 0 || companionRefusal(person, j.id, who[0]!.id).refused) return null;
+  const chosen = who.find((c) => c.id === contactId) ?? who[0]!;
+  return (
+    <span className="row gap-1" style={{ alignItems: 'center' }}>
+      <label className="sr-only" htmlFor={`along-${j.id}`}>Who</label>
+      <select id={`along-${j.id}`} value={chosen.id} onChange={(e) => setContactId(e.target.value)} style={{ width: 'auto' }}>{who.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
+      <button type="button" className="btn btn-sm btn-ghost" disabled={!ask.open} title={ask.reason} onClick={() => { const a = run<{ accepted: boolean; reason?: string; repaid?: number }>('travel.companion', { journeyId: j.id, contactId: chosen.id }); if (a.ok) toast(a.value!.accepted ? `${chosen.name.split(' ')[0]} is coming${a.value!.repaid ? `, and paid back their half of the room, ${formatMoney(a.value!.repaid, saveCurrency(sim.universe))}` : ''}.` : `No: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral'); }}>Ask A Friend Along</button>
+    </span>
+  );
 }

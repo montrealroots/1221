@@ -12,7 +12,7 @@ import type { Feature, Fixtures } from '@/engine/content/homes';
 import { PROJECTS } from '@/engine/content/homes';
 import { CITIES } from '@/engine/content/geography';
 import { sunTimes } from '@/engine/core/sun';
-import { moveIntoOwned, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
+import { moveIntoOwned, ownBuilt, projectRefusal, type HomeFacts } from '@/engine/systems/homes';
 import { courtAt, courtRefusal, homeCourts, weatherNow } from '@/engine/systems/dwelling';
 import { contactsOf, newContact } from '@/engine/systems/people';
 import { billsOf } from '@/engine/systems/household';
@@ -149,5 +149,28 @@ describe('a game after dark', () => {
     expect(r.value).toEqual({ accepted: true });
     for (let i = 0; i < 400 && sim.now < at + 2 * MS_HOUR; i += 1) sim.advanceTo(Math.min(at + 2 * MS_HOUR, sim.now + MS_HOUR));
     expect(friend.memory.map((m) => m.what), JSON.stringify(sim.universe.scheduled.filter((x) => x.kind.startsWith('social')).map((x) => [x.kind, x.status, x.at - at]))).toContain('Came over to play; the weather or the dark stopped it');
+  });
+});
+
+describe('special rooms and outdoor additions', () => {
+  it('are priced at the cost guides’ figures, one room to each spare bedroom', () => {
+    expect(PROJECTS.find((p) => p.id === 'home-theater')).toMatchObject({ usd: 25_000, spareBedroom: true });
+    expect(PROJECTS.find((p) => p.id === 'hot-tub')).toMatchObject({ usd: 8_500, needs: ['yard'] });
+    // A two-bedroom home has one spare: a theater takes it, and a library has none left.
+    const two = home(['homeTheater'], 'rooms-two');
+    const owned = two.player.homes![0]!;
+    owned.facts.beds = 2;
+    expect(projectRefusal(two, two.player, owned, PROJECTS.find((p) => p.id === 'library')!)).toBe('It has no spare bedroom.');
+    owned.facts.beds = 3;
+    expect(projectRefusal(two, two.player, owned, PROJECTS.find((p) => p.id === 'library')!)).toBeUndefined();
+  });
+
+  it('a hot tub and a putting green add their running to the month’s bills', () => {
+    const without = home([], 'tub-0');
+    const tub = home(['hotTub'], 'tub-1');
+    const green = home(['puttingGreen'], 'tub-2');
+    expect(billsOf(tub, tub.player) - billsOf(without, without.player)).toBeGreaterThan(0);
+    expect(billsOf(green, green.player) - billsOf(without, without.player)).toBeGreaterThan(0);
+    expect(billsOf(tub, tub.player)).toBeGreaterThan(billsOf(green, green.player));
   });
 });

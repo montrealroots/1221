@@ -252,7 +252,7 @@ function ErrandsPanel() {
             </select>
           </div>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!picked || stops.length >= 8} onClick={() => picked && setStops([...stops, { kind: picked.kind, payload: picked.payload, leg: picked.leg, label: picked.label }])}>Add The Stop</button>
-          <button type="button" className="btn btn-sm" disabled={!go.open || !park.open || !fuel.open || Boolean(no)} title={no ?? go.reason ?? park.reason ?? fuel.reason} onClick={() => {
+          <button type="button" className="btn btn-sm" disabled={!go.open || !park.open || !fuel.open || Boolean(no) || Boolean(person.trip)} title={no ?? go.reason ?? park.reason ?? fuel.reason} onClick={() => {
             const r = runErrands(sim, { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengerId ? { passengerId } : {}), ...(withDriver ? { driven: true } : {}), stops }, (kind, payload) => run(kind, payload, { silent: true }));
             if (r.stopped) toast(`Home again after ${r.done} of ${stops.length}: ${stops[r.stopped.step]!.label} couldn’t be done. ${r.stopped.error}`, 'negative');
             else toast(`Home again, all ${stops.length} done.`, 'positive');
@@ -260,6 +260,20 @@ function ErrandsPanel() {
           }}>Set Out</button>
         </div>
         <div className="small">{stops.length ? stops.map((x, i) => `${i + 1}. ${x.label}`).join('   ') : 'No stops yet.'}</div>
+        {/* A stop at a time, the plan changed as you go (from 2026-10-02): each leg and stop the same commands a whole trip runs. */}
+        <div className="row gap-1" style={{ flexWrap: 'wrap', alignItems: 'baseline' }}>
+          {person.trip && <span className="small">{`Out ${person.trip.by === 'car' ? 'in the car' : 'on foot'}, ${person.trip.km.toFixed(1)} km so far`}</span>}
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!go.open || !picked || (!person.trip && Boolean(tripRefusal(sim, person, by, car?.id, passengerId || undefined, withDriver)))} title={go.reason} onClick={() => {
+            if (!picked) return;
+            const start = person.trip ? {} : { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengerId ? { passengerId } : {}), ...(withDriver ? { driven: true } : {}) };
+            if (!run('errand.go', { to: picked.leg, ...start }).ok) return;
+            const before = sim.now;
+            const done = run(picked.kind, picked.payload);
+            if (sim.player.trip?.by === 'car' && picked.kind !== 'errand.fuel') run('errand.park', { minutes: (sim.now - before) / 60_000 }, { silent: true });
+            if (done.ok) toast(`${picked.label}: done.`, 'positive');
+          }}>{person.trip ? 'Go To This Stop Next' : 'Go Now, A Stop At A Time'}</button>
+          {person.trip && <button type="button" className="btn btn-sm" disabled={!go.open} title={go.reason} onClick={() => { if (run('errand.go', { to: 'home' }).ok) toast('Home again.', 'positive'); }}>Go Home</button>}
+        </div>
       </div>
     </Panel>
   );

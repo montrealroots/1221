@@ -930,6 +930,9 @@ export function lifeOf(facts: HomeFacts, part: Part): number {
 const wearOf = (sim: Simulation, owned: OwnedHome, part: Part): number => (partAge(sim, owned, part) ?? 0) / lifeOf(owned.facts, part);
 
 /** Why a project can't be done to a home, or nothing where it can. */
+/** The rooms a spare bedroom can be given over to, one each (from 2026-10-02). */
+const ROOMS_GIVEN: readonly Feature[] = ['homeTheater', 'danceStudio', 'soundproofRoom', 'library'];
+
 export function projectRefusal(sim: Simulation, person: Person, owned: OwnedHome, project: Project): string | undefined {
   const f = owned.facts;
   if (owned.selling) return 'It’s listed for sale.';
@@ -940,7 +943,8 @@ export function projectRefusal(sim: Simulation, person: Person, owned: OwnedHome
   if (project.lot !== undefined && (f.lot ?? 0) < project.lot) return 'The lot isn’t big enough.';
   if (project.bathsUpTo === 'bedsPlusOne' && f.baths >= Math.max(1, f.beds) + 1) return 'It has baths enough for its bedrooms.';
   if (project.bedsUpTo !== undefined && f.beds >= project.bedsUpTo) return 'It has bedrooms enough.';
-  if (project.spareBedroom && f.beds < 2) return 'It has no spare bedroom.';
+  // One spare bedroom to each room given over: the gym, a theater, a studio, a soundproofed room, a library (from 2026-10-02; until then any home of two bedrooms had a spare one for each).
+  if (project.spareBedroom && f.beds - 1 - ROOMS_GIVEN.filter((x) => f.features.includes(x)).length - (fixturesOf(sim, person, owned.cityId, f, owned.id).gym === 'home' ? 1 : 0) < 1) return 'It has no spare bedroom.';
   if (project.adds?.gym && fixturesOf(sim, person, owned.cityId, f, owned.id).gym === 'home') return 'It has a gym already.';
   if (project.renews && f.parts[project.renews] === undefined) return 'It has none to replace.';
   if (project.adds?.beds && owned.tenancies.some((t) => t.unit === 'main' && t.status === 'let')) return 'Not with a tenant living in it.';
