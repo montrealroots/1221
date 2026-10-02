@@ -35,7 +35,7 @@ import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
-import { optionsFor, optionsQuote, orderWeeksOf } from '@/engine/systems/caroptions';
+import { optionsFor, optionsQuote, orderWeeksOf, specOf } from '@/engine/systems/caroptions';
 import { FITS, MATERIAL_LABEL, PART_LABEL, UPHOLSTERERS, interiorQuote, type Material, type Part } from '@/engine/systems/interiors';
 import { FILL, capacityOf, fillQuote, fillRefusal, levelOf, rangeKm } from '@/engine/systems/fueltank';
 import { homeShareOf } from '@/engine/systems/charging';
@@ -277,6 +277,7 @@ export function VehiclesWorkspace() {
             <div className="grid grid-3">
               <Stat label="Insurance" value={typeof ins === 'number' && insCurrency ? `${inHome(ins, insCurrency)} A Month` : '—'} note={insBasis ?? 'Not kept here yet'} />
               {leaseMonths ? <Stat label={j?.startsWith('US-') ? 'Money Factor' : 'APR'} value={j?.startsWith('US-') ? String(US_LEASE.moneyFactor) : lq && typeof lq !== 'string' ? `${lq.apr.toFixed(2)}%` : '—'} note={j?.startsWith('US-') ? `About ${(US_LEASE.moneyFactor * 2400).toFixed(2)}% a year, worked back from Toyota’s offers` : pcp ? 'The lender’s rate on a PCP' : 'Honda Canada’s lease rate'} /> : <Stat label="Loan Rate" value={rate !== undefined ? `${(rate * 100).toFixed(2)}%` : '—'} note={rate !== undefined ? 'For your record, where it’s published' : 'Not published here: buy it outright'} />}
+              {model && specOf(model.id) && <Stat label="Seats And Cargo" value={specOf(model.id)!.seats ? `${specOf(model.id)!.seats} Seats` : '—'} note={specOf(model.id)!.cargoL ? `${specOf(model.id)!.cargoL} liters behind the seats${specOf(model.id)!.cargoFoldedL ? `, ${specOf(model.id)!.cargoFoldedL} folded` : ''}, the maker’s` : specOf(model.id)!.bedL ? `A ${specOf(model.id)!.bedL} liter bed, the maker’s` : 'No cargo figure published'} />}
               <Stat label="Economy" value={model?.kwhPer100km ? `${model.kwhPer100km} kWh/100 km` : model?.per100km ? `${model.per100km} L/100 km` : kind === 'bicycle' ? 'Pedaled' : kind === 'ebike' ? 'Charged At Home' : 'Not Yet Rated'} note={model?.per100km || model?.kwhPer100km || kind === 'bicycle' || kind === 'ebike' || kind === 'atv' ? model?.economyBasis : 'Fuel at AAA’s cost a mile until it’s rated'} />
             </div>
             {(leaseMonths ? noLease : no) ? <p className="small" style={{ margin: 0 }}>{leaseMonths ? noLease : no}</p> : null}

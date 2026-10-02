@@ -59,6 +59,7 @@ import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
 import { eiWeek } from './eiself';
 import { laidUp } from './injury';
 import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
+import { appointmentsOf, book } from './appointments';
 import { US_PHARMACIES, edMinutes, emergencyScale } from '../content/carevisits';
 import { careAway } from './travelinsurance';
 import { markRecord } from './credit';
@@ -120,6 +121,11 @@ export interface HealthRecord {
   debtSince?: Instant;
   seq?: number;
   /** Conditions carried, and whether they're kept up; whether they wear lenses, and the year of their last glasses. */
+  /** Doctor's appointments booked, and a visit owed after one was missed or called off (`systems/appointments.ts`, from 2026-10-02). */
+  appointments?: import('./appointments').Appointment[];
+  /** An English prescription prepayment certificate's end (`health.prepay`, from 2026-10-02). */
+  prepaidUntil?: number;
+  owedVisit?: string;
   chronic?: Partial<Record<Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }>>;
   /** A stand-alone dental plan: which, from and until, and this year's deductible and what it's paid. */
   dental?: { plan: DentalPlan; from: Instant; until?: Instant; deductible: Record<string, Money>; paid: Record<string, Money> };
@@ -613,7 +619,8 @@ export function publicCareShareOf(person: Person, care: Care, at: Instant, into 
   const pounds = (x: number) => { const c = Math.round(x * 100); return into === 'GBP' ? c : exchange(c, 'GBP', into) ?? c; };
   const england = city.parentId === 'uk-eng';
   const age = (at - person.birthInstant) / (365.25 * MS_DAY);
-  if (care === 'rx-generic' || care === 'rx-brand') return england && age < NHS.prescriptionFreeFrom ? pounds(NHS.prescription) : 0;
+  // A prepayment certificate in force makes each one free (`health.prepay`, from 2026-10-02).
+  if (care === 'rx-generic' || care === 'rx-brand') return england && age < NHS.prescriptionFreeFrom && !((person.health?.prepaidUntil ?? 0) > at) ? pounds(NHS.prescription) : 0;
   // A check-up and cleaning is Band 1, a filling Band 2; an eye test and glasses are the optician's, paid for as before.
   if (care === 'cleaning') return pounds(NHS.dental.band1);
   if (care === 'filling') return pounds(NHS.dental.band2);
@@ -725,6 +732,16 @@ function canadianDrugShare(person: Person, at: Instant, price: Money, into: stri
     const spent = h.caDrug[key] ?? 0;
     return spend(key, cad(row[2]), (rest) => Math.min(Math.round(rest * (1 - FAIR_PHARMACARE.share)), Math.max(0, most - spent - Math.min(price, Math.max(0, cad(row[2]) - spent)))));
   }
+  return undefined;
+}
+
+/** Why England's prescription prepayment certificate can't be bought now, or nothing: for someone in England who pays the charge. */
+export function prepayRefusal(sim: Simulation, person: Person): string | undefined {
+  const city = CITIES.get(homeOf(person));
+  if (city?.parentId !== 'uk-eng') return 'It’s England’s, for its prescription charge.';
+  if (publicCareShareOf(person, 'rx-generic', sim.now, 'GBP') === undefined) return 'You aren’t treated by the NHS.';
+  if ((sim.now - person.birthInstant) / (365.25 * MS_DAY) >= NHS.prescriptionFreeFrom) return `Prescriptions are free at ${NHS.prescriptionFreeFrom}.`;
+  if ((person.health?.prepaidUntil ?? 0) > sim.now + 30 * MS_DAY) return 'Yours runs more than another month.';
   return undefined;
 }
 
@@ -970,7 +987,14 @@ export function registerHealth(sim: Simulation): void {
   sim.onSchedule(HEALTH_WEEK_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
-    for (const event of illnessWeek(s, person, item.at)) careFor(s, person, event, item.at);
+    for (const event of illnessWeek(s, person, item.at)) {
+      // The player's doctor's visit is booked for the place's wait, where one is published (`systems/appointments.ts`); one already booked or owed covers it.
+      if (person.id === s.universe.playerId && event.care === 'visit' && !event.flu) {
+        if (appointmentsOf(person).length || healthOf(person).owedVisit) continue;
+        if (book(s, person, event.what)) continue;
+      }
+      careFor(s, person, event, item.at);
+    }
     // A self-employed Canadian's EI sickness benefit, for a week too sick to work (`systems/eiself.ts`).
     eiWeek(s, person, item.at, laidUp(person, item.at + 3 * MS_DAY) || (person.health?.inHospitalUntil ?? 0) > item.at - 4 * MS_DAY);
     // Depression left alone weighs on morale.
@@ -995,6 +1019,22 @@ export function registerHealth(sim: Simulation): void {
     s.post({ memo: `Medical bill unpaid: ${bill.what}`, category: 'health', postings: [{ accountId: debt.id, amount: -bill.amount }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: bill.amount }] });
     h.debtSince ??= s.now;
     if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${bill.what.toLowerCase()} is a medical debt now.`, importance: 75, route: '/workspace/papers' });
+  });
+
+  // England's prescription prepayment certificate: three months or twelve, every prescription free while it runs.
+  sim.onCommand<{ months: 3 | 12 }, { paid: Money; until: Instant }>('health.prepay', (p, { sim: s }) => {
+    const person = s.player;
+    const no = prepayRefusal(s, person);
+    if (no) throw new CommandError(no);
+    const months = p?.months === 3 ? 3 : 12;
+    const pounds = months === 3 ? NHS.prepayment.months3 : NHS.prepayment.months12;
+    const cur = saveCurrency(s.universe);
+    const paid = cur === 'GBP' ? Math.round(pounds * 100) : exchange(Math.round(pounds * 100), 'GBP', cur) ?? Math.round(pounds * 100);
+    if (!payFromCurrent(s, person, paid, `A prescription prepayment certificate, ${months} months`, 'health')) throw new CommandError(`It comes to ${formatMoney(paid, cur)}, more than you can pay.`);
+    const h = healthOf(person);
+    const from = Math.max(s.now, h.prepaidUntil ?? 0);
+    h.prepaidUntil = from + Math.round((months * 365.25) / 12) * MS_DAY;
+    return { paid, until: h.prepaidUntil };
   });
 
   sim.onCommand<Record<string, never>, { from: Instant; kind: string }>('health.enroll', (_p, { sim: s }) => {

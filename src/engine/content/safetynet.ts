@@ -655,6 +655,8 @@ export const UNIVERSAL_CREDIT = {
 export const NHS = {
   prescription: 9.9,
   prescriptionFreeFrom: 60,
+  /** A prescription prepayment certificate: every prescription free while it runs, for three months or twelve (Community Pharmacy England, read 2026-10-02; from 2026-10-02). */
+  prepayment: { months3: 32.05, months12: 114.5 },
   dental: { band1: 27.9, band2: 76.6, band3: 332.1, urgent: 27.9 },
   source: 'https://www.nhsbsa.nhs.uk/ (HC12, April 2026); https://www.gov.uk/guidance/nhs-entitlements-migrant-health-guide',
 } as const;

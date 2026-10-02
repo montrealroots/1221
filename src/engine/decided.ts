@@ -58,6 +58,7 @@ import { illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { bodyOf } from './systems/body';
 import { onsetMonth } from './systems/health';
+import { waitDays } from './systems/appointments';
 import { mayHurt } from './systems/injury';
 import { drawRental } from './systems/dwelling';
 import { inspectionFails } from './systems/inspections';
@@ -910,6 +911,19 @@ defineDecider<{ sim: Simulation; week: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), week: seed % 104 }),
   decide: ({ sim, week }) => Array.from({ length: 52 }, (_, n) => illnessWeek(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((e) => e.what).join('+') || '-').join(' '),
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'health.appointment',
+  decides: 'How long a doctor’s appointment is waited for where a wait is a published distribution: England’s band and day within it, or whether a Canadian is seen the next day (`content/appointments.ts`).',
+  drawnIn: 'src/engine/systems/appointments.ts',
+  reads: {
+    // Each booking its own draw.
+    key: (o, t) => ({ ...o, key: Math.round(t * 1_000) }),
+    world: (o, t) => ({ ...o, sim: quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'modest' }, `appt-${Math.round(t * 20)}`) }),
+  },
+  sample: (seed) => ({ sim: quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'modest' }, `appt-${seed}`), key: seed }),
+  decide: ({ sim, key }) => Array.from({ length: 40 }, (_, n) => waitDays(sim, sim.player, `k${key}-${n}`)).join(' '),
 });
 
 defineDecider<{ sim: Simulation }, string>({

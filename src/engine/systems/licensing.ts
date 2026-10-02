@@ -22,6 +22,7 @@
  * class, the class on the same card; renewing the car license carries it.
  */
 
+import { LICENSE_REPLACEMENT } from '../content/replacements';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -310,6 +311,19 @@ export function renewRefusal(person: Person, at: Instant): string | undefined {
   return undefined;
 }
 
+export const LICENSE_CARD_KIND = 'documents.license_card';
+
+/** Why a lost license can't be replaced now, or nothing: one of theirs, lost, from an authority SLATE has the fee for, applied for while living in its country. */
+export function replaceRefusal(person: Person, documentId: string): string | undefined {
+  const doc = documentsOf(person).find((d) => d.id === documentId);
+  if (!doc || doc.kind !== 'license') return 'That isn’t a license of yours.';
+  if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
+  const rule = LICENSE_REPLACEMENT[doc.issuer];
+  if (!rule) return `SLATE doesn’t have what ${LICENSES[doc.issuer]?.authority ?? 'its authority'} charges to replace it.`;
+  if (licensingOf(livesIn(person))?.split('-')[0] !== doc.issuer.split('-')[0]) return `${LICENSES[doc.issuer]?.authority ?? 'Its authority'} replaces a license for someone living in the country.`;
+  return undefined;
+}
+
 /** An IDP's issuer and fee for the license they hold, and why not where it can't be had. */
 export function idpRefusal(person: Person, at: Instant): string | undefined {
   const license = licenseOf(person, at);
@@ -427,6 +441,32 @@ export function registerLicensing(sim: Simulation): void {
     // The motorcycle class is on the same card, and renews with it.
     for (const d of documentsOf(person)) if (d.kind === 'license' && classOf(d) === 'motorcycle' && d.issuer === held.issuer && d.status === 'valid' && (d.stage ?? 'full') === 'full') d.expiresAt = expiresAt;
     return { expiresAt, fee };
+  });
+
+  // A lost or stolen license replaced at its authority's fee (`content/replacements.ts`, from 2026-10-02): in force at once where
+  // an interim document or the record lets its holder drive meanwhile, and once the card comes where it doesn't.
+  sim.onCommand<{ documentId: string }, { readyAt: Instant; fee: Money }>('documents.replace_license', (p, { sim: s }) => {
+    const person = s.player;
+    const no = replaceRefusal(person, String(p?.documentId));
+    if (no) throw new CommandError(no);
+    const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
+    const rule = LICENSE_REPLACEMENT[lost.issuer]!;
+    const fee = inSave(s, rule.fee, rule.currency);
+    if (!payFromBank(s, person, fee, `${LICENSES[lost.issuer]?.name ?? 'A license'}, replaced`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    lost.status = 'cancelled';
+    const id = s.nextId('document');
+    const readyAt = s.now + rule.days * MS_DAY;
+    const now = rule.driveMeanwhile || rule.days === 0;
+    documentsOf(person).push({ ...lost, id, number: numberFor('D', id), status: now ? 'valid' : 'pending', ...(now ? { issuedAt: s.now } : { appliedAt: s.now, readyAt }) });
+    if (!now) s.schedule({ at: readyAt, kind: LICENSE_CARD_KIND, label: 'The License Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
+    return { readyAt, fee };
+  });
+  sim.onSchedule(LICENSE_CARD_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
+    if (!doc || doc.status !== 'pending') return;
+    doc.status = 'valid';
+    doc.issuedAt = item.at;
   });
 
   sim.onCommand<Record<string, never>, { expiresAt: Instant; fee: Money }>('documents.apply_idp', (_p, { sim: s }) => {

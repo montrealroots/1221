@@ -15,7 +15,7 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { cookRefusal, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, unitPrice } from '@/engine/systems/kitchen';
+import { cookRefusal, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -207,6 +207,7 @@ function Recipes() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cookable = useFeature('food.cook');
+  const shopFor = useFeature('food.buy_short');
   const [serves, setServes] = useState<Record<string, number>>({});
   const rows = RECIPES.map((r) => ({ r, n: serves[r.id] ?? r.servings, no: cookRefusal(sim, person, r.id, serves[r.id] ?? r.servings) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
   const ready = rows.filter((x) => !x.no).length;
@@ -218,7 +219,7 @@ function Recipes() {
           <tbody>
             {rows.slice(0, 12).map(({ r, n, no }) => (
               <tr key={r.id}>
-                <td>{r.name}{no ? <div className="xs dim">{no}</div> : null}</td>
+                <td>{r.name}{no ? <div className="xs dim">{no}</div> : null}{no && /short of/.test(no) ? (() => { const need = shortfall(sim, person, r.id, n); if (!need || need.unbuyable.length || need.buys.length === 0) return need?.unbuyable.length ? <div className="xs dim">{`No store here sells ${need.unbuyable.join(', ')}.`}</div> : null; const cost = need.buys.reduce((a, b) => a + b.cost, 0); return <div><button type="button" className="btn btn-sm btn-ghost" disabled={!shopFor.open} title={shopFor.reason} onClick={() => { if (run('food.buy_short', { recipeId: r.id, servings: n }).ok) toast('Bought what was short; it can be cooked now.', 'positive'); }}>{`Buy What’s Short, ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}`}</button></div>; })() : null}</td>
                 <td className="num mono">
                   <label className="sr-only" htmlFor={`serves-${r.id}`}>Servings</label>
                   <select id={`serves-${r.id}`} value={n} onChange={(e) => setServes({ ...serves, [r.id]: Number(e.target.value) })}>

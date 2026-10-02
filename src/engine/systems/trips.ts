@@ -37,7 +37,8 @@ import { standInFor } from './standin';
 import { DRIVERS, type DriverService } from '../content/drivers';
 import { formatDate, type Instant } from '../core/time';
 import { tireFactor } from './tires';
-import { homeKeyOf, itemById, type Item, type Spot } from './items';
+import { homeKeyOf, itemById, itemsOf, volumeOf, type Item, type Spot } from './items';
+import { specOf } from './caroptions';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 
 export interface Trip { /** What was bought on the way, carried or in the car until the trip is home (from 2026-10-02). */ shopping?: { itemId: string; spot?: Spot; at: Instant }[]; by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
@@ -120,8 +121,19 @@ export const COLD_CHAIN_HOURS = 2;
 export function stow(person: Person, item: Item, at: Instant): void {
   const trip = person.trip;
   if (!trip || item.at.kind !== 'home') return;
+  const inCar = trip.by === 'car' && trip.vehicleId && !trip.standInId;
+  // The car holds what its maker says it does, seats up, or a pickup's bed (`content/caroptions.ts`); what won't fit isn't bought.
+  if (inCar) {
+    const v = (person.vehicles ?? []).find((x) => x.id === trip.vehicleId);
+    const spec = v ? specOf(v.modelId) : undefined;
+    const holds = spec?.cargoL ?? spec?.bedL;
+    if (holds !== null && holds !== undefined) {
+      const used = itemsOf(person).filter((i) => i.at.kind === 'vehicle' && i.at.vehicleId === trip.vehicleId).reduce((a, i) => a + volumeOf(i) * i.quantity, 0);
+      if (used + volumeOf(item) * item.quantity > holds + 1e-9) throw new CommandError(`It won’t fit in the car: ${Math.max(0, Math.floor(holds - used))} liters of its ${holds} are left.`);
+    }
+  }
   (trip.shopping ??= []).push({ itemId: item.id, ...(item.at.spot ? { spot: item.at.spot } : {}), at });
-  item.at = trip.by === 'car' && trip.vehicleId && !trip.standInId ? { kind: 'vehicle', vehicleId: trip.vehicleId } : { kind: 'person' };
+  item.at = inCar ? { kind: 'vehicle', vehicleId: trip.vehicleId! } : { kind: 'person' };
 }
 
 /** The trip's shopping put away at home; chilled food out past the two hours thrown out. How many were thrown out. */

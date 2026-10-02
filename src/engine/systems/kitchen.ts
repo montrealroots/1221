@@ -34,7 +34,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatTime, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { salesTaxRate } from '../content/tax';
-import { GROCERY_CHAINS, GROCERY_PRODUCTS, RECIPES, type GroceryProduct, type Ingredient, type Recipe, type Storage } from '../content/groceries';
+import { GROCERY_CHAINS, GROCERY_PRODUCTS, RECIPES, type FoodUnit, type GroceryProduct, type Ingredient, type Recipe, type Storage } from '../content/groceries';
 import { PINT, WIDMARK, drinkingAge } from '../content/alcohol';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
@@ -166,6 +166,41 @@ export function cookRefusal(sim: Simulation, person: Person, recipeId: string, s
   return undefined;
 }
 
+/**
+ * What a recipe is short of for so many servings, and the cheapest packs in
+ * reach that make it up: each missing food's cheapest product in a store here
+ * whose packs cover what's short (from 2026-10-02, the plan's §58: from a
+ * missing ingredient to the shop and back to the meal). An ingredient no store
+ * here sells is named as one that can't be bought.
+ */
+export function shortfall(sim: Simulation, person: Person, recipeId: string, servings?: number): { buys: { productId: string; quantity: number; cost: Money }[]; unbuyable: string[] } | undefined {
+  const r = recipeById(recipeId);
+  if (!r) return undefined;
+  const scale = (servings ?? r.servings) / r.servings;
+  const here = groceryCatalog(sim, person.currentLocationId).map((e) => e.value);
+  const buys: { productId: string; quantity: number; cost: Money }[] = [];
+  const unbuyable: string[] = [];
+  for (const i of r.ingredients) {
+    if (i.cupboard) continue;
+    if (!i.food) { unbuyable.push(i.name); continue; }
+    const stock = stockOf(sim, person, i.food);
+    const unit = stock[0]?.food.unit;
+    const have = stock.reduce((sum, s) => sum + s.food.left, 0);
+    if (stock.length && have >= amountIn(i, unit!, scale) - 1e-9) continue;
+    const products = here.filter((p) => p.food === i.food && (!unit || p.sizeUnit === unit));
+    const needIn = (u: FoodUnit) => amountIn(i, u, scale) - (unit === u ? have : 0);
+    const options = products.map((p) => {
+      const short = needIn(p.sizeUnit);
+      const quantity = Math.max(1, Math.ceil(short / p.sizeQty - 1e-9));
+      return { productId: p.id, quantity, short, cost: groceryPrice(sim, person.currentLocationId, p) * quantity };
+    }).filter((x) => x.short > 1e-9 && x.quantity <= 20).sort((a, b) => a.cost - b.cost);
+    if (options.length === 0) { unbuyable.push(i.name); continue; }
+    const { productId, quantity, cost } = options[0]!;
+    buys.push({ productId, quantity, cost });
+  }
+  return { buys, unbuyable };
+}
+
 /** Cooks a recipe for so many servings: its ingredients used at that scale, one serving eaten, the rest in the fridge. The portions left. */
 export function cook(sim: Simulation, person: Person, recipeId: string, servings?: number): number {
   const no = cookRefusal(sim, person, recipeId, servings);
@@ -246,6 +281,17 @@ export function registerKitchen(sim: Simulation): void {
     }
   });
   sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('food.buy_groceries', (p, { sim: s }) => ({ paid: buyGroceries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
+  // What a recipe is short of, bought at once where it's sold here, each by the same rules as buying it on its own.
+  sim.onCommand<{ recipeId: string; servings?: number }, { paid: Money; bought: number }>('food.buy_short', (p, { sim: s }) => {
+    const person = s.player;
+    const need = shortfall(s, person, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings));
+    if (!need) throw new CommandError('No such recipe.');
+    if (need.unbuyable.length) throw new CommandError(`No store here sells ${need.unbuyable.join(', ')}.`);
+    if (need.buys.length === 0) throw new CommandError('You have all of it.');
+    let paid = 0;
+    for (const b of need.buys) paid += buyGroceries(s, person, b.productId, b.quantity);
+    return { paid, bought: need.buys.length };
+  });
   sim.onCommand<{ recipeId: string; servings?: number }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings)) }));
   sim.onCommand<{ itemId?: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
     if (s.player.wellbeing.nourishment >= 90) throw new CommandError('You aren’t hungry.');

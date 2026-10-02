@@ -1,0 +1,467 @@
+{
+  "meta": {
+    "title": "SLATE research: primary-care appointment waits, specialist referral waits, no-shows and prescription collection",
+    "compiledOn": "2026-10-02",
+    "method": "WebSearch, WebFetch and curl. Data files (NHS England Digital regional CSVs, the AMN Healthcare white paper PDF, the Fraser Institute PDF, the NHS England RTT press notice PDF, the Statistics Canada table 13-10-0905-01 CSV, the NTPF open-data CSV and the IMSS ENCAL 2025 PDFs) were downloaded and read locally with pdftotext and short Node scripts. Figures marked 'page' were read in the document itself. 'derived' figures are arithmetic on page figures and give the formula. 'search-summary' figures come only from a search engine's summary and should be re-checked before they are shipped as hard figures. Nothing is invented. Where nothing is published the value is null with the reason.",
+    "verificationLevels": {
+      "page": "Read on the cited page or in the cited data file itself.",
+      "search-summary": "Taken only from the search engine's summary of the cited page; the page itself was not read (usually HTTP 403).",
+      "derived": "Arithmetic on figures read on the page; the formula or method is given."
+    },
+    "doesNotRepeat": [
+      "docs/research/world/research-gaps-hotels-health.json health.gpAccessAndSubstitution: the Commonwealth Fund 2023 Q9 distribution (Canada, Ontario, BC, US, UK), the ED substitution question, the Ireland Ipsos B&A rural poll and the IMSS ENCAL 2025 first-level 29-day figure. Those are cited here by reference and not copied, except where a figure is re-verified or needed as the Canada entry.",
+      "docs/research/world/research-health-visits.json waits[] and pharmacy[]: the England same-day 45.0% headline, the AMN 2025 national averages (search-summary there; read in the PDF here), the England prescription charge and PPC prices (search-summary there; read on the CPE page here), and Ireland's DPS EUR 80 cap (search-summary there; read on the Citizens Information page here)."
+    ],
+    "cityIds": {
+      "us-ny-newyork": "New York",
+      "us-ca-losangeles": "Los Angeles",
+      "us-ct-newhaven": "New Haven",
+      "ca-on-toronto": "Toronto",
+      "ca-bc-vancouver": "Vancouver",
+      "mx-cmx-mexicocity": "Mexico City",
+      "uk-eng-london": "London",
+      "ie-lei-dublin": "Dublin"
+    }
+  },
+
+  "gpWaits": [
+    {
+      "id": "eng-gpad-jul2026-national-all",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "Share of appointments in general practice by time from booking to appointment, all staff types (GP, other practice staff, unknown)",
+      "period": "July 2026 (the latest month whose data files could be read; see eng-gpad-aug2026-headline for August)",
+      "totalAppointments": 33928829,
+      "distributionPercent": { "sameDay": 44.68, "oneDay": 7.64, "twoToSevenDays": 17.28, "eightToFourteenDays": 12.40, "fifteenToTwentyOneDays": 7.42, "twentyTwoToTwentyEightDays": 5.11, "moreThanTwentyEightDays": 5.38, "unknownDataQuality": 0.08 },
+      "withinTwoWeeksPercent": { "value": 82.00, "verification": "derived", "formula": "44.68 + 7.64 + 17.28 + 12.40" },
+      "check": "The publication page states '44.7% of appointments in July 2026 took place on the same day that they were booked', which matches the 44.68% summed from the files.",
+      "source": "https://files.digital.nhs.uk/C2/A93A29/Appointments_GP_Regional_CSV_Jul_26.zip",
+      "publicationPage": "https://digital.nhs.uk/data-and-information/publications/statistical/appointments-in-general-practice/july-2026",
+      "read": "2026-10-02",
+      "verification": "page",
+      "method": "Sum of COUNT_OF_APPOINTMENTS for APPOINTMENT_MONTH = JUL2026 across all 42 sub-ICB regional CSVs in the zip, grouped by TIME_BETWEEN_BOOK_AND_APPT. The publication page itself returns a Cloudflare challenge to scripts; it was read through the Internet Archive capture of 2026-09-20, and the data files on files.digital.nhs.uk downloaded directly."
+    },
+    {
+      "id": "eng-gpad-jul2026-national-gp-only",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "Same distribution, appointments with a GP only (HCP_TYPE = GP)",
+      "period": "July 2026",
+      "totalAppointments": 15111822,
+      "distributionPercent": { "sameDay": 56.26, "oneDay": 7.59, "twoToSevenDays": 14.97, "eightToFourteenDays": 9.69, "fifteenToTwentyOneDays": 5.14, "twentyTwoToTwentyEightDays": 3.35, "moreThanTwentyEightDays": 2.94, "unknownDataQuality": 0.07 },
+      "note": "Appointments with nurses, pharmacists and other practice staff are booked further ahead (vaccinations, reviews), which is why the all-staff distribution has the longer tail. For 'seeing the GP', this is the better distribution.",
+      "source": "https://files.digital.nhs.uk/C2/A93A29/Appointments_GP_Regional_CSV_Jul_26.zip",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "eng-gpad-jul2026-london",
+      "market": "England (London region and its ICBs)",
+      "cityIds": ["uk-eng-london"],
+      "measure": "Share of appointments by time from booking to appointment, by London ICB",
+      "period": "July 2026",
+      "note": "London had four ICBs in the July 2026 files: North East, South East, South West, and West and North London (the merged former North Central and North West London ICBs).",
+      "allStaff": {
+        "LondonRegion": { "total": 5146473, "sameDay": 46.56, "oneDay": 9.01, "twoToSevenDays": 19.92, "eightToFourteenDays": 12.84, "fifteenToTwentyOneDays": 6.04, "twentyTwoToTwentyEightDays": 3.21, "moreThanTwentyEightDays": 2.30, "unknownDataQuality": 0.12 },
+        "NorthEastLondonICB": { "total": 1172251, "sameDay": 46.12, "oneDay": 9.54, "twoToSevenDays": 20.99, "eightToFourteenDays": 13.03, "fifteenToTwentyOneDays": 5.64, "twentyTwoToTwentyEightDays": 2.70, "moreThanTwentyEightDays": 1.89, "unknownDataQuality": 0.09 },
+        "SouthEastLondonICB": { "total": 872872, "sameDay": 44.71, "oneDay": 8.72, "twoToSevenDays": 20.69, "eightToFourteenDays": 13.70, "fifteenToTwentyOneDays": 6.33, "twentyTwoToTwentyEightDays": 3.39, "moreThanTwentyEightDays": 2.38, "unknownDataQuality": 0.08 },
+        "SouthWestLondonICB": { "total": 794251, "sameDay": 45.41, "oneDay": 8.27, "twoToSevenDays": 19.20, "eightToFourteenDays": 13.45, "fifteenToTwentyOneDays": 6.29, "twentyTwoToTwentyEightDays": 4.10, "moreThanTwentyEightDays": 3.17, "unknownDataQuality": 0.11 },
+        "WestAndNorthLondonICB": { "total": 2307099, "sameDay": 47.88, "oneDay": 9.11, "twoToSevenDays": 19.33, "eightToFourteenDays": 12.21, "fifteenToTwentyOneDays": 6.04, "twentyTwoToTwentyEightDays": 3.09, "moreThanTwentyEightDays": 2.18, "unknownDataQuality": 0.16 }
+      },
+      "gpOnly": {
+        "LondonRegion": { "total": 2735070, "sameDay": 56.60, "oneDay": 8.42, "twoToSevenDays": 16.42, "eightToFourteenDays": 10.30, "fifteenToTwentyOneDays": 4.49, "twentyTwoToTwentyEightDays": 2.23, "moreThanTwentyEightDays": 1.43, "unknownDataQuality": 0.12 },
+        "NorthEastLondonICB": { "total": 611259, "sameDay": 54.70, "oneDay": 9.69, "twoToSevenDays": 17.89, "eightToFourteenDays": 10.27, "fifteenToTwentyOneDays": 4.24, "twentyTwoToTwentyEightDays": 1.90, "moreThanTwentyEightDays": 1.20, "unknownDataQuality": 0.10 },
+        "SouthEastLondonICB": { "total": 498595, "sameDay": 53.63, "oneDay": 8.41, "twoToSevenDays": 17.81, "eightToFourteenDays": 11.71, "fifteenToTwentyOneDays": 4.77, "twentyTwoToTwentyEightDays": 2.24, "moreThanTwentyEightDays": 1.35, "unknownDataQuality": 0.09 },
+        "SouthWestLondonICB": { "total": 443639, "sameDay": 55.17, "oneDay": 8.13, "twoToSevenDays": 16.45, "eightToFourteenDays": 10.73, "fifteenToTwentyOneDays": 4.66, "twentyTwoToTwentyEightDays": 2.96, "moreThanTwentyEightDays": 1.77, "unknownDataQuality": 0.14 },
+        "WestAndNorthLondonICB": { "total": 1181577, "sameDay": 59.37, "oneDay": 7.88, "twoToSevenDays": 15.05, "eightToFourteenDays": 9.56, "fifteenToTwentyOneDays": 4.43, "twentyTwoToTwentyEightDays": 2.12, "moreThanTwentyEightDays": 1.44, "unknownDataQuality": 0.14 }
+      },
+      "unit": "percent of the ICB's July 2026 appointments",
+      "source": "https://files.digital.nhs.uk/C2/A93A29/Appointments_GP_Regional_CSV_Jul_26.zip",
+      "read": "2026-10-02",
+      "verification": "page",
+      "method": "Same as the national entry, restricted to REGION_NAME = London and grouped by ICB_NAME."
+    },
+    {
+      "id": "eng-gpad-aug2026-headline",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "Headline figures for August 2026, the latest publication",
+      "period": "August 2026",
+      "values": { "sameDayPercent": 45.0, "withinTwoWeeksPercent": 81.6, "attendedPercent": 89.6, "standardAppointments": 28800000, "faceToFacePercent": 59.9, "appointmentsPerWorkingDay": 1440000 },
+      "distribution": null,
+      "why": "The August 2026 page and its data-file links sit behind a Cloudflare challenge, and no Internet Archive capture of that page exists, so the August CSV URLs could not be found. The full distribution above is July's. The BMA's own page quotes the same-day, within-two-weeks, face-to-face, total and per-day figures.",
+      "source": "https://www.bma.org.uk/advice-and-support/nhs-delivery-and-workforce/pressures/pressures-in-general-practice-data-analysis",
+      "alsoSource": "https://digital.nhs.uk/data-and-information/publications/statistical/appointments-in-general-practice/august-2026",
+      "read": "2026-10-02",
+      "verification": "page (BMA page) for sameDay, withinTwoWeeks, standardAppointments, faceToFace, perWorkingDay; search-summary for attendedPercent 89.6"
+    },
+    {
+      "id": "us-amn-2025-new-patient",
+      "market": "United States (15 large metros, including New York and Los Angeles)",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles"],
+      "measure": "Average days to the first available new-patient appointment (AMN Healthcare / Merritt Hawkins survey)",
+      "period": "Calls and online-calendar checks made 15 January to 24 February 2025. This is the latest wave; the survey runs roughly every 3 to 5 years (2004, 2009, 2013, 2017, 2022, 2025), and no 2026 wave was found.",
+      "scenarioUsed": { "cardiology": "a heart check-up", "dermatology": "a skin exam to detect possible carcinomas/melanomas", "orthopedicSurgery": "injury or pain in the knee", "obGyn": "a well-woman gynecological exam", "gastroenterology": "a consultation preceding a colonoscopy", "familyMedicine": "a physical" },
+      "averageDays": {
+        "fifteenMetroTotal": { "allSixSpecialties": 31, "familyMedicine": 23.5, "cardiology": 32.7, "dermatology": 36.5, "obGyn": 41.8, "orthopedicSurgery": 12.0, "gastroenterology": 40 },
+        "NewYork": { "familyMedicine": 4, "cardiology": 23, "dermatology": 9, "obGyn": 16, "orthopedicSurgery": 8, "gastroenterology": 17 },
+        "LosAngeles": { "familyMedicine": 13, "cardiology": 24, "dermatology": 16, "obGyn": 43, "orthopedicSurgery": 22, "gastroenterology": 19 }
+      },
+      "rangeDays": {
+        "NewYork": { "familyMedicine": [1, 26], "cardiology": [3, 46], "dermatology": [1, 67], "obGyn": [1, 57], "orthopedicSurgery": [1, 35], "gastroenterology": [1, 89] },
+        "LosAngeles": { "familyMedicine": [1, 45], "cardiology": [1, 63], "dermatology": [1, 105], "obGyn": [6, 153], "orthopedicSurgery": [4, 133], "gastroenterology": [1, 66] },
+        "fifteenMetroFamilyMedicine": [1, 207]
+      },
+      "officesReached": { "NewYork": { "familyMedicine": 11, "cardiology": 13, "dermatology": 31, "obGyn": 25, "orthopedicSurgery": 21, "gastroenterology": 14 }, "LosAngeles": { "familyMedicine": 17, "cardiology": 10, "dermatology": 21, "obGyn": 10, "orthopedicSurgery": 10, "gastroenterology": 20 } },
+      "acceptsMedicaidPercent": { "NewYork": { "familyMedicine": 45, "cardiology": 38, "dermatology": 26, "obGyn": 12, "orthopedicSurgery": 24, "gastroenterology": 21 }, "LosAngeles": { "familyMedicine": 65, "cardiology": 90, "dermatology": 29, "obGyn": 60, "orthopedicSurgery": 70, "gastroenterology": 35 }, "fifteenMetroAllSpecialties": 53 },
+      "acceptsMedicarePercent": { "NewYork": { "familyMedicine": 100, "cardiology": 77, "dermatology": 74, "obGyn": 44, "orthopedicSurgery": 71, "gastroenterology": 64 }, "LosAngeles": { "familyMedicine": 88, "cardiology": 90, "dermatology": 81, "obGyn": 70, "orthopedicSurgery": 90, "gastroenterology": 90 }, "fifteenMetroAllSpecialties": 82 },
+      "newHaven": { "value": null, "why": "New Haven is not one of the 15 metros. AMN's separate 'mid-sized markets' series last ran in 2017 and is not used here." },
+      "caveats": [
+        "The PDF contradicts itself on New York cardiology: the cardiology table gives 23 days (13 offices, 3 to 46 days), but the 'Average Wait Times by Metropolitan Area' summary table gives 7 days. New York orthopedic surgery is 8 days in the specialty table and 9 in the summary. The specialty tables are used above.",
+        "pdftotext's -layout mode shifted the rows of these tables. The values above come from -raw mode, where every row reads cleanly. An earlier search-summary in research-health-visits.json is consistent with the totals.",
+        "Researchers reached 1,391 of the 3,656 offices they contacted, and the survey notes that large groups tend to assign a new patient to whichever physician has the most open schedule, so these are best-case waits for a new patient."
+      ],
+      "source": "https://www.amnhealthcare.com/siteassets/amn-insights/physician/ps-2025-physician-appt-wait-times---wp-v6.pdf",
+      "alsoSource": "https://ir.amnhealthcare.com/2025-05-27-New-Survey-Shows-Physician-Appointment-Wait-Times-Surge-19-Since-2022,-48-Since-2004",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "us-cmwf-2023-same-next-day",
+      "market": "United States",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "measure": "Adults who got a same-day or next-day appointment the last time they were sick (Commonwealth Fund 2023)",
+      "value": 43,
+      "unit": "percent",
+      "period": "2023 fieldwork",
+      "note": "Cited by reference. The full Q9 distribution, including US rows, is in research-gaps-hotels-health.json health.gpAccessAndSubstitution.commonwealthFund2023. It is national only, with no state or city breakdown.",
+      "source": "https://www.cihi.ca/en/international-survey-shows-canada-lags-behind-peer-countries-in-access-to-primary-health-care",
+      "read": "2026-10-02 (via research-gaps-hotels-health.json, read 2026-10-01/02)",
+      "verification": "page"
+    },
+    {
+      "id": "ca-cmwf-2023-same-next-day",
+      "market": "Canada (Ontario, British Columbia)",
+      "cityIds": ["ca-on-toronto", "ca-bc-vancouver"],
+      "measure": "Adults who got a same-day or next-day appointment with their doctor or place of care the last time they were sick",
+      "values": { "Canada": 26 },
+      "provincialDerived": {
+        "Ontario": { "value": 24.7, "formula": "(13.37 + 8.17) / (100 - 6.09 - 4.39 - 0.41 - 1.79)" },
+        "BritishColumbia": { "value": 21.8, "formula": "(12.97 + 6.57) / (100 - 4.54 - 3.06 - 0.69 - 2.09)" },
+        "verification": "derived",
+        "method": "The same base CIHI used for the published 26% (excluding 'did not need', 'not sure', 'declined' and 'never able'), applied to the provincial Q9 rows in the CIHI data tables. The Canada check reproduces 26.0."
+      },
+      "unit": "percent",
+      "period": "Commonwealth Fund 2023 International Health Policy Survey (the latest all-adult wave; 2024 surveyed adults 65+ only)",
+      "note": "The raw Q9 distribution for Canada, Ontario and BC (same day, next day, 2 to 5 days, 6 to 7, 8 to 14, over 2 weeks, never) is already in research-gaps-hotels-health.json. It is not copied here.",
+      "source": "https://www.cihi.ca/sites/default/files/document/cmwf-2023-data-tables-en.xlsx",
+      "alsoSource": "https://www.cihi.ca/en/international-survey-shows-canada-lags-behind-peer-countries-in-access-to-primary-health-care",
+      "read": "2026-10-02",
+      "verification": "page for Canada 26; derived for the provinces"
+    },
+    {
+      "id": "ca-regular-provider-2024",
+      "market": "Canada (Ontario, British Columbia)",
+      "cityIds": ["ca-on-toronto", "ca-bc-vancouver"],
+      "measure": "Adults 18+ who have a regular health care provider (Canadian Community Health Survey, annual component)",
+      "period": "2024 (2023 shown for comparison)",
+      "hasRegularProviderPercent": { "2024": { "CanadaExTerritories": 82.6, "Ontario": 88.5, "BritishColumbia": 79.9 }, "2023": { "CanadaExTerritories": 82.8, "Ontario": 87.6, "BritishColumbia": 81.6 } },
+      "withoutRegularProviderPercent": { "value": { "CanadaExTerritories": 17.4, "Ontario": 11.5, "BritishColumbia": 20.1 }, "period": "2024", "verification": "derived", "formula": "100 - has-regular-provider percent" },
+      "definitionNote": "A 'regular health care provider' in the CCHS includes a family doctor or GP and also a nurse practitioner or another provider the person regularly consults, so 'without a family doctor' is slightly higher than 'without a regular provider'. No city (Toronto or Vancouver) rows were found in this table.",
+      "alsoReported": [
+        { "text": "CIHI: '4 out of 5 Canadian adults age 18 and older (83%) reported having access to a regular health care provider' (2024, CCHS); ages 18 to 34 about 73%; 65+ 91%.", "source": "https://www.cihi.ca/en/taking-the-pulse-measuring-shared-priorities-for-canadian-health-care-2025/primary-health-care-2025/most-canadians-have-a-regular-health-care-provider", "verification": "page" },
+        { "text": "A different survey, the Survey on Health Care Access and Experiences (SHCAE-PSC 2024), gives different provincial figures. A search summary said 'Ontario declined from 87 to 85 per cent, and British Columbia declined from 82 to 75 per cent'. That was not read on a page and is not used.", "verification": "search-summary" }
+      ],
+      "source": "https://www150.statcan.gc.ca/n1/tbl/csv/13100905-eng.zip",
+      "table": "Statistics Canada Table 13-10-0905-01, Health indicator statistics, annual estimates; Indicators = 'Has a regular healthcare provider', Characteristics = 'Percent', Age group = 'Total, 18 years and over', Both sexes",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ie-gp-wait",
+      "market": "Ireland",
+      "cityIds": ["ie-lei-dublin"],
+      "measure": "GP appointment wait",
+      "value": null,
+      "why": "No official distribution exists. The HSE, ICGP, CSO and Healthy Ireland do not publish days to a GP appointment, and Ireland is not in the Commonwealth Fund survey. The only figure is the Ipsos B&A 'Rural Ireland Thinks' poll for the Irish Examiner (published 2026-09-18): 54% waited two days or more and 26% did not wait at all. That poll covers rural Ireland, not Dublin, and is already recorded in research-gaps-hotels-health.json health.gpAccessAndSubstitution.ireland. A fresh search on 2026-10-02 found nothing newer.",
+      "source": "https://www.irishexaminer.com/news/arid-41912527.html",
+      "read": "2026-10-02",
+      "verification": "page (via research-gaps-hotels-health.json)"
+    },
+    {
+      "id": "mx-imss-umf-wait",
+      "market": "Mexico (IMSS family medicine, Unidades de Medicina Familiar)",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "measure": "Average days from requesting an appointment to being seen at an IMSS family-medicine unit",
+      "values": { "averageDays": 29, "percentWaitingTwoWeeksOrMore": 76, "waitingRoomMinutesBeyondWhichSatisfactionFalls": "35-40" },
+      "period": "ENCAL 2025, fieldwork October to November 2025, 262 first-level units, national",
+      "note": "Re-read in the PDF on 2026-10-02: '29 días promedio entre solicitud de cita y atención'; '76% de usuarios espera 2 semanas o más'. This is national, with no Mexico City breakdown. It is already in research-gaps-hotels-health.json and is listed here only so that every market has a gpWaits entry.",
+      "source": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_1nivel.pdf",
+      "read": "2026-10-02",
+      "verification": "page"
+    }
+  ],
+
+  "specialistWaits": [
+    {
+      "id": "eng-rtt-jul2026",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "Consultant-led referral to treatment (RTT): waiting times for patients still waiting to start treatment (incomplete pathways)",
+      "period": "End of July 2026 (published 10 September 2026)",
+      "values": { "medianWeeks": 12.0, "percentile92Weeks": 38.4, "withinEighteenWeeksPercent": 65.4, "constitutionalStandardPercent": 92, "waitingListPathways": 7300000, "uniquePatientsEstimate": 6200000, "over52Weeks": 111379, "over65Weeks": 9095, "over78Weeks": 1494, "over104Weeks": 235, "newPathwaysInMonth": 1985434, "completedAdmittedInMonth": 328929, "completedNonAdmittedInMonth": 1322549 },
+      "withinEighteenWeeksBySpecialtyPercent": { "TraumaAndOrthopaedics": 60.9, "Dermatology": 69.2, "Cardiology": 67.9, "Gynaecology": 60.0, "Gastroenterology": 69.4, "EarNoseAndThroat": 57.6, "Ophthalmology": 72.9, "GeneralSurgery": 63.0, "Neurology": 61.7, "Urology": 64.7, "allSpecialtiesExcludingMissingTrusts": 65.3 },
+      "note": "RTT runs from the GP's referral to the start of treatment, not to the first specialist appointment. NHS England publishes no national median for referral to first outpatient appointment. The median and 92nd percentile are estimated from aggregate data and exclude missing trusts. No London-only median was extracted.",
+      "source": "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/09/Jul26-RTT-statistical-press-notice-PDF-578K-97ylx5.pdf",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ca-fraser-wyt-2025",
+      "market": "Canada (Ontario, British Columbia, national)",
+      "cityIds": ["ca-on-toronto", "ca-bc-vancouver"],
+      "measure": "Median weeks from GP referral to specialist consultation (Fraser Institute, Waiting Your Turn 2025, Table 3), and from GP referral to treatment (Table 2)",
+      "period": "Physician survey, 16 January to 30 May 2025; response rate 13.1%",
+      "gpReferralToSpecialistWeeks": {
+        "weightedMedian": { "BritishColumbia": 19.7, "Ontario": 10.7, "Canada": 15.3 },
+        "bySpecialty": {
+          "PlasticSurgery": { "BC": 52.0, "ON": 4.0, "CAN": 24.5 },
+          "Gynaecology": { "BC": 34.0, "ON": 17.0, "CAN": 25.0 },
+          "Ophthalmology": { "BC": 16.0, "ON": 13.0, "CAN": 15.1 },
+          "Otolaryngology": { "BC": 34.0, "ON": 20.0, "CAN": 22.4 },
+          "GeneralSurgery": { "BC": 16.0, "ON": 7.1, "CAN": 10.5 },
+          "Neurosurgery": { "BC": 26.0, "ON": 64.0, "CAN": 39.7 },
+          "OrthopaedicSurgery": { "BC": 25.5, "ON": 14.0, "CAN": 21.3 },
+          "CardiovascularSurgery": { "BC": 11.0, "ON": 4.8, "CAN": 8.8 },
+          "Urology": { "BC": 31.0, "ON": 10.0, "CAN": 17.3 },
+          "InternalMedicine": { "BC": 14.0, "ON": 8.0, "CAN": 12.1 },
+          "RadiationOncology": { "BC": 4.0, "ON": 1.5, "CAN": 1.8 },
+          "MedicalOncology": { "BC": 3.5, "ON": 2.0, "CAN": 2.2 }
+        }
+      },
+      "specialistToTreatmentWeeks": { "note": "Table 4. Canada's weighted median of 13.3 weeks is in the report text; the provincial table rows were read but are not all copied here.", "OrthopaedicSurgery": { "BC": 28.2, "ON": 18.2, "CAN": 27.2 } },
+      "gpReferralToTreatmentWeeks": { "weightedMedian": { "BritishColumbia": 32.2, "Ontario": 19.2, "Canada": 28.6 } },
+      "note": "These are physicians' estimates, not administrative data. Fraser does not survey family-doctor appointment waits, and dermatology and cardiology (as a medical specialty) are not separate rows; cardiology falls under internal medicine.",
+      "source": "https://www.fraserinstitute.org/sites/default/files/2025-12/waiting-your-turn-2025-17913.pdf",
+      "landingPage": "https://www.fraserinstitute.org/studies/waiting-your-turn-wait-times-for-health-care-in-canada-2025",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "us-amn-2025-specialists",
+      "market": "United States",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles"],
+      "measure": "Average days to a new-patient specialist appointment. The US generally has no referral queue; many plans (HMOs) need a referral but the wait is to the first opening.",
+      "values": "See gpWaits id us-amn-2025-new-patient for cardiology, dermatology, OB/GYN, orthopedic surgery and gastroenterology in New York, Los Angeles and the 15-metro total.",
+      "source": "https://www.amnhealthcare.com/siteassets/amn-insights/physician/ps-2025-physician-appt-wait-times---wp-v6.pdf",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ie-ntpf-outpatient-jul2026",
+      "market": "Ireland",
+      "cityIds": ["ie-lei-dublin"],
+      "measure": "People waiting for a first hospital outpatient (consultant) appointment, by time already waited (NTPF national outpatient list)",
+      "period": "Archive date 30 July 2026",
+      "values": { "total": 683548, "zeroToSixMonths": 407837, "sixToTwelveMonths": 154162, "twelveToEighteenMonths": 71212, "eighteenMonthsPlus": 50344 },
+      "sharePercent": { "zeroToSixMonths": 59.7, "sixToTwelveMonths": 22.6, "twelveToEighteenMonths": 10.4, "eighteenMonthsPlus": 7.4, "verification": "derived", "formula": "band / total" },
+      "target": { "text": "Sláintecare target: all patients seen within 10 weeks for an outpatient appointment, 12 weeks for an inpatient or day case and for GI scopes.", "source": "https://www.gov.ie/en/department-of-health/press-releases/monthly-waiting-list-figures-july-2026/", "verification": "page" },
+      "note": "This is a stock of people waiting, by time waited so far, not a median wait to be seen. NTPF does not publish a median. A search summary gave 687,839 for August 2026 (122,005 over a year, 51,540 over 18 months); that was not read on a page.",
+      "source": "https://www.ntpf.ie/app/uploads/2026/09/OpenData_OPNational01_2026.csv",
+      "listedOn": "https://www.ntpf.ie/waiting-list-data/open-data/",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "mx-imss-specialty-encal2025",
+      "market": "Mexico (IMSS second level)",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "measure": "IMSS referral (pase de referencia, form 4-30-8) to the first specialist consultation",
+      "period": "ENCAL 2025, October to November 2025, 91 second-level hospitals, national",
+      "values": { "referralToFirstSpecialtyConsultDays": 61, "averageDaysScheduledAppointmentToCareAllSpecialtyUsers": 53, "electiveSurgeryAverageWorkingDays": 57, "electiveSurgeryMedianWorkingDays": 22, "surgeriesRescheduledPercent": 16, "labStudyAverageWorkingDays": 24, "imagingAverageWorkingDays": 25, "triageWaitMeanMinutes": 82, "triageWaitMedianMinutes": 30, "satisfiedWithSameDayWaitPercent": 80 },
+      "text": "'61 días Tiempo total estimado desde pase de referencia hasta consulta de especialidad (primera vez)'; '53 días Espera promedio entre cita agendada y atención en especialidades'; '57 días Espera promedio para cirugía electiva (mediana: 22 días hábiles)'.",
+      "note": "research-health-visits.json (mx-imss-specialty-wait) holds 61 and 53 marked search-summary because that PDF could not be parsed then. It was parsed with pdftotext on 2026-10-02 and the figures are confirmed.",
+      "source": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_2nivel.pdf",
+      "read": "2026-10-02",
+      "verification": "page"
+    }
+  ],
+
+  "noShows": [
+    {
+      "id": "eng-gpad-dna-jul2026",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "Appointment status: attended, did not attend (DNA), unknown",
+      "period": "July 2026",
+      "allStaffPercent": { "England": { "attended": 89.51, "dna": 4.27, "unknown": 6.22 }, "LondonRegion": { "attended": 87.76, "dna": 5.66, "unknown": 6.58 }, "NorthEastLondonICB": { "dna": 6.46 }, "SouthEastLondonICB": { "dna": 6.12 }, "SouthWestLondonICB": { "dna": 5.38 }, "WestAndNorthLondonICB": { "dna": 5.17 } },
+      "gpOnlyPercent": { "England": { "attended": 91.20, "dna": 3.14, "unknown": 5.66 }, "LondonRegion": { "attended": 89.69, "dna": 3.99, "unknown": 6.32 }, "NorthEastLondonICB": { "dna": 4.33 }, "SouthEastLondonICB": { "dna": 4.38 }, "SouthWestLondonICB": { "dna": 4.01 }, "WestAndNorthLondonICB": { "dna": 3.63 } },
+      "dnaPercentByBookingLeadTimeEngland": { "sameDay": 1.70, "oneDay": 3.71, "twoToSevenDays": 5.77, "eightToFourteenDays": 7.18, "fifteenToTwentyOneDays": 7.38, "twentyTwoToTwentyEightDays": 7.44, "moreThanTwentyEightDays": 7.55, "basis": "all staff types, July 2026" },
+      "check": "The July 2026 page states '89.5% of all appointments were attended', which matches 89.51%.",
+      "note": "The DNA rate rises with lead time. That is a real mechanic: an appointment booked further ahead is more likely to be missed. 'Unknown' means the practice did not record an outcome. It is not a DNA.",
+      "source": "https://files.digital.nhs.uk/C2/A93A29/Appointments_GP_Regional_CSV_Jul_26.zip",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "eng-gp-no-charge",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "measure": "Can an NHS GP practice charge a registered patient for a missed appointment?",
+      "value": false,
+      "text": "NHS GP practices may not charge registered patients or temporary residents fees for treatment they must provide under the GMS contract (GMS Contracts Regulations, regs 24 and 25). There is no NHS missed-appointment fee. Repeated DNAs can lead, after warnings, to removal from the practice list.",
+      "source": "https://www.bma.org.uk/advice-and-support/gp-practices/gp-service-provision/what-services-gp-practices-can-and-cannot-charge-for",
+      "read": "2026-10-02",
+      "verification": "search-summary",
+      "note": "The BMA page was not fetched. Re-check before shipping."
+    },
+    {
+      "id": "us-mgma-no-show-fees",
+      "market": "United States",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "measure": "Practices charging a no-show fee, and typical amounts",
+      "values": { "practicesChargingNoShowFeePercent": 42, "pollDate": "2025-01-07", "pollResponses": 622, "primaryCareFeeRangeUSD": [25, 50], "surgicalSetting": "higher fees or deposits", "noticeToAvoidFeeHours": [24, 48] },
+      "text": "MGMA Stat poll: 42% of medical group leaders said their practices charge a no-show fee, 58% do not. Practices with a fee were more likely to report fewer no-shows in 2024 (25% against 16%). MGMA's guidance gives USD 25 to 50 as typical in primary care and asks for 24 to 48 hours' notice to avoid it.",
+      "earlierExample": { "text": "MGMA 2023 article: one group's new policy charged USD 25 for a missed office visit and USD 100 for a missed surgical appointment without notice.", "source": "https://www.mgma.com/mgma-stat/patient-no-shows-holding-steady-at-medical-groups-in-2023", "verification": "page" },
+      "note": "The USD 25 to 50 range is MGMA's advisory figure, not a measured distribution. No published US national no-show rate from an official statistic was found; the commonly quoted '5% to 30%' circulates only on vendor blogs and is not used.",
+      "source": "https://www.mgma.com/mgma-stat/no-show-fees-in-medical-practices-on-the-rise-to-balance-bumpy-attendance-rates",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "us-medicare-medicaid-no-show-rules",
+      "market": "United States (applies in New York, California, Connecticut)",
+      "cityIds": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+      "measure": "Who may be charged a missed-appointment fee",
+      "rules": {
+        "medicare": "Allowed only if the practice's missed-appointment policy applies equally to all patients and the amount is the same for Medicare and non-Medicare patients. Medicare itself never pays it (CMS MLN Matters MM5613, CR 5613): 'the charge for a missed appointment is not a charge for a service itself ... but rather is a charge for a missed business opportunity.'",
+        "medicaid": "Not allowed. Connecticut Medical Assistance Program Policy Transmittal 2015-03: 'federal and state policies prohibit charging Medicaid clients for broken, missed or cancelled appointments' (42 U.S.C. 1396a(a)(14), 42 C.F.R. 447.15)."
+      },
+      "sources": ["https://www.cms.gov/outreach-and-education/medicare-learning-network-mln/mlnmattersarticles/downloads/mm5613.pdf", "https://www.huskyhealthct.org/providers/provider_postings/Billing_Clients_for_Missed_Appointments.pdf"],
+      "source": "https://www.cms.gov/outreach-and-education/medicare-learning-network-mln/mlnmattersarticles/downloads/mm5613.pdf",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ca-on-cpso-missed-appointments",
+      "market": "Ontario",
+      "cityIds": ["ca-on-toronto"],
+      "measure": "Rules for charging an OHIP patient for a missed appointment",
+      "text": "CPSO 'Uninsured Services: Billing and Block Fees': 'Physicians are permitted to charge for an appointment that is missed or cancelled with less than 24 hours' notice', provided they have a cancellation system, the patient was told the policy and fee in advance, and the physician was available at the time. Fees must be reasonable, and physicians should grant exceptions for a first or isolated incident.",
+      "feeAmount": { "value": null, "why": "No standard amount. The OMA says it has no standard recommendation. Clinic examples: Infinity Health Centre (Toronto) CAD 20 missed appointment; Appletree Medical Group CAD 100 specialist no-show. Both are recorded in research-gaps-hotels-health.json torontoUninsuredWalkIn." },
+      "source": "https://www.cpso.on.ca/physicians/policies-guidance/policies/uninsured-services-billing-and-block-fees",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ca-bc-cpsbc-missed-appointments",
+      "market": "British Columbia",
+      "cityIds": ["ca-bc-vancouver"],
+      "measure": "Rules for charging an MSP patient for a missed appointment",
+      "text": "CPSBC: 'You may be charged for a missed appointment only if your physician has warned you about this in advance and has a cancellation process in place.'",
+      "feeAmount": { "value": null, "why": "The Doctors of BC 'Fees for Uninsured Services' schedule (effective 1 April 2024) was read and has no missed-appointment item; its only cancellation terms are for court and legal appearances." },
+      "source": "https://www.cpsbc.ca/public/public-resources/what-expect/charging-uninsured-services",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ie-mx-no-show",
+      "market": "Ireland, Mexico",
+      "cityIds": ["ie-lei-dublin", "mx-cmx-mexicocity"],
+      "measure": "GP no-show rate or missed-appointment fee",
+      "value": null,
+      "why": "Not researched to a source in this pass. Ireland publishes no national GP DNA statistic, and Irish GPs are private practices that set their own fees. IMSS publishes no UMF no-show rate in ENCAL 2025."
+    }
+  ],
+
+  "prescriptions": [
+    {
+      "id": "eng-prescription-charge-2026-27",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "item": "NHS prescription charge and prepayment certificates (PPC)",
+      "currency": "GBP",
+      "values": { "perItem": 9.90, "ppc3Month": 32.05, "ppc12Month": 114.50, "hrtPpc12Month": 19.80 },
+      "period": "2026/27 (frozen; GBP 9.90 since 1 May 2024)",
+      "note": "England only; prescriptions are free in Scotland, Wales and Northern Ireland. Exemption categories are in Part XVI of the Drug Tariff. A PPC pays off at four or more items in three months or more than 12 items in a year (search-summary from the same search).",
+      "source": "https://cpe.org.uk/dispensing-and-supply/prescription-processing/receiving-a-prescription/patient-charges/",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "eng-prescription-collection",
+      "market": "England",
+      "cityIds": ["uk-eng-london"],
+      "item": "How a prescription reaches the patient",
+      "text": "The Electronic Prescription Service sends the prescription from the GP to the patient's nominated pharmacy, and the patient collects it there. A repeat prescription is requested from the practice (online, NHS App, email or the tear-off slip) and needs two full working days before it reaches the pharmacy, excluding weekends and bank holidays. Repeat dispensing lets a patient collect further issues straight from the pharmacy without asking the practice again. Example practice (Strouts Place Medical Centre, Tower Hamlets, London): 'Please allow two full working days for prescriptions to be processed and remember to take weekends and bank holidays into account.'",
+      "processingWorkingDays": 2,
+      "source": "https://www.stroutsplace.nhs.uk/OnlineServicesPages/PrescriptionPageContent?PrescriptionPageId=29049",
+      "read": "2026-10-02",
+      "verification": "page",
+      "note": "Two working days is a practice-level rule, repeated across many NHS practice sites. It is not a national regulation. Pharmacy dispensing time after the prescription arrives is not published."
+    },
+    {
+      "id": "ie-dps-cap",
+      "market": "Ireland",
+      "cityIds": ["ie-lei-dublin"],
+      "item": "Drugs Payment Scheme monthly cap",
+      "currency": "EUR",
+      "values": { "monthlyCapPerHousehold": 80 },
+      "since": "2022-03-01",
+      "text": "'Under the Drugs Payment Scheme, you and your family only have to pay a maximum of €80 each month for approved prescribed drugs and medicines, and certain appliances.' 'You should try to use the same pharmacy in a month to avoid paying more than the maximum €80. You do not have to register with a pharmacy for the scheme.' Overpayment from using two or more pharmacies is refundable. Since 1 June 2025 a DPS card also gives free HRT.",
+      "source": "https://www.citizensinformation.ie/en/health/drugs-and-medicines/drugs-payment-scheme/",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ie-medical-card-prescription-charge",
+      "market": "Ireland",
+      "cityIds": ["ie-lei-dublin"],
+      "item": "Prescription charge for medical card holders",
+      "currency": "EUR",
+      "values": { "perItemUnder70": 1.50, "monthlyCapUnder70": 15, "perItem70Plus": 1.00, "monthlyCap70Plus": 10 },
+      "text": "'This prescription charge is €1.50 for each item that is dispensed to you under the medical card scheme, up to a maximum of €15 per month for each person or family. If you are aged over 70, the prescription charge is €1 per item, up to a maximum of €10 per month.' A family certificate held by the pharmacy enforces the family cap.",
+      "source": "https://www.citizensinformation.ie/en/health/drugs-and-medicines/prescription-charges-for-medical-card-holders/",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "mx-imss-pharmacy-encal2025",
+      "market": "Mexico (IMSS)",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "item": "Collecting a prescription at the IMSS unit pharmacy (free to derechohabientes)",
+      "values": {
+        "firstLevel": { "receivePrescriptionAtVisitPercent": 80, "goToPharmacySameDayPercent": 93, "fullyFilledPercent": 79, "partiallyFilledPercent": 18, "deniedPercent": 2, "incompleteDueToStockoutPercent": 89, "ofUnfilled_buyAtPrivatePharmacyPercent": 31, "ofUnfilled_stopTreatmentPercent": 3 },
+        "secondLevel": { "receivePrescriptionPercent": 47, "goToPharmacySameDayPercent": 87, "fullyFilledPercent": 79, "incompleteDueToStockoutPercent": 89, "satisfiedWithPharmacyWaitPercent": 90 }
+      },
+      "text": "First level: 'El 79% de los pacientes recibe la totalidad de los medicamentos recetados; el 18% reporta surtimiento parcial; el 2% lo tiene negado'; 'el 31% de quienes no reciben su receta completa opta por una farmacia privada (gasto de bolsillo), y el 3% suspende el tratamiento.'",
+      "note": "This gives SLATE a real mechanic: about one IMSS prescription in five is not fully filled at the unit, and the patient buys the rest privately or goes without.",
+      "source": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_1nivel.pdf",
+      "alsoSource": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_2nivel.pdf",
+      "read": "2026-10-02",
+      "verification": "page"
+    },
+    {
+      "id": "ca-us-prescriptions",
+      "market": "Canada, United States",
+      "item": "Prescription cost-sharing",
+      "value": null,
+      "why": "Ontario (OHIP+, ODB co-payments, Trillium) and BC (Fair PharmaCare) are already in research-health-visits.json pharmacy[]. The brief said US fill times are not needed.",
+      "source": "https://www.ontario.ca/page/get-help-high-prescription-drug-costs",
+      "read": "2026-10-02 (by reference)"
+    }
+  ],
+
+  "notes": [
+    "England: July 2026 is the latest month with a full distribution. The August 2026 publication page and its data links are behind a Cloudflare bot challenge, and no archive copy exists. Its headline figures (45.0% same day, 81.6% within two weeks, 89.6% attended) are recorded separately. To refresh, open the August page in a browser, copy the Appointments_GP_Regional_CSV_Aug_26.zip link, and rerun the same summation.",
+    "England: the files.digital.nhs.uk data host is not behind the challenge. Data-file URLs can be found from Internet Archive captures of the publication pages.",
+    "England: the 'GP only' distribution (56.3% same day) is the better model for 'see a GP'. The all-staff distribution includes nurse, pharmacist and other appointments, which are booked further ahead.",
+    "US AMN 2025: the white paper disagrees with itself on New York cardiology (23 days in the specialty table, 7 in the metro summary table). The specialty table is used. Check this before shipping.",
+    "US: AMN measures a new patient's first available slot by phone or online. It is not an established patient's wait to see their own doctor. No US official statistic of primary-care appointment waits exists. The Commonwealth Fund same-day or next-day share (43%) is the only national 'sick, need care' measure.",
+    "Canada: the provincial same-day or next-day shares (Ontario 24.7%, BC 21.8%) are derived by this pass from CIHI's own data tables, using the base that reproduces CIHI's published Canada 26%. They are not published by CIHI.",
+    "Canada: the regular-provider shares come from the CCHS. The SHCAE-PSC 2024 survey gives different and lower provincial numbers (search-summary only). The two surveys word the question differently.",
+    "Fraser figures are physicians' median estimates from a survey with a 13.1% response rate, not administrative data. Ontario and BC also publish their own administrative wait-time sites; those were not read in this pass.",
+    "Ireland: no GP wait statistic exists. NTPF outpatient counts by band are the specialist proxy. A median wait is not published.",
+    "Mexico: everything is IMSS ENCAL 2025 (national, user survey at exit). No Mexico City breakdown, and nothing for ISSSTE, IMSS-Bienestar or private GPs."
+  ]
+}

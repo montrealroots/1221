@@ -135,6 +135,8 @@ export function volumeOf(item: Item): number {
   if (item.volumeL !== undefined) return item.volumeL;
   if (item.garment) return GARMENT_L[item.garment.slot];
   if (item.supply) return item.supply.unit === 'ct' ? 0.05 : item.supply.left / 1000;
+  // Food as water weighs, a liter a kilogram; a count a quarter of a liter each, a dish's portion the same: SLATE's estimate.
+  if (item.food) return item.food.unit === 'ct' ? item.food.left * 0.25 : item.food.left / 1000;
   return 0;
 }
 

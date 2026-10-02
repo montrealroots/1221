@@ -161,7 +161,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 38f | Storage, mechanical upgrades | Partial | GB only | Racks, boxes; beyond GB |
 | 38i | Alternative transport | Complete (repairs) | `vehicle.stand_in`; tests | Wrap and interior work too |
 | 39a–b | Tank or charge, range | Done, 2026-10-02 | `systems/fueltank.ts`: 117 makers' capacities (`content/tanks.ts`), level, range, gauge on Vehicles; tests/fueltank.test.ts | 14 models without a published figure take SLATE's estimate, labeled |
-| 39c–d | Stops, belongings, passengers | Partial | errands; one passenger | Cargo and seats checked |
+| 39c–d | Stops, belongings, passengers | Partial | errands; one passenger; shopping held to the maker's cargo liters (2026-10-02) | Several passengers by the seats |
 | 39e | Route and time | Complete | tests/driving, trips, journey | — |
 | 39f | Refuel at a station | Done, 2026-10-02 | `vehicle.refuel` at a named station to full at the pump price; `errand.fuel` fills the tank; a leg short of fuel is refused | Choosing an amount short of full |
 | 39g | Charging | Done, 2026-10-02 | public to full over 50 kW's time, at home to 80% with a charger; the month charges at a fifth | — |
@@ -169,7 +169,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 40b | Change the plan mid-trip | Partial | one-click run | Step-by-step trip |
 | 40c | Parking | Partial | meter by the minute | Lots and garages; limits |
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
-| 40e | Purchases carried or in the car until moved | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
+| 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
 | 40g | Out of fuel | Not implemented | — | With the tank |
 | 40h | Breakdowns, delays | Partial | severe fault refuses | Mid-trip breakdown; tow |
 | 40i | Where it's parked | Partial | town only | Spot level |
@@ -217,17 +217,17 @@ Correctness first, then the connected day the plan asks to be shown working
 | 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial or not implemented | — | A stay place; fixtures from the property; incidentals |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
 | 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
-| 49k | Loss and replacement | Partial | passport only | Licence and ID replacement |
+| 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |
 
 ## Part 9. Healthcare, people, career, services
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
 | 50.1–2 | Find a provider; access and coverage | Partial | 35 providers in 8 towns | Dentists, opticians, therapists, specialists; a quote before care |
-| 50.3–7 | Book, prepare, attend, outcome, referral | Not implemented | care is drawn | Appointments, attendance, outcomes, referrals |
+| 50.3–7 | Book, prepare, attend, outcome, referral | Partial, 2026-10-02 | `systems/appointments.ts`: a doctor's visit booked for the place's published wait (England's distribution, AMN's days, IMSS's 29, Canada's next-day share), on the calendar, kept and billed or missed and owed, booked again or called off; tests/appointments.test.ts | Referrals (the specialist waits are now researched); outcomes beyond the bill; Ireland's wait unpublished |
 | 50.8 | Payment and coverage | Complete | bills, aid; tests | — |
 | 50.9–11 | Prescriptions, recovery, commitments | Partial | — | §51; follow-ups |
-| 51.1 | Prescriptions | Partial | paid at the counter | A prescription, supply, refills, collection |
+| 51.1 | Prescriptions | Partial | paid at the counter; England's prepayment certificate, three months or a year (`health.prepay`, 2026-10-02) | A prescription, supply, refills, collection |
 | 51.2 | Insurance | Partial | deep cover engine | Claims and denials; private cover abroad |
 | 51.3 | Travel insurance | Complete | tests/travelinsurance | — |
 | 51.4 | Accessibility | Not implemented | — | A needs model and venue attributes |
@@ -250,6 +250,6 @@ Correctness first, then the connected day the plan asks to be shown working
 | 55 | An assistant that proposes validated actions | Complete in code, not activated | systems/assistant.ts, askAssistant, ui/assistant; tests/assistant | Customization builder and development roles; the owner's key |
 | 56 | Supported connection, costs, credentials, works without it | Complete in code | docs/AI-INTEGRATION.md | Activation by the owner |
 | 57 | New mechanics reviewed, never run against saves | Partial | proposals only | A development-proposal role |
-| 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search | From a missing ingredient to the shop and back to the meal |
+| 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search; a recipe short of something buys it in place and cooks (`food.buy_short`, 2026-10-02) | The same in place for other shortfalls |
 | 59 | Activity states, recovery, no duplicates | Partial | orders, journeys, works | A common state model across activities |
 | 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | No washing up (§33i) |
