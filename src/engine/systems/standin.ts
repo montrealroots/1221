@@ -27,7 +27,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { CAR_SHOPS, type CarShop } from '../content/carshops';
 import { mayDrive } from './documents';
-import { payFromBank } from './household';
+import { payFromBank, inTheBank } from './household';
 import { RENTAL_RETURN_KIND, holdDeposit, rentalDays, rentalQuote, rentalsOf, type Rental } from './rentals';
 import type { OwnedVehicle } from './vehicles';
 
@@ -69,6 +69,8 @@ export function registerStandIn(sim: Simulation, find: (person: Person, id: stri
     if (!v) throw new CommandError('That isn’t a car you own.');
     const q = standInQuote(s, person, v, s.now);
     if (typeof q === 'string') throw new CommandError(q);
+    // Its deposit too, or nothing: until 2026-10-02 the car went out with no deposit held.
+    if (q.deposit > 0 && inTheBank(s, person) < q.total + q.deposit) throw new CommandError(`With its deposit it’s ${formatMoney(q.total + q.deposit, saveCurrency(s.universe))}, more than the bank holds.`);
     if (q.total > 0 && !payFromBank(s, person, q.total, `${q.what}, ${q.days} ${q.days === 1 ? 'day' : 'days'}, while the car is in`, 'vehicle')) throw new CommandError(`${formatMoney(q.total, saveCurrency(s.universe))} is more than the bank can cover.`);
     const town = shopTown(v);
     const r: Rental = { id: s.nextId('journey'), journeyId: '', returnJourneyId: '', cityId: town, pickupAt: s.now, returnAt: v.inShop!.until, days: q.days, paid: q.total, status: 'out', at: town, standIn: { vehicleId: v.id, ...(q.loaner ? { loaner: q.loaner } : {}) } };

@@ -86,6 +86,18 @@ describe('a stand-in', () => {
     expect(sim.universe.accounts[r.escrowAccountId!]!.balance).toBe(0);
   });
 
+  it('isn’t had, nor paid for, when the bank covers the days but not the deposit', () => {
+    const { sim, v } = inTheShop('si-deposit', 'midas-w53');
+    const q = standInQuote(sim, sim.player, v, sim.now);
+    if (typeof q === 'string') throw new Error(q);
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings') a.balance = 0;
+    const checking = sim.universe.accounts[sim.player.primaryAccountId!]!;
+    checking.balance = q.total + q.deposit - 1;
+    expect(sim.execute({ kind: 'vehicle.stand_in', payload: { vehicleId: v.id } }).error).toMatch(/With its deposit/);
+    expect(checking.balance).toBe(q.total + q.deposit - 1);
+    expect(standInFor(sim.player, v)).toBeUndefined();
+  });
+
   it('isn’t had for a car that isn’t in, or away from its town, or without a license', () => {
     const { sim, v } = inTheShop('si-no', 'toyota-of-manhattan');
     expect(standInQuote(sim, sim.player, { ...v, inShop: undefined }, sim.now)).toBe('It isn’t in a shop.');

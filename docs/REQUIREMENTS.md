@@ -25,8 +25,9 @@ replace.
 Correctness first, then the connected day the plan asks to be shown working
 (§62), then each domain by player impact.
 
-1. **What breaks a rule today.** A hotel or rental deposit that fails still
-   grants the stay (§48i). A saved outfit is worn though a piece is out of
+1. **What breaks a rule today.** A hotel or rental deposit that failed
+   granted the stay until 2026-10-02 (§48i; now held until paid or the day
+   ends). A saved outfit is worn though a piece is out of
    reach, and a piece that can't be worn is silently swapped (§32g, §27b). An
    order's "returned" state is declared and never set (§30). A fitting is
    paid without the actor there (§53.5). Look After Yourself's "eat" pays
@@ -209,7 +210,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking | Amenities, accessibility, policies; extras |
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
 | 48h | Check-in requirements | Partial | age at booking | Check-in step |
-| 48i | A failed deposit isn't a granted stay | Partial, violated | journey.ts arrival | Hold and resolve |
+| 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
 | 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial or not implemented | — | A stay place; fixtures from the property; incidentals |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
 | 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
