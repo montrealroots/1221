@@ -13,8 +13,9 @@
  * Movers take them from one home to the next, and a bed carries a state's
  * mattress recycling fee, from 2026-09-30 (below); until then neither was
  * kept. A mattress wearing out and movers in Ireland and abroad weren't kept
- * either, and are now (below). Not kept, by design: the rest of a home's
- * furniture, which changes nothing SLATE keeps.
+ * either, and are now (below). The rest of a home's furniture wasn't kept,
+ * as changing nothing, until 2026-10-02, when IKEA's seats, tables and
+ * storage came to be sold for what each does (`systems/furnishings.ts`).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -37,7 +38,7 @@ import { byRoad, roadKm } from './driving';
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
 
 /** The home they live in, where they own it and it came empty. */
-function bareHome(person: Person): boolean {
+export function bareHome(person: Person): boolean {
   if (person.home?.kind !== 'owned') return false;
   return (person.homes ?? []).find((h) => h.id === person.home!.homeId)?.bare === true;
 }
@@ -117,7 +118,8 @@ export function mattressFeeUsd(cityId: string, at: number): number {
  * money; nothing without pieces of one's own, or where no figure is kept.
  */
 export function moversCost(sim: Simulation, person: Person, fromCity: string, toCity: string, fromHome = homeKeyOf(person.home)): Money {
-  if (!hadAt(person, fromHome, 'bed') && !hadAt(person, fromHome, 'sofa')) return 0;
+  // Furniture of one's own to move: a bed, a sofa, or from 2026-10-02 any piece bought for the home.
+  if (!hadAt(person, fromHome, 'bed') && !hadAt(person, fromHome, 'sofa') && !itemsOf(person).some((i) => i.kind.startsWith('ikea:') && i.at.kind === 'home' && i.at.home === fromHome)) return 0;
   const from = CITIES.get(fromCity);
   const to = CITIES.get(toCity);
   if (!from || !to) return 0;

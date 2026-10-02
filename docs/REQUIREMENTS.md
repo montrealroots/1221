@@ -132,7 +132,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 35d | Waste | Partial, 2026-10-02 | `systems/waste.ts`: each research town's household charge in the bills (LA's schedule, Toronto, Vancouver, Dublin; London, Mexico City, New York and New Haven none) | Bin size and plan choice; collection days; bulky items |
 | 35e | Replacing supplies | Partial | automatic restock | Household consumables |
 | 35f | Appliance repair | Not implemented | appliances age out | Faults, repair visits |
-| 35g | Hosting | Partial | `social.invite` visit | Reads food, drink, tidiness, seats |
+| 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
 | 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener | Access, visit windows, work recorded |
 | 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines | Background top-ups bypass time and hours; favorites, repeat orders, scheduled routines |
 
@@ -188,7 +188,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 41l | Verified vs simulated | Partial | fine print says simulated | A `source` field |
 | 42 | Construction walkthrough | Partial | builds by stages (complete); home projects paid up front | Bid choice, stages and payments for projects, change orders, cancellation, acceptance |
 | 43a–b | Rooms, finishes | Not implemented / partial | parts with ages | Rooms; finish grade kept |
-| 43c | Furniture | Partial | 5 pieces | Wider catalog, each with a use |
+| 43c | Furniture | Partial | 5 pieces; from 2026-10-02 IKEA's seats, tables, wardrobes, frames, chests and bookcases (163 pieces, `systems/furnishings.ts`), seats and table places read by hosting, storage holding its outside measure | Desks, TV benches, coffee tables (no reader yet) |
 | 43d–h | Appliances, lighting, storage, security, utilities | Partial | fixtures; security | Fixture choice, lighting, capacity |
 | 43i | Special rooms | Partial, 2026-10-02 | home gym, theater, dance studio, library, soundproofed room, one to each spare bedroom; a walk-in closet and a sauna, at the cost guides' prices | What each room is used for beyond being kept |
 | 43j–l | Pools, gardens, outdoor kitchen, guesthouse, courts, track | Partial | pool, courts, ADU, pitch; a hot tub, putting green and sprinklers, the first two billed monthly (2026-10-02) | Gardens, greenhouse, outdoor kitchen use, guests in the ADU, track |

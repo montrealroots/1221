@@ -25,6 +25,8 @@ import { LookRegion, Open, at } from '@/ui/looks';
 import { dateKey } from '@/engine/core/time';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { homeCourts } from '@/engine/systems/dwelling';
+import { hostRefusal, type Gathering } from '@/engine/systems/hosting';
+import { seatsAtHome } from '@/engine/systems/furnishings';
 const COURT_LABEL = { tennis: 'Tennis', basketball: 'Basketball', pickleball: 'Pickleball', football: 'Football' } as const;
 import { HALL } from '@/engine/content/people';
 
@@ -67,11 +69,69 @@ export function PeopleWorkspace() {
           )}
         </Panel>
         {picked && <Invite contact={picked} key={picked.id} homeCity={person.home?.cityId} />}
+        {person.home && person.home.kind !== 'sofa' && contacts.some((c) => c.cityId === person.home!.cityId) && <HaveFriendsOver />}
         <Family />
         <Parents />
         <DatingPanel />
       </div>
     </>
+  );
+}
+
+/** Friends asked home together, for dinner or drinks (`systems/hosting.ts`): as many as there are seats for, a dinner at a table. */
+function HaveFriendsOver() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const zone = CITIES.require(person.home!.cityId).timeZone;
+  const near = contactsOf(person).filter((c) => c.cityId === person.home!.cityId && !c.rival);
+  const [asked, setAsked] = useState<string[]>([]);
+  const [what, setWhat] = useState<Gathering>('dinner');
+  const [day, setDay] = useState(1);
+  const [hour, setHour] = useState(19);
+  const today = zonedParts(sim.now, zone);
+  const when = instantFromZoned({ year: today.year, month: today.month, day: today.day, hour, minute: 0 }, zone) + day * MS_DAY;
+  const room = seatsAtHome(person);
+  const no = hostRefusal(sim, person, asked, when, what);
+  const toggle = (id: string) => setAsked((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]));
+  return (
+    <Panel title="Have Friends Over" subtitle={`Seats For ${room.seats}, A Table For ${room.table}`}>
+      <div className="col gap-3">
+        <div className="row gap-3" style={{ flexWrap: 'wrap' }}>
+          {near.map((c) => (
+            <label key={c.id} className="small row gap-1" style={{ alignItems: 'center' }}>
+              <input type="checkbox" checked={asked.includes(c.id)} onChange={() => toggle(c.id)} />{c.name}
+            </label>
+          ))}
+        </div>
+        <div className="field-row">
+          <div className="field">
+            <label htmlFor="host-what">For</label>
+            <select id="host-what" value={what} onChange={(e) => setWhat(e.target.value === 'drinks' ? 'drinks' : 'dinner')}>
+              <option value="drinks">Drinks</option>
+              <option value="dinner">Dinner</option>
+            </select>
+          </div>
+          <div className="field">
+            <label htmlFor="host-day">Day</label>
+            <select id="host-day" value={day} onChange={(e) => setDay(Number(e.target.value))}>
+              {Array.from({ length: 14 }, (_, i) => i).map((d) => <option key={d} value={d}>{d === 0 ? 'Today' : d === 1 ? 'Tomorrow' : formatDate(sim.now + d * MS_DAY, zone)}</option>)}
+            </select>
+          </div>
+          <div className="field">
+            <label htmlFor="host-hour">At</label>
+            <select id="host-hour" value={hour} onChange={(e) => setHour(Number(e.target.value))}>
+              {Array.from({ length: 13 }, (_, i) => i + 10).map((h) => <option key={h} value={h}>{`${String(h).padStart(2, '0')}:00`}</option>)}
+            </select>
+          </div>
+          <Gated feature="social.host" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
+            const a = run<{ coming: string[]; declined: { contactId: string; reason: string }[] }>('social.host', { contactIds: asked, at: when, what });
+            if (a.ok) { toast(a.value!.coming.length ? `${a.value!.coming.length} coming${a.value!.declined.length ? `; ${a.value!.declined.map((d) => d.reason).join(' ')}` : '.'}` : `Nobody can come: ${a.value!.declined.map((d) => d.reason).join(' ')}`, a.value!.coming.length ? 'positive' : 'neutral'); setAsked([]); }
+          }}>Ask Them Over</Gated>
+        </div>
+        {no && asked.length > 0 && <div className="xs dim">{no}</div>}
+        <div className="xs dim">A dinner is cooked for everyone at what a meal at home costs here, and sits everyone at your table; each guest is poured a drink from the beer and wine in the kitchen, as far as it goes. A home in a mess is noticed.</div>
+      </div>
+    </Panel>
   );
 }
 
