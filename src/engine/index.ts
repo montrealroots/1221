@@ -49,6 +49,7 @@ import { registerApplianceFaults } from './systems/appliancefaults';
 import { registerAccess } from './systems/access';
 import { registerGifts } from './systems/gifts';
 import { registerCleanerKey } from './systems/dwelling';
+import { registerReading } from './systems/reading';
 import { registerClothing, starterWardrobe } from './systems/clothing';
 import { registerAlcohol } from './systems/alcohol';
 import { registerKitchen } from './systems/kitchen';
@@ -231,6 +232,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerAccess(sim);
   registerGifts(sim);
   registerCleanerKey(sim);
+  registerReading(sim);
   registerClothing(sim);
   registerAlcohol(sim);
   registerKitchen(sim);

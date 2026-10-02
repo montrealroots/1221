@@ -16,6 +16,7 @@ import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
+import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
 import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
@@ -78,6 +79,7 @@ export function BelongingsWorkspace() {
         <Luggage />
         <Phones />
         <WatchingAndPlaying />
+        <Reading />
         {items.length > 0 && (
           <Panel title="Each Thing">
             <div className="field-row" style={{ marginBottom: '0.75rem' }}>
@@ -147,6 +149,47 @@ export function BelongingsWorkspace() {
         <Fine>A thing at home is to hand only at home; one in a car, only where the car is; one in a bag, wherever the bag is. An order’s things are yours from when you pay, and to hand when they’re delivered. A move brings your belongings with it.</Fine>
       </div>
     </>
+  );
+}
+
+/** Something to read: the town's library card, a book or an e-reader (`systems/reading.ts`). */
+function Reading() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const card = useFeature('reading.library_card');
+  const buy = useFeature('reading.buy');
+  const cur = saveCurrency(sim.universe);
+  const lib = libraryIn(person.home?.cityId ?? '');
+  const shop = readingCatalog(sim, person);
+  const noCard = cardRefusal(person);
+  if (!lib && shop.length === 0) return null;
+  return (
+    <Panel title="Reading" subtitle={hasSomethingToRead(person) ? 'Something To Read At Home' : 'Nothing To Read At Home Yet'}>
+      <div className="col gap-2">
+        {lib && <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="small">{lib.name}{person.libraryCard === person.home?.cityId ? ': your card' : ', free to a resident'}</span>
+          {person.libraryCard !== person.home?.cityId && <button type="button" className="btn btn-sm btn-ghost" disabled={!card.open || Boolean(noCard)} title={noCard ?? card.reason} onClick={() => { if (run('reading.library_card', {}).ok) toast('A library card of your own.', 'positive'); }}>Get A Library Card</button>}
+        </div>}
+        {shop.length > 0 && (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Read</th><th scope="col">Sold By</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+              <tbody>
+                {shop.map(({ buy: b, price }) => (
+                  <tr key={b.id}>
+                    <td>{b.label}</td>
+                    <td className="small">{b.seller}</td>
+                    <td className="num mono">{formatMoney(price, cur)}</td>
+                    <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open} title={buy.reason} onClick={() => { if (run('reading.buy', { id: b.id }).ok) toast(`${b.label}, bought.`, 'positive'); }}>Buy It To Read</button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <div className="xs dim">A reader enjoys an hour unwinding at home only with something to read there: the town’s library card, a book or an e-reader, as a film lover needs a TV.</div>
+      </div>
+    </Panel>
   );
 }
 

@@ -28,6 +28,7 @@ import type { LookAfter } from './life';
 import { personalityOf } from './personality';
 import type { Piece } from '../content/furniture';
 import { homeKeyOf } from './items';
+import { hasSomethingToRead } from './reading';
 import { PRODUCT_INTEREST } from '../content/career';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
@@ -50,7 +51,7 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   mow: ['nature'],
   // An hour to yourself goes on what you'd spend an evening on.
   // Film History and Film Preservation are an evening with the old films.
-  unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing'],
+  unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'reading', 'technology', 'television', 'theatre', 'writing'],
 };
 
 /** How much more of the mood, and of the stress relief, an hour gives somebody who loves it. */
@@ -68,7 +69,8 @@ export const GEAR_FOR: Readonly<Record<string, Piece>> = { film: 'tv', film_hist
 export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person, 'furniture' | 'items' | 'home' | 'currentLocationId'>>, action: LookAfter): string[] {
   const theirs = person.interests ?? [];
   const atHome = person.home !== undefined && person.home.kind !== 'sofa' && person.currentLocationId === person.home.cityId;
-  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!)));
+  // A reader's gear is something to read: a library card of the town, a book or an e-reader (`systems/reading.ts`, from 2026-10-02).
+  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || (id === 'reading' ? hasSomethingToRead(person as Person) : !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!))));
 }
 
 /** Their gear at the home they live in: an item there (`systems/items.ts`), or a save's piece from before items. */

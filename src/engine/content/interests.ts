@@ -98,6 +98,8 @@ export const GENERAL_INTERESTS: readonly Interest[] = [
   of('nature', 'Nature'),
   of('photography', 'Photography'),
   of('politics', 'Politics'),
+  // From 2026-10-02: a reader, whose hour unwinding at home needs something to read (`systems/reading.ts`).
+  of('reading', 'Reading'),
   of('sport', 'Sport'),
   of('technology', 'Technology'),
   of('television', 'Television'),

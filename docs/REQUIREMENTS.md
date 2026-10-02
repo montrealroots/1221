@@ -124,7 +124,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 33j | Restaurants, takeout, delivery, drinks | Complete | `food.dine`, `food.drink`; tests | — |
 | 33k | Reservations | Not implemented | — | Book a table ahead |
 | 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |
-| 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one | Reading; hobbies; games owned |
+| 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one; a reader unwinds with pleasure only with something to read at home: the town’s library card, free to a resident (8 libraries, each one’s own page), or a paperback or an e-reader at a named seller’s price, cheapest first (`reading.library_card`, `reading.buy`) | Hobbies; games owned; books read through |
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
 | 35a | Cleaning | Partial | `tidy` scalar; the chains' cleaning products on sale (`content/cleaning.ts`), a dishwasher's tablets used, 184 cycles a year | Rooms; how fast sprays and sponges go (unpublished) |
 | 35b | Laundry | Complete | `doLaundry`, a load's detergent each, refused without; tests/wardrobe, tests/cleaning | Towels and bedding |
