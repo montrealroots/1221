@@ -18,7 +18,7 @@ import { arrange } from '@/engine/systems/catalog';
 import { modCatalog, vehicleCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { Gated } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -35,6 +35,7 @@ import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
+import { FITS, MATERIAL_LABEL, PART_LABEL, UPHOLSTERERS, interiorQuote, type Material, type Part } from '@/engine/systems/interiors';
 import { FILL, capacityOf, fillQuote, fillRefusal, levelOf, rangeKm } from '@/engine/systems/fueltank';
 import { homeShareOf } from '@/engine/systems/charging';
 import { stereoQuote } from '@/engine/systems/caraudio';
@@ -101,7 +102,7 @@ export function VehiclesWorkspace() {
                     const m = modelById(v.modelId)!;
                     return (
                       <tr key={v.id}>
-                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open><FuelGauge v={v} /></td>
+                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open><FuelGauge v={v} />{v.interior ? <div className="xs dim">{v.interior.parts.map((d) => `${PART_LABEL[d.part]} In ${d.color} ${MATERIAL_LABEL[d.material]}${d.stitching ? `, ${d.stitching} Stitching` : ''}`).join(' · ')}</div> : null}</td>
                         <td><Open subject={at('day', dateKey(v.boughtAt, sim.homeZone))}>{formatDate(v.boughtAt, sim.zone)}</Open>{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
                         <td className="num mono"><Open subject={at('vehicle', v.id)}>{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</Open></td>
                         <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? <Open subject={at('vehicle', v.id)}>{money(v.loan.owed)}</Open> : 'None'}</td>
@@ -157,6 +158,8 @@ export function VehiclesWorkspace() {
             </LookRegion>
           )}
         </Panel>
+
+        <InteriorWork />
 
         <Panel title="Buy One" subtitle={j ? `Where you live: ${PLACE_NAME[j]}` : 'Where you live, SLATE sells no cars yet'}>
           <div className="col gap-3">
@@ -559,5 +562,89 @@ function ServiceControl({ v }: { v: OwnedVehicle }) {
       )}
       <Gated feature="vehicle.service" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `${serviceWhat(v)}.`} onClick={() => { const a = run<{ paid: number }>('vehicle.service', { vehicleId: v.id, shopId: shop!.id }); if (a.ok) toast(`Serviced, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{`Book The Service, ${formatMoney(serviceCost(sim, v), cur, { cents: false })}`}</Gated>
     </>
+  );
+}
+
+/** The interior done to your own design at a shop in the car's town: what's done, in what, its colors, an itemized estimate, then the commission (`vehicle.interior`). */
+function InteriorWork() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const work = useFeature('vehicle.interior');
+  const cars = vehiclesOf(person).filter((v) => v.soldAt === undefined && !v.repossessed);
+  const here = person.currentLocationId;
+  const shops = UPHOLSTERERS.filter((s) => s.cityId === here);
+  const [vehicleId, setVehicleId] = useState('');
+  const [shopId, setShopId] = useState('');
+  const [kit, setKit] = useState(false);
+  const [parts, setParts] = useState<Partial<Record<Part, { material: Material; color: string; stitching: string }>>>({ seats: { material: 'leopard-vinyl', color: 'Leopard', stitching: 'Black' } });
+  if (cars.length === 0 || shops.length === 0) return null;
+  const v = cars.find((x) => x.id === vehicleId) ?? cars[0]!;
+  const shop = shops.find((x) => x.id === shopId) ?? shops[0]!;
+  const design = (Object.keys(parts) as Part[]).filter((k) => parts[k]).map((k) => ({ part: k, ...parts[k]! }));
+  const q = interiorQuote(sim, shop.id, design, kit);
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe), { cents: false });
+  const set = (part: Part, patch: Partial<{ material: Material; color: string; stitching: string }>) => setParts({ ...parts, [part]: { ...(parts[part] ?? { material: FITS[part][0]!, color: '', stitching: '' }), ...patch } });
+  return (
+    <Panel title="The Interior, To Your Design" subtitle="What's done, in what, and its colors, at a shop in this town; kept with the car as commissioned">
+      <div className="col gap-3">
+        <div className="field-row field-row-tight">
+          <div className="field">
+            <label htmlFor="interior-car">Car</label>
+            <select id="interior-car" value={v.id} onChange={(e) => setVehicleId(e.target.value)}>{cars.map((c) => { const m = modelById(c.modelId)!; return <option key={c.id} value={c.id}>{`${m.make} ${m.model}`}</option>; })}</select>
+          </div>
+          <div className="field">
+            <label htmlFor="interior-shop">Shop</label>
+            <select id="interior-shop" value={shop.id} onChange={(e) => { setShopId(e.target.value); setKit(false); }}>{shops.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}</select>
+          </div>
+          {shop.katzkin && (
+            <label className="row gap-1 small" style={{ alignItems: 'center' }}>
+              <input type="checkbox" checked={kit} onChange={(e) => { setKit(e.target.checked); if (e.target.checked) setParts({ seats: { material: 'leather', color: parts.seats?.color || 'Black', stitching: parts.seats?.stitching || 'Black' } }); }} />
+              A Katzkin Leather Kit
+            </label>
+          )}
+        </div>
+        {(Object.keys(PART_LABEL) as Part[]).filter((part) => !kit || part === 'seats').map((part) => {
+          const chosen = parts[part];
+          return (
+            <div key={part} className="field-row field-row-tight" style={{ alignItems: 'flex-end' }}>
+              <label className="row gap-1 small" style={{ alignItems: 'center', minWidth: '10rem' }}>
+                <input type="checkbox" checked={Boolean(chosen)} disabled={kit} onChange={(e) => { if (e.target.checked) set(part, {}); else { const next = { ...parts }; delete next[part]; setParts(next); } }} />
+                {PART_LABEL[part]}
+              </label>
+              {chosen && (
+                <>
+                  <div className="field">
+                    <label htmlFor={`interior-${part}-material`}>Material</label>
+                    <select id={`interior-${part}-material`} value={chosen.material} disabled={kit} onChange={(e) => set(part, { material: e.target.value as Material })}>{FITS[part].map((m) => <option key={m} value={m}>{MATERIAL_LABEL[m]}</option>)}</select>
+                  </div>
+                  <div className="field">
+                    <label htmlFor={`interior-${part}-color`}>Color Or Pattern</label>
+                    <input id={`interior-${part}-color`} value={chosen.color} placeholder="Leopard, Cognac, Two-Tone" onChange={(e) => set(part, { color: e.target.value })} />
+                  </div>
+                  <div className="field">
+                    <label htmlFor={`interior-${part}-stitch`}>Stitching</label>
+                    <input id={`interior-${part}-stitch`} value={chosen.stitching} placeholder="Black, Gold" onChange={(e) => set(part, { stitching: e.target.value })} />
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
+        {typeof q === 'string' ? <div className="small muted">{q}</div> : (
+          <div className="table-scroll">
+            <table>
+              <tbody>
+                {q.lines.map((l) => <tr key={l.label}><td className="small">{l.label}</td><td className="num mono">{money(l.amount)}</td></tr>)}
+                <tr><th scope="row">The Estimate</th><td className="num mono">{money(q.total)}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+        <div className="row gap-2" style={{ alignItems: 'baseline' }}>
+          <button type="button" className="btn btn-sm btn-primary" disabled={!work.open || typeof q === 'string'} title={work.reason} onClick={() => { const a = run<{ readyAt: number }>('vehicle.interior', { vehicleId: v.id, shopId: shop.id, design, kit }); if (a.ok) toast(`Commissioned at ${shop.name}, ready ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>Commission It</button>
+          <span className="xs dim">{kit ? 'Katzkin’s own installed price; the kit is cut in two weeks, then the car is in two days.' : 'Hours at the trade guides’ middles and $75 an hour; materials at suppliers’ prices; the yardage is SLATE’s estimate, no shop publishing one.'}</span>
+        </div>
+      </div>
+    </Panel>
   );
 }

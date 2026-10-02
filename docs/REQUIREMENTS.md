@@ -156,7 +156,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 37k | Sell or trade | Partial | instant sale | Listing, buyer, time |
 | 38a | Wraps and finishes | Partial | two cities | More shops; removal; partial wraps |
 | 38b–c | Trim, lighting, body, rims, tires | Not implemented / partial | winter tires; alloys (GB) | Catalogs |
-| 38d, g–l | Seats, upholstery, materials, stitching; the leopard interior | Not implemented | — | Interior configuration, compatibility, upholsterers, itemized estimate, booking, collection, revision, removed parts |
+| 38d, g–l | Seats, upholstery, materials, stitching; the leopard interior | Partial, 2026-10-02 | `systems/interiors.ts`: seats, headliner and wheel in leather, vinyl, Alcantara, leopard vinyl or faux fur, colors and stitching chosen; an itemized estimate (suppliers' prices, the trade's hours at $75); a Katzkin kit at its own price; four named shops in New York and Los Angeles; the design kept with the car; tests/interiors.test.ts | Door panels and carpets; other towns (no shop publishes a price); original covers returned; revisions |
 | 38e | Audio | Partial | one head unit | Speakers, amplifiers |
 | 38f | Storage, mechanical upgrades | Partial | GB only | Racks, boxes; beyond GB |
 | 38i | Alternative transport | Complete (repairs) | `vehicle.stand_in`; tests | Wrap and interior work too |
