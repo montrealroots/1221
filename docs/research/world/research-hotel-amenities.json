@@ -1,0 +1,1773 @@
+[
+ {
+  "id": "pod-times-square",
+  "gym": {
+   "available": true,
+   "hours": null
+  },
+  "pool": null,
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Bar 42 & Terrace"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "USD",
+   "text": "On-the-go breakfast sold at Bar 42 (lobby bar); not stated as included; no price published"
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "USD",
+   "text": "Free WiFi throughout the property (OTA listings)"
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Accessible pod-style rooms, common spaces and ADA-compliant features; specific room types not named"
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 25,
+   "currency": "USD",
+   "basis": "per night",
+   "text": "Small dogs under 25 lb, $25 per night"
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "USD",
+   "text": "Non-smoking property; no smoking fee published"
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": 0,
+   "currency": "USD",
+   "text": "Early check-in when available, upon arrival; covered by the $29.84 nightly facility fee, no separate charge"
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": "15:00",
+   "text": "Cancel before 3:00pm Eastern one day prior to arrival; reservations made within 24 hours of arrival cannot be cancelled; late cancellation charged first night plus tax"
+  },
+  "source": "https://www.thepodhotel.com/pod-times-square/frequently-asked-questions",
+  "read": "2026-10-02",
+  "notes": "Own site: FAQ (read) for accessible, pets, early check-in; homepage https://www.thepodhotel.com/pod-times-square (read) for gym (complimentary gym access when booking direct; no hours), Bar 42 & Terrace, breakfast at Bar 42. WiFi, non-smoking and cancellation from a WebSearch summary of Booking.com/Hostelworld/Hotels.com listings and a Pod policies page on a developer mirror (pod42.devsite-1.com; direct fetch failed SSL); the official /policies page did not render the text; Booking.com and Hotels.com fetches returned empty or timed out. Pool and spa not mentioned anywhere read, left null (not confirmed absent). earlyCheckIn fee 0 reflects it being inside the facility fee. hoursBeforeArrival 24 is approximate: the rule is 3pm the day before arrival."
+ },
+ {
+  "id": "ace-hotel-brooklyn",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": false,
+   "kind": null,
+   "notes": "No pool (thehotelguru review via search summary); hotel's own pages list none"
+  },
+  "spa": {
+   "available": false,
+   "sauna": null,
+   "name": null
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Lele's Roman",
+    "Koju",
+    "The Lobby",
+    "Blackseed Bagels"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "USD",
+   "text": "Breakfast served 7:30am-11:30am via restaurant and room service; not stated as included; no price published"
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "USD",
+   "text": "Free WiFi in public areas and guest rooms; 'premium WiFi' is also listed among the $40/night destination fee inclusions"
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Medium",
+    "Double",
+    "Suite"
+   ],
+   "text": "Many ADA compliant rooms, including Medium, Double and Suite rooms"
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 25,
+   "currency": "USD",
+   "basis": "per night",
+   "text": "$25 per day per pet, pets under 25 lb"
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 350,
+   "currency": "USD",
+   "text": "All rooms non-smoking; $350 plus tax for smoking or vaping inside"
+  },
+  "earlyCheckIn": {
+   "offered": null,
+   "fee": null,
+   "currency": "USD",
+   "text": "FAQ only offers to hold bags for early arrivals; no early check-in or fee published"
+  },
+  "cancellation": {
+   "hoursBeforeArrival": null,
+   "byTime": null,
+   "text": "Modification and cancellation terms vary per rate plan"
+  },
+  "source": "https://acehotel.com/brooklyn/frequently-asked-questions/",
+  "read": "2026-10-02",
+  "notes": "Own site: FAQ (read) for gym 24h, breakfast hours, WiFi, ADA rooms, pets, smoking, bag hold, cancellation; homepage https://acehotel.com/brooklyn/ (read) for Koju, Lele's Roman, The Lobby; Blackseed Bagels named in the FAQ. Pool and spa absence from a WebSearch summary of thehotelguru.com (not the hotel's site); the hotel's pages mention neither. Restaurant 'As You Are' appears in older reviews; the current homepage names Lele's Roman instead, so As You Are was left out. Cancellation deadline not published (rate-dependent)."
+ },
+ {
+  "id": "the-plaza-nyc",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": false,
+   "kind": null,
+   "notes": "The Plaza does not currently house a swimming pool (hotel FAQ)"
+  },
+  "spa": {
+   "available": true,
+   "sauna": null,
+   "name": "111SKIN Spa/Clinic"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "The Palm Court",
+    "The Champagne Bar"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "USD",
+   "text": "Not included in the best available rate; the Bed & Breakfast package adds USD 60 over the best available rate for American breakfast for two. No per-person price is published."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "USD",
+   "text": "Internet & WiFi available throughout the hotel, no charge stated"
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Several rooms with wide doors for wheelchair access, grab bars and roll-in showers; room types not named"
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 0,
+   "currency": "USD",
+   "basis": "per stay",
+   "text": "Dogs of all sizes at no additional cost, maximum two per room (Fairmont Canine Companions)"
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 1500,
+   "currency": "USD",
+   "text": "Smoking permitted outside only; minimum $1,500 fee for smoking in rooms or public spaces"
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "USD",
+   "text": "Not guaranteed; hotel will do its best to accommodate; no fee published"
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 48,
+   "byTime": null,
+   "text": "Cancel at least 48 hours prior to arrival to avoid a late cancellation charge (booking-site summary; varies by rate)"
+  },
+  "source": "https://www.fairmont.com/en/hotels/new-york-city/the-plaza/guest-services.html",
+  "read": "2026-10-02",
+  "notes": "Own sites: Fairmont guest-services page (read) for gym 24h, spa, venues, WiFi, accessible, pets; https://www.theplazany.com/faq/ (read) for no pool, smoking, early check-in; https://www.theplazany.com/special-offers/bed-and-breakfast/ (read) for breakfast at $60 for two over BAR. pricePerPerson 30 is derived by halving, not a published per-person figure. Cancellation 48h from a WebSearch summary of Booking.com/Virtuoso/Trip.com listings, not the hotel's own page; no cutoff time found. Sauna not mentioned. WiFi free is inferred from no charge being stated. Merge correction: the USD 30 per-person breakfast was half the two-person package price, not a published figure, so it was set to null."
+ },
+ {
+  "id": "freehand-los-angeles",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": true,
+   "kind": "outdoor",
+   "notes": "Rooftop pool deck, home of the Broken Shaker bar (freehandhotels.com/los-angeles/broken-shaker/). Swimming hours not confirmed on a page read."
+  },
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Broken Shaker",
+    "The Exchange Coffee Co."
+   ]
+  },
+  "breakfast": null,
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "USD",
+   "text": "Always free; log in with name and email"
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Mobility/Hearing Accessible King with Tub",
+    "Mobility/Hearing Accessible Quad with Tub",
+    "Mobility/Hearing Accessible King Studio with Tub",
+    "Mobility/Hearing Accessible King Studio with Roll-in Shower",
+    "Mobility/Hearing Accessible Loft Suite with Roll-in Shower"
+   ],
+   "text": "Five ADA room types listed on the accessibility page"
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 75,
+   "currency": "USD",
+   "basis": "per stay",
+   "text": "Dogs 75 lb or less, private rooms only, one dog per room, one-time $75 plus tax per stay"
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 250,
+   "currency": "USD",
+   "text": "Strict no-smoking; minimum $250 per night for smoking in room; $500 for tampering with a smoke detector"
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "USD",
+   "text": "Early check-in from 12pm for a small fee, subject to availability; amount not published"
+  },
+  "cancellation": null,
+  "source": "https://freehandhotels.com/los-angeles/faq/",
+  "read": "2026-10-02",
+  "notes": "All from own site: LA FAQ (gym, pool hours, venues, WiFi, pets, early check-in), https://freehandhotels.com/los-angeles/accessibility/ (room types), https://freehandhotels.com/house-rules/ and /booking-terms-conditions/ (smoking $250/night minimum). Pool kind: the FAQ gives hours only; 'rooftop/outdoor' is from general knowledge of the property and prior notes, moderately confident. Breakfast not addressed (coffee shop exists, no breakfast offer found) - null. Spa not mentioned - null. Cancellation null: booking terms give no hours; search summaries conflict (24h vs 48h prior, one night's room and tax penalty). Merge correction: the rooftop pool was confirmed on https://freehandhotels.com/los-angeles/broken-shaker/ (\"located on the rooftop pool deck\"), read 2026-10-02. The swimming hours were dropped because no page read gave them."
+ },
+ {
+  "id": "hollywood-roosevelt",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": true,
+   "kind": "outdoor",
+   "notes": "Tropicana Pool, open 8am-8pm daily, heated year-round"
+  },
+  "spa": {
+   "available": true,
+   "sauna": null,
+   "name": "The Massage Garden"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Gable",
+    "The Lobby",
+    "Tropicana Cafe",
+    "Tropicana Bar",
+    "The Spare Room",
+    "Library Bar",
+    "Cinegrill Theater"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "USD",
+   "text": "Breakfast available daily at Tropicana Cafe and in-room dining; complimentary morning coffee is in the destination fee; no price published"
+  },
+  "wifi": {
+   "free": false,
+   "price": null,
+   "currency": "USD",
+   "text": "Enhanced high-speed Wi-Fi is part of the mandatory USD 37 per night destination fee (which also covers waters, morning coffee, calls and discounts). It is not sold separately."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Mobility/Accessible Guest Rooms"
+   ],
+   "text": "Mobility/accessible rooms with roll-in/walk-in showers, visual alarms and door/phone notification"
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 50,
+   "currency": "USD",
+   "basis": "per stay",
+   "text": "Up to two dogs 60 lb or less, $50 per stay; no cats"
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 500,
+   "currency": "USD",
+   "text": "Non-smoking; minimum $500 cleaning fee for violations"
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "USD",
+   "text": "Based on availability, cannot be guaranteed in advance; no fee published"
+  },
+  "cancellation": {
+   "hoursBeforeArrival": null,
+   "byTime": null,
+   "text": "Cancellation and deposit requirements vary by rate or offer"
+  },
+  "source": "https://www.thehollywoodroosevelt.com/faq",
+  "read": "2026-10-02",
+  "notes": "Own site: FAQ (read) for pool, venues, breakfast, WiFi-in-fee, pets, smoking, early check-in, cancellation; /accessibility (read) for room type. Gym 24h and spa name (The Massage Garden, open-air, 10am-6pm by appointment) from a WebSearch restricted to thehollywoodroosevelt.com (spa-and-wellness page summary; direct fetch 404). WiFi recorded as free:false, price 37 because it sits inside a mandatory destination fee - the $37 is the whole fee, not a WiFi price. Sauna not mentioned. Merge correction: wifi.price had held the whole USD 37 destination fee. It was set to null because no separate Wi-Fi price exists."
+ },
+ {
+  "id": "beverly-hills-hotel",
+  "gym": {
+   "available": true,
+   "hours": null
+  },
+  "pool": {
+   "available": true,
+   "kind": "outdoor",
+   "notes": "Heated outdoor pool with underwater music and private cabanas"
+  },
+  "spa": {
+   "available": true,
+   "sauna": null,
+   "name": null
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "The Polo Lounge",
+    "Fountain Coffee Room",
+    "The Cabana Cafe",
+    "Bar Nineteen12"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "USD",
+   "text": "Served at The Polo Lounge, Fountain Coffee Room, Cabana Cafe or in-room dining; not stated as included in the standard rate (Visa Signature bookings get a $55 daily breakfast credit)"
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "USD",
+   "text": "WiFi available in all areas, free of charge"
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "A selection of accessible rooms and suites; types not named"
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 150,
+   "currency": "USD",
+   "basis": "per stay",
+   "text": "Up to two house-trained dogs, max 20 kg/45 lb, $150 per stay"
+  },
+  "smoking": null,
+  "earlyCheckIn": null,
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": "16:00",
+   "text": "Cancel one day prior to arrival by 4pm local time to avoid one night's charge (search summary; may be offer-specific)"
+  },
+  "source": "https://www.visasignaturehotels.com/hotel-detail/the-beverly-hills-hotel",
+  "read": "2026-10-02",
+  "notes": "Hotel's own site (dorchestercollection.com) returned 403 on every page tried. Visa Signature Hotels listing (read) for dining names, amenities list, check-in 3pm, Visa breakfast credit. Pool, spa, gym, WiFi, accessible and pets from WebSearch summaries of the Dorchester overview page, planetofhotels and bringfido. Pet fee basis conflict: search summaries say $150 per stay; the Visa Signature listing says $150 per room per night - per stay kept, doubtful. Cancellation (4pm the day before) is from a search summary pointing at the Dorchester 'stay-indulge' offer page / Booking.com; it may be that offer's rule, not the flexible rate's. Smoking and early check-in: not found. Breakfast price not published."
+ },
+ {
+  "id": "la-quinta-new-haven",
+  "gym": {
+   "available": true,
+   "hours": null
+  },
+  "pool": {
+   "available": true,
+   "kind": "outdoor",
+   "notes": "Seasonal outdoor pool"
+  },
+  "spa": null,
+  "dining": {
+   "available": false,
+   "venues": []
+  },
+  "breakfast": {
+   "included": true,
+   "pricePerPerson": 0,
+   "currency": "USD",
+   "text": "Complimentary Bright Side Breakfast"
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "USD",
+   "text": "Free WiFi"
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Accessible rooms available; types not named"
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 25,
+   "currency": "USD",
+   "basis": "per night",
+   "text": "Up to 2 cats or dogs, 75 lb or less each; $25 nightly, maximum $75 per stay"
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "USD",
+   "text": "Non-smoking guest rooms; no fee published"
+  },
+  "earlyCheckIn": null,
+  "cancellation": null,
+  "source": "https://www.wyndhamhotels.com/laquinta/new-haven-connecticut/la-quinta-inn-and-suites-new-haven/overview",
+  "read": "2026-10-02",
+  "notes": "The given URL (.../la-quinta-new-haven/overview) rendered only site chrome; the working Wyndham page is .../la-quinta-inn-and-suites-new-haven/overview (read): gym with Peloton bikes (no hours), seasonal outdoor pool, free breakfast, free WiFi, accessible rooms, non-smoking rooms, pet-friendly. Pet fee from a WebSearch summary of Booking.com/Romingo/BringFido listings. Dining available:false because Wyndham lists no restaurant (one older Travel Weekly listing claims a restaurant - doubtful). Check-in 3pm from a Booking.com summary. Spa, early check-in and cancellation deadline not found (Booking.com says it varies by room type)."
+ },
+ {
+  "id": "omni-new-haven-at-yale",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": false,
+   "kind": null,
+   "notes": "No pool (OTA search summary, Orbitz/Travelocity)"
+  },
+  "spa": {
+   "available": true,
+   "sauna": true,
+   "name": "Ripple Float & Wellness Center (independent operator inside the hotel: floating, cryotherapy, infrared sauna, massage)"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "John Davenport's"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": 25,
+   "currency": "USD",
+   "text": "Not included in standard rates (a bed-and-breakfast package includes it). Trip.com lists breakfast at US$25.00 per person, 06:00-11:00. John Davenport's serves breakfast Mon-Fri 6:30-10:30, Sat-Sun 6:30-11:30."
+  },
+  "wifi": {
+   "free": false,
+   "price": 9.95,
+   "currency": "USD",
+   "text": "Complimentary for Omni Select Guest loyalty members (omnihotels.com). Otherwise a surcharge in guest rooms (Trip.com); USD 9.95 per 24 hours per an OTA search summary."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Accessible rooms with roll-in showers"
+   ],
+   "text": "14 accessible hotel rooms with roll-in showers, grab bars, audible alarms (omnihotels.com accessible page, via search summary)."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 125,
+   "currency": "USD",
+   "basis": "per stay",
+   "text": "Dogs and cats up to 50 lb, one pet per room; non-refundable cleaning fee USD 125 + tax per stay per room."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "USD",
+   "text": "All guest rooms and interior public space smoke-free; guests who smoke on property may be charged a fee (amount not published)."
+  },
+  "earlyCheckIn": {
+   "offered": null,
+   "fee": null,
+   "currency": "USD",
+   "text": "Check-in 16:00, check-out 11:00. OTA listings say early check-in may be available at additional cost; no fee published."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 72,
+   "byTime": "12:00",
+   "text": "Cancel no later than 12 noon, 72 hours prior to arrival, to avoid a one night room and tax penalty."
+  },
+  "source": "https://www.omnihotels.com/hotels/new-haven-yale/property-details/policies",
+  "read": "2026-10-02",
+  "notes": "omnihotels.com returned 403 on every page (policies, wellness), so own-site facts came from WebSearch restricted to omnihotels.com (summaries of the policies, accessible, wellness and John Davenport's pages): gym 24h, John Davenport's, pet fee, smoking, cancellation, check-in 16:00, 14 accessible rooms, Ripple wellness centre, Select Guest wifi. Pool absence: OTA search summary (Orbitz/Travelocity). Breakfast price USD 25 and wifi surcharge: Trip.com listing (read). Wifi USD 9.95/24h: unattributed OTA search summary, DOUBTFUL. Cancellation 72h/noon: search summary of omnihotels.com (event-booking pages say the same); not read directly. Pet fee 125 + tax matches prior note's 143.75 (125 + 15% CT tax). Spa is a third-party tenant, not a hotel spa. Early check-in fee not published."
+ },
+ {
+  "id": "study-at-yale",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": false,
+   "kind": null,
+   "notes": "No pool (OTA search summary)"
+  },
+  "spa": {
+   "available": false,
+   "sauna": null,
+   "name": null
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Heirloom Restaurant & Lounge",
+    "24-Hour Cafe (Living Room)"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "USD",
+   "text": "Heirloom serves breakfast (own site). Complimentary Kobrick coffee in the Living Room 5:30-10:30 daily. OTA listing: full breakfast 07:00-11:00 for a fee of USD 6 to 20 per person (a range, so no single price)."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "USD",
+   "text": "Complimentary wi-fi during your stay (network 'The Study Guest Wireless', password on key card envelope, re-entered daily)."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Accessible Single Room"
+   ],
+   "text": "Accommodations page lists an 'Accessible Single Room' with special conveniences."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 75,
+   "currency": "USD",
+   "basis": "per pet, per stay",
+   "text": "Additional cleaning fee of $75 per pet, per stay; advance notice appreciated."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 250,
+   "currency": "USD",
+   "text": "Smoking in your guestroom will result in a $250 cleaning fee charged to the card on file."
+  },
+  "earlyCheckIn": {
+   "offered": null,
+   "fee": null,
+   "currency": "USD",
+   "text": "Check-in 15:00, check-out 12:00 (own site). OTA: early check-in may be available at additional cost; no fee published."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": null,
+   "text": "24-hour cancellation policy (search summary, source not identified)."
+  },
+  "source": "https://www.thestudyatyale.com/amenities",
+  "read": "2026-10-02",
+  "notes": "Own site read directly: /amenities (gym 24h on 2nd floor, pet fee USD 75 per pet per stay, 24-Hour Cafe), /compendium (wifi complimentary, smoking USD 250 fee, Heirloom, check-in 15:00 / check-out 12:00, coffee), /accommodations (Accessible Single Room), home page (Heirloom Restaurant & Lounge). /faq is 404. Pool and spa absence and breakfast fee range: OTA search summaries (Trivago/Travelocity/Hotels.com); no own-site statement. Cancellation 24h: unattributed search summary, DOUBTFUL; Hotels.com and Orbitz pages timed out / returned 429. A second search source said USD 50 one-time pet fee, superseded by the own site's USD 75."
+ },
+ {
+  "id": "travelodge-london-kings-cross-royal-scot",
+  "gym": {
+   "available": false,
+   "hours": null
+  },
+  "pool": {
+   "available": false,
+   "kind": null,
+   "notes": "No on-site leisure; hotel page points to nearby gyms"
+  },
+  "spa": {
+   "available": false,
+   "sauna": false,
+   "name": null
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Bar Café"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "GBP",
+   "text": "Unlimited breakfast sold as an extra, 06:00-10:00 weekdays, 07:00-11:00 weekends. Children under 15 eat for GBP 1 each (up to two per full-paying adult). Adult price not shown on pages read."
+  },
+  "wifi": {
+   "free": false,
+   "price": 3.5,
+   "currency": "GBP",
+   "text": "Free for 30 mins per 24 hours; 24-hour access GBP 3.50 (also 48h GBP 7.00, 72h GBP 10.50, 1 week GBP 15.00)."
+  },
+  "accessible": {
+   "offered": false,
+   "roomTypes": [],
+   "text": "Due to the steps leading up to the entrance, this hotel is unable to provide wheelchair access; London Central Euston recommended instead."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 20,
+   "currency": "GBP",
+   "basis": "per pet, per stay",
+   "text": "Pet-friendly rooms available; pet stay bought as an Extra, max 2 pets per room; assistance dogs exempt."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "GBP",
+   "text": "Smoking incl. e-cigarettes/vapes not permitted except designated outside areas; guest charged for specialist cleaning, damage and lost room nights (no fixed figure)."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "GBP",
+   "text": "Early check-in from 12 noon available as a paid Extra, subject to availability; standard check-in 15:00."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 0,
+   "byTime": "12:00",
+   "text": "Flexible rate: cancel before 12pm on the check-in date for a refund. Semi-Flex/Lowest rates non-refundable."
+  },
+  "source": "https://www.travelodge.co.uk/hotels/269/London-Central-Kings-Cross-Royal-Scot-hotel",
+  "read": "2026-10-02",
+  "notes": "Own site read directly: hotel page (no gym/pool/spa on site, Bar Café, breakfast times, kids GBP 1, wifi, no wheelchair access, pet-friendly, early check-in for extra charge), /about/booking-terms-conditions/ (cancellation, smoking, extras), /about/frequently-asked-questions/ (wifi tiers, early check-in from noon, pet fee per pet per booking, max 2). Pet fee GBP 20 per pet per stay: WebSearch summary of travelodge.co.uk pet-friendly page / Travelodge support article (support site would not render). Adult breakfast price not on own pages; third-party sites give GBP 8.99 to 10.95, so left null. Early check-in fee GBP 15 appears only on third-party sites, left null. NOTE: prior research listed 'accessible rooms' for this hotel; the hotel page now says it cannot provide wheelchair access, so offered=false."
+ },
+ {
+  "id": "premier-inn-london-county-hall",
+  "gym": null,
+  "pool": null,
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Thyme"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": 13.99,
+   "currency": "GBP",
+   "text": "Unlimited Premier Inn Breakfast sold extra; brand says from GBP 10.99, GBP 11.99 or 13.99 at some restaurants; continental from GBP 9.99. Up to two under-16s eat free with a paying adult. GBP 13.99 is an OTA figure for this hotel."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "GBP",
+   "text": "Free wifi; Premier Plus rooms get Ultimate Wi-Fi."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Accessible Double",
+    "Accessible Twin (lowered bath)"
+   ],
+   "text": "Accessible rooms with bed 480-520 mm high, wider bathroom entry, lowered bath or wet room."
+  },
+  "pets": {
+   "allowed": false,
+   "fee": null,
+   "currency": "GBP",
+   "basis": null,
+   "text": "No pets except trained assistance dogs (UK)."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "GBP",
+   "text": "No-smoking policy throughout UK hotels incl. e-cigarettes; designated outdoor areas only. UK fee not confirmed."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "GBP",
+   "text": "Early check-in from 11am as a paid optional extra at selected hotels, price varies by date and location; standard check-in 15:00."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 0,
+   "byTime": "13:00",
+   "text": "Flex rate: free cancellation until 1pm on the day of arrival. Semi-Flex: until midnight UK time 3 days before arrival (prior note). Saver: non-refundable."
+  },
+  "source": "https://www.premierinn.com/gb/en/hotels/england/greater-london/london/london-county-hall.html",
+  "read": "2026-10-02",
+  "notes": "premierinn.com timed out on every WebFetch (hotel page, breakfast FAQ, booking terms, rates page), so everything is from WebSearch restricted to premierinn.com (summaries of the hotel page, breakfast pages, smoking-and-pets FAQ, rates and arriving-and-departing FAQ), except the GBP 13.99 breakfast figure, which is an OTA search summary for this hotel - DOUBTFUL. Gym/pool/spa null: no source confirmed presence or absence. Early check-in fee not published for this hotel (ZIP brand's GBP 10 not applicable). A GBP 100 smoking fee appeared only in an unclear search summary, left null."
+ },
+ {
+  "id": "hoxton-holborn",
+  "gym": {
+   "available": false,
+   "hours": null
+  },
+  "pool": null,
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Rondo",
+    "Lobby Bar"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": 5,
+   "currency": "GBP",
+   "text": "Breakfast bag (juice, fruit, breakfast item) hung on the door, delivered next morning for GBP 5 per person; hot breakfast at Rondo or room service priced separately."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "GBP",
+   "text": "Fast, complimentary WiFi throughout every Hoxton."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Accessible rooms (roll-in showers)",
+    "Hearing-accessible rooms"
+   ],
+   "text": "Accessible rooms with wide doorways, grab bars, roll-in showers, lowered sockets, vibrating pillows; lifts and accessible public areas."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 0,
+   "currency": "GBP",
+   "basis": "per stay",
+   "text": "One dog per room (up to 40 lb) at no charge; bed, bowls, treats provided; damage/mess charged; dogs not allowed in restaurant outlets."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 200,
+   "currency": "GBP",
+   "text": "Smoke-free; if smoking occurs in the hotel a cleaning fee of GBP 200 is assessed."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": 0,
+   "currency": "GBP",
+   "text": "Flexy Time: choose your own check-in and check-out time free when booking direct 72+ hours ahead; otherwise standard check-in 14:00. Late check-out GBP 10 per hour to 16:00."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": "14:00",
+   "text": "Amend or cancel free of charge up until 2pm (local time) one day before arrival; after that charged in full. Terms vary by booking type."
+  },
+  "source": "https://thehoxton.com/london/holborn/terms-and-conditions",
+  "read": "2026-10-02",
+  "notes": "Hotel home page 403, but own-site pages read directly: /terms-and-conditions (cancellation, Flexy Time, GBP 200 smoking fee, free dogs, GBP 50/night pre-auth), /faqs/ (gyms nearby with discounted passes, Rondo, GBP 5 breakfast bag, free wifi, 14:00 check-in), guests.thehoxton.com survival guide (dog up to 40 lb free, Rondo 7am-10.30pm, late checkout GBP 10/h). Accessible room details: WebSearch summary restricted to thehoxton.com. Gym false: FAQ sends guests to nearby gyms and an OTA summary says no on-site gym. Pool/spa null: not mentioned anywhere read (absence not stated). 'Lobby Bar' is from the FAQ fetch, which mixed in other properties' venues - somewhat DOUBTFUL. Early check-in fee 0 applies only to direct bookings 72h+ ahead. Cancellation is the direct-booking term (24h approximates '2pm the day before')."
+ },
+ {
+  "id": "the-savoy-london",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": true,
+   "kind": "indoor",
+   "notes": "Heated, naturally lit atrium pool with jet-stream; 07:00-21:00 weekdays, 08:00-20:00 weekends/bank holidays; children 09:00-17:00"
+  },
+  "spa": {
+   "available": true,
+   "sauna": true,
+   "name": null
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Restaurant 1890 by Gordon Ramsay",
+    "Savoy Grill",
+    "The River Restaurant by Gordon Ramsay",
+    "Gallery",
+    "American Bar",
+    "Beaufort Wine Bar"
+   ]
+  },
+  "breakfast": {
+   "included": null,
+   "pricePerPerson": null,
+   "currency": "GBP",
+   "text": "Depends on rate; breakfast-inclusive packages cover breakfast up to a value of GBP 45; children under 12 eat breakfast free. No a-la-carte per-person price published."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "GBP",
+   "text": "Free WiFi in all rooms and some public areas (OTA listings)."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Six fully accessible rooms; contact in advance for mobility or wheelchair assistance. Room categories not named."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 100,
+   "currency": "GBP",
+   "basis": "per stay",
+   "text": "Dogs welcome with a one-off charge of GBP 100 per stay; service animals exempt."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "GBP",
+   "text": "Smoking is not permitted anywhere in the hotel."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "GBP",
+   "text": "Check-in guaranteed from 15:00, check-out 12:00. Early check-in subject to availability and may incur additional charges; early arrivals can store luggage and use facilities."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": "14:00",
+   "text": "No cancellation charge prior to 14:00 local time up to 1 day prior to arrival; beyond that the first night is charged."
+  },
+  "source": "https://www.thesavoylondon.com/faqs",
+  "read": "2026-10-02",
+  "notes": "Own site read directly: home page (dining venues, gym, pool, sauna/steam), /faqs (pets GBP 100 per stay, no smoking, six accessible rooms, check-in/out, cancellation, breakfast up to GBP 45, gym 24h, pool hours), /wellness (hours, heated atrium pool, sauna, steam room, three treatment rooms; the spa has no brand name), /terms-and-conditions (early check-in may incur charges). WiFi: OTA search summary (Booking.com/Travelocity), not stated on own pages read. Prior note's GBP 25 per pet per night (OTA) is contradicted by the hotel's FAQ GBP 100 one-off; FAQ used. Cancellation 24h approximates '14:00 the day before'."
+ },
+ {
+  "id": "travelodge-plus-dublin-city-centre",
+  "gym": null,
+  "pool": null,
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Mossco Restaurant",
+    "Mossco Bar & Outdoor Terrace",
+    "Mossco Café"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "EUR",
+   "text": "Unlimited breakfast in the restaurant, 07:00-10:30 daily per hotel page (a search summary of the same domain said 6-10 weekdays, 6-11 weekends). Price not shown."
+  },
+  "wifi": {
+   "free": null,
+   "price": null,
+   "currency": "EUR",
+   "text": "Conflict: hotel page shows 'free for 30 minutes per 24 hours; 24 hour access GBP 3.50' (apparently a UK template - pound sign on an Irish hotel); the Travelodge.ie blog says free high-speed internet in all rooms."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Accessible rooms available (hotel page); types not named."
+  },
+  "pets": {
+   "allowed": null,
+   "fee": 20,
+   "currency": "EUR",
+   "basis": "per pet, per stay",
+   "text": "Brand terms: pets accompany guests in some Travelodge Ireland hotels, 1 small quiet pet per room, EUR 20 per pet per stay, max 4 days. Whether this hotel accepts pets is not stated."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 150,
+   "currency": "EUR",
+   "text": "Smoking in a non-smoking room leads to a fine of EUR 150 to EUR 250 (brand terms); 150 is the minimum."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "EUR",
+   "text": "Check-in from 15:00; earlier by buying an early check-in extra at booking; hotel page says early check-in available for extra charge. Fee not published."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 0,
+   "byTime": "12:00",
+   "text": "Flexible rate: refund if cancelled via Manage your booking before midday on the scheduled arrival date."
+  },
+  "source": "https://www.travelodge.ie/hotels/679/Dublin-City-Centre-hotel",
+  "read": "2026-10-02",
+  "notes": "Own site read directly: hotel page travelodge.ie/hotels/679 (dining hours, accessible rooms, check-in 15:00 / check-out 12:00 - prior note had 11:00, early check-in extra, wifi text), /rooms/travelodge-dublin-city-centre (Mossco Restaurant/Bar, café), /blog/travelodge-plus-dublin-city-centre (MossCo, Mossco Café, free wifi claim, 393 rooms), /responsibilities/terms-and-conditions (cancellation, pets EUR 20, smoking EUR 150-250, early check-in extra). Gym/pool/spa null: no page states presence or absence. pets.allowed is null (deviates from bool) because the brand allows pets only 'in some hotels' and this one is not identified. Wifi left null because the hotel's own pages contradict each other. Breakfast price not shown on any own page."
+ },
+ {
+  "id": "maldron-parnell-square",
+  "gym": {
+   "available": false,
+   "hours": null
+  },
+  "pool": null,
+  "spa": {
+   "available": false,
+   "sauna": null,
+   "name": null
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Grain & Grill",
+    "Red Bean Roastery Coffee Dock",
+    "Residents Bar"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "EUR",
+   "text": "Room-only rates exclude breakfast; it can be added (bed & breakfast rates also sold). Served in Grain & Grill 07:00-10:00 Mon-Fri, 08:00-11:00 Sat, Sun and bank holiday Mondays. Price per person not published by the hotel."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "EUR",
+   "text": "Complimentary WiFi throughout the hotel."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Wheelchair accessible room"
+   ],
+   "text": "7 wheelchair accessible rooms; room-type names not given."
+  },
+  "pets": {
+   "allowed": false,
+   "fee": null,
+   "currency": "EUR",
+   "basis": null,
+   "text": "Pets not allowed; only guide dogs or therapy animals permitted."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "EUR",
+   "text": "All bedrooms non-smoking; a deep-cleaning fee (amount not published) is charged for breaches; outdoor smoking area."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "EUR",
+   "text": "Early check-in can be arranged from 08:00 at an additional charge (amount not published), subject to availability on the day."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": null,
+   "text": "Free cancellation 24 hours prior to the day of arrival unless advance purchase was selected; first night charged otherwise."
+  },
+  "source": "https://www.maldronhotels.com/parnell-square/faqs/",
+  "read": "2026-10-02",
+  "notes": "All fields from the hotel's own FAQ page (re-read 2026-10-02). FAQ states 'we don't have any spa or gym facilities on-site', so gym and spa are confirmed absent; pool not mentioned (null). Breakfast price: search summaries cited about EUR 14 and EUR 10.50 per person from third-party listings (ebookers/Expedia family), not read on a page and inconsistent, so left null. Early check-in fee and smoking fee amounts are not published. byTime null: the 24-hour wording is 'prior to the day of arrival' with no clock time. Restaurant names also confirmed on https://www.maldronhotels.com/parnell-square/dining/ via search."
+ },
+ {
+  "id": "the-dean-dublin",
+  "gym": {
+   "available": true,
+   "hours": null
+  },
+  "pool": {
+   "available": true,
+   "kind": null,
+   "notes": "Adult-only heated relaxation pool in POWER's thermal suite (with sauna and steam room); guests have complimentary access. Kayak and HRS list it as an 'outdoor pool', which the hotel's own page does not say."
+  },
+  "spa": {
+   "available": true,
+   "sauna": true,
+   "name": "POWER thermal suite"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Sophie's (rooftop)",
+    "The Dean Bar"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": 20,
+   "currency": "EUR",
+   "text": "A la carte breakfast at Sophie's on the rooftop. HRS lists 'Fee for cooked-to-order breakfast: EUR 20 for adults and EUR 20 for children'."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "EUR",
+   "text": "Free Wi-Fi (listed on the hotel's room pages)."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Room pages say 'Accessible features available on request'; no room type is named accessible."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 40,
+   "currency": "EUR",
+   "basis": "per stay",
+   "text": "Dog Package EUR 40 per stay regardless of length (bed, bowls, toy); dogs under 10 kg / 22 lb; maximum 1 dog per room; must be booked in advance; subject to pet-friendly capacity; dogs not allowed in gym or pool areas."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "EUR",
+   "text": "Non-smoking hotel (HRS listing; search summary of booking listings says smoke-free). No fee published."
+  },
+  "earlyCheckIn": {
+   "offered": null,
+   "fee": null,
+   "currency": "EUR",
+   "text": "Check-in from 15:00; HRS says early arrival may be accommodated subject to availability. Not stated by the hotel."
+  },
+  "cancellation": null,
+  "source": "https://thedeanhotels.com/locations/dublin-centre",
+  "read": "2026-10-02",
+  "notes": "Hotel's own site: address (33 Harcourt Street, Saint Kevin's, Dublin 2, D02 WC81), dining, gym/pool/thermal suite (https://thedeanhotels.com/locations/dublin-centre/power), wifi and accessible-on-request (https://thedeanhotels.com/locations/dublin-centre/rooms/the-large), pets (https://thedeanhotels.com/dogs-at-the-dean-hotels). From HRS (https://www.hrs.com/en/hotel/756807): breakfast price, smoking, early check-in. DOUBTS: HRS also says 'Pets not allowed', 'not barrier-free' and 'Free cancellation is not offered' - the first two contradict the hotel's own pages, so the hotel was preferred; HRS's figures for this property are therefore of uncertain reliability, including the EUR 20 breakfast. Gym hours not published on the POWER page. Pool kind null because hotel calls it a 'heated relaxation pool' without saying indoor/outdoor while Kayak/HRS say outdoor. Cancellation null: the hotel's FAQ covers only gift cards, its terms page is a privacy policy, Kayak says 'vary by room type and provider', and HRS's 'no free cancellation' reflects only its own rate. Booking.com and Expedia did not render (empty / HTTP 429)."
+ },
+ {
+  "id": "the-westbury-dublin",
+  "gym": {
+   "available": false,
+   "hours": null
+  },
+  "pool": null,
+  "spa": {
+   "available": false,
+   "sauna": null,
+   "name": null
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Wilde",
+    "Balfes Bar & Brasserie",
+    "The Sidecar",
+    "The Gallery"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "EUR",
+   "text": "Not included in room-only rates; 'Breakfast with our Compliments' package includes Full Irish Breakfast at Wilde. Served at Wilde 07:00-10:30 Mon-Fri, 07:00-11:00 Sat-Sun; Balfes 08:00-10:45 Mon-Fri, weekend brunch 09:00-15:45. Per-person price not published by the hotel."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "EUR",
+   "text": "Free WiFi in entire hotel (HRS); irelandhotels.com: 'Wi-Fi throughout the hotel', listed as Free Wifi."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Standard Double",
+    "Standard Twin",
+    "Studio Suite"
+   ],
+   "text": "Hotel FAQ: 'we offer both standard double and twin rooms as well as a Studio Suite which is accessible.'"
+  },
+  "pets": {
+   "allowed": false,
+   "fee": null,
+   "currency": "EUR",
+   "basis": null,
+   "text": "Pets are not permitted, with the exception of guide dogs."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "EUR",
+   "text": "Smoke-free hotel (Kayak listing); search summary of booking listings mentions a designated smoking area. No fee published."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "EUR",
+   "text": "Early check-in can be provided subject to availability (hotel FAQ). Fee not published."
+  },
+  "cancellation": null,
+  "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/contact-us/frequently-asked-questions",
+  "read": "2026-10-02",
+  "notes": "Hotel's own site (FAQ and https://www.doylecollection.com/hotels/the-westbury-hotel): dining, breakfast hours/package, accessible room types, pets, early check-in, and gym. Gym set available:false because the hotel FAQ says the fitness suite is 'currently closed until November 2026' for an upgrade (it exists but is closed; Kayak still lists a fitness centre). Spa set false from Kayak ('Spa: Not available'); pool null (simply not listed by Kayak/HRS, not confirmed absent). Wifi from HRS (https://www.hrs.com/en/hotel/13022) and irelandhotels.com; smoking from Kayak (https://www.kayak.ie/Dublin-Hotels-The-Westbury.35936.ksp). Breakfast price null: HRS says 'EUR 20.00 per person (approximately)' while a search summary of other listings said EUR 35 - conflicting, neither from the hotel. Cancellation null: Doyle Collection terms (https://www.doylecollection.com/terms-conditions) say only that cancellation must be within the period on the confirmation, else one night is charged, and that Advance Purchase/Last Minute rates are non-refundable; a search summary claimed 24 hours prior to arrival but it was not read on a page, and HRS says no free cancellation for its rate."
+ },
+ {
+  "id": "chelsea-hotel-toronto",
+  "gym": {
+   "available": true,
+   "hours": "06:00-23:00 daily (adults-only, 18+, at The Heights, 27th floor)"
+  },
+  "pool": {
+   "available": true,
+   "kind": "indoor",
+   "notes": "Heated indoor Skyline Pool at The Heights (adults only, 18+); separate family aquatic centre The Cove in The Hive (2nd floor) with a 130-foot corkscrew waterslide that loops outside the building, riders over 3'8\"."
+  },
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "The Elm Tavern",
+    "Branches Deli",
+    "Mobile Dining (Stay Please)"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Flexible rate page lists no breakfast; some packages include breakfast and additional breakfast can be purchased at the restaurant. Price not published."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "CAD",
+   "text": "Wi-Fi listed among inclusions on the hotel's flexible-rate page; free Wi-Fi per site search summaries."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Accessible Room (Queen beds, from 315 sq ft)",
+    "Partially Accessible Room (King bed, from 275 sq ft)"
+   ],
+   "text": "Rooms page lists an Accessible Room and a Partially Accessible Room."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 50,
+   "currency": "CAD",
+   "basis": "per room per 5 nights",
+   "text": "Small to medium dogs under 50 lb; CAD 50 per room for up to 5 nights, then CAD 50 for each additional 5-night period; maximum two pets per room; leashed in public areas."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 250,
+   "currency": "CAD",
+   "text": "Smoke-free in all guest rooms and public spaces; CAD 250 recovery fee for violations."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Early check-in and late check-out available on request and subject to availability (hotel site, via search summary). No fee published."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": "15:00",
+   "text": "Flexible rate: no pre-payment, cancellations/modifications up to 24 hours prior to arrival. Hotel offer pages: cancel 24 hours prior to 3:00 PM on arrival day to avoid a 1-night charge (some offers say by 16:00, 24 hours prior)."
+  },
+  "source": "https://www.chelseatoronto.com/en/hotel/chelsea-services/",
+  "read": "2026-10-02",
+  "notes": "All fields from the hotel's own site: services page (pets, smoking, dining, accessible), https://www.chelseatoronto.com/en/hotel/the-heights (gym hours, indoor pool, 18+), https://www.chelseatoronto.com/en/rooms/ (accessible types), https://www.chelseatoronto.com/en/offers/stay/flexible-rate/ (cancellation, wifi). The Hive/Cove waterslide details, early check-in, the '3:00 PM' cancellation time and wifi 'free' come from search-engine summaries of chelseatoronto.com pages (family-fun-zone, offers), not pages fetched directly. byTime 15:00 = 3 PM on the day before arrival, but some offers use 16:00. Spa null: no spa found; a search summary mentioned a sauna but The Heights page did not, so sauna is unconfirmed. Breakfast price not found."
+ },
+ {
+  "id": "the-drake-hotel-toronto",
+  "gym": null,
+  "pool": null,
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Drake Café + Patio",
+    "Lounge",
+    "Sky Yard (rooftop)",
+    "Drake Underground (live venue)"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Not included in standard rates; complimentary breakfast is a Drake Members perk; Drake Café serves breakfast. Price not published."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "CAD",
+   "text": "Complimentary high-speed Wi-Fi in all guest rooms and public areas."
+  },
+  "accessible": {
+   "offered": null,
+   "roomTypes": [],
+   "text": "No accessible room type is named on the hotel pages read; Classic Wing rooms are reached by stairs only."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 70,
+   "currency": "CAD",
+   "basis": "per stay",
+   "text": "Dog-friendly, one dog per room, CAD 70 housekeeping fee per stay."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 250,
+   "currency": "CAD",
+   "text": "Smoking in the room at any time incurs a fine of CAD 250 per day."
+  },
+  "earlyCheckIn": {
+   "offered": null,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Check-in from 15:00, check-out by 11:00; no early check-in policy published."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 72,
+   "byTime": "15:00",
+   "text": "72 hours' notice before check-in time (before 3PM) to avoid a cancellation charge of one night's stay; also applies to date changes or shortening the stay."
+  },
+  "source": "https://thedrake.ca/faq/",
+  "read": "2026-10-02",
+  "notes": "All fields from the hotel's own site: FAQ (wifi, accessibility, pets, smoking, cancellation, CAD 200 incidental hold at check-in) and https://thedrake.ca/thedrakehotel/rooms/ (dining, breakfast perk, check-in/out, wifi). Sky Yard is named on https://thedrake.ca/the-drake/ as a rooftop event/patio space. Gym null: no on-site gym found; the hotel offers off-site fitness perks (free ride at Ride Cycle Club Ossington, yoga, 20% off F45), which is not a confirmed absence statement. Pool and spa null: not mentioned anywhere read. accessible.offered set false because the hotel names no accessible room type; this is an inference from the FAQ, not an explicit statement - treat as doubtful. The cancellation 'before 3PM' refers to check-in time, i.e. 72 hours before 15:00 on arrival day. Merge correction: accessible.offered was set to null because \"false\" had been inferred from the absence of a named accessible room, not stated by the hotel."
+ },
+ {
+  "id": "fairmont-royal-york",
+  "gym": {
+   "available": true,
+   "hours": "24 hours (Fairmont Fit, H level)"
+  },
+  "pool": {
+   "available": true,
+   "kind": "indoor",
+   "notes": "Indoor pool open to hotel guests 06:00-22:00 daily."
+  },
+  "spa": {
+   "available": true,
+   "sauna": null,
+   "name": "Kalani Spa"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "CLOCKWORK",
+    "Library Bar",
+    "REIGN"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Standard published rate is room only ('Breakfast is Usually Extra', WhataHotel listing); continental breakfast is complimentary only in the Fairmont Gold lounge. Price per person not published; search summaries cite approximately CAD 15-40."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "CAD",
+   "text": "Standard Wi-Fi complimentary for all guests with an access code; premium access with ALL loyalty enrolment."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Fully accessible room (12 rooms, roll-in shower with seat)"
+   ],
+   "text": "12 fully accessible rooms with grab bars, lowered switches/thermostat/peephole/clothes rack, wider doorways, raised toilet/sink, lever handles and roll-in shower with seat."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 60,
+   "currency": "CAD",
+   "basis": "per pet per stay",
+   "text": "Up to two small pets per room; CAD 60 plus applicable taxes per pet per stay; not left unattended; service dogs free."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 1000,
+   "currency": "CAD",
+   "text": "Smoke-free hotel; search summaries of listings cite a CAD 1,000 fine for non-adherence."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Early check-in and late check-out by request only, based on availability; additional fees may apply (amount not published). Check-in 16:00, check-out 12:00."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": "16:00",
+   "text": "Cancel without charge up to 4:00 PM local time one day prior to arrival; later cancellations are charged the first night (WhataHotel listing)."
+  },
+  "source": "https://www.fairmont.com/en/hotels/toronto/fairmont-royal-york/guest-services.html",
+  "read": "2026-10-02",
+  "notes": "Hotel's own sites: guest-services page (dining, spa name, wifi, accessible rooms, pets, early check-in, indoor pool) and the hotel's FAQ at https://www.thefairmontroyalyork.com/faqs/ (pool hours 06:00-22:00, fitness centre 24 hrs on H level, CAD 60 per-stay pet fee, Gold lounge breakfast). Cancellation from WhataHotel (https://www.whatahotel.com/hotels/1229/Fairmont-Royal-York.html), a booking agent; byTime 16:00 is on the day before arrival, recorded as 24h. Smoking CAD 1,000 fine came only from a search-engine summary of listings, not read on a page - doubtful; smoke-free status itself confirmed by a fairmont.com search result. Breakfast price null (approximate range only). Sauna null: not mentioned."
+ },
+ {
+  "id": "four-seasons-toronto",
+  "gym": {
+   "available": true,
+   "hours": "24 hours (in-house guests and residents; staffed 06:00-21:00)"
+  },
+  "pool": {
+   "available": true,
+   "kind": "indoor",
+   "notes": "Indoor pool with adjacent whirlpool and indoor/outdoor relaxation deck; pool 06:00-21:00 daily with family swim and 16+ relaxation hours on weekends."
+  },
+  "spa": {
+   "available": true,
+   "sauna": true,
+   "name": "The Spa at Four Seasons Hotel Toronto"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Café Boulud",
+    "d|bar",
+    "Cloud 9 Oasis (spa lounge)"
+   ]
+  },
+  "breakfast": {
+   "included": false,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Breakfast served 07:00-11:00 daily at Café Boulud; a Bed & Breakfast package is sold separately, implying room-only rates exclude it. Price not published; search summaries of OTA listings cite approximately CAD 15-45."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "CAD",
+   "text": "Complimentary premium Wi-Fi for all guests (fourseasons.com via search summary); HotelPlanner: complimentary in all rooms and suites."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Superior Accessible Room",
+    "Premier Accessible Room"
+   ],
+   "text": "Accessible room types listed on fourseasons.com/toronto/accommodations."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 0,
+   "currency": "CAD",
+   "basis": "per stay",
+   "text": "Dogs, cats and other domesticated animals under 25 lb (11.3 kg) stay with no additional fee; pet beds, bowls, treats and a pet in-room dining menu."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Entirely non-smoking; all 259 rooms non-smoking (HotelPlanner and other listings). No fee found."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Early check-in may be available if requested at the front desk on the day of check-in (HotelPlanner). Check-in 15:00."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": null,
+   "byTime": null,
+   "text": "Conflicting: HotelPlanner says 48 hours prior to arrival for individual reservations; a search summary of an OTA listing says cancel by 3:00 pm one day prior to arrival; fourseasons.com says reservations cannot be cancelled online within 48 hours of check-in."
+  },
+  "source": "https://press.fourseasons.com/toronto/hotel-facts/",
+  "read": "2026-10-02",
+  "notes": "fourseasons.com returns HTTP 403 to fetches, so: press site hotel-facts page (fetched) for address (60 Yorkville Avenue, M4W 0A4), indoor pool/whirlpool/deck, spa, dining; search-engine summaries restricted to fourseasons.com for gym hours, pool hours, spa steam room and infrared sauna, pet policy (no fee, under 25 lb), wifi, accessible room names (Superior Accessible Room page URL confirmed in results), breakfast hours. HotelPlanner (https://www.hotelplanner.com/Hotels/119307/...) for smoking, early check-in and its 48-hour cancellation claim. DOUBTS: HotelPlanner also claims breakfast is 'Complimentary' and pets under 20 lb, both of which conflict with Four Seasons' own pages (pets <25 lb; a paid B&B package exists), so its cancellation figure is not relied on; cancellation hours left null. HRS lists 'Indoor/Outdoor Pool' and no free cancellation for its own rate. Spa name is generic - the hotel calls it 'The Spa'. Pet fee 0 means the hotel states no additional fee."
+ },
+ {
+  "id": "days-inn-vancouver-downtown",
+  "gym": {
+   "available": false,
+   "hours": null
+  },
+  "pool": null,
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "The Chelsea Restaurant & Lounge",
+    "The Butcher and Bullock"
+   ]
+  },
+  "breakfast": {
+   "included": true,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Free continental breakfast each morning at the on-site restaurant, The Chelsea."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "CAD",
+   "text": "85 rooms that include free WiFi, a refrigerator and coffee maker."
+  },
+  "accessible": null,
+  "pets": {
+   "allowed": false,
+   "fee": null,
+   "currency": "CAD",
+   "basis": null,
+   "text": "Pets not allowed; service animals welcome and exempt from fees."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Non-smoking hotel; no smoking fee published."
+  },
+  "earlyCheckIn": null,
+  "cancellation": null,
+  "source": "https://www.wyndhamhotels.com/days-inn/vancouver-british-columbia/days-inn-vancouver-downtown/overview",
+  "read": "2026-10-02",
+  "notes": "OWN SITE (Wyndham overview page): dining (Chelsea Restaurant & Lounge, Butcher and Bullock), free continental breakfast, free WiFi, non-smoking. The Wyndham rooms-rates page rendered only unfilled template placeholders for policies, and /amenities returned 404. OTA: pets not allowed (service animals exempt) from Hotels.com/Expedia search summaries. Gym: no on-site gym; guests get a complimentary pass to a nearby fitness centre (Hotels.com search summary 'free use of a nearby fitness center'; Tripadvisor FAQ 'complimentary pass to the YWCA') - DOUBTFUL, another search summary said on-site. Expedia/Hotels.com/Booking.com/Tripadvisor pages could not be fetched (429/403/empty). NULL: pool and spa (no source confirms presence or absence; Kayak lists none); accessible (Wyndham shows an accessibility heading without content, an OTA summary lists accessible path/elevator/Braille signage, HRS says 'not barrier-free' - no accessible room types found); earlyCheckIn (not published); cancellation (one search summary said 48 hours, HRS says no free cancellation on its rate, Kayak says it varies by provider - unresolved). HRS also wrongly states there is no restaurant, so HRS was not used."
+ },
+ {
+  "id": "sandman-signature-vancouver-downtown",
+  "gym": {
+   "available": true,
+   "hours": "Daily 7:00-22:00"
+  },
+  "pool": {
+   "available": true,
+   "kind": "indoor",
+   "notes": "Hours not published"
+  },
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Moxies",
+    "Shark Club Sports Bar & Grill"
+   ]
+  },
+  "breakfast": null,
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "CAD",
+   "text": "Free Wi-Fi; high-speed Internet and unlimited Wi-Fi access."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Property listed as 'Wheelchair Accessible'; accessible room types not named."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 30,
+   "currency": "CAD",
+   "basis": "per night",
+   "text": "Pets allowed in select rooms; $30/day up to a max. $150/week; limit 2 pets per guestroom."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Smoke-free property; no smoking fee published."
+  },
+  "earlyCheckIn": null,
+  "cancellation": {
+   "hoursBeforeArrival": 24,
+   "byTime": null,
+   "text": "24-hour cancellation policy (time of day not stated)."
+  },
+  "source": "https://www.sandmanhotels.com/signature-vancouver-downtown",
+  "read": "2026-10-02",
+  "notes": "All fields from OWN SITE: main page (dining, wifi, accessible, smoke-free, 24-hour cancellation), /amenities (indoor pool, fitness centre), /amenities/fitness-centre (hours 7AM-10PM), /amenities/pet-friendly-hotel ($30/day, max $150/week, 2 pets). Pet fee currency shown only as '$' on a Canadian hotel's page, taken as CAD. NULL: spa (not mentioned anywhere on the site; no sauna or hot tub listed), breakfast (no inclusion or price published; Moxies is a separate restaurant), earlyCheckIn (not addressed)."
+ },
+ {
+  "id": "fairmont-hotel-vancouver",
+  "gym": {
+   "available": true,
+   "hours": "24 hours"
+  },
+  "pool": {
+   "available": true,
+   "kind": "indoor",
+   "notes": "Daily 6:00-22:30; no hot tub"
+  },
+  "spa": {
+   "available": true,
+   "sauna": true,
+   "name": "Spa Soleá"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Notch8 Restaurant & Bar",
+    "In-Room Dining",
+    "Afternoon Tea"
+   ]
+  },
+  "breakfast": {
+   "included": null,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Breakfast included only for Fairmont Gold guests (deluxe European breakfast, weekdays 7-10am, weekends 7-11am); no general inclusion or price published."
+  },
+  "wifi": {
+   "free": false,
+   "price": null,
+   "currency": "CAD",
+   "text": "Paid for standard guests, free for ALL loyalty members and Fairmont Gold, per OTA summaries; daily price reported as CAD 13.95 or 14.95 by different sources, so not recorded."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Twelve specially designed accessible rooms with special door handles and large bathrooms with grab bars; toilet seat extensions, TDD, closed captioning and fire alarm lamps on request."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 50,
+   "currency": "CAD",
+   "basis": "per night",
+   "text": "$50.00 per night plus taxes, to a maximum of $100; service dogs exempt; pets not to be left unattended."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Smoke-free hotel per OTA listings; no fee published."
+  },
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Late check-out or early check-in is by request only and based on availability. Additional fees may apply."
+  },
+  "cancellation": null,
+  "source": "https://www.fairmont.com/en/hotels/vancouver/fairmont-hotel-vancouver/guest-services.html",
+  "read": "2026-10-02",
+  "notes": "OWN SITE: gym, pool, sauna (6am-11pm), accessible rooms, pets, early check-in from the fairmont.com guest-services page and https://www.fairmont-hotel-vancouver.com/stay/guest-services/; spa name and Notch8 from https://www.fairmont-hotel-vancouver.com/ homepage; breakfast (Gold only) from https://www.fairmont-hotel-vancouver.com/faqs/. Spa name conflict: the FAQ page still names 'Absolute Spa'; the homepage names 'Spa Soleá' as the reimagined spa - homepage used. OTA: wifi (search summaries citing Qantas/Wotif and a Tripadvisor review titled 'They still charge for wifi'); smoking (Wotif/Qantas search summary). DOUBTFUL: wifi (two prices, neither read on a page). NULL: cancellation (FAQ says terms depend on the rate's sales conditions; no flexible-rate deadline published)."
+ },
+ {
+  "id": "fairmont-pacific-rim",
+  "gym": {
+   "available": true,
+   "hours": "24 hours, 7 days a week"
+  },
+  "pool": {
+   "available": true,
+   "kind": "outdoor",
+   "notes": "Rooftop pool; Priceline also lists a hot tub and fire pits"
+  },
+  "spa": {
+   "available": true,
+   "sauna": null,
+   "name": "Fairmont Spa"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Botanist",
+    "Botanist Bar",
+    "The Lobby Lounge & RawBar"
+   ]
+  },
+  "breakfast": {
+   "included": null,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Complimentary breakfast for Fairmont Gold guests and in a 'Bed & Breakfast' package at Botanist; no general inclusion or per-person price published."
+  },
+  "wifi": null,
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "Accessible rooms with wheelchair-accessible routes, lowered closet bars, touch-panel controls, 29.5-inch sink, grab bars and lowered toilet; 'Accessible Room Required' option at booking; room types not named."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 0,
+   "currency": "CAD",
+   "basis": "per stay",
+   "text": "Cats and dogs welcome with welcome package; must be leashed; service animals exempt. Priceline: 'Pets are allowed. It is free of charge.'"
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": null,
+   "currency": "CAD",
+   "text": "Non-smoking property (Priceline); no fee published."
+  },
+  "earlyCheckIn": null,
+  "cancellation": null,
+  "source": "https://www.fairmont.com/en/hotels/vancouver/fairmont-pacific-rim/guest-services.html",
+  "read": "2026-10-02",
+  "notes": "OWN SITE: gym hours, dining, accessible features, pets welcome (guest-services page); rooftop pool, Fairmont Spa (Forbes Five-Star, 5th floor), breakfast packages (https://www.fairmont.com/en/hotels/vancouver/fairmont-pacific-rim.html and fairmont.com/pacific-rim-vancouver/travel-tools/fact-sheet). OTA (Priceline https://www.priceline.com/hotel-deals/en-us/P3000030999/H17836604/fairmont-pacific-rim.ssp): pet fee free, non-smoking, hot tub. NULL: wifi (Priceline says free; a search summary says CAD 15.65 per 24 hours, free only for loyalty members - contradictory, unresolved); earlyCheckIn (not published); cancellation - CORRECTION to prior notes: the guest-services page's '24 hours prior' wording applies to airport transportation, not room reservations, so no room cancellation deadline was found. Sauna not mentioned."
+ },
+ {
+  "id": "rosewood-hotel-georgia",
+  "gym": {
+   "available": true,
+   "hours": "24 hours daily"
+  },
+  "pool": {
+   "available": true,
+   "kind": "indoor",
+   "notes": "52-foot heated saltwater lap pool, daily 7:00-21:00"
+  },
+  "spa": {
+   "available": true,
+   "sauna": true,
+   "name": "Sense, A Rosewood Spa"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Hawksworth",
+    "Reflections The Garden Terrace",
+    "Bel Café",
+    "1927 Lounge",
+    "The Georgia Bar",
+    "Prophecy"
+   ]
+  },
+  "breakfast": {
+   "included": null,
+   "pricePerPerson": null,
+   "currency": "CAD",
+   "text": "Breakfast served daily at Reflections The Garden Terrace; inclusion and price not published."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "CAD",
+   "text": "Complimentary WiFi (from a search summary of rosewoodhotels.com; the services page lists WiFi without a price)."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [],
+   "text": "'Accessible Accommodation' category listed; room types not named."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 75,
+   "currency": "CAD",
+   "basis": "per stay",
+   "text": "One dog or cat per room up to 25 lbs; minimum CAD75 one-time fee per stay including pet amenities; not in food and beverage areas."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 750,
+   "currency": "CAD",
+   "text": "Smoke-free throughout; non-refundable penalty CAD750 for regular rooms and CAD1,000 for suites."
+  },
+  "earlyCheckIn": null,
+  "cancellation": {
+   "hoursBeforeArrival": 48,
+   "byTime": "18:00",
+   "text": "Must cancel 48 hours prior to arrival by 6 pm PST to avoid one night's penalty."
+  },
+  "source": "https://www.rosewoodhotels.com/en/hotel-georgia-vancouver/hotel-policy",
+  "read": "2026-10-02",
+  "notes": "All from OWN SITE: pets, smoking, cancellation, dining from /hotel-policy; gym hours from /wellness/fitness; pool, dry sauna and cold plunge from /wellness/pool; spa and breakfast venue from the hotel homepage; WiFi and accessible category from /overview/services. Prior notes said Lord Stanley and Rosewood Suites are non-refundable. DOUBTFUL: wifi 'free' rests on a search-engine summary of rosewoodhotels.com pages; the page read only lists WiFi. NULL: earlyCheckIn (not addressed in policy); breakfast price."
+ },
+ {
+  "id": "hotel-catedral-cdmx",
+  "gym": null,
+  "pool": null,
+  "spa": null,
+  "dining": {
+   "available": true,
+   "venues": [
+    "Restaurante Catedral",
+    "Buffet Luxe",
+    "Terraza Bar",
+    "Café Catedral",
+    "Panadería Gourmet"
+   ]
+  },
+  "breakfast": {
+   "included": null,
+   "pricePerPerson": null,
+   "currency": "MXN",
+   "text": "Breakfast included only on rates sold with breakfast ('Seleccione la tarifa con desayuno incluido al reservar directo'; Buffet Luxe or continental on the terrace). No separate per-person price published by the hotel."
+  },
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "MXN",
+   "text": "'Hotel Catedral WIFI' for registered guests in rooms, lobbies and common areas; Kayak lists Free Wi-Fi."
+  },
+  "accessible": null,
+  "pets": {
+   "allowed": false,
+   "fee": null,
+   "currency": "MXN",
+   "basis": null,
+   "text": "No está permitido el acceso con mascotas al establecimiento."
+  },
+  "smoking": null,
+  "earlyCheckIn": {
+   "offered": true,
+   "fee": null,
+   "currency": "MXN",
+   "text": "Early arrival can be arranged subject to availability (standard check-in 15:00); no fee published."
+  },
+  "cancellation": {
+   "hoursBeforeArrival": 48,
+   "byTime": "00:00",
+   "text": "Direct bookings: free cancellation until 48 hours before arrival, 12:00 AM Mexico City time; after that 100% charged. Third-party bookings follow their own terms."
+  },
+  "source": "https://www.hotelcatedral.com/policies.md",
+  "read": "2026-10-02",
+  "notes": "OWN SITE: cancellation and pets from https://www.hotelcatedral.com/policies.md and https://guests.hotelcatedral.com/politicas; dining from https://www.hotelcatedral.com/gastronomia and /llms/amenities.txt (Restaurante Catedral 07:00-23:00; '13 Ácatl' listed as coming soon, not included); breakfast from /hotel-con-desayuno-incluido-cdmx; wifi and early check-in from https://guests.hotelcatedral.com/informacion. Wifi 'free' from Kayak plus the guest portal giving the password to registered guests. Late checkout to 19:00 costs MXN 553 (policies.md). NULL: gym, pool, spa - the hotel's site and amenity index mention none and Kayak lists none, but search summaries of Tripadvisor/Hotels.com claim a fitness centre and hot tub, so absence is not confirmed; accessible - not mentioned by the hotel, only an unattributed search summary claims adapted units; smoking - only an unattributed search summary says non-smoking; breakfast price - a search summary gave MXN 275 per person but no page was read, so not recorded."
+ },
+ {
+  "id": "four-seasons-mexico-city",
+  "gym": {
+   "available": true,
+   "hours": "24 hours (health club facilities 6:00-21:30)"
+  },
+  "pool": {
+   "available": true,
+   "kind": "outdoor",
+   "notes": "Outdoor pool with sun deck by the fitness centre"
+  },
+  "spa": {
+   "available": true,
+   "sauna": null,
+   "name": "The Wellness House"
+  },
+  "dining": {
+   "available": true,
+   "venues": [
+    "Zanaya",
+    "Il Becco",
+    "OMA",
+    "Fifty Mils"
+   ]
+  },
+  "breakfast": null,
+  "wifi": {
+   "free": true,
+   "price": null,
+   "currency": "MXN",
+   "text": "Complimentary premium Wi-Fi in rooms and suites."
+  },
+  "accessible": {
+   "offered": true,
+   "roomTypes": [
+    "Deluxe Room (select rooms mobility accessible)"
+   ],
+   "text": "Select Deluxe Rooms are mobility accessible."
+  },
+  "pets": {
+   "allowed": true,
+   "fee": 0,
+   "currency": "MXN",
+   "basis": "per stay",
+   "text": "Dogs and cats, fully vaccinated, one pet per room, leashed outside the room; no additional pet fee, but charges for excessive cleaning or damage; not allowed in The Wellness House, Il Becco, OMA or the Banquet Hall."
+  },
+  "smoking": {
+   "allowed": false,
+   "fee": 500,
+   "currency": "USD",
+   "text": "All accommodations non-smoking; USD 500 per room charged if smoking is detected (OTA)."
+  },
+  "earlyCheckIn": null,
+  "cancellation": null,
+  "source": "https://press.fourseasons.com/mexico/hotel-facts/",
+  "read": "2026-10-02",
+  "notes": "fourseasons.com returns 403 to fetches. OWN SITE (press site, read): outdoor pool, fitness centre, spa, four restaurants, pet-friendly. OWN SITE via search summaries of fourseasons.com pages (not read directly): gym 24 hours and health club 6:00-21:30 (/mexico/services-and-amenities/fitness/), pet terms and no pet fee (/mexico/services-and-amenities/pet-friendly-stays/), complimentary premium Wi-Fi and mobility-accessible Deluxe Rooms (/mexico/accommodations/ and Deluxe Room page), spa name (/mexico/spa/). Kayak confirms outdoor pool, fitness centre, free Wi-Fi. OTA: smoking policy and USD 500 fee from an Expedia-group (Orbitz/Travelocity/Hoteles.com) search summary - DOUBTFUL, page not read (429). NULL: breakfast (an OTA summary gave a USD 25-50 adult range, too vague to use); earlyCheckIn (not found); cancellation (Kayak says varies by provider; the only '48 hours' claim came from an unofficial look-alike site four-seasons-hotel-mexico-city.com, not used); sauna not mentioned."
+ }
+]
