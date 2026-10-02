@@ -253,9 +253,9 @@ export function emptyUniverse(
     playerId,
     people: {},
     accounts: {}, transactions: [],
-    scheduled: [], history: [], decisions: {}, notifications: [],
+    scheduled: [], decisions: {}, notifications: [],
     preferences: {
-      reducedMotion: false, timeSpeed: 'live',
+      timeSpeed: 'live',
     },
     counters: {},
   };

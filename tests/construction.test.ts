@@ -391,7 +391,9 @@ describe('a wet build', () => {
     expect(r.ok, r.error).toBe(true);
     let added = 0;
     let d = 0;
-    for (; d < 900 && sim.player.building; d += 1) { added = sim.player.building.weatherDays ?? 0; sim.advanceBy(MS_DAY); }
+    // The weather's days, as the build's log says them.
+    const weathered = () => (sim.player.building?.log ?? []).reduce((a, l) => a + Number(l.line.match(/wetter stretch than usual, (\d+)/)?.[1] ?? 0), 0);
+    for (; d < 900 && sim.player.building; d += 1) { added = weathered(); sim.advanceBy(MS_DAY); }
     expect(added).toBeGreaterThan(0);
     // Finished no sooner than the quote and the weather's days together.
     expect(sim.now).toBeGreaterThanOrEqual(r.value!.finishesBy + (added - 1) * MS_DAY);
@@ -426,7 +428,9 @@ describe('an inspection', () => {
     const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } });
     expect(r.ok, r.error).toBe(true);
     let failed = 0;
-    for (let d = 0; d < 900 && sim.player.building; d += 1) { failed = sim.player.building.inspectionFails ?? 0; sim.advanceBy(MS_DAY); }
+    // The visits failed, as the build's log says them.
+    const failures = () => (sim.player.building?.log ?? []).reduce((a, l) => { const m = l.line.match(/failed (once|(\d+) times)/); return a + (m ? (m[2] ? Number(m[2]) : 1) : 0); }, 0);
+    for (let d = 0; d < 900 && sim.player.building; d += 1) { failed = failures(); sim.advanceBy(MS_DAY); }
     expect(failed).toBeGreaterThan(0);
     const fees = memoed(sim, /reinspection/).reduce((a, t) => a + t.postings.find((x) => x.amount > 0)!.amount, 0);
     expect(fees).toBe(inSave(sim, 225_00 * failed, 'USD'));

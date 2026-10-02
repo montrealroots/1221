@@ -340,7 +340,8 @@ export function registerPayments(sim: Simulation): void {
     const taken = txn && current ? -txn.postings.filter((q) => q.accountId === current.id).reduce((a, q) => a + q.amount, 0) : 0;
     if (!txn || !current || txn.category !== 'bills' || taken <= 0) throw new CommandError('Only a bills direct debit taken from your current account can be taken back.');
     if (s.now - txn.at > 56 * MS_DAY) throw new CommandError(`That was ${formatDate(txn.at, s.zone)}; a direct debit comes back within eight weeks.`);
-    if (s.universe.transactions.some((t) => t.reverses === txn.id)) throw new CommandError('That one has been taken back already.');
+    // Read from the debit itself, which names what took it back; until 2026-10-02 every transaction was scanned for it.
+    if (txn.reversedBy) throw new CommandError('That one has been taken back already.');
     const back = s.post({ memo: 'Direct debit taken back', category: 'bills', postings: [{ accountId: current.id, amount: taken }, { accountId: s.nominalAccount('expense', 'Bills').id, amount: -taken }] });
     back.reverses = txn.id;
     txn.reversedBy = back.id;

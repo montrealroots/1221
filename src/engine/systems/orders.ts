@@ -24,7 +24,6 @@ export interface Order {
   id: string;
   /** Who it's from, as the screen names it. */
   from: string;
-  placedAt: Instant;
   arrivesAt: Instant;
   /** Where it's sent. */
   to: Place;
@@ -40,7 +39,7 @@ export const ordersOf = (person: Person): Order[] => (person.orders ??= []);
  * has taken the payment.
  */
 export function placeOrder(sim: Simulation, person: Person, order: { from: string; arrivesAt: Instant; to: Place; paid: Money }, lines: readonly Omit<Item, 'id' | 'at' | 'acquiredAt'>[]): Order {
-  const made: Order = { id: sim.nextId('order'), from: order.from, placedAt: sim.now, arrivesAt: order.arrivesAt, to: order.to, paid: order.paid, status: 'placed' };
+  const made: Order = { id: sim.nextId('order'), from: order.from, arrivesAt: order.arrivesAt, to: order.to, paid: order.paid, status: 'placed' };
   ordersOf(person).push(made);
   for (const line of lines) addItem(sim, person, { ...line, at: { kind: 'order', orderId: made.id }, acquiredAt: sim.now });
   sim.schedule({ at: order.arrivesAt, kind: ORDER_KIND, label: `A Delivery From ${order.from}`, category: 'home', priority: 30, payload: { personId: person.id, orderId: made.id } });

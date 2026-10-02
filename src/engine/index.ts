@@ -506,7 +506,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('counters', 'the counters');
   list('transactions', 'the transactions');
   list('scheduled', 'the timeline');
-  list('history', 'the history');
+  // The history of milestones went on 2026-10-02: only a night's sleep was written to it, and nothing read it.
+  if ('history' in universe) { delete (universe as unknown as Record<string, unknown>).history; steps.push('Dropped the history: nothing read it.'); }
   list('notifications', 'the notifications');
   if ('engineFailures' in universe) { delete (universe as unknown as Record<string, unknown>).engineFailures; steps.push('Dropped the failure log: a failure is said to the player as it happens.'); }
 
@@ -546,7 +547,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     };
     relabel(universe.scheduled as unknown as Record<string, unknown>[], 'label');
     relabel(universe.notifications as unknown as Record<string, unknown>[], 'title');
-    relabel(universe.history as unknown as Record<string, unknown>[], 'title');
     relabel(Object.values(universe.decisions ?? {}) as unknown as Record<string, unknown>[], 'title');
   }
   if (relabelled > 0) {
@@ -603,13 +603,14 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     stamp(Object.values(universe.decisions));
     stamp(universe.transactions);
     stamp(universe.scheduled);
-    stamp(universe.history);
     stamp(universe.notifications);
     if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
   }
 
+  // SLATE's own reduced-motion setting went on 2026-10-02; nothing could change it, and the system's preference stands.
+  if (universe.preferences && 'reducedMotion' in universe.preferences) delete (universe.preferences as unknown as Record<string, unknown>).reducedMotion;
   if (!universe.preferences) {
-    universe.preferences = { reducedMotion: false, timeSpeed: 'live' };
+    universe.preferences = { timeSpeed: 'live' };
     steps.push('Created the preferences.');
   }
 

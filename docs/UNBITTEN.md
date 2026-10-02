@@ -55,16 +55,14 @@ part the tool cannot see.
 
 ## Dead: declared, and nothing reads it
 
-- **A garment's size label is chosen, checked and kept, and nothing reads it.**
-  Since 2026-10-01 clothes are bought in a size the product comes in
-  (`systems/clothing.ts`), and the size is kept on the garment. Later that
-  day fit came to be read, but by weight, not by the label: a garment fits
-  within a size's step of the weight it was bought for, isn't worn past it,
-  and a tailor takes it in (`systems/tailoring.ts`). The label itself still
-  changes nothing, nor converts between markets. The fix is a body's
-  measurements, drawn as NHANES's and the Health Survey for England's are
-  spread (`research-clothing-services2.json` has the means but not the
-  spread), read against each retailer's size chart.
+- **What a player chooses and only sees.** Kept on purpose, each a choice a
+  real buyer makes that SLATE gives no consequence because none is published:
+  a garment's color (the product comes in it, and is bought in one), a car
+  wrap's color and finish (no shop's price list was found to charge a finish
+  differently), and at creation a race or ethnicity, a background in the
+  player's own words, a portrait and a middle name, each of which the screen
+  says decides nothing. Recorded here on 2026-10-02 after the dead-word audit
+  of that day found them.
 
 - **Rent is published in twenty places, and estimated everywhere else.** (Nineteen until New Haven's was added, `c5616e1f`, 2026-09-26; this said nineteen until 2026-10-01.)
   The atlas put a one-bedroom in Mosfellsbær at $3,424 a month, about what it
@@ -740,6 +738,29 @@ part the tool cannot see.
   and a deployed function, so taking it out is a deployment and waits for the
   owner. (`search()`, the five record shapes with no table and the history
   categories for systems long gone were taken out on 2026-09-25.)
+
+## Settled on 2026-10-02, by wiring or deletion
+
+- **A garment's size label was chosen, checked and kept, and nothing read
+  it.** It decides fit now (`sizeFor`, `fitKgFor` in
+  `systems/tailoring.ts`): your size sits in a garment's run where your body
+  mass index sits among your country's adults, and a size off is made for a
+  body a step heavier or lighter, too big until a tailor takes it in or too
+  small to wear. No retailer's chart is kept; the reading is SLATE's.
+- **A history of milestones** was written every night with the sleep, and
+  nothing read it; it went, with `core/audit.ts`, the `history` table and
+  its id namespace.
+- **SLATE's own reduced-motion setting** could not be changed by anything; it
+  went, and the system's preference stands.
+- **`Person.wearing`**, the day's outfit, was written and never read; it
+  went. **A build's counts** of weather days and failed inspections, **a land
+  deal's accepted date** and **an order's placed date** went the same way; the
+  build's log says the first two.
+- **A reversed debit's back-link** was written and the engine scanned every
+  transaction instead; it reads the link now.
+- **Five screens typed engine figures by hand** (Employment Insurance's
+  terms, a hired pilot's fee, ConfirmID's price, the State Pension's limit and
+  rate, the hours a friendship takes); they read the constants now.
 
 ## Settled on 2026-10-01, by wiring
 

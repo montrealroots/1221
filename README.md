@@ -58,15 +58,12 @@ reports any drift.
 **Outcomes are deterministic.** Every draw comes from a named, seeded stream,
 and the same save replays to the same universe. That part is live and tested.
 
-The explaining half is built and not yet connected. `src/engine/core/audit.ts`
-can record the inputs, weights, rules version, seed, probability, roll and
-result behind a decision, mark the factors the player could not have seen
-inside as unknowable, and strip those with `redactForPlayer` so the player
-learns that something was hidden and never what it was. Nothing calls it:
-`sim.audit()` has no callers, and no played save has ever written a single
-audit record. This paragraph said otherwise for a while, which was worse than
-saying nothing, because it made the axis look finished. It is waiting for the
-first system that makes a decision worth explaining.
+The explaining half was never connected, and it went. An audit trail of each
+decision's inputs, seed and roll was declared and nothing called it; it went in
+`5a5232e`. The history of milestones that shared its file wrote only a night's
+sleep, every night, and nothing read it; it went on 2026-10-02 with the file,
+`core/audit.ts`. The deciders (`src/engine/decided.ts`) are what says, for
+each draw, what decides it.
 
 **Failure is transactional.** A command that throws restores the universe
 exactly as it was. The restore writes the old values back into the objects that

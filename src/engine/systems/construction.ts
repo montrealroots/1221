@@ -118,11 +118,8 @@ export interface Build {
   /** A finished stage's bill the bank couldn't pay, and when the work stopped for it. */
   unpaid?: Money;
   stoppedAt?: Instant;
+  /** What happened, a line each; the weather's days and a failed inspection's visits are said here. Counts of each, kept beside it, went on 2026-10-02: nothing read them. */
   log: { at: Instant; line: string }[];
-  /** Days the weather has added, from 2026-10-02 (`weatherDelay`). */
-  weatherDays?: number;
-  /** Inspections failed and seen again (`buildInspectionFails`). */
-  inspectionFails?: number;
 }
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -286,7 +283,6 @@ export function weatherDelay(sim: Simulation, key: string, cityId: string, stage
 function next(sim: Simulation, person: Person, b: Build): void {
   const delay = weatherDelay(sim, `${person.id}-${b.parcelId}`, b.cityId, b.stage, b.days[b.stage]!, sim.now);
   if (delay > 0) {
-    b.weatherDays = (b.weatherDays ?? 0) + delay;
     b.log.push({ at: sim.now, line: `${STAGES[b.stage]!.name}: a wetter stretch than usual, ${delay} ${delay === 1 ? 'day' : 'days'} more` });
   }
   sim.schedule({ at: sim.now + (b.days[b.stage]! + delay) * MS_DAY, kind: BUILD_STAGE_KIND, label: `${STAGES[b.stage]!.name} Done`, category: 'home', priority: 30, payload: { personId: person.id } });
@@ -301,7 +297,6 @@ function advance(sim: Simulation, person: Person, b: Build, reinspected = false)
     const r = reinspection(b.place, b.stage);
     const fee = reinspectionFee(sim, b.place, b.stage, fails);
     if (fee > 0 && !payFromBank(sim, person, fee, `${inspection!}, ${fails === 1 ? 'a reinspection' : `${fails} reinspections`}`, 'construction')) owe(sim, person, fee, 'A reinspection fee', 'construction');
-    b.inspectionFails = (b.inspectionFails ?? 0) + fails;
     b.log.push({ at: sim.now, line: `${inspection!}, failed ${fails === 1 ? 'once' : `${fails} times`}; corrected and seen again` });
     say(sim, person, 'An Inspection Failed', `The ${inspection!.toLowerCase()} found corrections to make${fails > 1 ? `, ${fails} times over` : ''}. The work waits about ${Math.round(r.days * fails)} days for them and the inspector${fee > 0 ? `, and the reinspection costs ${formatMoney(fee, saveCurrency(sim.universe), { cents: false })}` : ''}.`, 55);
     sim.schedule({ at: sim.now + Math.round(r.days * fails * MS_DAY), kind: REINSPECT_KIND, label: `${inspection!}, Again`, category: 'home', priority: 30, payload: { personId: person.id } });

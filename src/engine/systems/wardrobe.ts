@@ -94,7 +94,6 @@ export function wearTheDay(sim: Simulation, person: Person, at: Instant = sim.no
   const outfit = outfitFor(sim, person, at);
   if (!outfit) return false;
   for (const g of outfit) wearOnce(g);
-  person.wearing = outfit.map((g) => g.id);
   return true;
 }
 

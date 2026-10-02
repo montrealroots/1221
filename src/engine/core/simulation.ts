@@ -4,7 +4,7 @@
  * This is the object every system talks to. It owns:
  *   - the one world clock and the ONE code path that advances it;
  *   - the event bus that lets buying a house touch nine other systems;
- *   - the ledger, timeline, historian and deterministic RNG;
+ *   - the ledger, timeline and deterministic RNG;
  *   - the command bus, which makes every mutation atomic: a refused command
  *     leaves nothing behind. It kept receipts for a repeated key too until
  *     2026-09-27, which nothing in play sent.
@@ -17,7 +17,6 @@ import type { Instant, TimeZone } from './time';
 import { MS_MINUTE, formatDateTime } from './time';
 import { Ledger, type LedgerTransaction, type Account } from './ledger';
 import { Timeline, type ScheduledItem } from './scheduler';
-import { Historian, type HistoryRecord } from './audit';
 import { EventBus, type WorldEvent, worldEvent } from './events';
 import { createIdFactory, type IdNamespace } from './ids';
 import { rngFor, type Rng } from './rng';
@@ -88,7 +87,6 @@ const MAX_ITEMS_PER_ADVANCE = 250_000;
 export class Simulation {
   readonly ledger: Ledger;
   readonly timeline: Timeline;
-  readonly historian: Historian;
   readonly bus: EventBus<CommandContext & { emit: (e: WorldEvent) => void }>;
   readonly nextId: (ns: IdNamespace) => Id;
 
@@ -106,7 +104,6 @@ export class Simulation {
   constructor(public universe: SaveUniverse) {
     this.ledger = new Ledger(universe);
     this.timeline = new Timeline(universe);
-    this.historian = new Historian(universe);
     this.bus = new EventBus();
     this.nextId = createIdFactory(universe as unknown as { __idCounter: number });
   }
@@ -625,14 +622,8 @@ export class Simulation {
     return account;
   }
 
-  remember(spec: Omit<HistoryRecord, 'id' | 'saveId' | 'at'> & { at?: Instant }): HistoryRecord {
-    return this.historian.recordHistory({
-      ...spec,
-      id: this.nextId('history'),
-      saveId: this.universe.meta.id,
-      at: spec.at ?? this.now,
-    });
-  }
+  // A history of milestones, `remember` and `core/audit.ts`'s Historian, went on 2026-10-02: a night's sleep was
+  // the only thing it wrote, every night, without end, and its timeline had no caller.
 
   notify(spec: { category: string; title: string; body: string; importance?: number; route?: string; refType?: string; refId?: Id }): void {
     this.universe.notifications.push({
@@ -714,13 +705,13 @@ export class Simulation {
 /**
  * Rollback support.
  *
- * `transactions`, `history` and `notifications` are strictly
+ * `transactions` and `notifications` are strictly
  * append-only, so rolling them back is a truncation rather than a clone. That
  * matters: those four are the collections that grow without bound over a
  * decade of play, and cloning them on every command would make a long save
  * progressively slower to play.
  */
-const APPEND_ONLY_LOGS = ['transactions', 'history', 'notifications'] as const;
+const APPEND_ONLY_LOGS = ['transactions', 'notifications'] as const;
 
 export interface UniverseSnapshot {
   clone: SaveUniverse;

@@ -82,7 +82,6 @@ export interface Listing { id: string; market: number; acres: number; asking: Mo
 export interface LandDeal {
   listing: Listing;
   price: Money;
-  acceptedAt: Instant;
   /** Until when the buyer can walk away with a deposit paid back: exchange, in England and Ireland. */
   diligenceUntil: Instant;
   closesAt: Instant;
@@ -304,7 +303,7 @@ export function registerLand(sim: Simulation): void {
     delete buying.counter;
     const m = LAND_MARKETS[listing.market]!;
     const rule = LAND_DEAL.deposit[m.place];
-    const deal: LandDeal = { listing, price, acceptedAt: s.now, diligenceUntil: s.now + LAND_DEAL.diligenceDays * MS_DAY, closesAt: s.now + LAND_DEAL.closingDays * MS_DAY, deposit: Math.round(price * rule.share), ...(p?.financed ? { financed: true } : {}) };
+    const deal: LandDeal = { listing, price, diligenceUntil: s.now + LAND_DEAL.diligenceDays * MS_DAY, closesAt: s.now + LAND_DEAL.closingDays * MS_DAY, deposit: Math.round(price * rule.share), ...(p?.financed ? { financed: true } : {}) };
     if (rule.at === 'accept' && !payDeposit(s, person, deal)) throw new CommandError('The bank can’t pay the deposit.');
     buying.deal = deal;
     // The searches with a published fee, ordered now.

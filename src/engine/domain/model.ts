@@ -13,7 +13,6 @@ import type { Instant, TimeZone } from '../core/time';
 import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
-import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
 import type { Counter, OwnedHome, Purchase } from '../systems/homes';
 import type { Living, Stay } from '../systems/dwelling';
@@ -262,7 +261,6 @@ export interface Person {
   orders?: import('../systems/orders').Order[];
   /** The outfit they chose to wear, and the one they have on (`systems/wardrobe.ts`, from 2026-10-01). */
   dressed?: string[];
-  wearing?: string[];
   /** Outfits they've put together and named, the clothes they bought, and when their own wardrobe began (`systems/clothing.ts`, from 2026-10-01). */
   outfits?: import('../systems/clothing').Outfit[];
   clothesBought?: import('../systems/clothing').ClothesPurchase[];
@@ -484,7 +482,6 @@ export interface Notification {
  * them, unread, as it keeps any key SLATE no longer knows.
  */
 export interface Preferences {
-  reducedMotion: boolean;
   /**
    * How fast the world runs against real time. 'live' is one to one: a minute
    * of your evening is a minute of theirs. The faster settings are there for
@@ -600,7 +597,6 @@ export interface SaveUniverse {
   transactions: LedgerTransaction[];
 
   scheduled: ScheduledItem[];
-  history: HistoryRecord[];
   decisions: Record<Id, DecisionItem>;
   notifications: Notification[];
 
@@ -613,14 +609,7 @@ export interface SaveUniverse {
    */
   tutorial?: { read: string[] };
 
-  /** Idempotency keys already applied, mapped to their recorded result. */
-
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;
 
-  /**
-   * Commands the engine itself raised while the clock was moving that failed.
-   * Kept so a background failure is visible in a diagnostic report rather than
-   * disappearing silently. Capped: this is a symptom log, not history.
-   */
 }

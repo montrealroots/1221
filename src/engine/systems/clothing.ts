@@ -40,7 +40,7 @@ import { atTown } from './homes';
 import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { ordersOf, placeOrder } from './orders';
-import { fitOf } from './tailoring';
+import { fitOf, fitKgFor, sizeFor } from './tailoring';
 import { bodyOf } from './body';
 import { dryCleanDirty, garmentsOf, wearTheDay, type Garment } from './wardrobe';
 
@@ -180,7 +180,8 @@ export function buyClothes(sim: Simulation, person: Person, o: BuyOptions): Clot
   const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how: o.how, at: sim.now, goods: q.goods, count };
   const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
   // Bought for the body they have now (`systems/tailoring.ts`).
-  const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods / count), spec, garment: { ...garmentOf(p), fitKg: bodyOf(sim, person).weightKg } };
+  // In the size chosen: a size off is made for a body a step heavier or lighter (`fitKgFor`, from 2026-10-02).
+  const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size) } };
   if (o.how === 'online') {
     const order = placeOrder(sim, person, { from: r.name, arrivesAt: q.arrivesAt!, to: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'wardrobe' }, paid: q.total }, Array.from({ length: count }, () => ({ ...line, garment: { ...line.garment } })));
     purchase.orderId = order.id;
@@ -394,7 +395,8 @@ const CUT_FOR = /\b(women'?s|men'?s|mens|womens|girls'?|boys'?|maternity|mama)\b
 export function cheapestOf(sim: Simulation, person: Person, kind: string, slot: Slot): { product: ClothingProduct; how: 'store' | 'online'; size?: string; color?: string } | undefined {
   const market = marketOf(person.home?.cityId ?? person.currentLocationId);
   const ways = CLOTHING_PRODUCTS.filter((p) => p.market === market && p.kind === kind && p.slot === slot).flatMap((p) => {
-    const size = p.sizes.length ? p.sizes[Math.floor(p.sizes.length / 2)] : undefined;
+    // Your own size, where the run can be ordered; the middle one where it can't (`sizeFor`).
+    const size = p.sizes.length ? sizeFor(sim, person, p.sizes) ?? p.sizes[Math.floor(p.sizes.length / 2)] : undefined;
     const color = p.colors.length > 1 ? p.colors[0] : undefined;
     const how = (['store', 'online'] as const).find((h) => !buyRefusal(person, { productId: p.id, how: h, size, color }));
     return how ? [{ product: p, how, size, color, each: productPrice(sim, person.currentLocationId, p) / p.pack }] : [];

@@ -220,14 +220,14 @@ describe('opening a slot', () => {
     const sim = quickSave({}, 'same-number');
     const slot = sim.universe.meta.slot;
     sim.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
-    delete (sim.universe as unknown as Record<string, unknown>).history;
+    delete (sim.universe as unknown as Record<string, unknown>).notifications;
     await adapter.save(sim.universe);
 
     const opened = await openSlot(adapter, slot);
     if ('error' in opened) throw new Error(opened.error);
-    expect(opened.migration.steps).toContain('Created the history.');
-    expect(opened.universe.history).toEqual([]);
-    expect((await adapter.load(slot))!.history).toEqual([]);
+    expect(opened.migration.steps).toContain('Created the notifications.');
+    expect(opened.universe.notifications).toEqual([]);
+    expect((await adapter.load(slot))!.notifications).toEqual([]);
   });
 
   it('opens a current save without writing it again', async () => {

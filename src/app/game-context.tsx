@@ -140,7 +140,6 @@ export function GameProvider({
 
   // Re-read on every render so the ticker restarts when the player changes it.
   const timeSpeed = sim.universe.preferences.timeSpeed;
-  const reducedMotion = sim.universe.preferences.reducedMotion;
 
   const refresh = useCallback(() => setVersion((v) => v + 1), []);
 
@@ -372,11 +371,6 @@ export function GameProvider({
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [navigate]);
-
-  // Honor the reduced-motion preference at the document level.
-  useEffect(() => {
-    document.body.dataset['reducedMotion'] = String(reducedMotion);
-  }, [reducedMotion]);
 
   const exitToMenu = useCallback(() => {
     void saveNow().then(onExit);

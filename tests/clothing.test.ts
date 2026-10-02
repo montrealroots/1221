@@ -15,6 +15,7 @@ import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
 import { buyRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
 import { arrange } from '@/engine/systems/catalog';
 import { cleanOutfits, garmentsOf, outfitFor, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
+import { sizeFor } from '@/engine/systems/tailoring';
 import { reachable } from '@/engine/systems/items';
 
 const life = (seed: string, city = 'us-ny-newyork') => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -88,7 +89,8 @@ describe('buying', () => {
     const four = purchaseQuote(sim, sim.player, { productId: tee.id, how: 'online', size: 'M', color: tee.colors[0], quantity: 4 })!;
     expect(4 * tee.price).toBeGreaterThanOrEqual(uniqlo.freeOver!);
     expect(four.delivery).toBe(0);
-    sim.must({ kind: 'clothes.buy', payload: { productId: tee.id, how: 'online', size: 'M', color: tee.colors[0] } });
+    // In their own size, so it isn't replaced as soon as it's home (`sizeFor`, from 2026-10-02).
+    sim.must({ kind: 'clothes.buy', payload: { productId: tee.id, how: 'online', size: sizeFor(sim, sim.player, tee.sizes), color: tee.colors[0] } });
     const items = purchaseItems(sim.player, sim.player.clothesBought![0]!.id);
     expect(items[0]!.at.kind).toBe('order');
     sim.advanceBy(7 * MS_DAY + 60_000);
