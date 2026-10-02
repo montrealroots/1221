@@ -35,7 +35,7 @@ import { classFor, forOutings, kindOf, modelById, runningCost, vehiclesOf, type 
 import { drive } from './driving';
 import { standInFor } from './standin';
 import { DRIVERS, type DriverService } from '../content/drivers';
-import type { Instant } from '../core/time';
+import { formatDate, type Instant } from '../core/time';
 import { tireFactor } from './tires';
 import { homeKeyOf, itemById, type Item, type Spot } from './items';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
@@ -82,6 +82,8 @@ export function tripRefusal(sim: Simulation, person: Person, by: 'car' | 'foot',
     if (forOutings(m)) return 'A bicycle or an ATV isn’t for errands here.';
     if ((v.at ?? v.cityId) !== here) return `The car is in ${CITIES.require(v.at ?? v.cityId).name}.`;
     if (v.repossessed) return 'The lender has the car.';
+    // Ordered from the factory, it isn't yours to drive until it comes (`systems/caroptions.ts`).
+    if (v.deliveredAt !== undefined && v.deliveredAt > sim.now) return `It’s on order: it comes ${formatDate(v.deliveredAt, sim.zone)}.`;
     if (stolenNow(v, sim.now)) return 'It’s been stolen.';
     // In the shop with a stand-in, it's the stand-in that goes (`systems/standin.ts`, from 2026-10-01).
     const laid = standInFor(person, v) ? undefined : laidUp(v, sim.now);

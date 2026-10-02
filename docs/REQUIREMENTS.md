@@ -144,14 +144,14 @@ Correctness first, then the connected day the plan asks to be shown working
 | 36b | Kinds incl. trucks, boats, aircraft | Partial | 9 kinds; one boat, one plane | Pickup kind; boat and aircraft catalogs |
 | 36c | Market and seller, verified offerings | Partial | home market only | Seller entity; another market |
 | 36d | Condition, mileage, used listings | Partial | age and hidden fault | Individual listings: mileage, condition, history, seller |
-| 36e | Factory options vs aftermarket | Not implemented (factory) | mods, wraps, tint, stereo | Option packs, paint, wheels |
+| 36e | Factory options vs aftermarket | Done, 2026-10-02 | 643 priced factory options for the 48 new cars (`content/caroptions.ts`): paint, wheels, interior, packages; mods, wraps, tint, stereo after | — |
 | 36f | Pricing | Complete | `quote`; tests/vehicles | — |
 | 37a–d | Market and seller, filter, compare, specs and history | Partial or not implemented | catalog facets | Listings, comparison, spec and history |
 | 37e | Inspection, test drive | Partial | `vehicle.inspect_used` | Test drive |
-| 37f | Configure options | Not implemented | — | Options in the quote |
+| 37f | Configure options | Done, 2026-10-02 | options in the quote before the taxes; one paint, wheels and interior; kept with the car; tests/caroptions.test.ts | — |
 | 37g | Cost, trade-in, funding | Complete | tests/vehicles, leasing | — |
 | 37h | Ownership requirements | Partial | checked when driving | Title and registration step |
-| 37i | Not drivable until delivered | Not implemented | bought cars drive at once | Delivery and collection |
+| 37i | Not drivable until delivered | Partial, 2026-10-02 | a factory order isn't driven until it comes, its weeks the dealers' or a leasing company's published figures; stock is driven away | A stock car's collection day (no published figure); home delivery fees |
 | 37j | Use and maintain | Complete | carcare, repairs; tests | — |
 | 37k | Sell or trade | Partial | instant sale | Listing, buyer, time |
 | 38a | Wraps and finishes | Partial | two cities | More shops; removal; partial wraps |
