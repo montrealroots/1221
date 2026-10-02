@@ -75,6 +75,8 @@ export interface Item {
   food?: import('./pantry').Food;
   /** A toiletry: its kind and how much is left (`systems/hygiene.ts`). */
   supply?: import('./hygiene').Supply;
+  /** Jewelry or a watch scheduled on the home's insurance, at what was paid (`systems/valuables.ts`, from 2026-10-02). */
+  scheduled?: true;
   /** A bed's market and size (`content/beds.ts`, from 2026-10-01); an older bed is its country's usual double. */
   bed?: { country: string; size: string };
 }

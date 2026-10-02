@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-277 commands; 272 named by a test, 5 not.
+281 commands; 276 named by a test, 5 not.
 
 ## aircraft
 
@@ -283,7 +283,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.pay_mortgage` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
 | `home.refinance` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` | Rent And A Roof |
 | `home.renovate` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `assistant.test.ts` `homes.test.ts` `permits.test.ts` | Rent And A Roof |
-| `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` | Rent And A Roof |
+| `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `valuables.test.ts` | Rent And A Roof |
 | `home.repair_machine` | `src/engine/systems/appliancefaults.ts` | `Home.tsx` | `appliancefaults.test.ts` | Rent And A Roof |
 | `home.replace_mattress` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` | Rent And A Roof |
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
@@ -449,6 +449,15 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `tutorial.read` | `src/engine/world/tutorial.ts` | — | **none** | — |
+
+## valuables
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `valuables.buy_safe` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
+| `valuables.lock_up` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
+| `valuables.schedule` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
+| `valuables.take_out` | `src/engine/systems/valuables.ts` | `BelongingsWorkspace.tsx` | `valuables.test.ts` | Rent And A Roof |
 
 ## vehicle
 

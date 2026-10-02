@@ -56,6 +56,8 @@ import { starterLuggage } from './luggage';
 import { sunTimes } from '../core/sun';
 import { gymHere } from './gyms';
 import { personalityOf } from './personality';
+import { burgleValuables, scheduledMonth } from './valuables';
+import { homeKeyOf } from './items';
 
 // ---------------------------------------------------------------------------
 // The place somebody lives
@@ -699,6 +701,8 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
   const cur = saveCurrency(sim.universe);
   // An alarm's monitoring, the month's (`systems/alarm.ts`).
   if (firstOfMonth) alarmMonth(sim, person);
+  // Scheduled jewelry and watches, on the policy that covers what's inside (`systems/valuables.ts`).
+  if (firstOfMonth) scheduledMonth(sim, person, coveredInside(sim, person) !== undefined);
   if (firstOfMonth && person.living?.rentersInsurance && home.kind !== 'owned') {
     if (!spend(sim, person, rentersPremium(sim, person), 'Renters insurance', 'insurance')) {
       delete person.living.rentersInsurance;
@@ -717,7 +721,9 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
   w.morale = clamp(w.morale - BELONGINGS.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   w.stress = clamp(w.stress + BELONGINGS.stress * personalityOf(person, 'stressGain'), 0, 100);
   const deductible = coveredInside(sim, person);
-  const pays = deductible === undefined ? 0 : Math.max(0, loss - deductible);
+  // The jewelry and watches not locked away go too, as the pieces themselves (`systems/valuables.ts`).
+  const pieces = burgled ? burgleValuables(sim, person, homeKeyOf(home)!, deductible !== undefined) : { taken: [], toClaim: 0, inFull: 0 };
+  const pays = deductible === undefined ? 0 : Math.max(0, loss + pieces.toClaim - deductible) + pieces.inFull;
   if (pays > 0) {
     sim.post({ memo: burgled ? 'Insurance claim: a burglary' : 'Insurance claim: a fire', category: 'insurance', postings: [{ accountId: person.primaryAccountId!, amount: pays }, { accountId: sim.nominalAccount('income', 'Insurance Claims').id, amount: -pays }] });
     const owned = livingIn(person);
@@ -729,7 +735,7 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'home', title: burgled ? 'Your Home Was Burgled' : 'A Fire In The Building',
-      body: `${formatMoney(loss, cur, { cents: false })} of your things ${burgled ? 'were taken' : 'were lost'}. ${pays > 0 ? `The insurance paid ${formatMoney(pays, cur, { cents: false })}, over its deductible.` : deductible !== undefined ? 'It’s under the deductible.' : 'Nothing insured them.'} ${replaced ? 'You’ve replaced what you need.' : 'You can’t afford to replace it all.'}`,
+      body: `${formatMoney(loss, cur, { cents: false })} of your things ${burgled ? 'were taken' : 'were lost'}${pieces.taken.length ? `, and ${pieces.taken.map((i) => i.label).join(', ')}` : ''}. ${pays > 0 ? `The insurance paid ${formatMoney(pays, cur, { cents: false })}, over its deductible.` : deductible !== undefined ? 'It’s under the deductible.' : 'Nothing insured them.'} ${replaced ? 'You’ve replaced what you need.' : 'You can’t afford to replace it all.'}`,
       importance: 80, route: '/home',
     });
   }
