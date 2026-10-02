@@ -36,9 +36,9 @@ import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 import { cook, kitchenMeal } from './kitchen';
 import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
-import { cleanOutfits, useTowel, washableDirty } from './wardrobe';
+import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
-import { GROOMING, dailyCare, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
+import { GROOMING, dailyCare, detergentFor, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
@@ -639,6 +639,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'charter') { const no = charterRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water'); if (no) return no; }
   if (action === 'laundry' && washableDirty(sim, person).length === 0) return 'Your clothes are all clean.';
   if (action === 'laundry' && !person.home) return 'You have nowhere to keep clothes.';
+  if (action === 'laundry' && !detergentFor(sim, person, Math.ceil(washableDirty(sim, person).length / GARMENTS_PER_LOAD))) return 'There isn’t enough laundry detergent at home for it.';
   if (action === 'tidy' && !(atHome(person) && place?.keeps)) return 'It isn’t your place to clean.';
   if (action === 'tidy' && livingOf(person).tidy >= 90) return 'The place is clean.';
   if (action === 'mow') { const lawn = atHome(person) ? homeLawn(person) : undefined; if (!lawn) return 'There’s no lawn of yours here.'; if (lawn.cm < MOWN_CM + 1) return 'It’s cut.'; }

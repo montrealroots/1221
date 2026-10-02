@@ -64,6 +64,7 @@ import { CommandError } from '../core/simulation';
 import { billsFactor, energyYear } from './seasons';
 import { deadline, latePenalty } from './taxreturn';
 import { drawRental, homePlace, machineUsd, type RentedUnit } from './dwelling';
+import { wasteFeeOf } from './waste';
 import { emptyHomeIn, moveIntoOwned } from './homes';
 import { carryFurniture } from './furniture';
 import { followTheMove, leavingHome } from './items';
@@ -222,8 +223,9 @@ export function rentOf(sim: Simulation, person: Person): Money {
  * month's was the same.
  */
 export function billsOf(sim: Simulation, person: Person): Money {
-  // Where the internet and the phone are billed by their providers, their part comes out (`systems/telecom.ts`, from 2026-10-01).
-  return Math.max(0, atlasBillsOf(sim, person) - telecomPartOf(sim, person));
+  // Where the internet and the phone are billed by their providers, their part comes out (`systems/telecom.ts`, from 2026-10-01);
+  // the rubbish collection goes in, where the town charges for it (`systems/waste.ts`, from 2026-10-02).
+  return Math.max(0, atlasBillsOf(sim, person) - telecomPartOf(sim, person)) + wasteFeeOf(sim, person);
 }
 
 /** The atlas's estimate of the phone and internet in a home's bills, where their providers bill them instead; nothing elsewhere. */

@@ -32,7 +32,8 @@ import { MS_DAY, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { salesTaxRate } from '../content/tax';
 import { GROCERY_CHAINS } from '../content/groceries';
-import { SALONS, TOILETRIES, type Salon, type Toiletry } from '../content/hygiene';
+import { SALONS, TOILETRIES as BATHROOM, type Salon, type Toiletry } from '../content/hygiene';
+import { CLEANING } from '../content/cleaning';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { spend } from './household';
@@ -49,6 +50,16 @@ export const USE = { bodyWashG: 11.3, soapG: 2.6, shampooG: 11.76, toothpasteG: 
 export const WITHOUT = { cleanser: 85, shampoo: 90, daily: 5 } as const;
 /** The kinds a life keeps and uses up. */
 export const KEPT = ['body-wash', 'shampoo', 'toothpaste', 'toothbrush', 'deodorant'] as const;
+/**
+ * The cleaning a home uses up, counted from 2026-10-02 (`content/cleaning.ts`): a wash's laundry detergent, a load each, and
+ * a dishwasher's tablet a cycle, at the 184 cycles a year the Department of Energy's test procedure takes for a household's
+ * use. Dish soap, sprays, bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how
+ * fast a household gets through them.
+ */
+export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent'] as const;
+export const DISHWASHER_CYCLES_A_DAY = 184 / 365;
+/** Everything the chains sell for the bathroom and for cleaning. */
+const TOILETRIES: readonly Toiletry[] = [...BATHROOM, ...CLEANING];
 
 const MARKET: Readonly<Record<string, string>> = { us: 'US', uk: 'GB', ie: 'IE', ca: 'CA', mx: 'MX' };
 const marketOf = (cityId: string) => MARKET[cityId.split('-')[0] ?? ''];
@@ -67,6 +78,8 @@ export function toiletryPrice(sim: Simulation, cityId: string, t: Toiletry): Mon
 const KIND_LABEL: Readonly<Record<string, string>> = {
   soap: 'Soap', 'body-wash': 'Body Wash', shampoo: 'Shampoo', conditioner: 'Conditioner', toothpaste: 'Toothpaste', toothbrush: 'Toothbrushes', deodorant: 'Deodorant',
   razor: 'Razors', 'shaving-cream': 'Shaving Cream', 'toilet-paper': 'Toilet Paper', floss: 'Floss', pads: 'Pads', tampons: 'Tampons',
+  'dish-soap': 'Dish Soap', 'dishwasher-detergent': 'Dishwasher Detergent', 'laundry-detergent': 'Laundry Detergent', 'all-purpose-cleaner': 'All-Purpose Cleaner',
+  bleach: 'Bleach', 'paper-towels': 'Paper Towels', 'trash-bags': 'Trash Bags', sponges: 'Sponges',
 };
 
 /** The toiletries on sale where they are. */
@@ -122,6 +135,25 @@ export function dailyCare(sim: Simulation, person: Person): number {
   return (teeth ? 0 : WITHOUT.daily) + (fresh ? 0 : WITHOUT.daily);
 }
 
+/** Whether their detergents are counted: from the first day after 2026-10-02 they keep a home with its toiletries counted. */
+export const keepsCleaning = (person: Person): boolean => person.cleaningSince !== undefined;
+
+/** Whether there's the laundry detergent for so many loads to hand. */
+export function detergentFor(sim: Simulation, person: Person, loads: number): boolean {
+  return !keepsCleaning(person) || toHand(sim, person, 'laundry-detergent').reduce((n, i) => n + i.supply.left, 0) + 1e-9 >= loads;
+}
+
+/** The laundry detergent for so many loads, used, where it's counted. */
+export function laundryDetergent(sim: Simulation, person: Person, loads: number): void {
+  if (keepsCleaning(person) && loads > 0) take(sim, person, ['laundry-detergent'], loads);
+}
+
+/** A day's share of a dishwasher's cycles, its tablets used; false where there are none, and the dishes are done by hand. */
+export function dishwasherRuns(sim: Simulation, person: Person): boolean {
+  if (!keepsCleaning(person)) return true;
+  return take(sim, person, ['dishwasher-detergent'], DISHWASHER_CYCLES_A_DAY);
+}
+
 /** Why they can't buy it here, or nothing. */
 export function toiletryRefusal(person: Person, id: string, quantity: number, at?: Instant): string | undefined {
   const t = toiletryById(id);
@@ -148,7 +180,7 @@ export function buyToiletries(sim: Simulation, person: Person, id: string, quant
 function giveToiletry(sim: Simulation, person: Person, t: Toiletry, paid?: Money): void {
   // A toothbrush is one brush a count; anything else is its size.
   // Carried, or in the car, until a trip out is home (`stow`).
-  stow(person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'bathroom' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
+  stow(person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
 }
 
 /** The cheapest of a kind, a gram or a brush: in a store in reach of the town, or anywhere in its market. Nothing where SLATE keeps none. */
@@ -170,13 +202,25 @@ export function starterSupplies(sim: Simulation, person: Person): boolean {
   return true;
 }
 
+/** The detergents a home begins with, once, beside its toiletries: laundry detergent, and the dishwasher's where it has one. */
+export function starterCleaning(sim: Simulation, person: Person, dishwasher: boolean): boolean {
+  if (keepsCleaning(person) || !keepsSupplies(person) || !person.home) return false;
+  const kinds = CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent');
+  const picks = kinds.map((kind) => cheapestToiletry(sim, person.home!.cityId, kind) ?? cheapestToiletry(sim, person.home!.cityId, kind, false));
+  if (picks.some((p) => !p)) return false;
+  for (const p of picks) giveToiletry(sim, person, p!);
+  person.cleaningSince = sim.now;
+  return true;
+}
+
 /** What's run out bought again on a free day, the cheapest of each in a store here; a worn toothbrush thrown out. How many bought. */
-export function restock(sim: Simulation, person: Person): number {
+export function restock(sim: Simulation, person: Person, dishwasher = false): number {
   if (!keepsSupplies(person) || !person.home || person.home.cityId !== person.currentLocationId) return 0;
   const worn = suppliesOf(person).filter((i) => i.supply.kind === 'toothbrush' && i.condition <= 0);
   if (worn.length) person.items = itemsOf(person).filter((i) => !worn.some((w) => w.id === i.id));
   let bought = 0;
-  for (const kind of KEPT) {
+  const cleaning = keepsCleaning(person) ? CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent') : [];
+  for (const kind of [...KEPT, ...cleaning]) {
     const have = toHand(sim, person, kind).filter((i) => kind !== 'toothbrush' || i.condition > 0);
     if (have.length > 0 || (kind === 'body-wash' && toHand(sim, person, 'soap').length > 0)) continue;
     const pick = cheapestToiletry(sim, person.currentLocationId, kind);

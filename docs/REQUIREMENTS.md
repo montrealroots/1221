@@ -126,10 +126,10 @@ Correctness first, then the connected day the plan asks to be shown working
 | 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |
 | 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one | Reading; hobbies; games owned |
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
-| 35a | Cleaning | Partial | `tidy` scalar | Rooms, cleaning supplies |
-| 35b | Laundry | Complete | `doLaundry`; tests/wardrobe | Detergent; towels and bedding |
+| 35a | Cleaning | Partial | `tidy` scalar; the chains' cleaning products on sale (`content/cleaning.ts`), a dishwasher's tablets used, 184 cycles a year | Rooms; how fast sprays and sponges go (unpublished) |
+| 35b | Laundry | Complete | `doLaundry`, a load's detergent each, refused without; tests/wardrobe, tests/cleaning | Towels and bedding |
 | 35c | Organizing | Partial | spots | Rooms; capacity |
-| 35d | Waste | Not implemented | — | Bins, collection, recycling |
+| 35d | Waste | Partial, 2026-10-02 | `systems/waste.ts`: each research town's household charge in the bills (LA's schedule, Toronto, Vancouver, Dublin; London, Mexico City, New York and New Haven none) | Bin size and plan choice; collection days; bulky items |
 | 35e | Replacing supplies | Partial | automatic restock | Household consumables |
 | 35f | Appliance repair | Not implemented | appliances age out | Faults, repair visits |
 | 35g | Hosting | Partial | `social.invite` visit | Reads food, drink, tidiness, seats |

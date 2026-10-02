@@ -305,6 +305,8 @@ export interface Person {
   datingApp?: import('../systems/dating').DatingApp;
   /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
   suppliesSince?: number;
+  /** When their laundry and dishwasher detergent began to be counted (`systems/hygiene.ts`, from 2026-10-02). */
+  cleaningSince?: number;
   groomedAt?: number;
   /** The home whose utility accounts they hold (`systems/utilities.ts`, from 2026-10-01). */
   utilitiesAt?: string;
