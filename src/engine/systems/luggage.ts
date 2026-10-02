@@ -21,6 +21,12 @@
  * Packing is the player's from 2026-10-02: anything moved into the suitcase on
  * Belongings goes as it is, and leaving home packs a week only into an empty
  * one. Pack For Me and Unpack do the same by hand, at home.
+ *
+ * From later on 2026-10-02 a suitcase, a duffel or a backpack can be bought
+ * where you live (`content/luggagecatalog.ts`), each holding its maker's
+ * liters, at its maker's or retailer's price with the town's sales tax where
+ * it's added; Take This One makes it the bag that goes away with you. The
+ * first carry-on stays the one until another is chosen.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -30,13 +36,44 @@ import { CommandError } from '../core/simulation';
 import { addItem, homeKeyOf, itemsOf, reachable, usedL, volumeOf, type Item } from './items';
 import { garmentsOf } from './wardrobe';
 import { suppliesOf } from './hygiene';
+import type { Money } from '../core/money';
+import { CITIES } from '../content/geography';
+import { salesTaxRate } from '../content/tax';
+import { LUGGAGE, type LuggagePiece } from '../content/luggagecatalog';
+import { inSaveMoney } from './banking';
+import { payFromBank } from './household';
 
 export const CARRY_ON = { label: 'Carry-On Suitcase', holdsL: 45 } as const;
 /** A week's clothes, by part. SLATE's estimate. */
 export const PACK: Readonly<Partial<Record<Slot, number>>> = { top: 7, bottom: 3, underwear: 7, socks: 7, shoes: 1, outer: 1, dress: 2, suit: 1, active: 2 };
 
-const isLuggage = (i: Item) => i.kind === 'luggage:carry-on';
-export const suitcaseOf = (person: Person): Item | undefined => itemsOf(person).find(isLuggage);
+const isLuggage = (i: Item) => i.kind.startsWith('luggage:');
+/** The bag that goes away: the one chosen, or the first owned. */
+export const suitcaseOf = (person: Person): Item | undefined => itemsOf(person).find((i) => i.id === person.luggageId && isLuggage(i)) ?? itemsOf(person).find(isLuggage);
+export const bagsOf = (person: Person): Item[] => itemsOf(person).filter(isLuggage);
+
+export const luggageById = (id: string): LuggagePiece | undefined => LUGGAGE.find((x) => x.id === id);
+
+/** A bag's price where a town is, taxed where its tax is added, in the save's money. */
+export function luggagePrice(sim: Simulation, cityId: string, p: LuggagePiece): Money {
+  const tax = p.taxIncluded ? 0 : salesTaxRate(cityId, sim.now, 'goods');
+  return inSaveMoney(sim, Math.round(p.price * (1 + tax) * 100), p.currency);
+}
+
+/** The bags on sale where they live, cheapest first. */
+export function luggageCatalog(sim: Simulation, person: Person): { piece: LuggagePiece; price: Money }[] {
+  const cityId = person.home?.cityId ?? person.currentLocationId;
+  const country = CITIES.get(cityId)?.countryId;
+  return LUGGAGE.filter((x) => x.country === country).map((piece) => ({ piece, price: luggagePrice(sim, cityId, piece) })).sort((a, b) => a.price - b.price);
+}
+
+export function buyLuggageRefusal(person: Person, id: string): string | undefined {
+  const p = luggageById(id);
+  if (!p) return 'That isn’t on sale.';
+  if (!person.home || person.home.cityId !== person.currentLocationId) return 'A bag is bought where you live, and kept at home.';
+  if (CITIES.get(person.home.cityId)?.countryId !== p.country) return 'It’s sold in another country.';
+  return undefined;
+}
 
 /** A carry-on for a life that hasn't one, at home in storage. */
 export function starterLuggage(sim: Simulation, person: Person): boolean {
@@ -139,6 +176,26 @@ export function luggageRefusal(sim: Simulation, person: Person): string | undefi
 }
 
 export function registerLuggage(sim: Simulation): void {
+  sim.onCommand<{ pieceId: string }, { paid: Money; itemId: string }>('luggage.buy', (p, { sim: s }) => {
+    const person = s.player;
+    const no = buyLuggageRefusal(person, String(p?.pieceId));
+    if (no) throw new CommandError(no);
+    const piece = luggageById(String(p.pieceId))!;
+    const paid = luggagePrice(s, person.home!.cityId, piece);
+    if (!payFromBank(s, person, paid, `${piece.brand} ${piece.model}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
+    const item = addItem(s, person, { kind: `luggage:${piece.id}`, label: `${piece.brand} ${piece.model}`, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'storage' }, acquiredAt: s.now, paid, holdsL: piece.liters, volumeL: piece.outsideL ?? piece.liters });
+    return { paid, itemId: item.id };
+  });
+  sim.onCommand<{ itemId: string }, { chosen: string }>('luggage.choose', (p, { sim: s }) => {
+    const person = s.player;
+    const bag = bagsOf(person).find((i) => i.id === p?.itemId);
+    if (!bag) throw new CommandError('That isn’t a bag of yours.');
+    const now = suitcaseOf(person);
+    if (now && now.id !== bag.id && packedIn(person, now).length > 0) throw new CommandError('Unpack the one you have first.');
+    person.luggageId = bag.id;
+    return { chosen: bag.label };
+  });
+
   // Pack For Me: a week's clothes and the bathroom's things, as far as it holds, on top of what's in it.
   sim.onCommand<Record<string, never>, { packed: number; usedL: number }>('luggage.pack', (_p, { sim: s }) => {
     const person = s.player;

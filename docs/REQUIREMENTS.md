@@ -203,7 +203,7 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 46 | Manual packing | Partial, 2026-10-02 | volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; a luggage catalog; checked bags against an airline's limits |
+| 46 | Manual packing | Partial, 2026-10-02 | 57 bags on sale at their makers' and retailers' prices, each holding its maker's liters, and the one that goes away chosen (`luggage.buy`, `luggage.choose`); volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; checked bags against an airline's limits |
 | 47a–c, g, l | Planning, documents, booking, cancellation, charters and ferries | Complete | journey.ts; tests | Destinations limited to towns with stays |
 | 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | from 2026-10-02: to and from the airport By Taxi or By Transit at each town's read fare (`systems/airportground.ts`); a canceled flight's fare taken back instead of the next one, the way home with it (`travel.take_refund`) | Missed connections; change the outbound; rideshare; airport parking |
 | 47m | Companions | Partial, 2026-10-02 | `travel.companion`: friends or a partner from where you set out, as many as the room sleeps by its listed beds (two where unread), own fares, the room split evenly again with each who joins, the waking hours together; tests/companions.test.ts | A child along |

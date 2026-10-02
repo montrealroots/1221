@@ -11,7 +11,7 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
-import { luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
@@ -75,6 +75,7 @@ export function BelongingsWorkspace() {
           </div>
         </Panel>
         <Suitcase />
+        <Luggage />
         <Phones />
         <WatchingAndPlaying />
         {items.length > 0 && (
@@ -146,6 +147,63 @@ export function BelongingsWorkspace() {
         <Fine>A thing at home is to hand only at home; one in a car, only where the car is; one in a bag, wherever the bag is. An order’s things are yours from when you pay, and to hand when they’re delivered. A move brings your belongings with it.</Fine>
       </div>
     </>
+  );
+}
+
+/** Bags: the ones owned, which goes away, and the ones on sale where you live, cheapest first (`systems/luggage.ts`). */
+function Luggage() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const buy = useFeature('luggage.buy');
+  const choose = useFeature('luggage.choose');
+  const cur = saveCurrency(sim.universe);
+  const owned = bagsOf(person);
+  const going = suitcaseOf(person);
+  const shop = luggageCatalog(sim, person);
+  const [type, setType] = useState('');
+  const types = [...new Set(shop.map((x) => x.piece.type))];
+  const shown = shop.filter((x) => !type || x.piece.type === type);
+  if (shop.length === 0 && owned.length < 2) return null;
+  const TYPE: Record<string, string> = { 'carry-on': 'Carry-On', medium: 'Medium', large: 'Large', duffel: 'Duffel', backpack: 'Backpack' };
+  return (
+    <Panel title="Bags" subtitle={going ? `${going.label} Goes Away With You` : 'None Yet'}>
+      <div className="col gap-2">
+        {owned.length > 1 && (
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            {owned.map((b) => <button key={b.id} type="button" className="btn btn-sm btn-ghost" disabled={!choose.open || b.id === going?.id} title={choose.reason} onClick={() => { if (run('luggage.choose', { itemId: b.id }).ok) toast(`${b.label} goes away with you now.`, 'positive'); }}>{b.id === going?.id ? `${b.label}, Going` : `Take The ${b.label}`}</button>)}
+          </div>
+        )}
+        {shop.length > 0 && (
+          <>
+            <div className="field" style={{ margin: 0, maxWidth: '14rem' }}>
+              <label htmlFor="bag-type">Kind</label>
+              <select id="bag-type" value={type} onChange={(e) => setType(e.target.value)}>
+                <option value="">Any</option>
+                {types.map((t) => <option key={t} value={t}>{TYPE[t] ?? t}</option>)}
+              </select>
+            </div>
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Bag</th><th scope="col" className="num">Holds</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+                <tbody>
+                  {shown.slice(0, 12).map(({ piece, price }) => {
+                    const no = buyLuggageRefusal(person, piece.id);
+                    return (
+                      <tr key={piece.id}>
+                        <td>{piece.brand} {piece.model}<div className="xs dim">{TYPE[piece.type] ?? piece.type}{piece.retailer ? `, ${piece.retailer}` : ''}</div></td>
+                        <td className="num">{piece.liters} L</td>
+                        <td className="num mono">{formatMoney(price, cur, { cents: false })}</td>
+                        <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('luggage.buy', { pieceId: piece.id }).ok) toast(`${piece.brand} ${piece.model}, bought.`, 'positive'); }}>Buy The Bag</button></td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </div>
+    </Panel>
   );
 }
 
