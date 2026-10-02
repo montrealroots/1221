@@ -13,6 +13,15 @@
  * fee, secondary. A month the bank can't pay stops the training where it
  * is, and it can be taken up again.
  *
+ * The tests can be failed, from 2026-10-02
+ * (`docs/research/world/research-boat-pilot-exams.json`): the knowledge test
+ * at the FAA's own 89.56% passed in 2025 (44,657 taken), the checkride at
+ * the 75.1% secondary sites give for 2025, none being published by the FAA
+ * (decider `pilot.tests`, `passesPilotTest`). Failed, the knowledge test is taken again a month
+ * on, after more instruction, at its fee; the checkride a month on, at half
+ * the examiner's fee, as the examiners who publish theirs charge for a
+ * retest.
+ *
  * Qualified, a pilot flies themselves between towns in America in a rented
  * 172, from the airport nearest each: at Textron's 124 knots, a fifth of an
  * hour more for the ground and the climb (SLATE's), within its 640 nautical
@@ -46,8 +55,10 @@ export const PILOT_TRAINING = {
 } as const;
 export const SKYHAWK = { knots: 124, rangeNm: 640, reserveHours: 0.5, overheadHours: 0.2 } as const;
 export const PILOT_MONTH_KIND = 'pilot.month';
+/** The share passing each test: the FAA's knowledge test, 2025; the checkride, a secondary figure. And a checkride retest's share of the fee. */
+export const PILOT_PASS = { knowledge: 0.8956, checkride: 0.751, retestShare: 0.5 } as const;
 
-export interface PilotTraining { startedAt: Instant; monthsDone: number; status: 'training' | 'stopped' | 'certified'; /** Where, from 2026-09-30: absent, America. */ country?: string }
+export interface PilotTraining { startedAt: Instant; monthsDone: number; status: 'training' | 'stopped' | 'certified'; /** Where, from 2026-09-30: absent, America. */ country?: string; /** The knowledge test passed, and the checkrides taken, from 2026-10-02. */ knowledgePassed?: boolean; knowledgeTries?: number; checkrides?: number }
 
 /**
  * A pilot's license and flying oneself outside America, from 2026-09-30
@@ -246,6 +257,11 @@ function scheduleMonth(sim: Simulation, person: Person): void {
   sim.schedule({ at: sim.now + 30 * MS_DAY, kind: PILOT_MONTH_KIND, label: 'Flight Training', category: 'personal', priority: 30, payload: { personId: person.id } });
 }
 
+/** Whether a test is passed, at its published share (decider `pilot.tests`); `odds` overrides it for the sweep. */
+export function passesPilotTest(sim: Simulation, person: Person, test: 'knowledge' | 'checkride', attempt: number, odds?: number): boolean {
+  return sim.rng('pilot.tests', person.id, test, attempt).next() < (odds ?? PILOT_PASS[test]);
+}
+
 export function registerAviation(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { month: Money; total: Money }>('pilot.train', (_p, { sim: s }) => {
     const person = s.player;
@@ -304,9 +320,26 @@ export function registerAviation(sim: Simulation): void {
       return;
     }
     if (t.monthsDone >= PILOT_TRAINING.months) {
-      if (!payFromBank(s, person, costs.tests, 'The knowledge test and the checkride', 'travel')) {
+      // The knowledge test, until passed; then the checkride, a retest at half its fee (from 2026-10-02).
+      const test = !t.knowledgePassed ? 'knowledge' : 'checkride';
+      const fee = test === 'knowledge' ? usd(s, PILOT_TRAINING.knowledgeTest * 100) : usd(s, Math.round(PILOT_TRAINING.checkride * ((t.checkrides ?? 0) > 0 ? PILOT_PASS.retestShare : 1) * 100));
+      if (!payFromBank(s, person, fee, test === 'knowledge' ? 'The knowledge test' : (t.checkrides ?? 0) > 0 ? 'The checkride, a retest' : 'The checkride', 'travel')) {
         t.status = 'stopped';
-        if (mine) s.notify({ category: 'personal', title: 'Training Stopped', body: `Your bank couldn’t pay the tests, ${formatMoney(costs.tests, saveCurrency(s.universe))}.`, importance: 60, route: '/workspace/travel' });
+        if (mine) s.notify({ category: 'personal', title: 'Training Stopped', body: `Your bank couldn’t pay the ${test === 'knowledge' ? 'knowledge test' : 'checkride'}, ${formatMoney(fee, saveCurrency(s.universe))}.`, importance: 60, route: '/workspace/travel' });
+        return;
+      }
+      const passed = passesPilotTest(s, person, test, test === 'knowledge' ? t.knowledgeTries ?? 0 : t.checkrides ?? 0);
+      if (test === 'checkride') t.checkrides = (t.checkrides ?? 0) + 1;
+      else t.knowledgeTries = (t.knowledgeTries ?? 0) + 1;
+      if (!passed) {
+        if (mine) s.notify({ category: 'personal', title: test === 'knowledge' ? 'Knowledge Test Failed' : 'Checkride Failed', body: test === 'knowledge' ? 'Below the 70% it needs: more instruction, and it’s taken again next month.' : 'The examiner didn’t pass it: a retest next month, at half the fee.', importance: 60, route: '/workspace/travel' });
+        scheduleMonth(s, person);
+        return;
+      }
+      if (test === 'knowledge') {
+        t.knowledgePassed = true;
+        if (mine) s.notify({ category: 'personal', title: 'Knowledge Test Passed', body: 'The checkride is next month.', importance: 40, route: '/workspace/travel' });
+        scheduleMonth(s, person);
         return;
       }
       t.status = 'certified';
