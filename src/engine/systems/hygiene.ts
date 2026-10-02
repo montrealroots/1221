@@ -59,6 +59,8 @@ export const KEPT = ['body-wash', 'shampoo', 'toothpaste', 'toothbrush', 'deodor
  */
 export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent'] as const;
 export const DISHWASHER_CYCLES_A_DAY = 184 / 365;
+/** A week's use of each, below which it's bought again: two loads of a person's one or two a week (`LAUNDRY`), and a week of dishwasher cycles. */
+export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY };
 /** Everything the chains sell for the bathroom and for cleaning. */
 const TOILETRIES: readonly Toiletry[] = [...BATHROOM, ...CLEANING];
 
@@ -225,7 +227,11 @@ export function restock(sim: Simulation, person: Person, dishwasher = false): nu
   const cleaning = keepsCleaning(person) ? CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent') : [];
   for (const kind of [...KEPT, ...cleaning]) {
     const have = toHand(sim, person, kind).filter((i) => kind !== 'toothbrush' || i.condition > 0);
-    if (have.length > 0 || (kind === 'body-wash' && toHand(sim, person, 'soap').length > 0)) continue;
+    // A detergent is bought again with a week's use left, as people buy it before it's out: until 2026-10-02 only once it
+    // was, and a working life went weeks without washing between free days (the lives replayed at ce72adf3: 1,048 refused).
+    const low = CLEANING_LOW[kind as (typeof CLEANING_KEPT)[number]];
+    const left = have.reduce((n, i) => n + i.supply.left, 0);
+    if (low !== undefined ? left >= low : have.length > 0 || (kind === 'body-wash' && toHand(sim, person, 'soap').length > 0)) continue;
     const pick = cheapestToiletry(sim, person.currentLocationId, kind);
     if (!pick || toiletryRefusal(person, pick.id, 1)) continue;
     try { buyToiletries(sim, person, pick.id, 1, true); bought += 1; } catch (e) { if (!(e instanceof CommandError)) throw e; }
