@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-269 commands; 263 named by a test, 6 not.
+270 commands; 264 named by a test, 6 not.
 
 ## aircraft
 
@@ -157,6 +157,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.delete_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
 | `clothes.dress` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.dry_clean` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
+| `clothes.measures` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `sizecharts.test.ts` | Rent And A Roof |
 | `clothes.return` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
 | `clothes.save_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `fittings.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.sell` | `src/engine/systems/resale.ts` | `ClothesWorkspace.tsx` | `resale.test.ts` | Rent And A Roof |

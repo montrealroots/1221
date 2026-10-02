@@ -30,6 +30,8 @@ import { bodyOf } from './body';
 import { BMI_EDGES, BODY_BY_COUNTRY, BODY_DEFAULT } from '../content/body';
 import { CITIES } from '../content/geography';
 import type { Garment } from './wardrobe';
+import { CLOTHING_RETAILERS } from '../content/clothingcatalog';
+import { SIZE_CHARTS } from '../content/sizecharts';
 
 export const FIT = { band: 0.075, weekDays: 7 } as const;
 const UNSIZED: ReadonlySet<Slot> = new Set(['shoes', 'socks', 'accessory']);
@@ -84,22 +86,65 @@ export function bmiShare(country: string, bmi: number): number {
   return Math.min(1, Math.max(0, below / total));
 }
 
-/** Your size in a garment's run, or nothing where it comes in one size. */
-export function sizeFor(sim: Simulation, person: Person, sizes: readonly string[]): string | undefined {
+/**
+ * Your measurements, as you've given them, and the department whose charts
+ * you size by (from 2026-10-02): a chest or bust, a waist and hips, in
+ * centimeters. Given, a garment from a retailer whose own chart SLATE keeps
+ * for its market and that department (`content/sizecharts.ts`) is your
+ * size by the chart: the smallest size whose range reaches yours, by bust
+ * or chest for a top and by waist for a bottom. Not given, or with no chart,
+ * the size is read from your body mass index, as before.
+ */
+export interface Measures { department: 'women' | 'men'; chestCm?: number; waistCm?: number; hipCm?: number }
+
+/** What a garment is, for its chart: its retailer and the slot it's worn in. */
+export interface Sized { retailer: string; slot: Slot }
+
+/** Your size by a retailer's own chart, where you've given your measurements and it keeps one; nothing otherwise. */
+export function chartSize(person: Person, p: Sized, sizes: readonly string[]): string | undefined {
+  const m = person.measures;
+  if (!m) return undefined;
+  const r = CLOTHING_RETAILERS.find((x) => x.id === p.retailer);
+  const group = p.slot === 'bottom' ? 'bottoms' : p.slot === 'top' || p.slot === 'outer' || p.slot === 'dress' || p.slot === 'active' ? 'tops' : undefined;
+  if (!r || !group) return undefined;
+  const chart = SIZE_CHARTS.find((c) => c.market === r.market && c.department === m.department && c.group === group && (c.retailer === r.name || c.retailer.startsWith(`${r.name} (`)));
+  const mine = group === 'bottoms' ? m.waistCm : m.chestCm;
+  if (!chart || mine === undefined) return undefined;
+  const offered = new Map(sizes.map((s) => [s.trim().toUpperCase(), s]));
+  for (const row of chart.rows) {
+    const span = group === 'bottoms' ? row.waist : row.bust ?? row.chest;
+    if (!span || span[1] < mine) continue;
+    const label = row.labels.find((l) => offered.has(l));
+    if (label) return offered.get(label);
+  }
+  return undefined;
+}
+
+/** Your size in a garment's run, or nothing where it comes in one size: by the retailer's chart where it can be, by body mass index otherwise. */
+export function sizeFor(sim: Simulation, person: Person, sizes: readonly string[], p?: Sized): string | undefined {
   const run = sizeRun(sizes);
   if (run.length === 0) return undefined;
+  const charted = p ? chartSize(person, p, run) : undefined;
+  if (charted) return charted;
   const body = bodyOf(sim, person);
   const share = bmiShare(CITIES.get(person.homeRegionId)?.countryId ?? '', body.weightKg / (body.heightCm / 100) ** 2);
   return run[Math.min(run.length - 1, Math.floor(share * run.length))];
 }
 
 /** The weight a garment in a size is made for: yours in your size, a step either way for each size off. */
-export function fitKgFor(sim: Simulation, person: Person, sizes: readonly string[], chosen: string | undefined): number {
+export function fitKgFor(sim: Simulation, person: Person, sizes: readonly string[], chosen: string | undefined, p?: Sized): number {
   const kg = bodyOf(sim, person).weightKg;
   const run = sizeRun(sizes);
-  const mine = sizeFor(sim, person, sizes);
+  const mine = sizeFor(sim, person, sizes, p);
   if (!chosen || !mine || !run.includes(chosen)) return kg;
   return kg * (1 + SIZE_STEP) ** (run.indexOf(chosen) - run.indexOf(mine));
+}
+
+/** Why measurements can't be kept as given, or nothing: each in centimeters, within what a body measures. */
+export function measuresRefusal(m: Partial<Measures>): string | undefined {
+  if (m.department !== 'women' && m.department !== 'men') return 'Choose whose charts to size by.';
+  for (const v of [m.chestCm, m.waistCm, m.hipCm]) if (v !== undefined && !(Number.isFinite(v) && v >= 40 && v <= 220)) return 'Each measurement in centimeters, from 40 to 220.';
+  return undefined;
 }
 
 export const tailorsIn = (cityId: string): Tailor[] => TAILORS.filter((t) => t.cityId === cityId);

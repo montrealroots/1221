@@ -312,6 +312,8 @@ export interface Person {
   /** A home machine broken and waiting for its repair (`systems/appliancefaults.ts`, from 2026-10-02). */
   /** Getting about in a wheelchair, and a disability parking permit (`systems/access.ts`, from 2026-10-02). */
   mobility?: 'wheelchair';
+  /** Measurements given, and the department sized by (`systems/tailoring.ts`, from 2026-10-02). */
+  measures?: import('../systems/tailoring').Measures;
   parkingPermit?: { cityId: string; at: number };
   applianceFaults?: Partial<Record<import('../systems/appliancefaults').Machine, import('../systems/appliancefaults').MachineFault>>;
   groomedAt?: number;
