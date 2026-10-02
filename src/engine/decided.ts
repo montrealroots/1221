@@ -42,6 +42,8 @@ import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { onTheRoad } from './systems/roadside';
+import { machinesDay } from './systems/appliancefaults';
+import { mayRefer } from './systems/appointments';
 import type { Journey } from './systems/journey';
 import { mayCollide } from './systems/carcare';
 import { buildInspectionFails, weatherDelay } from './systems/construction';
@@ -459,6 +461,32 @@ defineDecider<{ sim: Simulation; car: number }, string>({
     const j = { id: `j-${car}`, fromCity: 'us-ny-newyork', toCity: 'us-ct-newhaven', leaveAt: sim.now, arriveAt: sim.now + 7_200_000 } as Journey;
     return !onTheRoad(sim, sim.player, v, j, 130, 0.5) ? 'goes' : v.fault!.severe ? 'severe, towed' : 'light';
   },
+});
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'home.appliance_fault',
+  decides: 'A home machine breaking on a day, the washer, the dishwasher or the fridge, at the yearly rates Consumer Reports and Which? put a period on (FAULTS_A_YEAR); swept at even odds.',
+  drawnIn: 'src/engine/systems/appliancefaults.ts',
+  reads: {
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    const broke = machinesDay(sim, sim.player, 0.5);
+    return broke.length === 0 ? 'none' : broke.sort().join(', ');
+  },
+});
+
+defineDecider<{ sim: Simulation; visit: number }, string>({
+  id: 'health.referral',
+  decides: 'A doctor’s visit kept ending in a referral to a specialist or not, at the place’s share of visits referred (REFERRAL_SHARE); swept at even odds.',
+  drawnIn: 'src/engine/systems/appointments.ts',
+  reads: {
+    visit: (o, t) => ({ ...o, visit: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), visit: seed }),
+  decide: ({ sim, visit }) => (mayRefer(sim, sim.player, { id: `v${visit}`, at: sim.now, what: 'A checkup' }, 0.5) ? 'referred' : 'not'),
 });
 
 defineDecider<{ sim: Simulation; booking: number }, string>({

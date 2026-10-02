@@ -20,8 +20,9 @@ import { journeysOf } from './journey';
 import { documentsOf } from './documents';
 import { appointmentsOf } from './appointments';
 import { rentalsOf } from './rentals';
+import { MACHINE_LABEL, faultsOf, type Machine } from './appliancefaults';
 
-export interface UnderWay { kind: 'order' | 'car' | 'shop' | 'appointment' | 'journey' | 'document' | 'works' | 'rental'; label: string; until: Instant; route: string }
+export interface UnderWay { kind: 'order' | 'car' | 'shop' | 'appointment' | 'journey' | 'document' | 'works' | 'rental' | 'repair'; label: string; until: Instant; route: string }
 
 export function underWay(sim: Simulation, person: Person): UnderWay[] {
   const now = sim.now;
@@ -39,5 +40,6 @@ export function underWay(sim: Simulation, person: Person): UnderWay[] {
   for (const r of rentalsOf(person)) if (r.status === 'held' && r.heldUntil !== undefined) out.push({ kind: 'rental', label: 'A Rental Car Held For Its Deposit', until: r.heldUntil, route: '/workspace/travel' });
   for (const d of documentsOf(person)) if (d.status === 'pending' && d.readyAt !== undefined) out.push({ kind: 'document', label: `${d.name}, Being Issued`, until: d.readyAt, route: '/workspace/papers' });
   for (const h of person.homes ?? []) for (const w of h.works) if (w.doneAt > now) out.push({ kind: 'works', label: `${PROJECTS.find((p) => p.id === w.projectId)?.label ?? 'Works'}, ${h.facts.address}`, until: w.doneAt, route: '/workspace/homes' });
+  for (const [m, f] of Object.entries(faultsOf(person)) as [Machine, NonNullable<ReturnType<typeof faultsOf>[Machine]>][]) if (f.fixAt !== undefined && f.fixAt > now) out.push({ kind: 'repair', label: `The ${MACHINE_LABEL[m]}, Being Mended`, until: f.fixAt, route: '/home' });
   return out.sort((a, b) => a.until - b.until || a.label.localeCompare(b.label));
 }

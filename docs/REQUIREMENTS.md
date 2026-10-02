@@ -106,7 +106,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |
 | 31h | Grooming at home | Partial | salon, teeth, deodorant | Shave, hair, makeup at home; preferences |
 | 32a | Browse wardrobe, drawers, luggage | Partial | `reachable`, WhatToWear | Browse by location |
-| 32b | Filter by occasion, type, size, color, condition | Not implemented | `spec`, `condition` exist | Filters; occasion tags |
+| 32b | Filter by occasion, type, size, color, condition | Partial, 2026-10-02 | Belongings filters by kind, clean or not, condition, color and size, and finds by name (`systems/itemfacets.ts`) | Occasion tags (no source tags garments by occasion) |
 | 32c | Pieces and layers | Partial | one per slot | Layering |
 | 32d | Change, with time and a worn state | Done, 2026-10-02 | `clothes.change`: `CHANGE_MINUTES` (SLATE's estimate), each piece a wear, `wornNow`; tests/wardrobe.test.ts | — |
 | 32e | Removed items stored or to the hamper | Not implemented | — | Hamper spot; take-off choice |
@@ -131,7 +131,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 35c | Organizing | Partial | spots | Rooms; capacity |
 | 35d | Waste | Partial, 2026-10-02 | `systems/waste.ts`: each research town's household charge in the bills (LA's schedule, Toronto, Vancouver, Dublin; London, Mexico City, New York and New Haven none) | Bin size and plan choice; collection days; bulky items |
 | 35e | Replacing supplies | Partial | automatic restock | Household consumables |
-| 35f | Appliance repair | Not implemented | appliances age out | Faults, repair visits |
+| 35f | Appliance repair | Done, 2026-10-02 | `systems/appliancefaults.ts`: washer, dishwasher and fridge faults at Consumer Reports' and Which?'s rates (decider `home.appliance_fault`); the laundromat, washing by hand, a spoiled fridge; the landlord's mended free next morning, one's own booked at each market's price | Dryer and air conditioning faults (no rate with a period published) |
 | 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
 | 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener | Access, visit windows, work recorded |
 | 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines | Background top-ups bypass time and hours; favorites, repeat orders, scheduled routines |
@@ -205,7 +205,7 @@ Correctness first, then the connected day the plan asks to be shown working
 |---|---|---|---|---|
 | 46 | Manual packing | Partial, 2026-10-02 | volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; a luggage catalog; checked bags against an airline's limits |
 | 47a–c, g, l | Planning, documents, booking, cancellation, charters and ferries | Complete | journey.ts; tests | Destinations limited to towns with stays |
-| 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | — | Choices of ground transport; missed connections; rebooking choice; change the outbound; taxi and rideshare |
+| 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | from 2026-10-02: to and from the airport By Taxi or By Transit at each town's read fare (`systems/airportground.ts`); a canceled flight's fare taken back instead of the next one, the way home with it (`travel.take_refund`) | Missed connections; change the outbound; rideshare; airport parking |
 | 47m | Companions | Partial, 2026-10-02 | `travel.companion`: a friend or partner from where you set out, own fares, a room split evenly, the waking hours together; tests/companions.test.ts | Several companions; a child along |
 | 47o | Home while away | Partial | bills run | House-sitter, mail, spoilage checked |
 | 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns | Guests, rooms, filters |
@@ -224,7 +224,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
 | 50.1–2 | Find a provider; access and coverage | Partial | 35 providers in 8 towns | Dentists, opticians, therapists, specialists; a quote before care |
-| 50.3–7 | Book, prepare, attend, outcome, referral | Partial, 2026-10-02 | `systems/appointments.ts`: a doctor's visit booked for the place's published wait (England's distribution, AMN's days, IMSS's 29, Canada's next-day share), on the calendar, kept and billed or missed and owed, booked again or called off; tests/appointments.test.ts | Referrals (the specialist waits are now researched); outcomes beyond the bill; Ireland's wait unpublished |
+| 50.3–7 | Book, prepare, attend, outcome, referral | Partial, 2026-10-02 | `systems/appointments.ts`: a doctor's visit booked for the place's published wait (England's distribution, AMN's days, IMSS's 29, Canada's next-day share), on the calendar, kept and billed or missed and owed, booked again or called off; tests/appointments.test.ts; from 2026-10-02 a kept visit ends in a referral at the place's share (NAMCS 9.1%, England 8.1%, England's for Canada), the specialist booked after its published wait (`mayRefer`, decider `health.referral`) | What the specialist finds (no SLATE condition names one); Ireland and Mexico (no wait published) |
 | 50.8 | Payment and coverage | Complete | bills, aid; tests | — |
 | 50.9–11 | Prescriptions, recovery, commitments | Partial | — | §51; follow-ups |
 | 51.1 | Prescriptions | Partial | paid at the counter; England's prepayment certificate, three months or a year (`health.prepay`, 2026-10-02) | A prescription, supply, refills, collection |

@@ -10,6 +10,19 @@
  * in hospital or laid up), it isn't had and isn't billed, and the need stays
  * until they book again. Ireland publishes no GP wait, so a visit there is
  * had as before; so is the flu, which is mostly not seen at all.
+ *
+ * **A referral**, from 2026-10-02 (`research-referrals-childday.json`): a
+ * visit kept ends in one to a specialist as often as the place's doctors
+ * refer, America's 9.1% of office visits (NAMCS 2019) and England's 8.1%
+ * (2022), England's taken for Canada's, another system where the family
+ * doctor refers. The specialist is seen after the place's published wait:
+ * AMN's 31 days in America; in England the NHS's median of 12 weeks to
+ * treatment, the nearest it publishes; in Canada the Fraser Institute's
+ * family doctor to specialist median, 10.7 weeks in Ontario, 19.7 in British
+ * Columbia, 15.3 elsewhere. It's a visit like the first, billed as the
+ * place's cover bills one, and refers no further. Ireland publishes only how
+ * many wait, and Mexico neither, so no referral is drawn there. What the
+ * specialist finds isn't kept: SLATE's conditions don't name one.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -24,6 +37,33 @@ import { citizenOf } from './documents';
 import { present } from './career';
 
 export const APPOINTMENT_KIND = 'health.appointment';
+
+/** The share of visits that end in a referral, by country. */
+export const REFERRAL_SHARE: Readonly<Record<string, number>> = { us: 0.091, uk: 0.081, ca: 0.081 };
+/** Days from referral to the specialist: America's average; England's median weeks; Canada's by province (Ontario ca-08, British Columbia ca-02), its median otherwise. */
+export const REFERRAL_DAYS = { us: 31, uk: 12 * 7, ca: { 'ca-08': 10.7 * 7, 'ca-02': 19.7 * 7, other: 15.3 * 7 } } as const;
+/** What a specialist's appointment is booked as, and known by. */
+export const SPECIALIST = 'A specialist, referred';
+
+/** The days to a specialist where they live, or nothing where none is published. */
+export function referralDays(person: Person): number | undefined {
+  const city = homeCity(person);
+  const country = CITIES.get(city)?.countryId;
+  if (country === 'us') return REFERRAL_DAYS.us;
+  if (country === 'uk') return REFERRAL_DAYS.uk;
+  if (country === 'ca') { const p = CITIES.get(city)?.parentId ?? ''; return Math.round(p === 'ca-08' ? REFERRAL_DAYS.ca['ca-08'] : p === 'ca-02' ? REFERRAL_DAYS.ca['ca-02'] : REFERRAL_DAYS.ca.other); }
+  return undefined;
+}
+
+/** A kept visit that ends in a referral, at the place's share (decider `health.referral`): the specialist booked. `odds` overrides it for the sweep. */
+export function mayRefer(sim: Simulation, person: Person, a: Appointment, odds?: number): Appointment | undefined {
+  if (a.what === SPECIALIST) return undefined;
+  const share = REFERRAL_SHARE[CITIES.get(homeCity(person))?.countryId ?? ''];
+  if (share === undefined) return undefined;
+  if (sim.rng('health.referral', person.id, a.id, a.at).next() >= (odds ?? share)) return undefined;
+  // Every country with a share publishes a wait.
+  return bookIn(sim, person, SPECIALIST, referralDays(person)!, `Referred after ${a.what.toLowerCase()}`);
+}
 
 export interface Appointment { id: string; at: Instant; what: string; clinicId?: string }
 export const appointmentsOf = (person: Person): Appointment[] => (healthOf(person).appointments ??= []);
@@ -62,15 +102,19 @@ function slot(sim: Simulation, person: Person, days: number): Instant {
 
 /** Books the next appointment for a need, at their doctor or the town's first practice; nothing where no wait is published. */
 export function book(sim: Simulation, person: Person, what: string): Appointment | undefined {
-  const days = waitDays(sim, person, `${what}-${sim.now}`);
+  const days = what === SPECIALIST ? referralDays(person) : waitDays(sim, person, `${what}-${sim.now}`);
   if (days === undefined) return undefined;
+  return bookIn(sim, person, what, days);
+}
+
+function bookIn(sim: Simulation, person: Person, what: string, days: number, why?: string): Appointment {
   const clinic = clinicFor({ ...person, currentLocationId: homeCity(person) } as Person, 'visit');
   const h = healthOf(person);
   h.seq = (h.seq ?? 0) + 1;
   const a: Appointment = { id: `a${h.seq}`, at: slot(sim, person, days), what, ...(clinic ? { clinicId: clinic.id } : {}) };
   appointmentsOf(person).push(a);
-  sim.schedule({ at: a.at, kind: APPOINTMENT_KIND, label: `The Doctor${clinic ? `, ${clinic.name}` : ''}`, category: 'personal', priority: 35, requiresPlayer: true, durationMinutes: CONSULT_MINUTES, locationId: homeCity(person), payload: { personId: person.id, appointmentId: a.id } });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Doctor’s Appointment', body: `${what}: booked${clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the wait where you live.`, importance: 50, route: '/workspace/papers' });
+  sim.schedule({ at: a.at, kind: APPOINTMENT_KIND, label: what === SPECIALIST ? 'A Specialist' : `The Doctor${clinic ? `, ${clinic.name}` : ''}`, category: 'personal', priority: 35, requiresPlayer: true, durationMinutes: CONSULT_MINUTES, locationId: homeCity(person), payload: { personId: person.id, appointmentId: a.id } });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? ' specialist, booked' : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the wait where you live.`, importance: 50, route: '/workspace/papers' });
   return a;
 }
 
@@ -87,6 +131,8 @@ export function registerAppointments(sim: Simulation): void {
       return;
     }
     careFor(s, person, { care: 'visit', what: a.what }, item.at);
+    // And it may end in a referral (from 2026-10-02).
+    if (person.id === s.universe.playerId) mayRefer(s, person, a);
   });
 
   // A need booked again after a missed appointment, or one called off.

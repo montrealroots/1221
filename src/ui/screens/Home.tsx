@@ -54,6 +54,7 @@ import { kitchenStock } from '@/engine/systems/kitchen';
 import { mealsReady } from '@/engine/systems/pantry';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { underWay } from '@/engine/systems/underway';
+import { MACHINE_LABEL, faultsOf, repairBill, repairRefusal, type Machine } from '@/engine/systems/appliancefaults';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
@@ -764,6 +765,31 @@ function YourRoutines() {
   return <Stat label="Saved" value={String(routines.length)} note={routines.length ? routines.map((r) => r.name).slice(0, 3).join(', ') : 'None saved yet'} />;
 }
 
+/** A machine at home that's broken, and its repair booked (`systems/appliancefaults.ts`). */
+function BrokenMachines() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const broken = Object.keys(faultsOf(person)) as Machine[];
+  if (broken.length === 0) return null;
+  const cur = saveCurrency(sim.universe);
+  return (
+    <div className="col gap-1">
+      <div className="small muted">Broken At Home</div>
+      {broken.map((m) => {
+        const f = faultsOf(person)[m]!;
+        const bill = repairBill(sim, person, m);
+        const no = repairRefusal(sim, person, m);
+        return (
+          <div key={m} className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <span className="small">{MACHINE_LABEL[m]}{f.fixAt !== undefined ? <span className="xs dim">{` · mended ${formatDate(f.fixAt, sim.zone)}${f.landlord ? ', the landlord’s' : ''}`}</span> : null}</span>
+            {f.fixAt === undefined && <Gated feature="home.repair_machine" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.repair_machine', { machine: m }).ok) toast('A technician comes tomorrow.', 'positive'); }}>{bill !== undefined ? `Book The Repair, ${formatMoney(bill, cur, { cents: false })}` : 'Book The Repair'}</Gated>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 /** What you own besides clothes and food, and how much of it is at home. */
 function YourBelongings() {
   const { sim } = useGame();
@@ -781,6 +807,7 @@ function YourBelongings() {
           {pending.length > 6 && <div className="xs dim">{`And ${pending.length - 6} more`}</div>}
         </div>
       )}
+      <BrokenMachines />
     </div>
   );
 }

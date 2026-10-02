@@ -20,7 +20,7 @@ import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
-import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf } from '@/engine/systems/journey';
+import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf, refundRefusal } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
 import { companionRefusal } from '@/engine/systems/companions';
 import { contactsOf } from '@/engine/systems/people';
@@ -33,6 +33,8 @@ import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
+import { breakfastPrice, breakfastRefusal } from '@/engine/systems/hotelbreakfast';
+import { byTransit, transitOffered, type GroundWay } from '@/engine/systems/airportground';
 import { amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { lateQuote } from '@/engine/systems/latecheckout';
@@ -67,6 +69,7 @@ export function TravelWorkspace() {
   // A named hotel's room, as "hotel|room", or the town's average (`systems/hotels.ts`).
   const [hotelPick, setHotelPick] = useState('');
   const [ratePlan, setRatePlan] = useState<RatePlan>('flexible');
+  const [ground, setGround] = useState<GroundWay>('taxi');
   const [daysThere, setDaysThere] = useState(4);
   const [tow, setTow] = useState(false);
   // A town chosen before arriving in it isn't a destination from it: until 2026-09-30 it stayed chosen, the list showing
@@ -98,9 +101,13 @@ export function TravelWorkspace() {
   // A caravan of one's own behind the car (`systems/caravans.ts`, from 2026-09-30).
   const caravanHere = car && toCity && caravansOf(person).some((c) => (c.at ?? c.cityId) === fromCity) ? towFor(person, car, fromCity, toCity) : undefined;
   const towing = tow && car && caravanHere && typeof caravanHere !== 'string' ? caravanHere : undefined;
-  const planned = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
+  const flown = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
+  // To the airport and back by transit where it was read (`systems/airportground.ts`).
+  const transit = !mode && typeof flown !== 'string' && transitOffered(flown);
+  const planned = transit && ground === 'transit' && typeof flown !== 'string' ? byTransit(sim, flown) : flown;
   const outLegs = towing && typeof planned !== 'string' ? towedLegs(sim, car!, towing, planned) : planned;
-  const plannedBack = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
+  const flownBack = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
+  const plannedBack = transit && ground === 'transit' && flownBack && typeof flownBack !== 'string' ? byTransit(sim, flownBack) : flownBack;
   const backLegs = towing && plannedBack && typeof plannedBack !== 'string' ? towedLegs(sim, car!, towing, plannedBack) : plannedBack;
   // A round trip's discount is the airlines'; a train's return is two singles.
   const outPlan = typeof outLegs === 'string' ? undefined : round && !mode ? asRoundTrip(outLegs) : outLegs;
@@ -179,6 +186,15 @@ export function TravelWorkspace() {
                   <option value="premium">Business Or First</option>
                 </select>
               </div>
+              {transit && (
+                <div className="field">
+                  <label htmlFor="travel-ground">To The Airport</label>
+                  <select id="travel-ground" value={ground} onChange={(e) => setGround(e.target.value === 'transit' ? 'transit' : 'taxi')}>
+                    <option value="transit">By Transit</option>
+                    <option value="taxi">By Taxi</option>
+                  </select>
+                </div>
+              )}
               <div className="field">
                 <label htmlFor="travel-bags">Checked Bags</label>
                 <select id="travel-bags" value={mode ? 0 : bags} disabled={Boolean(mode)} onChange={(e) => setBags(Number(e.target.value))}>
@@ -275,7 +291,7 @@ export function TravelWorkspace() {
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}) });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}), ...(transit && ground === 'transit' ? { ground: 'transit' } : {}) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>
@@ -306,7 +322,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <AskAlong j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <CheckOutLate j={j} />}<PayDeposits j={j} /></div></td>
+                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <AskAlong j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <><CheckOutLate j={j} /><HotelBreakfast j={j} /></>}<PayDeposits j={j} />{j.status === 'underway' && j.rebooked && <TakeTheRefund j={j} />}</div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -508,6 +524,30 @@ function StayLonger({ j }: { j: Journey }) {
       }}>{typeof q === 'string' ? 'Stay Longer' : `Stay Longer (${formatMoney(q.total, cur, { cents: false })})`}</Gated>
     </div>
   );
+}
+
+/** Breakfast at the named hotel where you're staying, at its own price or with the room (`hotel.breakfast`). */
+function HotelBreakfast({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  if (!j.hotel?.named || person.currentLocationId !== j.toCity || person.stay?.hotelId !== j.hotel.named.hotelId) return null;
+  const price = breakfastPrice(sim, person);
+  if (price === undefined) return null;
+  const no = breakfastRefusal(sim, person);
+  const cur = saveCurrency(sim.universe);
+  return (
+    <Gated feature="hotel.breakfast" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('hotel.breakfast', {}).ok) toast('Breakfast, at the hotel.', 'positive'); }}>{price ? `Have Breakfast, ${formatMoney(price, cur)}` : 'Have Breakfast, Included'}</Gated>
+  );
+}
+
+/** A flight the airline canceled: the fare back instead of the next flight, before it leaves (`travel.take_refund`). */
+function TakeTheRefund({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const no = refundRefusal(sim, person, j.id);
+  if (no) return null;
+  const cur = saveCurrency(sim.universe);
+  return <Gated feature="travel.take_refund" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ refund: number }>('travel.take_refund', { journeyId: j.id }); if (a.ok) toast(`Refunded ${formatMoney(a.value!.refund, cur)}.`, 'positive'); }}>Take The Fare Back Instead</Gated>;
 }
 
 /** A later check-out, the morning of it, at a hotel that publishes its price (`travel.late_checkout`). */

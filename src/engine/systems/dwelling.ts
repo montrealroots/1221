@@ -50,6 +50,7 @@ import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForEx
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { detergentFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
+import { machinesDay } from './appliancefaults';
 import { starterLuggage } from './luggage';
 import { sunTimes } from '../core/sun';
 import { gymHere } from './gyms';
@@ -88,6 +89,8 @@ export interface Stay {
   out?: boolean;
   /** A named hotel's, for its own gym and pool (`content/hotelamenities.ts`, from 2026-10-02). */
   hotelId?: string;
+  /** The day breakfast was had at the hotel (`systems/hotelbreakfast.ts`, from 2026-10-02). */
+  breakfastOn?: string;
 }
 
 /** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */
@@ -163,11 +166,33 @@ export function homePlace(sim: Simulation, person: Person): Place | undefined {
   if (home.kind === 'sofa') return { type: 'condo', size: 700, fixtures: SOFA_FIXTURES, keeps: false, shared: true, owned: false, cooks: true };
   const owned = livingIn(person);
   if (owned) {
-    return { type: owned.facts.type, size: owned.facts.size, fixtures: ownUnits(person, fixturesOf(sim, person, owned.cityId, owned.facts, owned.id)), keeps: true, shared: false, owned: true, cooks: true };
+    return { type: owned.facts.type, size: owned.facts.size, fixtures: withFaults(person, ownUnits(person, fixturesOf(sim, person, owned.cityId, owned.facts, owned.id))), keeps: true, shared: false, owned: true, cooks: true };
   }
   const unit = home.unit ?? drawRental(sim, person, home.cityId, home.kind === 'shared', home.since);
-  return { type: unit.type, size: unit.size, fixtures: ownUnits(person, unit.fixtures), keeps: true, shared: unit.shared, owned: false, cooks: true };
+  return { type: unit.type, size: unit.size, fixtures: withFaults(person, ownUnits(person, unit.fixtures)), keeps: true, shared: unit.shared, owned: false, cooks: true };
 }
+
+/** The home's machines as they'd be working: before any fault (`systems/appliancefaults.ts`). */
+export function workingFixtures(sim: Simulation, person: Person): Fixtures | undefined {
+  const home = person.home;
+  if (!home || home.kind === 'sofa') return undefined;
+  const owned = livingIn(person);
+  if (owned) return ownUnits(person, fixturesOf(sim, person, owned.cityId, owned.facts, owned.id));
+  return ownUnits(person, (home.unit ?? drawRental(sim, person, home.cityId, home.kind === 'shared', home.since)).fixtures);
+}
+
+/**
+ * A broken washer or dishwasher, until it's repaired (`systems/appliancefaults.ts`, from 2026-10-02): the washing goes to
+ * the laundromat, and the dishes are done by hand.
+ */
+const withFaults = (person: Person, f: Fixtures): Fixtures => {
+  const broken = person.applianceFaults;
+  if (!broken) return f;
+  let out = f;
+  if (broken.washer && (out.laundry === 'in-unit' || out.laundry === 'washer-only')) out = { ...out, laundry: 'none' };
+  if (broken.dishwasher && out.dishwasher) out = { ...out, dishwasher: false };
+  return out;
+};
 
 /** Whether they're at home now: in its town. */
 export const atHome = (person: Person): boolean => Boolean(person.home && person.home.cityId === person.currentLocationId);
@@ -352,6 +377,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   starterTowels(sim, person);
   starterSupplies(sim, person);
   starterCleaning(sim, person, place.fixtures.dishwasher);
+  // The home's machines: one mended, or one broken (`systems/appliancefaults.ts`, from 2026-10-02).
+  machinesDay(sim, person);
   starterLuggage(sim, person);
   const w = person.wellbeing;
   // Left to themselves, somebody with a free day keeps up: the washing when it's nearly all worn, a tidy-up when the
