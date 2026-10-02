@@ -14,7 +14,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
 import { monthKm, runningCost, vehiclesOf } from '@/engine/systems/vehicles';
-import { leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
+import { driverCost, driverIn, leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
 import { metAtWork } from '@/engine/systems/people';
 import { salonsIn } from '@/engine/systems/hygiene';
 import { arrange } from '@/engine/systems/catalog';
@@ -133,4 +133,51 @@ describe('a trip', () => {
     }
     expect(stopped).toBe(true);
   });
+});
+
+describe('a driver hired for the car', () => {
+  it('drives it on a suspended license, paid by the hour at least its minimum, and a trip by yourself is refused', () => {
+    const sim = life('us-ny-newyork', 'trip-driver');
+    const v = withCar(sim);
+    sim.player.driving = { points: [], suspendedUntil: sim.now + 365 * MS_DAY };
+    expect(tripRefusal(sim, sim.player, 'car', v.id)).toBeDefined();
+    expect(tripRefusal(sim, sim.player, 'car', v.id, undefined, true)).toBeUndefined();
+    const before = sim.universe.transactions.length;
+    const km = v.km ?? 0;
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'errand', by: 'car', vehicleId: v.id, driven: true } }).ok).toBe(true);
+    expect(sim.player.trip?.driver?.id).toBe('dryver-ny');
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'home' } }).ok).toBe(true);
+    expect(v.km).toBeGreaterThan(km);
+    const paid = sim.universe.transactions.slice(before).find((t) => t.memo === 'Dryver, driving your car')!;
+    // Two hours at least, at $55.
+    expect(paid.postings.find((q) => q.amount > 0)!.amount).toBe(usd(sim, 110_00));
+  });
+
+  it('costs Vancouver’s by the kilometer with its GST, and isn’t had where nobody publishes a price', () => {
+    const van = life('ca-bc-vancouver', 'trip-driver-van');
+    const cad = (n: number) => { const c = Math.round(n * 100); const cur = saveCurrency(van.universe); return cur === 'CAD' ? c : exchange(c, 'CAD', cur)!; };
+    expect(driverCost(van, driverIn('ca-bc-vancouver')!, 30, 10)).toBe(cad((30 + 2.5 * 10) * 1.05));
+    expect(driverCost(van, driverIn('ca-on-toronto')!, 30, 10)).toBe(cad(60 * 3 * 1.13));
+    expect(driverCost(van, driverIn('ca-on-toronto')!, 240, 10)).toBe(cad(60 * 4 * 1.13));
+    const nh = life('us-ct-newhaven', 'trip-driver-nh');
+    const car = withCar(nh);
+    expect(tripRefusal(nh, nh.player, 'car', car.id, undefined, true)).toBe('Nobody here drives your own car for a published price.');
+  });
+});
+
+describe('a driver hired, drunk', () => {
+  const legs = (driven: boolean) => {
+    const sim = life('us-ny-newyork', 'trip-driver-drunk');
+    const v = withCar(sim);
+    expect(sim.execute({ kind: 'errand.go', payload: { to: 'errand', by: 'car', vehicleId: v.id, ...(driven ? { driven: true } : {}) } }).ok).toBe(true);
+    for (let i = 0; i < 300; i += 1) {
+      sim.player.alcohol = { bac: 0.2, at: sim.now, peak: 0.2, peakAt: sim.now };
+      sim.execute({ kind: 'errand.go', payload: { to: 'errand' } });
+    }
+    return sim.player.driving?.suspendedUntil;
+  };
+  it('is never stopped over the limit, where driving yourself is', () => {
+    expect(legs(false)).toBeDefined();
+    expect(legs(true)).toBeUndefined();
+  }, 120_000);
 });

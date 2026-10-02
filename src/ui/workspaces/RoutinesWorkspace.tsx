@@ -18,7 +18,7 @@ import { groceryCatalog } from '@/engine/systems/kitchen';
 import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
-import { leg, runErrands, tripRefusal, type Stop } from '@/engine/systems/trips';
+import { leg, runErrands, tripRefusal, type Stop, driverIn } from '@/engine/systems/trips';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
 
 export function RoutinesWorkspace() {
@@ -163,6 +163,8 @@ function ErrandsPanel() {
   const [by, setBy] = useState<'car' | 'foot'>('foot');
   const [vehicleId, setVehicleId] = useState('');
   const [passengerId, setPassengerId] = useState('');
+  const [driven, setDriven] = useState(false);
+  const driver = driverIn(here);
   const [stops, setStops] = useState<(Stop & { label: string })[]>([]);
   const [choice, setChoice] = useState('');
   const car = cars.find((v) => v.id === vehicleId) ?? cars[0];
@@ -176,7 +178,8 @@ function ErrandsPanel() {
     ...(by === 'car' ? (STATIONS[here] ?? []).map((st, i) => ({ key: `f:${i}`, label: `Fuel At ${st}`, kind: 'errand.fuel', payload: { station: i }, leg: 'errand' as const })) : []),
   ];
   const picked = options.find((o) => o.key === choice) ?? options[0];
-  const no = tripRefusal(sim, person, by, car?.id, passengerId || undefined) ?? (stops.length === 0 ? 'Add a stop.' : undefined);
+  const withDriver = by === 'car' && driven && Boolean(driver);
+  const no = tripRefusal(sim, person, by, car?.id, passengerId || undefined, withDriver) ?? (stops.length === 0 ? 'Add a stop.' : undefined);
   const each = leg(here, by, 'shopping');
   return (
     <Panel title="Run Errands" subtitle={`A leg is about ${each.km.toFixed(1)} km, ${Math.round(each.minutes)} minutes${by === 'car' ? (METER[here] ? `; parking at ${METER[here]!.zone}` : '; no meter rate published here') : ' on foot'}`}>
@@ -197,6 +200,15 @@ function ErrandsPanel() {
               </select>
             </div>
           )}
+          {by === 'car' && driver && (
+            <div className="field">
+              <label htmlFor="errand-driver">Who Drives</label>
+              <select id="errand-driver" value={driven ? 'driver' : 'you'} onChange={(e) => setDriven(e.target.value === 'driver')} title={`${driver.name}: ${driver.perHour !== undefined ? `${formatMoney(Math.round(driver.perHour * 100), driver.currency)} an hour, ${driver.minHours} at least` : `${formatMoney(Math.round((driver.pickup ?? 0) * 100), driver.currency)} to come out and ${formatMoney(Math.round((driver.perKm ?? 0) * 100), driver.currency)} a kilometer`}${driver.tax ? ', and tax' : ''}.`}>
+                <option value="you">You</option>
+                <option value="driver">{`A Driver From ${driver.name}`}</option>
+              </select>
+            </div>
+          )}
           <div className="field">
             <label htmlFor="errand-with">With</label>
             <select id="errand-with" value={passengerId} onChange={(e) => setPassengerId(e.target.value)}>
@@ -214,7 +226,7 @@ function ErrandsPanel() {
           </div>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!picked || stops.length >= 8} onClick={() => picked && setStops([...stops, { kind: picked.kind, payload: picked.payload, leg: picked.leg, label: picked.label }])}>Add The Stop</button>
           <button type="button" className="btn btn-sm" disabled={!go.open || !park.open || !fuel.open || Boolean(no)} title={no ?? go.reason ?? park.reason ?? fuel.reason} onClick={() => {
-            const r = runErrands(sim, { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengerId ? { passengerId } : {}), stops }, (kind, payload) => run(kind, payload, { silent: true }));
+            const r = runErrands(sim, { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengerId ? { passengerId } : {}), ...(withDriver ? { driven: true } : {}), stops }, (kind, payload) => run(kind, payload, { silent: true }));
             if (r.stopped) toast(`Home again after ${r.done} of ${stops.length}: ${stops[r.stopped.step]!.label} couldn’t be done. ${r.stopped.error}`, 'negative');
             else toast(`Home again, all ${stops.length} done.`, 'positive');
             setStops([]);
