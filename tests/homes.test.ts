@@ -22,10 +22,11 @@ import { depositCapMonths } from '@/engine/systems/household';
 import { PROPERTY_MANAGERS } from '@/engine/content/propertymanagers';
 import { lettingFee, managementFee, renewalFee } from '@/engine/systems/propertymanagers';
 import { fixturesOf, trainingAt } from '@/engine/systems/dwelling';
+import { lateDays, overrunOf } from '@/engine/systems/worksrisk';
 import { billsOf } from '@/engine/systems/household';
 import {
   HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
-  lifeOf, livingIn, loanBalance, marketRent, projectCost, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
+  lifeOf, livingIn, loanBalance, marketRent, projectBid, projectBids, projectCost, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
   type Listing, type OwnedHome, renewTenancy } from '@/engine/systems/homes';
 
 function save(seed: string, city = 'us-ct-newhaven'): Simulation {
@@ -33,6 +34,11 @@ function save(seed: string, city = 'us-ct-newhaven'): Simulation {
 }
 
 /** Money into their current account, from outside the story. */
+/** Played on until the works are done, late as they run (`lateDays`, from 2026-10-02). */
+function finish(sim: Simulation, owned: OwnedHome): void {
+  for (let i = 0; i < 400 && owned.works.length > 0; i += 1) sim.advanceBy(MS_DAY);
+}
+
 function give(sim: Simulation, amount: number): void {
   sim.post({ memo: 'Test money', category: 'test', postings: [{ accountId: sim.player.primaryAccountId!, amount }, { accountId: sim.nominalAccount('equity', 'Opening Balances').id, amount: -amount }] });
 }
@@ -314,9 +320,37 @@ describe('renovating', () => {
     give(sim, 100_000_00);
     const value = homeValue(sim, owned);
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } });
-    sim.advanceBy((roof.days + 1) * MS_DAY);
+    finish(sim, owned);
     expect(owned.facts.parts.roof).toBeGreaterThanOrEqual(year);
     expect(homeValue(sim, owned) - value).toBeGreaterThanOrEqual(worn * 0.99);
+  });
+
+  it('signs the cheapest of three bids, runs late and comes in over as drawn, the difference billed (from 2026-10-02)', () => {
+    // A seed whose roof runs late and comes in over.
+    let found: { sim: Simulation; owned: OwnedHome } | undefined;
+    for (let i = 0; i < 40 && !found; i += 1) {
+      const t = bought(`homes-risk-${i}`, 1);
+      const key = `${t.owned.id}:roof-asphalt:${t.sim.now}`;
+      if (lateDays(t.sim, key, t.owned.cityId, PROJECTS.find((p) => p.id === 'roof-asphalt')!.days) > 0 && overrunOf(t.sim, key, t.owned.cityId, 1_000_00) > 0) found = t;
+    }
+    const { sim, owned } = found!;
+    const roof = PROJECTS.find((p) => p.id === 'roof-asphalt')!;
+    owned.facts.parts.roof = new Date(sim.now).getUTCFullYear() - 30;
+    give(sim, 200_000_00);
+    const bids = projectBids(sim, owned, roof);
+    expect(bids[0]).toBe(projectBid(sim, owned, roof));
+    const started = sim.now;
+    const key = `${owned.id}:roof-asphalt:${started}`;
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } });
+    expect(owned.works[0]!.cost).toBe(bids[0]);
+    const due = owned.works[0]!.doneAt;
+    const late = lateDays(sim, key, owned.cityId, roof.days);
+    const over = overrunOf(sim, key, owned.cityId, bids[0]!);
+    sim.advanceTo(due + 60_000);
+    expect(owned.works[0]!.doneAt).toBe(due + late * MS_DAY);
+    finish(sim, owned);
+    expect(owned.improvements.at(-1)!.cost).toBe(bids[0]! + over);
+    expect(sim.universe.transactions.some((t) => t.memo.includes('over the bid'))).toBe(true);
   });
 
   it('refinishes worn hardwood for more than it costs, as NAR finds, and new floors for next to nothing', () => {
@@ -339,7 +373,7 @@ describe('renovating', () => {
     const rebuild = PROJECTS.find((p) => p.id === 'deck-renew')!;
     expect(projectRefusal(sim, sim.player, owned, rebuild)).toMatch(/deck/);
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'deck-wood' } });
-    sim.advanceBy((deck.days + 1) * MS_DAY);
+    finish(sim, owned);
     expect(projectRefusal(sim, sim.player, owned, deck)).toMatch(/has a deck/);
     expect(projectRefusal(sim, sim.player, owned, rebuild)).toBeUndefined();
     owned.facts.baths = owned.facts.beds + 1;
@@ -359,7 +393,7 @@ describe('rooms and removals', () => {
     owned.facts.beds = Math.max(2, beds);
     const rent = marketRent(sim, owned, 'main');
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'home-gym' } });
-    sim.advanceBy((gym.days + 1) * MS_DAY);
+    finish(sim, owned);
     expect(owned.facts.fixtures!.gym).toBe('home');
     expect(marketRent(sim, owned, 'main')).toBeGreaterThan(rent);
     expect(trainingAt(sim, sim.player).where).toBe('gym');
@@ -375,7 +409,7 @@ describe('rooms and removals', () => {
     const removal = PROJECTS.find((p) => p.id === 'pool-removal')!;
     const bills = billsOf(sim, sim.player);
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'pool-removal' } });
-    sim.advanceBy((removal.days + 1) * MS_DAY);
+    finish(sim, owned);
     expect(owned.facts.features).not.toContain('pool');
     expect(owned.facts.parts.pool).toBeUndefined();
     expect(billsOf(sim, sim.player)).toBeLessThan(bills);
@@ -391,7 +425,7 @@ describe('rooms and removals', () => {
     owned.facts.parts.garageDoor = 2010;
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'deck-removal' } });
     sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'garage-demolition' } });
-    sim.advanceBy(3 * MS_DAY);
+    finish(sim, owned);
     expect(owned.facts.features).not.toContain('deck');
     expect(owned.facts.features).not.toContain('garage');
     expect(owned.facts.parts.deck).toBeUndefined();

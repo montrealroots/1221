@@ -15,9 +15,13 @@
  *
  * Financed, from 2026-09-30, a construction loan pays its share of each
  * stage, interest only on what's been advanced, and becomes the house's
- * mortgage when it's finished (`BUILD_LOANS`). Not kept, and said so: delays
- * and overruns (no authority publishes a rate for a house), change orders,
- * a structural warranty, builder's risk insurance, and a failed inspection.
+ * mortgage when it's finished (`BUILD_LOANS`). This said until 2026-10-02 that
+ * delays, overruns, change orders, a structural warranty, builder's risk
+ * insurance and a failed inspection weren't kept; each came in since but
+ * delays and overruns on a new house, which no source sizes outside a
+ * pandemic-peak poll. From 2026-10-02 the plans are paid at the start, a
+ * registered professional's where the law asks one (`DESIGN`), and an
+ * American house's contract carries CoConstruct's average change orders.
  *
  * From 2026-09-30, a stage's retention is held back where the law or the
  * contract sets one, and paid after completion (`RETENTION`), and a house
@@ -50,7 +54,7 @@ import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { LAND_MARKETS } from '../content/land';
-import { OCCUPANCY_WAIT_DAYS, RETENTION, BC_PERMIT, BUILDERS_RISK_A_MONTH, BUILD_LOANS, BUILD_RULES, ENGLISH_WARRANTY, SERVICES, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
+import { CHANGE_ORDERS_USD, DESIGN, OCCUPANCY_WAIT_DAYS, RETENTION, BC_PERMIT, BUILDERS_RISK_A_MONTH, BUILD_LOANS, BUILD_RULES, ENGLISH_WARRANTY, SERVICES, CIL_CLAWBACK_YEARS, INSPECTIONS, LA_FEES, LEINSTER_FEES, LONDON_BUILDING_CONTROL, LONDON_CIL, NEW_HAVEN_FEES, NO_HOUSE, NYC_FEES, ONTARIO_FEES, SQFT_PER_M2, STAGES, type BuildPlace, type Design } from '../content/construction';
 import { parcelsOf, type Parcel } from './land';
 import { HOME, ownBuilt, paymentFor } from './homes';
 import { expenseFor, inTheBank, owe, payFromBank } from './household';
@@ -143,6 +147,8 @@ export interface BuildQuote {
   currency: string;
   design: Design;
   contract: Money;
+  /** In the contract, America's average change orders (`CHANGE_ORDERS_USD`, from 2026-10-02). */
+  changeOrders: Money;
   fees: { label: string; amount: Money }[];
   feesTotal: Money;
   /** A levy spared by living in it, owed if it's sold or let within three years. */
@@ -212,10 +218,15 @@ export function buildQuote(p: Parcel, designId: string, live: boolean): BuildQuo
   const most = mostFloor(place, p.acres);
   if (most !== undefined && design.sqft > most) return `It doesn’t fit: the land takes ${Math.floor(most).toLocaleString('en-US')} sq ft at most, by ${rules.bulk!.basis}.`;
   const area = rules.unit === 'sqft' ? design.sqft : design.sqft / SQFT_PER_M2;
-  const contract = cents(rules.rate * area);
+  // An American house's change orders, on average, by the stage (from 2026-10-02).
+  const changeOrders = rules.currency === 'USD' ? cents(CHANGE_ORDERS_USD) : 0;
+  const contract = cents(rules.rate * area) + changeOrders;
   const borough = LAND_MARKETS[p.market]!.label.match(/In (Hackney|Croydon|Havering)/)?.[1];
-  const f = buildFees(place, design.sqft, contract, borough);
-  const lines = [...f.lines];
+  // The permit is on the work as contracted, before its change orders.
+  const f = buildFees(place, design.sqft, contract - changeOrders, borough);
+  // The plans, a registered professional's where the law asks one (`DESIGN`, from 2026-10-02).
+  const d = DESIGN[place];
+  const lines = [{ label: d.label, amount: d.share !== undefined ? Math.round((contract - changeOrders) * d.share) : cents(d.flat!) }, ...f.lines];
   if (f.cil > 0) lines.push({ label: live ? 'Community Infrastructure Levy, Spared For A Self-Build' : 'Community Infrastructure Levy', amount: live ? 0 : f.cil });
   // Insured while it's built in America, and warranted in England (from 2026-10-01).
   if (rules.currency === 'USD') lines.push({ label: 'Builder’s Risk Insurance', amount: cents(BUILDERS_RISK_A_MONTH * Math.ceil(rules.buildMonths)) });
@@ -230,7 +241,7 @@ export function buildQuote(p: Parcel, designId: string, live: boolean): BuildQuo
     paid += amount;
     return { name: s.name, amount, days: Math.max(1, Math.round(rules.buildMonths * MONTH_DAYS * s.usd / whole)) };
   });
-  return { currency: rules.currency, design, contract, fees: lines, feesTotal, spared: live ? f.cil : 0, total: contract + feesTotal, stages, permitDays: rules.permitDays ?? Math.round(rules.permitMonths * MONTH_DAYS) };
+  return { currency: rules.currency, design, contract, changeOrders, fees: lines, feesTotal, spared: live ? f.cil : 0, total: contract + feesTotal, stages, permitDays: rules.permitDays ?? Math.round(rules.permitMonths * MONTH_DAYS) };
 }
 
 /** Why a house can't be started, or nothing. */

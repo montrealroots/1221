@@ -36,9 +36,11 @@ describe('what building costs', () => {
     const brooklyn = lot(/Brooklyn/, 2_850 / 43_560);
     expect(mostFloor('nyc', brooklyn.acres)).toBeCloseTo(2_137.5, 6);
     const q = buildQuote(brooklyn, 'ne-owner', true) as BuildQuote;
-    expect(q.contract).toBe(30_857_530);
+    // From 2026-10-02 with CoConstruct's $29,251 of change orders, and a registered architect's plans at 11.5% of the rest.
+    expect(q.contract).toBe(30_857_530 + 2_925_100);
+    expect(q.changeOrders).toBe(2_925_100);
     // From 2026-10-01 builder's risk too, Insureon's $105 a month for the build's 10.4 months begun.
-    expect(q.fees).toEqual([{ label: 'New Building Permit', amount: 103_26 }, { label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }]);
+    expect(q.fees).toEqual([{ label: 'A Registered Architect’s Plans', amount: Math.round(30_857_530 * 0.115) }, { label: 'New Building Permit', amount: 103_26 }, { label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }]);
     expect(buildQuote(brooklyn, 'ne-median', true)).toMatch(/doesn’t fit: the land takes 2,137 sq ft/);
     // Under 1,667 sq ft, the $100 least.
     expect(buildFees('nyc', 1_000, 0).lines[0]!.amount).toBe(100_00);
@@ -46,7 +48,8 @@ describe('what building costs', () => {
 
   it('charges New Haven’s permit by the $1,000 and the state’s education fee, and fits by RS-2’s coverage on two stories', () => {
     const q = buildQuote(lot(/New Haven/, 0.25), 'ne-average', true) as BuildQuote;
-    expect(q.contract).toBe(51_405_310);
+    expect(q.contract).toBe(51_405_310 + 2_925_100);
+    expect(fee(q, /Drafter/)).toBe(6_000_00);
     expect(fee(q, /Building Permit/)).toBe(7_745_00);
     expect(fee(q, /Education/)).toBe(133_65);
     expect(mostFloor('new-haven', 4_000 / 43_560)).toBeCloseTo(2_400, 6);
@@ -55,7 +58,7 @@ describe('what building costs', () => {
 
   it('values Los Angeles’s permit on LADBS’s table and adds plan check, the state’s fees, the linkage and school fees and the certificate; R1 takes 45% of the lot', () => {
     const q = buildQuote(lot(/Los Angeles/, 5_000 / 43_560), 'w-owner', true) as BuildQuote;
-    expect(q.contract).toBe(29_820_282);
+    expect(q.contract).toBe(29_820_282 + 2_925_100);
     // Valuation $101 × 1,686 = $170,286: $395 and $3.50 a $1,000.
     expect(fee(q, /^Building Permit/)).toBe(991_00);
     expect(fee(q, /Plan Check/)).toBe(891_90);
@@ -74,6 +77,8 @@ describe('what building costs', () => {
     expect(letting.contract).toBe(Math.round(2_640 * m2 * 100));
     expect(fee(letting, /Building Control/)).toBe(1_222_20);
     expect(fee(letting, /Structural Warranty/)).toBe(2_000_00);
+    // From 2026-10-02 a technologist's planning and Building Regulations drawings, no architect being required.
+    expect(fee(letting, /Technologist/)).toBe(14_000_00);
     expect(fee(letting, /Levy/)).toBe(Math.round((209.61 + 30.3) * m2 * 100));
     const living = buildQuote(plot, 'nds-3b5p', true) as BuildQuote;
     expect(fee(living, /Levy, Spared/)).toBe(0);
@@ -94,12 +99,13 @@ describe('what building costs', () => {
   // Until 2026-09-29 (stage 5b) no house was built on farmland.
   it('builds on American farmland at the region’s price with the state’s fees, and a town’s permit not kept', () => {
     const upstate = buildQuote(lot(/Upstate/, 10), 'ne-owner', true) as BuildQuote;
-    expect(upstate.contract).toBe(30_857_530);
+    expect(upstate.contract).toBe(30_857_530 + 2_925_100);
     // From 2026-09-30, with the services land with none needs: a well, a septic system and its percolation test.
     const services = [{ label: 'A Drilled Well', amount: 9_000_00 }, { label: 'A Septic System', amount: 8_021_00 }, { label: 'The Percolation Test', amount: 1_300_00 }];
-    expect(upstate.fees).toEqual([{ label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }, ...services]);
+    // Over 1,500 sq ft, New York State asks an architect's plans.
+    expect(upstate.fees).toEqual([{ label: 'A Registered Architect’s Plans', amount: Math.round(30_857_530 * 0.115) }, { label: 'Builder’s Risk Insurance', amount: 11 * 105_00 }, ...services]);
     const ct = buildQuote(lot(/Farmland In Connecticut/, 5), 'ne-owner', true) as BuildQuote;
-    expect(ct.fees).toEqual([{ label: 'State Education Fee', amount: 80_23 }, { label: 'Builder’s Risk Insurance', amount: 12 * 105_00 }, ...services]);
+    expect(ct.fees).toEqual([{ label: 'A Drafter’s Plans', amount: 6_000_00 }, { label: 'State Education Fee', amount: 80_23 }, { label: 'Builder’s Risk Insurance', amount: 12 * 105_00 }, ...services]);
     const ca = buildQuote(lot(/Farmland In California/, 10), 'w-owner', true) as BuildQuote;
     // $298,202.82 of work: $13 and $4 a $100,000.
     expect(fee(ca, /Strong-Motion/)).toBe(38_77);
@@ -113,6 +119,9 @@ describe('what building costs', () => {
     expect(fee(q, /Planning/)).toBe(65_00);
     expect(fee(q, /Contribution/)).toBe(Math.round(62 * m2 * 100));
     expect(fee(q, /Commencement/)).toBe(30_00);
+    // From 2026-10-02 a Dublin firm's fixed fee for the plans, with VAT; no change orders outside America.
+    expect(fee(q, /Fixed Fee/)).toBe(Math.round(15_050 * 1.23 * 100));
+    expect(q.changeOrders).toBe(0);
     expect(q.permitDays).toBe(98);
     // ESB Networks' flat connection, from 2026-09-30; Ontario's is free.
     expect(fee(q, /ESB Networks/)).toBe(3_602_00);
@@ -125,6 +134,7 @@ describe('what building costs', () => {
     expect(fee(on, /Building Permit/)).toBe(2_151_25);
     expect(fee(on, /Development Charge/)).toBe(8_105_00);
     expect(on.permitDays).toBe(14);
+    expect(fee(on, /Designer/)).toBe(17_500_00);
     const bc = buildQuote(lot(/South Coast/, 5), 'w-owner', true) as BuildQuote;
     expect(bc.contract).toBe(495 * 1_686 * 100);
     // $834,570: $699 and $9.96 a $1,000 over $50,000.

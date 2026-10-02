@@ -411,12 +411,12 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           )}
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Work</th><th scope="col" className="num">Cost</th><th scope="col" className="num">Permit</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
+              <thead><tr><th scope="col">Work</th><th scope="col" className="num">Cheapest Of Three Bids</th><th scope="col" className="num">Permit</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
               <tbody>
-                {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, cost, adds, permit, refusal }) => (
+                {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, cost, bids, adds, permit, refusal }) => (
                   <tr key={project.id}>
                     <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}</td>
-                    <td className="num mono">{money(cost)}</td>
+                    <td className="num mono" title={`The bids: ${bids.map(money).join(', ')}`}>{money(cost)}</td>
                     <td className="num mono">{permit ? money(permit.lines.reduce((a, l) => a + l.amount, 0)) : '—'}</td>
                     <td className="num mono">{project.days + (permit?.waitDays ?? 0)} {project.days + (permit?.waitDays ?? 0) === 1 ? 'day' : 'days'}</td>
                     <td className="num mono">{money(adds)}</td>

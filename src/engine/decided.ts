@@ -67,6 +67,7 @@ import { announceNominations, entriesOf } from './systems/awards';
 import { powerDay } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
+import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -497,6 +498,19 @@ defineDecider<{ sim: Simulation; build: number; stage: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), build: seed, stage: [1, 2, 4, 6][seed % 4]! }),
   decide: ({ sim, build, stage }) => String(buildInspectionFails(sim, `b${build}`, 'nyc', stage)),
+});
+
+defineDecider<{ sim: Simulation; job: number; days: number }, string>({
+  id: 'works.risk',
+  decides: 'A home project’s three bids within Checkbook’s measured spread, whether it runs late (48% in America, 24% in the UK) and by how much, and whether it comes in over the bid (43%, 55%) and by how much.',
+  drawnIn: 'src/engine/systems/worksrisk.ts',
+  reads: {
+    job: (o, t) => ({ ...o, job: Math.round(t * 400) }),
+    days: (o, t) => ({ ...o, days: 1 + Math.round(t * 90) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), job: seed, days: 1 + (seed % 90) }),
+  decide: ({ sim, job, days }) => `${bidsFor(sim, `j${job}`, 10_000_00, '2027-01').join('/')} ${lateDays(sim, `j${job}`, 'us-ny-newyork', days)} ${overrunOf(sim, `j${job}`, 'us-ny-newyork', 10_000_00)}`,
 });
 
 defineDecider<{ sim: Simulation; build: number; month: number }, string>({

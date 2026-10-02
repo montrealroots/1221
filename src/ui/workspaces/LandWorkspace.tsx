@@ -333,6 +333,7 @@ function Build() {
               <thead><tr><th scope="col">Line</th><th scope="col" className="num">Amount</th></tr></thead>
               <tbody>
                 <tr><td>The Contract, Paid Stage By Stage</td><td className="num mono">{money(q.contract)}</td></tr>
+                {q.changeOrders > 0 && <tr><td className="dim">In It, Change Orders On Average (CoConstruct, 2020)</td><td className="num mono dim">{money(q.changeOrders)}</td></tr>}
                 {q.fees.map((l) => <tr key={l.label}><td>{l.label}</td><td className="num mono">{money(l.amount)}</td></tr>)}
                 <tr><th scope="row">In All</th><td className="num mono">{money(q.total)}</td></tr>
               </tbody>

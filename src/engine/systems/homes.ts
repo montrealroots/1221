@@ -104,6 +104,7 @@ import { bcSvtRate, foreignBuyerFee, foreignBuyerRefusal, foreignBuyerTax } from
 import { moveTo } from './luggage';
 import { chargeAgent, keysHandedOver, lettingFee, managementFee, managerOf, renewalFee } from './propertymanagers';
 import { fixturesOf } from './dwelling';
+import { bidsFor, lateDays, overrunOf } from './worksrisk';
 import { markRecord } from './credit';
 
 // ---------------------------------------------------------------------------
@@ -435,7 +436,11 @@ export function sizeText(sqft: number, countryId: string): string {
 
 export interface Improvement { projectId: string; at: Instant; value: Money; cost: Money }
 
-export interface Works { projectId: string; startedAt: Instant; doneAt: Instant; cost: Money }
+export interface Works {
+  projectId: string; startedAt: Instant; doneAt: Instant; cost: Money;
+  /** Days it ran late, drawn once on the day it was due (`lateDays`, from 2026-10-02). */
+  late?: number;
+}
 
 /** A payment falling due on a home. */
 export interface Installment {
@@ -942,14 +947,19 @@ export function projectRefusal(sim: Simulation, person: Person, owned: OwnedHome
     return other && (other.id === project.id || (project.renews !== undefined && other.renews === project.renews));
   });
   if (busy) return 'That work is under way.';
-  const cost = projectCost(sim, owned, project);
+  const cost = projectBid(sim, owned, project);
   // With the permit or planning it asks (`systems/permits.ts`), paid when it starts.
   const permit = (worksPermit(sim, owned.cityId, project, cost)?.lines ?? []).reduce((a, l) => a + l.amount, 0);
   if (inTheBank(sim, person) < cost + permit) return `It costs ${formatMoney(cost + permit, saveCurrency(sim.universe), { cents: false })}${permit > 0 ? ' with its permit' : ''}, paid when the work starts.`;
   return undefined;
 }
 
-/** What a project costs on a home: the job, by the size where it's done by the foot, at the town's cost of living. */
+/** The three bids for a project on a home this month, cheapest first (`bidsFor`, from 2026-10-02). */
+export const projectBids = (sim: Simulation, owned: OwnedHome, project: Project): Money[] => bidsFor(sim, `${owned.id}:${project.id}`, projectCost(sim, owned, project), monthKey(sim, owned.cityId));
+/** The contract: the cheapest bid. */
+export const projectBid = (sim: Simulation, owned: OwnedHome, project: Project): Money => projectBids(sim, owned, project)[0]!;
+
+/** What a project costs on a home, as the guides give it: the job, by the size where it's done by the foot, at the town's cost of living. */
 export function projectCost(sim: Simulation, owned: OwnedHome, project: Project): Money {
   const scale = project.perSize ? Math.max(0.5, owned.facts.size / project.perSize) : 1;
   return atTown(sim, owned.cityId, project.usd * scale);
@@ -965,14 +975,15 @@ export function projectAdds(sim: Simulation, owned: OwnedHome, project: Project)
 }
 
 /** The projects a home can take now, and the ones it can't, with why. */
-export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; adds: Money; permit?: WorksPermit; refusal?: string }[] {
+export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string }[] {
   return PROJECTS
     .filter((p) => p.on.includes(owned.facts.type))
     .map((project) => {
       const refusal = projectRefusal(sim, person, owned, project);
-      const cost = projectCost(sim, owned, project);
+      const bids = projectBids(sim, owned, project);
+      const cost = bids[0]!;
       const permit = worksPermit(sim, owned.cityId, project, cost);
-      return { project, cost, adds: projectAdds(sim, owned, project), ...(permit ? { permit } : {}), ...(refusal ? { refusal } : {}) };
+      return { project, cost, bids, adds: projectAdds(sim, owned, project), ...(permit ? { permit } : {}), ...(refusal ? { refusal } : {}) };
     });
 }
 
@@ -981,9 +992,31 @@ const DISRUPTIVE_DAYS = 21;
 const WORKS_STRESS = 1;
 
 function finishWorks(sim: Simulation, person: Person, owned: OwnedHome, works: Works): void {
-  owned.works = owned.works.filter((w) => w !== works);
   const project = PROJECTS.find((p) => p.id === works.projectId);
+  const mine = person.id === sim.universe.playerId;
+  const key = `${owned.id}:${works.projectId}:${works.startedAt}`;
+  // Due today, it may run late, once (`lateDays`, from 2026-10-02).
+  if (project && works.late === undefined) {
+    works.late = lateDays(sim, key, owned.cityId, project.days);
+    if (works.late > 0) {
+      works.doneAt += works.late * MS_DAY;
+      sim.schedule({ at: works.doneAt, kind: WORKS_KIND, label: project.label, category: 'home', priority: 40, payload: { personId: person.id, homeId: owned.id, projectId: project.id } });
+      if (mine) sim.notify({ category: 'home', title: 'The Work Runs Late', body: `${project.label} at ${owned.facts.address}: ${works.late} ${works.late === 1 ? 'day' : 'days'} more.`, importance: 45, route: '/workspace/homes' });
+      return;
+    }
+  }
+  owned.works = owned.works.filter((w) => w !== works);
   if (!project) return;
+  // Finished, it may come in over the bid, the difference billed now (`overrunOf`, from 2026-10-02).
+  const over = overrunOf(sim, key, owned.cityId, works.cost);
+  if (over > 0) {
+    const draw = drawFromBank(sim, person, over, false, true);
+    const paid = over - draw.short;
+    if (paid > 0) sim.post({ memo: `${project.label}, over the bid, ${owned.facts.address}`, category: 'home', postings: [...draw.postings, { accountId: sim.nominalAccount('asset_value', 'Home Improvements').id, amount: paid }] });
+    owe(sim, person, draw.short, `${project.label}, over the bid`, 'home');
+    works.cost += over;
+    if (mine) sim.notify({ category: 'home', title: 'Over The Bid', body: `${project.label} at ${owned.facts.address} came in ${formatMoney(over, saveCurrency(sim.universe), { cents: false })} over.`, importance: 50, route: '/workspace/homes' });
+  }
   const adds = projectAdds(sim, owned, project);
   const f = owned.facts;
   const year = yearIn(sim, owned.cityId);
@@ -1930,7 +1963,8 @@ export function registerHomes(sim: Simulation): void {
     if (!project) throw new CommandError('No such work.');
     const refusal = projectRefusal(s, person, owned, project);
     if (refusal) throw new CommandError(refusal);
-    const cost = projectCost(s, owned, project);
+    // The cheapest of three bids (`projectBids`, from 2026-10-02).
+    const cost = projectBid(s, owned, project);
     const draw = drawFromBank(s, person, cost, false, true);
     s.post({ memo: `${project.label}, ${owned.facts.address}`, category: 'home', postings: [...draw.postings, { accountId: s.nominalAccount('asset_value', 'Home Improvements').id, amount: cost }] });
     // Its permit or planning, paid now; the work waits for a decision a law gives time to.

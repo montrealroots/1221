@@ -334,3 +334,48 @@ export const BUILD_LOANS: Readonly<Partial<Record<BuildPlace, BuildLoanTerms>>> 
   const uk: BuildLoanTerms = { down: 0.2, rate: 0.0589, months: 360, fees: () => 999 + 625, lender: 'Ecology Building Society' };
   return { nyc: us, 'ny-state': us, 'new-haven': us, 'ct-state': us, 'los-angeles': us, 'ca-state': us, london: uk };
 })();
+
+/**
+ * Who must design a house, and what the plans cost, in each place's money
+ * (`research-gaps-construction.json`, read 2026-10-02):
+ * - **New York City**: the construction documents must be a registered
+ *   architect's or engineer's (Admin. Code §28-104.1). No city figure for a
+ *   new house was found; the trade's 8% to 15% of construction, the middle.
+ * - **New York State**: a house of 1,500 sq ft or less needs no architect
+ *   (Education Law §7307(5)); a larger one does, at the same 11.5%, and every
+ *   house SLATE builds there is larger.
+ * - **Connecticut and California**: anyone may draw a one- or two-family
+ *   house (Gen. Stat. §20-298(2); Bus. & Prof. Code §5537(a)) at a drafter's
+ *   custom plans, $2,000 to $10,000 (HomeGuide, national), the middle.
+ * - **England**: no architect is required (Architects Act 1997 protects the
+ *   title only); a chartered technologist's planning and Building Regulations
+ *   drawings, £8,000 to £20,000, the middle (a search's summary).
+ * - **Ireland**: no architect is required to design, though a new house needs
+ *   certifiers; one Dublin firm's 2023 fixed fee for a new house up to 120 m²,
+ *   €15,050 before VAT at 23%. Certifiers' fees found disagree, and aren't
+ *   added.
+ * - **Ontario**: no architect for a house of up to three stories (Architects
+ *   Act s.11(3)); a BCIN designer's plans, C$5,000 to C$30,000, the middle (a
+ *   search's summary). **British Columbia** publishes no designer's fee and
+ *   takes Ontario's.
+ */
+export const DESIGN: Readonly<Record<BuildPlace, { label: string; share?: number; flat?: number }>> = {
+  nyc: { label: 'A Registered Architect’s Plans', share: 0.115 },
+  'ny-state': { label: 'A Registered Architect’s Plans', share: 0.115 },
+  'new-haven': { label: 'A Drafter’s Plans', flat: 6_000 },
+  'ct-state': { label: 'A Drafter’s Plans', flat: 6_000 },
+  'los-angeles': { label: 'A Drafter’s Plans', flat: 6_000 },
+  'ca-state': { label: 'A Drafter’s Plans', flat: 6_000 },
+  london: { label: 'A Technologist’s Planning And Building Regulations Drawings', flat: 14_000 },
+  leinster: { label: 'An Architect’s Fixed Fee, With VAT', flat: 15_050 * 1.23 },
+  ontario: { label: 'A Registered Designer’s Plans', flat: 17_500 },
+  bc: { label: 'A Designer’s Plans, At Ontario’s Price', flat: 17_500 },
+};
+
+/**
+ * Change orders on an American house, from CoConstruct's builders' records
+ * of nearly 30,000 projects: $29,251 of them on an average home building
+ * project in 2020 (2021-09-24). Builders on its software only; in the
+ * contract, by the stage.
+ */
+export const CHANGE_ORDERS_USD = 29_251;
