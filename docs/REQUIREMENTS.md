@@ -250,6 +250,6 @@ Correctness first, then the connected day the plan asks to be shown working
 | 55 | An assistant that proposes validated actions | Complete in code, not activated | systems/assistant.ts, askAssistant, ui/assistant; tests/assistant | Customization builder and development roles; the owner's key |
 | 56 | Supported connection, costs, credentials, works without it | Complete in code | docs/AI-INTEGRATION.md | Activation by the owner |
 | 57 | New mechanics reviewed, never run against saves | Partial | proposals only | A development-proposal role |
-| 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search | From a missing ingredient to the shop and back to the meal |
+| 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search; a recipe short of something buys it in place and cooks (`food.buy_short`, 2026-10-02) | The same in place for other shortfalls |
 | 59 | Activity states, recovery, no duplicates | Partial | orders, journeys, works | A common state model across activities |
 | 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | No washing up (§33i) |

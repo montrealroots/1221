@@ -9,7 +9,8 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { amountIn, cookRefusal, groceryCatalog, kitchenMeal, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
+import { RECIPES } from '@/engine/content/groceries';
+import { amountIn, cookRefusal, groceryCatalog, kitchenMeal, shortfall, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
 import { foodOf, mealsFromStock, mealsReady, throwOutSpoiled } from '@/engine/systems/pantry';
 import { buyTheDaysFood, canPay, foodOf as daysFoodCost, mealOf } from '@/engine/systems/household';
 import { bacAt } from '@/engine/systems/alcohol';
@@ -227,5 +228,49 @@ describe('a drink at home', () => {
     sim.must({ kind: 'food.drink_home', payload: { itemId: bottle.id } });
     expect(bottle.food.left).toBe(750 - 148);
     expect(bacAt(sim.player, sim.now)).toBeGreaterThan(0);
+  });
+});
+
+describe('what a recipe is short of', () => {
+  it('is bought at once, the cheapest packs here that make it up, and the recipe can be cooked', () => {
+    const sim = life('us-ny-newyork', 'short');
+    sim.player.items = (sim.player.items ?? []).filter((i) => !i.food);
+    expect(cookRefusal(sim, sim.player, RECIPE)).toMatch(/short of/);
+    const need = shortfall(sim, sim.player, RECIPE)!;
+    expect(need.unbuyable).toEqual([]);
+    expect(need.buys.length).toBeGreaterThan(0);
+    // Each the cheapest pack here for its food, on the packs' own price per unit of it.
+    const here = groceryCatalog(sim, 'us-ny-newyork').map((e) => e.value);
+    for (const b of need.buys) {
+      const food = productById(b.productId)!.food;
+      const rivals = here.filter((p) => p.food === food);
+      expect(rivals.length).toBeGreaterThan(0);
+      expect(rivals.every((p) => groceryPrice(sim, 'us-ny-newyork', p) * Math.ceil((b.quantity * productById(b.productId)!.sizeQty) / p.sizeQty) >= b.cost || p.sizeUnit !== productById(b.productId)!.sizeUnit || productById(b.productId)!.sizeQty * b.quantity > p.sizeQty * 20)).toBe(true);
+    }
+    const before = bank(sim);
+    const r = sim.execute<{ paid: number }>({ kind: 'food.buy_short', payload: { recipeId: RECIPE } });
+    expect(r.ok, r.error).toBe(true);
+    expect(r.value!.paid).toBe(need.buys.reduce((a, b) => a + b.cost, 0));
+    expect(before - bank(sim)).toBe(r.value!.paid);
+    expect(cookRefusal(sim, sim.player, RECIPE)).toBeUndefined();
+    expect(sim.execute({ kind: 'food.buy_short', payload: { recipeId: RECIPE } }).error).toBe('You have all of it.');
+  });
+});
+
+describe('the cheapest pack', () => {
+  it('is the one bought for what’s short, where London sells oats more than one way', () => {
+    const sim = life('uk-eng-london', 'short-ldn');
+    sim.player.items = (sim.player.items ?? []).filter((i) => !i.food);
+    const need = shortfall(sim, sim.player, 'easy-overnight-oats')!;
+    const oats = need.buys.find((b) => productById(b.productId)!.food === 'oats')!;
+    const here = groceryCatalog(sim, 'uk-eng-london').map((e) => e.value).filter((p) => p.food === 'oats');
+    expect(here.length).toBeGreaterThan(1);
+    // No other oats here would make it up for less.
+    const recipe = RECIPES.find((r) => r.id === 'easy-overnight-oats')!;
+    const ing = recipe.ingredients.find((i) => !i.cupboard && i.food === 'oats') as Extract<(typeof recipe.ingredients)[number], { food: string | null }>;
+    for (const p of here) {
+      const quantity = Math.max(1, Math.ceil(amountIn(ing, p.sizeUnit, 1) / p.sizeQty - 1e-9));
+      expect(groceryPrice(sim, 'uk-eng-london', p) * quantity).toBeGreaterThanOrEqual(oats.cost);
+    }
   });
 });
