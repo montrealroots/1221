@@ -161,7 +161,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 38f | Storage, mechanical upgrades | Partial | GB only | Racks, boxes; beyond GB |
 | 38i | Alternative transport | Complete (repairs) | `vehicle.stand_in`; tests | Wrap and interior work too |
 | 39a–b | Tank or charge, range | Done, 2026-10-02 | `systems/fueltank.ts`: 117 makers' capacities (`content/tanks.ts`), level, range, gauge on Vehicles; tests/fueltank.test.ts | 14 models without a published figure take SLATE's estimate, labeled |
-| 39c–d | Stops, belongings, passengers | Partial | errands; one passenger; shopping held to the maker's cargo liters (2026-10-02) | Several passengers by the seats |
+| 39c–d | Stops, belongings, passengers | Done, 2026-10-02 | errands; shopping held to the maker's cargo liters; as many passengers as the maker's seats hold beside the driver, any number on foot, none at work (`tripRefusal`) | — |
 | 39e | Route and time | Complete | tests/driving, trips, journey | — |
 | 39f | Refuel at a station | Done, 2026-10-02 | `vehicle.refuel` at a named station to full at the pump price; `errand.fuel` fills the tank; a leg short of fuel is refused | Choosing an amount short of full |
 | 39g | Charging | Done, 2026-10-02 | public to full over 50 kW's time, at home to 80% with a charger; the month charges at a fifth | — |

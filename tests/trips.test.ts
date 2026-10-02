@@ -19,6 +19,7 @@ import { specOf } from '@/engine/systems/caroptions';
 import { addItem } from '@/engine/systems/items';
 import { COLD_CHAIN_HOURS, driverCost, driverIn, leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
 import { metAtWork } from '@/engine/systems/people';
+import { atWork, atWorkReason } from '@/engine/systems/availability';
 import { salonsIn } from '@/engine/systems/hygiene';
 import { arrange } from '@/engine/systems/catalog';
 import { groceryCatalog } from '@/engine/systems/kitchen';
@@ -131,12 +132,41 @@ describe('a trip', () => {
 
   it('takes somebody along, whose hours together it adds', () => {
     const sim = life('ca-on-toronto', 'tr-along');
-    sim.advanceTo(at('ca-on-toronto', 'America/Toronto', 13, 10));
+    // At six, after a day shift (`systems/availability.ts`, from 2026-10-02).
+    sim.advanceTo(at('ca-on-toronto', 'America/Toronto', 13, 18));
     const c = metAtWork(sim, sim.player, 'ca-on-toronto', 'b1', 'A Job');
     const g = arrange(groceryCatalog(sim, 'ca-on-toronto'))[0]!;
     runErrands(sim, { by: 'foot', passengerId: c.id, stops: [{ kind: 'food.buy_groceries', payload: { productId: g.id, quantity: 1 }, leg: 'shopping' }] });
     expect(c.hours).toBeCloseTo(2 * leg('ca-on-toronto', 'foot', 'shopping').minutes / 60, 9);
     expect(c.memory[0]!.what).toMatch(/^Came along on your errands/);
+  });
+
+  it('in a car, as many come along as its seats hold beside the driver; on foot, any number; none at work', () => {
+    const sim = life('us-ny-newyork', 'tr-seats');
+    const v = withCar(sim);
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 19));
+    const seats = specOf(v.modelId)!.seats!;
+    const friends = Array.from({ length: seats }, (_, i) => metAtWork(sim, sim.player, 'us-ny-newyork', 's' + i, 'A Job'));
+    const ids = friends.map((c) => c.id);
+    expect(tripRefusal(sim, sim.player, 'car', v.id, ids.slice(0, seats - 1))).toBeUndefined();
+    expect(tripRefusal(sim, sim.player, 'car', v.id, ids)).toBe('It seats ' + (seats - 1) + ' beside you.');
+    expect(tripRefusal(sim, sim.player, 'foot', undefined, ids)).toBeUndefined();
+    expect(tripRefusal(sim, sim.player, 'foot', v.id, ids)).toBeUndefined();
+    const stop = salonStop('us-ny-newyork');
+    const r = runErrands(sim, { by: 'car', vehicleId: v.id, passengerIds: ids.slice(0, 2), stops: [{ kind: stop.kind, payload: stop.payload, leg: stop.leg }] });
+    expect(r, JSON.stringify(r)).toEqual({ done: 1 });
+    expect(friends[0]!.hours).toBeGreaterThan(0);
+    expect(friends[1]!.hours).toBe(friends[0]!.hours);
+    expect(friends[2]!.hours).toBe(0);
+  });
+
+  it('leaves behind a friend at work', () => {
+    const sim = life('us-ny-newyork', 'tr-work');
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 14, 11));
+    const friends = Array.from({ length: 12 }, (_, i) => metAtWork(sim, sim.player, 'us-ny-newyork', 'w' + i, 'A Job'));
+    const busy = friends.find((c) => atWork(sim, c, sim.now, 60))!;
+    expect(busy).toBeDefined();
+    expect(tripRefusal(sim, sim.player, 'foot', undefined, [busy.id])).toBe(atWorkReason(busy));
   });
 
   it('stops at a shop that’s shut when you get there, and still comes home', () => {
