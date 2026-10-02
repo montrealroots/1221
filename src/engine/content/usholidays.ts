@@ -19,7 +19,7 @@ const weekday = (y: number, m: number, d: number) => new Date(Date.UTC(y, m - 1,
 const key = (y: number, m: number, d: number) => new Date(Date.UTC(y, m - 1, d)).toISOString().slice(0, 10);
 
 /** The nth given weekday of a month; n of -1 is the last. */
-function nth(y: number, m: number, day: number, n: number): string {
+export function nth(y: number, m: number, day: number, n: number): string {
   if (n > 0) {
     const first = weekday(y, m, 1);
     return key(y, m, 1 + ((day - first + 7) % 7) + (n - 1) * 7);

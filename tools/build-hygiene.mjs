@@ -13,7 +13,9 @@ const toiletries = j.products.filter((p) => typeof p.price === 'number' && p.pri
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
   seen.add(id);
-  return { id, chain: p.chain, market: p.market, name: p.name, kind: p.kind, sizeQty: p.sizeQty, sizeUnit: p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true };
+  // Its stores are 'tesco-gb' and its research filed its toiletries as 'tesco': one chain, from 2026-10-02, until when
+  // Tesco's toiletries were never in reach in London nor held to its hours. The ids keep 'tesco', as saves hold them.
+  return { id, chain: p.chain === 'tesco' ? 'tesco-gb' : p.chain, market: p.market, name: p.name, kind: p.kind, sizeQty: p.sizeQty, sizeUnit: p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true };
 });
 
 const CITY = {
