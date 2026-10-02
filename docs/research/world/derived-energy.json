@@ -1,0 +1,61 @@
+{
+ "read": "2026-10-02",
+ "priceYear": 2025,
+ "usHousehold": 1884,
+ "places": {
+  "ca-08": {
+   "local": 2128,
+   "currency": "CAD",
+   "year": 2019,
+   "usd": 1604,
+   "priceFactor": 1.2039,
+   "weights": {
+    "Electricity": 1190,
+    "Natural gas": 811,
+    "Fuel oil and other fuels": 127
+   },
+   "source": "Statistics Canada, Survey of Household Spending 2019 (11-10-0222); CPI (18-10-0004)"
+  },
+  "ca-02": {
+   "local": 1845,
+   "currency": "CAD",
+   "year": 2019,
+   "usd": 1390,
+   "priceFactor": 1.1741,
+   "weights": {
+    "Electricity": 1202,
+    "Natural gas": 568,
+    "Fuel oil and other fuels": 75
+   },
+   "source": "Statistics Canada, Survey of Household Spending 2019 (11-10-0222); CPI (18-10-0004)"
+  },
+  "uk": {
+   "local": 1278.41,
+   "currency": "GBP",
+   "year": 2019,
+   "weekly": 24.5,
+   "usd": 1632,
+   "priceFactor": 1.5672,
+   "source": "ONS, Family Spending FYE 2020 (workbook 1, A1, 4.4); CPI 04.5 (D7CH)"
+  },
+  "ie": {
+   "local": 1765.8,
+   "currency": "EUR",
+   "year": 2020,
+   "weekly2023": 63.11,
+   "deflator": 0.5362,
+   "usd": 2015,
+   "priceFactor": 1.7117,
+   "source": "CSO, Household Budget Survey 2022-2023 (HBS01), at 2020 prices by Eurostat HICP CP045"
+  },
+  "mx": {
+   "local": 6092,
+   "currency": "MXN",
+   "year": 2020,
+   "usd": 283,
+   "priceFactor": 1,
+   "source": "INEGI, ENIGH 2020, electricidad y combustibles, MX$1,523 a quarter (read by hand)"
+  }
+ },
+ "usPriceFactor": 1.2802
+}

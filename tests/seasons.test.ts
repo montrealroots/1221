@@ -12,6 +12,7 @@ import { CARE } from '@/engine/content/safetynet';
 import { billsFactor, degreeDays, energyByMonth, energyScale, energyYear, ENERGY, fluByWeek, weekOfYear } from '@/engine/systems/seasons';
 import { CITIES } from '@/engine/content/geography';
 import { atTown, billsOf, costsAt, telecomPartOf } from '@/engine/systems/household';
+import { ENERGY_ABROAD_USD, ENERGY_PRICES_SINCE } from '@/engine/content/energy-world';
 import { illnessWeek } from '@/engine/systems/health';
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
@@ -24,9 +25,15 @@ describe('the bills', () => {
       expect(sum(Array.from({ length: 12 }, (_, m) => billsFactor(city, m + 1)))).toBeCloseTo(12, 9);
     }
     expect(energyScale('au-nsw-sydney')).toBe(1);
-    // A year's energy in the US is the state's spending against the nation's, the town's cost of living taken off.
+    // A year's energy in the US is the state's spending against the nation's, the town's cost of living taken off,
+    // at the last full year's prices (from 2026-10-02, `ENERGY_PRICES_SINCE`).
     const ny = CITIES.require('us-ny-newyork');
-    expect(energyScale('us-ny-newyork')).toBeCloseTo((2_319 / 1_884) * (100 / ny.costOfLivingIndex), 9);
+    expect(energyScale('us-ny-newyork')).toBeCloseTo((2_319 / 1_884) * (100 / ny.costOfLivingIndex) * ENERGY_PRICES_SINCE.us!, 9);
+    // Abroad, a province's or a country's own survey, the same way: Ontario's, and Mexico's.
+    const tor = CITIES.require('ca-on-toronto');
+    expect(energyScale('ca-on-toronto')).toBeCloseTo((ENERGY_ABROAD_USD['ca-08']! / 1_884) * (100 / tor.costOfLivingIndex) * ENERGY_PRICES_SINCE['ca-08']!, 9);
+    const mex = CITIES.require('mx-cmx-mexicocity');
+    expect(energyScale('mx-cmx-mexicocity')).toBeCloseTo((ENERGY_ABROAD_USD.mx! / 1_884) * (100 / mex.costOfLivingIndex), 9);
     const perCol = (id: string) => energyScale(id) * CITIES.require(id).costOfLivingIndex;
     expect(perCol('us-ct-newhaven')).toBeGreaterThan(perCol('us-fl-miami'));
     // And the year's bills, which creation shows, carry it.
