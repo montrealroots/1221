@@ -862,12 +862,13 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 .page-head { margin-bottom: var(--s5); }
 .page-head h1 { margin-bottom: var(--s1); }
 
+/* A tab is its words and the line under them, spaced by the strip's gap, so the first starts under the page's heading (from 2026-10-02; until then each was padded, and the first sat 16 pixels in). */
 .tabs {
-  display: flex; gap: var(--s1); border-bottom: 1px solid var(--line);
+  display: flex; gap: var(--s5); border-bottom: 1px solid var(--line);
   margin-bottom: var(--s5); overflow-x: auto;
 }
 .tab {
-  padding: var(--s3) var(--s4); background: none; border: 0;
+  padding: var(--s3) 0; background: none; border: 0;
   border-bottom: 2px solid transparent; color: var(--text-muted);
   font: inherit; font-size: var(--size-sm); font-weight: 550;
   cursor: pointer; white-space: nowrap;
