@@ -309,6 +309,8 @@ export interface Person {
   cleaningSince?: number;
   /** Breakdown cover with a motoring club (`systems/roadside.ts`, from 2026-10-02). */
   roadside?: import('../systems/roadside').Roadside;
+  /** A home machine broken and waiting for its repair (`systems/appliancefaults.ts`, from 2026-10-02). */
+  applianceFaults?: Partial<Record<import('../systems/appliancefaults').Machine, import('../systems/appliancefaults').MachineFault>>;
   groomedAt?: number;
   /** The home whose utility accounts they hold (`systems/utilities.ts`, from 2026-10-01). */
   utilitiesAt?: string;

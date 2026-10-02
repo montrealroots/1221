@@ -131,7 +131,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 35c | Organizing | Partial | spots | Rooms; capacity |
 | 35d | Waste | Partial, 2026-10-02 | `systems/waste.ts`: each research town's household charge in the bills (LA's schedule, Toronto, Vancouver, Dublin; London, Mexico City, New York and New Haven none) | Bin size and plan choice; collection days; bulky items |
 | 35e | Replacing supplies | Partial | automatic restock | Household consumables |
-| 35f | Appliance repair | Not implemented | appliances age out | Faults, repair visits |
+| 35f | Appliance repair | Done, 2026-10-02 | `systems/appliancefaults.ts`: washer, dishwasher and fridge faults at Consumer Reports' and Which?'s rates (decider `home.appliance_fault`); the laundromat, washing by hand, a spoiled fridge; the landlord's mended free next morning, one's own booked at each market's price | Dryer and air conditioning faults (no rate with a period published) |
 | 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
 | 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener | Access, visit windows, work recorded |
 | 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines | Background top-ups bypass time and hours; favorites, repeat orders, scheduled routines |
