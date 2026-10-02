@@ -133,7 +133,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 35e | Replacing supplies | Partial | automatic restock | Household consumables |
 | 35f | Appliance repair | Done, 2026-10-02 | `systems/appliancefaults.ts`: washer, dishwasher and fridge faults at Consumer Reports' and Which?'s rates (decider `home.appliance_fault`); the laundromat, washing by hand, a spoiled fridge; the landlord's mended free next morning, one's own booked at each market's price | Dryer and air conditioning faults (no rate with a period published) |
 | 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
-| 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener | Access, visit windows, work recorded |
+| 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener; from 2026-10-02 the cleaner comes at ten, SLATE's reading, getting in with a key or with somebody home, a visit missed not cleaned or charged (`cleanerGetsIn`) | Work recorded |
 | 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines; from 2026-10-02 Buy Again puts a past purchase back in the basket the same way, size and color, by the same refusals (`againOptions`) | Background top-ups bypass time and hours; favorites, scheduled routines |
 
 ## Part 6. Vehicles and movement

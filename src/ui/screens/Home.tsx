@@ -1021,7 +1021,7 @@ function YourPlace({ cur }: { cur: string }) {
       {place.keeps && (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           {living.cleaner
-            ? <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => run('home.cleaner', { on: false })}>Let The Cleaner Go</Gated>
+            ? <><Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => run('home.cleaner', { on: false })}>Let The Cleaner Go</Gated><Gated feature="home.cleaner_key" className="btn btn-sm btn-ghost" title="Without a key the cleaner gets in only when you or a partner are home at ten" onClick={() => { if (run('home.cleaner_key', { give: !living.cleaner!.key }).ok) toast(living.cleaner!.key ? 'The key back.' : 'They let themselves in now.', 'positive'); }}>{living.cleaner.key ? 'Take The Key Back' : 'Give The Cleaner A Key'}</Gated></>
             : <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cleaner', { on: true }).ok) toast('A cleaner comes every Friday.', 'positive'); }}>Hire A Cleaner ({formatMoney(cleaner, cur, { cents: false })} A Week)</Gated>}
         </div>
       )}
